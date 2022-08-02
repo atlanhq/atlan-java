@@ -1,6 +1,8 @@
 /* SPDX-License-Identifier: Apache-2.0 */
 package com.atlan.model.serde;
 
+import com.atlan.model.Glossary;
+import com.atlan.model.GlossaryCategory;
 import com.atlan.model.GlossaryTerm;
 import com.atlan.model.UnknownAsset;
 import com.atlan.model.core.Entity;
@@ -26,8 +28,12 @@ public class EntityTypeAdapterFactory implements TypeAdapterFactory {
     final TypeAdapter<JsonElement> jsonElementAdapter = gson.getAdapter(JsonElement.class);
     final TypeAdapter<UnknownAsset> unknownAssetAdapter =
         gson.getDelegateAdapter(this, TypeToken.get(UnknownAsset.class));
-    final TypeAdapter<com.atlan.model.GlossaryTerm> glossaryTermAdapter =
-        gson.getDelegateAdapter(this, TypeToken.get(com.atlan.model.GlossaryTerm.class));
+    final TypeAdapter<Glossary> glossaryAdapter =
+      gson.getDelegateAdapter(this, TypeToken.get(Glossary.class));
+    final TypeAdapter<GlossaryCategory> glossaryCategoryAdapter =
+      gson.getDelegateAdapter(this, TypeToken.get(GlossaryCategory.class));
+    final TypeAdapter<GlossaryTerm> glossaryTermAdapter =
+        gson.getDelegateAdapter(this, TypeToken.get(GlossaryTerm.class));
 
     TypeAdapter<Entity> resultCustomTypeAdapter =
         new TypeAdapter<>() {
@@ -38,6 +44,12 @@ public class EntityTypeAdapterFactory implements TypeAdapterFactory {
               unknownAssetAdapter.write(out, (UnknownAsset) value);
             } else {
               switch (typeName) {
+                case "AtlasGlossary":
+                  glossaryAdapter.write(out, (Glossary) value);
+                  break;
+                case "AtlasGlossaryCategory":
+                  glossaryCategoryAdapter.write(out, (GlossaryCategory) value);
+                  break;
                 case "AtlasGlossaryTerm":
                   glossaryTermAdapter.write(out, (GlossaryTerm) value);
                   break;
@@ -57,6 +69,12 @@ public class EntityTypeAdapterFactory implements TypeAdapterFactory {
               objectResult = unknownAssetAdapter.fromJsonTree(object);
             } else {
               switch (typeName) {
+                case "AtlasGlossary":
+                  objectResult = glossaryAdapter.fromJsonTree(object);
+                  break;
+                case "AtlasGlossaryCategory":
+                  objectResult = glossaryCategoryAdapter.fromJsonTree(object);
+                  break;
                 case "AtlasGlossaryTerm":
                   objectResult = glossaryTermAdapter.fromJsonTree(object);
                   break;

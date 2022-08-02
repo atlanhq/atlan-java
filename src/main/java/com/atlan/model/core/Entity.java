@@ -5,6 +5,7 @@ import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.enums.AtlanDeleteType;
+import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.responses.EntityMutationResponse;
 import com.atlan.model.responses.EntityResponse;
 import com.atlan.net.ApiResource;
@@ -48,6 +49,24 @@ public abstract class Entity extends AtlanObject {
 
   /** Map of custom metadata attributes and values defined on the entity. */
   Map<String, Object> businessAttributes;
+
+  /** Status of the entity. */
+  final AtlanStatus status;
+
+  /** User or account that created the entity. */
+  final String createdBy;
+
+  /** User or account that last updated the entity. */
+  final String updatedBy;
+
+  /** Time (epoch) at which the entity was created, in milliseconds. */
+  final Long createTime;
+
+  /** Time (epoch) at which the entity was last updated, in milliseconds. */
+  final Long updateTime;
+
+  /** Unused. */
+  List<String> classificationNames;
 
   /** Unused. */
   Boolean isIncomplete;
