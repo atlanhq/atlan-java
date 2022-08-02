@@ -9,9 +9,9 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class EntityResponse extends ApiResource {
-  /** Unused. */
-  Object referredEntities;
+    /** Unused. */
+    Object referredEntities;
 
-  /** The retrieved entity. */
-  Entity entity;
+    /** The retrieved entity. */
+    Entity entity;
 }

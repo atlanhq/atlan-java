@@ -19,21 +19,21 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 public class UnknownAsset extends Entity {
 
-  /** Name of the type definition that defines this asset. */
-  @Getter(onMethod_ = {@Override})
-  @Setter(onMethod_ = {@Override})
-  String typeName;
+    /** Name of the type definition that defines this asset. */
+    @Getter(onMethod_ = {@Override})
+    @Setter(onMethod_ = {@Override})
+    String typeName;
 
-  /** Attributes that can exist across all assets in Atlan. */
-  @Getter(onMethod_ = {@Override})
-  AssetAttributes attributes;
+    /** Attributes that can exist across all assets in Atlan. */
+    @Getter(onMethod_ = {@Override})
+    AssetAttributes attributes;
 
-  /** Relationships that can exist across all assets in Atlan. */
-  @Getter(onMethod_ = {@Override})
-  AssetRelationshipAttributes relationshipAttributes;
+    /** Relationships that can exist across all assets in Atlan. */
+    @Getter(onMethod_ = {@Override})
+    AssetRelationshipAttributes relationshipAttributes;
 
-  @Override
-  protected boolean canEqual(Object other) {
-    return other instanceof UnknownAsset;
-  }
+    @Override
+    protected boolean canEqual(Object other) {
+        return other instanceof UnknownAsset;
+    }
 }

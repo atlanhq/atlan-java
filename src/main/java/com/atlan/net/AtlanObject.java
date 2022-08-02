@@ -15,47 +15,45 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder(toBuilder = true)
 public abstract class AtlanObject {
 
-  public AtlanObject() {
-    // Do nothing - needed for Lombok SuperBuilder generations...
-  }
-
-  public static final Gson GSON = createGson();
-
-  private static Gson createGson() {
-    GsonBuilder builder =
-        new GsonBuilder()
-            .registerTypeAdapter(AtlanRawJsonObject.class, new AtlanRawJsonObjectDeserializer())
-            .registerTypeAdapter(Aggregation.class, new ElasticObjectSerializer<Aggregation>())
-            .registerTypeAdapter(Query.class, new ElasticObjectSerializer<Query>())
-            .registerTypeAdapter(SortOptions.class, new ElasticObjectSerializer<SortOptions>());
-    for (TypeAdapterFactory factory : ApiResourceTypeAdapterFactoryProvider.getAll()) {
-      // Keep an eye on these, as they may impact search vs heavily-inherited (with transient
-      // override) structures
-      builder.registerTypeAdapterFactory(factory);
+    public AtlanObject() {
+        // Do nothing - needed for Lombok SuperBuilder generations...
     }
-    return builder.create();
-  }
 
-  // This works for heavily-inherited (with transient override) structures
-  // public static final Gson PRETTY_PRINT_GSON =
-  //   new GsonBuilder()
-  //     .registerTypeAdapter(Aggregation.class, new ElasticObjectSerializer<Aggregation>())
-  //     .registerTypeAdapter(Query.class, new ElasticObjectSerializer<Query>())
-  //     .registerTypeAdapter(SortOptions.class, new ElasticObjectSerializer<SortOptions>())
-  //     .create();
+    public static final Gson GSON = createGson();
 
-  @Override
-  public String toString() {
-    return String.format(
-        "<%s@%s> JSON: %s",
-        this.getClass().getName(), System.identityHashCode(this), this.toJson());
-  }
+    private static Gson createGson() {
+        GsonBuilder builder = new GsonBuilder()
+                .registerTypeAdapter(AtlanRawJsonObject.class, new AtlanRawJsonObjectDeserializer())
+                .registerTypeAdapter(Aggregation.class, new ElasticObjectSerializer<Aggregation>())
+                .registerTypeAdapter(Query.class, new ElasticObjectSerializer<Query>())
+                .registerTypeAdapter(SortOptions.class, new ElasticObjectSerializer<SortOptions>());
+        for (TypeAdapterFactory factory : ApiResourceTypeAdapterFactoryProvider.getAll()) {
+            // Keep an eye on these, as they may impact search vs heavily-inherited (with transient
+            // override) structures
+            builder.registerTypeAdapterFactory(factory);
+        }
+        return builder.create();
+    }
 
-  public String toJson() {
-    return GSON.toJson(this);
-  }
+    // This works for heavily-inherited (with transient override) structures
+    // public static final Gson PRETTY_PRINT_GSON =
+    //   new GsonBuilder()
+    //     .registerTypeAdapter(Aggregation.class, new ElasticObjectSerializer<Aggregation>())
+    //     .registerTypeAdapter(Query.class, new ElasticObjectSerializer<Query>())
+    //     .registerTypeAdapter(SortOptions.class, new ElasticObjectSerializer<SortOptions>())
+    //     .create();
 
-  protected static boolean equals(Object a, Object b) {
-    return a == null ? b == null : a.equals(b);
-  }
+    @Override
+    public String toString() {
+        return String.format(
+                "<%s@%s> JSON: %s", this.getClass().getName(), System.identityHashCode(this), this.toJson());
+    }
+
+    public String toJson() {
+        return GSON.toJson(this);
+    }
+
+    protected static boolean equals(Object a, Object b) {
+        return a == null ? b == null : a.equals(b);
+    }
 }

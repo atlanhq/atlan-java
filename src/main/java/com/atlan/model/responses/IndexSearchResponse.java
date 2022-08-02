@@ -10,15 +10,15 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class IndexSearchResponse extends ApiResource {
-  /** Type of query. */
-  String queryType;
+    /** Type of query. */
+    String queryType;
 
-  /** Parameters for the search. */
-  Object searchParameters;
+    /** Parameters for the search. */
+    Object searchParameters;
 
-  /** List of results from the search. */
-  List<Entity> entities;
+    /** List of results from the search. */
+    List<Entity> entities;
 
-  /** Approximate number of total results. */
-  Long approximateCount;
+    /** Approximate number of total results. */
+    Long approximateCount;
 }

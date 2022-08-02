@@ -14,20 +14,20 @@ import java.lang.reflect.Type;
 
 public class ElasticObjectSerializer<T extends JsonpSerializable> implements JsonSerializer<T> {
 
-  private static final JsonpMapper mapper = new JacksonJsonpMapper();
+    private static final JsonpMapper mapper = new JacksonJsonpMapper();
 
-  /** Serializes any serializable Elastic object (aggregation, query, etc) into a JSON string. */
-  @Override
-  public JsonElement serialize(T src, Type typeOfSrc, JsonSerializationContext context) {
+    /** Serializes any serializable Elastic object (aggregation, query, etc) into a JSON string. */
+    @Override
+    public JsonElement serialize(T src, Type typeOfSrc, JsonSerializationContext context) {
 
-    if (src != null) {
-      StringWriter sw = new StringWriter();
-      JsonGenerator generator = mapper.jsonProvider().createGenerator(sw);
-      src.serialize(generator, mapper);
-      generator.close();
-      return JsonParser.parseString(sw.toString());
-    } else {
-      return null;
+        if (src != null) {
+            StringWriter sw = new StringWriter();
+            JsonGenerator generator = mapper.jsonProvider().createGenerator(sw);
+            src.serialize(generator, mapper);
+            generator.close();
+            return JsonParser.parseString(sw.toString());
+        } else {
+            return null;
+        }
     }
-  }
 }

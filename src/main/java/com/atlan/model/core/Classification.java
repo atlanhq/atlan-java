@@ -11,35 +11,35 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = false)
 public class Classification extends AtlanObject {
 
-  /**
-   * Name of the classification. Note that this is the static-hashed unique name of the
-   * classification, not hte human-readable displayName.
-   */
-  String typeName;
+    /**
+     * Name of the classification. Note that this is the static-hashed unique name of the
+     * classification, not hte human-readable displayName.
+     */
+    String typeName;
 
-  /** Unique identifier of the entity to which this classification is attached. */
-  String entityGuid;
+    /** Unique identifier of the entity to which this classification is attached. */
+    String entityGuid;
 
-  /** Status of the entity. */
-  String entityStatus;
+    /** Status of the entity. */
+    String entityStatus;
 
-  /**
-   * Whether to propagate this classification to other entities related to the entity to which the
-   * classification is attached.
-   */
-  Boolean propagate;
+    /**
+     * Whether to propagate this classification to other entities related to the entity to which the
+     * classification is attached.
+     */
+    Boolean propagate;
 
-  /**
-   * Whether to remove this classification from other entities to which it has been propagated when
-   * the classification is removed from this entity.
-   */
-  Boolean removePropagationsOnEntityDelete;
+    /**
+     * Whether to remove this classification from other entities to which it has been propagated when
+     * the classification is removed from this entity.
+     */
+    Boolean removePropagationsOnEntityDelete;
 
-  /**
-   * Whether to prevent this classification from propagating through lineage (true) or allow it to
-   * propagate through lineage (false).
-   */
-  Boolean restrictPropagationThroughLineage;
+    /**
+     * Whether to prevent this classification from propagating through lineage (true) or allow it to
+     * propagate through lineage (false).
+     */
+    Boolean restrictPropagationThroughLineage;
 
-  /** Unused. List<Object> attributes; List<Object> validityPeriods; */
+    /** Unused. List<Object> attributes; List<Object> validityPeriods; */
 }

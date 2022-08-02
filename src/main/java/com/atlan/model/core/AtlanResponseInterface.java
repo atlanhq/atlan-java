@@ -4,7 +4,7 @@ package com.atlan.model.core;
 import com.atlan.net.AtlanResponse;
 
 public interface AtlanResponseInterface {
-  AtlanResponse getLastResponse();
+    AtlanResponse getLastResponse();
 
-  void setLastResponse(AtlanResponse response);
+    void setLastResponse(AtlanResponse response);
 }

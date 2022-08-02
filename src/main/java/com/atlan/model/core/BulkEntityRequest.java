@@ -11,6 +11,6 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @EqualsAndHashCode(callSuper = false)
 public class BulkEntityRequest extends AtlanObject {
-  /** List of entities to operate on in bulk. */
-  List<Entity> entities;
+    /** List of entities to operate on in bulk. */
+    List<Entity> entities;
 }

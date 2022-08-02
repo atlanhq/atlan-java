@@ -5,16 +5,16 @@ import com.google.gson.annotations.SerializedName;
 import lombok.Getter;
 
 public enum AtlanStatus implements AtlanEnum {
-  @SerializedName("ACTIVE")
-  ACTIVE("ACTIVE"),
+    @SerializedName("ACTIVE")
+    ACTIVE("ACTIVE"),
 
-  @SerializedName("DELETED")
-  DELETED("DELETED");
+    @SerializedName("DELETED")
+    DELETED("DELETED");
 
-  @Getter(onMethod_ = {@Override})
-  private final String value;
+    @Getter(onMethod_ = {@Override})
+    private final String value;
 
-  AtlanStatus(String value) {
-    this.value = value;
-  }
+    AtlanStatus(String value) {
+        this.value = value;
+    }
 }

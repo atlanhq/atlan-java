@@ -14,9 +14,9 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @EqualsAndHashCode(callSuper = false)
 public class IndexSearchDSL extends AtlanObject {
-  Integer from;
-  Integer size;
-  Aggregation aggregation;
-  Query query;
-  List<SortOptions> sort;
+    Integer from;
+    Integer size;
+    Aggregation aggregation;
+    Query query;
+    List<SortOptions> sort;
 }

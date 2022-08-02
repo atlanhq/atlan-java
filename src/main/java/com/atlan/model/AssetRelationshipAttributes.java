@@ -15,17 +15,17 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 public class AssetRelationshipAttributes extends RelationshipAttributes {
 
-  /** Resources that are linked to this asset. */
-  List<Reference> links;
+    /** Resources that are linked to this asset. */
+    List<Reference> links;
 
-  /** Readme that is linked to this asset. */
-  Reference readme;
+    /** Readme that is linked to this asset. */
+    Reference readme;
 
-  /** Terms that are linked to this asset. */
-  List<Reference> meanings;
+    /** Terms that are linked to this asset. */
+    List<Reference> meanings;
 
-  @Override
-  protected boolean canEqual(Object other) {
-    return other instanceof AssetRelationshipAttributes;
-  }
+    @Override
+    protected boolean canEqual(Object other) {
+        return other instanceof AssetRelationshipAttributes;
+    }
 }

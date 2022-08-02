@@ -11,7 +11,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @EqualsAndHashCode(callSuper = false)
 public class UniqueAttributes extends AtlanObject {
-  /** Unique name of the related entity. */
-  @SerializedName("qualifiedName")
-  String qualifiedName;
+    /** Unique name of the related entity. */
+    @SerializedName("qualifiedName")
+    String qualifiedName;
 }

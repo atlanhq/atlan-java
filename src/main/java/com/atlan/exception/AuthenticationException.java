@@ -2,10 +2,9 @@
 package com.atlan.exception;
 
 public class AuthenticationException extends AtlanException {
-  private static final long serialVersionUID = 2L;
+    private static final long serialVersionUID = 2L;
 
-  public AuthenticationException(
-      String message, String requestId, String code, Integer statusCode) {
-    super(message, requestId, code, statusCode);
-  }
+    public AuthenticationException(String message, String requestId, String code, Integer statusCode) {
+        super(message, requestId, code, statusCode);
+    }
 }

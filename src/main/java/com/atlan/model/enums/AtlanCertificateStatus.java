@@ -5,19 +5,19 @@ import com.google.gson.annotations.SerializedName;
 import lombok.Getter;
 
 public enum AtlanCertificateStatus implements AtlanEnum {
-  @SerializedName("VERIFIED")
-  VERIFIED("VERIFIED"),
+    @SerializedName("VERIFIED")
+    VERIFIED("VERIFIED"),
 
-  @SerializedName("DRAFT")
-  DRAFT("DRAFT"),
+    @SerializedName("DRAFT")
+    DRAFT("DRAFT"),
 
-  @SerializedName("DEPRECATED")
-  DEPRECATED("DEPRECATED");
+    @SerializedName("DEPRECATED")
+    DEPRECATED("DEPRECATED");
 
-  @Getter(onMethod_ = {@Override})
-  private final String value;
+    @Getter(onMethod_ = {@Override})
+    private final String value;
 
-  AtlanCertificateStatus(String value) {
-    this.value = value;
-  }
+    AtlanCertificateStatus(String value) {
+        this.value = value;
+    }
 }

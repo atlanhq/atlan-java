@@ -9,9 +9,9 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class EntityMutationResponse extends ApiResource {
-  /** Assets that were changed. */
-  MutatedEntities mutatedEntities;
+    /** Assets that were changed. */
+    MutatedEntities mutatedEntities;
 
-  /** Map of assigned unique identifiers for the created assets. */
-  Map<String, String> guidAssignments;
+    /** Map of assigned unique identifiers for the created assets. */
+    Map<String, String> guidAssignments;
 }

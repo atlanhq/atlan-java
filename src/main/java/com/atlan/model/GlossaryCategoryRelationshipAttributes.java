@@ -15,45 +15,48 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 public class GlossaryCategoryRelationshipAttributes extends AssetRelationshipAttributes {
 
-  /** Glossary in which the category is located. */
-  Reference anchor;
+    /** Glossary in which the category is located. */
+    Reference anchor;
 
-  /** Parent category in which this category is located (or null if this is a root-level category). */
-  Reference parentCategory;
+    /** Parent category in which this category is located (or null if this is a root-level category). */
+    Reference parentCategory;
 
-  /** Terms organized within this category. */
-  List<Reference> terms;
+    /** Terms organized within this category. */
+    List<Reference> terms;
 
-  /** Child categories organized within this category. */
-  List<Reference> childrenCategories;
+    /** Child categories organized within this category. */
+    List<Reference> childrenCategories;
 
-  @Override
-  protected boolean canEqual(Object other) {
-    return other instanceof GlossaryCategoryRelationshipAttributes;
-  }
-
-  /**
-   * Set up the minimal object required to create a category. Only one of the following is required.
-   *
-   * @param glossaryGuid unique identifier of the glossary for the category
-   * @param glossaryQualifiedName unique name of the glossary
-   * @return a builder that can be further extended with other metadata
-   */
-  public static GlossaryCategoryRelationshipAttributes createRequest(
-    String glossaryGuid, String glossaryQualifiedName) {
-    Reference anchor = null;
-    if (glossaryGuid == null && glossaryQualifiedName == null) {
-      return null;
-    } else if (glossaryGuid != null) {
-      anchor = Reference.builder().typeName("AtlasGlossary").guid(glossaryGuid).build();
-    } else {
-      anchor =
-        Reference.builder()
-          .typeName("AtlasGlossary")
-          .uniqueAttributes(
-            UniqueAttributes.builder().qualifiedName(glossaryQualifiedName).build())
-          .build();
+    @Override
+    protected boolean canEqual(Object other) {
+        return other instanceof GlossaryCategoryRelationshipAttributes;
     }
-    return GlossaryCategoryRelationshipAttributes.builder().anchor(anchor).build();
-  }
+
+    /**
+     * Set up the minimal object required to create a category. Only one of the following is required.
+     *
+     * @param glossaryGuid unique identifier of the glossary for the category
+     * @param glossaryQualifiedName unique name of the glossary
+     * @return a builder that can be further extended with other metadata
+     */
+    public static GlossaryCategoryRelationshipAttributes createRequest(
+            String glossaryGuid, String glossaryQualifiedName) {
+        Reference anchor = null;
+        if (glossaryGuid == null && glossaryQualifiedName == null) {
+            return null;
+        } else if (glossaryGuid != null) {
+            anchor = Reference.builder()
+                    .typeName("AtlasGlossary")
+                    .guid(glossaryGuid)
+                    .build();
+        } else {
+            anchor = Reference.builder()
+                    .typeName("AtlasGlossary")
+                    .uniqueAttributes(UniqueAttributes.builder()
+                            .qualifiedName(glossaryQualifiedName)
+                            .build())
+                    .build();
+        }
+        return GlossaryCategoryRelationshipAttributes.builder().anchor(anchor).build();
+    }
 }

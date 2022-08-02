@@ -10,12 +10,12 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class MutatedEntities extends AtlanObject {
-  /** Assets that were created. */
-  List<Entity> CREATE;
+    /** Assets that were created. */
+    List<Entity> CREATE;
 
-  /** Assets that were updated. */
-  List<Entity> UPDATE;
+    /** Assets that were updated. */
+    List<Entity> UPDATE;
 
-  /** Assets that were deleted. */
-  List<Entity> DELETE;
+    /** Assets that were deleted. */
+    List<Entity> DELETE;
 }

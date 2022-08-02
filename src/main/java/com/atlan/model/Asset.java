@@ -13,16 +13,16 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 public abstract class Asset extends Entity {
 
-  /** Attributes that can exist across all assets in Atlan. */
-  @Getter(onMethod_ = {@Override})
-  transient AssetAttributes attributes;
+    /** Attributes that can exist across all assets in Atlan. */
+    @Getter(onMethod_ = {@Override})
+    transient AssetAttributes attributes;
 
-  /** Relationships that can exist across all assets in Atlan. */
-  @Getter(onMethod_ = {@Override})
-  transient AssetRelationshipAttributes relationshipAttributes;
+    /** Relationships that can exist across all assets in Atlan. */
+    @Getter(onMethod_ = {@Override})
+    transient AssetRelationshipAttributes relationshipAttributes;
 
-  @Override
-  protected boolean canEqual(Object other) {
-    return other instanceof Asset;
-  }
+    @Override
+    protected boolean canEqual(Object other) {
+        return other instanceof Asset;
+    }
 }

@@ -11,15 +11,15 @@ import java.util.AbstractMap;
  * @param <V> the type of the value
  */
 public class KeyValuePair<K, V> extends AbstractMap.SimpleEntry<K, V> {
-  private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-  /**
-   * Initializes a new instance of the {@link KeyValuePair} class using the specified key and value.
-   *
-   * @param key the key
-   * @param value the value
-   */
-  public KeyValuePair(K key, V value) {
-    super(key, value);
-  }
+    /**
+     * Initializes a new instance of the {@link KeyValuePair} class using the specified key and value.
+     *
+     * @param key the key
+     * @param value the value
+     */
+    public KeyValuePair(K key, V value) {
+        super(key, value);
+    }
 }

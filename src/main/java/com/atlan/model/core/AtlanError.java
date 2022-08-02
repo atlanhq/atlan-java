@@ -9,9 +9,9 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 public class AtlanError extends AtlanObject {
 
-  /** A short string indicating the error code reported. */
-  String errorCode;
+    /** A short string indicating the error code reported. */
+    String errorCode;
 
-  /** A human-readable message providing more details about the error. */
-  String errorMessage;
+    /** A human-readable message providing more details about the error. */
+    String errorMessage;
 }

@@ -5,19 +5,19 @@ import com.google.gson.annotations.SerializedName;
 import lombok.Getter;
 
 public enum AtlanAnnouncementType implements AtlanEnum {
-  @SerializedName("information")
-  INFORMATION("information"),
+    @SerializedName("information")
+    INFORMATION("information"),
 
-  @SerializedName("warning")
-  WARNING("warning"),
+    @SerializedName("warning")
+    WARNING("warning"),
 
-  @SerializedName("issue")
-  ISSUE("issue");
+    @SerializedName("issue")
+    ISSUE("issue");
 
-  @Getter(onMethod_ = {@Override})
-  private final String value;
+    @Getter(onMethod_ = {@Override})
+    private final String value;
 
-  AtlanAnnouncementType(String value) {
-    this.value = value;
-  }
+    AtlanAnnouncementType(String value) {
+        this.value = value;
+    }
 }

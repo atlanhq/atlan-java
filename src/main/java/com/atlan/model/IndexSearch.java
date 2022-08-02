@@ -15,20 +15,18 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @EqualsAndHashCode(callSuper = true)
 public class IndexSearch extends AtlanObject {
-  /** Parameters for the search itself. */
-  IndexSearchDSL dsl;
+    /** Parameters for the search itself. */
+    IndexSearchDSL dsl;
 
-  /** Attributes to include on each result document. */
-  List<String> attributes;
+    /** Attributes to include on each result document. */
+    List<String> attributes;
 
-  /** Attributes to include on each related entity of each result document. */
-  List<String> relationAttributes;
+    /** Attributes to include on each related entity of each result document. */
+    List<String> relationAttributes;
 
-  /** Run the search. */
-  public IndexSearchResponse search() throws AtlanException {
-    String url = String.format("%s%s", Atlan.getApiBase(), "/api/meta/search/indexsearch");
-    System.out.println("Request: " + this.toJson());
-    return ApiResource.request(
-        ApiResource.RequestMethod.POST, url, this, IndexSearchResponse.class, null);
-  }
+    /** Run the search. */
+    public IndexSearchResponse search() throws AtlanException {
+        String url = String.format("%s%s", Atlan.getApiBase(), "/api/meta/search/indexsearch");
+        return ApiResource.request(ApiResource.RequestMethod.POST, url, this, IndexSearchResponse.class, null);
+    }
 }

@@ -96,10 +96,13 @@ dependencies {
     implementation group: "com.google.code.gson", name: "gson", version:"2.9.1"
     implementation group: "co.elastic.clients", name: "elasticsearch-java", version: "8.3.3"
     implementation group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.12.3"
+    implementation group: "org.slf4j", name: "slf4j-api", version: "1.7.32"
     testImplementation group: "com.google.guava", name: "guava", version:"31.0.1-jre"
     testImplementation group: 'org.testng', name: 'testng', version: '7.4.0'
+    testImplementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.11'
     testRuntimeOnly group: 'org.testng', name: 'testng', version: '7.4.0'
     testRuntimeOnly group: "org.slf4j", name: "slf4j-api", version: "1.7.32"
+    testRuntimeOnly group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.11'
 }
 
 jar {
@@ -138,7 +141,7 @@ test {
 
 spotless {
     java {
-        googleJavaFormat("1.7") // 1.7 is the last version that supports Java 8
+        palantirJavaFormat("2.9.0")
         removeUnusedImports()
     }
 }

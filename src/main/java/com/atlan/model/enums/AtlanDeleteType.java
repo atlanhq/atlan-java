@@ -5,19 +5,19 @@ import com.google.gson.annotations.SerializedName;
 import lombok.Getter;
 
 public enum AtlanDeleteType implements AtlanEnum {
-  @SerializedName("HARD")
-  HARD("HARD"),
+    @SerializedName("HARD")
+    HARD("HARD"),
 
-  @SerializedName("SOFT")
-  SOFT("SOFT"),
+    @SerializedName("SOFT")
+    SOFT("SOFT"),
 
-  @SerializedName("DEFAULT")
-  DEFAULT("DEFAULT");
+    @SerializedName("DEFAULT")
+    DEFAULT("DEFAULT");
 
-  @Getter(onMethod_ = {@Override})
-  private final String value;
+    @Getter(onMethod_ = {@Override})
+    private final String value;
 
-  AtlanDeleteType(String value) {
-    this.value = value;
-  }
+    AtlanDeleteType(String value) {
+        this.value = value;
+    }
 }

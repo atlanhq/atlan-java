@@ -11,8 +11,8 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 public class GlossaryTermAttributes extends AssetAttributes {
-  @Override
-  protected boolean canEqual(Object other) {
-    return other instanceof GlossaryTermAttributes;
-  }
+    @Override
+    protected boolean canEqual(Object other) {
+        return other instanceof GlossaryTermAttributes;
+    }
 }

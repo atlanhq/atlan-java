@@ -12,12 +12,12 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = false)
 public class Attributes extends AtlanObject {
-  /**
-   * Unique name for this entity. This is typically a concatenation of the asset's name onto its
-   * parent's qualifiedName.
-   */
-  String qualifiedName;
+    /**
+     * Unique name for this entity. This is typically a concatenation of the asset's name onto its
+     * parent's qualifiedName.
+     */
+    String qualifiedName;
 
-  /** Human-readable name of the asset. */
-  String name;
+    /** Human-readable name of the asset. */
+    String name;
 }
