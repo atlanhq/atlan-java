@@ -2,8 +2,8 @@
 package com.atlan.model.serde;
 
 import com.atlan.model.GlossaryTerm;
-import com.atlan.model.core.Entity;
 import com.atlan.model.UnknownAsset;
+import com.atlan.model.core.Entity;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
@@ -24,9 +24,7 @@ public class EntityTypeAdapterFactory implements TypeAdapterFactory {
     }
     final String discriminator = "typeName";
     final TypeAdapter<JsonElement> jsonElementAdapter = gson.getAdapter(JsonElement.class);
-    final TypeAdapter<com.atlan.model.core.Entity> entityAdapter =
-        gson.getDelegateAdapter(this, TypeToken.get(com.atlan.model.core.Entity.class));
-    final TypeAdapter<UnknownAsset> assetStubAdapter =
+    final TypeAdapter<UnknownAsset> unknownAssetAdapter =
         gson.getDelegateAdapter(this, TypeToken.get(UnknownAsset.class));
     final TypeAdapter<com.atlan.model.GlossaryTerm> glossaryTermAdapter =
         gson.getDelegateAdapter(this, TypeToken.get(com.atlan.model.GlossaryTerm.class));
@@ -36,13 +34,17 @@ public class EntityTypeAdapterFactory implements TypeAdapterFactory {
           @Override
           public void write(JsonWriter out, Entity value) throws IOException {
             String typeName = value.getTypeName();
-            switch (typeName) {
-              case "AtlasGlossaryTerm":
-                glossaryTermAdapter.write(out, (GlossaryTerm) value);
-                break;
-              default:
-                entityAdapter.write(out, value);
-                break;
+            if (typeName == null) {
+              unknownAssetAdapter.write(out, (UnknownAsset) value);
+            } else {
+              switch (typeName) {
+                case "AtlasGlossaryTerm":
+                  glossaryTermAdapter.write(out, (GlossaryTerm) value);
+                  break;
+                default:
+                  unknownAssetAdapter.write(out, (UnknownAsset) value);
+                  break;
+              }
             }
           }
 
@@ -51,13 +53,17 @@ public class EntityTypeAdapterFactory implements TypeAdapterFactory {
             JsonObject object = jsonElementAdapter.read(in).getAsJsonObject();
             Entity objectResult;
             String typeName = object.getAsJsonPrimitive(discriminator).getAsString();
-            switch (typeName) {
-              case "AtlasGlossaryTerm":
-                objectResult = glossaryTermAdapter.fromJsonTree(object);
-                break;
-              default:
-                objectResult = assetStubAdapter.fromJsonTree(object);
-                break;
+            if (typeName == null) {
+              objectResult = unknownAssetAdapter.fromJsonTree(object);
+            } else {
+              switch (typeName) {
+                case "AtlasGlossaryTerm":
+                  objectResult = glossaryTermAdapter.fromJsonTree(object);
+                  break;
+                default:
+                  objectResult = unknownAssetAdapter.fromJsonTree(object);
+                  break;
+              }
             }
             return objectResult;
           }
