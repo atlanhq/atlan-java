@@ -1,0 +1,13 @@
+# SPDX-License-Identifier: Apache-2.0
+
+# IntelliJ
+*.iml
+**.iml
+*.ipr
+*.iws
+.idea
+
+# gradle
+!gradle/**
+.gradle/
+build/
