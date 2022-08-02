@@ -57,38 +57,6 @@ public class LiveAtlanResponseGetter implements AtlanResponseGetter {
     return resource;
   }
 
-  /*  @Override
-  public InputStream requestStream(
-      ApiResource.RequestMethod method,
-      String url,
-      Map<String, Object> params,
-      RequestOptions options)
-      throws AtlanException {
-    AtlanRequest request = new AtlanRequest(method, url, params, options);
-    AtlanResponseStream responseStream = httpClient.requestStreamWithRetries(request);
-
-    int responseCode = responseStream.code();
-
-    if (responseCode < 200 || responseCode >= 300) {
-      AtlanResponse response;
-      try {
-        response = responseStream.unstream();
-      } catch (IOException e) {
-        throw new ApiConnectionException(
-            String.format(
-                "IOException during API request to Atlan (%s): %s "
-                    + "Please check your internet connection and try again. If this problem persists,"
-                    + "you should check Atlan's availability via a browser,"
-                    + " or let us know at support@atlan.com.",
-                Atlan.getApiBase(), e.getMessage()),
-            e);
-      }
-      handleApiError(response);
-    }
-
-    return responseStream.body();
-  }*/
-
   private static HttpClient buildDefaultHttpClient() {
     return new HttpURLConnectionClient();
   }

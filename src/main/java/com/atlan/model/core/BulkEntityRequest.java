@@ -1,7 +1,6 @@
 /* SPDX-License-Identifier: Apache-2.0 */
 package com.atlan.model.core;
 
-import com.atlan.model.core.Entity;
 import com.atlan.net.AtlanObject;
 import java.util.List;
 import lombok.Data;
