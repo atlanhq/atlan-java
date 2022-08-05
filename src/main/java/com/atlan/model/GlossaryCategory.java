@@ -10,11 +10,13 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 public class GlossaryCategory extends Asset {
 
+    public static final String TYPE_NAME = "AtlasGlossaryCategory";
+
     /** Fixed typeName for categories. */
     @Getter(onMethod_ = {@Override})
     @Setter(onMethod_ = {@Override})
     @Builder.Default
-    String typeName = "AtlasGlossaryCategory";
+    String typeName = TYPE_NAME;
 
     /** Attributes for this category. */
     @Getter(onMethod_ = {@Override})
@@ -33,17 +35,15 @@ public class GlossaryCategory extends Asset {
      * Builds the minimal request necessary to create a category. At least one of glossaryGuid or
      * glossaryQualifiedName must be provided.
      *
-     * @param qualifiedName of the category
      * @param name of the category
      * @param glossaryGuid unique identifier of the category's glossary
      * @param glossaryQualifiedName unique name of the category's glossary
      * @return the minimal request necessary to create the category
      */
-    public static GlossaryCategory createRequest(
-            String qualifiedName, String name, String glossaryGuid, String glossaryQualifiedName) {
+    public static GlossaryCategory createRequest(String name, String glossaryGuid, String glossaryQualifiedName) {
         return GlossaryCategory.builder()
                 .attributes(GlossaryCategoryAttributes.builder()
-                        .qualifiedName(qualifiedName)
+                        .qualifiedName(name)
                         .name(name)
                         .build())
                 .relationshipAttributes(
@@ -58,13 +58,17 @@ public class GlossaryCategory extends Asset {
      * @param qualifiedName of the category
      * @param name of the category
      * @param glossaryGuid unique identifier of the category's glossary
-     * @param glossaryQualifiedName unique name of the category's glossary
      * @return the minimal request necessary to update the category
      */
-    public static GlossaryCategory updateRequest(
-            String qualifiedName, String name, String glossaryGuid, String glossaryQualifiedName) {
-        // Turns out that updating a category requires exactly the same info as creating one
-        // TODO: update using qualifiedName for the glossary fails...
-        return createRequest(qualifiedName, name, glossaryGuid, glossaryQualifiedName);
+    public static GlossaryCategory updateRequest(String qualifiedName, String name, String glossaryGuid) {
+        // Turns out that updating a category requires the glossary GUID, and will not work
+        // with the qualifiedName of the glossary
+        return GlossaryCategory.builder()
+                .attributes(GlossaryCategoryAttributes.builder()
+                        .qualifiedName(qualifiedName)
+                        .name(name)
+                        .build())
+                .relationshipAttributes(GlossaryCategoryRelationshipAttributes.createRequest(glossaryGuid, null))
+                .build();
     }
 }

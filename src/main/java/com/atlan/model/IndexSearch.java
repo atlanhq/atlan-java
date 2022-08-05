@@ -9,6 +9,7 @@ import com.atlan.net.AtlanObject;
 import java.util.List;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Singular;
 import lombok.experimental.SuperBuilder;
 
 @Data
@@ -19,9 +20,11 @@ public class IndexSearch extends AtlanObject {
     IndexSearchDSL dsl;
 
     /** Attributes to include on each result document. */
+    @Singular
     List<String> attributes;
 
     /** Attributes to include on each related entity of each result document. */
+    @Singular
     List<String> relationAttributes;
 
     /** Run the search. */

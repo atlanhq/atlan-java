@@ -13,6 +13,8 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 public abstract class Asset extends Entity {
 
+    public static final String TYPE_NAME = "Asset";
+
     /** Attributes that can exist across all assets in Atlan. */
     @Getter(onMethod_ = {@Override})
     transient AssetAttributes attributes;

@@ -7,11 +7,12 @@ import java.util.List;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.Singular;
 import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
-@SuperBuilder
+@SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 public class GlossaryTermRelationshipAttributes extends AssetRelationshipAttributes {
 
@@ -19,9 +20,11 @@ public class GlossaryTermRelationshipAttributes extends AssetRelationshipAttribu
     Reference anchor;
 
     /** Assets that are attached to this term. */
+    @Singular
     List<Reference> assignedEntities;
 
     /** Categories within which this term is organized. */
+    @Singular
     List<Reference> categories;
 
     @Override

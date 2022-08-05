@@ -66,7 +66,7 @@ public class AtlanRequest {
             this.options = (options != null) ? options : RequestOptions.getDefault();
             this.method = method;
             this.url = new URL(url);
-            this.content = HttpContent.buildJSONEncodedContent(body);
+            this.content = (body == null || body.length() == 0) ? null : HttpContent.buildJSONEncodedContent(body);
             this.headers = buildHeaders(method, this.options);
         } catch (IOException e) {
             throw new ApiConnectionException(

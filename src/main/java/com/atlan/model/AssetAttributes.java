@@ -4,6 +4,7 @@ package com.atlan.model;
 import com.atlan.model.core.Attributes;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanCertificateStatus;
+import com.atlan.model.serde.Removable;
 import java.util.List;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -36,7 +37,12 @@ public class AssetAttributes extends Attributes {
      * Human-readable descriptive message that can optionally be submitted when the
      * `certificateStatus` is changed.
      */
-    String certificateStatusMessage;
+    @Setter(AccessLevel.NONE)
+    Removable<String> certificateStatusMessage;
+
+    public void setCertificateStatusMessage(String certificateStatusMessage) {
+        this.certificateStatusMessage = Removable.of(certificateStatusMessage);
+    }
 
     /** Name of the user who last updated the `certificateStatus`. */
     final String certificateUpdatedBy;
@@ -62,21 +68,27 @@ public class AssetAttributes extends Attributes {
     AtlanAnnouncementType announcementType;
 
     /** List of users who own the asset. */
+    @Singular
     List<String> ownerUsers;
 
     /** List of groups who own the asset. */
+    @Singular
     List<String> ownerGroups;
 
     /** List of users who administer the asset. (This is only used for Connection assets.) */
+    @Singular
     List<String> adminUsers;
 
     /** List of groups who administer the asset. (This is only used for Connection assets.) */
+    @Singular
     List<String> adminGroups;
 
     /** Unused. */
+    @Singular
     List<String> viewerUsers;
 
     /** Unused. */
+    @Singular
     List<String> viewerGroups;
 
     /** Name of the connector through which this asset is accessible. */
@@ -104,7 +116,7 @@ public class AssetAttributes extends Attributes {
     Number popularityScore;
 
     /** Unused. */
-    List<String> sourceOwners;
+    String sourceOwners;
 
     /** URL to the resource within the source application. */
     String sourceURL;
@@ -129,6 +141,21 @@ public class AssetAttributes extends Attributes {
 
     /** Who last updated the asset. */
     final String sourceUpdatedBy;
+
+    /** Remove the certificate from the asset, if any is set on the asset. */
+    public AssetAttributes removeCertificate() {
+        setCertificateStatus(null);
+        setCertificateStatusMessage(null);
+        return this;
+    }
+
+    /** Remove the announcement from the asset, if any is set on the asset. */
+    public AssetAttributes removeAnnouncement() {
+        setAnnouncementType(null);
+        setAnnouncementTitle(null);
+        setAnnouncementMessage(null);
+        return this;
+    }
 
     @Override
     protected boolean canEqual(Object other) {

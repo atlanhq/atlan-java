@@ -7,21 +7,24 @@ import java.util.List;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.Singular;
 import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
-@SuperBuilder
+@SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 public class AssetRelationshipAttributes extends RelationshipAttributes {
 
     /** Resources that are linked to this asset. */
+    @Singular
     List<Reference> links;
 
     /** Readme that is linked to this asset. */
     Reference readme;
 
     /** Terms that are linked to this asset. */
+    @Singular
     List<Reference> meanings;
 
     @Override

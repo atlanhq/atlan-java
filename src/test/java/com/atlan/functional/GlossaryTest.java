@@ -11,13 +11,17 @@ import com.atlan.model.core.Entity;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.enums.AtlanDeleteType;
+import com.atlan.model.relations.Reference;
 import com.atlan.model.responses.EntityMutationResponse;
+import com.atlan.model.responses.EntityResponse;
 import com.atlan.model.responses.IndexSearchResponse;
 import com.atlan.model.responses.MutatedEntities;
 import java.util.Collections;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.Test;
 
+@Slf4j
 public class GlossaryTest extends BaseAtlanTest {
 
     public static final String GLOSSARY_NAME = "JavaClient Test Glossary";
@@ -35,7 +39,7 @@ public class GlossaryTest extends BaseAtlanTest {
 
     @Test(groups = {"glossary.create"})
     void createGlossary() {
-        Glossary glossary = Glossary.createRequest(GLOSSARY_NAME, GLOSSARY_NAME);
+        Glossary glossary = Glossary.createRequest(GLOSSARY_NAME);
         try {
             EntityMutationResponse response = Entity.create(glossary);
             assertNotNull(response);
@@ -48,7 +52,7 @@ public class GlossaryTest extends BaseAtlanTest {
             assertEquals(entities.size(), 1);
             Entity one = entities.get(0);
             assertNotNull(one);
-            assertEquals(one.getTypeName(), "AtlasGlossary");
+            assertEquals(one.getTypeName(), Glossary.TYPE_NAME);
             assertTrue(one instanceof Glossary);
             glossary = (Glossary) one;
             glossaryGuid = glossary.getGuid();
@@ -58,6 +62,7 @@ public class GlossaryTest extends BaseAtlanTest {
             assertNotNull(glossaryQame);
             assertEquals(glossary.getAttributes().getName(), GLOSSARY_NAME);
         } catch (AtlanException e) {
+            e.printStackTrace();
             assertNull(e, "Unexpected exception: " + e.getMessage());
         }
     }
@@ -66,7 +71,7 @@ public class GlossaryTest extends BaseAtlanTest {
             groups = {"category.create"},
             dependsOnGroups = {"glossary.create"})
     void createCategory() {
-        GlossaryCategory category = GlossaryCategory.createRequest(CATEGORY_NAME, CATEGORY_NAME, glossaryGuid, null);
+        GlossaryCategory category = GlossaryCategory.createRequest(CATEGORY_NAME, glossaryGuid, null);
         try {
             EntityMutationResponse response = Entity.create(category);
             assertNotNull(response);
@@ -79,7 +84,7 @@ public class GlossaryTest extends BaseAtlanTest {
             assertEquals(entities.size(), 1);
             Entity one = entities.get(0);
             assertNotNull(one);
-            assertEquals(one.getTypeName(), "AtlasGlossaryCategory");
+            assertEquals(one.getTypeName(), GlossaryCategory.TYPE_NAME);
             assertTrue(one instanceof GlossaryCategory);
             category = (GlossaryCategory) one;
             categoryGuid = category.getGuid();
@@ -89,6 +94,7 @@ public class GlossaryTest extends BaseAtlanTest {
             assertNotNull(categoryQame);
             assertEquals(category.getAttributes().getName(), CATEGORY_NAME);
         } catch (AtlanException e) {
+            e.printStackTrace();
             assertNull(e, "Unexpected exception: " + e.getMessage());
         }
     }
@@ -97,7 +103,7 @@ public class GlossaryTest extends BaseAtlanTest {
             groups = {"term.create"},
             dependsOnGroups = {"glossary.create"})
     void createTerm() {
-        GlossaryTerm term = GlossaryTerm.createRequest(TERM_NAME, TERM_NAME, glossaryGuid, null);
+        GlossaryTerm term = GlossaryTerm.createRequest(TERM_NAME, glossaryGuid, null);
         try {
             EntityMutationResponse response = Entity.create(term);
             assertNotNull(response);
@@ -110,7 +116,7 @@ public class GlossaryTest extends BaseAtlanTest {
             assertEquals(entities.size(), 1);
             Entity one = entities.get(0);
             assertNotNull(one);
-            assertEquals(one.getTypeName(), "AtlasGlossaryTerm");
+            assertEquals(one.getTypeName(), GlossaryTerm.TYPE_NAME);
             assertTrue(one instanceof GlossaryTerm);
             term = (GlossaryTerm) one;
             termGuid = term.getGuid();
@@ -120,17 +126,102 @@ public class GlossaryTest extends BaseAtlanTest {
             assertNotNull(termQame);
             assertEquals(term.getAttributes().getName(), TERM_NAME);
         } catch (AtlanException e) {
+            e.printStackTrace();
             assertNull(e, "Unexpected exception: " + e.getMessage());
         }
     }
 
-    // TODO: read tests
+    @Test(
+            groups = {"glossary.read"},
+            dependsOnGroups = {"glossary.create", "category.create", "term.create"})
+    void readGlossary() {
+        try {
+            EntityResponse response = Entity.retrieve(glossaryGuid);
+            assertNotNull(response);
+            Entity one = response.getEntity();
+            assertNotNull(one);
+            assertEquals(one.getTypeName(), Glossary.TYPE_NAME);
+            assertTrue(one instanceof Glossary);
+            Glossary glossary = (Glossary) one;
+            assertEquals(glossary.getGuid(), glossaryGuid);
+            assertNotNull(glossary.getAttributes());
+            assertEquals(glossary.getAttributes().getQualifiedName(), glossaryQame);
+            assertEquals(glossary.getAttributes().getName(), GLOSSARY_NAME);
+            assertNotNull(glossary.getRelationshipAttributes());
+            assertNotNull(glossary.getRelationshipAttributes().getTerms());
+            assertEquals(glossary.getRelationshipAttributes().getTerms().size(), 1);
+            assertEquals(glossary.getRelationshipAttributes().getTerms().get(0).getTypeName(), GlossaryTerm.TYPE_NAME);
+            assertEquals(glossary.getRelationshipAttributes().getTerms().get(0).getGuid(), termGuid);
+            assertNotNull(glossary.getRelationshipAttributes().getCategories());
+            assertEquals(glossary.getRelationshipAttributes().getCategories().size(), 1);
+            assertEquals(
+                    glossary.getRelationshipAttributes().getCategories().get(0).getTypeName(),
+                    GlossaryCategory.TYPE_NAME);
+            assertEquals(
+                    glossary.getRelationshipAttributes().getCategories().get(0).getGuid(), categoryGuid);
+        } catch (AtlanException e) {
+            e.printStackTrace();
+            assertNull(e, "Unexpected exception: " + e.getMessage());
+        }
+    }
+
+    @Test(
+            groups = {"category.read"},
+            dependsOnGroups = {"category.create"})
+    void readCategory() {
+        try {
+            EntityResponse response = Entity.retrieve(categoryGuid);
+            assertNotNull(response);
+            Entity one = response.getEntity();
+            assertNotNull(one);
+            assertEquals(one.getTypeName(), GlossaryCategory.TYPE_NAME);
+            assertTrue(one instanceof GlossaryCategory);
+            GlossaryCategory category = (GlossaryCategory) one;
+            assertEquals(category.getGuid(), categoryGuid);
+            assertNotNull(category.getAttributes());
+            assertEquals(category.getAttributes().getQualifiedName(), categoryQame);
+            assertEquals(category.getAttributes().getName(), CATEGORY_NAME);
+            assertNotNull(category.getRelationshipAttributes());
+            assertNotNull(category.getRelationshipAttributes().getAnchor());
+            assertEquals(category.getRelationshipAttributes().getAnchor().getTypeName(), Glossary.TYPE_NAME);
+            assertEquals(category.getRelationshipAttributes().getAnchor().getGuid(), glossaryGuid);
+        } catch (AtlanException e) {
+            e.printStackTrace();
+            assertNull(e, "Unexpected exception: " + e.getMessage());
+        }
+    }
+
+    @Test(
+            groups = {"term.read"},
+            dependsOnGroups = {"term.create"})
+    void readTerm() {
+        try {
+            EntityResponse response = Entity.retrieve(termGuid);
+            assertNotNull(response);
+            Entity one = response.getEntity();
+            assertNotNull(one);
+            assertEquals(one.getTypeName(), GlossaryTerm.TYPE_NAME);
+            assertTrue(one instanceof GlossaryTerm);
+            GlossaryTerm term = (GlossaryTerm) one;
+            assertEquals(term.getGuid(), termGuid);
+            assertNotNull(term.getAttributes());
+            assertEquals(term.getAttributes().getQualifiedName(), termQame);
+            assertEquals(term.getAttributes().getName(), TERM_NAME);
+            assertNotNull(term.getRelationshipAttributes());
+            assertNotNull(term.getRelationshipAttributes().getAnchor());
+            assertEquals(term.getRelationshipAttributes().getAnchor().getTypeName(), Glossary.TYPE_NAME);
+            assertEquals(term.getRelationshipAttributes().getAnchor().getGuid(), glossaryGuid);
+        } catch (AtlanException e) {
+            e.printStackTrace();
+            assertNull(e, "Unexpected exception: " + e.getMessage());
+        }
+    }
 
     @Test(
             groups = {"glossary.update"},
-            dependsOnGroups = {"glossary.create"})
+            dependsOnGroups = {"glossary.read"})
     void updateGlossary() {
-        Glossary glossary = Glossary.updateRequest(glossaryGuid, GLOSSARY_NAME, GLOSSARY_NAME);
+        Glossary glossary = Glossary.updateRequest(glossaryGuid, GLOSSARY_NAME);
         glossary = glossary.toBuilder()
                 .attributes(glossary.getAttributes().toBuilder()
                         .certificateStatus(AtlanCertificateStatus.VERIFIED)
@@ -151,7 +242,7 @@ public class GlossaryTest extends BaseAtlanTest {
             assertEquals(entities.size(), 1);
             Entity one = entities.get(0);
             assertNotNull(one);
-            assertEquals(one.getTypeName(), "AtlasGlossary");
+            assertEquals(one.getTypeName(), Glossary.TYPE_NAME);
             assertTrue(one instanceof Glossary);
             glossary = (Glossary) one;
             assertEquals(glossary.getGuid(), glossaryGuid);
@@ -163,6 +254,7 @@ public class GlossaryTest extends BaseAtlanTest {
             assertEquals(glossary.getAttributes().getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
             assertEquals(glossary.getAttributes().getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
         } catch (AtlanException e) {
+            e.printStackTrace();
             assertNull(e, "Unexpected exception: " + e.getMessage());
         }
     }
@@ -171,7 +263,7 @@ public class GlossaryTest extends BaseAtlanTest {
             groups = {"category.update"},
             dependsOnGroups = {"category.create"})
     void updateCategory() {
-        GlossaryCategory category = GlossaryCategory.updateRequest(categoryQame, CATEGORY_NAME, glossaryGuid, null);
+        GlossaryCategory category = GlossaryCategory.updateRequest(categoryQame, CATEGORY_NAME, glossaryGuid);
         category = category.toBuilder()
                 .attributes(category.getAttributes().toBuilder()
                         .certificateStatus(AtlanCertificateStatus.DRAFT)
@@ -180,6 +272,11 @@ public class GlossaryTest extends BaseAtlanTest {
                         .announcementMessage(ANNOUNCEMENT_MESSAGE)
                         .build())
                 .build();
+        GlossaryCategory category2 = GlossaryCategory.updateRequest(categoryQame, CATEGORY_NAME, glossaryGuid);
+        category2 = category2.toBuilder()
+                .attributes(category2.getAttributes().removeCertificate().removeAnnouncement())
+                .build();
+        log.info("Update with nulls: " + category2.toJson());
         try {
             EntityMutationResponse response = Entity.update(category);
             assertNotNull(response);
@@ -192,7 +289,7 @@ public class GlossaryTest extends BaseAtlanTest {
             assertEquals(entities.size(), 1);
             Entity one = entities.get(0);
             assertNotNull(one);
-            assertEquals(one.getTypeName(), "AtlasGlossaryCategory");
+            assertEquals(one.getTypeName(), GlossaryCategory.TYPE_NAME);
             assertTrue(one instanceof GlossaryCategory);
             category = (GlossaryCategory) one;
             assertEquals(category.getGuid(), categoryGuid);
@@ -204,6 +301,7 @@ public class GlossaryTest extends BaseAtlanTest {
             assertEquals(category.getAttributes().getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
             assertEquals(category.getAttributes().getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
         } catch (AtlanException e) {
+            e.printStackTrace();
             assertNull(e, "Unexpected exception: " + e.getMessage());
         }
     }
@@ -212,13 +310,19 @@ public class GlossaryTest extends BaseAtlanTest {
             groups = {"term.update"},
             dependsOnGroups = {"term.create", "category.create"})
     void updateTerm() {
-        GlossaryTerm term = GlossaryTerm.updateRequest(termQame, TERM_NAME, glossaryGuid, null);
+        GlossaryTerm term = GlossaryTerm.updateRequest(termQame, TERM_NAME, glossaryGuid);
         term = term.toBuilder()
                 .attributes(term.getAttributes().toBuilder()
                         .certificateStatus(AtlanCertificateStatus.DEPRECATED)
                         .announcementType(AtlanAnnouncementType.ISSUE)
                         .announcementTitle(ANNOUNCEMENT_TITLE)
                         .announcementMessage(ANNOUNCEMENT_MESSAGE)
+                        .build())
+                .relationshipAttributes(term.getRelationshipAttributes().toBuilder()
+                        .category(Reference.builder()
+                                .typeName(GlossaryCategory.TYPE_NAME)
+                                .guid(categoryGuid)
+                                .build())
                         .build())
                 .build();
         try {
@@ -230,10 +334,10 @@ public class GlossaryTest extends BaseAtlanTest {
             assertNull(mutatedEntities.getCREATE());
             List<Entity> entities = mutatedEntities.getUPDATE();
             assertNotNull(entities);
-            assertEquals(entities.size(), 1);
+            assertEquals(entities.size(), 2);
             Entity one = entities.get(0);
             assertNotNull(one);
-            assertEquals(one.getTypeName(), "AtlasGlossaryTerm");
+            assertEquals(one.getTypeName(), GlossaryTerm.TYPE_NAME);
             assertTrue(one instanceof GlossaryTerm);
             term = (GlossaryTerm) one;
             assertEquals(term.getGuid(), termGuid);
@@ -244,7 +348,17 @@ public class GlossaryTest extends BaseAtlanTest {
             assertEquals(term.getAttributes().getAnnouncementType(), AtlanAnnouncementType.ISSUE);
             assertEquals(term.getAttributes().getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
             assertEquals(term.getAttributes().getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
+            one = entities.get(1);
+            assertNotNull(one);
+            assertEquals(one.getTypeName(), GlossaryCategory.TYPE_NAME);
+            assertTrue(one instanceof GlossaryCategory);
+            GlossaryCategory category = (GlossaryCategory) one;
+            assertEquals(category.getGuid(), categoryGuid);
+            assertNotNull(category.getAttributes());
+            assertEquals(category.getAttributes().getQualifiedName(), categoryQame);
+            assertEquals(category.getAttributes().getName(), CATEGORY_NAME);
         } catch (AtlanException e) {
+            e.printStackTrace();
             assertNull(e, "Unexpected exception: " + e.getMessage());
         }
     }
@@ -257,7 +371,7 @@ public class GlossaryTest extends BaseAtlanTest {
             Query byState =
                     MatchQuery.of(m -> m.field("__state").query("ACTIVE"))._toQuery();
 
-            Query byType = MatchQuery.of(m -> m.field("__typeName.keyword").query("AtlasGlossaryTerm"))
+            Query byType = MatchQuery.of(m -> m.field("__typeName.keyword").query(GlossaryTerm.TYPE_NAME))
                     ._toQuery();
 
             Query byName =
@@ -291,6 +405,7 @@ public class GlossaryTest extends BaseAtlanTest {
             assertEquals(term.getAttributes().getQualifiedName(), termQame);
             // TODO: test relationship attributes (the glossary)
         } catch (AtlanException e) {
+            e.printStackTrace();
             assertNull(e, "Unexpected exception: " + e.getMessage());
         }
     }
@@ -311,7 +426,7 @@ public class GlossaryTest extends BaseAtlanTest {
             assertEquals(entities.size(), 1);
             Entity one = entities.get(0);
             assertNotNull(one);
-            assertEquals(one.getTypeName(), "AtlasGlossaryTerm");
+            assertEquals(one.getTypeName(), GlossaryTerm.TYPE_NAME);
             assertTrue(one instanceof GlossaryTerm);
             GlossaryTerm term = (GlossaryTerm) one;
             assertEquals(term.getGuid(), termGuid);
@@ -324,6 +439,7 @@ public class GlossaryTest extends BaseAtlanTest {
             assertEquals(term.getAttributes().getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
             // TODO: verify deleted status (and deletion handler)
         } catch (AtlanException e) {
+            e.printStackTrace();
             assertNull(e, "Unexpected exception: " + e.getMessage());
         }
     }
@@ -344,7 +460,7 @@ public class GlossaryTest extends BaseAtlanTest {
             assertEquals(entities.size(), 1);
             Entity one = entities.get(0);
             assertNotNull(one);
-            assertEquals(one.getTypeName(), "AtlasGlossaryCategory");
+            assertEquals(one.getTypeName(), GlossaryCategory.TYPE_NAME);
             assertTrue(one instanceof GlossaryCategory);
             GlossaryCategory category = (GlossaryCategory) one;
             assertEquals(category.getGuid(), categoryGuid);
@@ -357,6 +473,7 @@ public class GlossaryTest extends BaseAtlanTest {
             assertEquals(category.getAttributes().getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
             // TODO: verify deleted status (and deletion handler)
         } catch (AtlanException e) {
+            e.printStackTrace();
             assertNull(e, "Unexpected exception: " + e.getMessage());
         }
     }
@@ -377,7 +494,7 @@ public class GlossaryTest extends BaseAtlanTest {
             assertEquals(entities.size(), 1);
             Entity one = entities.get(0);
             assertNotNull(one);
-            assertEquals(one.getTypeName(), "AtlasGlossary");
+            assertEquals(one.getTypeName(), Glossary.TYPE_NAME);
             assertTrue(one instanceof Glossary);
             Glossary glossary = (Glossary) one;
             assertEquals(glossary.getGuid(), glossaryGuid);
@@ -390,6 +507,7 @@ public class GlossaryTest extends BaseAtlanTest {
             assertEquals(glossary.getAttributes().getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
             // TODO: verify deleted status (and deletion handler)
         } catch (AtlanException e) {
+            e.printStackTrace();
             assertNull(e, "Unexpected exception: " + e.getMessage());
         }
     }
@@ -399,7 +517,7 @@ public class GlossaryTest extends BaseAtlanTest {
         assertEquals(entities.size(), 1);
         Entity one = entities.get(0);
         assertNotNull(one);
-        assertEquals(one.getTypeName(), "AtlasGlossary");
+        assertEquals(one.getTypeName(), Glossary.TYPE_NAME);
         assertTrue(one instanceof Glossary);
         Glossary glossary = (Glossary) one;
         assertEquals(glossary.getGuid(), glossaryGuid);

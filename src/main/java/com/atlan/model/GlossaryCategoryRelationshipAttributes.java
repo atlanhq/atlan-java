@@ -7,11 +7,12 @@ import java.util.List;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.Singular;
 import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
-@SuperBuilder
+@SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 public class GlossaryCategoryRelationshipAttributes extends AssetRelationshipAttributes {
 
@@ -22,9 +23,11 @@ public class GlossaryCategoryRelationshipAttributes extends AssetRelationshipAtt
     Reference parentCategory;
 
     /** Terms organized within this category. */
+    @Singular
     List<Reference> terms;
 
     /** Child categories organized within this category. */
+    @Singular
     List<Reference> childrenCategories;
 
     @Override

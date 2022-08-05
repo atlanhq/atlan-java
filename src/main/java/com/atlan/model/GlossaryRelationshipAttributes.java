@@ -6,17 +6,20 @@ import java.util.List;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.Singular;
 import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
-@SuperBuilder
+@SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 public class GlossaryRelationshipAttributes extends AssetRelationshipAttributes {
     /** Terms within this glossary. */
+    @Singular
     List<Reference> terms;
 
     /** Categories within this glossary. */
+    @Singular
     List<Reference> categories;
 
     @Override

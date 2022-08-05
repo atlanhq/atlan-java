@@ -14,6 +14,7 @@ import java.util.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.Singular;
 import lombok.experimental.SuperBuilder;
 
 @Getter
@@ -21,7 +22,6 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = false)
 public abstract class Entity extends AtlanObject {
-
     /** Name of the type definition that defines this entity. */
     transient String typeName;
 
@@ -32,7 +32,7 @@ public abstract class Entity extends AtlanObject {
     String displayText;
 
     /** Classifications assigned to the entity. */
-    // @Singular
+    @Singular
     List<Classification> classifications;
 
     /**
@@ -48,6 +48,7 @@ public abstract class Entity extends AtlanObject {
     transient RelationshipAttributes relationshipAttributes;
 
     /** Map of custom metadata attributes and values defined on the entity. */
+    // @Singular
     Map<String, Object> businessAttributes;
 
     /** Status of the entity. */
