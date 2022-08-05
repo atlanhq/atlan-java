@@ -308,7 +308,7 @@ public class GlossaryTest extends BaseAtlanTest {
     void removeCategoryAttributes() {
         GlossaryCategory category2 = GlossaryCategory.updateRequest(categoryQame, CATEGORY_NAME, glossaryGuid);
         category2 = category2.toBuilder()
-                .attributes(category2.getAttributes().removeCertificate().removeAnnouncement())
+                .attributes(category2.getAttributes().removeAnnouncement())
                 .build();
         try {
             EntityMutationResponse response = Entity.update(category2);
@@ -329,7 +329,7 @@ public class GlossaryTest extends BaseAtlanTest {
             assertNotNull(category2.getAttributes());
             assertEquals(category2.getAttributes().getQualifiedName(), categoryQame);
             assertEquals(category2.getAttributes().getName(), CATEGORY_NAME);
-            assertNull(category2.getAttributes().getCertificateStatus());
+            assertEquals(category2.getAttributes().getCertificateStatus(), AtlanCertificateStatus.DRAFT);
             assertNull(category2.getAttributes().getAnnouncementType());
             assertNull(category2.getAttributes().getAnnouncementTitle());
             assertNull(category2.getAttributes().getAnnouncementMessage());
@@ -500,7 +500,7 @@ public class GlossaryTest extends BaseAtlanTest {
             assertNotNull(category.getAttributes());
             assertEquals(category.getAttributes().getQualifiedName(), categoryQame);
             assertEquals(category.getAttributes().getName(), CATEGORY_NAME);
-            assertNull(category.getAttributes().getCertificateStatus());
+            assertEquals(category.getAttributes().getCertificateStatus(), AtlanCertificateStatus.DRAFT);
             assertNull(category.getAttributes().getAnnouncementType());
             assertNull(category.getAttributes().getAnnouncementTitle());
             assertNull(category.getAttributes().getAnnouncementMessage());
