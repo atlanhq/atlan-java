@@ -54,12 +54,10 @@ public class RemovableTypeAdapterFactory implements TypeAdapterFactory {
                     case NULL:
                         value = Removable.NULL;
                         break;
+                    case STRING: // Could be a plain string, or an enum value
                     case BEGIN_OBJECT:
-                        value = Removable.of(delegateAdapter.read(in));
-                        break;
-                    case STRING:
                     default:
-                        value = Removable.of(in.nextString());
+                        value = Removable.of(delegateAdapter.read(in));
                         break;
                 }
                 return value;

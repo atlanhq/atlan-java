@@ -31,14 +31,29 @@ public class AssetAttributes extends Attributes {
     String tenantId;
 
     /** Status of the asset's certification. */
-    AtlanCertificateStatus certificateStatus;
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
+    Removable<AtlanCertificateStatus> certificateStatus;
+
+    public AtlanCertificateStatus getCertificateStatus() {
+        return certificateStatus == null ? null : certificateStatus.getValue();
+    }
+
+    public void setCertificateStatus(AtlanCertificateStatus certificateStatus) {
+        this.certificateStatus = Removable.of(certificateStatus);
+    }
 
     /**
      * Human-readable descriptive message that can optionally be submitted when the
      * `certificateStatus` is changed.
      */
+    @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)
     Removable<String> certificateStatusMessage;
+
+    public String getCertificateStatusMessage() {
+        return certificateStatusMessage == null ? null : certificateStatusMessage.getValue();
+    }
 
     public void setCertificateStatusMessage(String certificateStatusMessage) {
         this.certificateStatusMessage = Removable.of(certificateStatusMessage);
@@ -53,10 +68,30 @@ public class AssetAttributes extends Attributes {
     /**
      * Brief title for the announcement on this asset. Required when `announcementType` is specified.
      */
-    String announcementTitle;
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
+    Removable<String> announcementTitle;
+
+    public String getAnnouncementTitle() {
+        return announcementTitle == null ? null : announcementTitle.getValue();
+    }
+
+    public void setAnnouncementTitle(String announcementTitle) {
+        this.announcementTitle = Removable.of(announcementTitle);
+    }
 
     /** Detailed message to include in the announcement on this asset. */
-    String announcementMessage;
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
+    Removable<String> announcementMessage;
+
+    public String getAnnouncementMessage() {
+        return announcementMessage == null ? null : announcementMessage.getValue();
+    }
+
+    public void setAnnouncementMessage(String announcementMessage) {
+        this.announcementMessage = Removable.of(announcementMessage);
+    }
 
     /** Time (epoch) at which the announcement was last updated, in milliseconds. */
     final Long announcementUpdatedAt;
@@ -65,7 +100,17 @@ public class AssetAttributes extends Attributes {
     final String announcementUpdatedBy;
 
     /** Type of announcement on the asset. */
-    AtlanAnnouncementType announcementType;
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
+    Removable<AtlanAnnouncementType> announcementType;
+
+    public AtlanAnnouncementType getAnnouncementType() {
+        return announcementType == null ? null : announcementType.getValue();
+    }
+
+    public void setAnnouncementType(AtlanAnnouncementType announcementType) {
+        this.announcementType = Removable.of(announcementType);
+    }
 
     /** List of users who own the asset. */
     @Singular

@@ -16,6 +16,7 @@ import com.atlan.model.responses.EntityMutationResponse;
 import com.atlan.model.responses.EntityResponse;
 import com.atlan.model.responses.IndexSearchResponse;
 import com.atlan.model.responses.MutatedEntities;
+import com.atlan.model.serde.Removable;
 import java.util.Collections;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
@@ -224,10 +225,10 @@ public class GlossaryTest extends BaseAtlanTest {
         Glossary glossary = Glossary.updateRequest(glossaryGuid, GLOSSARY_NAME);
         glossary = glossary.toBuilder()
                 .attributes(glossary.getAttributes().toBuilder()
-                        .certificateStatus(AtlanCertificateStatus.VERIFIED)
-                        .announcementType(AtlanAnnouncementType.INFORMATION)
-                        .announcementTitle(ANNOUNCEMENT_TITLE)
-                        .announcementMessage(ANNOUNCEMENT_MESSAGE)
+                        .certificateStatus(Removable.of(AtlanCertificateStatus.VERIFIED))
+                        .announcementType(Removable.of(AtlanAnnouncementType.INFORMATION))
+                        .announcementTitle(Removable.of(ANNOUNCEMENT_TITLE))
+                        .announcementMessage(Removable.of(ANNOUNCEMENT_MESSAGE))
                         .build())
                 .build();
         try {
@@ -266,17 +267,12 @@ public class GlossaryTest extends BaseAtlanTest {
         GlossaryCategory category = GlossaryCategory.updateRequest(categoryQame, CATEGORY_NAME, glossaryGuid);
         category = category.toBuilder()
                 .attributes(category.getAttributes().toBuilder()
-                        .certificateStatus(AtlanCertificateStatus.DRAFT)
-                        .announcementType(AtlanAnnouncementType.WARNING)
-                        .announcementTitle(ANNOUNCEMENT_TITLE)
-                        .announcementMessage(ANNOUNCEMENT_MESSAGE)
+                        .certificateStatus(Removable.of(AtlanCertificateStatus.DRAFT))
+                        .announcementType(Removable.of(AtlanAnnouncementType.WARNING))
+                        .announcementTitle(Removable.of(ANNOUNCEMENT_TITLE))
+                        .announcementMessage(Removable.of(ANNOUNCEMENT_MESSAGE))
                         .build())
                 .build();
-        GlossaryCategory category2 = GlossaryCategory.updateRequest(categoryQame, CATEGORY_NAME, glossaryGuid);
-        category2 = category2.toBuilder()
-                .attributes(category2.getAttributes().removeCertificate().removeAnnouncement())
-                .build();
-        log.info("Update with nulls: " + category2.toJson());
         try {
             EntityMutationResponse response = Entity.update(category);
             assertNotNull(response);
@@ -307,16 +303,53 @@ public class GlossaryTest extends BaseAtlanTest {
     }
 
     @Test(
+            groups = {"category.remove.attributes"},
+            dependsOnGroups = {"category.update"})
+    void removeCategoryAttributes() {
+        GlossaryCategory category2 = GlossaryCategory.updateRequest(categoryQame, CATEGORY_NAME, glossaryGuid);
+        category2 = category2.toBuilder()
+                .attributes(category2.getAttributes().removeCertificate().removeAnnouncement())
+                .build();
+        try {
+            EntityMutationResponse response = Entity.update(category2);
+            assertNotNull(response);
+            MutatedEntities mutatedEntities = response.getMutatedEntities();
+            assertNotNull(mutatedEntities);
+            assertNull(mutatedEntities.getDELETE());
+            assertNull(mutatedEntities.getCREATE());
+            List<Entity> entities = mutatedEntities.getUPDATE();
+            assertNotNull(entities);
+            assertEquals(entities.size(), 1);
+            Entity one = entities.get(0);
+            assertNotNull(one);
+            assertEquals(one.getTypeName(), GlossaryCategory.TYPE_NAME);
+            assertTrue(one instanceof GlossaryCategory);
+            category2 = (GlossaryCategory) one;
+            assertEquals(category2.getGuid(), categoryGuid);
+            assertNotNull(category2.getAttributes());
+            assertEquals(category2.getAttributes().getQualifiedName(), categoryQame);
+            assertEquals(category2.getAttributes().getName(), CATEGORY_NAME);
+            assertNull(category2.getAttributes().getCertificateStatus());
+            assertNull(category2.getAttributes().getAnnouncementType());
+            assertNull(category2.getAttributes().getAnnouncementTitle());
+            assertNull(category2.getAttributes().getAnnouncementMessage());
+        } catch (AtlanException e) {
+            e.printStackTrace();
+            assertNull(e, "Unexpected exception: " + e.getMessage());
+        }
+    }
+
+    @Test(
             groups = {"term.update"},
             dependsOnGroups = {"term.create", "category.create"})
     void updateTerm() {
         GlossaryTerm term = GlossaryTerm.updateRequest(termQame, TERM_NAME, glossaryGuid);
         term = term.toBuilder()
                 .attributes(term.getAttributes().toBuilder()
-                        .certificateStatus(AtlanCertificateStatus.DEPRECATED)
-                        .announcementType(AtlanAnnouncementType.ISSUE)
-                        .announcementTitle(ANNOUNCEMENT_TITLE)
-                        .announcementMessage(ANNOUNCEMENT_MESSAGE)
+                        .certificateStatus(Removable.of(AtlanCertificateStatus.DEPRECATED))
+                        .announcementType(Removable.of(AtlanAnnouncementType.ISSUE))
+                        .announcementTitle(Removable.of(ANNOUNCEMENT_TITLE))
+                        .announcementMessage(Removable.of(ANNOUNCEMENT_MESSAGE))
                         .build())
                 .relationshipAttributes(term.getRelationshipAttributes().toBuilder()
                         .category(Reference.builder()
@@ -446,7 +479,7 @@ public class GlossaryTest extends BaseAtlanTest {
 
     @Test(
             groups = {"category.delete"},
-            dependsOnGroups = {"term.delete", "category.update"})
+            dependsOnGroups = {"term.delete", "category.update", "category.remove.attributes"})
     void deleteCategory() {
         try {
             EntityMutationResponse response = Entity.delete(categoryGuid, AtlanDeleteType.HARD);
@@ -467,10 +500,10 @@ public class GlossaryTest extends BaseAtlanTest {
             assertNotNull(category.getAttributes());
             assertEquals(category.getAttributes().getQualifiedName(), categoryQame);
             assertEquals(category.getAttributes().getName(), CATEGORY_NAME);
-            assertEquals(category.getAttributes().getCertificateStatus(), AtlanCertificateStatus.DRAFT);
-            assertEquals(category.getAttributes().getAnnouncementType(), AtlanAnnouncementType.WARNING);
-            assertEquals(category.getAttributes().getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
-            assertEquals(category.getAttributes().getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
+            assertNull(category.getAttributes().getCertificateStatus());
+            assertNull(category.getAttributes().getAnnouncementType());
+            assertNull(category.getAttributes().getAnnouncementTitle());
+            assertNull(category.getAttributes().getAnnouncementMessage());
             // TODO: verify deleted status (and deletion handler)
         } catch (AtlanException e) {
             e.printStackTrace();
