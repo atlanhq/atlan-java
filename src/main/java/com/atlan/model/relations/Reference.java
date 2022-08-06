@@ -1,6 +1,7 @@
 /* SPDX-License-Identifier: Apache-2.0 */
 package com.atlan.model.relations;
 
+import com.atlan.model.serde.Removable;
 import com.atlan.net.AtlanObject;
 import java.util.Map;
 import lombok.Data;
@@ -11,6 +12,19 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @EqualsAndHashCode(callSuper = true)
 public class Reference extends AtlanObject {
+
+    /**
+     * Quickly create a new reference to another asset.
+     * @param typeName type of the asset to reference
+     * @param guid GUID of the asset to reference
+     * @return a reference to another asset
+     */
+    public static Reference to(String typeName, String guid) {
+        return Reference.builder()
+            .typeName(typeName)
+            .guid(guid)
+            .build();
+    }
 
     /**
      * Unique identifier of the related entity. If the uniqueAttributes are not provided, this must be

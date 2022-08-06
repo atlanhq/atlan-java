@@ -9,7 +9,6 @@ import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -22,7 +21,6 @@ import java.util.*;
  * Creates type adapter for interface {@code EntityX} able to deserialize raw JSON to subtype
  * implementation based on discriminator field {@code typeName}.
  */
-@Slf4j
 public class EntityXAdapterFactory implements TypeAdapterFactory {
 
     @SuppressWarnings("unchecked")
@@ -102,21 +100,23 @@ public class EntityXAdapterFactory implements TypeAdapterFactory {
                         String fieldName = entry.getKey();
                         Field field = fieldMap.get(fieldName);
                         if (field != null && field.isAnnotationPresent(Attribute.class)) {
-                            log.debug("Moving attribute: {}", fieldName);
-                            Method get = entry.getValue();
-                            Object attrValue = get.invoke(toModify);
+                            Object attrValue;
+                            if (nullFields.contains(fieldName)) {
+                                // If the value should be serialized as null, then
+                                // set the value to the serializable null
+                                attrValue = Removable.NULL;
+                            } else {
+                                // Otherwise, pickup the value from the top-level
+                                // attribute so that we can move that value across
+                                Method get = entry.getValue();
+                                attrValue = get.invoke(toModify);
+                            }
                             if (attrValue != null) {
-                                //  3. set attributes map from the attribute values
-                                if (nullFields.contains(fieldName)) {
-                                    // If the value should be serialized as null, then
-                                    // set the value to the serializable null
-                                    attrValue = Removable.NULL;
-                                }
+                                //  3. set attributes map from the top-level attribute value
                                 attributes.put(fieldName, attrValue);
                                 Method set = setterMap.get(fieldName);
                                 if (set != null) {
-                                    log.debug(" ... nulling the top-level field");
-                                    //  4. null the individual top-level attributes
+                                    //  4. null the individual top-level attribute
                                     set.invoke(toModify, (Object) null);
                                 }
                             }
@@ -189,10 +189,8 @@ public class EntityXAdapterFactory implements TypeAdapterFactory {
 
                 if (attributes != null) {
                     for (String attrKey : attributes.keySet()) {
-                        log.debug("Looking up method for: " + attrKey);
                         Method method = setterMap.get(attrKey);
                         if (method != null) {
-                            log.debug(" ... deserializing {} using: {}", attrKey, method);
                             try {
                                 deserialize(value, attributes.get(attrKey), method, referenceAdapter);
                             } catch (NoSuchMethodException e) {
@@ -206,10 +204,8 @@ public class EntityXAdapterFactory implements TypeAdapterFactory {
 
                 if (relationshipAttributes != null) {
                     for (String relnKey : relationshipAttributes.keySet()) {
-                        log.debug("Looking up method for: " + relnKey);
                         Method method = setterMap.get(relnKey);
                         if (method != null) {
-                            log.debug(" ... deserializing {} using: {}", relnKey, method);
                             try {
                                 deserialize(value, relationshipAttributes.get(relnKey), method, referenceAdapter);
                             } catch (NoSuchMethodException e) {
@@ -228,7 +224,7 @@ public class EntityXAdapterFactory implements TypeAdapterFactory {
         return (TypeAdapter<T>) resultCustomTypeAdapter.nullSafe();
     }
 
-    private static void deserialize(EntityX value, JsonElement jsonElement, Method method, TypeAdapter<Reference> referenceAdapter) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+    private static void deserialize(EntityX value, JsonElement jsonElement, Method method, TypeAdapter<Reference> referenceAdapter) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException, IOException {
         if (jsonElement.isJsonPrimitive()) {
             deserializePrimitive(value, jsonElement.getAsJsonPrimitive(), method);
         } else if (jsonElement.isJsonArray()) {
@@ -238,7 +234,7 @@ public class EntityXAdapterFactory implements TypeAdapterFactory {
         }
     }
 
-    private static void deserializePrimitive(EntityX value, JsonPrimitive primitive, Method method) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+    private static void deserializePrimitive(EntityX value, JsonPrimitive primitive, Method method) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException, IOException {
         if (primitive.isString()) {
             Parameter[] params = method.getParameters();
             Class<?> paramClass = params[0].getType();
@@ -255,7 +251,7 @@ public class EntityXAdapterFactory implements TypeAdapterFactory {
         }
     }
 
-    private static void deserializeList(EntityX value, JsonArray array, Method method, TypeAdapter<Reference> referenceAdapter) throws IllegalAccessException, InvocationTargetException {
+    private static void deserializeList(EntityX value, JsonArray array, Method method, TypeAdapter<Reference> referenceAdapter) throws IllegalAccessException, InvocationTargetException, IOException {
         List<Object> list = new ArrayList<>();
         for (JsonElement element : array) {
             Object deserialized = deserializeElement(element, method, referenceAdapter);
@@ -264,7 +260,7 @@ public class EntityXAdapterFactory implements TypeAdapterFactory {
         method.invoke(value, list);
     }
 
-    private static void deserializeNumber(EntityX value, JsonPrimitive primitive, Method method) throws IllegalAccessException, InvocationTargetException {
+    private static void deserializeNumber(EntityX value, JsonPrimitive primitive, Method method) throws IllegalAccessException, InvocationTargetException, IOException {
         Object number = deserializeNumber(primitive.getAsNumber(), method);
         method.invoke(value, number);
     }
@@ -275,12 +271,13 @@ public class EntityXAdapterFactory implements TypeAdapterFactory {
      * @param method to which the deserialized value will be built into an entity
      * @param referenceAdapter for translating relationship objects
      * @return the deserialized object
+     * @throws IOException if an array is found nested directly within another array (unsupported)
      */
-    private static Object deserializeElement(JsonElement element, Method method, TypeAdapter<Reference> referenceAdapter) {
+    private static Object deserializeElement(JsonElement element, Method method, TypeAdapter<Reference> referenceAdapter) throws IOException {
         if (element.isJsonPrimitive()) {
             return deserializePrimitive(element.getAsJsonPrimitive(), method);
         } else if (element.isJsonArray()) {
-            log.error("Directly-nested arrays are not supported.");
+            throw new IOException("Directly-nested arrays are not supported.");
         } else if (element.isJsonObject()) {
             return referenceAdapter.fromJsonTree(element);
         }
@@ -293,7 +290,7 @@ public class EntityXAdapterFactory implements TypeAdapterFactory {
      * @param method to which the deserialized value will be built into an entity
      * @return the deserialized value
      */
-    private static Object deserializePrimitive(JsonPrimitive primitive, Method method) {
+    private static Object deserializePrimitive(JsonPrimitive primitive, Method method) throws IOException {
         if (primitive.isString()) {
             return primitive.getAsString();
         } else if (primitive.isBoolean()) {
@@ -310,14 +307,15 @@ public class EntityXAdapterFactory implements TypeAdapterFactory {
      * @param primitive number to deserialize
      * @param method to which the deserialized value will be built into an entity
      * @return the deserialized number
+     * @throws IOException if the setter method to deserialize through does not take exactly one argument
      */
-    private static Object deserializeNumber(Number primitive, Method method) {
+    private static Object deserializeNumber(Number primitive, Method method) throws IOException {
         Parameter[] parameters = method.getParameters();
         Class<?> parameterType = Boolean.class;
         if (parameters.length == 1) {
             parameterType = parameters[0].getType();
         } else {
-            log.error("Unexpected number of parameters ({}) found for method: {}", parameters.length, method);
+            throw new IOException("Unexpected number of parameters (" + parameters.length + ") found for method: " + method);
         }
         if (parameterType == Integer.class) {
             return primitive.intValue();
