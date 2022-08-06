@@ -6,8 +6,6 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
 import java.io.IOException;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 
 /**
  * Creates type adapter for interface {@code Removable} able to serialize null values to
@@ -22,17 +20,9 @@ public class RemovableTypeAdapterFactory implements TypeAdapterFactory {
             return null;
         }
 
-        Type parameterType = null;
-        Type parameterizedType = type.getType();
-        if (parameterizedType instanceof ParameterizedType) {
-            Type[] typeArguments = ((ParameterizedType) parameterizedType).getActualTypeArguments();
-            parameterType = typeArguments[0];
-        }
-
-        Class<?> parameterClass = (Class<?>) parameterType;
-        final TypeAdapter<Object> delegateAdapter =
-                (TypeAdapter<Object>) gson.getDelegateAdapter(this, TypeToken.get(parameterClass));
-
+        // We will only ever serialize these values, and only ever a 'null' value,
+        // so we need only handle a very limited scenario (anything else is unexpected
+        // and we'll therefore throw an exception)
         TypeAdapter<Removable<?>> nullableTypeAdapter = new TypeAdapter<>() {
             @Override
             public void write(JsonWriter out, Removable<?> value) throws IOException {
@@ -42,7 +32,7 @@ public class RemovableTypeAdapterFactory implements TypeAdapterFactory {
                     out.nullValue();
                     out.setSerializeNulls(previousSetting);
                 } else {
-                    delegateAdapter.write(out, value.getValue());
+                    throw new IOException("Unable to serialize a non-null Removable value.");
                 }
             }
 
@@ -57,8 +47,7 @@ public class RemovableTypeAdapterFactory implements TypeAdapterFactory {
                     case STRING: // Could be a plain string, or an enum value
                     case BEGIN_OBJECT:
                     default:
-                        value = Removable.of(delegateAdapter.read(in));
-                        break;
+                        throw new IOException("Unable to deserialize a non-null Removable value.");
                 }
                 return value;
             }
