@@ -48,4 +48,20 @@ public final class StringUtils {
                 .replaceAll("([a-z0-9])([A-Z])", "$1_$2")
                 .toLowerCase();
     }
+
+    /**
+     * Determine the name of a field that's read or written by a getter/setter method,
+     * from the name of the method.
+     * @param methodName from which to reverse-engineer the field name
+     * @return the field name
+     */
+    public static String getFieldNameFromMethodName(String methodName) {
+        if (methodName.startsWith("set") || methodName.startsWith("get")) {
+            StringBuilder sb = new StringBuilder(methodName);
+            sb.delete(0, 3);
+            sb.replace(0, 1, sb.substring(0, 1).toLowerCase());
+            return sb.toString();
+        }
+        return null;
+    }
 }

@@ -20,4 +20,13 @@ public enum AtlanAnnouncementType implements AtlanEnum {
     AtlanAnnouncementType(String value) {
         this.value = value;
     }
+
+    public static AtlanAnnouncementType fromValue(String value) {
+        for (AtlanAnnouncementType b : AtlanAnnouncementType.values()) {
+            if (b.value.equals(value)) {
+                return b;
+            }
+        }
+        return null;
+    }
 }

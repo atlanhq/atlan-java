@@ -20,4 +20,13 @@ public enum AtlanDeleteType implements AtlanEnum {
     AtlanDeleteType(String value) {
         this.value = value;
     }
+
+    public static AtlanDeleteType fromValue(String value) {
+        for (AtlanDeleteType b : AtlanDeleteType.values()) {
+            if (b.value.equals(value)) {
+                return b;
+            }
+        }
+        return null;
+    }
 }
