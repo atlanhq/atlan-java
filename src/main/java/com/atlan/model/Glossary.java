@@ -1,6 +1,8 @@
 /* SPDX-License-Identifier: Apache-2.0 */
 package com.atlan.model;
 
+import com.atlan.model.relations.Reference;
+import java.util.List;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -18,13 +20,15 @@ public class Glossary extends Asset {
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Attributes for this glossary. */
-    @Getter(onMethod_ = {@Override})
-    GlossaryAttributes attributes;
+    /** Terms within this glossary. */
+    @Singular
+    @Attribute
+    List<Reference> terms;
 
-    /** Map of the relationships to this glossary. */
-    @Getter(onMethod_ = {@Override})
-    GlossaryRelationshipAttributes relationshipAttributes;
+    /** Categories within this glossary. */
+    @Singular
+    @Attribute
+    List<Reference> categories;
 
     @Override
     protected boolean canEqual(Object other) {
@@ -38,12 +42,7 @@ public class Glossary extends Asset {
      * @return the minimal request necessary to create the glossary
      */
     public static Glossary createRequest(String name) {
-        return Glossary.builder()
-                .attributes(GlossaryAttributes.builder()
-                        .qualifiedName(name)
-                        .name(name)
-                        .build())
-                .build();
+        return Glossary.builder().qualifiedName(name).name(name).build();
     }
 
     /**
@@ -54,12 +53,6 @@ public class Glossary extends Asset {
      * @return the minimal request necessary to update the glossary
      */
     public static Glossary updateRequest(String guid, String name) {
-        return Glossary.builder()
-                .guid(guid)
-                .attributes(GlossaryAttributes.builder()
-                        .qualifiedName(name)
-                        .name(name)
-                        .build())
-                .build();
+        return Glossary.builder().guid(guid).qualifiedName(name).name(name).build();
     }
 }

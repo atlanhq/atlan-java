@@ -3,7 +3,6 @@ package com.atlan.net;
 
 import com.atlan.model.serde.EmptyListTypeAdapterFactory;
 import com.atlan.model.serde.EntityTypeAdapterFactory;
-import com.atlan.model.serde.EntityXAdapterFactory;
 import com.atlan.model.serde.RemovableTypeAdapterFactory;
 import com.google.gson.TypeAdapterFactory;
 import java.util.ArrayList;
@@ -18,7 +17,6 @@ final class ApiResourceTypeAdapterFactoryProvider {
     static {
         factories.add(EmptyListTypeAdapterFactory.INSTANCE);
         factories.add(new RemovableTypeAdapterFactory());
-        factories.add(new EntityXAdapterFactory());
         factories.add(new EntityTypeAdapterFactory());
         factories.add(new ReflectionCheckingTypeAdapterFactory());
     }

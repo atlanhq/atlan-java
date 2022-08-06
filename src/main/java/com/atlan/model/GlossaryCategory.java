@@ -1,6 +1,8 @@
 /* SPDX-License-Identifier: Apache-2.0 */
 package com.atlan.model;
 
+import com.atlan.model.relations.Reference;
+import java.util.List;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -18,13 +20,23 @@ public class GlossaryCategory extends Asset {
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Attributes for this category. */
-    @Getter(onMethod_ = {@Override})
-    GlossaryCategoryAttributes attributes;
+    /** Glossary in which the category is located. */
+    @Attribute
+    Reference anchor;
 
-    /** Map of the relationships to this category. */
-    @Getter(onMethod_ = {@Override})
-    GlossaryCategoryRelationshipAttributes relationshipAttributes;
+    /** Parent category in which this category is located (or null if this is a root-level category). */
+    @Attribute
+    Reference parentCategory;
+
+    /** Terms organized within this category. */
+    @Singular
+    @Attribute
+    List<Reference> terms;
+
+    /** Child categories organized within this category. */
+    @Singular
+    @Attribute
+    List<Reference> childrenCategories;
 
     @Override
     protected boolean canEqual(Object other) {
@@ -42,12 +54,9 @@ public class GlossaryCategory extends Asset {
      */
     public static GlossaryCategory createRequest(String name, String glossaryGuid, String glossaryQualifiedName) {
         return GlossaryCategory.builder()
-                .attributes(GlossaryCategoryAttributes.builder()
-                        .qualifiedName(name)
-                        .name(name)
-                        .build())
-                .relationshipAttributes(
-                        GlossaryCategoryRelationshipAttributes.createRequest(glossaryGuid, glossaryQualifiedName))
+                .qualifiedName(name)
+                .name(name)
+                .anchor(GlossaryTerm.anchorLink(glossaryGuid, glossaryQualifiedName))
                 .build();
     }
 
@@ -64,11 +73,9 @@ public class GlossaryCategory extends Asset {
         // Turns out that updating a category requires the glossary GUID, and will not work
         // with the qualifiedName of the glossary
         return GlossaryCategory.builder()
-                .attributes(GlossaryCategoryAttributes.builder()
-                        .qualifiedName(qualifiedName)
-                        .name(name)
-                        .build())
-                .relationshipAttributes(GlossaryCategoryRelationshipAttributes.createRequest(glossaryGuid, null))
+                .qualifiedName(qualifiedName)
+                .name(name)
+                .anchor(GlossaryTerm.anchorLink(glossaryGuid, null))
                 .build();
     }
 }

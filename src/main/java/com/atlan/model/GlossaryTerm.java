@@ -1,6 +1,9 @@
 /* SPDX-License-Identifier: Apache-2.0 */
 package com.atlan.model;
 
+import com.atlan.model.relations.Reference;
+import com.atlan.model.relations.UniqueAttributes;
+import java.util.List;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -18,13 +21,19 @@ public class GlossaryTerm extends Asset {
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Attributes for this term. */
-    @Getter(onMethod_ = {@Override})
-    GlossaryTermAttributes attributes;
+    /** Glossary in which the term is located. */
+    @Attribute
+    Reference anchor;
 
-    /** Map of the relationships to this term. */
-    @Getter(onMethod_ = {@Override})
-    GlossaryTermRelationshipAttributes relationshipAttributes;
+    /** Assets that are attached to this term. */
+    @Singular
+    @Attribute
+    List<Reference> assignedEntities;
+
+    /** Categories within which this term is organized. */
+    @Singular
+    @Attribute
+    List<Reference> categories;
 
     @Override
     protected boolean canEqual(Object other) {
@@ -42,12 +51,9 @@ public class GlossaryTerm extends Asset {
      */
     public static GlossaryTerm createRequest(String name, String glossaryGuid, String glossaryQualifiedName) {
         return GlossaryTerm.builder()
-                .attributes(GlossaryTermAttributes.builder()
-                        .qualifiedName(name)
-                        .name(name)
-                        .build())
-                .relationshipAttributes(
-                        GlossaryTermRelationshipAttributes.createRequest(glossaryGuid, glossaryQualifiedName))
+                .qualifiedName(name)
+                .name(name)
+                .anchor(anchorLink(glossaryGuid, glossaryQualifiedName))
                 .build();
     }
 
@@ -64,11 +70,36 @@ public class GlossaryTerm extends Asset {
         // Turns out that updating a term requires the glossary GUID, and will not work
         // with the qualifiedName of the glossary
         return GlossaryTerm.builder()
-                .attributes(GlossaryTermAttributes.builder()
-                        .qualifiedName(qualifiedName)
-                        .name(name)
-                        .build())
-                .relationshipAttributes(GlossaryTermRelationshipAttributes.createRequest(glossaryGuid, null))
+                .qualifiedName(qualifiedName)
+                .name(name)
+                .anchor(anchorLink(glossaryGuid, null))
                 .build();
+    }
+
+    /**
+     * Set up the minimal object required to create a term. Only one of the following is required.
+     *
+     * @param glossaryGuid unique identifier of the glossary for the term
+     * @param glossaryQualifiedName unique name of the glossary
+     * @return a builder that can be further extended with other metadata
+     */
+    static Reference anchorLink(String glossaryGuid, String glossaryQualifiedName) {
+        Reference anchor = null;
+        if (glossaryGuid == null && glossaryQualifiedName == null) {
+            return null;
+        } else if (glossaryGuid != null) {
+            anchor = Reference.builder()
+                    .typeName("AtlasGlossary")
+                    .guid(glossaryGuid)
+                    .build();
+        } else {
+            anchor = Reference.builder()
+                    .typeName("AtlasGlossary")
+                    .uniqueAttributes(UniqueAttributes.builder()
+                            .qualifiedName(glossaryQualifiedName)
+                            .build())
+                    .build();
+        }
+        return anchor;
     }
 }

@@ -7,23 +7,23 @@ import co.elastic.clients.elasticsearch._types.query_dsl.MatchQuery;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.*;
-import com.atlan.model.core.EntityX;
+import com.atlan.model.core.Entity;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.enums.AtlanDeleteType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.relations.Reference;
-import com.atlan.model.responses.EntityXMutationResponse;
-import com.atlan.model.responses.EntityXResponse;
-import com.atlan.model.responses.IndexSearchResponseX;
-import com.atlan.model.responses.MutatedXEntities;
+import com.atlan.model.responses.EntityMutationResponse;
+import com.atlan.model.responses.EntityResponse;
+import com.atlan.model.responses.IndexSearchResponse;
+import com.atlan.model.responses.MutatedEntities;
 import java.util.Collections;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.Test;
 
 @Slf4j
-public class GlossaryXTest extends BaseAtlanTest {
+public class GlossaryTest extends BaseAtlanTest {
 
     public static final String GLOSSARY_NAME = "JavaClient Test Glossary";
     public static final String CATEGORY_NAME = "JavaClient Test Category";
@@ -40,22 +40,22 @@ public class GlossaryXTest extends BaseAtlanTest {
 
     @Test(groups = {"glossary.create"})
     void createGlossary() {
-        GlossaryX glossary = GlossaryX.createRequest(GLOSSARY_NAME);
+        Glossary glossary = Glossary.createRequest(GLOSSARY_NAME);
         try {
-            EntityXMutationResponse response = EntityX.create(glossary);
+            EntityMutationResponse response = Entity.create(glossary);
             assertNotNull(response);
-            MutatedXEntities mutatedEntities = response.getMutatedEntities();
+            MutatedEntities mutatedEntities = response.getMutatedEntities();
             assertNotNull(mutatedEntities);
             assertNull(mutatedEntities.getDELETE());
             assertNull(mutatedEntities.getUPDATE());
-            List<EntityX> entities = mutatedEntities.getCREATE();
+            List<Entity> entities = mutatedEntities.getCREATE();
             assertNotNull(entities);
             assertEquals(entities.size(), 1);
-            EntityX one = entities.get(0);
+            Entity one = entities.get(0);
             assertNotNull(one);
-            assertEquals(one.getTypeName(), GlossaryX.TYPE_NAME);
-            assertTrue(one instanceof GlossaryX);
-            glossary = (GlossaryX) one;
+            assertEquals(one.getTypeName(), Glossary.TYPE_NAME);
+            assertTrue(one instanceof Glossary);
+            glossary = (Glossary) one;
             glossaryGuid = glossary.getGuid();
             assertNotNull(glossaryGuid);
             glossaryQame = glossary.getQualifiedName();
@@ -71,22 +71,22 @@ public class GlossaryXTest extends BaseAtlanTest {
             groups = {"category.create"},
             dependsOnGroups = {"glossary.create"})
     void createCategory() {
-        GlossaryCategoryX category = GlossaryCategoryX.createRequest(CATEGORY_NAME, glossaryGuid, null);
+        GlossaryCategory category = GlossaryCategory.createRequest(CATEGORY_NAME, glossaryGuid, null);
         try {
-            EntityXMutationResponse response = EntityX.create(category);
+            EntityMutationResponse response = Entity.create(category);
             assertNotNull(response);
-            MutatedXEntities mutatedEntities = response.getMutatedEntities();
+            MutatedEntities mutatedEntities = response.getMutatedEntities();
             assertNotNull(mutatedEntities);
             assertNull(mutatedEntities.getDELETE());
             validateGlossaryUpdate(mutatedEntities.getUPDATE());
-            List<EntityX> entities = mutatedEntities.getCREATE();
+            List<Entity> entities = mutatedEntities.getCREATE();
             assertNotNull(entities);
             assertEquals(entities.size(), 1);
-            EntityX one = entities.get(0);
+            Entity one = entities.get(0);
             assertNotNull(one);
-            assertEquals(one.getTypeName(), GlossaryCategoryX.TYPE_NAME);
-            assertTrue(one instanceof GlossaryCategoryX);
-            category = (GlossaryCategoryX) one;
+            assertEquals(one.getTypeName(), GlossaryCategory.TYPE_NAME);
+            assertTrue(one instanceof GlossaryCategory);
+            category = (GlossaryCategory) one;
             categoryGuid = category.getGuid();
             assertNotNull(categoryGuid);
             categoryQame = category.getQualifiedName();
@@ -102,22 +102,22 @@ public class GlossaryXTest extends BaseAtlanTest {
             groups = {"term.create"},
             dependsOnGroups = {"glossary.create"})
     void createTerm() {
-        GlossaryTermX term = GlossaryTermX.createRequest(TERM_NAME, glossaryGuid, null);
+        GlossaryTerm term = GlossaryTerm.createRequest(TERM_NAME, glossaryGuid, null);
         try {
-            EntityXMutationResponse response = EntityX.create(term);
+            EntityMutationResponse response = Entity.create(term);
             assertNotNull(response);
-            MutatedXEntities mutatedEntities = response.getMutatedEntities();
+            MutatedEntities mutatedEntities = response.getMutatedEntities();
             assertNotNull(mutatedEntities);
             assertNull(mutatedEntities.getDELETE());
             validateGlossaryUpdate(mutatedEntities.getUPDATE());
-            List<EntityX> entities = mutatedEntities.getCREATE();
+            List<Entity> entities = mutatedEntities.getCREATE();
             assertNotNull(entities);
             assertEquals(entities.size(), 1);
-            EntityX one = entities.get(0);
+            Entity one = entities.get(0);
             assertNotNull(one);
-            assertEquals(one.getTypeName(), GlossaryTermX.TYPE_NAME);
-            assertTrue(one instanceof GlossaryTermX);
-            term = (GlossaryTermX) one;
+            assertEquals(one.getTypeName(), GlossaryTerm.TYPE_NAME);
+            assertTrue(one instanceof GlossaryTerm);
+            term = (GlossaryTerm) one;
             termGuid = term.getGuid();
             assertNotNull(termGuid);
             assertNotNull(term.getAttributes());
@@ -135,23 +135,23 @@ public class GlossaryXTest extends BaseAtlanTest {
             dependsOnGroups = {"glossary.create", "category.create", "term.create"})
     void readGlossary() {
         try {
-            EntityXResponse response = EntityX.retrieve(glossaryGuid);
+            EntityResponse response = Entity.retrieve(glossaryGuid);
             assertNotNull(response);
-            EntityX one = response.getEntity();
+            Entity one = response.getEntity();
             assertNotNull(one);
-            assertEquals(one.getTypeName(), GlossaryX.TYPE_NAME);
-            assertTrue(one instanceof GlossaryX);
-            GlossaryX glossary = (GlossaryX) one;
+            assertEquals(one.getTypeName(), Glossary.TYPE_NAME);
+            assertTrue(one instanceof Glossary);
+            Glossary glossary = (Glossary) one;
             assertEquals(glossary.getGuid(), glossaryGuid);
             assertEquals(glossary.getQualifiedName(), glossaryQame);
             assertEquals(glossary.getName(), GLOSSARY_NAME);
             assertNotNull(glossary.getTerms());
             assertEquals(glossary.getTerms().size(), 1);
-            assertEquals(glossary.getTerms().get(0).getTypeName(), GlossaryTermX.TYPE_NAME);
+            assertEquals(glossary.getTerms().get(0).getTypeName(), GlossaryTerm.TYPE_NAME);
             assertEquals(glossary.getTerms().get(0).getGuid(), termGuid);
             assertNotNull(glossary.getCategories());
             assertEquals(glossary.getCategories().size(), 1);
-            assertEquals(glossary.getCategories().get(0).getTypeName(), GlossaryCategoryX.TYPE_NAME);
+            assertEquals(glossary.getCategories().get(0).getTypeName(), GlossaryCategory.TYPE_NAME);
             assertEquals(glossary.getCategories().get(0).getGuid(), categoryGuid);
         } catch (AtlanException e) {
             e.printStackTrace();
@@ -164,18 +164,18 @@ public class GlossaryXTest extends BaseAtlanTest {
             dependsOnGroups = {"category.create"})
     void readCategory() {
         try {
-            EntityXResponse response = EntityX.retrieve(categoryGuid);
+            EntityResponse response = Entity.retrieve(categoryGuid);
             assertNotNull(response);
-            EntityX one = response.getEntity();
+            Entity one = response.getEntity();
             assertNotNull(one);
-            assertEquals(one.getTypeName(), GlossaryCategoryX.TYPE_NAME);
-            assertTrue(one instanceof GlossaryCategoryX);
-            GlossaryCategoryX category = (GlossaryCategoryX) one;
+            assertEquals(one.getTypeName(), GlossaryCategory.TYPE_NAME);
+            assertTrue(one instanceof GlossaryCategory);
+            GlossaryCategory category = (GlossaryCategory) one;
             assertEquals(category.getGuid(), categoryGuid);
             assertEquals(category.getQualifiedName(), categoryQame);
             assertEquals(category.getName(), CATEGORY_NAME);
             assertNotNull(category.getAnchor());
-            assertEquals(category.getAnchor().getTypeName(), GlossaryX.TYPE_NAME);
+            assertEquals(category.getAnchor().getTypeName(), Glossary.TYPE_NAME);
             assertEquals(category.getAnchor().getGuid(), glossaryGuid);
         } catch (AtlanException e) {
             e.printStackTrace();
@@ -188,18 +188,18 @@ public class GlossaryXTest extends BaseAtlanTest {
             dependsOnGroups = {"term.create"})
     void readTerm() {
         try {
-            EntityXResponse response = EntityX.retrieve(termGuid);
+            EntityResponse response = Entity.retrieve(termGuid);
             assertNotNull(response);
-            EntityX one = response.getEntity();
+            Entity one = response.getEntity();
             assertNotNull(one);
-            assertEquals(one.getTypeName(), GlossaryTermX.TYPE_NAME);
-            assertTrue(one instanceof GlossaryTermX);
-            GlossaryTermX term = (GlossaryTermX) one;
+            assertEquals(one.getTypeName(), GlossaryTerm.TYPE_NAME);
+            assertTrue(one instanceof GlossaryTerm);
+            GlossaryTerm term = (GlossaryTerm) one;
             assertEquals(term.getGuid(), termGuid);
             assertEquals(term.getQualifiedName(), termQame);
             assertEquals(term.getName(), TERM_NAME);
             assertNotNull(term.getAnchor());
-            assertEquals(term.getAnchor().getTypeName(), GlossaryX.TYPE_NAME);
+            assertEquals(term.getAnchor().getTypeName(), Glossary.TYPE_NAME);
             assertEquals(term.getAnchor().getGuid(), glossaryGuid);
         } catch (AtlanException e) {
             e.printStackTrace();
@@ -211,7 +211,7 @@ public class GlossaryXTest extends BaseAtlanTest {
             groups = {"glossary.update"},
             dependsOnGroups = {"glossary.read"})
     void updateGlossary() {
-        GlossaryX glossary = GlossaryX.updateRequest(glossaryGuid, GLOSSARY_NAME);
+        Glossary glossary = Glossary.updateRequest(glossaryGuid, GLOSSARY_NAME);
         glossary = glossary.toBuilder()
                 .certificateStatus(AtlanCertificateStatus.VERIFIED)
                 .announcementType(AtlanAnnouncementType.INFORMATION)
@@ -219,20 +219,20 @@ public class GlossaryXTest extends BaseAtlanTest {
                 .announcementMessage(ANNOUNCEMENT_MESSAGE)
                 .build();
         try {
-            EntityXMutationResponse response = EntityX.update(glossary);
+            EntityMutationResponse response = Entity.update(glossary);
             assertNotNull(response);
-            MutatedXEntities mutatedEntities = response.getMutatedEntities();
+            MutatedEntities mutatedEntities = response.getMutatedEntities();
             assertNotNull(mutatedEntities);
             assertNull(mutatedEntities.getDELETE());
             assertNull(mutatedEntities.getCREATE());
-            List<EntityX> entities = mutatedEntities.getUPDATE();
+            List<Entity> entities = mutatedEntities.getUPDATE();
             assertNotNull(entities);
             assertEquals(entities.size(), 1);
-            EntityX one = entities.get(0);
+            Entity one = entities.get(0);
             assertNotNull(one);
-            assertEquals(one.getTypeName(), GlossaryX.TYPE_NAME);
-            assertTrue(one instanceof GlossaryX);
-            glossary = (GlossaryX) one;
+            assertEquals(one.getTypeName(), Glossary.TYPE_NAME);
+            assertTrue(one instanceof Glossary);
+            glossary = (Glossary) one;
             assertEquals(glossary.getGuid(), glossaryGuid);
             assertEquals(glossary.getQualifiedName(), glossaryQame);
             assertEquals(glossary.getName(), GLOSSARY_NAME);
@@ -250,7 +250,7 @@ public class GlossaryXTest extends BaseAtlanTest {
             groups = {"category.update"},
             dependsOnGroups = {"category.create"})
     void updateCategory() {
-        GlossaryCategoryX category = GlossaryCategoryX.updateRequest(categoryQame, CATEGORY_NAME, glossaryGuid);
+        GlossaryCategory category = GlossaryCategory.updateRequest(categoryQame, CATEGORY_NAME, glossaryGuid);
         category = category.toBuilder()
                 .certificateStatus(AtlanCertificateStatus.DRAFT)
                 .announcementType(AtlanAnnouncementType.WARNING)
@@ -258,20 +258,20 @@ public class GlossaryXTest extends BaseAtlanTest {
                 .announcementMessage(ANNOUNCEMENT_MESSAGE)
                 .build();
         try {
-            EntityXMutationResponse response = EntityX.update(category);
+            EntityMutationResponse response = Entity.update(category);
             assertNotNull(response);
-            MutatedXEntities mutatedEntities = response.getMutatedEntities();
+            MutatedEntities mutatedEntities = response.getMutatedEntities();
             assertNotNull(mutatedEntities);
             assertNull(mutatedEntities.getDELETE());
             assertNull(mutatedEntities.getCREATE());
-            List<EntityX> entities = mutatedEntities.getUPDATE();
+            List<Entity> entities = mutatedEntities.getUPDATE();
             assertNotNull(entities);
             assertEquals(entities.size(), 1);
-            EntityX one = entities.get(0);
+            Entity one = entities.get(0);
             assertNotNull(one);
-            assertEquals(one.getTypeName(), GlossaryCategoryX.TYPE_NAME);
-            assertTrue(one instanceof GlossaryCategoryX);
-            category = (GlossaryCategoryX) one;
+            assertEquals(one.getTypeName(), GlossaryCategory.TYPE_NAME);
+            assertTrue(one instanceof GlossaryCategory);
+            category = (GlossaryCategory) one;
             assertEquals(category.getGuid(), categoryGuid);
             assertEquals(category.getQualifiedName(), categoryQame);
             assertEquals(category.getName(), CATEGORY_NAME);
@@ -289,23 +289,23 @@ public class GlossaryXTest extends BaseAtlanTest {
             groups = {"category.remove.attributes"},
             dependsOnGroups = {"category.update"})
     void removeCategoryAttributes() {
-        GlossaryCategoryX category2 = GlossaryCategoryX.updateRequest(categoryQame, CATEGORY_NAME, glossaryGuid);
+        GlossaryCategory category2 = GlossaryCategory.updateRequest(categoryQame, CATEGORY_NAME, glossaryGuid);
         category2.removeAnnouncement();
         try {
-            EntityXMutationResponse response = EntityX.update(category2);
+            EntityMutationResponse response = Entity.update(category2);
             assertNotNull(response);
-            MutatedXEntities mutatedEntities = response.getMutatedEntities();
+            MutatedEntities mutatedEntities = response.getMutatedEntities();
             assertNotNull(mutatedEntities);
             assertNull(mutatedEntities.getDELETE());
             assertNull(mutatedEntities.getCREATE());
-            List<EntityX> entities = mutatedEntities.getUPDATE();
+            List<Entity> entities = mutatedEntities.getUPDATE();
             assertNotNull(entities);
             assertEquals(entities.size(), 1);
-            EntityX one = entities.get(0);
+            Entity one = entities.get(0);
             assertNotNull(one);
-            assertEquals(one.getTypeName(), GlossaryCategoryX.TYPE_NAME);
-            assertTrue(one instanceof GlossaryCategoryX);
-            category2 = (GlossaryCategoryX) one;
+            assertEquals(one.getTypeName(), GlossaryCategory.TYPE_NAME);
+            assertTrue(one instanceof GlossaryCategory);
+            category2 = (GlossaryCategory) one;
             assertEquals(category2.getGuid(), categoryGuid);
             assertEquals(category2.getQualifiedName(), categoryQame);
             assertEquals(category2.getName(), CATEGORY_NAME);
@@ -323,29 +323,29 @@ public class GlossaryXTest extends BaseAtlanTest {
             groups = {"term.update"},
             dependsOnGroups = {"term.create", "category.create"})
     void updateTerm() {
-        GlossaryTermX term = GlossaryTermX.updateRequest(termQame, TERM_NAME, glossaryGuid);
+        GlossaryTerm term = GlossaryTerm.updateRequest(termQame, TERM_NAME, glossaryGuid);
         term = term.toBuilder()
                 .certificateStatus(AtlanCertificateStatus.DEPRECATED)
                 .announcementType(AtlanAnnouncementType.ISSUE)
                 .announcementTitle(ANNOUNCEMENT_TITLE)
                 .announcementMessage(ANNOUNCEMENT_MESSAGE)
-                .category(Reference.to(GlossaryCategoryX.TYPE_NAME, categoryGuid))
+                .category(Reference.to(GlossaryCategory.TYPE_NAME, categoryGuid))
                 .build();
         try {
-            EntityXMutationResponse response = EntityX.update(term);
+            EntityMutationResponse response = Entity.update(term);
             assertNotNull(response);
-            MutatedXEntities mutatedEntities = response.getMutatedEntities();
+            MutatedEntities mutatedEntities = response.getMutatedEntities();
             assertNotNull(mutatedEntities);
             assertNull(mutatedEntities.getDELETE());
             assertNull(mutatedEntities.getCREATE());
-            List<EntityX> entities = mutatedEntities.getUPDATE();
+            List<Entity> entities = mutatedEntities.getUPDATE();
             assertNotNull(entities);
             assertEquals(entities.size(), 2);
-            EntityX one = entities.get(0);
+            Entity one = entities.get(0);
             assertNotNull(one);
-            assertEquals(one.getTypeName(), GlossaryTermX.TYPE_NAME);
-            assertTrue(one instanceof GlossaryTermX);
-            term = (GlossaryTermX) one;
+            assertEquals(one.getTypeName(), GlossaryTerm.TYPE_NAME);
+            assertTrue(one instanceof GlossaryTerm);
+            term = (GlossaryTerm) one;
             assertEquals(term.getGuid(), termGuid);
             assertEquals(term.getQualifiedName(), termQame);
             assertEquals(term.getName(), TERM_NAME);
@@ -355,9 +355,9 @@ public class GlossaryXTest extends BaseAtlanTest {
             assertEquals(term.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
             one = entities.get(1);
             assertNotNull(one);
-            assertEquals(one.getTypeName(), GlossaryCategoryX.TYPE_NAME);
-            assertTrue(one instanceof GlossaryCategoryX);
-            GlossaryCategoryX category = (GlossaryCategoryX) one;
+            assertEquals(one.getTypeName(), GlossaryCategory.TYPE_NAME);
+            assertTrue(one instanceof GlossaryCategory);
+            GlossaryCategory category = (GlossaryCategory) one;
             assertEquals(category.getGuid(), categoryGuid);
             assertEquals(category.getQualifiedName(), categoryQame);
             assertEquals(category.getName(), CATEGORY_NAME);
@@ -375,7 +375,7 @@ public class GlossaryXTest extends BaseAtlanTest {
             Query byState =
                     MatchQuery.of(m -> m.field("__state").query("ACTIVE"))._toQuery();
 
-            Query byType = MatchQuery.of(m -> m.field("__typeName.keyword").query(GlossaryTermX.TYPE_NAME))
+            Query byType = MatchQuery.of(m -> m.field("__typeName.keyword").query(GlossaryTerm.TYPE_NAME))
                     ._toQuery();
 
             Query byName =
@@ -384,7 +384,7 @@ public class GlossaryXTest extends BaseAtlanTest {
             Query combined =
                     BoolQuery.of(b -> b.must(byState).must(byType).must(byName))._toQuery();
 
-            IndexSearchX index = IndexSearchX.builder()
+            IndexSearch index = IndexSearch.builder()
                     .dsl(IndexSearchDSL.builder()
                             .from(0)
                             .size(100)
@@ -394,20 +394,20 @@ public class GlossaryXTest extends BaseAtlanTest {
                     .relationAttributes(Collections.singletonList("certificateStatus"))
                     .build();
 
-            IndexSearchResponseX response = index.search();
+            IndexSearchResponse response = index.search();
 
             assertNotNull(response);
             assertEquals(response.getApproximateCount().longValue(), 1L);
-            List<EntityX> entities = response.getEntities();
+            List<Entity> entities = response.getEntities();
             assertNotNull(entities);
             assertEquals(entities.size(), 1);
-            EntityX one = entities.get(0);
-            assertTrue(one instanceof GlossaryTermX);
-            GlossaryTermX term = (GlossaryTermX) one;
+            Entity one = entities.get(0);
+            assertTrue(one instanceof GlossaryTerm);
+            GlossaryTerm term = (GlossaryTerm) one;
             assertEquals(term.getGuid(), termGuid);
             assertEquals(term.getQualifiedName(), termQame);
             assertNotNull(term.getAnchor());
-            assertEquals(term.getAnchor().getTypeName(), GlossaryX.TYPE_NAME);
+            assertEquals(term.getAnchor().getTypeName(), Glossary.TYPE_NAME);
             assertEquals(term.getAnchor().getGuid(), glossaryGuid);
             // TODO: test embedded relationship attributes that were requested
             //  ... this probably needs a more complex entity structure than
@@ -423,20 +423,20 @@ public class GlossaryXTest extends BaseAtlanTest {
             dependsOnGroups = {"term.search"})
     void deleteTerm() {
         try {
-            EntityXMutationResponse response = EntityX.delete(termGuid, AtlanDeleteType.HARD);
+            EntityMutationResponse response = Entity.delete(termGuid, AtlanDeleteType.HARD);
             assertNotNull(response);
-            MutatedXEntities mutatedEntities = response.getMutatedEntities();
+            MutatedEntities mutatedEntities = response.getMutatedEntities();
             assertNotNull(mutatedEntities);
             assertNull(mutatedEntities.getCREATE());
             assertNull(mutatedEntities.getUPDATE());
-            List<EntityX> entities = mutatedEntities.getDELETE();
+            List<Entity> entities = mutatedEntities.getDELETE();
             assertNotNull(entities);
             assertEquals(entities.size(), 1);
-            EntityX one = entities.get(0);
+            Entity one = entities.get(0);
             assertNotNull(one);
-            assertEquals(one.getTypeName(), GlossaryTermX.TYPE_NAME);
-            assertTrue(one instanceof GlossaryTermX);
-            GlossaryTermX term = (GlossaryTermX) one;
+            assertEquals(one.getTypeName(), GlossaryTerm.TYPE_NAME);
+            assertTrue(one instanceof GlossaryTerm);
+            GlossaryTerm term = (GlossaryTerm) one;
             assertEquals(term.getGuid(), termGuid);
             assertEquals(term.getQualifiedName(), termQame);
             assertEquals(term.getName(), TERM_NAME);
@@ -457,20 +457,20 @@ public class GlossaryXTest extends BaseAtlanTest {
             dependsOnGroups = {"term.delete", "category.update", "category.remove.attributes"})
     void deleteCategory() {
         try {
-            EntityXMutationResponse response = EntityX.delete(categoryGuid, AtlanDeleteType.HARD);
+            EntityMutationResponse response = Entity.delete(categoryGuid, AtlanDeleteType.HARD);
             assertNotNull(response);
-            MutatedXEntities mutatedEntities = response.getMutatedEntities();
+            MutatedEntities mutatedEntities = response.getMutatedEntities();
             assertNotNull(mutatedEntities);
             assertNull(mutatedEntities.getCREATE());
             assertNull(mutatedEntities.getUPDATE());
-            List<EntityX> entities = mutatedEntities.getDELETE();
+            List<Entity> entities = mutatedEntities.getDELETE();
             assertNotNull(entities);
             assertEquals(entities.size(), 1);
-            EntityX one = entities.get(0);
+            Entity one = entities.get(0);
             assertNotNull(one);
-            assertEquals(one.getTypeName(), GlossaryCategoryX.TYPE_NAME);
-            assertTrue(one instanceof GlossaryCategoryX);
-            GlossaryCategoryX category = (GlossaryCategoryX) one;
+            assertEquals(one.getTypeName(), GlossaryCategory.TYPE_NAME);
+            assertTrue(one instanceof GlossaryCategory);
+            GlossaryCategory category = (GlossaryCategory) one;
             assertEquals(category.getGuid(), categoryGuid);
             assertEquals(category.getQualifiedName(), categoryQame);
             assertEquals(category.getName(), CATEGORY_NAME);
@@ -491,20 +491,20 @@ public class GlossaryXTest extends BaseAtlanTest {
             dependsOnGroups = {"category.delete"})
     void deleteGlossary() {
         try {
-            EntityXMutationResponse response = EntityX.delete(glossaryGuid, AtlanDeleteType.HARD);
+            EntityMutationResponse response = Entity.delete(glossaryGuid, AtlanDeleteType.HARD);
             assertNotNull(response);
-            MutatedXEntities mutatedEntities = response.getMutatedEntities();
+            MutatedEntities mutatedEntities = response.getMutatedEntities();
             assertNotNull(mutatedEntities);
             assertNull(mutatedEntities.getCREATE());
             assertNull(mutatedEntities.getUPDATE());
-            List<EntityX> entities = mutatedEntities.getDELETE();
+            List<Entity> entities = mutatedEntities.getDELETE();
             assertNotNull(entities);
             assertEquals(entities.size(), 1);
-            EntityX one = entities.get(0);
+            Entity one = entities.get(0);
             assertNotNull(one);
-            assertEquals(one.getTypeName(), GlossaryX.TYPE_NAME);
-            assertTrue(one instanceof GlossaryX);
-            GlossaryX glossary = (GlossaryX) one;
+            assertEquals(one.getTypeName(), Glossary.TYPE_NAME);
+            assertTrue(one instanceof Glossary);
+            Glossary glossary = (Glossary) one;
             assertEquals(glossary.getGuid(), glossaryGuid);
             assertEquals(glossary.getQualifiedName(), glossaryQame);
             assertEquals(glossary.getName(), GLOSSARY_NAME);
@@ -520,14 +520,14 @@ public class GlossaryXTest extends BaseAtlanTest {
         }
     }
 
-    private void validateGlossaryUpdate(List<EntityX> entities) {
+    private void validateGlossaryUpdate(List<Entity> entities) {
         assertNotNull(entities);
         assertEquals(entities.size(), 1);
-        EntityX one = entities.get(0);
+        Entity one = entities.get(0);
         assertNotNull(one);
-        assertEquals(one.getTypeName(), GlossaryX.TYPE_NAME);
-        assertTrue(one instanceof GlossaryX);
-        GlossaryX glossary = (GlossaryX) one;
+        assertEquals(one.getTypeName(), Glossary.TYPE_NAME);
+        assertTrue(one instanceof Glossary);
+        Glossary glossary = (Glossary) one;
         assertEquals(glossary.getGuid(), glossaryGuid);
         assertEquals(glossary.getQualifiedName(), glossaryQame);
     }

@@ -22,6 +22,20 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = false)
 public abstract class Entity extends AtlanObject {
+    /** Internal tracking of fields that should be serialized with null values. */
+    transient Set<String> nullFields;
+
+    /**
+     * Add a field to be serialized with a null value.
+     * @param fieldName to serialize with a null value
+     */
+    public void addNullField(String fieldName) {
+        if (nullFields == null) {
+            nullFields = new LinkedHashSet<>();
+        }
+        nullFields.add(fieldName);
+    }
+
     /** Name of the type definition that defines this entity. */
     transient String typeName;
 
@@ -36,16 +50,16 @@ public abstract class Entity extends AtlanObject {
     List<Classification> classifications;
 
     /**
-     * Map of attributes in the entity and their values. The specific keys of this map will vary by
-     * type, so are described in the subtypes of this object.
+     * Map of attributes in the entity and their values. This is intended for use by internal (de)serialization
+     * only. For actual attributes and their values, use the top-level strongly-typed getters and setters.
      */
-    transient Attributes attributes;
+    Map<String, Object> attributes;
 
     /**
-     * Map of relationships for the entity and their values. The specific keys of this map will vary
-     * by type, so are described in the subtypes of this object.
+     * Map of relationships for the entity and their values. This is intended for use by internal (de)serialization
+     * only. For actual attributes and their values, use the top-level strongly-typed getters and setters.
      */
-    transient RelationshipAttributes relationshipAttributes;
+    Map<String, Object> relationshipAttributes;
 
     /** Map of custom metadata attributes and values defined on the entity. */
     // @Singular
@@ -66,6 +80,9 @@ public abstract class Entity extends AtlanObject {
     /** Time (epoch) at which the entity was last updated, in milliseconds. */
     final Long updateTime;
 
+    /** Details on the handler used for deletion of the asset. */
+    final String deleteHandler;
+
     /** Unused. */
     List<String> classificationNames;
 
@@ -74,9 +91,6 @@ public abstract class Entity extends AtlanObject {
 
     /** Unused. */
     List<String> meaningNames;
-
-    /** Unused. */
-    List<Object> meanings;
 
     /** Creates any entity, ignoring any classifications and businessAttributes provided. */
     public static EntityMutationResponse create(Entity value) throws AtlanException {
