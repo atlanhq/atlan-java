@@ -2,10 +2,9 @@
 package com.atlan.model;
 
 import com.atlan.model.relations.Reference;
+import java.util.List;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-
-import java.util.List;
 
 @Getter
 @Setter
@@ -23,11 +22,13 @@ public class GlossaryX extends AssetX {
 
     /** Terms within this glossary. */
     @Singular
-    @Attribute List<Reference> terms;
+    @Attribute
+    List<Reference> terms;
 
     /** Categories within this glossary. */
     @Singular
-    @Attribute List<Reference> categories;
+    @Attribute
+    List<Reference> categories;
 
     @Override
     protected boolean canEqual(Object other) {
@@ -41,10 +42,7 @@ public class GlossaryX extends AssetX {
      * @return the minimal request necessary to create the glossary
      */
     public static GlossaryX createRequest(String name) {
-        return GlossaryX.builder()
-            .qualifiedName(name)
-            .name(name)
-            .build();
+        return GlossaryX.builder().qualifiedName(name).name(name).build();
     }
 
     /**
@@ -55,10 +53,6 @@ public class GlossaryX extends AssetX {
      * @return the minimal request necessary to update the glossary
      */
     public static GlossaryX updateRequest(String guid, String name) {
-        return GlossaryX.builder()
-            .guid(guid)
-            .qualifiedName(name)
-            .name(name)
-            .build();
+        return GlossaryX.builder().guid(guid).qualifiedName(name).name(name).build();
     }
 }

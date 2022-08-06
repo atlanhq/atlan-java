@@ -80,6 +80,9 @@ public abstract class EntityX extends AtlanObject {
     /** Time (epoch) at which the entity was last updated, in milliseconds. */
     final Long updateTime;
 
+    /** Details on the handler used for deletion of the asset. */
+    final String deleteHandler;
+
     /** Unused. */
     List<String> classificationNames;
 
@@ -99,7 +102,7 @@ public abstract class EntityX extends AtlanObject {
      * businessAttributes.
      */
     public static EntityXMutationResponse create(
-        EntityX value, boolean replaceClassifications, boolean replaceBusinessAttributes) throws AtlanException {
+            EntityX value, boolean replaceClassifications, boolean replaceBusinessAttributes) throws AtlanException {
         return create(Collections.singletonList(value), replaceClassifications, replaceBusinessAttributes);
     }
 
@@ -113,14 +116,14 @@ public abstract class EntityX extends AtlanObject {
      * businessAttributes.
      */
     public static EntityXMutationResponse create(
-        List<EntityX> values, boolean replaceClassifications, boolean replaceBusinessAttributes)
-        throws AtlanException {
+            List<EntityX> values, boolean replaceClassifications, boolean replaceBusinessAttributes)
+            throws AtlanException {
         String url = String.format(
-            "%s%s",
-            Atlan.getApiBase(),
-            String.format(
-                "/api/meta/entity/bulk?replaceClassifications=%s&replaceBusinessAttributes=%s",
-                replaceClassifications, replaceBusinessAttributes));
+                "%s%s",
+                Atlan.getApiBase(),
+                String.format(
+                        "/api/meta/entity/bulk?replaceClassifications=%s&replaceBusinessAttributes=%s",
+                        replaceClassifications, replaceBusinessAttributes));
         BulkEntityXRequest beq = BulkEntityXRequest.builder().entities(values).build();
         return ApiResource.request(ApiResource.RequestMethod.POST, url, beq, EntityXMutationResponse.class, null);
     }
@@ -132,13 +135,13 @@ public abstract class EntityX extends AtlanObject {
 
     /** Retrieves any entity by its GUID. */
     public static EntityXResponse retrieve(String guid, boolean ignoreRelationships, boolean minExtInfo)
-        throws AtlanException {
+            throws AtlanException {
         String url = String.format(
-            "%s%s",
-            Atlan.getApiBase(),
-            String.format(
-                "/api/meta/entity/guid/%s?ignoreRelationships=%s&minExtInfo=%s",
-                ApiResource.urlEncodeId(guid), ignoreRelationships, minExtInfo));
+                "%s%s",
+                Atlan.getApiBase(),
+                String.format(
+                        "/api/meta/entity/guid/%s?ignoreRelationships=%s&minExtInfo=%s",
+                        ApiResource.urlEncodeId(guid), ignoreRelationships, minExtInfo));
         return ApiResource.request(ApiResource.RequestMethod.GET, url, "", EntityXResponse.class, null);
     }
 
@@ -149,17 +152,17 @@ public abstract class EntityX extends AtlanObject {
 
     /** Retrieves any entity by its qualifiedName. */
     public static EntityXResponse retrieve(
-        String typeName, String qualifiedName, boolean ignoreRelationships, boolean minExtInfo)
-        throws AtlanException {
+            String typeName, String qualifiedName, boolean ignoreRelationships, boolean minExtInfo)
+            throws AtlanException {
         String url = String.format(
-            "%s%s",
-            Atlan.getApiBase(),
-            String.format(
-                "/api/meta/entity/uniqueAttribute/type/%s?attr:qualifiedName=%s&ignoreRelationships=%s&minExtInfo=%s",
-                ApiResource.urlEncodeId(typeName),
-                ApiResource.urlEncodeId(qualifiedName),
-                ignoreRelationships,
-                minExtInfo));
+                "%s%s",
+                Atlan.getApiBase(),
+                String.format(
+                        "/api/meta/entity/uniqueAttribute/type/%s?attr:qualifiedName=%s&ignoreRelationships=%s&minExtInfo=%s",
+                        ApiResource.urlEncodeId(typeName),
+                        ApiResource.urlEncodeId(qualifiedName),
+                        ignoreRelationships,
+                        minExtInfo));
         return ApiResource.request(ApiResource.RequestMethod.GET, url, "", EntityXResponse.class, null);
     }
 
@@ -173,7 +176,7 @@ public abstract class EntityX extends AtlanObject {
      * businessAttributes.
      */
     public static EntityXMutationResponse update(
-        EntityX value, boolean replaceClassifications, boolean replaceBusinessAttributes) throws AtlanException {
+            EntityX value, boolean replaceClassifications, boolean replaceBusinessAttributes) throws AtlanException {
         return create(Collections.singletonList(value), replaceClassifications, replaceBusinessAttributes);
     }
 
@@ -205,19 +208,19 @@ public abstract class EntityX extends AtlanObject {
                 // Remove the final comma
                 guidList.setLength(guidList.length() - 1);
                 String url = String.format(
-                    "%s%s",
-                    Atlan.getApiBase(),
-                    String.format("/api/meta/entity/bulk?%s&deleteType=%s", guidList, deleteType));
+                        "%s%s",
+                        Atlan.getApiBase(),
+                        String.format("/api/meta/entity/bulk?%s&deleteType=%s", guidList, deleteType));
                 return ApiResource.request(
-                    ApiResource.RequestMethod.DELETE, url, "", EntityXMutationResponse.class, null);
+                        ApiResource.RequestMethod.DELETE, url, "", EntityXMutationResponse.class, null);
             }
         }
         throw new InvalidRequestException(
-            "Insufficient information provided to delete entities: no GUID provided.",
-            "guid",
-            "N/A",
-            "ATLAN-JAVA-CLIENT-400",
-            400,
-            null);
+                "Insufficient information provided to delete entities: no GUID provided.",
+                "guid",
+                "N/A",
+                "ATLAN-JAVA-CLIENT-400",
+                400,
+                null);
     }
 }

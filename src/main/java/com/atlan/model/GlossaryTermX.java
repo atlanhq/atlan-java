@@ -3,10 +3,9 @@ package com.atlan.model;
 
 import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
+import java.util.List;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-
-import java.util.List;
 
 @Getter
 @Setter
@@ -23,15 +22,18 @@ public class GlossaryTermX extends AssetX {
     String typeName = TYPE_NAME;
 
     /** Glossary in which the term is located. */
-    @Attribute Reference anchor;
+    @Attribute
+    Reference anchor;
 
     /** Assets that are attached to this term. */
     @Singular
-    @Attribute List<Reference> assignedEntities;
+    @Attribute
+    List<Reference> assignedEntities;
 
     /** Categories within which this term is organized. */
     @Singular
-    @Attribute List<Reference> categories;
+    @Attribute
+    List<Reference> categories;
 
     @Override
     protected boolean canEqual(Object other) {
@@ -49,10 +51,10 @@ public class GlossaryTermX extends AssetX {
      */
     public static GlossaryTermX createRequest(String name, String glossaryGuid, String glossaryQualifiedName) {
         return GlossaryTermX.builder()
-            .qualifiedName(name)
-            .name(name)
-            .anchor(anchorLink(glossaryGuid, glossaryQualifiedName))
-            .build();
+                .qualifiedName(name)
+                .name(name)
+                .anchor(anchorLink(glossaryGuid, glossaryQualifiedName))
+                .build();
     }
 
     /**
@@ -68,10 +70,10 @@ public class GlossaryTermX extends AssetX {
         // Turns out that updating a term requires the glossary GUID, and will not work
         // with the qualifiedName of the glossary
         return GlossaryTermX.builder()
-            .qualifiedName(qualifiedName)
-            .name(name)
-            .anchor(anchorLink(glossaryGuid, null))
-            .build();
+                .qualifiedName(qualifiedName)
+                .name(name)
+                .anchor(anchorLink(glossaryGuid, null))
+                .build();
     }
 
     /**
@@ -87,16 +89,16 @@ public class GlossaryTermX extends AssetX {
             return null;
         } else if (glossaryGuid != null) {
             anchor = Reference.builder()
-                .typeName("AtlasGlossary")
-                .guid(glossaryGuid)
-                .build();
+                    .typeName("AtlasGlossary")
+                    .guid(glossaryGuid)
+                    .build();
         } else {
             anchor = Reference.builder()
-                .typeName("AtlasGlossary")
-                .uniqueAttributes(UniqueAttributes.builder()
-                    .qualifiedName(glossaryQualifiedName)
-                    .build())
-                .build();
+                    .typeName("AtlasGlossary")
+                    .uniqueAttributes(UniqueAttributes.builder()
+                            .qualifiedName(glossaryQualifiedName)
+                            .build())
+                    .build();
         }
         return anchor;
     }

@@ -1,7 +1,6 @@
 /* SPDX-License-Identifier: Apache-2.0 */
 package com.atlan.model.relations;
 
-import com.atlan.model.serde.Removable;
 import com.atlan.net.AtlanObject;
 import java.util.Map;
 import lombok.Data;
@@ -20,10 +19,7 @@ public class Reference extends AtlanObject {
      * @return a reference to another asset
      */
     public static Reference to(String typeName, String guid) {
-        return Reference.builder()
-            .typeName(typeName)
-            .guid(guid)
-            .build();
+        return Reference.builder().typeName(typeName).guid(guid).build();
     }
 
     /**

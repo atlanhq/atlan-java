@@ -9,7 +9,6 @@ import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -33,15 +32,14 @@ public class EntityXAdapterFactory implements TypeAdapterFactory {
         final String discriminator = "typeName";
 
         final TypeAdapter<JsonElement> jsonElementAdapter = gson.getAdapter(JsonElement.class);
-        final TypeAdapter<Reference> referenceAdapter =
-            gson.getDelegateAdapter(this, TypeToken.get(Reference.class));
+        final TypeAdapter<Reference> referenceAdapter = gson.getDelegateAdapter(this, TypeToken.get(Reference.class));
 
         final TypeAdapter<AssetX> assetAdapter = gson.getDelegateAdapter(this, TypeToken.get(AssetX.class));
         final TypeAdapter<GlossaryX> glossaryAdapter = gson.getDelegateAdapter(this, TypeToken.get(GlossaryX.class));
         final TypeAdapter<GlossaryCategoryX> glossaryCategoryAdapter =
-            gson.getDelegateAdapter(this, TypeToken.get(GlossaryCategoryX.class));
+                gson.getDelegateAdapter(this, TypeToken.get(GlossaryCategoryX.class));
         final TypeAdapter<GlossaryTermX> glossaryTermAdapter =
-            gson.getDelegateAdapter(this, TypeToken.get(GlossaryTermX.class));
+                gson.getDelegateAdapter(this, TypeToken.get(GlossaryTermX.class));
 
         TypeAdapter<EntityX> resultCustomTypeAdapter = new TypeAdapter<>() {
             @Override
@@ -147,7 +145,6 @@ public class EntityXAdapterFactory implements TypeAdapterFactory {
                             break;
                     }
                 }
-
             }
 
             @Override
@@ -218,13 +215,14 @@ public class EntityXAdapterFactory implements TypeAdapterFactory {
                 }
 
                 return value;
-
             }
         };
         return (TypeAdapter<T>) resultCustomTypeAdapter.nullSafe();
     }
 
-    private static void deserialize(EntityX value, JsonElement jsonElement, Method method, TypeAdapter<Reference> referenceAdapter) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException, IOException {
+    private static void deserialize(
+            EntityX value, JsonElement jsonElement, Method method, TypeAdapter<Reference> referenceAdapter)
+            throws IllegalAccessException, InvocationTargetException, NoSuchMethodException, IOException {
         if (jsonElement.isJsonPrimitive()) {
             deserializePrimitive(value, jsonElement.getAsJsonPrimitive(), method);
         } else if (jsonElement.isJsonArray()) {
@@ -234,7 +232,8 @@ public class EntityXAdapterFactory implements TypeAdapterFactory {
         }
     }
 
-    private static void deserializePrimitive(EntityX value, JsonPrimitive primitive, Method method) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException, IOException {
+    private static void deserializePrimitive(EntityX value, JsonPrimitive primitive, Method method)
+            throws IllegalAccessException, InvocationTargetException, NoSuchMethodException, IOException {
         if (primitive.isString()) {
             Parameter[] params = method.getParameters();
             Class<?> paramClass = params[0].getType();
@@ -251,7 +250,9 @@ public class EntityXAdapterFactory implements TypeAdapterFactory {
         }
     }
 
-    private static void deserializeList(EntityX value, JsonArray array, Method method, TypeAdapter<Reference> referenceAdapter) throws IllegalAccessException, InvocationTargetException, IOException {
+    private static void deserializeList(
+            EntityX value, JsonArray array, Method method, TypeAdapter<Reference> referenceAdapter)
+            throws IllegalAccessException, InvocationTargetException, IOException {
         List<Object> list = new ArrayList<>();
         for (JsonElement element : array) {
             Object deserialized = deserializeElement(element, method, referenceAdapter);
@@ -260,7 +261,8 @@ public class EntityXAdapterFactory implements TypeAdapterFactory {
         method.invoke(value, list);
     }
 
-    private static void deserializeNumber(EntityX value, JsonPrimitive primitive, Method method) throws IllegalAccessException, InvocationTargetException, IOException {
+    private static void deserializeNumber(EntityX value, JsonPrimitive primitive, Method method)
+            throws IllegalAccessException, InvocationTargetException, IOException {
         Object number = deserializeNumber(primitive.getAsNumber(), method);
         method.invoke(value, number);
     }
@@ -273,7 +275,8 @@ public class EntityXAdapterFactory implements TypeAdapterFactory {
      * @return the deserialized object
      * @throws IOException if an array is found nested directly within another array (unsupported)
      */
-    private static Object deserializeElement(JsonElement element, Method method, TypeAdapter<Reference> referenceAdapter) throws IOException {
+    private static Object deserializeElement(
+            JsonElement element, Method method, TypeAdapter<Reference> referenceAdapter) throws IOException {
         if (element.isJsonPrimitive()) {
             return deserializePrimitive(element.getAsJsonPrimitive(), method);
         } else if (element.isJsonArray()) {
@@ -315,7 +318,8 @@ public class EntityXAdapterFactory implements TypeAdapterFactory {
         if (parameters.length == 1) {
             parameterType = parameters[0].getType();
         } else {
-            throw new IOException("Unexpected number of parameters (" + parameters.length + ") found for method: " + method);
+            throw new IOException(
+                    "Unexpected number of parameters (" + parameters.length + ") found for method: " + method);
         }
         if (parameterType == Integer.class) {
             return primitive.intValue();

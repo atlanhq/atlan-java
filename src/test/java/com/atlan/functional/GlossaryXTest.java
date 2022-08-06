@@ -11,14 +11,14 @@ import com.atlan.model.core.EntityX;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.enums.AtlanDeleteType;
+import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.relations.Reference;
-import java.util.Collections;
-import java.util.List;
-
 import com.atlan.model.responses.EntityXMutationResponse;
 import com.atlan.model.responses.EntityXResponse;
 import com.atlan.model.responses.IndexSearchResponseX;
 import com.atlan.model.responses.MutatedXEntities;
+import java.util.Collections;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.Test;
 
@@ -68,8 +68,8 @@ public class GlossaryXTest extends BaseAtlanTest {
     }
 
     @Test(
-        groups = {"category.create"},
-        dependsOnGroups = {"glossary.create"})
+            groups = {"category.create"},
+            dependsOnGroups = {"glossary.create"})
     void createCategory() {
         GlossaryCategoryX category = GlossaryCategoryX.createRequest(CATEGORY_NAME, glossaryGuid, null);
         try {
@@ -99,8 +99,8 @@ public class GlossaryXTest extends BaseAtlanTest {
     }
 
     @Test(
-        groups = {"term.create"},
-        dependsOnGroups = {"glossary.create"})
+            groups = {"term.create"},
+            dependsOnGroups = {"glossary.create"})
     void createTerm() {
         GlossaryTermX term = GlossaryTermX.createRequest(TERM_NAME, glossaryGuid, null);
         try {
@@ -131,8 +131,8 @@ public class GlossaryXTest extends BaseAtlanTest {
     }
 
     @Test(
-        groups = {"glossary.read"},
-        dependsOnGroups = {"glossary.create", "category.create", "term.create"})
+            groups = {"glossary.read"},
+            dependsOnGroups = {"glossary.create", "category.create", "term.create"})
     void readGlossary() {
         try {
             EntityXResponse response = EntityX.retrieve(glossaryGuid);
@@ -160,8 +160,8 @@ public class GlossaryXTest extends BaseAtlanTest {
     }
 
     @Test(
-        groups = {"category.read"},
-        dependsOnGroups = {"category.create"})
+            groups = {"category.read"},
+            dependsOnGroups = {"category.create"})
     void readCategory() {
         try {
             EntityXResponse response = EntityX.retrieve(categoryGuid);
@@ -184,8 +184,8 @@ public class GlossaryXTest extends BaseAtlanTest {
     }
 
     @Test(
-        groups = {"term.read"},
-        dependsOnGroups = {"term.create"})
+            groups = {"term.read"},
+            dependsOnGroups = {"term.create"})
     void readTerm() {
         try {
             EntityXResponse response = EntityX.retrieve(termGuid);
@@ -208,16 +208,16 @@ public class GlossaryXTest extends BaseAtlanTest {
     }
 
     @Test(
-        groups = {"glossary.update"},
-        dependsOnGroups = {"glossary.read"})
+            groups = {"glossary.update"},
+            dependsOnGroups = {"glossary.read"})
     void updateGlossary() {
         GlossaryX glossary = GlossaryX.updateRequest(glossaryGuid, GLOSSARY_NAME);
         glossary = glossary.toBuilder()
-            .certificateStatus(AtlanCertificateStatus.VERIFIED)
-            .announcementType(AtlanAnnouncementType.INFORMATION)
-            .announcementTitle(ANNOUNCEMENT_TITLE)
-            .announcementMessage(ANNOUNCEMENT_MESSAGE)
-            .build();
+                .certificateStatus(AtlanCertificateStatus.VERIFIED)
+                .announcementType(AtlanAnnouncementType.INFORMATION)
+                .announcementTitle(ANNOUNCEMENT_TITLE)
+                .announcementMessage(ANNOUNCEMENT_MESSAGE)
+                .build();
         try {
             EntityXMutationResponse response = EntityX.update(glossary);
             assertNotNull(response);
@@ -247,16 +247,16 @@ public class GlossaryXTest extends BaseAtlanTest {
     }
 
     @Test(
-        groups = {"category.update"},
-        dependsOnGroups = {"category.create"})
+            groups = {"category.update"},
+            dependsOnGroups = {"category.create"})
     void updateCategory() {
         GlossaryCategoryX category = GlossaryCategoryX.updateRequest(categoryQame, CATEGORY_NAME, glossaryGuid);
         category = category.toBuilder()
-            .certificateStatus(AtlanCertificateStatus.DRAFT)
-            .announcementType(AtlanAnnouncementType.WARNING)
-            .announcementTitle(ANNOUNCEMENT_TITLE)
-            .announcementMessage(ANNOUNCEMENT_MESSAGE)
-            .build();
+                .certificateStatus(AtlanCertificateStatus.DRAFT)
+                .announcementType(AtlanAnnouncementType.WARNING)
+                .announcementTitle(ANNOUNCEMENT_TITLE)
+                .announcementMessage(ANNOUNCEMENT_MESSAGE)
+                .build();
         try {
             EntityXMutationResponse response = EntityX.update(category);
             assertNotNull(response);
@@ -286,8 +286,8 @@ public class GlossaryXTest extends BaseAtlanTest {
     }
 
     @Test(
-        groups = {"category.remove.attributes"},
-        dependsOnGroups = {"category.update"})
+            groups = {"category.remove.attributes"},
+            dependsOnGroups = {"category.update"})
     void removeCategoryAttributes() {
         GlossaryCategoryX category2 = GlossaryCategoryX.updateRequest(categoryQame, CATEGORY_NAME, glossaryGuid);
         category2.removeAnnouncement();
@@ -320,17 +320,17 @@ public class GlossaryXTest extends BaseAtlanTest {
     }
 
     @Test(
-        groups = {"term.update"},
-        dependsOnGroups = {"term.create", "category.create"})
+            groups = {"term.update"},
+            dependsOnGroups = {"term.create", "category.create"})
     void updateTerm() {
         GlossaryTermX term = GlossaryTermX.updateRequest(termQame, TERM_NAME, glossaryGuid);
         term = term.toBuilder()
-            .certificateStatus(AtlanCertificateStatus.DEPRECATED)
-            .announcementType(AtlanAnnouncementType.ISSUE)
-            .announcementTitle(ANNOUNCEMENT_TITLE)
-            .announcementMessage(ANNOUNCEMENT_MESSAGE)
-            .category(Reference.to(GlossaryCategoryX.TYPE_NAME, categoryGuid))
-            .build();
+                .certificateStatus(AtlanCertificateStatus.DEPRECATED)
+                .announcementType(AtlanAnnouncementType.ISSUE)
+                .announcementTitle(ANNOUNCEMENT_TITLE)
+                .announcementMessage(ANNOUNCEMENT_MESSAGE)
+                .category(Reference.to(GlossaryCategoryX.TYPE_NAME, categoryGuid))
+                .build();
         try {
             EntityXMutationResponse response = EntityX.update(term);
             assertNotNull(response);
@@ -368,31 +368,31 @@ public class GlossaryXTest extends BaseAtlanTest {
     }
 
     @Test(
-        groups = {"term.search"},
-        dependsOnGroups = {"term.update"})
+            groups = {"term.search"},
+            dependsOnGroups = {"term.update"})
     void searchTerms() {
         try {
             Query byState =
-                MatchQuery.of(m -> m.field("__state").query("ACTIVE"))._toQuery();
+                    MatchQuery.of(m -> m.field("__state").query("ACTIVE"))._toQuery();
 
             Query byType = MatchQuery.of(m -> m.field("__typeName.keyword").query(GlossaryTermX.TYPE_NAME))
-                ._toQuery();
+                    ._toQuery();
 
             Query byName =
-                MatchQuery.of(m -> m.field("name.keyword").query(TERM_NAME))._toQuery();
+                    MatchQuery.of(m -> m.field("name.keyword").query(TERM_NAME))._toQuery();
 
             Query combined =
-                BoolQuery.of(b -> b.must(byState).must(byType).must(byName))._toQuery();
+                    BoolQuery.of(b -> b.must(byState).must(byType).must(byName))._toQuery();
 
             IndexSearchX index = IndexSearchX.builder()
-                .dsl(IndexSearchDSL.builder()
-                    .from(0)
-                    .size(100)
-                    .query(combined)
-                    .build())
-                .attributes(Collections.singletonList("anchor"))
-                .relationAttributes(Collections.singletonList("certificateStatus"))
-                .build();
+                    .dsl(IndexSearchDSL.builder()
+                            .from(0)
+                            .size(100)
+                            .query(combined)
+                            .build())
+                    .attributes(Collections.singletonList("anchor"))
+                    .relationAttributes(Collections.singletonList("certificateStatus"))
+                    .build();
 
             IndexSearchResponseX response = index.search();
 
@@ -406,7 +406,12 @@ public class GlossaryXTest extends BaseAtlanTest {
             GlossaryTermX term = (GlossaryTermX) one;
             assertEquals(term.getGuid(), termGuid);
             assertEquals(term.getQualifiedName(), termQame);
-            // TODO: test relationship attributes (the glossary)
+            assertNotNull(term.getAnchor());
+            assertEquals(term.getAnchor().getTypeName(), GlossaryX.TYPE_NAME);
+            assertEquals(term.getAnchor().getGuid(), glossaryGuid);
+            // TODO: test embedded relationship attributes that were requested
+            //  ... this probably needs a more complex entity structure than
+            //  just the basic references defined in EntityX (?)
         } catch (AtlanException e) {
             e.printStackTrace();
             assertNull(e, "Unexpected exception: " + e.getMessage());
@@ -414,8 +419,8 @@ public class GlossaryXTest extends BaseAtlanTest {
     }
 
     @Test(
-        groups = {"term.delete"},
-        dependsOnGroups = {"term.search"})
+            groups = {"term.delete"},
+            dependsOnGroups = {"term.search"})
     void deleteTerm() {
         try {
             EntityXMutationResponse response = EntityX.delete(termGuid, AtlanDeleteType.HARD);
@@ -439,7 +444,8 @@ public class GlossaryXTest extends BaseAtlanTest {
             assertEquals(term.getAnnouncementType(), AtlanAnnouncementType.ISSUE);
             assertEquals(term.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
             assertEquals(term.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
-            // TODO: verify deleted status (and deletion handler)
+            assertEquals(term.getStatus(), AtlanStatus.DELETED);
+            assertEquals(term.getDeleteHandler(), "HARD");
         } catch (AtlanException e) {
             e.printStackTrace();
             assertNull(e, "Unexpected exception: " + e.getMessage());
@@ -447,8 +453,8 @@ public class GlossaryXTest extends BaseAtlanTest {
     }
 
     @Test(
-        groups = {"category.delete"},
-        dependsOnGroups = {"term.delete", "category.update", "category.remove.attributes"})
+            groups = {"category.delete"},
+            dependsOnGroups = {"term.delete", "category.update", "category.remove.attributes"})
     void deleteCategory() {
         try {
             EntityXMutationResponse response = EntityX.delete(categoryGuid, AtlanDeleteType.HARD);
@@ -472,7 +478,8 @@ public class GlossaryXTest extends BaseAtlanTest {
             assertNull(category.getAnnouncementType());
             assertNull(category.getAnnouncementTitle());
             assertNull(category.getAnnouncementMessage());
-            // TODO: verify deleted status (and deletion handler)
+            assertEquals(category.getStatus(), AtlanStatus.DELETED);
+            assertEquals(category.getDeleteHandler(), "HARD");
         } catch (AtlanException e) {
             e.printStackTrace();
             assertNull(e, "Unexpected exception: " + e.getMessage());
@@ -480,8 +487,8 @@ public class GlossaryXTest extends BaseAtlanTest {
     }
 
     @Test(
-        groups = {"glossary.delete"},
-        dependsOnGroups = {"category.delete"})
+            groups = {"glossary.delete"},
+            dependsOnGroups = {"category.delete"})
     void deleteGlossary() {
         try {
             EntityXMutationResponse response = EntityX.delete(glossaryGuid, AtlanDeleteType.HARD);
@@ -505,7 +512,8 @@ public class GlossaryXTest extends BaseAtlanTest {
             assertEquals(glossary.getAnnouncementType(), AtlanAnnouncementType.INFORMATION);
             assertEquals(glossary.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
             assertEquals(glossary.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
-            // TODO: verify deleted status (and deletion handler)
+            assertEquals(glossary.getStatus(), AtlanStatus.DELETED);
+            assertEquals(glossary.getDeleteHandler(), "HARD");
         } catch (AtlanException e) {
             e.printStackTrace();
             assertNull(e, "Unexpected exception: " + e.getMessage());

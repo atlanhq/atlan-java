@@ -2,10 +2,9 @@
 package com.atlan.model;
 
 import com.atlan.model.relations.Reference;
+import java.util.List;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-
-import java.util.List;
 
 @Getter
 @Setter
@@ -22,18 +21,22 @@ public class GlossaryCategoryX extends AssetX {
     String typeName = TYPE_NAME;
 
     /** Glossary in which the category is located. */
-    @Attribute Reference anchor;
+    @Attribute
+    Reference anchor;
 
     /** Parent category in which this category is located (or null if this is a root-level category). */
-    @Attribute Reference parentCategory;
+    @Attribute
+    Reference parentCategory;
 
     /** Terms organized within this category. */
     @Singular
-    @Attribute List<Reference> terms;
+    @Attribute
+    List<Reference> terms;
 
     /** Child categories organized within this category. */
     @Singular
-    @Attribute List<Reference> childrenCategories;
+    @Attribute
+    List<Reference> childrenCategories;
 
     @Override
     protected boolean canEqual(Object other) {
@@ -51,10 +54,10 @@ public class GlossaryCategoryX extends AssetX {
      */
     public static GlossaryCategoryX createRequest(String name, String glossaryGuid, String glossaryQualifiedName) {
         return GlossaryCategoryX.builder()
-            .qualifiedName(name)
-            .name(name)
-            .anchor(GlossaryTermX.anchorLink(glossaryGuid, glossaryQualifiedName))
-            .build();
+                .qualifiedName(name)
+                .name(name)
+                .anchor(GlossaryTermX.anchorLink(glossaryGuid, glossaryQualifiedName))
+                .build();
     }
 
     /**
@@ -70,9 +73,9 @@ public class GlossaryCategoryX extends AssetX {
         // Turns out that updating a category requires the glossary GUID, and will not work
         // with the qualifiedName of the glossary
         return GlossaryCategoryX.builder()
-            .qualifiedName(qualifiedName)
-            .name(name)
-            .anchor(GlossaryTermX.anchorLink(glossaryGuid, null))
-            .build();
+                .qualifiedName(qualifiedName)
+                .name(name)
+                .anchor(GlossaryTermX.anchorLink(glossaryGuid, null))
+                .build();
     }
 }
