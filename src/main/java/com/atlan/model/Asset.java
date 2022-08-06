@@ -13,7 +13,7 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
-public class Asset extends Entity {
+public abstract class Asset extends Entity {
 
     public static final String TYPE_NAME = "Asset";
 
@@ -144,11 +144,11 @@ public class Asset extends Entity {
 
     /** Unused. */
     @Attribute
-    Number viewScore;
+    Double viewScore;
 
     /** Unused. */
     @Attribute
-    Number popularityScore;
+    Double popularityScore;
 
     /** Unused. */
     @Attribute
@@ -211,10 +211,5 @@ public class Asset extends Entity {
         addNullField("announcementType");
         addNullField("announcementTitle");
         addNullField("announcementMessage");
-    }
-
-    @Override
-    protected boolean canEqual(Object other) {
-        return other instanceof Asset;
     }
 }

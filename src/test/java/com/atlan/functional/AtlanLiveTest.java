@@ -2,7 +2,7 @@ package com.atlan.functional;
 
 import com.atlan.Atlan;
 
-public class BaseAtlanTest {
+public class AtlanLiveTest {
 
     public static final String ANNOUNCEMENT_TITLE = "Automated testing.";
     public static final String ANNOUNCEMENT_MESSAGE = "Automated testing of the Java client.";

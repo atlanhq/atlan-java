@@ -1,13 +1,10 @@
 /* SPDX-License-Identifier: Apache-2.0 */
 package com.atlan.net;
 
-import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.core.AtlanResponseInterface;
-import com.atlan.util.StringUtils;
 import com.google.gson.JsonObject;
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -21,30 +18,6 @@ public abstract class ApiResource extends AtlanObject implements AtlanResponseIn
 
     public static void setAtlanResponseGetter(AtlanResponseGetter arg) {
         ApiResource.atlanResponseGetter = arg;
-    }
-
-    private static String className(Class<?> clazz) {
-        // Convert CamelCase to snake_case
-        String className = StringUtils.toSnakeCase(clazz.getSimpleName());
-
-        // Handle namespaced resources by checking if the class is in a sub-package, and if so prepend
-        // it to the class name
-        String[] parts = clazz.getPackage().getName().split("\\.", -1);
-        assert parts.length == 3 || parts.length == 4;
-        if (parts.length == 4) {
-            // The first three parts are always "com.atlan.model", the fourth part is the sub-package
-            className = parts[3] + "/" + className;
-        }
-
-        // Handle special cases
-        switch (className) {
-            case "invoice_item":
-                return "invoiceitem";
-            case "file_upload":
-                return "file";
-            default:
-                return className;
-        }
     }
 
     private transient AtlanResponse lastResponse;
@@ -82,40 +55,6 @@ public abstract class ApiResource extends AtlanObject implements AtlanResponseIn
         return this.rawJsonObject;
     }
 
-    protected static String singleClassUrl(Class<?> clazz) {
-        return singleClassUrl(clazz, Atlan.getApiBase());
-    }
-
-    protected static String singleClassUrl(Class<?> clazz, String apiBase) {
-        return String.format("%s/v1/%s", apiBase, className(clazz));
-    }
-
-    protected static String classUrl(Class<?> clazz) {
-        return classUrl(clazz, Atlan.getApiBase());
-    }
-
-    protected static String classUrl(Class<?> clazz, String apiBase) {
-        return String.format("%ss", singleClassUrl(clazz, apiBase));
-    }
-
-    protected static String instanceUrl(Class<?> clazz, String id) throws InvalidRequestException {
-        return instanceUrl(clazz, id, Atlan.getApiBase());
-    }
-
-    protected static String instanceUrl(Class<?> clazz, String id, String apiBase) throws InvalidRequestException {
-        return String.format("%s/%s", classUrl(clazz, apiBase), urlEncode(id));
-    }
-
-    protected static String subresourceUrl(Class<?> clazz, String id, Class<?> subClazz)
-            throws InvalidRequestException {
-        return subresourceUrl(clazz, id, subClazz, Atlan.getApiBase());
-    }
-
-    private static String subresourceUrl(Class<?> clazz, String id, Class<?> subClazz, String apiBase)
-            throws InvalidRequestException {
-        return String.format("%s/%s/%ss", classUrl(clazz, apiBase), urlEncode(id), className(subClazz));
-    }
-
     public enum RequestMethod {
         GET,
         POST,
@@ -131,16 +70,10 @@ public abstract class ApiResource extends AtlanObject implements AtlanResponseIn
             return null;
         }
 
-        try {
-            // Don't use strict form encoding by changing the square bracket control
-            // characters back to their literals. This is fine by the server, and
-            // makes these parameter strings easier to read.
-            return URLEncoder.encode(str, CHARSET.name()).replaceAll("%5B", "[").replaceAll("%5D", "]");
-        } catch (UnsupportedEncodingException e) {
-            // This can literally never happen, and lets us avoid having to catch
-            // UnsupportedEncodingException in callers.
-            throw new AssertionError("UTF-8 is unknown");
-        }
+        // Don't use strict form encoding by changing the square bracket control
+        // characters back to their literals. This is fine by the server, and
+        // makes these parameter strings easier to read.
+        return URLEncoder.encode(str, CHARSET).replaceAll("%5B", "[").replaceAll("%5D", "]");
     }
 
     /** URL-encode a string ID in url path formatting. */

@@ -1,6 +1,7 @@
 /* SPDX-License-Identifier: Apache-2.0 */
 package com.atlan.model.core;
 
+import com.atlan.model.enums.AtlanStatus;
 import com.atlan.net.AtlanObject;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -10,6 +11,17 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @EqualsAndHashCode(callSuper = false)
 public class Classification extends AtlanObject {
+
+    public static Classification of(String classificationName, String entityGuid) {
+        return Classification.builder()
+                .typeName(classificationName) // TODO: translate this from display name to internal name
+                .entityGuid(entityGuid)
+                .entityStatus(AtlanStatus.ACTIVE)
+                .propagate(true)
+                .removePropagationsOnEntityDelete(true)
+                .restrictPropagationThroughLineage(false)
+                .build();
+    }
 
     /**
      * Name of the classification. Note that this is the static-hashed unique name of the
@@ -21,7 +33,7 @@ public class Classification extends AtlanObject {
     String entityGuid;
 
     /** Status of the entity. */
-    String entityStatus;
+    AtlanStatus entityStatus;
 
     /**
      * Whether to propagate this classification to other entities related to the entity to which the

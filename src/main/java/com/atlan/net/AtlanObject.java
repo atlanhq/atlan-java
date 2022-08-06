@@ -10,9 +10,11 @@ import com.atlan.model.serde.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.TypeAdapterFactory;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 
 @SuperBuilder(toBuilder = true)
+@EqualsAndHashCode(callSuper = false)
 public abstract class AtlanObject {
 
     public AtlanObject() {
@@ -35,14 +37,6 @@ public abstract class AtlanObject {
         return builder.create();
     }
 
-    // This works for heavily-inherited (with transient override) structures
-    // public static final Gson PRETTY_PRINT_GSON =
-    //   new GsonBuilder()
-    //     .registerTypeAdapter(Aggregation.class, new ElasticObjectSerializer<Aggregation>())
-    //     .registerTypeAdapter(Query.class, new ElasticObjectSerializer<Query>())
-    //     .registerTypeAdapter(SortOptions.class, new ElasticObjectSerializer<SortOptions>())
-    //     .create();
-
     @Override
     public String toString() {
         return String.format(
@@ -51,9 +45,5 @@ public abstract class AtlanObject {
 
     public String toJson() {
         return GSON.toJson(this);
-    }
-
-    protected static boolean equals(Object a, Object b) {
-        return a == null ? b == null : a.equals(b);
     }
 }

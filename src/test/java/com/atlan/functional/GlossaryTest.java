@@ -23,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.Test;
 
 @Slf4j
-public class GlossaryTest extends BaseAtlanTest {
+public class GlossaryTest extends AtlanLiveTest {
 
     public static final String GLOSSARY_NAME = "JavaClient Test Glossary";
     public static final String CATEGORY_NAME = "JavaClient Test Category";

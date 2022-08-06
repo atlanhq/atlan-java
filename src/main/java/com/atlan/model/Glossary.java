@@ -30,11 +30,6 @@ public class Glossary extends Asset {
     @Attribute
     List<Reference> categories;
 
-    @Override
-    protected boolean canEqual(Object other) {
-        return other instanceof Glossary;
-    }
-
     /**
      * Builds the minimal request necessary to create a glossary.
      *

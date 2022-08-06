@@ -11,19 +11,24 @@ import com.atlan.model.responses.EntityResponse;
 import com.atlan.net.ApiResource;
 import com.atlan.net.AtlanObject;
 import java.util.*;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.Singular;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
 @SuperBuilder(toBuilder = true)
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 public abstract class Entity extends AtlanObject {
     /** Internal tracking of fields that should be serialized with null values. */
     transient Set<String> nullFields;
+
+    /** Retrieve the list of fields to be serialized with null values. */
+    public Set<String> getNullFields() {
+        if (nullFields == null) {
+            return Collections.emptySet();
+        }
+        return Collections.unmodifiableSet(nullFields);
+    }
 
     /**
      * Add a field to be serialized with a null value.
@@ -53,12 +58,14 @@ public abstract class Entity extends AtlanObject {
      * Map of attributes in the entity and their values. This is intended for use by internal (de)serialization
      * only. For actual attributes and their values, use the top-level strongly-typed getters and setters.
      */
+    @EqualsAndHashCode.Exclude
     Map<String, Object> attributes;
 
     /**
      * Map of relationships for the entity and their values. This is intended for use by internal (de)serialization
      * only. For actual attributes and their values, use the top-level strongly-typed getters and setters.
      */
+    @EqualsAndHashCode.Exclude
     Map<String, Object> relationshipAttributes;
 
     /** Map of custom metadata attributes and values defined on the entity. */

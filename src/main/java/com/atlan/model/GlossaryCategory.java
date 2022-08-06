@@ -34,14 +34,9 @@ public class GlossaryCategory extends Asset {
     List<Reference> terms;
 
     /** Child categories organized within this category. */
-    @Singular
+    @Singular("childCategory")
     @Attribute
     List<Reference> childrenCategories;
-
-    @Override
-    protected boolean canEqual(Object other) {
-        return other instanceof GlossaryCategory;
-    }
 
     /**
      * Builds the minimal request necessary to create a category. At least one of glossaryGuid or

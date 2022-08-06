@@ -34,7 +34,8 @@ public class EntityTypeAdapterFactory implements TypeAdapterFactory {
         final TypeAdapter<JsonElement> jsonElementAdapter = gson.getAdapter(JsonElement.class);
         final TypeAdapter<Reference> referenceAdapter = gson.getDelegateAdapter(this, TypeToken.get(Reference.class));
 
-        final TypeAdapter<Asset> assetAdapter = gson.getDelegateAdapter(this, TypeToken.get(Asset.class));
+        final TypeAdapter<IndistinctAsset> assetAdapter =
+                gson.getDelegateAdapter(this, TypeToken.get(IndistinctAsset.class));
         final TypeAdapter<Glossary> glossaryAdapter = gson.getDelegateAdapter(this, TypeToken.get(Glossary.class));
         final TypeAdapter<GlossaryCategory> glossaryCategoryAdapter =
                 gson.getDelegateAdapter(this, TypeToken.get(GlossaryCategory.class));
@@ -50,8 +51,8 @@ public class EntityTypeAdapterFactory implements TypeAdapterFactory {
                 Class<?> c;
                 Asset toModify;
                 if (typeName == null) {
-                    c = Asset.class;
-                    toModify = ((Asset) value).toBuilder().build();
+                    c = IndistinctAsset.class;
+                    toModify = ((IndistinctAsset) value).toBuilder().build();
                 } else {
                     switch (typeName) {
                         case "AtlasGlossary":
@@ -67,8 +68,8 @@ public class EntityTypeAdapterFactory implements TypeAdapterFactory {
                             toModify = ((GlossaryTerm) value).toBuilder().build();
                             break;
                         default:
-                            c = Asset.class;
-                            toModify = ((Asset) value).toBuilder().build();
+                            c = IndistinctAsset.class;
+                            toModify = ((IndistinctAsset) value).toBuilder().build();
                             break;
                     }
                 }
@@ -87,10 +88,6 @@ public class EntityTypeAdapterFactory implements TypeAdapterFactory {
                 }
 
                 Set<String> nullFields = toModify.getNullFields();
-                if (nullFields == null) {
-                    // TODO: embed this init somewhere in the model class itself
-                    nullFields = Collections.EMPTY_SET;
-                }
 
                 //  2. iterate through getter methods to retrieve attribute values
                 try {
@@ -128,7 +125,7 @@ public class EntityTypeAdapterFactory implements TypeAdapterFactory {
 
                 //  5. serialize the new object
                 if (typeName == null) {
-                    assetAdapter.write(out, toModify);
+                    assetAdapter.write(out, (IndistinctAsset) toModify);
                 } else {
                     switch (typeName) {
                         case "AtlasGlossary":
@@ -141,7 +138,7 @@ public class EntityTypeAdapterFactory implements TypeAdapterFactory {
                             glossaryTermAdapter.write(out, (GlossaryTerm) toModify);
                             break;
                         default:
-                            assetAdapter.write(out, toModify);
+                            assetAdapter.write(out, (IndistinctAsset) toModify);
                             break;
                     }
                 }

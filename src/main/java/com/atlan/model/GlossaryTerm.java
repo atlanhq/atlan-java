@@ -35,11 +35,6 @@ public class GlossaryTerm extends Asset {
     @Attribute
     List<Reference> categories;
 
-    @Override
-    protected boolean canEqual(Object other) {
-        return other instanceof GlossaryTerm;
-    }
-
     /**
      * Builds the minimal request necessary to create a term. At least one of glossaryGuid or
      * glossaryQualifiedName must be provided.
@@ -89,12 +84,12 @@ public class GlossaryTerm extends Asset {
             return null;
         } else if (glossaryGuid != null) {
             anchor = Reference.builder()
-                    .typeName("AtlasGlossary")
+                    .typeName(Glossary.TYPE_NAME)
                     .guid(glossaryGuid)
                     .build();
         } else {
             anchor = Reference.builder()
-                    .typeName("AtlasGlossary")
+                    .typeName(Glossary.TYPE_NAME)
                     .uniqueAttributes(UniqueAttributes.builder()
                             .qualifiedName(glossaryQualifiedName)
                             .build())
