@@ -36,11 +36,19 @@ public class EntityTypeAdapterFactory implements TypeAdapterFactory {
 
         final TypeAdapter<IndistinctAsset> assetAdapter =
                 gson.getDelegateAdapter(this, TypeToken.get(IndistinctAsset.class));
+
         final TypeAdapter<Glossary> glossaryAdapter = gson.getDelegateAdapter(this, TypeToken.get(Glossary.class));
         final TypeAdapter<GlossaryCategory> glossaryCategoryAdapter =
                 gson.getDelegateAdapter(this, TypeToken.get(GlossaryCategory.class));
         final TypeAdapter<GlossaryTerm> glossaryTermAdapter =
                 gson.getDelegateAdapter(this, TypeToken.get(GlossaryTerm.class));
+
+        final TypeAdapter<LineageProcess> processAdapter =
+                gson.getDelegateAdapter(this, TypeToken.get(LineageProcess.class));
+        final TypeAdapter<ColumnProcess> columnProcessAdapter =
+                gson.getDelegateAdapter(this, TypeToken.get(ColumnProcess.class));
+
+        final TypeAdapter<Table> tableAdapter = gson.getDelegateAdapter(this, TypeToken.get(Table.class));
 
         TypeAdapter<Entity> resultCustomTypeAdapter = new TypeAdapter<>() {
             @Override
@@ -66,6 +74,18 @@ public class EntityTypeAdapterFactory implements TypeAdapterFactory {
                         case "AtlasGlossaryTerm":
                             c = GlossaryTerm.class;
                             toModify = ((GlossaryTerm) value).toBuilder().build();
+                            break;
+                        case "Process":
+                            c = LineageProcess.class;
+                            toModify = ((LineageProcess) value).toBuilder().build();
+                            break;
+                        case "ColumnProcess":
+                            c = ColumnProcess.class;
+                            toModify = ((ColumnProcess) value).toBuilder().build();
+                            break;
+                        case "Table":
+                            c = Table.class;
+                            toModify = ((Table) value).toBuilder().build();
                             break;
                         default:
                             c = IndistinctAsset.class;
@@ -137,6 +157,15 @@ public class EntityTypeAdapterFactory implements TypeAdapterFactory {
                         case "AtlasGlossaryTerm":
                             glossaryTermAdapter.write(out, (GlossaryTerm) toModify);
                             break;
+                        case "Process":
+                            processAdapter.write(out, (LineageProcess) toModify);
+                            break;
+                        case "ColumnProcess":
+                            columnProcessAdapter.write(out, (ColumnProcess) toModify);
+                            break;
+                        case "Table":
+                            tableAdapter.write(out, (Table) toModify);
+                            break;
                         default:
                             assetAdapter.write(out, (IndistinctAsset) toModify);
                             break;
@@ -170,6 +199,18 @@ public class EntityTypeAdapterFactory implements TypeAdapterFactory {
                         case "AtlasGlossaryTerm":
                             value = glossaryTermAdapter.fromJsonTree(object);
                             c = GlossaryTerm.class;
+                            break;
+                        case "Process":
+                            value = processAdapter.fromJsonTree(object);
+                            c = LineageProcess.class;
+                            break;
+                        case "ColumnProcess":
+                            value = columnProcessAdapter.fromJsonTree(object);
+                            c = ColumnProcess.class;
+                            break;
+                        case "Table":
+                            value = tableAdapter.fromJsonTree(object);
+                            c = Table.class;
                             break;
                         default:
                             value = assetAdapter.fromJsonTree(object);
@@ -225,7 +266,8 @@ public class EntityTypeAdapterFactory implements TypeAdapterFactory {
         } else if (jsonElement.isJsonArray()) {
             deserializeList(value, jsonElement.getAsJsonArray(), method, referenceAdapter);
         } else if (jsonElement.isJsonObject()) {
-            method.invoke(value, referenceAdapter.fromJsonTree(jsonElement));
+            // TODO: Could be a map or a reference...
+            deserializeObject(value, jsonElement.getAsJsonObject(), method, referenceAdapter);
         }
     }
 
@@ -255,7 +297,30 @@ public class EntityTypeAdapterFactory implements TypeAdapterFactory {
             Object deserialized = deserializeElement(element, method, referenceAdapter);
             list.add(deserialized);
         }
-        method.invoke(value, list);
+        Parameter[] params = method.getParameters();
+        Class<?> paramClass = params[0].getType();
+        if (paramClass == Set.class) {
+            method.invoke(value, new LinkedHashSet<>(list));
+        } else if (paramClass == List.class) {
+            method.invoke(value, list);
+        } else {
+            throw new IOException("Unable to deserialize JSON list to Java class: " + paramClass.getCanonicalName());
+        }
+    }
+
+    private static void deserializeObject(
+            Entity value, JsonObject jsonObject, Method method, TypeAdapter<Reference> referenceAdapter)
+            throws IllegalAccessException, InvocationTargetException, IOException {
+        Parameter[] params = method.getParameters();
+        Class<?> paramClass = params[0].getType();
+        if (paramClass == Reference.class) {
+            method.invoke(value, referenceAdapter.fromJsonTree(jsonObject));
+        } else if (paramClass == Map.class) {
+            // TODO: need to translate Java object to a Map
+            method.invoke(value, jsonObject);
+        } else {
+            throw new IOException("Unable to deserialize JSON object to Java class: " + paramClass.getCanonicalName());
+        }
     }
 
     private static void deserializeNumber(Entity value, JsonPrimitive primitive, Method method)

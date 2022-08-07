@@ -3,10 +3,16 @@ package com.atlan.model;
 
 import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+/**
+ * Instance of a term in Atlan, with its detailed information.
+ */
 @Getter
 @Setter
 @SuperBuilder(toBuilder = true)
@@ -21,6 +27,15 @@ public class GlossaryTerm extends Asset {
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Unused attributes. */
+    private final String shortDescription = "";
+
+    private final String longDescription = "";
+    private final List<String> examples = Collections.emptyList();
+    private final String abbreviation = "";
+    private final String usage = "";
+    private final Map<String, String> additionalAttributes = Collections.emptyMap();
+
     /** Glossary in which the term is located. */
     @Attribute
     Reference anchor;
@@ -34,6 +49,53 @@ public class GlossaryTerm extends Asset {
     @Singular
     @Attribute
     List<Reference> categories;
+
+    /** Linked glossary terms that may also be of interest. */
+    @Singular("addToSeeAlso")
+    @Attribute
+    List<Reference> seeAlso;
+
+    /** Glossary terms that have the same, or a very similar meaning in the same language. */
+    @Singular
+    @Attribute
+    Set<Reference> synonyms;
+
+    /** Glossary terms that have the opposite (or near opposite) meaning in the same language. */
+    @Singular
+    @Attribute
+    Set<Reference> antonyms;
+
+    /** These terms are preferred in place of this term. */
+    @Singular
+    @Attribute
+    Set<Reference> preferredTerms;
+
+    /**
+     * These terms should be used instead of this term.
+     */
+    @Singular("addToReplacedBy")
+    @Attribute
+    Set<Reference> replacedBy;
+
+    /**
+     * These terms represent the same meaning, but each is in a different language.
+     */
+    @Singular
+    @Attribute
+    Set<Reference> translatedTerms;
+
+    /**
+     * Unused relationships.
+     */
+    private final Set<Reference> classifies = Collections.emptySet();
+
+    /**
+     * These terms each represent one of the valid values that could be assigned to a data item that has the meaning
+     * described by this term.
+     */
+    @Singular("addToValidValuesFor")
+    @Attribute
+    Set<Reference> validValuesFor;
 
     /**
      * Builds the minimal request necessary to create a term. At least one of glossaryGuid or

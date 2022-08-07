@@ -11,10 +11,9 @@ import com.atlan.model.serde.IndistinctAsset;
 import com.atlan.net.ApiResource;
 import org.testng.annotations.Test;
 
-public class IndistinctAssetTest {
+public class LineageProcessTest {
 
-    private static final IndistinctAsset full = IndistinctAsset.builder()
-            .typeName("typeName")
+    private static final LineageProcess full = LineageProcess.builder()
             .guid("guid")
             .displayText("displayText")
             .classification(Classification.of("classificationName1", "guid"))
@@ -44,20 +43,17 @@ public class IndistinctAssetTest {
             .ownerGroup("ownerGroup")
             .adminUser("adminUser")
             .adminGroup("adminGroup")
-            .adminRole("adminRole")
             .viewerUser("viewerUser")
             .viewerGroup("viewerGroup")
             .connectorName("connectorName")
             .connectionName("connectionName")
             .connectionQualifiedName("connectionQualifiedName")
-            .__hasLineage(false)
             .isDiscoverable(true)
             .isEditable(true)
             .viewScore(123456.0)
             .popularityScore(123456.0)
             .sourceOwners("sourceOwners")
             .sourceURL("sourceURL")
-            .sourceEmbedURL("sourceEmbedURL")
             .lastSyncWorkflowName("lastSyncWorkflowName")
             .lastSyncRunAt(123456789L)
             .lastSyncRun("lastSyncRun")
@@ -65,14 +61,18 @@ public class IndistinctAssetTest {
             .sourceCreatedAt(123456789L)
             .sourceUpdatedAt(123456789L)
             .sourceUpdatedBy("sourceUpdatedBy")
-            .link(Reference.to("Resource", "linkGuid1"))
-            .link(Reference.to("Resource", "linkGuid2"))
-            .readme(Reference.to("Readme", "readmeGuid"))
-            .meaning(Reference.to(GlossaryTerm.TYPE_NAME, "termGuid1"))
-            .meaning(Reference.to(GlossaryTerm.TYPE_NAME, "termGuid2"))
+            .code("code")
+            .sql("sql")
+            .ast("ast")
+            .input(Reference.to(IndistinctAsset.TYPE_NAME, "input1"))
+            .input(Reference.to(IndistinctAsset.TYPE_NAME, "input2"))
+            .output(Reference.to(IndistinctAsset.TYPE_NAME, "output1"))
+            .output(Reference.to(IndistinctAsset.TYPE_NAME, "output2"))
+            .columnProcess(Reference.to(LineageProcess.TYPE_NAME, "columnProcess1"))
+            .columnProcess(Reference.to(LineageProcess.TYPE_NAME, "columnProcess2"))
             .build();
 
-    private static IndistinctAsset frodo;
+    private static LineageProcess frodo;
     private static String serialized;
 
     @Test(groups = {"serialize"})
@@ -87,7 +87,7 @@ public class IndistinctAssetTest {
             dependsOnGroups = {"serialize"})
     void deserialization() {
         assertNotNull(serialized);
-        frodo = ApiResource.GSON.fromJson(serialized, IndistinctAsset.class);
+        frodo = ApiResource.GSON.fromJson(serialized, LineageProcess.class);
         assertNotNull(frodo);
     }
 
@@ -101,6 +101,7 @@ public class IndistinctAssetTest {
         assertEquals(serialized, backAgain, "Serialization is equivalent after serde loop.");
     }
 
+    // TODO: Determine why the deserialized form would differ
     @Test(
             groups = {"equivalency"},
             dependsOnGroups = {"serialize", "deserialize"})

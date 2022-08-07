@@ -108,6 +108,11 @@ public abstract class Asset extends Entity {
     @Attribute
     List<String> adminGroups;
 
+    /** List of roles who administer the asset. (This is only used for Connection assets.) */
+    @Singular
+    @Attribute
+    List<String> adminRoles;
+
     /** Unused. */
     @Singular
     @Attribute
@@ -129,6 +134,10 @@ public abstract class Asset extends Entity {
     /** Unique name of the connection through which this asset is accessible. */
     @Attribute
     String connectionQualifiedName;
+
+    /** Indicates whether this asset has lineage (true) or not. */
+    @Attribute
+    Boolean __hasLineage;
 
     /** Unused. */
     @Attribute
@@ -157,6 +166,10 @@ public abstract class Asset extends Entity {
     /** URL to the resource within the source application. */
     @Attribute
     String sourceURL;
+
+    /** URL to create an embed for a resource (for example, an image of a dashboard) within Atlan. */
+    @Attribute
+    String sourceEmbedURL;
 
     /** Name of the crawler that last synchronized this asset. */
     @Attribute

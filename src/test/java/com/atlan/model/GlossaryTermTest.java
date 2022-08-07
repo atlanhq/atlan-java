@@ -71,6 +71,20 @@ public class GlossaryTermTest {
             .assignedEntity(Reference.to(IndistinctAsset.TYPE_NAME, "assetGuid2"))
             .category(Reference.to(GlossaryCategory.TYPE_NAME, "categoryGuid1"))
             .category(Reference.to(GlossaryCategory.TYPE_NAME, "categoryGuid2"))
+            .addToSeeAlso(Reference.to(GlossaryTerm.TYPE_NAME, "termGuid1"))
+            .addToSeeAlso(Reference.to(GlossaryTerm.TYPE_NAME, "termGuid2"))
+            .synonym(Reference.to(GlossaryTerm.TYPE_NAME, "termGuid1"))
+            .synonym(Reference.to(GlossaryTerm.TYPE_NAME, "termGuid2"))
+            .antonym(Reference.to(GlossaryTerm.TYPE_NAME, "termGuid1"))
+            .antonym(Reference.to(GlossaryTerm.TYPE_NAME, "termGuid2"))
+            .preferredTerm(Reference.to(GlossaryTerm.TYPE_NAME, "termGuid1"))
+            .preferredTerm(Reference.to(GlossaryTerm.TYPE_NAME, "termGuid2"))
+            .addToReplacedBy(Reference.to(GlossaryTerm.TYPE_NAME, "termGuid1"))
+            .addToReplacedBy(Reference.to(GlossaryTerm.TYPE_NAME, "termGuid2"))
+            .translatedTerm(Reference.to(GlossaryTerm.TYPE_NAME, "termGuid1"))
+            .translatedTerm(Reference.to(GlossaryTerm.TYPE_NAME, "termGuid2"))
+            .addToValidValuesFor(Reference.to(GlossaryTerm.TYPE_NAME, "termGuid1"))
+            .addToValidValuesFor(Reference.to(GlossaryTerm.TYPE_NAME, "termGuid2"))
             .build();
 
     private static GlossaryTerm frodo;

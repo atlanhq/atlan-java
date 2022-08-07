@@ -2,10 +2,15 @@
 package com.atlan.model;
 
 import com.atlan.model.relations.Reference;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+/**
+ * Instance of a category in Atlan, with its detailed information.
+ */
 @Getter
 @Setter
 @SuperBuilder(toBuilder = true)
@@ -19,6 +24,12 @@ public class GlossaryCategory extends Asset {
     @Setter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
+
+    /** Unused attributes. */
+    private final String shortDescription = "";
+
+    private final String longDescription = "";
+    private final Map<String, String> additionalAttributes = Collections.emptyMap();
 
     /** Glossary in which the category is located. */
     @Attribute
