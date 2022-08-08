@@ -49,6 +49,7 @@ public class EntityTypeAdapterFactory implements TypeAdapterFactory {
                 gson.getDelegateAdapter(this, TypeToken.get(ColumnProcess.class));
 
         final TypeAdapter<Table> tableAdapter = gson.getDelegateAdapter(this, TypeToken.get(Table.class));
+        final TypeAdapter<Column> columnAdapter = gson.getDelegateAdapter(this, TypeToken.get(Column.class));
 
         TypeAdapter<Entity> resultCustomTypeAdapter = new TypeAdapter<>() {
             @Override
@@ -86,6 +87,10 @@ public class EntityTypeAdapterFactory implements TypeAdapterFactory {
                         case "Table":
                             c = Table.class;
                             toModify = ((Table) value).toBuilder().build();
+                            break;
+                        case "Column":
+                            c = Column.class;
+                            toModify = ((Column) value).toBuilder().build();
                             break;
                         default:
                             c = IndistinctAsset.class;
@@ -166,6 +171,9 @@ public class EntityTypeAdapterFactory implements TypeAdapterFactory {
                         case "Table":
                             tableAdapter.write(out, (Table) toModify);
                             break;
+                        case "Column":
+                            columnAdapter.write(out, (Column) toModify);
+                            break;
                         default:
                             assetAdapter.write(out, (IndistinctAsset) toModify);
                             break;
@@ -211,6 +219,10 @@ public class EntityTypeAdapterFactory implements TypeAdapterFactory {
                         case "Table":
                             value = tableAdapter.fromJsonTree(object);
                             c = Table.class;
+                            break;
+                        case "Column":
+                            value = columnAdapter.fromJsonTree(object);
+                            c = Column.class;
                             break;
                         default:
                             value = assetAdapter.fromJsonTree(object);
@@ -299,10 +311,10 @@ public class EntityTypeAdapterFactory implements TypeAdapterFactory {
         }
         Parameter[] params = method.getParameters();
         Class<?> paramClass = params[0].getType();
-        if (paramClass == Set.class) {
-            method.invoke(value, new LinkedHashSet<>(list));
-        } else if (paramClass == List.class) {
+        if (paramClass == List.class) {
             method.invoke(value, list);
+        } else if (paramClass == Set.class) {
+            method.invoke(value, new LinkedHashSet<>(list));
         } else {
             throw new IOException("Unable to deserialize JSON list to Java class: " + paramClass.getCanonicalName());
         }
