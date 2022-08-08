@@ -1,14 +1,14 @@
 /* SPDX-License-Identifier: Apache-2.0 */
 package com.atlan.model.core;
 
-import com.atlan.Atlan;
+import com.atlan.api.EntityBulkEndpoint;
+import com.atlan.api.EntityGuidEndpoint;
+import com.atlan.api.EntityUniqueAttributesEndpoint;
 import com.atlan.exception.AtlanException;
-import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.enums.AtlanDeleteType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.responses.EntityMutationResponse;
 import com.atlan.model.responses.EntityResponse;
-import com.atlan.net.ApiResource;
 import com.atlan.net.AtlanObject;
 import java.util.*;
 import lombok.*;
@@ -99,135 +99,93 @@ public abstract class Entity extends AtlanObject {
     /** Unused. */
     List<String> meaningNames;
 
-    /** Creates any entity, ignoring any classifications and businessAttributes provided. */
-    public static EntityMutationResponse create(Entity value) throws AtlanException {
-        return create(value, false, false);
+    /**
+     * Creates the entity. If no entity exists, the classifications and businessAttributes will be ?
+     * @return details of the created or updated entity
+     * @throws AtlanException on any error during the API invocation
+     */
+    public EntityMutationResponse upsert() throws AtlanException {
+        return EntityBulkEndpoint.upsert(this, false, false);
     }
 
     /**
-     * Creates any entity, optionally overwriting an existing entity's classifications and / or
-     * businessAttributes.
+     * If no entity exists, has the same behavior as the {@link #upsert()} method.
+     * If an entity does exist, optionally overwrites any classifications and / or businessAttributes.
+     * @param replaceClassifications whether to replace classifications during an update (true) or not (false)
+     * @param replaceCustomMetadata whether to replace custom metadata during an update (true) or not (false)
+     * @return details of the created or updated entity
+     * @throws AtlanException on any error during the API invocation
      */
-    public static EntityMutationResponse create(
-            Entity value, boolean replaceClassifications, boolean replaceBusinessAttributes) throws AtlanException {
-        return create(Collections.singletonList(value), replaceClassifications, replaceBusinessAttributes);
-    }
-
-    /** Creates any entities, ignoring any classifications and businessAttributes provided. */
-    public static EntityMutationResponse create(List<Entity> values) throws AtlanException {
-        return create(values, false, false);
+    public EntityMutationResponse upsert(boolean replaceClassifications, boolean replaceCustomMetadata)
+            throws AtlanException {
+        return EntityBulkEndpoint.upsert(this, replaceClassifications, replaceCustomMetadata);
     }
 
     /**
-     * Creates any entities, optionally overwriting the existing entities' classifications and / or
-     * businessAttributes.
+     * Retrieves an entity by its GUID, complete with all of its relationships.
+     * @param guid of the entity to retrieve
+     * @return the requested full entity, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link com.atlan.exception.NotFoundException} if the entity does not exist
      */
-    public static EntityMutationResponse create(
-            List<Entity> values, boolean replaceClassifications, boolean replaceBusinessAttributes)
-            throws AtlanException {
-        String url = String.format(
-                "%s%s",
-                Atlan.getApiBase(),
-                String.format(
-                        "/api/meta/entity/bulk?replaceClassifications=%s&replaceBusinessAttributes=%s",
-                        replaceClassifications, replaceBusinessAttributes));
-        BulkEntityRequest beq = BulkEntityRequest.builder().entities(values).build();
-        return ApiResource.request(ApiResource.RequestMethod.POST, url, beq, EntityMutationResponse.class, null);
-    }
-
-    /** Retrieves any entity by its GUID. */
-    public static EntityResponse retrieve(String guid) throws AtlanException {
-        return retrieve(guid, false, false);
-    }
-
-    /** Retrieves any entity by its GUID. */
-    public static EntityResponse retrieve(String guid, boolean ignoreRelationships, boolean minExtInfo)
-            throws AtlanException {
-        String url = String.format(
-                "%s%s",
-                Atlan.getApiBase(),
-                String.format(
-                        "/api/meta/entity/guid/%s?ignoreRelationships=%s&minExtInfo=%s",
-                        ApiResource.urlEncodeId(guid), ignoreRelationships, minExtInfo));
-        return ApiResource.request(ApiResource.RequestMethod.GET, url, "", EntityResponse.class, null);
-    }
-
-    /** Retrieves any entity by its qualifiedName. */
-    public static EntityResponse retrieve(String typeName, String qualifiedName) throws AtlanException {
-        return retrieve(typeName, qualifiedName, false, false);
-    }
-
-    /** Retrieves any entity by its qualifiedName. */
-    public static EntityResponse retrieve(
-            String typeName, String qualifiedName, boolean ignoreRelationships, boolean minExtInfo)
-            throws AtlanException {
-        String url = String.format(
-                "%s%s",
-                Atlan.getApiBase(),
-                String.format(
-                        "/api/meta/entity/uniqueAttribute/type/%s?attr:qualifiedName=%s&ignoreRelationships=%s&minExtInfo=%s",
-                        ApiResource.urlEncodeId(typeName),
-                        ApiResource.urlEncodeId(qualifiedName),
-                        ignoreRelationships,
-                        minExtInfo));
-        return ApiResource.request(ApiResource.RequestMethod.GET, url, "", EntityResponse.class, null);
-    }
-
-    /** Updates any entity, ignoring any classifications and businessAttributes provided. */
-    public static EntityMutationResponse update(Entity value) throws AtlanException {
-        return create(value, false, false);
+    public static Entity retrieveFull(String guid) throws AtlanException {
+        EntityResponse response = EntityGuidEndpoint.retrieve(guid, false, false);
+        return response.getEntity();
     }
 
     /**
-     * Updates any entity, optionally overwriting an existing entity's classifications and / or
-     * businessAttributes.
+     * Retrieves a minimal entity by its GUID, without its relationships.
+     * @param guid of the entity to retrieve
+     * @return the requested minimal entity, without its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link com.atlan.exception.NotFoundException} if the entity does not exist
      */
-    public static EntityMutationResponse update(
-            Entity value, boolean replaceClassifications, boolean replaceBusinessAttributes) throws AtlanException {
-        return create(Collections.singletonList(value), replaceClassifications, replaceBusinessAttributes);
+    public static Entity retrieveMinimal(String guid) throws AtlanException {
+        EntityResponse response = EntityGuidEndpoint.retrieve(guid, true, true);
+        return response.getEntity();
     }
 
-    /** Updates any entities, ignoring any classifications and businessAttributes provided. */
-    public static EntityMutationResponse update(List<Entity> values) throws AtlanException {
-        return create(values, false, false);
+    /**
+     * Retrieves an entity by its qualifiedName, complete with all of its relationships.
+     * @param typeName the type of the entity to retrieve
+     * @param qualifiedName the unique name of the entity to retrieve
+     * @return the requested full entity, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link com.atlan.exception.NotFoundException} if the entity does not exist
+     */
+    public static Entity retrieveFull(String typeName, String qualifiedName) throws AtlanException {
+        EntityResponse response = EntityUniqueAttributesEndpoint.retrieve(typeName, qualifiedName, false, false);
+        return response.getEntity();
     }
 
-    /** Soft-deletes any entity */
+    /**
+     * Retrieves an entity by its qualifiedName, without its relationships.
+     * @param typeName the type of the entity to retrieve
+     * @param qualifiedName the unique name of the entity to retrieve
+     * @return the requested minimal entity, without its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link com.atlan.exception.NotFoundException} if the entity does not exist
+     */
+    public static Entity retrieveMinimal(String typeName, String qualifiedName) throws AtlanException {
+        EntityResponse response = EntityUniqueAttributesEndpoint.retrieve(typeName, qualifiedName, true, true);
+        return response.getEntity();
+    }
+
+    /**
+     * Soft-deletes an entity by its GUID. This operation can be reversed by updating the entity and changing
+     * its {@link #status} to {@code ACTIVE}.
+     * @param guid of the entity to soft-delete
+     * @return details of the soft-deleted entity
+     * @throws AtlanException on any error during the API invocation
+     */
     public static EntityMutationResponse delete(String guid) throws AtlanException {
-        return delete(guid, AtlanDeleteType.SOFT);
+        return EntityBulkEndpoint.delete(guid, AtlanDeleteType.SOFT);
     }
 
-    /** Deletes any entity */
-    public static EntityMutationResponse delete(String guid, AtlanDeleteType deleteType) throws AtlanException {
-        return delete(Collections.singletonList(guid), deleteType);
-    }
-
-    /** Deletes any entities */
-    public static EntityMutationResponse delete(List<String> guids, AtlanDeleteType deleteType) throws AtlanException {
-        if (guids != null) {
-            StringBuilder guidList = new StringBuilder();
-            for (String guid : guids) {
-                if (guid != null) {
-                    guidList.append("guid=").append(guid).append(",");
-                }
-            }
-            if (guidList.length() > 0) {
-                // Remove the final comma
-                guidList.setLength(guidList.length() - 1);
-                String url = String.format(
-                        "%s%s",
-                        Atlan.getApiBase(),
-                        String.format("/api/meta/entity/bulk?%s&deleteType=%s", guidList, deleteType));
-                return ApiResource.request(
-                        ApiResource.RequestMethod.DELETE, url, "", EntityMutationResponse.class, null);
-            }
-        }
-        throw new InvalidRequestException(
-                "Insufficient information provided to delete entities: no GUID provided.",
-                "guid",
-                "N/A",
-                "ATLAN-JAVA-CLIENT-400",
-                400,
-                null);
+    /**
+     * Hard-deletes (purges) an entity by its GUID. This operation is irreversible. The entity to purge must
+     * currently be in an active state (soft-deleted entities cannot be purged).
+     * @param guid of the entity to hard-delete
+     * @return details of the hard-deleted entity
+     * @throws AtlanException on any error during the API invocation
+     */
+    public static EntityMutationResponse purge(String guid) throws AtlanException {
+        return EntityBulkEndpoint.delete(guid, AtlanDeleteType.HARD);
     }
 }
