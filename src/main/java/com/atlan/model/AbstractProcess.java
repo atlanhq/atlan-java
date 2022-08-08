@@ -7,7 +7,6 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
-import java.util.Set;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -40,12 +39,12 @@ public abstract class AbstractProcess extends Asset {
     /** Assets that are inputs to this process. */
     @Singular
     @Attribute
-    Set<Reference> inputs;
+    List<Reference> inputs;
 
     /** Assets that are outputs from this process. */
     @Singular
     @Attribute
-    Set<Reference> outputs;
+    List<Reference> outputs;
 
     /**
      * Generate a unique qualifiedName for a process.
@@ -63,9 +62,13 @@ public abstract class AbstractProcess extends Asset {
             String connectionName,
             String connectionQualifiedName,
             List<Reference> inputs,
-            List<Reference> outputs) {
+            List<Reference> outputs,
+            Reference parent) {
         StringBuilder sb = new StringBuilder();
         sb.append(name).append(connectorName).append(connectionName).append(connectionQualifiedName);
+        if (parent != null) {
+            appendRelationship(sb, parent);
+        }
         appendRelationships(sb, inputs);
         appendRelationships(sb, outputs);
         try {
@@ -85,15 +88,24 @@ public abstract class AbstractProcess extends Asset {
      */
     private static void appendRelationships(StringBuilder sb, List<Reference> relationships) {
         for (Reference relationship : relationships) {
-            // TODO: if two calls are made for the same process, but one uses GUIDs for
-            //  its references and the other uses qualifiedName, we'll end up with different
-            //  hashes (duplicate processes)
-            if (relationship.getGuid() != null) {
-                sb.append(relationship.getGuid());
-            } else if (relationship.getUniqueAttributes() != null
-                    && relationship.getUniqueAttributes().getQualifiedName() != null) {
-                sb.append(relationship.getUniqueAttributes().getQualifiedName());
-            }
+            appendRelationship(sb, relationship);
+        }
+    }
+
+    /**
+     * Append a single relationship into the provided string builder.
+     * @param sb into which to append
+     * @param relationship to append
+     */
+    private static void appendRelationship(StringBuilder sb, Reference relationship) {
+        // TODO: if two calls are made for the same process, but one uses GUIDs for
+        //  its references and the other uses qualifiedName, we'll end up with different
+        //  hashes (duplicate processes)
+        if (relationship.getGuid() != null) {
+            sb.append(relationship.getGuid());
+        } else if (relationship.getUniqueAttributes() != null
+                && relationship.getUniqueAttributes().getQualifiedName() != null) {
+            sb.append(relationship.getUniqueAttributes().getQualifiedName());
         }
     }
 }
