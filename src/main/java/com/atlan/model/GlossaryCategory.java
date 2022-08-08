@@ -50,15 +50,17 @@ public class GlossaryCategory extends Asset {
     List<Reference> childrenCategories;
 
     /**
-     * Builds the minimal request necessary to create a category. At least one of glossaryGuid or
+     * Builds the minimal object necessary for creating a category. At least one of glossaryGuid or
      * glossaryQualifiedName must be provided.
+     * To continue adding to the object, call {@link #toBuilder()} on
+     * the result and continue calling additional methods to add metadata followed by {@link GlossaryCategoryBuilder#build()}.
      *
      * @param name of the category
      * @param glossaryGuid unique identifier of the category's glossary
      * @param glossaryQualifiedName unique name of the category's glossary
-     * @return the minimal request necessary to create the category
+     * @return the minimal object necessary to create the category
      */
-    public static GlossaryCategory createRequest(String name, String glossaryGuid, String glossaryQualifiedName) {
+    public static GlossaryCategory toCreate(String name, String glossaryGuid, String glossaryQualifiedName) {
         return GlossaryCategory.builder()
                 .qualifiedName(name)
                 .name(name)
@@ -67,15 +69,17 @@ public class GlossaryCategory extends Asset {
     }
 
     /**
-     * Builds the minimal request necessary to update a category. At least one of glossaryGuid or
+     * Builds the minimal object necessary to update a category. At least one of glossaryGuid or
      * glossaryQualifiedName must be provided.
+     * To continue adding to the object, call {@link #toBuilder()} on
+     * the result and continue calling additional methods to add metadata followed by {@link GlossaryCategoryBuilder#build()}.
      *
      * @param qualifiedName of the category
      * @param name of the category
      * @param glossaryGuid unique identifier of the category's glossary
-     * @return the minimal request necessary to update the category
+     * @return the minimal object necessary to update the category
      */
-    public static GlossaryCategory updateRequest(String qualifiedName, String name, String glossaryGuid) {
+    public static GlossaryCategory toUpdate(String qualifiedName, String name, String glossaryGuid) {
         // Turns out that updating a category requires the glossary GUID, and will not work
         // with the qualifiedName of the glossary
         return GlossaryCategory.builder()

@@ -6,7 +6,6 @@ import com.atlan.model.relations.UniqueAttributes;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -58,36 +57,30 @@ public class GlossaryTerm extends Asset {
     /** Glossary terms that have the same, or a very similar meaning in the same language. */
     @Singular
     @Attribute
-    Set<Reference> synonyms;
+    List<Reference> synonyms;
 
     /** Glossary terms that have the opposite (or near opposite) meaning in the same language. */
     @Singular
     @Attribute
-    Set<Reference> antonyms;
+    List<Reference> antonyms;
 
     /** These terms are preferred in place of this term. */
     @Singular
     @Attribute
-    Set<Reference> preferredTerms;
+    List<Reference> preferredTerms;
 
-    /**
-     * These terms should be used instead of this term.
-     */
+    /** These terms should be used instead of this term. */
     @Singular("addToReplacedBy")
     @Attribute
-    Set<Reference> replacedBy;
+    List<Reference> replacedBy;
 
-    /**
-     * These terms represent the same meaning, but each is in a different language.
-     */
+    /** These terms represent the same meaning, but each is in a different language. */
     @Singular
     @Attribute
-    Set<Reference> translatedTerms;
+    List<Reference> translatedTerms;
 
-    /**
-     * Unused relationships.
-     */
-    private final Set<Reference> classifies = Collections.emptySet();
+    /** Unused relationships. */
+    private final List<Reference> classifies = Collections.emptyList();
 
     /**
      * These terms each represent one of the valid values that could be assigned to a data item that has the meaning
@@ -95,18 +88,20 @@ public class GlossaryTerm extends Asset {
      */
     @Singular("addToValidValuesFor")
     @Attribute
-    Set<Reference> validValuesFor;
+    List<Reference> validValuesFor;
 
     /**
-     * Builds the minimal request necessary to create a term. At least one of glossaryGuid or
+     * Builds the minimal object necessary for creating a term. At least one of glossaryGuid or
      * glossaryQualifiedName must be provided.
+     * To continue adding to the object, call {@link #toBuilder()} on
+     * the result and continue calling additional methods to add metadata followed by {@link GlossaryTermBuilder#build()}.
      *
      * @param name of the term
      * @param glossaryGuid unique identifier of the term's glossary
      * @param glossaryQualifiedName unique name of the term's glossary
      * @return the minimal request necessary to create the term
      */
-    public static GlossaryTerm createRequest(String name, String glossaryGuid, String glossaryQualifiedName) {
+    public static GlossaryTerm toCreate(String name, String glossaryGuid, String glossaryQualifiedName) {
         return GlossaryTerm.builder()
                 .qualifiedName(name)
                 .name(name)
@@ -115,15 +110,17 @@ public class GlossaryTerm extends Asset {
     }
 
     /**
-     * Builds the minimal request necessary to update a term. At least one of glossaryGuid or
+     * Builds the minimal object necessary to update a term. At least one of glossaryGuid or
      * glossaryQualifiedName must be provided.
+     * To continue adding to the object, call {@link #toBuilder()} on
+     * the result and continue calling additional methods to add metadata followed by {@link GlossaryTermBuilder#build()}.
      *
      * @param qualifiedName of the term
      * @param name of the term
      * @param glossaryGuid unique identifier of the term's glossary
-     * @return the minimal request necessary to update the term
+     * @return the minimal object necessary to update the term
      */
-    public static GlossaryTerm updateRequest(String qualifiedName, String name, String glossaryGuid) {
+    public static GlossaryTerm toUpdate(String qualifiedName, String name, String glossaryGuid) {
         // Turns out that updating a term requires the glossary GUID, and will not work
         // with the qualifiedName of the glossary
         return GlossaryTerm.builder()
@@ -134,7 +131,7 @@ public class GlossaryTerm extends Asset {
     }
 
     /**
-     * Set up the minimal object required to create a term. Only one of the following is required.
+     * Set up the minimal object required to reference a glossary. Only one of the following is required.
      *
      * @param glossaryGuid unique identifier of the glossary for the term
      * @param glossaryQualifiedName unique name of the glossary

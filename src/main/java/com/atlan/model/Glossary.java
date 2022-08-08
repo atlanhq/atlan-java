@@ -44,23 +44,27 @@ public class Glossary extends Asset {
     List<Reference> categories;
 
     /**
-     * Builds the minimal request necessary to create a glossary.
+     * Builds the minimal object necessary for creating a glossary.
+     * To continue adding to the object, call {@link #toBuilder()} on the result and continue calling additional
+     * methods to add metadata followed by {@link GlossaryBuilder#build()}.
      *
      * @param name of the glossary
-     * @return the minimal request necessary to create the glossary
+     * @return the minimal object necessary to create the glossary
      */
-    public static Glossary createRequest(String name) {
+    public static Glossary toCreate(String name) {
         return Glossary.builder().qualifiedName(name).name(name).build();
     }
 
     /**
-     * Builds the minimal request necessary to update a glossary.
+     * Builds the minimal object necessary to update a glossary.
+     * To continue adding to the object, call {@link #toBuilder()} on the result and continue calling additional
+     * methods to add metadata followed by {@link GlossaryBuilder#build()}.
      *
      * @param guid unique identifier of the glossary
      * @param name of the glossary
-     * @return the minimal request necessary to update the glossary
+     * @return the minimal object necessary to update the glossary
      */
-    public static Glossary updateRequest(String guid, String name) {
+    public static Glossary toUpdate(String guid, String name) {
         return Glossary.builder().guid(guid).qualifiedName(name).name(name).build();
     }
 }

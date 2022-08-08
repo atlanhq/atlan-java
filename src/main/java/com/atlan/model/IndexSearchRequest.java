@@ -1,10 +1,9 @@
 /* SPDX-License-Identifier: Apache-2.0 */
 package com.atlan.model;
 
-import com.atlan.Atlan;
+import com.atlan.api.IndexSearchEndpoint;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.responses.IndexSearchResponse;
-import com.atlan.net.ApiResource;
 import com.atlan.net.AtlanObject;
 import java.util.List;
 import lombok.Data;
@@ -15,7 +14,7 @@ import lombok.experimental.SuperBuilder;
 @Data
 @SuperBuilder
 @EqualsAndHashCode(callSuper = true)
-public class IndexSearch extends AtlanObject {
+public class IndexSearchRequest extends AtlanObject {
     /** Parameters for the search itself. */
     IndexSearchDSL dsl;
 
@@ -29,7 +28,6 @@ public class IndexSearch extends AtlanObject {
 
     /** Run the search. */
     public IndexSearchResponse search() throws AtlanException {
-        String url = String.format("%s%s", Atlan.getApiBase(), "/api/meta/search/indexsearch");
-        return ApiResource.request(ApiResource.RequestMethod.POST, url, this, IndexSearchResponse.class, null);
+        return IndexSearchEndpoint.search(this);
     }
 }

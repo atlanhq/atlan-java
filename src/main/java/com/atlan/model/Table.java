@@ -3,12 +3,13 @@ package com.atlan.model;
 
 import com.atlan.model.relations.Reference;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 /**
- * Detailed information about SQL-related assets.
+ * Instance of a table in Atlan, with its detailed information.
  */
 @Getter
 @Setter
@@ -24,97 +25,74 @@ public class Table extends SQL {
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /**
-     * Number of columns in this table.
-     */
+    /** Number of columns in this table. */
     @Attribute
     Long columnCount;
 
-    /**
-     * Number of rows in this table.
-     */
+    /** Number of rows in this table. */
     @Attribute
     Long rowCount;
 
-    /**
-     * Size of the table in bytes.
-     */
+    /** Size of the table in bytes. */
     @Attribute
     Long sizeBytes;
 
-    /**
-     * TBC
-     */
+    /** TBC */
     @Attribute
     String alias;
 
-    /**
-     * Whether this table is temporary (true) or not (false).
-     */
+    /** Whether this table is temporary (true) or not (false). */
     @Attribute
     Boolean isTemporary;
 
-    /**
-     * TBC
-     */
+    /** TBC */
     @Attribute
     Boolean isQueryPreview;
 
-    /**
-     * Unused attributes.
-     */
+    /** Unused attributes. */
     private final Map<String, String> queryPreviewConfig = Collections.emptyMap();
 
-    /**
-     * TBC
-     */
+    /** TBC */
     @Attribute
     String externalLocation;
 
-    /**
-     * TBC
-     */
+    /** TBC */
     @Attribute
     String externalLocationRegion;
 
-    /**
-     * TBC
-     */
+    /** TBC */
     @Attribute
     String externalLocationFormat;
 
-    /**
-     * TBC
-     */
+    /** TBC */
     @Attribute
     Boolean isPartitioned;
 
-    /**
-     * TBC
-     */
+    /** TBC */
     @Attribute
     String partitionStrategy;
 
-    /**
-     * TBC
-     */
+    /** TBC */
     @Attribute
     Long partitionCount;
 
-    /**
-     * TBC
-     */
+    /** TBC */
     @Attribute
     String partitionList;
 
-    /**
-     * Schema in which this table exists.
-     */
+    /** Schema in which this table exists. */
     @Attribute
     Reference atlanSchema;
 
+    /** Columns that exist within this table. */
+    @Singular
+    @Attribute
+    List<Reference> columns;
+
     /**
-     * Builds the minimal request necessary to create a table.
+     * Builds the minimal object necessary to create a table.
+     * To continue adding to the object, call {@link #toBuilder()} on the result and continue calling additional
+     * methods to add metadata followed by {@link TableBuilder#build()}.
      *
      * @param name of the table
      * @param connectorName name of the connector (software / system) that hosts the table
@@ -125,7 +103,7 @@ public class Table extends SQL {
      * @param connectionQualifiedName unique name of the specific instance of the software / system that hosts the table
      * @return the minimal request necessary to create the table
      */
-    public static Table createRequest(
+    public static Table toCreate(
             String name,
             String connectorName,
             String schemaName,
@@ -133,6 +111,8 @@ public class Table extends SQL {
             String databaseName,
             String databaseQualifiedName,
             String connectionQualifiedName) {
+        // TODO: can we simplify the argument list by just taking qualifiedNames and extracting the
+        //  non-qualifiedNames from these?
         return Table.builder()
                 .name(name)
                 .qualifiedName(schemaQualifiedName + "/" + name)
@@ -146,13 +126,15 @@ public class Table extends SQL {
     }
 
     /**
-     * Builds the minimal request necessary to update a table.
+     * Builds the minimal object necessary to update a table.
+     * To continue adding to the object, call {@link #toBuilder()} on the result and continue calling additional
+     * methods to add metadata followed by {@link TableBuilder#build()}.
      *
      * @param qualifiedName of the table
      * @param name of the table
      * @return the minimal request necessary to update the table
      */
-    public static Table updateRequest(String qualifiedName, String name) {
+    public static Table toUpdate(String qualifiedName, String name) {
         return Table.builder().qualifiedName(qualifiedName).name(name).build();
     }
 }
