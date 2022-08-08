@@ -85,6 +85,8 @@ public class TableTest {
             .partitionCount(12L)
             .partitionList("partitionList")
             .atlanSchema(Reference.to("Schema", "schemaGuid"))
+            .column(Reference.to(Column.TYPE_NAME, "columnGuid1"))
+            .column(Reference.to(Column.TYPE_NAME, "columnGuid2"))
             .build();
 
     private static Table frodo;
