@@ -95,7 +95,7 @@ public class IndistinctAssetTest {
         assertNotNull(serialized);
         assertNotNull(frodo);
         String backAgain = frodo.toJson();
-        assertEquals(serialized, backAgain, "Serialization is equivalent after serde loop.");
+        assertEquals(serialized, backAgain, "Serialization is not equivalent after serde loop,");
     }
 
     @Test(
@@ -104,6 +104,6 @@ public class IndistinctAssetTest {
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);
-        assertEquals(full, frodo, "Deserialization is equivalent after serde loop.");
+        assertEquals(full, frodo, "Deserialization is not equivalent after serde loop,");
     }
 }

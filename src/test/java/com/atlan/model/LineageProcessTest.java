@@ -40,17 +40,20 @@ public class LineageProcessTest {
             .ownerGroup("ownerGroup")
             .adminUser("adminUser")
             .adminGroup("adminGroup")
+            .adminRole("adminRole")
             .viewerUser("viewerUser")
             .viewerGroup("viewerGroup")
             .connectorName("connectorName")
             .connectionName("connectionName")
             .connectionQualifiedName("connectionQualifiedName")
+            .__hasLineage(false)
             .isDiscoverable(true)
             .isEditable(true)
             .viewScore(123456.0)
             .popularityScore(123456.0)
             .sourceOwners("sourceOwners")
             .sourceURL("sourceURL")
+            .sourceEmbedURL("sourceEmbedURL")
             .lastSyncWorkflowName("lastSyncWorkflowName")
             .lastSyncRunAt(123456789L)
             .lastSyncRun("lastSyncRun")
@@ -58,6 +61,11 @@ public class LineageProcessTest {
             .sourceCreatedAt(123456789L)
             .sourceUpdatedAt(123456789L)
             .sourceUpdatedBy("sourceUpdatedBy")
+            .link(Reference.to("Resource", "linkGuid1"))
+            .link(Reference.to("Resource", "linkGuid2"))
+            .readme(Reference.to("Readme", "readmeGuid"))
+            .meaning(Reference.to(GlossaryTerm.TYPE_NAME, "termGuid1"))
+            .meaning(Reference.to(GlossaryTerm.TYPE_NAME, "termGuid2"))
             .code("code")
             .sql("sql")
             .ast("ast")
@@ -95,7 +103,7 @@ public class LineageProcessTest {
         assertNotNull(serialized);
         assertNotNull(frodo);
         String backAgain = frodo.toJson();
-        assertEquals(serialized, backAgain, "Serialization is equivalent after serde loop.");
+        assertEquals(serialized, backAgain, "Serialization is not equivalent after serde loop,");
     }
 
     // TODO: Determine why the deserialized form would differ
@@ -105,6 +113,6 @@ public class LineageProcessTest {
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);
-        assertEquals(full, frodo, "Deserialization is equivalent after serde loop.");
+        assertEquals(full, frodo, "Deserialization is not equivalent after serde loop,");
     }
 }
