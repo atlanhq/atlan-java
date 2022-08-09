@@ -5,6 +5,7 @@ import com.atlan.api.EntityBulkEndpoint;
 import com.atlan.api.EntityGuidEndpoint;
 import com.atlan.api.EntityUniqueAttributesEndpoint;
 import com.atlan.exception.AtlanException;
+import com.atlan.model.CustomMetadata;
 import com.atlan.model.enums.AtlanDeleteType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.responses.EntityMutationResponse;
@@ -52,7 +53,7 @@ public abstract class Entity extends AtlanObject {
 
     /** Classifications assigned to the entity. */
     @Singular
-    List<Classification> classifications;
+    Set<Classification> classifications;
 
     /**
      * Map of attributes in the entity and their values. This is intended for use by internal (de)serialization
@@ -68,9 +69,20 @@ public abstract class Entity extends AtlanObject {
     @EqualsAndHashCode.Exclude
     Map<String, Object> relationshipAttributes;
 
-    /** Map of custom metadata attributes and values defined on the entity. */
-    // @Singular
-    Map<String, Object> businessAttributes;
+    /**
+     * Map of custom metadata attributes and values defined on the entity. This is intended for use by internal
+     * (de)serialization only. For actual custom metadata attributes and values, use the top-level
+     * {@link #customMetadata} field and its related operations.
+     */
+    @EqualsAndHashCode.Exclude
+    Map<String, Map<String, Object>> businessAttributes;
+
+    /**
+     * Map of custom metadata attributes and values defined on the entity. The map is keyed by the human-readable
+     * name of the custom metadata set, and the values are a further mapping from human-readable attribute name
+     * to the value for that attribute on this entity.
+     */
+    transient CustomMetadata customMetadata;
 
     /** Status of the entity. */
     final AtlanStatus status;
@@ -90,14 +102,32 @@ public abstract class Entity extends AtlanObject {
     /** Details on the handler used for deletion of the asset. */
     final String deleteHandler;
 
-    /** Unused. */
-    List<String> classificationNames;
+    /** The names of the classifications that exist on the asset. */
+    Set<String> classificationNames;
 
     /** Unused. */
     Boolean isIncomplete;
 
     /** Unused. */
-    List<String> meaningNames;
+    Set<String> meaningNames;
+
+    /** Remove the certificate from the asset, if any is set on the asset. */
+    public void removeCustomMetadata() {
+        // It is sufficient to simply exclude businessAttributes from a request in order
+        // for them to be removed, as long as the "replaceBusinessAttributes" flag is set
+        // to true (which it must be for any update to work to businessAttributes anyway)
+        businessAttributes = null;
+        customMetadata = null;
+    }
+
+    /** Remove the classifications from the asset, if the asset is classified with any. */
+    public void removeClassifications() {
+        // It is sufficient to simply exclude classifications from a request in order
+        // for them to be removed, as long as the "replaceClassifications" flag is set to
+        // true (which it must be for any update to work to classifications anyway)
+        classifications = null;
+        classificationNames = null;
+    }
 
     /**
      * Creates the entity. If no entity exists, the classifications and businessAttributes will be ?
