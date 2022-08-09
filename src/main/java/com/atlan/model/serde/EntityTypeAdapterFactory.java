@@ -1,6 +1,9 @@
 /* SPDX-License-Identifier: Apache-2.0 */
 package com.atlan.model.serde;
 
+import com.atlan.cache.ClassificationCache;
+import com.atlan.cache.CustomMetadataCache;
+import com.atlan.exception.AtlanException;
 import com.atlan.model.*;
 import com.atlan.model.core.Entity;
 import com.atlan.model.relations.Reference;
@@ -17,7 +20,7 @@ import java.lang.reflect.Parameter;
 import java.util.*;
 
 /**
- * Creates type adapter for interface {@code EntityX} able to deserialize raw JSON to subtype
+ * Creates type adapter for interface {@link Entity} able to deserialize raw JSON to subtype
  * implementation based on discriminator field {@code typeName}.
  */
 public class EntityTypeAdapterFactory implements TypeAdapterFactory {
@@ -111,6 +114,7 @@ public class EntityTypeAdapterFactory implements TypeAdapterFactory {
                 if (attributes == null) {
                     attributes = new LinkedHashMap<>();
                 }
+                Map<String, Map<String, Object>> businessAttributes = toModify.getBusinessAttributes();
 
                 Set<String> nullFields = toModify.getNullFields();
 
@@ -119,34 +123,48 @@ public class EntityTypeAdapterFactory implements TypeAdapterFactory {
                     for (Map.Entry<String, Method> entry : getterMap.entrySet()) {
                         String fieldName = entry.getKey();
                         Field field = fieldMap.get(fieldName);
-                        if (field != null && field.isAnnotationPresent(Attribute.class)) {
-                            Object attrValue;
-                            if (nullFields.contains(fieldName)) {
-                                // If the value should be serialized as null, then
-                                // set the value to the serializable null
-                                attrValue = Removable.NULL;
-                            } else {
-                                // Otherwise, pickup the value from the top-level
-                                // attribute so that we can move that value across
-                                Method get = entry.getValue();
-                                attrValue = get.invoke(toModify);
-                            }
-                            if (attrValue != null) {
-                                //  3. set attributes map from the top-level attribute value
-                                attributes.put(fieldName, attrValue);
-                                Method set = setterMap.get(fieldName);
-                                if (set != null) {
-                                    //  4. null the individual top-level attribute
-                                    set.invoke(toModify, (Object) null);
+                        if (field != null) {
+                            if (field.isAnnotationPresent(Attribute.class)) {
+                                Object attrValue;
+                                if (nullFields.contains(fieldName)) {
+                                    // If the value should be serialized as null, then
+                                    // set the value to the serializable null
+                                    attrValue = Removable.NULL;
+                                } else {
+                                    // Otherwise, pickup the value from the top-level
+                                    // attribute so that we can move that value across
+                                    Method get = entry.getValue();
+                                    attrValue = get.invoke(toModify);
+                                }
+                                if (attrValue != null) {
+                                    //  3. set attributes map from the top-level attribute value
+                                    attributes.put(fieldName, attrValue);
+                                    Method set = setterMap.get(fieldName);
+                                    if (set != null) {
+                                        //  4. null the individual top-level attribute
+                                        set.invoke(toModify, (Object) null);
+                                    }
+                                }
+                            } else if (field.getName().equals("customMetadata")) {
+                                // 5. Translate custom metadata to businessAttributes map
+                                CustomMetadata cm = toModify.getCustomMetadata();
+                                if (cm != null) {
+                                    if (businessAttributes == null) {
+                                        businessAttributes = new LinkedHashMap<>();
+                                    }
+                                    CustomMetadataCache.getBusinessAttributesFromCustomMetadata(cm, businessAttributes);
                                 }
                             }
                         }
                     }
                 } catch (IllegalAccessException | InvocationTargetException e) {
                     throw new IOException("Unable to retrieve value through reflection.", e);
+                } catch (AtlanException e) {
+                    throw new IOException("Unable to retrieve the available custom metadata in Atlan.", e);
                 }
 
                 toModify.setAttributes(attributes);
+                toModify.setBusinessAttributes(businessAttributes);
 
                 //  5. serialize the new object
                 if (typeName == null) {
@@ -186,6 +204,8 @@ public class EntityTypeAdapterFactory implements TypeAdapterFactory {
                 JsonObject object = jsonElementAdapter.read(in).getAsJsonObject();
                 JsonObject attributes = object.getAsJsonObject("attributes");
                 JsonObject relationshipAttributes = object.getAsJsonObject("relationshipAttributes");
+                JsonObject businessAttributes = object.getAsJsonObject("businessAttributes");
+                JsonArray classificationNames = object.getAsJsonArray("classificationNames");
 
                 Entity value;
                 Class<?> c;
@@ -264,6 +284,32 @@ public class EntityTypeAdapterFactory implements TypeAdapterFactory {
                     }
                 }
 
+                CustomMetadata cm = null;
+                if (businessAttributes != null) {
+                    // Translate these into custom metadata structure
+                    try {
+                        cm = CustomMetadataCache.getCustomMetadataFromBusinessAttributes(businessAttributes);
+                    } catch (AtlanException e) {
+                        throw new IOException("Unable to deserialize custom metadata.", e);
+                    }
+                }
+
+                Set<String> clsNames = null;
+                if (classificationNames != null) {
+                    clsNames = new HashSet<>();
+                    // Translate these IDs in to human-readable names
+                    try {
+                        for (JsonElement element : classificationNames) {
+                            String name = ClassificationCache.getNameForId(element.getAsString());
+                            clsNames.add(name);
+                        }
+                    } catch (AtlanException e) {
+                        throw new IOException("Unable to deserialize classification name.", e);
+                    }
+                }
+
+                value.setCustomMetadata(cm);
+                value.setClassificationNames(clsNames);
                 return value;
             }
         };

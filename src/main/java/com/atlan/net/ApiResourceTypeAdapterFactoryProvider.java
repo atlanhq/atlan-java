@@ -1,6 +1,7 @@
 /* SPDX-License-Identifier: Apache-2.0 */
 package com.atlan.net;
 
+import com.atlan.model.serde.ClassificationTypeAdapterFactory;
 import com.atlan.model.serde.EmptyListTypeAdapterFactory;
 import com.atlan.model.serde.EntityTypeAdapterFactory;
 import com.atlan.model.serde.RemovableTypeAdapterFactory;
@@ -17,6 +18,7 @@ final class ApiResourceTypeAdapterFactoryProvider {
     static {
         factories.add(EmptyListTypeAdapterFactory.INSTANCE);
         factories.add(new RemovableTypeAdapterFactory());
+        factories.add(new ClassificationTypeAdapterFactory());
         factories.add(new EntityTypeAdapterFactory());
         factories.add(new ReflectionCheckingTypeAdapterFactory());
     }
