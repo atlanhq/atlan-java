@@ -3,7 +3,6 @@ package com.atlan.model;
 
 import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import lombok.*;
@@ -17,6 +16,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 public class GlossaryTerm extends Asset {
+    private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "AtlasGlossaryTerm";
 
@@ -27,13 +27,13 @@ public class GlossaryTerm extends Asset {
     String typeName = TYPE_NAME;
 
     /** Unused attributes. */
-    private final String shortDescription = "";
+    transient String shortDescription;
 
-    private final String longDescription = "";
-    private final List<String> examples = Collections.emptyList();
-    private final String abbreviation = "";
-    private final String usage = "";
-    private final Map<String, String> additionalAttributes = Collections.emptyMap();
+    transient String longDescription;
+    transient List<String> examples;
+    transient String abbreviation;
+    transient String usage;
+    transient Map<String, String> additionalAttributes;
 
     /** Glossary in which the term is located. */
     @Attribute
@@ -80,7 +80,7 @@ public class GlossaryTerm extends Asset {
     List<Reference> translatedTerms;
 
     /** Unused relationships. */
-    private final List<Reference> classifies = Collections.emptyList();
+    transient List<Reference> classifies;
 
     /**
      * These terms each represent one of the valid values that could be assigned to a data item that has the meaning

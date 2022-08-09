@@ -14,6 +14,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 public class LineageProcess extends AbstractProcess {
+    private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "Process";
 

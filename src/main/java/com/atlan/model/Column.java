@@ -3,7 +3,6 @@ package com.atlan.model;
 
 import com.atlan.model.relations.Reference;
 import com.google.gson.annotations.SerializedName;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import lombok.*;
@@ -17,6 +16,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 public class Column extends SQL {
+    private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "Column";
 
@@ -103,7 +103,7 @@ public class Column extends SQL {
     Long maxLength;
 
     /** Unused attributes. */
-    private final Map<String, String> validations = Collections.emptyMap();
+    transient Map<String, String> validations;
 
     /** Table in which this column exists, or null if the column exists in a view. */
     @Attribute

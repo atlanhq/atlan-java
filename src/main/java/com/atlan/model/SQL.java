@@ -1,7 +1,6 @@
 /* SPDX-License-Identifier: Apache-2.0 */
 package com.atlan.model;
 
-import java.util.Collections;
 import java.util.Map;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -32,7 +31,7 @@ public abstract class SQL extends Asset {
     /**
      * Unused attribues.
      */
-    private final Map<String, Long> queryUserMap = Collections.emptyMap();
+    transient Map<String, Long> queryUserMap;
 
     /**
      * Time (epoch) at which the query count was last updated, in milliseconds.

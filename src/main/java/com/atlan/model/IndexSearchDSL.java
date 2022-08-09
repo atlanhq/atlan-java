@@ -15,14 +15,20 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @EqualsAndHashCode(callSuper = false)
 public class IndexSearchDSL extends AtlanObject {
+    private static final long serialVersionUID = 2L;
+
     /** Starting point for paging. */
     Integer from;
+
     /** Number of results to return per page. */
     Integer size;
+
     /** (Optional) Aggregation to apply to the query. */
     Aggregation aggregation;
+
     /** Query to run. */
     Query query;
+
     /** (Optional) Properties by which to sort the results. */
     @Singular("sortOption")
     List<SortOptions> sort;

@@ -15,6 +15,8 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @EqualsAndHashCode(callSuper = true)
 public class IndexSearchRequest extends AtlanObject {
+    private static final long serialVersionUID = 2L;
+
     /** Parameters for the search itself. */
     IndexSearchDSL dsl;
 

@@ -2,7 +2,6 @@
 package com.atlan.model;
 
 import com.atlan.model.relations.Reference;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import lombok.*;
@@ -16,6 +15,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 public class Table extends SQL {
+    private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "Table";
 
@@ -50,7 +50,7 @@ public class Table extends SQL {
     Boolean isQueryPreview;
 
     /** Unused attributes. */
-    private final Map<String, String> queryPreviewConfig = Collections.emptyMap();
+    transient Map<String, String> queryPreviewConfig;
 
     /** TBC */
     @Attribute

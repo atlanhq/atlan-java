@@ -2,7 +2,6 @@
 package com.atlan.model;
 
 import com.atlan.model.relations.Reference;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import lombok.*;
@@ -16,6 +15,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 public class Glossary extends Asset {
+    private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "AtlasGlossary";
 
@@ -26,12 +26,12 @@ public class Glossary extends Asset {
     String typeName = TYPE_NAME;
 
     /** Unused attributes. */
-    private final String shortDescription = "";
+    transient String shortDescription;
 
-    private final String longDescription = "";
-    private final String language = "";
-    private final String usage = "";
-    private final Map<String, String> additionalAttributes = Collections.emptyMap();
+    transient String longDescription;
+    transient String language;
+    transient String usage;
+    transient Map<String, String> additionalAttributes;
 
     /** Terms within this glossary. */
     @Singular
