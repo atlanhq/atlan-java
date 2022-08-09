@@ -9,6 +9,8 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class EntityResponse extends ApiResource {
+    private static final long serialVersionUID = 2L;
+
     /** Unused. */
     Object referredEntities;
 

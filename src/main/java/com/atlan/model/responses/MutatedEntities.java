@@ -10,6 +10,8 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class MutatedEntities extends AtlanObject {
+    private static final long serialVersionUID = 2L;
+
     /** Assets that were created. */
     List<Entity> CREATE;
 

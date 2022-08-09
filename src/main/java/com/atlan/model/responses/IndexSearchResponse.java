@@ -10,6 +10,8 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class IndexSearchResponse extends ApiResource {
+    private static final long serialVersionUID = 2L;
+
     /** Type of query. */
     String queryType;
 

@@ -12,6 +12,8 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class EntityMutationResponse extends ApiResource {
+    private static final long serialVersionUID = 2L;
+
     /** Assets that were changed. */
     MutatedEntities mutatedEntities;
 
