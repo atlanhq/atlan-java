@@ -2,7 +2,6 @@ package com.atlan.model;
 
 import static org.testng.Assert.*;
 
-import com.atlan.model.core.Classification;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.enums.AtlanStatus;
@@ -15,8 +14,6 @@ public class GlossaryTest {
     private static final Glossary full = Glossary.builder()
             .guid("guid")
             .displayText("displayText")
-            .classification(Classification.of("classificationName1", "guid"))
-            .classification(Classification.of("classificationName2", "guid"))
             .status(AtlanStatus.ACTIVE)
             .createdBy("createdBy")
             .updatedBy("updatedBy")
@@ -42,17 +39,20 @@ public class GlossaryTest {
             .ownerGroup("ownerGroup")
             .adminUser("adminUser")
             .adminGroup("adminGroup")
+            .adminRole("adminRole")
             .viewerUser("viewerUser")
             .viewerGroup("viewerGroup")
             .connectorName("connectorName")
             .connectionName("connectionName")
             .connectionQualifiedName("connectionQualifiedName")
+            .__hasLineage(false)
             .isDiscoverable(true)
             .isEditable(true)
             .viewScore(123456.0)
             .popularityScore(123456.0)
             .sourceOwners("sourceOwners")
             .sourceURL("sourceURL")
+            .sourceEmbedURL("sourceEmbedURL")
             .lastSyncWorkflowName("lastSyncWorkflowName")
             .lastSyncRunAt(123456789L)
             .lastSyncRun("lastSyncRun")
@@ -65,10 +65,10 @@ public class GlossaryTest {
             .readme(Reference.to("Readme", "readmeGuid"))
             .meaning(Reference.to(GlossaryTerm.TYPE_NAME, "termGuid1"))
             .meaning(Reference.to(GlossaryTerm.TYPE_NAME, "termGuid2"))
-            .term(Reference.to(GlossaryTerm.TYPE_NAME, "termGuid1"))
+            /*.term(Reference.to(GlossaryTerm.TYPE_NAME, "termGuid1"))
             .term(Reference.to(GlossaryTerm.TYPE_NAME, "termGuid2"))
             .category(Reference.to(GlossaryCategory.TYPE_NAME, "categoryGuid1"))
-            .category(Reference.to(GlossaryCategory.TYPE_NAME, "categoryGuid2"))
+            .category(Reference.to(GlossaryCategory.TYPE_NAME, "categoryGuid2"))*/
             .build();
 
     private static Glossary frodo;

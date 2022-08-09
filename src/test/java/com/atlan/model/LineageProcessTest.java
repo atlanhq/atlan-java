@@ -2,7 +2,6 @@ package com.atlan.model;
 
 import static org.testng.Assert.*;
 
-import com.atlan.model.core.Classification;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.enums.AtlanStatus;
@@ -16,8 +15,6 @@ public class LineageProcessTest {
     private static final LineageProcess full = LineageProcess.builder()
             .guid("guid")
             .displayText("displayText")
-            .classification(Classification.of("classificationName1", "guid"))
-            .classification(Classification.of("classificationName2", "guid"))
             .status(AtlanStatus.ACTIVE)
             .createdBy("createdBy")
             .updatedBy("updatedBy")
