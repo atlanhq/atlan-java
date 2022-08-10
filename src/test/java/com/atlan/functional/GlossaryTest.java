@@ -397,7 +397,8 @@ public class GlossaryTest extends AtlanLiveTest {
 
     @Test(
             groups = {"term.purge"},
-            dependsOnGroups = {"term.search"})
+            dependsOnGroups = {"term.search"},
+            alwaysRun = true)
     void purgeTerm() {
         try {
             EntityMutationResponse response = GlossaryTerm.purge(termGuid);
@@ -429,7 +430,8 @@ public class GlossaryTest extends AtlanLiveTest {
 
     @Test(
             groups = {"category.purge"},
-            dependsOnGroups = {"term.purge", "category.update", "category.remove.attributes"})
+            dependsOnGroups = {"term.purge", "category.update", "category.remove.attributes"},
+            alwaysRun = true)
     void purgeCategory() {
         try {
             EntityMutationResponse response = GlossaryCategory.purge(categoryGuid);
@@ -461,7 +463,8 @@ public class GlossaryTest extends AtlanLiveTest {
 
     @Test(
             groups = {"glossary.purge"},
-            dependsOnGroups = {"category.purge"})
+            dependsOnGroups = {"category.purge"},
+            alwaysRun = true)
     void purgeGlossary() {
         try {
             EntityMutationResponse response = Glossary.purge(glossaryGuid);
