@@ -7,16 +7,14 @@ import com.atlan.exception.AtlanException;
 import com.atlan.model.*;
 import com.atlan.model.core.Entity;
 import com.atlan.model.relations.Reference;
+import com.atlan.util.GsonUtils;
 import com.atlan.util.StringUtils;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import java.io.IOException;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.lang.reflect.Parameter;
+import java.lang.reflect.*;
 import java.util.*;
 
 /**
@@ -36,6 +34,7 @@ public class EntityTypeAdapterFactory implements TypeAdapterFactory {
 
         final TypeAdapter<JsonElement> jsonElementAdapter = gson.getAdapter(JsonElement.class);
         final TypeAdapter<Reference> referenceAdapter = gson.getDelegateAdapter(this, TypeToken.get(Reference.class));
+        final TypeAdapter<AWSTag> awsTagAdapter = gson.getDelegateAdapter(this, TypeToken.get(AWSTag.class));
 
         final TypeAdapter<IndistinctAsset> assetAdapter =
                 gson.getDelegateAdapter(this, TypeToken.get(IndistinctAsset.class));
@@ -55,6 +54,9 @@ public class EntityTypeAdapterFactory implements TypeAdapterFactory {
                 gson.getDelegateAdapter(this, TypeToken.get(Connection.class));
         final TypeAdapter<Table> tableAdapter = gson.getDelegateAdapter(this, TypeToken.get(Table.class));
         final TypeAdapter<Column> columnAdapter = gson.getDelegateAdapter(this, TypeToken.get(Column.class));
+
+        final TypeAdapter<S3Bucket> s3BucketAdapter = gson.getDelegateAdapter(this, TypeToken.get(S3Bucket.class));
+        final TypeAdapter<S3Object> s3ObjectAdapter = gson.getDelegateAdapter(this, TypeToken.get(S3Object.class));
 
         TypeAdapter<Entity> resultCustomTypeAdapter = new TypeAdapter<>() {
             @Override
@@ -100,6 +102,14 @@ public class EntityTypeAdapterFactory implements TypeAdapterFactory {
                         case "Column":
                             c = Column.class;
                             toModify = ((Column) value).toBuilder().build();
+                            break;
+                        case "S3Bucket":
+                            c = S3Bucket.class;
+                            toModify = ((S3Bucket) value).toBuilder().build();
+                            break;
+                        case "S3Object":
+                            c = S3Object.class;
+                            toModify = ((S3Object) value).toBuilder().build();
                             break;
                         default:
                             c = IndistinctAsset.class;
@@ -201,6 +211,12 @@ public class EntityTypeAdapterFactory implements TypeAdapterFactory {
                         case "Column":
                             columnAdapter.write(out, (Column) toModify);
                             break;
+                        case "S3Bucket":
+                            s3BucketAdapter.write(out, (S3Bucket) toModify);
+                            break;
+                        case "S3Object":
+                            s3ObjectAdapter.write(out, (S3Object) toModify);
+                            break;
                         default:
                             assetAdapter.write(out, (IndistinctAsset) toModify);
                             break;
@@ -257,6 +273,14 @@ public class EntityTypeAdapterFactory implements TypeAdapterFactory {
                             value = columnAdapter.fromJsonTree(object);
                             c = Column.class;
                             break;
+                        case "S3Bucket":
+                            value = s3BucketAdapter.fromJsonTree(object);
+                            c = S3Bucket.class;
+                            break;
+                        case "S3Object":
+                            value = s3ObjectAdapter.fromJsonTree(object);
+                            c = S3Object.class;
+                            break;
                         default:
                             value = assetAdapter.fromJsonTree(object);
                             c = Asset.class;
@@ -272,7 +296,7 @@ public class EntityTypeAdapterFactory implements TypeAdapterFactory {
                         Method method = setterMap.get(attrKey);
                         if (method != null) {
                             try {
-                                deserialize(value, attributes.get(attrKey), method, referenceAdapter);
+                                deserialize(value, attributes.get(attrKey), method);
                             } catch (NoSuchMethodException e) {
                                 throw new IOException("Missing fromValue method for enum.", e);
                             } catch (IllegalAccessException | InvocationTargetException e) {
@@ -287,7 +311,7 @@ public class EntityTypeAdapterFactory implements TypeAdapterFactory {
                         Method method = setterMap.get(relnKey);
                         if (method != null) {
                             try {
-                                deserialize(value, relationshipAttributes.get(relnKey), method, referenceAdapter);
+                                deserialize(value, relationshipAttributes.get(relnKey), method);
                             } catch (NoSuchMethodException e) {
                                 throw new IOException("Missing fromValue method for enum.", e);
                             } catch (IllegalAccessException | InvocationTargetException e) {
@@ -325,148 +349,104 @@ public class EntityTypeAdapterFactory implements TypeAdapterFactory {
                 value.setClassificationNames(clsNames);
                 return value;
             }
+
+            private void deserialize(Entity value, JsonElement jsonElement, Method method)
+                    throws IllegalAccessException, InvocationTargetException, NoSuchMethodException, IOException {
+                if (jsonElement.isJsonPrimitive()) {
+                    deserializePrimitive(value, jsonElement.getAsJsonPrimitive(), method);
+                } else if (jsonElement.isJsonArray()) {
+                    deserializeList(value, jsonElement.getAsJsonArray(), method);
+                } else if (jsonElement.isJsonObject()) {
+                    deserializeObject(value, jsonElement.getAsJsonObject(), method);
+                }
+                // Only type left is null, which we don't need to explicitly set (it's the default)
+            }
+
+            private void deserializeList(Entity value, JsonArray array, Method method)
+                    throws IllegalAccessException, InvocationTargetException, IOException {
+                Class<?> paramClass = getParameterOfMethod(method);
+                List<Object> list = new ArrayList<>();
+                for (JsonElement element : array) {
+                    Object deserialized = deserializeElement(element, method);
+                    list.add(deserialized);
+                }
+                if (paramClass == List.class) {
+                    method.invoke(value, list);
+                } else if (paramClass == Set.class) {
+                    method.invoke(value, new LinkedHashSet<>(list));
+                } else {
+                    throw new IOException(
+                            "Unable to deserialize JSON list to Java class: " + paramClass.getCanonicalName());
+                }
+            }
+
+            private void deserializeObject(Entity value, JsonObject jsonObject, Method method)
+                    throws IllegalAccessException, InvocationTargetException, IOException {
+                Class<?> paramClass = getParameterOfMethod(method);
+                if (paramClass == Reference.class) {
+                    method.invoke(value, referenceAdapter.fromJsonTree(jsonObject));
+                } else if (paramClass == Map.class) {
+                    // TODO: need to translate Java object to a Map
+                    method.invoke(value, jsonObject);
+                } else if (paramClass == AWSTag.class) {
+                    method.invoke(value, awsTagAdapter.fromJsonTree(jsonObject));
+                } else {
+                    throw new IOException(
+                            "Unable to deserialize JSON object to Java class: " + paramClass.getCanonicalName());
+                }
+            }
+
+            /**
+             * Deserialize a value direct to an object.
+             * @param element to deserialize
+             * @param method to which the deserialized value will be built into an entity
+             * @return the deserialized object
+             * @throws IOException if an array is found nested directly within another array (unsupported)
+             */
+            private Object deserializeElement(JsonElement element, Method method) throws IOException {
+                if (element.isJsonPrimitive()) {
+                    return GsonUtils.deserializePrimitive(element.getAsJsonPrimitive(), method);
+                } else if (element.isJsonArray()) {
+                    throw new IOException("Directly-nested arrays are not supported.");
+                } else if (element.isJsonObject()) {
+                    Type paramType = getParameterizedTypeOfMethod(method);
+                    Class<?> innerClass = getClassOfParameterizedType(paramType);
+                    if (innerClass == Reference.class) {
+                        return referenceAdapter.fromJsonTree(element);
+                    } else if (innerClass == AWSTag.class) {
+                        return awsTagAdapter.fromJsonTree(element);
+                    } else {
+                        throw new IOException(
+                                "Unable to deserialize JSON object to Java class: " + innerClass.getCanonicalName());
+                    }
+                }
+                return null;
+            }
+
+            private void deserializePrimitive(Entity value, JsonPrimitive primitive, Method method)
+                    throws IllegalAccessException, InvocationTargetException, NoSuchMethodException, IOException {
+                if (primitive.isString()) {
+                    Class<?> paramClass = getParameterOfMethod(method);
+                    if (paramClass.isEnum()) {
+                        Method fromValue = paramClass.getMethod("fromValue", String.class);
+                        method.invoke(value, fromValue.invoke(null, primitive.getAsString()));
+                    } else {
+                        method.invoke(value, primitive.getAsString());
+                    }
+                } else if (primitive.isBoolean()) {
+                    method.invoke(value, primitive.getAsBoolean());
+                } else if (primitive.isNumber()) {
+                    deserializeNumber(value, primitive, method);
+                }
+            }
+
+            private void deserializeNumber(Entity value, JsonPrimitive primitive, Method method)
+                    throws IllegalAccessException, InvocationTargetException, IOException {
+                Object number = GsonUtils.deserializeNumber(primitive.getAsNumber(), method);
+                method.invoke(value, number);
+            }
         };
         return (TypeAdapter<T>) resultCustomTypeAdapter.nullSafe();
-    }
-
-    private static void deserialize(
-            Entity value, JsonElement jsonElement, Method method, TypeAdapter<Reference> referenceAdapter)
-            throws IllegalAccessException, InvocationTargetException, NoSuchMethodException, IOException {
-        if (jsonElement.isJsonPrimitive()) {
-            deserializePrimitive(value, jsonElement.getAsJsonPrimitive(), method);
-        } else if (jsonElement.isJsonArray()) {
-            deserializeList(value, jsonElement.getAsJsonArray(), method, referenceAdapter);
-        } else if (jsonElement.isJsonObject()) {
-            deserializeObject(value, jsonElement.getAsJsonObject(), method, referenceAdapter);
-        }
-    }
-
-    private static void deserializePrimitive(Entity value, JsonPrimitive primitive, Method method)
-            throws IllegalAccessException, InvocationTargetException, NoSuchMethodException, IOException {
-        if (primitive.isString()) {
-            Parameter[] params = method.getParameters();
-            Class<?> paramClass = params[0].getType();
-            if (paramClass.isEnum()) {
-                Method fromValue = paramClass.getMethod("fromValue", String.class);
-                method.invoke(value, fromValue.invoke(null, primitive.getAsString()));
-            } else {
-                method.invoke(value, primitive.getAsString());
-            }
-        } else if (primitive.isBoolean()) {
-            method.invoke(value, primitive.getAsBoolean());
-        } else if (primitive.isNumber()) {
-            deserializeNumber(value, primitive, method);
-        }
-    }
-
-    private static void deserializeList(
-            Entity value, JsonArray array, Method method, TypeAdapter<Reference> referenceAdapter)
-            throws IllegalAccessException, InvocationTargetException, IOException {
-        List<Object> list = new ArrayList<>();
-        for (JsonElement element : array) {
-            Object deserialized = deserializeElement(element, method, referenceAdapter);
-            list.add(deserialized);
-        }
-        Parameter[] params = method.getParameters();
-        Class<?> paramClass = params[0].getType();
-        if (paramClass == List.class) {
-            method.invoke(value, list);
-        } else if (paramClass == Set.class) {
-            method.invoke(value, new LinkedHashSet<>(list));
-        } else {
-            throw new IOException("Unable to deserialize JSON list to Java class: " + paramClass.getCanonicalName());
-        }
-    }
-
-    private static void deserializeObject(
-            Entity value, JsonObject jsonObject, Method method, TypeAdapter<Reference> referenceAdapter)
-            throws IllegalAccessException, InvocationTargetException, IOException {
-        Parameter[] params = method.getParameters();
-        Class<?> paramClass = params[0].getType();
-        if (paramClass == Reference.class) {
-            method.invoke(value, referenceAdapter.fromJsonTree(jsonObject));
-        } else if (paramClass == Map.class) {
-            // TODO: need to translate Java object to a Map
-            method.invoke(value, jsonObject);
-        } else {
-            throw new IOException("Unable to deserialize JSON object to Java class: " + paramClass.getCanonicalName());
-        }
-    }
-
-    private static void deserializeNumber(Entity value, JsonPrimitive primitive, Method method)
-            throws IllegalAccessException, InvocationTargetException, IOException {
-        Object number = deserializeNumber(primitive.getAsNumber(), method);
-        method.invoke(value, number);
-    }
-
-    /**
-     * Deserialize a value direct to an object.
-     * @param element to deserialize
-     * @param method to which the deserialized value will be built into an entity
-     * @param referenceAdapter for translating relationship objects
-     * @return the deserialized object
-     * @throws IOException if an array is found nested directly within another array (unsupported)
-     */
-    private static Object deserializeElement(
-            JsonElement element, Method method, TypeAdapter<Reference> referenceAdapter) throws IOException {
-        if (element.isJsonPrimitive()) {
-            return deserializePrimitive(element.getAsJsonPrimitive(), method);
-        } else if (element.isJsonArray()) {
-            throw new IOException("Directly-nested arrays are not supported.");
-        } else if (element.isJsonObject()) {
-            return referenceAdapter.fromJsonTree(element);
-        }
-        return null;
-    }
-
-    /**
-     * Deserialize a primitive JSON value to an object.
-     * @param primitive value to deserialize
-     * @param method to which the deserialized value will be built into an entity
-     * @return the deserialized value
-     */
-    private static Object deserializePrimitive(JsonPrimitive primitive, Method method) throws IOException {
-        if (primitive.isString()) {
-            return primitive.getAsString();
-        } else if (primitive.isBoolean()) {
-            return primitive.getAsBoolean();
-        } else if (primitive.isNumber()) {
-            return deserializeNumber(primitive.getAsNumber(), method);
-        }
-        return null;
-    }
-
-    /**
-     * Deserialize a number direct to an object, converting to the correct type
-     * across Integer, Long, Double, Float, Short, Byte.
-     * @param primitive number to deserialize
-     * @param method to which the deserialized value will be built into an entity
-     * @return the deserialized number
-     * @throws IOException if the setter method to deserialize through does not take exactly one argument
-     */
-    private static Object deserializeNumber(Number primitive, Method method) throws IOException {
-        Parameter[] parameters = method.getParameters();
-        Class<?> parameterType = Boolean.class;
-        if (parameters.length == 1) {
-            parameterType = parameters[0].getType();
-        } else {
-            throw new IOException(
-                    "Unexpected number of parameters (" + parameters.length + ") found for method: " + method);
-        }
-        if (parameterType == Integer.class) {
-            return primitive.intValue();
-        } else if (parameterType == Long.class) {
-            return primitive.longValue();
-        } else if (parameterType == Double.class) {
-            return primitive.doubleValue();
-        } else if (parameterType == Float.class) {
-            return primitive.floatValue();
-        } else if (parameterType == Short.class) {
-            return primitive.shortValue();
-        } else if (parameterType == Byte.class) {
-            return primitive.byteValue();
-        }
-        return null;
     }
 
     /**
@@ -523,5 +503,42 @@ public class EntityTypeAdapterFactory implements TypeAdapterFactory {
         for (Field field : b.getDeclaredFields()) {
             map.put(field.getName(), field);
         }
+    }
+
+    /**
+     * Retrieve the class (type) of the first parameter of the provided method.
+     * (For setter methods, this should be the only parameter.)
+     * @param method for which to determine the first parameter's type
+     * @return the class of the first parameter
+     */
+    private static Class<?> getParameterOfMethod(Method method) {
+        Parameter[] params = method.getParameters();
+        return params[0].getType();
+    }
+
+    /**
+     * Retrieve the parameterized class (type) of the first parameter of the provided method.
+     * (For setter methods, this should be the only parameter.)
+     * @param method for which to determine the first parameter's parameterized type
+     * @return the parameterized type of the first parameter
+     */
+    private static Type getParameterizedTypeOfMethod(Method method) {
+        Parameter[] params = method.getParameters();
+        return params[0].getParameterizedType();
+    }
+
+    /**
+     * Retrieve the class (type) within the parameterized type provided.
+     * For example, if the parameterized type is {@code List<String>} this will return the String class.
+     * @param parameterizedType the parameterized type from which to determine the inner type
+     * @return the class within the parameterized type
+     */
+    private static Class<?> getClassOfParameterizedType(Type parameterizedType) {
+        Type parameterType = null;
+        if (parameterizedType instanceof ParameterizedType) {
+            Type[] typeArguments = ((ParameterizedType) parameterizedType).getActualTypeArguments();
+            parameterType = typeArguments[0];
+        }
+        return (Class<?>) parameterType;
     }
 }

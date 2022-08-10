@@ -132,6 +132,19 @@ public class Connection extends Asset {
     }
 
     /**
+     * Builds the minimal object necessary to update a connection.
+     * To continue adding to the object, call {@link #toBuilder()} on the result and continue calling
+     * additional methods to add metadata followed by {@link ConnectionBuilder#build()}.
+     *
+     * @param qualifiedName of the connection
+     * @param name of the connection
+     * @return the minimal object necessary to update the connection
+     */
+    public static Connection toUpdate(String qualifiedName, String name) {
+        return Connection.builder().qualifiedName(qualifiedName).name(name).build();
+    }
+
+    /**
      * Generate a unique connection name.
      * @param connectorName name of the connection's connector
      * @return a unique name for the connection
