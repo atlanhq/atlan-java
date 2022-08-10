@@ -27,6 +27,7 @@ public class DataStudioTest extends AtlanLiveTest {
 
     private static String connectionGuid = null;
     private static String connectionQame = null;
+    private static String workflowName = null;
 
     @Test(groups = {"connection.invalid"})
     void invalidConnection() {
@@ -74,12 +75,21 @@ public class DataStudioTest extends AtlanLiveTest {
             dependsOnGroups = {"connection.create"})
     void purgeConnection() {
         try {
-            // 1. Run the connection delete workflow
             Workflow deleteWorkflow = Packages.getConnectionDelete(connectionQame, true);
             WorkflowResponse response = deleteWorkflow.run();
             assertNotNull(response);
-            String workflowName = response.getMetadata().getName();
-            // 2. Busy-wait until the deletion is finished
+            workflowName = response.getMetadata().getName();
+        } catch (AtlanException e) {
+            e.printStackTrace();
+            assertNull(e, "Unexpected exception while trying to delete a connection.");
+        }
+    }
+
+    @Test(
+            groups = {"workflow.status"},
+            dependsOnGroups = {"connection.purge"})
+    void monitorStatus() {
+        try {
             AtlanWorkflowPhase status = null;
             do {
                 final WorkflowSearchResult runDetails = WorkflowSearchRequest.findLatestRun(workflowName);
@@ -89,11 +99,21 @@ public class DataStudioTest extends AtlanLiveTest {
                 log.info("Workflow status: {}", status);
                 Thread.sleep(5000);
             } while (status != null && status != AtlanWorkflowPhase.SUCCESS);
-            // 3. Archive the (one-off) connection delete workflow itself
-            WorkflowsEndpoint.archive(workflowName);
         } catch (AtlanException | InterruptedException e) {
             e.printStackTrace();
-            assertNull(e, "Unexpected exception while trying to delete a connection.");
+            assertNull(e, "Unexpected exception while trying to monitor deletion workflow.");
+        }
+    }
+
+    @Test(
+            groups = {"workflow.run.archive"},
+            dependsOnGroups = {"workflow.status"})
+    void archiveWorkflowRun() {
+        try {
+            WorkflowsEndpoint.archive(workflowName);
+        } catch (AtlanException e) {
+            e.printStackTrace();
+            assertNull(e, "Unexpected exception while trying to archive the workflow run.");
         }
     }
 }
