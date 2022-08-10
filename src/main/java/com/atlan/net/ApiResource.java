@@ -106,7 +106,7 @@ public abstract class ApiResource extends AtlanObject implements AtlanResponseIn
         log.debug("({}) {} with: {}", method, url, body);
         T response = ApiResource.atlanResponseGetter.request(method, url, body, clazz, options);
         if (log.isDebugEnabled()) {
-            log.debug(" ... response: {}", response.getRawJsonObject());
+            log.debug(" ... response: {}", response == null ? null : response.getRawJsonObject());
         }
         return response;
     }

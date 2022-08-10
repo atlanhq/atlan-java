@@ -48,7 +48,10 @@ public class LiveAtlanResponseGetter implements AtlanResponseGetter {
             raiseMalformedJsonError(responseBody, responseCode, requestId, e);
         }
 
-        resource.setLastResponse(response);
+        // Null check necessary for empty responses
+        if (resource != null) {
+            resource.setLastResponse(response);
+        }
 
         return resource;
     }

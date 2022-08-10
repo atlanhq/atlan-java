@@ -51,6 +51,7 @@ public class EntityTypeAdapterFactory implements TypeAdapterFactory {
         final TypeAdapter<ColumnProcess> columnProcessAdapter =
                 gson.getDelegateAdapter(this, TypeToken.get(ColumnProcess.class));
 
+        final TypeAdapter<Connection> connectionAdapter = gson.getDelegateAdapter(this, TypeToken.get(Connection.class));
         final TypeAdapter<Table> tableAdapter = gson.getDelegateAdapter(this, TypeToken.get(Table.class));
         final TypeAdapter<Column> columnAdapter = gson.getDelegateAdapter(this, TypeToken.get(Column.class));
 
@@ -86,6 +87,10 @@ public class EntityTypeAdapterFactory implements TypeAdapterFactory {
                         case "ColumnProcess":
                             c = ColumnProcess.class;
                             toModify = ((ColumnProcess) value).toBuilder().build();
+                            break;
+                        case "Connection":
+                            c = Connection.class;
+                            toModify = ((Connection) value).toBuilder().build();
                             break;
                         case "Table":
                             c = Table.class;
@@ -186,6 +191,9 @@ public class EntityTypeAdapterFactory implements TypeAdapterFactory {
                         case "ColumnProcess":
                             columnProcessAdapter.write(out, (ColumnProcess) toModify);
                             break;
+                        case "Connection":
+                            connectionAdapter.write(out, (Connection) toModify);
+                            break;
                         case "Table":
                             tableAdapter.write(out, (Table) toModify);
                             break;
@@ -235,6 +243,10 @@ public class EntityTypeAdapterFactory implements TypeAdapterFactory {
                         case "ColumnProcess":
                             value = columnProcessAdapter.fromJsonTree(object);
                             c = ColumnProcess.class;
+                            break;
+                        case "Connection":
+                            value = connectionAdapter.fromJsonTree(object);
+                            c = Connection.class;
                             break;
                         case "Table":
                             value = tableAdapter.fromJsonTree(object);
@@ -324,7 +336,6 @@ public class EntityTypeAdapterFactory implements TypeAdapterFactory {
         } else if (jsonElement.isJsonArray()) {
             deserializeList(value, jsonElement.getAsJsonArray(), method, referenceAdapter);
         } else if (jsonElement.isJsonObject()) {
-            // TODO: Could be a map or a reference...
             deserializeObject(value, jsonElement.getAsJsonObject(), method, referenceAdapter);
         }
     }
