@@ -2,10 +2,9 @@ package com.atlan.model.responses;
 
 import com.atlan.model.admin.AtlanRole;
 import com.atlan.net.ApiResource;
+import java.util.List;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-
-import java.util.List;
 
 @Data
 @EqualsAndHashCode(callSuper = false)

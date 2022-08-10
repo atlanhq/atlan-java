@@ -1,11 +1,10 @@
 package com.atlan.model.admin;
 
 import com.atlan.net.AtlanObject;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-
 import java.util.List;
 import java.util.Map;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper = false)

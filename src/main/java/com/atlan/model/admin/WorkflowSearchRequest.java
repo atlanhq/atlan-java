@@ -12,11 +12,10 @@ import com.atlan.api.WorkflowsEndpoint;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.IndexSearchDSL;
 import com.atlan.model.responses.WorkflowSearchResponse;
+import java.util.List;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
-
-import java.util.List;
 
 @Data
 @SuperBuilder
@@ -32,26 +31,24 @@ public class WorkflowSearchRequest extends IndexSearchDSL {
     /** Find the latest run of a given workflow. */
     public static WorkflowSearchResult findLatestRun(String workflowName) throws AtlanException {
 
-        SortOptions sort =
-            SortOptions.of(s -> s
-                .field(FieldSort.of(f -> f
-                    .field("metadata.creationTimestamp").order(SortOrder.Desc).nested(NestedSortValue
-                        .of(v -> v.path("metadata"))))));
+        SortOptions sort = SortOptions.of(s -> s.field(FieldSort.of(f -> f.field("metadata.creationTimestamp")
+                .order(SortOrder.Desc)
+                .nested(NestedSortValue.of(v -> v.path("metadata"))))));
 
-        Query term =
-            TermQuery.of(t -> t.field("spec.workflowTemplateRef.name.keyword").value(workflowName))._toQuery();
+        Query term = TermQuery.of(
+                        t -> t.field("spec.workflowTemplateRef.name.keyword").value(workflowName))
+                ._toQuery();
 
-        Query nested =
-            NestedQuery.of(n -> n.path("spec").query(term))._toQuery();
+        Query nested = NestedQuery.of(n -> n.path("spec").query(term))._toQuery();
 
         Query query = BoolQuery.of(b -> b.filter(nested))._toQuery();
 
         WorkflowSearchRequest request = WorkflowSearchRequest.builder()
-            .from(0)
-            .size(10)
-            .sortOption(sort)
-            .query(query)
-            .build();
+                .from(0)
+                .size(10)
+                .sortOption(sort)
+                .query(query)
+                .build();
 
         WorkflowSearchResponse response = WorkflowsEndpoint.search(request);
         if (response != null) {
@@ -61,7 +58,5 @@ public class WorkflowSearchRequest extends IndexSearchDSL {
             }
         }
         return null;
-
     }
-
 }

@@ -4,12 +4,11 @@ import com.atlan.api.WorkflowsEndpoint;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.responses.WorkflowResponse;
 import com.atlan.net.AtlanObject;
+import java.util.List;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-
-import java.util.List;
 
 @Getter
 @Setter

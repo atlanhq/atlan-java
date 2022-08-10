@@ -1,10 +1,10 @@
 package com.atlan.functional;
 
+import static org.testng.Assert.*;
+
 import com.atlan.cache.RoleCache;
 import com.atlan.exception.AtlanException;
 import org.testng.annotations.Test;
-
-import static org.testng.Assert.*;
 
 public class AdminTest extends AtlanLiveTest {
 
@@ -18,5 +18,4 @@ public class AdminTest extends AtlanLiveTest {
             assertNull(e, "Unexpected exception when retrieving roles.");
         }
     }
-
 }

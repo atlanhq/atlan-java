@@ -24,11 +24,14 @@ public class Packages {
         annotations.put("orchestration.atlan.com/emoji", "🗑️");
         annotations.put("orchestration.atlan.com/icon", "https://atlan.com/assets/img/atlan-blue.6ed81a56.svg");
         annotations.put("orchestration.atlan.com/logo", "https://atlan.com/assets/img/atlan-blue.6ed81a56.svg");
-        annotations.put("orchestration.atlan.com/marketplaceLink", "https://packages.atlan.com/-/web/detail/@atlan/connection-delete");
+        annotations.put(
+                "orchestration.atlan.com/marketplaceLink",
+                "https://packages.atlan.com/-/web/detail/@atlan/connection-delete");
         annotations.put("orchestration.atlan.com/name", "Connection Delete");
         annotations.put("package.argoproj.io/author", "Atlan");
         annotations.put("package.argoproj.io/description", "Deletes a connection and all its related assets");
-        annotations.put("package.argoproj.io/homepage", "https://packages.atlan.com/-/web/detail/@atlan/connection-delete");
+        annotations.put(
+                "package.argoproj.io/homepage", "https://packages.atlan.com/-/web/detail/@atlan/connection-delete");
         annotations.put("package.argoproj.io/keywords", "[\"delete\",\"admin\",\"utility\"]");
         annotations.put("package.argoproj.io/name", "@atlan/connection-delete");
         annotations.put("package.argoproj.io/registry", "https://packages.atlan.com");
@@ -36,43 +39,42 @@ public class Packages {
         annotations.put("package.argoproj.io/support", "support@atlan.com");
         annotations.put("orchestration.atlan.com/atlanName", runName);
         return Workflow.builder()
-            .metadata(WorkflowMetadata.builder()
-                .labels(labels)
-                .annotations(annotations)
-                .name(runName)
-                .namespace("default")
-                .build())
-            .spec(WorkflowSpec.builder()
-                .templates(Collections.singletonList(WorkflowTemplate.builder()
-                        .name("main")
-                        .dag(WorkflowDAG.builder()
-                            .task(WorkflowTask.builder()
-                                .name("run")
-                                .arguments(WorkflowTaskArguments.builder()
-                                    .parameter(NameValuePair.builder()
-                                        .name("connection-qualified-name")
-                                        .value(qualifiedName)
+                .metadata(WorkflowMetadata.builder()
+                        .labels(labels)
+                        .annotations(annotations)
+                        .name(runName)
+                        .namespace("default")
+                        .build())
+                .spec(WorkflowSpec.builder()
+                        .templates(Collections.singletonList(WorkflowTemplate.builder()
+                                .name("main")
+                                .dag(WorkflowDAG.builder()
+                                        .task(WorkflowTask.builder()
+                                                .name("run")
+                                                .arguments(WorkflowTaskArguments.builder()
+                                                        .parameter(NameValuePair.builder()
+                                                                .name("connection-qualified-name")
+                                                                .value(qualifiedName)
+                                                                .build())
+                                                        .parameter(NameValuePair.builder()
+                                                                .name("delete-assets")
+                                                                .value(true)
+                                                                .build())
+                                                        .parameter(NameValuePair.builder()
+                                                                .name("delete-type")
+                                                                .value(purge ? "HARD" : "SOFT")
+                                                                .build())
+                                                        .build())
+                                                .templateRef(WorkflowTemplateRef.builder()
+                                                        .name("atlan-connection-delete")
+                                                        .template("main")
+                                                        .clusterScope(true)
+                                                        .build())
+                                                .build())
                                         .build())
-                                    .parameter(NameValuePair.builder()
-                                        .name("delete-assets")
-                                        .value(true)
-                                        .build())
-                                    .parameter(NameValuePair.builder()
-                                        .name("delete-type")
-                                        .value(purge ? "HARD" : "SOFT")
-                                        .build())
-                                    .build())
-                                .templateRef(WorkflowTemplateRef.builder()
-                                    .name("atlan-connection-delete")
-                                    .template("main")
-                                    .clusterScope(true)
-                                    .build())
-                                .build())
-                            .build())
-                    .build()))
-                .entrypoint("main")
-                .build())
-            .build();
+                                .build()))
+                        .entrypoint("main")
+                        .build())
+                .build();
     }
-
 }

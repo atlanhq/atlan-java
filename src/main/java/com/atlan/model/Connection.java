@@ -3,10 +3,8 @@ package com.atlan.model;
 
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.enums.AtlanConnectionCategory;
-
 import java.util.List;
 import java.util.Map;
-
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -34,6 +32,7 @@ public class Connection extends Asset {
 
     /** Unused attributes */
     transient String subCategory;
+
     transient Map<String, String> queryPreviewConfig;
     transient String queryConfig;
 
@@ -93,18 +92,20 @@ public class Connection extends Asset {
      * @return the minimal object necessary to create the connection
      * @throws InvalidRequestException if no admin has been defined for the connection
      */
-    public static Connection toCreate(String name,
-                                      AtlanConnectionCategory category,
-                                      String connectorName,
-                                      List<String> adminRoles,
-                                      List<String> adminGroups,
-                                      List<String> adminUsers) throws InvalidRequestException {
+    public static Connection toCreate(
+            String name,
+            AtlanConnectionCategory category,
+            String connectorName,
+            List<String> adminRoles,
+            List<String> adminGroups,
+            List<String> adminUsers)
+            throws InvalidRequestException {
         boolean adminFound = false;
-        ConnectionBuilder<?,?> builder = Connection.builder()
-            .name(name)
-            .qualifiedName(generateQualifiedName(connectorName))
-            .category(category)
-            .connectorName(connectorName);
+        ConnectionBuilder<?, ?> builder = Connection.builder()
+                .name(name)
+                .qualifiedName(generateQualifiedName(connectorName))
+                .category(category)
+                .connectorName(connectorName);
         if (adminRoles != null && !adminRoles.isEmpty()) {
             adminFound = true;
             builder = builder.adminRoles(adminRoles);
@@ -120,7 +121,13 @@ public class Connection extends Asset {
         if (adminFound) {
             return builder.build();
         } else {
-            throw new InvalidRequestException("No admin provided for the connection, will not attempt to create one.", "adminRoles,adminGroups,adminUsers", "--", "ATLAN-CLIENT-CONNECTION-400-001", 400, null);
+            throw new InvalidRequestException(
+                    "No admin provided for the connection, will not attempt to create one.",
+                    "adminRoles,adminGroups,adminUsers",
+                    "--",
+                    "ATLAN-CLIENT-CONNECTION-400-001",
+                    400,
+                    null);
         }
     }
 

@@ -3,7 +3,6 @@ package com.atlan.api;
 import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.responses.RoleResponse;
-import com.atlan.model.responses.TypeDefResponse;
 import com.atlan.net.ApiResource;
 
 public class RolesEndpoint {
@@ -22,14 +21,23 @@ public class RolesEndpoint {
      * @return a list of roles that match the provided criteria
      * @throws AtlanException on any API communication issue
      */
-    public static RoleResponse getRoles(String filter, String sort, boolean count, int offset, int limit) throws AtlanException {
+    public static RoleResponse getRoles(String filter, String sort, boolean count, int offset, int limit)
+            throws AtlanException {
         if (filter == null) {
             filter = "";
         }
         if (sort == null) {
             sort = "";
         }
-        String url = String.format("%s%s?filter=%s&sort=%s&count=%s&offset=%s&limit=%s", Atlan.getApiBase(), endpoint, ApiResource.urlEncode(filter), ApiResource.urlEncode(sort), count, offset, limit);
+        String url = String.format(
+                "%s%s?filter=%s&sort=%s&count=%s&offset=%s&limit=%s",
+                Atlan.getApiBase(),
+                endpoint,
+                ApiResource.urlEncode(filter),
+                ApiResource.urlEncode(sort),
+                count,
+                offset,
+                limit);
         return ApiResource.request(ApiResource.RequestMethod.GET, url, "", RoleResponse.class, null);
     }
 

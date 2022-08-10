@@ -51,7 +51,8 @@ public class EntityTypeAdapterFactory implements TypeAdapterFactory {
         final TypeAdapter<ColumnProcess> columnProcessAdapter =
                 gson.getDelegateAdapter(this, TypeToken.get(ColumnProcess.class));
 
-        final TypeAdapter<Connection> connectionAdapter = gson.getDelegateAdapter(this, TypeToken.get(Connection.class));
+        final TypeAdapter<Connection> connectionAdapter =
+                gson.getDelegateAdapter(this, TypeToken.get(Connection.class));
         final TypeAdapter<Table> tableAdapter = gson.getDelegateAdapter(this, TypeToken.get(Table.class));
         final TypeAdapter<Column> columnAdapter = gson.getDelegateAdapter(this, TypeToken.get(Column.class));
 

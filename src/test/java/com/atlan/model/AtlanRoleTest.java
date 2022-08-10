@@ -9,13 +9,13 @@ import org.testng.annotations.Test;
 public class AtlanRoleTest {
 
     private static final AtlanRole full = AtlanRole.builder()
-        .id("id")
-        .description("description")
-        .name("name")
-        .clientRole(false)
-        .level("level")
-        .memberCount("memberCount")
-        .build();
+            .id("id")
+            .description("description")
+            .name("name")
+            .clientRole(false)
+            .level("level")
+            .memberCount("memberCount")
+            .build();
 
     private static AtlanRole frodo;
     private static String serialized;
@@ -28,8 +28,8 @@ public class AtlanRoleTest {
     }
 
     @Test(
-        groups = {"deserialize"},
-        dependsOnGroups = {"serialize"})
+            groups = {"deserialize"},
+            dependsOnGroups = {"serialize"})
     void deserialization() {
         assertNotNull(serialized);
         frodo = ApiResource.GSON.fromJson(serialized, AtlanRole.class);
@@ -37,8 +37,8 @@ public class AtlanRoleTest {
     }
 
     @Test(
-        groups = {"equivalency"},
-        dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"equivalency"},
+            dependsOnGroups = {"serialize", "deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -48,8 +48,8 @@ public class AtlanRoleTest {
 
     // TODO: Determine why the deserialized form would differ
     @Test(
-        groups = {"equivalency"},
-        dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"equivalency"},
+            dependsOnGroups = {"serialize", "deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

@@ -1,5 +1,7 @@
 package com.atlan.functional;
 
+import static org.testng.Assert.*;
+
 import com.atlan.api.WorkflowsEndpoint;
 import com.atlan.cache.RoleCache;
 import com.atlan.exception.AtlanException;
@@ -14,12 +16,9 @@ import com.atlan.model.enums.AtlanConnectionCategory;
 import com.atlan.model.enums.AtlanWorkflowPhase;
 import com.atlan.model.responses.EntityMutationResponse;
 import com.atlan.model.responses.WorkflowResponse;
+import java.util.Collections;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.Test;
-
-import java.util.Collections;
-
-import static org.testng.Assert.*;
 
 @Slf4j
 public class DataStudioTest extends AtlanLiveTest {
@@ -31,7 +30,9 @@ public class DataStudioTest extends AtlanLiveTest {
 
     @Test(groups = {"connection.invalid"})
     void invalidConnection() {
-        assertThrows(InvalidRequestException.class, () -> Connection.toCreate(CONNECTION_NAME, AtlanConnectionCategory.BI, "datastudio", null, null, null));
+        assertThrows(
+                InvalidRequestException.class,
+                () -> Connection.toCreate(CONNECTION_NAME, AtlanConnectionCategory.BI, "datastudio", null, null, null));
     }
 
     @Test(groups = {"connection.create"})
@@ -39,7 +40,13 @@ public class DataStudioTest extends AtlanLiveTest {
         try {
             String adminRoleGuid = RoleCache.getIdForName("$admin");
             if (adminRoleGuid != null) {
-                Connection connection = Connection.toCreate(CONNECTION_NAME, AtlanConnectionCategory.BI, "datastudio", Collections.singletonList(adminRoleGuid), null, null);
+                Connection connection = Connection.toCreate(
+                        CONNECTION_NAME,
+                        AtlanConnectionCategory.BI,
+                        "datastudio",
+                        Collections.singletonList(adminRoleGuid),
+                        null,
+                        null);
                 EntityMutationResponse response = connection.upsert();
                 assertNotNull(response);
                 assertTrue(response.getUpdatedEntities().isEmpty());
@@ -62,7 +69,9 @@ public class DataStudioTest extends AtlanLiveTest {
         }
     }
 
-    @Test(groups = {"connection.purge"}, dependsOnGroups = {"connection.create"})
+    @Test(
+            groups = {"connection.purge"},
+            dependsOnGroups = {"connection.create"})
     void purgeConnection() {
         try {
             // 1. Run the connection delete workflow
@@ -87,5 +96,4 @@ public class DataStudioTest extends AtlanLiveTest {
             assertNull(e, "Unexpected exception while trying to delete a connection.");
         }
     }
-
 }
