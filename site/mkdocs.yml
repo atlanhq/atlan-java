@@ -1,0 +1,127 @@
+# Copyright 2022, Atlan
+---
+site_name: Developer
+site_description: Developer reference materials
+copyright: >-
+  Copyright &copy; 2022 Atlan<br>Built with 💙 for the 🤖-making 🧑's of Data -
+  <a href="#__consent">change 🍪 settings</a>
+#repo_name: atlanhq/atlan-customer-journey
+#repo_url: https://github.com/atlanhq/atlan-customer-journey
+site_url: https://reference.atlan.com
+edit_uri: ""
+
+nav:
+  - Overview: index.md
+  - SDKs:
+    - SDKs introduction: sdks/index.md
+    - Key concepts: sdks/concepts.md
+    - Java SDK:
+      - Introduction to the Atlan Java SDK: sdks/java/index.md
+      - Getting started: sdks/java/getting-started.md
+      - Basic operations:
+        - Creating an asset: sdks/java/basic-operations/create.md
+        - Retrieving an asset: sdks/java/basic-operations/read.md
+        - Updating an asset: sdks/java/basic-operations/update.md
+        - Deleting an asset: sdks/java/basic-operations/delete.md
+        - Searching for assets: sdks/java/basic-operations/search.md
+        - Error-handling: sdks/java/basic-operations/errors.md
+      - Common examples:
+        - Certify assets: sdks/java/common-examples/certificates.md
+        - Manage announcements: sdks/java/common-examples/announcements.md
+        - Classify assets: sdks/java/common-examples/classifications.md
+        - Add asset READMEs: sdks/java/common-examples/readme.md
+        - Change custom metadata: sdks/java/common-examples/custom-metadata.md
+        - Manage lineage: sdks/java/common-examples/lineage.md
+    - Python SDK:
+      - Introduction to the Atlan Python SDK: sdks/python/index.md
+  - Search attributes:
+    - Search attributes introduction: search/index.md
+    - Common attributes: search/common.md
+    - Attributes for assets: search/assets.md
+    - Glossary-specific: search/glossary.md
+    - Connection-specific: search/connections.md
+    - SQL asset-specific: search/sql.md
+    - BI asset-specific:
+      - Looker-specific: search/bi/looker.md
+      - Tableau-specific: search/bi/tableau.md
+      - Power BI-specific: search/bi/powerbi.md
+  - Error codes:
+    - Else: else.md
+
+theme:
+  name: material
+  language: en
+  custom_dir: overrides
+  features:
+    - navigation.tabs
+    - navigation.top
+    - navigation.indexes
+    - search.highlight
+    - navigation.tracking
+    - content.code.annotate
+    - content.tabs.link
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: atlan-light
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: atlan-dark
+      toggle:
+        icon: material/toggle-switch-off-outline
+        name: Switch to light mode
+  icon:
+    repo: fontawesome/brands/github
+  favicon: assets/favicon.ico
+  logo: assets/atlan-logo-blue.svg
+
+extra_css:
+  - assets/stylesheets/atlan.css
+
+extra:
+  generator: false
+#  analytics:
+#    provider: google
+#    property: G-C0M7W5P2GZ
+  consent:
+    title: Cookie consent
+    description: >-
+      We use cookies to recognize your repeated visits and preferences, as well
+      as to measure the effectiveness of our documentation and whether users
+      find what they're searching for. With your consent, you're helping us to
+      make our documentation better 💙
+  social:
+    - icon: fontawesome/brands/facebook
+      link: https://www.facebook.com/AtlanHQ/
+      name: Atlan on Facebook
+    - icon: fontawesome/brands/linkedin
+      link: https://www.linkedin.com/company/atlan-hq/
+      name: Atlan on LinkedIn
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/AtlanHQ
+      name: Atlan on Twitter
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - def_list
+  - footnotes
+  - abbr
+  - tables
+  - pymdownx.snippets
+  - pymdownx.highlight
+  - pymdownx.details
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.superfences
+  - pymdownx.keys
+  - toc:
+      permalink: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+  - pymdownx.tasklist:
+      custom_checkbox: true
+      clickable_checkbox: false

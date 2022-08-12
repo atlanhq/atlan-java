@@ -14,7 +14,7 @@ public class Classification extends AtlanObject {
 
     public static Classification of(String classificationName, String entityGuid) {
         return Classification.builder()
-                .typeName(classificationName) // TODO: translate this from display name to internal name
+                .typeName(classificationName)
                 .entityGuid(entityGuid)
                 .entityStatus(AtlanStatus.ACTIVE)
                 .propagate(true)
