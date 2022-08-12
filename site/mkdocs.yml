@@ -45,13 +45,13 @@ nav:
       - Looker-specific: search/bi/looker.md
       - Tableau-specific: search/bi/tableau.md
       - Power BI-specific: search/bi/powerbi.md
-  - Error codes:
-    - Else: else.md
+#  - Error codes:
+#    - Else: else.md
 
 theme:
   name: material
   language: en
-  custom_dir: overrides
+#  custom_dir: overrides
   features:
     - navigation.tabs
     - navigation.top
