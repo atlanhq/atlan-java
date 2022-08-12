@@ -1,10 +1,9 @@
 # Copyright 2022, Atlan
 ---
 site_name: Developer
-site_description: Developer reference materials
+site_description: Developers, your path to 🤖's for data starts here
 copyright: >-
-  Copyright &copy; 2022 Atlan<br>Built with 💙 for the 🤖-making 🧑's of Data -
-  <a href="#__consent">change 🍪 settings</a>
+  Copyright &copy; 2022 Atlan<br>Built with 💙 for the 🤖-making 🧑's of Data
 #repo_name: atlanhq/atlan-customer-journey
 #repo_url: https://github.com/atlanhq/atlan-customer-journey
 site_url: https://reference.atlan.com
@@ -16,7 +15,6 @@ nav:
     - SDKs introduction: sdks/index.md
     - Key concepts: sdks/concepts.md
     - Java SDK:
-      - Introduction to the Atlan Java SDK: sdks/java/index.md
       - Getting started: sdks/java/getting-started.md
       - Basic operations:
         - Creating an asset: sdks/java/basic-operations/create.md
@@ -25,15 +23,24 @@ nav:
         - Deleting an asset: sdks/java/basic-operations/delete.md
         - Searching for assets: sdks/java/basic-operations/search.md
         - Error-handling: sdks/java/basic-operations/errors.md
-      - Common examples:
-        - Certify assets: sdks/java/common-examples/certificates.md
-        - Manage announcements: sdks/java/common-examples/announcements.md
-        - Classify assets: sdks/java/common-examples/classifications.md
-        - Add asset READMEs: sdks/java/common-examples/readme.md
-        - Change custom metadata: sdks/java/common-examples/custom-metadata.md
-        - Manage lineage: sdks/java/common-examples/lineage.md
     - Python SDK:
       - Introduction to the Atlan Python SDK: sdks/python/index.md
+      - Getting started: sdks/python/getting-started.md
+      - Basic operations:
+        - Creating an asset: sdks/python/basic-operations/create.md
+        - Retrieving an asset: sdks/python/basic-operations/read.md
+        - Updating an asset: sdks/python/basic-operations/update.md
+        - Deleting an asset: sdks/python/basic-operations/delete.md
+        - Searching for assets: sdks/python/basic-operations/search.md
+        - Error-handling: sdks/python/basic-operations/errors.md
+    - Examples:
+      - Certify assets: sdks/common-examples/certificates.md
+      - Manage announcements: sdks/common-examples/announcements.md
+      - Classify assets: sdks/common-examples/classifications.md
+      - Change custom metadata: sdks/common-examples/custom-metadata.md
+      - Manage lineage: sdks/common-examples/lineage.md
+      - Link terms to assets: sdks/common-examples/term-assignment.md
+      - Add asset READMEs: sdks/common-examples/readme.md
   - Search attributes:
     - Search attributes introduction: search/index.md
     - Common attributes: search/common.md
@@ -51,7 +58,7 @@ nav:
 theme:
   name: material
   language: en
-#  custom_dir: overrides
+  custom_dir: overrides
   features:
     - navigation.tabs
     - navigation.top
@@ -115,7 +122,11 @@ markdown_extensions:
   - pymdownx.details
   - pymdownx.tabbed:
       alternate_style: true
-  - pymdownx.superfences
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
   - pymdownx.keys
   - toc:
       permalink: true

@@ -38,7 +38,7 @@ h1 {
   color: var(--md-default-fg-color)!important;
 }
 
-/* Increase text size overall */
+/* Increase text size overall
 .md-typeset {
   font-size: 0.9rem!important;
 }
@@ -61,7 +61,7 @@ h1 {
 
 .md-tabs__link--active {
   font-weight: 700;
-}
+} */
 
 .md-typeset a {
   color: var(--md-typeset-color);
@@ -79,6 +79,11 @@ html .md-footer-meta.md-typeset a {
   border-radius: 0.4rem!important;
   margin-bottom: 0.2rem;
   box-shadow: none!important;
+}
+
+/* Center diagrams */
+.mermaid {
+  text-align: center;
 }
 
 [data-md-color-scheme="atlan-light"] {

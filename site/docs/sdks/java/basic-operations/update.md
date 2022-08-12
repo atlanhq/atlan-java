@@ -27,15 +27,16 @@ So first you should enrich the object:
 ```java linenums="5" title="Enrich the asset before updating it"
 term = term.toBuilder() // (1)
 		.certificateStatus(AtlanCertificateStatus.VERIFIED) // (2)
-		.announcementType(AtlanAnnouncementType.INFORMATION)
+		.announcementType(AtlanAnnouncementType.INFORMATION) // (3)
 		.announcementTitle("Imported");
 		.announcementMessage("This term was imported from ...")
-		.build(); // (3)
+		.build(); // (4)
 ```
 
 1. The `toBuilder()` method can be called on any object to create a chainable builder for further enriching the object.
-2. In this example, we're adding a certificate and announcement to the object.
-3. To persist the enrichment back to the object, we must `build()` the builder.
+2. In this example, we're adding a certificate to the object.
+3. Note that you can chain any number of enrichments together. Here we are also adding an announcement to the asset.
+4. To persist the enrichment back to the object, we must `build()` the builder.
 
 	!!! warning "Assign the result back"
 		Remember to assign the result of the `build()` operation back to your original object. Otherwise the result is not persisted back into any variable! (In this case we're assigning to the `term` variable back on line 5.)
