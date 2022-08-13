@@ -8,7 +8,7 @@ public class AtlanLiveTest {
     public static final String ANNOUNCEMENT_MESSAGE = "Automated testing of the Java client.";
 
     static {
-        Atlan.apiKey = System.getenv("ATLAN_API_KEY");
-        Atlan.setApiBase(System.getenv("ATLAN_BASE_URL"));
+        Atlan.setApiToken(System.getenv("ATLAN_API_KEY"));
+        Atlan.setBaseUrl(System.getenv("ATLAN_BASE_URL"));
     }
 }

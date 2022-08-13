@@ -14,7 +14,7 @@ public class EntityGuidEndpoint {
             throws AtlanException {
         String url = String.format(
                 "%s%s",
-                Atlan.getApiBase(),
+                Atlan.getBaseUrl(),
                 String.format(
                         "%s%s?ignoreRelationships=%s&minExtInfo=%s",
                         endpoint, ApiResource.urlEncodeId(guid), ignoreRelationships, minExtInfo));

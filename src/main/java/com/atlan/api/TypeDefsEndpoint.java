@@ -14,7 +14,7 @@ public class TypeDefsEndpoint {
      * @param category of type definitions to retrieve
      */
     public static TypeDefResponse getTypeDefs(String category) throws AtlanException {
-        String url = String.format("%s%s", Atlan.getApiBase(), String.format("%s?type=%s", endpoint, category));
+        String url = String.format("%s%s", Atlan.getBaseUrl(), String.format("%s?type=%s", endpoint, category));
         return ApiResource.request(ApiResource.RequestMethod.GET, url, "", TypeDefResponse.class, null);
     }
 }

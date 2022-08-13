@@ -11,7 +11,7 @@ public class IndexSearchEndpoint {
     private static final String endpoint = "/api/meta/search/indexsearch";
 
     public static IndexSearchResponse search(IndexSearchRequest request) throws AtlanException {
-        String url = String.format("%s%s", Atlan.getApiBase(), endpoint);
+        String url = String.format("%s%s", Atlan.getBaseUrl(), endpoint);
         return ApiResource.request(ApiResource.RequestMethod.POST, url, request, IndexSearchResponse.class, null);
     }
 }
