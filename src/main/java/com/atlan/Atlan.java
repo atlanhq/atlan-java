@@ -13,7 +13,6 @@ public abstract class Atlan {
     public static final String API_VERSION = ApiVersion.CURRENT;
     public static final String VERSION = "0.0.1";
 
-    public static volatile String apiKey;
     public static volatile String clientId;
     public static volatile boolean enableTelemetry = true;
     public static volatile String partnerId;
@@ -26,6 +25,7 @@ public abstract class Atlan {
 
     private static volatile int maxNetworkRetries = 0;
 
+    private static volatile String apiToken = null;
     private static volatile String apiBase = null;
     private static volatile Proxy connectionProxy = null;
     private static volatile PasswordAuthentication proxyCredential = null;
@@ -33,12 +33,23 @@ public abstract class Atlan {
     private static volatile Map<String, String> appInfo = null;
 
     /** Set the base URL for your tenant of Atlan. */
-    public static void setApiBase(final String baseURL) {
+    public static void setBaseUrl(final String baseURL) {
         apiBase = baseURL;
     }
 
-    public static String getApiBase() {
+    /** Retrieve the base URL for your tenant of Atlan. */
+    public static String getBaseUrl() {
         return apiBase;
+    }
+
+    /** Set the API token to use for authenticating API calls. */
+    public static void setApiToken(final String token) {
+        apiToken = token;
+    }
+
+    /** Retrieve the API token to use for authenticating API calls. */
+    public static String getApiToken() {
+        return apiToken;
     }
 
     /**

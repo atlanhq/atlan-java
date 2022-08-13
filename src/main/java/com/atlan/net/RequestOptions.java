@@ -30,7 +30,7 @@ public class RequestOptions {
 
     public static RequestOptions getDefault() {
         return new RequestOptions(
-                Atlan.apiKey,
+                Atlan.getApiToken(),
                 Atlan.clientId,
                 null,
                 null,
@@ -139,7 +139,7 @@ public class RequestOptions {
          * default values.
          */
         public RequestOptionsBuilder() {
-            this.apiKey = Atlan.apiKey;
+            this.apiKey = Atlan.getApiToken();
             this.clientId = Atlan.clientId;
             this.connectTimeout = Atlan.getConnectTimeout();
             this.readTimeout = Atlan.getReadTimeout();

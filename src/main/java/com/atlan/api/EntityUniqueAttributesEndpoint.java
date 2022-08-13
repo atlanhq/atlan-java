@@ -15,7 +15,7 @@ public class EntityUniqueAttributesEndpoint {
             throws AtlanException {
         String url = String.format(
                 "%s%s",
-                Atlan.getApiBase(),
+                Atlan.getBaseUrl(),
                 String.format(
                         "%s%s?attr:qualifiedName=%s&ignoreRelationships=%s&minExtInfo=%s",
                         endpoint,

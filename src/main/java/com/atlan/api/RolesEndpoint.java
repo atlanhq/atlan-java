@@ -31,7 +31,7 @@ public class RolesEndpoint {
         }
         String url = String.format(
                 "%s%s?filter=%s&sort=%s&count=%s&offset=%s&limit=%s",
-                Atlan.getApiBase(),
+                Atlan.getBaseUrl(),
                 endpoint,
                 ApiResource.urlEncode(filter),
                 ApiResource.urlEncode(sort),
@@ -51,7 +51,7 @@ public class RolesEndpoint {
         if (filter == null) {
             filter = "";
         }
-        String url = String.format("%s%s?filter=%s", Atlan.getApiBase(), endpoint, ApiResource.urlEncode(filter));
+        String url = String.format("%s%s?filter=%s", Atlan.getBaseUrl(), endpoint, ApiResource.urlEncode(filter));
         return ApiResource.request(ApiResource.RequestMethod.GET, url, "", RoleResponse.class, null);
     }
 
@@ -61,7 +61,7 @@ public class RolesEndpoint {
      * @throws AtlanException on any API communication issue
      */
     public static RoleResponse getAllRoles() throws AtlanException {
-        String url = String.format("%s%s", Atlan.getApiBase(), endpoint);
+        String url = String.format("%s%s", Atlan.getBaseUrl(), endpoint);
         return ApiResource.request(ApiResource.RequestMethod.GET, url, "", RoleResponse.class, null);
     }
 }

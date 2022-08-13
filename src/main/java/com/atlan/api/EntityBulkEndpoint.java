@@ -33,7 +33,7 @@ public class EntityBulkEndpoint {
             throws AtlanException {
         String url = String.format(
                 "%s%s",
-                Atlan.getApiBase(),
+                Atlan.getBaseUrl(),
                 String.format(
                         "%s?replaceClassifications=%s&replaceBusinessAttributes=%s",
                         endpoint, replaceClassifications, replaceBusinessAttributes));
@@ -60,7 +60,7 @@ public class EntityBulkEndpoint {
                 guidList.setLength(guidList.length() - 1);
                 String url = String.format(
                         "%s%s",
-                        Atlan.getApiBase(), String.format("%s?%s&deleteType=%s", endpoint, guidList, deleteType));
+                        Atlan.getBaseUrl(), String.format("%s?%s&deleteType=%s", endpoint, guidList, deleteType));
                 return ApiResource.request(
                         ApiResource.RequestMethod.DELETE, url, "", EntityMutationResponse.class, null);
             }
