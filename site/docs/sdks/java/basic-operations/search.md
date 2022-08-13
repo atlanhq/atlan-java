@@ -1,3 +1,6 @@
+---
+icon: fontawesome/brands-java
+---
 
 # Searching for assets using the Java SDK
 
@@ -26,8 +29,8 @@ Query combined = BoolQuery.of(b -> b
 				._toQuery(); // (3)
 ```
 
-1. Create an Elastic query that matches the `__state` of an asset being `ACTIVE`.
-2. Create an Elastic query that matches the `__typeName` of an asset being a glossary term.
+1. Create an Elastic query that matches the `__state` of an [asset](/concepts/assets) being `ACTIVE`.
+2. Create an Elastic query that matches the `__typeName` of an [asset](/concepts/assets) being a glossary term.
 3. Create an Elastic query that combines the first two queries, asserting that both conditions must be met.
 
 ## Build the request
@@ -49,8 +52,8 @@ IndexSearchRequest index = IndexSearchRequest.builder()
 1. The starting point for paging of results.
 2. The number of results to include (per page).
 3. The query to run, that we built-up in the previous step.
-4. The list of attributes to include in each result. In this case we will return the `anchor` attribute for terms, which gives the relationship from the term to its parent glossary.
-5. The list of attributes to include on each relationship that is included in each result. Since we are returning `anchor` relationships, this will ensure that the `certificateStatus` of those related glossaries is also included in each result.
+4. The list of attributes to include in each result. In this case we will return the `anchor` attribute for terms, which gives the [relationship](/concepts/relationships) from the term to its parent glossary.
+5. The list of attributes to include on each [relationship](/concepts/relationships) that is included in each result. Since we are returning `anchor` [relationships](/concepts/relationships), this will ensure that the `certificateStatus` of those related glossaries is also included in each result.
 6. Since we're progressively building the request up, we must remember to `build()` it into the request object as the final step.
 
 ## Run the search
@@ -71,7 +74,7 @@ for (Entity result : results) { // (3)
 1. The `getApproximateCount()` method gives the total number of results overall (not resticted by page).
 2. The results themselves can be accessed through the `getEntities()` method on the response.
 3. You can then iterate through these results.
-4. Remember that each result is a generic `Entity`. In our example we searched for a specific type, but another example may search for any asset with a given name (or classification) — so each result could be a different type. So again we should check and cast the results as-needed.
+4. Remember that each result is a generic `Entity`. In our example we searched for a specific type, but another example may search for any [asset](/concepts/assets) with a given name (or classification) — so each result could be a different type. So again we should check and cast the results as-needed.
 
 !!! recommendation "Details of searchable attributes"
 	The [Search attributes](/search/) section of this reference material provides details on all attributes that can be searched in Atlan.

@@ -1,3 +1,6 @@
+---
+icon: fontawesome/brands-java
+---
 
 # Error-handling in the Java SDK
 
@@ -9,11 +12,11 @@ The SDK defines checked exceptions for the following categories of error:
 |---|---|
 | `ApiConnectionException` | Errors when the SDK is unable to connect to the API, for example due to a lack of network access or timeouts. |
 | `AuthenticationException` | Errors when the API token configured for the SDK is invalid or expired. |
-| `ConflictException` | Errors when there is some conflict with an existing asset and the operation cannot be completed as a result. |
+| `ConflictException` | Errors when there is some conflict with an existing [asset](/concepts/assets) and the operation cannot be completed as a result. |
 | `InvalidRequestException` | Errors when the request sent to Atlan does not match its expectations. If you are using the built-in methods like `toCreate()` and `toUpdate()` this exception should be treated as a bug in the SDK. (These operations take responsibility for avoiding this error.) |
 | `LogicException` | Errors where some assumption made in the SDK's code is proven incorrect. If ever raised, they should be reported as bugs against the SDK. |
-| `NotFoundException` | Errors when the requested resource or asset does not exist in Atlan. |
-| `PermissionException` | Errors when the API token used by the SDK does not have permission to access a resource or carry out an operation on a specific asset. |
+| `NotFoundException` | Errors when the requested resource or [asset](/concepts/assets) does not exist in Atlan. |
+| `PermissionException` | Errors when the API token used by the SDK does not have permission to access a resource or carry out an operation on a specific [asset](/concepts/assets). |
 | `RateLimitException` | Errors when the Atlan server is being overwhelmed by requests. |
 
 A given API call could fail due to all of the errors above. So these all extend a generic `AtlanException` checked exception, and all API operations throw `AtlanException`.

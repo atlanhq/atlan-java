@@ -1,12 +1,12 @@
 
-# Classify assets using the Java SDK
+# Classify assets
 
 !!! details "Cannot add classifications when creating assets"
-	Currently it is not possible to add classifications when creating assets.
+	Currently it is not possible to add classifications when creating [assets](/concepts/assets).
 
-## Add classifications to existing assets
+## Add to existing assets
 
-To add classifications to existing assets:
+To add classifications to existing [assets](/concepts/assets):
 
 === ":fontawesome-brands-java: Java"
 
@@ -40,15 +40,15 @@ To add classifications to existing assets:
 	4. Directly chain our enrichment methods to add a classification.
 	5. Note that this `classification` method can be chained even to itself, to add multiple classifications.
 	6. Call the `build()` method to build the enriched object. (No need to assign it back to an original object, as we've chained all the operations 	together!)
-	6. Use the `toUpdate()` method to initialize the object for another asset.
-	7. Chain the `toBuilder()`, enrichment and `build()` methods like we did for the previous asset.
-	8. Build the result back into the list again, like we did for the previous asset.
-	9. Optimize our update by bundling all the assets into a single API call.
+	6. Use the `toUpdate()` method to initialize the object for another [asset](/concepts/assets).
+	7. Chain the `toBuilder()`, enrichment and `build()` methods like we did for the previous [asset](/concepts/assets).
+	8. Build the result back into the list again, like we did for the previous [asset](/concepts/assets).
+	9. Optimize our update by bundling all the [assets](/concepts/assets) into a single API call.
 	
 		!!! warning "Replace classifications"
-			Note that we also send `true` as the second parameter to the upsert, to *overwrite* any existing classifications on these assets with the ones 	we have provided. (Without this, the classifications we send will be ignored.)
+			Note that we also send `true` as the second parameter to the upsert, to *overwrite* any existing classifications on these [assets](/concepts/assets) with the ones 	we have provided. (Without this, the classifications we send will be ignored.)
 	
-	10. The response will include all *n* assets that were updated.
+	10. The response will include all *n* [assets](/concepts/assets) that were updated.
 
 === ":material-language-python: Python"
 
@@ -57,11 +57,11 @@ To add classifications to existing assets:
 ???+ warning "Be aware of how much you're updating per request"
 	While this is great for reducing the number of API calls for better performance, do be aware of how many objects you're trying to update per request. There will be a limit beyond which you are trying to send too much information through a single API call and you could see other impacts such as failed requests due to network timeouts.
 
-## Remove classifications existing assets
+## Remove from existing assets
 
-### Removing some, but not all
+### Remove some, but not all
 
-To remove some classifications from existing assets, you need to provide the classifications you want to keep in your object:
+To remove some classifications from existing [assets](/concepts/assets), you need to provide the classifications you want to keep in your object:
 
 === ":fontawesome-brands-java: Java"
 
@@ -78,18 +78,18 @@ To remove some classifications from existing assets, you need to provide the cla
 	response.getUpdatedEntities().size() == 1; // (4)
 	```
 	
-	1. Use the `toUpdate()` method to initialize the object with all [necessary attributes for updating it](../../java/basic-operations/update/#build-minimal-object-needed). (Removing the classifications is still an update to the asset, we are not deleting the asset itself.)
-	2. Enrich the object with the classification(s) you want to *keep* on the asset.
-	3. Call the `upsert()` method to actually update the asset, using `true` as the first argument to overwrite classifications. This will *replace* the 	existing classifications on the asset with the limited ones we have enriched on the object. (In other words, it will remove any of the classifications 	from the asset that we did *not* include in our enrichment.)
-	4. The response will include that single asset that was updated (again, removing classifications is an update to the asset — we are not deleting the asset itself).
+	1. Use the `toUpdate()` method to initialize the object with all [necessary attributes for updating it](../../java/basic-operations/update/#build-minimal-object-needed). (Removing the classifications is still an update to the [asset](/concepts/assets), we are not deleting the [asset](/concepts/assets) itself.)
+	2. Enrich the object with the classification(s) you want to *keep* on the [asset](/concepts/assets).
+	3. Call the `upsert()` method to actually update the [asset](/concepts/assets), using `true` as the first argument to overwrite classifications. This will *replace* the 	existing classifications on the [asset](/concepts/assets) with the limited ones we have enriched on the object. (In other words, it will remove any of the classifications 	from the [asset](/concepts/assets) that we did *not* include in our enrichment.)
+	4. The response will include that single [asset](/concepts/assets) that was updated (again, removing classifications is an update to the [asset](/concepts/assets) — we are not deleting the [asset](/concepts/assets) itself).
 
 === ":material-language-python: Python"
 
 	!!! construction "Coming soon"
 
-### Removing all classifications
+### Remove all classifications
 
-To remove all classifications from an existing asset, you need to specify no classifications in your object:
+To remove all classifications from an existing [asset](/concepts/assets), you need to specify no classifications in your object:
 
 === ":fontawesome-brands-java: Java"
 
@@ -102,9 +102,9 @@ To remove all classifications from an existing asset, you need to specify no cla
 	response.getUpdatedEntities().size() == 1; // (3)
 	```
 	
-	1. Use the `toUpdate()` method to initialize the object with all [necessary attributes for updating it](../../java/basic-operations/update/#build-minimal-object-needed). (Removing the classifications is still an update to the asset, we are not deleting the asset itself.)
-	2. Call the `upsert()` method to actually update the asset, using `true` as the first argument to overwrite classifications. Since we have not 	provided any classifications in our object, this will *replace* the existing classifications on the asset with no classifications. (In other words, it 	will remove all classifications from the asset.)
-	3. The response will include that single asset that was updated (again, removing classifications is an update to the asset — we are not deleting the asset itself).
+	1. Use the `toUpdate()` method to initialize the object with all [necessary attributes for updating it](../../java/basic-operations/update/#build-minimal-object-needed). (Removing the classifications is still an update to the [asset](/concepts/assets), we are not deleting the [asset](/concepts/assets) itself.)
+	2. Call the `upsert()` method to actually update the [asset](/concepts/assets), using `true` as the first argument to overwrite classifications. Since we have not 	provided any classifications in our object, this will *replace* the existing classifications on the [asset](/concepts/assets) with no classifications. (In other words, it 	will remove all classifications from the [asset](/concepts/assets).)
+	3. The response will include that single [asset](/concepts/assets) that was updated (again, removing classifications is an update to the [asset](/concepts/assets) — we are not deleting the [asset](/concepts/assets) itself).
 
 === ":material-language-python: Python"
 

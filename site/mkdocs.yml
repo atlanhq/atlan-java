@@ -1,7 +1,7 @@
 # Copyright 2022, Atlan
 ---
 site_name: Developer
-site_description: Developers, your path to 🤖's for data starts here
+site_description: Dear Developers
 copyright: >-
   Copyright &copy; 2022 Atlan<br>Built with 💙 for the 🤖-making 🧑's of Data
 #repo_name: atlanhq/atlan-customer-journey
@@ -13,7 +13,6 @@ nav:
   - Overview: index.md
   - SDKs:
     - SDKs introduction: sdks/index.md
-    - Key concepts: sdks/concepts.md
     - Java SDK:
       - Getting started: sdks/java/getting-started.md
       - Basic operations:
@@ -52,6 +51,15 @@ nav:
       - Looker-specific: search/bi/looker.md
       - Tableau-specific: search/bi/tableau.md
       - Power BI-specific: search/bi/powerbi.md
+  - Key concepts:
+    - Key concepts: concepts/index.md
+    - Atlan objects:
+      - Type definitions: concepts/typedefs.md
+      - Entities: concepts/entities.md
+      - Relationships: concepts/relationships.md
+      - Assets: concepts/assets.md
+    - Access:
+      - API tokens: concepts/api-tokens.md
 #  - Error codes:
 #    - Else: else.md
 
