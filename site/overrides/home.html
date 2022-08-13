@@ -1,0 +1,104 @@
+<!-- Changes Copyright (c) 2022 Atlan -->
+
+<!--
+  Original content:
+  Copyright (c) 2016-2021 Martin Donath <martin.donath@squidfunk.com>
+  Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to
+  deal in the Software without restriction, including without limitation the
+  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+  sell copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+  IN THE SOFTWARE.
+-->
+
+{% extends "base.html" %}
+
+{% block extrahead %}
+  <meta property="robots" content="noindex, nofollow" />
+{% endblock %}
+
+{% block htmltitle %}
+  <title>Atlan - Developers</title>
+{% endblock %}
+
+{% block styles %}
+{{ super() }}
+    <link rel="stylesheet" type="text/css" href="/assets/stylesheets/home.css">
+{% endblock %}
+
+{% block tabs %}
+
+<section class="mdx-container">
+  <div class="md-grid md-typeset">
+    <div class="mdx-hero">
+      <div class="mdx-hero__image">
+        <img src="/assets/images/coding.svg" alt="" width="300" draggable="false">
+      </div>
+      <div class="mdx-hero__content">
+        <h1>{{ config.site_description }}.</h1>
+        <a href="{{ page.next_page.url | url }}" title="{{ page.next_page.title | e }}" class="md-button md-button--primary">
+          Get started
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Welcome to our temporary 🏡 for the developer community of Atlan. Here you'll find reference materials related to working with Atlan programmatically, in particular through our APIs.
+
+You might want to get started by learning more about our [SDKs](sdks/).
+
+Or you might be interested in specific reference material on:
+
+- [Search attributes](search/)
+- [Error codes](errors/) -->
+
+<div class="top-hr">
+    <div class="feature-item">
+        <h2><a href="/sdks">
+            SDKs
+        </a></h2>
+        <p>
+            Grab the libraries, learn the basics, and start integrating Atlan.
+        </p>
+    </div>
+    <div class="feature-item">
+        <h2><a href="/search">
+            Search reference
+        </a></h2>
+        <p>
+            Delve deeper into the power and flexibility of Atlan's search, powered by Elastic.
+        </p>
+    </div>
+    <!--<div class="feature-item">
+        <h2><a href="/first-value">
+            Error reference
+        </a></h2>
+        <p>
+            Identify the top value streams you want to go after, deploy the first, and onboard initial users.
+        </p>
+    </div>
+    <div class="feature-item">
+        <h2><a href="/activate">
+            Activate
+        </a></h2>
+        <p><strong>
+            ✅ Your entire data team!
+        </strong></p>
+        <p>
+            Review your value stream priorities, automate for your team's efficiency, and deploy more value streams.
+        </p>
+    </div>-->
+</div>
+
+{% endblock %}
+{% block footer %}{% endblock %}

@@ -27,8 +27,8 @@ The SDK is available on Maven Central, ready to be included in your project:
 
 The SDK connects to your instance by setting two values on the static `Atlan` class:
 
-- `Atlan.apiKey` should contain your API token
-- `Atlan.setApiBase()` should be given your Atlan URL (for example, `https://tenant.atlan.com`)
+- `Atlan.setApiToken()` should be given your Atlan API token, for authentication
+- `Atlan.setBaseUrl()` should be given your Atlan URL (for example, `https://tenant.atlan.com`)
 
 Once these are set, you can start using your SDK to make live calls against your Atlan instance.
 
@@ -41,8 +41,8 @@ import com.atlan.Atlan;
 
 public class AtlanLiveTest {
     static {
-        Atlan.apiKey = System.getenv("ATLAN_API_KEY");
-        Atlan.setApiBase(System.getenv("ATLAN_BASE_URL"));
+        Atlan.setApiToken(System.getenv("ATLAN_API_KEY"));
+        Atlan.setBaseUrl(System.getenv("ATLAN_BASE_URL"));
     }
 }
 ```

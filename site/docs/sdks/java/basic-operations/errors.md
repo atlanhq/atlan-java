@@ -1,9 +1,9 @@
 
 # Error-handling in the Java SDK
 
-The SDK defines checked exceptions for the following categories of error:
-
 ## Exceptions
+
+The SDK defines checked exceptions for the following categories of error:
 
 | Exception | Description |
 |---|---|
