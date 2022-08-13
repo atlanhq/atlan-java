@@ -1,7 +1,10 @@
+---
+icon: fontawesome/brands-java
+---
 
 # Updating an asset through the Java SDK
 
-All objects in the SDK that you can update within Atlan implement the builder pattern. This allows you to progressively build-up the object you want to update. In addition, each object provides a `toUpdate()` method that takes the minimal set of required fields to *update* that asset, when it already exists in Atlan.
+All objects in the SDK that you can update within Atlan implement the builder pattern. This allows you to progressively build-up the object you want to update. In addition, each object provides a `toUpdate()` method that takes the minimal set of required fields to *update* that [asset](/concepts/assets), when it already exists in Atlan.
 
 ## Build minimal object needed
 
@@ -14,7 +17,7 @@ GlossaryTerm term = GlossaryTerm
 							  "b4113341-251b-4adc-81fb-2420501c30e6"); // (3)
 ```
 
-1. The `qualifiedName` of the existing term, which must match exactly (case-sensitive). Note that for some assets (like terms), this may be a strange-looking Atlan-internal string.
+1. The `qualifiedName` of the existing term, which must match exactly (case-sensitive). Note that for some [assets](/concepts/assets) (like terms), this may be a strange-looking Atlan-internal string.
 2. The name of the existing term. This must match exactly (case-sensitive).
 3. The GUID of the glossary in which the term exists.
 
@@ -35,16 +38,16 @@ term = term.toBuilder() // (1)
 
 1. The `toBuilder()` method can be called on any object to create a chainable builder for further enriching the object.
 2. In this example, we're adding a certificate to the object.
-3. Note that you can chain any number of enrichments together. Here we are also adding an announcement to the asset.
+3. Note that you can chain any number of enrichments together. Here we are also adding an announcement to the [asset](/concepts/assets).
 4. To persist the enrichment back to the object, we must `build()` the builder.
 
 	!!! warning "Assign the result back"
 		Remember to assign the result of the `build()` operation back to your original object. Otherwise the result is not persisted back into any variable! (In this case we're assigning to the `term` variable back on line 5.)
 
-When enriching the object for update, you only need to specify the information you want to change. Any information you do not include in your update will be left untouched on the asset in Atlan. This way you do not need to try to reproduce the complete asset in your request to do targeted updates to specific attributes.
+When enriching the object for update, you only need to specify the information you want to change. Any information you do not include in your update will be left untouched on the [asset](/concepts/assets) in Atlan. This way you do not need to try to reproduce the complete [asset](/concepts/assets) in your request to do targeted updates to specific attributes.
 
 ??? details "More information"
-	Note that this does create some challenges. For example, what if you *want* to remove some information that already exists on the asset in Atlan? To do that, we provide helper methods that inject the correct content into your object to handle removals. For example, `removeCertificate()` can be used to remove any existing certificate details from an asset.
+	Note that this does create some challenges. For example, what if you *want* to remove some information that already exists on the [asset](/concepts/assets) in Atlan? To do that, we provide helper methods that inject the correct content into your object to handle removals. For example, `removeCertificate()` can be used to remove any existing certificate details from an [asset](/concepts/assets).
 
 	These helper methods should *always* be called on the built object itself (not the builder), and only as the final step (after all other enrichment has been done to the object).
 
@@ -73,11 +76,11 @@ if (updated instanceof GlossaryTerm) {
 
 	Note that the `upsert()` method always returns objects of type `Entity`, though.
 
-3. The `Entity` class is a superclass of all assets. So we need to cast to more specific types (like `GlossaryTerm`) after verifying the object that was actually returned.
+3. The `Entity` class is a superclass of all [assets](/concepts/assets). So we need to cast to more specific types (like `GlossaryTerm`) after verifying the object that was actually returned.
 
-4. In this example, creating the `GlossaryTerm` actually also updates the parent `Glossary`. This is why the `response` contains generic `Entity` objects rather than specific types — any operation could side-effect a number of different assets.
+4. In this example, creating the `GlossaryTerm` actually also updates the parent `Glossary`. This is why the `response` contains generic `Entity` objects rather than specific types — any operation could side-effect a number of different [assets](/concepts/assets).
 
 5. Like with the `GlossaryTerm`, we can check and cast the generic `Entity` returned by the response into its more specific type (`Glossary`).
 
 !!! warning "Case-sensitive, exact match"
-	If you use a different capitalization or spelling for the name or `qualifiedName`, you may accidentally *create* a new asset rather than updating the existing one.
+	If you use a different capitalization or spelling for the name or `qualifiedName`, you may accidentally *create* a new [asset](/concepts/assets) rather than updating the existing one.

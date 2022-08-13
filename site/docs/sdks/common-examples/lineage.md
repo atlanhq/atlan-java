@@ -1,7 +1,7 @@
 
 # Manage lineage
 
-Lineage in Atlan is defined by `Process` entities. These link assets together by `inputs` and `outputs`, and there can be any number of each of these:
+Lineage in Atlan is defined by `Process` entities. These link [assets](/concepts/assets) together by `inputs` and `outputs`, and there can be any number of each of these:
 
 ```mermaid
 graph LR
@@ -16,10 +16,10 @@ graph LR
 
 ## Create lineage between assets
 
-To create lineage between assets, we need to create a `Process` entity.
+To create lineage between [assets](/concepts/assets), we need to create a `Process` entity.
 
 !!! warning "Input and output assets must already exist"
-	Note that the assets you reference as the inputs and outputs of the process must already exist, before creating the process.
+	Note that the [assets](/concepts/assets) you reference as the inputs and outputs of the process must already exist, before creating the process.
 
 === ":fontawesome-brands-java: Java"
 
@@ -46,16 +46,16 @@ To create lineage between assets, we need to create a `Process` entity.
 	3. Define the connector that ran the process.
 	4. Define the connection that ran the process.
 	5. Provide the `qualifiedName` of the connection that ran the process.
-	6. Provide the list of inputs to the process. Note that each of these is only a `Reference` to an asset, not a full asset object. For a reference we only need:
+	6. Provide the list of inputs to the process. Note that each of these is only a `Reference` to an [asset](/concepts/assets), not a full [asset](/concepts/assets) object. For a reference we only need:
 
-		- the type of asset, and either:
+		- the type of [asset](/concepts/assets), and either:
 			- its GUID (for the static `Reference.to()` method)
 			- its `qualifiedName` (for the static `Reference.by()` method)
 
-	7. Provide the list of outputs to the process. Note that each of these is again only a `Reference` to an asset.
+	7. Provide the list of outputs to the process. Note that each of these is again only a `Reference` to an [asset](/concepts/assets).
 	8. Call the `upsert()` method to actually create the process.
-	9. The response will include that single asset that was created.
-	10. The response will also include the 5 data assets (3 inputs, 2 outputs) that were updated.
+	9. The response will include that single [asset](/concepts/assets) that was created.
+	10. The response will also include the 5 data [assets](/concepts/assets) (3 inputs, 2 outputs) that were updated.
 
 === ":material-language-python: Python"
 
@@ -63,7 +63,7 @@ To create lineage between assets, we need to create a `Process` entity.
 
 ## Remove lineage between assets
 
-To remove lineage between assets, we need to delete the `Process` entity that links them:
+To remove lineage between [assets](/concepts/assets), we need to delete the `Process` entity that links them:
 
 === ":fontawesome-brands-java: Java"
 
@@ -86,4 +86,4 @@ To remove lineage between assets, we need to delete the `Process` entity that li
 	!!! construction "Coming soon"
 
 ??? details "More information"
-	This will irreversibly delete the process, and therefore the lineage it represented. The input and output assets themselves will also be updated, to no longer be linked to the (now non-existent) process. However, the input and output assets themselves will continue to exist in Atlan.
+	This will irreversibly delete the process, and therefore the lineage it represented. The input and output [assets](/concepts/assets) themselves will also be updated, to no longer be linked to the (now non-existent) process. However, the input and output [assets](/concepts/assets) themselves will continue to exist in Atlan.

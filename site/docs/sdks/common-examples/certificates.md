@@ -1,9 +1,9 @@
 
 # Certify assets
 
-## Set certificate when creating asset
+## When creating an asset
 
-To add a certificate when creating an asset:
+To add a certificate when creating an [asset](/concepts/assets):
 
 === ":fontawesome-brands-java: Java"
 
@@ -25,16 +25,16 @@ To add a certificate when creating an asset:
 	3. Set the certificate that should be added (in this example, we're using `VERIRIFED`).
 	4. (Optional) Add a message for the certificate.
 	5. Call the `build()` method to build the enriched object. (Remember this needs to be assigned back to the original object — line 5!)
-	6. Call the `upsert()` method to actually create the asset with this certificate.
-	7. The response will include that single asset that was created.
+	6. Call the `upsert()` method to actually create the [asset](/concepts/assets) with this certificate.
+	7. The response will include that single [asset](/concepts/assets) that was created.
 
 === ":material-language-python: Python"
 
 	!!! construction "Coming soon"
 
-## Add certificate to existing assets
+## Add to existing assets
 
-You can also add a certificate to existing assets. To illustrate a bit more flexibility, let's imagine we want to update the certificate on multiple assets at the same time:
+You can also add a certificate to existing [assets](/concepts/assets). To illustrate a bit more flexibility, let's imagine we want to update the certificate on multiple [assets](/concepts/assets) at the same time:
 
 === ":fontawesome-brands-java: Java"
 
@@ -65,11 +65,11 @@ You can also add a certificate to existing assets. To illustrate a bit more flex
 	3. Call the `toBuilder()` method on the resulting object to [enrich it further](../../java/basic-operations/update/#enrich-before-updating).
 	4. Directly chain our enrichment methods to add the certificate and message onto the `toBuilder()` method's result.
 	5. Call the `build()` method to build the enriched object. (No need to assign it back to an original object, as we've chained all the operations 	together!)
-	6. Use the `toUpdate()` method to initialize the object for another asset.
-	7. Chain the `toBuilder()`, enrichment and `build()` methods like we did for the previous asset.
-	8. Build the result back into the list again, like we did for the previous asset.
-	9. To optimize our update, we want to limit the number of API calls we make. If we called `upsert()` against each of *n* assets individually, we would 	have *n* API calls. Here we use the API endpoint directly with a list of assets — this makes 1 API call to update all *n* assets at the same time.
-	10. The response will include all *n* assets that were updated.
+	6. Use the `toUpdate()` method to initialize the object for another [asset](/concepts/assets).
+	7. Chain the `toBuilder()`, enrichment and `build()` methods like we did for the previous [asset](/concepts/assets).
+	8. Build the result back into the list again, like we did for the previous [asset](/concepts/assets).
+	9. To optimize our update, we want to limit the number of API calls we make. If we called `upsert()` against each of *n* [assets](/concepts/assets) individually, we would 	have *n* API calls. Here we use the API endpoint directly with a list of [assets](/concepts/assets) — this makes 1 API call to update all *n* [assets](/concepts/assets) at the same time.
+	10. The response will include all *n* [assets](/concepts/assets) that were updated.
 
 === ":material-language-python: Python"
 
@@ -78,13 +78,13 @@ You can also add a certificate to existing assets. To illustrate a bit more flex
 ???+ warning "Be aware of how much you're updating per request"
 	While this is great for reducing the number of API calls for better performance, do be aware of how many objects you're trying to update per request. There will be a limit beyond which you are trying to send too much information through a single API call and you could see other impacts such as failed requests due to network timeouts.
 
-## Remove certificate from an existing asset
+## Remove from an existing asset
 
-To remove a certificate from an existing asset:
+To remove a certificate from an existing [asset](/concepts/assets):
 
 === ":fontawesome-brands-java: Java"
 
-	```java linenums="1" title="Remove certificates from existing assets"
+	```java linenums="1" title="Remove certificate from existing asset"
 	GlossaryTerm term = GlossaryTerm
 			.toUpdate("gsNccqJraDZqM6WyGP3ea@FzCMyPR2LxkPFgr8eNGrq", // (1)
 					  "Example Term",
@@ -94,10 +94,10 @@ To remove a certificate from an existing asset:
 	response.getUpdatedEntities().size() == 1; // (4)
 	```
 	
-	1. Use the `toUpdate()` method to initialize the object with all [necessary attributes for updating it](../../java/basic-operations/update/#build-minimal-object-needed). (Removing the certificate is still an update to the asset, we are not deleting the asset itself.)
+	1. Use the `toUpdate()` method to initialize the object with all [necessary attributes for updating it](../../java/basic-operations/update/#build-minimal-object-needed). (Removing the certificate is still an update to the [asset](/concepts/assets), we are not deleting the [asset](/concepts/assets) itself.)
 	2. Call the `removeCertificate()` method on the built object to set it up for removing the certificate details when sent across to Atlan.
-	3. Call the `upsert()` method to actually update the asset (remove its certificate).
-	4. The response will include that single asset that was updated (again, removing a certificate is an update to the asset — we are not deleting the 	asset itself).
+	3. Call the `upsert()` method to actually update the [asset](/concepts/assets) (remove its certificate).
+	4. The response will include that single [asset](/concepts/assets) that was updated (again, removing a certificate is an update to the [asset](/concepts/assets) — we are not deleting the [asset](/concepts/assets) itself).
 
 === ":material-language-python: Python"
 

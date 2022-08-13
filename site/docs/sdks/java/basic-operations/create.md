@@ -1,7 +1,10 @@
+---
+icon: fontawesome/brands-java
+---
 
 # Creating an asset through the Java SDK
 
-All objects in the SDK that you can create within Atlan implement the builder pattern. This allows you to progressively build-up the object you want to create. In addition, each object provides a `toCreate()` method that takes the minimal set of required fields to create that asset.
+All objects in the SDK that you can create within Atlan implement the builder pattern. This allows you to progressively build-up the object you want to create. In addition, each object provides a `toCreate()` method that takes the minimal set of required fields to create that [asset](/concepts/assets).
 
 ## Build minimal object needed
 
@@ -49,15 +52,15 @@ if (updated instanceof Glossary) {
 
 	Note that the `upsert()` method always returns objects of type `Entity`, though.
 
-3. The `Entity` class is a superclass of all assets. So we need to cast to more specific types (like `GlossaryTerm`) after verifying the object that was actually returned.
+3. The `Entity` class is a superclass of all [assets](/concepts/assets). So we need to cast to more specific types (like `GlossaryTerm`) after verifying the object that was actually returned.
 
-4. In this example, creating the `GlossaryTerm` actually also updates the parent `Glossary`. This is why the `response` contains generic `Entity` objects rather than specific types — any operation could side-effect a number of different assets.
+4. In this example, creating the `GlossaryTerm` actually also updates the parent `Glossary`. This is why the `response` contains generic `Entity` objects rather than specific types — any operation could side-effect a number of different [assets](/concepts/assets).
 
 5. Like with the `GlossaryTerm`, we can check and cast the generic `Entity` returned by the response into its more specific type (`Glossary`).
 
 ## (Optional) Enrich before creating
 
-If you want to further enrich the asset before creating it, you can do this using the builder pattern:
+If you want to further enrich the [asset](/concepts/assets) before creating it, you can do this using the builder pattern:
 
 ```java linenums="5" title="Alternatively, further enrich the asset before creating it"
 term = term.toBuilder() // (1)
