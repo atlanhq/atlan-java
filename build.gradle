@@ -84,6 +84,16 @@ tasks.withType(Test) {
     }
 }
 
+tasks.register('uberJar', Jar) {
+    archiveClassifier = 'uber'
+    from sourceSets.main.output
+    dependsOn configurations.runtimeClasspath
+    from {
+        configurations.runtimeClasspath.findAll { it.name.endsWith('jar')}.collect{ zipTree(it) }
+    }
+    duplicatesStrategy = org.gradle.api.file.DuplicatesStrategy.INCLUDE
+}
+
 compileJava {
     options.compilerArgs << "-Werror"
 }
@@ -137,11 +147,6 @@ apply from: "deploy.gradle"
 test {
     useTestNG()
     testLogging.showStandardStreams = true
-//    useJUnitPlatform()
-//    testLogging {
-//        events "passed", "skipped", "failed"
-//        exceptionFormat "full"
-//    }
 }
 
 spotless {
