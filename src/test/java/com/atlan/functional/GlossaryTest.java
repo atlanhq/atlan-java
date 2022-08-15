@@ -3,8 +3,8 @@ package com.atlan.functional;
 import static org.testng.Assert.*;
 
 import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
-import co.elastic.clients.elasticsearch._types.query_dsl.MatchQuery;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
+import co.elastic.clients.elasticsearch._types.query_dsl.TermQuery;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.*;
 import com.atlan.model.core.Entity;
@@ -350,13 +350,13 @@ public class GlossaryTest extends AtlanLiveTest {
     void searchTerms() {
         try {
             Query byState =
-                    MatchQuery.of(m -> m.field("__state").query("ACTIVE"))._toQuery();
+                    TermQuery.of(t -> t.field("__state").value("ACTIVE"))._toQuery();
 
-            Query byType = MatchQuery.of(m -> m.field("__typeName.keyword").query(GlossaryTerm.TYPE_NAME))
+            Query byType = TermQuery.of(t -> t.field("__typeName.keyword").value(GlossaryTerm.TYPE_NAME))
                     ._toQuery();
 
             Query byName =
-                    MatchQuery.of(m -> m.field("name.keyword").query(TERM_NAME))._toQuery();
+                    TermQuery.of(t -> t.field("name.keyword").value(TERM_NAME))._toQuery();
 
             Query combined =
                     BoolQuery.of(b -> b.must(byState).must(byType).must(byName))._toQuery();

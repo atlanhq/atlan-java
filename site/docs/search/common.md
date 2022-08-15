@@ -15,7 +15,7 @@ The identifier has no meaning, and is randomly generated, but is guaranteed to u
     {
       "dsl": {
         "query": {
-          "match": { "__guid": "25638e8c-0225-46fd-a70c-304117370c4c" }
+          "term": { "__guid": "25638e8c-0225-46fd-a70c-304117370c4c" }
         }
       },
       "attributes": [ "__guid" ]
@@ -49,7 +49,7 @@ If created via API, this will be a unique identifier for the API token used. Oth
     {
       "dsl": {
         "query": {
-          "match": { "__createdBy": "jdoe" }
+          "term": { "__createdBy": "jdoe" }
         }
       },
       "attributes": [ "__createdBy" ]
@@ -83,7 +83,7 @@ If updated via API, this will be a unique identifier for the API token used. Oth
     {
       "dsl": {
         "query": {
-          "match": { "__modifiedBy": "jdoe" }
+          "term": { "__modifiedBy": "jdoe" }
         }
       },
       "attributes": [ "__modifiedBy" ]
@@ -188,7 +188,7 @@ The entity status in Atlan. The expected values are:
     {
       "dsl": {
         "query": {
-          "match": { "__state": "DELETED" }
+          "term": { "__state": "DELETED" }
         }
       },
       "attributes": [ "__state" ]
@@ -425,7 +425,7 @@ The type of entity. For example, `Table`, `Column`, and so on.
     {
       "dsl": {
         "query": {
-          "match": { "__typeName.keyword": "AtlasGlossaryTerm" }
+          "term": { "__typeName.keyword": "AtlasGlossaryTerm" }
         }
       },
       "attributes": [ "__typeName" ]
@@ -579,7 +579,7 @@ Flag that is true if an entity has at least one process upstream or downstream. 
     {
       "dsl": {
         "query": {
-          "match": { "__hasLineage": true }
+          "term": { "__hasLineage": true }
         }
       },
       "attributes": [ "__hasLineage" ]
