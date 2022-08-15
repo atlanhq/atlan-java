@@ -9,9 +9,9 @@ import com.atlan.model.relations.Reference;
 import com.atlan.net.ApiResource;
 import org.testng.annotations.Test;
 
-public class TableTest {
+public class ReadmeTest {
 
-    private static final Table full = Table.builder()
+    private static final Readme full = Readme.builder()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -23,7 +23,7 @@ public class TableTest {
             .qualifiedName("qualifiedName")
             .name("name")
             .displayName("displayName")
-            .description("description")
+            .description("<h1>description</h1>")
             .userDescription("userDescription")
             .tenantId("tenantId")
             .certificateStatus(AtlanCertificateStatus.VERIFIED)
@@ -65,36 +65,13 @@ public class TableTest {
             .readme(Reference.to("Readme", "readmeGuid"))
             .meaning(Reference.to(GlossaryTerm.TYPE_NAME, "termGuid1"))
             .meaning(Reference.to(GlossaryTerm.TYPE_NAME, "termGuid2"))
-            .queryCount(123L)
-            .queryUserCount(123L)
-            .queryCountUpdatedAt(123456789L)
-            .databaseName("databaseName")
-            .databaseQualifiedName("databaseQualifiedName")
-            .schemaName("schemaName")
-            .schemaQualifiedName("schemaQualifiedName")
-            .tableName("tableName")
-            .tableQualifiedName("tableQualifiedName")
-            .viewName("viewName")
-            .viewQualifiedName("viewQualifiedName")
-            .columnCount(123L)
-            .rowCount(1234567890L)
-            .sizeBytes(1234567890L)
-            .alias("alias")
-            .isTemporary(false)
-            .isQueryPreview(true)
-            .externalLocation("externalLocation")
-            .externalLocationRegion("externalLocationRegion")
-            .externalLocationFormat("externalLocationFormat")
-            .isPartitioned(true)
-            .partitionStrategy("partitionStrategy")
-            .partitionCount(12L)
-            .partitionList("partitionList")
-            .atlanSchema(Reference.to("Schema", "schemaGuid"))
-            .column(Reference.to(Column.TYPE_NAME, "columnGuid1"))
-            .column(Reference.to(Column.TYPE_NAME, "columnGuid2"))
+            .link("link")
+            .isGlobal(false)
+            .reference("reference")
+            .asset(Reference.to(GlossaryTerm.TYPE_NAME, "termGuid3"))
             .build();
 
-    private static Table frodo;
+    private static Readme frodo;
     private static String serialized;
 
     @Test(groups = {"serialize"})
@@ -109,7 +86,7 @@ public class TableTest {
             dependsOnGroups = {"serialize"})
     void deserialization() {
         assertNotNull(serialized);
-        frodo = ApiResource.GSON.fromJson(serialized, Table.class);
+        frodo = ApiResource.GSON.fromJson(serialized, Readme.class);
         assertNotNull(frodo);
     }
 

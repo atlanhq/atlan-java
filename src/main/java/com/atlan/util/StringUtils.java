@@ -3,6 +3,8 @@ package com.atlan.util;
 
 import static java.util.Objects.requireNonNull;
 
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.util.regex.Pattern;
@@ -55,5 +57,25 @@ public final class StringUtils {
             return sb.toString();
         }
         return null;
+    }
+
+    /**
+     * Encode the provided content for storage as a README's content.
+     * @param decoded to be encoded
+     * @return encoded README content
+     */
+    public static String encodeContent(String decoded) {
+        return decoded == null
+                ? null
+                : URLEncoder.encode(decoded, StandardCharsets.UTF_8).replace("+", "%20");
+    }
+
+    /**
+     * Decode the provided content from the README-encoded form to plain HTML.
+     * @param encoded to be decoded
+     * @return decoded README content (HTML)
+     */
+    public static String decodeContent(String encoded) {
+        return encoded == null ? null : URLDecoder.decode(encoded.replace("%20", "+"), StandardCharsets.UTF_8);
     }
 }

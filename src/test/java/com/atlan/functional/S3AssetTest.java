@@ -33,12 +33,17 @@ public class S3AssetTest extends AtlanLiveTest {
     public static final String S3_OBJECT1_ARN = "aws::production:jc-test-bucket:a/prefix/jc-test-source.csv";
     public static final String S3_OBJECT2_NAME = "jc-test-object-target";
     public static final String S3_OBJECT2_ARN = "aws::production:jc-test-bucket:a/prefix/jc-test-target.csv";
+    private static final String readmeContent =
+            "<h1>This is a test</h1><h2>With some headings</h2><p>And some normal content.</p>";
 
     private static String connectionGuid = null;
     private static String connectionQame = null;
 
     private static String s3BucketGuid = null;
     private static String s3BucketQame = null;
+
+    private static String readmeGuid = null;
+    private static String readmeQame = null;
 
     private static String s3Object1Guid = null;
     private static String s3Object1Qame = null;
@@ -226,6 +231,38 @@ public class S3AssetTest extends AtlanLiveTest {
     }
 
     @Test(
+            groups = {"readme.create"},
+            dependsOnGroups = {"s3object.create"})
+    void addReadme() {
+        try {
+            Readme readme = Readme.toCreate(S3Bucket.TYPE_NAME, s3BucketGuid, S3_BUCKET_NAME, readmeContent);
+            EntityMutationResponse response = readme.upsert();
+            assertNotNull(response);
+            assertTrue(response.getDeletedEntities().isEmpty());
+            assertEquals(response.getCreatedEntities().size(), 1);
+            Entity one = response.getCreatedEntities().get(0);
+            assertTrue(one instanceof Readme);
+            readme = (Readme) one;
+            assertNotNull(readme);
+            readmeGuid = readme.getGuid();
+            assertNotNull(readmeGuid);
+            readmeQame = readme.getQualifiedName();
+            assertNotNull(readmeQame);
+            assertEquals(readme.getDescription(), readmeContent);
+            assertEquals(response.getUpdatedEntities().size(), 1);
+            one = response.getUpdatedEntities().get(0);
+            assertTrue(one instanceof S3Bucket);
+            S3Bucket s3Bucket = (S3Bucket) one;
+            assertNotNull(s3Bucket);
+            assertEquals(s3Bucket.getGuid(), s3BucketGuid);
+            assertEquals(s3Bucket.getQualifiedName(), s3BucketQame);
+        } catch (AtlanException e) {
+            e.printStackTrace();
+            assertNull(e, "Unexpected exception while trying to create a README.");
+        }
+    }
+
+    @Test(
             groups = {"s3bucket.retrieve"},
             dependsOnGroups = {"s3object.create"})
     void retrieveS3Bucket() {
@@ -242,9 +279,35 @@ public class S3AssetTest extends AtlanLiveTest {
             Reference one = bucket.getObjects().get(0);
             assertNotNull(one);
             assertEquals(one.getTypeName(), S3Object.TYPE_NAME);
+            assertNotNull(bucket.getReadme());
+            one = bucket.getReadme();
+            assertNotNull(one);
+            assertEquals(one.getTypeName(), Readme.TYPE_NAME);
+            assertEquals(one.getGuid(), readmeGuid);
         } catch (AtlanException e) {
             e.printStackTrace();
             assertNull(e, "Unexpected exception while trying to retrieve an S3 bucket.");
+        }
+    }
+
+    @Test(
+            groups = {"readme.purge"},
+            dependsOnGroups = {"s3bucket.retrieve"})
+    void purgeReadme() {
+        try {
+            EntityMutationResponse response = Readme.purge(readmeGuid);
+            assertNotNull(response);
+            assertEquals(response.getDeletedEntities().size(), 1);
+            Entity one = response.getDeletedEntities().get(0);
+            assertNotNull(one);
+            assertTrue(one instanceof Readme);
+            Readme readme = (Readme) one;
+            assertEquals(readme.getGuid(), readmeGuid);
+            assertEquals(readme.getQualifiedName(), readmeQame);
+            assertEquals(readme.getStatus(), AtlanStatus.DELETED);
+        } catch (AtlanException e) {
+            e.printStackTrace();
+            assertNull(e, "Unexpected error during README deletion.");
         }
     }
 
