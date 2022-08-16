@@ -9,9 +9,9 @@ The globally unique identifier (GUID) of any object in Atlan.
 
 The identifier has no meaning, and is randomly generated, but is guaranteed to uniquely identify only a single entity.
 
-=== ":material-tag: Exact-Request"
+=== ":material-tag: Request (exact)"
 
-    ```json hl_lines="4 7"
+    ```json linenums="1" title="__guid"
     {
       "dsl": {
         "query": {
@@ -22,9 +22,9 @@ The identifier has no meaning, and is randomly generated, but is guaranteed to u
     }
     ```
 
-=== ":material-tag: Exact-Response"
+=== ":material-tag: Response (exact)"
 
-    ```json hl_lines="5 7"
+    ```json linenums="1" title="__guid"
     {
       "entities": [
         {
@@ -43,9 +43,9 @@ The Atlan user who created this entity.
 
 If created via API, this will be a unique identifier for the API token used. Otherwise, this will be the username of the user that created the entity through the Atlan UI.
 
-=== ":material-tag: Exact-Request"
+=== ":material-tag: Request (exact)"
 
-    ```json hl_lines="4 7"
+    ```json linenums="1" title="__createdBy"
     {
       "dsl": {
         "query": {
@@ -56,9 +56,9 @@ If created via API, this will be a unique identifier for the API token used. Oth
     }
     ```
 
-=== ":material-tag: Exact-Response"
+=== ":material-tag: Response (exact)"
 
-    ```json hl_lines="5 7"
+    ```json linenums="1" title="__createdBy"
     {
       "entities": [
         {
@@ -77,9 +77,9 @@ The Atlan user who last updated the entity.
 
 If updated via API, this will be a unique identifier for the API token used. Otherwise, this will be the username of the user that made the change through the Atlan UI.
 
-=== ":material-tag: Exact-Request"
+=== ":material-tag: Request (exact)"
 
-    ```json hl_lines="4 7"
+    ```json linenums="1" title="__modifiedBy"
     {
       "dsl": {
         "query": {
@@ -90,9 +90,9 @@ If updated via API, this will be a unique identifier for the API token used. Oth
     }
     ```
 
-=== ":material-tag: Exact-Response"
+=== ":material-tag: Response (exact)"
 
-    ```json hl_lines="5 7"
+    ```json linenums="1" title="__modifiedBy"
     {
       "entities": [
         {
@@ -113,7 +113,7 @@ This is stored as an epoch: the milliseconds since January 1, 1970 (UTC).
 
 === ":material-calendar-clock: Request"
 
-    ```json hl_lines="4 7"
+    ```json linenums="1" title="__timestamp"
     {
       "dsl": {
         "query": {
@@ -126,7 +126,7 @@ This is stored as an epoch: the milliseconds since January 1, 1970 (UTC).
 
 === ":material-calendar-clock: Response"
 
-    ```json hl_lines="5 7"
+    ```json linenums="1" title="__timestamp"
     {
       "entities": [
         {
@@ -147,7 +147,7 @@ This is stored as an epoch: the milliseconds since January 1, 1970 (UTC).
 
 === ":material-calendar-clock: Request"
 
-    ```json hl_lines="4 7"
+    ```json linenums="1" title="__modificationTimestamp"
     {
       "dsl": {
         "query": {
@@ -160,7 +160,7 @@ This is stored as an epoch: the milliseconds since January 1, 1970 (UTC).
 
 === ":material-calendar-clock: Response"
 
-    ```json hl_lines="5 7"
+    ```json linenums="1" title="__modificationTimestamp"
     {
       "entities": [
         {
@@ -182,9 +182,9 @@ The entity status in Atlan. The expected values are:
 
 (Note that hard-deleted, or "purged" entities are fully erased, and therefore no status exists for them.)
 
-=== ":material-tag: Exact-Request"
+=== ":material-tag: Request (exact)"
 
-    ```json hl_lines="4 7"
+    ```json linenums="1" title="__state"
     {
       "dsl": {
         "query": {
@@ -195,9 +195,9 @@ The entity status in Atlan. The expected values are:
     }
     ```
 
-=== ":material-tag: Exact-Response"
+=== ":material-tag: Response (exact)"
 
-    ```json hl_lines="5 7"
+    ```json linenums="1" title="__state"
     {
       "entities": [
         {
@@ -221,9 +221,9 @@ All directly-assigned classifications that exist on an entity.
     - `classificationNames` in the response is a set (unordered) of strings. Note that its order may or may not match that of the pipe-delimited `attributes.__classificationNames` string.
     - When searching, the `__traitNames` field provides more reliable results than searching `__classificationNames`. The latter can return results that have no classifications (but previously did), while the former returns only those that currently have classifications.
 
-=== ":material-tag: Exact-Request"
+=== ":material-tag: Request (exact)"
 
-    ```json hl_lines="4 7"
+    ```json linenums="1" title="__traitNames"
     {
       "dsl": {
         "query": {
@@ -234,9 +234,9 @@ All directly-assigned classifications that exist on an entity.
     }
     ```
 
-=== ":material-tag: Exact-Response"
+=== ":material-tag: Response (exact)"
 
-    ```json hl_lines="5 7-10"
+    ```json linenums="1" title="__traitNames"
     {
       "entities": [
         {
@@ -267,9 +267,9 @@ All propagated classifications that exist on an entity. This includes classifica
     - `classificationNames` in the response is a set (unordered) of strings. Note that its order may or may not match that of the pipe-delimited `attributes.__propagatedClassificationNames` string.
     - When searching, the `__propagatedTraitNames` field provides more reliable results than searching `__propagatedClassificationNames`. The latter can return results that have no classifications (but previously did), while the former returns only those that currently have classifications.
 
-=== ":material-tag: Exact-Request"
+=== ":material-tag: Request (exact)"
 
-    ```json hl_lines="4 7"
+    ```json linenums="1" title="__propagatedTraitNames"
     {
       "dsl": {
         "query": {
@@ -280,9 +280,9 @@ All propagated classifications that exist on an entity. This includes classifica
     }
     ```
 
-=== ":material-tag: Exact-Response"
+=== ":material-tag: Response (exact)"
 
-    ```json hl_lines="5 7-10"
+    ```json linenums="1" title="__propagatedTraitNames"
     {
       "entities": [
         {
@@ -309,9 +309,9 @@ All classifications that exist on an entity, whether directly assigned or propag
     - `classificationNames` in the response is a set (unordered) of strings. Note that its order may or may not match that of the space-delimited `attributes.__classificationsText` string.
     - When searching for existence (as in the example), the `__classificationsText` field may provide false positives. These are typically where a classification previously existed on an entity but no longer does.
 
-=== ":material-tag-text: Analyzed-Request"
+=== ":material-tag-text: Request (analyzed)"
 
-    ```json hl_lines="4 7"
+    ```json linenums="1" title="__classificationsText"
     {
       "dsl": {
         "query": {
@@ -322,9 +322,9 @@ All classifications that exist on an entity, whether directly assigned or propag
     }
     ```
 
-=== ":material-tag-text: Analyzed-Response"
+=== ":material-tag-text: Response (analyzed)"
 
-    ```json hl_lines="5 7-10"
+    ```json linenums="1" title="__classificationsText"
     {
       "entities": [
         {
@@ -348,9 +348,9 @@ All terms attached to an entity.
     - `__meanings` is a keyword array in Elastic, so cannot be searched by simple matching.
     - `__meanings` has no separate response — the default `meanings` appears with or without `__meanings` in the attribute list of the request.
 
-=== ":material-tag: Exact-Request"
+=== ":material-tag: Request (exact)"
 
-    ```json hl_lines="4"
+    ```json linenums="1" title="__meanings"
     {
       "dsl": {
         "query": {
@@ -361,9 +361,9 @@ All terms attached to an entity.
     }
     ```
 
-=== ":material-tag: Exact-Response"
+=== ":material-tag: Response (exact)"
 
-    ```json hl_lines="4-11"
+    ```json linenums="1" title="__meanings"
     {
       "entities": [
         {
@@ -388,9 +388,9 @@ All terms attached to an entity, as a single comma-separated string.
     - `__meaningsText` has no separate response — the default `meaningNames` appears with or without `__meaningsText` in the attribute list of the request.
     - `meaningNames` is an (unordered) set of term names, rather than a single string.
 
-=== ":material-tag-text: Analyzed-Request"
+=== ":material-tag-text: Request (analyzed)"
 
-    ```json hl_lines="4"
+    ```json linenums="1" title="__meaningsText"
     {
       "dsl": {
         "query": {
@@ -401,9 +401,9 @@ All terms attached to an entity, as a single comma-separated string.
     }
     ```
 
-=== ":material-tag-text: Analyzed-Response"
+=== ":material-tag-text: Response (analyzed)"
 
-    ```json hl_lines="4-6"
+    ```json linenums="1" title="__meaningsText"
     {
       "entities": [
         {
@@ -419,9 +419,9 @@ All terms attached to an entity, as a single comma-separated string.
 
 The type of entity. For example, `Table`, `Column`, and so on.
 
-=== ":material-tag: Exact-Request"
+=== ":material-tag: Request (exact)"
 
-    ```json hl_lines="4"
+    ```json linenums="1" title="__typeName"
     {
       "dsl": {
         "query": {
@@ -432,9 +432,9 @@ The type of entity. For example, `Table`, `Column`, and so on.
     }
     ```
 
-=== ":material-tag: Exact-Response"
+=== ":material-tag: Response (exact)"
 
-    ```json hl_lines="4 6"
+    ```json linenums="1" title="__typeName"
     {
       "entities": [
         {
@@ -447,9 +447,9 @@ The type of entity. For example, `Table`, `Column`, and so on.
     }
     ```
 
-=== ":material-tag-text: Analyzed-Request"
+=== ":material-tag-text: Request (analyzed)"
 
-    ```json hl_lines="4"
+    ```json linenums="1" title="__typeName"
     {
       "dsl": {
         "query": {
@@ -460,9 +460,9 @@ The type of entity. For example, `Table`, `Column`, and so on.
     }
     ```
 
-=== ":material-tag-text: Analyzed-Response"
+=== ":material-tag-text: Response (analyzed)"
 
-    ```json hl_lines="4 6 10 12"
+    ```json linenums="1" title="__typeName"
     {
       "entities": [
         {
@@ -493,9 +493,9 @@ For example:
 ??? details "Details"
     - `__superTypeNames` has no separate response — the default `typeName` appears with or without `__superTypeNames` in the attribute list of the request.
 
-=== ":material-tag: Exact-Request"
+=== ":material-tag: Request (exact)"
 
-    ```json hl_lines="4"
+    ```json linenums="1" title="__superTypeNames"
     {
       "dsl": {
         "query": {
@@ -506,9 +506,9 @@ For example:
     }
     ```
 
-=== ":material-tag: Exact-Response"
+=== ":material-tag: Response (exact)"
 
-    ```json hl_lines="4 7 10 13"
+    ```json linenums="1" title="__superTypeNames"
     {
       "entities": [
         {
@@ -527,9 +527,9 @@ For example:
     }
     ```
 
-=== ":material-tag-text: Analyzed-Request"
+=== ":material-tag-text: Request (analyzed)"
 
-    ```json hl_lines="4"
+    ```json linenums="1" title="__superTypeNames"
     {
       "dsl": {
         "query": {
@@ -540,9 +540,9 @@ For example:
     }
     ```
 
-=== ":material-tag-text: Analyzed-Response"
+=== ":material-tag-text: Response (analyzed)"
 
-    ```json hl_lines="4 7 10 13 16 19"
+    ```json linenums="1" title="__superTypeNames"
     {
       "entities": [
         {
@@ -575,7 +575,7 @@ Flag that is true if an entity has at least one process upstream or downstream. 
 
 === ":material-toggle-switch: Request"
 
-    ```json hl_lines="4 7"
+    ```json linenums="1" title="__hasLineage"
     {
       "dsl": {
         "query": {
@@ -588,7 +588,7 @@ Flag that is true if an entity has at least one process upstream or downstream. 
 
 === ":material-toggle-switch: Response"
 
-    ```json hl_lines="5"
+    ```json linenums="1" title="__hasLineage"
     {
       "entities": [
         {
