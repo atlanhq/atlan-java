@@ -6,7 +6,7 @@ copyright: >-
   Copyright &copy; 2022 Atlan<br>Built with 💙 for the 🤖-making 🧑's of Data
 #repo_name: atlanhq/atlan-customer-journey
 #repo_url: https://github.com/atlanhq/atlan-customer-journey
-site_url: https://reference.atlan.com
+site_url: https://atlanhq.github.io/atlan-java
 edit_uri: ""
 
 nav:
