@@ -158,8 +158,8 @@ public class LinkingTest extends AtlanLiveTest {
     }
 
     @Test(
-        groups = {"link.remove2", "update"},
-        dependsOnGroups = {"create", "link.asset2term"})
+            groups = {"link.remove2", "update"},
+            dependsOnGroups = {"create", "link.asset2term"})
     void removeAssetToTermLinks() {
         S3Object s3Object1 = S3Object.toUpdate(S3AssetTest.s3Object1Qame, S3AssetTest.S3_OBJECT1_NAME);
         s3Object1.removeMeanings();
