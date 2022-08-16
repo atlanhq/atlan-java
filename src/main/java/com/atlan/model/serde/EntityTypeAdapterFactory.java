@@ -153,7 +153,11 @@ public class EntityTypeAdapterFactory implements TypeAdapterFactory {
                                 if (nullFields.contains(fieldName)) {
                                     // If the value should be serialized as null, then
                                     // set the value to the serializable null
-                                    attrValue = Removable.NULL;
+                                    if (field.getType() == List.class) {
+                                        attrValue = Removable.EMPTY_LIST;
+                                    } else {
+                                        attrValue = Removable.NULL;
+                                    }
                                 } else {
                                     // Otherwise, pickup the value from the top-level
                                     // attribute so that we can move that value across

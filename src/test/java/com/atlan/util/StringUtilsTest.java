@@ -38,11 +38,9 @@ public class StringUtilsTest {
         final String test = "<h1>This is a test</h1><p>With some HTML...</p>";
         String encoded = StringUtils.encodeContent(test);
         assertNotNull(encoded);
-        System.out.println("Encoded: " + encoded);
         assertNotEquals(test, encoded);
         String decoded = StringUtils.decodeContent(encoded);
         assertNotNull(decoded);
-        System.out.println("Decoded: " + decoded);
         assertEquals(decoded, test);
     }
 }

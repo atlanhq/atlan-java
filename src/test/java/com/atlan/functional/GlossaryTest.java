@@ -26,16 +26,16 @@ public class GlossaryTest extends AtlanLiveTest {
     public static final String CATEGORY_NAME = "JavaClient Test Category";
     public static final String TERM_NAME = "JavaClient Test Term";
 
-    private static String glossaryGuid = null;
-    private static String glossaryQame = null;
+    public static String glossaryGuid = null;
+    public static String glossaryQame = null;
 
     private static String categoryGuid = null;
     private static String categoryQame = null;
 
-    private static String termGuid = null;
-    private static String termQame = null;
+    public static String termGuid = null;
+    public static String termQame = null;
 
-    @Test(groups = {"glossary.create"})
+    @Test(groups = {"glossary.create", "create"})
     void createGlossary() {
         Glossary glossary = Glossary.toCreate(GLOSSARY_NAME);
         try {
@@ -63,7 +63,7 @@ public class GlossaryTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"category.create"},
+            groups = {"category.create", "create"},
             dependsOnGroups = {"glossary.create"})
     void createCategory() {
         GlossaryCategory category = GlossaryCategory.toCreate(CATEGORY_NAME, glossaryGuid, null);
@@ -92,7 +92,7 @@ public class GlossaryTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"term.create"},
+            groups = {"term.create", "create"},
             dependsOnGroups = {"glossary.create"})
     void createTerm() {
         GlossaryTerm term = GlossaryTerm.toCreate(TERM_NAME, glossaryGuid, null);
@@ -122,7 +122,7 @@ public class GlossaryTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"glossary.read"},
+            groups = {"glossary.read", "read"},
             dependsOnGroups = {"glossary.create", "category.create", "term.create"})
     void readGlossary() {
         try {
@@ -149,7 +149,7 @@ public class GlossaryTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"category.read"},
+            groups = {"category.read", "read"},
             dependsOnGroups = {"category.create"})
     void readCategory() {
         try {
@@ -171,7 +171,7 @@ public class GlossaryTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"term.read"},
+            groups = {"term.read", "read"},
             dependsOnGroups = {"term.create"})
     void readTerm() {
         try {
@@ -193,7 +193,7 @@ public class GlossaryTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"glossary.update"},
+            groups = {"glossary.update", "update"},
             dependsOnGroups = {"glossary.read"})
     void updateGlossary() {
         Glossary glossary = Glossary.toUpdate(glossaryGuid, GLOSSARY_NAME);
@@ -230,7 +230,7 @@ public class GlossaryTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"category.update"},
+            groups = {"category.update", "update"},
             dependsOnGroups = {"category.create"})
     void updateCategory() {
         GlossaryCategory category = GlossaryCategory.toUpdate(categoryQame, CATEGORY_NAME, glossaryGuid);
@@ -267,7 +267,7 @@ public class GlossaryTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"category.remove.attributes"},
+            groups = {"category.remove.attributes", "update"},
             dependsOnGroups = {"category.update"})
     void removeCategoryAttributes() {
         GlossaryCategory category2 = GlossaryCategory.toUpdate(categoryQame, CATEGORY_NAME, glossaryGuid);
@@ -299,7 +299,7 @@ public class GlossaryTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"term.update"},
+            groups = {"term.update", "update"},
             dependsOnGroups = {"term.create", "category.create"})
     void updateTerm() {
         GlossaryTerm term = GlossaryTerm.toUpdate(termQame, TERM_NAME, glossaryGuid);
@@ -345,7 +345,7 @@ public class GlossaryTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"term.search"},
+            groups = {"term.search", "search"},
             dependsOnGroups = {"term.update"})
     void searchTerms() {
         try {
@@ -396,8 +396,8 @@ public class GlossaryTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"term.purge"},
-            dependsOnGroups = {"term.search"},
+            groups = {"term.purge", "purge"},
+            dependsOnGroups = {"create", "update", "read", "search"},
             alwaysRun = true)
     void purgeTerm() {
         try {
@@ -429,8 +429,8 @@ public class GlossaryTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"category.purge"},
-            dependsOnGroups = {"term.purge", "category.update", "category.remove.attributes"},
+            groups = {"category.purge", "purge"},
+            dependsOnGroups = {"term.purge", "create", "update", "read", "search"},
             alwaysRun = true)
     void purgeCategory() {
         try {
@@ -462,8 +462,8 @@ public class GlossaryTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"glossary.purge"},
-            dependsOnGroups = {"category.purge"},
+            groups = {"glossary.purge", "purge"},
+            dependsOnGroups = {"category.purge", "create", "update", "read", "search"},
             alwaysRun = true)
     void purgeGlossary() {
         try {

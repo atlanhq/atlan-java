@@ -111,7 +111,6 @@ public class ColumnProcessTest {
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);
-        System.out.println("Hash (full): " + full.hashCode() + "\nHash (frod): " + frodo.hashCode());
         assertEquals(full, frodo, "Deserialization is not equivalent after serde loop,");
     }
 }

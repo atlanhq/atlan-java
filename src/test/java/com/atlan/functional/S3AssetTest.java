@@ -33,22 +33,17 @@ public class S3AssetTest extends AtlanLiveTest {
     public static final String S3_OBJECT1_ARN = "aws::production:jc-test-bucket:a/prefix/jc-test-source.csv";
     public static final String S3_OBJECT2_NAME = "jc-test-object-target";
     public static final String S3_OBJECT2_ARN = "aws::production:jc-test-bucket:a/prefix/jc-test-target.csv";
-    private static final String readmeContent =
-            "<h1>This is a test</h1><h2>With some headings</h2><p>And some normal content.</p>";
 
     private static String connectionGuid = null;
     private static String connectionQame = null;
 
-    private static String s3BucketGuid = null;
-    private static String s3BucketQame = null;
+    public static String s3BucketGuid = null;
+    public static String s3BucketQame = null;
 
-    private static String readmeGuid = null;
-    private static String readmeQame = null;
-
-    private static String s3Object1Guid = null;
-    private static String s3Object1Qame = null;
-    private static String s3Object2Guid = null;
-    private static String s3Object2Qame = null;
+    public static String s3Object1Guid = null;
+    public static String s3Object1Qame = null;
+    public static String s3Object2Guid = null;
+    public static String s3Object2Qame = null;
 
     private static String lineageGuid = null;
     private static String lineageQame = null;
@@ -63,7 +58,7 @@ public class S3AssetTest extends AtlanLiveTest {
                         CONNECTION_NAME, AtlanConnectionCategory.OBJECT_STORE, "s3", null, null, null));
     }
 
-    @Test(groups = {"connection.create"})
+    @Test(groups = {"connection.create", "create"})
     void createConnection() {
         try {
             String adminRoleGuid = RoleCache.getIdForName("$admin");
@@ -98,7 +93,7 @@ public class S3AssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"connection.retrieve"},
+            groups = {"connection.retrieve", "read"},
             dependsOnGroups = {"connection.create"})
     void retrieveConnection() throws InterruptedException {
         Entity full = null;
@@ -116,7 +111,7 @@ public class S3AssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"s3bucket.create"},
+            groups = {"s3bucket.create", "create"},
             dependsOnGroups = {"connection.retrieve"})
     void createS3Bucket() {
         try {
@@ -145,7 +140,7 @@ public class S3AssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"s3object.create"},
+            groups = {"s3object.create", "create"},
             dependsOnGroups = {"s3bucket.create"})
     void createS3Object1() {
         try {
@@ -188,7 +183,7 @@ public class S3AssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"s3object.create"},
+            groups = {"s3object.create", "create"},
             dependsOnGroups = {"s3bucket.create"})
     void createS3Object2() {
         try {
@@ -231,40 +226,8 @@ public class S3AssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"readme.create"},
-            dependsOnGroups = {"s3object.create"})
-    void addReadme() {
-        try {
-            Readme readme = Readme.toCreate(S3Bucket.TYPE_NAME, s3BucketGuid, S3_BUCKET_NAME, readmeContent);
-            EntityMutationResponse response = readme.upsert();
-            assertNotNull(response);
-            assertTrue(response.getDeletedEntities().isEmpty());
-            assertEquals(response.getCreatedEntities().size(), 1);
-            Entity one = response.getCreatedEntities().get(0);
-            assertTrue(one instanceof Readme);
-            readme = (Readme) one;
-            assertNotNull(readme);
-            readmeGuid = readme.getGuid();
-            assertNotNull(readmeGuid);
-            readmeQame = readme.getQualifiedName();
-            assertNotNull(readmeQame);
-            assertEquals(readme.getDescription(), readmeContent);
-            assertEquals(response.getUpdatedEntities().size(), 1);
-            one = response.getUpdatedEntities().get(0);
-            assertTrue(one instanceof S3Bucket);
-            S3Bucket s3Bucket = (S3Bucket) one;
-            assertNotNull(s3Bucket);
-            assertEquals(s3Bucket.getGuid(), s3BucketGuid);
-            assertEquals(s3Bucket.getQualifiedName(), s3BucketQame);
-        } catch (AtlanException e) {
-            e.printStackTrace();
-            assertNull(e, "Unexpected exception while trying to create a README.");
-        }
-    }
-
-    @Test(
-            groups = {"s3bucket.retrieve"},
-            dependsOnGroups = {"s3object.create"})
+            groups = {"s3bucket.retrieve", "read"},
+            dependsOnGroups = {"s3object.create", "readme.create"})
     void retrieveS3Bucket() {
         try {
             Entity full = Entity.retrieveFull(s3BucketGuid);
@@ -283,7 +246,7 @@ public class S3AssetTest extends AtlanLiveTest {
             one = bucket.getReadme();
             assertNotNull(one);
             assertEquals(one.getTypeName(), Readme.TYPE_NAME);
-            assertEquals(one.getGuid(), readmeGuid);
+            assertEquals(one.getGuid(), LinkingTest.readmeGuid);
         } catch (AtlanException e) {
             e.printStackTrace();
             assertNull(e, "Unexpected exception while trying to retrieve an S3 bucket.");
@@ -291,28 +254,7 @@ public class S3AssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"readme.purge"},
-            dependsOnGroups = {"s3bucket.retrieve"})
-    void purgeReadme() {
-        try {
-            EntityMutationResponse response = Readme.purge(readmeGuid);
-            assertNotNull(response);
-            assertEquals(response.getDeletedEntities().size(), 1);
-            Entity one = response.getDeletedEntities().get(0);
-            assertNotNull(one);
-            assertTrue(one instanceof Readme);
-            Readme readme = (Readme) one;
-            assertEquals(readme.getGuid(), readmeGuid);
-            assertEquals(readme.getQualifiedName(), readmeQame);
-            assertEquals(readme.getStatus(), AtlanStatus.DELETED);
-        } catch (AtlanException e) {
-            e.printStackTrace();
-            assertNull(e, "Unexpected error during README deletion.");
-        }
-    }
-
-    @Test(
-            groups = {"lineage.create"},
+            groups = {"lineage.create", "create"},
             dependsOnGroups = {"s3bucket.retrieve"})
     void createLineage() {
         final String processName = S3_OBJECT1_NAME + " >> " + S3_OBJECT2_NAME;
@@ -361,8 +303,8 @@ public class S3AssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"lineage.purge"},
-            dependsOnGroups = {"lineage.create"},
+            groups = {"lineage.purge", "purge"},
+            dependsOnGroups = {"create", "update", "read"},
             alwaysRun = true)
     void deleteLineage() {
         try {
@@ -383,7 +325,7 @@ public class S3AssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"connection.purge"},
+            groups = {"connection.purge", "purge"},
             dependsOnGroups = {"lineage.purge"},
             alwaysRun = true)
     void purgeConnection() {
@@ -399,7 +341,7 @@ public class S3AssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"workflow.status"},
+            groups = {"workflow.status", "purge"},
             dependsOnGroups = {"connection.purge"})
     void monitorStatus() {
         try {
@@ -419,7 +361,7 @@ public class S3AssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"workflow.run.archive"},
+            groups = {"workflow.run.archive", "purge"},
             dependsOnGroups = {"workflow.status"})
     void archiveWorkflowRun() {
         try {

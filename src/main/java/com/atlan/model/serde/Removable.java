@@ -4,45 +4,41 @@ package com.atlan.model.serde;
  * A class to capture a value that can be explicitly set to null, so that we can
  * serialize it accordingly.
  */
-public class Removable<T> {
+public class Removable {
+
+    public enum TYPE {
+        PRIMITIVE,
+        LIST;
+    }
 
     /**
      * Single null value that can be used for any removable type.
      */
-    public static final Removable<?> NULL = new Removable<>(true);
+    public static final Removable NULL = new Removable(true);
 
     /**
-     * Quickly create a new removable value from whatever object type you like.
-     * @param value to create
-     * @return a removable representation of that value
-     * @param <T> type of the value
+     * Single null equivalent value that can be used for any list-based type.
      */
-    public static <T> Removable<T> of(T value) {
-        return new Removable<>(value);
-    }
+    public static final Removable EMPTY_LIST = new Removable(true, TYPE.LIST);
 
-    private T value;
+    private TYPE type = TYPE.PRIMITIVE;
     private boolean jsonNull = false;
 
     private Removable(boolean jsonNull) {
         this.jsonNull = jsonNull;
     }
 
-    private Removable(T value) {
-        this.setValue(value);
-    }
-
-    private void setValue(T value) {
-        this.value = value;
-        jsonNull = (value == null);
+    private Removable(boolean jsonNull, TYPE type) {
+        this.jsonNull = jsonNull;
+        this.type = type;
     }
 
     /**
-     * Retrieve the underlying value for this object.
+     * Retrieve the underlying type for this object.
      * @return the value
      */
-    public T getValue() {
-        return value;
+    public TYPE getType() {
+        return type;
     }
 
     /**
@@ -56,6 +52,6 @@ public class Removable<T> {
 
     @Override
     public String toString() {
-        return value.toString();
+        return type == TYPE.LIST ? "[]" : "null";
     }
 }
