@@ -123,7 +123,6 @@ public class TableTest {
         assertEquals(serialized, backAgain, "Serialization is equivalent after serde loop.");
     }
 
-    // TODO: Determine why the deserialized form would differ
     @Test(
             groups = {"equivalency"},
             dependsOnGroups = {"serialize", "deserialize"})

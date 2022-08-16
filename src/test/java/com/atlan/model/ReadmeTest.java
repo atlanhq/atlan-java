@@ -6,13 +6,12 @@ import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.relations.Reference;
-import com.atlan.model.serde.IndistinctAsset;
 import com.atlan.net.ApiResource;
 import org.testng.annotations.Test;
 
-public class ColumnProcessTest {
+public class ReadmeTest {
 
-    private static final ColumnProcess full = ColumnProcess.builder()
+    private static final Readme full = Readme.builder()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -24,7 +23,7 @@ public class ColumnProcessTest {
             .qualifiedName("qualifiedName")
             .name("name")
             .displayName("displayName")
-            .description("description")
+            .description("<h1>description</h1>")
             .userDescription("userDescription")
             .tenantId("tenantId")
             .certificateStatus(AtlanCertificateStatus.VERIFIED)
@@ -66,17 +65,13 @@ public class ColumnProcessTest {
             .readme(Reference.to("Readme", "readmeGuid"))
             .meaning(Reference.to(GlossaryTerm.TYPE_NAME, "termGuid1"))
             .meaning(Reference.to(GlossaryTerm.TYPE_NAME, "termGuid2"))
-            .code("code")
-            .sql("sql")
-            .ast("ast")
-            .input(Reference.to(IndistinctAsset.TYPE_NAME, "input1"))
-            .input(Reference.to(IndistinctAsset.TYPE_NAME, "input2"))
-            .output(Reference.to(IndistinctAsset.TYPE_NAME, "output1"))
-            .output(Reference.to(IndistinctAsset.TYPE_NAME, "output2"))
-            .process(Reference.to(ColumnProcess.TYPE_NAME, "processGuid"))
+            .link("link")
+            .isGlobal(false)
+            .reference("reference")
+            .asset(Reference.to(GlossaryTerm.TYPE_NAME, "termGuid3"))
             .build();
 
-    private static ColumnProcess frodo;
+    private static Readme frodo;
     private static String serialized;
 
     @Test(groups = {"serialize"})
@@ -91,7 +86,7 @@ public class ColumnProcessTest {
             dependsOnGroups = {"serialize"})
     void deserialization() {
         assertNotNull(serialized);
-        frodo = ApiResource.GSON.fromJson(serialized, ColumnProcess.class);
+        frodo = ApiResource.GSON.fromJson(serialized, Readme.class);
         assertNotNull(frodo);
     }
 
@@ -102,7 +97,7 @@ public class ColumnProcessTest {
         assertNotNull(serialized);
         assertNotNull(frodo);
         String backAgain = frodo.toJson();
-        assertEquals(serialized, backAgain, "Serialization is not equivalent after serde loop,");
+        assertEquals(serialized, backAgain, "Serialization is equivalent after serde loop.");
     }
 
     @Test(
@@ -111,6 +106,6 @@ public class ColumnProcessTest {
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);
-        assertEquals(full, frodo, "Deserialization is not equivalent after serde loop,");
+        assertEquals(full, frodo, "Deserialization is equivalent after serde loop.");
     }
 }

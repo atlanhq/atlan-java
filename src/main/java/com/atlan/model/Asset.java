@@ -225,4 +225,9 @@ public abstract class Asset extends Entity {
         addNullField("announcementTitle");
         addNullField("announcementMessage");
     }
+
+    /** Remove the linked terms from the asset, if any are set on the asset. */
+    public void removeMeanings() {
+        addNullField("meanings");
+    }
 }

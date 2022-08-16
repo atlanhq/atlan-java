@@ -1,6 +1,7 @@
 /* SPDX-License-Identifier: Apache-2.0 */
 package com.atlan.model.relations;
 
+import com.atlan.model.enums.AtlanStatus;
 import com.atlan.net.AtlanObject;
 import java.util.Map;
 import lombok.Data;
@@ -58,7 +59,7 @@ public class Reference extends AtlanObject {
     String relationshipGuid;
 
     /** Status of the relationship itself. */
-    String relationshipStatus;
+    AtlanStatus relationshipStatus;
 
     /** Unused. */
     Map<String, Object> relationshipAttributes;

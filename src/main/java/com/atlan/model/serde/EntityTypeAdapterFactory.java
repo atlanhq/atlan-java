@@ -39,6 +39,8 @@ public class EntityTypeAdapterFactory implements TypeAdapterFactory {
         final TypeAdapter<IndistinctAsset> assetAdapter =
                 gson.getDelegateAdapter(this, TypeToken.get(IndistinctAsset.class));
 
+        final TypeAdapter<Readme> readmeAdapter = gson.getDelegateAdapter(this, TypeToken.get(Readme.class));
+
         final TypeAdapter<Glossary> glossaryAdapter = gson.getDelegateAdapter(this, TypeToken.get(Glossary.class));
         final TypeAdapter<GlossaryCategory> glossaryCategoryAdapter =
                 gson.getDelegateAdapter(this, TypeToken.get(GlossaryCategory.class));
@@ -71,6 +73,12 @@ public class EntityTypeAdapterFactory implements TypeAdapterFactory {
                     toModify = ((IndistinctAsset) value).toBuilder().build();
                 } else {
                     switch (typeName) {
+                        case "Readme":
+                            c = Readme.class;
+                            toModify = ((Readme) value).toBuilder().build();
+                            // Encode the Readme's description before serialization
+                            toModify.setDescription(StringUtils.encodeContent(toModify.getDescription()));
+                            break;
                         case "AtlasGlossary":
                             c = Glossary.class;
                             toModify = ((Glossary) value).toBuilder().build();
@@ -145,7 +153,11 @@ public class EntityTypeAdapterFactory implements TypeAdapterFactory {
                                 if (nullFields.contains(fieldName)) {
                                     // If the value should be serialized as null, then
                                     // set the value to the serializable null
-                                    attrValue = Removable.NULL;
+                                    if (field.getType() == List.class) {
+                                        attrValue = Removable.EMPTY_LIST;
+                                    } else {
+                                        attrValue = Removable.NULL;
+                                    }
                                 } else {
                                     // Otherwise, pickup the value from the top-level
                                     // attribute so that we can move that value across
@@ -187,6 +199,9 @@ public class EntityTypeAdapterFactory implements TypeAdapterFactory {
                     assetAdapter.write(out, (IndistinctAsset) toModify);
                 } else {
                     switch (typeName) {
+                        case "Readme":
+                            readmeAdapter.write(out, (Readme) toModify);
+                            break;
                         case "AtlasGlossary":
                             glossaryAdapter.write(out, (Glossary) toModify);
                             break;
@@ -241,6 +256,10 @@ public class EntityTypeAdapterFactory implements TypeAdapterFactory {
                     c = Asset.class;
                 } else {
                     switch (typeName) {
+                        case "Readme":
+                            value = readmeAdapter.fromJsonTree(object);
+                            c = Readme.class;
+                            break;
                         case "AtlasGlossary":
                             value = glossaryAdapter.fromJsonTree(object);
                             c = Glossary.class;
@@ -343,6 +362,13 @@ public class EntityTypeAdapterFactory implements TypeAdapterFactory {
                     } catch (AtlanException e) {
                         throw new IOException("Unable to deserialize classification name.", e);
                     }
+                }
+
+                // Special cases to wrap-up:
+                // Decode the Readme's description after deserialization
+                if (typeName != null && typeName.equals("Readme")) {
+                    Readme readme = (Readme) value;
+                    readme.setDescription(StringUtils.decodeContent(readme.getDescription()));
                 }
 
                 value.setCustomMetadata(cm);

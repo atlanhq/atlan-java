@@ -90,6 +90,11 @@ public class GlossaryTerm extends Asset {
     @Attribute
     List<Reference> validValuesFor;
 
+    /** Remove the linked assets from the term, if any are set on the term. */
+    public void removeAssignedEntities() {
+        addNullField("assignedEntities");
+    }
+
     /**
      * Builds the minimal object necessary for creating a term. At least one of glossaryGuid or
      * glossaryQualifiedName must be provided.

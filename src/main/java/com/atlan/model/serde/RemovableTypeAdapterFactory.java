@@ -23,29 +23,36 @@ public class RemovableTypeAdapterFactory implements TypeAdapterFactory {
         // We will only ever serialize these values, and only ever a 'null' value,
         // so we need only handle a very limited scenario (anything else is unexpected
         // and we'll therefore throw an exception)
-        TypeAdapter<Removable<?>> nullableTypeAdapter = new TypeAdapter<>() {
+        TypeAdapter<Removable> nullableTypeAdapter = new TypeAdapter<>() {
             @Override
-            public void write(JsonWriter out, Removable<?> value) throws IOException {
+            public void write(JsonWriter out, Removable value) throws IOException {
                 if (value.isJsonNull()) {
-                    boolean previousSetting = out.getSerializeNulls();
-                    out.setSerializeNulls(true);
-                    out.nullValue();
-                    out.setSerializeNulls(previousSetting);
+                    if (value.getType() == Removable.TYPE.LIST) {
+                        // For a list, output an empty array rather than a null
+                        out.beginArray();
+                        out.endArray();
+                    } else {
+                        boolean previousSetting = out.getSerializeNulls();
+                        out.setSerializeNulls(true);
+                        out.nullValue();
+                        out.setSerializeNulls(previousSetting);
+                    }
                 } else {
                     throw new IOException("Unable to serialize a non-null Removable value.");
                 }
             }
 
             @Override
-            public Removable<?> read(JsonReader in) throws IOException {
+            public Removable read(JsonReader in) throws IOException {
                 JsonToken next = in.peek();
-                Removable<?> value;
+                Removable value;
                 switch (next) {
                     case NULL:
                         value = Removable.NULL;
                         break;
                     case STRING: // Could be a plain string, or an enum value
                     case BEGIN_OBJECT:
+                    case BEGIN_ARRAY:
                     default:
                         throw new IOException("Unable to deserialize a non-null Removable value.");
                 }

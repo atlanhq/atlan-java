@@ -95,6 +95,19 @@ public class S3Object extends S3 {
     }
 
     /**
+     * Builds the minimal object necessary to update an S3 object.
+     * To continue adding to the object, call {@link #toBuilder()} on the result and continue calling
+     * additional methods to add metadata followed by {@link S3Object.S3ObjectBuilder#build()}.
+     *
+     * @param qualifiedName unique name of the S3 object
+     * @param name of the S3 object
+     * @return the minimal object necessary to update the S3 object
+     */
+    public static S3Object toUpdate(String qualifiedName, String name) {
+        return S3Object.builder().qualifiedName(qualifiedName).name(name).build();
+    }
+
+    /**
      * Generate a unique S3 bucket name.
      * @param connectionQualifiedName unique name of the connection
      * @param awsArn unique ARN for the bucket

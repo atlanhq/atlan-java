@@ -37,13 +37,13 @@ public class S3AssetTest extends AtlanLiveTest {
     private static String connectionGuid = null;
     private static String connectionQame = null;
 
-    private static String s3BucketGuid = null;
-    private static String s3BucketQame = null;
+    public static String s3BucketGuid = null;
+    public static String s3BucketQame = null;
 
-    private static String s3Object1Guid = null;
-    private static String s3Object1Qame = null;
-    private static String s3Object2Guid = null;
-    private static String s3Object2Qame = null;
+    public static String s3Object1Guid = null;
+    public static String s3Object1Qame = null;
+    public static String s3Object2Guid = null;
+    public static String s3Object2Qame = null;
 
     private static String lineageGuid = null;
     private static String lineageQame = null;
@@ -58,7 +58,7 @@ public class S3AssetTest extends AtlanLiveTest {
                         CONNECTION_NAME, AtlanConnectionCategory.OBJECT_STORE, "s3", null, null, null));
     }
 
-    @Test(groups = {"connection.create"})
+    @Test(groups = {"connection.create", "create"})
     void createConnection() {
         try {
             String adminRoleGuid = RoleCache.getIdForName("$admin");
@@ -93,7 +93,7 @@ public class S3AssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"connection.retrieve"},
+            groups = {"connection.retrieve", "read"},
             dependsOnGroups = {"connection.create"})
     void retrieveConnection() throws InterruptedException {
         Entity full = null;
@@ -111,7 +111,7 @@ public class S3AssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"s3bucket.create"},
+            groups = {"s3bucket.create", "create"},
             dependsOnGroups = {"connection.retrieve"})
     void createS3Bucket() {
         try {
@@ -140,7 +140,7 @@ public class S3AssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"s3object.create"},
+            groups = {"s3object.create", "create"},
             dependsOnGroups = {"s3bucket.create"})
     void createS3Object1() {
         try {
@@ -183,7 +183,7 @@ public class S3AssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"s3object.create"},
+            groups = {"s3object.create", "create"},
             dependsOnGroups = {"s3bucket.create"})
     void createS3Object2() {
         try {
@@ -226,8 +226,8 @@ public class S3AssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"s3bucket.retrieve"},
-            dependsOnGroups = {"s3object.create"})
+            groups = {"s3bucket.retrieve", "read"},
+            dependsOnGroups = {"s3object.create", "readme.create"})
     void retrieveS3Bucket() {
         try {
             Entity full = Entity.retrieveFull(s3BucketGuid);
@@ -242,6 +242,11 @@ public class S3AssetTest extends AtlanLiveTest {
             Reference one = bucket.getObjects().get(0);
             assertNotNull(one);
             assertEquals(one.getTypeName(), S3Object.TYPE_NAME);
+            assertNotNull(bucket.getReadme());
+            one = bucket.getReadme();
+            assertNotNull(one);
+            assertEquals(one.getTypeName(), Readme.TYPE_NAME);
+            assertEquals(one.getGuid(), LinkingTest.readmeGuid);
         } catch (AtlanException e) {
             e.printStackTrace();
             assertNull(e, "Unexpected exception while trying to retrieve an S3 bucket.");
@@ -249,7 +254,7 @@ public class S3AssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"lineage.create"},
+            groups = {"lineage.create", "create"},
             dependsOnGroups = {"s3bucket.retrieve"})
     void createLineage() {
         final String processName = S3_OBJECT1_NAME + " >> " + S3_OBJECT2_NAME;
@@ -298,8 +303,8 @@ public class S3AssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"lineage.purge"},
-            dependsOnGroups = {"lineage.create"},
+            groups = {"lineage.purge", "purge"},
+            dependsOnGroups = {"create", "update", "read"},
             alwaysRun = true)
     void deleteLineage() {
         try {
@@ -320,7 +325,7 @@ public class S3AssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"connection.purge"},
+            groups = {"connection.purge", "purge"},
             dependsOnGroups = {"lineage.purge"},
             alwaysRun = true)
     void purgeConnection() {
@@ -336,7 +341,7 @@ public class S3AssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"workflow.status"},
+            groups = {"workflow.status", "purge"},
             dependsOnGroups = {"connection.purge"})
     void monitorStatus() {
         try {
@@ -356,7 +361,7 @@ public class S3AssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"workflow.run.archive"},
+            groups = {"workflow.run.archive", "purge"},
             dependsOnGroups = {"workflow.status"})
     void archiveWorkflowRun() {
         try {
