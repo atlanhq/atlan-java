@@ -90,7 +90,7 @@ public class LinkingTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"link.remove", "update"},
+            groups = {"link.remove1", "update"},
             dependsOnGroups = {"create", "link.term2asset"})
     void removeTermToAssetLinks() {
         GlossaryTerm term =
@@ -120,7 +120,7 @@ public class LinkingTest extends AtlanLiveTest {
 
     @Test(
             groups = {"link.asset2term", "update"},
-            dependsOnGroups = {"create", "link.remove"})
+            dependsOnGroups = {"create", "link.remove1"})
     void linkAssetToTerms() {
         S3Object s3Object1 = S3Object.toUpdate(S3AssetTest.s3Object1Qame, S3AssetTest.S3_OBJECT1_NAME);
         s3Object1 = s3Object1.toBuilder()
@@ -154,6 +154,34 @@ public class LinkingTest extends AtlanLiveTest {
         } catch (AtlanException e) {
             e.printStackTrace();
             assertNull(e, "Unexpected exception while trying to link an asset to a term.");
+        }
+    }
+
+    @Test(
+        groups = {"link.remove2", "update"},
+        dependsOnGroups = {"create", "link.asset2term"})
+    void removeAssetToTermLinks() {
+        S3Object s3Object1 = S3Object.toUpdate(S3AssetTest.s3Object1Qame, S3AssetTest.S3_OBJECT1_NAME);
+        s3Object1.removeMeanings();
+        try {
+            EntityMutationResponse response = s3Object1.upsert();
+            assertNotNull(response);
+            assertTrue(response.getDeletedEntities().isEmpty());
+            assertTrue(response.getCreatedEntities().isEmpty());
+            assertEquals(response.getUpdatedEntities().size(), 2);
+            Entity full = Entity.retrieveFull(S3AssetTest.s3Object1Guid);
+            assertTrue(full instanceof S3Object);
+            s3Object1 = (S3Object) full;
+            assertEquals(s3Object1.getQualifiedName(), S3AssetTest.s3Object1Qame);
+            assertEquals(s3Object1.getName(), S3AssetTest.S3_OBJECT1_NAME);
+            List<Reference> terms = s3Object1.getMeanings();
+            assertNotNull(terms);
+            assertEquals(terms.size(), 2);
+            assertEquals(terms.get(0).getRelationshipStatus(), AtlanStatus.DELETED);
+            assertEquals(terms.get(1).getRelationshipStatus(), AtlanStatus.DELETED);
+        } catch (AtlanException e) {
+            e.printStackTrace();
+            assertNull(e, "Unexpected exception while trying to remove assigned assets from a term.");
         }
     }
 
