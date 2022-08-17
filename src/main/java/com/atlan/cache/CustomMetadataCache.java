@@ -4,9 +4,10 @@ import com.atlan.api.TypeDefsEndpoint;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.LogicException;
 import com.atlan.model.CustomMetadata;
+import com.atlan.model.enums.AtlanTypeCategory;
 import com.atlan.model.responses.TypeDefResponse;
 import com.atlan.model.typedefs.AttributeDef;
-import com.atlan.model.typedefs.BusinessMetadataDef;
+import com.atlan.model.typedefs.CustomMetadataDef;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -22,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class CustomMetadataCache {
 
-    private static Map<String, BusinessMetadataDef> cacheById = new ConcurrentHashMap<>();
+    private static Map<String, CustomMetadataDef> cacheById = new ConcurrentHashMap<>();
     private static Map<String, String> mapIdToName = new ConcurrentHashMap<>();
     private static Map<String, String> mapNameToId = new ConcurrentHashMap<>();
 
@@ -31,8 +32,8 @@ public class CustomMetadataCache {
 
     private static synchronized void refreshCache() throws AtlanException {
         log.debug("Refreshing cache of custom metadata...");
-        TypeDefResponse response = TypeDefsEndpoint.getTypeDefs("business_metadata");
-        List<BusinessMetadataDef> customMetadata;
+        TypeDefResponse response = TypeDefsEndpoint.getTypeDefs(AtlanTypeCategory.BUSINESS_METADATA);
+        List<CustomMetadataDef> customMetadata;
         if (response != null) {
             customMetadata = response.getBusinessMetadataDefs();
         } else {
@@ -43,7 +44,7 @@ public class CustomMetadataCache {
         mapNameToId = new ConcurrentHashMap<>();
         mapAttrIdToName = new ConcurrentHashMap<>();
         mapAttrNameToId = new ConcurrentHashMap<>();
-        for (BusinessMetadataDef bmDef : customMetadata) {
+        for (CustomMetadataDef bmDef : customMetadata) {
             String typeId = bmDef.getName();
             cacheById.put(typeId, bmDef);
             mapIdToName.put(typeId, bmDef.getDisplayName());
@@ -63,7 +64,7 @@ public class CustomMetadataCache {
      * @return Atlan-internal ID string of the custom metadata set
      * @throws AtlanException on any API communication problem if the cache needs to be refreshed
      */
-    private static String getIdForName(String name) throws AtlanException {
+    public static String getIdForName(String name) throws AtlanException {
         String cmId = mapNameToId.get(name);
         if (cmId != null) {
             // If found, return straight away
@@ -81,7 +82,7 @@ public class CustomMetadataCache {
      * @return human-readable name of the custom metadata set
      * @throws AtlanException on any API communication problem if the cache needs to be refreshed
      */
-    private static String getNameForId(String id) throws AtlanException {
+    public static String getNameForId(String id) throws AtlanException {
         String cmName = mapIdToName.get(id);
         if (cmName != null) {
             // If found, return straight away

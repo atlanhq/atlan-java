@@ -2,6 +2,7 @@ package com.atlan.cache;
 
 import com.atlan.api.TypeDefsEndpoint;
 import com.atlan.exception.AtlanException;
+import com.atlan.model.enums.AtlanTypeCategory;
 import com.atlan.model.responses.TypeDefResponse;
 import com.atlan.model.typedefs.ClassificationDef;
 import java.util.*;
@@ -21,7 +22,7 @@ public class ClassificationCache {
 
     private static synchronized void refreshCache() throws AtlanException {
         log.debug("Refreshing cache of classifications...");
-        TypeDefResponse response = TypeDefsEndpoint.getTypeDefs("classification");
+        TypeDefResponse response = TypeDefsEndpoint.getTypeDefs(AtlanTypeCategory.CLASSIFICATION);
         List<ClassificationDef> classifications;
         if (response != null) {
             classifications = response.getClassificationDefs();
