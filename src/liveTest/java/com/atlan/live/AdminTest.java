@@ -1,4 +1,4 @@
-package com.atlan.functional;
+package com.atlan.live;
 
 import static org.testng.Assert.*;
 

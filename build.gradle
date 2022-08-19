@@ -11,7 +11,8 @@ buildscript {
 }
 
 plugins {
-    id "java"
+    id "java-library"
+    id "jvm-test-suite"
     id "maven-publish"
     id "signing"
     id "jacoco"
@@ -71,21 +72,8 @@ tasks.withType(JavaCompile) {
     }
 }
 
-tasks.withType(Test) {
-    // Check if JAVA_TEST_HOME environment variable is specified
-    String home = System.getenv("JAVA_TEST_HOME")
-    if (home && !home.allWhitespace) {
-        test.executable = "${home}/bin/java"
-    }
-    // Github CI should always set JAVA_TEST_HOME
-    else if (System.getenv("GITHUB_ACTIONS"))
-    {
-        throw new GradleException("JAVA_TEST_HOME should be set when running in CI")
-    }
-}
-
 tasks.register('uberJar', Jar) {
-    archiveClassifier = 'uber'
+    archiveClassifier = 'jar-with-dependencies'
     from sourceSets.main.output
     dependsOn configurations.runtimeClasspath
     from {
@@ -112,7 +100,7 @@ dependencies {
     implementation group: "co.elastic.clients", name: "elasticsearch-java", version: "8.3.3"
     implementation group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.12.3"
     implementation group: "org.slf4j", name: "slf4j-api", version: "1.7.32"
-    testImplementation group: "com.google.guava", name: "guava", version:"31.0.1-jre"
+    api group: "co.elastic.clients", name: "elasticsearch-java", version: "8.3.3"
     testImplementation group: 'org.testng', name: 'testng', version: '7.4.0'
     testImplementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.11'
     testRuntimeOnly group: 'org.testng', name: 'testng', version: '7.4.0'
@@ -144,9 +132,55 @@ delombok {
 
 apply from: "deploy.gradle"
 
-test {
-    useTestNG()
-    testLogging.showStandardStreams = true
+testing {
+    suites {
+        test {
+            useTestNG()
+            targets {
+                all {
+                    testTask.configure {
+                        filter {
+                            excludeTestsMatching "com.atlan.live.*"
+                            excludeTestsMatching "com.atlan.experimental.*"
+                        }
+                    }
+                }
+            }
+            sources {
+                java {
+                    srcDirs = ["src/test/java"]
+                }
+            }
+        }
+        liveTest(JvmTestSuite) {
+            useTestNG()
+            targets {
+                all {
+                    testTask.configure {
+                        filter {
+                            excludeTestsMatching "com.atlan.experimental.*"
+                        }
+                        testLogging.showStandardStreams = true
+                    }
+                }
+            }
+            dependencies {
+                implementation project
+                implementation group: 'org.testng', name: 'testng', version: '7.4.0'
+                implementation group: "org.slf4j", name: "slf4j-api", version: "1.7.32"
+                implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.11'
+            }
+            sources {
+                java {
+                    srcDirs = ["src/liveTest/java"]
+                }
+            }
+        }
+    }
+}
+
+tasks.named('check') {
+    dependsOn(testing.suites.test)
 }
 
 spotless {

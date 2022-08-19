@@ -1,4 +1,4 @@
-package com.atlan.functional;
+package com.atlan.live;
 
 import static org.testng.Assert.*;
 
@@ -16,10 +16,9 @@ import com.atlan.model.responses.EntityMutationResponse;
 import com.atlan.model.responses.IndexSearchResponse;
 import java.util.Collections;
 import java.util.List;
-import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.Test;
 
-@Slf4j
+@Test(groups = {"live"})
 public class GlossaryTest extends AtlanLiveTest {
 
     public static final String GLOSSARY_NAME = "JavaClient Test Glossary";
