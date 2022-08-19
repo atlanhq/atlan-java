@@ -1,10 +1,15 @@
 /* SPDX-License-Identifier: Apache-2.0 */
 package com.atlan.model;
 
+import com.atlan.api.EntityBulkEndpoint;
+import com.atlan.api.EntityUpdateEndpoint;
+import com.atlan.exception.AtlanException;
+import com.atlan.model.core.Classification;
 import com.atlan.model.core.Entity;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.relations.Reference;
+import com.atlan.model.responses.EntityMutationResponse;
 import java.util.List;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -229,5 +234,125 @@ public abstract class Asset extends Entity {
     /** Remove the linked terms from the asset, if any are set on the asset. */
     public void removeMeanings() {
         addNullField("meanings");
+    }
+
+    /**
+     * Update the certificate on an asset.
+     *
+     * @param builder the builder to use for updating the certificate
+     * @param certificate certificate to set
+     * @param message (optional) message to set (or null for no message)
+     * @return the result of the update, or null if the update failed
+     * @throws AtlanException on any API problems
+     */
+    protected static Entity updateCertificate(
+            AssetBuilder<?, ?> builder, AtlanCertificateStatus certificate, String message) throws AtlanException {
+        builder = builder.certificateStatus(certificate);
+        if (message != null && message.length() > 1) {
+            builder = builder.certificateStatusMessage(message);
+        }
+        return updateAttributes(builder.build());
+    }
+
+    /**
+     * Update the announcement on an asset.
+     *
+     * @param builder the builder to use for updating the announcement
+     * @param type type of announcement to set
+     * @param title (optional) title of the announcement to set (or null for no title)
+     * @param message (optional) message of the announcement to set (or null for no message)
+     * @return the result of the update, or null if the update failed
+     * @throws AtlanException on any API problems
+     */
+    protected static Entity updateAnnouncement(
+            AssetBuilder<?, ?> builder, AtlanAnnouncementType type, String title, String message)
+            throws AtlanException {
+        builder = builder.announcementType(type);
+        if (title != null && title.length() > 1) {
+            builder = builder.announcementTitle(title);
+        }
+        if (message != null && message.length() > 1) {
+            builder = builder.announcementMessage(message);
+        }
+        return updateAttributes(builder.build());
+    }
+
+    private static Entity updateAttributes(Asset asset) throws AtlanException {
+        EntityMutationResponse response = EntityBulkEndpoint.upsert(asset, false, false);
+        if (response != null && !response.getUpdatedEntities().isEmpty()) {
+            return response.getUpdatedEntities().get(0);
+        }
+        return null;
+    }
+
+    /**
+     * Update the certificate on an asset.
+     *
+     * @param builder the builder to use for updating the certificate
+     * @param typeName type of the asset
+     * @param qualifiedName for the asset
+     * @param certificate certificate to set
+     * @param message (optional) message to set (or null for no message)
+     * @return the result of the update, or null if the update failed
+     * @throws AtlanException on any API problems
+     */
+    protected static Entity updateCertificate(
+            AssetBuilder<?, ?> builder,
+            String typeName,
+            String qualifiedName,
+            AtlanCertificateStatus certificate,
+            String message)
+            throws AtlanException {
+        builder = builder.qualifiedName(qualifiedName).certificateStatus(certificate);
+        if (message != null && message.length() > 1) {
+            builder = builder.certificateStatusMessage(message);
+        }
+        return updateAttributes(typeName, qualifiedName, builder.build());
+    }
+
+    /**
+     * Update the announcement on an asset.
+     *
+     * @param builder the builder to use for updating the announcement
+     * @param typeName type of the asset
+     * @param qualifiedName for the asset
+     * @param type type of announcement to set
+     * @param title (optional) title of the announcement to set (or null for no title)
+     * @param message (optional) message of the announcement to set (or null for no message)
+     * @return the result of the update, or null if the update failed
+     * @throws AtlanException on any API problems
+     */
+    protected static Entity updateAnnouncement(
+            AssetBuilder<?, ?> builder,
+            String typeName,
+            String qualifiedName,
+            AtlanAnnouncementType type,
+            String title,
+            String message)
+            throws AtlanException {
+        builder = builder.qualifiedName(qualifiedName).announcementType(type);
+        if (title != null && title.length() > 1) {
+            builder = builder.announcementTitle(title);
+        }
+        if (message != null && message.length() > 1) {
+            builder = builder.announcementMessage(message);
+        }
+        return updateAttributes(typeName, qualifiedName, builder.build());
+    }
+
+    private static Entity updateAttributes(String typeName, String qualifiedName, Asset asset) throws AtlanException {
+        EntityMutationResponse response = EntityUpdateEndpoint.updateAttributes(typeName, qualifiedName, asset);
+        if (response != null && !response.getPartiallyUpdatedEntities().isEmpty()) {
+            return response.getPartiallyUpdatedEntities().get(0);
+        }
+        if (response != null && !response.getUpdatedEntities().isEmpty()) {
+            return response.getUpdatedEntities().get(0);
+        }
+        return null;
+    }
+
+    protected static void updateClassifications(String typeName, String qualifiedName, Classification classification)
+            throws AtlanException {
+        EntityUpdateEndpoint.updateClassifications(typeName, qualifiedName, List.of(classification));
     }
 }

@@ -13,9 +13,7 @@ import com.atlan.model.admin.Workflow;
 import com.atlan.model.admin.WorkflowSearchRequest;
 import com.atlan.model.admin.WorkflowSearchResult;
 import com.atlan.model.core.Entity;
-import com.atlan.model.enums.AtlanConnectionCategory;
-import com.atlan.model.enums.AtlanStatus;
-import com.atlan.model.enums.AtlanWorkflowPhase;
+import com.atlan.model.enums.*;
 import com.atlan.model.relations.Reference;
 import com.atlan.model.responses.EntityMutationResponse;
 import com.atlan.model.responses.WorkflowResponse;
@@ -56,7 +54,7 @@ public class S3AssetTest extends AtlanLiveTest {
     void invalidConnection() {
         assertThrows(
                 InvalidRequestException.class,
-                () -> Connection.toCreate(
+                () -> Connection.creator(
                         CONNECTION_NAME, AtlanConnectionCategory.OBJECT_STORE, "s3", null, null, null));
     }
 
@@ -65,13 +63,14 @@ public class S3AssetTest extends AtlanLiveTest {
         try {
             String adminRoleGuid = RoleCache.getIdForName("$admin");
             if (adminRoleGuid != null) {
-                Connection connection = Connection.toCreate(
-                        CONNECTION_NAME,
-                        AtlanConnectionCategory.OBJECT_STORE,
-                        "s3",
-                        Collections.singletonList(adminRoleGuid),
-                        null,
-                        null);
+                Connection connection = Connection.creator(
+                                CONNECTION_NAME,
+                                AtlanConnectionCategory.OBJECT_STORE,
+                                "s3",
+                                Collections.singletonList(adminRoleGuid),
+                                null,
+                                null)
+                        .build();
                 EntityMutationResponse response = connection.upsert();
                 assertNotNull(response);
                 assertTrue(response.getUpdatedEntities().isEmpty());
@@ -117,7 +116,8 @@ public class S3AssetTest extends AtlanLiveTest {
             dependsOnGroups = {"connection.retrieve"})
     void createS3Bucket() {
         try {
-            S3Bucket s3Bucket = S3Bucket.toCreate(S3_BUCKET_NAME, connectionQame, S3_BUCKET_ARN);
+            S3Bucket s3Bucket = S3Bucket.creator(S3_BUCKET_NAME, connectionQame, S3_BUCKET_ARN)
+                    .build();
             EntityMutationResponse response = s3Bucket.upsert();
             assertNotNull(response);
             assertTrue(response.getUpdatedEntities().isEmpty());
@@ -146,8 +146,7 @@ public class S3AssetTest extends AtlanLiveTest {
             dependsOnGroups = {"s3bucket.create"})
     void createS3Object1() {
         try {
-            S3Object s3Object = S3Object.toCreate(S3_OBJECT1_NAME, connectionQame, S3_OBJECT1_ARN);
-            s3Object = s3Object.toBuilder()
+            S3Object s3Object = S3Object.creator(S3_OBJECT1_NAME, connectionQame, S3_OBJECT1_ARN)
                     .s3BucketName(S3_BUCKET_NAME)
                     .s3BucketQualifiedName(s3BucketQame)
                     .bucket(Reference.to(S3Bucket.TYPE_NAME, s3BucketGuid))
@@ -189,8 +188,7 @@ public class S3AssetTest extends AtlanLiveTest {
             dependsOnGroups = {"s3bucket.create"})
     void createS3Object2() {
         try {
-            S3Object s3Object = S3Object.toCreate(S3_OBJECT2_NAME, connectionQame, S3_OBJECT2_ARN);
-            s3Object = s3Object.toBuilder()
+            S3Object s3Object = S3Object.creator(S3_OBJECT2_NAME, connectionQame, S3_OBJECT2_ARN)
                     .s3BucketName(S3_BUCKET_NAME)
                     .s3BucketQualifiedName(s3BucketQame)
                     .bucket(Reference.to(S3Bucket.TYPE_NAME, s3BucketGuid))
@@ -228,8 +226,28 @@ public class S3AssetTest extends AtlanLiveTest {
     }
 
     @Test(
+            groups = {"s3bucket.update", "update"},
+            dependsOnGroups = {"s3bucket.create"})
+    void updateS3Bucket() {
+        try {
+            S3Bucket updated = S3Bucket.updateCertificate(s3BucketQame, AtlanCertificateStatus.VERIFIED, null);
+            assertNotNull(updated);
+            assertEquals(updated.getCertificateStatus(), AtlanCertificateStatus.VERIFIED);
+            updated = S3Bucket.updateAnnouncement(
+                    s3BucketQame, AtlanAnnouncementType.INFORMATION, ANNOUNCEMENT_TITLE, ANNOUNCEMENT_MESSAGE);
+            assertNotNull(updated);
+            assertEquals(updated.getAnnouncementType(), AtlanAnnouncementType.INFORMATION);
+            assertEquals(updated.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
+            assertEquals(updated.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
+        } catch (AtlanException e) {
+            e.printStackTrace();
+            assertNull(e, "Unexpected exception while trying to update an S3 bucket.");
+        }
+    }
+
+    @Test(
             groups = {"s3bucket.retrieve", "read"},
-            dependsOnGroups = {"s3object.create", "readme.create"})
+            dependsOnGroups = {"s3object.create", "readme.create", "s3bucket.update"})
     void retrieveS3Bucket() {
         try {
             Entity full = Entity.retrieveFull(s3BucketGuid);
@@ -239,6 +257,7 @@ public class S3AssetTest extends AtlanLiveTest {
             assertEquals(bucket.getGuid(), s3BucketGuid);
             assertEquals(bucket.getQualifiedName(), s3BucketQame);
             assertEquals(bucket.getName(), S3_BUCKET_NAME);
+            assertEquals(bucket.getCertificateStatus(), AtlanCertificateStatus.VERIFIED);
             assertNotNull(bucket.getObjects());
             assertEquals(bucket.getObjects().size(), 2);
             Reference one = bucket.getObjects().get(0);
@@ -260,13 +279,14 @@ public class S3AssetTest extends AtlanLiveTest {
             dependsOnGroups = {"s3bucket.retrieve"})
     void createLineage() {
         final String processName = S3_OBJECT1_NAME + " >> " + S3_OBJECT2_NAME;
-        LineageProcess process = LineageProcess.toCreate(
-                processName,
-                "s3",
-                CONNECTION_NAME,
-                connectionQame,
-                Collections.singletonList(Reference.to(S3Object.TYPE_NAME, s3Object1Guid)),
-                Collections.singletonList(Reference.to(S3Object.TYPE_NAME, s3Object2Guid)));
+        LineageProcess process = LineageProcess.creator(
+                        processName,
+                        "s3",
+                        CONNECTION_NAME,
+                        connectionQame,
+                        Collections.singletonList(Reference.to(S3Object.TYPE_NAME, s3Object1Guid)),
+                        Collections.singletonList(Reference.to(S3Object.TYPE_NAME, s3Object2Guid)))
+                .build();
         try {
             EntityMutationResponse response = process.upsert();
             assertNotNull(response);

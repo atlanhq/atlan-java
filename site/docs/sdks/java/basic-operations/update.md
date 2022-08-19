@@ -4,17 +4,17 @@ icon: fontawesome/brands-java
 
 # Updating an asset through the Java SDK
 
-All objects in the SDK that you can update within Atlan implement the builder pattern. This allows you to progressively build-up the object you want to update. In addition, each object provides a `toUpdate()` method that takes the minimal set of required fields to *update* that [asset](/concepts/assets), when it already exists in Atlan.
+All objects in the SDK that you can update within Atlan implement the builder pattern. This allows you to progressively build-up the object you want to update. In addition, each object provides an `updater()` method that takes the minimal set of required fields to *update* that [asset](/concepts/assets), when it already exists in Atlan.
 
 ## Build minimal object needed
 
 For example, to update a glossary term we need to provide the `qualifiedName` and name of the term, and the GUID of the glossary in which it exists:
 
 ```java linenums="1" title="Build minimal asset necessary for update"
-GlossaryTerm term = GlossaryTerm
-					.toUpdate("gsNccqJraDZqM6WyGP3ea@FzCMyPR2LxkPFgr8eNGrq", // (1)
-						      "Example Term", // (2)
-							  "b4113341-251b-4adc-81fb-2420501c30e6"); // (3)
+GlossaryTermBuilder<?,?> termUpdater = GlossaryTerm
+					.updater("gsNccqJraDZqM6WyGP3ea@FzCMyPR2LxkPFgr8eNGrq", // (1)
+						     "Example Term", // (2)
+							 "b4113341-251b-4adc-81fb-2420501c30e6"); // (3)
 ```
 
 1. The `qualifiedName` of the existing term, which must match exactly (case-sensitive). Note that for some [assets](/concepts/assets) (like terms), this may be a strange-looking Atlan-internal string.
@@ -28,7 +28,7 @@ The `term` object now has the minimal required information for Atlan to update i
 So first you should enrich the object:
 
 ```java linenums="5" title="Enrich the asset before updating it"
-term = term.toBuilder() // (1)
+GlossaryTerm term = termUpdater // (1)
 		.certificateStatus(AtlanCertificateStatus.VERIFIED) // (2)
 		.announcementType(AtlanAnnouncementType.INFORMATION) // (3)
 		.announcementTitle("Imported");
@@ -36,7 +36,7 @@ term = term.toBuilder() // (1)
 		.build(); // (4)
 ```
 
-1. The `toBuilder()` method can be called on any object to create a chainable builder for further enriching the object.
+1. We'll create an object we can take actions on from this updater.
 2. In this example, we're adding a certificate to the object.
 3. Note that you can chain any number of enrichments together. Here we are also adding an announcement to the [asset](/concepts/assets).
 4. To persist the enrichment back to the object, we must `build()` the builder.

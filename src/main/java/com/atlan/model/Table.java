@@ -1,6 +1,9 @@
 /* SPDX-License-Identifier: Apache-2.0 */
 package com.atlan.model;
 
+import com.atlan.exception.AtlanException;
+import com.atlan.model.enums.AtlanAnnouncementType;
+import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.relations.Reference;
 import java.util.List;
 import java.util.Map;
@@ -101,9 +104,9 @@ public class Table extends SQL {
      * @param databaseName name of database in which this table exists
      * @param databaseQualifiedName unique name of the database in which this table exists
      * @param connectionQualifiedName unique name of the specific instance of the software / system that hosts the table
-     * @return the minimal request necessary to create the table
+     * @return the minimal request necessary to create the table, as a builder
      */
-    public static Table toCreate(
+    public static TableBuilder<?, ?> creator(
             String name,
             String connectorName,
             String schemaName,
@@ -121,8 +124,7 @@ public class Table extends SQL {
                 .schemaQualifiedName(schemaQualifiedName)
                 .databaseName(databaseName)
                 .databaseQualifiedName(databaseQualifiedName)
-                .connectionQualifiedName(connectionQualifiedName)
-                .build();
+                .connectionQualifiedName(connectionQualifiedName);
     }
 
     /**
@@ -132,9 +134,37 @@ public class Table extends SQL {
      *
      * @param qualifiedName of the table
      * @param name of the table
-     * @return the minimal request necessary to update the table
+     * @return the minimal request necessary to update the table, as a builder
      */
-    public static Table toUpdate(String qualifiedName, String name) {
-        return Table.builder().qualifiedName(qualifiedName).name(name).build();
+    public static TableBuilder<?, ?> updater(String qualifiedName, String name) {
+        return Table.builder().qualifiedName(qualifiedName).name(name);
+    }
+
+    /**
+     * Update the certificate on a table.
+     * @param qualifiedName of the table
+     * @param certificate to use
+     * @param message (optional) message, or null if no message
+     * @return the updated table, or null if the update failed
+     * @throws AtlanException on any API problems
+     */
+    public static Table updateCertificate(String qualifiedName, AtlanCertificateStatus certificate, String message)
+            throws AtlanException {
+        return (Table) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
+    }
+
+    /**
+     * Update the announcement on a table.
+     *
+     * @param qualifiedName of the table
+     * @param type type of announcement to set
+     * @param title (optional) title of the announcement to set (or null for no title)
+     * @param message (optional) message of the announcement to set (or null for no message)
+     * @return the result of the update, or null if the update failed
+     * @throws AtlanException on any API problems
+     */
+    public static Table updateAnnouncement(
+            String qualifiedName, AtlanAnnouncementType type, String title, String message) throws AtlanException {
+        return (Table) Asset.updateAnnouncement(builder(), TYPE_NAME, qualifiedName, type, title, message);
     }
 }

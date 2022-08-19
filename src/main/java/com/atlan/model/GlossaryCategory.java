@@ -58,14 +58,14 @@ public class GlossaryCategory extends Asset {
      * @param name of the category
      * @param glossaryGuid unique identifier of the category's glossary
      * @param glossaryQualifiedName unique name of the category's glossary
-     * @return the minimal object necessary to create the category
+     * @return the minimal object necessary to create the category, as a builder
      */
-    public static GlossaryCategory toCreate(String name, String glossaryGuid, String glossaryQualifiedName) {
+    public static GlossaryCategoryBuilder<?, ?> creator(
+            String name, String glossaryGuid, String glossaryQualifiedName) {
         return GlossaryCategory.builder()
                 .qualifiedName(name)
                 .name(name)
-                .anchor(GlossaryTerm.anchorLink(glossaryGuid, glossaryQualifiedName))
-                .build();
+                .anchor(Glossary.anchorLink(glossaryGuid, glossaryQualifiedName));
     }
 
     /**
@@ -77,15 +77,14 @@ public class GlossaryCategory extends Asset {
      * @param qualifiedName of the category
      * @param name of the category
      * @param glossaryGuid unique identifier of the category's glossary
-     * @return the minimal object necessary to update the category
+     * @return the minimal object necessary to update the category, as a builder
      */
-    public static GlossaryCategory toUpdate(String qualifiedName, String name, String glossaryGuid) {
+    public static GlossaryCategoryBuilder<?, ?> updater(String qualifiedName, String name, String glossaryGuid) {
         // Turns out that updating a category requires the glossary GUID, and will not work
         // with the qualifiedName of the glossary
         return GlossaryCategory.builder()
                 .qualifiedName(qualifiedName)
                 .name(name)
-                .anchor(GlossaryTerm.anchorLink(glossaryGuid, null))
-                .build();
+                .anchor(Glossary.anchorLink(glossaryGuid, null));
     }
 }

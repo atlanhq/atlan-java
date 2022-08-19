@@ -46,9 +46,8 @@ public class ClassificationTest extends AtlanLiveTest {
             dependsOnGroups = {"link.remove2"})
     void updateTermClassification() {
         try {
-            GlossaryTerm toUpdate =
-                    GlossaryTerm.toUpdate(GlossaryTest.termQame, GlossaryTest.TERM_NAME, GlossaryTest.glossaryGuid);
-            toUpdate = toUpdate.toBuilder()
+            GlossaryTerm toUpdate = GlossaryTerm.updater(
+                            GlossaryTest.termQame, GlossaryTest.TERM_NAME, GlossaryTest.glossaryGuid)
                     .classification(Classification.of(CLASSIFICATION_NAME, GlossaryTest.termGuid))
                     .build();
             EntityMutationResponse response = toUpdate.upsert(true, false);
@@ -82,8 +81,9 @@ public class ClassificationTest extends AtlanLiveTest {
             dependsOnGroups = {"update.term.classification"})
     void removeTermClassification() {
         try {
-            GlossaryTerm toUpdate =
-                    GlossaryTerm.toUpdate(GlossaryTest.termQame, GlossaryTest.TERM_NAME, GlossaryTest.glossaryGuid);
+            GlossaryTerm toUpdate = GlossaryTerm.updater(
+                            GlossaryTest.termQame, GlossaryTest.TERM_NAME, GlossaryTest.glossaryGuid)
+                    .build();
             toUpdate.removeClassifications();
             EntityMutationResponse response = toUpdate.upsert(true, false);
             assertNotNull(response);

@@ -82,16 +82,15 @@ public class S3Object extends S3 {
      * @param name of the S3 object
      * @param connectionQualifiedName unique name of the connection through which the object is accessible
      * @param awsArn unique ARN of the object
-     * @return the minimal object necessary to create the S3 object
+     * @return the minimal object necessary to create the S3 object, as a builder
      */
-    public static S3Object toCreate(String name, String connectionQualifiedName, String awsArn) {
+    public static S3ObjectBuilder<?, ?> creator(String name, String connectionQualifiedName, String awsArn) {
         return S3Object.builder()
                 .qualifiedName(generateQualifiedName(connectionQualifiedName, awsArn))
                 .name(name)
                 .connectionQualifiedName(connectionQualifiedName)
                 .connectorName("s3")
-                .awsArn(awsArn)
-                .build();
+                .awsArn(awsArn);
     }
 
     /**
@@ -101,10 +100,10 @@ public class S3Object extends S3 {
      *
      * @param qualifiedName unique name of the S3 object
      * @param name of the S3 object
-     * @return the minimal object necessary to update the S3 object
+     * @return the minimal object necessary to update the S3 object, as a builder
      */
-    public static S3Object toUpdate(String qualifiedName, String name) {
-        return S3Object.builder().qualifiedName(qualifiedName).name(name).build();
+    public static S3ObjectBuilder<?, ?> updater(String qualifiedName, String name) {
+        return S3Object.builder().qualifiedName(qualifiedName).name(name);
     }
 
     /**

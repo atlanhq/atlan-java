@@ -2,6 +2,7 @@
 package com.atlan.model;
 
 import com.atlan.model.relations.Reference;
+import com.atlan.model.relations.UniqueAttributes;
 import java.util.List;
 import java.util.Map;
 import lombok.*;
@@ -49,10 +50,10 @@ public class Glossary extends Asset {
      * methods to add metadata followed by {@link GlossaryBuilder#build()}.
      *
      * @param name of the glossary
-     * @return the minimal object necessary to create the glossary
+     * @return the minimal object necessary to create the glossary, as a builder
      */
-    public static Glossary toCreate(String name) {
-        return Glossary.builder().qualifiedName(name).name(name).build();
+    public static GlossaryBuilder<?, ?> creator(String name) {
+        return Glossary.builder().qualifiedName(name).name(name);
     }
 
     /**
@@ -62,9 +63,33 @@ public class Glossary extends Asset {
      *
      * @param guid unique identifier of the glossary
      * @param name of the glossary
-     * @return the minimal object necessary to update the glossary
+     * @return the minimal object necessary to update the glossary, as a builder
      */
-    public static Glossary toUpdate(String guid, String name) {
-        return Glossary.builder().guid(guid).qualifiedName(name).name(name).build();
+    public static GlossaryBuilder<?, ?> updater(String guid, String name) {
+        return Glossary.builder().guid(guid).qualifiedName(name).name(name);
+    }
+
+    /**
+     * Set up the minimal object required to reference a glossary. Only one of the following is required.
+     *
+     * @param glossaryGuid unique identifier of the glossary for the term
+     * @param glossaryQualifiedName unique name of the glossary
+     * @return a builder that can be further extended with other metadata
+     */
+    static Reference anchorLink(String glossaryGuid, String glossaryQualifiedName) {
+        Reference anchor = null;
+        if (glossaryGuid == null && glossaryQualifiedName == null) {
+            return null;
+        } else if (glossaryGuid != null) {
+            anchor = Reference.builder().typeName(TYPE_NAME).guid(glossaryGuid).build();
+        } else {
+            anchor = Reference.builder()
+                    .typeName(TYPE_NAME)
+                    .uniqueAttributes(UniqueAttributes.builder()
+                            .qualifiedName(glossaryQualifiedName)
+                            .build())
+                    .build();
+        }
+        return anchor;
     }
 }

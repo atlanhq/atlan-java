@@ -45,6 +45,19 @@ public class EntityMutationResponse extends ApiResource {
     }
 
     /**
+     * Retrieve the list of entities that were partially updated.
+     * Note: this should only ever be populated by calls to the {@link com.atlan.api.EntityUpdateEndpoint}
+     * @return list of partially updated entities, or an empty list of none were partially updated
+     */
+    public List<Entity> getPartiallyUpdatedEntities() {
+        if (mutatedEntities != null) {
+            List<Entity> updated = mutatedEntities.getPARTIAL_UPDATE();
+            return updated == null ? Collections.emptyList() : updated;
+        }
+        return Collections.emptyList();
+    }
+
+    /**
      * Retrieve the list of entities that were deleted.
      * @return list of deleted entities, or an empty list of none were deleted
      */

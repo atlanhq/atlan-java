@@ -1,6 +1,9 @@
 /* SPDX-License-Identifier: Apache-2.0 */
 package com.atlan.model;
 
+import com.atlan.exception.AtlanException;
+import com.atlan.model.enums.AtlanAnnouncementType;
+import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.relations.Reference;
 import java.util.List;
 import lombok.*;
@@ -38,6 +41,34 @@ public class S3Bucket extends S3 {
     List<Reference> objects;
 
     /**
+     * Update the certificate on an S3 bucket.
+     * @param qualifiedName of the S3 bucket
+     * @param certificate to use
+     * @param message (optional) message, or null if no message
+     * @return the updated S3 bucket, or null if the update failed
+     * @throws AtlanException on any API problems
+     */
+    public static S3Bucket updateCertificate(String qualifiedName, AtlanCertificateStatus certificate, String message)
+            throws AtlanException {
+        return (S3Bucket) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
+    }
+
+    /**
+     * Update the announcement on an S3 bucket.
+     *
+     * @param qualifiedName of the S3 bucket
+     * @param type type of announcement to set
+     * @param title (optional) title of the announcement to set (or null for no title)
+     * @param message (optional) message of the announcement to set (or null for no message)
+     * @return the result of the update, or null if the update failed
+     * @throws AtlanException on any API problems
+     */
+    public static S3Bucket updateAnnouncement(
+            String qualifiedName, AtlanAnnouncementType type, String title, String message) throws AtlanException {
+        return (S3Bucket) Asset.updateAnnouncement(builder(), TYPE_NAME, qualifiedName, type, title, message);
+    }
+
+    /**
      * Builds the minimal object necessary to create an S3 bucket.
      * To continue adding to the object, call {@link #toBuilder()} on the result and continue calling
      * additional methods to add metadata followed by {@link S3Bucket.S3BucketBuilder#build()}.
@@ -45,16 +76,15 @@ public class S3Bucket extends S3 {
      * @param name of the S3 bucket
      * @param connectionQualifiedName unique name of the connection through which the bucket is accessible
      * @param awsArn unique ARN of the bucket
-     * @return the minimal object necessary to create the S3 bucket
+     * @return the minimal object necessary to create the S3 bucket, as a builder
      */
-    public static S3Bucket toCreate(String name, String connectionQualifiedName, String awsArn) {
+    public static S3BucketBuilder<?, ?> creator(String name, String connectionQualifiedName, String awsArn) {
         return S3Bucket.builder()
                 .qualifiedName(generateQualifiedName(connectionQualifiedName, awsArn))
                 .name(name)
                 .connectionQualifiedName(connectionQualifiedName)
                 .connectorName("s3")
-                .awsArn(awsArn)
-                .build();
+                .awsArn(awsArn);
     }
 
     /**
@@ -64,10 +94,10 @@ public class S3Bucket extends S3 {
      *
      * @param qualifiedName of the S3 bucket
      * @param name of the S3 bucket
-     * @return the minimal object necessary to update the S3 bucket
+     * @return the minimal object necessary to update the S3 bucket, as a builder
      */
-    public static S3Bucket toUpdate(String qualifiedName, String name) {
-        return S3Bucket.builder().qualifiedName(qualifiedName).name(name).build();
+    public static S3BucketBuilder<?, ?> updater(String qualifiedName, String name) {
+        return S3Bucket.builder().qualifiedName(qualifiedName).name(name);
     }
 
     /**

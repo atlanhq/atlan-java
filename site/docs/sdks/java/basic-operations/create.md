@@ -4,15 +4,15 @@ icon: fontawesome/brands-java
 
 # Creating an asset through the Java SDK
 
-All objects in the SDK that you can create within Atlan implement the builder pattern. This allows you to progressively build-up the object you want to create. In addition, each object provides a `toCreate()` method that takes the minimal set of required fields to create that [asset](/concepts/assets).
+All objects in the SDK that you can create within Atlan implement the builder pattern. This allows you to progressively build-up the object you want to create. In addition, each object provides a `creator()` method that takes the minimal set of required fields to create that [asset](/concepts/assets).
 
 ## Build minimal object needed
 
 For example, to create a glossary term we need to provide the name of the term and either the GUID or `qualifiedName` of the glossary in which to create the term:
 
 ```java linenums="1" title="Build minimal asset necessary for creation"
-GlossaryTerm term = GlossaryTerm
-		.toCreate("Example Term", // (1)
+GlossaryTermBuilder<?,?> termCreator = GlossaryTerm
+		.creator("Example Term", // (1)
 				  "b4113341-251b-4adc-81fb-2420501c30e6", // (2)
 				  null); // (3)
 ```
@@ -23,24 +23,25 @@ GlossaryTerm term = GlossaryTerm
 
 ## Create the asset from the object
 
-This `term` object now has the minimal required information for Atlan to create it.
+This `term` object now has the minimal required information for Atlan to create it, once we `build()` it.
 You can then actually create the object in Atlan by calling the `upsert()` method on the object itself:
 
 ```java linenums="5" title="Create the asset"
-EntityMutationResponse response = term.upsert(); // (1)
-Entity created = response.getCreatedEntities().get(0); // (2)
-GlossaryTerm term;
+GlossaryTerm term = termCreator.build(); // (1)
+EntityMutationResponse response = term.upsert(); // (2)
+Entity created = response.getCreatedEntities().get(0); // (3)
 if (created instanceof GlossaryTerm) {
-	term = (GlossaryTerm) created; // (3)
+	term = (GlossaryTerm) created; // (4)
 }
-Entity updated = response.getUpdatedEntities().get(0); // (4)
+Entity updated = response.getUpdatedEntities().get(0); // (5)
 Glossary glossary;
 if (updated instanceof Glossary) {
-	glossary = (Glossary) updated; // (5)
+	glossary = (Glossary) updated; // (6)
 }
 ```
 
-1. The `upsert()` method will either:
+1. Before we can take actions on the builder object we've been interacting with, we need to `build()` it into a full object.
+1. Then we can do operations, like `upsert()`, which will either:
 
 	- create a new entity, if Atlan does not have a term with the same name in the same glossary
 	- update an existing entity, if Atlan already has a term with the same name in the same glossary
@@ -63,7 +64,7 @@ if (updated instanceof Glossary) {
 If you want to further enrich the [asset](/concepts/assets) before creating it, you can do this using the builder pattern:
 
 ```java linenums="5" title="Alternatively, further enrich the asset before creating it"
-term = term.toBuilder() // (1)
+GlossaryTerm term = termCreator // (1)
 		.certificateStatus(AtlanCertificateStatus.VERIFIED) // (2)
 		.announcementType(AtlanAnnouncementType.INFORMATION)
 		.announcementTitle("Imported");
@@ -72,7 +73,7 @@ term = term.toBuilder() // (1)
 EntityMutationResponse response = term.upsert(); // (4)
 ```
 
-1. The `toBuilder()` method can be called on any object to create a chainable builder for further enriching the object.
+1. We'll create an object we can take actions on from this creator.
 2. In this example, we're adding a certificate and announcement to the object.
 3. To persist the enrichment back to the object, we must `build()` the builder.
 4. We can call the `upsert()` operation against this enriched object, the same as we showed earlier.

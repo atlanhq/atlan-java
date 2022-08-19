@@ -40,6 +40,7 @@ nav:
       - Manage lineage: sdks/common-examples/lineage.md
       - Link terms to assets: sdks/common-examples/term-assignment.md
       - Add asset READMEs: sdks/common-examples/readme.md
+      - Advanced examples: sdks/common-examples/advanced.md
   - Search attributes:
     - Search attributes introduction: search/index.md
     - Common attributes: search/common.md
