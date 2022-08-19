@@ -348,7 +348,7 @@ public class S3AssetTest extends AtlanLiveTest {
 
     @Test(
             groups = {"connection.purge", "purge"},
-            dependsOnGroups = {"lineage.purge"},
+            dependsOnGroups = {"lineage.purge", "create", "update", "read"},
             alwaysRun = true)
     void purgeConnection() {
         try {
