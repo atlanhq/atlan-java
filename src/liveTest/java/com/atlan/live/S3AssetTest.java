@@ -1,4 +1,4 @@
-package com.atlan.functional;
+package com.atlan.live;
 
 import static org.testng.Assert.*;
 
@@ -20,11 +20,13 @@ import com.atlan.model.relations.Reference;
 import com.atlan.model.responses.EntityMutationResponse;
 import com.atlan.model.responses.WorkflowResponse;
 import java.util.Collections;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
 
-@Slf4j
 public class S3AssetTest extends AtlanLiveTest {
+
+    private static final Logger log = LoggerFactory.getLogger(S3AssetTest.class);
 
     public static final String CONNECTION_NAME = "jc-test-connection";
     public static final String S3_BUCKET_NAME = "jc-test-bucket";
