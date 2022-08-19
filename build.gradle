@@ -72,19 +72,6 @@ tasks.withType(JavaCompile) {
     }
 }
 
-tasks.withType(Test) {
-    // Check if JAVA_TEST_HOME environment variable is specified
-    String home = System.getenv("JAVA_TEST_HOME")
-    if (home && !home.allWhitespace) {
-        test.executable = "${home}/bin/java"
-    }
-    // Github CI should always set JAVA_TEST_HOME
-    else if (System.getenv("GITHUB_ACTIONS"))
-    {
-        throw new GradleException("JAVA_TEST_HOME should be set when running in CI")
-    }
-}
-
 tasks.register('uberJar', Jar) {
     archiveClassifier = 'jar-with-dependencies'
     from sourceSets.main.output
