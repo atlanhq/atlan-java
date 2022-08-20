@@ -8,9 +8,9 @@ Deleting an [asset](/concepts/assets) uses a similar pattern to the retrieval op
 
 ## Soft-delete an asset
 
-Soft-deletes are a reversible operation. The status of the [asset](/concepts/assets) is changed to `DELETED` and it no longer appears in the UI, but the [asset](/concepts/assets) is still present in Atlan's back-end.
+Soft-deletes (also called an *archive*) are a reversible operation. The status of the [asset](/concepts/assets) is changed to `DELETED` and it no longer appears in the UI, but the [asset](/concepts/assets) is still present in Atlan's back-end.
 
-To soft-delete an [asset](/concepts/assets), we only need to provide the GUID:
+To soft-delete (archive) an [asset](/concepts/assets), we only need to provide the GUID:
 
 ```java linenums="1" title="Soft-delete an asset"
 EntityMutationResponse response =
