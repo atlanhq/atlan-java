@@ -55,7 +55,7 @@ To remove all classifications from an existing [asset](/concepts/assets), you ne
 	```java linenums="1" title="Remove all classifications from an existing asset"
 	Table table = Table.updater( // (1)
 		"default/snowflake/1657037873/SAMPLE_DB/FOOD_BEV/TOP_BEVERAGE_USERS",
-		"TOP_BEVERAGE_USERS");
+		"TOP_BEVERAGE_USERS").build();
 	EntityMutationResponse response = term.upsert(true, false); // (2)
 	response.getUpdatedEntities().size() == 1; // (3)
 	```

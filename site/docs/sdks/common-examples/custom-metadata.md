@@ -14,14 +14,13 @@ To add custom metadata when creating an [asset](/concepts/assets):
 			.withAttribute("RACI", "Consulted", List.of("finance", "risk")) // (3)
 			.withAttribute("RACI", "Informed", List.of("operations"))
 	GlossaryTerm term = GlossaryTerm
-			.toCreate("Example Term", // (4)
-					  "b4113341-251b-4adc-81fb-2420501c30e6",
-					  null);
-	term = term.toBuilder() // (5)
-			.customMetadata(cm) // (6)
-			.build(); // (7)
-	EntityMutationResponse response = term.upsert(false, true); // (8)
-	response.getCreatedEntities().size() == 1 // (9)
+			.creator("Example Term", // (4)
+					 "b4113341-251b-4adc-81fb-2420501c30e6",
+					 null);
+			.customMetadata(cm) // (5)
+			.build(); // (6)
+	EntityMutationResponse response = term.upsert(false, true); // (7)
+	response.getCreatedEntities().size() == 1 // (8)
 	```
 	
 	1. Create a custom metadata object that will contain all the custom metadata you want to add to the [asset](/concepts/assets).
@@ -34,12 +33,11 @@ To add custom metadata when creating an [asset](/concepts/assets):
 		The value can be any object valid for the attribute: a string, a boolean, or a number. (Note that dates are sent as `long` (epoch) numbers.)
 
 	3. For any attribute that can be multi-valued, we can send a list of values.
-	4. Use the `toCreate()` method to initialize the object with all [necessary attributes for creating it](../../java/basic-operations/create/#build-minimal-object-needed).
-	5. Call the `toBuilder()` method on the resulting object to [enrich it further](../../java/basic-operations/create/#optional-enrich-before-creating).
-	6. Set the custom metadata that should be added (using the custom metadata object you built earlier).
-	7. Call the `build()` method to build the enriched object. (Remember this needs to be assigned back to the original object — line 10!)
-	8. Call the `upsert()` method to actually create the [asset](/concepts/assets) with this custom metadata. Note that we send a `true` for the second argument to ensure that we update the custom metadata in Atlan.
-	9. The response will include that single [asset](/concepts/assets) that was created.
+	4. Use the `creator()` method to initialize the object with all [necessary attributes for creating it](../../java/basic-operations/create/#build-minimal-object-needed).
+	5. Set the custom metadata that should be added (using the custom metadata object you built earlier).
+	6. Call the `build()` method to build the enriched object.
+	7. Call the `upsert()` method to actually create the [asset](/concepts/assets) with this custom metadata. Note that we send a `true` for the second argument to ensure that we update the custom metadata in Atlan.
+	8. The response will include that single [asset](/concepts/assets) that was created.
 
 === ":material-language-python: Python"
 
@@ -76,33 +74,29 @@ You can also add custom metadata to many existing [assets](/concepts/assets) at 
 			.withAttribute("RACI", "Informed", List.of("operations"))
 	List<Entity> assets = new ArrayList<>();
 	assets.add(GlossaryTerm // (2)
-			.toUpdate("gsNccqJraDZqM6WyGP3ea@FzCMyPR2LxkPFgr8eNGrq", // (3)
-					  "Example Term",
-					  "b4113341-251b-4adc-81fb-2420501c30e6")
-			.toBuilder() // (4)
-			.customMetadata(cm) // (5)
-			.build()); // (6)
+			.updater("gsNccqJraDZqM6WyGP3ea@FzCMyPR2LxkPFgr8eNGrq", // (3)
+					 "Example Term",
+					 "b4113341-251b-4adc-81fb-2420501c30e6")
+			.customMetadata(cm) // (4)
+			.build()); // (5)
 	assets.add(GlossaryTerm
-			.toUpdate("sduw38sCas83Ca8sdf982@FzCMyPR2LxkPFgr8eNGrq", // (7)
-					  "Another Term",
-					  "b267858d-8316-4c41-a56a-6e9b840cef4a")
-			.toBuilder() // (8)
+			.updater("sduw38sCas83Ca8sdf982@FzCMyPR2LxkPFgr8eNGrq", // (6)
+					 "Another Term",
+					 "b267858d-8316-4c41-a56a-6e9b840cef4a")
 			.customMetadata(cm)
 			.build());
-	EntityMutationResponse response = EntityBulkEndpoint.upsert(assets, false, true); // (9)
-	response.getUpdatedEntities().size() == 2 // (10)
+	EntityMutationResponse response = EntityBulkEndpoint.upsert(assets, false, true); // (7)
+	response.getUpdatedEntities().size() == 2 // (8)
 	```
 	
 	1. Create the custom metadata object that will contain all the custom metadata you want to add to the [assets](/concepts/assets).
 	2. Define your object directly into an element of a `List`, rather than managing a separate object.
-	3. Use the `toUpdate()` method to initialize the object with all [necessary attributes for updating it](../../java/basic-operations/update/#build-minimal-object-needed).
-	4. Call the `toBuilder()` method on the resulting object to [enrich it further](../../java/basic-operations/update/#enrich-before-updating).
-	5. Directly chain the custom metadata onto the `toBuilder()` method's result.
-	6. Call the `build()` method to build the enriched object. (No need to assign it back to an original object, as we've chained all the operations 	together!)
-	7. Use the `toUpdate()` method to initialize the object for another [asset](/concepts/assets).
-	8. Chain the `toBuilder()`, enrichment and `build()` methods like we did for the previous [asset](/concepts/assets).
-	9. To optimize your update, you want to limit the number of API calls we make. If you called `upsert()` against each of *n* [assets](/concepts/assets) individually, you would have *n* API calls. Here you use the API endpoint directly with a list of [assets](/concepts/assets) — this makes 1 API call to update all *n* [assets](/concepts/assets) at the same time.
-	10. The response will include all *n* [assets](/concepts/assets) that were updated.
+	3. Use the `updater()` method to initialize the object with all [necessary attributes for updating it](../../java/basic-operations/update/#build-minimal-object-needed).
+	4. Directly chain the custom metadata onto the `updater()` method's result.
+	5. Call the `build()` method to build the enriched object.
+	6. Use the `updater()` method to initialize the object for another [asset](/concepts/assets).
+	7. To optimize your update, you want to limit the number of API calls we make. If you called `upsert()` against each of *n* [assets](/concepts/assets) individually, you would have *n* API calls. Here you use the API endpoint directly with a list of [assets](/concepts/assets) — this makes 1 API call to update all *n* [assets](/concepts/assets) at the same time.
+	8. The response will include all *n* [assets](/concepts/assets) that were updated.
 
 === ":material-language-python: Python"
 
@@ -113,20 +107,20 @@ You can also add custom metadata to many existing [assets](/concepts/assets) at 
 
 ## Remove from an existing asset
 
-To remove a custom metadata from an existing [asset](/concepts/assets):
+To remove all custom metadata from an existing [asset](/concepts/assets):
 
 === ":fontawesome-brands-java: Java"
 
 	```java linenums="1" title="Remove all custom metadata from an existing asset"
 	GlossaryTerm term = GlossaryTerm
-			.toUpdate("gsNccqJraDZqM6WyGP3ea@FzCMyPR2LxkPFgr8eNGrq", // (1)
-					  "Example Term",
-					  "b4113341-251b-4adc-81fb-2420501c30e6");
+			.updater("gsNccqJraDZqM6WyGP3ea@FzCMyPR2LxkPFgr8eNGrq", // (1)
+					 "Example Term",
+					 "b4113341-251b-4adc-81fb-2420501c30e6").build();
 	EntityMutationResponse response = term.upsert(false, true); // (2)
 	response.getUpdatedEntities().size() == 1; // (3)
 	```
 	
-	1. Use the `toUpdate()` method to initialize the object with all [necessary attributes for updating it](../../java/basic-operations/update/#build-minimal-object-needed). (Removing the custom metadata is still an update to the [asset](/concepts/assets), we are not deleting the [asset](/concepts/assets) itself.)
+	1. Use the `updater()` method to initialize the object with all [necessary attributes for updating it](../../java/basic-operations/update/#build-minimal-object-needed). (Removing the custom metadata is still an update to the [asset](/concepts/assets), we are not deleting the [asset](/concepts/assets) itself.)
 	2. Call the `upsert()` method to actually update the [asset](/concepts/assets), using `true` as the second argument to overwrite custom metadata. Since we have not provided any custom metadata in our object, this will *replace* the existing custom metadata on the [asset](/concepts/assets) with no custom metadata. (In other words, it will remove all custom metadata from the [asset](/concepts/assets).)
 	3. The response will include that single [asset](/concepts/assets) that was updated (again, removing custom metadata is an update to the [asset](/concepts/assets) — we are not deleting the [asset](/concepts/assets) itself).
 
