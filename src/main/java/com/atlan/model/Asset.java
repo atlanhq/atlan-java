@@ -339,32 +339,6 @@ public abstract class Asset extends Entity {
         return updateAttributes(typeName, qualifiedName, builder.build());
     }
 
-    /**
-     * Add classifications to an asset.
-     *
-     * @param typeName type of the asset
-     * @param qualifiedName of the asset
-     * @param classificationNames human-readable names of the classifications to add
-     * @throws AtlanException on any API problems, or if any of the classifications already exist on the asset
-     */
-    protected static void addClassifications(String typeName, String qualifiedName, List<String> classificationNames)
-            throws AtlanException {
-        EntityUniqueAttributesEndpoint.addClassifications(typeName, qualifiedName, classificationNames);
-    }
-
-    /**
-     * Remove a classification from an asset.
-     *
-     * @param typeName type of the asset
-     * @param qualifiedName of the asset
-     * @param classificationName human-readable name of the classifications to remove
-     * @throws AtlanException on any API problems, or if any of the classification does not exist on the asset
-     */
-    protected static void removeClassification(String typeName, String qualifiedName, String classificationName)
-            throws AtlanException {
-        EntityUniqueAttributesEndpoint.removeClassification(typeName, qualifiedName, classificationName, true);
-    }
-
     private static Entity updateAttributes(String typeName, String qualifiedName, Asset asset) throws AtlanException {
         EntityMutationResponse response =
                 EntityUniqueAttributesEndpoint.updateAttributes(typeName, qualifiedName, asset);

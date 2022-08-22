@@ -5,7 +5,7 @@ import com.atlan.api.EntityBulkEndpoint;
 import com.atlan.api.EntityGuidEndpoint;
 import com.atlan.api.EntityUniqueAttributesEndpoint;
 import com.atlan.exception.AtlanException;
-import com.atlan.model.CustomMetadata;
+import com.atlan.model.CustomMetadataAttributes;
 import com.atlan.model.enums.AtlanDeleteType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.responses.EntityMutationResponse;
@@ -18,7 +18,8 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @Setter
 @SuperBuilder(toBuilder = true)
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = false)
+@SuppressWarnings("cast")
 public abstract class Entity extends AtlanObject {
     /** Internal tracking of fields that should be serialized with null values. */
     transient Set<String> nullFields;
@@ -72,7 +73,7 @@ public abstract class Entity extends AtlanObject {
     /**
      * Map of custom metadata attributes and values defined on the entity. This is intended for use by internal
      * (de)serialization only. For actual custom metadata attributes and values, use the top-level
-     * {@link #customMetadata} field and its related operations.
+     * {@link #customMetadataSets} field and its related operations.
      */
     @EqualsAndHashCode.Exclude
     Map<String, Map<String, Object>> businessAttributes;
@@ -82,7 +83,8 @@ public abstract class Entity extends AtlanObject {
      * name of the custom metadata set, and the values are a further mapping from human-readable attribute name
      * to the value for that attribute on this entity.
      */
-    transient CustomMetadata customMetadata;
+    @Singular("customMetadata")
+    transient Map<String, CustomMetadataAttributes> customMetadataSets;
 
     /** Status of the entity. */
     final AtlanStatus status;
@@ -117,7 +119,7 @@ public abstract class Entity extends AtlanObject {
         // for them to be removed, as long as the "replaceBusinessAttributes" flag is set
         // to true (which it must be for any update to work to businessAttributes anyway)
         businessAttributes = null;
-        customMetadata = null;
+        customMetadataSets = null;
     }
 
     /** Remove the classifications from the asset, if the asset is classified with any. */
@@ -217,5 +219,70 @@ public abstract class Entity extends AtlanObject {
      */
     public static EntityMutationResponse purge(String guid) throws AtlanException {
         return EntityBulkEndpoint.delete(guid, AtlanDeleteType.HARD);
+    }
+
+    /**
+     * Update only the provided custom metadata attributes on the asset. This will leave all other custom metadata
+     * attributes, even within the same named custom metadata, unchanged.
+     *
+     * @param guid unique identifier of the asset
+     * @param cmName human-readable name of the custom metadata to update
+     * @param attributes the values of the custom metadata attributes to change
+     * @throws AtlanException on any API problems, or if the custom metadata is not defined in Atlan
+     */
+    public static void updateCustomMetadataAttributes(String guid, String cmName, CustomMetadataAttributes attributes)
+            throws AtlanException {
+        EntityGuidEndpoint.updateCustomMetadataAttributes(guid, cmName, attributes);
+    }
+
+    /**
+     * Replace specific custom metadata on the asset. This will replace everything within the named custom metadata,
+     * but will not change any of the other named custom metadata on the asset.
+     *
+     * @param guid unique identifier of the asset
+     * @param cmName human-readable name of the custom metadata to replace
+     * @param attributes the values of the attributes to replace for the custom metadata
+     * @throws AtlanException on any API problems, or if the custom metadata is not defined in Atlan
+     */
+    public static void replaceCustomMetadata(String guid, String cmName, CustomMetadataAttributes attributes)
+            throws AtlanException {
+        EntityGuidEndpoint.replaceCustomMetadata(guid, cmName, attributes);
+    }
+
+    /**
+     * Remove specific custom metadata from an asset.
+     *
+     * @param guid unique identifier of the asset
+     * @param cmName human-readable name of the custom metadata to remove
+     * @throws AtlanException on any API problems, or if the custom metadata is not defined in Atlan
+     */
+    public static void removeCustomMetadata(String guid, String cmName) throws AtlanException {
+        EntityGuidEndpoint.removeCustomMetadata(guid, cmName);
+    }
+
+    /**
+     * Add classifications to an asset.
+     *
+     * @param typeName type of the asset
+     * @param qualifiedName of the asset
+     * @param classificationNames human-readable names of the classifications to add
+     * @throws AtlanException on any API problems, or if any of the classifications already exist on the asset
+     */
+    protected static void addClassifications(String typeName, String qualifiedName, List<String> classificationNames)
+            throws AtlanException {
+        EntityUniqueAttributesEndpoint.addClassifications(typeName, qualifiedName, classificationNames);
+    }
+
+    /**
+     * Remove a classification from an asset.
+     *
+     * @param typeName type of the asset
+     * @param qualifiedName of the asset
+     * @param classificationName human-readable name of the classifications to remove
+     * @throws AtlanException on any API problems, or if any of the classification does not exist on the asset
+     */
+    protected static void removeClassification(String typeName, String qualifiedName, String classificationName)
+            throws AtlanException {
+        EntityUniqueAttributesEndpoint.removeClassification(typeName, qualifiedName, classificationName, true);
     }
 }
