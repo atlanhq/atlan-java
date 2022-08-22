@@ -1,7 +1,11 @@
 /* SPDX-License-Identifier: Apache-2.0 */
 package com.atlan.model;
 
+import com.atlan.exception.AtlanException;
+import com.atlan.model.enums.AtlanAnnouncementType;
+import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.relations.Reference;
+import java.util.List;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -75,6 +79,57 @@ public class S3Object extends S3 {
     Reference bucket;
 
     /**
+     * Update the certificate on an S3 object.
+     * @param qualifiedName of the S3 object
+     * @param certificate to use
+     * @param message (optional) message, or null if no message
+     * @return the updated S3 object, or null if the update failed
+     * @throws AtlanException on any API problems
+     */
+    public static S3Object updateCertificate(String qualifiedName, AtlanCertificateStatus certificate, String message)
+            throws AtlanException {
+        return (S3Object) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
+    }
+
+    /**
+     * Update the announcement on an S3 object.
+     *
+     * @param qualifiedName of the S3 object
+     * @param type type of announcement to set
+     * @param title (optional) title of the announcement to set (or null for no title)
+     * @param message (optional) message of the announcement to set (or null for no message)
+     * @return the result of the update, or null if the update failed
+     * @throws AtlanException on any API problems
+     */
+    public static S3Object updateAnnouncement(
+            String qualifiedName, AtlanAnnouncementType type, String title, String message) throws AtlanException {
+        return (S3Object) Asset.updateAnnouncement(builder(), TYPE_NAME, qualifiedName, type, title, message);
+    }
+
+    /**
+     * Add classifications to an S3 object.
+     *
+     * @param qualifiedName of the S3 object
+     * @param classificationNames human-readable names of the classifications to add
+     * @throws AtlanException on any API problems, or if any of the classifications already exist on the S3 object
+     */
+    public static void addClassifications(String qualifiedName, List<String> classificationNames)
+            throws AtlanException {
+        Asset.addClassifications(TYPE_NAME, qualifiedName, classificationNames);
+    }
+
+    /**
+     * Remove a classification from an S3 object.
+     *
+     * @param qualifiedName of the S3 object
+     * @param classificationName human-readable name of the classification to remove
+     * @throws AtlanException on any API problems, or if the classification does not exist on the S3 object
+     */
+    public static void removeClassification(String qualifiedName, String classificationName) throws AtlanException {
+        Asset.removeClassification(TYPE_NAME, qualifiedName, classificationName);
+    }
+
+    /**
      * Builds the minimal object necessary to create an S3 object.
      * To continue adding to the object, call {@link #toBuilder()} on the result and continue calling
      * additional methods to add metadata followed by {@link S3Object.S3ObjectBuilder#build()}.
@@ -82,16 +137,15 @@ public class S3Object extends S3 {
      * @param name of the S3 object
      * @param connectionQualifiedName unique name of the connection through which the object is accessible
      * @param awsArn unique ARN of the object
-     * @return the minimal object necessary to create the S3 object
+     * @return the minimal object necessary to create the S3 object, as a builder
      */
-    public static S3Object toCreate(String name, String connectionQualifiedName, String awsArn) {
+    public static S3ObjectBuilder<?, ?> creator(String name, String connectionQualifiedName, String awsArn) {
         return S3Object.builder()
                 .qualifiedName(generateQualifiedName(connectionQualifiedName, awsArn))
                 .name(name)
                 .connectionQualifiedName(connectionQualifiedName)
                 .connectorName("s3")
-                .awsArn(awsArn)
-                .build();
+                .awsArn(awsArn);
     }
 
     /**
@@ -101,17 +155,17 @@ public class S3Object extends S3 {
      *
      * @param qualifiedName unique name of the S3 object
      * @param name of the S3 object
-     * @return the minimal object necessary to update the S3 object
+     * @return the minimal object necessary to update the S3 object, as a builder
      */
-    public static S3Object toUpdate(String qualifiedName, String name) {
-        return S3Object.builder().qualifiedName(qualifiedName).name(name).build();
+    public static S3ObjectBuilder<?, ?> updater(String qualifiedName, String name) {
+        return S3Object.builder().qualifiedName(qualifiedName).name(name);
     }
 
     /**
-     * Generate a unique S3 bucket name.
+     * Generate a unique S3 object name.
      * @param connectionQualifiedName unique name of the connection
-     * @param awsArn unique ARN for the bucket
-     * @return a unique name for the S3 bucket
+     * @param awsArn unique ARN for the object
+     * @return a unique name for the S3 object
      */
     private static String generateQualifiedName(String connectionQualifiedName, String awsArn) {
         return connectionQualifiedName + "/" + awsArn;

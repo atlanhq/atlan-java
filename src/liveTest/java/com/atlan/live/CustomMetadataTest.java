@@ -133,9 +133,10 @@ public class CustomMetadataTest extends AtlanLiveTest {
                     .withAttribute(CUSTOM_METADATA_SET_NAME, CM_ATTR_URL, "http://www.example.com")
                     .withAttribute(CUSTOM_METADATA_SET_NAME, CM_ATTR_SQL, "SELECT * from SOMEWHERE;")
                     .build();
-            GlossaryTerm toUpdate =
-                    GlossaryTerm.toUpdate(GlossaryTest.termQame, GlossaryTest.TERM_NAME, GlossaryTest.glossaryGuid);
-            toUpdate = toUpdate.toBuilder().customMetadata(cm).build();
+            GlossaryTerm toUpdate = GlossaryTerm.updater(
+                            GlossaryTest.termQame, GlossaryTest.TERM_NAME, GlossaryTest.glossaryGuid)
+                    .customMetadata(cm)
+                    .build();
             EntityMutationResponse response = toUpdate.upsert(false, true);
             assertNotNull(response);
             assertTrue(response.getDeletedEntities().isEmpty());
@@ -187,8 +188,9 @@ public class CustomMetadataTest extends AtlanLiveTest {
             dependsOnGroups = {"update.term.cm"})
     void removeTermCM() {
         try {
-            GlossaryTerm toUpdate =
-                    GlossaryTerm.toUpdate(GlossaryTest.termQame, GlossaryTest.TERM_NAME, GlossaryTest.glossaryGuid);
+            GlossaryTerm toUpdate = GlossaryTerm.updater(
+                            GlossaryTest.termQame, GlossaryTest.TERM_NAME, GlossaryTest.glossaryGuid)
+                    .build();
             toUpdate.removeCustomMetadata();
             EntityMutationResponse response = toUpdate.upsert(false, true);
             assertNotNull(response);

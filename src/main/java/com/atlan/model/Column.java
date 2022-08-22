@@ -157,9 +157,9 @@ public class Column extends SQL {
      * @param databaseName name of database in which this column exists
      * @param databaseQualifiedName unique name of the database in which this column exists
      * @param connectionQualifiedName unique name of the specific instance of the software / system that hosts the column
-     * @return the minimal request necessary to create the column
+     * @return the minimal request necessary to create the column, as a builder
      */
-    public static Column toCreate(
+    public static ColumnBuilder<?, ?> creator(
             String name,
             String connectorName,
             String parentType,
@@ -185,7 +185,7 @@ public class Column extends SQL {
             builder = builder.tableName(parentName).tableQualifiedName(parentQualifiedName);
         }
         // TODO: handle other parent types (view, materialized view)
-        return builder.build();
+        return builder;
     }
 
     /**
@@ -195,9 +195,9 @@ public class Column extends SQL {
      *
      * @param qualifiedName of the column
      * @param name of the column
-     * @return the minimal request necessary to update the column
+     * @return the minimal request necessary to update the column, as a builder
      */
-    public static Column toUpdate(String qualifiedName, String name) {
-        return Column.builder().qualifiedName(qualifiedName).name(name).build();
+    public static ColumnBuilder<?, ?> updater(String qualifiedName, String name) {
+        return Column.builder().qualifiedName(qualifiedName).name(name);
     }
 }

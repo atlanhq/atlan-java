@@ -40,9 +40,9 @@ public class LineageProcess extends AbstractProcess {
      * @param connectionQualifiedName unique name of the specific instance of that software / system that ran the process
      * @param inputs sources of data the process reads from
      * @param outputs targets of data the process writes to
-     * @return the minimal object necessary to create the process
+     * @return the minimal object necessary to create the process, as a builder
      */
-    public static LineageProcess toCreate(
+    public static LineageProcessBuilder<?, ?> creator(
             String name,
             String connectorName,
             String connectionName,
@@ -57,7 +57,6 @@ public class LineageProcess extends AbstractProcess {
                 .connectionName(connectionName)
                 .connectionQualifiedName(connectionQualifiedName)
                 .inputs(inputs)
-                .outputs(outputs)
-                .build();
+                .outputs(outputs);
     }
 }

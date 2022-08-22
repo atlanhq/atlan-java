@@ -127,7 +127,7 @@ public class GlossaryTermTest {
 
     @Test
     void anchorLinkByGuid() {
-        Reference anchorLink = GlossaryTerm.anchorLink("glossaryGuid", null);
+        Reference anchorLink = Glossary.anchorLink("glossaryGuid", null);
         assertNotNull(anchorLink);
         assertEquals(anchorLink.getTypeName(), Glossary.TYPE_NAME);
         assertEquals(anchorLink.getGuid(), "glossaryGuid");
@@ -136,7 +136,7 @@ public class GlossaryTermTest {
 
     @Test
     void anchorLinkByQualifiedName() {
-        Reference anchorLink = GlossaryTerm.anchorLink(null, "glossaryQualifiedName");
+        Reference anchorLink = Glossary.anchorLink(null, "glossaryQualifiedName");
         assertNotNull(anchorLink);
         assertEquals(anchorLink.getTypeName(), Glossary.TYPE_NAME);
         assertNotNull(anchorLink.getUniqueAttributes());
@@ -146,7 +146,7 @@ public class GlossaryTermTest {
 
     @Test
     void anchorLinkByBoth() {
-        Reference anchorLink = GlossaryTerm.anchorLink("glossaryGuid", "glossaryQualifiedName");
+        Reference anchorLink = Glossary.anchorLink("glossaryGuid", "glossaryQualifiedName");
         assertNotNull(anchorLink);
         assertEquals(anchorLink.getTypeName(), Glossary.TYPE_NAME);
         assertEquals(anchorLink.getGuid(), "glossaryGuid");

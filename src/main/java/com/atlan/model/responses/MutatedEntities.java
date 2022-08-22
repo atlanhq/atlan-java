@@ -18,6 +18,9 @@ public class MutatedEntities extends AtlanObject {
     /** Assets that were updated. */
     List<Entity> UPDATE;
 
+    /** Assets that were partially updated. */
+    List<Entity> PARTIAL_UPDATE;
+
     /** Assets that were deleted. */
     List<Entity> DELETE;
 }

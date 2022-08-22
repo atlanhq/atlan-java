@@ -36,15 +36,15 @@ public class Readme extends Resource {
      * @param assetGuid the GUID of the asset to which the README should be attached
      * @param assetName name of the asset to which the README should be attached
      * @param content the HTML content to use for the README
-     * @return the minimal object necessary to create the README and attach it to the asset
+     * @return the minimal object necessary to create the README and attach it to the asset, as a builder
      */
-    public static Readme toCreate(String assetTypeName, String assetGuid, String assetName, String content) {
+    public static ReadmeBuilder<?, ?> creator(
+            String assetTypeName, String assetGuid, String assetName, String content) {
         return Readme.builder()
                 .qualifiedName(generateQualifiedName(assetGuid))
                 .name(generateName(assetName))
                 .description(content)
-                .asset(Reference.to(assetTypeName, assetGuid))
-                .build();
+                .asset(Reference.to(assetTypeName, assetGuid));
     }
 
     /**
@@ -55,14 +55,13 @@ public class Readme extends Resource {
      * @param assetGuid the GUID of the asset to which the README is attached
      * @param assetName name of the asset to which the README is attached
      * @param content the HTML content to use for the README
-     * @return the minimal object necessary to update the README
+     * @return the minimal object necessary to update the README, as a builder
      */
-    public static Readme toUpdate(String assetGuid, String assetName, String content) {
+    public static ReadmeBuilder<?, ?> updater(String assetGuid, String assetName, String content) {
         return Readme.builder()
                 .qualifiedName(generateQualifiedName(assetGuid))
                 .name(generateName(assetName))
-                .description(content)
-                .build();
+                .description(content);
     }
 
     /**

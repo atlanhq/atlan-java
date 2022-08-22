@@ -39,9 +39,9 @@ public class ColumnProcess extends AbstractProcess {
      * @param connectionQualifiedName unique name of the specific instance of that software / system that ran the process
      * @param inputs columns of data the process reads from
      * @param outputs columns of data the process writes to
-     * @return the minimal object necessary to create the column-level process
+     * @return the minimal object necessary to create the column-level process, as a builder
      */
-    public static ColumnProcess toCreate(
+    public static ColumnProcessBuilder<?, ?> creator(
             String name,
             String connectorName,
             String connectionName,
@@ -53,7 +53,6 @@ public class ColumnProcess extends AbstractProcess {
                         name, connectorName, connectionName, connectionQualifiedName, inputs, outputs, null))
                 .name(name)
                 .inputs(inputs)
-                .outputs(outputs)
-                .build();
+                .outputs(outputs);
     }
 }

@@ -36,7 +36,7 @@ public class GlossaryTest extends AtlanLiveTest {
 
     @Test(groups = {"glossary.create", "create"})
     void createGlossary() {
-        Glossary glossary = Glossary.toCreate(GLOSSARY_NAME);
+        Glossary glossary = Glossary.creator(GLOSSARY_NAME).build();
         try {
             EntityMutationResponse response = glossary.upsert();
             assertNotNull(response);
@@ -65,7 +65,8 @@ public class GlossaryTest extends AtlanLiveTest {
             groups = {"category.create", "create"},
             dependsOnGroups = {"glossary.create"})
     void createCategory() {
-        GlossaryCategory category = GlossaryCategory.toCreate(CATEGORY_NAME, glossaryGuid, null);
+        GlossaryCategory category =
+                GlossaryCategory.creator(CATEGORY_NAME, glossaryGuid, null).build();
         try {
             EntityMutationResponse response = category.upsert();
             assertNotNull(response);
@@ -94,7 +95,7 @@ public class GlossaryTest extends AtlanLiveTest {
             groups = {"term.create", "create"},
             dependsOnGroups = {"glossary.create"})
     void createTerm() {
-        GlossaryTerm term = GlossaryTerm.toCreate(TERM_NAME, glossaryGuid, null);
+        GlossaryTerm term = GlossaryTerm.creator(TERM_NAME, glossaryGuid, null).build();
         try {
             EntityMutationResponse response = term.upsert();
             assertNotNull(response);
@@ -195,7 +196,7 @@ public class GlossaryTest extends AtlanLiveTest {
             groups = {"glossary.update", "update"},
             dependsOnGroups = {"glossary.read"})
     void updateGlossary() {
-        Glossary glossary = Glossary.toUpdate(glossaryGuid, GLOSSARY_NAME);
+        Glossary glossary = Glossary.updater(glossaryGuid, GLOSSARY_NAME).build();
         glossary = glossary.toBuilder()
                 .certificateStatus(AtlanCertificateStatus.VERIFIED)
                 .announcementType(AtlanAnnouncementType.INFORMATION)
@@ -232,7 +233,8 @@ public class GlossaryTest extends AtlanLiveTest {
             groups = {"category.update", "update"},
             dependsOnGroups = {"category.create"})
     void updateCategory() {
-        GlossaryCategory category = GlossaryCategory.toUpdate(categoryQame, CATEGORY_NAME, glossaryGuid);
+        GlossaryCategory category = GlossaryCategory.updater(categoryQame, CATEGORY_NAME, glossaryGuid)
+                .build();
         category = category.toBuilder()
                 .certificateStatus(AtlanCertificateStatus.DRAFT)
                 .announcementType(AtlanAnnouncementType.WARNING)
@@ -269,7 +271,8 @@ public class GlossaryTest extends AtlanLiveTest {
             groups = {"category.remove.attributes", "update"},
             dependsOnGroups = {"category.update"})
     void removeCategoryAttributes() {
-        GlossaryCategory category2 = GlossaryCategory.toUpdate(categoryQame, CATEGORY_NAME, glossaryGuid);
+        GlossaryCategory category2 = GlossaryCategory.updater(categoryQame, CATEGORY_NAME, glossaryGuid)
+                .build();
         category2.removeAnnouncement();
         try {
             EntityMutationResponse response = category2.upsert();
@@ -301,9 +304,7 @@ public class GlossaryTest extends AtlanLiveTest {
             groups = {"term.update", "update"},
             dependsOnGroups = {"term.create", "category.create"})
     void updateTerm() {
-        GlossaryTerm term = GlossaryTerm.toUpdate(termQame, TERM_NAME, glossaryGuid);
-        term = term.toBuilder()
-                .certificateStatus(AtlanCertificateStatus.DEPRECATED)
+        GlossaryTerm term = GlossaryTerm.updater(termQame, TERM_NAME, glossaryGuid)
                 .announcementType(AtlanAnnouncementType.ISSUE)
                 .announcementTitle(ANNOUNCEMENT_TITLE)
                 .announcementMessage(ANNOUNCEMENT_MESSAGE)
@@ -325,7 +326,6 @@ public class GlossaryTest extends AtlanLiveTest {
             assertEquals(term.getGuid(), termGuid);
             assertEquals(term.getQualifiedName(), termQame);
             assertEquals(term.getName(), TERM_NAME);
-            assertEquals(term.getCertificateStatus(), AtlanCertificateStatus.DEPRECATED);
             assertEquals(term.getAnnouncementType(), AtlanAnnouncementType.ISSUE);
             assertEquals(term.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
             assertEquals(term.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
@@ -337,6 +337,10 @@ public class GlossaryTest extends AtlanLiveTest {
             assertEquals(category.getGuid(), categoryGuid);
             assertEquals(category.getQualifiedName(), categoryQame);
             assertEquals(category.getName(), CATEGORY_NAME);
+            term = GlossaryTerm.updateCertificate(
+                    termQame, TERM_NAME, glossaryGuid, AtlanCertificateStatus.DEPRECATED, null);
+            assertNotNull(term);
+            assertEquals(term.getCertificateStatus(), AtlanCertificateStatus.DEPRECATED);
         } catch (AtlanException e) {
             e.printStackTrace();
             assertNull(e, "Unexpected exception: " + e.getMessage());

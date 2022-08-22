@@ -1,8 +1,10 @@
 /* SPDX-License-Identifier: Apache-2.0 */
 package com.atlan.model;
 
+import com.atlan.exception.AtlanException;
+import com.atlan.model.enums.AtlanAnnouncementType;
+import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.relations.Reference;
-import com.atlan.model.relations.UniqueAttributes;
 import java.util.List;
 import java.util.Map;
 import lombok.*;
@@ -96,6 +98,43 @@ public class GlossaryTerm extends Asset {
     }
 
     /**
+     * Update the certificate on a term.
+     *
+     * @param qualifiedName of the term
+     * @param certificate to use
+     * @param message (optional) message, or null if no message
+     * @return the updated term, or null if the update failed
+     * @throws AtlanException on any API problems
+     */
+    public static GlossaryTerm updateCertificate(
+            String qualifiedName, String name, String glossaryGuid, AtlanCertificateStatus certificate, String message)
+            throws AtlanException {
+        return (GlossaryTerm) Asset.updateCertificate(updater(qualifiedName, name, glossaryGuid), certificate, message);
+    }
+
+    /**
+     * Update the announcement on a term.
+     *
+     * @param qualifiedName of the term
+     * @param type type of announcement to set
+     * @param title (optional) title of the announcement to set (or null for no title)
+     * @param message (optional) message of the announcement to set (or null for no message)
+     * @return the result of the update, or null if the update failed
+     * @throws AtlanException on any API problems
+     */
+    public static GlossaryTerm updateAnnouncement(
+            String qualifiedName,
+            String name,
+            String glossaryGuid,
+            AtlanAnnouncementType type,
+            String title,
+            String message)
+            throws AtlanException {
+        return (GlossaryTerm)
+                Asset.updateAnnouncement(updater(qualifiedName, name, glossaryGuid), type, title, message);
+    }
+
+    /**
      * Builds the minimal object necessary for creating a term. At least one of glossaryGuid or
      * glossaryQualifiedName must be provided.
      * To continue adding to the object, call {@link #toBuilder()} on
@@ -104,14 +143,13 @@ public class GlossaryTerm extends Asset {
      * @param name of the term
      * @param glossaryGuid unique identifier of the term's glossary
      * @param glossaryQualifiedName unique name of the term's glossary
-     * @return the minimal request necessary to create the term
+     * @return the minimal request necessary to create the term, as a builder
      */
-    public static GlossaryTerm toCreate(String name, String glossaryGuid, String glossaryQualifiedName) {
+    public static GlossaryTermBuilder<?, ?> creator(String name, String glossaryGuid, String glossaryQualifiedName) {
         return GlossaryTerm.builder()
                 .qualifiedName(name)
                 .name(name)
-                .anchor(anchorLink(glossaryGuid, glossaryQualifiedName))
-                .build();
+                .anchor(Glossary.anchorLink(glossaryGuid, glossaryQualifiedName));
     }
 
     /**
@@ -123,42 +161,14 @@ public class GlossaryTerm extends Asset {
      * @param qualifiedName of the term
      * @param name of the term
      * @param glossaryGuid unique identifier of the term's glossary
-     * @return the minimal object necessary to update the term
+     * @return the minimal object necessary to update the term, as a builder
      */
-    public static GlossaryTerm toUpdate(String qualifiedName, String name, String glossaryGuid) {
+    public static GlossaryTermBuilder<?, ?> updater(String qualifiedName, String name, String glossaryGuid) {
         // Turns out that updating a term requires the glossary GUID, and will not work
         // with the qualifiedName of the glossary
         return GlossaryTerm.builder()
                 .qualifiedName(qualifiedName)
                 .name(name)
-                .anchor(anchorLink(glossaryGuid, null))
-                .build();
-    }
-
-    /**
-     * Set up the minimal object required to reference a glossary. Only one of the following is required.
-     *
-     * @param glossaryGuid unique identifier of the glossary for the term
-     * @param glossaryQualifiedName unique name of the glossary
-     * @return a builder that can be further extended with other metadata
-     */
-    static Reference anchorLink(String glossaryGuid, String glossaryQualifiedName) {
-        Reference anchor = null;
-        if (glossaryGuid == null && glossaryQualifiedName == null) {
-            return null;
-        } else if (glossaryGuid != null) {
-            anchor = Reference.builder()
-                    .typeName(Glossary.TYPE_NAME)
-                    .guid(glossaryGuid)
-                    .build();
-        } else {
-            anchor = Reference.builder()
-                    .typeName(Glossary.TYPE_NAME)
-                    .uniqueAttributes(UniqueAttributes.builder()
-                            .qualifiedName(glossaryQualifiedName)
-                            .build())
-                    .build();
-        }
-        return anchor;
+                .anchor(Glossary.anchorLink(glossaryGuid, null));
     }
 }

@@ -89,10 +89,10 @@ public class Connection extends Asset {
      * @param adminRoles the GUIDs of the roles that can administer this connection
      * @param adminGroups the names of the groups that can administer this connection
      * @param adminUsers the names of the users that can administer this connection
-     * @return the minimal object necessary to create the connection
+     * @return the minimal object necessary to create the connection, as a builder
      * @throws InvalidRequestException if no admin has been defined for the connection
      */
-    public static Connection toCreate(
+    public static ConnectionBuilder<?, ?> creator(
             String name,
             AtlanConnectionCategory category,
             String connectorName,
@@ -119,7 +119,7 @@ public class Connection extends Asset {
             builder = builder.adminUsers(adminUsers);
         }
         if (adminFound) {
-            return builder.build();
+            return builder;
         } else {
             throw new InvalidRequestException(
                     "No admin provided for the connection, will not attempt to create one.",
@@ -138,10 +138,10 @@ public class Connection extends Asset {
      *
      * @param qualifiedName of the connection
      * @param name of the connection
-     * @return the minimal object necessary to update the connection
+     * @return the minimal object necessary to update the connection, as a builder
      */
-    public static Connection toUpdate(String qualifiedName, String name) {
-        return Connection.builder().qualifiedName(qualifiedName).name(name).build();
+    public static ConnectionBuilder<?, ?> updater(String qualifiedName, String name) {
+        return Connection.builder().qualifiedName(qualifiedName).name(name);
     }
 
     /**

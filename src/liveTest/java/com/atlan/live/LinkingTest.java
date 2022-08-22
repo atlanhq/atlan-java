@@ -29,8 +29,9 @@ public class LinkingTest extends AtlanLiveTest {
             dependsOnGroups = {"s3object.create"})
     void addReadme() {
         try {
-            Readme readme = Readme.toCreate(
-                    S3Bucket.TYPE_NAME, S3AssetTest.s3BucketGuid, S3AssetTest.S3_BUCKET_NAME, readmeContent);
+            Readme readme = Readme.creator(
+                            S3Bucket.TYPE_NAME, S3AssetTest.s3BucketGuid, S3AssetTest.S3_BUCKET_NAME, readmeContent)
+                    .build();
             EntityMutationResponse response = readme.upsert();
             assertNotNull(response);
             assertTrue(response.getDeletedEntities().isEmpty());
@@ -61,9 +62,8 @@ public class LinkingTest extends AtlanLiveTest {
             groups = {"link.term2asset", "update"},
             dependsOnGroups = {"create"})
     void linkTermToAssets() {
-        GlossaryTerm term =
-                GlossaryTerm.toUpdate(GlossaryTest.termQame, GlossaryTest.TERM_NAME, GlossaryTest.glossaryGuid);
-        term = term.toBuilder()
+        GlossaryTerm term = GlossaryTerm.updater(
+                        GlossaryTest.termQame, GlossaryTest.TERM_NAME, GlossaryTest.glossaryGuid)
                 .assignedEntity(Reference.to(S3Object.TYPE_NAME, S3AssetTest.s3Object1Guid))
                 .assignedEntity(Reference.by(S3Object.TYPE_NAME, S3AssetTest.s3Object2Qame))
                 .build();
@@ -93,8 +93,9 @@ public class LinkingTest extends AtlanLiveTest {
             groups = {"link.remove1", "update"},
             dependsOnGroups = {"create", "link.term2asset"})
     void removeTermToAssetLinks() {
-        GlossaryTerm term =
-                GlossaryTerm.toUpdate(GlossaryTest.termQame, GlossaryTest.TERM_NAME, GlossaryTest.glossaryGuid);
+        GlossaryTerm term = GlossaryTerm.updater(
+                        GlossaryTest.termQame, GlossaryTest.TERM_NAME, GlossaryTest.glossaryGuid)
+                .build();
         term.removeAssignedEntities();
         try {
             EntityMutationResponse response = term.upsert();
@@ -122,8 +123,7 @@ public class LinkingTest extends AtlanLiveTest {
             groups = {"link.asset2term", "update"},
             dependsOnGroups = {"create", "link.remove1"})
     void linkAssetToTerms() {
-        S3Object s3Object1 = S3Object.toUpdate(S3AssetTest.s3Object1Qame, S3AssetTest.S3_OBJECT1_NAME);
-        s3Object1 = s3Object1.toBuilder()
+        S3Object s3Object1 = S3Object.updater(S3AssetTest.s3Object1Qame, S3AssetTest.S3_OBJECT1_NAME)
                 .meaning(Reference.to(GlossaryTerm.TYPE_NAME, GlossaryTest.termGuid))
                 .build();
         try {
@@ -161,7 +161,8 @@ public class LinkingTest extends AtlanLiveTest {
             groups = {"link.remove2", "update"},
             dependsOnGroups = {"create", "link.asset2term"})
     void removeAssetToTermLinks() {
-        S3Object s3Object1 = S3Object.toUpdate(S3AssetTest.s3Object1Qame, S3AssetTest.S3_OBJECT1_NAME);
+        S3Object s3Object1 = S3Object.updater(S3AssetTest.s3Object1Qame, S3AssetTest.S3_OBJECT1_NAME)
+                .build();
         s3Object1.removeMeanings();
         try {
             EntityMutationResponse response = s3Object1.upsert();
