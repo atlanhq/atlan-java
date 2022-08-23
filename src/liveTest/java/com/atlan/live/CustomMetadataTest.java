@@ -17,6 +17,7 @@ import java.util.Map;
 import java.util.Set;
 import org.testng.annotations.Test;
 
+@Test(groups = {"custom_metadata"})
 public class CustomMetadataTest extends AtlanLiveTest {
 
     public static final String CM_NAME1 = "JC CM1";
@@ -33,7 +34,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
     public static final String CM_ATTR_URL = "url";
     public static final String CM_ATTR_SQL = "sql";
 
-    @Test(groups = {"create.cm", "create"})
+    @Test(groups = {"create.cm"})
     void createCustomMetadata() {
         try {
             CustomMetadataDef customMetadataDef = CustomMetadataDef.toCreate(CM_NAME1).toBuilder()
@@ -196,8 +197,8 @@ public class CustomMetadataTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"update.term.cm", "update"},
-            dependsOnGroups = {"create", "create.cm", "link.remove2"})
+            groups = {"link.cm.term"},
+            dependsOnGroups = {"create.cm", "unlink.asset.term", "unlink.term.asset"})
     void updateTermCM() {
         try {
             CustomMetadataAttributes cm1 = CustomMetadataAttributes.builder()
@@ -237,8 +238,8 @@ public class CustomMetadataTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"remove.term.cm", "update"},
-            dependsOnGroups = {"update.term.cm"})
+            groups = {"unlink.cm.term"},
+            dependsOnGroups = {"link.cm.term"})
     void removeTermCM() {
         try {
             GlossaryTerm toUpdate = GlossaryTerm.updater(
@@ -267,8 +268,8 @@ public class CustomMetadataTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"update.s3object.cm1", "update"},
-            dependsOnGroups = {"s3object.create", "create", "create.cm"})
+            groups = {"link.cm.s3object.1"},
+            dependsOnGroups = {"create.s3object", "create.cm"})
     void addObjectCM1() {
         try {
             CustomMetadataAttributes cm = CustomMetadataAttributes.builder()
@@ -297,8 +298,8 @@ public class CustomMetadataTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"update.s3object.cm2", "update"},
-            dependsOnGroups = {"s3object.create", "create", "create.cm", "update.s3object.cm1"})
+            groups = {"link.cm.s3object.2"},
+            dependsOnGroups = {"link.cm.s3object.1"})
     void addObjectCM2() {
         try {
             CustomMetadataAttributes cm = CustomMetadataAttributes.builder()
@@ -329,8 +330,8 @@ public class CustomMetadataTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"update.s3object.cm1-again", "update"},
-            dependsOnGroups = {"update.s3object.cm2"})
+            groups = {"link.cm.s3object.3"},
+            dependsOnGroups = {"link.cm.s3object.2"})
     void updateObjectCM1() {
         try {
             CustomMetadataAttributes cm = CustomMetadataAttributes.builder()
@@ -355,8 +356,8 @@ public class CustomMetadataTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"update.s3object.cm1.remove", "update"},
-            dependsOnGroups = {"update.s3object.cm1", "update.s3object.cm2", "update.s3object.cm1-again"})
+            groups = {"unlink.cm.s3object.1"},
+            dependsOnGroups = {"link.cm.s3object.3"})
     void removeObjectCM1() {
         try {
             S3Object.removeCustomMetadata(S3AssetTest.s3Object1Guid, CM_NAME1);
@@ -376,8 +377,8 @@ public class CustomMetadataTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"update.s3object.cm2.remove", "update"},
-            dependsOnGroups = {"update.s3object.cm1.remove"})
+            groups = {"unlink.cm.s3object.2"},
+            dependsOnGroups = {"unlink.cm.s3object.1"})
     void removeObjectCM2() {
         try {
             S3Object.removeCustomMetadata(S3AssetTest.s3Object1Guid, CM_NAME2);
@@ -395,8 +396,17 @@ public class CustomMetadataTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"purge.cm", "purge"},
-            dependsOnGroups = {"create", "read", "update", "term.purge"},
+            groups = {"purge.cm"},
+            dependsOnGroups = {
+                "create.*",
+                "read.*",
+                "update.*",
+                "link.*",
+                "unlink.*",
+                "search.*",
+                "purge.term",
+                "purge.connection"
+            },
             alwaysRun = true)
     void purgeCustomMetadata() {
         try {

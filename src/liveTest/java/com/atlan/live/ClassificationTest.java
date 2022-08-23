@@ -17,12 +17,13 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import org.testng.annotations.Test;
 
+@Test(groups = {"classification"})
 public class ClassificationTest extends AtlanLiveTest {
 
     public static final String CLASSIFICATION_NAME1 = "JC Test Classification 1";
     public static final String CLASSIFICATION_NAME2 = "JC Test Classification 2";
 
-    @Test(groups = {"create.classification", "create"})
+    @Test(groups = {"create.classification"})
     void createClassification() {
         try {
             ClassificationDef classificationDef =
@@ -51,8 +52,8 @@ public class ClassificationTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"update.term.classification", "update"},
-            dependsOnGroups = {"link.remove2"})
+            groups = {"link.classification.term"},
+            dependsOnGroups = {"unlink.asset.term", "unlink.term.asset"})
     void updateTermClassification() {
         try {
             GlossaryTerm toUpdate = GlossaryTerm.updater(
@@ -86,8 +87,8 @@ public class ClassificationTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"remove.term.classification", "update"},
-            dependsOnGroups = {"update.term.classification"})
+            groups = {"unlink.classification.term"},
+            dependsOnGroups = {"link.classification.term"})
     void removeTermClassification() {
         try {
             GlossaryTerm toUpdate = GlossaryTerm.updater(
@@ -117,8 +118,8 @@ public class ClassificationTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"update.s3object.classification", "update"},
-            dependsOnGroups = {"s3object.create"})
+            groups = {"link.classification.s3object"},
+            dependsOnGroups = {"create.s3object"})
     void addObjectClassification() {
         try {
             S3Object.addClassifications(S3AssetTest.s3Object2Qame, List.of(CLASSIFICATION_NAME1, CLASSIFICATION_NAME2));
@@ -141,8 +142,8 @@ public class ClassificationTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"update.s3object.classification.duplicate", "update"},
-            dependsOnGroups = {"update.s3object.classification"})
+            groups = {"link.classification.s3object.duplicate"},
+            dependsOnGroups = {"link.classification.s3object"})
     void addDuplicateObjectClassification() {
         assertThrows(
                 InvalidRequestException.class,
@@ -150,8 +151,8 @@ public class ClassificationTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"update.s3object.classification.remove", "update"},
-            dependsOnGroups = {"update.s3object.classification"})
+            groups = {"unlink.classification.s3object"},
+            dependsOnGroups = {"link.classification.s3object"})
     void removeObjectClassification() {
         try {
             S3Object.removeClassification(S3AssetTest.s3Object2Qame, CLASSIFICATION_NAME2);
@@ -173,8 +174,8 @@ public class ClassificationTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"update.s3object.classification.remove.nonexistent", "update"},
-            dependsOnGroups = {"update.s3object.classification.remove"})
+            groups = {"unlink.classification.s3object.nonexistent"},
+            dependsOnGroups = {"unlink.classification.s3object"})
     void removeNonexistentObjectClassification() {
         assertThrows(
                 InvalidRequestException.class,
@@ -182,8 +183,8 @@ public class ClassificationTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"update.s3object.classification.again", "update"},
-            dependsOnGroups = {"update.s3object.classification.remove.nonexistent"})
+            groups = {"link.classification.s3object.again"},
+            dependsOnGroups = {"unlink.classification.s3object.nonexistent"})
     void addObjectClassificationAgain() {
         try {
             S3Object.addClassifications(S3AssetTest.s3Object2Qame, List.of(CLASSIFICATION_NAME2));
@@ -206,8 +207,8 @@ public class ClassificationTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"remove.s3object.classification.all", "update"},
-            dependsOnGroups = {"update.s3object.classification.again"},
+            groups = {"unlink.classification.s3object.all"},
+            dependsOnGroups = {"link.classification.s3object.again"},
             alwaysRun = true)
     void removeObjectClassifications() {
         try {
@@ -237,8 +238,17 @@ public class ClassificationTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"purge.classification", "purge"},
-            dependsOnGroups = {"create", "read", "update", "term.purge"},
+            groups = {"purge.classification"},
+            dependsOnGroups = {
+                "create.*",
+                "read.*",
+                "update.*",
+                "link.*",
+                "unlink.*",
+                "search.*",
+                "purge.term",
+                "purge.connection"
+            },
             alwaysRun = true)
     void purgeClassification1() {
         try {
@@ -250,8 +260,17 @@ public class ClassificationTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"purge.classification", "purge"},
-            dependsOnGroups = {"create", "read", "update", "term.purge"},
+            groups = {"purge.classification"},
+            dependsOnGroups = {
+                "create.*",
+                "read.*",
+                "update.*",
+                "link.*",
+                "unlink.*",
+                "search.*",
+                "purge.term",
+                "purge.connection"
+            },
             alwaysRun = true)
     void purgeClassification2() {
         try {

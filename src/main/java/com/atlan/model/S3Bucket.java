@@ -42,6 +42,7 @@ public class S3Bucket extends S3 {
 
     /**
      * Update the certificate on an S3 bucket.
+     *
      * @param qualifiedName of the S3 bucket
      * @param certificate to use
      * @param message (optional) message, or null if no message
@@ -51,6 +52,19 @@ public class S3Bucket extends S3 {
     public static S3Bucket updateCertificate(String qualifiedName, AtlanCertificateStatus certificate, String message)
             throws AtlanException {
         return (S3Bucket) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
+    }
+
+    /**
+     * Remove the certificate from an S3 bucket.
+     *
+     * @param qualifiedName of the S3 bucket
+     * @param name of the S3 bucket
+     * @return the updated S3 bucket, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static S3Bucket removeCertificate(String qualifiedName, String name) throws AtlanException {
+        return (S3Bucket)
+                Asset.removeCertificate(builder().qualifiedName(qualifiedName).name(name));
     }
 
     /**
@@ -66,6 +80,19 @@ public class S3Bucket extends S3 {
     public static S3Bucket updateAnnouncement(
             String qualifiedName, AtlanAnnouncementType type, String title, String message) throws AtlanException {
         return (S3Bucket) Asset.updateAnnouncement(builder(), TYPE_NAME, qualifiedName, type, title, message);
+    }
+
+    /**
+     * Remove the announcement from an S3 bucket.
+     *
+     * @param qualifiedName of the S3 bucket
+     * @param name of the S3 bucket
+     * @return the updated S3 bucket, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static S3Bucket removeAnnouncement(String qualifiedName, String name) throws AtlanException {
+        return (S3Bucket)
+                Asset.removeAnnouncement(builder().qualifiedName(qualifiedName).name(name));
     }
 
     /**

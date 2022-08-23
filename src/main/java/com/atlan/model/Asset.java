@@ -254,6 +254,24 @@ public abstract class Asset extends Entity {
     }
 
     /**
+     * Remove the certificate on an asset.
+     *
+     * @param builder the builder to use for removing the certificate
+     * @return the result of the removal, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    protected static Entity removeCertificate(AssetBuilder<?, ?> builder) throws AtlanException {
+        Asset asset = builder.build();
+        asset.removeCertificate();
+        EntityMutationResponse response = asset.upsert();
+        if (response != null && !response.getUpdatedEntities().isEmpty()) {
+            return response.getUpdatedEntities().get(0);
+        } else {
+            return null;
+        }
+    }
+
+    /**
      * Update the announcement on an asset.
      *
      * @param builder the builder to use for updating the announcement
@@ -274,6 +292,24 @@ public abstract class Asset extends Entity {
             builder = builder.announcementMessage(message);
         }
         return updateAttributes(builder.build());
+    }
+
+    /**
+     * Remove the announcement on an asset.
+     *
+     * @param builder the builder to use for removing the announcement
+     * @return the result of the removal, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    protected static Entity removeAnnouncement(AssetBuilder<?, ?> builder) throws AtlanException {
+        Asset asset = builder.build();
+        asset.removeAnnouncement();
+        EntityMutationResponse response = asset.upsert();
+        if (response != null && !response.getUpdatedEntities().isEmpty()) {
+            return response.getUpdatedEntities().get(0);
+        } else {
+            return null;
+        }
     }
 
     private static Entity updateAttributes(Asset asset) throws AtlanException {

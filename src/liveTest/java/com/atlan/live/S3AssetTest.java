@@ -2,26 +2,21 @@ package com.atlan.live;
 
 import static org.testng.Assert.*;
 
-import com.atlan.api.WorkflowsEndpoint;
 import com.atlan.cache.RoleCache;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.PermissionException;
 import com.atlan.model.*;
-import com.atlan.model.admin.Packages;
-import com.atlan.model.admin.Workflow;
-import com.atlan.model.admin.WorkflowSearchRequest;
-import com.atlan.model.admin.WorkflowSearchResult;
 import com.atlan.model.core.Entity;
 import com.atlan.model.enums.*;
 import com.atlan.model.relations.Reference;
 import com.atlan.model.responses.EntityMutationResponse;
-import com.atlan.model.responses.WorkflowResponse;
 import java.util.Collections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.Test;
 
+@Test(groups = {"s3asset"})
 public class S3AssetTest extends AtlanLiveTest {
 
     private static final Logger log = LoggerFactory.getLogger(S3AssetTest.class);
@@ -34,8 +29,8 @@ public class S3AssetTest extends AtlanLiveTest {
     public static final String S3_OBJECT2_NAME = "jc-test-object-target";
     public static final String S3_OBJECT2_ARN = "aws::production:jc-test-bucket:a/prefix/jc-test-target.csv";
 
-    private static String connectionGuid = null;
-    private static String connectionQame = null;
+    public static String connectionGuid = null;
+    public static String connectionQame = null;
 
     public static String s3BucketGuid = null;
     public static String s3BucketQame = null;
@@ -45,12 +40,7 @@ public class S3AssetTest extends AtlanLiveTest {
     public static String s3Object2Guid = null;
     public static String s3Object2Qame = null;
 
-    private static String lineageGuid = null;
-    private static String lineageQame = null;
-
-    private static String workflowName = null;
-
-    @Test(groups = {"connection.invalid"})
+    @Test(groups = {"invalid.connection"})
     void invalidConnection() {
         assertThrows(
                 InvalidRequestException.class,
@@ -58,7 +48,7 @@ public class S3AssetTest extends AtlanLiveTest {
                         CONNECTION_NAME, AtlanConnectionCategory.OBJECT_STORE, "s3", null, null, null));
     }
 
-    @Test(groups = {"connection.create", "create"})
+    @Test(groups = {"create.connection"})
     void createConnection() {
         try {
             String adminRoleGuid = RoleCache.getIdForName("$admin");
@@ -94,8 +84,8 @@ public class S3AssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"connection.retrieve", "read"},
-            dependsOnGroups = {"connection.create"})
+            groups = {"read.connection"},
+            dependsOnGroups = {"create.connection"})
     void retrieveConnection() throws InterruptedException {
         Entity full = null;
         do {
@@ -112,8 +102,8 @@ public class S3AssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"s3bucket.create", "create"},
-            dependsOnGroups = {"connection.retrieve"})
+            groups = {"create.s3bucket"},
+            dependsOnGroups = {"read.connection"})
     void createS3Bucket() {
         try {
             S3Bucket s3Bucket = S3Bucket.creator(S3_BUCKET_NAME, connectionQame, S3_BUCKET_ARN)
@@ -142,8 +132,8 @@ public class S3AssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"s3object.create", "create"},
-            dependsOnGroups = {"s3bucket.create"})
+            groups = {"create.s3object"},
+            dependsOnGroups = {"create.s3bucket"})
     void createS3Object1() {
         try {
             S3Object s3Object = S3Object.creator(S3_OBJECT1_NAME, connectionQame, S3_OBJECT1_ARN)
@@ -184,8 +174,8 @@ public class S3AssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"s3object.create", "create"},
-            dependsOnGroups = {"s3bucket.create"})
+            groups = {"create.s3object"},
+            dependsOnGroups = {"create.s3bucket"})
     void createS3Object2() {
         try {
             S3Object s3Object = S3Object.creator(S3_OBJECT2_NAME, connectionQame, S3_OBJECT2_ARN)
@@ -226,8 +216,8 @@ public class S3AssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"s3bucket.update", "update"},
-            dependsOnGroups = {"s3bucket.create"})
+            groups = {"update.s3bucket"},
+            dependsOnGroups = {"create.s3bucket"})
     void updateS3Bucket() {
         try {
             S3Bucket updated = S3Bucket.updateCertificate(s3BucketQame, AtlanCertificateStatus.VERIFIED, null);
@@ -246,8 +236,8 @@ public class S3AssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"s3bucket.retrieve", "read"},
-            dependsOnGroups = {"s3object.create", "readme.create", "s3bucket.update"})
+            groups = {"read.s3bucket"},
+            dependsOnGroups = {"create.s3object", "create.readme", "update.s3bucket"})
     void retrieveS3Bucket() {
         try {
             Entity full = Entity.retrieveFull(s3BucketGuid);
@@ -267,7 +257,7 @@ public class S3AssetTest extends AtlanLiveTest {
             one = bucket.getReadme();
             assertNotNull(one);
             assertEquals(one.getTypeName(), Readme.TYPE_NAME);
-            assertEquals(one.getGuid(), LinkingTest.readmeGuid);
+            assertEquals(one.getGuid(), ReadmeTest.readmeGuid);
         } catch (AtlanException e) {
             e.printStackTrace();
             assertNull(e, "Unexpected exception while trying to retrieve an S3 bucket.");
@@ -275,122 +265,26 @@ public class S3AssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"lineage.create", "create"},
-            dependsOnGroups = {"s3bucket.retrieve"})
-    void createLineage() {
-        final String processName = S3_OBJECT1_NAME + " >> " + S3_OBJECT2_NAME;
-        LineageProcess process = LineageProcess.creator(
-                        processName,
-                        "s3",
-                        CONNECTION_NAME,
-                        connectionQame,
-                        Collections.singletonList(Reference.to(S3Object.TYPE_NAME, s3Object1Guid)),
-                        Collections.singletonList(Reference.to(S3Object.TYPE_NAME, s3Object2Guid)))
-                .build();
+            groups = {"update.s3bucket.again"},
+            dependsOnGroups = {"read.s3bucket"})
+    void updateS3BucketAgain() {
         try {
-            EntityMutationResponse response = process.upsert();
-            assertNotNull(response);
-            assertEquals(response.getCreatedEntities().size(), 1);
-            Entity one = response.getCreatedEntities().get(0);
-            assertNotNull(one);
-            assertTrue(one instanceof LineageProcess);
-            process = (LineageProcess) one;
-            lineageGuid = one.getGuid();
-            assertNotNull(lineageGuid);
-            lineageQame = process.getQualifiedName();
-            assertNotNull(lineageQame);
-            assertEquals(process.getName(), processName);
-            assertNotNull(process.getInputs());
-            assertEquals(process.getInputs().size(), 1);
-            Reference input = process.getInputs().get(0);
-            assertNotNull(input);
-            assertEquals(input.getTypeName(), S3Object.TYPE_NAME);
-            assertEquals(input.getGuid(), s3Object1Guid);
-            assertNotNull(process.getOutputs());
-            assertEquals(process.getOutputs().size(), 1);
-            Reference output = process.getOutputs().get(0);
-            assertNotNull(output);
-            assertEquals(output.getTypeName(), S3Object.TYPE_NAME);
-            assertEquals(output.getGuid(), s3Object2Guid);
-            assertEquals(response.getUpdatedEntities().size(), 2);
-            Entity updated = response.getUpdatedEntities().get(0);
+            S3Bucket updated = S3Bucket.removeCertificate(s3BucketQame, S3_BUCKET_NAME);
             assertNotNull(updated);
-            assertEquals(updated.getTypeName(), S3Object.TYPE_NAME);
-            updated = response.getUpdatedEntities().get(1);
-            assertEquals(updated.getTypeName(), S3Object.TYPE_NAME);
+            assertNull(updated.getCertificateStatus());
+            assertNull(updated.getCertificateStatusMessage());
+            assertEquals(updated.getAnnouncementType(), AtlanAnnouncementType.INFORMATION);
+            assertEquals(updated.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
+            assertEquals(updated.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
+            updated = S3Bucket.removeAnnouncement(s3BucketQame, S3_BUCKET_NAME);
+            assertNotNull(updated);
+            assertNull(updated.getAnnouncementType());
+            assertNull(updated.getAnnouncementTitle());
+            assertNull(updated.getAnnouncementMessage());
         } catch (AtlanException e) {
             e.printStackTrace();
-            assertNull(e, "Unexpected error during lineage creation.");
-        }
-    }
-
-    @Test(
-            groups = {"lineage.purge", "purge"},
-            dependsOnGroups = {"create", "update", "read"},
-            alwaysRun = true)
-    void deleteLineage() {
-        try {
-            EntityMutationResponse response = LineageProcess.purge(lineageGuid);
-            assertNotNull(response);
-            assertEquals(response.getDeletedEntities().size(), 1);
-            Entity one = response.getDeletedEntities().get(0);
-            assertNotNull(one);
-            assertTrue(one instanceof LineageProcess);
-            LineageProcess process = (LineageProcess) one;
-            assertEquals(process.getGuid(), lineageGuid);
-            assertEquals(process.getQualifiedName(), lineageQame);
-            assertEquals(process.getStatus(), AtlanStatus.DELETED);
-        } catch (AtlanException e) {
-            e.printStackTrace();
-            assertNull(e, "Unexpected error during lineage deletion.");
-        }
-    }
-
-    @Test(
-            groups = {"connection.purge", "purge"},
-            dependsOnGroups = {"lineage.purge", "create", "update", "read"},
-            alwaysRun = true)
-    void purgeConnection() {
-        try {
-            Workflow deleteWorkflow = Packages.getConnectionDelete(connectionQame, true);
-            WorkflowResponse response = deleteWorkflow.run();
-            assertNotNull(response);
-            workflowName = response.getMetadata().getName();
-        } catch (AtlanException e) {
-            e.printStackTrace();
-            assertNull(e, "Unexpected exception while trying to delete a connection.");
-        }
-    }
-
-    @Test(
-            groups = {"workflow.status", "purge"},
-            dependsOnGroups = {"connection.purge"})
-    void monitorStatus() {
-        try {
-            AtlanWorkflowPhase status = null;
-            do {
-                final WorkflowSearchResult runDetails = WorkflowSearchRequest.findLatestRun(workflowName);
-                if (runDetails != null) {
-                    status = runDetails.getStatus();
-                }
-                log.info("Workflow status: {}", status);
-                Thread.sleep(5000);
-            } while (status != null && status != AtlanWorkflowPhase.SUCCESS);
-        } catch (AtlanException | InterruptedException e) {
-            e.printStackTrace();
-            assertNull(e, "Unexpected exception while trying to monitor deletion workflow.");
-        }
-    }
-
-    @Test(
-            groups = {"workflow.run.archive", "purge"},
-            dependsOnGroups = {"workflow.status"})
-    void archiveWorkflowRun() {
-        try {
-            WorkflowsEndpoint.archive(workflowName);
-        } catch (AtlanException e) {
-            e.printStackTrace();
-            assertNull(e, "Unexpected exception while trying to archive the workflow run.");
+            assertNull(
+                    e, "Unexpected exception while trying to remove certificates and announcements from an S3 bucket.");
         }
     }
 }
