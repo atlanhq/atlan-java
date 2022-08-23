@@ -173,15 +173,17 @@ public class EntityTypeAdapterFactory implements TypeAdapterFactory {
                                         set.invoke(toModify, (Object) null);
                                     }
                                 }
-                            } else if (field.getName().equals("customMetadata")) {
+                            } else if (field.getName().equals("customMetadataSets")) {
                                 // 5. Translate custom metadata to businessAttributes map
-                                CustomMetadata cm = toModify.getCustomMetadata();
+                                Map<String, CustomMetadataAttributes> cm = toModify.getCustomMetadataSets();
                                 if (cm != null) {
                                     if (businessAttributes == null) {
                                         businessAttributes = new LinkedHashMap<>();
                                     }
                                     CustomMetadataCache.getBusinessAttributesFromCustomMetadata(cm, businessAttributes);
                                 }
+                                // Then remove it, to exclude it from serialization
+                                toModify.setCustomMetadataSets(null);
                             }
                         }
                     }
@@ -340,7 +342,7 @@ public class EntityTypeAdapterFactory implements TypeAdapterFactory {
                     }
                 }
 
-                CustomMetadata cm = null;
+                Map<String, CustomMetadataAttributes> cm = null;
                 if (businessAttributes != null) {
                     // Translate these into custom metadata structure
                     try {
@@ -371,7 +373,7 @@ public class EntityTypeAdapterFactory implements TypeAdapterFactory {
                     readme.setDescription(StringUtils.decodeContent(readme.getDescription()));
                 }
 
-                value.setCustomMetadata(cm);
+                value.setCustomMetadataSets(cm);
                 value.setClassificationNames(clsNames);
                 return value;
             }

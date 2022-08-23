@@ -3,9 +3,10 @@ package com.atlan.cache;
 import com.atlan.api.TypeDefsEndpoint;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.LogicException;
-import com.atlan.model.CustomMetadata;
+import com.atlan.model.CustomMetadataAttributes;
 import com.atlan.model.enums.AtlanTypeCategory;
 import com.atlan.model.responses.TypeDefResponse;
+import com.atlan.model.serde.Removable;
 import com.atlan.model.typedefs.AttributeDef;
 import com.atlan.model.typedefs.CustomMetadataDef;
 import com.google.gson.JsonArray;
@@ -151,25 +152,64 @@ public class CustomMetadataCache {
     }
 
     /**
+     * Construct a full set of attributes for the given custom metadata, but where all the values are null.
+     *
+     * @param customMetadataName for which to construct the empty map
+     * @return a map from custom metadata attribute name (human-readable) to null values
+     * @throws AtlanException on any API issues
+     */
+    public static Map<String, Object> getEmptyAttributes(String customMetadataName) throws AtlanException {
+        String cmId = getIdForName(customMetadataName);
+        Map<String, String> attributes = mapAttrNameToId.get(cmId);
+        Map<String, Object> empty = new LinkedHashMap<>();
+        for (String attrName : attributes.keySet()) {
+            empty.put(attrName, Removable.NULL);
+        }
+        return empty;
+    }
+
+    /**
      * Translate the provided custom metadata object into a business attributes object.
      * We receive the businessAttributes object (rather than creating a new one) to initialize it with
      * any existing business attributes.
+     *
      * @param customMetadata custom metadata object
      * @param businessAttributes business attributes object, which will be changed
      * @throws AtlanException on any API communication problem if the cache needs to be refreshed
      */
     public static void getBusinessAttributesFromCustomMetadata(
-            CustomMetadata customMetadata, Map<String, Map<String, Object>> businessAttributes) throws AtlanException {
+            Map<String, CustomMetadataAttributes> customMetadata, Map<String, Map<String, Object>> businessAttributes)
+            throws AtlanException {
         if (customMetadata != null) {
-            for (String cmName : customMetadata.listSets()) {
+            for (Map.Entry<String, CustomMetadataAttributes> entry : customMetadata.entrySet()) {
+                String cmName = entry.getKey();
                 String cmId = getIdForName(cmName);
+                CustomMetadataAttributes attrs = entry.getValue();
                 Map<String, Object> bmAttrs = businessAttributes.getOrDefault(cmId, new LinkedHashMap<>());
-                for (String attrName : customMetadata.listAttributesForSet(cmName)) {
-                    String cmAttrId = getAttrIdForName(cmId, attrName);
-                    bmAttrs.put(cmAttrId, customMetadata.getValueForAttribute(cmName, attrName));
-                }
+                getIdMapFromNameMap(cmName, attrs.getAttributes(), bmAttrs);
                 businessAttributes.put(cmId, bmAttrs);
             }
+        }
+    }
+
+    /**
+     * Translate the provided map keyed by human-readable attribute name into a map of keyed by attribute id.
+     * We receive the idToValue map (rather than creating a new one) to initialize it with
+     * any existing business attributes.
+     *
+     * @param customMetadataName human-readable name of the custom metadata
+     * @param nameToValue the attributes and their values for the custom metadata
+     * @param idToValue the business metadata to map into
+     * @throws AtlanException on any API communication problem if the cache needs to be refreshed
+     */
+    public static void getIdMapFromNameMap(
+            String customMetadataName, Map<String, Object> nameToValue, Map<String, Object> idToValue)
+            throws AtlanException {
+        String cmId = getIdForName(customMetadataName);
+        for (Map.Entry<String, Object> entry : nameToValue.entrySet()) {
+            String attrName = entry.getKey();
+            String cmAttrId = getAttrIdForName(cmId, attrName);
+            idToValue.put(cmAttrId, entry.getValue());
         }
     }
 
@@ -179,12 +219,13 @@ public class CustomMetadataCache {
      * @return custom metadata object
      * @throws AtlanException on any API communication problem if the cache needs to be refreshed
      */
-    public static CustomMetadata getCustomMetadataFromBusinessAttributes(JsonObject businessAttributes)
-            throws AtlanException {
-        CustomMetadata.CustomMetadataBuilder builder = CustomMetadata.builder();
+    public static Map<String, CustomMetadataAttributes> getCustomMetadataFromBusinessAttributes(
+            JsonObject businessAttributes) throws AtlanException {
+        Map<String, CustomMetadataAttributes> map = new LinkedHashMap<>();
         for (String cmId : businessAttributes.keySet()) {
             String cmName = getNameForId(cmId);
             JsonObject bmAttrs = businessAttributes.get(cmId).getAsJsonObject();
+            CustomMetadataAttributes.CustomMetadataAttributesBuilder<?, ?> builder = CustomMetadataAttributes.builder();
             for (String attrId : bmAttrs.keySet()) {
                 String cmAttrName = getAttrNameForId(cmId, attrId);
                 JsonElement jsonValue = bmAttrs.get(attrId);
@@ -200,11 +241,11 @@ public class CustomMetadataCache {
                         // removed retain an empty set for that attribute, but this is equivalent to the
                         // custom metadata not existing from a UI and delete-ability perspective (so we will
                         // treat as non-existent in the deserialization as well)
-                        builder.withAttribute(cmName, cmAttrName, values);
+                        builder.attribute(cmAttrName, values);
                     }
                 } else if (jsonValue.isJsonPrimitive()) {
                     Object primitive = deserializePrimitive(jsonValue);
-                    builder.withAttribute(cmName, cmAttrName, primitive);
+                    builder.attribute(cmAttrName, primitive);
                 } else {
                     throw new LogicException(
                             "Unable to deserialize non-primitive custom metadata value.",
@@ -213,8 +254,12 @@ public class CustomMetadataCache {
                             500);
                 }
             }
+            CustomMetadataAttributes cma = builder.build();
+            if (!cma.isEmpty()) {
+                map.put(cmName, builder.build());
+            }
         }
-        return builder.build();
+        return map;
     }
 
     private static Object deserializePrimitive(JsonElement jsonValue) throws LogicException {
