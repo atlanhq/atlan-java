@@ -2,8 +2,8 @@ package com.atlan.model.workflow;
 
 import com.atlan.api.WorkflowsEndpoint;
 import com.atlan.exception.AtlanException;
+import com.atlan.model.core.AtlanObject;
 import com.atlan.model.responses.WorkflowResponse;
-import com.atlan.net.AtlanObjectJ;
 import java.util.List;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -16,7 +16,7 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
-public class Workflow extends AtlanObjectJ {
+public class Workflow extends AtlanObject {
     private static final long serialVersionUID = 2L;
 
     WorkflowMetadata metadata;

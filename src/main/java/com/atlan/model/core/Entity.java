@@ -10,7 +10,6 @@ import com.atlan.model.enums.AtlanDeleteType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.responses.EntityMutationResponse;
 import com.atlan.model.responses.EntityResponse;
-import com.atlan.net.AtlanObjectJ;
 import com.atlan.serde.EntityDeserializer;
 import com.atlan.serde.EntitySerializer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -43,7 +42,7 @@ import lombok.experimental.SuperBuilder;
     @JsonSubTypes.Type(value = ColumnProcess.class, name = ColumnProcess.TYPE_NAME),
 })
 @SuppressWarnings("cast")
-public abstract class Entity extends AtlanObjectJ {
+public abstract class Entity extends AtlanObject {
     /** Internal tracking of fields that should be serialized with null values. */
     @JsonIgnore
     transient Set<String> nullFields;

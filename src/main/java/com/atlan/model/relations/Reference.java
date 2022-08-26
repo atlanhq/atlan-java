@@ -1,8 +1,8 @@
 /* SPDX-License-Identifier: Apache-2.0 */
 package com.atlan.model.relations;
 
+import com.atlan.model.core.AtlanObject;
 import com.atlan.model.enums.AtlanStatus;
-import com.atlan.net.AtlanObjectJ;
 import java.util.Map;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -16,7 +16,7 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 @SuperBuilder
 @EqualsAndHashCode(callSuper = true)
-public class Reference extends AtlanObjectJ {
+public class Reference extends AtlanObject {
     private static final long serialVersionUID = 2L;
 
     /**

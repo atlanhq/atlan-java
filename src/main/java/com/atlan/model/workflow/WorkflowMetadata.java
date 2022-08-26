@@ -1,6 +1,6 @@
 package com.atlan.model.workflow;
 
-import com.atlan.net.AtlanObjectJ;
+import com.atlan.model.core.AtlanObject;
 import java.util.List;
 import java.util.Map;
 import lombok.EqualsAndHashCode;
@@ -14,7 +14,7 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
-public class WorkflowMetadata extends AtlanObjectJ {
+public class WorkflowMetadata extends AtlanObject {
     private static final long serialVersionUID = 2L;
 
     Map<String, String> labels;

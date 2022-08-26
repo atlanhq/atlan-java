@@ -1,6 +1,6 @@
 package com.atlan.model.typedefs;
 
-import com.atlan.net.AtlanObjectJ;
+import com.atlan.model.core.AtlanObject;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,7 +12,7 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 @SuperBuilder
 @EqualsAndHashCode(callSuper = false)
-public class BusinessMetadataOptions extends AtlanObjectJ {
+public class BusinessMetadataOptions extends AtlanObject {
     private static final long serialVersionUID = 2L;
 
     /** Type of logo used for the custom metadata. */

@@ -1,6 +1,6 @@
 package com.atlan.model.workflow;
 
-import com.atlan.net.AtlanObjectJ;
+import com.atlan.model.core.AtlanObject;
 import java.util.List;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -13,7 +13,7 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
-public class WorkflowSpec extends AtlanObjectJ {
+public class WorkflowSpec extends AtlanObject {
     private static final long serialVersionUID = 2L;
 
     List<WorkflowTemplate> templates;

@@ -1,5 +1,5 @@
 /* SPDX-License-Identifier: Apache-2.0 */
-package com.atlan.net;
+package com.atlan.model.core;
 
 import com.atlan.serde.Serde;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -10,9 +10,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = false)
-public abstract class AtlanObjectJ {
+public abstract class AtlanObject {
 
-    public AtlanObjectJ() {
+    public AtlanObject() {
         // Do nothing - needed for Lombok SuperBuilder generations...
     }
 

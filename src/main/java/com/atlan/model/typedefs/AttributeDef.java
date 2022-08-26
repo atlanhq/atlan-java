@@ -1,8 +1,8 @@
 package com.atlan.model.typedefs;
 
+import com.atlan.model.core.AtlanObject;
 import com.atlan.model.enums.AtlanCustomAttributeCardinality;
 import com.atlan.model.enums.AtlanCustomAttributePrimitiveType;
-import com.atlan.net.AtlanObjectJ;
 import java.util.Map;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -19,7 +19,7 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = false)
-public class AttributeDef extends AtlanObjectJ {
+public class AttributeDef extends AtlanObject {
     private static final long serialVersionUID = 2L;
 
     /**

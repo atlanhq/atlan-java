@@ -1,8 +1,8 @@
 /* SPDX-License-Identifier: Apache-2.0 */
 package com.atlan.model.responses;
 
+import com.atlan.model.core.AtlanObject;
 import com.atlan.model.core.Entity;
-import com.atlan.net.AtlanObjectJ;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 import lombok.Data;
@@ -10,7 +10,7 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class MutatedEntities extends AtlanObjectJ {
+public class MutatedEntities extends AtlanObject {
     private static final long serialVersionUID = 2L;
 
     /** Assets that were created. */

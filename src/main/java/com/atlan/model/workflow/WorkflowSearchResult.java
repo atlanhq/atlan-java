@@ -1,14 +1,14 @@
 package com.atlan.model.workflow;
 
+import com.atlan.model.core.AtlanObject;
 import com.atlan.model.enums.AtlanWorkflowPhase;
-import com.atlan.net.AtlanObjectJ;
 import java.util.List;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class WorkflowSearchResult extends AtlanObjectJ {
+public class WorkflowSearchResult extends AtlanObject {
     private static final long serialVersionUID = 2L;
 
     String _index;

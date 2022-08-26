@@ -3,7 +3,7 @@ package com.atlan.model.requests;
 
 import com.atlan.cache.CustomMetadataCache;
 import com.atlan.exception.AtlanException;
-import com.atlan.net.AtlanObjectJ;
+import com.atlan.model.core.AtlanObject;
 import com.atlan.serde.Serde;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.LinkedHashMap;
@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @EqualsAndHashCode(callSuper = false)
-public class CustomMetadataUpdateRequest extends AtlanObjectJ {
+public class CustomMetadataUpdateRequest extends AtlanObject {
 
     /** Whether to include the custom metadata name as an outer wrapper (true) or not (false). */
     private final transient boolean includeName;

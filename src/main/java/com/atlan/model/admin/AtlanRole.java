@@ -1,6 +1,6 @@
 package com.atlan.model.admin;
 
-import com.atlan.net.AtlanObjectJ;
+import com.atlan.model.core.AtlanObject;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,7 +12,7 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
-public class AtlanRole extends AtlanObjectJ {
+public class AtlanRole extends AtlanObject {
     private static final long serialVersionUID = 2L;
 
     /** Unique identifier for the role (GUID). */

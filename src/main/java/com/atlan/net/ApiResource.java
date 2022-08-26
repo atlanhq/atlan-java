@@ -3,6 +3,7 @@ package com.atlan.net;
 
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.InvalidRequestException;
+import com.atlan.model.core.AtlanObject;
 import com.atlan.model.core.AtlanResponseInterface;
 import com.atlan.serde.Serde;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -13,7 +14,7 @@ import java.nio.charset.StandardCharsets;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public abstract class ApiResource extends AtlanObjectJ implements AtlanResponseInterface {
+public abstract class ApiResource extends AtlanObject implements AtlanResponseInterface {
     public static final Charset CHARSET = StandardCharsets.UTF_8;
 
     private static AtlanResponseGetter atlanResponseGetter = new LiveAtlanResponseGetter();
@@ -102,7 +103,7 @@ public abstract class ApiResource extends AtlanObjectJ implements AtlanResponseI
     }
 
     public static <T extends ApiResource> T request(
-            ApiResource.RequestMethod method, String url, AtlanObjectJ payload, Class<T> clazz, RequestOptions options)
+            ApiResource.RequestMethod method, String url, AtlanObject payload, Class<T> clazz, RequestOptions options)
             throws AtlanException {
         checkNullTypedParams(url, payload);
         return request(method, url, payload.toJson(), clazz, options);
@@ -125,7 +126,7 @@ public abstract class ApiResource extends AtlanObjectJ implements AtlanResponseI
      * @param url request url associated with the given parameters.
      * @param params typed parameters to check for null value.
      */
-    public static void checkNullTypedParams(String url, AtlanObjectJ params) {
+    public static void checkNullTypedParams(String url, AtlanObject params) {
         if (params == null) {
             throw new IllegalArgumentException(String.format(
                     "Found null params for %s. "

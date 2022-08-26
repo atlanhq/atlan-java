@@ -4,13 +4,13 @@ import com.atlan.Atlan;
 import com.atlan.cache.ClassificationCache;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.InvalidRequestException;
+import com.atlan.model.core.AtlanObject;
 import com.atlan.model.core.Classification;
 import com.atlan.model.core.Entity;
 import com.atlan.model.requests.SingleEntityRequest;
 import com.atlan.model.responses.EntityMutationResponse;
 import com.atlan.model.responses.EntityResponse;
 import com.atlan.net.ApiResource;
-import com.atlan.net.AtlanObjectJ;
 import com.atlan.serde.Serde;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.ArrayList;
@@ -174,7 +174,7 @@ public class EntityUniqueAttributesEndpoint {
     /**
      * Request class for handling classification additions.
      */
-    public static class ClassificationList extends AtlanObjectJ {
+    public static class ClassificationList extends AtlanObject {
         private final List<Classification> classifications;
 
         public ClassificationList(List<Classification> classifications) {

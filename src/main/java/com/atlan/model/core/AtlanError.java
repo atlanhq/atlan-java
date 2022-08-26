@@ -1,13 +1,12 @@
 /* SPDX-License-Identifier: Apache-2.0 */
 package com.atlan.model.core;
 
-import com.atlan.net.AtlanObjectJ;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class AtlanError extends AtlanObjectJ {
+public class AtlanError extends AtlanObject {
 
     /** A short string indicating the error code reported. */
     String errorCode;

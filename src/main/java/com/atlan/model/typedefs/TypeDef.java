@@ -1,7 +1,7 @@
 package com.atlan.model.typedefs;
 
+import com.atlan.model.core.AtlanObject;
 import com.atlan.model.enums.AtlanTypeCategory;
-import com.atlan.net.AtlanObjectJ;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import java.util.List;
@@ -20,7 +20,7 @@ import lombok.experimental.SuperBuilder;
     @JsonSubTypes.Type(value = ClassificationDef.class, name = "CLASSIFICATION"),
     @JsonSubTypes.Type(value = CustomMetadataDef.class, name = "BUSINESS_METADATA"),
 })
-public abstract class TypeDef extends AtlanObjectJ {
+public abstract class TypeDef extends AtlanObject {
     private static final long serialVersionUID = 2L;
 
     /** Type of the type definition itself. */

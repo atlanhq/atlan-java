@@ -2,7 +2,6 @@
 package com.atlan.model.core;
 
 import com.atlan.model.enums.AtlanStatus;
-import com.atlan.net.AtlanObjectJ;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,7 +11,7 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @SuperBuilder
 @EqualsAndHashCode(callSuper = false)
-public class Classification extends AtlanObjectJ {
+public class Classification extends AtlanObject {
 
     public static Classification of(String classificationName, String entityGuid) {
         return Classification.builder()
