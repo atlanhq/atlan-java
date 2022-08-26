@@ -1,5 +1,6 @@
 package com.atlan.model.enums;
 
+import com.fasterxml.jackson.annotation.JsonValue;
 import com.google.gson.annotations.SerializedName;
 import lombok.Getter;
 
@@ -19,6 +20,7 @@ public enum AtlanWorkflowPhase implements AtlanEnum {
     @SerializedName("Pending")
     PENDING("Pending");
 
+    @JsonValue
     @Getter(onMethod_ = {@Override})
     private final String value;
 
