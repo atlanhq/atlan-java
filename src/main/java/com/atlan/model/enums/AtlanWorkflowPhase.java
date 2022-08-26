@@ -1,24 +1,16 @@
 package com.atlan.model.enums;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 
 public enum AtlanWorkflowPhase implements AtlanEnum {
-    @SerializedName("Succeeded")
     SUCCESS("Succeeded"),
-
-    @SerializedName("Running")
     RUNNING("Running"),
-
-    @SerializedName("Failed")
     FAILED("Failed"),
-
-    @SerializedName("Error")
     ERROR("Error"),
-
-    @SerializedName("Pending")
     PENDING("Pending");
 
+    @JsonValue
     @Getter(onMethod_ = {@Override})
     private final String value;
 

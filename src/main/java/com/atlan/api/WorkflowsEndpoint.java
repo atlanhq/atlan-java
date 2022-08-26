@@ -2,10 +2,10 @@ package com.atlan.api;
 
 import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
-import com.atlan.model.admin.Workflow;
-import com.atlan.model.admin.WorkflowSearchRequest;
 import com.atlan.model.responses.WorkflowResponse;
 import com.atlan.model.responses.WorkflowSearchResponse;
+import com.atlan.model.workflow.Workflow;
+import com.atlan.model.workflow.WorkflowSearchRequest;
 import com.atlan.net.ApiResource;
 
 public class WorkflowsEndpoint {
@@ -33,7 +33,7 @@ public class WorkflowsEndpoint {
     public static void archive(String workflowName) throws AtlanException {
         String url = String.format(
                 "%s%s", Atlan.getBaseUrl(), String.format("%s/%s/archive", workflows_endpoint, workflowName));
-        ApiResource.request(ApiResource.RequestMethod.POST, url, "", ApiResource.class, null);
+        ApiResource.request(ApiResource.RequestMethod.POST, url, "", null, null);
     }
 
     /**

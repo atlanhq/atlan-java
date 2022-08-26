@@ -11,19 +11,23 @@ import com.atlan.model.core.Entity;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.enums.AtlanStatus;
+import com.atlan.model.relations.GuidReference;
 import com.atlan.model.relations.Reference;
 import com.atlan.model.responses.EntityMutationResponse;
 import com.atlan.model.responses.IndexSearchResponse;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 import org.testng.annotations.Test;
 
-@Test(groups = {"live"})
+@Test(groups = {"glossary"})
 public class GlossaryTest extends AtlanLiveTest {
 
     public static final String GLOSSARY_NAME = "JavaClient Test Glossary";
     public static final String CATEGORY_NAME = "JavaClient Test Category";
-    public static final String TERM_NAME = "JavaClient Test Term";
+    public static final String TERM_NAME1 = "JavaClient Test Term1";
+    public static final String TERM_NAME2 = "JavaClient Test Term2";
 
     public static String glossaryGuid = null;
     public static String glossaryQame = null;
@@ -31,10 +35,12 @@ public class GlossaryTest extends AtlanLiveTest {
     private static String categoryGuid = null;
     private static String categoryQame = null;
 
-    public static String termGuid = null;
-    public static String termQame = null;
+    public static String termGuid1 = null;
+    public static String termQame1 = null;
+    public static String termGuid2 = null;
+    public static String termQame2 = null;
 
-    @Test(groups = {"glossary.create", "create"})
+    @Test(groups = {"create.glossary"})
     void createGlossary() {
         Glossary glossary = Glossary.creator(GLOSSARY_NAME).build();
         try {
@@ -62,8 +68,8 @@ public class GlossaryTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"category.create", "create"},
-            dependsOnGroups = {"glossary.create"})
+            groups = {"create.category"},
+            dependsOnGroups = {"create.glossary"})
     void createCategory() {
         GlossaryCategory category =
                 GlossaryCategory.creator(CATEGORY_NAME, glossaryGuid, null).build();
@@ -92,10 +98,10 @@ public class GlossaryTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"term.create", "create"},
-            dependsOnGroups = {"glossary.create"})
-    void createTerm() {
-        GlossaryTerm term = GlossaryTerm.creator(TERM_NAME, glossaryGuid, null).build();
+            groups = {"create.term"},
+            dependsOnGroups = {"create.glossary"})
+    void createTerm1() {
+        GlossaryTerm term = GlossaryTerm.creator(TERM_NAME1, glossaryGuid, null).build();
         try {
             EntityMutationResponse response = term.upsert();
             assertNotNull(response);
@@ -109,12 +115,11 @@ public class GlossaryTest extends AtlanLiveTest {
             assertEquals(one.getTypeName(), GlossaryTerm.TYPE_NAME);
             assertTrue(one instanceof GlossaryTerm);
             term = (GlossaryTerm) one;
-            termGuid = term.getGuid();
-            assertNotNull(termGuid);
-            assertNotNull(term.getAttributes());
-            termQame = term.getQualifiedName();
-            assertNotNull(termQame);
-            assertEquals(term.getName(), TERM_NAME);
+            termGuid1 = term.getGuid();
+            assertNotNull(termGuid1);
+            termQame1 = term.getQualifiedName();
+            assertNotNull(termQame1);
+            assertEquals(term.getName(), TERM_NAME1);
         } catch (AtlanException e) {
             e.printStackTrace();
             assertNull(e, "Unexpected exception: " + e.getMessage());
@@ -122,8 +127,37 @@ public class GlossaryTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"glossary.read", "read"},
-            dependsOnGroups = {"glossary.create", "category.create", "term.create"})
+            groups = {"create.term"},
+            dependsOnGroups = {"create.glossary", "create.category"})
+    void createTerm2() {
+        GlossaryTerm term = GlossaryTerm.creator(TERM_NAME2, glossaryGuid, null).build();
+        try {
+            EntityMutationResponse response = term.upsert();
+            assertNotNull(response);
+            assertEquals(response.getDeletedEntities().size(), 0);
+            validateGlossaryUpdate(response.getUpdatedEntities());
+            List<Entity> entities = response.getCreatedEntities();
+            assertNotNull(entities);
+            assertEquals(entities.size(), 1);
+            Entity one = entities.get(0);
+            assertNotNull(one);
+            assertEquals(one.getTypeName(), GlossaryTerm.TYPE_NAME);
+            assertTrue(one instanceof GlossaryTerm);
+            term = (GlossaryTerm) one;
+            termGuid2 = term.getGuid();
+            assertNotNull(termGuid2);
+            termQame2 = term.getQualifiedName();
+            assertNotNull(termQame2);
+            assertEquals(term.getName(), TERM_NAME2);
+        } catch (AtlanException e) {
+            e.printStackTrace();
+            assertNull(e, "Unexpected exception: " + e.getMessage());
+        }
+    }
+
+    @Test(
+            groups = {"read.glossary"},
+            dependsOnGroups = {"create.glossary", "create.category", "create.term"})
     void readGlossary() {
         try {
             Entity one = Entity.retrieveFull(glossaryGuid);
@@ -135,13 +169,26 @@ public class GlossaryTest extends AtlanLiveTest {
             assertEquals(glossary.getQualifiedName(), glossaryQame);
             assertEquals(glossary.getName(), GLOSSARY_NAME);
             assertNotNull(glossary.getTerms());
-            assertEquals(glossary.getTerms().size(), 1);
-            assertEquals(glossary.getTerms().get(0).getTypeName(), GlossaryTerm.TYPE_NAME);
-            assertEquals(glossary.getTerms().get(0).getGuid(), termGuid);
+            assertEquals(glossary.getTerms().size(), 2);
+            Set<String> types =
+                    glossary.getTerms().stream().map(Reference::getTypeName).collect(Collectors.toSet());
+            assertNotNull(types);
+            assertEquals(types.size(), 1);
+            assertTrue(types.contains(GlossaryTerm.TYPE_NAME));
+            Set<String> guids =
+                    glossary.getTerms().stream().map(Reference::getGuid).collect(Collectors.toSet());
+            assertNotNull(guids);
+            assertEquals(guids.size(), 2);
+            assertTrue(guids.contains(termGuid1));
+            assertTrue(guids.contains(termGuid2));
             assertNotNull(glossary.getCategories());
             assertEquals(glossary.getCategories().size(), 1);
-            assertEquals(glossary.getCategories().get(0).getTypeName(), GlossaryCategory.TYPE_NAME);
-            assertEquals(glossary.getCategories().get(0).getGuid(), categoryGuid);
+            types = glossary.getCategories().stream()
+                    .map(Reference::getTypeName)
+                    .collect(Collectors.toSet());
+            assertTrue(types.contains(GlossaryCategory.TYPE_NAME));
+            guids = glossary.getCategories().stream().map(Reference::getGuid).collect(Collectors.toSet());
+            assertTrue(guids.contains(categoryGuid));
         } catch (AtlanException e) {
             e.printStackTrace();
             assertNull(e, "Unexpected exception: " + e.getMessage());
@@ -149,8 +196,8 @@ public class GlossaryTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"category.read", "read"},
-            dependsOnGroups = {"category.create"})
+            groups = {"read.category"},
+            dependsOnGroups = {"create.category"})
     void readCategory() {
         try {
             Entity one = Entity.retrieveFull(categoryGuid);
@@ -171,18 +218,18 @@ public class GlossaryTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"term.read", "read"},
-            dependsOnGroups = {"term.create"})
+            groups = {"read.term"},
+            dependsOnGroups = {"create.term"})
     void readTerm() {
         try {
-            Entity one = Entity.retrieveFull(termGuid);
+            Entity one = Entity.retrieveFull(termGuid1);
             assertNotNull(one);
             assertEquals(one.getTypeName(), GlossaryTerm.TYPE_NAME);
             assertTrue(one instanceof GlossaryTerm);
             GlossaryTerm term = (GlossaryTerm) one;
-            assertEquals(term.getGuid(), termGuid);
-            assertEquals(term.getQualifiedName(), termQame);
-            assertEquals(term.getName(), TERM_NAME);
+            assertEquals(term.getGuid(), termGuid1);
+            assertEquals(term.getQualifiedName(), termQame1);
+            assertEquals(term.getName(), TERM_NAME1);
             assertNotNull(term.getAnchor());
             assertEquals(term.getAnchor().getTypeName(), Glossary.TYPE_NAME);
             assertEquals(term.getAnchor().getGuid(), glossaryGuid);
@@ -193,8 +240,8 @@ public class GlossaryTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"glossary.update", "update"},
-            dependsOnGroups = {"glossary.read"})
+            groups = {"update.glossary"},
+            dependsOnGroups = {"read.glossary"})
     void updateGlossary() {
         Glossary glossary = Glossary.updater(glossaryGuid, GLOSSARY_NAME).build();
         glossary = glossary.toBuilder()
@@ -230,8 +277,8 @@ public class GlossaryTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"category.update", "update"},
-            dependsOnGroups = {"category.create"})
+            groups = {"update.category"},
+            dependsOnGroups = {"create.category"})
     void updateCategory() {
         GlossaryCategory category = GlossaryCategory.updater(categoryQame, CATEGORY_NAME, glossaryGuid)
                 .build();
@@ -268,8 +315,8 @@ public class GlossaryTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"category.remove.attributes", "update"},
-            dependsOnGroups = {"category.update"})
+            groups = {"update.category.attributes"},
+            dependsOnGroups = {"update.category"})
     void removeCategoryAttributes() {
         GlossaryCategory category2 = GlossaryCategory.updater(categoryQame, CATEGORY_NAME, glossaryGuid)
                 .build();
@@ -301,14 +348,14 @@ public class GlossaryTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"term.update", "update"},
-            dependsOnGroups = {"term.create", "category.create"})
+            groups = {"update.term"},
+            dependsOnGroups = {"create.term", "create.category"})
     void updateTerm() {
-        GlossaryTerm term = GlossaryTerm.updater(termQame, TERM_NAME, glossaryGuid)
+        GlossaryTerm term = GlossaryTerm.updater(termQame1, TERM_NAME1, glossaryGuid)
                 .announcementType(AtlanAnnouncementType.ISSUE)
                 .announcementTitle(ANNOUNCEMENT_TITLE)
                 .announcementMessage(ANNOUNCEMENT_MESSAGE)
-                .category(Reference.to(GlossaryCategory.TYPE_NAME, categoryGuid))
+                .category(GuidReference.to(GlossaryCategory.TYPE_NAME, categoryGuid))
                 .build();
         try {
             EntityMutationResponse response = term.upsert();
@@ -323,9 +370,9 @@ public class GlossaryTest extends AtlanLiveTest {
             assertEquals(one.getTypeName(), GlossaryTerm.TYPE_NAME);
             assertTrue(one instanceof GlossaryTerm);
             term = (GlossaryTerm) one;
-            assertEquals(term.getGuid(), termGuid);
-            assertEquals(term.getQualifiedName(), termQame);
-            assertEquals(term.getName(), TERM_NAME);
+            assertEquals(term.getGuid(), termGuid1);
+            assertEquals(term.getQualifiedName(), termQame1);
+            assertEquals(term.getName(), TERM_NAME1);
             assertEquals(term.getAnnouncementType(), AtlanAnnouncementType.ISSUE);
             assertEquals(term.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
             assertEquals(term.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
@@ -338,7 +385,7 @@ public class GlossaryTest extends AtlanLiveTest {
             assertEquals(category.getQualifiedName(), categoryQame);
             assertEquals(category.getName(), CATEGORY_NAME);
             term = GlossaryTerm.updateCertificate(
-                    termQame, TERM_NAME, glossaryGuid, AtlanCertificateStatus.DEPRECATED, null);
+                    termQame1, TERM_NAME1, glossaryGuid, AtlanCertificateStatus.DEPRECATED, null);
             assertNotNull(term);
             assertEquals(term.getCertificateStatus(), AtlanCertificateStatus.DEPRECATED);
         } catch (AtlanException e) {
@@ -348,8 +395,8 @@ public class GlossaryTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"term.search", "search"},
-            dependsOnGroups = {"term.update"})
+            groups = {"search.term"},
+            dependsOnGroups = {"update.term"})
     void searchTerms() {
         try {
             Query byState =
@@ -359,7 +406,7 @@ public class GlossaryTest extends AtlanLiveTest {
                     ._toQuery();
 
             Query byName =
-                    TermQuery.of(t -> t.field("name.keyword").value(TERM_NAME))._toQuery();
+                    TermQuery.of(t -> t.field("name.keyword").value(TERM_NAME1))._toQuery();
 
             Query combined =
                     BoolQuery.of(b -> b.must(byState).must(byType).must(byName))._toQuery();
@@ -384,14 +431,14 @@ public class GlossaryTest extends AtlanLiveTest {
             Entity one = entities.get(0);
             assertTrue(one instanceof GlossaryTerm);
             GlossaryTerm term = (GlossaryTerm) one;
-            assertEquals(term.getGuid(), termGuid);
-            assertEquals(term.getQualifiedName(), termQame);
+            assertEquals(term.getGuid(), termGuid1);
+            assertEquals(term.getQualifiedName(), termQame1);
             assertNotNull(term.getAnchor());
             assertEquals(term.getAnchor().getTypeName(), Glossary.TYPE_NAME);
             assertEquals(term.getAnchor().getGuid(), glossaryGuid);
             // TODO: test embedded relationship attributes that were requested
             //  ... this probably needs a more complex entity structure than
-            //  just the basic references defined in EntityX (?)
+            //  just the basic references defined in Entity (?)
         } catch (AtlanException e) {
             e.printStackTrace();
             assertNull(e, "Unexpected exception: " + e.getMessage());
@@ -399,12 +446,12 @@ public class GlossaryTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"term.purge", "purge"},
-            dependsOnGroups = {"create", "update", "read", "search"},
+            groups = {"purge.term.1"},
+            dependsOnGroups = {"create.*", "update.*", "read.*", "search.*", "link.*", "unlink.*"},
             alwaysRun = true)
-    void purgeTerm() {
+    void purgeTerm1() {
         try {
-            EntityMutationResponse response = GlossaryTerm.purge(termGuid);
+            EntityMutationResponse response = GlossaryTerm.purge(termGuid1);
             assertNotNull(response);
             assertEquals(response.getCreatedEntities().size(), 0);
             assertEquals(response.getUpdatedEntities().size(), 0);
@@ -416,9 +463,9 @@ public class GlossaryTest extends AtlanLiveTest {
             assertEquals(one.getTypeName(), GlossaryTerm.TYPE_NAME);
             assertTrue(one instanceof GlossaryTerm);
             GlossaryTerm term = (GlossaryTerm) one;
-            assertEquals(term.getGuid(), termGuid);
-            assertEquals(term.getQualifiedName(), termQame);
-            assertEquals(term.getName(), TERM_NAME);
+            assertEquals(term.getGuid(), termGuid1);
+            assertEquals(term.getQualifiedName(), termQame1);
+            assertEquals(term.getName(), TERM_NAME1);
             assertEquals(term.getCertificateStatus(), AtlanCertificateStatus.DEPRECATED);
             assertEquals(term.getAnnouncementType(), AtlanAnnouncementType.ISSUE);
             assertEquals(term.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
@@ -432,8 +479,42 @@ public class GlossaryTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"category.purge", "purge"},
-            dependsOnGroups = {"term.purge", "create", "update", "read", "search"},
+            groups = {"purge.term.2"},
+            dependsOnGroups = {"create.*", "update.*", "read.*", "search.*", "link.*", "unlink.*"},
+            alwaysRun = true)
+    void purgeTerm2() {
+        try {
+            EntityMutationResponse response = GlossaryTerm.purge(termGuid2);
+            assertNotNull(response);
+            assertEquals(response.getCreatedEntities().size(), 0);
+            assertEquals(response.getUpdatedEntities().size(), 0);
+            List<Entity> entities = response.getDeletedEntities();
+            assertNotNull(entities);
+            assertEquals(entities.size(), 1);
+            Entity one = entities.get(0);
+            assertNotNull(one);
+            assertEquals(one.getTypeName(), GlossaryTerm.TYPE_NAME);
+            assertTrue(one instanceof GlossaryTerm);
+            GlossaryTerm term = (GlossaryTerm) one;
+            assertEquals(term.getGuid(), termGuid2);
+            assertEquals(term.getQualifiedName(), termQame2);
+            assertEquals(term.getName(), TERM_NAME2);
+            assertNull(term.getCertificateStatus());
+            assertNull(term.getCertificateStatusMessage());
+            assertNull(term.getAnnouncementType());
+            assertNull(term.getAnnouncementTitle());
+            assertNull(term.getAnnouncementMessage());
+            assertEquals(term.getStatus(), AtlanStatus.DELETED);
+            assertEquals(term.getDeleteHandler(), "HARD");
+        } catch (AtlanException e) {
+            e.printStackTrace();
+            assertNull(e, "Unexpected exception: " + e.getMessage());
+        }
+    }
+
+    @Test(
+            groups = {"purge.category"},
+            dependsOnGroups = {"purge.term.*"},
             alwaysRun = true)
     void purgeCategory() {
         try {
@@ -465,8 +546,8 @@ public class GlossaryTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"glossary.purge", "purge"},
-            dependsOnGroups = {"category.purge", "create", "update", "read", "search"},
+            groups = {"purge.glossary"},
+            dependsOnGroups = {"purge.category"},
             alwaysRun = true)
     void purgeGlossary() {
         try {

@@ -6,7 +6,8 @@ import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.relations.Reference;
-import com.atlan.net.ApiResource;
+import com.atlan.serde.Serde;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.testng.annotations.Test;
 
 public class GlossaryCategoryTest {
@@ -62,7 +63,7 @@ public class GlossaryCategoryTest {
             .sourceUpdatedBy("sourceUpdatedBy")
             .link(Reference.to("Resource", "linkGuid1"))
             .link(Reference.to("Resource", "linkGuid2"))
-            .readme(Reference.to("Readme", "readmeGuid"))
+            .readme(Reference.to(Readme.TYPE_NAME, "readmeGuid"))
             .meaning(Reference.to(GlossaryTerm.TYPE_NAME, "termGuid1"))
             .meaning(Reference.to(GlossaryTerm.TYPE_NAME, "termGuid2"))
             .anchor(Reference.to(Glossary.TYPE_NAME, "glossaryGuid"))
@@ -86,9 +87,9 @@ public class GlossaryCategoryTest {
     @Test(
             groups = {"deserialize"},
             dependsOnGroups = {"serialize"})
-    void deserialization() {
+    void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
-        frodo = ApiResource.GSON.fromJson(serialized, GlossaryCategory.class);
+        frodo = Serde.mapper.readValue(serialized, GlossaryCategory.class);
         assertNotNull(frodo);
     }
 
@@ -99,7 +100,7 @@ public class GlossaryCategoryTest {
         assertNotNull(serialized);
         assertNotNull(frodo);
         String backAgain = frodo.toJson();
-        assertEquals(serialized, backAgain, "Serialization is not equivalent after serde loop,");
+        assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
     }
 
     @Test(
@@ -108,6 +109,6 @@ public class GlossaryCategoryTest {
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);
-        assertEquals(full, frodo, "Deserialization is not equivalent after serde loop,");
+        assertEquals(frodo, full, "Deserialization is not equivalent after serde loop,");
     }
 }

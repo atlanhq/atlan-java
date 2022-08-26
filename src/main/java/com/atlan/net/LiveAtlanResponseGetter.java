@@ -4,7 +4,8 @@ package com.atlan.net;
 import com.atlan.exception.*;
 import com.atlan.model.core.AtlanError;
 import com.atlan.model.core.AtlanResponseInterface;
-import com.google.gson.JsonSyntaxException;
+import com.atlan.serde.Serde;
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 public class LiveAtlanResponseGetter implements AtlanResponseGetter {
     private final HttpClient httpClient;
@@ -42,10 +43,12 @@ public class LiveAtlanResponseGetter implements AtlanResponseGetter {
         }
 
         T resource = null;
-        try {
-            resource = ApiResource.GSON.fromJson(responseBody, clazz);
-        } catch (JsonSyntaxException e) {
-            raiseMalformedJsonError(responseBody, responseCode, requestId, e);
+        if (clazz != null) {
+            try {
+                resource = Serde.mapper.readValue(responseBody, clazz);
+            } catch (JsonProcessingException e) {
+                raiseMalformedJsonError(responseBody, responseCode, requestId, e);
+            }
         }
 
         // Null check necessary for empty responses
@@ -85,8 +88,8 @@ public class LiveAtlanResponseGetter implements AtlanResponseGetter {
         }
 
         try {
-            error = ApiResource.GSON.fromJson(response.body(), AtlanError.class);
-        } catch (JsonSyntaxException e) {
+            error = Serde.mapper.readValue(response.body(), AtlanError.class);
+        } catch (JsonProcessingException e) {
             raiseMalformedJsonError(response.body(), response.code(), response.requestId(), e);
         }
         if (error == null) {

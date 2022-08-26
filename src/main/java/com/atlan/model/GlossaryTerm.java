@@ -5,8 +5,10 @@ import com.atlan.exception.AtlanException;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.relations.Reference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -29,13 +31,23 @@ public class GlossaryTerm extends Asset {
     String typeName = TYPE_NAME;
 
     /** Unused attributes. */
-    transient String shortDescription;
+    @JsonIgnore
+    String shortDescription;
 
-    transient String longDescription;
-    transient List<String> examples;
-    transient String abbreviation;
-    transient String usage;
-    transient Map<String, String> additionalAttributes;
+    @JsonIgnore
+    String longDescription;
+
+    @JsonIgnore
+    List<String> examples;
+
+    @JsonIgnore
+    String abbreviation;
+
+    @JsonIgnore
+    String usage;
+
+    @JsonIgnore
+    Map<String, String> additionalAttributes;
 
     /** Glossary in which the term is located. */
     @Attribute
@@ -44,45 +56,46 @@ public class GlossaryTerm extends Asset {
     /** Assets that are attached to this term. */
     @Singular
     @Attribute
-    List<Reference> assignedEntities;
+    Set<Reference> assignedEntities;
 
     /** Categories within which this term is organized. */
     @Singular
     @Attribute
-    List<Reference> categories;
+    Set<Reference> categories;
 
     /** Linked glossary terms that may also be of interest. */
     @Singular("addToSeeAlso")
     @Attribute
-    List<Reference> seeAlso;
+    Set<Reference> seeAlso;
 
     /** Glossary terms that have the same, or a very similar meaning in the same language. */
     @Singular
     @Attribute
-    List<Reference> synonyms;
+    Set<Reference> synonyms;
 
     /** Glossary terms that have the opposite (or near opposite) meaning in the same language. */
     @Singular
     @Attribute
-    List<Reference> antonyms;
+    Set<Reference> antonyms;
 
     /** These terms are preferred in place of this term. */
     @Singular
     @Attribute
-    List<Reference> preferredTerms;
+    Set<Reference> preferredTerms;
 
     /** These terms should be used instead of this term. */
     @Singular("addToReplacedBy")
     @Attribute
-    List<Reference> replacedBy;
+    Set<Reference> replacedBy;
 
     /** These terms represent the same meaning, but each is in a different language. */
     @Singular
     @Attribute
-    List<Reference> translatedTerms;
+    Set<Reference> translatedTerms;
 
     /** Unused relationships. */
-    transient List<Reference> classifies;
+    @JsonIgnore
+    Set<Reference> classifies;
 
     /**
      * These terms each represent one of the valid values that could be assigned to a data item that has the meaning
@@ -90,7 +103,7 @@ public class GlossaryTerm extends Asset {
      */
     @Singular("addToValidValuesFor")
     @Attribute
-    List<Reference> validValuesFor;
+    Set<Reference> validValuesFor;
 
     /** Remove the linked assets from the term, if any are set on the term. */
     public void removeAssignedEntities() {
@@ -137,8 +150,6 @@ public class GlossaryTerm extends Asset {
     /**
      * Builds the minimal object necessary for creating a term. At least one of glossaryGuid or
      * glossaryQualifiedName must be provided.
-     * To continue adding to the object, call {@link #toBuilder()} on
-     * the result and continue calling additional methods to add metadata followed by {@link GlossaryTermBuilder#build()}.
      *
      * @param name of the term
      * @param glossaryGuid unique identifier of the term's glossary
@@ -155,8 +166,6 @@ public class GlossaryTerm extends Asset {
     /**
      * Builds the minimal object necessary to update a term. At least one of glossaryGuid or
      * glossaryQualifiedName must be provided.
-     * To continue adding to the object, call {@link #toBuilder()} on
-     * the result and continue calling additional methods to add metadata followed by {@link GlossaryTermBuilder#build()}.
      *
      * @param qualifiedName of the term
      * @param name of the term
@@ -170,5 +179,16 @@ public class GlossaryTerm extends Asset {
                 .qualifiedName(qualifiedName)
                 .name(name)
                 .anchor(Glossary.anchorLink(glossaryGuid, null));
+    }
+
+    /**
+     * Builds the minimal object necessary to apply an update to a term, from a potentially
+     * more-complete term object.
+     *
+     * @return the minimal object necessary to update the term, as a builder
+     */
+    @Override
+    protected GlossaryTermBuilder<?, ?> trimToRequired() {
+        return updater(this.getQualifiedName(), this.getName(), this.getAnchor().getGuid());
     }
 }

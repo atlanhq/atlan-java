@@ -2,8 +2,9 @@
 package com.atlan.model;
 
 import com.atlan.model.relations.Reference;
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Map;
+import java.util.Set;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -26,10 +27,14 @@ public class GlossaryCategory extends Asset {
     String typeName = TYPE_NAME;
 
     /** Unused attributes. */
-    transient String shortDescription;
+    @JsonIgnore
+    String shortDescription;
 
-    transient String longDescription;
-    transient Map<String, String> additionalAttributes;
+    @JsonIgnore
+    String longDescription;
+
+    @JsonIgnore
+    Map<String, String> additionalAttributes;
 
     /** Glossary in which the category is located. */
     @Attribute
@@ -42,18 +47,16 @@ public class GlossaryCategory extends Asset {
     /** Terms organized within this category. */
     @Singular
     @Attribute
-    List<Reference> terms;
+    Set<Reference> terms;
 
     /** Child categories organized within this category. */
     @Singular("childCategory")
     @Attribute
-    List<Reference> childrenCategories;
+    Set<Reference> childrenCategories;
 
     /**
      * Builds the minimal object necessary for creating a category. At least one of glossaryGuid or
      * glossaryQualifiedName must be provided.
-     * To continue adding to the object, call {@link #toBuilder()} on
-     * the result and continue calling additional methods to add metadata followed by {@link GlossaryCategoryBuilder#build()}.
      *
      * @param name of the category
      * @param glossaryGuid unique identifier of the category's glossary
@@ -71,8 +74,6 @@ public class GlossaryCategory extends Asset {
     /**
      * Builds the minimal object necessary to update a category. At least one of glossaryGuid or
      * glossaryQualifiedName must be provided.
-     * To continue adding to the object, call {@link #toBuilder()} on
-     * the result and continue calling additional methods to add metadata followed by {@link GlossaryCategoryBuilder#build()}.
      *
      * @param qualifiedName of the category
      * @param name of the category
@@ -86,5 +87,16 @@ public class GlossaryCategory extends Asset {
                 .qualifiedName(qualifiedName)
                 .name(name)
                 .anchor(Glossary.anchorLink(glossaryGuid, null));
+    }
+
+    /**
+     * Builds the minimal object necessary to apply an update to a category, from a potentially
+     * more-complete category object.
+     *
+     * @return the minimal object necessary to update the category, as a builder
+     */
+    @Override
+    protected GlossaryCategoryBuilder<?, ?> trimToRequired() {
+        return updater(this.getQualifiedName(), this.getName(), this.getAnchor().getGuid());
     }
 }

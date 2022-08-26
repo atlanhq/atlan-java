@@ -5,7 +5,7 @@ import com.atlan.exception.AtlanException;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.relations.Reference;
-import java.util.List;
+import java.util.Set;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -38,10 +38,11 @@ public class S3Bucket extends S3 {
     /** S3 objects within this bucket. */
     @Singular
     @Attribute
-    List<Reference> objects;
+    Set<Reference> objects;
 
     /**
      * Update the certificate on an S3 bucket.
+     *
      * @param qualifiedName of the S3 bucket
      * @param certificate to use
      * @param message (optional) message, or null if no message
@@ -51,6 +52,19 @@ public class S3Bucket extends S3 {
     public static S3Bucket updateCertificate(String qualifiedName, AtlanCertificateStatus certificate, String message)
             throws AtlanException {
         return (S3Bucket) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
+    }
+
+    /**
+     * Remove the certificate from an S3 bucket.
+     *
+     * @param qualifiedName of the S3 bucket
+     * @param name of the S3 bucket
+     * @return the updated S3 bucket, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static S3Bucket removeCertificate(String qualifiedName, String name) throws AtlanException {
+        return (S3Bucket)
+                Asset.removeCertificate(builder().qualifiedName(qualifiedName).name(name));
     }
 
     /**
@@ -69,9 +83,20 @@ public class S3Bucket extends S3 {
     }
 
     /**
+     * Remove the announcement from an S3 bucket.
+     *
+     * @param qualifiedName of the S3 bucket
+     * @param name of the S3 bucket
+     * @return the updated S3 bucket, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static S3Bucket removeAnnouncement(String qualifiedName, String name) throws AtlanException {
+        return (S3Bucket)
+                Asset.removeAnnouncement(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Builds the minimal object necessary to create an S3 bucket.
-     * To continue adding to the object, call {@link #toBuilder()} on the result and continue calling
-     * additional methods to add metadata followed by {@link S3Bucket.S3BucketBuilder#build()}.
      *
      * @param name of the S3 bucket
      * @param connectionQualifiedName unique name of the connection through which the bucket is accessible
@@ -89,8 +114,6 @@ public class S3Bucket extends S3 {
 
     /**
      * Builds the minimal object necessary to update an S3 bucket.
-     * To continue adding to the object, call {@link #toBuilder()} on the result and continue calling
-     * additional methods to add metadata followed by {@link S3Bucket.S3BucketBuilder#build()}.
      *
      * @param qualifiedName of the S3 bucket
      * @param name of the S3 bucket
@@ -98,6 +121,17 @@ public class S3Bucket extends S3 {
      */
     public static S3BucketBuilder<?, ?> updater(String qualifiedName, String name) {
         return S3Bucket.builder().qualifiedName(qualifiedName).name(name);
+    }
+
+    /**
+     * Builds the minimal object necessary to apply an update to an S3 bucket, from a potentially
+     * more-complete S3 bucket object.
+     *
+     * @return the minimal object necessary to update the S3 bucket, as a builder
+     */
+    @Override
+    protected S3BucketBuilder<?, ?> trimToRequired() {
+        return updater(this.getQualifiedName(), this.getName());
     }
 
     /**

@@ -6,7 +6,8 @@ import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.relations.Reference;
-import com.atlan.net.ApiResource;
+import com.atlan.serde.Serde;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.testng.annotations.Test;
 
 public class ColumnTest {
@@ -116,9 +117,9 @@ public class ColumnTest {
     @Test(
             groups = {"deserialize"},
             dependsOnGroups = {"serialize"})
-    void deserialization() {
+    void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
-        frodo = ApiResource.GSON.fromJson(serialized, Column.class);
+        frodo = Serde.mapper.readValue(serialized, Column.class);
         assertNotNull(frodo);
     }
 
@@ -129,16 +130,15 @@ public class ColumnTest {
         assertNotNull(serialized);
         assertNotNull(frodo);
         String backAgain = frodo.toJson();
-        assertEquals(serialized, backAgain, "Serialization is not equivalent after serde loop,");
+        assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
     }
 
-    // TODO: Determine why the deserialized form would differ
     @Test(
             groups = {"equivalency"},
             dependsOnGroups = {"serialize", "deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);
-        assertEquals(full, frodo, "Deserialization is not equivalent after serde loop,");
+        assertEquals(frodo, full, "Deserialization is not equivalent after serde loop,");
     }
 }

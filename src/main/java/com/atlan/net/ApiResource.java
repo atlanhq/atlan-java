@@ -3,8 +3,11 @@ package com.atlan.net;
 
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.InvalidRequestException;
+import com.atlan.model.core.AtlanObject;
 import com.atlan.model.core.AtlanResponseInterface;
-import com.google.gson.JsonObject;
+import com.atlan.serde.Serde;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -22,7 +25,7 @@ public abstract class ApiResource extends AtlanObject implements AtlanResponseIn
 
     private transient AtlanResponse lastResponse;
 
-    private transient JsonObject rawJsonObject;
+    private transient JsonNode rawJsonObject;
 
     @Override
     public AtlanResponse getLastResponse() {
@@ -35,23 +38,29 @@ public abstract class ApiResource extends AtlanObject implements AtlanResponseIn
     }
 
     /**
-     * Returns the raw JsonObject exposed by the Gson library. This can be used to access properties
+     * Returns the raw JsonNode exposed by the Jackson library. This can be used to access properties
      * that are not directly exposed by Atlan's Java library.
      *
      * <p>Note: You should always prefer using the standard property accessors whenever possible.
-     * Because this method exposes Gson's underlying API, it is not considered fully stable. Atlan's
-     * Java library might move off Gson in the future and this method would be removed or change
+     * Because this method exposes Jackson's underlying API, it is not considered fully stable. Atlan's
+     * Java library might move off Jackson in the future and this method would be removed or change
      * significantly.
      *
-     * @return The raw JsonObject.
+     * @return The raw JsonNode.
      */
-    public JsonObject getRawJsonObject() {
+    public JsonNode getRawJsonObject() {
         // Lazily initialize this the first time the getter is called.
         if ((this.rawJsonObject == null) && (this.getLastResponse() != null)) {
-            this.rawJsonObject =
-                    ApiResource.GSON.fromJson(this.getLastResponse().body(), JsonObject.class);
+            try {
+                this.rawJsonObject =
+                        Serde.mapper.readTree(this.getLastResponse().body());
+            } catch (JsonProcessingException e) {
+                log.error(
+                        "Unable to parse raw JSON tree — invalid JSON? {}",
+                        this.getLastResponse().body(),
+                        e);
+            }
         }
-
         return this.rawJsonObject;
     }
 

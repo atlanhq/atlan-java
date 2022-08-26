@@ -1,6 +1,6 @@
 package com.atlan.model;
 
-import com.atlan.net.AtlanObject;
+import com.atlan.model.core.AtlanObject;
 import java.util.Map;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

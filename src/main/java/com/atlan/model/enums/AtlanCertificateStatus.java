@@ -1,19 +1,15 @@
 /* SPDX-License-Identifier: Apache-2.0 */
 package com.atlan.model.enums;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 
 public enum AtlanCertificateStatus implements AtlanEnum {
-    @SerializedName("VERIFIED")
     VERIFIED("VERIFIED"),
-
-    @SerializedName("DRAFT")
     DRAFT("DRAFT"),
-
-    @SerializedName("DEPRECATED")
     DEPRECATED("DEPRECATED");
 
+    @JsonValue
     @Getter(onMethod_ = {@Override})
     private final String value;
 

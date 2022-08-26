@@ -1,18 +1,20 @@
 package com.atlan.model.typedefs;
 
+import com.atlan.model.core.AtlanObject;
 import com.atlan.model.enums.AtlanCustomAttributePrimitiveType;
-import com.atlan.net.AtlanObject;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.jackson.Jacksonized;
 
 /**
  * Options that can be set on each attribute within a type definition.
  */
 @Getter
 @Setter
+@Jacksonized
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = false)
 public class AttributeDefOptions extends AtlanObject {
@@ -43,6 +45,9 @@ public class AttributeDefOptions extends AtlanObject {
         return builder.build();
     }
 
+    /** Optional description of the attribute. */
+    String description;
+
     /** Set of entities on which this attribute can be applied. */
     @Builder.Default
     String applicableEntityTypes = "[\"Asset\"]";
@@ -71,6 +76,9 @@ public class AttributeDefOptions extends AtlanObject {
     /** Whether users will see this attribute in the overview tab of the sidebar (true) or not (false). */
     @Builder.Default
     Boolean showInOverview = false;
+
+    /** Whether the attribute is deprecated ("true") or not (null or "false"). */
+    String isDeprecated;
 
     /** Primitive type of the attribute. */
     AtlanCustomAttributePrimitiveType primitiveType;

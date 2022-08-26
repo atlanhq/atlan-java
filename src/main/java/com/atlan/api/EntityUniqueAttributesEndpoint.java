@@ -4,13 +4,15 @@ import com.atlan.Atlan;
 import com.atlan.cache.ClassificationCache;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.InvalidRequestException;
+import com.atlan.model.core.AtlanObject;
 import com.atlan.model.core.Classification;
 import com.atlan.model.core.Entity;
-import com.atlan.model.core.SingleEntityRequest;
+import com.atlan.model.requests.SingleEntityRequest;
 import com.atlan.model.responses.EntityMutationResponse;
 import com.atlan.model.responses.EntityResponse;
 import com.atlan.net.ApiResource;
-import com.atlan.net.AtlanObject;
+import com.atlan.serde.Serde;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
@@ -118,12 +120,7 @@ public class EntityUniqueAttributesEndpoint {
                 String.format(
                         "%s%s/classifications?attr:qualifiedName=%s",
                         endpoint, typeName, ApiResource.urlEncode(qualifiedName)));
-        ApiResource.request(
-                ApiResource.RequestMethod.POST,
-                url,
-                new ClassificationList(classifications),
-                EntityMutationResponse.class,
-                null);
+        ApiResource.request(ApiResource.RequestMethod.POST, url, new ClassificationList(classifications), null, null);
     }
 
     /**
@@ -152,7 +149,7 @@ public class EntityUniqueAttributesEndpoint {
                             "%s%s/classification/%s?attr:qualifiedName=%s",
                             endpoint, typeName, classificationId, ApiResource.urlEncode(qualifiedName)));
             try {
-                ApiResource.request(ApiResource.RequestMethod.DELETE, url, "", EntityMutationResponse.class, null);
+                ApiResource.request(ApiResource.RequestMethod.DELETE, url, "", null, null);
             } catch (InvalidRequestException e) {
                 if (idempotent && e.getMessage().equals("ATLAS-400-00-06D")) {
                     log.debug(
@@ -186,7 +183,11 @@ public class EntityUniqueAttributesEndpoint {
 
         @Override
         public String toJson() {
-            return ApiResource.GSON.toJson(classifications);
+            try {
+                return Serde.mapper.writeValueAsString(classifications);
+            } catch (JsonProcessingException e) {
+                throw new RuntimeException("Unable to serialize list of classifications.", e);
+            }
         }
     }
 }

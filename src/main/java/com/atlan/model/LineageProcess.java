@@ -31,8 +31,6 @@ public class LineageProcess extends AbstractProcess {
 
     /**
      * Builds the minimal object necessary to create a process.
-     * To continue adding to the object, call {@link #toBuilder()} on the result and continue calling
-     * additional methods to add metadata followed by {@link LineageProcessBuilder#build()}.
      *
      * @param name of the process
      * @param connectorName name of the connector (software / system) that ran the process
@@ -58,5 +56,27 @@ public class LineageProcess extends AbstractProcess {
                 .connectionQualifiedName(connectionQualifiedName)
                 .inputs(inputs)
                 .outputs(outputs);
+    }
+
+    /**
+     * Builds the minimal object necessary to update a process.
+     *
+     * @param qualifiedName unique name of the process
+     * @param name human-readable name of the process
+     * @return the minimal object necessary to update the process, as a builder
+     */
+    public static LineageProcessBuilder<?, ?> updater(String qualifiedName, String name) {
+        return LineageProcess.builder().qualifiedName(qualifiedName).name(name);
+    }
+
+    /**
+     * Builds the minimal object necessary to apply an update to a connection, from a potentially
+     * more-complete connection object.
+     *
+     * @return the minimal object necessary to update the connection, as a builder
+     */
+    @Override
+    protected LineageProcessBuilder<?, ?> trimToRequired() {
+        return updater(this.getQualifiedName(), this.getName());
     }
 }

@@ -17,6 +17,7 @@ import java.util.Map;
 import java.util.Set;
 import org.testng.annotations.Test;
 
+@Test(groups = {"custom_metadata"})
 public class CustomMetadataTest extends AtlanLiveTest {
 
     public static final String CM_NAME1 = "JC CM1";
@@ -33,7 +34,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
     public static final String CM_ATTR_URL = "url";
     public static final String CM_ATTR_SQL = "sql";
 
-    @Test(groups = {"create.cm", "create"})
+    @Test(groups = {"create.cm"})
     void createCustomMetadata() {
         try {
             CustomMetadataDef customMetadataDef = CustomMetadataDef.toCreate(CM_NAME1).toBuilder()
@@ -196,8 +197,8 @@ public class CustomMetadataTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"update.term.cm", "update"},
-            dependsOnGroups = {"create", "create.cm", "link.remove2"})
+            groups = {"link.cm.term"},
+            dependsOnGroups = {"create.cm", "unlink.asset.term.*", "unlink.term.asset"})
     void updateTermCM() {
         try {
             CustomMetadataAttributes cm1 = CustomMetadataAttributes.builder()
@@ -210,7 +211,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
                     .attribute(CM_ATTR_SQL, "SELECT * from SOMEWHERE;")
                     .build();
             GlossaryTerm toUpdate = GlossaryTerm.updater(
-                            GlossaryTest.termQame, GlossaryTest.TERM_NAME, GlossaryTest.glossaryGuid)
+                            GlossaryTest.termQame1, GlossaryTest.TERM_NAME1, GlossaryTest.glossaryGuid)
                     .customMetadata(CM_NAME1, cm1)
                     .build();
             EntityMutationResponse response = toUpdate.upsert(false, true);
@@ -221,12 +222,12 @@ public class CustomMetadataTest extends AtlanLiveTest {
             Entity one = response.getUpdatedEntities().get(0);
             assertTrue(one instanceof GlossaryTerm);
             GlossaryTerm term = (GlossaryTerm) one;
-            assertEquals(term.getQualifiedName(), GlossaryTest.termQame);
-            one = Entity.retrieveFull(GlossaryTerm.TYPE_NAME, GlossaryTest.termQame);
+            assertEquals(term.getQualifiedName(), GlossaryTest.termQame1);
+            one = Entity.retrieveFull(GlossaryTerm.TYPE_NAME, GlossaryTest.termQame1);
             assertNotNull(one);
             assertTrue(one instanceof GlossaryTerm);
             term = (GlossaryTerm) one;
-            assertEquals(term.getQualifiedName(), GlossaryTest.termQame);
+            assertEquals(term.getQualifiedName(), GlossaryTest.termQame1);
             assertNotNull(term.getCustomMetadataSets());
             cm1 = term.getCustomMetadataSets().get(CM_NAME1);
             validateAttributes(cm1);
@@ -237,12 +238,12 @@ public class CustomMetadataTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"remove.term.cm", "update"},
-            dependsOnGroups = {"update.term.cm"})
+            groups = {"unlink.cm.term"},
+            dependsOnGroups = {"link.cm.term"})
     void removeTermCM() {
         try {
             GlossaryTerm toUpdate = GlossaryTerm.updater(
-                            GlossaryTest.termQame, GlossaryTest.TERM_NAME, GlossaryTest.glossaryGuid)
+                            GlossaryTest.termQame1, GlossaryTest.TERM_NAME1, GlossaryTest.glossaryGuid)
                     .build();
             toUpdate.removeCustomMetadata();
             EntityMutationResponse response = toUpdate.upsert(false, true);
@@ -253,12 +254,12 @@ public class CustomMetadataTest extends AtlanLiveTest {
             Entity one = response.getUpdatedEntities().get(0);
             assertTrue(one instanceof GlossaryTerm);
             GlossaryTerm term = (GlossaryTerm) one;
-            assertEquals(term.getQualifiedName(), GlossaryTest.termQame);
-            one = Entity.retrieveFull(GlossaryTerm.TYPE_NAME, GlossaryTest.termQame);
+            assertEquals(term.getQualifiedName(), GlossaryTest.termQame1);
+            one = Entity.retrieveFull(GlossaryTerm.TYPE_NAME, GlossaryTest.termQame1);
             assertNotNull(one);
             assertTrue(one instanceof GlossaryTerm);
             term = (GlossaryTerm) one;
-            assertEquals(term.getQualifiedName(), GlossaryTest.termQame);
+            assertEquals(term.getQualifiedName(), GlossaryTest.termQame1);
             assertTrue(term.getCustomMetadataSets().isEmpty());
         } catch (AtlanException e) {
             e.printStackTrace();
@@ -267,8 +268,8 @@ public class CustomMetadataTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"update.s3object.cm1", "update"},
-            dependsOnGroups = {"s3object.create", "create", "create.cm"})
+            groups = {"link.cm.s3object.1"},
+            dependsOnGroups = {"create.s3object", "create.cm"})
     void addObjectCM1() {
         try {
             CustomMetadataAttributes cm = CustomMetadataAttributes.builder()
@@ -297,8 +298,8 @@ public class CustomMetadataTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"update.s3object.cm2", "update"},
-            dependsOnGroups = {"s3object.create", "create", "create.cm", "update.s3object.cm1"})
+            groups = {"link.cm.s3object.2"},
+            dependsOnGroups = {"link.cm.s3object.1"})
     void addObjectCM2() {
         try {
             CustomMetadataAttributes cm = CustomMetadataAttributes.builder()
@@ -329,8 +330,8 @@ public class CustomMetadataTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"update.s3object.cm1-again", "update"},
-            dependsOnGroups = {"update.s3object.cm2"})
+            groups = {"link.cm.s3object.3"},
+            dependsOnGroups = {"link.cm.s3object.2"})
     void updateObjectCM1() {
         try {
             CustomMetadataAttributes cm = CustomMetadataAttributes.builder()
@@ -355,8 +356,8 @@ public class CustomMetadataTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"update.s3object.cm1.remove", "update"},
-            dependsOnGroups = {"update.s3object.cm1", "update.s3object.cm2", "update.s3object.cm1-again"})
+            groups = {"unlink.cm.s3object.1"},
+            dependsOnGroups = {"link.cm.s3object.3"})
     void removeObjectCM1() {
         try {
             S3Object.removeCustomMetadata(S3AssetTest.s3Object1Guid, CM_NAME1);
@@ -376,8 +377,8 @@ public class CustomMetadataTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"update.s3object.cm2.remove", "update"},
-            dependsOnGroups = {"update.s3object.cm1.remove"})
+            groups = {"unlink.cm.s3object.2"},
+            dependsOnGroups = {"unlink.cm.s3object.1"})
     void removeObjectCM2() {
         try {
             S3Object.removeCustomMetadata(S3AssetTest.s3Object1Guid, CM_NAME2);
@@ -395,8 +396,17 @@ public class CustomMetadataTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"purge.cm", "purge"},
-            dependsOnGroups = {"create", "read", "update", "term.purge"},
+            groups = {"purge.cm"},
+            dependsOnGroups = {
+                "create.*",
+                "read.*",
+                "update.*",
+                "link.*",
+                "unlink.*",
+                "search.*",
+                "purge.term.*",
+                "purge.connection"
+            },
             alwaysRun = true)
     void purgeCustomMetadata() {
         try {
@@ -416,20 +426,9 @@ public class CustomMetadataTest extends AtlanLiveTest {
         assertNotNull(cma);
         assertNotNull(cma.getAttributes());
         assertEquals(cma.getAttributes().get(CM_ATTR_STRING), Set.of("one", "two", "three"));
-        /*assertEquals(
-                ((LazilyParsedNumber) term.getCustomMetadata()
-                                .getValueForAttribute(CM_NAME1, CM_ATTR_INTEGER))
-                        .intValue(),
-                42);
-        // TODO: float / double values lose precision with GSON serde...
-        assertEquals(
-        ((LazilyParsedNumber) term.getCustomMetadata().getValueForAttribute(CM_NAME1, CM_ATTR_DECIMAL)).floatValue(),
-        4.2);
-        assertEquals(
-                ((LazilyParsedNumber) term.getCustomMetadata()
-                                .getValueForAttribute(CM_NAME1, CM_ATTR_DATE))
-                        .longValue(),
-                1659308400000L);*/
+        assertEquals(cma.getAttributes().get(CM_ATTR_INTEGER), 42L);
+        // TODO: currently broken assertEquals(cma.getAttributes().get(CM_ATTR_DECIMAL), 4.2);
+        assertEquals(cma.getAttributes().get(CM_ATTR_DATE), 1659308400000L);
         assertEquals(cma.getAttributes().get(CM_ATTR_BOOLEAN), value);
         assertEquals(cma.getAttributes().get(CM_ATTR_URL), "http://www.example.com");
         assertEquals(cma.getAttributes().get(CM_ATTR_SQL), "SELECT * from SOMEWHERE;");

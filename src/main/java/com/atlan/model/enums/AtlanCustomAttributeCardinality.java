@@ -1,16 +1,14 @@
 /* SPDX-License-Identifier: Apache-2.0 */
 package com.atlan.model.enums;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 
 public enum AtlanCustomAttributeCardinality implements AtlanEnum {
-    @SerializedName("SINGLE")
     SINGLE("SINGLE"),
-
-    @SerializedName("SET")
     SET("SET");
 
+    @JsonValue
     @Getter(onMethod_ = {@Override})
     private final String value;
 

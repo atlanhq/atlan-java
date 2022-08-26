@@ -1,6 +1,7 @@
 /* SPDX-License-Identifier: Apache-2.0 */
 package com.atlan.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Map;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -31,13 +32,14 @@ public abstract class SQL extends Asset {
     /**
      * Unused attribues.
      */
-    transient Map<String, Long> queryUserMap;
+    @JsonIgnore
+    Map<String, Long> queryUserMap;
 
     /**
      * Time (epoch) at which the query count was last updated, in milliseconds.
      */
     @Attribute
-    final Long queryCountUpdatedAt;
+    Long queryCountUpdatedAt;
 
     /**
      * Name of the database in which this SQL asset exists, or null if it does not

@@ -5,6 +5,7 @@ import com.atlan.exception.AtlanException;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.relations.Reference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;
 import java.util.Map;
 import lombok.*;
@@ -53,7 +54,8 @@ public class Table extends SQL {
     Boolean isQueryPreview;
 
     /** Unused attributes. */
-    transient Map<String, String> queryPreviewConfig;
+    @JsonIgnore
+    Map<String, String> queryPreviewConfig;
 
     /** TBC */
     @Attribute
@@ -94,8 +96,6 @@ public class Table extends SQL {
 
     /**
      * Builds the minimal object necessary to create a table.
-     * To continue adding to the object, call {@link #toBuilder()} on the result and continue calling additional
-     * methods to add metadata followed by {@link TableBuilder#build()}.
      *
      * @param name of the table
      * @param connectorName name of the connector (software / system) that hosts the table
@@ -129,8 +129,6 @@ public class Table extends SQL {
 
     /**
      * Builds the minimal object necessary to update a table.
-     * To continue adding to the object, call {@link #toBuilder()} on the result and continue calling additional
-     * methods to add metadata followed by {@link TableBuilder#build()}.
      *
      * @param qualifiedName of the table
      * @param name of the table
@@ -138,6 +136,17 @@ public class Table extends SQL {
      */
     public static TableBuilder<?, ?> updater(String qualifiedName, String name) {
         return Table.builder().qualifiedName(qualifiedName).name(name);
+    }
+
+    /**
+     * Builds the minimal object necessary to apply an update to a table, from a potentially
+     * more-complete table object.
+     *
+     * @return the minimal object necessary to update the table, as a builder
+     */
+    @Override
+    protected TableBuilder<?, ?> trimToRequired() {
+        return updater(this.getQualifiedName(), this.getName());
     }
 
     /**

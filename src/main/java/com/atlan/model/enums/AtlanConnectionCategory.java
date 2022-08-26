@@ -1,19 +1,15 @@
 /* SPDX-License-Identifier: Apache-2.0 */
 package com.atlan.model.enums;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 
 public enum AtlanConnectionCategory implements AtlanEnum {
-    @SerializedName("warehouse")
     WAREHOUSE("warehouse"),
-
-    @SerializedName("bi")
     BI("bi"),
-
-    @SerializedName("ObjectStore")
     OBJECT_STORE("ObjectStore");
 
+    @JsonValue
     @Getter(onMethod_ = {@Override})
     private final String value;
 

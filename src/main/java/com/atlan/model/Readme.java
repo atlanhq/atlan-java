@@ -1,6 +1,7 @@
 /* SPDX-License-Identifier: Apache-2.0 */
 package com.atlan.model;
 
+import com.atlan.model.relations.GuidReference;
 import com.atlan.model.relations.Reference;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -29,8 +30,6 @@ public class Readme extends Resource {
 
     /**
      * Builds the minimal object necessary to create a README.
-     * To continue adding to the object, call {@link #toBuilder()} on the result and continue calling
-     * additional methods to add metadata followed by {@link Readme.ReadmeBuilder#build()}.
      *
      * @param assetTypeName type of the asset to which the README should be attached
      * @param assetGuid the GUID of the asset to which the README should be attached
@@ -44,24 +43,29 @@ public class Readme extends Resource {
                 .qualifiedName(generateQualifiedName(assetGuid))
                 .name(generateName(assetName))
                 .description(content)
-                .asset(Reference.to(assetTypeName, assetGuid));
+                .asset(GuidReference.to(assetTypeName, assetGuid));
     }
 
     /**
      * Builds the minimal object necessary to update a README.
-     * To continue adding to the object, call {@link #toBuilder()} on the result and continue calling
-     * additional methods to add metadata followed by {@link Readme.ReadmeBuilder#build()}.
      *
      * @param assetGuid the GUID of the asset to which the README is attached
      * @param assetName name of the asset to which the README is attached
-     * @param content the HTML content to use for the README
      * @return the minimal object necessary to update the README, as a builder
      */
-    public static ReadmeBuilder<?, ?> updater(String assetGuid, String assetName, String content) {
-        return Readme.builder()
-                .qualifiedName(generateQualifiedName(assetGuid))
-                .name(generateName(assetName))
-                .description(content);
+    public static ReadmeBuilder<?, ?> updater(String assetGuid, String assetName) {
+        return Readme.builder().qualifiedName(generateQualifiedName(assetGuid)).name(generateName(assetName));
+    }
+
+    /**
+     * Builds the minimal object necessary to apply an update to a readme, from a potentially
+     * more-complete readme object.
+     *
+     * @return the minimal object necessary to update the readme, as a builder
+     */
+    @Override
+    protected ReadmeBuilder<?, ?> trimToRequired() {
+        return updater(this.getQualifiedName(), this.getName());
     }
 
     /**

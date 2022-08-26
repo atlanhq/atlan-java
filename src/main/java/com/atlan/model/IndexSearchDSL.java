@@ -4,7 +4,7 @@ package com.atlan.model;
 import co.elastic.clients.elasticsearch._types.SortOptions;
 import co.elastic.clients.elasticsearch._types.aggregations.Aggregation;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
-import com.atlan.net.AtlanObject;
+import com.atlan.model.core.AtlanObject;
 import java.util.List;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

@@ -6,7 +6,8 @@ import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.relations.Reference;
-import com.atlan.net.ApiResource;
+import com.atlan.serde.Serde;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.testng.annotations.Test;
 
 public class TableTest {
@@ -62,7 +63,7 @@ public class TableTest {
             .sourceUpdatedBy("sourceUpdatedBy")
             .link(Reference.to("Resource", "linkGuid1"))
             .link(Reference.to("Resource", "linkGuid2"))
-            .readme(Reference.to("Readme", "readmeGuid"))
+            .readme(Reference.to(Readme.TYPE_NAME, "readmeGuid"))
             .meaning(Reference.to(GlossaryTerm.TYPE_NAME, "termGuid1"))
             .meaning(Reference.to(GlossaryTerm.TYPE_NAME, "termGuid2"))
             .queryCount(123L)
@@ -107,9 +108,9 @@ public class TableTest {
     @Test(
             groups = {"deserialize"},
             dependsOnGroups = {"serialize"})
-    void deserialization() {
+    void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
-        frodo = ApiResource.GSON.fromJson(serialized, Table.class);
+        frodo = Serde.mapper.readValue(serialized, Table.class);
         assertNotNull(frodo);
     }
 
@@ -120,7 +121,7 @@ public class TableTest {
         assertNotNull(serialized);
         assertNotNull(frodo);
         String backAgain = frodo.toJson();
-        assertEquals(serialized, backAgain, "Serialization is equivalent after serde loop.");
+        assertEquals(backAgain, serialized, "Serialization is equivalent after serde loop.");
     }
 
     @Test(
@@ -129,6 +130,6 @@ public class TableTest {
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);
-        assertEquals(full, frodo, "Deserialization is equivalent after serde loop.");
+        assertEquals(frodo, full, "Deserialization is equivalent after serde loop.");
     }
 }

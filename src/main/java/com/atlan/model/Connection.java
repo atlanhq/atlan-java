@@ -3,6 +3,7 @@ package com.atlan.model;
 
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.enums.AtlanConnectionCategory;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;
 import java.util.Map;
 import lombok.*;
@@ -31,10 +32,14 @@ public class Connection extends Asset {
     AtlanConnectionCategory category;
 
     /** Unused attributes */
-    transient String subCategory;
+    @JsonIgnore
+    String subCategory;
 
-    transient Map<String, String> queryPreviewConfig;
-    transient String queryConfig;
+    @JsonIgnore
+    Map<String, String> queryPreviewConfig;
+
+    @JsonIgnore
+    String queryConfig;
 
     /** Host name of the connection's source. */
     @Attribute
@@ -78,8 +83,6 @@ public class Connection extends Asset {
 
     /**
      * Builds the minimal object necessary to create a connection.
-     * To continue adding to the object, call {@link #toBuilder()} on the result and continue calling
-     * additional methods to add metadata followed by {@link ConnectionBuilder#build()}.
      * Note: at least one of {@code #adminRoles}, {@code #adminGroups}, or {@code #adminUsers} must be
      * provided or an InvalidRequestException will be thrown.
      *
@@ -133,8 +136,6 @@ public class Connection extends Asset {
 
     /**
      * Builds the minimal object necessary to update a connection.
-     * To continue adding to the object, call {@link #toBuilder()} on the result and continue calling
-     * additional methods to add metadata followed by {@link ConnectionBuilder#build()}.
      *
      * @param qualifiedName of the connection
      * @param name of the connection
@@ -142,6 +143,17 @@ public class Connection extends Asset {
      */
     public static ConnectionBuilder<?, ?> updater(String qualifiedName, String name) {
         return Connection.builder().qualifiedName(qualifiedName).name(name);
+    }
+
+    /**
+     * Builds the minimal object necessary to apply an update to a connection, from a potentially
+     * more-complete connection object.
+     *
+     * @return the minimal object necessary to update the connection, as a builder
+     */
+    @Override
+    protected ConnectionBuilder<?, ?> trimToRequired() {
+        return updater(this.getQualifiedName(), this.getName());
     }
 
     /**

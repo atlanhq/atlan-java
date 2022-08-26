@@ -2,24 +2,25 @@
 package com.atlan.net;
 
 import com.atlan.Atlan;
-import com.google.gson.Gson;
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.Duration;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 
 /** Helper class used by {@link LiveAtlanResponseGetter} to manage request telemetry. */
+@Slf4j
 class RequestTelemetry {
     /** The name of the header used to send request telemetry in requests. */
     public static final String HEADER_NAME = "X-Atlan-Client-Telemetry";
 
     private static final int MAX_REQUEST_METRICS_QUEUE_SIZE = 100;
 
-    private static final Gson gson = new Gson();
+    private static final ObjectMapper mapper = new ObjectMapper();
 
-    private static ConcurrentLinkedQueue<RequestMetrics> prevRequestMetrics =
-            new ConcurrentLinkedQueue<RequestMetrics>();
+    private static ConcurrentLinkedQueue<RequestMetrics> prevRequestMetrics = new ConcurrentLinkedQueue<>();
 
     /**
      * Returns an {@link Optional} containing the value of the {@code X-Atlan-Telemetry} header to add
@@ -43,7 +44,12 @@ class RequestTelemetry {
         }
 
         ClientTelemetryPayload payload = new ClientTelemetryPayload(requestMetrics);
-        return Optional.of(gson.toJson(payload));
+        try {
+            return Optional.of(mapper.writeValueAsString(payload));
+        } catch (JsonProcessingException e) {
+            log.error("Unable to serialize request metrics details: {}", payload, e);
+        }
+        return Optional.empty();
     }
 
     /**
@@ -72,16 +78,12 @@ class RequestTelemetry {
 
     @Data
     private static class ClientTelemetryPayload {
-        @SerializedName("last_request_metrics")
         private final RequestMetrics lastRequestMetrics;
     }
 
     @Data
     private static class RequestMetrics {
-        @SerializedName("request_id")
         private final String requestId;
-
-        @SerializedName("request_duration_ms")
         private final long requestDurationMs;
     }
 }

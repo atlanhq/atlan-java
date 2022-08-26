@@ -3,8 +3,8 @@ package com.atlan.model;
 
 import com.atlan.api.IndexSearchEndpoint;
 import com.atlan.exception.AtlanException;
+import com.atlan.model.core.AtlanObject;
 import com.atlan.model.responses.IndexSearchResponse;
-import com.atlan.net.AtlanObject;
 import java.util.List;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

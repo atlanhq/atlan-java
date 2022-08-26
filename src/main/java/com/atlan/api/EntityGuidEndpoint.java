@@ -5,7 +5,7 @@ import com.atlan.cache.CustomMetadataCache;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.CustomMetadataAttributes;
-import com.atlan.model.core.CustomMetadataUpdateRequest;
+import com.atlan.model.requests.CustomMetadataUpdateRequest;
 import com.atlan.model.responses.EntityResponse;
 import com.atlan.net.ApiResource;
 import java.util.Map;
@@ -47,7 +47,7 @@ public class EntityGuidEndpoint {
                                 "%s%s/businessmetadata?isOverwrite=false", endpoint, ApiResource.urlEncodeId(guid)));
                 CustomMetadataUpdateRequest cmur =
                         new CustomMetadataUpdateRequest(cmName, values.getAttributes(), true);
-                ApiResource.request(ApiResource.RequestMethod.POST, url, cmur, EntityResponse.class, null);
+                ApiResource.request(ApiResource.RequestMethod.POST, url, cmur, null, null);
             }
         } else {
             throw new InvalidRequestException(
@@ -82,7 +82,7 @@ public class EntityGuidEndpoint {
                                 endpoint, ApiResource.urlEncodeId(guid), ApiResource.urlEncodeId(cmId)));
                 CustomMetadataUpdateRequest cmur =
                         new CustomMetadataUpdateRequest(cmName, values.getAttributes(), false);
-                ApiResource.request(ApiResource.RequestMethod.POST, url, cmur, EntityResponse.class, null);
+                ApiResource.request(ApiResource.RequestMethod.POST, url, cmur, null, null);
             }
         } else {
             throw new InvalidRequestException(
@@ -116,7 +116,7 @@ public class EntityGuidEndpoint {
                     String.format(
                             "%s%s/businessmetadata/%s",
                             endpoint, ApiResource.urlEncodeId(guid), ApiResource.urlEncodeId(cmId)));
-            ApiResource.request(ApiResource.RequestMethod.DELETE, url, "", EntityResponse.class, null); */
+            ApiResource.request(ApiResource.RequestMethod.DELETE, url, "", null, null); */
         } else {
             throw new InvalidRequestException(
                     "No custom metadata found with the provided name.",

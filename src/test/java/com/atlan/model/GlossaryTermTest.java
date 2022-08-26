@@ -6,8 +6,8 @@ import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.relations.Reference;
-import com.atlan.model.serde.IndistinctAsset;
-import com.atlan.net.ApiResource;
+import com.atlan.serde.Serde;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.testng.annotations.Test;
 
 public class GlossaryTermTest {
@@ -63,7 +63,7 @@ public class GlossaryTermTest {
             .sourceUpdatedBy("sourceUpdatedBy")
             .link(Reference.to("Resource", "linkGuid1"))
             .link(Reference.to("Resource", "linkGuid2"))
-            .readme(Reference.to("Readme", "readmeGuid"))
+            .readme(Reference.to(Readme.TYPE_NAME, "readmeGuid"))
             .meaning(Reference.to(GlossaryTerm.TYPE_NAME, "termGuid1"))
             .meaning(Reference.to(GlossaryTerm.TYPE_NAME, "termGuid2"))
             .anchor(Reference.to(Glossary.TYPE_NAME, "glossaryGuid"))
@@ -100,9 +100,9 @@ public class GlossaryTermTest {
     @Test(
             groups = {"deserialize"},
             dependsOnGroups = {"serialize"})
-    void deserialization() {
+    void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
-        frodo = ApiResource.GSON.fromJson(serialized, GlossaryTerm.class);
+        frodo = Serde.mapper.readValue(serialized, GlossaryTerm.class);
         assertNotNull(frodo);
     }
 
@@ -113,7 +113,7 @@ public class GlossaryTermTest {
         assertNotNull(serialized);
         assertNotNull(frodo);
         String backAgain = frodo.toJson();
-        assertEquals(serialized, backAgain, "Serialization is not equivalent after serde loop,");
+        assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
     }
 
     @Test(
@@ -122,34 +122,6 @@ public class GlossaryTermTest {
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);
-        assertEquals(full, frodo, "Deserialization is not equivalent after serde loop,");
-    }
-
-    @Test
-    void anchorLinkByGuid() {
-        Reference anchorLink = Glossary.anchorLink("glossaryGuid", null);
-        assertNotNull(anchorLink);
-        assertEquals(anchorLink.getTypeName(), Glossary.TYPE_NAME);
-        assertEquals(anchorLink.getGuid(), "glossaryGuid");
-        assertNull(anchorLink.getUniqueAttributes());
-    }
-
-    @Test
-    void anchorLinkByQualifiedName() {
-        Reference anchorLink = Glossary.anchorLink(null, "glossaryQualifiedName");
-        assertNotNull(anchorLink);
-        assertEquals(anchorLink.getTypeName(), Glossary.TYPE_NAME);
-        assertNotNull(anchorLink.getUniqueAttributes());
-        assertEquals(anchorLink.getUniqueAttributes().getQualifiedName(), "glossaryQualifiedName");
-        assertNull(anchorLink.getGuid());
-    }
-
-    @Test
-    void anchorLinkByBoth() {
-        Reference anchorLink = Glossary.anchorLink("glossaryGuid", "glossaryQualifiedName");
-        assertNotNull(anchorLink);
-        assertEquals(anchorLink.getTypeName(), Glossary.TYPE_NAME);
-        assertEquals(anchorLink.getGuid(), "glossaryGuid");
-        assertNull(anchorLink.getUniqueAttributes());
+        assertEquals(frodo, full, "Deserialization is not equivalent after serde loop,");
     }
 }

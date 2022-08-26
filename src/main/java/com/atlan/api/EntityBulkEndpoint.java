@@ -3,9 +3,9 @@ package com.atlan.api;
 import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.InvalidRequestException;
-import com.atlan.model.core.BulkEntityRequest;
 import com.atlan.model.core.Entity;
 import com.atlan.model.enums.AtlanDeleteType;
+import com.atlan.model.requests.BulkEntityRequest;
 import com.atlan.model.responses.EntityMutationResponse;
 import com.atlan.net.ApiResource;
 import java.util.Collections;
@@ -52,7 +52,7 @@ public class EntityBulkEndpoint {
             StringBuilder guidList = new StringBuilder();
             for (String guid : guids) {
                 if (guid != null) {
-                    guidList.append("guid=").append(guid).append(",");
+                    guidList.append("guid=").append(guid).append("&");
                 }
             }
             if (guidList.length() > 0) {
