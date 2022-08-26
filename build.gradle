@@ -185,6 +185,7 @@ spotless {
     java {
         palantirJavaFormat("2.9.0")
         removeUnusedImports()
+        licenseHeaderFile('LICENSE_HEADER')
     }
 }
 

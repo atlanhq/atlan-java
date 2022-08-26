@@ -1,4 +1,5 @@
 /* SPDX-License-Identifier: Apache-2.0 */
+/* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.net;
 
 /** A response from Atlan's API, with body represented as a String. */

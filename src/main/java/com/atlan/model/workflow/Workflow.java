@@ -1,3 +1,5 @@
+/* SPDX-License-Identifier: Apache-2.0 */
+/* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.workflow;
 
 import com.atlan.api.WorkflowsEndpoint;
