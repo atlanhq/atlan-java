@@ -30,8 +30,6 @@ public class ColumnProcess extends AbstractProcess {
 
     /**
      * Builds the minimal object necessary to create a column-level process.
-     * To continue adding to the object, call {@link #toBuilder()} on the result and continue calling
-     * additional methods to add metadata followed by {@link ColumnProcessBuilder#build()}.
      *
      * @param name of the column-level process
      * @param connectorName name of the connector (software / system) that ran the process
@@ -54,5 +52,27 @@ public class ColumnProcess extends AbstractProcess {
                 .name(name)
                 .inputs(inputs)
                 .outputs(outputs);
+    }
+
+    /**
+     * Builds the minimal object necessary to update a column-level process.
+     *
+     * @param qualifiedName unique name of the column-level process
+     * @param name human-readable name of the column-level process
+     * @return the minimal object necessary to update the column-level process, as a builder
+     */
+    public static ColumnProcessBuilder<?, ?> updater(String qualifiedName, String name) {
+        return ColumnProcess.builder().qualifiedName(qualifiedName).name(name);
+    }
+
+    /**
+     * Builds the minimal object necessary to apply an update to a column-level process, from a potentially
+     * more-complete column-level process object.
+     *
+     * @return the minimal object necessary to update the column-level process, as a builder
+     */
+    @Override
+    protected ColumnProcessBuilder<?, ?> trimToRequired() {
+        return updater(this.getQualifiedName(), this.getName());
     }
 }

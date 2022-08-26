@@ -1,12 +1,22 @@
 package com.atlan.model.typedefs;
 
 import com.atlan.model.enums.AtlanClassificationColor;
-import com.atlan.net.AtlanObject;
+import com.atlan.net.AtlanObjectJ;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
+import lombok.extern.jackson.Jacksonized;
 
 /**
  * Options that can be defined for a classification.
  */
-public class ClassificationOptions extends AtlanObject {
+@Getter
+@Setter
+@Jacksonized
+@SuperBuilder(toBuilder = true)
+@EqualsAndHashCode(callSuper = false)
+public class ClassificationOptions extends AtlanObjectJ {
     private static final long serialVersionUID = 2L;
 
     /**

@@ -13,12 +13,14 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.jackson.Jacksonized;
 
 /**
  * Structural definition of a classification.
  */
 @Getter
 @Setter
+@Jacksonized
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 public class ClassificationDef extends TypeDef {
@@ -45,7 +47,7 @@ public class ClassificationDef extends TypeDef {
     /**
      * Builds the minimal object necessary to create a classification definition.
      * To continue adding to the object, call {@link #toBuilder()} on the result and continue calling additional
-     * methods to add metadata followed by {@link ClassificationDefBuilder#build()}.
+     * methods to add metadata followed by {@link ClassificationDefJBuilder#build()}.
      *
      * @param displayName the human-readable name for the classification
      * @param color the color to use for the classification

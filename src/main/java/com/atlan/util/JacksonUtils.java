@@ -1,6 +1,6 @@
 package com.atlan.util;
 
-import com.atlan.net.ApiResourceJ;
+import com.atlan.serde.Serde;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -113,6 +113,6 @@ public class JacksonUtils {
     public static <T> T deserializeObject(JsonNode node, String path, TypeReference<T> typeReference)
             throws JsonProcessingException {
         JsonNode value = node.get(path);
-        return value == null || value.isNull() ? null : ApiResourceJ.mapper.readValue(value.toString(), typeReference);
+        return value == null || value.isNull() ? null : Serde.mapper.readValue(value.toString(), typeReference);
     }
 }

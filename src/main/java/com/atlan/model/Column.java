@@ -2,9 +2,10 @@
 package com.atlan.model;
 
 import com.atlan.model.relations.Reference;
-import com.google.gson.annotations.SerializedName;
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Map;
+import java.util.Set;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -76,11 +77,11 @@ public class Column extends SQL {
 
     /** TBC */
     @Attribute
-    final String pinnedBy;
+    String pinnedBy;
 
     /** TBC */
     @Attribute
-    final Long pinnedAt;
+    Long pinnedAt;
 
     /** Total number of digits allowed when the {@link #dataType} is numeric. */
     @Attribute
@@ -103,7 +104,8 @@ public class Column extends SQL {
     Long maxLength;
 
     /** Unused attributes. */
-    transient Map<String, String> validations;
+    @JsonIgnore
+    Map<String, String> validations;
 
     /** Table in which this column exists, or null if the column exists in a view. */
     @Attribute
@@ -119,13 +121,13 @@ public class Column extends SQL {
 
     /** Materialized view in which this column exists, or null if the column exists in a table or view. */
     @Attribute
-    @SerializedName("materialisedView")
+    @JsonProperty("materialisedView")
     Reference materializedView;
 
     /** Queries that involve this column. */
     @Singular
     @Attribute
-    List<Reference> queries;
+    Set<Reference> queries;
 
     /**
      * Retrieve the parent of this column, irrespective of its type.
@@ -144,8 +146,6 @@ public class Column extends SQL {
 
     /**
      * Builds the minimal object necessary to create a column.
-     * To continue adding to the object, call {@link #toBuilder()} on the result and continue calling additional
-     * methods to add metadata followed by {@link ColumnBuilder#build()}.
      *
      * @param name of the column
      * @param connectorName name of the connector (software / system) that hosts the column
@@ -190,8 +190,6 @@ public class Column extends SQL {
 
     /**
      * Builds the minimal object necessary to update a column.
-     * To continue adding to the object, call {@link #toBuilder()} on the result and continue calling additional
-     * methods to add metadata followed by {@link ColumnBuilder#build()}.
      *
      * @param qualifiedName of the column
      * @param name of the column
@@ -199,5 +197,16 @@ public class Column extends SQL {
      */
     public static ColumnBuilder<?, ?> updater(String qualifiedName, String name) {
         return Column.builder().qualifiedName(qualifiedName).name(name);
+    }
+
+    /**
+     * Builds the minimal object necessary to apply an update to a column, from a potentially
+     * more-complete column object.
+     *
+     * @return the minimal object necessary to update the column, as a builder
+     */
+    @Override
+    protected ColumnBuilder<?, ?> trimToRequired() {
+        return updater(this.getQualifiedName(), this.getName());
     }
 }

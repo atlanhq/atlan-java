@@ -2,17 +2,11 @@
 package com.atlan.model.enums;
 
 import com.fasterxml.jackson.annotation.JsonValue;
-import com.google.gson.annotations.SerializedName;
 import lombok.Getter;
 
 public enum AtlanAnnouncementType implements AtlanEnum {
-    @SerializedName("information")
     INFORMATION("information"),
-
-    @SerializedName("warning")
     WARNING("warning"),
-
-    @SerializedName("issue")
     ISSUE("issue");
 
     @JsonValue

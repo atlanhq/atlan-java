@@ -1,7 +1,7 @@
 package com.atlan.model.responses;
 
-import com.atlan.model.admin.WorkflowMetadata;
-import com.atlan.model.admin.WorkflowSpec;
+import com.atlan.model.workflow.WorkflowMetadata;
+import com.atlan.model.workflow.WorkflowSpec;
 import com.atlan.net.ApiResource;
 import java.util.List;
 import lombok.Data;

@@ -23,7 +23,7 @@ public abstract class Atlan {
     private static volatile int connectTimeout = -1;
     private static volatile int readTimeout = -1;
 
-    private static volatile int maxNetworkRetries = 0;
+    private static volatile int maxNetworkRetries = 10;
 
     private static volatile String apiToken = null;
     private static volatile String apiBase = null;

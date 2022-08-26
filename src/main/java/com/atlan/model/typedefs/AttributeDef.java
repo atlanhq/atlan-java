@@ -2,22 +2,24 @@ package com.atlan.model.typedefs;
 
 import com.atlan.model.enums.AtlanCustomAttributeCardinality;
 import com.atlan.model.enums.AtlanCustomAttributePrimitiveType;
-import com.atlan.net.AtlanObject;
+import com.atlan.net.AtlanObjectJ;
 import java.util.Map;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.jackson.Jacksonized;
 
 /**
  * Defines the structure of a single attribute for a type definition in Atlan.
  */
 @Getter
 @Setter
+@Jacksonized
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = false)
-public class AttributeDef extends AtlanObject {
+public class AttributeDef extends AtlanObjectJ {
     private static final long serialVersionUID = 2L;
 
     /**
@@ -31,7 +33,7 @@ public class AttributeDef extends AtlanObject {
      */
     public static AttributeDef of(
             String displayName, AtlanCustomAttributePrimitiveType type, String optionsName, boolean multiValued) {
-        AttributeDef.AttributeDefBuilder<?, ?> builder =
+        AttributeDefBuilder<?, ?> builder =
                 AttributeDef.builder().name(displayName).displayName(displayName);
         String baseType;
         switch (type) {

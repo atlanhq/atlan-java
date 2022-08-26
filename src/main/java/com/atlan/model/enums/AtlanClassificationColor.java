@@ -2,17 +2,11 @@
 package com.atlan.model.enums;
 
 import com.fasterxml.jackson.annotation.JsonValue;
-import com.google.gson.annotations.SerializedName;
 import lombok.Getter;
 
 public enum AtlanClassificationColor implements AtlanEnum {
-    @SerializedName("Green")
     GREEN("Green"),
-
-    @SerializedName("Yellow")
     YELLOW("Yellow"),
-
-    @SerializedName("Red")
     RED("Red");
 
     @JsonValue

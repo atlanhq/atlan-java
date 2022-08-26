@@ -2,14 +2,10 @@
 package com.atlan.model.enums;
 
 import com.fasterxml.jackson.annotation.JsonValue;
-import com.google.gson.annotations.SerializedName;
 import lombok.Getter;
 
 public enum AtlanCustomAttributeCardinality implements AtlanEnum {
-    @SerializedName("SINGLE")
     SINGLE("SINGLE"),
-
-    @SerializedName("SET")
     SET("SET");
 
     @JsonValue

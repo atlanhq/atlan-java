@@ -1,8 +1,6 @@
 package com.atlan.model.responses;
 
-import com.atlan.model.typedefs.ClassificationDef;
-import com.atlan.model.typedefs.CustomMetadataDef;
-import com.atlan.model.typedefs.TypeDef;
+import com.atlan.model.typedefs.*;
 import com.atlan.net.ApiResource;
 import java.util.List;
 import lombok.Data;

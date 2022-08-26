@@ -2,17 +2,11 @@
 package com.atlan.model.enums;
 
 import com.fasterxml.jackson.annotation.JsonValue;
-import com.google.gson.annotations.SerializedName;
 import lombok.Getter;
 
 public enum AtlanCertificateStatus implements AtlanEnum {
-    @SerializedName("VERIFIED")
     VERIFIED("VERIFIED"),
-
-    @SerializedName("DRAFT")
     DRAFT("DRAFT"),
-
-    @SerializedName("DEPRECATED")
     DEPRECATED("DEPRECATED");
 
     @JsonValue

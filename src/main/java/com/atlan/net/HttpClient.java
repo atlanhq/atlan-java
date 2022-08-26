@@ -4,7 +4,9 @@ package com.atlan.net;
 import com.atlan.Atlan;
 import com.atlan.exception.ApiConnectionException;
 import com.atlan.exception.AtlanException;
+import com.atlan.serde.Serde;
 import com.atlan.util.Stopwatch;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.time.Duration;
@@ -12,8 +14,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
+import lombok.extern.slf4j.Slf4j;
 
 /** Base abstract class for HTTP clients used to send requests to Atlan's API. */
+@Slf4j
 public abstract class HttpClient {
     /** Maximum sleep time between tries to send HTTP requests after network failure. */
     public static final Duration maxNetworkRetriesDelay = Duration.ofSeconds(5);
@@ -97,7 +101,7 @@ public abstract class HttpClient {
 
     public <T extends AbstractAtlanResponse<?>> T sendWithRetries(AtlanRequest request, RequestSendFunction<T> send)
             throws AtlanException {
-        ApiConnectionException requestException = null;
+        AtlanException requestException = null;
         T response = null;
         int retry = 0;
 
@@ -187,11 +191,15 @@ public abstract class HttpClient {
         propertyMap.put("bindings.version", Atlan.VERSION);
         propertyMap.put("lang", "Java");
         propertyMap.put("publisher", "Atlan");
-        if (Atlan.getAppInfo() != null) {
-            propertyMap.put("application", ApiResource.GSON.toJson(Atlan.getAppInfo()));
-        }
 
-        return ApiResource.GSON.toJson(propertyMap);
+        try {
+            if (Atlan.getAppInfo() != null) {
+                propertyMap.put("application", Serde.mapper.writeValueAsString(Atlan.getAppInfo()));
+            }
+            return Serde.mapper.writeValueAsString(propertyMap);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException("Unable to build client user agent string.", e);
+        }
     }
 
     private static String formatAppInfo(Map<String, String> info) {
@@ -212,6 +220,9 @@ public abstract class HttpClient {
             int numRetries, AtlanException exception, AtlanRequest request, T response) {
         // Do not retry if we are out of retries.
         if (numRetries >= request.options().getMaxNetworkRetries()) {
+            log.error(
+                    " ... beyond max retries ({}), failing! If this is unexpected, you can try increasing the maximum retries through Atlan.setMaxNetworkRetries()",
+                    request.options().getMaxNetworkRetries());
             return false;
         }
 
@@ -220,38 +231,18 @@ public abstract class HttpClient {
                 && (exception.getCause() != null)
                 && (exception.getCause() instanceof ConnectException
                         || exception.getCause() instanceof SocketTimeoutException)) {
+            log.info(" ... network issue, will retry.");
             return true;
         }
 
-        // The API may ask us not to retry (eg; if doing so would be a no-op)
-        // or advise us to retry (eg; in cases of lock timeouts); we defer to that.
-        if ((response != null) && (response.headers() != null)) {
-            String value = response.headers().firstValue("Atlan-Should-Retry").orElse(null);
-
-            if ("true".equals(value)) {
-                return true;
-            }
-
-            if ("false".equals(value)) {
-                return false;
-            }
-        }
-
-        // Retry on conflict errors.
-        if ((response != null) && (response.code() == 409)) {
+        // Retry on permission failure (since these are granted asynchronously)
+        if (response != null && response.code() == 403) {
+            log.info(" ... no permission for the operation (yet), will retry.");
             return true;
         }
 
         // Retry on 500, 503, and other internal errors.
-        //
-        // Note that we expect the Atlan-Should-Retry header to be false
-        // in most cases when a 500 is returned, since our idempotency framework
-        // would typically replay it anyway.
-        if ((response != null) && (response.code() >= 500)) {
-            return true;
-        }
-
-        return false;
+        return (response != null) && (response.code() >= 500);
     }
 
     private Duration sleepTime(int numRetries) {

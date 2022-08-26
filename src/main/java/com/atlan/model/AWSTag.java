@@ -1,17 +1,19 @@
 /* SPDX-License-Identifier: Apache-2.0 */
 package com.atlan.model;
 
-import com.atlan.net.AtlanObject;
+import com.atlan.net.AtlanObjectJ;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.jackson.Jacksonized;
 
 /**
  * Detailed information about an AWS tag.
  */
 @Data
+@Jacksonized
 @SuperBuilder
 @EqualsAndHashCode(callSuper = true)
-public class AWSTag extends AtlanObject {
+public class AWSTag extends AtlanObjectJ {
     /**
      * Quickly create a new AWS tag.
      * @param key key of the tag

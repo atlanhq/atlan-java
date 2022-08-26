@@ -21,6 +21,13 @@ public class EntityMutationResponse extends ApiResource {
     Map<String, String> guidAssignments;
 
     /**
+     * List of entities that were partially updated.
+     * This will only be populated by certain API calls, and actually duplicates the details you'll find
+     * in {@link MutatedEntities#PARTIAL_UPDATE} for those same API calls.
+     */
+    List<Entity> partialUpdatedEntities;
+
+    /**
      * Retrieve the list of entities that were created.
      * @return list of created entities, or an empty list if none were created
      */

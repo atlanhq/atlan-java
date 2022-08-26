@@ -2,9 +2,9 @@
 package com.atlan.model;
 
 import com.atlan.model.relations.Reference;
-import com.atlan.model.relations.UniqueAttributes;
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Map;
+import java.util.Set;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -27,27 +27,33 @@ public class Glossary extends Asset {
     String typeName = TYPE_NAME;
 
     /** Unused attributes. */
-    transient String shortDescription;
+    @JsonIgnore
+    String shortDescription;
 
-    transient String longDescription;
-    transient String language;
-    transient String usage;
-    transient Map<String, String> additionalAttributes;
+    @JsonIgnore
+    String longDescription;
+
+    @JsonIgnore
+    String language;
+
+    @JsonIgnore
+    String usage;
+
+    @JsonIgnore
+    Map<String, String> additionalAttributes;
 
     /** Terms within this glossary. */
     @Singular
     @Attribute
-    List<Reference> terms;
+    Set<Reference> terms;
 
     /** Categories within this glossary. */
     @Singular
     @Attribute
-    List<Reference> categories;
+    Set<Reference> categories;
 
     /**
      * Builds the minimal object necessary for creating a glossary.
-     * To continue adding to the object, call {@link #toBuilder()} on the result and continue calling additional
-     * methods to add metadata followed by {@link GlossaryBuilder#build()}.
      *
      * @param name of the glossary
      * @return the minimal object necessary to create the glossary, as a builder
@@ -58,8 +64,6 @@ public class Glossary extends Asset {
 
     /**
      * Builds the minimal object necessary to update a glossary.
-     * To continue adding to the object, call {@link #toBuilder()} on the result and continue calling additional
-     * methods to add metadata followed by {@link GlossaryBuilder#build()}.
      *
      * @param guid unique identifier of the glossary
      * @param name of the glossary
@@ -67,6 +71,17 @@ public class Glossary extends Asset {
      */
     public static GlossaryBuilder<?, ?> updater(String guid, String name) {
         return Glossary.builder().guid(guid).qualifiedName(name).name(name);
+    }
+
+    /**
+     * Builds the minimal object necessary to apply an update to a glossary, from a potentially
+     * more-complete glossary object.
+     *
+     * @return the minimal object necessary to update the glossary, as a builder
+     */
+    @Override
+    protected GlossaryBuilder<?, ?> trimToRequired() {
+        return updater(this.getGuid(), this.getName());
     }
 
     /**
@@ -81,14 +96,9 @@ public class Glossary extends Asset {
         if (glossaryGuid == null && glossaryQualifiedName == null) {
             return null;
         } else if (glossaryGuid != null) {
-            anchor = Reference.builder().typeName(TYPE_NAME).guid(glossaryGuid).build();
+            anchor = Reference.to(TYPE_NAME, glossaryGuid);
         } else {
-            anchor = Reference.builder()
-                    .typeName(TYPE_NAME)
-                    .uniqueAttributes(UniqueAttributes.builder()
-                            .qualifiedName(glossaryQualifiedName)
-                            .build())
-                    .build();
+            anchor = Reference.by(TYPE_NAME, glossaryQualifiedName);
         }
         return anchor;
     }

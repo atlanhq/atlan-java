@@ -1,5 +1,6 @@
 package com.atlan.model.admin;
 
+import com.atlan.model.workflow.*;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;

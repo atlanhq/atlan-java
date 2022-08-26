@@ -2,17 +2,11 @@
 package com.atlan.model.enums;
 
 import com.fasterxml.jackson.annotation.JsonValue;
-import com.google.gson.annotations.SerializedName;
 import lombok.Getter;
 
 public enum AtlanConnectionCategory implements AtlanEnum {
-    @SerializedName("warehouse")
     WAREHOUSE("warehouse"),
-
-    @SerializedName("bi")
     BI("bi"),
-
-    @SerializedName("ObjectStore")
     OBJECT_STORE("ObjectStore");
 
     @JsonValue

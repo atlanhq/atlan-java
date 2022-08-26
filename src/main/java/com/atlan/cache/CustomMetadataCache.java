@@ -6,13 +6,11 @@ import com.atlan.exception.LogicException;
 import com.atlan.model.CustomMetadataAttributes;
 import com.atlan.model.enums.AtlanTypeCategory;
 import com.atlan.model.responses.TypeDefResponse;
-import com.atlan.model.serde.Removable;
 import com.atlan.model.typedefs.AttributeDef;
 import com.atlan.model.typedefs.CustomMetadataDef;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
+import com.atlan.serde.Removable;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import lombok.extern.slf4j.Slf4j;
@@ -177,7 +175,7 @@ public class CustomMetadataCache {
      * @param businessAttributes business attributes object, which will be changed
      * @throws AtlanException on any API communication problem if the cache needs to be refreshed
      */
-    public static void getBusinessAttributesFromCustomMetadata(
+    public static void getBusinessAttributesFromCustomMetadataJ(
             Map<String, CustomMetadataAttributes> customMetadata, Map<String, Map<String, Object>> businessAttributes)
             throws AtlanException {
         if (customMetadata != null) {
@@ -220,19 +218,23 @@ public class CustomMetadataCache {
      * @throws AtlanException on any API communication problem if the cache needs to be refreshed
      */
     public static Map<String, CustomMetadataAttributes> getCustomMetadataFromBusinessAttributes(
-            JsonObject businessAttributes) throws AtlanException {
+            JsonNode businessAttributes) throws AtlanException {
         Map<String, CustomMetadataAttributes> map = new LinkedHashMap<>();
-        for (String cmId : businessAttributes.keySet()) {
+        Iterator<String> itrCM = businessAttributes.fieldNames();
+        while (itrCM.hasNext()) {
+            String cmId = itrCM.next();
             String cmName = getNameForId(cmId);
-            JsonObject bmAttrs = businessAttributes.get(cmId).getAsJsonObject();
+            JsonNode bmAttrs = businessAttributes.get(cmId);
             CustomMetadataAttributes.CustomMetadataAttributesBuilder<?, ?> builder = CustomMetadataAttributes.builder();
-            for (String attrId : bmAttrs.keySet()) {
+            Iterator<String> itrCMA = bmAttrs.fieldNames();
+            while (itrCMA.hasNext()) {
+                String attrId = itrCMA.next();
                 String cmAttrName = getAttrNameForId(cmId, attrId);
-                JsonElement jsonValue = bmAttrs.get(attrId);
-                if (jsonValue.isJsonArray()) {
+                JsonNode jsonValue = bmAttrs.get(attrId);
+                if (jsonValue.isArray()) {
                     Set<Object> values = new HashSet<>();
-                    JsonArray array = jsonValue.getAsJsonArray();
-                    for (JsonElement element : array) {
+                    ArrayNode array = (ArrayNode) jsonValue;
+                    for (JsonNode element : array) {
                         Object primitive = deserializePrimitive(element);
                         values.add(primitive);
                     }
@@ -243,13 +245,13 @@ public class CustomMetadataCache {
                         // treat as non-existent in the deserialization as well)
                         builder.attribute(cmAttrName, values);
                     }
-                } else if (jsonValue.isJsonPrimitive()) {
+                } else if (jsonValue.isValueNode()) {
                     Object primitive = deserializePrimitive(jsonValue);
                     builder.attribute(cmAttrName, primitive);
                 } else {
                     throw new LogicException(
                             "Unable to deserialize non-primitive custom metadata value.",
-                            jsonValue.getAsString(),
+                            jsonValue.toString(),
                             "ATLAN-CLIENT-CM-500-002",
                             500);
                 }
@@ -262,26 +264,27 @@ public class CustomMetadataCache {
         return map;
     }
 
-    private static Object deserializePrimitive(JsonElement jsonValue) throws LogicException {
-        if (jsonValue.isJsonPrimitive()) {
-            JsonPrimitive primitive = jsonValue.getAsJsonPrimitive();
-            if (primitive.isString()) {
-                return primitive.getAsString();
-            } else if (primitive.isBoolean()) {
-                return primitive.getAsBoolean();
-            } else if (primitive.isNumber()) {
-                return primitive.getAsNumber();
+    private static Object deserializePrimitive(JsonNode jsonValue) throws LogicException {
+        if (jsonValue.isValueNode()) {
+            if (jsonValue.isTextual()) {
+                return jsonValue.asText();
+            } else if (jsonValue.isBoolean()) {
+                return jsonValue.asBoolean();
+            } else if (jsonValue.isIntegralNumber()) {
+                return jsonValue.asLong();
+            } else if (jsonValue.isFloatingPointNumber()) {
+                return jsonValue.asDouble();
             } else {
                 throw new LogicException(
                         "Unable to deserialize unrecognized primitive custom metadata value.",
-                        primitive.getAsString(),
+                        jsonValue.toString(),
                         "ATLAN-CLIENT-CM-500-001",
                         500);
             }
         } else {
             throw new LogicException(
                     "Unable to deserialize non-primitive custom metadata value.",
-                    jsonValue.getAsString(),
+                    jsonValue.toString(),
                     "ATLAN-CLIENT-CM-500-002",
                     500);
         }

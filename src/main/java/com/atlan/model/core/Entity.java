@@ -5,12 +5,19 @@ import com.atlan.api.EntityBulkEndpoint;
 import com.atlan.api.EntityGuidEndpoint;
 import com.atlan.api.EntityUniqueAttributesEndpoint;
 import com.atlan.exception.AtlanException;
-import com.atlan.model.CustomMetadataAttributes;
+import com.atlan.model.*;
 import com.atlan.model.enums.AtlanDeleteType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.responses.EntityMutationResponse;
 import com.atlan.model.responses.EntityResponse;
-import com.atlan.net.AtlanObject;
+import com.atlan.net.AtlanObjectJ;
+import com.atlan.serde.EntityDeserializer;
+import com.atlan.serde.EntitySerializer;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -19,9 +26,26 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = false)
+@JsonSerialize(using = EntitySerializer.class)
+@JsonDeserialize(using = EntityDeserializer.class)
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "typeName")
+@JsonSubTypes({
+    @JsonSubTypes.Type(value = Readme.class, name = Readme.TYPE_NAME),
+    @JsonSubTypes.Type(value = Glossary.class, name = Glossary.TYPE_NAME),
+    @JsonSubTypes.Type(value = GlossaryCategory.class, name = GlossaryCategory.TYPE_NAME),
+    @JsonSubTypes.Type(value = GlossaryTerm.class, name = GlossaryTerm.TYPE_NAME),
+    @JsonSubTypes.Type(value = Connection.class, name = Connection.TYPE_NAME),
+    @JsonSubTypes.Type(value = Table.class, name = Table.TYPE_NAME),
+    @JsonSubTypes.Type(value = Column.class, name = Column.TYPE_NAME),
+    @JsonSubTypes.Type(value = S3Bucket.class, name = S3Bucket.TYPE_NAME),
+    @JsonSubTypes.Type(value = S3Object.class, name = S3Object.TYPE_NAME),
+    @JsonSubTypes.Type(value = LineageProcess.class, name = LineageProcess.TYPE_NAME),
+    @JsonSubTypes.Type(value = ColumnProcess.class, name = ColumnProcess.TYPE_NAME),
+})
 @SuppressWarnings("cast")
-public abstract class Entity extends AtlanObject {
+public abstract class Entity extends AtlanObjectJ {
     /** Internal tracking of fields that should be serialized with null values. */
+    @JsonIgnore
     transient Set<String> nullFields;
 
     /** Retrieve the list of fields to be serialized with null values. */
@@ -44,7 +68,7 @@ public abstract class Entity extends AtlanObject {
     }
 
     /** Name of the type definition that defines this entity. */
-    transient String typeName;
+    String typeName;
 
     /** Globally-unique identifier for this entity. */
     String guid;
@@ -57,34 +81,12 @@ public abstract class Entity extends AtlanObject {
     Set<Classification> classifications;
 
     /**
-     * Map of attributes in the entity and their values. This is intended for use by internal (de)serialization
-     * only. For actual attributes and their values, use the top-level strongly-typed getters and setters.
-     */
-    @EqualsAndHashCode.Exclude
-    Map<String, Object> attributes;
-
-    /**
-     * Map of relationships for the entity and their values. This is intended for use by internal (de)serialization
-     * only. For actual attributes and their values, use the top-level strongly-typed getters and setters.
-     */
-    @EqualsAndHashCode.Exclude
-    Map<String, Object> relationshipAttributes;
-
-    /**
-     * Map of custom metadata attributes and values defined on the entity. This is intended for use by internal
-     * (de)serialization only. For actual custom metadata attributes and values, use the top-level
-     * {@link #customMetadataSets} field and its related operations.
-     */
-    @EqualsAndHashCode.Exclude
-    Map<String, Map<String, Object>> businessAttributes;
-
-    /**
      * Map of custom metadata attributes and values defined on the entity. The map is keyed by the human-readable
      * name of the custom metadata set, and the values are a further mapping from human-readable attribute name
      * to the value for that attribute on this entity.
      */
     @Singular("customMetadata")
-    transient Map<String, CustomMetadataAttributes> customMetadataSets;
+    Map<String, CustomMetadataAttributes> customMetadataSets;
 
     /** Status of the entity. */
     final AtlanStatus status;
@@ -118,7 +120,6 @@ public abstract class Entity extends AtlanObject {
         // It is sufficient to simply exclude businessAttributes from a request in order
         // for them to be removed, as long as the "replaceBusinessAttributes" flag is set
         // to true (which it must be for any update to work to businessAttributes anyway)
-        businessAttributes = null;
         customMetadataSets = null;
     }
 

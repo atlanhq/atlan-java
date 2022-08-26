@@ -2,15 +2,17 @@
 package com.atlan.model.core;
 
 import com.atlan.model.enums.AtlanStatus;
-import com.atlan.net.AtlanObject;
-import lombok.Data;
+import com.atlan.net.AtlanObjectJ;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
-@Data
+@Getter
+@Setter
 @SuperBuilder
 @EqualsAndHashCode(callSuper = false)
-public class Classification extends AtlanObject {
+public class Classification extends AtlanObjectJ {
 
     public static Classification of(String classificationName, String entityGuid) {
         return Classification.builder()
@@ -21,6 +23,10 @@ public class Classification extends AtlanObject {
                 .removePropagationsOnEntityDelete(true)
                 .restrictPropagationThroughLineage(false)
                 .build();
+    }
+
+    public Classification() {
+        // Necessary for Jackson deserialization
     }
 
     /**

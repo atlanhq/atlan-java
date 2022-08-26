@@ -1,6 +1,6 @@
 package com.atlan.model;
 
-import com.atlan.net.AtlanObject;
+import com.atlan.net.AtlanObjectJ;
 import java.util.Map;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -14,7 +14,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = false)
 @SuppressWarnings("cast")
-public class CustomMetadataAttributes extends AtlanObject {
+public class CustomMetadataAttributes extends AtlanObjectJ {
 
     /**
      * Mapping of custom metadata attributes to values, all by internal IDs.

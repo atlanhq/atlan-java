@@ -5,9 +5,7 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.enums.AtlanTypeCategory;
 import com.atlan.model.responses.TypeDefResponse;
-import com.atlan.model.typedefs.ClassificationDef;
-import com.atlan.model.typedefs.CustomMetadataDef;
-import com.atlan.model.typedefs.TypeDef;
+import com.atlan.model.typedefs.*;
 import com.atlan.net.ApiResource;
 import java.util.List;
 
@@ -70,6 +68,6 @@ public class TypeDefsEndpoint {
     public static void purgeTypeDef(String internalName) throws AtlanException {
         String url =
                 String.format("%s%s", Atlan.getBaseUrl(), String.format("%s/name/%s", endpoint_singular, internalName));
-        ApiResource.request(ApiResource.RequestMethod.DELETE, url, "", TypeDefResponse.class, null);
+        ApiResource.request(ApiResource.RequestMethod.DELETE, url, "", null, null);
     }
 }
