@@ -2,6 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.util;
 
+/* Based on original code from https://github.com/stripe/stripe-java (under MIT license) */
 import java.io.Serializable;
 import java.util.AbstractMap;
 import java.util.Collection;
@@ -15,7 +16,7 @@ import java.util.stream.Collectors;
  *
  * <p>All keys are expected to be strings (though {@code null} is a valid key). The map remembers
  * the case of the last key to be set, and {@link Map#keySet()} or {@link Map#entrySet()} will
- * contain case-sensitive keys. However, querying and contains testing is case insensitive.
+ * contain case-sensitive keys. However, querying and contains testing is case-insensitive.</p>
  */
 public class CaseInsensitiveMap<V> extends AbstractMap<String, V> implements Map<String, V>, Cloneable, Serializable {
     private static final long serialVersionUID = 107333939521129358L;

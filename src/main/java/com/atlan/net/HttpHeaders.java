@@ -2,6 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.net;
 
+/* Based on original code from https://github.com/stripe/stripe-java (under MIT license) */
 import static java.util.Objects.requireNonNull;
 
 import com.atlan.util.CaseInsensitiveMap;

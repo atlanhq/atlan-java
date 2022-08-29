@@ -2,6 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.net;
 
+/* Based on original code from https://github.com/stripe/stripe-java (under MIT license) */
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.core.AtlanObject;

@@ -2,10 +2,10 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.net;
 
+/* Based on original code from https://github.com/stripe/stripe-java (under MIT license) */
 import com.atlan.Atlan;
 import java.net.PasswordAuthentication;
 import java.net.Proxy;
-import java.util.Map;
 import lombok.EqualsAndHashCode;
 
 @EqualsAndHashCode(callSuper = false)
@@ -14,13 +14,8 @@ public class RequestOptions {
     private final String clientId;
     private final String idempotencyKey;
     private final String atlanAccount;
-    /** Atlan version always set at {@link Atlan#API_VERSION}. */
-    private final String atlanVersion = Atlan.API_VERSION;
-    /**
-     * Atlan version override when made on behalf of others. This can be used when the returned
-     * response will not be deserialized into the current classes pinned to {@link Atlan#VERSION}.
-     */
-    private final String atlanVersionOverride;
+    /** Atlan version always set at {@link Atlan#VERSION}. */
+    private final String atlanVersion = Atlan.VERSION;
 
     private final int connectTimeout;
     private final int readTimeout;
@@ -35,7 +30,6 @@ public class RequestOptions {
                 Atlan.clientId,
                 null,
                 null,
-                null,
                 Atlan.getConnectTimeout(),
                 Atlan.getReadTimeout(),
                 Atlan.getMaxNetworkRetries(),
@@ -48,7 +42,6 @@ public class RequestOptions {
             String clientId,
             String idempotencyKey,
             String atlanAccount,
-            String atlanVersionOverride,
             int connectTimeout,
             int readTimeout,
             int maxNetworkRetries,
@@ -58,7 +51,6 @@ public class RequestOptions {
         this.clientId = clientId;
         this.idempotencyKey = idempotencyKey;
         this.atlanAccount = atlanAccount;
-        this.atlanVersionOverride = atlanVersionOverride;
         this.connectTimeout = connectTimeout;
         this.readTimeout = readTimeout;
         this.maxNetworkRetries = maxNetworkRetries;
@@ -84,10 +76,6 @@ public class RequestOptions {
 
     public String getAtlanVersion() {
         return atlanVersion;
-    }
-
-    public String getAtlanVersionOverride() {
-        return atlanVersionOverride;
     }
 
     public int getReadTimeout() {
@@ -128,7 +116,6 @@ public class RequestOptions {
         private String clientId;
         private String idempotencyKey;
         private String atlanAccount;
-        private String atlanVersionOverride;
         private int connectTimeout;
         private int readTimeout;
         private int maxNetworkRetries;
@@ -269,31 +256,6 @@ public class RequestOptions {
             return setAtlanAccount(null);
         }
 
-        public String getAtlanVersionOverride() {
-            return this.atlanVersionOverride;
-        }
-
-        /**
-         * Do not use this except for in API where JSON response is not fully deserialized into explicit
-         * Atlan classes, but only passed to other clients as raw data -- essentially making request on
-         * behalf of others with their API version. One example is in {@link EphemeralKey#create(Map,
-         * RequestOptions)}. Setting this value in a typical scenario will result in deserialization
-         * error as the model classes have schema according to the pinned {@link Atlan#API_VERSION} and
-         * not the {@code atlanVersionOverride}
-         *
-         * @param atlanVersionOverride Atlan version override which belongs to the client to make
-         *     request on behalf of.
-         * @return option builder
-         */
-        public RequestOptionsBuilder setAtlanVersionOverride(String atlanVersionOverride) {
-            this.atlanVersionOverride = normalizeAtlanVersion(atlanVersionOverride);
-            return this;
-        }
-
-        public RequestOptionsBuilder clearAtlanVersionOverride() {
-            return setAtlanVersionOverride(null);
-        }
-
         /** Constructs a {@link RequestOptions} with the specified values. */
         public RequestOptions build() {
             return new RequestOptions(
@@ -301,7 +263,6 @@ public class RequestOptions {
                     normalizeClientId(this.clientId),
                     normalizeIdempotencyKey(this.idempotencyKey),
                     normalizeAtlanAccount(this.atlanAccount),
-                    normalizeAtlanVersion(this.atlanVersionOverride),
                     connectTimeout,
                     readTimeout,
                     maxNetworkRetries,
@@ -330,18 +291,6 @@ public class RequestOptions {
         String normalized = clientId.trim();
         if (normalized.isEmpty()) {
             throw new InvalidRequestOptionsException("Empty client_id specified!");
-        }
-        return normalized;
-    }
-
-    private static String normalizeAtlanVersion(String atlanVersion) {
-        // null atlanVersions are considered "valid" and use Atlan.apiVersion
-        if (atlanVersion == null) {
-            return null;
-        }
-        String normalized = atlanVersion.trim();
-        if (normalized.isEmpty()) {
-            throw new InvalidRequestOptionsException("Empty Atlan version specified!");
         }
         return normalized;
     }

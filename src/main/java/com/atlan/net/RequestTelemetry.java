@@ -2,6 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.net;
 
+/* Based on original code from https://github.com/stripe/stripe-java (under MIT license) */
 import com.atlan.Atlan;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

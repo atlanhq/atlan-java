@@ -2,6 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.net;
 
+/* Based on original code from https://github.com/stripe/stripe-java (under MIT license) */
 import com.atlan.Atlan;
 import com.atlan.exception.ApiConnectionException;
 import com.atlan.exception.AtlanException;
@@ -141,12 +142,10 @@ public class AtlanRequest {
         headerMap.put("Authorization", Arrays.asList(String.format("Bearer %s", apiKey)));
 
         // Atlan-Version
-        if (options.getAtlanVersionOverride() != null) {
-            headerMap.put("Atlan-Version", Arrays.asList(options.getAtlanVersionOverride()));
-        } else if (options.getAtlanVersion() != null) {
+        if (options.getAtlanVersion() != null) {
             headerMap.put("Atlan-Version", Arrays.asList(options.getAtlanVersion()));
         } else {
-            throw new IllegalStateException("Either `atlanVersion` or `atlanVersionOverride` value must be set.");
+            throw new IllegalStateException("`atlanVersion` value must be set.");
         }
 
         // Atlan-Account

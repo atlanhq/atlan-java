@@ -2,6 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.exception;
 
+/* Based on original code from https://github.com/stripe/stripe-java (under MIT license) */
 import com.atlan.model.core.AtlanError;
 import lombok.Getter;
 import lombok.Setter;
