@@ -12,11 +12,24 @@ import com.atlan.model.responses.EntityResponse;
 import com.atlan.net.ApiResource;
 import java.util.Map;
 
+/**
+ * API endpoints for operating on a single entity, based on its unique ID (GUID).
+ */
 public class EntityGuidEndpoint {
 
     private static final String endpoint = "/api/meta/entity/guid/";
 
     /** Retrieves any entity by its GUID. */
+
+    /**
+     * Retrieves any entity by its GUID.
+     *
+     * @param guid unique ID (GUID) of the entity to retrieve
+     * @param ignoreRelationships whether to exclude the entity's relationships (true) or include them (false) in the response
+     * @param minExtInfo TBC
+     * @return the requested entity and its details, if it exists
+     * @throws AtlanException on any API interaction problems
+     */
     public static EntityResponse retrieve(String guid, boolean ignoreRelationships, boolean minExtInfo)
             throws AtlanException {
         String url = String.format(

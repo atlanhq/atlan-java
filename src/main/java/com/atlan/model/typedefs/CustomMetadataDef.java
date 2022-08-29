@@ -30,7 +30,7 @@ public class CustomMetadataDef extends TypeDef {
     @Getter(onMethod_ = {@Override})
     @Setter(onMethod_ = {@Override})
     @Builder.Default
-    AtlanTypeCategory category = AtlanTypeCategory.BUSINESS_METADATA;
+    AtlanTypeCategory category = AtlanTypeCategory.CUSTOM_METADATA;
 
     /** Options for the custom metadata. */
     BusinessMetadataOptions options;
@@ -59,8 +59,8 @@ public class CustomMetadataDef extends TypeDef {
      */
     public CustomMetadataDef create() throws AtlanException {
         TypeDefResponse response = TypeDefsEndpoint.createTypeDef(this);
-        if (response != null && !response.getBusinessMetadataDefs().isEmpty()) {
-            return response.getBusinessMetadataDefs().get(0);
+        if (response != null && !response.getCustomMetadataDefs().isEmpty()) {
+            return response.getCustomMetadataDefs().get(0);
         }
         return null;
     }

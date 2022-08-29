@@ -44,6 +44,7 @@ public class ClassificationCache {
 
     /**
      * Translate the provided human-readable classification name to the Atlan-internal ID string.
+     *
      * @param name human-readable name of the classification
      * @return Atlan-internal ID string of the classification
      * @throws AtlanException on any API communication problem if the cache needs to be refreshed
@@ -62,6 +63,7 @@ public class ClassificationCache {
 
     /**
      * Translate the provided Atlan-internal classification ID string to the human-readable classification name.
+     *
      * @param id Atlan-internal ID string of the classification
      * @return human-readable name of the classification
      * @throws AtlanException on any API communication problem if the cache needs to be refreshed

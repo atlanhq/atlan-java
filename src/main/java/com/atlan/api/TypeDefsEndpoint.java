@@ -11,6 +11,9 @@ import com.atlan.model.typedefs.*;
 import com.atlan.net.ApiResource;
 import java.util.List;
 
+/**
+ * API endpoints for operating on Atlan's type definitions (in simple terms the underlying metadata model).
+ */
 public class TypeDefsEndpoint {
 
     private static final String endpoint = "/api/meta/types/typedefs";
@@ -18,6 +21,7 @@ public class TypeDefsEndpoint {
 
     /**
      * Retrieves a list of the type definitions in Atlan.
+     *
      * @param category of type definitions to retrieve
      * @return the requested list of type definitions
      * @throws AtlanException on any API communication issue
@@ -32,6 +36,8 @@ public class TypeDefsEndpoint {
 
     /**
      * Create a new type definition in Atlan.
+     * Note: only custom metadata and classification type definitions are currently supported.
+     *
      * @param typeDef to create
      * @return the resulting type definition that was created
      * @throws AtlanException on any API communication issue
@@ -43,8 +49,8 @@ public class TypeDefsEndpoint {
                 case CLASSIFICATION:
                     wrapper.setClassificationDefs(List.of((ClassificationDef) typeDef));
                     break;
-                case BUSINESS_METADATA:
-                    wrapper.setBusinessMetadataDefs(List.of((CustomMetadataDef) typeDef));
+                case CUSTOM_METADATA:
+                    wrapper.setCustomMetadataDefs(List.of((CustomMetadataDef) typeDef));
                     break;
                 default:
                     throw new InvalidRequestException(
@@ -63,6 +69,7 @@ public class TypeDefsEndpoint {
 
     /**
      * Delete the type definition.
+     *
      * @param internalName the internal hashed-string name of the type definition
      * @throws AtlanException on any API communication issue
      */

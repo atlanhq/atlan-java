@@ -7,6 +7,9 @@ import com.atlan.model.core.AtlanError;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Base class for any error raised by interactions with Atlan's APIs.
+ */
 @Getter
 public abstract class AtlanException extends Exception {
     private static final long serialVersionUID = 2L;

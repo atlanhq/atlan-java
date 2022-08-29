@@ -7,6 +7,9 @@ import com.atlan.exception.AtlanException;
 import com.atlan.model.responses.RoleResponse;
 import com.atlan.net.ApiResource;
 
+/**
+ * API endpoints for interacting with Atlan's roles.
+ */
 public class RolesEndpoint {
 
     private static final String endpoint = "/api/service/roles";
@@ -15,6 +18,7 @@ public class RolesEndpoint {
 
     /**
      * Retrieves a list of the roles defined in Atlan.
+     *
      * @param filter which roles to retrieve
      * @param sort property by which to sort the results
      * @param count whether to return the total number of records (true) or not (false)
@@ -45,6 +49,7 @@ public class RolesEndpoint {
 
     /**
      * Retrieves a list of the roles defined in Atlan.
+     *
      * @param filter which roles to retrieve
      * @return a list of roles that match the provided criteria
      * @throws AtlanException on any API communication issue
@@ -59,6 +64,7 @@ public class RolesEndpoint {
 
     /**
      * Retrieve all roles defined in Atlan.
+     *
      * @return a list of all the roles in Atlan
      * @throws AtlanException on any API communication issue
      */
