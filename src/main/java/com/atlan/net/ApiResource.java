@@ -2,6 +2,8 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.net;
 
+/* Based on original code from https://github.com/stripe/stripe-java (under MIT license) */
+import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.core.AtlanObject;
@@ -14,25 +16,30 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * Base class for all response objects.
+ */
 @Slf4j
 public abstract class ApiResource extends AtlanObject implements AtlanResponseInterface {
     public static final Charset CHARSET = StandardCharsets.UTF_8;
 
-    private static AtlanResponseGetter atlanResponseGetter = new LiveAtlanResponseGetter();
-
-    public static void setAtlanResponseGetter(AtlanResponseGetter arg) {
-        ApiResource.atlanResponseGetter = arg;
-    }
+    private static final AtlanResponseGetter atlanResponseGetter = new LiveAtlanResponseGetter();
 
     private transient AtlanResponse lastResponse;
 
     private transient JsonNode rawJsonObject;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public AtlanResponse getLastResponse() {
         return lastResponse;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setLastResponse(AtlanResponse response) {
         this.lastResponse = response;
@@ -45,7 +52,7 @@ public abstract class ApiResource extends AtlanObject implements AtlanResponseIn
      * <p>Note: You should always prefer using the standard property accessors whenever possible.
      * Because this method exposes Jackson's underlying API, it is not considered fully stable. Atlan's
      * Java library might move off Jackson in the future and this method would be removed or change
-     * significantly.
+     * significantly.</p>
      *
      * @return The raw JsonNode.
      */
@@ -65,6 +72,7 @@ public abstract class ApiResource extends AtlanObject implements AtlanResponseIn
         return this.rawJsonObject;
     }
 
+    /** HTTP methods that can be used in API requests. */
     public enum RequestMethod {
         GET,
         POST,
@@ -91,9 +99,8 @@ public abstract class ApiResource extends AtlanObject implements AtlanResponseIn
         if (id == null) {
             throw new InvalidRequestException(
                     "Invalid null ID found for url path formatting. This can be because your string ID "
-                            + "argument to the API method is null, or the ID field in your Atlan object "
-                            + "instance is null. Please contact support@atlan.com on the latter case. ",
-                    null,
+                            + "argument to the API method is null, or the relevant field in your Atlan object "
+                            + "instance is null. ",
                     null,
                     null,
                     0,
@@ -103,6 +110,18 @@ public abstract class ApiResource extends AtlanObject implements AtlanResponseIn
         return urlEncode(id);
     }
 
+    /**
+     * Pass-through to the request-handling method after confirming thatthe provided payload is non-null.
+     *
+     * @param method for the request
+     * @param url of the request
+     * @param payload to send in the request
+     * @param clazz defining the expected response type
+     * @param options for sending the request (or null to use global defaults)
+     * @return the response
+     * @param <T> the type of the response
+     * @throws AtlanException on any API interaction problem
+     */
     public static <T extends ApiResource> T request(
             ApiResource.RequestMethod method, String url, AtlanObject payload, Class<T> clazz, RequestOptions options)
             throws AtlanException {
@@ -110,13 +129,38 @@ public abstract class ApiResource extends AtlanObject implements AtlanResponseIn
         return request(method, url, payload.toJson(), clazz, options);
     }
 
+    /**
+     * Pass-through the request to the request-handling method.
+     * This method wraps debug-level logging lines around the request to show precisely what was constructed and sent
+     * to Atlan and precisely what was returned (prior to deserialization).
+     *
+     * @param method for the request
+     * @param url of the request
+     * @param body to send in the request, if any (to not send any use an empty string)
+     * @param clazz defining the expected response type
+     * @param options for sending the request (or null to use global defaults)
+     * @return the response
+     * @param <T> the type of the response
+     * @throws AtlanException on any API interaction problem
+     */
     public static <T extends ApiResource> T request(
             ApiResource.RequestMethod method, String url, String body, Class<T> clazz, RequestOptions options)
             throws AtlanException {
         log.debug("({}) {} with: {}", method, url, body);
         T response = ApiResource.atlanResponseGetter.request(method, url, body, clazz, options);
         if (log.isDebugEnabled()) {
-            log.debug(" ... response: {}", response == null ? null : response.getRawJsonObject());
+            if (response != null) {
+                if (Atlan.enableTelemetry) {
+                    log.debug(
+                            " ... response ({}): {}",
+                            response.getLastResponse().metrics(),
+                            response.getRawJsonObject());
+                } else {
+                    log.debug(" ... response: {}", response.getRawJsonObject());
+                }
+            } else {
+                log.debug(" ... empty response.");
+            }
         }
         return response;
     }

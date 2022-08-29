@@ -2,8 +2,12 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model;
 
+import com.atlan.exception.AtlanException;
+import com.atlan.model.enums.AtlanAnnouncementType;
+import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.relations.Reference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import lombok.*;
@@ -102,5 +106,83 @@ public class Glossary extends Asset {
             anchor = Reference.by(TYPE_NAME, glossaryQualifiedName);
         }
         return anchor;
+    }
+
+    /**
+     * Update the certificate on a glossary.
+     *
+     * @param qualifiedName of the glossary
+     * @param certificate to use
+     * @param message (optional) message, or null if no message
+     * @return the updated glossary, or null if the update failed
+     * @throws AtlanException on any API problems
+     */
+    public static Glossary updateCertificate(String qualifiedName, AtlanCertificateStatus certificate, String message)
+            throws AtlanException {
+        return (Glossary) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
+    }
+
+    /**
+     * Remove the certificate from a glossary.
+     *
+     * @param qualifiedName of the glossary
+     * @param name of the glossary
+     * @return the updated glossary, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static Glossary removeCertificate(String qualifiedName, String name) throws AtlanException {
+        return (Glossary)
+                Asset.removeCertificate(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Update the announcement on a glossary.
+     *
+     * @param qualifiedName of the glossary
+     * @param type type of announcement to set
+     * @param title (optional) title of the announcement to set (or null for no title)
+     * @param message (optional) message of the announcement to set (or null for no message)
+     * @return the result of the update, or null if the update failed
+     * @throws AtlanException on any API problems
+     */
+    public static Glossary updateAnnouncement(
+            String qualifiedName, AtlanAnnouncementType type, String title, String message) throws AtlanException {
+        return (Glossary) Asset.updateAnnouncement(builder(), TYPE_NAME, qualifiedName, type, title, message);
+    }
+
+    /**
+     * Remove the announcement from a glossary.
+     *
+     * @param qualifiedName of the glossary
+     * @param name of the glossary
+     * @return the updated glossary, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static Glossary removeAnnouncement(String qualifiedName, String name) throws AtlanException {
+        return (Glossary)
+                Asset.removeAnnouncement(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Add classifications to a glossary.
+     *
+     * @param qualifiedName of the glossary
+     * @param classificationNames human-readable names of the classifications to add
+     * @throws AtlanException on any API problems, or if any of the classifications already exist on the glossary
+     */
+    public static void addClassifications(String qualifiedName, List<String> classificationNames)
+            throws AtlanException {
+        Asset.addClassifications(TYPE_NAME, qualifiedName, classificationNames);
+    }
+
+    /**
+     * Remove a classification from a glossary.
+     *
+     * @param qualifiedName of the glossary
+     * @param classificationName human-readable name of the classification to remove
+     * @throws AtlanException on any API problems, or if the classification does not exist on the glossary
+     */
+    public static void removeClassification(String qualifiedName, String classificationName) throws AtlanException {
+        Asset.removeClassification(TYPE_NAME, qualifiedName, classificationName);
     }
 }

@@ -2,6 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.net;
 
+/* Based on original code from https://github.com/stripe/stripe-java (under MIT license) */
 import com.atlan.Atlan;
 import com.atlan.exception.ApiConnectionException;
 import com.atlan.exception.AtlanException;
@@ -13,7 +14,6 @@ import java.net.SocketTimeoutException;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,8 +25,6 @@ public abstract class HttpClient {
 
     /** Minimum sleep time between tries to send HTTP requests after network failure. */
     public static final Duration minNetworkRetriesDelay = Duration.ofMillis(500);
-
-    private final RequestTelemetry requestTelemetry = new RequestTelemetry();
 
     /** A value indicating whether the client should sleep between automatic request retries. */
     boolean networkRetriesSleep = true;
@@ -61,20 +59,17 @@ public abstract class HttpClient {
 
     private <T extends AbstractAtlanResponse<?>> T sendWithTelemetry(AtlanRequest request, RequestSendFunction<T> send)
             throws AtlanException {
-        Optional<String> telemetryHeaderValue = requestTelemetry.getHeaderValue(request.headers());
-        if (telemetryHeaderValue.isPresent()) {
-            request = request.withAdditionalHeader(RequestTelemetry.HEADER_NAME, telemetryHeaderValue.get());
+        if (!Atlan.enableTelemetry) {
+            // If telemetry is disabled, just make the request and respond
+            return send.apply(request);
+        } else {
+            // Otherwise, time the request / response and embed the metrics back into the response itself
+            Stopwatch stopwatch = Stopwatch.startNew();
+            T response = send.apply(request);
+            stopwatch.stop();
+            RequestMetrics.embed(response, stopwatch.getElapsed());
+            return response;
         }
-
-        Stopwatch stopwatch = Stopwatch.startNew();
-
-        T response = send.apply(request);
-
-        stopwatch.stop();
-
-        requestTelemetry.maybeEnqueueMetrics(response, stopwatch.getElapsed());
-
-        return response;
     }
 
     /**
@@ -89,17 +84,14 @@ public abstract class HttpClient {
     }
 
     /**
-     * Sends the given request to Atlan's API, streaming the response, and handling telemetry if not
-     * disabled.
+     * Sends the given request to Atlan's API, retrying if it encounters certain problems.
      *
      * @param request the request
+     * @param send the function to use for sending the request (e.g. with or without telemetry)
      * @return the response
-     * @throws AtlanException If the request fails for any reason
+     * @param <T> the type of the response
+     * @throws AtlanException if the request fails for any reason, even after retries
      */
-    public AtlanResponseStream requestStreamWithTelemetry(AtlanRequest request) throws AtlanException {
-        return sendWithTelemetry(request, this::requestStream);
-    }
-
     public <T extends AbstractAtlanResponse<?>> T sendWithRetries(AtlanRequest request, RequestSendFunction<T> send)
             throws AtlanException {
         AtlanException requestException = null;
@@ -146,18 +138,6 @@ public abstract class HttpClient {
      */
     public AtlanResponse requestWithRetries(AtlanRequest request) throws AtlanException {
         return sendWithRetries(request, (r) -> this.requestWithTelemetry(r));
-    }
-
-    /**
-     * Sends the given request to Atlan's API, streaming the response, retrying the request in cases
-     * of intermittent problems.
-     *
-     * @param request the request
-     * @return the response
-     * @throws AtlanException If the request fails for any reason
-     */
-    public AtlanResponseStream requestStreamWithRetries(AtlanRequest request) throws AtlanException {
-        return sendWithRetries(request, (r) -> this.requestStreamWithTelemetry(r));
     }
 
     /**

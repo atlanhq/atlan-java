@@ -11,6 +11,9 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 @JsonSerialize(using = RemovableSerializer.class)
 public class Removable {
 
+    /**
+     * Type of empty value (primitives and lists are treated differently on serialization).
+     */
     public enum TYPE {
         PRIMITIVE,
         LIST;
@@ -21,6 +24,9 @@ public class Removable {
      */
     public static final Removable NULL = new Removable(true);
 
+    /**
+     * Single null value that can be used for any list- or set-based removable type.
+     */
     public static final Removable EMPTY_LIST = new Removable(true, TYPE.LIST);
 
     private TYPE type = TYPE.PRIMITIVE;
@@ -37,6 +43,7 @@ public class Removable {
 
     /**
      * Retrieve the underlying type for this object.
+     *
      * @return the value
      */
     public TYPE getType() {
@@ -46,12 +53,16 @@ public class Removable {
     /**
      * Indicates whether we should explicitly set a null value in JSON serialization
      * or not.
+     *
      * @return true if we should serialize the value as null
      */
     public boolean isJsonNull() {
         return jsonNull;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toString() {
         return type == TYPE.LIST ? "[]" : "null";

@@ -2,12 +2,16 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.net;
 
+/* Based on original code from https://github.com/stripe/stripe-java (under MIT license) */
 import com.atlan.exception.*;
 import com.atlan.model.core.AtlanError;
 import com.atlan.model.core.AtlanResponseInterface;
 import com.atlan.serde.Serde;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
+/**
+ * Class that wraps the API request and response handling, such as detecting errors from specific response codes.
+ */
 public class LiveAtlanResponseGetter implements AtlanResponseGetter {
     private final HttpClient httpClient;
 
@@ -28,6 +32,18 @@ public class LiveAtlanResponseGetter implements AtlanResponseGetter {
         this.httpClient = (httpClient != null) ? httpClient : buildDefaultHttpClient();
     }
 
+    /**
+     * Makes a request to an Atlan's API.
+     *
+     * @param method to use for the request
+     * @param url of the endpoint (with all path and query parameters) for the request
+     * @param body payload for the request, if any
+     * @param clazz the expected response object type from the request
+     * @param options any alternative options to use for the request, or null to use default options
+     * @return the response of the request
+     * @param <T> the type of the response of the request
+     * @throws AtlanException on any API interaction problem, indicating the type of problem encountered
+     */
     @Override
     public <T extends AtlanResponseInterface> T request(
             ApiResource.RequestMethod method, String url, String body, Class<T> clazz, RequestOptions options)
@@ -37,7 +53,6 @@ public class LiveAtlanResponseGetter implements AtlanResponseGetter {
 
         int responseCode = response.code();
         String responseBody = response.body();
-        String requestId = response.requestId();
 
         if (responseCode < 200 || responseCode >= 300) {
             handleApiError(response);
@@ -48,7 +63,7 @@ public class LiveAtlanResponseGetter implements AtlanResponseGetter {
             try {
                 resource = Serde.mapper.readValue(responseBody, clazz);
             } catch (JsonProcessingException e) {
-                raiseMalformedJsonError(responseBody, responseCode, requestId, e);
+                raiseMalformedJsonError(responseBody, responseCode, e);
             }
         }
 
@@ -64,19 +79,33 @@ public class LiveAtlanResponseGetter implements AtlanResponseGetter {
         return new HttpURLConnectionClient();
     }
 
-    private static void raiseMalformedJsonError(String responseBody, int responseCode, String requestId, Throwable e)
+    /**
+     * If the response does not contain valid JSON, there was probably a pretty significant problem, so this raises
+     * an ApiException in such cases.
+     *
+     * @param responseBody body of the response
+     * @param responseCode numeric code of the response
+     * @param e cause of the error, if any
+     * @throws ApiException indicating that the response object was invalid (not valid JSON)
+     */
+    private static void raiseMalformedJsonError(String responseBody, int responseCode, Throwable e)
             throws ApiException {
         String details = e == null ? "none" : e.getMessage();
         throw new ApiException(
                 String.format(
                         "Invalid response object from API: %s. (HTTP response code was %d). Additional details: %s.",
                         responseBody, responseCode, details),
-                requestId,
                 null,
                 responseCode,
                 e);
     }
 
+    /**
+     * Detect specific exceptions based primarily on the response code received from Atlan.
+     *
+     * @param response received from an API call
+     * @throws AtlanException a more specific exception, based on the details of that response
+     */
     private static void handleApiError(AtlanResponse response) throws AtlanException {
         AtlanError error = null;
         AtlanException exception = null;
@@ -85,56 +114,43 @@ public class LiveAtlanResponseGetter implements AtlanResponseGetter {
         // so preemptively exit with an invalid request exception.
         int rc = response.code();
         if (rc == 500) {
-            throw new InvalidRequestException(response.body(), null, null, null, rc, null);
+            throw new InvalidRequestException(response.body(), null, null, rc, null);
         }
 
         try {
             error = Serde.mapper.readValue(response.body(), AtlanError.class);
         } catch (JsonProcessingException e) {
-            raiseMalformedJsonError(response.body(), response.code(), response.requestId(), e);
+            raiseMalformedJsonError(response.body(), response.code(), e);
         }
         if (error == null) {
-            raiseMalformedJsonError(response.body(), response.code(), response.requestId(), null);
+            raiseMalformedJsonError(response.body(), response.code(), null);
         }
 
         switch (response.code()) {
             case 400:
                 exception = new InvalidRequestException(
-                        error.getErrorMessage(),
-                        null,
-                        response.requestId(),
-                        error.getErrorCode(),
-                        response.code(),
-                        null);
+                        error.getErrorMessage(), null, error.getErrorCode(), response.code(), null);
                 break;
             case 404:
-                exception = new NotFoundException(
-                        error.getErrorMessage(), response.requestId(), error.getErrorCode(), response.code(), null);
+                exception = new NotFoundException(error.getErrorMessage(), error.getErrorCode(), response.code(), null);
                 break;
             case 401:
-                exception = new AuthenticationException(
-                        error.getErrorMessage(), response.requestId(), error.getErrorCode(), response.code());
+                exception = new AuthenticationException(error.getErrorMessage(), error.getErrorCode(), response.code());
                 break;
             case 403:
-                exception = new PermissionException(
-                        error.getErrorMessage(), response.requestId(), error.getErrorCode(), response.code());
+                exception = new PermissionException(error.getErrorMessage(), error.getErrorCode(), response.code());
                 break;
             case 409:
-                exception = new ConflictException(
-                        error.getErrorMessage(), response.requestId(), error.getErrorCode(), response.code(), null);
+                exception = new ConflictException(error.getErrorMessage(), error.getErrorCode(), response.code(), null);
                 break;
             case 429:
+                // TODO: confirm that a 429 is raised rather than needing to check the X-RateLimit-Remaining-Minute
+                //  header value of a response (if it is 0 then we are being rate-limited)
                 exception = new RateLimitException(
-                        error.getErrorMessage(),
-                        null,
-                        response.requestId(),
-                        error.getErrorCode(),
-                        response.code(),
-                        null);
+                        error.getErrorMessage(), null, error.getErrorCode(), response.code(), null);
                 break;
             default:
-                exception = new ApiException(
-                        error.getErrorMessage(), response.requestId(), error.getErrorCode(), response.code(), null);
+                exception = new ApiException(error.getErrorMessage(), error.getErrorCode(), response.code(), null);
                 break;
         }
 

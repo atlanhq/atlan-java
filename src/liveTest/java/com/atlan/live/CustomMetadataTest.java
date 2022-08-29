@@ -53,7 +53,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
                     .build();
             CustomMetadataDef response = customMetadataDef.create();
             assertNotNull(response);
-            assertEquals(response.getCategory(), AtlanTypeCategory.BUSINESS_METADATA);
+            assertEquals(response.getCategory(), AtlanTypeCategory.CUSTOM_METADATA);
             assertNotNull(response.getName());
             assertNotEquals(response.getName(), CM_NAME1);
             assertNotNull(response.getGuid());
@@ -130,7 +130,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
                     .build();
             response = customMetadataDef.create();
             assertNotNull(response);
-            assertEquals(response.getCategory(), AtlanTypeCategory.BUSINESS_METADATA);
+            assertEquals(response.getCategory(), AtlanTypeCategory.CUSTOM_METADATA);
             assertNotNull(response.getName());
             assertNotEquals(response.getName(), CM_NAME2);
             assertNotNull(response.getGuid());

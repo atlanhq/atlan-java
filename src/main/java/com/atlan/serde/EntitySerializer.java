@@ -21,6 +21,15 @@ import java.lang.reflect.Method;
 import java.util.*;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * Serialization of all {@link Entity} objects, down through the entire inheritance hierarchy.
+ * This custom serialization is necessary to create some specific aspects of complexity in Atlan's payloads:
+ * <ul>
+ *     <li>The nested <code>attributes</code> and <code>relationshipAttributes</code> structures.</li>
+ *     <li>Handling the extension of properties as you traverse down the inheritance structures, without needing to also extend these nested structures through inheritance.</li>
+ *     <li>Automatically translating custom metadata into the nested <code>businessAttributes</code> structure, including translating human-readable names into Atlan's internal hashed-string representations.</li>
+ * </ul>
+ */
 @Slf4j
 public class EntitySerializer extends StdSerializer<Entity> {
     private static final long serialVersionUID = 2L;
@@ -33,6 +42,9 @@ public class EntitySerializer extends StdSerializer<Entity> {
         super(t);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void serializeWithType(
             Entity value, JsonGenerator gen, SerializerProvider serializers, TypeSerializer typeSer)
@@ -40,6 +52,9 @@ public class EntitySerializer extends StdSerializer<Entity> {
         serialize(value, gen, serializers);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void serialize(Entity entity, JsonGenerator gen, SerializerProvider sp)
             throws IOException, JsonProcessingException {

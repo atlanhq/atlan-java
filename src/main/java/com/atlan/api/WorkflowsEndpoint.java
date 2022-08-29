@@ -10,6 +10,9 @@ import com.atlan.model.workflow.Workflow;
 import com.atlan.model.workflow.WorkflowSearchRequest;
 import com.atlan.net.ApiResource;
 
+/**
+ * API endpoints for operating on Atlan's workflows.
+ */
 public class WorkflowsEndpoint {
 
     private static final String workflows_endpoint = "/api/service/workflows";
@@ -18,6 +21,7 @@ public class WorkflowsEndpoint {
 
     /**
      * Run the provided workflow.
+     *
      * @param workflow details of the workflow to run
      * @return details of the workflow run
      * @throws AtlanException on any API communication issue
@@ -29,6 +33,7 @@ public class WorkflowsEndpoint {
 
     /**
      * Archive (delete) the provided workflow.
+     *
      * @param workflowName the workflow to delete
      * @throws AtlanException on any API communication issue
      */
@@ -40,6 +45,7 @@ public class WorkflowsEndpoint {
 
     /**
      * Search for workflows that meet the provided criteria.
+     *
      * @param request criteria by which to find workflows
      * @return the matching workflows
      * @throws AtlanException on any API communication issue

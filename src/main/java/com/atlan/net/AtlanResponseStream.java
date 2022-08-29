@@ -2,10 +2,14 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.net;
 
+/* Based on original code from https://github.com/stripe/stripe-java (under MIT license) */
 import com.atlan.util.StreamUtils;
 import java.io.IOException;
 import java.io.InputStream;
 
+/**
+ * Class for handling API interactions as streams.
+ */
 public class AtlanResponseStream extends AbstractAtlanResponse<InputStream> {
     /**
      * Initializes a new instance of the {@link AtlanResponseStream} class.

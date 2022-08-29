@@ -2,6 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.net;
 
+/* Based on original code from https://github.com/stripe/stripe-java (under MIT license) */
 import static java.util.Objects.requireNonNull;
 
 import com.atlan.util.CaseInsensitiveMap;
@@ -16,7 +17,7 @@ import lombok.EqualsAndHashCode;
 /**
  * A read-only view of a set of HTTP headers.
  *
- * <p>This class mimics the {@code java.net.http.HttpHeaders} added in Java 11.
+ * <p>This class mimics the {@code java.net.http.HttpHeaders} added in Java 11.</p>
  */
 @EqualsAndHashCode
 public class HttpHeaders {

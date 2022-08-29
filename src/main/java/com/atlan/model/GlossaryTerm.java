@@ -112,43 +112,6 @@ public class GlossaryTerm extends Asset {
     }
 
     /**
-     * Update the certificate on a term.
-     *
-     * @param qualifiedName of the term
-     * @param certificate to use
-     * @param message (optional) message, or null if no message
-     * @return the updated term, or null if the update failed
-     * @throws AtlanException on any API problems
-     */
-    public static GlossaryTerm updateCertificate(
-            String qualifiedName, String name, String glossaryGuid, AtlanCertificateStatus certificate, String message)
-            throws AtlanException {
-        return (GlossaryTerm) Asset.updateCertificate(updater(qualifiedName, name, glossaryGuid), certificate, message);
-    }
-
-    /**
-     * Update the announcement on a term.
-     *
-     * @param qualifiedName of the term
-     * @param type type of announcement to set
-     * @param title (optional) title of the announcement to set (or null for no title)
-     * @param message (optional) message of the announcement to set (or null for no message)
-     * @return the result of the update, or null if the update failed
-     * @throws AtlanException on any API problems
-     */
-    public static GlossaryTerm updateAnnouncement(
-            String qualifiedName,
-            String name,
-            String glossaryGuid,
-            AtlanAnnouncementType type,
-            String title,
-            String message)
-            throws AtlanException {
-        return (GlossaryTerm)
-                Asset.updateAnnouncement(updater(qualifiedName, name, glossaryGuid), type, title, message);
-    }
-
-    /**
      * Builds the minimal object necessary for creating a term. At least one of glossaryGuid or
      * glossaryQualifiedName must be provided.
      *
@@ -191,5 +154,97 @@ public class GlossaryTerm extends Asset {
     @Override
     protected GlossaryTermBuilder<?, ?> trimToRequired() {
         return updater(this.getQualifiedName(), this.getName(), this.getAnchor().getGuid());
+    }
+
+    /**
+     * Update the certificate on a term.
+     *
+     * @param qualifiedName of the term
+     * @param name of the term
+     * @param glossaryGuid unique ID (GUID) of the term's glossary
+     * @param certificate to use
+     * @param message (optional) message, or null if no message
+     * @return the updated term, or null if the update failed
+     * @throws AtlanException on any API problems
+     */
+    public static GlossaryTerm updateCertificate(
+            String qualifiedName, String name, String glossaryGuid, AtlanCertificateStatus certificate, String message)
+            throws AtlanException {
+        return (GlossaryTerm) Asset.updateCertificate(updater(qualifiedName, name, glossaryGuid), certificate, message);
+    }
+
+    /**
+     * Remove the certificate from a term.
+     *
+     * @param qualifiedName of the term
+     * @param name of the term
+     * @param glossaryGuid unique ID (GUID) of the term's glossary
+     * @return the updated term, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static GlossaryTerm removeCertificate(String qualifiedName, String name, String glossaryGuid)
+            throws AtlanException {
+        return (GlossaryTerm) Asset.removeCertificate(updater(qualifiedName, name, glossaryGuid));
+    }
+
+    /**
+     * Update the announcement on a term.
+     *
+     * @param qualifiedName of the term
+     * @param name of the term
+     * @param glossaryGuid unique ID (GUID) of the term's glossary
+     * @param type type of announcement to set
+     * @param title (optional) title of the announcement to set (or null for no title)
+     * @param message (optional) message of the announcement to set (or null for no message)
+     * @return the result of the update, or null if the update failed
+     * @throws AtlanException on any API problems
+     */
+    public static GlossaryTerm updateAnnouncement(
+            String qualifiedName,
+            String name,
+            String glossaryGuid,
+            AtlanAnnouncementType type,
+            String title,
+            String message)
+            throws AtlanException {
+        return (GlossaryTerm)
+                Asset.updateAnnouncement(updater(qualifiedName, name, glossaryGuid), type, title, message);
+    }
+
+    /**
+     * Remove the announcement from a term.
+     *
+     * @param qualifiedName of the term
+     * @param name of the term
+     * @param glossaryGuid unique ID (GUID) of the term's glossary
+     * @return the updated term, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static GlossaryTerm removeAnnouncement(String qualifiedName, String name, String glossaryGuid)
+            throws AtlanException {
+        return (GlossaryTerm) Asset.removeAnnouncement(updater(qualifiedName, name, glossaryGuid));
+    }
+
+    /**
+     * Add classifications to a term.
+     *
+     * @param qualifiedName of the term
+     * @param classificationNames human-readable names of the classifications to add
+     * @throws AtlanException on any API problems, or if any of the classifications already exist on the term
+     */
+    public static void addClassifications(String qualifiedName, List<String> classificationNames)
+            throws AtlanException {
+        Asset.addClassifications(TYPE_NAME, qualifiedName, classificationNames);
+    }
+
+    /**
+     * Remove a classification from a term.
+     *
+     * @param qualifiedName of the term
+     * @param classificationName human-readable name of the classification to remove
+     * @throws AtlanException on any API problems, or if the classification does not exist on the term
+     */
+    public static void removeClassification(String qualifiedName, String classificationName) throws AtlanException {
+        Asset.removeClassification(TYPE_NAME, qualifiedName, classificationName);
     }
 }

@@ -8,9 +8,16 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializationConfig;
 import com.fasterxml.jackson.databind.ser.BeanSerializerModifier;
 
+/**
+ * This special Jackson extension allows us to reuse the default serialization of the {@link Classification} object,
+ * since all we really change in serialization is the string value.
+ */
 @SuppressWarnings("unchecked")
 public class ClassificationBeanSerializerModifier extends BeanSerializerModifier {
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public JsonSerializer<?> modifySerializer(
             SerializationConfig config, BeanDescription beanDesc, JsonSerializer<?> serializer) {

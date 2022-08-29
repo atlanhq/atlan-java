@@ -11,7 +11,7 @@ public enum AtlanTypeCategory implements AtlanEnum {
     CLASSIFICATION("CLASSIFICATION"),
     ENTITY("ENTITY"),
     RELATIONSHIP("RELATIONSHIP"),
-    BUSINESS_METADATA("BUSINESS_METADATA");
+    CUSTOM_METADATA("BUSINESS_METADATA");
 
     @JsonValue
     @Getter(onMethod_ = {@Override})

@@ -2,10 +2,14 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.exception;
 
+/* Based on original code from https://github.com/stripe/stripe-java (under MIT license) */
 import com.atlan.model.core.AtlanError;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Base class for any error raised by interactions with Atlan's APIs.
+ */
 @Getter
 public abstract class AtlanException extends Exception {
     private static final long serialVersionUID = 2L;
@@ -17,18 +21,16 @@ public abstract class AtlanException extends Exception {
     transient AtlanError atlanError;
 
     private String code;
-    private String requestId;
     private Integer statusCode;
 
-    protected AtlanException(String message, String requestId, String code, Integer statusCode) {
-        this(message, requestId, code, statusCode, null);
+    protected AtlanException(String message, String code, Integer statusCode) {
+        this(message, code, statusCode, null);
     }
 
     /** Constructs a new Atlan exception with the specified details. */
-    protected AtlanException(String message, String requestId, String code, Integer statusCode, Throwable e) {
+    protected AtlanException(String message, String code, Integer statusCode, Throwable e) {
         super(message, e);
         this.code = code;
-        this.requestId = requestId;
         this.statusCode = statusCode;
     }
 
@@ -43,9 +45,6 @@ public abstract class AtlanException extends Exception {
         String additionalInfo = "";
         if (code != null) {
             additionalInfo += "; code: " + code;
-        }
-        if (requestId != null) {
-            additionalInfo += "; request-id: " + requestId;
         }
         return super.getMessage() + additionalInfo;
     }

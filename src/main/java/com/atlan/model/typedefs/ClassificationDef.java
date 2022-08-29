@@ -49,7 +49,7 @@ public class ClassificationDef extends TypeDef {
     /**
      * Builds the minimal object necessary to create a classification definition.
      * To continue adding to the object, call {@link #toBuilder()} on the result and continue calling additional
-     * methods to add metadata followed by {@link ClassificationDefJBuilder#build()}.
+     * methods to add metadata followed by {@link ClassificationDefBuilder#build()}.
      *
      * @param displayName the human-readable name for the classification
      * @param color the color to use for the classification
@@ -91,7 +91,6 @@ public class ClassificationDef extends TypeDef {
             throw new InvalidRequestException(
                     "Unable to find a classification with the name: " + displayName,
                     "name",
-                    "",
                     "ATLAN-CLIENT-400-011",
                     400,
                     null);

@@ -5,11 +5,15 @@ package com.atlan.util;
 import java.lang.reflect.*;
 import java.util.Map;
 
+/**
+ * Utility methods to handle Java reflection.
+ */
 public class ReflectionUtils {
 
     /**
      * Build up a map of all the setter methods that exist in the class (and its superclasses),
      * from name of the field to the setter method itself (via reflection).
+     *
      * @param map of all setter methods
      * @param b starting class
      */
@@ -20,6 +24,7 @@ public class ReflectionUtils {
     /**
      * Build up a map of all the getter methods that exist in the class (and its superclasses),
      * from name of the field to the getter method itself (via reflection).
+     *
      * @param map of all getter methods
      * @param b starting class
      */
@@ -30,6 +35,7 @@ public class ReflectionUtils {
     /**
      * Build up a map of all the methods that exist in the class (and its superclasses),
      * whose name starts with a certain prefix.
+     *
      * @param map of all setter methods
      * @param b starting class
      * @param prefix each method must start with
@@ -50,6 +56,7 @@ public class ReflectionUtils {
     /**
      * Build up a map of all methods that exist in the class (and its superclasses),
      * from name of the method to the method itself (reflection).
+     *
      * @param map of all methods
      * @param b starting class
      */
@@ -66,6 +73,7 @@ public class ReflectionUtils {
     /**
      * Retrieve the class (type) of the first parameter of the provided method.
      * (For setter methods, this should be the only parameter.)
+     *
      * @param method for which to determine the first parameter's type
      * @return the class of the first parameter
      */
@@ -77,6 +85,7 @@ public class ReflectionUtils {
     /**
      * Retrieve the parameterized class (type) of the first parameter of the provided method.
      * (For setter methods, this should be the only parameter.)
+     *
      * @param method for which to determine the first parameter's parameterized type
      * @return the parameterized type of the first parameter
      */
@@ -88,6 +97,7 @@ public class ReflectionUtils {
     /**
      * Retrieve the class (type) within the parameterized type provided.
      * For example, if the parameterized type is {@code List<String>} this will return the String class.
+     *
      * @param parameterizedType the parameterized type from which to determine the inner type
      * @return the class within the parameterized type
      */

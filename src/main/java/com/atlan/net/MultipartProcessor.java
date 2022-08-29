@@ -2,6 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.net;
 
+/* Based on original code from https://github.com/stripe/stripe-java (under MIT license) */
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -10,6 +11,9 @@ import java.io.PrintWriter;
 import java.net.URLConnection;
 import java.nio.charset.Charset;
 
+/**
+ * Currently unused — may be useful longer-term for endpoints that need to upload files (TBC).
+ */
 public class MultipartProcessor {
     private final String boundary;
     private static final String LINE_BREAK = "\r\n";

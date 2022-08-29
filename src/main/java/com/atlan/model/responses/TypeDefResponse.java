@@ -4,6 +4,7 @@ package com.atlan.model.responses;
 
 import com.atlan.model.typedefs.*;
 import com.atlan.net.ApiResource;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -32,5 +33,6 @@ public class TypeDefResponse extends ApiResource {
     List<TypeDef> relationshipDefs;
 
     /** List of custom metadata type definitions. */
-    List<CustomMetadataDef> businessMetadataDefs;
+    @JsonProperty("businessMetadataDefs")
+    List<CustomMetadataDef> customMetadataDefs;
 }

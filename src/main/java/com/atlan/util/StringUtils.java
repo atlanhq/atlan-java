@@ -2,6 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.util;
 
+/* Based on original code from https://github.com/stripe/stripe-java (under MIT license) */
 import static java.util.Objects.requireNonNull;
 
 import java.net.URLDecoder;
@@ -62,6 +63,7 @@ public final class StringUtils {
 
     /**
      * Encode the provided content for storage as a README's content.
+     *
      * @param decoded to be encoded
      * @return encoded README content
      */
@@ -73,6 +75,7 @@ public final class StringUtils {
 
     /**
      * Decode the provided content from the README-encoded form to plain HTML.
+     *
      * @param encoded to be decoded
      * @return decoded README content (HTML)
      */

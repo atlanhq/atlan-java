@@ -2,6 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.net;
 
+/* Based on original code from https://github.com/stripe/stripe-java (under MIT license) */
 import com.atlan.Atlan;
 import com.atlan.exception.ApiConnectionException;
 import java.io.IOException;
@@ -16,6 +17,9 @@ import java.util.List;
 import java.util.Map;
 import lombok.Cleanup;
 
+/**
+ * Class that actually handles the HTTP-level communications with Atlan.
+ */
 public class HttpURLConnectionClient extends HttpClient {
     /** Initializes a new instance of the {@link HttpURLConnectionClient}. */
     public HttpURLConnectionClient() {
@@ -80,6 +84,12 @@ public class HttpURLConnectionClient extends HttpClient {
         }
     }
 
+    /**
+     * Returns the HTTP headers to use for the request.
+     *
+     * @param request the request being sent
+     * @return the HTTP headers
+     */
     static HttpHeaders getHeaders(AtlanRequest request) {
         Map<String, List<String>> userAgentHeadersMap = new HashMap<>();
 

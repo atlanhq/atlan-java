@@ -33,10 +33,10 @@ public class CustomMetadataCache {
 
     private static synchronized void refreshCache() throws AtlanException {
         log.debug("Refreshing cache of custom metadata...");
-        TypeDefResponse response = TypeDefsEndpoint.getTypeDefs(AtlanTypeCategory.BUSINESS_METADATA);
+        TypeDefResponse response = TypeDefsEndpoint.getTypeDefs(AtlanTypeCategory.CUSTOM_METADATA);
         List<CustomMetadataDef> customMetadata;
         if (response != null) {
-            customMetadata = response.getBusinessMetadataDefs();
+            customMetadata = response.getCustomMetadataDefs();
         } else {
             customMetadata = Collections.emptyList();
         }
@@ -61,6 +61,7 @@ public class CustomMetadataCache {
 
     /**
      * Translate the provided human-readable custom metadata set name to the Atlan-internal ID string.
+     *
      * @param name human-readable name of the custom metadata set
      * @return Atlan-internal ID string of the custom metadata set
      * @throws AtlanException on any API communication problem if the cache needs to be refreshed
@@ -79,6 +80,7 @@ public class CustomMetadataCache {
 
     /**
      * Translate the provided Atlan-internal custom metadata ID string to the human-readable custom metadata set name.
+     *
      * @param id Atlan-internal ID string of the custom metadata set
      * @return human-readable name of the custom metadata set
      * @throws AtlanException on any API communication problem if the cache needs to be refreshed
@@ -97,6 +99,7 @@ public class CustomMetadataCache {
 
     /**
      * Translate the provided human-readable custom metadata attribute name to the Atlan-internal ID string.
+     *
      * @param setId Atlan-internal ID string for the custom metadata set
      * @param attributeName human-readable name of the attribute
      * @return Atlan-internal ID string for the attribute
@@ -125,6 +128,7 @@ public class CustomMetadataCache {
 
     /**
      * Translate the provided Atlan-internal ID for a custom metadata attribute to the human-readable attribute name.
+     *
      * @param setId Atlan-internal ID string for the custom metadata set
      * @param attributeId Atlan-internal ID string for the attribute
      * @return human-readable name of the attribute
@@ -215,6 +219,7 @@ public class CustomMetadataCache {
 
     /**
      * Translate the provided business attributes object into a custom metadata object.
+     *
      * @param businessAttributes business attributes object
      * @return custom metadata object
      * @throws AtlanException on any API communication problem if the cache needs to be refreshed
@@ -252,8 +257,7 @@ public class CustomMetadataCache {
                     builder.attribute(cmAttrName, primitive);
                 } else {
                     throw new LogicException(
-                            "Unable to deserialize non-primitive custom metadata value.",
-                            jsonValue.toString(),
+                            "Unable to deserialize non-primitive custom metadata value: " + jsonValue,
                             "ATLAN-CLIENT-CM-500-002",
                             500);
                 }
@@ -278,15 +282,13 @@ public class CustomMetadataCache {
                 return jsonValue.asDouble();
             } else {
                 throw new LogicException(
-                        "Unable to deserialize unrecognized primitive custom metadata value.",
-                        jsonValue.toString(),
+                        "Unable to deserialize unrecognized primitive custom metadata value: " + jsonValue,
                         "ATLAN-CLIENT-CM-500-001",
                         500);
             }
         } else {
             throw new LogicException(
-                    "Unable to deserialize non-primitive custom metadata value.",
-                    jsonValue.toString(),
+                    "Unable to deserialize non-primitive custom metadata value:" + jsonValue,
                     "ATLAN-CLIENT-CM-500-002",
                     500);
         }

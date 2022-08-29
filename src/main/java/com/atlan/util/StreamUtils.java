@@ -2,6 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.util;
 
+/* Based on original code from https://github.com/stripe/stripe-java (under MIT license) */
 import static java.util.Objects.requireNonNull;
 
 import java.io.IOException;
@@ -11,6 +12,9 @@ import java.io.Reader;
 import java.nio.charset.Charset;
 import lombok.Cleanup;
 
+/**
+ * Utilities for working with streams of data.
+ */
 public final class StreamUtils {
     private static final int DEFAULT_BUF_SIZE = 1024;
 

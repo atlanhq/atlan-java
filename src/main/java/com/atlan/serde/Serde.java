@@ -20,6 +20,7 @@ public class Serde {
 
     private static final Set<Module> modules = createModules();
 
+    /** Singular ObjectMapper through which to do Jackson-based (de-)serialization. */
     public static final ObjectMapper mapper = createMapper();
 
     private static Set<Module> createModules() {

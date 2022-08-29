@@ -2,6 +2,8 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.net;
 
+/* Based on original code from https://github.com/stripe/stripe-java (under MIT license) */
+
 /** A response from Atlan's API, with body represented as a String. */
 public class AtlanResponse extends AbstractAtlanResponse<String> {
     /**

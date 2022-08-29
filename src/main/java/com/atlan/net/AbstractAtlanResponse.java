@@ -2,6 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.net;
 
+/* Based on original code from https://github.com/stripe/stripe-java (under MIT license) */
 import static java.util.Objects.requireNonNull;
 
 import java.time.Instant;
@@ -23,6 +24,15 @@ abstract class AbstractAtlanResponse<T> {
     /** The HTTP headers of the response. */
     HttpHeaders headers;
 
+    /**
+     * The metrics of the request / response round-trip, if enabled.
+     * Note: if retries are also enabled, this will contain ONLY the metrics for the final retry and no others.
+     */
+    @NonFinal
+    @Getter(AccessLevel.PUBLIC)
+    @Setter(AccessLevel.PACKAGE)
+    RequestMetrics metrics;
+
     /** The body of the response. */
     T body;
 
@@ -40,7 +50,7 @@ abstract class AbstractAtlanResponse<T> {
 
     /** Number of times the request was retried. Used for internal tests only. */
     @NonFinal
-    @Getter(AccessLevel.PACKAGE)
+    @Getter(AccessLevel.PUBLIC)
     @Setter(AccessLevel.PACKAGE)
     int numRetries;
 
@@ -56,24 +66,6 @@ abstract class AbstractAtlanResponse<T> {
         }
         return ZonedDateTime.parse(dateStr.get(), DateTimeFormatter.RFC_1123_DATE_TIME)
                 .toInstant();
-    }
-
-    /**
-     * Gets the idempotency key of the request, as returned by Atlan.
-     *
-     * @return the idempotency key of the request, as returned by Atlan
-     */
-    public String idempotencyKey() {
-        return this.headers.firstValue("Idempotency-Key").orElse(null);
-    }
-
-    /**
-     * Gets the ID of the request, as returned by Atlan.
-     *
-     * @return the ID of the request, as returned by Atlan
-     */
-    public String requestId() {
-        return this.headers.firstValue("Request-Id").orElse(null);
     }
 
     protected AbstractAtlanResponse(int code, HttpHeaders headers, T body) {

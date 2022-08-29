@@ -19,6 +19,9 @@ import java.util.ArrayList;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * API endpoints for operating on a single entity, based on its unique attributes (primarily {@code qualifiedName}).
+ */
 @Slf4j
 public class EntityUniqueAttributesEndpoint {
 
@@ -127,7 +130,7 @@ public class EntityUniqueAttributesEndpoint {
 
     /**
      * Removes a single classification from the provided asset.
-     * Note: if the provided classification does not exists on the asset, an InvalidRequestException
+     * Note: if the provided classification does not exist on the asset, an InvalidRequestException
      * will be thrown with error code {@code ATLAS-400-00-06D}, unless {@code idempotent} is set to true.
      *
      * @param typeName type of asset from which to remove the classification
@@ -164,9 +167,8 @@ public class EntityUniqueAttributesEndpoint {
             }
         } else {
             throw new InvalidRequestException(
-                    "No classification found with the provided name.",
+                    "No classification found with the provided name: " + classificationName,
                     "classificationName",
-                    classificationName,
                     "ATLAN-JAVA-CLIENT-400-020",
                     400,
                     null);

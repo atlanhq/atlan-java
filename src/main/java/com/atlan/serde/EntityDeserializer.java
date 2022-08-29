@@ -22,6 +22,16 @@ import java.io.IOException;
 import java.lang.reflect.*;
 import java.util.*;
 
+/**
+ * Deserialization of all {@link Entity} objects, down through the entire inheritance hierarchy.
+ * This custom deserialization is necessary to flatten some specific aspects of complexity in Atlan's payloads:
+ * <ul>
+ *     <li>The nested <code>attributes</code> and <code>relationshipAttributes</code> structures.</li>
+ *     <li>The possibility that the same (relationship) attribute could appear in either of these nested structures.</li>
+ *     <li>Handling the extension of properties as you traverse down the inheritance structures, without needing to also extend these nested structures through inheritance.</li>
+ *     <li>Automatically translating the nested <code>businessAttributes</code> structure into custom metadata, including translating from Atlan's internal hashed-string representations into human-readable names.</li>
+ * </ul>
+ */
 public class EntityDeserializer extends StdDeserializer<Entity> {
 
     private static final long serialVersionUID = 2L;
@@ -34,12 +44,18 @@ public class EntityDeserializer extends StdDeserializer<Entity> {
         super(t);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Object deserializeWithType(
             JsonParser parser, DeserializationContext context, TypeDeserializer typeDeserializer) throws IOException {
         return deserialize(parser, context);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Entity deserialize(JsonParser parser, DeserializationContext context) throws IOException {
 
