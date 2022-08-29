@@ -81,7 +81,57 @@ public class S3Object extends S3 {
     Reference bucket;
 
     /**
+     * Builds the minimal object necessary to create an S3 object.
+     *
+     * @param name of the S3 object
+     * @param connectionQualifiedName unique name of the connection through which the object is accessible
+     * @param awsArn unique ARN of the object
+     * @return the minimal object necessary to create the S3 object, as a builder
+     */
+    public static S3ObjectBuilder<?, ?> creator(String name, String connectionQualifiedName, String awsArn) {
+        return S3Object.builder()
+                .qualifiedName(generateQualifiedName(connectionQualifiedName, awsArn))
+                .name(name)
+                .connectionQualifiedName(connectionQualifiedName)
+                .connectorName("s3")
+                .awsArn(awsArn);
+    }
+
+    /**
+     * Builds the minimal object necessary to update an S3 object.
+     *
+     * @param qualifiedName unique name of the S3 object
+     * @param name of the S3 object
+     * @return the minimal object necessary to update the S3 object, as a builder
+     */
+    public static S3ObjectBuilder<?, ?> updater(String qualifiedName, String name) {
+        return S3Object.builder().qualifiedName(qualifiedName).name(name);
+    }
+
+    /**
+     * Builds the minimal object necessary to apply an update to an S3 object, from a potentially
+     * more-complete S3 object.
+     *
+     * @return the minimal object necessary to update the S3 object, as a builder
+     */
+    @Override
+    protected S3ObjectBuilder<?, ?> trimToRequired() {
+        return updater(this.getQualifiedName(), this.getName());
+    }
+
+    /**
+     * Generate a unique S3 object name.
+     * @param connectionQualifiedName unique name of the connection
+     * @param awsArn unique ARN for the object
+     * @return a unique name for the S3 object
+     */
+    private static String generateQualifiedName(String connectionQualifiedName, String awsArn) {
+        return connectionQualifiedName + "/" + awsArn;
+    }
+
+    /**
      * Update the certificate on an S3 object.
+     *
      * @param qualifiedName of the S3 object
      * @param certificate to use
      * @param message (optional) message, or null if no message
@@ -91,6 +141,19 @@ public class S3Object extends S3 {
     public static S3Object updateCertificate(String qualifiedName, AtlanCertificateStatus certificate, String message)
             throws AtlanException {
         return (S3Object) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
+    }
+
+    /**
+     * Remove the certificate from an S3 object.
+     *
+     * @param qualifiedName of the S3 object
+     * @param name of the S3 object
+     * @return the updated S3 object, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static S3Object removeCertificate(String qualifiedName, String name) throws AtlanException {
+        return (S3Object)
+                Asset.removeCertificate(builder().qualifiedName(qualifiedName).name(name));
     }
 
     /**
@@ -106,6 +169,19 @@ public class S3Object extends S3 {
     public static S3Object updateAnnouncement(
             String qualifiedName, AtlanAnnouncementType type, String title, String message) throws AtlanException {
         return (S3Object) Asset.updateAnnouncement(builder(), TYPE_NAME, qualifiedName, type, title, message);
+    }
+
+    /**
+     * Remove the announcement from an S3 object.
+     *
+     * @param qualifiedName of the S3 object
+     * @param name of the S3 object
+     * @return the updated S3 object, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static S3Object removeAnnouncement(String qualifiedName, String name) throws AtlanException {
+        return (S3Object)
+                Asset.removeAnnouncement(builder().qualifiedName(qualifiedName).name(name));
     }
 
     /**
@@ -171,54 +247,5 @@ public class S3Object extends S3 {
      */
     public static S3Object removeTerms(String qualifiedName, List<GuidReference> terms) throws AtlanException {
         return (S3Object) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
-    }
-
-    /**
-     * Builds the minimal object necessary to create an S3 object.
-     *
-     * @param name of the S3 object
-     * @param connectionQualifiedName unique name of the connection through which the object is accessible
-     * @param awsArn unique ARN of the object
-     * @return the minimal object necessary to create the S3 object, as a builder
-     */
-    public static S3ObjectBuilder<?, ?> creator(String name, String connectionQualifiedName, String awsArn) {
-        return S3Object.builder()
-                .qualifiedName(generateQualifiedName(connectionQualifiedName, awsArn))
-                .name(name)
-                .connectionQualifiedName(connectionQualifiedName)
-                .connectorName("s3")
-                .awsArn(awsArn);
-    }
-
-    /**
-     * Builds the minimal object necessary to update an S3 object.
-     *
-     * @param qualifiedName unique name of the S3 object
-     * @param name of the S3 object
-     * @return the minimal object necessary to update the S3 object, as a builder
-     */
-    public static S3ObjectBuilder<?, ?> updater(String qualifiedName, String name) {
-        return S3Object.builder().qualifiedName(qualifiedName).name(name);
-    }
-
-    /**
-     * Builds the minimal object necessary to apply an update to an S3 object, from a potentially
-     * more-complete S3 object.
-     *
-     * @return the minimal object necessary to update the S3 object, as a builder
-     */
-    @Override
-    protected S3ObjectBuilder<?, ?> trimToRequired() {
-        return updater(this.getQualifiedName(), this.getName());
-    }
-
-    /**
-     * Generate a unique S3 object name.
-     * @param connectionQualifiedName unique name of the connection
-     * @param awsArn unique ARN for the object
-     * @return a unique name for the S3 object
-     */
-    private static String generateQualifiedName(String connectionQualifiedName, String awsArn) {
-        return connectionQualifiedName + "/" + awsArn;
     }
 }

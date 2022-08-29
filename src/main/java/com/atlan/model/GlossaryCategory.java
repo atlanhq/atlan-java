@@ -2,8 +2,12 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model;
 
+import com.atlan.exception.AtlanException;
+import com.atlan.model.enums.AtlanAnnouncementType;
+import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.relations.Reference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import lombok.*;
@@ -99,5 +103,98 @@ public class GlossaryCategory extends Asset {
     @Override
     protected GlossaryCategoryBuilder<?, ?> trimToRequired() {
         return updater(this.getQualifiedName(), this.getName(), this.getAnchor().getGuid());
+    }
+
+    /**
+     * Update the certificate on a category.
+     *
+     * @param qualifiedName of the category
+     * @param name of the category
+     * @param glossaryGuid unique ID (GUID) of the category's glossary
+     * @param certificate to use
+     * @param message (optional) message, or null if no message
+     * @return the updated category, or null if the update failed
+     * @throws AtlanException on any API problems
+     */
+    public static GlossaryCategory updateCertificate(
+            String qualifiedName, String name, String glossaryGuid, AtlanCertificateStatus certificate, String message)
+            throws AtlanException {
+        return (GlossaryCategory)
+                Asset.updateCertificate(updater(qualifiedName, name, glossaryGuid), certificate, message);
+    }
+
+    /**
+     * Remove the certificate from a category.
+     *
+     * @param qualifiedName of the category
+     * @param name of the category
+     * @param glossaryGuid unique ID (GUID) of the category's glossary
+     * @return the updated category, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static GlossaryCategory removeCertificate(String qualifiedName, String name, String glossaryGuid)
+            throws AtlanException {
+        return (GlossaryCategory) Asset.removeCertificate(updater(qualifiedName, name, glossaryGuid));
+    }
+
+    /**
+     * Update the announcement on a category.
+     *
+     * @param qualifiedName of the category
+     * @param name of the category
+     * @param glossaryGuid unique ID (GUID) of the category's glossary
+     * @param type type of announcement to set
+     * @param title (optional) title of the announcement to set (or null for no title)
+     * @param message (optional) message of the announcement to set (or null for no message)
+     * @return the result of the update, or null if the update failed
+     * @throws AtlanException on any API problems
+     */
+    public static GlossaryCategory updateAnnouncement(
+            String qualifiedName,
+            String name,
+            String glossaryGuid,
+            AtlanAnnouncementType type,
+            String title,
+            String message)
+            throws AtlanException {
+        return (GlossaryCategory)
+                Asset.updateAnnouncement(updater(qualifiedName, name, glossaryGuid), type, title, message);
+    }
+
+    /**
+     * Remove the announcement from a category.
+     *
+     * @param qualifiedName of the category
+     * @param name of the category
+     * @param glossaryGuid unique ID (GUID) of the category's glossary
+     * @return the updated category, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static GlossaryCategory removeAnnouncement(String qualifiedName, String name, String glossaryGuid)
+            throws AtlanException {
+        return (GlossaryCategory) Asset.removeAnnouncement(updater(qualifiedName, name, glossaryGuid));
+    }
+
+    /**
+     * Add classifications to a category.
+     *
+     * @param qualifiedName of the category
+     * @param classificationNames human-readable names of the classifications to add
+     * @throws AtlanException on any API problems, or if any of the classifications already exist on the category
+     */
+    public static void addClassifications(String qualifiedName, List<String> classificationNames)
+            throws AtlanException {
+        Asset.addClassifications(TYPE_NAME, qualifiedName, classificationNames);
+    }
+
+    /**
+     * Remove a classification from a category.
+     *
+     * @param qualifiedName of the category
+     * @param classificationName human-readable name of the classification to remove
+     * @throws AtlanException on any API problems, or if the classification does not exist on the category
+     */
+    public static void removeClassification(String qualifiedName, String classificationName) throws AtlanException {
+        Asset.removeClassification(TYPE_NAME, qualifiedName, classificationName);
     }
 }
