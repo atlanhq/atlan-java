@@ -8,6 +8,10 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import java.io.IOException;
 
+/**
+ * Serialization of the {@link Removable} placeholder object, to allow the SDK to serialize null values only when
+ * it should intentionally clear out some value.
+ */
 public class RemovableSerializer extends StdSerializer<Removable> {
     private static final long serialVersionUID = 2L;
 
@@ -19,6 +23,9 @@ public class RemovableSerializer extends StdSerializer<Removable> {
         super(t);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void serialize(Removable removable, JsonGenerator gen, SerializerProvider sp)
             throws IOException, JsonProcessingException {

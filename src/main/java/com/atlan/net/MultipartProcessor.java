@@ -11,6 +11,9 @@ import java.io.PrintWriter;
 import java.net.URLConnection;
 import java.nio.charset.Charset;
 
+/**
+ * Currently unused — may be useful longer-term for endpoints that need to upload files (TBC).
+ */
 public class MultipartProcessor {
     private final String boundary;
     private static final String LINE_BREAK = "\r\n";

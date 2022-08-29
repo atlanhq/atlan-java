@@ -10,6 +10,6 @@ public class ApiConnectionException extends AtlanException {
     }
 
     public ApiConnectionException(String message, Throwable e) {
-        super(message, null, null, 0, e);
+        super(message, null, 0, e);
     }
 }

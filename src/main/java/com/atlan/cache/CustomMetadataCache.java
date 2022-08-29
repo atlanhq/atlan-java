@@ -252,8 +252,7 @@ public class CustomMetadataCache {
                     builder.attribute(cmAttrName, primitive);
                 } else {
                     throw new LogicException(
-                            "Unable to deserialize non-primitive custom metadata value.",
-                            jsonValue.toString(),
+                            "Unable to deserialize non-primitive custom metadata value: " + jsonValue,
                             "ATLAN-CLIENT-CM-500-002",
                             500);
                 }
@@ -278,15 +277,13 @@ public class CustomMetadataCache {
                 return jsonValue.asDouble();
             } else {
                 throw new LogicException(
-                        "Unable to deserialize unrecognized primitive custom metadata value.",
-                        jsonValue.toString(),
+                        "Unable to deserialize unrecognized primitive custom metadata value: " + jsonValue,
                         "ATLAN-CLIENT-CM-500-001",
                         500);
             }
         } else {
             throw new LogicException(
-                    "Unable to deserialize non-primitive custom metadata value.",
-                    jsonValue.toString(),
+                    "Unable to deserialize non-primitive custom metadata value:" + jsonValue,
                     "ATLAN-CLIENT-CM-500-002",
                     500);
         }

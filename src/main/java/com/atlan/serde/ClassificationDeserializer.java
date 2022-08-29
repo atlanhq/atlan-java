@@ -14,6 +14,11 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fasterxml.jackson.databind.jsontype.TypeDeserializer;
 import java.io.IOException;
 
+/**
+ * Custom deserialization of {@link Classification} objects.
+ * In particular, this translates from the Atlan-internal hashed-string representation for a classification into
+ * the human-readable name for a classification.
+ */
 public class ClassificationDeserializer extends StdDeserializer<Classification> {
     private static final long serialVersionUID = 2L;
 
@@ -21,12 +26,18 @@ public class ClassificationDeserializer extends StdDeserializer<Classification> 
         super(Classification.class);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Object deserializeWithType(
             JsonParser parser, DeserializationContext context, TypeDeserializer typeDeserializer) throws IOException {
         return deserialize(parser, context);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Classification deserialize(JsonParser parser, DeserializationContext context) throws IOException {
 
@@ -44,6 +55,8 @@ public class ClassificationDeserializer extends StdDeserializer<Classification> 
             throw new IOException("Unable to find classification with ID-string: " + clsId, e);
         }
 
+        // TODO: Unfortunately, attempts to use a ClassificationBeanDeserializerModifier to avoid the direct
+        //  deserialization below were not successful — something to investigate another time
         return Classification.builder()
                 .typeName(clsName)
                 .entityGuid(JacksonUtils.deserializeString(root, "entityGuid"))

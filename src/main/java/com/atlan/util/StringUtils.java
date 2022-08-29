@@ -63,6 +63,7 @@ public final class StringUtils {
 
     /**
      * Encode the provided content for storage as a README's content.
+     *
      * @param decoded to be encoded
      * @return encoded README content
      */
@@ -74,6 +75,7 @@ public final class StringUtils {
 
     /**
      * Decode the provided content from the README-encoded form to plain HTML.
+     *
      * @param encoded to be decoded
      * @return decoded README content (HTML)
      */

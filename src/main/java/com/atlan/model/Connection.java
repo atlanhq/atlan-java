@@ -128,7 +128,6 @@ public class Connection extends Asset {
             throw new InvalidRequestException(
                     "No admin provided for the connection, will not attempt to create one.",
                     "adminRoles,adminGroups,adminUsers",
-                    "--",
                     "ATLAN-CLIENT-CONNECTION-400-001",
                     400,
                     null);

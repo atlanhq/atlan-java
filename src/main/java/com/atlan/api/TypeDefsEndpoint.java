@@ -50,7 +50,6 @@ public class TypeDefsEndpoint {
                     throw new InvalidRequestException(
                             "Unable to create new type definitions of category: " + typeDef.getCategory(),
                             "category",
-                            "",
                             "ATLAN-CLIENT-400-010",
                             400,
                             null);

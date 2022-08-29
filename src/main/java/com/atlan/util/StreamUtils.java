@@ -12,6 +12,9 @@ import java.io.Reader;
 import java.nio.charset.Charset;
 import lombok.Cleanup;
 
+/**
+ * Utilities for working with streams of data.
+ */
 public final class StreamUtils {
     private static final int DEFAULT_BUF_SIZE = 1024;
 

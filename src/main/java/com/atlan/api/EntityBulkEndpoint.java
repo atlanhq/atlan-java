@@ -70,7 +70,6 @@ public class EntityBulkEndpoint {
         throw new InvalidRequestException(
                 "Insufficient information provided to delete entities: no GUID provided.",
                 "guid",
-                "N/A",
                 "ATLAN-JAVA-CLIENT-400",
                 400,
                 null);

@@ -53,9 +53,8 @@ public class EntityGuidEndpoint {
             }
         } else {
             throw new InvalidRequestException(
-                    "No custom metadata found with the provided name.",
+                    "No custom metadata found with the provided name: " + cmName,
                     "customMetadataName",
-                    cmName,
                     "ATLAN-JAVA-CLIENT-400-030",
                     400,
                     null);
@@ -88,9 +87,8 @@ public class EntityGuidEndpoint {
             }
         } else {
             throw new InvalidRequestException(
-                    "No custom metadata found with the provided name.",
+                    "No custom metadata found with the provided name: " + cmName,
                     "customMetadataName",
-                    cmName,
                     "ATLAN-JAVA-CLIENT-400-030",
                     400,
                     null);
@@ -121,9 +119,8 @@ public class EntityGuidEndpoint {
             ApiResource.request(ApiResource.RequestMethod.DELETE, url, "", null, null); */
         } else {
             throw new InvalidRequestException(
-                    "No custom metadata found with the provided name.",
+                    "No custom metadata found with the provided name: " + cmName,
                     "customMetadataName",
-                    cmName,
                     "ATLAN-JAVA-CLIENT-400-030",
                     400,
                     null);

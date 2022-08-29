@@ -113,29 +113,26 @@ public class AtlanRequest {
         String apiKey = options.getApiKey();
         if (apiKey == null) {
             throw new AuthenticationException(
-                    "No API key provided. Set your API key using `Atlan.apiKey = \"<API-KEY>\"`. You can "
-                            + "generate API keys from the Atlan Dashboard. See "
-                            + "https://atlan.com/docs/api/authentication for details or contact support at "
-                            + "https://support.atlan.com/email if you have any questions.",
-                    null,
+                    "No API token provided. Set your API token using `Atlan.setApiToken(\"<API-TOKEN>\");`. You can "
+                            + "generate API tokens from the Atlan Admin Center. See "
+                            + "https://ask.atlan.com/hc/en-us/articles/8312649180049 for details or contact support at "
+                            + "https://ask.atlan.com/hc/en-us/requests/new if you have any questions.",
                     null,
                     0);
         } else if (apiKey.isEmpty()) {
             throw new AuthenticationException(
-                    "Your API key is invalid, as it is an empty string. You can double-check your API key "
-                            + "from the Atlan Dashboard. See "
-                            + "https://atlan.com/docs/api/authentication for details or contact support at "
-                            + "https://support.atlan.com/email if you have any questions.",
-                    null,
+                    "Your API token is invalid, as it is an empty string. You can double-check your API token "
+                            + "from the Atlan Admin Center. See "
+                            + "https://ask.atlan.com/hc/en-us/articles/8312649180049 for details or contact support at "
+                            + "https://ask.atlan.com/hc/en-us/requests/new if you have any questions.",
                     null,
                     0);
         } else if (StringUtils.containsWhitespace(apiKey)) {
             throw new AuthenticationException(
-                    "Your API key is invalid, as it contains whitespace. You can double-check your API key "
-                            + "from the Atlan Dashboard. See "
-                            + "https://atlan.com/docs/api/authentication for details or contact support at "
-                            + "https://support.atlan.com/email if you have any questions.",
-                    null,
+                    "Your API token is invalid, as it contains whitespace. You can double-check your API token "
+                            + "from the Atlan Admin Center. See "
+                            + "https://ask.atlan.com/hc/en-us/articles/8312649180049 for details or contact support at "
+                            + "https://ask.atlan.com/hc/en-us/requests/new if you have any questions.",
                     null,
                     0);
         }

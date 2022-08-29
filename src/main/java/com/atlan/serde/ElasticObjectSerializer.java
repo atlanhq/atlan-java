@@ -14,6 +14,14 @@ import java.io.IOException;
 import java.io.StringWriter;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * Custom serialization of Elastic objects into the JSON expected by Atlan's search interfaces.
+ * We reuse the Elastic client to allow full richness and flexibility in defining the queries themselves, but
+ * this custom serialization is then necessary as the underlying objects of the Elastic client itself do not exactly
+ * match the expected JSON serialization format. (Thankfully all we need to do is call Elastic's own underlying
+ * serialization methods to get there, though!)
+ * @param <T> the type of Elastic object to serialize
+ */
 @Slf4j
 public class ElasticObjectSerializer<T extends JsonpSerializable> extends StdSerializer<T> {
     private static final long serialVersionUID = 2L;

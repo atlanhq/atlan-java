@@ -164,9 +164,8 @@ public class EntityUniqueAttributesEndpoint {
             }
         } else {
             throw new InvalidRequestException(
-                    "No classification found with the provided name.",
+                    "No classification found with the provided name: " + classificationName,
                     "classificationName",
-                    classificationName,
                     "ATLAN-JAVA-CLIENT-400-020",
                     400,
                     null);

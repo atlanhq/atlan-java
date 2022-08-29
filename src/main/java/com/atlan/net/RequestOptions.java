@@ -8,6 +8,11 @@ import java.net.PasswordAuthentication;
 import java.net.Proxy;
 import lombok.EqualsAndHashCode;
 
+/**
+ * Class to encapsulate all the options that can be overridden on individual API calls.
+ * For the moment, only {@link #getDefault()} is used (behind-the-scenes), but this would provide the foundation
+ * to open up per-request variations of things like he maximum number of retries to allow.
+ */
 @EqualsAndHashCode(callSuper = false)
 public class RequestOptions {
     private final String apiKey;
@@ -24,6 +29,11 @@ public class RequestOptions {
     private final Proxy connectionProxy;
     private final PasswordAuthentication proxyCredential;
 
+    /**
+     * Returns a default set of request options, using the global settings of the SDK.
+     *
+     * @return default request options
+     */
     public static RequestOptions getDefault() {
         return new RequestOptions(
                 Atlan.getApiToken(),

@@ -38,7 +38,7 @@ public class CustomMetadataDef extends TypeDef {
     /**
      * Builds the minimal object necessary to create a custom metadata definition.
      * To continue adding to the object, call {@link #toBuilder()} on the result and continue calling additional
-     * methods to add metadata followed by {@link CustomMetadataDefJBuilder#build()}.
+     * methods to add metadata followed by {@link CustomMetadataDefBuilder#build()}.
      * Note: without any enrichment, this will create a custom metadata set with no attributes. This is valid,
      * but probably not useful for anything!
      *
@@ -80,7 +80,6 @@ public class CustomMetadataDef extends TypeDef {
             throw new InvalidRequestException(
                     "Unable to find a custom metadata definition with the name: " + displayName,
                     "name",
-                    "",
                     "ATLAN-CLIENT-400-012",
                     400,
                     null);

@@ -46,17 +46,26 @@ public class CaseInsensitiveMap<V> extends AbstractMap<String, V> implements Map
 
     // Query Operations
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean containsKey(Object key) {
         String keyLower = convertKey(key);
         return this.store.containsKey(keyLower);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean containsValue(Object value) {
         return this.values().contains(value);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public V get(Object key) {
         String keyLower = convertKey(key);
@@ -69,6 +78,9 @@ public class CaseInsensitiveMap<V> extends AbstractMap<String, V> implements Map
 
     // Modification Operations
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public V put(String key, V value) {
         String keyLower = convertKey(key);
@@ -76,6 +88,9 @@ public class CaseInsensitiveMap<V> extends AbstractMap<String, V> implements Map
         return value;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public V remove(Object key) {
         String keyLower = convertKey(key);
@@ -88,6 +103,9 @@ public class CaseInsensitiveMap<V> extends AbstractMap<String, V> implements Map
 
     // Bulk Operations
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void clear() {
         this.store.clear();
@@ -95,16 +113,25 @@ public class CaseInsensitiveMap<V> extends AbstractMap<String, V> implements Map
 
     // Views
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Set<String> keySet() {
         return this.store.values().stream().map(entry -> entry.getKey()).collect(Collectors.toSet());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Collection<V> values() {
         return this.store.values().stream().map(entry -> entry.getValue()).collect(Collectors.toList());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Set<Entry<String, V>> entrySet() {
         return this.store.values().stream().collect(Collectors.toSet());

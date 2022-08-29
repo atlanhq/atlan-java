@@ -70,6 +70,11 @@ public abstract class Atlan {
         connectionProxy = proxy;
     }
 
+    /**
+     * Returns the proxy to tunnel all Atlan connections.
+     *
+     * @return proxy
+     */
     public static Proxy getConnectionProxy() {
         return connectionProxy;
     }

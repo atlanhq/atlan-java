@@ -13,6 +13,11 @@ import com.fasterxml.jackson.databind.jsontype.TypeSerializer;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import java.io.IOException;
 
+/**
+ * Custom serialization of {@link Classification} objects.
+ * In particular, this translates from the human-readable name into the Atlan-internal hashed-string representation for
+ * a classification.
+ */
 public class ClassificationSerializer extends StdSerializer<Classification> {
     private static final long serialVersionUID = 2L;
 
@@ -27,6 +32,9 @@ public class ClassificationSerializer extends StdSerializer<Classification> {
         this.defaultSerializer = defaultSerializer;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void serializeWithType(
             Classification value, JsonGenerator gen, SerializerProvider serializers, TypeSerializer typeSer)
@@ -34,6 +42,9 @@ public class ClassificationSerializer extends StdSerializer<Classification> {
         serialize(value, gen, serializers);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void serialize(Classification cls, JsonGenerator gen, SerializerProvider sp)
             throws IOException, JsonProcessingException {

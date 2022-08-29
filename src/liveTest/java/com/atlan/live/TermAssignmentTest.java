@@ -124,7 +124,6 @@ public class TermAssignmentTest extends AtlanLiveTest {
         try {
             S3Object result = S3Object.replaceTerms(S3AssetTest.s3Object1Qame, S3AssetTest.S3_OBJECT1_NAME, null);
             assertNotNull(result);
-            // TODO: verify whether we actually see relationships in the entity response?
             Entity full = Entity.retrieveFull(S3AssetTest.s3Object1Guid);
             assertTrue(full instanceof S3Object);
             S3Object s3Object1 = (S3Object) full;
@@ -151,7 +150,6 @@ public class TermAssignmentTest extends AtlanLiveTest {
             S3Object result = S3Object.appendTerms(
                     S3AssetTest.s3Object1Qame, List.of(Reference.to(GlossaryTerm.TYPE_NAME, GlossaryTest.termGuid1)));
             assertNotNull(result);
-            // TODO: verify whether we actually see relationships in the entity response?
             Entity full = Entity.retrieveFull(S3AssetTest.s3Object1Guid);
             assertTrue(full instanceof S3Object);
             S3Object s3Object1 = (S3Object) full;
@@ -184,7 +182,6 @@ public class TermAssignmentTest extends AtlanLiveTest {
             S3Object result = S3Object.appendTerms(
                     S3AssetTest.s3Object1Qame, List.of(Reference.to(GlossaryTerm.TYPE_NAME, GlossaryTest.termGuid2)));
             assertNotNull(result);
-            // TODO: verify whether we actually see relationships in the entity response?
             Entity full = Entity.retrieveFull(S3AssetTest.s3Object1Guid);
             assertTrue(full instanceof S3Object);
             S3Object s3Object1 = (S3Object) full;
@@ -218,7 +215,6 @@ public class TermAssignmentTest extends AtlanLiveTest {
             S3Object result = S3Object.removeTerms(
                     S3AssetTest.s3Object1Qame, List.of(Reference.to(GlossaryTerm.TYPE_NAME, GlossaryTest.termGuid1)));
             assertNotNull(result);
-            // TODO: verify whether we actually see relationships in the entity response?
             Entity full = Entity.retrieveFull(S3AssetTest.s3Object1Guid);
             assertTrue(full instanceof S3Object);
             S3Object s3Object1 = (S3Object) full;
@@ -251,7 +247,6 @@ public class TermAssignmentTest extends AtlanLiveTest {
             S3Object result = S3Object.removeTerms(
                     S3AssetTest.s3Object1Qame, List.of(Reference.to(GlossaryTerm.TYPE_NAME, GlossaryTest.termGuid2)));
             assertNotNull(result);
-            // TODO: verify whether we actually see relationships in the entity response?
             Entity full = Entity.retrieveFull(S3AssetTest.s3Object1Guid);
             assertTrue(full instanceof S3Object);
             S3Object s3Object1 = (S3Object) full;
