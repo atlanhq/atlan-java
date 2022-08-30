@@ -4,7 +4,6 @@ package com.atlan.model.lineage;
 
 import com.atlan.api.LineageEndpoint;
 import com.atlan.exception.AtlanException;
-import com.atlan.model.EntityFilter;
 import com.atlan.model.core.AtlanObject;
 import com.atlan.model.enums.AtlanLineageDirection;
 import java.util.List;

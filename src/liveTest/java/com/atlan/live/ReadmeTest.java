@@ -5,11 +5,11 @@ package com.atlan.live;
 import static org.testng.Assert.*;
 
 import com.atlan.exception.AtlanException;
-import com.atlan.model.Readme;
-import com.atlan.model.S3Bucket;
+import com.atlan.model.assets.Readme;
+import com.atlan.model.assets.S3Bucket;
 import com.atlan.model.core.Entity;
+import com.atlan.model.core.EntityMutationResponse;
 import com.atlan.model.enums.AtlanStatus;
-import com.atlan.model.responses.EntityMutationResponse;
 import org.testng.annotations.Test;
 
 public class ReadmeTest extends AtlanLiveTest {

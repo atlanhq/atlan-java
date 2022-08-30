@@ -6,13 +6,13 @@ import static org.testng.Assert.*;
 
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.InvalidRequestException;
-import com.atlan.model.GlossaryTerm;
-import com.atlan.model.S3Object;
+import com.atlan.model.assets.GlossaryTerm;
+import com.atlan.model.assets.S3Object;
 import com.atlan.model.core.Classification;
 import com.atlan.model.core.Entity;
+import com.atlan.model.core.EntityMutationResponse;
 import com.atlan.model.enums.AtlanClassificationColor;
 import com.atlan.model.enums.AtlanTypeCategory;
-import com.atlan.model.responses.EntityMutationResponse;
 import com.atlan.model.typedefs.ClassificationDef;
 import java.util.List;
 import java.util.Set;

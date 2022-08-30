@@ -5,12 +5,12 @@ package com.atlan.live;
 import static org.testng.Assert.*;
 
 import com.atlan.exception.AtlanException;
-import com.atlan.model.GlossaryTerm;
-import com.atlan.model.S3Object;
+import com.atlan.model.assets.GlossaryTerm;
+import com.atlan.model.assets.S3Object;
 import com.atlan.model.core.Entity;
+import com.atlan.model.core.EntityMutationResponse;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.relations.Reference;
-import com.atlan.model.responses.EntityMutationResponse;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;

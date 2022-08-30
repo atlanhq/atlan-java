@@ -7,7 +7,6 @@ import com.atlan.cache.CustomMetadataCache;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.enums.AtlanTypeCategory;
-import com.atlan.model.responses.TypeDefResponse;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

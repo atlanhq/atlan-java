@@ -5,13 +5,13 @@ package com.atlan.live;
 import static org.testng.Assert.*;
 
 import com.atlan.exception.AtlanException;
-import com.atlan.model.CustomMetadataAttributes;
-import com.atlan.model.GlossaryTerm;
-import com.atlan.model.S3Object;
+import com.atlan.model.assets.GlossaryTerm;
+import com.atlan.model.assets.S3Object;
+import com.atlan.model.core.CustomMetadataAttributes;
 import com.atlan.model.core.Entity;
+import com.atlan.model.core.EntityMutationResponse;
 import com.atlan.model.enums.AtlanCustomAttributePrimitiveType;
 import com.atlan.model.enums.AtlanTypeCategory;
-import com.atlan.model.responses.EntityMutationResponse;
 import com.atlan.model.typedefs.AttributeDef;
 import com.atlan.model.typedefs.CustomMetadataDef;
 import java.util.List;

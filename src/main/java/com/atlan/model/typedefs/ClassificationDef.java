@@ -8,7 +8,6 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.enums.AtlanClassificationColor;
 import com.atlan.model.enums.AtlanTypeCategory;
-import com.atlan.model.responses.TypeDefResponse;
 import java.util.List;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;

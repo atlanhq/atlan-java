@@ -5,13 +5,16 @@ package com.atlan.api;
 import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.InvalidRequestException;
+import com.atlan.model.core.AtlanObject;
 import com.atlan.model.core.Entity;
+import com.atlan.model.core.EntityMutationResponse;
 import com.atlan.model.enums.AtlanDeleteType;
-import com.atlan.model.requests.BulkEntityRequest;
-import com.atlan.model.responses.EntityMutationResponse;
 import com.atlan.net.ApiResource;
 import java.util.Collections;
 import java.util.List;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.SuperBuilder;
 
 /**
  * API endpoints for operating on multiple entities at the same time (in bulk).
@@ -101,5 +104,16 @@ public class EntityBulkEndpoint {
                 "ATLAN-JAVA-CLIENT-400",
                 400,
                 null);
+    }
+
+    /**
+     * Request class for updating many entities together (in bulk).
+     */
+    @Data
+    @SuperBuilder
+    @EqualsAndHashCode(callSuper = false)
+    static class BulkEntityRequest extends AtlanObject {
+        /** List of entities to operate on in bulk. */
+        List<Entity> entities;
     }
 }

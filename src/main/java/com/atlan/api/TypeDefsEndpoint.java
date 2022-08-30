@@ -6,8 +6,8 @@ import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.enums.AtlanTypeCategory;
-import com.atlan.model.responses.TypeDefResponse;
 import com.atlan.model.typedefs.*;
+import com.atlan.model.typedefs.TypeDefResponse;
 import com.atlan.net.ApiResource;
 import java.util.List;
 

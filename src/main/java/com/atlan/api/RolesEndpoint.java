@@ -4,7 +4,7 @@ package com.atlan.api;
 
 import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
-import com.atlan.model.responses.RoleResponse;
+import com.atlan.model.admin.RoleResponse;
 import com.atlan.net.ApiResource;
 
 /**

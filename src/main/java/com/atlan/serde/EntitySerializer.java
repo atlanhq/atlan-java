@@ -4,8 +4,8 @@ package com.atlan.serde;
 
 import com.atlan.cache.CustomMetadataCache;
 import com.atlan.exception.AtlanException;
-import com.atlan.model.Attribute;
-import com.atlan.model.CustomMetadataAttributes;
+import com.atlan.model.assets.Attribute;
+import com.atlan.model.core.CustomMetadataAttributes;
 import com.atlan.model.core.Entity;
 import com.atlan.util.ReflectionUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -100,7 +100,7 @@ public class EntitySerializer extends StdSerializer<Entity> {
                         // 5. Translate custom metadata to businessAttributes map
                         Map<String, CustomMetadataAttributes> cm = entity.getCustomMetadataSets();
                         if (cm != null) {
-                            CustomMetadataCache.getBusinessAttributesFromCustomMetadataJ(cm, businessAttributes);
+                            CustomMetadataCache.getBusinessAttributesFromCustomMetadata(cm, businessAttributes);
                         }
                         // Then remove it, to exclude it from serialization
                         entity.setCustomMetadataSets(null);

@@ -5,7 +5,7 @@ package com.atlan.cache;
 import com.atlan.api.RolesEndpoint;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.admin.AtlanRole;
-import com.atlan.model.responses.RoleResponse;
+import com.atlan.model.admin.RoleResponse;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import lombok.extern.slf4j.Slf4j;

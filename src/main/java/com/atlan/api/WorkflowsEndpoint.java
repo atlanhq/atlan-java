@@ -4,10 +4,10 @@ package com.atlan.api;
 
 import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
-import com.atlan.model.responses.WorkflowResponse;
-import com.atlan.model.responses.WorkflowSearchResponse;
 import com.atlan.model.workflow.Workflow;
+import com.atlan.model.workflow.WorkflowResponse;
 import com.atlan.model.workflow.WorkflowSearchRequest;
+import com.atlan.model.workflow.WorkflowSearchResponse;
 import com.atlan.net.ApiResource;
 
 /**

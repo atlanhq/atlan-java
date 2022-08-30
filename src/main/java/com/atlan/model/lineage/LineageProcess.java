@@ -2,7 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.lineage;
 
-import com.atlan.model.Attribute;
+import com.atlan.model.assets.Attribute;
 import com.atlan.model.relations.Reference;
 import java.util.List;
 import lombok.*;
