@@ -8,6 +8,8 @@ import com.atlan.exception.AtlanException;
 import com.atlan.model.*;
 import com.atlan.model.core.Classification;
 import com.atlan.model.core.Entity;
+import com.atlan.model.lineage.ColumnProcess;
+import com.atlan.model.lineage.LineageProcess;
 import com.atlan.util.JacksonUtils;
 import com.atlan.util.ReflectionUtils;
 import com.atlan.util.StringUtils;

@@ -9,6 +9,8 @@ import com.atlan.exception.AtlanException;
 import com.atlan.model.*;
 import com.atlan.model.enums.AtlanDeleteType;
 import com.atlan.model.enums.AtlanStatus;
+import com.atlan.model.lineage.ColumnProcess;
+import com.atlan.model.lineage.LineageProcess;
 import com.atlan.model.responses.EntityMutationResponse;
 import com.atlan.model.responses.EntityResponse;
 import com.atlan.serde.EntityDeserializer;

@@ -7,6 +7,7 @@ import static org.testng.Assert.*;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.enums.AtlanStatus;
+import com.atlan.model.lineage.ColumnProcess;
 import com.atlan.model.relations.Reference;
 import com.atlan.serde.Serde;
 import com.fasterxml.jackson.core.JsonProcessingException;

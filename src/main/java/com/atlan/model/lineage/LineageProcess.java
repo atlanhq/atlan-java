@@ -1,7 +1,8 @@
 /* SPDX-License-Identifier: Apache-2.0 */
 /* Copyright 2022 Atlan Pte. Ltd. */
-package com.atlan.model;
+package com.atlan.model.lineage;
 
+import com.atlan.model.Attribute;
 import com.atlan.model.relations.Reference;
 import java.util.List;
 import lombok.*;

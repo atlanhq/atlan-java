@@ -4,6 +4,7 @@ package com.atlan.model;
 
 import static org.testng.Assert.*;
 
+import com.atlan.model.lineage.AbstractProcess;
 import com.atlan.model.relations.Reference;
 import java.util.Collections;
 import org.testng.annotations.Test;
