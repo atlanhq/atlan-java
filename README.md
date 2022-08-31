@@ -3,7 +3,7 @@
 
 <!-- [![License](https://img.shields.io/github/license/atlanhq/atlan-java)](LICENSE) -->
 [![Build](https://github.com/atlanhq/atlan-java/workflows/Merge/badge.svg)](https://github.com/atlanhq/atlan-java/actions/workflows/merge.yml?query=workflow%3AMerge)
-[![CodeQL](https://github.com/atlanhq/atlan-java/workflows/CodeQL/badge.svg)](https://github.com/atlanhq/atlan-java/actions/workflows/codeql-analysis.yml)
+<!--[![CodeQL](https://github.com/atlanhq/atlan-java/workflows/CodeQL/badge.svg)](https://github.com/atlanhq/atlan-java/actions/workflows/codeql-analysis.yml) -->
 <!-- [![Release](https://img.shields.io/maven-central/v/com.atlan/atlan-java?label=release)](http://repository.sonatype.org/service/local/artifact/maven/redirect?r=central-proxy&g=com.atlan&a=atlan-java&v=RELEASE&c=jar-with-dependencies)
 [![Development](https://img.shields.io/nexus/s/com.atlan/atlan-java?label=development&server=https%3A%2F%2Foss.sonatype.org)](https://oss.sonatype.org/content/repositories/snapshots/com/atlan/atlan-java/) -->
 
