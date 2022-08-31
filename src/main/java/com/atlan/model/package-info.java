@@ -1,4 +1,4 @@
 /**
- * Representations of Atlan metadata. At the top-level these are the varying types of assets.
+ * Representations of the objects needed to interact with Atlan's APIs.
  */
 package com.atlan.model;

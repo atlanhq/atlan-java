@@ -7,12 +7,15 @@ import static org.testng.Assert.*;
 import com.atlan.cache.RoleCache;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.InvalidRequestException;
-import com.atlan.model.*;
+import com.atlan.model.assets.Connection;
+import com.atlan.model.assets.Readme;
+import com.atlan.model.assets.S3Bucket;
+import com.atlan.model.assets.S3Object;
 import com.atlan.model.core.Entity;
+import com.atlan.model.core.EntityMutationResponse;
 import com.atlan.model.enums.*;
 import com.atlan.model.relations.GuidReference;
 import com.atlan.model.relations.Reference;
-import com.atlan.model.responses.EntityMutationResponse;
 import java.util.Collections;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -28,6 +31,8 @@ public class S3AssetTest extends AtlanLiveTest {
     public static final String S3_OBJECT1_ARN = "aws::production:jc-test-bucket:a/prefix/jc-test-source.csv";
     public static final String S3_OBJECT2_NAME = "jc-test-object-target";
     public static final String S3_OBJECT2_ARN = "aws::production:jc-test-bucket:a/prefix/jc-test-target.csv";
+    public static final String S3_OBJECT3_NAME = "jc-test-object-target2";
+    public static final String S3_OBJECT3_ARN = "aws::production:jc-test-bucket:a/prefix/jc-test-target2.csv";
 
     public static String connectionGuid = null;
     public static String connectionQame = null;
@@ -39,6 +44,8 @@ public class S3AssetTest extends AtlanLiveTest {
     public static String s3Object1Qame = null;
     public static String s3Object2Guid = null;
     public static String s3Object2Qame = null;
+    public static String s3Object3Guid = null;
+    public static String s3Object3Qame = null;
 
     @Test(groups = {"invalid.connection"})
     void invalidConnection() {
@@ -206,6 +213,38 @@ public class S3AssetTest extends AtlanLiveTest {
             assertEquals(s3Object.getConnectorName(), "s3");
             assertEquals(s3Object.getS3BucketName(), S3_BUCKET_NAME);
             assertEquals(s3Object.getS3BucketQualifiedName(), s3BucketQame);
+        } catch (AtlanException e) {
+            e.printStackTrace();
+            assertNull(e, "Unexpected exception while trying to create an S3 object.");
+        }
+    }
+
+    @Test(
+            groups = {"create.s3object"},
+            dependsOnGroups = {"create.s3bucket"})
+    void createS3Object3() {
+        try {
+            S3Object s3Object = S3Object.creator(S3_OBJECT3_NAME, connectionQame, S3_OBJECT3_ARN)
+                    .build();
+            EntityMutationResponse response = s3Object.upsert();
+            assertNotNull(response);
+            assertTrue(response.getDeletedEntities().isEmpty());
+            assertEquals(response.getCreatedEntities().size(), 1);
+            Entity one = response.getCreatedEntities().get(0);
+            assertNotNull(one);
+            assertEquals(one.getTypeName(), S3Object.TYPE_NAME);
+            assertTrue(one instanceof S3Object);
+            s3Object = (S3Object) one;
+            s3Object3Guid = s3Object.getGuid();
+            assertNotNull(s3Object3Guid);
+            s3Object3Qame = s3Object.getQualifiedName();
+            assertNotNull(s3Object3Qame);
+            assertEquals(s3Object.getName(), S3_OBJECT3_NAME);
+            assertEquals(s3Object.getAwsArn(), S3_OBJECT3_ARN);
+            assertEquals(s3Object.getConnectorName(), "s3");
+            assertNull(s3Object.getS3BucketName());
+            assertNull(s3Object.getS3BucketQualifiedName());
+            assertNull(s3Object.getBucket());
         } catch (AtlanException e) {
             e.printStackTrace();
             assertNull(e, "Unexpected exception while trying to create an S3 object.");

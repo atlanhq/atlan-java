@@ -5,11 +5,11 @@ package com.atlan.cache;
 import com.atlan.api.TypeDefsEndpoint;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.LogicException;
-import com.atlan.model.CustomMetadataAttributes;
+import com.atlan.model.core.CustomMetadataAttributes;
 import com.atlan.model.enums.AtlanTypeCategory;
-import com.atlan.model.responses.TypeDefResponse;
 import com.atlan.model.typedefs.AttributeDef;
 import com.atlan.model.typedefs.CustomMetadataDef;
+import com.atlan.model.typedefs.TypeDefResponse;
 import com.atlan.serde.Removable;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -181,7 +181,7 @@ public class CustomMetadataCache {
      * @param businessAttributes business attributes object, which will be changed
      * @throws AtlanException on any API communication problem if the cache needs to be refreshed
      */
-    public static void getBusinessAttributesFromCustomMetadataJ(
+    public static void getBusinessAttributesFromCustomMetadata(
             Map<String, CustomMetadataAttributes> customMetadata, Map<String, Map<String, Object>> businessAttributes)
             throws AtlanException {
         if (customMetadata != null) {

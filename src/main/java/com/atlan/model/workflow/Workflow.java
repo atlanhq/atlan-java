@@ -5,7 +5,6 @@ package com.atlan.model.workflow;
 import com.atlan.api.WorkflowsEndpoint;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.core.AtlanObject;
-import com.atlan.model.responses.WorkflowResponse;
 import java.util.List;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

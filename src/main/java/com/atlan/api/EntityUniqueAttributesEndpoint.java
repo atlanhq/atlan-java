@@ -9,14 +9,16 @@ import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.core.AtlanObject;
 import com.atlan.model.core.Classification;
 import com.atlan.model.core.Entity;
-import com.atlan.model.requests.SingleEntityRequest;
-import com.atlan.model.responses.EntityMutationResponse;
-import com.atlan.model.responses.EntityResponse;
+import com.atlan.model.core.EntityMutationResponse;
+import com.atlan.model.core.EntityResponse;
 import com.atlan.net.ApiResource;
 import com.atlan.serde.Serde;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -193,5 +195,16 @@ public class EntityUniqueAttributesEndpoint {
                 throw new RuntimeException("Unable to serialize list of classifications.", e);
             }
         }
+    }
+
+    /**
+     * Request class for updating a single entity.
+     */
+    @Data
+    @SuperBuilder
+    @EqualsAndHashCode(callSuper = false)
+    static class SingleEntityRequest extends AtlanObject {
+        /** The entity to update. */
+        Entity entity;
     }
 }

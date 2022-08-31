@@ -4,8 +4,8 @@ package com.atlan.api;
 
 import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
-import com.atlan.model.IndexSearchRequest;
-import com.atlan.model.responses.IndexSearchResponse;
+import com.atlan.model.search.IndexSearchRequest;
+import com.atlan.model.search.IndexSearchResponse;
 import com.atlan.net.ApiResource;
 
 /**
