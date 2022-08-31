@@ -1,0 +1,22 @@
+# SPDX-License-Identifier: Apache-2.0
+# Copyright 2022 Atlan Pte. Ltd.
+name: "Merge"
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  merge-build:
+    runs-on: ubuntu-latest
+    name: "Merge"
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v3
+        with:
+          java-version: 11
+          distribution: adopt
+      - name: Check formatting
+        run: ./gradlew spotlessCheck
+      - name: Build artifacts
+        run: ./gradlew assemble
