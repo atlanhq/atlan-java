@@ -91,8 +91,20 @@ public class EntityDeserializer extends StdDeserializer<Entity> {
                 case Connection.TYPE_NAME:
                     builder = Connection.builder();
                     break;
+                case Database.TYPE_NAME:
+                    builder = Database.builder();
+                    break;
+                case Schema.TYPE_NAME:
+                    builder = Schema.builder();
+                    break;
                 case Table.TYPE_NAME:
                     builder = Table.builder();
+                    break;
+                case View.TYPE_NAME:
+                    builder = View.builder();
+                    break;
+                case MaterializedView.TYPE_NAME:
+                    builder = MaterializedView.builder();
                     break;
                 case Column.TYPE_NAME:
                     builder = Column.builder();

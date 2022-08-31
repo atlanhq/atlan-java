@@ -12,9 +12,9 @@ import com.atlan.serde.Serde;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.testng.annotations.Test;
 
-public class TableTest {
+public class SchemaTest {
 
-    private static final Table full = Table.builder()
+    private static final Schema full = Schema.builder()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -79,25 +79,18 @@ public class TableTest {
             .tableQualifiedName("tableQualifiedName")
             .viewName("viewName")
             .viewQualifiedName("viewQualifiedName")
-            .columnCount(123L)
-            .rowCount(1234567890L)
-            .sizeBytes(1234567890L)
-            .alias("alias")
-            .isTemporary(false)
-            .isQueryPreview(true)
-            .externalLocation("externalLocation")
-            .externalLocationRegion("externalLocationRegion")
-            .externalLocationFormat("externalLocationFormat")
-            .isPartitioned(true)
-            .partitionStrategy("partitionStrategy")
-            .partitionCount(12L)
-            .partitionList("partitionList")
-            .atlanSchema(Reference.to(Schema.TYPE_NAME, "schemaGuid"))
-            .column(Reference.to(Column.TYPE_NAME, "columnGuid1"))
-            .column(Reference.to(Column.TYPE_NAME, "columnGuid2"))
+            .tableCount(123)
+            .viewCount(456)
+            .database(Reference.to(Database.TYPE_NAME, "databaseGuid"))
+            .table(Reference.to(Table.TYPE_NAME, "tableGuid1"))
+            .table(Reference.to(Table.TYPE_NAME, "tableGuid2"))
+            .view(Reference.to(View.TYPE_NAME, "viewGuid1"))
+            .view(Reference.to(View.TYPE_NAME, "viewGuid2"))
+            .materializedView(Reference.to(MaterializedView.TYPE_NAME, "mviewGuid1"))
+            .materializedView(Reference.to(MaterializedView.TYPE_NAME, "mviewGuid2"))
             .build();
 
-    private static Table frodo;
+    private static Schema frodo;
     private static String serialized;
 
     @Test(groups = {"serialize"})
@@ -112,7 +105,7 @@ public class TableTest {
             dependsOnGroups = {"serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
-        frodo = Serde.mapper.readValue(serialized, Table.class);
+        frodo = Serde.mapper.readValue(serialized, Schema.class);
         assertNotNull(frodo);
     }
 

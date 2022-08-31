@@ -12,9 +12,9 @@ import com.atlan.serde.Serde;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.testng.annotations.Test;
 
-public class TableTest {
+public class ViewTest {
 
-    private static final Table full = Table.builder()
+    private static final View full = View.builder()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -85,19 +85,13 @@ public class TableTest {
             .alias("alias")
             .isTemporary(false)
             .isQueryPreview(true)
-            .externalLocation("externalLocation")
-            .externalLocationRegion("externalLocationRegion")
-            .externalLocationFormat("externalLocationFormat")
-            .isPartitioned(true)
-            .partitionStrategy("partitionStrategy")
-            .partitionCount(12L)
-            .partitionList("partitionList")
+            .definition("definition")
             .atlanSchema(Reference.to(Schema.TYPE_NAME, "schemaGuid"))
             .column(Reference.to(Column.TYPE_NAME, "columnGuid1"))
             .column(Reference.to(Column.TYPE_NAME, "columnGuid2"))
             .build();
 
-    private static Table frodo;
+    private static View frodo;
     private static String serialized;
 
     @Test(groups = {"serialize"})
@@ -112,7 +106,7 @@ public class TableTest {
             dependsOnGroups = {"serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
-        frodo = Serde.mapper.readValue(serialized, Table.class);
+        frodo = Serde.mapper.readValue(serialized, View.class);
         assertNotNull(frodo);
     }
 

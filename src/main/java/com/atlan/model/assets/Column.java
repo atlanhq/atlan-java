@@ -187,10 +187,23 @@ public class Column extends SQL {
                 .databaseName(databaseName)
                 .databaseQualifiedName(databaseQualifiedName)
                 .connectionQualifiedName(connectionQualifiedName);
-        if (parentType.equals(Table.TYPE_NAME)) {
-            builder = builder.tableName(parentName).tableQualifiedName(parentQualifiedName);
+        switch (parentType) {
+            case Table.TYPE_NAME:
+                builder = builder.tableName(parentName)
+                        .tableQualifiedName(parentQualifiedName)
+                        .table(Reference.by(parentType, parentQualifiedName));
+                break;
+            case View.TYPE_NAME:
+                builder = builder.viewName(parentName)
+                        .viewQualifiedName(parentQualifiedName)
+                        .view(Reference.by(parentType, parentQualifiedName));
+                break;
+            case MaterializedView.TYPE_NAME:
+                builder = builder.viewName(parentName)
+                        .viewQualifiedName(parentQualifiedName)
+                        .materializedView(Reference.by(parentType, parentQualifiedName));
+                break;
         }
-        // TODO: handle other parent types (view, materialized view)
         return builder;
     }
 
