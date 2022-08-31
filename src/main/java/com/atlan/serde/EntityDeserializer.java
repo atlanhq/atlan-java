@@ -4,6 +4,7 @@ package com.atlan.serde;
 
 import com.atlan.cache.ClassificationCache;
 import com.atlan.cache.CustomMetadataCache;
+import com.atlan.cache.ReflectionCache;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.assets.*;
 import com.atlan.model.core.Classification;
@@ -12,7 +13,6 @@ import com.atlan.model.core.Entity;
 import com.atlan.model.lineage.ColumnProcess;
 import com.atlan.model.lineage.LineageProcess;
 import com.atlan.util.JacksonUtils;
-import com.atlan.util.ReflectionUtils;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -150,14 +150,14 @@ public class EntityDeserializer extends StdDeserializer<Entity> {
 
         Entity value = builder.build();
 
-        Map<String, Method> setterMap = new LinkedHashMap<>();
-        ReflectionUtils.getSetterMethods(setterMap, value.getClass());
+        Class<?> clazz = value.getClass();
 
         if (attributes != null && !attributes.isNull()) {
             Iterator<String> itr = attributes.fieldNames();
             while (itr.hasNext()) {
                 String attrKey = itr.next();
-                Method method = setterMap.get(attrKey);
+                String deserializeName = ReflectionCache.getDeserializedName(clazz, attrKey);
+                Method method = ReflectionCache.getSetter(clazz, deserializeName);
                 if (method != null) {
                     try {
                         deserialize(value, attributes.get(attrKey), method);
@@ -174,7 +174,8 @@ public class EntityDeserializer extends StdDeserializer<Entity> {
             Iterator<String> itr = relationshipAttributes.fieldNames();
             while (itr.hasNext()) {
                 String relnKey = itr.next();
-                Method method = setterMap.get(relnKey);
+                String deserializeName = ReflectionCache.getDeserializedName(clazz, relnKey);
+                Method method = ReflectionCache.getSetter(clazz, deserializeName);
                 if (method != null) {
                     try {
                         deserialize(value, relationshipAttributes.get(relnKey), method);
@@ -239,7 +240,7 @@ public class EntityDeserializer extends StdDeserializer<Entity> {
 
     private void deserializeList(Entity value, ArrayNode array, Method method)
             throws IllegalAccessException, InvocationTargetException, IOException {
-        Class<?> paramClass = ReflectionUtils.getParameterOfMethod(method);
+        Class<?> paramClass = ReflectionCache.getParameterOfMethod(method);
         List<Object> list = new ArrayList<>();
         for (JsonNode element : array) {
             Object deserialized = deserializeElement(element, method);
@@ -256,7 +257,7 @@ public class EntityDeserializer extends StdDeserializer<Entity> {
 
     private void deserializeObject(Entity value, JsonNode jsonObject, Method method)
             throws IllegalAccessException, InvocationTargetException, IOException {
-        Class<?> paramClass = ReflectionUtils.getParameterOfMethod(method);
+        Class<?> paramClass = ReflectionCache.getParameterOfMethod(method);
         method.invoke(value, Serde.mapper.readValue(jsonObject.toString(), paramClass));
     }
 
@@ -273,8 +274,8 @@ public class EntityDeserializer extends StdDeserializer<Entity> {
         } else if (element.isArray()) {
             throw new IOException("Directly-nested arrays are not supported.");
         } else if (element.isObject()) {
-            Type paramType = ReflectionUtils.getParameterizedTypeOfMethod(method);
-            Class<?> innerClass = ReflectionUtils.getClassOfParameterizedType(paramType);
+            Type paramType = ReflectionCache.getParameterizedTypeOfMethod(method);
+            Class<?> innerClass = ReflectionCache.getClassOfParameterizedType(paramType);
             return Serde.mapper.readValue(element.toString(), innerClass);
         }
         return null;
@@ -283,7 +284,7 @@ public class EntityDeserializer extends StdDeserializer<Entity> {
     private void deserializePrimitive(Entity value, JsonNode primitive, Method method)
             throws IllegalAccessException, InvocationTargetException, NoSuchMethodException, IOException {
         if (primitive.isTextual()) {
-            Class<?> paramClass = ReflectionUtils.getParameterOfMethod(method);
+            Class<?> paramClass = ReflectionCache.getParameterOfMethod(method);
             if (paramClass.isEnum()) {
                 Method fromValue = paramClass.getMethod("fromValue", String.class);
                 method.invoke(value, fromValue.invoke(null, primitive.asText()));

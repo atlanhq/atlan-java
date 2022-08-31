@@ -84,6 +84,7 @@ public class Schema extends SQL {
                 .connectorName(connectorName)
                 .databaseName(databaseName)
                 .databaseQualifiedName(databaseQualifiedName)
+                .database(Reference.by(Database.TYPE_NAME, databaseQualifiedName))
                 .connectionQualifiedName(connectionQualifiedName);
     }
 

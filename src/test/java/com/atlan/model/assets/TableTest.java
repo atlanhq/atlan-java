@@ -92,7 +92,7 @@ public class TableTest {
             .partitionStrategy("partitionStrategy")
             .partitionCount(12L)
             .partitionList("partitionList")
-            .atlanSchema(Reference.to(Schema.TYPE_NAME, "schemaGuid"))
+            .schema(Reference.to(Schema.TYPE_NAME, "schemaGuid"))
             .column(Reference.to(Column.TYPE_NAME, "columnGuid1"))
             .column(Reference.to(Column.TYPE_NAME, "columnGuid2"))
             .build();

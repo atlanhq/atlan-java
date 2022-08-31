@@ -55,7 +55,7 @@ public class S3AssetTest extends AtlanLiveTest {
                         CONNECTION_NAME, AtlanConnectionCategory.OBJECT_STORE, "s3", null, null, null));
     }
 
-    @Test(groups = {"create.connection"})
+    @Test(groups = {"create.connection.s3"})
     void createConnection() {
         try {
             String adminRoleGuid = RoleCache.getIdForName("$admin");
@@ -91,8 +91,8 @@ public class S3AssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"read.connection"},
-            dependsOnGroups = {"create.connection"})
+            groups = {"read.connection.s3"},
+            dependsOnGroups = {"create.connection.s3"})
     void retrieveConnection() {
         Entity full = null;
         do {
@@ -107,7 +107,7 @@ public class S3AssetTest extends AtlanLiveTest {
 
     @Test(
             groups = {"create.s3bucket"},
-            dependsOnGroups = {"read.connection"})
+            dependsOnGroups = {"read.connection.s3"})
     void createS3Bucket() {
         try {
             S3Bucket s3Bucket = S3Bucket.creator(S3_BUCKET_NAME, connectionQame, S3_BUCKET_ARN)

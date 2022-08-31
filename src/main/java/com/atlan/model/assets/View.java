@@ -8,8 +8,10 @@ import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.relations.GuidReference;
 import com.atlan.model.relations.Reference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -65,12 +67,13 @@ public class View extends SQL {
 
     /** Schema in which this view exists. */
     @Attribute
-    Reference atlanSchema;
+    @JsonProperty("atlanSchema")
+    Reference schema;
 
     /** Columns that exist within this view. */
     @Singular
     @Attribute
-    List<Reference> columns;
+    Set<Reference> columns;
 
     /**
      * Builds the minimal object necessary to create a view.
@@ -100,6 +103,7 @@ public class View extends SQL {
                 .connectorName(connectorName)
                 .schemaName(schemaName)
                 .schemaQualifiedName(schemaQualifiedName)
+                .schema(Reference.by(Schema.TYPE_NAME, schemaQualifiedName))
                 .databaseName(databaseName)
                 .databaseQualifiedName(databaseQualifiedName)
                 .connectionQualifiedName(connectionQualifiedName);
