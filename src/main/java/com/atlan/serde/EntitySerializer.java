@@ -3,21 +3,17 @@
 package com.atlan.serde;
 
 import com.atlan.cache.CustomMetadataCache;
+import com.atlan.cache.ReflectionCache;
 import com.atlan.exception.AtlanException;
-import com.atlan.model.assets.Attribute;
 import com.atlan.model.core.CustomMetadataAttributes;
 import com.atlan.model.core.Entity;
-import com.atlan.util.ReflectionUtils;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.jsontype.TypeSerializer;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.*;
 import lombok.extern.slf4j.Slf4j;
 
@@ -59,10 +55,7 @@ public class EntitySerializer extends StdSerializer<Entity> {
     public void serialize(Entity entity, JsonGenerator gen, SerializerProvider sp)
             throws IOException, JsonProcessingException {
 
-        Map<String, Method> getterMap = new HashMap<>();
-        ReflectionUtils.getGetterMethods(getterMap, entity.getClass());
-        Map<String, Field> fieldMap = new HashMap<>();
-        ReflectionUtils.getAllFields(fieldMap, entity.getClass());
+        Class<?> clazz = entity.getClass();
 
         Set<String> nullFields = entity.getNullFields();
 
@@ -72,48 +65,50 @@ public class EntitySerializer extends StdSerializer<Entity> {
         gen.writeStartObject();
 
         try {
-            for (Map.Entry<String, Method> entry : getterMap.entrySet()) {
-                String fieldName = entry.getKey();
-                Field field = fieldMap.get(fieldName);
-                if (field != null) {
-                    Method getter = entry.getValue();
-                    if (field.isAnnotationPresent(Attribute.class)) {
-                        Object attrValue;
-                        if (nullFields.contains(fieldName)) {
-                            // If the value should be serialized as null, then
-                            // set the value to the serializable null
-                            if (field.getType() == List.class || field.getType() == Set.class) {
-                                attrValue = Removable.EMPTY_LIST;
-                            } else {
-                                attrValue = Removable.NULL;
-                            }
+            for (String fieldName : ReflectionCache.getFieldNames(clazz)) {
+                if (ReflectionCache.isAttribute(clazz, fieldName)) {
+                    // If the field should be attribute-nested...
+                    Object attrValue;
+                    if (nullFields.contains(fieldName)) {
+                        // If the value should be serialized as null, then
+                        // set the value to the serializable null
+                        Class<?> type = ReflectionCache.getFieldType(clazz, fieldName);
+                        if (type == List.class || type == Set.class) {
+                            attrValue = Removable.EMPTY_LIST;
                         } else {
-                            // Otherwise, pickup the value from the top-level
-                            // attribute so that we can move that value across
-                            attrValue = getter.invoke(entity);
+                            attrValue = Removable.NULL;
                         }
-                        if (attrValue != null) {
-                            //  3. set attributes map from the top-level attribute value
-                            attributes.put(fieldName, attrValue);
-                        }
-                    } else if (field.getName().equals("customMetadataSets")) {
-                        // 5. Translate custom metadata to businessAttributes map
-                        Map<String, CustomMetadataAttributes> cm = entity.getCustomMetadataSets();
-                        if (cm != null) {
-                            CustomMetadataCache.getBusinessAttributesFromCustomMetadata(cm, businessAttributes);
-                        }
-                        // Then remove it, to exclude it from serialization
-                        entity.setCustomMetadataSets(null);
-                    } else if (!field.isAnnotationPresent(JsonIgnore.class)) {
-                        Object attrValue = getter.invoke(entity);
-                        if (attrValue != null
-                                && !(attrValue instanceof Collection && ((Collection<?>) attrValue).isEmpty())) {
-                            // Otherwise, just write out the field as-is
-                            sp.defaultSerializeField(fieldName, attrValue, gen);
-                        }
+                    } else {
+                        // Otherwise, pickup the value from the top-level
+                        // attribute so that we can move that value across
+                        attrValue = ReflectionCache.getGetter(clazz, fieldName).invoke(entity);
+                    }
+                    if (attrValue != null) {
+                        // Add the value we've derived above to the attribute map for nesting
+                        String serializeName = ReflectionCache.getSerializedName(clazz, fieldName);
+                        attributes.put(serializeName, attrValue);
+                    }
+                } else if (fieldName.equals("customMetadataSets")) {
+                    // Translate custom metadata to businessAttributes map
+                    Map<String, CustomMetadataAttributes> cm = entity.getCustomMetadataSets();
+                    if (cm != null) {
+                        CustomMetadataCache.getBusinessAttributesFromCustomMetadata(cm, businessAttributes);
+                    }
+                    // Then remove it, to exclude it from serialization
+                    entity.setCustomMetadataSets(null);
+                } else {
+                    // For any other (top-level) field, we'll just write it out as-is (skipping any null
+                    // values or empty lists)
+                    Object attrValue =
+                            ReflectionCache.getGetter(clazz, fieldName).invoke(entity);
+                    if (attrValue != null
+                            && !(attrValue instanceof Collection && ((Collection<?>) attrValue).isEmpty())) {
+                        String serializeName = ReflectionCache.getSerializedName(clazz, fieldName);
+                        sp.defaultSerializeField(serializeName, attrValue, gen);
                     }
                 }
             }
+
         } catch (IllegalAccessException | InvocationTargetException e) {
             throw new IOException("Unable to retrieve value through reflection.", e);
         } catch (AtlanException e) {

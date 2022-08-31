@@ -2,9 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.serde;
 
-import co.elastic.clients.json.JsonpMapper;
 import co.elastic.clients.json.JsonpSerializable;
-import co.elastic.clients.json.jackson.JacksonJsonpMapper;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.SerializerProvider;
@@ -26,9 +24,6 @@ import lombok.extern.slf4j.Slf4j;
 public class ElasticObjectSerializer<T extends JsonpSerializable> extends StdSerializer<T> {
     private static final long serialVersionUID = 2L;
 
-    // Create our own local mapper to avoid a race condition on initialization
-    private static final JsonpMapper localMapper = new JacksonJsonpMapper();
-
     public ElasticObjectSerializer() {
         this(null);
     }
@@ -48,8 +43,8 @@ public class ElasticObjectSerializer<T extends JsonpSerializable> extends StdSer
         if (src != null) {
             StringWriter sw = new StringWriter();
             jakarta.json.stream.JsonGenerator generator =
-                    localMapper.jsonProvider().createGenerator(sw);
-            src.serialize(generator, localMapper);
+                    Serde.jsonpMapper.jsonProvider().createGenerator(sw);
+            src.serialize(generator, Serde.jsonpMapper);
             generator.close();
             gen.writeRawValue(sw.toString());
         }

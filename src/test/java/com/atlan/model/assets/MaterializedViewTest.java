@@ -12,9 +12,9 @@ import com.atlan.serde.Serde;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.testng.annotations.Test;
 
-public class ColumnTest {
+public class MaterializedViewTest {
 
-    private static final Column full = Column.builder()
+    private static final MaterializedView full = MaterializedView.builder()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -79,34 +79,19 @@ public class ColumnTest {
             .tableQualifiedName("tableQualifiedName")
             .viewName("viewName")
             .viewQualifiedName("viewQualifiedName")
-            .dataType("dataType")
-            .subDataType("subDataType")
-            .order(1)
-            .isPartition(false)
-            .partitionOrder(1)
-            .isClustered(true)
-            .isPrimary(true)
-            .isForeign(false)
-            .isIndexed(true)
-            .isSort(false)
-            .isDist(true)
-            .isPinned(true)
-            .pinnedBy("pinnedBy")
-            .pinnedAt(123456789L)
-            .precision(123)
-            .defaultValue("defaultValue")
-            .isNullable(false)
-            .numericScale(123.456F)
-            .maxLength(123456L)
-            .table(Reference.to(Table.TYPE_NAME, "tableGuid"))
-            .tablePartition(Reference.to("TablePartition", "tablePartitionGuid"))
-            .view(Reference.to(View.TYPE_NAME, "viewGuid"))
-            .materializedView(Reference.to(MaterializedView.TYPE_NAME, "materializedViewGuid"))
-            .query(Reference.to("Query", "queryGuid1"))
-            .query(Reference.to("Query", "queryGuid2"))
+            .columnCount(123L)
+            .rowCount(1234567890L)
+            .sizeBytes(1234567890L)
+            .alias("alias")
+            .isTemporary(false)
+            .isQueryPreview(true)
+            .definition("definition")
+            .schema(Reference.to(Schema.TYPE_NAME, "schemaGuid"))
+            .column(Reference.to(Column.TYPE_NAME, "columnGuid1"))
+            .column(Reference.to(Column.TYPE_NAME, "columnGuid2"))
             .build();
 
-    private static Column frodo;
+    private static MaterializedView frodo;
     private static String serialized;
 
     @Test(groups = {"serialize"})
@@ -121,7 +106,7 @@ public class ColumnTest {
             dependsOnGroups = {"serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
-        frodo = Serde.mapper.readValue(serialized, Column.class);
+        frodo = Serde.mapper.readValue(serialized, MaterializedView.class);
         assertNotNull(frodo);
     }
 
@@ -132,7 +117,7 @@ public class ColumnTest {
         assertNotNull(serialized);
         assertNotNull(frodo);
         String backAgain = frodo.toJson();
-        assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
+        assertEquals(backAgain, serialized, "Serialization is equivalent after serde loop.");
     }
 
     @Test(
@@ -141,6 +126,6 @@ public class ColumnTest {
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);
-        assertEquals(frodo, full, "Deserialization is not equivalent after serde loop,");
+        assertEquals(frodo, full, "Deserialization is equivalent after serde loop.");
     }
 }

@@ -407,7 +407,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
                 "unlink.*",
                 "search.*",
                 "purge.term.*",
-                "purge.connection"
+                "purge.connection.*"
             },
             alwaysRun = true)
     void purgeCustomMetadata() {
