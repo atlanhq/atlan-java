@@ -11,8 +11,10 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Singular;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.jackson.Jacksonized;
 
 @Data
+@Jacksonized
 @SuperBuilder
 @EqualsAndHashCode(callSuper = false)
 public class IndexSearchDSL extends AtlanObject {

@@ -11,6 +11,9 @@ import lombok.EqualsAndHashCode;
 import lombok.Singular;
 import lombok.experimental.SuperBuilder;
 
+/**
+ * Class from which to configure and run a search against Atlan.
+ */
 @Data
 @SuperBuilder
 @EqualsAndHashCode(callSuper = true)

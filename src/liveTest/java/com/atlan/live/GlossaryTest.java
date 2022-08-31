@@ -4,9 +4,6 @@ package com.atlan.live;
 
 import static org.testng.Assert.*;
 
-import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
-import co.elastic.clients.elasticsearch._types.query_dsl.Query;
-import co.elastic.clients.elasticsearch._types.query_dsl.TermQuery;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.assets.Glossary;
 import com.atlan.model.assets.GlossaryCategory;
@@ -18,10 +15,6 @@ import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.relations.GuidReference;
 import com.atlan.model.relations.Reference;
-import com.atlan.model.search.IndexSearchDSL;
-import com.atlan.model.search.IndexSearchRequest;
-import com.atlan.model.search.IndexSearchResponse;
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -394,57 +387,6 @@ public class GlossaryTest extends AtlanLiveTest {
                     termQame1, TERM_NAME1, glossaryGuid, AtlanCertificateStatus.DEPRECATED, null);
             assertNotNull(term);
             assertEquals(term.getCertificateStatus(), AtlanCertificateStatus.DEPRECATED);
-        } catch (AtlanException e) {
-            e.printStackTrace();
-            assertNull(e, "Unexpected exception: " + e.getMessage());
-        }
-    }
-
-    @Test(
-            groups = {"search.term"},
-            dependsOnGroups = {"update.term"})
-    void searchTerms() {
-        try {
-            Query byState =
-                    TermQuery.of(t -> t.field("__state").value("ACTIVE"))._toQuery();
-
-            Query byType = TermQuery.of(t -> t.field("__typeName.keyword").value(GlossaryTerm.TYPE_NAME))
-                    ._toQuery();
-
-            Query byName =
-                    TermQuery.of(t -> t.field("name.keyword").value(TERM_NAME1))._toQuery();
-
-            Query combined =
-                    BoolQuery.of(b -> b.must(byState).must(byType).must(byName))._toQuery();
-
-            IndexSearchRequest index = IndexSearchRequest.builder()
-                    .dsl(IndexSearchDSL.builder()
-                            .from(0)
-                            .size(100)
-                            .query(combined)
-                            .build())
-                    .attributes(Collections.singletonList("anchor"))
-                    .relationAttributes(Collections.singletonList("certificateStatus"))
-                    .build();
-
-            IndexSearchResponse response = index.search();
-
-            assertNotNull(response);
-            assertEquals(response.getApproximateCount().longValue(), 1L);
-            List<Entity> entities = response.getEntities();
-            assertNotNull(entities);
-            assertEquals(entities.size(), 1);
-            Entity one = entities.get(0);
-            assertTrue(one instanceof GlossaryTerm);
-            GlossaryTerm term = (GlossaryTerm) one;
-            assertEquals(term.getGuid(), termGuid1);
-            assertEquals(term.getQualifiedName(), termQame1);
-            assertNotNull(term.getAnchor());
-            assertEquals(term.getAnchor().getTypeName(), Glossary.TYPE_NAME);
-            assertEquals(term.getAnchor().getGuid(), glossaryGuid);
-            // TODO: test embedded relationship attributes that were requested
-            //  ... this probably needs a more complex entity structure than
-            //  just the basic references defined in Entity (?)
         } catch (AtlanException e) {
             e.printStackTrace();
             assertNull(e, "Unexpected exception: " + e.getMessage());
