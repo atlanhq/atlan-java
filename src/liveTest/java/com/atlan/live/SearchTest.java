@@ -21,7 +21,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-
 import org.testng.annotations.Test;
 
 public class SearchTest extends AtlanLiveTest {
@@ -248,11 +247,11 @@ public class SearchTest extends AtlanLiveTest {
             Query byLineage =
                     TermQuery.of(t -> t.field("__hasLineage").value(true))._toQuery();
             Query byState =
-                TermQuery.of(t -> t.field("__state").value("ACTIVE"))._toQuery();
+                    TermQuery.of(t -> t.field("__state").value("ACTIVE"))._toQuery();
             Query byType = TermQuery.of(t -> t.field("__typeName.keyword").value(S3Object.TYPE_NAME))
-                ._toQuery();
+                    ._toQuery();
             Query combined = BoolQuery.of(b -> b.must(byState).must(byType).must(byLineage))
-                ._toQuery();
+                    ._toQuery();
 
             IndexSearchRequest index = IndexSearchRequest.builder()
                     .dsl(IndexSearchDSL.builder().query(combined).build())
