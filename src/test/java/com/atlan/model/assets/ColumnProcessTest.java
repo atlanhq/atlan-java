@@ -49,7 +49,7 @@ public class ColumnProcessTest {
             .connectorName("connectorName")
             .connectionName("connectionName")
             .connectionQualifiedName("connectionQualifiedName")
-            .__hasLineage(false)
+            .hasLineage(false)
             .isDiscoverable(true)
             .isEditable(true)
             .viewScore(123456.0)

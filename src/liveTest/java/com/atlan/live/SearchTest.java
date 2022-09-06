@@ -7,9 +7,8 @@ import static org.testng.Assert.*;
 import co.elastic.clients.elasticsearch._types.FieldSort;
 import co.elastic.clients.elasticsearch._types.SortOptions;
 import co.elastic.clients.elasticsearch._types.SortOrder;
-import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
-import co.elastic.clients.elasticsearch._types.query_dsl.Query;
-import co.elastic.clients.elasticsearch._types.query_dsl.TermQuery;
+import co.elastic.clients.elasticsearch._types.query_dsl.*;
+import co.elastic.clients.json.JsonData;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.assets.Glossary;
 import com.atlan.model.assets.GlossaryTerm;
@@ -20,9 +19,14 @@ import com.atlan.model.search.IndexSearchRequest;
 import com.atlan.model.search.IndexSearchResponse;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import org.testng.annotations.Test;
 
 public class SearchTest extends AtlanLiveTest {
+
+    private static Long s3ObjectCreationTime = null;
 
     @Test(
             groups = {"search.term"},
@@ -137,6 +141,7 @@ public class SearchTest extends AtlanLiveTest {
             one = entities.get(0);
             assertTrue(one instanceof S3Object);
             object = (S3Object) one;
+            s3ObjectCreationTime = object.getCreateTime();
             assertNotNull(object);
             assertEquals(object.getQualifiedName(), S3AssetTest.s3Object3Qame);
             assertEquals(object.getConnectionQualifiedName(), S3AssetTest.connectionQame);
@@ -149,6 +154,134 @@ public class SearchTest extends AtlanLiveTest {
         } catch (AtlanException e) {
             e.printStackTrace();
             assertNull(e, "Unexpected exception while searching and paging through S3 objects.");
+        }
+    }
+
+    @Test(
+            groups = {"search.s3object.creation"},
+            dependsOnGroups = {"search.s3object"})
+    void searchByRange() {
+
+        try {
+            Query byCreation = RangeQuery.of(r -> r.field("__timestamp").gte(JsonData.of(s3ObjectCreationTime)))
+                    ._toQuery();
+            Query byState =
+                    TermQuery.of(t -> t.field("__state").value("ACTIVE"))._toQuery();
+            Query byType = TermQuery.of(t -> t.field("__typeName.keyword").value(S3Object.TYPE_NAME))
+                    ._toQuery();
+            Query combined = BoolQuery.of(b -> b.must(byState).must(byType).must(byCreation))
+                    ._toQuery();
+
+            IndexSearchRequest index = IndexSearchRequest.builder()
+                    .dsl(IndexSearchDSL.builder().query(combined).build())
+                    .attribute("name")
+                    .attribute("connectionQualifiedName")
+                    .build();
+
+            IndexSearchResponse response = index.search();
+
+            assertNotNull(response);
+            assertEquals(response.getApproximateCount().longValue(), 1L);
+            List<Entity> entities = response.getEntities();
+            assertNotNull(entities);
+            assertEquals(entities.size(), 1);
+            Entity one = entities.get(0);
+            assertTrue(one instanceof S3Object);
+            S3Object object = (S3Object) one;
+            assertNotNull(object);
+            assertEquals(object.getQualifiedName(), S3AssetTest.s3Object3Qame);
+            assertEquals(object.getConnectionQualifiedName(), S3AssetTest.connectionQame);
+
+        } catch (AtlanException e) {
+            e.printStackTrace();
+            assertNull(e, "Unexpected exception while searching by range.");
+        }
+    }
+
+    @Test(
+            groups = {"search.s3object.classification"},
+            dependsOnGroups = {"link.classification.s3object"})
+    void searchByClassification() {
+
+        try {
+            Query byClassification =
+                    ExistsQuery.of(q -> q.field("__traitNames"))._toQuery();
+            Query byState =
+                    TermQuery.of(t -> t.field("__state").value("ACTIVE"))._toQuery();
+            Query byType = TermQuery.of(t -> t.field("__typeName.keyword").value(S3Object.TYPE_NAME))
+                    ._toQuery();
+            Query combined = BoolQuery.of(b -> b.must(byState).must(byType).must(byClassification))
+                    ._toQuery();
+
+            IndexSearchRequest index = IndexSearchRequest.builder()
+                    .dsl(IndexSearchDSL.builder().query(combined).build())
+                    .attribute("name")
+                    .attribute("connectionQualifiedName")
+                    .build();
+
+            IndexSearchResponse response = index.search();
+
+            assertNotNull(response);
+            assertEquals(response.getApproximateCount().longValue(), 1L);
+            List<Entity> entities = response.getEntities();
+            assertNotNull(entities);
+            assertEquals(entities.size(), 1);
+            Entity one = entities.get(0);
+            assertTrue(one instanceof S3Object);
+            S3Object object = (S3Object) one;
+            assertNotNull(object);
+            assertEquals(object.getQualifiedName(), S3AssetTest.s3Object2Qame);
+            assertEquals(object.getConnectionQualifiedName(), S3AssetTest.connectionQame);
+
+        } catch (AtlanException e) {
+            e.printStackTrace();
+            assertNull(e, "Unexpected exception while searching by classification existence.");
+        }
+    }
+
+    @Test(
+            groups = {"search.s3object.lineage"},
+            dependsOnGroups = {"create.lineage.*"})
+    void searchByLineage() {
+
+        try {
+            Query byLineage =
+                    TermQuery.of(t -> t.field("__hasLineage").value(true))._toQuery();
+            Query byState =
+                TermQuery.of(t -> t.field("__state").value("ACTIVE"))._toQuery();
+            Query byType = TermQuery.of(t -> t.field("__typeName.keyword").value(S3Object.TYPE_NAME))
+                ._toQuery();
+            Query combined = BoolQuery.of(b -> b.must(byState).must(byType).must(byLineage))
+                ._toQuery();
+
+            IndexSearchRequest index = IndexSearchRequest.builder()
+                    .dsl(IndexSearchDSL.builder().query(combined).build())
+                    .attribute("name")
+                    .attribute("__hasLineage")
+                    .build();
+
+            IndexSearchResponse response = index.search();
+
+            assertNotNull(response);
+            assertEquals(response.getApproximateCount().longValue(), 3L);
+            List<Entity> entities = response.getEntities();
+            assertNotNull(entities);
+            assertEquals(entities.size(), 3);
+            Set<String> types = entities.stream().map(Entity::getTypeName).collect(Collectors.toSet());
+            assertEquals(types.size(), 1);
+            assertTrue(types.contains(S3Object.TYPE_NAME));
+            Set<String> guids = entities.stream().map(Entity::getGuid).collect(Collectors.toSet());
+            assertEquals(guids.size(), 3);
+            assertTrue(guids.contains(S3AssetTest.s3Object1Guid));
+            assertTrue(guids.contains(S3AssetTest.s3Object2Guid));
+            assertTrue(guids.contains(S3AssetTest.s3Object3Guid));
+            for (Entity one : entities) {
+                assertTrue(((S3Object) one).getHasLineage());
+            }
+
+        } catch (AtlanException e) {
+            e.printStackTrace();
+            assertNull(e, "Unexpected exception while searching by lineage existence.");
         }
     }
 }

@@ -116,7 +116,7 @@ public abstract class Entity extends AtlanObject {
     /** Unused. */
     Boolean isIncomplete;
 
-    /** Unused. */
+    /** Names of terms that have been linked to this asset. */
     Set<String> meaningNames;
 
     /** Remove the certificate from the asset, if any is set on the asset. */
