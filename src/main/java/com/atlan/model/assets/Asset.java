@@ -13,6 +13,7 @@ import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.relations.GuidReference;
 import com.atlan.model.relations.Reference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.*;
 import java.util.stream.Collectors;
 import lombok.*;
@@ -146,7 +147,8 @@ public abstract class Asset extends Entity {
 
     /** Indicates whether this asset has lineage (true) or not. */
     @Attribute
-    Boolean __hasLineage;
+    @JsonProperty("__hasLineage")
+    Boolean hasLineage;
 
     /** Unused. */
     @Attribute

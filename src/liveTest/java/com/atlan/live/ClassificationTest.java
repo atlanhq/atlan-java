@@ -154,7 +154,7 @@ public class ClassificationTest extends AtlanLiveTest {
 
     @Test(
             groups = {"unlink.classification.s3object"},
-            dependsOnGroups = {"link.classification.s3object"})
+            dependsOnGroups = {"link.classification.s3object", "search.s3object.classification"})
     void removeObjectClassification() {
         try {
             S3Object.removeClassification(S3AssetTest.s3Object2Qame, CLASSIFICATION_NAME2);

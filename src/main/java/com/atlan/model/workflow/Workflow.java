@@ -4,6 +4,7 @@ package com.atlan.model.workflow;
 
 import com.atlan.api.WorkflowsEndpoint;
 import com.atlan.exception.AtlanException;
+import com.atlan.model.admin.PackageParameter;
 import com.atlan.model.core.AtlanObject;
 import java.util.List;
 import lombok.EqualsAndHashCode;
@@ -22,7 +23,7 @@ public class Workflow extends AtlanObject {
 
     WorkflowMetadata metadata;
     WorkflowSpec spec;
-    List<Object> payload;
+    List<PackageParameter> payload;
 
     /**
      * Run the workflow immediately.
