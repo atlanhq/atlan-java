@@ -53,7 +53,8 @@ public class CustomMetadataCache {
             mapAttrIdToName.put(typeId, new ConcurrentHashMap<>());
             mapAttrNameToId.put(typeId, new ConcurrentHashMap<>());
             for (AttributeDef attributeDef : bmDef.getAttributeDefs()) {
-                mapAttrIdToName.get(typeId).put(attributeDef.getName(), attributeDef.getDisplayName());
+                String attrId = attributeDef.getName();
+                mapAttrIdToName.get(typeId).put(attrId, attributeDef.getDisplayName());
                 mapAttrNameToId.get(typeId).put(attributeDef.getDisplayName(), attributeDef.getName());
             }
         }
@@ -95,6 +96,42 @@ public class CustomMetadataCache {
             refreshCache();
             return mapIdToName.get(id);
         }
+    }
+
+    /**
+     * Retrieve all the custom metadata attributes. The map will be keyed by custom metadata set
+     * name, and the value will be a listing of all the attributes within that set (with all the details
+     * of each of those attributes).
+     *
+     * @return a map from custom metadata set name to all details about all its attributes
+     * @throws AtlanException on any API communication problem if the cache needs to be refreshed
+     */
+    public static Map<String, List<AttributeDef>> getAllCustomAttributes() throws AtlanException {
+        return getAllCustomAttributes(false);
+    }
+
+    /**
+     * Retrieve all the custom metadata attributes. The map will be keyed by custom metadata set
+     * name, and the value will be a listing of all the attributes within that set (with all the details
+     * of each of those attributes).
+     *
+     * @param forceRefresh if true, will refresh the custom metadata cache; if false, will only refresh
+     *                     the cache if it is empty
+     * @return a map from custom metadata set name to all details about all its attributes
+     * @throws AtlanException on any API communication problem if the cache needs to be refreshed
+     */
+    public static Map<String, List<AttributeDef>> getAllCustomAttributes(boolean forceRefresh) throws AtlanException {
+        if (cacheById.isEmpty() || forceRefresh) {
+            refreshCache();
+        }
+        Map<String, List<AttributeDef>> map = new HashMap<>();
+        for (Map.Entry<String, CustomMetadataDef> entry : cacheById.entrySet()) {
+            String typeId = entry.getKey();
+            String typeName = getNameForId(typeId);
+            CustomMetadataDef typeDef = entry.getValue();
+            map.put(typeName, typeDef.getAttributeDefs());
+        }
+        return Collections.unmodifiableMap(map);
     }
 
     /**
