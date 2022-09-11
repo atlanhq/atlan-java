@@ -206,7 +206,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
             CustomMetadataAttributes cm1 = CustomMetadataAttributes.builder()
                     .attribute(CM_ATTR_STRING, List.of("one", "two", "three"))
                     .attribute(CM_ATTR_INTEGER, 42)
-                    // TODO: currently broken .attribute(CM_ATTR_DECIMAL, 4.2)
+                    .attribute(CM_ATTR_DECIMAL, 4.2)
                     .attribute(CM_ATTR_BOOLEAN, true)
                     .attribute(CM_ATTR_DATE, 1659308400000L)
                     .attribute(CM_ATTR_URL, "http://www.example.com")
@@ -277,7 +277,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
             CustomMetadataAttributes cm = CustomMetadataAttributes.builder()
                     .attribute(CM_ATTR_STRING, List.of("one", "two", "three"))
                     .attribute(CM_ATTR_INTEGER, 42)
-                    // TODO: currently broken .attribute(CM_ATTR_DECIMAL, 4.2)
+                    .attribute(CM_ATTR_DECIMAL, 4.2)
                     .attribute(CM_ATTR_BOOLEAN, true)
                     .attribute(CM_ATTR_DATE, 1659308400000L)
                     .attribute(CM_ATTR_URL, "http://www.example.com")
@@ -307,7 +307,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
             CustomMetadataAttributes cm = CustomMetadataAttributes.builder()
                     .attribute(CM_ATTR_STRING, List.of("one", "two", "three"))
                     .attribute(CM_ATTR_INTEGER, 42)
-                    // TODO: currently broken .attribute(CM_ATTR_DECIMAL, 4.2)
+                    .attribute(CM_ATTR_DECIMAL, 4.2)
                     .attribute(CM_ATTR_BOOLEAN, true)
                     .attribute(CM_ATTR_DATE, 1659308400000L)
                     .attribute(CM_ATTR_URL, "http://www.example.com")
@@ -407,7 +407,8 @@ public class CustomMetadataTest extends AtlanLiveTest {
                 "unlink.*",
                 "search.*",
                 "purge.term.*",
-                "purge.connection.*"
+                "purge.connection.*",
+                "workflow.status.*"
             },
             alwaysRun = true)
     void purgeCustomMetadata() {
@@ -429,7 +430,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
         assertNotNull(cma.getAttributes());
         assertEquals(cma.getAttributes().get(CM_ATTR_STRING), Set.of("one", "two", "three"));
         assertEquals(cma.getAttributes().get(CM_ATTR_INTEGER), 42L);
-        // TODO: currently broken assertEquals(cma.getAttributes().get(CM_ATTR_DECIMAL), 4.2);
+        assertEquals(cma.getAttributes().get(CM_ATTR_DECIMAL), 4.2);
         assertEquals(cma.getAttributes().get(CM_ATTR_DATE), 1659308400000L);
         assertEquals(cma.getAttributes().get(CM_ATTR_BOOLEAN), value);
         assertEquals(cma.getAttributes().get(CM_ATTR_URL), "http://www.example.com");

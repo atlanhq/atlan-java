@@ -87,7 +87,7 @@ public class SearchTest extends AtlanLiveTest {
                     TermQuery.of(t -> t.field("__state").value("ACTIVE"))._toQuery();
             Query byType = TermQuery.of(t -> t.field("__typeName.keyword").value(S3Object.TYPE_NAME))
                     ._toQuery();
-            Query combined = BoolQuery.of(b -> b.must(byState).must(byType))._toQuery();
+            Query combined = BoolQuery.of(b -> b.filter(byState, byType))._toQuery();
 
             SortOptions sort = SortOptions.of(
                     s -> s.field(FieldSort.of(f -> f.field("__timestamp").order(SortOrder.Asc))));
