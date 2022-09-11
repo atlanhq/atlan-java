@@ -249,7 +249,8 @@ public class ClassificationTest extends AtlanLiveTest {
                 "unlink.*",
                 "search.*",
                 "purge.term.*",
-                "purge.connection.*"
+                "purge.connection.*",
+                "workflow.status.*"
             },
             alwaysRun = true)
     void purgeClassification1() {
@@ -271,7 +272,8 @@ public class ClassificationTest extends AtlanLiveTest {
                 "unlink.*",
                 "search.*",
                 "purge.term.*",
-                "purge.connection.*"
+                "purge.connection.*",
+                "workflow.status.*"
             },
             alwaysRun = true)
     void purgeClassification2() {
