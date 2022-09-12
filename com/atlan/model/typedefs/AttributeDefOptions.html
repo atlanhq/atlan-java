@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":9,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":10,"i32":10,"i33":10,"i34":10};
+var data = {"i0":9,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":9,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":10,"i32":10,"i33":10,"i34":10,"i35":10,"i36":10,"i37":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -374,75 +374,96 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 </tr>
 <tr id="i24" class="altColor">
 <td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setArchivedAt(java.lang.Long)">setArchivedAt</a></span>&#8203;(java.lang.Long&nbsp;archivedAt)</code></th>
+<td class="colLast">
+<div class="block">When the attribute was deleted.</div>
+</td>
+</tr>
+<tr id="i25" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setArchivedBy(java.lang.String)">setArchivedBy</a></span>&#8203;(java.lang.String&nbsp;archivedBy)</code></th>
+<td class="colLast">
+<div class="block">User who deleted the attribute.</div>
+</td>
+</tr>
+<tr id="i26" class="altColor">
+<td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setCustomApplicableEntityTypes(java.util.Set)">setCustomApplicableEntityTypes</a></span>&#8203;(java.util.Set&lt;java.lang.String&gt;&nbsp;customApplicableEntityTypes)</code></th>
 <td class="colLast">
 <div class="block">Set of entities on which this attribute should appear.</div>
 </td>
 </tr>
-<tr id="i25" class="rowColor">
+<tr id="i27" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setCustomType(java.lang.String)">setCustomType</a></span>&#8203;(java.lang.String&nbsp;customType)</code></th>
 <td class="colLast">
 <div class="block">Used for Atlan-specific types like <code>users</code>, <code>groups</code>, <code>url</code>, and <code>SQL</code>.</div>
 </td>
 </tr>
-<tr id="i26" class="altColor">
+<tr id="i28" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setDescription(java.lang.String)">setDescription</a></span>&#8203;(java.lang.String&nbsp;description)</code></th>
 <td class="colLast">
 <div class="block">Optional description of the attribute.</div>
 </td>
 </tr>
-<tr id="i27" class="rowColor">
+<tr id="i29" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setEnumType(java.lang.String)">setEnumType</a></span>&#8203;(java.lang.String&nbsp;enumType)</code></th>
 <td class="colLast">
 <div class="block">Name of the enumeration (options), when the attribute is an enumeration.</div>
 </td>
 </tr>
-<tr id="i28" class="altColor">
+<tr id="i30" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setIsArchived(java.lang.Boolean)">setIsArchived</a></span>&#8203;(java.lang.Boolean&nbsp;isArchived)</code></th>
+<td class="colLast">
+<div class="block">Whether the attribute has been deleted (true) or is still active (false).</div>
+</td>
+</tr>
+<tr id="i31" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setIsDeprecated(java.lang.String)">setIsDeprecated</a></span>&#8203;(java.lang.String&nbsp;isDeprecated)</code></th>
 <td class="colLast">
 <div class="block">Whether the attribute is deprecated ("true") or not (null or "false").</div>
 </td>
 </tr>
-<tr id="i29" class="rowColor">
+<tr id="i32" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setIsEnum(java.lang.Boolean)">setIsEnum</a></span>&#8203;(java.lang.Boolean&nbsp;isEnum)</code></th>
 <td class="colLast">
 <div class="block">Whether the attribute is an enumeration (true) or not (false).</div>
 </td>
 </tr>
-<tr id="i30" class="altColor">
+<tr id="i33" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setMaxStrLength(java.lang.String)">setMaxStrLength</a></span>&#8203;(java.lang.String&nbsp;maxStrLength)</code></th>
 <td class="colLast">
 <div class="block">Maximum length allowed for a string value.</div>
 </td>
 </tr>
-<tr id="i31" class="rowColor">
+<tr id="i34" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setMultiValueSelect(java.lang.Boolean)">setMultiValueSelect</a></span>&#8203;(java.lang.Boolean&nbsp;multiValueSelect)</code></th>
 <td class="colLast">
 <div class="block">Whether this attribute can have multiple values (true) or only a single value (false).</div>
 </td>
 </tr>
-<tr id="i32" class="altColor">
+<tr id="i35" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setPrimitiveType(com.atlan.model.enums.AtlanCustomAttributePrimitiveType)">setPrimitiveType</a></span>&#8203;(<a href="../enums/AtlanCustomAttributePrimitiveType.html" title="enum in com.atlan.model.enums">AtlanCustomAttributePrimitiveType</a>&nbsp;primitiveType)</code></th>
 <td class="colLast">
 <div class="block">Primitive type of the attribute.</div>
 </td>
 </tr>
-<tr id="i33" class="rowColor">
+<tr id="i36" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setShowInOverview(java.lang.Boolean)">setShowInOverview</a></span>&#8203;(java.lang.Boolean&nbsp;showInOverview)</code></th>
 <td class="colLast">
 <div class="block">Whether users will see this attribute in the overview tab of the sidebar (true) or not (false).</div>
 </td>
 </tr>
-<tr id="i34" class="altColor">
+<tr id="i37" class="rowColor">
 <td class="colFirst"><code><a href="AttributeDefOptions.AttributeDefOptionsBuilder.html" title="class in com.atlan.model.typedefs">AttributeDefOptions.AttributeDefOptionsBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toBuilder()">toBuilder</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
@@ -821,6 +842,36 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <h4>setCustomType</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;setCustomType&#8203;(java.lang.String&nbsp;customType)</pre>
 <div class="block">Used for Atlan-specific types like <code>users</code>, <code>groups</code>, <code>url</code>, and <code>SQL</code>.</div>
+</li>
+</ul>
+<a id="setIsArchived(java.lang.Boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setIsArchived</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;setIsArchived&#8203;(java.lang.Boolean&nbsp;isArchived)</pre>
+<div class="block">Whether the attribute has been deleted (true) or is still active (false).</div>
+</li>
+</ul>
+<a id="setArchivedAt(java.lang.Long)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setArchivedAt</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;setArchivedAt&#8203;(java.lang.Long&nbsp;archivedAt)</pre>
+<div class="block">When the attribute was deleted.</div>
+</li>
+</ul>
+<a id="setArchivedBy(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setArchivedBy</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;setArchivedBy&#8203;(java.lang.String&nbsp;archivedBy)</pre>
+<div class="block">User who deleted the attribute.</div>
 </li>
 </ul>
 <a id="equals(java.lang.Object)">

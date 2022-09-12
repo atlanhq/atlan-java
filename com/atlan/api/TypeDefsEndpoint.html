@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":9,"i2":9};
+var data = {"i0":9,"i1":9,"i2":9,"i3":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -195,6 +195,13 @@ extends java.lang.Object</pre>
 <div class="block">Delete the type definition.</div>
 </td>
 </tr>
+<tr id="i3" class="rowColor">
+<td class="colFirst"><code>static <a href="../model/typedefs/TypeDefResponse.html" title="class in com.atlan.model.typedefs">TypeDefResponse</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateTypeDef(com.atlan.model.typedefs.TypeDef)">updateTypeDef</a></span>&#8203;(<a href="../model/typedefs/TypeDef.html" title="class in com.atlan.model.typedefs">TypeDef</a>&nbsp;typeDef)</code></th>
+<td class="colLast">
+<div class="block">Update an existing type definition in Atlan.</div>
+</td>
+</tr>
 </table>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
@@ -272,6 +279,26 @@ extends java.lang.Object</pre>
 <dd><code>typeDef</code> - to create</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the resulting type definition that was created</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication issue</dd>
+</dl>
+</li>
+</ul>
+<a id="updateTypeDef(com.atlan.model.typedefs.TypeDef)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>updateTypeDef</h4>
+<pre class="methodSignature">public static&nbsp;<a href="../model/typedefs/TypeDefResponse.html" title="class in com.atlan.model.typedefs">TypeDefResponse</a>&nbsp;updateTypeDef&#8203;(<a href="../model/typedefs/TypeDef.html" title="class in com.atlan.model.typedefs">TypeDef</a>&nbsp;typeDef)
+                                     throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Update an existing type definition in Atlan.
+ Note: only custom metadata and classification type definitions are currently supported.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>typeDef</code> - to update</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the resulting type definition that was updated</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication issue</dd>
 </dl>

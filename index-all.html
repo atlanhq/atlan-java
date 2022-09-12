@@ -1445,6 +1445,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Builds the minimal object necessary for creating a glossary.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/typedefs/CustomMetadataDef.html#creator(java.lang.String)">creator(String)</a></span> - Static method in class com.atlan.model.typedefs.<a href="com/atlan/model/typedefs/CustomMetadataDef.html" title="class in com.atlan.model.typedefs">CustomMetadataDef</a></dt>
+<dd>
+<div class="block">Builds the minimal object necessary to create a custom metadata definition.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Connection.html#creator(java.lang.String,com.atlan.model.enums.AtlanConnectionCategory,java.lang.String,java.util.List,java.util.List,java.util.List)">creator(String, AtlanConnectionCategory, String, List&lt;String&gt;, List&lt;String&gt;, List&lt;String&gt;)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Connection.html" title="class in com.atlan.model.assets">Connection</a></dt>
 <dd>
 <div class="block">Builds the minimal object necessary to create a connection.</div>
@@ -2081,9 +2085,13 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/cache/CustomMetadataCache.html#getAllCustomAttributes()">getAllCustomAttributes()</a></span> - Static method in class com.atlan.cache.<a href="com/atlan/cache/CustomMetadataCache.html" title="class in com.atlan.cache">CustomMetadataCache</a></dt>
 <dd>
-<div class="block">Retrieve all the custom metadata attributes.</div>
+<div class="block">Retrieve all the (active) custom metadata attributes.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/cache/CustomMetadataCache.html#getAllCustomAttributes(boolean)">getAllCustomAttributes(boolean)</a></span> - Static method in class com.atlan.cache.<a href="com/atlan/cache/CustomMetadataCache.html" title="class in com.atlan.cache">CustomMetadataCache</a></dt>
+<dd>
+<div class="block">Retrieve all the custom metadata attributes.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/cache/CustomMetadataCache.html#getAllCustomAttributes(boolean,boolean)">getAllCustomAttributes(boolean, boolean)</a></span> - Static method in class com.atlan.cache.<a href="com/atlan/cache/CustomMetadataCache.html" title="class in com.atlan.cache">CustomMetadataCache</a></dt>
 <dd>
 <div class="block">Retrieve all the custom metadata attributes.</div>
 </dd>
@@ -2280,6 +2288,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/atlan/model/lineage/EntityFilter.html#getAttributeValue()">getAttributeValue()</a></span> - Method in class com.atlan.model.lineage.<a href="com/atlan/model/lineage/EntityFilter.html" title="class in com.atlan.model.lineage">EntityFilter</a></dt>
 <dd>
 <div class="block">Value that <a href="com/atlan/model/lineage/EntityFilter.html#attributeName"><code>EntityFilter.attributeName</code></a>'s value should be compared against.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/cache/CustomMetadataCache.html#getAttrIdForName(java.lang.String,java.lang.String)">getAttrIdForName(String, String)</a></span> - Static method in class com.atlan.cache.<a href="com/atlan/cache/CustomMetadataCache.html" title="class in com.atlan.cache">CustomMetadataCache</a></dt>
+<dd>
+<div class="block">Translate the provided human-readable custom metadata set and attribute names to the Atlan-internal ID string
+ for the attribute.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/AWS.html#getAwsAccountId()">getAwsAccountId()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/AWS.html" title="class in com.atlan.model.assets">AWS</a></dt>
 <dd>
@@ -2539,6 +2552,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/atlan/model/typedefs/AttributeDefOptions.html#getCustomApplicableEntityTypes()">getCustomApplicableEntityTypes()</a></span> - Method in class com.atlan.model.typedefs.<a href="com/atlan/model/typedefs/AttributeDefOptions.html" title="class in com.atlan.model.typedefs">AttributeDefOptions</a></dt>
 <dd>
 <div class="block">Set of entities on which this attribute should appear.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/cache/CustomMetadataCache.html#getCustomMetadataDef(java.lang.String)">getCustomMetadataDef(String)</a></span> - Static method in class com.atlan.cache.<a href="com/atlan/cache/CustomMetadataCache.html" title="class in com.atlan.cache">CustomMetadataCache</a></dt>
+<dd>
+<div class="block">Retrieve the full custom metadata structure definition.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/typedefs/TypeDefResponse.html#getCustomMetadataDefs()">getCustomMetadataDefs()</a></span> - Method in class com.atlan.model.typedefs.<a href="com/atlan/model/typedefs/TypeDefResponse.html" title="class in com.atlan.model.typedefs">TypeDefResponse</a></dt>
 <dd>
@@ -4933,6 +4950,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/cache/ReflectionCache.html#%3Cinit%3E()">ReflectionCache()</a></span> - Constructor for class com.atlan.cache.<a href="com/atlan/cache/ReflectionCache.html" title="class in com.atlan.cache">ReflectionCache</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/cache/CustomMetadataCache.html#refreshCache()">refreshCache()</a></span> - Static method in class com.atlan.cache.<a href="com/atlan/cache/CustomMetadataCache.html" title="class in com.atlan.cache">CustomMetadataCache</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/MaterializedView.MaterializedViewBuilder.html#refreshMethod(java.lang.String)">refreshMethod(String)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/MaterializedView.MaterializedViewBuilder.html" title="class in com.atlan.model.assets">MaterializedView.MaterializedViewBuilder</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/MaterializedView.MaterializedViewBuilder.html#refreshMode(java.lang.String)">refreshMode(String)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/MaterializedView.MaterializedViewBuilder.html" title="class in com.atlan.model.assets">MaterializedView.MaterializedViewBuilder</a></dt>
@@ -5777,6 +5796,14 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Approximate number of total results.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/typedefs/AttributeDefOptions.html#setArchivedAt(java.lang.Long)">setArchivedAt(Long)</a></span> - Method in class com.atlan.model.typedefs.<a href="com/atlan/model/typedefs/AttributeDefOptions.html" title="class in com.atlan.model.typedefs">AttributeDefOptions</a></dt>
+<dd>
+<div class="block">When the attribute was deleted.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/typedefs/AttributeDefOptions.html#setArchivedBy(java.lang.String)">setArchivedBy(String)</a></span> - Method in class com.atlan.model.typedefs.<a href="com/atlan/model/typedefs/AttributeDefOptions.html" title="class in com.atlan.model.typedefs">AttributeDefOptions</a></dt>
+<dd>
+<div class="block">User who deleted the attribute.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/workflow/WorkflowTask.html#setArguments(com.atlan.model.workflow.WorkflowTaskArguments)">setArguments(WorkflowTaskArguments)</a></span> - Method in class com.atlan.model.workflow.<a href="com/atlan/model/workflow/WorkflowTask.html" title="class in com.atlan.model.workflow">WorkflowTask</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Readme.html#setAsset(com.atlan.model.relations.Reference)">setAsset(Reference)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Readme.html" title="class in com.atlan.model.assets">Readme</a></dt>
@@ -6305,6 +6332,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/atlan/model/lineage/AbstractProcess.html#setInputs(java.util.List)">setInputs(List&lt;Reference&gt;)</a></span> - Method in class com.atlan.model.lineage.<a href="com/atlan/model/lineage/AbstractProcess.html" title="class in com.atlan.model.lineage">AbstractProcess</a></dt>
 <dd>
 <div class="block">Assets that are inputs to this process.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/typedefs/AttributeDefOptions.html#setIsArchived(java.lang.Boolean)">setIsArchived(Boolean)</a></span> - Method in class com.atlan.model.typedefs.<a href="com/atlan/model/typedefs/AttributeDefOptions.html" title="class in com.atlan.model.typedefs">AttributeDefOptions</a></dt>
+<dd>
+<div class="block">Whether the attribute has been deleted (true) or is still active (false).</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.html#setIsClustered(java.lang.Boolean)">setIsClustered(Boolean)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.html" title="class in com.atlan.model.assets">Column</a></dt>
 <dd>
@@ -7560,10 +7591,6 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Convert request options to builder, retaining invariant values for the integration.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/atlan/model/typedefs/CustomMetadataDef.html#toCreate(java.lang.String)">toCreate(String)</a></span> - Static method in class com.atlan.model.typedefs.<a href="com/atlan/model/typedefs/CustomMetadataDef.html" title="class in com.atlan.model.typedefs">CustomMetadataDef</a></dt>
-<dd>
-<div class="block">Builds the minimal object necessary to create a custom metadata definition.</div>
-</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/typedefs/ClassificationDef.html#toCreate(java.lang.String,com.atlan.model.enums.AtlanClassificationColor)">toCreate(String, AtlanClassificationColor)</a></span> - Static method in class com.atlan.model.typedefs.<a href="com/atlan/model/typedefs/ClassificationDef.html" title="class in com.atlan.model.typedefs">ClassificationDef</a></dt>
 <dd>
 <div class="block">Builds the minimal object necessary to create a classification definition.</div>
@@ -7953,6 +7980,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/relations/UniqueAttributes.UniqueAttributesBuilder.html#%3Cinit%3E()">UniqueAttributesBuilder()</a></span> - Constructor for class com.atlan.model.relations.<a href="com/atlan/model/relations/UniqueAttributes.UniqueAttributesBuilder.html" title="class in com.atlan.model.relations">UniqueAttributes.UniqueAttributesBuilder</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/typedefs/CustomMetadataDef.html#update()">update()</a></span> - Method in class com.atlan.model.typedefs.<a href="com/atlan/model/typedefs/CustomMetadataDef.html" title="class in com.atlan.model.typedefs">CustomMetadataDef</a></dt>
+<dd>
+<div class="block">Update this custom metadata definition in Atlan.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Asset.html#updateAnnouncement(com.atlan.model.assets.Asset.AssetBuilder,com.atlan.model.enums.AtlanAnnouncementType,java.lang.String,java.lang.String)">updateAnnouncement(Asset.AssetBuilder&lt;?, ?&gt;, AtlanAnnouncementType, String, String)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a></dt>
 <dd>
 <div class="block">Update the announcement on an asset.</div>
@@ -8149,6 +8180,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/typedefs/TypeDef.TypeDefBuilder.html#updateTime(java.lang.Long)">updateTime(Long)</a></span> - Method in class com.atlan.model.typedefs.<a href="com/atlan/model/typedefs/TypeDef.TypeDefBuilder.html" title="class in com.atlan.model.typedefs">TypeDef.TypeDefBuilder</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/api/TypeDefsEndpoint.html#updateTypeDef(com.atlan.model.typedefs.TypeDef)">updateTypeDef(TypeDef)</a></span> - Static method in class com.atlan.api.<a href="com/atlan/api/TypeDefsEndpoint.html" title="class in com.atlan.api">TypeDefsEndpoint</a></dt>
+<dd>
+<div class="block">Update an existing type definition in Atlan.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/core/Entity.html#upsert()">upsert()</a></span> - Method in class com.atlan.model.core.<a href="com/atlan/model/core/Entity.html" title="class in com.atlan.model.core">Entity</a></dt>
 <dd>
 <div class="block">Creates the entity.</div>
