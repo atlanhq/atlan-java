@@ -170,11 +170,12 @@ public class AttributeDefOptions extends AtlanObject {
     String customType;
 
     /** Whether the attribute has been deleted (true) or is still active (false). */
-    final Boolean isArchived;
+    @Builder.Default
+    Boolean isArchived = false;
 
     /** When the attribute was deleted. */
-    final Long archivedAt;
+    Long archivedAt;
 
     /** User who deleted the attribute. */
-    final String archivedBy;
+    String archivedBy;
 }

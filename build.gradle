@@ -30,11 +30,6 @@ group = GROUP
 version = VERSION_NAME
 
 tasks.withType(JavaCompile) {
-    JavaVersion compilerJavaVersionEnum = JavaVersion.current()
-    if (compilerJavaVersionEnum != JavaVersion.VERSION_11) {
-        throw new GradleException("JDK 11 is required to build Atlan")
-    }
-
     options.release = project.targetCompatibility.majorVersion as Integer
 
     options.compilerArgs << "-Xlint:all" << "-Xlint:-options" << "-Xlint:-processing"

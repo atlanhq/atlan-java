@@ -36,19 +36,14 @@ public class CustomMetadataDef extends TypeDef {
 
     /**
      * Builds the minimal object necessary to create a custom metadata definition.
-     * To continue adding to the object, call {@link #toBuilder()} on the result and continue calling additional
-     * methods to add metadata followed by {@link CustomMetadataDefBuilder#build()}.
      * Note: without any enrichment, this will create a custom metadata set with no attributes. This is valid,
      * but probably not useful for anything!
      *
      * @param displayName the human-readable name for the custom metadata set
      * @return the minimal request necessary to create the custom metadata typedef
      */
-    public static CustomMetadataDef toCreate(String displayName) {
-        return CustomMetadataDef.builder()
-                .name(displayName)
-                .displayName(displayName)
-                .build();
+    public static CustomMetadataDefBuilder<?, ?> creator(String displayName) {
+        return CustomMetadataDef.builder().name(displayName).displayName(displayName);
     }
 
     /**
@@ -59,6 +54,22 @@ public class CustomMetadataDef extends TypeDef {
     public CustomMetadataDef create() throws AtlanException {
         TypeDefResponse response = TypeDefsEndpoint.createTypeDef(this);
         if (response != null && !response.getCustomMetadataDefs().isEmpty()) {
+            return response.getCustomMetadataDefs().get(0);
+        }
+        return null;
+    }
+
+    /**
+     * Update this custom metadata definition in Atlan.
+     * Note: there are many restrictions on what you can / should update, so this should really be treated
+     * as an internal method. (This will also force a refresh of the custom metadata cache.)
+     * @return the result of the update, or null if the update failed
+     * @throws AtlanException on any API communication issues
+     */
+    public CustomMetadataDef update() throws AtlanException {
+        TypeDefResponse response = TypeDefsEndpoint.updateTypeDef(this);
+        if (response != null && !response.getCustomMetadataDefs().isEmpty()) {
+            CustomMetadataCache.refreshCache();
             return response.getCustomMetadataDefs().get(0);
         }
         return null;

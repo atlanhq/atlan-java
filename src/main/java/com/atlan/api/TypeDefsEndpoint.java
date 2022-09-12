@@ -68,6 +68,39 @@ public class TypeDefsEndpoint {
     }
 
     /**
+     * Update an existing type definition in Atlan.
+     * Note: only custom metadata and classification type definitions are currently supported.
+     *
+     * @param typeDef to update
+     * @return the resulting type definition that was updated
+     * @throws AtlanException on any API communication issue
+     */
+    public static TypeDefResponse updateTypeDef(TypeDef typeDef) throws AtlanException {
+        TypeDefResponse wrapper = new TypeDefResponse();
+        if (typeDef != null) {
+            switch (typeDef.getCategory()) {
+                case CLASSIFICATION:
+                    wrapper.setClassificationDefs(List.of((ClassificationDef) typeDef));
+                    break;
+                case CUSTOM_METADATA:
+                    wrapper.setCustomMetadataDefs(List.of((CustomMetadataDef) typeDef));
+                    break;
+                default:
+                    throw new InvalidRequestException(
+                            "Unable to update type definitions of category: " + typeDef.getCategory(),
+                            "category",
+                            "ATLAN-CLIENT-400-011",
+                            400,
+                            null);
+            }
+            String url = String.format("%s%s", Atlan.getBaseUrl(), endpoint);
+            return ApiResource.request(ApiResource.RequestMethod.PUT, url, wrapper, TypeDefResponse.class, null);
+        }
+        // If there was no typedef provided, just return an empty response (noop)
+        return wrapper;
+    }
+
+    /**
      * Delete the type definition.
      *
      * @param internalName the internal hashed-string name of the type definition

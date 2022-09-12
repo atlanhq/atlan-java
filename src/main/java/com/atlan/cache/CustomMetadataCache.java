@@ -31,7 +31,7 @@ public class CustomMetadataCache {
     private static Map<String, Map<String, String>> mapAttrIdToName = new ConcurrentHashMap<>();
     private static Map<String, Map<String, String>> mapAttrNameToId = new ConcurrentHashMap<>();
 
-    private static synchronized void refreshCache() throws AtlanException {
+    public static synchronized void refreshCache() throws AtlanException {
         log.debug("Refreshing cache of custom metadata...");
         TypeDefResponse response = TypeDefsEndpoint.getTypeDefs(AtlanTypeCategory.CUSTOM_METADATA);
         List<CustomMetadataDef> customMetadata;
@@ -99,11 +99,11 @@ public class CustomMetadataCache {
     }
 
     /**
-     * Retrieve all the custom metadata attributes. The map will be keyed by custom metadata set
-     * name, and the value will be a listing of all the attributes within that set (with all the details
+     * Retrieve all the (active) custom metadata attributes. The map will be keyed by custom metadata set
+     * name, and the value will be a listing of all the (active) attributes within that set (with all the details
      * of each of those attributes).
      *
-     * @return a map from custom metadata set name to all details about all its attributes
+     * @return a map from custom metadata set name to all details about all its active attributes
      * @throws AtlanException on any API communication problem if the cache needs to be refreshed
      */
     public static Map<String, List<AttributeDef>> getAllCustomAttributes() throws AtlanException {
@@ -115,12 +115,27 @@ public class CustomMetadataCache {
      * name, and the value will be a listing of all the attributes within that set (with all the details
      * of each of those attributes).
      *
+     * @param includeDeleted if true, include the archived (deleted) custom attributes; otherwise only include active custom attributes
+     * @return a map from custom metadata set name to all details about all its attributes
+     * @throws AtlanException on any API communication problem if the cache needs to be refreshed
+     */
+    public static Map<String, List<AttributeDef>> getAllCustomAttributes(boolean includeDeleted) throws AtlanException {
+        return getAllCustomAttributes(includeDeleted, false);
+    }
+
+    /**
+     * Retrieve all the custom metadata attributes. The map will be keyed by custom metadata set
+     * name, and the value will be a listing of all the attributes within that set (with all the details
+     * of each of those attributes).
+     *
+     * @param includeDeleted if true, include the archived (deleted) custom attributes; otherwise only include active custom attributes
      * @param forceRefresh if true, will refresh the custom metadata cache; if false, will only refresh
      *                     the cache if it is empty
      * @return a map from custom metadata set name to all details about all its attributes
      * @throws AtlanException on any API communication problem if the cache needs to be refreshed
      */
-    public static Map<String, List<AttributeDef>> getAllCustomAttributes(boolean forceRefresh) throws AtlanException {
+    public static Map<String, List<AttributeDef>> getAllCustomAttributes(boolean includeDeleted, boolean forceRefresh)
+            throws AtlanException {
         if (cacheById.isEmpty() || forceRefresh) {
             refreshCache();
         }
@@ -129,9 +144,64 @@ public class CustomMetadataCache {
             String typeId = entry.getKey();
             String typeName = getNameForId(typeId);
             CustomMetadataDef typeDef = entry.getValue();
-            map.put(typeName, typeDef.getAttributeDefs());
+            List<AttributeDef> attributeDefs = typeDef.getAttributeDefs();
+            List<AttributeDef> toInclude;
+            if (includeDeleted) {
+                toInclude = attributeDefs;
+            } else {
+                toInclude = new ArrayList<>();
+                for (AttributeDef attributeDef : attributeDefs) {
+                    if (!attributeDef.getOptions().getIsArchived()) {
+                        toInclude.add(attributeDef);
+                    }
+                }
+            }
+            map.put(typeName, toInclude);
         }
         return Collections.unmodifiableMap(map);
+    }
+
+    /**
+     * Translate the provided human-readable custom metadata set and attribute names to the Atlan-internal ID string
+     * for the attribute.
+     *
+     * @param setName human-readable name of the custom metadata set
+     * @param attributeName human-readable name of the attribute
+     * @return Atlan-internal ID string for the attribute
+     * @throws AtlanException on any API communication problem if the cache needs to be refreshed
+     */
+    public static String getAttrIdForName(String setName, String attributeName) throws AtlanException {
+        String attrId = null;
+        String setId = getIdForName(setName);
+        Map<String, String> subMap = mapAttrNameToId.get(setId);
+        if (subMap != null) {
+            attrId = subMap.get(attributeName);
+        }
+        if (attrId != null) {
+            // If found, return straight away
+            return attrId;
+        } else {
+            // Otherwise, refresh the cache and look again (could be stale)
+            refreshCache();
+            subMap = mapAttrNameToId.get(setId);
+            if (subMap != null) {
+                return subMap.get(attributeName);
+            } else {
+                return null;
+            }
+        }
+    }
+
+    /**
+     * Retrieve the full custom metadata structure definition.
+     *
+     * @param setName human-readable name of the custom metadata set
+     * @return the full custom metadata structure definition for that set
+     * @throws AtlanException on any API communication problem if the cache needs to be refreshed
+     */
+    public static CustomMetadataDef getCustomMetadataDef(String setName) throws AtlanException {
+        String setId = getIdForName(setName);
+        return cacheById.get(setId);
     }
 
     /**
@@ -142,7 +212,7 @@ public class CustomMetadataCache {
      * @return Atlan-internal ID string for the attribute
      * @throws AtlanException on any API communication problem if the cache needs to be refreshed
      */
-    private static String getAttrIdForName(String setId, String attributeName) throws AtlanException {
+    private static String getAttrIdForNameFromSetId(String setId, String attributeName) throws AtlanException {
         String attrId = null;
         Map<String, String> subMap = mapAttrNameToId.get(setId);
         if (subMap != null) {
@@ -171,7 +241,7 @@ public class CustomMetadataCache {
      * @return human-readable name of the attribute
      * @throws AtlanException on any API communication problem if the cache needs to be refreshed
      */
-    private static String getAttrNameForId(String setId, String attributeId) throws AtlanException {
+    private static String getAttrNameForIdFromSetId(String setId, String attributeId) throws AtlanException {
         String attrName = null;
         Map<String, String> subMap = mapAttrIdToName.get(setId);
         if (subMap != null) {
@@ -249,7 +319,7 @@ public class CustomMetadataCache {
         String cmId = getIdForName(customMetadataName);
         for (Map.Entry<String, Object> entry : nameToValue.entrySet()) {
             String attrName = entry.getKey();
-            String cmAttrId = getAttrIdForName(cmId, attrName);
+            String cmAttrId = getAttrIdForNameFromSetId(cmId, attrName);
             idToValue.put(cmAttrId, entry.getValue());
         }
     }
@@ -273,7 +343,7 @@ public class CustomMetadataCache {
             Iterator<String> itrCMA = bmAttrs.fieldNames();
             while (itrCMA.hasNext()) {
                 String attrId = itrCMA.next();
-                String cmAttrName = getAttrNameForId(cmId, attrId);
+                String cmAttrName = getAttrNameForIdFromSetId(cmId, attrId);
                 JsonNode jsonValue = bmAttrs.get(attrId);
                 if (jsonValue.isArray()) {
                     Set<Object> values = new HashSet<>();

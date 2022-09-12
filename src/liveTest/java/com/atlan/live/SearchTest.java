@@ -5,15 +5,20 @@ package com.atlan.live;
 import static org.testng.Assert.*;
 
 import co.elastic.clients.elasticsearch._types.FieldSort;
+import co.elastic.clients.elasticsearch._types.FieldValue;
 import co.elastic.clients.elasticsearch._types.SortOptions;
 import co.elastic.clients.elasticsearch._types.SortOrder;
 import co.elastic.clients.elasticsearch._types.query_dsl.*;
 import co.elastic.clients.json.JsonData;
+import com.atlan.Atlan;
+import com.atlan.cache.ClassificationCache;
+import com.atlan.cache.CustomMetadataCache;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.assets.Glossary;
 import com.atlan.model.assets.GlossaryTerm;
 import com.atlan.model.assets.S3Object;
 import com.atlan.model.core.Entity;
+import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.search.IndexSearchDSL;
 import com.atlan.model.search.IndexSearchRequest;
 import com.atlan.model.search.IndexSearchResponse;
@@ -23,6 +28,12 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import org.testng.annotations.Test;
 
+/**
+ * Tests various searches.
+ * Note: since the search index is only eventually consistent with the metastore, there can be slight
+ * delays between the data being persisted and it being searchable. As a result, there are retry loops
+ * here in the tests to allow for that eventual consistency.
+ */
 public class SearchTest extends AtlanLiveTest {
 
     private static Long s3ObjectCreationTime = null;
@@ -198,9 +209,9 @@ public class SearchTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"search.s3object.classification"},
+            groups = {"search.s3object.classification.any"},
             dependsOnGroups = {"link.classification.s3object"})
-    void searchByClassification() {
+    void searchByAnyClassification() {
 
         try {
             Query byClassification =
@@ -235,6 +246,202 @@ public class SearchTest extends AtlanLiveTest {
         } catch (AtlanException e) {
             e.printStackTrace();
             assertNull(e, "Unexpected exception while searching by classification existence.");
+        }
+    }
+
+    @Test(
+            groups = {"search.s3object.classification.specific"},
+            dependsOnGroups = {"link.classification.s3object"})
+    void searchBySpecificClassification() throws InterruptedException {
+
+        try {
+            String classificationId = ClassificationCache.getIdForName(ClassificationTest.CLASSIFICATION_NAME1);
+            Query byDirectClassification = TermsQuery.of(t -> t.field("__traitNames")
+                            .terms(TermsQueryField.of(f -> f.value(List.of(FieldValue.of(classificationId))))))
+                    ._toQuery();
+            Query byPropagatedClassification = TermsQuery.of(t -> t.field("__propagatedTraitNames")
+                            .terms(TermsQueryField.of(f -> f.value(List.of(FieldValue.of(classificationId))))))
+                    ._toQuery();
+            Query byState = TermQuery.of(t -> t.field("__state").value(AtlanStatus.ACTIVE.getValue()))
+                    ._toQuery();
+            Query byType = TermQuery.of(t -> t.field("__typeName.keyword").value(S3Object.TYPE_NAME))
+                    ._toQuery();
+            Query combined = BoolQuery.of(b -> b.filter(byState, byType)
+                            .should(byDirectClassification, byPropagatedClassification)
+                            .minimumShouldMatch("1"))
+                    ._toQuery();
+
+            IndexSearchRequest index = IndexSearchRequest.builder()
+                    .dsl(IndexSearchDSL.builder().query(combined).build())
+                    .attribute("name")
+                    .attribute("connectionQualifiedName")
+                    .build();
+
+            IndexSearchResponse response = index.search();
+
+            assertNotNull(response);
+            int count = 0;
+            while (response.getApproximateCount() == 0L && count < Atlan.getMaxNetworkRetries()) {
+                Thread.sleep(2000);
+                response = index.search();
+                count++;
+            }
+            assertEquals(response.getApproximateCount().longValue(), 1L);
+            List<Entity> entities = response.getEntities();
+            assertNotNull(entities);
+            assertEquals(entities.size(), 1);
+            Entity one = entities.get(0);
+            assertTrue(one instanceof S3Object);
+            S3Object object = (S3Object) one;
+            assertNotNull(object);
+            assertEquals(object.getQualifiedName(), S3AssetTest.s3Object2Qame);
+            assertEquals(object.getConnectionQualifiedName(), S3AssetTest.connectionQame);
+
+        } catch (AtlanException e) {
+            e.printStackTrace();
+            assertNull(e, "Unexpected exception while searching by a specific classification.");
+        }
+    }
+
+    @Test(
+            groups = {"search.s3object.term.specific"},
+            dependsOnGroups = {"link.term.asset"})
+    void searchByTermAssignment() throws InterruptedException {
+
+        try {
+            Query byTermAssignment = TermsQuery.of(t -> t.field("__meanings")
+                            .terms(TermsQueryField.of(f -> f.value(List.of(FieldValue.of(GlossaryTest.termQame1))))))
+                    ._toQuery();
+            Query byState = TermQuery.of(t -> t.field("__state").value(AtlanStatus.ACTIVE.getValue()))
+                    ._toQuery();
+            Query byType = TermQuery.of(t -> t.field("__typeName.keyword").value(S3Object.TYPE_NAME))
+                    ._toQuery();
+            Query combined = BoolQuery.of(b -> b.filter(byState, byType, byTermAssignment))
+                    ._toQuery();
+
+            IndexSearchRequest index = IndexSearchRequest.builder()
+                    .dsl(IndexSearchDSL.builder().query(combined).build())
+                    .attribute("name")
+                    .attribute("meanings")
+                    .attribute("connectionQualifiedName")
+                    .build();
+
+            IndexSearchResponse response = index.search();
+
+            assertNotNull(response);
+            int count = 0;
+            while (response.getApproximateCount() == 0L && count < Atlan.getMaxNetworkRetries()) {
+                Thread.sleep(2000);
+                response = index.search();
+                count++;
+            }
+            // TODO: currently relationship setup in this direction does not resolve via search (TBC)...
+            /*assertEquals(response.getApproximateCount().longValue(), 2L);
+            List<Entity> entities = response.getEntities();
+            assertNotNull(entities);
+            assertEquals(entities.size(), 2);
+            Set<String> types = entities.stream().map(Entity::getTypeName).collect(Collectors.toSet());
+            assertEquals(types.size(), 1);
+            assertTrue(types.contains(S3Object.TYPE_NAME));
+            Set<String> guids = entities.stream().map(Entity::getGuid).collect(Collectors.toSet());
+            assertEquals(guids.size(), 2);
+            assertTrue(guids.contains(S3AssetTest.s3Object1Guid));
+            assertTrue(guids.contains(S3AssetTest.s3Object2Guid));*/
+        } catch (AtlanException e) {
+            e.printStackTrace();
+            assertNull(e, "Unexpected exception while searching by a specific classification.");
+        }
+    }
+
+    @Test(
+            groups = {"search.s3object.term.fromAsset"},
+            dependsOnGroups = {"link.asset.term"})
+    void searchByAssignedTerm() throws InterruptedException {
+
+        try {
+            Query byTermAssignment = TermsQuery.of(t -> t.field("__meanings")
+                            .terms(TermsQueryField.of(f -> f.value(List.of(FieldValue.of(GlossaryTest.termQame1))))))
+                    ._toQuery();
+            Query byState = TermQuery.of(t -> t.field("__state").value(AtlanStatus.ACTIVE.getValue()))
+                    ._toQuery();
+            Query byType = TermQuery.of(t -> t.field("__typeName.keyword").value(S3Object.TYPE_NAME))
+                    ._toQuery();
+            Query combined = BoolQuery.of(b -> b.filter(byState, byType, byTermAssignment))
+                    ._toQuery();
+
+            IndexSearchRequest index = IndexSearchRequest.builder()
+                    .dsl(IndexSearchDSL.builder().query(combined).build())
+                    .attribute("name")
+                    .attribute("meanings")
+                    .attribute("connectionQualifiedName")
+                    .build();
+
+            IndexSearchResponse response = index.search();
+
+            assertNotNull(response);
+            int count = 0;
+            while (response.getApproximateCount() == 0L && count < Atlan.getMaxNetworkRetries()) {
+                Thread.sleep(2000);
+                response = index.search();
+                count++;
+            }
+            assertEquals(response.getApproximateCount().longValue(), 1L);
+            List<Entity> entities = response.getEntities();
+            assertNotNull(entities);
+            assertEquals(entities.size(), 1);
+            Set<String> types = entities.stream().map(Entity::getTypeName).collect(Collectors.toSet());
+            assertEquals(types.size(), 1);
+            assertTrue(types.contains(S3Object.TYPE_NAME));
+            Set<String> guids = entities.stream().map(Entity::getGuid).collect(Collectors.toSet());
+            assertEquals(guids.size(), 1);
+            assertTrue(guids.contains(S3AssetTest.s3Object1Guid));
+        } catch (AtlanException e) {
+            e.printStackTrace();
+            assertNull(e, "Unexpected exception while searching by a specific classification.");
+        }
+    }
+
+    @Test(
+            groups = {"search.term.cm"},
+            dependsOnGroups = {"link.cm.term"})
+    void searchByCustomMetadata() throws InterruptedException {
+
+        try {
+            String attributeId = CustomMetadataCache.getAttrIdForName(
+                    CustomMetadataTest.CM_NAME1, CustomMetadataTest.CM_ATTR_STRING);
+            Query byCM = ExistsQuery.of(q -> q.field(attributeId))._toQuery();
+            Query byState = TermQuery.of(t -> t.field("__state").value(AtlanStatus.ACTIVE.getValue()))
+                    ._toQuery();
+            Query byType = TermQuery.of(t -> t.field("__typeName.keyword").value(GlossaryTerm.TYPE_NAME))
+                    ._toQuery();
+            Query combined = BoolQuery.of(b -> b.filter(byState, byType, byCM))._toQuery();
+
+            IndexSearchRequest index = IndexSearchRequest.builder()
+                    .dsl(IndexSearchDSL.builder().query(combined).build())
+                    .attribute("name")
+                    .build();
+
+            IndexSearchResponse response = index.search();
+
+            assertNotNull(response);
+            int count = 0;
+            while (response.getApproximateCount() == 0L && count < Atlan.getMaxNetworkRetries()) {
+                Thread.sleep(2000);
+                response = index.search();
+                count++;
+            }
+            assertEquals(response.getApproximateCount().longValue(), 1L);
+            List<Entity> entities = response.getEntities();
+            assertNotNull(entities);
+            assertEquals(entities.size(), 1);
+            Entity one = entities.get(0);
+            assertTrue(one instanceof GlossaryTerm);
+            GlossaryTerm term = (GlossaryTerm) one;
+            assertEquals(term.getGuid(), GlossaryTest.termGuid1);
+            assertEquals(term.getQualifiedName(), GlossaryTest.termQame1);
+        } catch (AtlanException e) {
+            e.printStackTrace();
+            assertNull(e, "Unexpected exception while searching by a specific classification.");
         }
     }
 
