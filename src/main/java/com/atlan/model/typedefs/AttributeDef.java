@@ -74,9 +74,12 @@ public class AttributeDef extends AtlanObject {
 
     /**
      * Type of the attribute.
-     * This can either be a primitive Atlan type or the name of a custom metadata enumeration (options).
-     * The primitive Atlan types' values are defined in the {@link AtlanCustomAttributePrimitiveType} enumeration.
-     * For fields that can be multivalued, use {@code array<type>} for the typeName.
+     * <ul>
+     *   <li>This can either be a primitive Atlan type or the name of a custom metadata enumeration (options).</li>
+     *   <li>The primitive Atlan types' values are defined in the {@link AtlanCustomAttributePrimitiveType} enumeration.</li>
+     *   <li>Note: there are a number of custom types there as well ({@code users}, {@code groups}, {@code url}, and {@code SQL}). The {@code typeName} for all of these custom types is {@code STRING}, and the more detailed type only appears in the {@link #options}.</li>
+     *   <li>For fields that can be multivalued, use {@code array<type>} for the typeName.</li>
+     * </ul>
      */
     String typeName;
 

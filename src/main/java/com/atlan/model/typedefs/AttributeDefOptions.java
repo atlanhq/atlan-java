@@ -2,8 +2,16 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.typedefs;
 
+import com.atlan.model.assets.*;
 import com.atlan.model.core.AtlanObject;
 import com.atlan.model.enums.AtlanCustomAttributePrimitiveType;
+import com.atlan.model.lineage.ColumnProcess;
+import com.atlan.model.lineage.LineageProcess;
+import com.atlan.serde.SetToStringSerializer;
+import com.atlan.serde.StringToSetDeserializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import java.util.Set;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -21,6 +29,70 @@ import lombok.extern.jackson.Jacksonized;
 @EqualsAndHashCode(callSuper = false)
 public class AttributeDefOptions extends AtlanObject {
     private static final long serialVersionUID = 2L;
+
+    private static final Set<String> defaultTypes = Set.of(
+            Database.TYPE_NAME,
+            Schema.TYPE_NAME,
+            View.TYPE_NAME,
+            Table.TYPE_NAME,
+            "TablePartition",
+            MaterializedView.TYPE_NAME,
+            Column.TYPE_NAME,
+            "TableauSite",
+            "TableauProject",
+            "TableauWorkbook",
+            "TableauWorksheet",
+            "TableauDashboard",
+            "TableauDatasource",
+            "TableauDatasourceField",
+            "TableauCalculatedField",
+            "TableauFlow",
+            "TableauMetric",
+            "PowerBIWorkspace",
+            "PowerBIDashboard",
+            "PowerBIReport",
+            "PowerBIDataset",
+            "PowerBIDataflow",
+            "PowerBITile",
+            "PowerBIPage",
+            "PowerBIDatasource",
+            "PowerBITable",
+            "PowerBIColumn",
+            "PowerBIMeasure",
+            "LookerDashboard",
+            "LookerExplore",
+            "LookerField",
+            "LookerFolder",
+            "LookerLook",
+            "LookerModel",
+            "LookerProject",
+            "LookerQuery",
+            "LookerTile",
+            "LookerView",
+            "MetabaseCollection",
+            "MetabaseDashboard",
+            "MetabaseQuestion",
+            "ModeWorkspace",
+            "ModeCollection",
+            "ModeReport",
+            "ModeQuery",
+            "ModeChart",
+            "SalesforceOrganization",
+            "SalesforceDashboard",
+            "SalesforceReport",
+            "SalesforceObject",
+            "SalesforceField",
+            S3Bucket.TYPE_NAME,
+            S3Object.TYPE_NAME,
+            "Query",
+            "Folder",
+            "Collection",
+            LineageProcess.TYPE_NAME,
+            ColumnProcess.TYPE_NAME,
+            "BIProcess",
+            Glossary.TYPE_NAME,
+            GlossaryTerm.TYPE_NAME,
+            GlossaryCategory.TYPE_NAME);
 
     /**
      * Instantiate a new set of attribute options from the provided parameters.
@@ -52,12 +124,15 @@ public class AttributeDefOptions extends AtlanObject {
 
     /** Set of entities on which this attribute can be applied. */
     @Builder.Default
-    String applicableEntityTypes = "[\"Asset\"]";
+    @JsonSerialize(using = SetToStringSerializer.class)
+    @JsonDeserialize(using = StringToSetDeserializer.class)
+    Set<String> applicableEntityTypes = Set.of("Asset");
 
     /** Set of entities on which this attribute should appear. */
     @Builder.Default
-    String customApplicableEntityTypes =
-            "[\"Database\",\"Schema\",\"View\",\"Table\",\"TablePartition\",\"MaterialisedView\",\"Column\",\"TableauSite\",\"TableauProject\",\"TableauWorkbook\",\"TableauWorksheet\",\"TableauDashboard\",\"TableauDatasource\",\"TableauDatasourceField\",\"TableauCalculatedField\",\"TableauFlow\",\"TableauMetric\",\"PowerBIWorkspace\",\"PowerBIDashboard\",\"PowerBIReport\",\"PowerBIDataset\",\"PowerBIDataflow\",\"PowerBITile\",\"PowerBIPage\",\"PowerBIDatasource\",\"PowerBITable\",\"PowerBIColumn\",\"PowerBIMeasure\",\"LookerDashboard\",\"LookerExplore\",\"LookerField\",\"LookerFolder\",\"LookerLook\",\"LookerModel\",\"LookerProject\",\"LookerQuery\",\"LookerTile\",\"LookerView\",\"MetabaseCollection\",\"MetabaseDashboard\",\"MetabaseQuestion\",\"ModeWorkspace\",\"ModeCollection\",\"ModeReport\",\"ModeQuery\",\"ModeChart\",\"SalesforceOrganization\",\"SalesforceDashboard\",\"SalesforceReport\",\"SalesforceObject\",\"SalesforceField\",\"S3Bucket\",\"S3Object\",\"Query\",\"Folder\",\"Collection\",\"Process\",\"ColumnProcess\",\"BIProcess\",\"AtlasGlossary\",\"AtlasGlossaryTerm\",\"AtlasGlossaryCategory\"]";
+    @JsonSerialize(using = SetToStringSerializer.class)
+    @JsonDeserialize(using = StringToSetDeserializer.class)
+    Set<String> customApplicableEntityTypes = defaultTypes;
 
     /** Whether the attribute should be searchable (true) or not (false). */
     @Builder.Default
