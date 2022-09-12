@@ -52,7 +52,7 @@ public class TermAssignmentTest extends AtlanLiveTest {
 
     @Test(
             groups = {"unlink.term.asset"},
-            dependsOnGroups = {"link.term.asset"})
+            dependsOnGroups = {"link.term.asset", "search.s3object.term.specific"})
     void removeTermToAssetLinks() {
         GlossaryTerm term = GlossaryTerm.updater(
                         GlossaryTest.termQame1, GlossaryTest.TERM_NAME1, GlossaryTest.glossaryGuid)
@@ -119,7 +119,7 @@ public class TermAssignmentTest extends AtlanLiveTest {
 
     @Test(
             groups = {"unlink.asset.term"},
-            dependsOnGroups = {"link.asset.term"})
+            dependsOnGroups = {"link.asset.term", "search.s3object.term.fromAsset"})
     void removeAssetToTermLinks() {
         try {
             S3Object result = S3Object.replaceTerms(S3AssetTest.s3Object1Qame, S3AssetTest.S3_OBJECT1_NAME, null);

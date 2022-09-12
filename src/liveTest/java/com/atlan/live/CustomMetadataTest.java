@@ -14,10 +14,9 @@ import com.atlan.model.enums.AtlanCustomAttributePrimitiveType;
 import com.atlan.model.enums.AtlanTypeCategory;
 import com.atlan.model.lineage.LineageProcess;
 import com.atlan.model.typedefs.AttributeDef;
+import com.atlan.model.typedefs.AttributeDefOptions;
 import com.atlan.model.typedefs.CustomMetadataDef;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import org.testng.annotations.Test;
 
 @Test(groups = {"custom_metadata"})
@@ -36,11 +35,12 @@ public class CustomMetadataTest extends AtlanLiveTest {
     // TODO: public static final String CM_ATTR_GROUP = "group";
     public static final String CM_ATTR_URL = "url";
     public static final String CM_ATTR_SQL = "sql";
+    public static final String CM_ATTR_EXTRA = "extra";
 
     @Test(groups = {"create.cm"})
     void createCustomMetadata() {
         try {
-            CustomMetadataDef customMetadataDef = CustomMetadataDef.toCreate(CM_NAME1).toBuilder()
+            CustomMetadataDef customMetadataDef = CustomMetadataDef.creator(CM_NAME1)
                     .attributeDef(AttributeDef.of(CM_ATTR_STRING, AtlanCustomAttributePrimitiveType.STRING, null, true))
                     .attributeDef(
                             AttributeDef.of(CM_ATTR_INTEGER, AtlanCustomAttributePrimitiveType.INTEGER, null, false))
@@ -51,6 +51,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
                     .attributeDef(AttributeDef.of(CM_ATTR_DATE, AtlanCustomAttributePrimitiveType.DATE, null, false))
                     .attributeDef(AttributeDef.of(CM_ATTR_URL, AtlanCustomAttributePrimitiveType.URL, null, false))
                     .attributeDef(AttributeDef.of(CM_ATTR_SQL, AtlanCustomAttributePrimitiveType.SQL, null, false))
+                    .attributeDef(AttributeDef.of(CM_ATTR_EXTRA, AtlanCustomAttributePrimitiveType.STRING, null, false))
                     .build();
             CustomMetadataDef response = customMetadataDef.create();
             assertNotNull(response);
@@ -61,7 +62,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
             assertEquals(response.getDisplayName(), CM_NAME1);
             List<AttributeDef> attributes = response.getAttributeDefs();
             assertNotNull(attributes);
-            assertEquals(attributes.size(), 7);
+            assertEquals(attributes.size(), 8);
             AttributeDef one = attributes.get(0);
             assertNotNull(one);
             assertEquals(one.getDisplayName(), CM_ATTR_STRING);
@@ -116,8 +117,16 @@ public class CustomMetadataTest extends AtlanLiveTest {
             assertNotNull(one.getOptions());
             assertFalse(one.getOptions().getMultiValueSelect());
             assertEquals(one.getOptions().getCustomType(), AtlanCustomAttributePrimitiveType.SQL.getValue());
+            one = attributes.get(7);
+            assertNotNull(one);
+            assertEquals(one.getDisplayName(), CM_ATTR_EXTRA);
+            assertNotNull(one.getName());
+            assertNotEquals(one.getName(), CM_ATTR_EXTRA);
+            assertEquals(one.getTypeName(), AtlanCustomAttributePrimitiveType.STRING.getValue());
+            assertNotNull(one.getOptions());
+            assertFalse(one.getOptions().getMultiValueSelect());
 
-            customMetadataDef = CustomMetadataDef.toCreate(CM_NAME2).toBuilder()
+            customMetadataDef = CustomMetadataDef.creator(CM_NAME2)
                     .attributeDef(AttributeDef.of(CM_ATTR_STRING, AtlanCustomAttributePrimitiveType.STRING, null, true))
                     .attributeDef(
                             AttributeDef.of(CM_ATTR_INTEGER, AtlanCustomAttributePrimitiveType.INTEGER, null, false))
@@ -128,6 +137,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
                     .attributeDef(AttributeDef.of(CM_ATTR_DATE, AtlanCustomAttributePrimitiveType.DATE, null, false))
                     .attributeDef(AttributeDef.of(CM_ATTR_URL, AtlanCustomAttributePrimitiveType.URL, null, false))
                     .attributeDef(AttributeDef.of(CM_ATTR_SQL, AtlanCustomAttributePrimitiveType.SQL, null, false))
+                    .attributeDef(AttributeDef.of(CM_ATTR_EXTRA, AtlanCustomAttributePrimitiveType.STRING, null, false))
                     .build();
             response = customMetadataDef.create();
             assertNotNull(response);
@@ -138,7 +148,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
             assertEquals(response.getDisplayName(), CM_NAME2);
             attributes = response.getAttributeDefs();
             assertNotNull(attributes);
-            assertEquals(attributes.size(), 7);
+            assertEquals(attributes.size(), 8);
             one = attributes.get(0);
             assertNotNull(one);
             assertEquals(one.getDisplayName(), CM_ATTR_STRING);
@@ -193,6 +203,14 @@ public class CustomMetadataTest extends AtlanLiveTest {
             assertNotNull(one.getOptions());
             assertFalse(one.getOptions().getMultiValueSelect());
             assertEquals(one.getOptions().getCustomType(), AtlanCustomAttributePrimitiveType.SQL.getValue());
+            one = attributes.get(7);
+            assertNotNull(one);
+            assertEquals(one.getDisplayName(), CM_ATTR_EXTRA);
+            assertNotNull(one.getName());
+            assertNotEquals(one.getName(), CM_ATTR_EXTRA);
+            assertEquals(one.getTypeName(), AtlanCustomAttributePrimitiveType.STRING.getValue());
+            assertNotNull(one.getOptions());
+            assertFalse(one.getOptions().getMultiValueSelect());
         } catch (AtlanException e) {
             e.printStackTrace();
             assertNull(e, "Unexpected exception while trying to create a new custom metadata structures.");
@@ -242,7 +260,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
 
     @Test(
             groups = {"unlink.cm.term"},
-            dependsOnGroups = {"link.cm.term"})
+            dependsOnGroups = {"link.cm.term", "search.term.cm"})
     void removeTermCM() {
         try {
             GlossaryTerm toUpdate = GlossaryTerm.updater(
@@ -399,8 +417,106 @@ public class CustomMetadataTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"read.cm.structure"},
+            groups = {"unlink.cm.attribute"},
             dependsOnGroups = {"create.cm"})
+    void removeAttribute() {
+        try {
+            CustomMetadataDef existing = CustomMetadataCache.getCustomMetadataDef(CM_NAME1);
+            List<AttributeDef> existingAttrs = existing.getAttributeDefs();
+            List<AttributeDef> updatedAttrs = new ArrayList<>();
+            for (AttributeDef existingAttr : existingAttrs) {
+                if (existingAttr.getDisplayName().equals(CM_ATTR_EXTRA)) {
+                    AttributeDefOptions options = existingAttr.getOptions();
+                    options.setIsArchived(true);
+                    options.setArchivedBy("test-automation");
+                    options.setArchivedAt(new Date().getTime());
+                    existingAttr.setOptions(options);
+                }
+                updatedAttrs.add(existingAttr);
+            }
+            existing.setAttributeDefs(updatedAttrs);
+            CustomMetadataDef updated = existing.update();
+            assertNotNull(updated);
+            assertEquals(updated.getCategory(), AtlanTypeCategory.CUSTOM_METADATA);
+            assertNotNull(updated.getName());
+            assertNotEquals(updated.getName(), CM_NAME1);
+            assertNotNull(updated.getGuid());
+            assertEquals(updated.getDisplayName(), CM_NAME1);
+            List<AttributeDef> attributes = updated.getAttributeDefs();
+            assertNotNull(attributes);
+            assertEquals(attributes.size(), 8);
+            AttributeDef one = attributes.get(0);
+            assertNotNull(one);
+            assertEquals(one.getDisplayName(), CM_ATTR_STRING);
+            assertNotNull(one.getName());
+            assertNotEquals(one.getName(), CM_ATTR_STRING);
+            assertEquals(one.getTypeName(), "array<" + AtlanCustomAttributePrimitiveType.STRING.getValue() + ">");
+            assertNotNull(one.getOptions());
+            assertTrue(one.getOptions().getMultiValueSelect());
+            one = attributes.get(1);
+            assertEquals(one.getDisplayName(), CM_ATTR_INTEGER);
+            assertNotNull(one.getName());
+            assertNotEquals(one.getName(), CM_ATTR_INTEGER);
+            assertEquals(one.getTypeName(), AtlanCustomAttributePrimitiveType.INTEGER.getValue());
+            assertNotNull(one.getOptions());
+            assertFalse(one.getOptions().getMultiValueSelect());
+            one = attributes.get(2);
+            assertEquals(one.getDisplayName(), CM_ATTR_DECIMAL);
+            assertNotNull(one.getName());
+            assertNotEquals(one.getName(), CM_ATTR_DECIMAL);
+            assertEquals(one.getTypeName(), AtlanCustomAttributePrimitiveType.DECIMAL.getValue());
+            assertNotNull(one.getOptions());
+            assertFalse(one.getOptions().getMultiValueSelect());
+            one = attributes.get(3);
+            assertEquals(one.getDisplayName(), CM_ATTR_BOOLEAN);
+            assertNotNull(one.getName());
+            assertNotEquals(one.getName(), CM_ATTR_BOOLEAN);
+            assertEquals(one.getTypeName(), AtlanCustomAttributePrimitiveType.BOOLEAN.getValue());
+            assertNotNull(one.getOptions());
+            assertFalse(one.getOptions().getMultiValueSelect());
+            one = attributes.get(4);
+            assertEquals(one.getDisplayName(), CM_ATTR_DATE);
+            assertNotNull(one.getName());
+            assertNotEquals(one.getName(), CM_ATTR_DATE);
+            assertEquals(one.getTypeName(), AtlanCustomAttributePrimitiveType.DATE.getValue());
+            assertNotNull(one.getOptions());
+            assertFalse(one.getOptions().getMultiValueSelect());
+            one = attributes.get(5);
+            assertEquals(one.getDisplayName(), CM_ATTR_URL);
+            assertNotNull(one.getName());
+            assertNotEquals(one.getName(), CM_ATTR_URL);
+            // Note: for custom attribute types, the typeName will remain "string"
+            assertEquals(one.getTypeName(), AtlanCustomAttributePrimitiveType.STRING.getValue());
+            assertNotNull(one.getOptions());
+            assertFalse(one.getOptions().getMultiValueSelect());
+            assertEquals(one.getOptions().getCustomType(), AtlanCustomAttributePrimitiveType.URL.getValue());
+            one = attributes.get(6);
+            assertEquals(one.getDisplayName(), CM_ATTR_SQL);
+            assertNotNull(one.getName());
+            assertNotEquals(one.getName(), CM_ATTR_SQL);
+            // Note: for custom attribute types, the typeName will remain "string"
+            assertEquals(one.getTypeName(), AtlanCustomAttributePrimitiveType.STRING.getValue());
+            assertNotNull(one.getOptions());
+            assertFalse(one.getOptions().getMultiValueSelect());
+            assertEquals(one.getOptions().getCustomType(), AtlanCustomAttributePrimitiveType.SQL.getValue());
+            one = attributes.get(7);
+            assertNotNull(one);
+            assertEquals(one.getDisplayName(), CM_ATTR_EXTRA);
+            assertNotNull(one.getName());
+            assertNotEquals(one.getName(), CM_ATTR_EXTRA);
+            assertEquals(one.getTypeName(), AtlanCustomAttributePrimitiveType.STRING.getValue());
+            assertNotNull(one.getOptions());
+            assertFalse(one.getOptions().getMultiValueSelect());
+            assertTrue(one.getOptions().getIsArchived());
+        } catch (AtlanException e) {
+            e.printStackTrace();
+            assertNull(e, "Unexpected exception while trying to remove a custom metadata attribute.");
+        }
+    }
+
+    @Test(
+            groups = {"read.cm.structure"},
+            dependsOnGroups = {"unlink.cm.attribute"})
     void retrieveStructure() {
         try {
             Map<String, List<AttributeDef>> map = CustomMetadataCache.getAllCustomAttributes();
@@ -408,8 +524,34 @@ public class CustomMetadataTest extends AtlanLiveTest {
             assertEquals(map.size(), 2);
             assertTrue(map.containsKey(CM_NAME1));
             assertTrue(map.containsKey(CM_NAME2));
-            validateStructure(map.get(CM_NAME1));
-            validateStructure(map.get(CM_NAME2));
+            AttributeDef extra = validateStructure(map.get(CM_NAME1), false);
+            assertNull(extra);
+            extra = validateStructure(map.get(CM_NAME2), true);
+            assertNotNull(extra);
+            assertEquals(extra.getDisplayName(), CM_ATTR_EXTRA);
+            assertNotEquals(extra.getName(), CM_ATTR_EXTRA);
+            assertEquals(extra.getTypeName(), AtlanCustomAttributePrimitiveType.STRING.getValue());
+            assertTrue(extra.getOptions().getCustomApplicableEntityTypes().contains(Database.TYPE_NAME));
+            assertFalse(extra.getOptions().getIsArchived());
+            map = CustomMetadataCache.getAllCustomAttributes(true);
+            assertNotNull(map);
+            assertEquals(map.size(), 2);
+            assertTrue(map.containsKey(CM_NAME1));
+            assertTrue(map.containsKey(CM_NAME2));
+            extra = validateStructure(map.get(CM_NAME1), true);
+            assertNotNull(extra);
+            assertEquals(extra.getDisplayName(), CM_ATTR_EXTRA);
+            assertNotEquals(extra.getName(), CM_ATTR_EXTRA);
+            assertEquals(extra.getTypeName(), AtlanCustomAttributePrimitiveType.STRING.getValue());
+            assertTrue(extra.getOptions().getCustomApplicableEntityTypes().contains(Database.TYPE_NAME));
+            assertTrue(extra.getOptions().getIsArchived());
+            extra = validateStructure(map.get(CM_NAME2), true);
+            assertNotNull(extra);
+            assertEquals(extra.getDisplayName(), CM_ATTR_EXTRA);
+            assertNotEquals(extra.getName(), CM_ATTR_EXTRA);
+            assertEquals(extra.getTypeName(), AtlanCustomAttributePrimitiveType.STRING.getValue());
+            assertTrue(extra.getOptions().getCustomApplicableEntityTypes().contains(Database.TYPE_NAME));
+            assertFalse(extra.getOptions().getIsArchived());
         } catch (AtlanException e) {
             e.printStackTrace();
             assertNull(e, "Unexpected exception while trying to remove custom metadata from an asset.");
@@ -456,45 +598,60 @@ public class CustomMetadataTest extends AtlanLiveTest {
         assertEquals(cma.getAttributes().get(CM_ATTR_SQL), "SELECT * from SOMEWHERE;");
     }
 
-    private void validateStructure(List<AttributeDef> list) {
+    private AttributeDef validateStructure(List<AttributeDef> list, boolean includesExtra) {
         assertNotNull(list);
-        assertEquals(list.size(), 7);
+        if (includesExtra) {
+            assertEquals(list.size(), 8);
+        } else {
+            assertEquals(list.size(), 7);
+        }
         AttributeDef one = list.get(0);
         assertEquals(one.getDisplayName(), CM_ATTR_STRING);
         assertNotEquals(one.getName(), CM_ATTR_STRING);
         assertEquals(one.getTypeName(), "array<" + AtlanCustomAttributePrimitiveType.STRING.getValue() + ">");
         assertTrue(one.getOptions().getCustomApplicableEntityTypes().contains(Database.TYPE_NAME));
+        assertFalse(one.getOptions().getIsArchived());
         one = list.get(1);
         assertEquals(one.getDisplayName(), CM_ATTR_INTEGER);
         assertNotEquals(one.getName(), CM_ATTR_INTEGER);
         assertEquals(one.getTypeName(), AtlanCustomAttributePrimitiveType.INTEGER.getValue());
         assertTrue(one.getOptions().getCustomApplicableEntityTypes().contains(Table.TYPE_NAME));
+        assertFalse(one.getOptions().getIsArchived());
         one = list.get(2);
         assertEquals(one.getDisplayName(), CM_ATTR_DECIMAL);
         assertNotEquals(one.getName(), CM_ATTR_DECIMAL);
         assertEquals(one.getTypeName(), AtlanCustomAttributePrimitiveType.DECIMAL.getValue());
         assertTrue(one.getOptions().getCustomApplicableEntityTypes().contains(Column.TYPE_NAME));
+        assertFalse(one.getOptions().getIsArchived());
         one = list.get(3);
         assertEquals(one.getDisplayName(), CM_ATTR_BOOLEAN);
         assertNotEquals(one.getName(), CM_ATTR_BOOLEAN);
         assertEquals(one.getTypeName(), AtlanCustomAttributePrimitiveType.BOOLEAN.getValue());
         assertTrue(one.getOptions().getCustomApplicableEntityTypes().contains(MaterializedView.TYPE_NAME));
+        assertFalse(one.getOptions().getIsArchived());
         one = list.get(4);
         assertEquals(one.getDisplayName(), CM_ATTR_DATE);
         assertNotEquals(one.getName(), CM_ATTR_DATE);
         assertEquals(one.getTypeName(), AtlanCustomAttributePrimitiveType.DATE.getValue());
         assertTrue(one.getOptions().getCustomApplicableEntityTypes().contains(LineageProcess.TYPE_NAME));
+        assertFalse(one.getOptions().getIsArchived());
         one = list.get(5);
         assertEquals(one.getDisplayName(), CM_ATTR_URL);
         assertNotEquals(one.getName(), CM_ATTR_URL);
         assertEquals(one.getTypeName(), AtlanCustomAttributePrimitiveType.STRING.getValue());
         assertEquals(one.getOptions().getCustomType(), AtlanCustomAttributePrimitiveType.URL.getValue());
         assertTrue(one.getOptions().getCustomApplicableEntityTypes().contains(Glossary.TYPE_NAME));
+        assertFalse(one.getOptions().getIsArchived());
         one = list.get(6);
         assertEquals(one.getDisplayName(), CM_ATTR_SQL);
         assertNotEquals(one.getName(), CM_ATTR_SQL);
         assertEquals(one.getTypeName(), AtlanCustomAttributePrimitiveType.STRING.getValue());
         assertEquals(one.getOptions().getCustomType(), AtlanCustomAttributePrimitiveType.SQL.getValue());
         assertTrue(one.getOptions().getCustomApplicableEntityTypes().contains(GlossaryTerm.TYPE_NAME));
+        assertFalse(one.getOptions().getIsArchived());
+        if (list.size() > 7) {
+            return list.get(7);
+        }
+        return null;
     }
 }
