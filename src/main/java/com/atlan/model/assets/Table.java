@@ -5,8 +5,10 @@ package com.atlan.model.assets;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanCertificateStatus;
+import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.relations.GuidReference;
 import com.atlan.model.relations.Reference;
+import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
@@ -103,28 +105,20 @@ public class Table extends SQL {
      * Builds the minimal object necessary to create a table.
      *
      * @param name of the table
-     * @param connectorName name of the connector (software / system) that hosts the table
-     * @param schemaName name of schema in which this table exists
      * @param schemaQualifiedName unique name of the schema in which this table exists
-     * @param databaseName name of database in which this table exists
-     * @param databaseQualifiedName unique name of the database in which this table exists
-     * @param connectionQualifiedName unique name of the specific instance of the software / system that hosts the table
      * @return the minimal request necessary to create the table, as a builder
      */
-    public static TableBuilder<?, ?> creator(
-            String name,
-            String connectorName,
-            String schemaName,
-            String schemaQualifiedName,
-            String databaseName,
-            String databaseQualifiedName,
-            String connectionQualifiedName) {
-        // TODO: can we simplify the argument list by just taking qualifiedNames and extracting the
-        //  non-qualifiedNames from these?
+    public static TableBuilder<?, ?> creator(String name, String schemaQualifiedName) {
+        String[] tokens = schemaQualifiedName.split("/");
+        AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(tokens);
+        String schemaName = StringUtils.getNameFromQualifiedName(schemaQualifiedName);
+        String databaseQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(schemaQualifiedName);
+        String databaseName = StringUtils.getNameFromQualifiedName(databaseQualifiedName);
+        String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(databaseQualifiedName);
         return Table.builder()
                 .name(name)
                 .qualifiedName(schemaQualifiedName + "/" + name)
-                .connectorName(connectorName)
+                .connectorType(connectorType)
                 .schemaName(schemaName)
                 .schemaQualifiedName(schemaQualifiedName)
                 .schema(Reference.by(Schema.TYPE_NAME, schemaQualifiedName))

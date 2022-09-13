@@ -8,7 +8,8 @@ import lombok.Getter;
 public enum AtlanConnectionCategory implements AtlanEnum {
     WAREHOUSE("warehouse"),
     BI("bi"),
-    OBJECT_STORE("ObjectStore");
+    OBJECT_STORE("ObjectStore"),
+    SAAS("SaaS");
 
     @JsonValue
     @Getter(onMethod_ = {@Override})

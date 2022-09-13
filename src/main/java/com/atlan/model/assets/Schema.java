@@ -5,8 +5,10 @@ package com.atlan.model.assets;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanCertificateStatus;
+import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.relations.GuidReference;
 import com.atlan.model.relations.Reference;
+import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 import java.util.Set;
@@ -64,24 +66,18 @@ public class Schema extends SQL {
      * Builds the minimal object necessary to create a schema.
      *
      * @param name of the schema
-     * @param connectorName name of the connector (software / system) that hosts the schema
-     * @param databaseName name of database in which this schema exists
      * @param databaseQualifiedName unique name of the database in which this schema exists
-     * @param connectionQualifiedName unique name of the specific instance of the software / system that hosts the schema
      * @return the minimal request necessary to create the schema, as a builder
      */
-    public static SchemaBuilder<?, ?> creator(
-            String name,
-            String connectorName,
-            String databaseName,
-            String databaseQualifiedName,
-            String connectionQualifiedName) {
-        // TODO: can we simplify the argument list by just taking qualifiedNames and extracting the
-        //  non-qualifiedNames from these?
+    public static SchemaBuilder<?, ?> creator(String name, String databaseQualifiedName) {
+        String[] tokens = databaseQualifiedName.split("/");
+        AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(tokens);
+        String databaseName = StringUtils.getNameFromQualifiedName(databaseQualifiedName);
+        String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(databaseQualifiedName);
         return Schema.builder()
                 .name(name)
                 .qualifiedName(databaseQualifiedName + "/" + name)
-                .connectorName(connectorName)
+                .connectorType(connectorType)
                 .databaseName(databaseName)
                 .databaseQualifiedName(databaseQualifiedName)
                 .database(Reference.by(Database.TYPE_NAME, databaseQualifiedName))

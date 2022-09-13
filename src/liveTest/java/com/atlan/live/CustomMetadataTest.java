@@ -16,6 +16,7 @@ import com.atlan.model.lineage.LineageProcess;
 import com.atlan.model.typedefs.AttributeDef;
 import com.atlan.model.typedefs.AttributeDefOptions;
 import com.atlan.model.typedefs.CustomMetadataDef;
+import java.time.Instant;
 import java.util.*;
 import org.testng.annotations.Test;
 
@@ -429,7 +430,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
                     AttributeDefOptions options = existingAttr.getOptions();
                     options.setIsArchived(true);
                     options.setArchivedBy("test-automation");
-                    options.setArchivedAt(new Date().getTime());
+                    options.setArchivedAt(Instant.now().toEpochMilli());
                     existingAttr.setOptions(options);
                 }
                 updatedAttrs.add(existingAttr);

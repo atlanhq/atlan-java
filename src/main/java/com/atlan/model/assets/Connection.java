@@ -7,6 +7,7 @@ import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.enums.AtlanConnectionCategory;
+import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.relations.GuidReference;
 import com.atlan.model.relations.Reference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -88,13 +89,25 @@ public class Connection extends Asset {
     String sourceLogo;
 
     /**
+     * Determine the connector type from the provided qualifiedName.
+     *
+     * @param tokens of the qualifiedName, from which to determine the connector type
+     * @return the connector type, or null if the qualifiedName is not for a connected asset
+     */
+    protected static AtlanConnectorType getConnectorTypeFromQualifiedName(String[] tokens) {
+        if (tokens.length > 1) {
+            return AtlanConnectorType.fromValue(tokens[1]);
+        }
+        return null;
+    }
+
+    /**
      * Builds the minimal object necessary to create a connection.
      * Note: at least one of {@code #adminRoles}, {@code #adminGroups}, or {@code #adminUsers} must be
      * provided or an InvalidRequestException will be thrown.
      *
      * @param name of the connection
-     * @param category type of connection
-     * @param connectorName name of the connection's connector (this determines what logo appears for the assets)
+     * @param connectorType type of the connection's connector (this determines what logo appears for the assets)
      * @param adminRoles the GUIDs of the roles that can administer this connection
      * @param adminGroups the names of the groups that can administer this connection
      * @param adminUsers the names of the users that can administer this connection
@@ -103,8 +116,7 @@ public class Connection extends Asset {
      */
     public static ConnectionBuilder<?, ?> creator(
             String name,
-            AtlanConnectionCategory category,
-            String connectorName,
+            AtlanConnectorType connectorType,
             List<String> adminRoles,
             List<String> adminGroups,
             List<String> adminUsers)
@@ -112,9 +124,9 @@ public class Connection extends Asset {
         boolean adminFound = false;
         ConnectionBuilder<?, ?> builder = Connection.builder()
                 .name(name)
-                .qualifiedName(generateQualifiedName(connectorName))
-                .category(category)
-                .connectorName(connectorName);
+                .qualifiedName(generateQualifiedName(connectorType))
+                .category(connectorType.getCategory())
+                .connectorType(connectorType);
         if (adminRoles != null && !adminRoles.isEmpty()) {
             adminFound = true;
             builder = builder.adminRoles(adminRoles);
@@ -163,12 +175,12 @@ public class Connection extends Asset {
 
     /**
      * Generate a unique connection name.
-     * @param connectorName name of the connection's connector
+     * @param connectorType type of the connection's connector
      * @return a unique name for the connection
      */
-    private static String generateQualifiedName(String connectorName) {
+    private static String generateQualifiedName(AtlanConnectorType connectorType) {
         long now = System.currentTimeMillis() / 1000;
-        return "default/" + connectorName + "/" + now;
+        return "default/" + connectorType.getValue() + "/" + now;
     }
 
     /**

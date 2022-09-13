@@ -5,8 +5,10 @@ package com.atlan.model.assets;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanCertificateStatus;
+import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.relations.GuidReference;
 import com.atlan.model.relations.Reference;
+import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
@@ -95,28 +97,20 @@ public class MaterializedView extends SQL {
      * Builds the minimal object necessary to create a materialized view.
      *
      * @param name of the materialized view
-     * @param connectorName name of the connector (software / system) that hosts the materialized view
-     * @param schemaName name of schema in which this materialized view exists
      * @param schemaQualifiedName unique name of the schema in which this materialized view exists
-     * @param databaseName name of database in which this materialized view exists
-     * @param databaseQualifiedName unique name of the database in which this materialized view exists
-     * @param connectionQualifiedName unique name of the specific instance of the software / system that hosts the materialized view
      * @return the minimal request necessary to create the materialized view, as a builder
      */
-    public static MaterializedViewBuilder<?, ?> creator(
-            String name,
-            String connectorName,
-            String schemaName,
-            String schemaQualifiedName,
-            String databaseName,
-            String databaseQualifiedName,
-            String connectionQualifiedName) {
-        // TODO: can we simplify the argument list by just taking qualifiedNames and extracting the
-        //  non-qualifiedNames from these?
+    public static MaterializedViewBuilder<?, ?> creator(String name, String schemaQualifiedName) {
+        String[] tokens = schemaQualifiedName.split("/");
+        AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(tokens);
+        String schemaName = StringUtils.getNameFromQualifiedName(schemaQualifiedName);
+        String databaseQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(schemaQualifiedName);
+        String databaseName = StringUtils.getNameFromQualifiedName(databaseQualifiedName);
+        String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(databaseQualifiedName);
         return MaterializedView.builder()
                 .name(name)
                 .qualifiedName(schemaQualifiedName + "/" + name)
-                .connectorName(connectorName)
+                .connectorType(connectorType)
                 .schemaName(schemaName)
                 .schemaQualifiedName(schemaQualifiedName)
                 .schema(Reference.by(Schema.TYPE_NAME, schemaQualifiedName))

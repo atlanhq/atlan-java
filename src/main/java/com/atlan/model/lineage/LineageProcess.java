@@ -3,6 +3,7 @@
 package com.atlan.model.lineage;
 
 import com.atlan.model.assets.Attribute;
+import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.relations.Reference;
 import java.util.List;
 import lombok.*;
@@ -35,7 +36,7 @@ public class LineageProcess extends AbstractProcess {
      * Builds the minimal object necessary to create a process.
      *
      * @param name of the process
-     * @param connectorName name of the connector (software / system) that ran the process
+     * @param connectorType type of the connector (software / system) that ran the process
      * @param connectionName name of the specific instance of that software / system that ran the process
      * @param connectionQualifiedName unique name of the specific instance of that software / system that ran the process
      * @param inputs sources of data the process reads from
@@ -44,16 +45,16 @@ public class LineageProcess extends AbstractProcess {
      */
     public static LineageProcessBuilder<?, ?> creator(
             String name,
-            String connectorName,
+            AtlanConnectorType connectorType,
             String connectionName,
             String connectionQualifiedName,
             List<Reference> inputs,
             List<Reference> outputs) {
         return LineageProcess.builder()
                 .qualifiedName(generateQualifiedName(
-                        name, connectorName, connectionName, connectionQualifiedName, inputs, outputs, null))
+                        name, connectorType, connectionName, connectionQualifiedName, inputs, outputs, null))
                 .name(name)
-                .connectorName(connectorName)
+                .connectorType(connectorType)
                 .connectionName(connectionName)
                 .connectionQualifiedName(connectionQualifiedName)
                 .inputs(inputs)

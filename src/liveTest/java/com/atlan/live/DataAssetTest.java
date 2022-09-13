@@ -20,7 +20,7 @@ import org.testng.annotations.Test;
 @Test(groups = {"data_asset"})
 public class DataAssetTest extends AtlanLiveTest {
 
-    public static final String CONNECTOR_NAME = "netsuite";
+    public static final AtlanConnectorType CONNECTOR_TYPE = AtlanConnectorType.NETSUITE;
 
     public static final String CONNECTION_NAME = "jc-tc-data";
     public static final String DATABASE_NAME = "jc-test-database";
@@ -64,8 +64,7 @@ public class DataAssetTest extends AtlanLiveTest {
     void invalidConnection() {
         assertThrows(
                 InvalidRequestException.class,
-                () -> Connection.creator(
-                        CONNECTION_NAME, AtlanConnectionCategory.WAREHOUSE, CONNECTOR_NAME, null, null, null));
+                () -> Connection.creator(CONNECTION_NAME, AtlanConnectorType.NETSUITE, null, null, null));
     }
 
     @Test(groups = {"create.connection.data"})
@@ -75,8 +74,7 @@ public class DataAssetTest extends AtlanLiveTest {
             if (adminRoleGuid != null) {
                 Connection connection = Connection.creator(
                                 CONNECTION_NAME,
-                                AtlanConnectionCategory.WAREHOUSE,
-                                CONNECTOR_NAME,
+                                AtlanConnectorType.NETSUITE,
                                 Collections.singletonList(adminRoleGuid),
                                 null,
                                 null)
@@ -123,8 +121,7 @@ public class DataAssetTest extends AtlanLiveTest {
             dependsOnGroups = {"read.connection.data"})
     void createDatabase() {
         try {
-            Database database = Database.creator(DATABASE_NAME, CONNECTOR_NAME, connectionQame)
-                    .build();
+            Database database = Database.creator(DATABASE_NAME, connectionQame).build();
             EntityMutationResponse response = database.upsert();
             assertNotNull(response);
             assertTrue(response.getUpdatedEntities().isEmpty());
@@ -140,7 +137,7 @@ public class DataAssetTest extends AtlanLiveTest {
             databaseQame = database.getQualifiedName();
             assertNotNull(databaseQame);
             assertEquals(database.getName(), DATABASE_NAME);
-            assertEquals(database.getConnectorName(), CONNECTOR_NAME);
+            assertEquals(database.getConnectorType(), CONNECTOR_TYPE);
         } catch (AtlanException e) {
             e.printStackTrace();
             assertNull(e, "Unexpected exception while trying to create a database.");
@@ -152,8 +149,7 @@ public class DataAssetTest extends AtlanLiveTest {
             dependsOnGroups = {"create.database"})
     void createSchema() {
         try {
-            Schema schema = Schema.creator(SCHEMA_NAME, CONNECTOR_NAME, DATABASE_NAME, databaseQame, connectionQame)
-                    .build();
+            Schema schema = Schema.creator(SCHEMA_NAME, databaseQame).build();
             EntityMutationResponse response = schema.upsert();
             assertNotNull(response);
             assertTrue(response.getDeletedEntities().isEmpty());
@@ -176,7 +172,7 @@ public class DataAssetTest extends AtlanLiveTest {
             schemaQame = schema.getQualifiedName();
             assertNotNull(schemaQame);
             assertEquals(schema.getName(), SCHEMA_NAME);
-            assertEquals(schema.getConnectorName(), CONNECTOR_NAME);
+            assertEquals(schema.getConnectorType(), CONNECTOR_TYPE);
             assertEquals(schema.getDatabaseName(), DATABASE_NAME);
             assertEquals(schema.getDatabaseQualifiedName(), databaseQame);
         } catch (AtlanException e) {
@@ -190,15 +186,7 @@ public class DataAssetTest extends AtlanLiveTest {
             dependsOnGroups = {"create.schema"})
     void createTable() {
         try {
-            Table table = Table.creator(
-                            TABLE_NAME,
-                            CONNECTOR_NAME,
-                            SCHEMA_NAME,
-                            schemaQame,
-                            DATABASE_NAME,
-                            databaseQame,
-                            connectionQame)
-                    .build();
+            Table table = Table.creator(TABLE_NAME, schemaQame).build();
             EntityMutationResponse response = table.upsert();
             assertNotNull(response);
             assertTrue(response.getDeletedEntities().isEmpty());
@@ -221,7 +209,7 @@ public class DataAssetTest extends AtlanLiveTest {
             tableQame = table.getQualifiedName();
             assertNotNull(tableQame);
             assertEquals(table.getName(), TABLE_NAME);
-            assertEquals(table.getConnectorName(), CONNECTOR_NAME);
+            assertEquals(table.getConnectorType(), CONNECTOR_TYPE);
             assertEquals(table.getSchemaName(), SCHEMA_NAME);
             assertEquals(table.getSchemaQualifiedName(), schemaQame);
             assertEquals(table.getDatabaseName(), DATABASE_NAME);
@@ -238,15 +226,7 @@ public class DataAssetTest extends AtlanLiveTest {
             dependsOnGroups = {"create.schema"})
     void createView() {
         try {
-            View view = View.creator(
-                            VIEW_NAME,
-                            CONNECTOR_NAME,
-                            SCHEMA_NAME,
-                            schemaQame,
-                            DATABASE_NAME,
-                            databaseQame,
-                            connectionQame)
-                    .build();
+            View view = View.creator(VIEW_NAME, schemaQame).build();
             EntityMutationResponse response = view.upsert();
             assertNotNull(response);
             assertTrue(response.getDeletedEntities().isEmpty());
@@ -269,7 +249,7 @@ public class DataAssetTest extends AtlanLiveTest {
             viewQame = view.getQualifiedName();
             assertNotNull(viewQame);
             assertEquals(view.getName(), VIEW_NAME);
-            assertEquals(view.getConnectorName(), CONNECTOR_NAME);
+            assertEquals(view.getConnectorType(), CONNECTOR_TYPE);
             assertEquals(view.getSchemaName(), SCHEMA_NAME);
             assertEquals(view.getSchemaQualifiedName(), schemaQame);
             assertEquals(view.getDatabaseName(), DATABASE_NAME);
@@ -286,15 +266,8 @@ public class DataAssetTest extends AtlanLiveTest {
             dependsOnGroups = {"create.schema"})
     void createMView() {
         try {
-            MaterializedView mview = MaterializedView.creator(
-                            MVIEW_NAME,
-                            CONNECTOR_NAME,
-                            SCHEMA_NAME,
-                            schemaQame,
-                            DATABASE_NAME,
-                            databaseQame,
-                            connectionQame)
-                    .build();
+            MaterializedView mview =
+                    MaterializedView.creator(MVIEW_NAME, schemaQame).build();
             EntityMutationResponse response = mview.upsert();
             assertNotNull(response);
             assertTrue(response.getDeletedEntities().isEmpty());
@@ -317,7 +290,7 @@ public class DataAssetTest extends AtlanLiveTest {
             mviewQame = mview.getQualifiedName();
             assertNotNull(mviewQame);
             assertEquals(mview.getName(), MVIEW_NAME);
-            assertEquals(mview.getConnectorName(), CONNECTOR_NAME);
+            assertEquals(mview.getConnectorType(), CONNECTOR_TYPE);
             assertEquals(mview.getSchemaName(), SCHEMA_NAME);
             assertEquals(mview.getSchemaQualifiedName(), schemaQame);
             assertEquals(mview.getDatabaseName(), DATABASE_NAME);
@@ -334,18 +307,8 @@ public class DataAssetTest extends AtlanLiveTest {
             dependsOnGroups = {"create.table"})
     void createColumn1() {
         try {
-            Column column = Column.creator(
-                            COLUMN_NAME1,
-                            CONNECTOR_NAME,
-                            Table.TYPE_NAME,
-                            TABLE_NAME,
-                            tableQame,
-                            SCHEMA_NAME,
-                            schemaQame,
-                            DATABASE_NAME,
-                            databaseQame,
-                            connectionQame)
-                    .build();
+            Column column =
+                    Column.creator(COLUMN_NAME1, Table.TYPE_NAME, tableQame).build();
             EntityMutationResponse response = column.upsert();
             assertNotNull(response);
             assertTrue(response.getDeletedEntities().isEmpty());
@@ -367,7 +330,7 @@ public class DataAssetTest extends AtlanLiveTest {
             columnQame1 = column.getQualifiedName();
             assertNotNull(columnQame1);
             assertEquals(column.getName(), COLUMN_NAME1);
-            assertEquals(column.getConnectorName(), CONNECTOR_NAME);
+            assertEquals(column.getConnectorType(), CONNECTOR_TYPE);
             assertEquals(column.getTableName(), TABLE_NAME);
             assertEquals(column.getTableQualifiedName(), tableQame);
             assertEquals(column.getSchemaName(), SCHEMA_NAME);
@@ -386,18 +349,8 @@ public class DataAssetTest extends AtlanLiveTest {
             dependsOnGroups = {"create.table"})
     void createColumn2() {
         try {
-            Column column = Column.creator(
-                            COLUMN_NAME2,
-                            CONNECTOR_NAME,
-                            Table.TYPE_NAME,
-                            TABLE_NAME,
-                            tableQame,
-                            SCHEMA_NAME,
-                            schemaQame,
-                            DATABASE_NAME,
-                            databaseQame,
-                            connectionQame)
-                    .build();
+            Column column =
+                    Column.creator(COLUMN_NAME2, Table.TYPE_NAME, tableQame).build();
             EntityMutationResponse response = column.upsert();
             assertNotNull(response);
             assertTrue(response.getDeletedEntities().isEmpty());
@@ -419,7 +372,7 @@ public class DataAssetTest extends AtlanLiveTest {
             columnQame2 = column.getQualifiedName();
             assertNotNull(columnQame2);
             assertEquals(column.getName(), COLUMN_NAME2);
-            assertEquals(column.getConnectorName(), CONNECTOR_NAME);
+            assertEquals(column.getConnectorType(), CONNECTOR_TYPE);
             assertEquals(column.getTableName(), TABLE_NAME);
             assertEquals(column.getTableQualifiedName(), tableQame);
             assertEquals(column.getSchemaName(), SCHEMA_NAME);
@@ -438,18 +391,8 @@ public class DataAssetTest extends AtlanLiveTest {
             dependsOnGroups = {"create.view"})
     void createColumn3() {
         try {
-            Column column = Column.creator(
-                            COLUMN_NAME3,
-                            CONNECTOR_NAME,
-                            View.TYPE_NAME,
-                            VIEW_NAME,
-                            viewQame,
-                            SCHEMA_NAME,
-                            schemaQame,
-                            DATABASE_NAME,
-                            databaseQame,
-                            connectionQame)
-                    .build();
+            Column column =
+                    Column.creator(COLUMN_NAME3, View.TYPE_NAME, viewQame).build();
             EntityMutationResponse response = column.upsert();
             assertNotNull(response);
             assertTrue(response.getDeletedEntities().isEmpty());
@@ -471,7 +414,7 @@ public class DataAssetTest extends AtlanLiveTest {
             columnQame3 = column.getQualifiedName();
             assertNotNull(columnQame3);
             assertEquals(column.getName(), COLUMN_NAME3);
-            assertEquals(column.getConnectorName(), CONNECTOR_NAME);
+            assertEquals(column.getConnectorType(), CONNECTOR_TYPE);
             assertEquals(column.getViewName(), VIEW_NAME);
             assertEquals(column.getViewQualifiedName(), viewQame);
             assertEquals(column.getSchemaName(), SCHEMA_NAME);
@@ -490,18 +433,8 @@ public class DataAssetTest extends AtlanLiveTest {
             dependsOnGroups = {"create.view"})
     void createColumn4() {
         try {
-            Column column = Column.creator(
-                            COLUMN_NAME4,
-                            CONNECTOR_NAME,
-                            View.TYPE_NAME,
-                            VIEW_NAME,
-                            viewQame,
-                            SCHEMA_NAME,
-                            schemaQame,
-                            DATABASE_NAME,
-                            databaseQame,
-                            connectionQame)
-                    .build();
+            Column column =
+                    Column.creator(COLUMN_NAME4, View.TYPE_NAME, viewQame).build();
             EntityMutationResponse response = column.upsert();
             assertNotNull(response);
             assertTrue(response.getDeletedEntities().isEmpty());
@@ -523,7 +456,7 @@ public class DataAssetTest extends AtlanLiveTest {
             columnQame4 = column.getQualifiedName();
             assertNotNull(columnQame4);
             assertEquals(column.getName(), COLUMN_NAME4);
-            assertEquals(column.getConnectorName(), CONNECTOR_NAME);
+            assertEquals(column.getConnectorType(), CONNECTOR_TYPE);
             assertEquals(column.getViewName(), VIEW_NAME);
             assertEquals(column.getViewQualifiedName(), viewQame);
             assertEquals(column.getSchemaName(), SCHEMA_NAME);
@@ -542,17 +475,7 @@ public class DataAssetTest extends AtlanLiveTest {
             dependsOnGroups = {"create.view"})
     void createColumn5() {
         try {
-            Column column = Column.creator(
-                            COLUMN_NAME5,
-                            CONNECTOR_NAME,
-                            MaterializedView.TYPE_NAME,
-                            MVIEW_NAME,
-                            mviewQame,
-                            SCHEMA_NAME,
-                            schemaQame,
-                            DATABASE_NAME,
-                            databaseQame,
-                            connectionQame)
+            Column column = Column.creator(COLUMN_NAME5, MaterializedView.TYPE_NAME, mviewQame)
                     .build();
             EntityMutationResponse response = column.upsert();
             assertNotNull(response);
@@ -575,7 +498,7 @@ public class DataAssetTest extends AtlanLiveTest {
             columnQame5 = column.getQualifiedName();
             assertNotNull(columnQame5);
             assertEquals(column.getName(), COLUMN_NAME5);
-            assertEquals(column.getConnectorName(), CONNECTOR_NAME);
+            assertEquals(column.getConnectorType(), CONNECTOR_TYPE);
             assertEquals(column.getViewName(), MVIEW_NAME);
             assertEquals(column.getViewQualifiedName(), mviewQame);
             assertEquals(column.getSchemaName(), SCHEMA_NAME);
@@ -594,17 +517,7 @@ public class DataAssetTest extends AtlanLiveTest {
             dependsOnGroups = {"create.view"})
     void createColumn6() {
         try {
-            Column column = Column.creator(
-                            COLUMN_NAME6,
-                            CONNECTOR_NAME,
-                            MaterializedView.TYPE_NAME,
-                            MVIEW_NAME,
-                            mviewQame,
-                            SCHEMA_NAME,
-                            schemaQame,
-                            DATABASE_NAME,
-                            databaseQame,
-                            connectionQame)
+            Column column = Column.creator(COLUMN_NAME6, MaterializedView.TYPE_NAME, mviewQame)
                     .build();
             EntityMutationResponse response = column.upsert();
             assertNotNull(response);
@@ -627,7 +540,7 @@ public class DataAssetTest extends AtlanLiveTest {
             columnQame6 = column.getQualifiedName();
             assertNotNull(columnQame6);
             assertEquals(column.getName(), COLUMN_NAME6);
-            assertEquals(column.getConnectorName(), CONNECTOR_NAME);
+            assertEquals(column.getConnectorType(), CONNECTOR_TYPE);
             assertEquals(column.getViewName(), MVIEW_NAME);
             assertEquals(column.getViewQualifiedName(), mviewQame);
             assertEquals(column.getSchemaName(), SCHEMA_NAME);

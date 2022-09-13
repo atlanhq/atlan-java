@@ -4,6 +4,7 @@ package com.atlan.model.lineage;
 
 import com.atlan.model.assets.Asset;
 import com.atlan.model.assets.Attribute;
+import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.relations.Reference;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
@@ -52,7 +53,7 @@ public abstract class AbstractProcess extends Asset {
     /**
      * Generate a unique qualifiedName for a process.
      * @param name of the process
-     * @param connectorName name of the connector (software / system) that ran the process
+     * @param connectorType type of the connector (software / system) that ran the process
      * @param connectionName name of the specific instance of that software / system that ran the process
      * @param connectionQualifiedName unique name of the specific instance of that software / system that ran the process
      * @param inputs sources of data the process reads from
@@ -61,14 +62,14 @@ public abstract class AbstractProcess extends Asset {
      */
     public static String generateQualifiedName(
             String name,
-            String connectorName,
+            AtlanConnectorType connectorType,
             String connectionName,
             String connectionQualifiedName,
             List<Reference> inputs,
             List<Reference> outputs,
             Reference parent) {
         StringBuilder sb = new StringBuilder();
-        sb.append(name).append(connectorName).append(connectionName).append(connectionQualifiedName);
+        sb.append(name).append(connectorType.getValue()).append(connectionName).append(connectionQualifiedName);
         if (parent != null) {
             appendRelationship(sb, parent);
         }
