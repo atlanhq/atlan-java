@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":9,"i2":9,"i3":10,"i4":9,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":9,"i23":9,"i24":9,"i25":9,"i26":9,"i27":10,"i28":10,"i29":10,"i30":10,"i31":10,"i32":10,"i33":10,"i34":10,"i35":10,"i36":10,"i37":10,"i38":10,"i39":10,"i40":10,"i41":10,"i42":10,"i43":10,"i44":9,"i45":9,"i46":9};
+var data = {"i0":9,"i1":9,"i2":9,"i3":10,"i4":9,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":9,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":9,"i24":9,"i25":9,"i26":9,"i27":9,"i28":10,"i29":10,"i30":10,"i31":10,"i32":10,"i33":10,"i34":10,"i35":10,"i36":10,"i37":10,"i38":10,"i39":10,"i40":10,"i41":10,"i42":10,"i43":10,"i44":10,"i45":9,"i46":9,"i47":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -286,9 +286,8 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>static <a href="Connection.ConnectionBuilder.html" title="class in com.atlan.model.assets">Connection.ConnectionBuilder</a>&lt;?,&#8203;?&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#creator(java.lang.String,com.atlan.model.enums.AtlanConnectionCategory,java.lang.String,java.util.List,java.util.List,java.util.List)">creator</a></span>&#8203;(java.lang.String&nbsp;name,
-       <a href="../enums/AtlanConnectionCategory.html" title="enum in com.atlan.model.enums">AtlanConnectionCategory</a>&nbsp;category,
-       java.lang.String&nbsp;connectorName,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#creator(java.lang.String,com.atlan.model.enums.AtlanConnectorType,java.util.List,java.util.List,java.util.List)">creator</a></span>&#8203;(java.lang.String&nbsp;name,
+       <a href="../enums/AtlanConnectorType.html" title="enum in com.atlan.model.enums">AtlanConnectorType</a>&nbsp;connectorType,
        java.util.List&lt;java.lang.String&gt;&nbsp;adminRoles,
        java.util.List&lt;java.lang.String&gt;&nbsp;adminGroups,
        java.util.List&lt;java.lang.String&gt;&nbsp;adminUsers)</code></th>
@@ -337,77 +336,84 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 </td>
 </tr>
 <tr id="i11" class="rowColor">
+<td class="colFirst"><code>protected static <a href="../enums/AtlanConnectorType.html" title="enum in com.atlan.model.enums">AtlanConnectorType</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getConnectorTypeFromQualifiedName(java.lang.String%5B%5D)">getConnectorTypeFromQualifiedName</a></span>&#8203;(java.lang.String[]&nbsp;tokens)</code></th>
+<td class="colLast">
+<div class="block">Determine the connector type from the provided qualifiedName.</div>
+</td>
+</tr>
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCredentialStrategy()">getCredentialStrategy</a></span>()</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDefaultCredentialGuid()">getDefaultCredentialGuid</a></span>()</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getHost()">getHost</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Host name of the connection's source.</div>
 </td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code>java.lang.Integer</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPort()">getPort</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Port number to the connection's source.</div>
 </td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getQueryConfig()">getQueryConfig</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code>java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getQueryPreviewConfig()">getQueryPreviewConfig</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i17" class="rowColor">
+<tr id="i18" class="altColor">
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRowLimit()">getRowLimit</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Maximum number of rows that can be returned for the source.</div>
 </td>
 </tr>
-<tr id="i18" class="altColor">
+<tr id="i19" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSourceLogo()">getSourceLogo</a></span>()</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i19" class="rowColor">
+<tr id="i20" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSubCategory()">getSubCategory</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Unused attributes</div>
 </td>
 </tr>
-<tr id="i20" class="altColor">
+<tr id="i21" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTypeName()">getTypeName</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Fixed typeName for column processes.</div>
 </td>
 </tr>
-<tr id="i21" class="rowColor">
+<tr id="i22" class="altColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hashCode()">hashCode</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i22" class="altColor">
+<tr id="i23" class="rowColor">
 <td class="colFirst"><code>static <a href="Connection.html" title="class in com.atlan.model.assets">Connection</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeAnnouncement(java.lang.String,java.lang.String)">removeAnnouncement</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                   java.lang.String&nbsp;name)</code></th>
@@ -415,7 +421,7 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 <div class="block">Remove the announcement from a connection.</div>
 </td>
 </tr>
-<tr id="i23" class="rowColor">
+<tr id="i24" class="altColor">
 <td class="colFirst"><code>static <a href="Connection.html" title="class in com.atlan.model.assets">Connection</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeCertificate(java.lang.String,java.lang.String)">removeCertificate</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                  java.lang.String&nbsp;name)</code></th>
@@ -423,7 +429,7 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 <div class="block">Remove the certificate from a connection.</div>
 </td>
 </tr>
-<tr id="i24" class="altColor">
+<tr id="i25" class="rowColor">
 <td class="colFirst"><code>static void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeClassification(java.lang.String,java.lang.String)">removeClassification</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                     java.lang.String&nbsp;classificationName)</code></th>
@@ -431,7 +437,7 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 <div class="block">Remove a classification from a connection.</div>
 </td>
 </tr>
-<tr id="i25" class="rowColor">
+<tr id="i26" class="altColor">
 <td class="colFirst"><code>static <a href="Connection.html" title="class in com.atlan.model.assets">Connection</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeTerms(java.lang.String,java.util.List)">removeTerms</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
            java.util.List&lt;<a href="../relations/GuidReference.html" title="class in com.atlan.model.relations">GuidReference</a>&gt;&nbsp;terms)</code></th>
@@ -439,7 +445,7 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 <div class="block">Remove terms from a connection, without replacing all existing terms linked to the connection.</div>
 </td>
 </tr>
-<tr id="i26" class="altColor">
+<tr id="i27" class="rowColor">
 <td class="colFirst"><code>static <a href="Connection.html" title="class in com.atlan.model.assets">Connection</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#replaceTerms(java.lang.String,java.lang.String,java.util.List)">replaceTerms</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
             java.lang.String&nbsp;name,
@@ -448,113 +454,113 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 <div class="block">Replace the terms linked to the connection.</div>
 </td>
 </tr>
-<tr id="i27" class="rowColor">
+<tr id="i28" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAllowQuery(java.lang.Boolean)">setAllowQuery</a></span>&#8203;(java.lang.Boolean&nbsp;allowQuery)</code></th>
 <td class="colLast">
 <div class="block">When true, allow the source to be queried.</div>
 </td>
 </tr>
-<tr id="i28" class="altColor">
+<tr id="i29" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAllowQueryPreview(java.lang.Boolean)">setAllowQueryPreview</a></span>&#8203;(java.lang.Boolean&nbsp;allowQueryPreview)</code></th>
 <td class="colLast">
 <div class="block">When true, allow data previews of the source.</div>
 </td>
 </tr>
-<tr id="i29" class="rowColor">
+<tr id="i30" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setCategory(com.atlan.model.enums.AtlanConnectionCategory)">setCategory</a></span>&#8203;(<a href="../enums/AtlanConnectionCategory.html" title="enum in com.atlan.model.enums">AtlanConnectionCategory</a>&nbsp;category)</code></th>
 <td class="colLast">
 <div class="block">Type of connection.</div>
 </td>
 </tr>
-<tr id="i30" class="altColor">
+<tr id="i31" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setConnectorIcon(java.lang.String)">setConnectorIcon</a></span>&#8203;(java.lang.String&nbsp;connectorIcon)</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i31" class="rowColor">
+<tr id="i32" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setConnectorImage(java.lang.String)">setConnectorImage</a></span>&#8203;(java.lang.String&nbsp;connectorImage)</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i32" class="altColor">
+<tr id="i33" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setCredentialStrategy(java.lang.String)">setCredentialStrategy</a></span>&#8203;(java.lang.String&nbsp;credentialStrategy)</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i33" class="rowColor">
+<tr id="i34" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setDefaultCredentialGuid(java.lang.String)">setDefaultCredentialGuid</a></span>&#8203;(java.lang.String&nbsp;defaultCredentialGuid)</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i34" class="altColor">
+<tr id="i35" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setHost(java.lang.String)">setHost</a></span>&#8203;(java.lang.String&nbsp;host)</code></th>
 <td class="colLast">
 <div class="block">Host name of the connection's source.</div>
 </td>
 </tr>
-<tr id="i35" class="rowColor">
+<tr id="i36" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setPort(java.lang.Integer)">setPort</a></span>&#8203;(java.lang.Integer&nbsp;port)</code></th>
 <td class="colLast">
 <div class="block">Port number to the connection's source.</div>
 </td>
 </tr>
-<tr id="i36" class="altColor">
+<tr id="i37" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setQueryConfig(java.lang.String)">setQueryConfig</a></span>&#8203;(java.lang.String&nbsp;queryConfig)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i37" class="rowColor">
+<tr id="i38" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setQueryPreviewConfig(java.util.Map)">setQueryPreviewConfig</a></span>&#8203;(java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;queryPreviewConfig)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i38" class="altColor">
+<tr id="i39" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setRowLimit(java.lang.Long)">setRowLimit</a></span>&#8203;(java.lang.Long&nbsp;rowLimit)</code></th>
 <td class="colLast">
 <div class="block">Maximum number of rows that can be returned for the source.</div>
 </td>
 </tr>
-<tr id="i39" class="rowColor">
+<tr id="i40" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setSourceLogo(java.lang.String)">setSourceLogo</a></span>&#8203;(java.lang.String&nbsp;sourceLogo)</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i40" class="altColor">
+<tr id="i41" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setSubCategory(java.lang.String)">setSubCategory</a></span>&#8203;(java.lang.String&nbsp;subCategory)</code></th>
 <td class="colLast">
 <div class="block">Unused attributes</div>
 </td>
 </tr>
-<tr id="i41" class="rowColor">
+<tr id="i42" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setTypeName(java.lang.String)">setTypeName</a></span>&#8203;(java.lang.String&nbsp;typeName)</code></th>
 <td class="colLast">
 <div class="block">Fixed typeName for column processes.</div>
 </td>
 </tr>
-<tr id="i42" class="altColor">
+<tr id="i43" class="rowColor">
 <td class="colFirst"><code><a href="Connection.ConnectionBuilder.html" title="class in com.atlan.model.assets">Connection.ConnectionBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toBuilder()">toBuilder</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i43" class="rowColor">
+<tr id="i44" class="altColor">
 <td class="colFirst"><code>protected <a href="Connection.ConnectionBuilder.html" title="class in com.atlan.model.assets">Connection.ConnectionBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#trimToRequired()">trimToRequired</a></span>()</code></th>
 <td class="colLast">
@@ -562,7 +568,7 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
  more-complete connection object.</div>
 </td>
 </tr>
-<tr id="i44" class="altColor">
+<tr id="i45" class="rowColor">
 <td class="colFirst"><code>static <a href="Connection.html" title="class in com.atlan.model.assets">Connection</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateAnnouncement(java.lang.String,com.atlan.model.enums.AtlanAnnouncementType,java.lang.String,java.lang.String)">updateAnnouncement</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                   <a href="../enums/AtlanAnnouncementType.html" title="enum in com.atlan.model.enums">AtlanAnnouncementType</a>&nbsp;type,
@@ -572,7 +578,7 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 <div class="block">Update the announcement on a connection.</div>
 </td>
 </tr>
-<tr id="i45" class="rowColor">
+<tr id="i46" class="altColor">
 <td class="colFirst"><code>static <a href="Connection.html" title="class in com.atlan.model.assets">Connection</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateCertificate(java.lang.String,com.atlan.model.enums.AtlanCertificateStatus,java.lang.String)">updateCertificate</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                  <a href="../enums/AtlanCertificateStatus.html" title="enum in com.atlan.model.enums">AtlanCertificateStatus</a>&nbsp;certificate,
@@ -581,7 +587,7 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 <div class="block">Update the certificate on a connection.</div>
 </td>
 </tr>
-<tr id="i46" class="altColor">
+<tr id="i47" class="rowColor">
 <td class="colFirst"><code>static <a href="Connection.ConnectionBuilder.html" title="class in com.atlan.model.assets">Connection.ConnectionBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updater(java.lang.String,java.lang.String)">updater</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
        java.lang.String&nbsp;name)</code></th>
@@ -595,7 +601,7 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;com.atlan.model.assets.<a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></h3>
-<code><a href="Asset.html#appendTerms(java.lang.String,java.lang.String,java.util.List)">appendTerms</a>, <a href="Asset.html#getAdminGroups()">getAdminGroups</a>, <a href="Asset.html#getAdminRoles()">getAdminRoles</a>, <a href="Asset.html#getAdminUsers()">getAdminUsers</a>, <a href="Asset.html#getAnnouncementMessage()">getAnnouncementMessage</a>, <a href="Asset.html#getAnnouncementTitle()">getAnnouncementTitle</a>, <a href="Asset.html#getAnnouncementType()">getAnnouncementType</a>, <a href="Asset.html#getAnnouncementUpdatedAt()">getAnnouncementUpdatedAt</a>, <a href="Asset.html#getAnnouncementUpdatedBy()">getAnnouncementUpdatedBy</a>, <a href="Asset.html#getCertificateStatus()">getCertificateStatus</a>, <a href="Asset.html#getCertificateStatusMessage()">getCertificateStatusMessage</a>, <a href="Asset.html#getCertificateUpdatedAt()">getCertificateUpdatedAt</a>, <a href="Asset.html#getCertificateUpdatedBy()">getCertificateUpdatedBy</a>, <a href="Asset.html#getConnectionName()">getConnectionName</a>, <a href="Asset.html#getConnectionQualifiedName()">getConnectionQualifiedName</a>, <a href="Asset.html#getConnectorName()">getConnectorName</a>, <a href="Asset.html#getDescription()">getDescription</a>, <a href="Asset.html#getDisplayName()">getDisplayName</a>, <a href="Asset.html#getHasLineage()">getHasLineage</a>, <a href="Asset.html#getIsDiscoverable()">getIsDiscoverable</a>, <a href="Asset.html#getIsEditable()">getIsEditable</a>, <a href="Asset.html#getLastSyncRun()">getLastSyncRun</a>, <a href="Asset.html#getLastSyncRunAt()">getLastSyncRunAt</a>, <a href="Asset.html#getLastSyncWorkflowName()">getLastSyncWorkflowName</a>, <a href="Asset.html#getLinks()">getLinks</a>, <a href="Asset.html#getMeanings()">getMeanings</a>, <a href="Asset.html#getName()">getName</a>, <a href="Asset.html#getOwnerGroups()">getOwnerGroups</a>, <a href="Asset.html#getOwnerUsers()">getOwnerUsers</a>, <a href="Asset.html#getPopularityScore()">getPopularityScore</a>, <a href="Asset.html#getQualifiedName()">getQualifiedName</a>, <a href="Asset.html#getReadme()">getReadme</a>, <a href="Asset.html#getSourceCreatedAt()">getSourceCreatedAt</a>, <a href="Asset.html#getSourceCreatedBy()">getSourceCreatedBy</a>, <a href="Asset.html#getSourceEmbedURL()">getSourceEmbedURL</a>, <a href="Asset.html#getSourceOwners()">getSourceOwners</a>, <a href="Asset.html#getSourceUpdatedAt()">getSourceUpdatedAt</a>, <a href="Asset.html#getSourceUpdatedBy()">getSourceUpdatedBy</a>, <a href="Asset.html#getSourceURL()">getSourceURL</a>, <a href="Asset.html#getSubType()">getSubType</a>, <a href="Asset.html#getTenantId()">getTenantId</a>, <a href="Asset.html#getUserDescription()">getUserDescription</a>, <a href="Asset.html#getViewerGroups()">getViewerGroups</a>, <a href="Asset.html#getViewerUsers()">getViewerUsers</a>, <a href="Asset.html#getViewScore()">getViewScore</a>, <a href="Asset.html#removeAnnouncement()">removeAnnouncement</a>, <a href="Asset.html#removeAnnouncement(com.atlan.model.assets.Asset.AssetBuilder)">removeAnnouncement</a>, <a href="Asset.html#removeCertificate()">removeCertificate</a>, <a href="Asset.html#removeCertificate(com.atlan.model.assets.Asset.AssetBuilder)">removeCertificate</a>, <a href="Asset.html#removeMeanings()">removeMeanings</a>, <a href="Asset.html#removeTerms(java.lang.String,java.lang.String,java.util.List)">removeTerms</a>, <a href="Asset.html#replaceTerms(com.atlan.model.assets.Asset.AssetBuilder,java.util.List)">replaceTerms</a>, <a href="Asset.html#setAdminGroups(java.util.Set)">setAdminGroups</a>, <a href="Asset.html#setAdminRoles(java.util.Set)">setAdminRoles</a>, <a href="Asset.html#setAdminUsers(java.util.Set)">setAdminUsers</a>, <a href="Asset.html#setAnnouncementMessage(java.lang.String)">setAnnouncementMessage</a>, <a href="Asset.html#setAnnouncementTitle(java.lang.String)">setAnnouncementTitle</a>, <a href="Asset.html#setAnnouncementType(com.atlan.model.enums.AtlanAnnouncementType)">setAnnouncementType</a>, <a href="Asset.html#setAnnouncementUpdatedAt(java.lang.Long)">setAnnouncementUpdatedAt</a>, <a href="Asset.html#setAnnouncementUpdatedBy(java.lang.String)">setAnnouncementUpdatedBy</a>, <a href="Asset.html#setCertificateStatus(com.atlan.model.enums.AtlanCertificateStatus)">setCertificateStatus</a>, <a href="Asset.html#setCertificateStatusMessage(java.lang.String)">setCertificateStatusMessage</a>, <a href="Asset.html#setCertificateUpdatedAt(java.lang.Long)">setCertificateUpdatedAt</a>, <a href="Asset.html#setCertificateUpdatedBy(java.lang.String)">setCertificateUpdatedBy</a>, <a href="Asset.html#setConnectionName(java.lang.String)">setConnectionName</a>, <a href="Asset.html#setConnectionQualifiedName(java.lang.String)">setConnectionQualifiedName</a>, <a href="Asset.html#setConnectorName(java.lang.String)">setConnectorName</a>, <a href="Asset.html#setDescription(java.lang.String)">setDescription</a>, <a href="Asset.html#setDisplayName(java.lang.String)">setDisplayName</a>, <a href="Asset.html#setHasLineage(java.lang.Boolean)">setHasLineage</a>, <a href="Asset.html#setIsDiscoverable(java.lang.Boolean)">setIsDiscoverable</a>, <a href="Asset.html#setIsEditable(java.lang.Boolean)">setIsEditable</a>, <a href="Asset.html#setLastSyncRun(java.lang.String)">setLastSyncRun</a>, <a href="Asset.html#setLastSyncRunAt(java.lang.Long)">setLastSyncRunAt</a>, <a href="Asset.html#setLastSyncWorkflowName(java.lang.String)">setLastSyncWorkflowName</a>, <a href="Asset.html#setLinks(java.util.Set)">setLinks</a>, <a href="Asset.html#setMeanings(java.util.Set)">setMeanings</a>, <a href="Asset.html#setName(java.lang.String)">setName</a>, <a href="Asset.html#setOwnerGroups(java.util.Set)">setOwnerGroups</a>, <a href="Asset.html#setOwnerUsers(java.util.Set)">setOwnerUsers</a>, <a href="Asset.html#setPopularityScore(java.lang.Double)">setPopularityScore</a>, <a href="Asset.html#setQualifiedName(java.lang.String)">setQualifiedName</a>, <a href="Asset.html#setReadme(com.atlan.model.relations.Reference)">setReadme</a>, <a href="Asset.html#setSourceCreatedAt(java.lang.Long)">setSourceCreatedAt</a>, <a href="Asset.html#setSourceCreatedBy(java.lang.String)">setSourceCreatedBy</a>, <a href="Asset.html#setSourceEmbedURL(java.lang.String)">setSourceEmbedURL</a>, <a href="Asset.html#setSourceOwners(java.lang.String)">setSourceOwners</a>, <a href="Asset.html#setSourceUpdatedAt(java.lang.Long)">setSourceUpdatedAt</a>, <a href="Asset.html#setSourceUpdatedBy(java.lang.String)">setSourceUpdatedBy</a>, <a href="Asset.html#setSourceURL(java.lang.String)">setSourceURL</a>, <a href="Asset.html#setSubType(java.lang.Object)">setSubType</a>, <a href="Asset.html#setTenantId(java.lang.String)">setTenantId</a>, <a href="Asset.html#setUserDescription(java.lang.String)">setUserDescription</a>, <a href="Asset.html#setViewerGroups(java.util.Set)">setViewerGroups</a>, <a href="Asset.html#setViewerUsers(java.util.Set)">setViewerUsers</a>, <a href="Asset.html#setViewScore(java.lang.Double)">setViewScore</a>, <a href="Asset.html#updateAnnouncement(com.atlan.model.assets.Asset.AssetBuilder,com.atlan.model.enums.AtlanAnnouncementType,java.lang.String,java.lang.String)">updateAnnouncement</a>, <a href="Asset.html#updateAnnouncement(com.atlan.model.assets.Asset.AssetBuilder,java.lang.String,java.lang.String,com.atlan.model.enums.AtlanAnnouncementType,java.lang.String,java.lang.String)">updateAnnouncement</a>, <a href="Asset.html#updateCertificate(com.atlan.model.assets.Asset.AssetBuilder,com.atlan.model.enums.AtlanCertificateStatus,java.lang.String)">updateCertificate</a>, <a href="Asset.html#updateCertificate(com.atlan.model.assets.Asset.AssetBuilder,java.lang.String,java.lang.String,com.atlan.model.enums.AtlanCertificateStatus,java.lang.String)">updateCertificate</a></code></li>
+<code><a href="Asset.html#appendTerms(java.lang.String,java.lang.String,java.util.List)">appendTerms</a>, <a href="Asset.html#getAdminGroups()">getAdminGroups</a>, <a href="Asset.html#getAdminRoles()">getAdminRoles</a>, <a href="Asset.html#getAdminUsers()">getAdminUsers</a>, <a href="Asset.html#getAnnouncementMessage()">getAnnouncementMessage</a>, <a href="Asset.html#getAnnouncementTitle()">getAnnouncementTitle</a>, <a href="Asset.html#getAnnouncementType()">getAnnouncementType</a>, <a href="Asset.html#getAnnouncementUpdatedAt()">getAnnouncementUpdatedAt</a>, <a href="Asset.html#getAnnouncementUpdatedBy()">getAnnouncementUpdatedBy</a>, <a href="Asset.html#getCertificateStatus()">getCertificateStatus</a>, <a href="Asset.html#getCertificateStatusMessage()">getCertificateStatusMessage</a>, <a href="Asset.html#getCertificateUpdatedAt()">getCertificateUpdatedAt</a>, <a href="Asset.html#getCertificateUpdatedBy()">getCertificateUpdatedBy</a>, <a href="Asset.html#getConnectionName()">getConnectionName</a>, <a href="Asset.html#getConnectionQualifiedName()">getConnectionQualifiedName</a>, <a href="Asset.html#getConnectorType()">getConnectorType</a>, <a href="Asset.html#getDescription()">getDescription</a>, <a href="Asset.html#getDisplayName()">getDisplayName</a>, <a href="Asset.html#getHasLineage()">getHasLineage</a>, <a href="Asset.html#getIsDiscoverable()">getIsDiscoverable</a>, <a href="Asset.html#getIsEditable()">getIsEditable</a>, <a href="Asset.html#getLastSyncRun()">getLastSyncRun</a>, <a href="Asset.html#getLastSyncRunAt()">getLastSyncRunAt</a>, <a href="Asset.html#getLastSyncWorkflowName()">getLastSyncWorkflowName</a>, <a href="Asset.html#getLinks()">getLinks</a>, <a href="Asset.html#getMeanings()">getMeanings</a>, <a href="Asset.html#getName()">getName</a>, <a href="Asset.html#getOwnerGroups()">getOwnerGroups</a>, <a href="Asset.html#getOwnerUsers()">getOwnerUsers</a>, <a href="Asset.html#getPopularityScore()">getPopularityScore</a>, <a href="Asset.html#getQualifiedName()">getQualifiedName</a>, <a href="Asset.html#getReadme()">getReadme</a>, <a href="Asset.html#getSourceCreatedAt()">getSourceCreatedAt</a>, <a href="Asset.html#getSourceCreatedBy()">getSourceCreatedBy</a>, <a href="Asset.html#getSourceEmbedURL()">getSourceEmbedURL</a>, <a href="Asset.html#getSourceOwners()">getSourceOwners</a>, <a href="Asset.html#getSourceUpdatedAt()">getSourceUpdatedAt</a>, <a href="Asset.html#getSourceUpdatedBy()">getSourceUpdatedBy</a>, <a href="Asset.html#getSourceURL()">getSourceURL</a>, <a href="Asset.html#getSubType()">getSubType</a>, <a href="Asset.html#getTenantId()">getTenantId</a>, <a href="Asset.html#getUserDescription()">getUserDescription</a>, <a href="Asset.html#getViewerGroups()">getViewerGroups</a>, <a href="Asset.html#getViewerUsers()">getViewerUsers</a>, <a href="Asset.html#getViewScore()">getViewScore</a>, <a href="Asset.html#removeAnnouncement()">removeAnnouncement</a>, <a href="Asset.html#removeAnnouncement(com.atlan.model.assets.Asset.AssetBuilder)">removeAnnouncement</a>, <a href="Asset.html#removeCertificate()">removeCertificate</a>, <a href="Asset.html#removeCertificate(com.atlan.model.assets.Asset.AssetBuilder)">removeCertificate</a>, <a href="Asset.html#removeMeanings()">removeMeanings</a>, <a href="Asset.html#removeTerms(java.lang.String,java.lang.String,java.util.List)">removeTerms</a>, <a href="Asset.html#replaceTerms(com.atlan.model.assets.Asset.AssetBuilder,java.util.List)">replaceTerms</a>, <a href="Asset.html#setAdminGroups(java.util.Set)">setAdminGroups</a>, <a href="Asset.html#setAdminRoles(java.util.Set)">setAdminRoles</a>, <a href="Asset.html#setAdminUsers(java.util.Set)">setAdminUsers</a>, <a href="Asset.html#setAnnouncementMessage(java.lang.String)">setAnnouncementMessage</a>, <a href="Asset.html#setAnnouncementTitle(java.lang.String)">setAnnouncementTitle</a>, <a href="Asset.html#setAnnouncementType(com.atlan.model.enums.AtlanAnnouncementType)">setAnnouncementType</a>, <a href="Asset.html#setAnnouncementUpdatedAt(java.lang.Long)">setAnnouncementUpdatedAt</a>, <a href="Asset.html#setAnnouncementUpdatedBy(java.lang.String)">setAnnouncementUpdatedBy</a>, <a href="Asset.html#setCertificateStatus(com.atlan.model.enums.AtlanCertificateStatus)">setCertificateStatus</a>, <a href="Asset.html#setCertificateStatusMessage(java.lang.String)">setCertificateStatusMessage</a>, <a href="Asset.html#setCertificateUpdatedAt(java.lang.Long)">setCertificateUpdatedAt</a>, <a href="Asset.html#setCertificateUpdatedBy(java.lang.String)">setCertificateUpdatedBy</a>, <a href="Asset.html#setConnectionName(java.lang.String)">setConnectionName</a>, <a href="Asset.html#setConnectionQualifiedName(java.lang.String)">setConnectionQualifiedName</a>, <a href="Asset.html#setConnectorType(com.atlan.model.enums.AtlanConnectorType)">setConnectorType</a>, <a href="Asset.html#setDescription(java.lang.String)">setDescription</a>, <a href="Asset.html#setDisplayName(java.lang.String)">setDisplayName</a>, <a href="Asset.html#setHasLineage(java.lang.Boolean)">setHasLineage</a>, <a href="Asset.html#setIsDiscoverable(java.lang.Boolean)">setIsDiscoverable</a>, <a href="Asset.html#setIsEditable(java.lang.Boolean)">setIsEditable</a>, <a href="Asset.html#setLastSyncRun(java.lang.String)">setLastSyncRun</a>, <a href="Asset.html#setLastSyncRunAt(java.lang.Long)">setLastSyncRunAt</a>, <a href="Asset.html#setLastSyncWorkflowName(java.lang.String)">setLastSyncWorkflowName</a>, <a href="Asset.html#setLinks(java.util.Set)">setLinks</a>, <a href="Asset.html#setMeanings(java.util.Set)">setMeanings</a>, <a href="Asset.html#setName(java.lang.String)">setName</a>, <a href="Asset.html#setOwnerGroups(java.util.Set)">setOwnerGroups</a>, <a href="Asset.html#setOwnerUsers(java.util.Set)">setOwnerUsers</a>, <a href="Asset.html#setPopularityScore(java.lang.Double)">setPopularityScore</a>, <a href="Asset.html#setQualifiedName(java.lang.String)">setQualifiedName</a>, <a href="Asset.html#setReadme(com.atlan.model.relations.Reference)">setReadme</a>, <a href="Asset.html#setSourceCreatedAt(java.lang.Long)">setSourceCreatedAt</a>, <a href="Asset.html#setSourceCreatedBy(java.lang.String)">setSourceCreatedBy</a>, <a href="Asset.html#setSourceEmbedURL(java.lang.String)">setSourceEmbedURL</a>, <a href="Asset.html#setSourceOwners(java.lang.String)">setSourceOwners</a>, <a href="Asset.html#setSourceUpdatedAt(java.lang.Long)">setSourceUpdatedAt</a>, <a href="Asset.html#setSourceUpdatedBy(java.lang.String)">setSourceUpdatedBy</a>, <a href="Asset.html#setSourceURL(java.lang.String)">setSourceURL</a>, <a href="Asset.html#setSubType(java.lang.Object)">setSubType</a>, <a href="Asset.html#setTenantId(java.lang.String)">setTenantId</a>, <a href="Asset.html#setUserDescription(java.lang.String)">setUserDescription</a>, <a href="Asset.html#setViewerGroups(java.util.Set)">setViewerGroups</a>, <a href="Asset.html#setViewerUsers(java.util.Set)">setViewerUsers</a>, <a href="Asset.html#setViewScore(java.lang.Double)">setViewScore</a>, <a href="Asset.html#updateAnnouncement(com.atlan.model.assets.Asset.AssetBuilder,com.atlan.model.enums.AtlanAnnouncementType,java.lang.String,java.lang.String)">updateAnnouncement</a>, <a href="Asset.html#updateAnnouncement(com.atlan.model.assets.Asset.AssetBuilder,java.lang.String,java.lang.String,com.atlan.model.enums.AtlanAnnouncementType,java.lang.String,java.lang.String)">updateAnnouncement</a>, <a href="Asset.html#updateCertificate(com.atlan.model.assets.Asset.AssetBuilder,com.atlan.model.enums.AtlanCertificateStatus,java.lang.String)">updateCertificate</a>, <a href="Asset.html#updateCertificate(com.atlan.model.assets.Asset.AssetBuilder,java.lang.String,java.lang.String,com.atlan.model.enums.AtlanCertificateStatus,java.lang.String)">updateCertificate</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.com.atlan.model.core.Entity">
@@ -676,15 +682,30 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a id="creator(java.lang.String,com.atlan.model.enums.AtlanConnectionCategory,java.lang.String,java.util.List,java.util.List,java.util.List)">
+<a id="getConnectorTypeFromQualifiedName(java.lang.String[])">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getConnectorTypeFromQualifiedName</h4>
+<pre class="methodSignature">protected static&nbsp;<a href="../enums/AtlanConnectorType.html" title="enum in com.atlan.model.enums">AtlanConnectorType</a>&nbsp;getConnectorTypeFromQualifiedName&#8203;(java.lang.String[]&nbsp;tokens)</pre>
+<div class="block">Determine the connector type from the provided qualifiedName.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>tokens</code> - of the qualifiedName, from which to determine the connector type</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the connector type, or null if the qualifiedName is not for a connected asset</dd>
+</dl>
+</li>
+</ul>
+<a id="creator(java.lang.String,com.atlan.model.enums.AtlanConnectorType,java.util.List,java.util.List,java.util.List)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>creator</h4>
 <pre class="methodSignature">public static&nbsp;<a href="Connection.ConnectionBuilder.html" title="class in com.atlan.model.assets">Connection.ConnectionBuilder</a>&lt;?,&#8203;?&gt;&nbsp;creator&#8203;(java.lang.String&nbsp;name,
-                                                              <a href="../enums/AtlanConnectionCategory.html" title="enum in com.atlan.model.enums">AtlanConnectionCategory</a>&nbsp;category,
-                                                              java.lang.String&nbsp;connectorName,
+                                                              <a href="../enums/AtlanConnectorType.html" title="enum in com.atlan.model.enums">AtlanConnectorType</a>&nbsp;connectorType,
                                                               java.util.List&lt;java.lang.String&gt;&nbsp;adminRoles,
                                                               java.util.List&lt;java.lang.String&gt;&nbsp;adminGroups,
                                                               java.util.List&lt;java.lang.String&gt;&nbsp;adminUsers)
@@ -695,8 +716,7 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>name</code> - of the connection</dd>
-<dd><code>category</code> - type of connection</dd>
-<dd><code>connectorName</code> - name of the connection's connector (this determines what logo appears for the assets)</dd>
+<dd><code>connectorType</code> - type of the connection's connector (this determines what logo appears for the assets)</dd>
 <dd><code>adminRoles</code> - the GUIDs of the roles that can administer this connection</dd>
 <dd><code>adminGroups</code> - the names of the groups that can administer this connection</dd>
 <dd><code>adminUsers</code> - the names of the users that can administer this connection</dd>

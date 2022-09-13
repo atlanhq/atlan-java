@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9};
+var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -204,6 +204,20 @@ extends java.lang.Object</pre>
 </td>
 </tr>
 <tr id="i4" class="altColor">
+<td class="colFirst"><code>static java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getNameFromQualifiedName(java.lang.String)">getNameFromQualifiedName</a></span>&#8203;(java.lang.String&nbsp;qualifiedName)</code></th>
+<td class="colLast">
+<div class="block">Retrieve the name of a data asset from the provided qualifiedName.</div>
+</td>
+</tr>
+<tr id="i5" class="rowColor">
+<td class="colFirst"><code>static java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getParentQualifiedNameFromQualifiedName(java.lang.String)">getParentQualifiedNameFromQualifiedName</a></span>&#8203;(java.lang.String&nbsp;qualifiedName)</code></th>
+<td class="colLast">
+<div class="block">Retrieve the qualifiedName of the parent data asset of the provided asset's qualifiedName.</div>
+</td>
+</tr>
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>static boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#secureCompare(java.lang.String,java.lang.String)">secureCompare</a></span>&#8203;(java.lang.String&nbsp;a,
              java.lang.String&nbsp;b)</code></th>
@@ -326,7 +340,7 @@ extends java.lang.Object</pre>
 <a id="decodeContent(java.lang.String)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>decodeContent</h4>
 <pre class="methodSignature">public static&nbsp;java.lang.String&nbsp;decodeContent&#8203;(java.lang.String&nbsp;encoded)</pre>
@@ -336,6 +350,38 @@ extends java.lang.Object</pre>
 <dd><code>encoded</code> - to be decoded</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>decoded README content (HTML)</dd>
+</dl>
+</li>
+</ul>
+<a id="getNameFromQualifiedName(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getNameFromQualifiedName</h4>
+<pre class="methodSignature">public static&nbsp;java.lang.String&nbsp;getNameFromQualifiedName&#8203;(java.lang.String&nbsp;qualifiedName)</pre>
+<div class="block">Retrieve the name of a data asset from the provided qualifiedName.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>qualifiedName</code> - from which to retrieve the name component</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the name of the data asset</dd>
+</dl>
+</li>
+</ul>
+<a id="getParentQualifiedNameFromQualifiedName(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>getParentQualifiedNameFromQualifiedName</h4>
+<pre class="methodSignature">public static&nbsp;java.lang.String&nbsp;getParentQualifiedNameFromQualifiedName&#8203;(java.lang.String&nbsp;qualifiedName)</pre>
+<div class="block">Retrieve the qualifiedName of the parent data asset of the provided asset's qualifiedName.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>qualifiedName</code> - from which to retrieve the parent asset's qualifiedName</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the qualifiedName of the parent data asset</dd>
 </dl>
 </li>
 </ul>
