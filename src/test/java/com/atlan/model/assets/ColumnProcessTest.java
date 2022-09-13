@@ -6,6 +6,7 @@ import static org.testng.Assert.*;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanCertificateStatus;
+import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.lineage.ColumnProcess;
 import com.atlan.model.relations.Reference;
@@ -46,7 +47,7 @@ public class ColumnProcessTest {
             .adminRole("adminRole")
             .viewerUser("viewerUser")
             .viewerGroup("viewerGroup")
-            .connectorName("connectorName")
+            .connectorType(AtlanConnectorType.BIGQUERY)
             .connectionName("connectionName")
             .connectionQualifiedName("connectionQualifiedName")
             .hasLineage(false)

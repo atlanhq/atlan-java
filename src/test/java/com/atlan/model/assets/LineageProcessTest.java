@@ -6,6 +6,7 @@ import static org.testng.Assert.*;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanCertificateStatus;
+import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.lineage.LineageProcess;
 import com.atlan.model.relations.Reference;
@@ -46,7 +47,7 @@ public class LineageProcessTest {
             .adminRole("adminRole")
             .viewerUser("viewerUser")
             .viewerGroup("viewerGroup")
-            .connectorName("connectorName")
+            .connectorType(AtlanConnectorType.GLUE)
             .connectionName("connectionName")
             .connectionQualifiedName("connectionQualifiedName")
             .hasLineage(false)
