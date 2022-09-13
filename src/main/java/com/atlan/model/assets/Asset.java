@@ -10,6 +10,7 @@ import com.atlan.model.core.EntityMutationResponse;
 import com.atlan.model.core.EntityResponse;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanCertificateStatus;
+import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.relations.GuidReference;
 import com.atlan.model.relations.Reference;
@@ -133,9 +134,10 @@ public abstract class Asset extends Entity {
     @Attribute
     Set<String> viewerGroups;
 
-    /** Name of the connector through which this asset is accessible. */
+    /** Type of the connector through which this asset is accessible. */
     @Attribute
-    String connectorName;
+    @JsonProperty("connectorName")
+    AtlanConnectorType connectorType;
 
     /** Unused. */
     @Attribute

@@ -3,6 +3,7 @@
 package com.atlan.model.lineage;
 
 import com.atlan.model.assets.Attribute;
+import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.relations.Reference;
 import java.util.List;
 import lombok.*;
@@ -34,7 +35,7 @@ public class ColumnProcess extends AbstractProcess {
      * Builds the minimal object necessary to create a column-level process.
      *
      * @param name of the column-level process
-     * @param connectorName name of the connector (software / system) that ran the process
+     * @param connectorType type of the connector (software / system) that ran the process
      * @param connectionName name of the specific instance of that software / system that ran the process
      * @param connectionQualifiedName unique name of the specific instance of that software / system that ran the process
      * @param inputs columns of data the process reads from
@@ -43,14 +44,14 @@ public class ColumnProcess extends AbstractProcess {
      */
     public static ColumnProcessBuilder<?, ?> creator(
             String name,
-            String connectorName,
+            AtlanConnectorType connectorType,
             String connectionName,
             String connectionQualifiedName,
             List<Reference> inputs,
             List<Reference> outputs) {
         return ColumnProcess.builder()
                 .qualifiedName(generateQualifiedName(
-                        name, connectorName, connectionName, connectionQualifiedName, inputs, outputs, null))
+                        name, connectorType, connectionName, connectionQualifiedName, inputs, outputs, null))
                 .name(name)
                 .inputs(inputs)
                 .outputs(outputs);

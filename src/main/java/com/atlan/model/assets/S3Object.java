@@ -5,6 +5,7 @@ package com.atlan.model.assets;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanCertificateStatus;
+import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.relations.GuidReference;
 import com.atlan.model.relations.Reference;
 import java.util.List;
@@ -93,7 +94,7 @@ public class S3Object extends S3 {
                 .qualifiedName(generateQualifiedName(connectionQualifiedName, awsArn))
                 .name(name)
                 .connectionQualifiedName(connectionQualifiedName)
-                .connectorName("s3")
+                .connectorType(AtlanConnectorType.S3)
                 .awsArn(awsArn);
     }
 

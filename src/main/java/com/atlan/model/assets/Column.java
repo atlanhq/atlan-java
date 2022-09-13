@@ -5,8 +5,10 @@ package com.atlan.model.assets;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanCertificateStatus;
+import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.relations.GuidReference;
 import com.atlan.model.relations.Reference;
+import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
@@ -154,34 +156,23 @@ public class Column extends SQL {
      * Builds the minimal object necessary to create a column.
      *
      * @param name of the column
-     * @param connectorName name of the connector (software / system) that hosts the column
      * @param parentType type of parent (table, view, materialized view), should be a TYPE_NAME static string
-     * @param parentName name of parent table / view / materialized view in which this column exists
      * @param parentQualifiedName unique name of the table / view / materialized view in which this column exists
-     * @param schemaName name of schema in which this column exists
-     * @param schemaQualifiedName unique name of the schema in which this column exists
-     * @param databaseName name of database in which this column exists
-     * @param databaseQualifiedName unique name of the database in which this column exists
-     * @param connectionQualifiedName unique name of the specific instance of the software / system that hosts the column
      * @return the minimal request necessary to create the column, as a builder
      */
-    public static ColumnBuilder<?, ?> creator(
-            String name,
-            String connectorName,
-            String parentType,
-            String parentName,
-            String parentQualifiedName,
-            String schemaName,
-            String schemaQualifiedName,
-            String databaseName,
-            String databaseQualifiedName,
-            String connectionQualifiedName) {
-        // TODO: can we simplify the argument list by just taking qualifiedNames and extracting the
-        //  non-qualifiedNames from these?
+    public static ColumnBuilder<?, ?> creator(String name, String parentType, String parentQualifiedName) {
+        String[] tokens = parentQualifiedName.split("/");
+        AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(tokens);
+        String parentName = StringUtils.getNameFromQualifiedName(parentQualifiedName);
+        String schemaQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(parentQualifiedName);
+        String schemaName = StringUtils.getNameFromQualifiedName(schemaQualifiedName);
+        String databaseQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(schemaQualifiedName);
+        String databaseName = StringUtils.getNameFromQualifiedName(databaseQualifiedName);
+        String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(databaseQualifiedName);
         ColumnBuilder<?, ?> builder = Column.builder()
                 .name(name)
                 .qualifiedName(parentQualifiedName + "/" + name)
-                .connectorName(connectorName)
+                .connectorType(connectorType)
                 .schemaName(schemaName)
                 .schemaQualifiedName(schemaQualifiedName)
                 .databaseName(databaseName)

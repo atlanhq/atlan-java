@@ -51,8 +51,7 @@ public class S3AssetTest extends AtlanLiveTest {
     void invalidConnection() {
         assertThrows(
                 InvalidRequestException.class,
-                () -> Connection.creator(
-                        CONNECTION_NAME, AtlanConnectionCategory.OBJECT_STORE, "s3", null, null, null));
+                () -> Connection.creator(CONNECTION_NAME, AtlanConnectorType.S3, null, null, null));
     }
 
     @Test(groups = {"create.connection.s3"})
@@ -62,8 +61,7 @@ public class S3AssetTest extends AtlanLiveTest {
             if (adminRoleGuid != null) {
                 Connection connection = Connection.creator(
                                 CONNECTION_NAME,
-                                AtlanConnectionCategory.OBJECT_STORE,
-                                "s3",
+                                AtlanConnectorType.S3,
                                 Collections.singletonList(adminRoleGuid),
                                 null,
                                 null)
@@ -128,7 +126,7 @@ public class S3AssetTest extends AtlanLiveTest {
             assertNotNull(s3BucketQame);
             assertEquals(s3Bucket.getName(), S3_BUCKET_NAME);
             assertEquals(s3Bucket.getAwsArn(), S3_BUCKET_ARN);
-            assertEquals(s3Bucket.getConnectorName(), "s3");
+            assertEquals(s3Bucket.getConnectorType(), AtlanConnectorType.S3);
         } catch (AtlanException e) {
             e.printStackTrace();
             assertNull(e, "Unexpected exception while trying to create an S3 bucket.");
@@ -168,7 +166,7 @@ public class S3AssetTest extends AtlanLiveTest {
             assertNotNull(s3Object1Qame);
             assertEquals(s3Object.getName(), S3_OBJECT1_NAME);
             assertEquals(s3Object.getAwsArn(), S3_OBJECT1_ARN);
-            assertEquals(s3Object.getConnectorName(), "s3");
+            assertEquals(s3Object.getConnectorType(), AtlanConnectorType.S3);
             assertEquals(s3Object.getS3BucketName(), S3_BUCKET_NAME);
             assertEquals(s3Object.getS3BucketQualifiedName(), s3BucketQame);
         } catch (AtlanException e) {
@@ -210,7 +208,7 @@ public class S3AssetTest extends AtlanLiveTest {
             assertNotNull(s3Object2Qame);
             assertEquals(s3Object.getName(), S3_OBJECT2_NAME);
             assertEquals(s3Object.getAwsArn(), S3_OBJECT2_ARN);
-            assertEquals(s3Object.getConnectorName(), "s3");
+            assertEquals(s3Object.getConnectorType(), AtlanConnectorType.S3);
             assertEquals(s3Object.getS3BucketName(), S3_BUCKET_NAME);
             assertEquals(s3Object.getS3BucketQualifiedName(), s3BucketQame);
         } catch (AtlanException e) {
@@ -241,7 +239,7 @@ public class S3AssetTest extends AtlanLiveTest {
             assertNotNull(s3Object3Qame);
             assertEquals(s3Object.getName(), S3_OBJECT3_NAME);
             assertEquals(s3Object.getAwsArn(), S3_OBJECT3_ARN);
-            assertEquals(s3Object.getConnectorName(), "s3");
+            assertEquals(s3Object.getConnectorType(), AtlanConnectorType.S3);
             assertNull(s3Object.getS3BucketName());
             assertNull(s3Object.getS3BucketQualifiedName());
             assertNull(s3Object.getBucket());

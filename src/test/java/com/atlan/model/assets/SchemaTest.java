@@ -6,6 +6,7 @@ import static org.testng.Assert.*;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanCertificateStatus;
+import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.relations.Reference;
 import com.atlan.serde.Serde;
@@ -45,7 +46,7 @@ public class SchemaTest {
             .adminRole("adminRole")
             .viewerUser("viewerUser")
             .viewerGroup("viewerGroup")
-            .connectorName("connectorName")
+            .connectorType(AtlanConnectorType.ATHENA)
             .connectionName("connectionName")
             .connectionQualifiedName("connectionQualifiedName")
             .hasLineage(false)

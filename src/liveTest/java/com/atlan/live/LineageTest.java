@@ -9,6 +9,7 @@ import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.assets.S3Object;
 import com.atlan.model.core.Entity;
 import com.atlan.model.core.EntityMutationResponse;
+import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.lineage.LineageProcess;
 import com.atlan.model.lineage.LineageRequest;
@@ -34,7 +35,7 @@ public class LineageTest extends AtlanLiveTest {
         final String processName = S3AssetTest.S3_OBJECT1_NAME + " >> " + S3AssetTest.S3_OBJECT2_NAME;
         LineageProcess process = LineageProcess.creator(
                         processName,
-                        "s3",
+                        AtlanConnectorType.S3,
                         S3AssetTest.CONNECTION_NAME,
                         S3AssetTest.connectionQame,
                         Collections.singletonList(Reference.to(S3Object.TYPE_NAME, S3AssetTest.s3Object1Guid)),
@@ -84,7 +85,7 @@ public class LineageTest extends AtlanLiveTest {
         final String processName = S3AssetTest.S3_OBJECT2_NAME + " >> " + S3AssetTest.S3_OBJECT3_NAME;
         LineageProcess process = LineageProcess.creator(
                         processName,
-                        "s3",
+                        AtlanConnectorType.S3,
                         S3AssetTest.CONNECTION_NAME,
                         S3AssetTest.connectionQame,
                         Collections.singletonList(Reference.to(S3Object.TYPE_NAME, S3AssetTest.s3Object2Guid)),

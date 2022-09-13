@@ -5,6 +5,7 @@ package com.atlan.model.assets;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanCertificateStatus;
+import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.relations.GuidReference;
 import com.atlan.model.relations.Reference;
 import java.util.List;
@@ -43,17 +44,16 @@ public class Database extends SQL {
      * Builds the minimal object necessary to create a database.
      *
      * @param name of the database
-     * @param connectorName name of the connector (software / system) that hosts the database
      * @param connectionQualifiedName unique name of the specific instance of the software / system that hosts the database
      * @return the minimal request necessary to create the database, as a builder
      */
-    public static DatabaseBuilder<?, ?> creator(String name, String connectorName, String connectionQualifiedName) {
-        // TODO: can we simplify the argument list by just taking qualifiedNames and extracting the
-        //  non-qualifiedNames from these?
+    public static DatabaseBuilder<?, ?> creator(String name, String connectionQualifiedName) {
+        AtlanConnectorType connectorType =
+                Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName.split("/"));
         return Database.builder()
                 .name(name)
                 .qualifiedName(connectionQualifiedName + "/" + name)
-                .connectorName(connectorName)
+                .connectorType(connectorType)
                 .connectionQualifiedName(connectionQualifiedName);
     }
 

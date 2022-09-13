@@ -82,4 +82,30 @@ public final class StringUtils {
     public static String decodeContent(String encoded) {
         return encoded == null ? null : URLDecoder.decode(encoded.replace("%20", "+"), StandardCharsets.UTF_8);
     }
+
+    /**
+     * Retrieve the name of a data asset from the provided qualifiedName.
+     *
+     * @param qualifiedName from which to retrieve the name component
+     * @return the name of the data asset
+     */
+    public static String getNameFromQualifiedName(String qualifiedName) {
+        if (qualifiedName != null && qualifiedName.indexOf("/") > 0) {
+            return qualifiedName.substring(qualifiedName.lastIndexOf("/") + 1);
+        }
+        return null;
+    }
+
+    /**
+     * Retrieve the qualifiedName of the parent data asset of the provided asset's qualifiedName.
+     *
+     * @param qualifiedName from which to retrieve the parent asset's qualifiedName
+     * @return the qualifiedName of the parent data asset
+     */
+    public static String getParentQualifiedNameFromQualifiedName(String qualifiedName) {
+        if (qualifiedName != null && qualifiedName.indexOf("/") > 0) {
+            return qualifiedName.substring(0, qualifiedName.lastIndexOf("/"));
+        }
+        return null;
+    }
 }
