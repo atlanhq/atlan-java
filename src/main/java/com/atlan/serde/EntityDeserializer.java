@@ -152,6 +152,8 @@ public class EntityDeserializer extends StdDeserializer<Entity> {
 
         Class<?> clazz = value.getClass();
 
+        Map<String, JsonNode> leftOverAttributes = new HashMap<>();
+
         if (attributes != null && !attributes.isNull()) {
             Iterator<String> itr = attributes.fieldNames();
             while (itr.hasNext()) {
@@ -166,6 +168,10 @@ public class EntityDeserializer extends StdDeserializer<Entity> {
                     } catch (IllegalAccessException | InvocationTargetException e) {
                         throw new IOException("Failed to deserialize through reflection.", e);
                     }
+                } else {
+                    // If the setter was not found, still retain it for later processing
+                    // (this is where custom attributes will end up for search results)
+                    leftOverAttributes.put(attrKey, attributes.get(attrKey));
                 }
             }
         }
@@ -188,7 +194,21 @@ public class EntityDeserializer extends StdDeserializer<Entity> {
             }
         }
 
+        // Custom attributes can come from two places, only one of which should ever have data...
         Map<String, CustomMetadataAttributes> cm = null;
+
+        // 1. For search results, they're embedded in `attributes` in the form <cmId>.<attrId>
+        if (!leftOverAttributes.isEmpty()) {
+            // Translate these into custom metadata structure
+            try {
+                cm = CustomMetadataCache.getCustomMetadataFromSearchResult(leftOverAttributes);
+            } catch (AtlanException e) {
+                e.printStackTrace();
+                throw new IOException("Unable to deserialize custom metadata from search result.", e);
+            }
+        }
+
+        // 2. For entity retrievals, they're all in a `businessAttributes` dict
         if (businessAttributes != null) {
             // Translate these into custom metadata structure
             try {
