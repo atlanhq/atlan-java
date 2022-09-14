@@ -419,6 +419,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/typedefs/AttributeDefOptions.AttributeDefOptionsBuilder.html#archivedAt(java.lang.Long)">archivedAt(Long)</a></span> - Method in class com.atlan.model.typedefs.<a href="com/atlan/model/typedefs/AttributeDefOptions.AttributeDefOptionsBuilder.html" title="class in com.atlan.model.typedefs">AttributeDefOptions.AttributeDefOptionsBuilder</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/core/CustomMetadataAttributes.CustomMetadataAttributesBuilder.html#archivedAttribute(java.lang.String,java.lang.Object)">archivedAttribute(String, Object)</a></span> - Method in class com.atlan.model.core.<a href="com/atlan/model/core/CustomMetadataAttributes.CustomMetadataAttributesBuilder.html" title="class in com.atlan.model.core">CustomMetadataAttributes.CustomMetadataAttributesBuilder</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/core/CustomMetadataAttributes.CustomMetadataAttributesBuilder.html#archivedAttributes(java.util.Map)">archivedAttributes(Map&lt;? extends String, ? extends Object&gt;)</a></span> - Method in class com.atlan.model.core.<a href="com/atlan/model/core/CustomMetadataAttributes.CustomMetadataAttributesBuilder.html" title="class in com.atlan.model.core">CustomMetadataAttributes.CustomMetadataAttributesBuilder</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/typedefs/AttributeDefOptions.AttributeDefOptionsBuilder.html#archivedBy(java.lang.String)">archivedBy(String)</a></span> - Method in class com.atlan.model.typedefs.<a href="com/atlan/model/typedefs/AttributeDefOptions.AttributeDefOptionsBuilder.html" title="class in com.atlan.model.typedefs">AttributeDefOptions.AttributeDefOptionsBuilder</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/workflow/WorkflowTask.WorkflowTaskBuilder.html#arguments(com.atlan.model.workflow.WorkflowTaskArguments)">arguments(WorkflowTaskArguments)</a></span> - Method in class com.atlan.model.workflow.<a href="com/atlan/model/workflow/WorkflowTask.WorkflowTaskBuilder.html" title="class in com.atlan.model.workflow">WorkflowTask.WorkflowTaskBuilder</a></dt>
@@ -1180,6 +1184,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/GlossaryTerm.GlossaryTermBuilder.html#clearAntonyms()">clearAntonyms()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/GlossaryTerm.GlossaryTermBuilder.html" title="class in com.atlan.model.assets">GlossaryTerm.GlossaryTermBuilder</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/net/RequestOptions.RequestOptionsBuilder.html#clearApiKey()">clearApiKey()</a></span> - Method in class com.atlan.net.<a href="com/atlan/net/RequestOptions.RequestOptionsBuilder.html" title="class in com.atlan.net">RequestOptions.RequestOptionsBuilder</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/core/CustomMetadataAttributes.CustomMetadataAttributesBuilder.html#clearArchivedAttributes()">clearArchivedAttributes()</a></span> - Method in class com.atlan.model.core.<a href="com/atlan/model/core/CustomMetadataAttributes.CustomMetadataAttributesBuilder.html" title="class in com.atlan.model.core">CustomMetadataAttributes.CustomMetadataAttributesBuilder</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/GlossaryTerm.GlossaryTermBuilder.html#clearAssignedEntities()">clearAssignedEntities()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/GlossaryTerm.GlossaryTermBuilder.html" title="class in com.atlan.model.assets">GlossaryTerm.GlossaryTermBuilder</a></dt>
 <dd>&nbsp;</dd>
@@ -2237,6 +2243,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">When the attribute was deleted.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/core/CustomMetadataAttributes.html#getArchivedAttributes()">getArchivedAttributes()</a></span> - Method in class com.atlan.model.core.<a href="com/atlan/model/core/CustomMetadataAttributes.html" title="class in com.atlan.model.core">CustomMetadataAttributes</a></dt>
+<dd>
+<div class="block">Mapping of archived custom metadata attributes to values, by human-readable names.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/typedefs/AttributeDefOptions.html#getArchivedBy()">getArchivedBy()</a></span> - Method in class com.atlan.model.typedefs.<a href="com/atlan/model/typedefs/AttributeDefOptions.html" title="class in com.atlan.model.typedefs">AttributeDefOptions</a></dt>
 <dd>
 <div class="block">User who deleted the attribute.</div>
@@ -2281,7 +2291,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/core/CustomMetadataAttributes.html#getAttributes()">getAttributes()</a></span> - Method in class com.atlan.model.core.<a href="com/atlan/model/core/CustomMetadataAttributes.html" title="class in com.atlan.model.core">CustomMetadataAttributes</a></dt>
 <dd>
-<div class="block">Mapping of custom metadata attributes to values, all by internal IDs.</div>
+<div class="block">Mapping of custom metadata attributes to values, all by human-readable names.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/lineage/LineageRequest.html#getAttributes()">getAttributes()</a></span> - Method in class com.atlan.model.lineage.<a href="com/atlan/model/lineage/LineageRequest.html" title="class in com.atlan.model.lineage">LineageRequest</a></dt>
 <dd>
@@ -2298,6 +2308,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/atlan/model/search/SearchParameters.html#getAttributes()">getAttributes()</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/SearchParameters.html" title="class in com.atlan.model.search">SearchParameters</a></dt>
 <dd>
 <div class="block">List of attributes that were requested in the search.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/cache/CustomMetadataCache.html#getAttributesForSearchResults(java.lang.String)">getAttributesForSearchResults(String)</a></span> - Static method in class com.atlan.cache.<a href="com/atlan/cache/CustomMetadataCache.html" title="class in com.atlan.cache">CustomMetadataCache</a></dt>
+<dd>
+<div class="block">Retrieve the full set of custom attributes to include on search results.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/lineage/EntityFilter.html#getAttributeValue()">getAttributeValue()</a></span> - Method in class com.atlan.model.lineage.<a href="com/atlan/model/lineage/EntityFilter.html" title="class in com.atlan.model.lineage">EntityFilter</a></dt>
 <dd>
@@ -2584,6 +2598,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/atlan/cache/CustomMetadataCache.html#getCustomMetadataFromBusinessAttributes(com.fasterxml.jackson.databind.JsonNode)">getCustomMetadataFromBusinessAttributes(JsonNode)</a></span> - Static method in class com.atlan.cache.<a href="com/atlan/cache/CustomMetadataCache.html" title="class in com.atlan.cache">CustomMetadataCache</a></dt>
 <dd>
 <div class="block">Translate the provided business attributes object into a custom metadata object.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/cache/CustomMetadataCache.html#getCustomMetadataFromSearchResult(java.util.Map)">getCustomMetadataFromSearchResult(Map&lt;String, JsonNode&gt;)</a></span> - Static method in class com.atlan.cache.<a href="com/atlan/cache/CustomMetadataCache.html" title="class in com.atlan.cache">CustomMetadataCache</a></dt>
+<dd>
+<div class="block">Translate the provided search result-embedded custom metadata into a custom metadata object.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/core/Entity.html#getCustomMetadataSets()">getCustomMetadataSets()</a></span> - Method in class com.atlan.model.core.<a href="com/atlan/model/core/Entity.html" title="class in com.atlan.model.core">Entity</a></dt>
 <dd>

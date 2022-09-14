@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":6,"i4":10,"i5":6,"i6":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":6,"i6":10,"i7":10,"i8":6,"i9":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -189,31 +189,47 @@ extends <a href="AtlanObject.AtlanObjectBuilder.html" title="class in com.atlan.
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="CustomMetadataAttributes.CustomMetadataAttributesBuilder.html" title="type parameter in CustomMetadataAttributes.CustomMetadataAttributesBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#attribute(java.lang.String,java.lang.Object)">attribute</a></span>&#8203;(java.lang.String&nbsp;attributeKey,
-         java.lang.Object&nbsp;attributeValue)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#archivedAttribute(java.lang.String,java.lang.Object)">archivedAttribute</a></span>&#8203;(java.lang.String&nbsp;archivedAttributeKey,
+                 java.lang.Object&nbsp;archivedAttributeValue)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="CustomMetadataAttributes.CustomMetadataAttributesBuilder.html" title="type parameter in CustomMetadataAttributes.CustomMetadataAttributesBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#attributes(java.util.Map)">attributes</a></span>&#8203;(java.util.Map&lt;? extends java.lang.String,&#8203;? extends java.lang.Object&gt;&nbsp;attributes)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#archivedAttributes(java.util.Map)">archivedAttributes</a></span>&#8203;(java.util.Map&lt;? extends java.lang.String,&#8203;? extends java.lang.Object&gt;&nbsp;archivedAttributes)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code>abstract <a href="CustomMetadataAttributes.CustomMetadataAttributesBuilder.html" title="type parameter in CustomMetadataAttributes.CustomMetadataAttributesBuilder">C</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#build()">build</a></span>()</code></th>
+<td class="colFirst"><code><a href="CustomMetadataAttributes.CustomMetadataAttributesBuilder.html" title="type parameter in CustomMetadataAttributes.CustomMetadataAttributesBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#attribute(java.lang.String,java.lang.Object)">attribute</a></span>&#8203;(java.lang.String&nbsp;attributeKey,
+         java.lang.Object&nbsp;attributeValue)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="CustomMetadataAttributes.CustomMetadataAttributesBuilder.html" title="type parameter in CustomMetadataAttributes.CustomMetadataAttributesBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearAttributes()">clearAttributes</a></span>()</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#attributes(java.util.Map)">attributes</a></span>&#8203;(java.util.Map&lt;? extends java.lang.String,&#8203;? extends java.lang.Object&gt;&nbsp;attributes)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
+<td class="colFirst"><code>abstract <a href="CustomMetadataAttributes.CustomMetadataAttributesBuilder.html" title="type parameter in CustomMetadataAttributes.CustomMetadataAttributesBuilder">C</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#build()">build</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i6" class="altColor">
+<td class="colFirst"><code><a href="CustomMetadataAttributes.CustomMetadataAttributesBuilder.html" title="type parameter in CustomMetadataAttributes.CustomMetadataAttributesBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearArchivedAttributes()">clearArchivedAttributes</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i7" class="rowColor">
+<td class="colFirst"><code><a href="CustomMetadataAttributes.CustomMetadataAttributesBuilder.html" title="type parameter in CustomMetadataAttributes.CustomMetadataAttributesBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearAttributes()">clearAttributes</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>protected abstract <a href="CustomMetadataAttributes.CustomMetadataAttributesBuilder.html" title="type parameter in CustomMetadataAttributes.CustomMetadataAttributesBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#self()">self</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
@@ -328,6 +344,34 @@ extends <a href="AtlanObject.AtlanObjectBuilder.html" title="class in com.atlan.
 <li class="blockList">
 <h4>clearAttributes</h4>
 <pre class="methodSignature">public&nbsp;<a href="CustomMetadataAttributes.CustomMetadataAttributesBuilder.html" title="type parameter in CustomMetadataAttributes.CustomMetadataAttributesBuilder">B</a>&nbsp;clearAttributes()</pre>
+</li>
+</ul>
+<a id="archivedAttribute(java.lang.String,java.lang.Object)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>archivedAttribute</h4>
+<pre class="methodSignature">public&nbsp;<a href="CustomMetadataAttributes.CustomMetadataAttributesBuilder.html" title="type parameter in CustomMetadataAttributes.CustomMetadataAttributesBuilder">B</a>&nbsp;archivedAttribute&#8203;(java.lang.String&nbsp;archivedAttributeKey,
+                           java.lang.Object&nbsp;archivedAttributeValue)</pre>
+</li>
+</ul>
+<a id="archivedAttributes(java.util.Map)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>archivedAttributes</h4>
+<pre class="methodSignature">public&nbsp;<a href="CustomMetadataAttributes.CustomMetadataAttributesBuilder.html" title="type parameter in CustomMetadataAttributes.CustomMetadataAttributesBuilder">B</a>&nbsp;archivedAttributes&#8203;(java.util.Map&lt;? extends java.lang.String,&#8203;? extends java.lang.Object&gt;&nbsp;archivedAttributes)</pre>
+</li>
+</ul>
+<a id="clearArchivedAttributes()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>clearArchivedAttributes</h4>
+<pre class="methodSignature">public&nbsp;<a href="CustomMetadataAttributes.CustomMetadataAttributesBuilder.html" title="type parameter in CustomMetadataAttributes.CustomMetadataAttributesBuilder">B</a>&nbsp;clearArchivedAttributes()</pre>
 </li>
 </ul>
 <a id="toString()">
