@@ -5,23 +5,21 @@ package com.atlan.live;
 import static org.testng.Assert.*;
 
 import co.elastic.clients.elasticsearch._types.FieldSort;
-import co.elastic.clients.elasticsearch._types.FieldValue;
 import co.elastic.clients.elasticsearch._types.SortOptions;
 import co.elastic.clients.elasticsearch._types.SortOrder;
 import co.elastic.clients.elasticsearch._types.query_dsl.*;
 import co.elastic.clients.json.JsonData;
 import com.atlan.Atlan;
-import com.atlan.cache.ClassificationCache;
 import com.atlan.cache.CustomMetadataCache;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.assets.Glossary;
 import com.atlan.model.assets.GlossaryTerm;
 import com.atlan.model.assets.S3Object;
 import com.atlan.model.core.Entity;
-import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.search.IndexSearchDSL;
 import com.atlan.model.search.IndexSearchRequest;
 import com.atlan.model.search.IndexSearchResponse;
+import com.atlan.util.QueryFactory;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -43,17 +41,12 @@ public class SearchTest extends AtlanLiveTest {
             dependsOnGroups = {"update.term"})
     void searchTerms() {
         try {
-            Query byState =
-                    TermQuery.of(t -> t.field("__state").value("ACTIVE"))._toQuery();
-
-            Query byType = TermQuery.of(t -> t.field("__typeName.keyword").value(GlossaryTerm.TYPE_NAME))
-                    ._toQuery();
-
-            Query byName = TermQuery.of(t -> t.field("name.keyword").value(GlossaryTest.TERM_NAME1))
-                    ._toQuery();
+            Query byState = QueryFactory.active();
+            Query byType = QueryFactory.withType(GlossaryTerm.TYPE_NAME);
+            Query byName = QueryFactory.withExactName(GlossaryTest.TERM_NAME1);
 
             Query combined =
-                    BoolQuery.of(b -> b.must(byState).must(byType).must(byName))._toQuery();
+                    BoolQuery.of(b -> b.filter(byState, byType, byName))._toQuery();
 
             IndexSearchRequest index = IndexSearchRequest.builder()
                     .dsl(IndexSearchDSL.builder()
@@ -94,10 +87,8 @@ public class SearchTest extends AtlanLiveTest {
             dependsOnGroups = {"create.s3object"})
     void searchS3Objects() {
         try {
-            Query byState =
-                    TermQuery.of(t -> t.field("__state").value("ACTIVE"))._toQuery();
-            Query byType = TermQuery.of(t -> t.field("__typeName.keyword").value(S3Object.TYPE_NAME))
-                    ._toQuery();
+            Query byState = QueryFactory.active();
+            Query byType = QueryFactory.withType(S3Object.TYPE_NAME);
             Query combined = BoolQuery.of(b -> b.filter(byState, byType))._toQuery();
 
             SortOptions sort = SortOptions.of(
@@ -175,12 +166,10 @@ public class SearchTest extends AtlanLiveTest {
         try {
             Query byCreation = RangeQuery.of(r -> r.field("__timestamp").gte(JsonData.of(s3ObjectCreationTime)))
                     ._toQuery();
-            Query byState =
-                    TermQuery.of(t -> t.field("__state").value("ACTIVE"))._toQuery();
-            Query byType = TermQuery.of(t -> t.field("__typeName.keyword").value(S3Object.TYPE_NAME))
-                    ._toQuery();
-            Query combined = BoolQuery.of(b -> b.must(byState).must(byType).must(byCreation))
-                    ._toQuery();
+            Query byState = QueryFactory.active();
+            Query byType = QueryFactory.withType(S3Object.TYPE_NAME);
+            Query combined =
+                    BoolQuery.of(b -> b.filter(byState, byType, byCreation))._toQuery();
 
             IndexSearchRequest index = IndexSearchRequest.builder()
                     .dsl(IndexSearchDSL.builder().query(combined).build())
@@ -214,13 +203,10 @@ public class SearchTest extends AtlanLiveTest {
     void searchByAnyClassification() {
 
         try {
-            Query byClassification =
-                    ExistsQuery.of(q -> q.field("__traitNames"))._toQuery();
-            Query byState =
-                    TermQuery.of(t -> t.field("__state").value("ACTIVE"))._toQuery();
-            Query byType = TermQuery.of(t -> t.field("__typeName.keyword").value(S3Object.TYPE_NAME))
-                    ._toQuery();
-            Query combined = BoolQuery.of(b -> b.must(byState).must(byType).must(byClassification))
+            Query byClassification = QueryFactory.withAnyValueFor("__traitNames");
+            Query byState = QueryFactory.active();
+            Query byType = QueryFactory.withType(S3Object.TYPE_NAME);
+            Query combined = BoolQuery.of(b -> b.filter(byState, byType, byClassification))
                     ._toQuery();
 
             IndexSearchRequest index = IndexSearchRequest.builder()
@@ -255,20 +241,11 @@ public class SearchTest extends AtlanLiveTest {
     void searchBySpecificClassification() throws InterruptedException {
 
         try {
-            String classificationId = ClassificationCache.getIdForName(ClassificationTest.CLASSIFICATION_NAME1);
-            Query byDirectClassification = TermsQuery.of(t -> t.field("__traitNames")
-                            .terms(TermsQueryField.of(f -> f.value(List.of(FieldValue.of(classificationId))))))
-                    ._toQuery();
-            Query byPropagatedClassification = TermsQuery.of(t -> t.field("__propagatedTraitNames")
-                            .terms(TermsQueryField.of(f -> f.value(List.of(FieldValue.of(classificationId))))))
-                    ._toQuery();
-            Query byState = TermQuery.of(t -> t.field("__state").value(AtlanStatus.ACTIVE.getValue()))
-                    ._toQuery();
-            Query byType = TermQuery.of(t -> t.field("__typeName.keyword").value(S3Object.TYPE_NAME))
-                    ._toQuery();
-            Query combined = BoolQuery.of(b -> b.filter(byState, byType)
-                            .should(byDirectClassification, byPropagatedClassification)
-                            .minimumShouldMatch("1"))
+            Query byClassification =
+                    QueryFactory.withAtLeastOneClassification(List.of(ClassificationTest.CLASSIFICATION_NAME1));
+            Query byState = QueryFactory.active();
+            Query byType = QueryFactory.withType(S3Object.TYPE_NAME);
+            Query combined = BoolQuery.of(b -> b.filter(byState, byType, byClassification))
                     ._toQuery();
 
             IndexSearchRequest index = IndexSearchRequest.builder()
@@ -309,13 +286,9 @@ public class SearchTest extends AtlanLiveTest {
     void searchByTermAssignment() throws InterruptedException {
 
         try {
-            Query byTermAssignment = TermsQuery.of(t -> t.field("__meanings")
-                            .terms(TermsQueryField.of(f -> f.value(List.of(FieldValue.of(GlossaryTest.termQame1))))))
-                    ._toQuery();
-            Query byState = TermQuery.of(t -> t.field("__state").value(AtlanStatus.ACTIVE.getValue()))
-                    ._toQuery();
-            Query byType = TermQuery.of(t -> t.field("__typeName.keyword").value(S3Object.TYPE_NAME))
-                    ._toQuery();
+            Query byTermAssignment = QueryFactory.withAtLeastOneTerm(List.of(GlossaryTest.termQame1));
+            Query byState = QueryFactory.active();
+            Query byType = QueryFactory.withType(S3Object.TYPE_NAME);
             Query combined = BoolQuery.of(b -> b.filter(byState, byType, byTermAssignment))
                     ._toQuery();
 
@@ -359,13 +332,9 @@ public class SearchTest extends AtlanLiveTest {
     void searchByAssignedTerm() throws InterruptedException {
 
         try {
-            Query byTermAssignment = TermsQuery.of(t -> t.field("__meanings")
-                            .terms(TermsQueryField.of(f -> f.value(List.of(FieldValue.of(GlossaryTest.termQame1))))))
-                    ._toQuery();
-            Query byState = TermQuery.of(t -> t.field("__state").value(AtlanStatus.ACTIVE.getValue()))
-                    ._toQuery();
-            Query byType = TermQuery.of(t -> t.field("__typeName.keyword").value(S3Object.TYPE_NAME))
-                    ._toQuery();
+            Query byTermAssignment = QueryFactory.withAtLeastOneTerm(List.of(GlossaryTest.termQame1));
+            Query byState = QueryFactory.active();
+            Query byType = QueryFactory.withType(S3Object.TYPE_NAME);
             Query combined = BoolQuery.of(b -> b.filter(byState, byType, byTermAssignment))
                     ._toQuery();
 
@@ -409,11 +378,9 @@ public class SearchTest extends AtlanLiveTest {
         try {
             String attributeId = CustomMetadataCache.getAttrIdForName(
                     CustomMetadataTest.CM_NAME1, CustomMetadataTest.CM_ATTR_STRING);
-            Query byCM = ExistsQuery.of(q -> q.field(attributeId))._toQuery();
-            Query byState = TermQuery.of(t -> t.field("__state").value(AtlanStatus.ACTIVE.getValue()))
-                    ._toQuery();
-            Query byType = TermQuery.of(t -> t.field("__typeName.keyword").value(GlossaryTerm.TYPE_NAME))
-                    ._toQuery();
+            Query byCM = QueryFactory.withAnyValueFor(attributeId);
+            Query byState = QueryFactory.active();
+            Query byType = QueryFactory.withType(GlossaryTerm.TYPE_NAME);
             Query combined = BoolQuery.of(b -> b.filter(byState, byType, byCM))._toQuery();
 
             IndexSearchRequest index = IndexSearchRequest.builder()
@@ -451,14 +418,11 @@ public class SearchTest extends AtlanLiveTest {
     void searchByLineage() {
 
         try {
-            Query byLineage =
-                    TermQuery.of(t -> t.field("__hasLineage").value(true))._toQuery();
-            Query byState =
-                    TermQuery.of(t -> t.field("__state").value("ACTIVE"))._toQuery();
-            Query byType = TermQuery.of(t -> t.field("__typeName.keyword").value(S3Object.TYPE_NAME))
-                    ._toQuery();
-            Query combined = BoolQuery.of(b -> b.must(byState).must(byType).must(byLineage))
-                    ._toQuery();
+            Query byLineage = QueryFactory.withLineage();
+            Query byState = QueryFactory.active();
+            Query byType = QueryFactory.withType(S3Object.TYPE_NAME);
+            Query combined =
+                    BoolQuery.of(b -> b.filter(byState, byType, byLineage))._toQuery();
 
             IndexSearchRequest index = IndexSearchRequest.builder()
                     .dsl(IndexSearchDSL.builder().query(combined).build())
