@@ -41,8 +41,13 @@ import lombok.experimental.SuperBuilder;
     @JsonSubTypes.Type(value = View.class, name = View.TYPE_NAME),
     @JsonSubTypes.Type(value = MaterializedView.class, name = MaterializedView.TYPE_NAME),
     @JsonSubTypes.Type(value = Column.class, name = Column.TYPE_NAME),
+    @JsonSubTypes.Type(value = DataStudioAsset.class, name = DataStudioAsset.TYPE_NAME),
     @JsonSubTypes.Type(value = S3Bucket.class, name = S3Bucket.TYPE_NAME),
     @JsonSubTypes.Type(value = S3Object.class, name = S3Object.TYPE_NAME),
+    @JsonSubTypes.Type(value = PresetWorkspace.class, name = PresetWorkspace.TYPE_NAME),
+    @JsonSubTypes.Type(value = PresetDashboard.class, name = PresetDashboard.TYPE_NAME),
+    @JsonSubTypes.Type(value = PresetChart.class, name = PresetChart.TYPE_NAME),
+    @JsonSubTypes.Type(value = PresetDataset.class, name = PresetDataset.TYPE_NAME),
     @JsonSubTypes.Type(value = LineageProcess.class, name = LineageProcess.TYPE_NAME),
     @JsonSubTypes.Type(value = ColumnProcess.class, name = ColumnProcess.TYPE_NAME),
 })
