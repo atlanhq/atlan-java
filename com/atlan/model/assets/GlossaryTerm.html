@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":9,"i2":10,"i3":9,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":9,"i25":10,"i26":9,"i27":9,"i28":10,"i29":10,"i30":10,"i31":10,"i32":10,"i33":10,"i34":10,"i35":10,"i36":10,"i37":10,"i38":10,"i39":10,"i40":10,"i41":10,"i42":10,"i43":10,"i44":10,"i45":10,"i46":10,"i47":10,"i48":9,"i49":9,"i50":9};
+var data = {"i0":9,"i1":9,"i2":10,"i3":9,"i4":10,"i5":9,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":9,"i26":10,"i27":9,"i28":9,"i29":10,"i30":10,"i31":10,"i32":10,"i33":10,"i34":10,"i35":10,"i36":10,"i37":10,"i38":10,"i39":10,"i40":10,"i41":10,"i42":10,"i43":10,"i44":10,"i45":10,"i46":10,"i47":10,"i48":10,"i49":9,"i50":9,"i51":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -291,115 +291,124 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
+<td class="colFirst"><code>static <a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#findByName(java.lang.String,java.lang.String,java.util.Collection)">findByName</a></span>&#8203;(java.lang.String&nbsp;name,
+          java.lang.String&nbsp;glossaryQualifiedName,
+          java.util.Collection&lt;java.lang.String&gt;&nbsp;attributes)</code></th>
+<td class="colLast">
+<div class="block">Find a glossary term by its human-readable name.</div>
+</td>
+</tr>
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAbbreviation()">getAbbreviation</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAdditionalAttributes()">getAdditionalAttributes</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code><a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAnchor()">getAnchor</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Glossary in which the term is located.</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>java.util.Set&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAntonyms()">getAntonyms</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Glossary terms that have the opposite (or near opposite) meaning in the same language.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>java.util.Set&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAssignedEntities()">getAssignedEntities</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Assets that are attached to this term.</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>java.util.Set&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCategories()">getCategories</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Categories within which this term is organized.</div>
 </td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>java.util.Set&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getClassifies()">getClassifies</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Unused relationships.</div>
 </td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>java.util.List&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getExamples()">getExamples</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getLongDescription()">getLongDescription</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code>java.util.Set&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPreferredTerms()">getPreferredTerms</a></span>()</code></th>
 <td class="colLast">
 <div class="block">These terms are preferred in place of this term.</div>
 </td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code>java.util.Set&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getReplacedBy()">getReplacedBy</a></span>()</code></th>
 <td class="colLast">
 <div class="block">These terms should be used instead of this term.</div>
 </td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code>java.util.Set&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSeeAlso()">getSeeAlso</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Linked glossary terms that may also be of interest.</div>
 </td>
 </tr>
-<tr id="i17" class="rowColor">
+<tr id="i18" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getShortDescription()">getShortDescription</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Unused attributes.</div>
 </td>
 </tr>
-<tr id="i18" class="altColor">
+<tr id="i19" class="rowColor">
 <td class="colFirst"><code>java.util.Set&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSynonyms()">getSynonyms</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Glossary terms that have the same, or a very similar meaning in the same language.</div>
 </td>
 </tr>
-<tr id="i19" class="rowColor">
+<tr id="i20" class="altColor">
 <td class="colFirst"><code>java.util.Set&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTranslatedTerms()">getTranslatedTerms</a></span>()</code></th>
 <td class="colLast">
 <div class="block">These terms represent the same meaning, but each is in a different language.</div>
 </td>
 </tr>
-<tr id="i20" class="altColor">
+<tr id="i21" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTypeName()">getTypeName</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Fixed typeName for terms.</div>
 </td>
 </tr>
-<tr id="i21" class="rowColor">
+<tr id="i22" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getUsage()">getUsage</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i22" class="altColor">
+<tr id="i23" class="rowColor">
 <td class="colFirst"><code>java.util.Set&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getValidValuesFor()">getValidValuesFor</a></span>()</code></th>
 <td class="colLast">
@@ -407,12 +416,12 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
  described by this term.</div>
 </td>
 </tr>
-<tr id="i23" class="rowColor">
+<tr id="i24" class="altColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hashCode()">hashCode</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i24" class="altColor">
+<tr id="i25" class="rowColor">
 <td class="colFirst"><code>static <a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeAnnouncement(java.lang.String,java.lang.String,java.lang.String)">removeAnnouncement</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                   java.lang.String&nbsp;name,
@@ -421,14 +430,14 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 <div class="block">Remove the announcement from a term.</div>
 </td>
 </tr>
-<tr id="i25" class="rowColor">
+<tr id="i26" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeAssignedEntities()">removeAssignedEntities</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Remove the linked assets from the term, if any are set on the term.</div>
 </td>
 </tr>
-<tr id="i26" class="altColor">
+<tr id="i27" class="rowColor">
 <td class="colFirst"><code>static <a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeCertificate(java.lang.String,java.lang.String,java.lang.String)">removeCertificate</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                  java.lang.String&nbsp;name,
@@ -437,7 +446,7 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 <div class="block">Remove the certificate from a term.</div>
 </td>
 </tr>
-<tr id="i27" class="rowColor">
+<tr id="i28" class="altColor">
 <td class="colFirst"><code>static void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeClassification(java.lang.String,java.lang.String)">removeClassification</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                     java.lang.String&nbsp;classificationName)</code></th>
@@ -445,116 +454,116 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 <div class="block">Remove a classification from a term.</div>
 </td>
 </tr>
-<tr id="i28" class="altColor">
+<tr id="i29" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAbbreviation(java.lang.String)">setAbbreviation</a></span>&#8203;(java.lang.String&nbsp;abbreviation)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i29" class="rowColor">
+<tr id="i30" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAdditionalAttributes(java.util.Map)">setAdditionalAttributes</a></span>&#8203;(java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;additionalAttributes)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i30" class="altColor">
+<tr id="i31" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAnchor(com.atlan.model.relations.Reference)">setAnchor</a></span>&#8203;(<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&nbsp;anchor)</code></th>
 <td class="colLast">
 <div class="block">Glossary in which the term is located.</div>
 </td>
 </tr>
-<tr id="i31" class="rowColor">
+<tr id="i32" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAntonyms(java.util.Set)">setAntonyms</a></span>&#8203;(java.util.Set&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;&nbsp;antonyms)</code></th>
 <td class="colLast">
 <div class="block">Glossary terms that have the opposite (or near opposite) meaning in the same language.</div>
 </td>
 </tr>
-<tr id="i32" class="altColor">
+<tr id="i33" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAssignedEntities(java.util.Set)">setAssignedEntities</a></span>&#8203;(java.util.Set&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;&nbsp;assignedEntities)</code></th>
 <td class="colLast">
 <div class="block">Assets that are attached to this term.</div>
 </td>
 </tr>
-<tr id="i33" class="rowColor">
+<tr id="i34" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setCategories(java.util.Set)">setCategories</a></span>&#8203;(java.util.Set&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;&nbsp;categories)</code></th>
 <td class="colLast">
 <div class="block">Categories within which this term is organized.</div>
 </td>
 </tr>
-<tr id="i34" class="altColor">
+<tr id="i35" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setClassifies(java.util.Set)">setClassifies</a></span>&#8203;(java.util.Set&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;&nbsp;classifies)</code></th>
 <td class="colLast">
 <div class="block">Unused relationships.</div>
 </td>
 </tr>
-<tr id="i35" class="rowColor">
+<tr id="i36" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setExamples(java.util.List)">setExamples</a></span>&#8203;(java.util.List&lt;java.lang.String&gt;&nbsp;examples)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i36" class="altColor">
+<tr id="i37" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setLongDescription(java.lang.String)">setLongDescription</a></span>&#8203;(java.lang.String&nbsp;longDescription)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i37" class="rowColor">
+<tr id="i38" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setPreferredTerms(java.util.Set)">setPreferredTerms</a></span>&#8203;(java.util.Set&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;&nbsp;preferredTerms)</code></th>
 <td class="colLast">
 <div class="block">These terms are preferred in place of this term.</div>
 </td>
 </tr>
-<tr id="i38" class="altColor">
+<tr id="i39" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setReplacedBy(java.util.Set)">setReplacedBy</a></span>&#8203;(java.util.Set&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;&nbsp;replacedBy)</code></th>
 <td class="colLast">
 <div class="block">These terms should be used instead of this term.</div>
 </td>
 </tr>
-<tr id="i39" class="rowColor">
+<tr id="i40" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setSeeAlso(java.util.Set)">setSeeAlso</a></span>&#8203;(java.util.Set&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;&nbsp;seeAlso)</code></th>
 <td class="colLast">
 <div class="block">Linked glossary terms that may also be of interest.</div>
 </td>
 </tr>
-<tr id="i40" class="altColor">
+<tr id="i41" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setShortDescription(java.lang.String)">setShortDescription</a></span>&#8203;(java.lang.String&nbsp;shortDescription)</code></th>
 <td class="colLast">
 <div class="block">Unused attributes.</div>
 </td>
 </tr>
-<tr id="i41" class="rowColor">
+<tr id="i42" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setSynonyms(java.util.Set)">setSynonyms</a></span>&#8203;(java.util.Set&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;&nbsp;synonyms)</code></th>
 <td class="colLast">
 <div class="block">Glossary terms that have the same, or a very similar meaning in the same language.</div>
 </td>
 </tr>
-<tr id="i42" class="altColor">
+<tr id="i43" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setTranslatedTerms(java.util.Set)">setTranslatedTerms</a></span>&#8203;(java.util.Set&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;&nbsp;translatedTerms)</code></th>
 <td class="colLast">
 <div class="block">These terms represent the same meaning, but each is in a different language.</div>
 </td>
 </tr>
-<tr id="i43" class="rowColor">
+<tr id="i44" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setTypeName(java.lang.String)">setTypeName</a></span>&#8203;(java.lang.String&nbsp;typeName)</code></th>
 <td class="colLast">
 <div class="block">Fixed typeName for terms.</div>
 </td>
 </tr>
-<tr id="i44" class="altColor">
+<tr id="i45" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setUsage(java.lang.String)">setUsage</a></span>&#8203;(java.lang.String&nbsp;usage)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i45" class="rowColor">
+<tr id="i46" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setValidValuesFor(java.util.Set)">setValidValuesFor</a></span>&#8203;(java.util.Set&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;&nbsp;validValuesFor)</code></th>
 <td class="colLast">
@@ -562,12 +571,12 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
  described by this term.</div>
 </td>
 </tr>
-<tr id="i46" class="altColor">
+<tr id="i47" class="rowColor">
 <td class="colFirst"><code><a href="GlossaryTerm.GlossaryTermBuilder.html" title="class in com.atlan.model.assets">GlossaryTerm.GlossaryTermBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toBuilder()">toBuilder</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i47" class="rowColor">
+<tr id="i48" class="altColor">
 <td class="colFirst"><code>protected <a href="GlossaryTerm.GlossaryTermBuilder.html" title="class in com.atlan.model.assets">GlossaryTerm.GlossaryTermBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#trimToRequired()">trimToRequired</a></span>()</code></th>
 <td class="colLast">
@@ -575,7 +584,7 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
  more-complete term object.</div>
 </td>
 </tr>
-<tr id="i48" class="altColor">
+<tr id="i49" class="rowColor">
 <td class="colFirst"><code>static <a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateAnnouncement(java.lang.String,java.lang.String,java.lang.String,com.atlan.model.enums.AtlanAnnouncementType,java.lang.String,java.lang.String)">updateAnnouncement</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                   java.lang.String&nbsp;name,
@@ -587,7 +596,7 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 <div class="block">Update the announcement on a term.</div>
 </td>
 </tr>
-<tr id="i49" class="rowColor">
+<tr id="i50" class="altColor">
 <td class="colFirst"><code>static <a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateCertificate(java.lang.String,java.lang.String,java.lang.String,com.atlan.model.enums.AtlanCertificateStatus,java.lang.String)">updateCertificate</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                  java.lang.String&nbsp;name,
@@ -598,7 +607,7 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 <div class="block">Update the certificate on a term.</div>
 </td>
 </tr>
-<tr id="i50" class="altColor">
+<tr id="i51" class="rowColor">
 <td class="colFirst"><code>static <a href="GlossaryTerm.GlossaryTermBuilder.html" title="class in com.atlan.model.assets">GlossaryTerm.GlossaryTermBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updater(java.lang.String,java.lang.String,java.lang.String)">updater</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
        java.lang.String&nbsp;name,
@@ -900,6 +909,29 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 <dd><code>classificationName</code> - human-readable name of the classification to remove</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API problems, or if the classification does not exist on the term</dd>
+</dl>
+</li>
+</ul>
+<a id="findByName(java.lang.String,java.lang.String,java.util.Collection)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>findByName</h4>
+<pre class="methodSignature">public static&nbsp;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&nbsp;findByName&#8203;(java.lang.String&nbsp;name,
+                                      java.lang.String&nbsp;glossaryQualifiedName,
+                                      java.util.Collection&lt;java.lang.String&gt;&nbsp;attributes)
+                               throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Find a glossary term by its human-readable name.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>name</code> - of the glossary term</dd>
+<dd><code>glossaryQualifiedName</code> - qualifiedName of the glossary in which to look for the term</dd>
+<dd><code>attributes</code> - an optional collection of attributes to retrieve for the glossary term</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the glossary term, if found</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API problems, or if the glossary term does not exist</dd>
 </dl>
 </li>
 </ul>
