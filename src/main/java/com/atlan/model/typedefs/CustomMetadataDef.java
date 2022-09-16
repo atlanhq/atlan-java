@@ -32,7 +32,7 @@ public class CustomMetadataDef extends TypeDef {
     AtlanTypeCategory category = AtlanTypeCategory.CUSTOM_METADATA;
 
     /** Options for the custom metadata. */
-    BusinessMetadataOptions options;
+    CustomMetadataOptions options;
 
     /**
      * Builds the minimal object necessary to create a custom metadata definition.

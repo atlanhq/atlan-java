@@ -239,7 +239,6 @@ public class SearchTest extends AtlanLiveTest {
             groups = {"search.s3object.classification.specific"},
             dependsOnGroups = {"link.classification.s3object"})
     void searchBySpecificClassification() throws InterruptedException {
-
         try {
             Query byClassification =
                     QueryFactory.withAtLeastOneClassification(List.of(ClassificationTest.CLASSIFICATION_NAME1));
@@ -251,29 +250,30 @@ public class SearchTest extends AtlanLiveTest {
             IndexSearchRequest index = IndexSearchRequest.builder()
                     .dsl(IndexSearchDSL.builder().query(combined).build())
                     .attribute("name")
-                    .attribute("connectionQualifiedName")
                     .build();
 
             IndexSearchResponse response = index.search();
 
             assertNotNull(response);
             int count = 0;
-            while (response.getApproximateCount() == 0L && count < Atlan.getMaxNetworkRetries()) {
+            // Depending on how fast propagation happens, there should eventually be 2 assets
+            // with the classification (since they're connected through lineage at this point)
+            while (response.getApproximateCount() < 2L && count < Atlan.getMaxNetworkRetries()) {
                 Thread.sleep(2000);
                 response = index.search();
                 count++;
             }
-            assertEquals(response.getApproximateCount().longValue(), 1L);
+            assertEquals(response.getApproximateCount().longValue(), 2L);
             List<Entity> entities = response.getEntities();
             assertNotNull(entities);
-            assertEquals(entities.size(), 1);
-            Entity one = entities.get(0);
-            assertTrue(one instanceof S3Object);
-            S3Object object = (S3Object) one;
-            assertNotNull(object);
-            assertEquals(object.getQualifiedName(), S3AssetTest.s3Object2Qame);
-            assertEquals(object.getConnectionQualifiedName(), S3AssetTest.connectionQame);
-
+            assertEquals(entities.size(), 2);
+            Set<String> types = entities.stream().map(Entity::getTypeName).collect(Collectors.toSet());
+            assertEquals(types.size(), 1);
+            assertTrue(types.contains(S3Object.TYPE_NAME));
+            Set<String> guids = entities.stream().map(Entity::getGuid).collect(Collectors.toSet());
+            assertEquals(guids.size(), 2);
+            assertTrue(guids.contains(S3AssetTest.s3Object2Guid));
+            assertTrue(guids.contains(S3AssetTest.s3Object3Guid));
         } catch (AtlanException e) {
             e.printStackTrace();
             assertNull(e, "Unexpected exception while searching by a specific classification.");
@@ -286,7 +286,11 @@ public class SearchTest extends AtlanLiveTest {
     void searchByTermAssignment() throws InterruptedException {
 
         try {
-            Query byTermAssignment = QueryFactory.withAtLeastOneTerm(List.of(GlossaryTest.termQame1));
+            Glossary glossary = Glossary.findByName(GlossaryTest.GLOSSARY_NAME, null);
+            String glossaryQN = glossary.getQualifiedName();
+            GlossaryTerm term = GlossaryTerm.findByName(GlossaryTest.TERM_NAME1, glossaryQN, null);
+            String termQN = term.getQualifiedName();
+            Query byTermAssignment = QueryFactory.withAtLeastOneTerm(List.of(termQN));
             Query byState = QueryFactory.active();
             Query byType = QueryFactory.withType(S3Object.TYPE_NAME);
             Query combined = BoolQuery.of(b -> b.filter(byState, byType, byTermAssignment))
@@ -332,7 +336,11 @@ public class SearchTest extends AtlanLiveTest {
     void searchByAssignedTerm() throws InterruptedException {
 
         try {
-            Query byTermAssignment = QueryFactory.withAtLeastOneTerm(List.of(GlossaryTest.termQame1));
+            Glossary glossary = Glossary.findByName(GlossaryTest.GLOSSARY_NAME, null);
+            String glossaryQN = glossary.getQualifiedName();
+            GlossaryTerm term = GlossaryTerm.findByName(GlossaryTest.TERM_NAME1, glossaryQN, null);
+            String termQN = term.getQualifiedName();
+            Query byTermAssignment = QueryFactory.withAtLeastOneTerm(List.of(termQN));
             Query byState = QueryFactory.active();
             Query byType = QueryFactory.withType(S3Object.TYPE_NAME);
             Query combined = BoolQuery.of(b -> b.filter(byState, byType, byTermAssignment))

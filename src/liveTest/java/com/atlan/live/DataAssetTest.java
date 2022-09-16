@@ -20,20 +20,20 @@ import org.testng.annotations.Test;
 @Test(groups = {"data_asset"})
 public class DataAssetTest extends AtlanLiveTest {
 
-    public static final AtlanConnectorType CONNECTOR_TYPE = AtlanConnectorType.NETSUITE;
+    public static final AtlanConnectorType CONNECTOR_TYPE = AtlanConnectorType.VERTICA;
 
-    public static final String CONNECTION_NAME = "jc-tc-data";
-    public static final String DATABASE_NAME = "jc-test-database";
-    public static final String SCHEMA_NAME = "jc-test-schema";
-    public static final String TABLE_NAME = "jc-test-table";
-    public static final String VIEW_NAME = "jc-test-view";
-    public static final String MVIEW_NAME = "jc-test-materialized-view";
-    public static final String COLUMN_NAME1 = "jc-test-column1";
-    public static final String COLUMN_NAME2 = "jc-test-column2";
-    public static final String COLUMN_NAME3 = "jc-test-column3";
-    public static final String COLUMN_NAME4 = "jc-test-column4";
-    public static final String COLUMN_NAME5 = "jc-test-column5";
-    public static final String COLUMN_NAME6 = "jc-test-column6";
+    public static final String CONNECTION_NAME = "vertica-connection";
+    public static final String DATABASE_NAME = "vert_db";
+    public static final String SCHEMA_NAME = "vert_schema";
+    public static final String TABLE_NAME = "vert_table";
+    public static final String VIEW_NAME = "vert_view";
+    public static final String MVIEW_NAME = "vert_mat_view";
+    public static final String COLUMN_NAME1 = "vert_col1";
+    public static final String COLUMN_NAME2 = "vert_col2";
+    public static final String COLUMN_NAME3 = "vert_col3";
+    public static final String COLUMN_NAME4 = "vert_col4";
+    public static final String COLUMN_NAME5 = "vert_col5";
+    public static final String COLUMN_NAME6 = "vert_col6";
 
     public static String connectionGuid = null;
     public static String connectionQame = null;
@@ -64,7 +64,7 @@ public class DataAssetTest extends AtlanLiveTest {
     void invalidConnection() {
         assertThrows(
                 InvalidRequestException.class,
-                () -> Connection.creator(CONNECTION_NAME, AtlanConnectorType.NETSUITE, null, null, null));
+                () -> Connection.creator(CONNECTION_NAME, CONNECTOR_TYPE, null, null, null));
     }
 
     @Test(groups = {"create.connection.data"})
@@ -73,11 +73,7 @@ public class DataAssetTest extends AtlanLiveTest {
             String adminRoleGuid = RoleCache.getIdForName("$admin");
             if (adminRoleGuid != null) {
                 Connection connection = Connection.creator(
-                                CONNECTION_NAME,
-                                AtlanConnectorType.NETSUITE,
-                                Collections.singletonList(adminRoleGuid),
-                                null,
-                                null)
+                                CONNECTION_NAME, CONNECTOR_TYPE, Collections.singletonList(adminRoleGuid), null, null)
                         .build();
                 EntityMutationResponse response = connection.upsert();
                 assertNotNull(response);
