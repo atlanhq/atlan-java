@@ -109,11 +109,26 @@ public class EntityDeserializer extends StdDeserializer<Entity> {
                 case Column.TYPE_NAME:
                     builder = Column.builder();
                     break;
+                case DataStudioAsset.TYPE_NAME:
+                    builder = DataStudioAsset.builder();
+                    break;
                 case S3Bucket.TYPE_NAME:
                     builder = S3Bucket.builder();
                     break;
                 case S3Object.TYPE_NAME:
                     builder = S3Object.builder();
+                    break;
+                case PresetWorkspace.TYPE_NAME:
+                    builder = PresetWorkspace.builder();
+                    break;
+                case PresetDashboard.TYPE_NAME:
+                    builder = PresetDashboard.builder();
+                    break;
+                case PresetChart.TYPE_NAME:
+                    builder = PresetChart.builder();
+                    break;
+                case PresetDataset.TYPE_NAME:
+                    builder = PresetDataset.builder();
                     break;
                 case LineageProcess.TYPE_NAME:
                     builder = LineageProcess.builder();
