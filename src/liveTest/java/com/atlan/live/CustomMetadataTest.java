@@ -16,6 +16,7 @@ import com.atlan.model.lineage.LineageProcess;
 import com.atlan.model.typedefs.AttributeDef;
 import com.atlan.model.typedefs.AttributeDefOptions;
 import com.atlan.model.typedefs.CustomMetadataDef;
+import com.atlan.model.typedefs.CustomMetadataOptions;
 import java.time.Instant;
 import java.util.*;
 import org.testng.annotations.Test;
@@ -23,8 +24,8 @@ import org.testng.annotations.Test;
 @Test(groups = {"custom_metadata"})
 public class CustomMetadataTest extends AtlanLiveTest {
 
-    public static final String CM_NAME1 = "JC CM1";
-    public static final String CM_NAME2 = "JC CM2";
+    public static final String CM_NAME1 = "RACI";
+    public static final String CM_NAME2 = "IPR";
 
     public static final String CM_ATTR_STRING = "string";
     public static final String CM_ATTR_INTEGER = "integer";
@@ -55,6 +56,9 @@ public class CustomMetadataTest extends AtlanLiveTest {
                     .attributeDef(AttributeDef.of(CM_ATTR_URL, AtlanCustomAttributePrimitiveType.URL, null, false))
                     .attributeDef(AttributeDef.of(CM_ATTR_SQL, AtlanCustomAttributePrimitiveType.SQL, null, false))
                     .attributeDef(AttributeDef.of(CM_ATTR_EXTRA, AtlanCustomAttributePrimitiveType.STRING, null, false))
+                    .options(CustomMetadataOptions.builder()
+                            .emoji("\uD83D\uDC6A")
+                            .build())
                     .build();
             CustomMetadataDef response = customMetadataDef.create();
             assertNotNull(response);
@@ -141,6 +145,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
                     .attributeDef(AttributeDef.of(CM_ATTR_URL, AtlanCustomAttributePrimitiveType.URL, null, false))
                     .attributeDef(AttributeDef.of(CM_ATTR_SQL, AtlanCustomAttributePrimitiveType.SQL, null, false))
                     .attributeDef(AttributeDef.of(CM_ATTR_EXTRA, AtlanCustomAttributePrimitiveType.STRING, null, false))
+                    .options(CustomMetadataOptions.builder().emoji("⚖️").build())
                     .build();
             response = customMetadataDef.create();
             assertNotNull(response);

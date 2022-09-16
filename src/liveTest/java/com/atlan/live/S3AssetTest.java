@@ -24,11 +24,11 @@ import org.testng.annotations.Test;
 @Test(groups = {"s3asset"})
 public class S3AssetTest extends AtlanLiveTest {
 
-    public static final String CONNECTION_NAME = "jc-test-connection";
-    public static final String S3_BUCKET_NAME = "jc-test-bucket";
-    public static final String S3_BUCKET_ARN = "aws::production:jc-test-bucket";
-    public static final String S3_OBJECT1_NAME = "jc-test-object-source";
-    public static final String S3_OBJECT1_ARN = "aws::production:jc-test-bucket:a/prefix/jc-test-source.csv";
+    public static final String CONNECTION_NAME = "aws-s3-connection";
+    public static final String S3_BUCKET_NAME = "mybucket";
+    public static final String S3_BUCKET_ARN = "arn:aws:s3:::mybucket";
+    public static final String S3_OBJECT1_NAME = "myobject.csv";
+    public static final String S3_OBJECT1_ARN = "arn:aws:s3:::mybucket/prefix/myobject.csv";
     public static final String S3_OBJECT2_NAME = "jc-test-object-target";
     public static final String S3_OBJECT2_ARN = "aws::production:jc-test-bucket:a/prefix/jc-test-target.csv";
     public static final String S3_OBJECT3_NAME = "jc-test-object-target2";

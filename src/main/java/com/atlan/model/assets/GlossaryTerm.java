@@ -2,16 +2,27 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
+import co.elastic.clients.elasticsearch._types.FieldValue;
+import co.elastic.clients.elasticsearch._types.query_dsl.*;
 import com.atlan.exception.AtlanException;
+import com.atlan.exception.LogicException;
+import com.atlan.exception.NotFoundException;
+import com.atlan.model.core.Entity;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.relations.Reference;
+import com.atlan.model.search.IndexSearchDSL;
+import com.atlan.model.search.IndexSearchRequest;
+import com.atlan.model.search.IndexSearchResponse;
+import com.atlan.util.QueryFactory;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Instance of a term in Atlan, with its detailed information.
@@ -20,6 +31,7 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@Slf4j
 public class GlossaryTerm extends Asset {
     private static final long serialVersionUID = 2L;
 
@@ -246,5 +258,56 @@ public class GlossaryTerm extends Asset {
      */
     public static void removeClassification(String qualifiedName, String classificationName) throws AtlanException {
         Asset.removeClassification(TYPE_NAME, qualifiedName, classificationName);
+    }
+
+    /**
+     * Find a glossary term by its human-readable name.
+     *
+     * @param name of the glossary term
+     * @param glossaryQualifiedName qualifiedName of the glossary in which to look for the term
+     * @param attributes an optional collection of attributes to retrieve for the glossary term
+     * @return the glossary term, if found
+     * @throws AtlanException on any API problems, or if the glossary term does not exist
+     */
+    public static GlossaryTerm findByName(String name, String glossaryQualifiedName, Collection<String> attributes)
+            throws AtlanException {
+        Query byType = QueryFactory.withType(TYPE_NAME);
+        Query byName = QueryFactory.withExactName(name);
+        Query byGlossary = TermsQuery.of(t -> t.field("__glossary")
+                        .terms(TermsQueryField.of(f -> f.value(List.of(FieldValue.of(glossaryQualifiedName))))))
+                ._toQuery();
+        Query active = QueryFactory.active();
+        Query filter =
+                BoolQuery.of(b -> b.filter(byType, byName, byGlossary, active))._toQuery();
+        IndexSearchRequest.IndexSearchRequestBuilder<?, ?> builder = IndexSearchRequest.builder()
+                .dsl(IndexSearchDSL.builder().from(0).size(2).query(filter).build());
+        if (attributes != null && !attributes.isEmpty()) {
+            builder.attributes(attributes);
+        }
+        IndexSearchRequest request = builder.build();
+        IndexSearchResponse response = request.search();
+        if (response != null) {
+            long count = response.getApproximateCount();
+            if (count > 1) {
+                log.warn(
+                        "Multiple glossary terms found with the name '{}' in glossary '{}', returning only the first.",
+                        name,
+                        glossaryQualifiedName);
+            }
+            List<Entity> results = response.getEntities();
+            if (results != null && !results.isEmpty()) {
+                Entity first = results.get(0);
+                if (first instanceof GlossaryTerm) {
+                    return (GlossaryTerm) first;
+                } else {
+                    throw new LogicException(
+                            "Found a non-glossary term result when searching for only glossary terms.",
+                            "ATLAN-JAVA-CLIENT-500-091",
+                            500);
+                }
+            }
+        }
+        throw new NotFoundException(
+                "Unable to find a glossary term with the name: " + name, "ATLAN-JAVA-CLIENT-404-091", 404, null);
     }
 }
