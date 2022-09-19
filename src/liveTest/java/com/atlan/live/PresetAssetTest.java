@@ -131,9 +131,16 @@ public class PresetAssetTest extends AtlanLiveTest {
             EntityMutationResponse response = collection.upsert();
             assertNotNull(response);
             assertTrue(response.getDeletedEntities().isEmpty());
-            assertTrue(response.getUpdatedEntities().isEmpty());
+            assertEquals(response.getUpdatedEntities().size(), 1);
+            Entity one = response.getUpdatedEntities().get(0);
+            assertNotNull(one);
+            assertEquals(one.getTypeName(), PresetWorkspace.TYPE_NAME);
+            assertTrue(one instanceof PresetWorkspace);
+            PresetWorkspace workspace = (PresetWorkspace) one;
+            assertEquals(workspace.getGuid(), workspaceGuid);
+            assertEquals(workspace.getQualifiedName(), workspaceQame);
             assertEquals(response.getCreatedEntities().size(), 1);
-            Entity one = response.getCreatedEntities().get(0);
+            one = response.getCreatedEntities().get(0);
             assertNotNull(one);
             assertEquals(one.getTypeName(), PresetDashboard.TYPE_NAME);
             assertTrue(one instanceof PresetDashboard);
