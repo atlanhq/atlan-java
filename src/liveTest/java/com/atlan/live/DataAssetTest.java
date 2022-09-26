@@ -20,20 +20,20 @@ import org.testng.annotations.Test;
 @Test(groups = {"data_asset"})
 public class DataAssetTest extends AtlanLiveTest {
 
-    public static final AtlanConnectorType CONNECTOR_TYPE = AtlanConnectorType.VERTICA;
+    public static final AtlanConnectorType CONNECTOR_TYPE = AtlanConnectorType.DYNAMODB;
 
-    public static final String CONNECTION_NAME = "vertica-connection";
-    public static final String DATABASE_NAME = "vert_db";
-    public static final String SCHEMA_NAME = "vert_schema";
-    public static final String TABLE_NAME = "vert_table";
-    public static final String VIEW_NAME = "vert_view";
-    public static final String MVIEW_NAME = "vert_mat_view";
-    public static final String COLUMN_NAME1 = "vert_col1";
-    public static final String COLUMN_NAME2 = "vert_col2";
-    public static final String COLUMN_NAME3 = "vert_col3";
-    public static final String COLUMN_NAME4 = "vert_col4";
-    public static final String COLUMN_NAME5 = "vert_col5";
-    public static final String COLUMN_NAME6 = "vert_col6";
+    public static final String CONNECTION_NAME = "dynamo-connection";
+    public static final String DATABASE_NAME = "dyn_db";
+    public static final String SCHEMA_NAME = "dyn_schema";
+    public static final String TABLE_NAME = "dyn_table";
+    public static final String VIEW_NAME = "dyn_view";
+    public static final String MVIEW_NAME = "dyn_mat_view";
+    public static final String COLUMN_NAME1 = "dyn_col1";
+    public static final String COLUMN_NAME2 = "dyn_col2";
+    public static final String COLUMN_NAME3 = "dyn_col3";
+    public static final String COLUMN_NAME4 = "dyn_col4";
+    public static final String COLUMN_NAME5 = "dyn_col5";
+    public static final String COLUMN_NAME6 = "dyn_col6";
 
     public static String connectionGuid = null;
     public static String connectionQame = null;
