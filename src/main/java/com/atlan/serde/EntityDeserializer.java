@@ -64,6 +64,7 @@ public class EntityDeserializer extends StdDeserializer<Entity> {
 
         JsonNode root = parser.getCodec().readTree(parser);
         JsonNode attributes = root.get("attributes");
+        JsonNode relationshipGuid = root.get("relationshipGuid");
         JsonNode relationshipAttributes = root.get("relationshipAttributes");
         JsonNode businessAttributes = root.get("businessAttributes");
         JsonNode classificationNames = root.get("classificationNames");
@@ -146,6 +147,13 @@ public class EntityDeserializer extends StdDeserializer<Entity> {
         builder = builder.typeName(JacksonUtils.deserializeString(root, "typeName"))
                 .guid(JacksonUtils.deserializeString(root, "guid"))
                 .displayText(JacksonUtils.deserializeString(root, "displayText"))
+                // Include reference attributes, for related entities
+                .entityStatus(JacksonUtils.deserializeString(root, "entityStatus"))
+                .relationshipType(JacksonUtils.deserializeString(root, "relationshipType"))
+                .relationshipGuid(JacksonUtils.deserializeString(root, "relationshipGuid"))
+                .relationshipStatus(
+                        JacksonUtils.deserializeObject(root, "relationshipStatus", new TypeReference<>() {}))
+                .uniqueAttributes(JacksonUtils.deserializeObject(root, "uniqueAttributes", new TypeReference<>() {}))
                 .status(JacksonUtils.deserializeObject(root, "status", new TypeReference<>() {}))
                 .createdBy(JacksonUtils.deserializeString(root, "createdBy"))
                 .updatedBy(JacksonUtils.deserializeString(root, "updatedBy"))
@@ -191,19 +199,23 @@ public class EntityDeserializer extends StdDeserializer<Entity> {
             }
         }
 
-        if (relationshipAttributes != null && !relationshipAttributes.isNull()) {
-            Iterator<String> itr = relationshipAttributes.fieldNames();
-            while (itr.hasNext()) {
-                String relnKey = itr.next();
-                String deserializeName = ReflectionCache.getDeserializedName(clazz, relnKey);
-                Method method = ReflectionCache.getSetter(clazz, deserializeName);
-                if (method != null) {
-                    try {
-                        deserialize(value, relationshipAttributes.get(relnKey), method);
-                    } catch (NoSuchMethodException e) {
-                        throw new IOException("Missing fromValue method for enum.", e);
-                    } catch (IllegalAccessException | InvocationTargetException e) {
-                        throw new IOException("Failed to deserialize through reflection.", e);
+        // Only process relationshipAttributes if this is a full entity, not a relationship
+        // reference. (If it is a relationship reference, the relationshipGuid will be non-null.)
+        if (relationshipGuid == null || relationshipGuid.isNull()) {
+            if (relationshipAttributes != null && !relationshipAttributes.isNull()) {
+                Iterator<String> itr = relationshipAttributes.fieldNames();
+                while (itr.hasNext()) {
+                    String relnKey = itr.next();
+                    String deserializeName = ReflectionCache.getDeserializedName(clazz, relnKey);
+                    Method method = ReflectionCache.getSetter(clazz, deserializeName);
+                    if (method != null) {
+                        try {
+                            deserialize(value, relationshipAttributes.get(relnKey), method);
+                        } catch (NoSuchMethodException e) {
+                            throw new IOException("Missing fromValue method for enum.", e);
+                        } catch (IllegalAccessException | InvocationTargetException e) {
+                            throw new IOException("Failed to deserialize through reflection.", e);
+                        }
                     }
                 }
             }
@@ -283,8 +295,8 @@ public class EntityDeserializer extends StdDeserializer<Entity> {
         }
         if (paramClass == List.class) {
             method.invoke(value, list);
-        } else if (paramClass == Set.class) {
-            method.invoke(value, new LinkedHashSet<>(list));
+        } else if (paramClass == Set.class || paramClass == SortedSet.class) {
+            method.invoke(value, new TreeSet<>(list));
         } else {
             throw new IOException("Unable to deserialize JSON list to Java class: " + paramClass.getCanonicalName());
         }

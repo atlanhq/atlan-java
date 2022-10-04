@@ -8,6 +8,7 @@ import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.relations.GuidReference;
 import com.atlan.model.relations.Reference;
+import com.atlan.model.relations.UniqueAttributes;
 import java.util.List;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -80,6 +81,29 @@ public class S3Object extends S3 {
     /** S3 bucket in which the object exists. */
     @Attribute
     Reference bucket;
+
+    /**
+     * Reference to a S3 object by GUID.
+     *
+     * @param guid the GUID of the S3 object to reference
+     * @return reference to a S3 object that can be used for defining a relationship to a S3 object
+     */
+    public static S3Object refByGuid(String guid) {
+        return S3Object.builder().guid(guid).build();
+    }
+
+    /**
+     * Reference to a S3 object by qualifiedName.
+     *
+     * @param qualifiedName the qualifiedName of the S3 object to reference
+     * @return reference to a S3 object that can be used for defining a relationship to a S3 object
+     */
+    public static S3Object refByQualifiedName(String qualifiedName) {
+        return S3Object.builder()
+                .uniqueAttributes(
+                        UniqueAttributes.builder().qualifiedName(qualifiedName).build())
+                .build();
+    }
 
     /**
      * Builds the minimal object necessary to create an S3 object.

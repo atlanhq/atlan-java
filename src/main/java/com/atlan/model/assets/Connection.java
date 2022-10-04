@@ -13,6 +13,8 @@ import com.atlan.model.relations.Reference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;
 import java.util.Map;
+import java.util.SortedSet;
+
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -87,6 +89,11 @@ public class Connection extends Asset {
     /** TBC */
     @Attribute
     String sourceLogo;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<String> connectionDbtEnvironments;
 
     /**
      * Determine the connector type from the provided qualifiedName.

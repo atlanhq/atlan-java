@@ -12,5 +12,6 @@ public class AtlanLiveTest {
     static {
         Atlan.setApiToken(System.getenv("ATLAN_API_KEY"));
         Atlan.setBaseUrl(System.getenv("ATLAN_BASE_URL"));
+        Atlan.setMaxNetworkRetries(20);
     }
 }

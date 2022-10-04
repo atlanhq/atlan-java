@@ -8,6 +8,7 @@ import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.relations.GuidReference;
 import com.atlan.model.relations.Reference;
+import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -100,6 +101,29 @@ public class Table extends SQL {
     @Singular
     @Attribute
     Set<Reference> columns;
+
+    /**
+     * Reference to a table by GUID.
+     *
+     * @param guid the GUID of the table to reference
+     * @return reference to a table that can be used for defining a relationship to a table
+     */
+    public static Table refByGuid(String guid) {
+        return Table.builder().guid(guid).build();
+    }
+
+    /**
+     * Reference to a table by qualifiedName.
+     *
+     * @param qualifiedName the qualifiedName of the table to reference
+     * @return reference to a table that can be used for defining a relationship to a table
+     */
+    public static Table refByQualifiedName(String qualifiedName) {
+        return Table.builder()
+                .uniqueAttributes(
+                        UniqueAttributes.builder().qualifiedName(qualifiedName).build())
+                .build();
+    }
 
     /**
      * Builds the minimal object necessary to create a table.

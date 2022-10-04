@@ -8,6 +8,7 @@ import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.relations.GuidReference;
 import com.atlan.model.relations.Reference;
+import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -150,6 +151,29 @@ public class Column extends SQL {
             return materializedView;
         }
         return null;
+    }
+
+    /**
+     * Reference to a column by GUID.
+     *
+     * @param guid the GUID of the column to reference
+     * @return reference to a column that can be used for defining a relationship to a column
+     */
+    public static Column refByGuid(String guid) {
+        return Column.builder().guid(guid).build();
+    }
+
+    /**
+     * Reference to a column by qualifiedName.
+     *
+     * @param qualifiedName the qualifiedName of the column to reference
+     * @return reference to a column that can be used for defining a relationship to a column
+     */
+    public static Column refByQualifiedName(String qualifiedName) {
+        return Column.builder()
+                .uniqueAttributes(
+                        UniqueAttributes.builder().qualifiedName(qualifiedName).build())
+                .build();
     }
 
     /**

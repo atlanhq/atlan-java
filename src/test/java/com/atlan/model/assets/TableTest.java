@@ -101,7 +101,14 @@ public class TableTest {
     private static Table frodo;
     private static String serialized;
 
-    @Test(groups = {"serialize"})
+    @Test(groups = {"builderEquivalency"})
+    void builderEquivalency() {
+        assertEquals(full.toBuilder().build(), full);
+    }
+
+    @Test(
+            groups = {"serialize"},
+            dependsOnGroups = {"builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();

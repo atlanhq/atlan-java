@@ -5,11 +5,11 @@ package com.atlan.model.assets;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanCertificateStatus;
-import com.atlan.model.relations.Reference;
+import com.atlan.model.relations.UniqueAttributes;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
+import java.util.SortedSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -43,21 +43,44 @@ public class GlossaryCategory extends Asset {
 
     /** Glossary in which the category is located. */
     @Attribute
-    Reference anchor;
+    Glossary anchor;
 
     /** Parent category in which this category is located (or null if this is a root-level category). */
     @Attribute
-    Reference parentCategory;
+    GlossaryCategory parentCategory;
 
     /** Terms organized within this category. */
     @Singular
     @Attribute
-    Set<Reference> terms;
+    SortedSet<GlossaryTerm> terms;
 
     /** Child categories organized within this category. */
     @Singular("childCategory")
     @Attribute
-    Set<Reference> childrenCategories;
+    SortedSet<GlossaryCategory> childrenCategories;
+
+    /**
+     * Reference to a category by GUID.
+     *
+     * @param guid the GUID of the category to reference
+     * @return reference to a category that can be used for defining a relationship to a category
+     */
+    public static GlossaryCategory refByGuid(String guid) {
+        return GlossaryCategory.builder().guid(guid).build();
+    }
+
+    /**
+     * Reference to a category by qualifiedName.
+     *
+     * @param qualifiedName the qualifiedName of the category to reference
+     * @return reference to a category that can be used for defining a relationship to a category
+     */
+    public static GlossaryCategory refByQualifiedName(String qualifiedName) {
+        return GlossaryCategory.builder()
+                .uniqueAttributes(
+                        UniqueAttributes.builder().qualifiedName(qualifiedName).build())
+                .build();
+    }
 
     /**
      * Builds the minimal object necessary for creating a category. At least one of glossaryGuid or

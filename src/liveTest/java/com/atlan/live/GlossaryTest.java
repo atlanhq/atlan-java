@@ -13,7 +13,6 @@ import com.atlan.model.core.EntityMutationResponse;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.enums.AtlanStatus;
-import com.atlan.model.relations.GuidReference;
 import com.atlan.model.relations.Reference;
 import java.util.List;
 import java.util.Set;
@@ -60,6 +59,7 @@ public class GlossaryTest extends AtlanLiveTest {
             glossaryQame = glossary.getQualifiedName();
             assertNotNull(glossaryQame);
             assertEquals(glossary.getName(), GLOSSARY_NAME);
+            assertNotEquals(glossaryQame, GLOSSARY_NAME);
         } catch (AtlanException e) {
             e.printStackTrace();
             assertNull(e, "Unexpected exception: " + e.getMessage());
@@ -354,7 +354,7 @@ public class GlossaryTest extends AtlanLiveTest {
                 .announcementType(AtlanAnnouncementType.ISSUE)
                 .announcementTitle(ANNOUNCEMENT_TITLE)
                 .announcementMessage(ANNOUNCEMENT_MESSAGE)
-                .category(GuidReference.to(GlossaryCategory.TYPE_NAME, categoryGuid))
+                .category(GlossaryCategory.refByGuid(categoryGuid))
                 .build();
         try {
             EntityMutationResponse response = term.upsert();

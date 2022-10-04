@@ -51,18 +51,25 @@ public class GlossaryCategoryTest {
             .readme(Reference.to(Readme.TYPE_NAME, "readmeGuid"))
             .meaning(Reference.to(GlossaryTerm.TYPE_NAME, "termGuid1"))
             .meaning(Reference.to(GlossaryTerm.TYPE_NAME, "termGuid2"))
-            .anchor(Reference.to(Glossary.TYPE_NAME, "glossaryGuid"))
-            .parentCategory(Reference.to(GlossaryCategory.TYPE_NAME, "categoryGuid"))
-            .term(Reference.to(GlossaryTerm.TYPE_NAME, "termGuid1"))
-            .term(Reference.to(GlossaryTerm.TYPE_NAME, "termGuid2"))
-            .childCategory(Reference.to(GlossaryCategory.TYPE_NAME, "categoryGuid1"))
-            .childCategory(Reference.to(GlossaryCategory.TYPE_NAME, "categoryGuid2"))
+            .anchor(Glossary.refByGuid("glossaryGuid"))
+            .parentCategory(GlossaryCategory.refByGuid("categoryGuid"))
+            .term(GlossaryTerm.refByGuid("termGuid1"))
+            .term(GlossaryTerm.refByGuid("termGuid2"))
+            .childCategory(GlossaryCategory.refByGuid("categoryGuid1"))
+            .childCategory(GlossaryCategory.refByGuid("categoryGuid2"))
             .build();
 
     private static GlossaryCategory frodo;
     private static String serialized;
 
-    @Test(groups = {"serialize"})
+    @Test(groups = {"builderEquivalency"})
+    void builderEquivalency() {
+        assertEquals(full.toBuilder().build(), full);
+    }
+
+    @Test(
+            groups = {"serialize"},
+            dependsOnGroups = {"builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();

@@ -4,21 +4,36 @@ package com.atlan.model.relations;
 
 import com.atlan.model.core.AtlanObject;
 import com.atlan.model.enums.AtlanStatus;
+import java.util.Comparator;
 import java.util.Map;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 
-// TODO: Consider making this object the root of the entire inheritance hierarchy (above Entity)
-//  - then we can actually pull back fully-typed objects via search (?)
-
-@Data
+@Getter
+@Setter
 @Jacksonized
-@SuperBuilder
-@EqualsAndHashCode(callSuper = true)
-public class Reference extends AtlanObject {
+@SuperBuilder(toBuilder = true)
+@EqualsAndHashCode(callSuper = false)
+public class Reference extends AtlanObject implements Comparable<Reference> {
     private static final long serialVersionUID = 2L;
+
+    // Sort references in a set based first on their relationshipGuid (if any),
+    // then by their guid (if any), then by their qualifiedName (if any),
+    // and finally by their awsArn — at least one of these must exist if this
+    // is any kind of valid reference. (And there cannot be duplicate combinations
+    // of these properties to be a valid set of references: they would be duplicate
+    // references.)
+    private static final Comparator<String> stringComparator = Comparator.nullsFirst(String::compareTo);
+    private static final Comparator<UniqueAttributes> uniqueAttrsComparator = Comparator.comparing(
+                    UniqueAttributes::getQualifiedName, stringComparator)
+            .thenComparing(UniqueAttributes::getAwsArn, stringComparator);
+    private static final Comparator<Reference> referenceComparator = Comparator.comparing(
+                    Reference::getRelationshipGuid, stringComparator)
+            .thenComparing(Reference::getGuid, stringComparator)
+            .thenComparing(Reference::getUniqueAttributes, Comparator.nullsFirst(uniqueAttrsComparator));
 
     /**
      * Quickly create a new reference to another asset, by its GUID.
@@ -42,43 +57,41 @@ public class Reference extends AtlanObject {
         return QualifiedNameReference.of(typeName, qualifiedName);
     }
 
-    /**
-     * Unique identifier of the related entity. If the uniqueAttributes are not provided, this must be
-     * provided.
-     */
-    String guid;
-
-    /** Type of the related entity. */
+    /** Name of the type that defines the entity. */
     String typeName;
 
-    /** Status of the related entity. */
-    String entityStatus;
+    /** Globally-unique identifier for the entity. */
+    String guid;
 
-    /** Human-readable name of the related entity. */
+    /** Human-readable name of the entity. */
     String displayText;
 
-    /** Type of the relationship itself. */
+    /** Status of the entity (if this is a related entity). */
+    String entityStatus;
+
+    /** Type of the relationship (if this is a related entity). */
     String relationshipType;
 
-    /** Unique identifier of the relationship itself. */
+    /** Unique identifier of the relationship (when this is a related entity). */
     String relationshipGuid;
 
-    /** Status of the relationship itself. */
+    /** Status of the relationship (when this is a related entity). */
     AtlanStatus relationshipStatus;
 
-    /** Unused. */
+    /** Attributes specific to the relationship (unused). */
     Map<String, Object> relationshipAttributes;
 
     /**
-     * Attribute(s) that uniquely identify the related entity. If the guid is not provided, these must
-     * be provided.
+     * Attribute(s) that uniquely identify the entity (when this is a related entity).
+     * If the guid is not provided, these must be provided.
      */
     UniqueAttributes uniqueAttributes;
 
     /**
-     * Attributes of the referenced entity.
-     * Note that these will only be populated when the reference is being returned as part of a search query;
-     * in all other circumstances these will be null.
+     * {@inheritDoc}
      */
-    Map<String, Object> attributes;
+    @Override
+    public int compareTo(Reference o) {
+        return referenceComparator.compare(this, o);
+    }
 }

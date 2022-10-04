@@ -5,6 +5,7 @@ package com.atlan.live;
 import static org.testng.Assert.*;
 
 import com.atlan.exception.AtlanException;
+import com.atlan.model.assets.Asset;
 import com.atlan.model.assets.GlossaryTerm;
 import com.atlan.model.assets.S3Object;
 import com.atlan.model.core.Entity;
@@ -24,8 +25,8 @@ public class TermAssignmentTest extends AtlanLiveTest {
     void linkTermToAssets() {
         GlossaryTerm term = GlossaryTerm.updater(
                         GlossaryTest.termQame1, GlossaryTest.TERM_NAME1, GlossaryTest.glossaryGuid)
-                .assignedEntity(Reference.to(S3Object.TYPE_NAME, S3AssetTest.s3Object1Guid))
-                .assignedEntity(Reference.by(S3Object.TYPE_NAME, S3AssetTest.s3Object2Qame))
+                .assignedEntity(S3Object.refByGuid(S3AssetTest.s3Object1Guid))
+                .assignedEntity(S3Object.refByQualifiedName(S3AssetTest.s3Object2Qame))
                 .build();
         try {
             EntityMutationResponse response = term.upsert();
@@ -38,7 +39,7 @@ public class TermAssignmentTest extends AtlanLiveTest {
             term = (GlossaryTerm) full;
             assertEquals(term.getQualifiedName(), GlossaryTest.termQame1);
             assertEquals(term.getName(), GlossaryTest.TERM_NAME1);
-            Set<Reference> entities = term.getAssignedEntities();
+            Set<Asset> entities = term.getAssignedEntities();
             assertNotNull(entities);
             assertEquals(entities.size(), 2);
             Set<String> types = entities.stream().map(Reference::getTypeName).collect(Collectors.toSet());
@@ -69,7 +70,7 @@ public class TermAssignmentTest extends AtlanLiveTest {
             term = (GlossaryTerm) full;
             assertEquals(term.getQualifiedName(), GlossaryTest.termQame1);
             assertEquals(term.getName(), GlossaryTest.TERM_NAME1);
-            Set<Reference> entities = term.getAssignedEntities();
+            Set<Asset> entities = term.getAssignedEntities();
             assertNotNull(entities);
             assertEquals(entities.size(), 2);
             Set<AtlanStatus> statuses =
