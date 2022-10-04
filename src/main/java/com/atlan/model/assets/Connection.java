@@ -10,11 +10,11 @@ import com.atlan.model.enums.AtlanConnectionCategory;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.relations.GuidReference;
 import com.atlan.model.relations.Reference;
+import com.atlan.model.relations.UniqueAttributes;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
-
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -106,6 +106,29 @@ public class Connection extends Asset {
             return AtlanConnectorType.fromValue(tokens[1]);
         }
         return null;
+    }
+
+    /**
+     * Reference to a connection by GUID.
+     *
+     * @param guid the GUID of the connection to reference
+     * @return reference to a connection that can be used for defining a relationship to a connection
+     */
+    public static Connection refByGuid(String guid) {
+        return Connection.builder().guid(guid).build();
+    }
+
+    /**
+     * Reference to a connection by qualifiedName.
+     *
+     * @param qualifiedName the qualifiedName of the connection to reference
+     * @return reference to a connection that can be used for defining a relationship to a connection
+     */
+    public static Connection refByQualifiedName(String qualifiedName) {
+        return Connection.builder()
+                .uniqueAttributes(
+                        UniqueAttributes.builder().qualifiedName(qualifiedName).build())
+                .build();
     }
 
     /**

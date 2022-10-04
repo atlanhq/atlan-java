@@ -14,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
+import java.util.SortedSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -136,7 +136,7 @@ public class Column extends SQL {
     /** Queries that involve this column. */
     @Singular
     @Attribute
-    Set<Reference> queries;
+    SortedSet<Reference> queries;
 
     /**
      * Retrieve the parent of this column, irrespective of its type.

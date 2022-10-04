@@ -9,7 +9,12 @@ public enum AtlanConnectionCategory implements AtlanEnum {
     WAREHOUSE("warehouse"),
     BI("bi"),
     OBJECT_STORE("ObjectStore"),
-    SAAS("SaaS");
+    SAAS("SaaS"),
+    LAKE("lake"),
+    QUERY_ENGINE("queryengine"),
+    ENRICHER("enricher"),
+    ELT("elt"),
+    DATABASE("database");
 
     @JsonValue
     @Getter(onMethod_ = {@Override})
