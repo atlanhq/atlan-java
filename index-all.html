@@ -1498,6 +1498,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">Utility classes for reuse across the SDK.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/relations/Reference.html#compareTo(com.atlan.model.relations.Reference)">compareTo(Reference)</a></span> - Method in class com.atlan.model.relations.<a href="com/atlan/model/relations/Reference.html" title="class in com.atlan.model.relations">Reference</a></dt>
+<dt><span class="memberNameLink"><a href="com/atlan/model/relations/Reference.ReferenceBuilder.html#completeObject(boolean)">completeObject(boolean)</a></span> - Method in class com.atlan.model.relations.<a href="com/atlan/model/relations/Reference.ReferenceBuilder.html" title="class in com.atlan.model.relations">Reference.ReferenceBuilder</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/atlan/exception/ConflictException.html" title="class in com.atlan.exception"><span class="typeNameLink">ConflictException</span></a> - Exception in <a href="com/atlan/exception/package-summary.html">com.atlan.exception</a></dt>
 <dd>
 <div class="block">Error that occurs if the operation being attempted hits a conflict within Atlan.</div>
@@ -2713,6 +2715,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/View.html#getColumns()">getColumns()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/View.html" title="class in com.atlan.model.assets">View</a></dt>
 <dd>
 <div class="block">Columns that exist within this view.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/relations/Reference.html#getCompleteObject()">getCompleteObject()</a></span> - Method in class com.atlan.model.relations.<a href="com/atlan/model/relations/Reference.html" title="class in com.atlan.model.relations">Reference</a></dt>
+<dd>
+<div class="block">Internal tracking of whether this represents a complete view of an object, or not.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/workflow/WorkflowSearchResultStatus.html#getConditions()">getConditions()</a></span> - Method in class com.atlan.model.workflow.<a href="com/atlan/model/workflow/WorkflowSearchResultStatus.html" title="class in com.atlan.model.workflow">WorkflowSearchResultStatus</a></dt>
 <dd>&nbsp;</dd>
@@ -4862,6 +4868,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.ColumnBuilder.html#isClustered(java.lang.Boolean)">isClustered(Boolean)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.ColumnBuilder.html" title="class in com.atlan.model.assets">Column.ColumnBuilder</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/relations/Reference.html#isComplete()">isComplete()</a></span> - Method in class com.atlan.model.relations.<a href="com/atlan/model/relations/Reference.html" title="class in com.atlan.model.relations">Reference</a></dt>
+<dd>
+<div class="block">When true, indicates that this object represents a complete view of the entity.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/typedefs/AttributeDefOptions.AttributeDefOptionsBuilder.html#isDeprecated(java.lang.String)">isDeprecated(String)</a></span> - Method in class com.atlan.model.typedefs.<a href="com/atlan/model/typedefs/AttributeDefOptions.AttributeDefOptionsBuilder.html" title="class in com.atlan.model.typedefs">AttributeDefOptions.AttributeDefOptionsBuilder</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Asset.AssetBuilder.html#isDiscoverable(java.lang.Boolean)">isDiscoverable(Boolean)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Asset.AssetBuilder.html" title="class in com.atlan.model.assets">Asset.AssetBuilder</a></dt>
@@ -4938,6 +4948,18 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/typedefs/AttributeDef.AttributeDefBuilder.html#isUnique(java.lang.Boolean)">isUnique(Boolean)</a></span> - Method in class com.atlan.model.typedefs.<a href="com/atlan/model/typedefs/AttributeDef.AttributeDefBuilder.html" title="class in com.atlan.model.typedefs">AttributeDef.AttributeDefBuilder</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/relations/Reference.html#isValidReference()">isValidReference()</a></span> - Method in class com.atlan.model.relations.<a href="com/atlan/model/relations/Reference.html" title="class in com.atlan.model.relations">Reference</a></dt>
+<dd>
+<div class="block">Indicates whether this object can be used as a reference (relationship).</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/relations/Reference.html#isValidReferenceByGuid()">isValidReferenceByGuid()</a></span> - Method in class com.atlan.model.relations.<a href="com/atlan/model/relations/Reference.html" title="class in com.atlan.model.relations">Reference</a></dt>
+<dd>
+<div class="block">Indicates whether this object can be used as a valid reference by GUID.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/relations/Reference.html#isValidReferenceByQualifiedName()">isValidReferenceByQualifiedName()</a></span> - Method in class com.atlan.model.relations.<a href="com/atlan/model/relations/Reference.html" title="class in com.atlan.model.relations">Reference</a></dt>
+<dd>
+<div class="block">Indicates whether this object can be used as a valid reference by qualifiedName.</div>
+</dd>
 </dl>
 <a id="I:J">
 <!--   -->
@@ -6949,6 +6971,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/View.html#setColumns(java.util.SortedSet)">setColumns(SortedSet&lt;Column&gt;)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/View.html" title="class in com.atlan.model.assets">View</a></dt>
 <dd>
 <div class="block">Columns that exist within this view.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/relations/Reference.html#setCompleteObject()">setCompleteObject()</a></span> - Method in class com.atlan.model.relations.<a href="com/atlan/model/relations/Reference.html" title="class in com.atlan.model.relations">Reference</a></dt>
+<dd>
+<div class="block">Sets the internal tracking of this object to indicate it is a complete representation of an entity.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/workflow/WorkflowSearchResultStatus.html#setConditions(java.util.List)">setConditions(List&lt;Object&gt;)</a></span> - Method in class com.atlan.model.workflow.<a href="com/atlan/model/workflow/WorkflowSearchResultStatus.html" title="class in com.atlan.model.workflow">WorkflowSearchResultStatus</a></dt>
 <dd>&nbsp;</dd>

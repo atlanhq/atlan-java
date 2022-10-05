@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":6,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":6,"i10":10,"i11":10,"i12":10};
+var data = {"i0":10,"i1":6,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":6,"i11":10,"i12":10,"i13":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -198,55 +198,60 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#displayText(java.lang.String)">displayText</a></span>&#8203;(java.lang.String&nbsp;displayText)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#completeObject(boolean)">completeObject</a></span>&#8203;(boolean&nbsp;completeObject)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#entityStatus(java.lang.String)">entityStatus</a></span>&#8203;(java.lang.String&nbsp;entityStatus)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#displayText(java.lang.String)">displayText</a></span>&#8203;(java.lang.String&nbsp;displayText)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#guid(java.lang.String)">guid</a></span>&#8203;(java.lang.String&nbsp;guid)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#entityStatus(java.lang.String)">entityStatus</a></span>&#8203;(java.lang.String&nbsp;entityStatus)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#relationshipAttributes(java.util.Map)">relationshipAttributes</a></span>&#8203;(java.util.Map&lt;java.lang.String,&#8203;java.lang.Object&gt;&nbsp;relationshipAttributes)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#guid(java.lang.String)">guid</a></span>&#8203;(java.lang.String&nbsp;guid)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code><a href="Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#relationshipGuid(java.lang.String)">relationshipGuid</a></span>&#8203;(java.lang.String&nbsp;relationshipGuid)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#relationshipAttributes(java.util.Map)">relationshipAttributes</a></span>&#8203;(java.util.Map&lt;java.lang.String,&#8203;java.lang.Object&gt;&nbsp;relationshipAttributes)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#relationshipStatus(com.atlan.model.enums.AtlanStatus)">relationshipStatus</a></span>&#8203;(<a href="../enums/AtlanStatus.html" title="enum in com.atlan.model.enums">AtlanStatus</a>&nbsp;relationshipStatus)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#relationshipGuid(java.lang.String)">relationshipGuid</a></span>&#8203;(java.lang.String&nbsp;relationshipGuid)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code><a href="Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#relationshipType(java.lang.String)">relationshipType</a></span>&#8203;(java.lang.String&nbsp;relationshipType)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#relationshipStatus(com.atlan.model.enums.AtlanStatus)">relationshipStatus</a></span>&#8203;(<a href="../enums/AtlanStatus.html" title="enum in com.atlan.model.enums">AtlanStatus</a>&nbsp;relationshipStatus)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i9" class="rowColor">
+<td class="colFirst"><code><a href="Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#relationshipType(java.lang.String)">relationshipType</a></span>&#8203;(java.lang.String&nbsp;relationshipType)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>protected abstract <a href="Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#self()">self</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code><a href="Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#typeName(java.lang.String)">typeName</a></span>&#8203;(java.lang.String&nbsp;typeName)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code><a href="Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#uniqueAttributes(com.atlan.model.relations.UniqueAttributes)">uniqueAttributes</a></span>&#8203;(<a href="UniqueAttributes.html" title="class in com.atlan.model.relations">UniqueAttributes</a>&nbsp;uniqueAttributes)</code></th>
 <td class="colLast">&nbsp;</td>
@@ -332,6 +337,19 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../core/AtlanObject.AtlanObjectBuilder.html#build()">build</a></code>&nbsp;in class&nbsp;<code><a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in com.atlan.model.core">AtlanObject.AtlanObjectBuilder</a>&lt;<a href="Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">C</a> extends <a href="Reference.html" title="class in com.atlan.model.relations">Reference</a>,&#8203;<a href="Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">B</a> extends <a href="Reference.ReferenceBuilder.html" title="class in com.atlan.model.relations">Reference.ReferenceBuilder</a>&lt;<a href="Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">C</a>,&#8203;<a href="Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">B</a>&gt;&gt;</code></dd>
+</dl>
+</li>
+</ul>
+<a id="completeObject(boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>completeObject</h4>
+<pre class="methodSignature">public&nbsp;<a href="Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">B</a>&nbsp;completeObject&#8203;(boolean&nbsp;completeObject)</pre>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
 </dl>
 </li>
 </ul>
