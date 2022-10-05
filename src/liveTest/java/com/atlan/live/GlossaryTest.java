@@ -13,8 +13,6 @@ import com.atlan.model.core.EntityMutationResponse;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.enums.AtlanStatus;
-import com.atlan.model.relations.GuidReference;
-import com.atlan.model.relations.Reference;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -60,6 +58,7 @@ public class GlossaryTest extends AtlanLiveTest {
             glossaryQame = glossary.getQualifiedName();
             assertNotNull(glossaryQame);
             assertEquals(glossary.getName(), GLOSSARY_NAME);
+            assertNotEquals(glossaryQame, GLOSSARY_NAME);
         } catch (AtlanException e) {
             e.printStackTrace();
             assertNull(e, "Unexpected exception: " + e.getMessage());
@@ -170,12 +169,12 @@ public class GlossaryTest extends AtlanLiveTest {
             assertNotNull(glossary.getTerms());
             assertEquals(glossary.getTerms().size(), 2);
             Set<String> types =
-                    glossary.getTerms().stream().map(Reference::getTypeName).collect(Collectors.toSet());
+                    glossary.getTerms().stream().map(GlossaryTerm::getTypeName).collect(Collectors.toSet());
             assertNotNull(types);
             assertEquals(types.size(), 1);
             assertTrue(types.contains(GlossaryTerm.TYPE_NAME));
             Set<String> guids =
-                    glossary.getTerms().stream().map(Reference::getGuid).collect(Collectors.toSet());
+                    glossary.getTerms().stream().map(GlossaryTerm::getGuid).collect(Collectors.toSet());
             assertNotNull(guids);
             assertEquals(guids.size(), 2);
             assertTrue(guids.contains(termGuid1));
@@ -183,10 +182,12 @@ public class GlossaryTest extends AtlanLiveTest {
             assertNotNull(glossary.getCategories());
             assertEquals(glossary.getCategories().size(), 1);
             types = glossary.getCategories().stream()
-                    .map(Reference::getTypeName)
+                    .map(GlossaryCategory::getTypeName)
                     .collect(Collectors.toSet());
             assertTrue(types.contains(GlossaryCategory.TYPE_NAME));
-            guids = glossary.getCategories().stream().map(Reference::getGuid).collect(Collectors.toSet());
+            guids = glossary.getCategories().stream()
+                    .map(GlossaryCategory::getGuid)
+                    .collect(Collectors.toSet());
             assertTrue(guids.contains(categoryGuid));
         } catch (AtlanException e) {
             e.printStackTrace();
@@ -354,7 +355,7 @@ public class GlossaryTest extends AtlanLiveTest {
                 .announcementType(AtlanAnnouncementType.ISSUE)
                 .announcementTitle(ANNOUNCEMENT_TITLE)
                 .announcementMessage(ANNOUNCEMENT_MESSAGE)
-                .category(GuidReference.to(GlossaryCategory.TYPE_NAME, categoryGuid))
+                .category(GlossaryCategory.refByGuid(categoryGuid))
                 .build();
         try {
             EntityMutationResponse response = term.upsert();

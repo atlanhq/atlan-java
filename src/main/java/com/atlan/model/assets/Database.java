@@ -6,10 +6,9 @@ import com.atlan.exception.AtlanException;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.enums.AtlanConnectorType;
-import com.atlan.model.relations.GuidReference;
-import com.atlan.model.relations.Reference;
+import com.atlan.model.relations.UniqueAttributes;
 import java.util.List;
-import java.util.Set;
+import java.util.SortedSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -38,7 +37,30 @@ public class Database extends SQL {
     /** Schemas that exist within this database. */
     @Singular
     @Attribute
-    Set<Reference> schemas;
+    SortedSet<Schema> schemas;
+
+    /**
+     * Reference to a database by GUID.
+     *
+     * @param guid the GUID of the database to reference
+     * @return reference to a database that can be used for defining a relationship to a database
+     */
+    public static Database refByGuid(String guid) {
+        return Database.builder().guid(guid).build();
+    }
+
+    /**
+     * Reference to a database by qualifiedName.
+     *
+     * @param qualifiedName the qualifiedName of the database to reference
+     * @return reference to a database that can be used for defining a relationship to a database
+     */
+    public static Database refByQualifiedName(String qualifiedName) {
+        return Database.builder()
+                .uniqueAttributes(
+                        UniqueAttributes.builder().qualifiedName(qualifiedName).build())
+                .build();
+    }
 
     /**
      * Builds the minimal object necessary to create a database.
@@ -166,7 +188,7 @@ public class Database extends SQL {
      * @return the database that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static Database replaceTerms(String qualifiedName, String name, List<Reference> terms)
+    public static Database replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
             throws AtlanException {
         return (Database) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -181,7 +203,7 @@ public class Database extends SQL {
      * @return the database that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static Database appendTerms(String qualifiedName, List<Reference> terms) throws AtlanException {
+    public static Database appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
         return (Database) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -195,7 +217,7 @@ public class Database extends SQL {
      * @return the database that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static Database removeTerms(String qualifiedName, List<GuidReference> terms) throws AtlanException {
+    public static Database removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
         return (Database) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 }

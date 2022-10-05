@@ -6,8 +6,7 @@ import com.atlan.exception.AtlanException;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.enums.AtlanConnectorType;
-import com.atlan.model.relations.GuidReference;
-import com.atlan.model.relations.Reference;
+import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.StringUtils;
 import java.util.List;
 import lombok.*;
@@ -45,7 +44,30 @@ public class PresetDataset extends Preset {
 
     /** Collection in which the dataset exists. */
     @Attribute
-    Reference presetDashboard;
+    PresetDashboard presetDashboard;
+
+    /**
+     * Reference to a Preset dataset by GUID.
+     *
+     * @param guid the GUID of the Preset dataset to reference
+     * @return reference to a Preset dataset that can be used for defining a relationship to a Preset dataset
+     */
+    public static PresetDataset refByGuid(String guid) {
+        return PresetDataset.builder().guid(guid).build();
+    }
+
+    /**
+     * Reference to a Preset dataset by qualifiedName.
+     *
+     * @param qualifiedName the qualifiedName of the Preset dataset to reference
+     * @return reference to a Preset dataset that can be used for defining a relationship to a Preset dataset
+     */
+    public static PresetDataset refByQualifiedName(String qualifiedName) {
+        return PresetDataset.builder()
+                .uniqueAttributes(
+                        UniqueAttributes.builder().qualifiedName(qualifiedName).build())
+                .build();
+    }
 
     /**
      * Builds the minimal object necessary to create a Preset dataset.
@@ -64,7 +86,7 @@ public class PresetDataset extends Preset {
                 .qualifiedName(collectionQualifiedName + "/" + name)
                 .connectorType(connectorType)
                 .presetDashboardQualifiedName(collectionQualifiedName)
-                .presetDashboard(Reference.by(PresetDashboard.TYPE_NAME, collectionQualifiedName))
+                .presetDashboard(PresetDashboard.refByQualifiedName(collectionQualifiedName))
                 .presetWorkspaceQualifiedName(workspaceQualifiedName)
                 .connectionQualifiedName(connectionQualifiedName);
     }
@@ -178,7 +200,7 @@ public class PresetDataset extends Preset {
      * @return the dataset that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static PresetDataset replaceTerms(String qualifiedName, String name, List<Reference> terms)
+    public static PresetDataset replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
             throws AtlanException {
         return (PresetDataset) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -193,7 +215,7 @@ public class PresetDataset extends Preset {
      * @return the dataset that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static PresetDataset appendTerms(String qualifiedName, List<Reference> terms) throws AtlanException {
+    public static PresetDataset appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
         return (PresetDataset) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -207,7 +229,7 @@ public class PresetDataset extends Preset {
      * @return the dataset that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static PresetDataset removeTerms(String qualifiedName, List<GuidReference> terms) throws AtlanException {
+    public static PresetDataset removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
         return (PresetDataset) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 }

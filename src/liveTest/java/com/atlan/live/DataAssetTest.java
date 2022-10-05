@@ -11,7 +11,6 @@ import com.atlan.model.assets.*;
 import com.atlan.model.core.Entity;
 import com.atlan.model.core.EntityMutationResponse;
 import com.atlan.model.enums.*;
-import com.atlan.model.relations.Reference;
 import java.util.Collections;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -562,7 +561,7 @@ public class DataAssetTest extends AtlanLiveTest {
             assertEquals(column.getGuid(), columnGuid1);
             assertEquals(column.getQualifiedName(), columnQame1);
             assertEquals(column.getName(), COLUMN_NAME1);
-            Reference one = column.getParent();
+            SQL one = column.getParent();
             assertNotNull(one);
             assertEquals(one.getTypeName(), Table.TYPE_NAME);
             assertEquals(one.getGuid(), tableGuid);
@@ -584,7 +583,7 @@ public class DataAssetTest extends AtlanLiveTest {
             assertEquals(column.getGuid(), columnGuid3);
             assertEquals(column.getQualifiedName(), columnQame3);
             assertEquals(column.getName(), COLUMN_NAME3);
-            Reference one = column.getParent();
+            SQL one = column.getParent();
             assertNotNull(one);
             assertEquals(one.getTypeName(), View.TYPE_NAME);
             assertEquals(one.getGuid(), viewGuid);
@@ -606,7 +605,7 @@ public class DataAssetTest extends AtlanLiveTest {
             assertEquals(column.getGuid(), columnGuid5);
             assertEquals(column.getQualifiedName(), columnQame5);
             assertEquals(column.getName(), COLUMN_NAME5);
-            Reference one = column.getParent();
+            SQL one = column.getParent();
             assertNotNull(one);
             assertEquals(one.getTypeName(), MaterializedView.TYPE_NAME);
             assertEquals(one.getGuid(), mviewGuid);
@@ -652,15 +651,14 @@ public class DataAssetTest extends AtlanLiveTest {
             assertNotNull(table.getColumns());
             assertEquals(table.getColumns().size(), 2);
             Set<String> types =
-                    table.getColumns().stream().map(Reference::getTypeName).collect(Collectors.toSet());
+                    table.getColumns().stream().map(Column::getTypeName).collect(Collectors.toSet());
             assertEquals(types.size(), 1);
             assertTrue(types.contains(Column.TYPE_NAME));
-            Set<String> guids =
-                    table.getColumns().stream().map(Reference::getGuid).collect(Collectors.toSet());
+            Set<String> guids = table.getColumns().stream().map(Column::getGuid).collect(Collectors.toSet());
             assertEquals(guids.size(), 2);
             assertTrue(guids.contains(columnGuid1));
             assertTrue(guids.contains(columnGuid2));
-            Reference one = table.getSchema();
+            Schema one = table.getSchema();
             assertNotNull(one);
             assertEquals(one.getTypeName(), Schema.TYPE_NAME);
             assertEquals(one.getGuid(), schemaGuid);
@@ -685,15 +683,14 @@ public class DataAssetTest extends AtlanLiveTest {
             assertNotNull(view.getColumns());
             assertEquals(view.getColumns().size(), 2);
             Set<String> types =
-                    view.getColumns().stream().map(Reference::getTypeName).collect(Collectors.toSet());
+                    view.getColumns().stream().map(Column::getTypeName).collect(Collectors.toSet());
             assertEquals(types.size(), 1);
             assertTrue(types.contains(Column.TYPE_NAME));
-            Set<String> guids =
-                    view.getColumns().stream().map(Reference::getGuid).collect(Collectors.toSet());
+            Set<String> guids = view.getColumns().stream().map(Column::getGuid).collect(Collectors.toSet());
             assertEquals(guids.size(), 2);
             assertTrue(guids.contains(columnGuid3));
             assertTrue(guids.contains(columnGuid4));
-            Reference one = view.getSchema();
+            Schema one = view.getSchema();
             assertNotNull(one);
             assertEquals(one.getTypeName(), Schema.TYPE_NAME);
             assertEquals(one.getGuid(), schemaGuid);
@@ -718,15 +715,14 @@ public class DataAssetTest extends AtlanLiveTest {
             assertNotNull(mview.getColumns());
             assertEquals(mview.getColumns().size(), 2);
             Set<String> types =
-                    mview.getColumns().stream().map(Reference::getTypeName).collect(Collectors.toSet());
+                    mview.getColumns().stream().map(Column::getTypeName).collect(Collectors.toSet());
             assertEquals(types.size(), 1);
             assertTrue(types.contains(Column.TYPE_NAME));
-            Set<String> guids =
-                    mview.getColumns().stream().map(Reference::getGuid).collect(Collectors.toSet());
+            Set<String> guids = mview.getColumns().stream().map(Column::getGuid).collect(Collectors.toSet());
             assertEquals(guids.size(), 2);
             assertTrue(guids.contains(columnGuid5));
             assertTrue(guids.contains(columnGuid6));
-            Reference one = mview.getSchema();
+            Schema one = mview.getSchema();
             assertNotNull(one);
             assertEquals(one.getTypeName(), Schema.TYPE_NAME);
             assertEquals(one.getGuid(), schemaGuid);
@@ -748,33 +744,32 @@ public class DataAssetTest extends AtlanLiveTest {
             assertEquals(schema.getGuid(), schemaGuid);
             assertEquals(schema.getQualifiedName(), schemaQame);
             assertEquals(schema.getName(), SCHEMA_NAME);
-            Reference one = schema.getDatabase();
+            Database one = schema.getDatabase();
             assertNotNull(one);
             assertEquals(one.getTypeName(), Database.TYPE_NAME);
             assertEquals(one.getGuid(), databaseGuid);
             assertNotNull(schema.getTables());
             assertEquals(schema.getTables().size(), 1);
             Set<String> types =
-                    schema.getTables().stream().map(Reference::getTypeName).collect(Collectors.toSet());
+                    schema.getTables().stream().map(Table::getTypeName).collect(Collectors.toSet());
             assertEquals(types.size(), 1);
             assertTrue(types.contains(Table.TYPE_NAME));
-            Set<String> guids =
-                    schema.getTables().stream().map(Reference::getGuid).collect(Collectors.toSet());
+            Set<String> guids = schema.getTables().stream().map(Table::getGuid).collect(Collectors.toSet());
             assertEquals(guids.size(), 1);
             assertTrue(guids.contains(tableGuid));
-            types = schema.getViews().stream().map(Reference::getTypeName).collect(Collectors.toSet());
+            types = schema.getViews().stream().map(View::getTypeName).collect(Collectors.toSet());
             assertEquals(types.size(), 1);
             assertTrue(types.contains(View.TYPE_NAME));
-            guids = schema.getViews().stream().map(Reference::getGuid).collect(Collectors.toSet());
+            guids = schema.getViews().stream().map(View::getGuid).collect(Collectors.toSet());
             assertEquals(guids.size(), 1);
             assertTrue(guids.contains(viewGuid));
             types = schema.getMaterializedViews().stream()
-                    .map(Reference::getTypeName)
+                    .map(MaterializedView::getTypeName)
                     .collect(Collectors.toSet());
             assertEquals(types.size(), 1);
             assertTrue(types.contains(MaterializedView.TYPE_NAME));
             guids = schema.getMaterializedViews().stream()
-                    .map(Reference::getGuid)
+                    .map(MaterializedView::getGuid)
                     .collect(Collectors.toSet());
             assertEquals(guids.size(), 1);
             assertTrue(guids.contains(mviewGuid));
@@ -799,11 +794,11 @@ public class DataAssetTest extends AtlanLiveTest {
             assertNotNull(database.getSchemas());
             assertEquals(database.getSchemas().size(), 1);
             Set<String> types =
-                    database.getSchemas().stream().map(Reference::getTypeName).collect(Collectors.toSet());
+                    database.getSchemas().stream().map(Schema::getTypeName).collect(Collectors.toSet());
             assertEquals(types.size(), 1);
             assertTrue(types.contains(Schema.TYPE_NAME));
             Set<String> guids =
-                    database.getSchemas().stream().map(Reference::getGuid).collect(Collectors.toSet());
+                    database.getSchemas().stream().map(Schema::getGuid).collect(Collectors.toSet());
             assertEquals(guids.size(), 1);
             assertTrue(guids.contains(schemaGuid));
         } catch (AtlanException e) {

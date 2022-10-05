@@ -7,8 +7,7 @@ import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.GoogleDataStudioAssetType;
-import com.atlan.model.relations.GuidReference;
-import com.atlan.model.relations.Reference;
+import com.atlan.model.relations.UniqueAttributes;
 import java.util.List;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -46,6 +45,29 @@ public class DataStudioAsset extends Google {
     /** Whether the asset is soft-deleted in Google Data Studio (true) or not (false). */
     @Attribute
     Boolean isTrashedDataStudioAsset;
+
+    /**
+     * Reference to a Google Data Studio asset by GUID.
+     *
+     * @param guid the GUID of the Google Data Studio asset to reference
+     * @return reference to a Google Data Studio asset that can be used for defining a relationship to a Google Data Studio asset
+     */
+    public static DataStudioAsset refByGuid(String guid) {
+        return DataStudioAsset.builder().guid(guid).build();
+    }
+
+    /**
+     * Reference to a Google Data Studio asset by qualifiedName.
+     *
+     * @param qualifiedName the qualifiedName of the Google Data Studio asset to reference
+     * @return reference to a Google Data Studio asset that can be used for defining a relationship to a Google Data Studio asset
+     */
+    public static DataStudioAsset refByQualifiedName(String qualifiedName) {
+        return DataStudioAsset.builder()
+                .uniqueAttributes(
+                        UniqueAttributes.builder().qualifiedName(qualifiedName).build())
+                .build();
+    }
 
     /**
      * Builds the minimal object necessary to create a Google Data Studio asset.
@@ -174,7 +196,7 @@ public class DataStudioAsset extends Google {
      * @return the asset that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static DataStudioAsset replaceTerms(String qualifiedName, String name, List<Reference> terms)
+    public static DataStudioAsset replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
             throws AtlanException {
         return (DataStudioAsset) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -189,7 +211,7 @@ public class DataStudioAsset extends Google {
      * @return the asset that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static DataStudioAsset appendTerms(String qualifiedName, List<Reference> terms) throws AtlanException {
+    public static DataStudioAsset appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
         return (DataStudioAsset) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -203,7 +225,7 @@ public class DataStudioAsset extends Google {
      * @return the asset that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static DataStudioAsset removeTerms(String qualifiedName, List<GuidReference> terms) throws AtlanException {
+    public static DataStudioAsset removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
         return (DataStudioAsset) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 }

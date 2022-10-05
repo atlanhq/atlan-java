@@ -12,8 +12,6 @@ import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
-import com.atlan.model.relations.GuidReference;
-import com.atlan.model.relations.Reference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -102,37 +100,37 @@ public abstract class Asset extends Entity {
     /** List of users who own the asset. */
     @Singular
     @Attribute
-    Set<String> ownerUsers;
+    SortedSet<String> ownerUsers;
 
     /** List of groups who own the asset. */
     @Singular
     @Attribute
-    Set<String> ownerGroups;
+    SortedSet<String> ownerGroups;
 
     /** List of users who administer the asset. (This is only used for Connection assets.) */
     @Singular
     @Attribute
-    Set<String> adminUsers;
+    SortedSet<String> adminUsers;
 
     /** List of groups who administer the asset. (This is only used for Connection assets.) */
     @Singular
     @Attribute
-    Set<String> adminGroups;
+    SortedSet<String> adminGroups;
 
     /** List of roles who administer the asset. (This is only used for Connection assets.) */
     @Singular
     @Attribute
-    Set<String> adminRoles;
+    SortedSet<String> adminRoles;
 
     /** Unused. */
     @Singular
     @Attribute
-    Set<String> viewerUsers;
+    SortedSet<String> viewerUsers;
 
     /** Unused. */
     @Singular
     @Attribute
-    Set<String> viewerGroups;
+    SortedSet<String> viewerGroups;
 
     /** Type of the connector through which this asset is accessible. */
     @Attribute
@@ -215,16 +213,16 @@ public abstract class Asset extends Entity {
     /** Resources that are linked to this asset. */
     @Singular
     @Attribute
-    Set<Reference> links;
+    SortedSet<Link> links;
 
     /** Readme that is linked to this asset. */
     @Attribute
-    Reference readme;
+    Readme readme;
 
     /** Terms that are linked to this asset. */
     @Singular
     @Attribute
-    Set<Reference> meanings;
+    SortedSet<GlossaryTerm> meanings;
 
     /** Remove the certificate from the asset, if any is set on the asset. */
     public void removeCertificate() {
@@ -406,7 +404,7 @@ public abstract class Asset extends Entity {
      * @return the asset that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    protected static Entity replaceTerms(AssetBuilder<?, ?> builder, List<Reference> terms) throws AtlanException {
+    protected static Entity replaceTerms(AssetBuilder<?, ?> builder, List<GlossaryTerm> terms) throws AtlanException {
         if (terms == null || terms.isEmpty()) {
             Asset asset = builder.build();
             asset.removeMeanings();
@@ -427,14 +425,14 @@ public abstract class Asset extends Entity {
      * @return the asset that was updated (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    protected static Entity appendTerms(String typeName, String qualifiedName, List<Reference> terms)
+    protected static Entity appendTerms(String typeName, String qualifiedName, List<GlossaryTerm> terms)
             throws AtlanException {
         Asset existing = getExistingAsset(typeName, qualifiedName);
         if (existing != null) {
-            Set<Reference> replacementTerms = new LinkedHashSet<>();
-            Set<Reference> existingTerms = existing.getMeanings();
+            Set<GlossaryTerm> replacementTerms = new TreeSet<>();
+            Set<GlossaryTerm> existingTerms = existing.getMeanings();
             if (existingTerms != null) {
-                for (Reference term : existingTerms) {
+                for (GlossaryTerm term : existingTerms) {
                     if (term.getRelationshipStatus() != AtlanStatus.DELETED) {
                         // Only re-include the terms that are not already deleted
                         replacementTerms.add(term);
@@ -460,14 +458,14 @@ public abstract class Asset extends Entity {
      * @return the asset that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    protected static Entity removeTerms(String typeName, String qualifiedName, List<GuidReference> terms)
+    protected static Entity removeTerms(String typeName, String qualifiedName, List<GlossaryTerm> terms)
             throws AtlanException {
         Asset existing = getExistingAsset(typeName, qualifiedName);
         if (existing != null) {
-            Set<Reference> replacementTerms = new LinkedHashSet<>();
-            Set<Reference> existingTerms = existing.getMeanings();
-            Set<String> removeGuids = terms.stream().map(Reference::getGuid).collect(Collectors.toSet());
-            for (Reference term : existingTerms) {
+            Set<GlossaryTerm> replacementTerms = new TreeSet<>();
+            Set<GlossaryTerm> existingTerms = existing.getMeanings();
+            Set<String> removeGuids = terms.stream().map(GlossaryTerm::getGuid).collect(Collectors.toSet());
+            for (GlossaryTerm term : existingTerms) {
                 String existingTermGuid = term.getGuid();
                 if (!removeGuids.contains(existingTermGuid) && term.getRelationshipStatus() != AtlanStatus.DELETED) {
                     // Only re-include the terms that we are not removing and that are not already deleted

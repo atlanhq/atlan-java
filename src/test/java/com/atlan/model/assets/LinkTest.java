@@ -5,13 +5,14 @@ package com.atlan.model.assets;
 import static org.testng.Assert.*;
 
 import com.atlan.model.enums.AtlanStatus;
+import com.atlan.model.enums.LinkIconType;
 import com.atlan.serde.Serde;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.testng.annotations.Test;
 
-public class ReadmeTest {
+public class LinkTest {
 
-    private static final Readme full = Readme.builder()
+    private static final Link full = Link.builder()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -22,16 +23,13 @@ public class ReadmeTest {
             .isIncomplete(false)
             .qualifiedName("qualifiedName")
             .name("name")
-            .displayName("displayName")
-            .description("<h1>description</h1>")
-            .userDescription("userDescription")
             .tenantId("tenantId")
-            .isDiscoverable(true)
-            .isEditable(true)
+            .icon("\uD83D\uDE80")
+            .iconType(LinkIconType.EMOJI)
             .asset(GlossaryTerm.refByGuid("termGuid3"))
             .build();
 
-    private static Readme frodo;
+    private static Link frodo;
     private static String serialized;
 
     @Test(groups = {"builderEquivalency"})
@@ -53,7 +51,7 @@ public class ReadmeTest {
             dependsOnGroups = {"serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
-        frodo = Serde.mapper.readValue(serialized, Readme.class);
+        frodo = Serde.mapper.readValue(serialized, Link.class);
         assertNotNull(frodo);
     }
 

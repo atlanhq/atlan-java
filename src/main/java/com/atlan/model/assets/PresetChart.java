@@ -6,8 +6,7 @@ import com.atlan.exception.AtlanException;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.enums.AtlanConnectorType;
-import com.atlan.model.relations.GuidReference;
-import com.atlan.model.relations.Reference;
+import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.StringUtils;
 import java.util.List;
 import java.util.Map;
@@ -42,7 +41,30 @@ public class PresetChart extends Preset {
 
     /** Collection in which the chart exists. */
     @Attribute
-    Reference presetDashboard;
+    PresetDashboard presetDashboard;
+
+    /**
+     * Reference to a Preset chart by GUID.
+     *
+     * @param guid the GUID of the Preset chart to reference
+     * @return reference to a Preset chart that can be used for defining a relationship to a Preset chart
+     */
+    public static PresetChart refByGuid(String guid) {
+        return PresetChart.builder().guid(guid).build();
+    }
+
+    /**
+     * Reference to a Preset chart by qualifiedName.
+     *
+     * @param qualifiedName the qualifiedName of the Preset chart to reference
+     * @return reference to a Preset chart that can be used for defining a relationship to a Preset chart
+     */
+    public static PresetChart refByQualifiedName(String qualifiedName) {
+        return PresetChart.builder()
+                .uniqueAttributes(
+                        UniqueAttributes.builder().qualifiedName(qualifiedName).build())
+                .build();
+    }
 
     /**
      * Builds the minimal object necessary to create a Preset chart.
@@ -61,7 +83,7 @@ public class PresetChart extends Preset {
                 .qualifiedName(collectionQualifiedName + "/" + name)
                 .connectorType(connectorType)
                 .presetDashboardQualifiedName(collectionQualifiedName)
-                .presetDashboard(Reference.by(PresetDashboard.TYPE_NAME, collectionQualifiedName))
+                .presetDashboard(PresetDashboard.refByQualifiedName(collectionQualifiedName))
                 .presetWorkspaceQualifiedName(workspaceQualifiedName)
                 .connectionQualifiedName(connectionQualifiedName);
     }
@@ -175,7 +197,7 @@ public class PresetChart extends Preset {
      * @return the chart that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static PresetChart replaceTerms(String qualifiedName, String name, List<Reference> terms)
+    public static PresetChart replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
             throws AtlanException {
         return (PresetChart) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -190,7 +212,7 @@ public class PresetChart extends Preset {
      * @return the chart that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static PresetChart appendTerms(String qualifiedName, List<Reference> terms) throws AtlanException {
+    public static PresetChart appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
         return (PresetChart) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -204,7 +226,7 @@ public class PresetChart extends Preset {
      * @return the chart that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static PresetChart removeTerms(String qualifiedName, List<GuidReference> terms) throws AtlanException {
+    public static PresetChart removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
         return (PresetChart) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 }

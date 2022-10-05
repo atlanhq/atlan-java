@@ -2,9 +2,10 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.lineage;
 
+import com.atlan.model.assets.Asset;
 import com.atlan.model.assets.Attribute;
 import com.atlan.model.enums.AtlanConnectorType;
-import com.atlan.model.relations.Reference;
+import com.atlan.model.relations.UniqueAttributes;
 import java.util.List;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -29,7 +30,30 @@ public class ColumnProcess extends AbstractProcess {
 
     /** Parent process through which this column-level process runs. */
     @Attribute
-    Reference process;
+    LineageProcess process;
+
+    /**
+     * Reference to a column process by GUID.
+     *
+     * @param guid the GUID of the column process to reference
+     * @return reference to a column process that can be used for defining a relationship to a column process
+     */
+    public static ColumnProcess refByGuid(String guid) {
+        return ColumnProcess.builder().guid(guid).build();
+    }
+
+    /**
+     * Reference to a column process by qualifiedName.
+     *
+     * @param qualifiedName the qualifiedName of the column process to reference
+     * @return reference to a column process that can be used for defining a relationship to a column process
+     */
+    public static ColumnProcess refByQualifiedName(String qualifiedName) {
+        return ColumnProcess.builder()
+                .uniqueAttributes(
+                        UniqueAttributes.builder().qualifiedName(qualifiedName).build())
+                .build();
+    }
 
     /**
      * Builds the minimal object necessary to create a column-level process.
@@ -47,8 +71,8 @@ public class ColumnProcess extends AbstractProcess {
             AtlanConnectorType connectorType,
             String connectionName,
             String connectionQualifiedName,
-            List<Reference> inputs,
-            List<Reference> outputs) {
+            List<Asset> inputs,
+            List<Asset> outputs) {
         return ColumnProcess.builder()
                 .qualifiedName(generateQualifiedName(
                         name, connectorType, connectionName, connectionQualifiedName, inputs, outputs, null))

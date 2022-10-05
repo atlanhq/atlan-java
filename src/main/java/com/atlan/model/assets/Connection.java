@@ -8,11 +8,11 @@ import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.enums.AtlanConnectionCategory;
 import com.atlan.model.enums.AtlanConnectorType;
-import com.atlan.model.relations.GuidReference;
-import com.atlan.model.relations.Reference;
+import com.atlan.model.relations.UniqueAttributes;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;
 import java.util.Map;
+import java.util.SortedSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -88,6 +88,11 @@ public class Connection extends Asset {
     @Attribute
     String sourceLogo;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<String> connectionDbtEnvironments;
+
     /**
      * Determine the connector type from the provided qualifiedName.
      *
@@ -99,6 +104,29 @@ public class Connection extends Asset {
             return AtlanConnectorType.fromValue(tokens[1]);
         }
         return null;
+    }
+
+    /**
+     * Reference to a connection by GUID.
+     *
+     * @param guid the GUID of the connection to reference
+     * @return reference to a connection that can be used for defining a relationship to a connection
+     */
+    public static Connection refByGuid(String guid) {
+        return Connection.builder().guid(guid).build();
+    }
+
+    /**
+     * Reference to a connection by qualifiedName.
+     *
+     * @param qualifiedName the qualifiedName of the connection to reference
+     * @return reference to a connection that can be used for defining a relationship to a connection
+     */
+    public static Connection refByQualifiedName(String qualifiedName) {
+        return Connection.builder()
+                .uniqueAttributes(
+                        UniqueAttributes.builder().qualifiedName(qualifiedName).build())
+                .build();
     }
 
     /**
@@ -270,7 +298,7 @@ public class Connection extends Asset {
      * @return the connection that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static Connection replaceTerms(String qualifiedName, String name, List<Reference> terms)
+    public static Connection replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
             throws AtlanException {
         return (Connection) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -285,7 +313,7 @@ public class Connection extends Asset {
      * @return the connection that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static Connection appendTerms(String qualifiedName, List<Reference> terms) throws AtlanException {
+    public static Connection appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
         return (Connection) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -299,7 +327,7 @@ public class Connection extends Asset {
      * @return the connection that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static Connection removeTerms(String qualifiedName, List<GuidReference> terms) throws AtlanException {
+    public static Connection removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
         return (Connection) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 }

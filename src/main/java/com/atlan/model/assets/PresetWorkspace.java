@@ -6,10 +6,9 @@ import com.atlan.exception.AtlanException;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.enums.AtlanConnectorType;
-import com.atlan.model.relations.GuidReference;
-import com.atlan.model.relations.Reference;
+import com.atlan.model.relations.UniqueAttributes;
 import java.util.List;
-import java.util.Set;
+import java.util.SortedSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -70,7 +69,30 @@ public class PresetWorkspace extends Preset {
     /** Collections within this workspace. */
     @Singular
     @Attribute
-    Set<Reference> presetDashboards;
+    SortedSet<PresetDashboard> presetDashboards;
+
+    /**
+     * Reference to a Preset workspace by GUID.
+     *
+     * @param guid the GUID of the Preset workspace to reference
+     * @return reference to a Preset workspace that can be used for defining a relationship to a Preset workspace
+     */
+    public static PresetWorkspace refByGuid(String guid) {
+        return PresetWorkspace.builder().guid(guid).build();
+    }
+
+    /**
+     * Reference to a Preset workspace by qualifiedName.
+     *
+     * @param qualifiedName the qualifiedName of the Preset workspace to reference
+     * @return reference to a Preset workspace that can be used for defining a relationship to a Preset workspace
+     */
+    public static PresetWorkspace refByQualifiedName(String qualifiedName) {
+        return PresetWorkspace.builder()
+                .uniqueAttributes(
+                        UniqueAttributes.builder().qualifiedName(qualifiedName).build())
+                .build();
+    }
 
     /**
      * Builds the minimal object necessary to create a Preset workspace.
@@ -207,7 +229,7 @@ public class PresetWorkspace extends Preset {
      * @return the workspace that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static PresetWorkspace replaceTerms(String qualifiedName, String name, List<Reference> terms)
+    public static PresetWorkspace replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
             throws AtlanException {
         return (PresetWorkspace) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -222,7 +244,7 @@ public class PresetWorkspace extends Preset {
      * @return the workspace that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static PresetWorkspace appendTerms(String qualifiedName, List<Reference> terms) throws AtlanException {
+    public static PresetWorkspace appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
         return (PresetWorkspace) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -236,7 +258,7 @@ public class PresetWorkspace extends Preset {
      * @return the workspace that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static PresetWorkspace removeTerms(String qualifiedName, List<GuidReference> terms) throws AtlanException {
+    public static PresetWorkspace removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
         return (PresetWorkspace) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 }

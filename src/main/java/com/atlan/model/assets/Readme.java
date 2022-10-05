@@ -2,8 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
-import com.atlan.model.relations.GuidReference;
-import com.atlan.model.relations.Reference;
+import com.atlan.model.relations.UniqueAttributes;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -27,24 +26,45 @@ public class Readme extends Resource {
 
     /** Asset to which the README is linked. */
     @Attribute
-    Reference asset;
+    Asset asset;
+
+    /**
+     * Reference to a README by GUID.
+     *
+     * @param guid the GUID of the README to reference
+     * @return reference to a README that can be used for defining a relationship to a README
+     */
+    public static Readme refByGuid(String guid) {
+        return Readme.builder().guid(guid).build();
+    }
+
+    /**
+     * Reference to a README by qualifiedName.
+     *
+     * @param qualifiedName the qualifiedName of the README to reference
+     * @return reference to a README that can be used for defining a relationship to a README
+     */
+    public static Readme refByQualifiedName(String qualifiedName) {
+        return Readme.builder()
+                .uniqueAttributes(
+                        UniqueAttributes.builder().qualifiedName(qualifiedName).build())
+                .build();
+    }
 
     /**
      * Builds the minimal object necessary to create a README.
      *
-     * @param assetTypeName type of the asset to which the README should be attached
-     * @param assetGuid the GUID of the asset to which the README should be attached
+     * @param reference a reference, by GUID, to the asset to which the README should be attached
      * @param assetName name of the asset to which the README should be attached
      * @param content the HTML content to use for the README
      * @return the minimal object necessary to create the README and attach it to the asset, as a builder
      */
-    public static ReadmeBuilder<?, ?> creator(
-            String assetTypeName, String assetGuid, String assetName, String content) {
+    public static ReadmeBuilder<?, ?> creator(Asset reference, String assetName, String content) {
         return Readme.builder()
-                .qualifiedName(generateQualifiedName(assetGuid))
+                .qualifiedName(generateQualifiedName(reference.getGuid()))
                 .name(generateName(assetName))
                 .description(content)
-                .asset(GuidReference.to(assetTypeName, assetGuid));
+                .asset(reference);
     }
 
     /**

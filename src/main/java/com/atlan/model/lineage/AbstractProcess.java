@@ -5,7 +5,6 @@ package com.atlan.model.lineage;
 import com.atlan.model.assets.Asset;
 import com.atlan.model.assets.Attribute;
 import com.atlan.model.enums.AtlanConnectorType;
-import com.atlan.model.relations.Reference;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -43,12 +42,12 @@ public abstract class AbstractProcess extends Asset {
     /** Assets that are inputs to this process. */
     @Singular
     @Attribute
-    List<Reference> inputs;
+    List<Asset> inputs;
 
     /** Assets that are outputs from this process. */
     @Singular
     @Attribute
-    List<Reference> outputs;
+    List<Asset> outputs;
 
     /**
      * Generate a unique qualifiedName for a process.
@@ -65,9 +64,9 @@ public abstract class AbstractProcess extends Asset {
             AtlanConnectorType connectorType,
             String connectionName,
             String connectionQualifiedName,
-            List<Reference> inputs,
-            List<Reference> outputs,
-            Reference parent) {
+            List<Asset> inputs,
+            List<Asset> outputs,
+            LineageProcess parent) {
         StringBuilder sb = new StringBuilder();
         sb.append(name).append(connectorType.getValue()).append(connectionName).append(connectionQualifiedName);
         if (parent != null) {
@@ -90,8 +89,8 @@ public abstract class AbstractProcess extends Asset {
      * @param sb into which to append
      * @param relationships to append
      */
-    private static void appendRelationships(StringBuilder sb, List<Reference> relationships) {
-        for (Reference relationship : relationships) {
+    private static void appendRelationships(StringBuilder sb, List<Asset> relationships) {
+        for (Asset relationship : relationships) {
             appendRelationship(sb, relationship);
         }
     }
@@ -101,7 +100,7 @@ public abstract class AbstractProcess extends Asset {
      * @param sb into which to append
      * @param relationship to append
      */
-    private static void appendRelationship(StringBuilder sb, Reference relationship) {
+    private static void appendRelationship(StringBuilder sb, Asset relationship) {
         // TODO: if two calls are made for the same process, but one uses GUIDs for
         //  its references and the other uses qualifiedName, we'll end up with different
         //  hashes (duplicate processes)

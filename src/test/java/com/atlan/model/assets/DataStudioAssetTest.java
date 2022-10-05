@@ -5,7 +5,6 @@ package com.atlan.model.assets;
 import static org.testng.Assert.*;
 
 import com.atlan.model.enums.*;
-import com.atlan.model.relations.Reference;
 import com.atlan.serde.Serde;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.testng.annotations.Test;
@@ -61,11 +60,11 @@ public class DataStudioAssetTest {
             .sourceCreatedAt(123456789L)
             .sourceUpdatedAt(123456789L)
             .sourceUpdatedBy("sourceUpdatedBy")
-            .link(Reference.to("Resource", "linkGuid1"))
-            .link(Reference.to("Resource", "linkGuid2"))
-            .readme(Reference.to("Readme", "readmeGuid"))
-            .meaning(Reference.to(GlossaryTerm.TYPE_NAME, "termGuid1"))
-            .meaning(Reference.to(GlossaryTerm.TYPE_NAME, "termGuid2"))
+            .link(Link.refByGuid("linkGuid1"))
+            .link(Link.refByGuid("linkGuid2"))
+            .readme(Readme.refByGuid("readmeGuid"))
+            .meaning(GlossaryTerm.refByGuid("termGuid1"))
+            .meaning(GlossaryTerm.refByGuid("termGuid2"))
             .googleService("googleService")
             .googleProjectName("googleProjectName")
             .googleProjectId("googleProjectId")
@@ -79,7 +78,14 @@ public class DataStudioAssetTest {
     private static DataStudioAsset frodo;
     private static String serialized;
 
-    @Test(groups = {"serialize"})
+    @Test(groups = {"builderEquivalency"})
+    void builderEquivalency() {
+        assertEquals(full.toBuilder().build(), full);
+    }
+
+    @Test(
+            groups = {"serialize"},
+            dependsOnGroups = {"builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();

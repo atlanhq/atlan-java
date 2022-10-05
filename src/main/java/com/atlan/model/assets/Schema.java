@@ -6,12 +6,11 @@ import com.atlan.exception.AtlanException;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.enums.AtlanConnectorType;
-import com.atlan.model.relations.GuidReference;
-import com.atlan.model.relations.Reference;
+import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
-import java.util.Set;
+import java.util.SortedSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -44,23 +43,46 @@ public class Schema extends SQL {
 
     /** Database in which this schema exists. */
     @Attribute
-    Reference database;
+    Database database;
 
     /** Tables that exist within this schema. */
     @Singular
     @Attribute
-    Set<Reference> tables;
+    SortedSet<Table> tables;
 
     /** Views that exist within this schema. */
     @Singular
     @Attribute
-    Set<Reference> views;
+    SortedSet<View> views;
 
     /** Materialized views that exist within this schema. */
     @Singular
     @JsonProperty("materialisedViews")
     @Attribute
-    Set<Reference> materializedViews;
+    SortedSet<MaterializedView> materializedViews;
+
+    /**
+     * Reference to a schema by GUID.
+     *
+     * @param guid the GUID of the schema to reference
+     * @return reference to a schema that can be used for defining a relationship to a schema
+     */
+    public static Schema refByGuid(String guid) {
+        return Schema.builder().guid(guid).build();
+    }
+
+    /**
+     * Reference to a schema by qualifiedName.
+     *
+     * @param qualifiedName the qualifiedName of the schema to reference
+     * @return reference to a schema that can be used for defining a relationship to a schema
+     */
+    public static Schema refByQualifiedName(String qualifiedName) {
+        return Schema.builder()
+                .uniqueAttributes(
+                        UniqueAttributes.builder().qualifiedName(qualifiedName).build())
+                .build();
+    }
 
     /**
      * Builds the minimal object necessary to create a schema.
@@ -80,7 +102,7 @@ public class Schema extends SQL {
                 .connectorType(connectorType)
                 .databaseName(databaseName)
                 .databaseQualifiedName(databaseQualifiedName)
-                .database(Reference.by(Database.TYPE_NAME, databaseQualifiedName))
+                .database(Database.refByQualifiedName(databaseQualifiedName))
                 .connectionQualifiedName(connectionQualifiedName);
     }
 
@@ -193,7 +215,8 @@ public class Schema extends SQL {
      * @return the schema that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static Schema replaceTerms(String qualifiedName, String name, List<Reference> terms) throws AtlanException {
+    public static Schema replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+            throws AtlanException {
         return (Schema) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
 
@@ -207,7 +230,7 @@ public class Schema extends SQL {
      * @return the schema that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static Schema appendTerms(String qualifiedName, List<Reference> terms) throws AtlanException {
+    public static Schema appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
         return (Schema) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -221,7 +244,7 @@ public class Schema extends SQL {
      * @return the schema that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static Schema removeTerms(String qualifiedName, List<GuidReference> terms) throws AtlanException {
+    public static Schema removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
         return (Schema) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 }

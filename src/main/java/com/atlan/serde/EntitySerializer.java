@@ -73,7 +73,7 @@ public class EntitySerializer extends StdSerializer<Entity> {
                         // If the value should be serialized as null, then
                         // set the value to the serializable null
                         Class<?> type = ReflectionCache.getFieldType(clazz, fieldName);
-                        if (type == List.class || type == Set.class) {
+                        if (type == List.class || type == Set.class || type == SortedSet.class) {
                             attrValue = Removable.EMPTY_LIST;
                         } else {
                             attrValue = Removable.NULL;
@@ -115,7 +115,9 @@ public class EntitySerializer extends StdSerializer<Entity> {
             throw new IOException("Unable to retrieve the available custom metadata in Atlan.", e);
         }
 
-        sp.defaultSerializeField("attributes", attributes, gen);
+        if (!attributes.isEmpty()) {
+            sp.defaultSerializeField("attributes", attributes, gen);
+        }
         if (!businessAttributes.isEmpty()) {
             sp.defaultSerializeField("businessAttributes", businessAttributes, gen);
         }

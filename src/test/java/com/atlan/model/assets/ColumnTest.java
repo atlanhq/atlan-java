@@ -64,11 +64,11 @@ public class ColumnTest {
             .sourceCreatedAt(123456789L)
             .sourceUpdatedAt(123456789L)
             .sourceUpdatedBy("sourceUpdatedBy")
-            .link(Reference.to("Resource", "linkGuid1"))
-            .link(Reference.to("Resource", "linkGuid2"))
-            .readme(Reference.to(Readme.TYPE_NAME, "readmeGuid"))
-            .meaning(Reference.to(GlossaryTerm.TYPE_NAME, "termGuid1"))
-            .meaning(Reference.to(GlossaryTerm.TYPE_NAME, "termGuid2"))
+            .link(Link.refByGuid("linkGuid1"))
+            .link(Link.refByGuid("linkGuid2"))
+            .readme(Readme.refByGuid("readmeGuid"))
+            .meaning(GlossaryTerm.refByGuid("termGuid1"))
+            .meaning(GlossaryTerm.refByGuid("termGuid2"))
             .queryCount(123L)
             .queryUserCount(123L)
             .queryCountUpdatedAt(123456789L)
@@ -99,10 +99,10 @@ public class ColumnTest {
             .isNullable(false)
             .numericScale(123.456F)
             .maxLength(123456L)
-            .table(Reference.to(Table.TYPE_NAME, "tableGuid"))
+            .table(Table.refByGuid("tableGuid"))
             .tablePartition(Reference.to("TablePartition", "tablePartitionGuid"))
-            .view(Reference.to(View.TYPE_NAME, "viewGuid"))
-            .materializedView(Reference.to(MaterializedView.TYPE_NAME, "materializedViewGuid"))
+            .view(View.refByGuid("viewGuid"))
+            .materializedView(MaterializedView.refByGuid("materializedViewGuid"))
             .query(Reference.to("Query", "queryGuid1"))
             .query(Reference.to("Query", "queryGuid2"))
             .build();
@@ -110,7 +110,14 @@ public class ColumnTest {
     private static Column frodo;
     private static String serialized;
 
-    @Test(groups = {"serialize"})
+    @Test(groups = {"builderEquivalency"})
+    void builderEquivalency() {
+        assertEquals(full.toBuilder().build(), full);
+    }
+
+    @Test(
+            groups = {"serialize"},
+            dependsOnGroups = {"builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();

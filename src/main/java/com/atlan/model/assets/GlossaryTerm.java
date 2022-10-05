@@ -10,16 +10,13 @@ import com.atlan.exception.NotFoundException;
 import com.atlan.model.core.Entity;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanCertificateStatus;
-import com.atlan.model.relations.Reference;
+import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.IndexSearchDSL;
 import com.atlan.model.search.IndexSearchRequest;
 import com.atlan.model.search.IndexSearchResponse;
 import com.atlan.util.QueryFactory;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
@@ -64,51 +61,51 @@ public class GlossaryTerm extends Asset {
 
     /** Glossary in which the term is located. */
     @Attribute
-    Reference anchor;
+    Glossary anchor;
 
     /** Assets that are attached to this term. */
     @Singular
     @Attribute
-    Set<Reference> assignedEntities;
+    SortedSet<Asset> assignedEntities;
 
     /** Categories within which this term is organized. */
     @Singular
     @Attribute
-    Set<Reference> categories;
+    SortedSet<GlossaryCategory> categories;
 
     /** Linked glossary terms that may also be of interest. */
     @Singular("addToSeeAlso")
     @Attribute
-    Set<Reference> seeAlso;
+    SortedSet<GlossaryTerm> seeAlso;
 
     /** Glossary terms that have the same, or a very similar meaning in the same language. */
     @Singular
     @Attribute
-    Set<Reference> synonyms;
+    SortedSet<GlossaryTerm> synonyms;
 
     /** Glossary terms that have the opposite (or near opposite) meaning in the same language. */
     @Singular
     @Attribute
-    Set<Reference> antonyms;
+    SortedSet<GlossaryTerm> antonyms;
 
     /** These terms are preferred in place of this term. */
     @Singular
     @Attribute
-    Set<Reference> preferredTerms;
+    SortedSet<GlossaryTerm> preferredTerms;
 
     /** These terms should be used instead of this term. */
     @Singular("addToReplacedBy")
     @Attribute
-    Set<Reference> replacedBy;
+    SortedSet<GlossaryTerm> replacedBy;
 
     /** These terms represent the same meaning, but each is in a different language. */
     @Singular
     @Attribute
-    Set<Reference> translatedTerms;
+    SortedSet<GlossaryTerm> translatedTerms;
 
     /** Unused relationships. */
     @JsonIgnore
-    Set<Reference> classifies;
+    SortedSet<GlossaryTerm> classifies;
 
     /**
      * These terms each represent one of the valid values that could be assigned to a data item that has the meaning
@@ -116,7 +113,30 @@ public class GlossaryTerm extends Asset {
      */
     @Singular("addToValidValuesFor")
     @Attribute
-    Set<Reference> validValuesFor;
+    SortedSet<GlossaryTerm> validValuesFor;
+
+    /**
+     * Reference to a term by GUID.
+     *
+     * @param guid the GUID of the term to reference
+     * @return reference to a term that can be used for defining a relationship to a term
+     */
+    public static GlossaryTerm refByGuid(String guid) {
+        return GlossaryTerm.builder().guid(guid).build();
+    }
+
+    /**
+     * Reference to a term by qualifiedName.
+     *
+     * @param qualifiedName the qualifiedName of the term to reference
+     * @return reference to a term that can be used for defining a relationship to a term
+     */
+    public static GlossaryTerm refByQualifiedName(String qualifiedName) {
+        return GlossaryTerm.builder()
+                .uniqueAttributes(
+                        UniqueAttributes.builder().qualifiedName(qualifiedName).build())
+                .build();
+    }
 
     /** Remove the linked assets from the term, if any are set on the term. */
     public void removeAssignedEntities() {

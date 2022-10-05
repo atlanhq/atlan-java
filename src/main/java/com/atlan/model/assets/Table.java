@@ -6,14 +6,13 @@ import com.atlan.exception.AtlanException;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.enums.AtlanConnectorType;
-import com.atlan.model.relations.GuidReference;
-import com.atlan.model.relations.Reference;
+import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
+import java.util.SortedSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -94,12 +93,35 @@ public class Table extends SQL {
     /** Schema in which this table exists. */
     @Attribute
     @JsonProperty("atlanSchema")
-    Reference schema;
+    Schema schema;
 
     /** Columns that exist within this table. */
     @Singular
     @Attribute
-    Set<Reference> columns;
+    SortedSet<Column> columns;
+
+    /**
+     * Reference to a table by GUID.
+     *
+     * @param guid the GUID of the table to reference
+     * @return reference to a table that can be used for defining a relationship to a table
+     */
+    public static Table refByGuid(String guid) {
+        return Table.builder().guid(guid).build();
+    }
+
+    /**
+     * Reference to a table by qualifiedName.
+     *
+     * @param qualifiedName the qualifiedName of the table to reference
+     * @return reference to a table that can be used for defining a relationship to a table
+     */
+    public static Table refByQualifiedName(String qualifiedName) {
+        return Table.builder()
+                .uniqueAttributes(
+                        UniqueAttributes.builder().qualifiedName(qualifiedName).build())
+                .build();
+    }
 
     /**
      * Builds the minimal object necessary to create a table.
@@ -121,7 +143,7 @@ public class Table extends SQL {
                 .connectorType(connectorType)
                 .schemaName(schemaName)
                 .schemaQualifiedName(schemaQualifiedName)
-                .schema(Reference.by(Schema.TYPE_NAME, schemaQualifiedName))
+                .schema(Schema.refByQualifiedName(schemaQualifiedName))
                 .databaseName(databaseName)
                 .databaseQualifiedName(databaseQualifiedName)
                 .connectionQualifiedName(connectionQualifiedName);
@@ -236,7 +258,8 @@ public class Table extends SQL {
      * @return the table that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static Table replaceTerms(String qualifiedName, String name, List<Reference> terms) throws AtlanException {
+    public static Table replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+            throws AtlanException {
         return (Table) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
 
@@ -250,7 +273,7 @@ public class Table extends SQL {
      * @return the table that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static Table appendTerms(String qualifiedName, List<Reference> terms) throws AtlanException {
+    public static Table appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
         return (Table) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -264,7 +287,7 @@ public class Table extends SQL {
      * @return the table that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static Table removeTerms(String qualifiedName, List<GuidReference> terms) throws AtlanException {
+    public static Table removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
         return (Table) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 }

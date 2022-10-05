@@ -11,6 +11,7 @@ import com.atlan.model.enums.AtlanDeleteType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.lineage.ColumnProcess;
 import com.atlan.model.lineage.LineageProcess;
+import com.atlan.model.relations.Reference;
 import com.atlan.serde.EntityDeserializer;
 import com.atlan.serde.EntitySerializer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -25,12 +26,13 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @Setter
 @SuperBuilder(toBuilder = true)
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 @JsonSerialize(using = EntitySerializer.class)
 @JsonDeserialize(using = EntityDeserializer.class)
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "typeName")
 @JsonSubTypes({
     @JsonSubTypes.Type(value = Readme.class, name = Readme.TYPE_NAME),
+    @JsonSubTypes.Type(value = Link.class, name = Link.TYPE_NAME),
     @JsonSubTypes.Type(value = Glossary.class, name = Glossary.TYPE_NAME),
     @JsonSubTypes.Type(value = GlossaryCategory.class, name = GlossaryCategory.TYPE_NAME),
     @JsonSubTypes.Type(value = GlossaryTerm.class, name = GlossaryTerm.TYPE_NAME),
@@ -52,7 +54,7 @@ import lombok.experimental.SuperBuilder;
     @JsonSubTypes.Type(value = ColumnProcess.class, name = ColumnProcess.TYPE_NAME),
 })
 @SuppressWarnings("cast")
-public abstract class Entity extends AtlanObject {
+public abstract class Entity extends Reference {
     /** Internal tracking of fields that should be serialized with null values. */
     @JsonIgnore
     transient Set<String> nullFields;
@@ -75,15 +77,6 @@ public abstract class Entity extends AtlanObject {
         }
         nullFields.add(fieldName);
     }
-
-    /** Name of the type definition that defines this entity. */
-    String typeName;
-
-    /** Globally-unique identifier for this entity. */
-    String guid;
-
-    /** Human-readable name of the entity. */
-    String displayText;
 
     /** Classifications assigned to the entity. */
     @Singular

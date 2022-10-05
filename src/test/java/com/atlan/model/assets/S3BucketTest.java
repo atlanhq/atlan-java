@@ -8,7 +8,6 @@ import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
-import com.atlan.model.relations.Reference;
 import com.atlan.serde.Serde;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.testng.annotations.Test;
@@ -64,11 +63,11 @@ public class S3BucketTest {
             .sourceCreatedAt(123456789L)
             .sourceUpdatedAt(123456789L)
             .sourceUpdatedBy("sourceUpdatedBy")
-            .link(Reference.to("Resource", "linkGuid1"))
-            .link(Reference.to("Resource", "linkGuid2"))
-            .readme(Reference.to("Readme", "readmeGuid"))
-            .meaning(Reference.to(GlossaryTerm.TYPE_NAME, "termGuid1"))
-            .meaning(Reference.to(GlossaryTerm.TYPE_NAME, "termGuid2"))
+            .link(Link.refByGuid("linkGuid1"))
+            .link(Link.refByGuid("linkGuid2"))
+            .readme(Readme.refByGuid("readmeGuid"))
+            .meaning(GlossaryTerm.refByGuid("termGuid1"))
+            .meaning(GlossaryTerm.refByGuid("termGuid2"))
             .awsArn("awsArn")
             .awsPartition("awsPartition")
             .awsService("awsService")
@@ -83,14 +82,21 @@ public class S3BucketTest {
             .s3Encryption("s3Encryption")
             .s3ObjectCount(123456L)
             .s3BucketVersioningEnabled(true)
-            .object(Reference.to(S3Object.TYPE_NAME, "objectGuid1"))
-            .object(Reference.to(S3Object.TYPE_NAME, "objectGuid2"))
+            .object(S3Object.refByGuid("objectGuid1"))
+            .object(S3Object.refByGuid("objectGuid2"))
             .build();
 
     private static S3Bucket frodo;
     private static String serialized;
 
-    @Test(groups = {"serialize"})
+    @Test(groups = {"builderEquivalency"})
+    void builderEquivalency() {
+        assertEquals(full.toBuilder().build(), full);
+    }
+
+    @Test(
+            groups = {"serialize"},
+            dependsOnGroups = {"builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();

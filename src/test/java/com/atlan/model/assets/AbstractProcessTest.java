@@ -6,7 +6,7 @@ import static org.testng.Assert.*;
 
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.lineage.AbstractProcess;
-import com.atlan.model.relations.Reference;
+import com.atlan.model.lineage.LineageProcess;
 import java.util.Collections;
 import org.testng.annotations.Test;
 
@@ -20,24 +20,24 @@ public class AbstractProcessTest {
                 AtlanConnectorType.S3,
                 "three",
                 "four",
-                Collections.singletonList(Reference.to("five", "six")),
-                Collections.singletonList(Reference.to("seven", "eight")),
+                Collections.singletonList(S3Object.refByGuid("six")),
+                Collections.singletonList(Table.refByGuid("eight")),
                 null);
         String qn2 = AbstractProcess.generateQualifiedName(
                 "one",
                 AtlanConnectorType.S3,
                 "three",
                 "four",
-                Collections.singletonList(Reference.to("five", "six")),
-                Collections.singletonList(Reference.to("seven", "eight")),
+                Collections.singletonList(S3Object.refByGuid("six")),
+                Collections.singletonList(Table.refByGuid("eight")),
                 null);
         String qn3 = AbstractProcess.generateQualifiedName(
                 "one",
                 AtlanConnectorType.S3,
                 "three",
                 "four",
-                Collections.singletonList(Reference.to("five", "six")),
-                Collections.singletonList(Reference.to("seven", "eighs")),
+                Collections.singletonList(S3Object.refByGuid("six")),
+                Collections.singletonList(Table.refByGuid("eighs")),
                 null);
         assertNotNull(qn1);
         assertNotNull(qn2);
@@ -55,25 +55,25 @@ public class AbstractProcessTest {
                 AtlanConnectorType.S3,
                 "three",
                 "four",
-                Collections.singletonList(Reference.to("five", "six")),
-                Collections.singletonList(Reference.to("seven", "eight")),
-                Reference.to("nine", "ten"));
+                Collections.singletonList(S3Object.refByGuid("six")),
+                Collections.singletonList(Table.refByGuid("eight")),
+                LineageProcess.refByGuid("ten"));
         String qn2 = AbstractProcess.generateQualifiedName(
                 "one",
                 AtlanConnectorType.S3,
                 "three",
                 "four",
-                Collections.singletonList(Reference.to("five", "six")),
-                Collections.singletonList(Reference.to("seven", "eight")),
-                Reference.to("nine", "ten"));
+                Collections.singletonList(S3Object.refByGuid("six")),
+                Collections.singletonList(Table.refByGuid("eight")),
+                LineageProcess.refByGuid("ten"));
         String qn3 = AbstractProcess.generateQualifiedName(
                 "one",
                 AtlanConnectorType.S3,
                 "three",
                 "four",
-                Collections.singletonList(Reference.to("five", "six")),
-                Collections.singletonList(Reference.to("seven", "eight")),
-                Reference.to("nine", "teo"));
+                Collections.singletonList(S3Object.refByGuid("six")),
+                Collections.singletonList(Table.refByGuid("eight")),
+                LineageProcess.refByGuid("teo"));
         assertNotNull(qn1);
         assertNotNull(qn2);
         assertNotNull(qn3);

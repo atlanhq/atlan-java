@@ -7,15 +7,10 @@ import static org.testng.Assert.*;
 import com.atlan.cache.RoleCache;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.InvalidRequestException;
-import com.atlan.model.assets.Connection;
-import com.atlan.model.assets.Readme;
-import com.atlan.model.assets.S3Bucket;
-import com.atlan.model.assets.S3Object;
+import com.atlan.model.assets.*;
 import com.atlan.model.core.Entity;
 import com.atlan.model.core.EntityMutationResponse;
 import com.atlan.model.enums.*;
-import com.atlan.model.relations.GuidReference;
-import com.atlan.model.relations.Reference;
 import java.util.Collections;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -141,7 +136,7 @@ public class S3AssetTest extends AtlanLiveTest {
             S3Object s3Object = S3Object.creator(S3_OBJECT1_NAME, connectionQame, S3_OBJECT1_ARN)
                     .s3BucketName(S3_BUCKET_NAME)
                     .s3BucketQualifiedName(s3BucketQame)
-                    .bucket(GuidReference.to(S3Bucket.TYPE_NAME, s3BucketGuid))
+                    .bucket(S3Bucket.refByGuid(s3BucketGuid))
                     .build();
             EntityMutationResponse response = s3Object.upsert();
             assertNotNull(response);
@@ -183,7 +178,7 @@ public class S3AssetTest extends AtlanLiveTest {
             S3Object s3Object = S3Object.creator(S3_OBJECT2_NAME, connectionQame, S3_OBJECT2_ARN)
                     .s3BucketName(S3_BUCKET_NAME)
                     .s3BucketQualifiedName(s3BucketQame)
-                    .bucket(GuidReference.to(S3Bucket.TYPE_NAME, s3BucketGuid))
+                    .bucket(S3Bucket.refByGuid(s3BucketGuid))
                     .build();
             EntityMutationResponse response = s3Object.upsert();
             assertNotNull(response);
@@ -271,7 +266,7 @@ public class S3AssetTest extends AtlanLiveTest {
 
     @Test(
             groups = {"read.s3bucket"},
-            dependsOnGroups = {"create.s3object", "create.readme", "update.s3bucket"})
+            dependsOnGroups = {"create.s3object", "create.readme", "create.link", "update.s3bucket"})
     void retrieveS3Bucket() {
         try {
             Entity full = Entity.retrieveFull(s3BucketGuid);
@@ -285,19 +280,26 @@ public class S3AssetTest extends AtlanLiveTest {
             assertNotNull(bucket.getObjects());
             assertEquals(bucket.getObjects().size(), 2);
             Set<String> types =
-                    bucket.getObjects().stream().map(Reference::getTypeName).collect(Collectors.toSet());
+                    bucket.getObjects().stream().map(S3Object::getTypeName).collect(Collectors.toSet());
             assertEquals(types.size(), 1);
             assertTrue(types.contains(S3Object.TYPE_NAME));
             Set<String> guids =
-                    bucket.getObjects().stream().map(Reference::getGuid).collect(Collectors.toSet());
+                    bucket.getObjects().stream().map(S3Object::getGuid).collect(Collectors.toSet());
             assertEquals(guids.size(), 2);
             assertTrue(guids.contains(s3Object1Guid));
             assertTrue(guids.contains(s3Object2Guid));
             assertNotNull(bucket.getReadme());
-            Reference one = bucket.getReadme();
+            Readme one = bucket.getReadme();
             assertNotNull(one);
             assertEquals(one.getTypeName(), Readme.TYPE_NAME);
             assertEquals(one.getGuid(), ReadmeTest.readmeGuid);
+            Set<Link> links = bucket.getLinks();
+            assertNotNull(links);
+            assertEquals(links.size(), 1);
+            types = links.stream().map(Link::getTypeName).collect(Collectors.toSet());
+            assertTrue(types.contains(Link.TYPE_NAME));
+            guids = links.stream().map(Link::getGuid).collect(Collectors.toSet());
+            assertTrue(guids.contains(LinkTest.linkGuid));
         } catch (AtlanException e) {
             e.printStackTrace();
             assertNull(e, "Unexpected exception while trying to retrieve an S3 bucket.");
