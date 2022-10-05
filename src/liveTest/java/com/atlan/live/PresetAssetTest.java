@@ -11,7 +11,6 @@ import com.atlan.model.assets.*;
 import com.atlan.model.core.Entity;
 import com.atlan.model.core.EntityMutationResponse;
 import com.atlan.model.enums.*;
-import com.atlan.model.relations.Reference;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -273,24 +272,24 @@ public class PresetAssetTest extends AtlanLiveTest {
             assertNotNull(collection.getPresetCharts());
             assertEquals(collection.getPresetCharts().size(), 1);
             Set<String> types = collection.getPresetCharts().stream()
-                    .map(Reference::getTypeName)
+                    .map(PresetChart::getTypeName)
                     .collect(Collectors.toSet());
             assertEquals(types.size(), 1);
             assertTrue(types.contains(PresetChart.TYPE_NAME));
             Set<String> guids = collection.getPresetCharts().stream()
-                    .map(Reference::getGuid)
+                    .map(PresetChart::getGuid)
                     .collect(Collectors.toSet());
             assertEquals(guids.size(), 1);
             assertTrue(guids.contains(chartGuid));
             assertNotNull(collection.getPresetDatasets());
             assertEquals(collection.getPresetDatasets().size(), 1);
             types = collection.getPresetDatasets().stream()
-                    .map(Reference::getTypeName)
+                    .map(PresetDataset::getTypeName)
                     .collect(Collectors.toSet());
             assertEquals(types.size(), 1);
             assertTrue(types.contains(PresetDataset.TYPE_NAME));
             guids = collection.getPresetDatasets().stream()
-                    .map(Reference::getGuid)
+                    .map(PresetDataset::getGuid)
                     .collect(Collectors.toSet());
             assertEquals(guids.size(), 1);
             assertTrue(guids.contains(datasetGuid));

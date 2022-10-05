@@ -6,6 +6,7 @@ import static org.testng.Assert.*;
 
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.InvalidRequestException;
+import com.atlan.model.assets.Asset;
 import com.atlan.model.assets.S3Object;
 import com.atlan.model.core.Entity;
 import com.atlan.model.core.EntityMutationResponse;
@@ -14,7 +15,6 @@ import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.lineage.LineageProcess;
 import com.atlan.model.lineage.LineageRequest;
 import com.atlan.model.lineage.LineageResponse;
-import com.atlan.model.relations.Reference;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -38,8 +38,8 @@ public class LineageTest extends AtlanLiveTest {
                         AtlanConnectorType.S3,
                         S3AssetTest.CONNECTION_NAME,
                         S3AssetTest.connectionQame,
-                        Collections.singletonList(Reference.to(S3Object.TYPE_NAME, S3AssetTest.s3Object1Guid)),
-                        Collections.singletonList(Reference.to(S3Object.TYPE_NAME, S3AssetTest.s3Object2Guid)))
+                        Collections.singletonList(S3Object.refByGuid(S3AssetTest.s3Object1Guid)),
+                        Collections.singletonList(S3Object.refByGuid(S3AssetTest.s3Object2Guid)))
                 .build();
         try {
             EntityMutationResponse response = process.upsert();
@@ -56,13 +56,13 @@ public class LineageTest extends AtlanLiveTest {
             assertEquals(process.getName(), processName);
             assertNotNull(process.getInputs());
             assertEquals(process.getInputs().size(), 1);
-            Reference input = process.getInputs().get(0);
+            Asset input = process.getInputs().get(0);
             assertNotNull(input);
             assertEquals(input.getTypeName(), S3Object.TYPE_NAME);
             assertEquals(input.getGuid(), S3AssetTest.s3Object1Guid);
             assertNotNull(process.getOutputs());
             assertEquals(process.getOutputs().size(), 1);
-            Reference output = process.getOutputs().get(0);
+            Asset output = process.getOutputs().get(0);
             assertNotNull(output);
             assertEquals(output.getTypeName(), S3Object.TYPE_NAME);
             assertEquals(output.getGuid(), S3AssetTest.s3Object2Guid);
@@ -88,8 +88,8 @@ public class LineageTest extends AtlanLiveTest {
                         AtlanConnectorType.S3,
                         S3AssetTest.CONNECTION_NAME,
                         S3AssetTest.connectionQame,
-                        Collections.singletonList(Reference.to(S3Object.TYPE_NAME, S3AssetTest.s3Object2Guid)),
-                        Collections.singletonList(Reference.to(S3Object.TYPE_NAME, S3AssetTest.s3Object3Guid)))
+                        Collections.singletonList(S3Object.refByGuid(S3AssetTest.s3Object2Guid)),
+                        Collections.singletonList(S3Object.refByGuid(S3AssetTest.s3Object3Guid)))
                 .build();
         try {
             EntityMutationResponse response = process.upsert();
@@ -106,13 +106,13 @@ public class LineageTest extends AtlanLiveTest {
             assertEquals(process.getName(), processName);
             assertNotNull(process.getInputs());
             assertEquals(process.getInputs().size(), 1);
-            Reference input = process.getInputs().get(0);
+            Asset input = process.getInputs().get(0);
             assertNotNull(input);
             assertEquals(input.getTypeName(), S3Object.TYPE_NAME);
             assertEquals(input.getGuid(), S3AssetTest.s3Object2Guid);
             assertNotNull(process.getOutputs());
             assertEquals(process.getOutputs().size(), 1);
-            Reference output = process.getOutputs().get(0);
+            Asset output = process.getOutputs().get(0);
             assertNotNull(output);
             assertEquals(output.getTypeName(), S3Object.TYPE_NAME);
             assertEquals(output.getGuid(), S3AssetTest.s3Object3Guid);

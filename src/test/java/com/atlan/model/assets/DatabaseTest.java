@@ -8,7 +8,6 @@ import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
-import com.atlan.model.relations.Reference;
 import com.atlan.serde.Serde;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.testng.annotations.Test;
@@ -64,11 +63,11 @@ public class DatabaseTest {
             .sourceCreatedAt(123456789L)
             .sourceUpdatedAt(123456789L)
             .sourceUpdatedBy("sourceUpdatedBy")
-            .link(Reference.to("Resource", "linkGuid1"))
-            .link(Reference.to("Resource", "linkGuid2"))
-            .readme(Reference.to(Readme.TYPE_NAME, "readmeGuid"))
-            .meaning(Reference.to(GlossaryTerm.TYPE_NAME, "termGuid1"))
-            .meaning(Reference.to(GlossaryTerm.TYPE_NAME, "termGuid2"))
+            .link(Link.refByGuid("linkGuid1"))
+            .link(Link.refByGuid("linkGuid2"))
+            .readme(Readme.refByGuid("readmeGuid"))
+            .meaning(GlossaryTerm.refByGuid("termGuid1"))
+            .meaning(GlossaryTerm.refByGuid("termGuid2"))
             .queryCount(123L)
             .queryUserCount(123L)
             .queryCountUpdatedAt(123456789L)
@@ -81,8 +80,8 @@ public class DatabaseTest {
             .viewName("viewName")
             .viewQualifiedName("viewQualifiedName")
             .schemaCount(123)
-            .schema(Reference.to(Schema.TYPE_NAME, "schemaGuid1"))
-            .schema(Reference.to(Schema.TYPE_NAME, "schemaGuid2"))
+            .schema(Schema.refByGuid("schemaGuid1"))
+            .schema(Schema.refByGuid("schemaGuid2"))
             .build();
 
     private static Database frodo;

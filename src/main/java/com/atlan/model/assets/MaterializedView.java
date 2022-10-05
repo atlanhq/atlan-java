@@ -6,14 +6,13 @@ import com.atlan.exception.AtlanException;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.enums.AtlanConnectorType;
-import com.atlan.model.relations.GuidReference;
-import com.atlan.model.relations.Reference;
+import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
+import java.util.SortedSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -86,12 +85,35 @@ public class MaterializedView extends SQL {
     /** Schema in which this materialized view exists. */
     @Attribute
     @JsonProperty("atlanSchema")
-    Reference schema;
+    Schema schema;
 
     /** Columns that exist within this materialized view. */
     @Singular
     @Attribute
-    Set<Reference> columns;
+    SortedSet<Column> columns;
+
+    /**
+     * Reference to a materialized view by GUID.
+     *
+     * @param guid the GUID of the materialized view to reference
+     * @return reference to a materialized view that can be used for defining a relationship to a materialized view
+     */
+    public static MaterializedView refByGuid(String guid) {
+        return MaterializedView.builder().guid(guid).build();
+    }
+
+    /**
+     * Reference to a materialized view by qualifiedName.
+     *
+     * @param qualifiedName the qualifiedName of the materialized view to reference
+     * @return reference to a materialized view that can be used for defining a relationship to a materialized view
+     */
+    public static MaterializedView refByQualifiedName(String qualifiedName) {
+        return MaterializedView.builder()
+                .uniqueAttributes(
+                        UniqueAttributes.builder().qualifiedName(qualifiedName).build())
+                .build();
+    }
 
     /**
      * Builds the minimal object necessary to create a materialized view.
@@ -113,7 +135,7 @@ public class MaterializedView extends SQL {
                 .connectorType(connectorType)
                 .schemaName(schemaName)
                 .schemaQualifiedName(schemaQualifiedName)
-                .schema(Reference.by(Schema.TYPE_NAME, schemaQualifiedName))
+                .schema(Schema.refByQualifiedName(schemaQualifiedName))
                 .databaseName(databaseName)
                 .databaseQualifiedName(databaseQualifiedName)
                 .connectionQualifiedName(connectionQualifiedName);
@@ -228,7 +250,7 @@ public class MaterializedView extends SQL {
      * @return the materialized view that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static MaterializedView replaceTerms(String qualifiedName, String name, List<Reference> terms)
+    public static MaterializedView replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
             throws AtlanException {
         return (MaterializedView) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -243,7 +265,7 @@ public class MaterializedView extends SQL {
      * @return the materialized view that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static MaterializedView appendTerms(String qualifiedName, List<Reference> terms) throws AtlanException {
+    public static MaterializedView appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
         return (MaterializedView) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -257,7 +279,7 @@ public class MaterializedView extends SQL {
      * @return the materialized view that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static MaterializedView removeTerms(String qualifiedName, List<GuidReference> terms) throws AtlanException {
+    public static MaterializedView removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
         return (MaterializedView) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 }

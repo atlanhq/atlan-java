@@ -8,8 +8,6 @@ import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.enums.AtlanConnectionCategory;
 import com.atlan.model.enums.AtlanConnectorType;
-import com.atlan.model.relations.GuidReference;
-import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;
@@ -300,7 +298,7 @@ public class Connection extends Asset {
      * @return the connection that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static Connection replaceTerms(String qualifiedName, String name, List<Reference> terms)
+    public static Connection replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
             throws AtlanException {
         return (Connection) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -315,7 +313,7 @@ public class Connection extends Asset {
      * @return the connection that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static Connection appendTerms(String qualifiedName, List<Reference> terms) throws AtlanException {
+    public static Connection appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
         return (Connection) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -329,7 +327,7 @@ public class Connection extends Asset {
      * @return the connection that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static Connection removeTerms(String qualifiedName, List<GuidReference> terms) throws AtlanException {
+    public static Connection removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
         return (Connection) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 }

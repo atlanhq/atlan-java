@@ -2,9 +2,10 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.lineage;
 
+import com.atlan.model.assets.Asset;
 import com.atlan.model.assets.Attribute;
 import com.atlan.model.enums.AtlanConnectorType;
-import com.atlan.model.relations.Reference;
+import com.atlan.model.relations.UniqueAttributes;
 import java.util.List;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -30,7 +31,30 @@ public class LineageProcess extends AbstractProcess {
     /** Sub-processes giving column-level lineage for this process. */
     @Singular
     @Attribute
-    List<Reference> columnProcesses;
+    List<ColumnProcess> columnProcesses;
+
+    /**
+     * Reference to a lineage process by GUID.
+     *
+     * @param guid the GUID of the lineage process to reference
+     * @return reference to a lineage process that can be used for defining a relationship to a lineage process
+     */
+    public static LineageProcess refByGuid(String guid) {
+        return LineageProcess.builder().guid(guid).build();
+    }
+
+    /**
+     * Reference to a lineage process by qualifiedName.
+     *
+     * @param qualifiedName the qualifiedName of the lineage process to reference
+     * @return reference to a lineage process that can be used for defining a relationship to a lineage process
+     */
+    public static LineageProcess refByQualifiedName(String qualifiedName) {
+        return LineageProcess.builder()
+                .uniqueAttributes(
+                        UniqueAttributes.builder().qualifiedName(qualifiedName).build())
+                .build();
+    }
 
     /**
      * Builds the minimal object necessary to create a process.
@@ -48,8 +72,8 @@ public class LineageProcess extends AbstractProcess {
             AtlanConnectorType connectorType,
             String connectionName,
             String connectionQualifiedName,
-            List<Reference> inputs,
-            List<Reference> outputs) {
+            List<Asset> inputs,
+            List<Asset> outputs) {
         return LineageProcess.builder()
                 .qualifiedName(generateQualifiedName(
                         name, connectorType, connectionName, connectionQualifiedName, inputs, outputs, null))

@@ -32,6 +32,7 @@ import lombok.experimental.SuperBuilder;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "typeName")
 @JsonSubTypes({
     @JsonSubTypes.Type(value = Readme.class, name = Readme.TYPE_NAME),
+    @JsonSubTypes.Type(value = Link.class, name = Link.TYPE_NAME),
     @JsonSubTypes.Type(value = Glossary.class, name = Glossary.TYPE_NAME),
     @JsonSubTypes.Type(value = GlossaryCategory.class, name = GlossaryCategory.TYPE_NAME),
     @JsonSubTypes.Type(value = GlossaryTerm.class, name = GlossaryTerm.TYPE_NAME),

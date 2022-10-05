@@ -42,8 +42,8 @@ public class Reference extends AtlanObject implements Comparable<Reference> {
      * @param guid GUID of the asset to reference
      * @return a reference to another asset
      */
-    public static GuidReference to(String typeName, String guid) {
-        return GuidReference.of(typeName, guid);
+    public static Reference to(String typeName, String guid) {
+        return Reference.builder().typeName(typeName).guid(guid).build();
     }
 
     /**
@@ -53,8 +53,12 @@ public class Reference extends AtlanObject implements Comparable<Reference> {
      * @param qualifiedName of the asset to reference
      * @return a reference to another asset
      */
-    public static QualifiedNameReference by(String typeName, String qualifiedName) {
-        return QualifiedNameReference.of(typeName, qualifiedName);
+    public static Reference by(String typeName, String qualifiedName) {
+        return Reference.builder()
+                .typeName(typeName)
+                .uniqueAttributes(
+                        UniqueAttributes.builder().qualifiedName(qualifiedName).build())
+                .build();
     }
 
     /** Name of the type that defines the entity. */

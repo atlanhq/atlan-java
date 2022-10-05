@@ -8,7 +8,6 @@ import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
-import com.atlan.model.relations.Reference;
 import com.atlan.serde.Serde;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.testng.annotations.Test;
@@ -64,11 +63,11 @@ public class PresetDashboardTest {
             .sourceCreatedAt(123456789L)
             .sourceUpdatedAt(123456789L)
             .sourceUpdatedBy("sourceUpdatedBy")
-            .link(Reference.to("Resource", "linkGuid1"))
-            .link(Reference.to("Resource", "linkGuid2"))
-            .readme(Reference.to("Readme", "readmeGuid"))
-            .meaning(Reference.to(GlossaryTerm.TYPE_NAME, "termGuid1"))
-            .meaning(Reference.to(GlossaryTerm.TYPE_NAME, "termGuid2"))
+            .link(Link.refByGuid("linkGuid1"))
+            .link(Link.refByGuid("linkGuid2"))
+            .readme(Readme.refByGuid("readmeGuid"))
+            .meaning(GlossaryTerm.refByGuid("termGuid1"))
+            .meaning(GlossaryTerm.refByGuid("termGuid2"))
             .presetWorkspaceId(123456L)
             .presetWorkspaceQualifiedName("presetWorkspaceQualifiedName")
             .presetDashboardId(654321L)
@@ -79,11 +78,11 @@ public class PresetDashboardTest {
             .presetDashboardIsPublished(false)
             .presetDashboardThumbnailURL("presetDashboardThumbnailURL")
             .presetDashboardChartCount(123L)
-            .presetWorkspace(Reference.by(PresetWorkspace.TYPE_NAME, "workspaceGuid"))
-            .presetChart(Reference.to(PresetChart.TYPE_NAME, "chartGuid1"))
-            .presetChart(Reference.to(PresetChart.TYPE_NAME, "chartGuid2"))
-            .presetDataset(Reference.to(PresetChart.TYPE_NAME, "datasetGuid1"))
-            .presetDataset(Reference.to(PresetChart.TYPE_NAME, "datasetGuid2"))
+            .presetWorkspace(PresetWorkspace.refByGuid("workspaceGuid"))
+            .presetChart(PresetChart.refByGuid("chartGuid1"))
+            .presetChart(PresetChart.refByGuid("chartGuid2"))
+            .presetDataset(PresetDataset.refByGuid("datasetGuid1"))
+            .presetDataset(PresetDataset.refByGuid("datasetGuid2"))
             .build();
 
     private static PresetDashboard frodo;

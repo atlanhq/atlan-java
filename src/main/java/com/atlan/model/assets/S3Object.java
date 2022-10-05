@@ -6,8 +6,6 @@ import com.atlan.exception.AtlanException;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.enums.AtlanConnectorType;
-import com.atlan.model.relations.GuidReference;
-import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.List;
 import lombok.*;
@@ -80,7 +78,7 @@ public class S3Object extends S3 {
 
     /** S3 bucket in which the object exists. */
     @Attribute
-    Reference bucket;
+    S3Bucket bucket;
 
     /**
      * Reference to a S3 object by GUID.
@@ -241,7 +239,7 @@ public class S3Object extends S3 {
      * @return the S3 object that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static S3Object replaceTerms(String qualifiedName, String name, List<Reference> terms)
+    public static S3Object replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
             throws AtlanException {
         return (S3Object) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -256,7 +254,7 @@ public class S3Object extends S3 {
      * @return the S3 object that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static S3Object appendTerms(String qualifiedName, List<Reference> terms) throws AtlanException {
+    public static S3Object appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
         return (S3Object) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -270,7 +268,7 @@ public class S3Object extends S3 {
      * @return the S3 object that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static S3Object removeTerms(String qualifiedName, List<GuidReference> terms) throws AtlanException {
+    public static S3Object removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
         return (S3Object) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 }

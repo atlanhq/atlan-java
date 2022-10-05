@@ -6,14 +6,13 @@ import com.atlan.exception.AtlanException;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.enums.AtlanConnectorType;
-import com.atlan.model.relations.GuidReference;
-import com.atlan.model.relations.Reference;
+import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
+import java.util.SortedSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -70,12 +69,35 @@ public class View extends SQL {
     /** Schema in which this view exists. */
     @Attribute
     @JsonProperty("atlanSchema")
-    Reference schema;
+    Schema schema;
 
     /** Columns that exist within this view. */
     @Singular
     @Attribute
-    Set<Reference> columns;
+    SortedSet<Column> columns;
+
+    /**
+     * Reference to a view by GUID.
+     *
+     * @param guid the GUID of the view to reference
+     * @return reference to a view that can be used for defining a relationship to a view
+     */
+    public static View refByGuid(String guid) {
+        return View.builder().guid(guid).build();
+    }
+
+    /**
+     * Reference to a view by qualifiedName.
+     *
+     * @param qualifiedName the qualifiedName of the view to reference
+     * @return reference to a view that can be used for defining a relationship to a view
+     */
+    public static View refByQualifiedName(String qualifiedName) {
+        return View.builder()
+                .uniqueAttributes(
+                        UniqueAttributes.builder().qualifiedName(qualifiedName).build())
+                .build();
+    }
 
     /**
      * Builds the minimal object necessary to create a view.
@@ -97,7 +119,7 @@ public class View extends SQL {
                 .connectorType(connectorType)
                 .schemaName(schemaName)
                 .schemaQualifiedName(schemaQualifiedName)
-                .schema(Reference.by(Schema.TYPE_NAME, schemaQualifiedName))
+                .schema(Schema.refByQualifiedName(schemaQualifiedName))
                 .databaseName(databaseName)
                 .databaseQualifiedName(databaseQualifiedName)
                 .connectionQualifiedName(connectionQualifiedName);
@@ -212,7 +234,7 @@ public class View extends SQL {
      * @return the view that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static View replaceTerms(String qualifiedName, String name, List<Reference> terms) throws AtlanException {
+    public static View replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms) throws AtlanException {
         return (View) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
 
@@ -226,7 +248,7 @@ public class View extends SQL {
      * @return the view that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static View appendTerms(String qualifiedName, List<Reference> terms) throws AtlanException {
+    public static View appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
         return (View) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -240,7 +262,7 @@ public class View extends SQL {
      * @return the view that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static View removeTerms(String qualifiedName, List<GuidReference> terms) throws AtlanException {
+    public static View removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
         return (View) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 }

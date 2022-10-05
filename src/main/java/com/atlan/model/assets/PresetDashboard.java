@@ -6,11 +6,10 @@ import com.atlan.exception.AtlanException;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.enums.AtlanConnectorType;
-import com.atlan.model.relations.GuidReference;
-import com.atlan.model.relations.Reference;
+import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.StringUtils;
 import java.util.List;
-import java.util.Set;
+import java.util.SortedSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -58,17 +57,40 @@ public class PresetDashboard extends Preset {
 
     /** Workspace in which the collection exists. */
     @Attribute
-    Reference presetWorkspace;
+    PresetWorkspace presetWorkspace;
 
     /** Charts contained within the collection. */
     @Attribute
     @Singular
-    Set<Reference> presetCharts;
+    SortedSet<PresetChart> presetCharts;
 
     /** Datasets contained within the collection. */
     @Attribute
     @Singular
-    Set<Reference> presetDatasets;
+    SortedSet<PresetDataset> presetDatasets;
+
+    /**
+     * Reference to a Preset dashboard by GUID.
+     *
+     * @param guid the GUID of the Preset dashboard to reference
+     * @return reference to a Preset dashboard that can be used for defining a relationship to a Preset dashboard
+     */
+    public static PresetDashboard refByGuid(String guid) {
+        return PresetDashboard.builder().guid(guid).build();
+    }
+
+    /**
+     * Reference to a Preset dashboard by qualifiedName.
+     *
+     * @param qualifiedName the qualifiedName of the Preset dashboard to reference
+     * @return reference to a Preset dashboard that can be used for defining a relationship to a Preset dashboard
+     */
+    public static PresetDashboard refByQualifiedName(String qualifiedName) {
+        return PresetDashboard.builder()
+                .uniqueAttributes(
+                        UniqueAttributes.builder().qualifiedName(qualifiedName).build())
+                .build();
+    }
 
     /**
      * Builds the minimal object necessary to create a Preset collection.
@@ -86,7 +108,7 @@ public class PresetDashboard extends Preset {
                 .qualifiedName(workspaceQualifiedName + "/" + name)
                 .connectorType(connectorType)
                 .presetWorkspaceQualifiedName(workspaceQualifiedName)
-                .presetWorkspace(Reference.by(PresetWorkspace.TYPE_NAME, workspaceQualifiedName))
+                .presetWorkspace(PresetWorkspace.refByQualifiedName(workspaceQualifiedName))
                 .connectionQualifiedName(connectionQualifiedName);
     }
 
@@ -199,7 +221,7 @@ public class PresetDashboard extends Preset {
      * @return the collection that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static PresetDashboard replaceTerms(String qualifiedName, String name, List<Reference> terms)
+    public static PresetDashboard replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
             throws AtlanException {
         return (PresetDashboard) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -214,7 +236,7 @@ public class PresetDashboard extends Preset {
      * @return the collection that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static PresetDashboard appendTerms(String qualifiedName, List<Reference> terms) throws AtlanException {
+    public static PresetDashboard appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
         return (PresetDashboard) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -228,7 +250,7 @@ public class PresetDashboard extends Preset {
      * @return the collection that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static PresetDashboard removeTerms(String qualifiedName, List<GuidReference> terms) throws AtlanException {
+    public static PresetDashboard removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
         return (PresetDashboard) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 }

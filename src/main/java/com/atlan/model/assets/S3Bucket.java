@@ -6,10 +6,9 @@ import com.atlan.exception.AtlanException;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.enums.AtlanConnectorType;
-import com.atlan.model.relations.GuidReference;
-import com.atlan.model.relations.Reference;
+import com.atlan.model.relations.UniqueAttributes;
 import java.util.List;
-import java.util.Set;
+import java.util.SortedSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -42,7 +41,30 @@ public class S3Bucket extends S3 {
     /** S3 objects within this bucket. */
     @Singular
     @Attribute
-    Set<Reference> objects;
+    SortedSet<S3Object> objects;
+
+    /**
+     * Reference to a S3 bucket by GUID.
+     *
+     * @param guid the GUID of the S3 bucket to reference
+     * @return reference to a S3 bucket that can be used for defining a relationship to a S3 bucket
+     */
+    public static S3Bucket refByGuid(String guid) {
+        return S3Bucket.builder().guid(guid).build();
+    }
+
+    /**
+     * Reference to a S3 bucket by qualifiedName.
+     *
+     * @param qualifiedName the qualifiedName of the S3 bucket to reference
+     * @return reference to a S3 bucket that can be used for defining a relationship to a S3 bucket
+     */
+    public static S3Bucket refByQualifiedName(String qualifiedName) {
+        return S3Bucket.builder()
+                .uniqueAttributes(
+                        UniqueAttributes.builder().qualifiedName(qualifiedName).build())
+                .build();
+    }
 
     /**
      * Builds the minimal object necessary to create an S3 bucket.
@@ -180,7 +202,7 @@ public class S3Bucket extends S3 {
      * @return the S3 bucket that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static S3Bucket replaceTerms(String qualifiedName, String name, List<Reference> terms)
+    public static S3Bucket replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
             throws AtlanException {
         return (S3Bucket) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -195,7 +217,7 @@ public class S3Bucket extends S3 {
      * @return the S3 bucket that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static S3Bucket appendTerms(String qualifiedName, List<Reference> terms) throws AtlanException {
+    public static S3Bucket appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
         return (S3Bucket) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -209,7 +231,7 @@ public class S3Bucket extends S3 {
      * @return the S3 bucket that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static S3Bucket removeTerms(String qualifiedName, List<GuidReference> terms) throws AtlanException {
+    public static S3Bucket removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
         return (S3Bucket) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 }

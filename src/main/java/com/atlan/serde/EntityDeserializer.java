@@ -80,6 +80,9 @@ public class EntityDeserializer extends StdDeserializer<Entity> {
                 case Readme.TYPE_NAME:
                     builder = Readme.builder();
                     break;
+                case Link.TYPE_NAME:
+                    builder = Link.builder();
+                    break;
                 case Glossary.TYPE_NAME:
                     builder = Glossary.builder();
                     break;

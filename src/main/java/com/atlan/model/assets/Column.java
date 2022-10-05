@@ -6,7 +6,6 @@ import com.atlan.exception.AtlanException;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.enums.AtlanConnectorType;
-import com.atlan.model.relations.GuidReference;
 import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.StringUtils;
@@ -118,7 +117,7 @@ public class Column extends SQL {
 
     /** Table in which this column exists, or null if the column exists in a view. */
     @Attribute
-    Reference table;
+    Table table;
 
     /** Table partition in which this column exists, if any. */
     @Attribute
@@ -126,12 +125,12 @@ public class Column extends SQL {
 
     /** View in which this column exists, or null if the column exists in a table or materialized view. */
     @Attribute
-    Reference view;
+    View view;
 
     /** Materialized view in which this column exists, or null if the column exists in a table or view. */
     @Attribute
     @JsonProperty("materialisedView")
-    Reference materializedView;
+    MaterializedView materializedView;
 
     /** Queries that involve this column. */
     @Singular
@@ -142,7 +141,7 @@ public class Column extends SQL {
      * Retrieve the parent of this column, irrespective of its type.
      * @return the reference to this column's parent
      */
-    public Reference getParent() {
+    public SQL getParent() {
         if (table != null) {
             return table;
         } else if (view != null) {
@@ -206,17 +205,17 @@ public class Column extends SQL {
             case Table.TYPE_NAME:
                 builder = builder.tableName(parentName)
                         .tableQualifiedName(parentQualifiedName)
-                        .table(Reference.by(parentType, parentQualifiedName));
+                        .table(Table.refByQualifiedName(parentQualifiedName));
                 break;
             case View.TYPE_NAME:
                 builder = builder.viewName(parentName)
                         .viewQualifiedName(parentQualifiedName)
-                        .view(Reference.by(parentType, parentQualifiedName));
+                        .view(View.refByQualifiedName(parentQualifiedName));
                 break;
             case MaterializedView.TYPE_NAME:
                 builder = builder.viewName(parentName)
                         .viewQualifiedName(parentQualifiedName)
-                        .materializedView(Reference.by(parentType, parentQualifiedName));
+                        .materializedView(MaterializedView.refByQualifiedName(parentQualifiedName));
                 break;
         }
         return builder;
@@ -331,7 +330,8 @@ public class Column extends SQL {
      * @return the column that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static Column replaceTerms(String qualifiedName, String name, List<Reference> terms) throws AtlanException {
+    public static Column replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+            throws AtlanException {
         return (Column) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
 
@@ -345,7 +345,7 @@ public class Column extends SQL {
      * @return the column that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static Column appendTerms(String qualifiedName, List<Reference> terms) throws AtlanException {
+    public static Column appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
         return (Column) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -359,7 +359,7 @@ public class Column extends SQL {
      * @return the column that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static Column removeTerms(String qualifiedName, List<GuidReference> terms) throws AtlanException {
+    public static Column removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
         return (Column) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 }

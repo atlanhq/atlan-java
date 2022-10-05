@@ -5,42 +5,42 @@ package com.atlan.live;
 import static org.testng.Assert.*;
 
 import com.atlan.exception.AtlanException;
-import com.atlan.model.assets.Readme;
+import com.atlan.model.assets.Link;
 import com.atlan.model.assets.S3Bucket;
 import com.atlan.model.core.Entity;
 import com.atlan.model.core.EntityMutationResponse;
 import com.atlan.model.enums.AtlanStatus;
 import org.testng.annotations.Test;
 
-public class ReadmeTest extends AtlanLiveTest {
+public class LinkTest extends AtlanLiveTest {
 
-    private static final String readmeContent =
-            "<h1>This is a test</h1><h2>With some headings</h2><p>And some normal content.</p>";
+    private static final String linkTitle = "Atlan";
+    private static final String linkURL = "https://www.atlan.com";
 
-    public static String readmeGuid = null;
-    public static String readmeQame = null;
+    public static String linkGuid = null;
+    public static String linkQame = null;
 
     @Test(
-            groups = {"create.readme"},
+            groups = {"create.link"},
             dependsOnGroups = {"create.s3object"})
-    void addReadme() {
+    void addLink() {
         try {
-            Readme readme = Readme.creator(
-                            S3Bucket.refByGuid(S3AssetTest.s3BucketGuid), S3AssetTest.S3_BUCKET_NAME, readmeContent)
+            Link link = Link.creator(S3Bucket.refByGuid(S3AssetTest.s3BucketGuid), linkTitle, linkURL)
                     .build();
-            EntityMutationResponse response = readme.upsert();
+            EntityMutationResponse response = link.upsert();
             assertNotNull(response);
             assertTrue(response.getDeletedEntities().isEmpty());
             assertEquals(response.getCreatedEntities().size(), 1);
             Entity one = response.getCreatedEntities().get(0);
-            assertTrue(one instanceof Readme);
-            readme = (Readme) one;
-            assertNotNull(readme);
-            readmeGuid = readme.getGuid();
-            assertNotNull(readmeGuid);
-            readmeQame = readme.getQualifiedName();
-            assertNotNull(readmeQame);
-            assertEquals(readme.getDescription(), readmeContent);
+            assertTrue(one instanceof Link);
+            link = (Link) one;
+            assertNotNull(link);
+            linkGuid = link.getGuid();
+            assertNotNull(linkGuid);
+            linkQame = link.getQualifiedName();
+            assertNotNull(linkQame);
+            assertEquals(link.getName(), linkTitle);
+            assertEquals(link.getLink(), linkURL);
             assertEquals(response.getUpdatedEntities().size(), 1);
             one = response.getUpdatedEntities().get(0);
             assertTrue(one instanceof S3Bucket);
@@ -50,29 +50,29 @@ public class ReadmeTest extends AtlanLiveTest {
             assertEquals(s3Bucket.getQualifiedName(), S3AssetTest.s3BucketQame);
         } catch (AtlanException e) {
             e.printStackTrace();
-            assertNull(e, "Unexpected exception while trying to create a README.");
+            assertNull(e, "Unexpected exception while trying to create a link.");
         }
     }
 
     @Test(
-            groups = {"purge.readme"},
+            groups = {"purge.link"},
             dependsOnGroups = {"create.*", "update.*", "read.*", "search.*", "link.*", "unlink.*"},
             alwaysRun = true)
-    void purgeReadme() {
+    void purgeLink() {
         try {
-            EntityMutationResponse response = Readme.purge(readmeGuid);
+            EntityMutationResponse response = Link.purge(linkGuid);
             assertNotNull(response);
             assertEquals(response.getDeletedEntities().size(), 1);
             Entity one = response.getDeletedEntities().get(0);
             assertNotNull(one);
-            assertTrue(one instanceof Readme);
-            Readme readme = (Readme) one;
-            assertEquals(readme.getGuid(), readmeGuid);
-            assertEquals(readme.getQualifiedName(), readmeQame);
-            assertEquals(readme.getStatus(), AtlanStatus.DELETED);
+            assertTrue(one instanceof Link);
+            Link link = (Link) one;
+            assertEquals(link.getGuid(), linkGuid);
+            assertEquals(link.getQualifiedName(), linkQame);
+            assertEquals(link.getStatus(), AtlanStatus.DELETED);
         } catch (AtlanException e) {
             e.printStackTrace();
-            assertNull(e, "Unexpected error during README deletion.");
+            assertNull(e, "Unexpected error during link deletion.");
         }
     }
 }
