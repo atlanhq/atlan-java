@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":9,"i2":10,"i3":9,"i4":10,"i5":9,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":9,"i26":10,"i27":9,"i28":9,"i29":10,"i30":10,"i31":10,"i32":10,"i33":10,"i34":10,"i35":10,"i36":10,"i37":10,"i38":10,"i39":10,"i40":10,"i41":10,"i42":10,"i43":10,"i44":10,"i45":10,"i46":10,"i47":10,"i48":10,"i49":9,"i50":9,"i51":9};
+var data = {"i0":9,"i1":9,"i2":10,"i3":9,"i4":10,"i5":9,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":9,"i26":9,"i27":9,"i28":10,"i29":9,"i30":9,"i31":10,"i32":10,"i33":10,"i34":10,"i35":10,"i36":10,"i37":10,"i38":10,"i39":10,"i40":10,"i41":10,"i42":10,"i43":10,"i44":10,"i45":10,"i46":10,"i47":10,"i48":10,"i49":10,"i50":10,"i51":9,"i52":9,"i53":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -125,6 +125,9 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li><a href="../core/AtlanObject.html" title="class in com.atlan.model.core">com.atlan.model.core.AtlanObject</a></li>
 <li>
 <ul class="inheritance">
+<li><a href="../relations/Reference.html" title="class in com.atlan.model.relations">com.atlan.model.relations.Reference</a></li>
+<li>
+<ul class="inheritance">
 <li><a href="../core/Entity.html" title="class in com.atlan.model.core">com.atlan.model.core.Entity</a></li>
 <li>
 <ul class="inheritance">
@@ -141,9 +144,15 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </ul>
 </li>
 </ul>
+</li>
+</ul>
 <div class="description">
 <ul class="blockList">
 <li class="blockList">
+<dl>
+<dt>All Implemented Interfaces:</dt>
+<dd><code>java.lang.Comparable&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;</code></dd>
+</dl>
 <hr>
 <pre>public class <span class="typeNameLabel">GlossaryTerm</span>
 extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></pre>
@@ -187,6 +196,13 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 </a>
 <h3>Nested classes/interfaces inherited from class&nbsp;com.atlan.model.core.<a href="../core/Entity.html" title="class in com.atlan.model.core">Entity</a></h3>
 <code><a href="../core/Entity.EntityBuilder.html" title="class in com.atlan.model.core">Entity.EntityBuilder</a>&lt;<a href="../core/Entity.EntityBuilder.html" title="type parameter in Entity.EntityBuilder">C</a> extends <a href="../core/Entity.html" title="class in com.atlan.model.core">Entity</a>,&#8203;<a href="../core/Entity.EntityBuilder.html" title="type parameter in Entity.EntityBuilder">B</a> extends <a href="../core/Entity.EntityBuilder.html" title="class in com.atlan.model.core">Entity.EntityBuilder</a>&lt;<a href="../core/Entity.EntityBuilder.html" title="type parameter in Entity.EntityBuilder">C</a>,&#8203;<a href="../core/Entity.EntityBuilder.html" title="type parameter in Entity.EntityBuilder">B</a>&gt;&gt;</code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a id="nested.classes.inherited.from.class.com.atlan.model.relations.Reference">
+<!--   -->
+</a>
+<h3>Nested classes/interfaces inherited from class&nbsp;com.atlan.model.relations.<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a></h3>
+<code><a href="../relations/Reference.ReferenceBuilder.html" title="class in com.atlan.model.relations">Reference.ReferenceBuilder</a>&lt;<a href="../relations/Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">C</a> extends <a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>,&#8203;<a href="../relations/Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">B</a> extends <a href="../relations/Reference.ReferenceBuilder.html" title="class in com.atlan.model.relations">Reference.ReferenceBuilder</a>&lt;<a href="../relations/Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">C</a>,&#8203;<a href="../relations/Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">B</a>&gt;&gt;</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="nested.classes.inherited.from.class.com.atlan.model.core.AtlanObject">
@@ -310,35 +326,35 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i8" class="altColor">
-<td class="colFirst"><code><a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a></code></td>
+<td class="colFirst"><code><a href="Glossary.html" title="class in com.atlan.model.assets">Glossary</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAnchor()">getAnchor</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Glossary in which the term is located.</div>
 </td>
 </tr>
 <tr id="i9" class="rowColor">
-<td class="colFirst"><code>java.util.Set&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;</code></td>
+<td class="colFirst"><code>java.util.SortedSet&lt;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAntonyms()">getAntonyms</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Glossary terms that have the opposite (or near opposite) meaning in the same language.</div>
 </td>
 </tr>
 <tr id="i10" class="altColor">
-<td class="colFirst"><code>java.util.Set&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;</code></td>
+<td class="colFirst"><code>java.util.SortedSet&lt;<a href="Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAssignedEntities()">getAssignedEntities</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Assets that are attached to this term.</div>
 </td>
 </tr>
 <tr id="i11" class="rowColor">
-<td class="colFirst"><code>java.util.Set&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;</code></td>
+<td class="colFirst"><code>java.util.SortedSet&lt;<a href="GlossaryCategory.html" title="class in com.atlan.model.assets">GlossaryCategory</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCategories()">getCategories</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Categories within which this term is organized.</div>
 </td>
 </tr>
 <tr id="i12" class="altColor">
-<td class="colFirst"><code>java.util.Set&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;</code></td>
+<td class="colFirst"><code>java.util.SortedSet&lt;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getClassifies()">getClassifies</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Unused relationships.</div>
@@ -355,21 +371,21 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i15" class="rowColor">
-<td class="colFirst"><code>java.util.Set&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;</code></td>
+<td class="colFirst"><code>java.util.SortedSet&lt;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPreferredTerms()">getPreferredTerms</a></span>()</code></th>
 <td class="colLast">
 <div class="block">These terms are preferred in place of this term.</div>
 </td>
 </tr>
 <tr id="i16" class="altColor">
-<td class="colFirst"><code>java.util.Set&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;</code></td>
+<td class="colFirst"><code>java.util.SortedSet&lt;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getReplacedBy()">getReplacedBy</a></span>()</code></th>
 <td class="colLast">
 <div class="block">These terms should be used instead of this term.</div>
 </td>
 </tr>
 <tr id="i17" class="rowColor">
-<td class="colFirst"><code>java.util.Set&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;</code></td>
+<td class="colFirst"><code>java.util.SortedSet&lt;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSeeAlso()">getSeeAlso</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Linked glossary terms that may also be of interest.</div>
@@ -383,14 +399,14 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 </td>
 </tr>
 <tr id="i19" class="rowColor">
-<td class="colFirst"><code>java.util.Set&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;</code></td>
+<td class="colFirst"><code>java.util.SortedSet&lt;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSynonyms()">getSynonyms</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Glossary terms that have the same, or a very similar meaning in the same language.</div>
 </td>
 </tr>
 <tr id="i20" class="altColor">
-<td class="colFirst"><code>java.util.Set&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;</code></td>
+<td class="colFirst"><code>java.util.SortedSet&lt;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTranslatedTerms()">getTranslatedTerms</a></span>()</code></th>
 <td class="colLast">
 <div class="block">These terms represent the same meaning, but each is in a different language.</div>
@@ -409,7 +425,7 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i23" class="rowColor">
-<td class="colFirst"><code>java.util.Set&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;</code></td>
+<td class="colFirst"><code>java.util.SortedSet&lt;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getValidValuesFor()">getValidValuesFor</a></span>()</code></th>
 <td class="colLast">
 <div class="block">These terms each represent one of the valid values that could be assigned to a data item that has the meaning
@@ -423,6 +439,20 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 </tr>
 <tr id="i25" class="rowColor">
 <td class="colFirst"><code>static <a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#refByGuid(java.lang.String)">refByGuid</a></span>&#8203;(java.lang.String&nbsp;guid)</code></th>
+<td class="colLast">
+<div class="block">Reference to a term by GUID.</div>
+</td>
+</tr>
+<tr id="i26" class="altColor">
+<td class="colFirst"><code>static <a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#refByQualifiedName(java.lang.String)">refByQualifiedName</a></span>&#8203;(java.lang.String&nbsp;qualifiedName)</code></th>
+<td class="colLast">
+<div class="block">Reference to a term by qualifiedName.</div>
+</td>
+</tr>
+<tr id="i27" class="rowColor">
+<td class="colFirst"><code>static <a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeAnnouncement(java.lang.String,java.lang.String,java.lang.String)">removeAnnouncement</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                   java.lang.String&nbsp;name,
                   java.lang.String&nbsp;glossaryGuid)</code></th>
@@ -430,14 +460,14 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 <div class="block">Remove the announcement from a term.</div>
 </td>
 </tr>
-<tr id="i26" class="altColor">
+<tr id="i28" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeAssignedEntities()">removeAssignedEntities</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Remove the linked assets from the term, if any are set on the term.</div>
 </td>
 </tr>
-<tr id="i27" class="rowColor">
+<tr id="i29" class="rowColor">
 <td class="colFirst"><code>static <a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeCertificate(java.lang.String,java.lang.String,java.lang.String)">removeCertificate</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                  java.lang.String&nbsp;name,
@@ -446,7 +476,7 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 <div class="block">Remove the certificate from a term.</div>
 </td>
 </tr>
-<tr id="i28" class="altColor">
+<tr id="i30" class="altColor">
 <td class="colFirst"><code>static void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeClassification(java.lang.String,java.lang.String)">removeClassification</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                     java.lang.String&nbsp;classificationName)</code></th>
@@ -454,129 +484,129 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 <div class="block">Remove a classification from a term.</div>
 </td>
 </tr>
-<tr id="i29" class="rowColor">
+<tr id="i31" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAbbreviation(java.lang.String)">setAbbreviation</a></span>&#8203;(java.lang.String&nbsp;abbreviation)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i30" class="altColor">
+<tr id="i32" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAdditionalAttributes(java.util.Map)">setAdditionalAttributes</a></span>&#8203;(java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;additionalAttributes)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i31" class="rowColor">
+<tr id="i33" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAnchor(com.atlan.model.relations.Reference)">setAnchor</a></span>&#8203;(<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&nbsp;anchor)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAnchor(com.atlan.model.assets.Glossary)">setAnchor</a></span>&#8203;(<a href="Glossary.html" title="class in com.atlan.model.assets">Glossary</a>&nbsp;anchor)</code></th>
 <td class="colLast">
 <div class="block">Glossary in which the term is located.</div>
 </td>
 </tr>
-<tr id="i32" class="altColor">
+<tr id="i34" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAntonyms(java.util.Set)">setAntonyms</a></span>&#8203;(java.util.Set&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;&nbsp;antonyms)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAntonyms(java.util.SortedSet)">setAntonyms</a></span>&#8203;(java.util.SortedSet&lt;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;antonyms)</code></th>
 <td class="colLast">
 <div class="block">Glossary terms that have the opposite (or near opposite) meaning in the same language.</div>
 </td>
 </tr>
-<tr id="i33" class="rowColor">
+<tr id="i35" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAssignedEntities(java.util.Set)">setAssignedEntities</a></span>&#8203;(java.util.Set&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;&nbsp;assignedEntities)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAssignedEntities(java.util.SortedSet)">setAssignedEntities</a></span>&#8203;(java.util.SortedSet&lt;<a href="Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;&nbsp;assignedEntities)</code></th>
 <td class="colLast">
 <div class="block">Assets that are attached to this term.</div>
 </td>
 </tr>
-<tr id="i34" class="altColor">
+<tr id="i36" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setCategories(java.util.Set)">setCategories</a></span>&#8203;(java.util.Set&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;&nbsp;categories)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setCategories(java.util.SortedSet)">setCategories</a></span>&#8203;(java.util.SortedSet&lt;<a href="GlossaryCategory.html" title="class in com.atlan.model.assets">GlossaryCategory</a>&gt;&nbsp;categories)</code></th>
 <td class="colLast">
 <div class="block">Categories within which this term is organized.</div>
 </td>
 </tr>
-<tr id="i35" class="rowColor">
+<tr id="i37" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setClassifies(java.util.Set)">setClassifies</a></span>&#8203;(java.util.Set&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;&nbsp;classifies)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setClassifies(java.util.SortedSet)">setClassifies</a></span>&#8203;(java.util.SortedSet&lt;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;classifies)</code></th>
 <td class="colLast">
 <div class="block">Unused relationships.</div>
 </td>
 </tr>
-<tr id="i36" class="altColor">
+<tr id="i38" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setExamples(java.util.List)">setExamples</a></span>&#8203;(java.util.List&lt;java.lang.String&gt;&nbsp;examples)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i37" class="rowColor">
+<tr id="i39" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setLongDescription(java.lang.String)">setLongDescription</a></span>&#8203;(java.lang.String&nbsp;longDescription)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i38" class="altColor">
+<tr id="i40" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setPreferredTerms(java.util.Set)">setPreferredTerms</a></span>&#8203;(java.util.Set&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;&nbsp;preferredTerms)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setPreferredTerms(java.util.SortedSet)">setPreferredTerms</a></span>&#8203;(java.util.SortedSet&lt;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;preferredTerms)</code></th>
 <td class="colLast">
 <div class="block">These terms are preferred in place of this term.</div>
 </td>
 </tr>
-<tr id="i39" class="rowColor">
+<tr id="i41" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setReplacedBy(java.util.Set)">setReplacedBy</a></span>&#8203;(java.util.Set&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;&nbsp;replacedBy)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setReplacedBy(java.util.SortedSet)">setReplacedBy</a></span>&#8203;(java.util.SortedSet&lt;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;replacedBy)</code></th>
 <td class="colLast">
 <div class="block">These terms should be used instead of this term.</div>
 </td>
 </tr>
-<tr id="i40" class="altColor">
+<tr id="i42" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setSeeAlso(java.util.Set)">setSeeAlso</a></span>&#8203;(java.util.Set&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;&nbsp;seeAlso)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setSeeAlso(java.util.SortedSet)">setSeeAlso</a></span>&#8203;(java.util.SortedSet&lt;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;seeAlso)</code></th>
 <td class="colLast">
 <div class="block">Linked glossary terms that may also be of interest.</div>
 </td>
 </tr>
-<tr id="i41" class="rowColor">
+<tr id="i43" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setShortDescription(java.lang.String)">setShortDescription</a></span>&#8203;(java.lang.String&nbsp;shortDescription)</code></th>
 <td class="colLast">
 <div class="block">Unused attributes.</div>
 </td>
 </tr>
-<tr id="i42" class="altColor">
+<tr id="i44" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setSynonyms(java.util.Set)">setSynonyms</a></span>&#8203;(java.util.Set&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;&nbsp;synonyms)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setSynonyms(java.util.SortedSet)">setSynonyms</a></span>&#8203;(java.util.SortedSet&lt;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;synonyms)</code></th>
 <td class="colLast">
 <div class="block">Glossary terms that have the same, or a very similar meaning in the same language.</div>
 </td>
 </tr>
-<tr id="i43" class="rowColor">
+<tr id="i45" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setTranslatedTerms(java.util.Set)">setTranslatedTerms</a></span>&#8203;(java.util.Set&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;&nbsp;translatedTerms)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setTranslatedTerms(java.util.SortedSet)">setTranslatedTerms</a></span>&#8203;(java.util.SortedSet&lt;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;translatedTerms)</code></th>
 <td class="colLast">
 <div class="block">These terms represent the same meaning, but each is in a different language.</div>
 </td>
 </tr>
-<tr id="i44" class="altColor">
+<tr id="i46" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setTypeName(java.lang.String)">setTypeName</a></span>&#8203;(java.lang.String&nbsp;typeName)</code></th>
 <td class="colLast">
 <div class="block">Fixed typeName for terms.</div>
 </td>
 </tr>
-<tr id="i45" class="rowColor">
+<tr id="i47" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setUsage(java.lang.String)">setUsage</a></span>&#8203;(java.lang.String&nbsp;usage)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i46" class="altColor">
+<tr id="i48" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setValidValuesFor(java.util.Set)">setValidValuesFor</a></span>&#8203;(java.util.Set&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;&nbsp;validValuesFor)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setValidValuesFor(java.util.SortedSet)">setValidValuesFor</a></span>&#8203;(java.util.SortedSet&lt;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;validValuesFor)</code></th>
 <td class="colLast">
 <div class="block">These terms each represent one of the valid values that could be assigned to a data item that has the meaning
  described by this term.</div>
 </td>
 </tr>
-<tr id="i47" class="rowColor">
+<tr id="i49" class="rowColor">
 <td class="colFirst"><code><a href="GlossaryTerm.GlossaryTermBuilder.html" title="class in com.atlan.model.assets">GlossaryTerm.GlossaryTermBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toBuilder()">toBuilder</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i48" class="altColor">
+<tr id="i50" class="altColor">
 <td class="colFirst"><code>protected <a href="GlossaryTerm.GlossaryTermBuilder.html" title="class in com.atlan.model.assets">GlossaryTerm.GlossaryTermBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#trimToRequired()">trimToRequired</a></span>()</code></th>
 <td class="colLast">
@@ -584,7 +614,7 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
  more-complete term object.</div>
 </td>
 </tr>
-<tr id="i49" class="rowColor">
+<tr id="i51" class="rowColor">
 <td class="colFirst"><code>static <a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateAnnouncement(java.lang.String,java.lang.String,java.lang.String,com.atlan.model.enums.AtlanAnnouncementType,java.lang.String,java.lang.String)">updateAnnouncement</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                   java.lang.String&nbsp;name,
@@ -596,7 +626,7 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 <div class="block">Update the announcement on a term.</div>
 </td>
 </tr>
-<tr id="i50" class="altColor">
+<tr id="i52" class="altColor">
 <td class="colFirst"><code>static <a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateCertificate(java.lang.String,java.lang.String,java.lang.String,com.atlan.model.enums.AtlanCertificateStatus,java.lang.String)">updateCertificate</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                  java.lang.String&nbsp;name,
@@ -607,7 +637,7 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 <div class="block">Update the certificate on a term.</div>
 </td>
 </tr>
-<tr id="i51" class="rowColor">
+<tr id="i53" class="rowColor">
 <td class="colFirst"><code>static <a href="GlossaryTerm.GlossaryTermBuilder.html" title="class in com.atlan.model.assets">GlossaryTerm.GlossaryTermBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updater(java.lang.String,java.lang.String,java.lang.String)">updater</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
        java.lang.String&nbsp;name,
@@ -622,14 +652,21 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;com.atlan.model.assets.<a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></h3>
-<code><a href="Asset.html#appendTerms(java.lang.String,java.lang.String,java.util.List)">appendTerms</a>, <a href="Asset.html#getAdminGroups()">getAdminGroups</a>, <a href="Asset.html#getAdminRoles()">getAdminRoles</a>, <a href="Asset.html#getAdminUsers()">getAdminUsers</a>, <a href="Asset.html#getAnnouncementMessage()">getAnnouncementMessage</a>, <a href="Asset.html#getAnnouncementTitle()">getAnnouncementTitle</a>, <a href="Asset.html#getAnnouncementType()">getAnnouncementType</a>, <a href="Asset.html#getAnnouncementUpdatedAt()">getAnnouncementUpdatedAt</a>, <a href="Asset.html#getAnnouncementUpdatedBy()">getAnnouncementUpdatedBy</a>, <a href="Asset.html#getCertificateStatus()">getCertificateStatus</a>, <a href="Asset.html#getCertificateStatusMessage()">getCertificateStatusMessage</a>, <a href="Asset.html#getCertificateUpdatedAt()">getCertificateUpdatedAt</a>, <a href="Asset.html#getCertificateUpdatedBy()">getCertificateUpdatedBy</a>, <a href="Asset.html#getConnectionName()">getConnectionName</a>, <a href="Asset.html#getConnectionQualifiedName()">getConnectionQualifiedName</a>, <a href="Asset.html#getConnectorType()">getConnectorType</a>, <a href="Asset.html#getDescription()">getDescription</a>, <a href="Asset.html#getDisplayName()">getDisplayName</a>, <a href="Asset.html#getHasLineage()">getHasLineage</a>, <a href="Asset.html#getIsDiscoverable()">getIsDiscoverable</a>, <a href="Asset.html#getIsEditable()">getIsEditable</a>, <a href="Asset.html#getLastSyncRun()">getLastSyncRun</a>, <a href="Asset.html#getLastSyncRunAt()">getLastSyncRunAt</a>, <a href="Asset.html#getLastSyncWorkflowName()">getLastSyncWorkflowName</a>, <a href="Asset.html#getLinks()">getLinks</a>, <a href="Asset.html#getMeanings()">getMeanings</a>, <a href="Asset.html#getName()">getName</a>, <a href="Asset.html#getOwnerGroups()">getOwnerGroups</a>, <a href="Asset.html#getOwnerUsers()">getOwnerUsers</a>, <a href="Asset.html#getPopularityScore()">getPopularityScore</a>, <a href="Asset.html#getQualifiedName()">getQualifiedName</a>, <a href="Asset.html#getReadme()">getReadme</a>, <a href="Asset.html#getSourceCreatedAt()">getSourceCreatedAt</a>, <a href="Asset.html#getSourceCreatedBy()">getSourceCreatedBy</a>, <a href="Asset.html#getSourceEmbedURL()">getSourceEmbedURL</a>, <a href="Asset.html#getSourceOwners()">getSourceOwners</a>, <a href="Asset.html#getSourceUpdatedAt()">getSourceUpdatedAt</a>, <a href="Asset.html#getSourceUpdatedBy()">getSourceUpdatedBy</a>, <a href="Asset.html#getSourceURL()">getSourceURL</a>, <a href="Asset.html#getSubType()">getSubType</a>, <a href="Asset.html#getTenantId()">getTenantId</a>, <a href="Asset.html#getUserDescription()">getUserDescription</a>, <a href="Asset.html#getViewerGroups()">getViewerGroups</a>, <a href="Asset.html#getViewerUsers()">getViewerUsers</a>, <a href="Asset.html#getViewScore()">getViewScore</a>, <a href="Asset.html#removeAnnouncement()">removeAnnouncement</a>, <a href="Asset.html#removeAnnouncement(com.atlan.model.assets.Asset.AssetBuilder)">removeAnnouncement</a>, <a href="Asset.html#removeCertificate()">removeCertificate</a>, <a href="Asset.html#removeCertificate(com.atlan.model.assets.Asset.AssetBuilder)">removeCertificate</a>, <a href="Asset.html#removeMeanings()">removeMeanings</a>, <a href="Asset.html#removeTerms(java.lang.String,java.lang.String,java.util.List)">removeTerms</a>, <a href="Asset.html#replaceTerms(com.atlan.model.assets.Asset.AssetBuilder,java.util.List)">replaceTerms</a>, <a href="Asset.html#setAdminGroups(java.util.Set)">setAdminGroups</a>, <a href="Asset.html#setAdminRoles(java.util.Set)">setAdminRoles</a>, <a href="Asset.html#setAdminUsers(java.util.Set)">setAdminUsers</a>, <a href="Asset.html#setAnnouncementMessage(java.lang.String)">setAnnouncementMessage</a>, <a href="Asset.html#setAnnouncementTitle(java.lang.String)">setAnnouncementTitle</a>, <a href="Asset.html#setAnnouncementType(com.atlan.model.enums.AtlanAnnouncementType)">setAnnouncementType</a>, <a href="Asset.html#setAnnouncementUpdatedAt(java.lang.Long)">setAnnouncementUpdatedAt</a>, <a href="Asset.html#setAnnouncementUpdatedBy(java.lang.String)">setAnnouncementUpdatedBy</a>, <a href="Asset.html#setCertificateStatus(com.atlan.model.enums.AtlanCertificateStatus)">setCertificateStatus</a>, <a href="Asset.html#setCertificateStatusMessage(java.lang.String)">setCertificateStatusMessage</a>, <a href="Asset.html#setCertificateUpdatedAt(java.lang.Long)">setCertificateUpdatedAt</a>, <a href="Asset.html#setCertificateUpdatedBy(java.lang.String)">setCertificateUpdatedBy</a>, <a href="Asset.html#setConnectionName(java.lang.String)">setConnectionName</a>, <a href="Asset.html#setConnectionQualifiedName(java.lang.String)">setConnectionQualifiedName</a>, <a href="Asset.html#setConnectorType(com.atlan.model.enums.AtlanConnectorType)">setConnectorType</a>, <a href="Asset.html#setDescription(java.lang.String)">setDescription</a>, <a href="Asset.html#setDisplayName(java.lang.String)">setDisplayName</a>, <a href="Asset.html#setHasLineage(java.lang.Boolean)">setHasLineage</a>, <a href="Asset.html#setIsDiscoverable(java.lang.Boolean)">setIsDiscoverable</a>, <a href="Asset.html#setIsEditable(java.lang.Boolean)">setIsEditable</a>, <a href="Asset.html#setLastSyncRun(java.lang.String)">setLastSyncRun</a>, <a href="Asset.html#setLastSyncRunAt(java.lang.Long)">setLastSyncRunAt</a>, <a href="Asset.html#setLastSyncWorkflowName(java.lang.String)">setLastSyncWorkflowName</a>, <a href="Asset.html#setLinks(java.util.Set)">setLinks</a>, <a href="Asset.html#setMeanings(java.util.Set)">setMeanings</a>, <a href="Asset.html#setName(java.lang.String)">setName</a>, <a href="Asset.html#setOwnerGroups(java.util.Set)">setOwnerGroups</a>, <a href="Asset.html#setOwnerUsers(java.util.Set)">setOwnerUsers</a>, <a href="Asset.html#setPopularityScore(java.lang.Double)">setPopularityScore</a>, <a href="Asset.html#setQualifiedName(java.lang.String)">setQualifiedName</a>, <a href="Asset.html#setReadme(com.atlan.model.relations.Reference)">setReadme</a>, <a href="Asset.html#setSourceCreatedAt(java.lang.Long)">setSourceCreatedAt</a>, <a href="Asset.html#setSourceCreatedBy(java.lang.String)">setSourceCreatedBy</a>, <a href="Asset.html#setSourceEmbedURL(java.lang.String)">setSourceEmbedURL</a>, <a href="Asset.html#setSourceOwners(java.lang.String)">setSourceOwners</a>, <a href="Asset.html#setSourceUpdatedAt(java.lang.Long)">setSourceUpdatedAt</a>, <a href="Asset.html#setSourceUpdatedBy(java.lang.String)">setSourceUpdatedBy</a>, <a href="Asset.html#setSourceURL(java.lang.String)">setSourceURL</a>, <a href="Asset.html#setSubType(java.lang.Object)">setSubType</a>, <a href="Asset.html#setTenantId(java.lang.String)">setTenantId</a>, <a href="Asset.html#setUserDescription(java.lang.String)">setUserDescription</a>, <a href="Asset.html#setViewerGroups(java.util.Set)">setViewerGroups</a>, <a href="Asset.html#setViewerUsers(java.util.Set)">setViewerUsers</a>, <a href="Asset.html#setViewScore(java.lang.Double)">setViewScore</a>, <a href="Asset.html#updateAnnouncement(com.atlan.model.assets.Asset.AssetBuilder,com.atlan.model.enums.AtlanAnnouncementType,java.lang.String,java.lang.String)">updateAnnouncement</a>, <a href="Asset.html#updateAnnouncement(com.atlan.model.assets.Asset.AssetBuilder,java.lang.String,java.lang.String,com.atlan.model.enums.AtlanAnnouncementType,java.lang.String,java.lang.String)">updateAnnouncement</a>, <a href="Asset.html#updateCertificate(com.atlan.model.assets.Asset.AssetBuilder,com.atlan.model.enums.AtlanCertificateStatus,java.lang.String)">updateCertificate</a>, <a href="Asset.html#updateCertificate(com.atlan.model.assets.Asset.AssetBuilder,java.lang.String,java.lang.String,com.atlan.model.enums.AtlanCertificateStatus,java.lang.String)">updateCertificate</a></code></li>
+<code><a href="Asset.html#appendTerms(java.lang.String,java.lang.String,java.util.List)">appendTerms</a>, <a href="Asset.html#getAdminGroups()">getAdminGroups</a>, <a href="Asset.html#getAdminRoles()">getAdminRoles</a>, <a href="Asset.html#getAdminUsers()">getAdminUsers</a>, <a href="Asset.html#getAnnouncementMessage()">getAnnouncementMessage</a>, <a href="Asset.html#getAnnouncementTitle()">getAnnouncementTitle</a>, <a href="Asset.html#getAnnouncementType()">getAnnouncementType</a>, <a href="Asset.html#getAnnouncementUpdatedAt()">getAnnouncementUpdatedAt</a>, <a href="Asset.html#getAnnouncementUpdatedBy()">getAnnouncementUpdatedBy</a>, <a href="Asset.html#getCertificateStatus()">getCertificateStatus</a>, <a href="Asset.html#getCertificateStatusMessage()">getCertificateStatusMessage</a>, <a href="Asset.html#getCertificateUpdatedAt()">getCertificateUpdatedAt</a>, <a href="Asset.html#getCertificateUpdatedBy()">getCertificateUpdatedBy</a>, <a href="Asset.html#getConnectionName()">getConnectionName</a>, <a href="Asset.html#getConnectionQualifiedName()">getConnectionQualifiedName</a>, <a href="Asset.html#getConnectorType()">getConnectorType</a>, <a href="Asset.html#getDescription()">getDescription</a>, <a href="Asset.html#getDisplayName()">getDisplayName</a>, <a href="Asset.html#getHasLineage()">getHasLineage</a>, <a href="Asset.html#getIsDiscoverable()">getIsDiscoverable</a>, <a href="Asset.html#getIsEditable()">getIsEditable</a>, <a href="Asset.html#getLastSyncRun()">getLastSyncRun</a>, <a href="Asset.html#getLastSyncRunAt()">getLastSyncRunAt</a>, <a href="Asset.html#getLastSyncWorkflowName()">getLastSyncWorkflowName</a>, <a href="Asset.html#getLinks()">getLinks</a>, <a href="Asset.html#getMeanings()">getMeanings</a>, <a href="Asset.html#getName()">getName</a>, <a href="Asset.html#getOwnerGroups()">getOwnerGroups</a>, <a href="Asset.html#getOwnerUsers()">getOwnerUsers</a>, <a href="Asset.html#getPopularityScore()">getPopularityScore</a>, <a href="Asset.html#getQualifiedName()">getQualifiedName</a>, <a href="Asset.html#getReadme()">getReadme</a>, <a href="Asset.html#getSourceCreatedAt()">getSourceCreatedAt</a>, <a href="Asset.html#getSourceCreatedBy()">getSourceCreatedBy</a>, <a href="Asset.html#getSourceEmbedURL()">getSourceEmbedURL</a>, <a href="Asset.html#getSourceOwners()">getSourceOwners</a>, <a href="Asset.html#getSourceUpdatedAt()">getSourceUpdatedAt</a>, <a href="Asset.html#getSourceUpdatedBy()">getSourceUpdatedBy</a>, <a href="Asset.html#getSourceURL()">getSourceURL</a>, <a href="Asset.html#getSubType()">getSubType</a>, <a href="Asset.html#getTenantId()">getTenantId</a>, <a href="Asset.html#getUserDescription()">getUserDescription</a>, <a href="Asset.html#getViewerGroups()">getViewerGroups</a>, <a href="Asset.html#getViewerUsers()">getViewerUsers</a>, <a href="Asset.html#getViewScore()">getViewScore</a>, <a href="Asset.html#removeAnnouncement()">removeAnnouncement</a>, <a href="Asset.html#removeAnnouncement(com.atlan.model.assets.Asset.AssetBuilder)">removeAnnouncement</a>, <a href="Asset.html#removeCertificate()">removeCertificate</a>, <a href="Asset.html#removeCertificate(com.atlan.model.assets.Asset.AssetBuilder)">removeCertificate</a>, <a href="Asset.html#removeMeanings()">removeMeanings</a>, <a href="Asset.html#removeTerms(java.lang.String,java.lang.String,java.util.List)">removeTerms</a>, <a href="Asset.html#replaceTerms(com.atlan.model.assets.Asset.AssetBuilder,java.util.List)">replaceTerms</a>, <a href="Asset.html#setAdminGroups(java.util.SortedSet)">setAdminGroups</a>, <a href="Asset.html#setAdminRoles(java.util.SortedSet)">setAdminRoles</a>, <a href="Asset.html#setAdminUsers(java.util.SortedSet)">setAdminUsers</a>, <a href="Asset.html#setAnnouncementMessage(java.lang.String)">setAnnouncementMessage</a>, <a href="Asset.html#setAnnouncementTitle(java.lang.String)">setAnnouncementTitle</a>, <a href="Asset.html#setAnnouncementType(com.atlan.model.enums.AtlanAnnouncementType)">setAnnouncementType</a>, <a href="Asset.html#setAnnouncementUpdatedAt(java.lang.Long)">setAnnouncementUpdatedAt</a>, <a href="Asset.html#setAnnouncementUpdatedBy(java.lang.String)">setAnnouncementUpdatedBy</a>, <a href="Asset.html#setCertificateStatus(com.atlan.model.enums.AtlanCertificateStatus)">setCertificateStatus</a>, <a href="Asset.html#setCertificateStatusMessage(java.lang.String)">setCertificateStatusMessage</a>, <a href="Asset.html#setCertificateUpdatedAt(java.lang.Long)">setCertificateUpdatedAt</a>, <a href="Asset.html#setCertificateUpdatedBy(java.lang.String)">setCertificateUpdatedBy</a>, <a href="Asset.html#setConnectionName(java.lang.String)">setConnectionName</a>, <a href="Asset.html#setConnectionQualifiedName(java.lang.String)">setConnectionQualifiedName</a>, <a href="Asset.html#setConnectorType(com.atlan.model.enums.AtlanConnectorType)">setConnectorType</a>, <a href="Asset.html#setDescription(java.lang.String)">setDescription</a>, <a href="Asset.html#setDisplayName(java.lang.String)">setDisplayName</a>, <a href="Asset.html#setHasLineage(java.lang.Boolean)">setHasLineage</a>, <a href="Asset.html#setIsDiscoverable(java.lang.Boolean)">setIsDiscoverable</a>, <a href="Asset.html#setIsEditable(java.lang.Boolean)">setIsEditable</a>, <a href="Asset.html#setLastSyncRun(java.lang.String)">setLastSyncRun</a>, <a href="Asset.html#setLastSyncRunAt(java.lang.Long)">setLastSyncRunAt</a>, <a href="Asset.html#setLastSyncWorkflowName(java.lang.String)">setLastSyncWorkflowName</a>, <a href="Asset.html#setLinks(java.util.SortedSet)">setLinks</a>, <a href="Asset.html#setMeanings(java.util.SortedSet)">setMeanings</a>, <a href="Asset.html#setName(java.lang.String)">setName</a>, <a href="Asset.html#setOwnerGroups(java.util.SortedSet)">setOwnerGroups</a>, <a href="Asset.html#setOwnerUsers(java.util.SortedSet)">setOwnerUsers</a>, <a href="Asset.html#setPopularityScore(java.lang.Double)">setPopularityScore</a>, <a href="Asset.html#setQualifiedName(java.lang.String)">setQualifiedName</a>, <a href="Asset.html#setReadme(com.atlan.model.assets.Readme)">setReadme</a>, <a href="Asset.html#setSourceCreatedAt(java.lang.Long)">setSourceCreatedAt</a>, <a href="Asset.html#setSourceCreatedBy(java.lang.String)">setSourceCreatedBy</a>, <a href="Asset.html#setSourceEmbedURL(java.lang.String)">setSourceEmbedURL</a>, <a href="Asset.html#setSourceOwners(java.lang.String)">setSourceOwners</a>, <a href="Asset.html#setSourceUpdatedAt(java.lang.Long)">setSourceUpdatedAt</a>, <a href="Asset.html#setSourceUpdatedBy(java.lang.String)">setSourceUpdatedBy</a>, <a href="Asset.html#setSourceURL(java.lang.String)">setSourceURL</a>, <a href="Asset.html#setSubType(java.lang.Object)">setSubType</a>, <a href="Asset.html#setTenantId(java.lang.String)">setTenantId</a>, <a href="Asset.html#setUserDescription(java.lang.String)">setUserDescription</a>, <a href="Asset.html#setViewerGroups(java.util.SortedSet)">setViewerGroups</a>, <a href="Asset.html#setViewerUsers(java.util.SortedSet)">setViewerUsers</a>, <a href="Asset.html#setViewScore(java.lang.Double)">setViewScore</a>, <a href="Asset.html#updateAnnouncement(com.atlan.model.assets.Asset.AssetBuilder,com.atlan.model.enums.AtlanAnnouncementType,java.lang.String,java.lang.String)">updateAnnouncement</a>, <a href="Asset.html#updateAnnouncement(com.atlan.model.assets.Asset.AssetBuilder,java.lang.String,java.lang.String,com.atlan.model.enums.AtlanAnnouncementType,java.lang.String,java.lang.String)">updateAnnouncement</a>, <a href="Asset.html#updateCertificate(com.atlan.model.assets.Asset.AssetBuilder,com.atlan.model.enums.AtlanCertificateStatus,java.lang.String)">updateCertificate</a>, <a href="Asset.html#updateCertificate(com.atlan.model.assets.Asset.AssetBuilder,java.lang.String,java.lang.String,com.atlan.model.enums.AtlanCertificateStatus,java.lang.String)">updateCertificate</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.com.atlan.model.core.Entity">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;com.atlan.model.core.<a href="../core/Entity.html" title="class in com.atlan.model.core">Entity</a></h3>
-<code><a href="../core/Entity.html#addClassifications(java.lang.String,java.lang.String,java.util.List)">addClassifications</a>, <a href="../core/Entity.html#addNullField(java.lang.String)">addNullField</a>, <a href="../core/Entity.html#delete(java.lang.String)">delete</a>, <a href="../core/Entity.html#getClassificationNames()">getClassificationNames</a>, <a href="../core/Entity.html#getClassifications()">getClassifications</a>, <a href="../core/Entity.html#getCreatedBy()">getCreatedBy</a>, <a href="../core/Entity.html#getCreateTime()">getCreateTime</a>, <a href="../core/Entity.html#getCustomMetadataSets()">getCustomMetadataSets</a>, <a href="../core/Entity.html#getDeleteHandler()">getDeleteHandler</a>, <a href="../core/Entity.html#getDisplayText()">getDisplayText</a>, <a href="../core/Entity.html#getGuid()">getGuid</a>, <a href="../core/Entity.html#getIsIncomplete()">getIsIncomplete</a>, <a href="../core/Entity.html#getMeaningNames()">getMeaningNames</a>, <a href="../core/Entity.html#getNullFields()">getNullFields</a>, <a href="../core/Entity.html#getStatus()">getStatus</a>, <a href="../core/Entity.html#getUpdatedBy()">getUpdatedBy</a>, <a href="../core/Entity.html#getUpdateTime()">getUpdateTime</a>, <a href="../core/Entity.html#purge(java.lang.String)">purge</a>, <a href="../core/Entity.html#removeClassification(java.lang.String,java.lang.String,java.lang.String)">removeClassification</a>, <a href="../core/Entity.html#removeClassifications()">removeClassifications</a>, <a href="../core/Entity.html#removeCustomMetadata()">removeCustomMetadata</a>, <a href="../core/Entity.html#removeCustomMetadata(java.lang.String,java.lang.String)">removeCustomMetadata</a>, <a href="../core/Entity.html#replaceCustomMetadata(java.lang.String,java.lang.String,com.atlan.model.core.CustomMetadataAttributes)">replaceCustomMetadata</a>, <a href="../core/Entity.html#retrieveFull(java.lang.String)">retrieveFull</a>, <a href="../core/Entity.html#retrieveFull(java.lang.String,java.lang.String)">retrieveFull</a>, <a href="../core/Entity.html#retrieveMinimal(java.lang.String)">retrieveMinimal</a>, <a href="../core/Entity.html#retrieveMinimal(java.lang.String,java.lang.String)">retrieveMinimal</a>, <a href="../core/Entity.html#setClassificationNames(java.util.Set)">setClassificationNames</a>, <a href="../core/Entity.html#setClassifications(java.util.Set)">setClassifications</a>, <a href="../core/Entity.html#setCustomMetadataSets(java.util.Map)">setCustomMetadataSets</a>, <a href="../core/Entity.html#setDisplayText(java.lang.String)">setDisplayText</a>, <a href="../core/Entity.html#setGuid(java.lang.String)">setGuid</a>, <a href="../core/Entity.html#setIsIncomplete(java.lang.Boolean)">setIsIncomplete</a>, <a href="../core/Entity.html#setMeaningNames(java.util.Set)">setMeaningNames</a>, <a href="../core/Entity.html#setNullFields(java.util.Set)">setNullFields</a>, <a href="../core/Entity.html#updateCustomMetadataAttributes(java.lang.String,java.lang.String,com.atlan.model.core.CustomMetadataAttributes)">updateCustomMetadataAttributes</a>, <a href="../core/Entity.html#upsert()">upsert</a>, <a href="../core/Entity.html#upsert(boolean,boolean)">upsert</a></code></li>
+<code><a href="../core/Entity.html#addClassifications(java.lang.String,java.lang.String,java.util.List)">addClassifications</a>, <a href="../core/Entity.html#addNullField(java.lang.String)">addNullField</a>, <a href="../core/Entity.html#delete(java.lang.String)">delete</a>, <a href="../core/Entity.html#getClassificationNames()">getClassificationNames</a>, <a href="../core/Entity.html#getClassifications()">getClassifications</a>, <a href="../core/Entity.html#getCreatedBy()">getCreatedBy</a>, <a href="../core/Entity.html#getCreateTime()">getCreateTime</a>, <a href="../core/Entity.html#getCustomMetadataSets()">getCustomMetadataSets</a>, <a href="../core/Entity.html#getDeleteHandler()">getDeleteHandler</a>, <a href="../core/Entity.html#getIsIncomplete()">getIsIncomplete</a>, <a href="../core/Entity.html#getMeaningNames()">getMeaningNames</a>, <a href="../core/Entity.html#getNullFields()">getNullFields</a>, <a href="../core/Entity.html#getStatus()">getStatus</a>, <a href="../core/Entity.html#getUpdatedBy()">getUpdatedBy</a>, <a href="../core/Entity.html#getUpdateTime()">getUpdateTime</a>, <a href="../core/Entity.html#purge(java.lang.String)">purge</a>, <a href="../core/Entity.html#removeClassification(java.lang.String,java.lang.String,java.lang.String)">removeClassification</a>, <a href="../core/Entity.html#removeClassifications()">removeClassifications</a>, <a href="../core/Entity.html#removeCustomMetadata()">removeCustomMetadata</a>, <a href="../core/Entity.html#removeCustomMetadata(java.lang.String,java.lang.String)">removeCustomMetadata</a>, <a href="../core/Entity.html#replaceCustomMetadata(java.lang.String,java.lang.String,com.atlan.model.core.CustomMetadataAttributes)">replaceCustomMetadata</a>, <a href="../core/Entity.html#retrieveFull(java.lang.String)">retrieveFull</a>, <a href="../core/Entity.html#retrieveFull(java.lang.String,java.lang.String)">retrieveFull</a>, <a href="../core/Entity.html#retrieveMinimal(java.lang.String)">retrieveMinimal</a>, <a href="../core/Entity.html#retrieveMinimal(java.lang.String,java.lang.String)">retrieveMinimal</a>, <a href="../core/Entity.html#setClassificationNames(java.util.Set)">setClassificationNames</a>, <a href="../core/Entity.html#setClassifications(java.util.Set)">setClassifications</a>, <a href="../core/Entity.html#setCustomMetadataSets(java.util.Map)">setCustomMetadataSets</a>, <a href="../core/Entity.html#setIsIncomplete(java.lang.Boolean)">setIsIncomplete</a>, <a href="../core/Entity.html#setMeaningNames(java.util.Set)">setMeaningNames</a>, <a href="../core/Entity.html#setNullFields(java.util.Set)">setNullFields</a>, <a href="../core/Entity.html#updateCustomMetadataAttributes(java.lang.String,java.lang.String,com.atlan.model.core.CustomMetadataAttributes)">updateCustomMetadataAttributes</a>, <a href="../core/Entity.html#upsert()">upsert</a>, <a href="../core/Entity.html#upsert(boolean,boolean)">upsert</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a id="methods.inherited.from.class.com.atlan.model.relations.Reference">
+<!--   -->
+</a>
+<h3>Methods inherited from class&nbsp;com.atlan.model.relations.<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a></h3>
+<code><a href="../relations/Reference.html#by(java.lang.String,java.lang.String)">by</a>, <a href="../relations/Reference.html#compareTo(com.atlan.model.relations.Reference)">compareTo</a>, <a href="../relations/Reference.html#getDisplayText()">getDisplayText</a>, <a href="../relations/Reference.html#getEntityStatus()">getEntityStatus</a>, <a href="../relations/Reference.html#getGuid()">getGuid</a>, <a href="../relations/Reference.html#getRelationshipAttributes()">getRelationshipAttributes</a>, <a href="../relations/Reference.html#getRelationshipGuid()">getRelationshipGuid</a>, <a href="../relations/Reference.html#getRelationshipStatus()">getRelationshipStatus</a>, <a href="../relations/Reference.html#getRelationshipType()">getRelationshipType</a>, <a href="../relations/Reference.html#getUniqueAttributes()">getUniqueAttributes</a>, <a href="../relations/Reference.html#setDisplayText(java.lang.String)">setDisplayText</a>, <a href="../relations/Reference.html#setEntityStatus(java.lang.String)">setEntityStatus</a>, <a href="../relations/Reference.html#setGuid(java.lang.String)">setGuid</a>, <a href="../relations/Reference.html#setRelationshipAttributes(java.util.Map)">setRelationshipAttributes</a>, <a href="../relations/Reference.html#setRelationshipGuid(java.lang.String)">setRelationshipGuid</a>, <a href="../relations/Reference.html#setRelationshipStatus(com.atlan.model.enums.AtlanStatus)">setRelationshipStatus</a>, <a href="../relations/Reference.html#setRelationshipType(java.lang.String)">setRelationshipType</a>, <a href="../relations/Reference.html#setUniqueAttributes(com.atlan.model.relations.UniqueAttributes)">setUniqueAttributes</a>, <a href="../relations/Reference.html#to(java.lang.String,java.lang.String)">to</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.com.atlan.model.core.AtlanObject">
@@ -703,6 +740,38 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a id="refByGuid(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>refByGuid</h4>
+<pre class="methodSignature">public static&nbsp;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&nbsp;refByGuid&#8203;(java.lang.String&nbsp;guid)</pre>
+<div class="block">Reference to a term by GUID.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>guid</code> - the GUID of the term to reference</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>reference to a term that can be used for defining a relationship to a term</dd>
+</dl>
+</li>
+</ul>
+<a id="refByQualifiedName(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>refByQualifiedName</h4>
+<pre class="methodSignature">public static&nbsp;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&nbsp;refByQualifiedName&#8203;(java.lang.String&nbsp;qualifiedName)</pre>
+<div class="block">Reference to a term by qualifiedName.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>qualifiedName</code> - the qualifiedName of the term to reference</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>reference to a term that can be used for defining a relationship to a term</dd>
+</dl>
+</li>
+</ul>
 <a id="removeAssignedEntities()">
 <!--   -->
 </a>
@@ -951,6 +1020,10 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 <li class="blockList">
 <h4>toBuilder</h4>
 <pre class="methodSignature">public&nbsp;<a href="GlossaryTerm.GlossaryTermBuilder.html" title="class in com.atlan.model.assets">GlossaryTerm.GlossaryTermBuilder</a>&lt;?,&#8203;?&gt;&nbsp;toBuilder()</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
+<dd><code><a href="../relations/Reference.html#toBuilder()">toBuilder</a></code>&nbsp;in class&nbsp;<code><a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a></code></dd>
+</dl>
 </li>
 </ul>
 <a id="getShortDescription()">
@@ -1014,7 +1087,7 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 <ul class="blockList">
 <li class="blockList">
 <h4>getAnchor</h4>
-<pre class="methodSignature">public&nbsp;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&nbsp;getAnchor()</pre>
+<pre class="methodSignature">public&nbsp;<a href="Glossary.html" title="class in com.atlan.model.assets">Glossary</a>&nbsp;getAnchor()</pre>
 <div class="block">Glossary in which the term is located.</div>
 </li>
 </ul>
@@ -1024,7 +1097,7 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 <ul class="blockList">
 <li class="blockList">
 <h4>getAssignedEntities</h4>
-<pre class="methodSignature">public&nbsp;java.util.Set&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;&nbsp;getAssignedEntities()</pre>
+<pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;&nbsp;getAssignedEntities()</pre>
 <div class="block">Assets that are attached to this term.</div>
 </li>
 </ul>
@@ -1034,7 +1107,7 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 <ul class="blockList">
 <li class="blockList">
 <h4>getCategories</h4>
-<pre class="methodSignature">public&nbsp;java.util.Set&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;&nbsp;getCategories()</pre>
+<pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="GlossaryCategory.html" title="class in com.atlan.model.assets">GlossaryCategory</a>&gt;&nbsp;getCategories()</pre>
 <div class="block">Categories within which this term is organized.</div>
 </li>
 </ul>
@@ -1044,7 +1117,7 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 <ul class="blockList">
 <li class="blockList">
 <h4>getSeeAlso</h4>
-<pre class="methodSignature">public&nbsp;java.util.Set&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;&nbsp;getSeeAlso()</pre>
+<pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;getSeeAlso()</pre>
 <div class="block">Linked glossary terms that may also be of interest.</div>
 </li>
 </ul>
@@ -1054,7 +1127,7 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 <ul class="blockList">
 <li class="blockList">
 <h4>getSynonyms</h4>
-<pre class="methodSignature">public&nbsp;java.util.Set&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;&nbsp;getSynonyms()</pre>
+<pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;getSynonyms()</pre>
 <div class="block">Glossary terms that have the same, or a very similar meaning in the same language.</div>
 </li>
 </ul>
@@ -1064,7 +1137,7 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 <ul class="blockList">
 <li class="blockList">
 <h4>getAntonyms</h4>
-<pre class="methodSignature">public&nbsp;java.util.Set&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;&nbsp;getAntonyms()</pre>
+<pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;getAntonyms()</pre>
 <div class="block">Glossary terms that have the opposite (or near opposite) meaning in the same language.</div>
 </li>
 </ul>
@@ -1074,7 +1147,7 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 <ul class="blockList">
 <li class="blockList">
 <h4>getPreferredTerms</h4>
-<pre class="methodSignature">public&nbsp;java.util.Set&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;&nbsp;getPreferredTerms()</pre>
+<pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;getPreferredTerms()</pre>
 <div class="block">These terms are preferred in place of this term.</div>
 </li>
 </ul>
@@ -1084,7 +1157,7 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 <ul class="blockList">
 <li class="blockList">
 <h4>getReplacedBy</h4>
-<pre class="methodSignature">public&nbsp;java.util.Set&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;&nbsp;getReplacedBy()</pre>
+<pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;getReplacedBy()</pre>
 <div class="block">These terms should be used instead of this term.</div>
 </li>
 </ul>
@@ -1094,7 +1167,7 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 <ul class="blockList">
 <li class="blockList">
 <h4>getTranslatedTerms</h4>
-<pre class="methodSignature">public&nbsp;java.util.Set&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;&nbsp;getTranslatedTerms()</pre>
+<pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;getTranslatedTerms()</pre>
 <div class="block">These terms represent the same meaning, but each is in a different language.</div>
 </li>
 </ul>
@@ -1104,7 +1177,7 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 <ul class="blockList">
 <li class="blockList">
 <h4>getClassifies</h4>
-<pre class="methodSignature">public&nbsp;java.util.Set&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;&nbsp;getClassifies()</pre>
+<pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;getClassifies()</pre>
 <div class="block">Unused relationships.</div>
 </li>
 </ul>
@@ -1114,7 +1187,7 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 <ul class="blockList">
 <li class="blockList">
 <h4>getValidValuesFor</h4>
-<pre class="methodSignature">public&nbsp;java.util.Set&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;&nbsp;getValidValuesFor()</pre>
+<pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;getValidValuesFor()</pre>
 <div class="block">These terms each represent one of the valid values that could be assigned to a data item that has the meaning
  described by this term.</div>
 </li>
@@ -1174,113 +1247,113 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 <pre class="methodSignature">public&nbsp;void&nbsp;setAdditionalAttributes&#8203;(java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;additionalAttributes)</pre>
 </li>
 </ul>
-<a id="setAnchor(com.atlan.model.relations.Reference)">
+<a id="setAnchor(com.atlan.model.assets.Glossary)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setAnchor</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setAnchor&#8203;(<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&nbsp;anchor)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;setAnchor&#8203;(<a href="Glossary.html" title="class in com.atlan.model.assets">Glossary</a>&nbsp;anchor)</pre>
 <div class="block">Glossary in which the term is located.</div>
 </li>
 </ul>
-<a id="setAssignedEntities(java.util.Set)">
+<a id="setAssignedEntities(java.util.SortedSet)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setAssignedEntities</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setAssignedEntities&#8203;(java.util.Set&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;&nbsp;assignedEntities)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;setAssignedEntities&#8203;(java.util.SortedSet&lt;<a href="Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;&nbsp;assignedEntities)</pre>
 <div class="block">Assets that are attached to this term.</div>
 </li>
 </ul>
-<a id="setCategories(java.util.Set)">
+<a id="setCategories(java.util.SortedSet)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setCategories</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setCategories&#8203;(java.util.Set&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;&nbsp;categories)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;setCategories&#8203;(java.util.SortedSet&lt;<a href="GlossaryCategory.html" title="class in com.atlan.model.assets">GlossaryCategory</a>&gt;&nbsp;categories)</pre>
 <div class="block">Categories within which this term is organized.</div>
 </li>
 </ul>
-<a id="setSeeAlso(java.util.Set)">
+<a id="setSeeAlso(java.util.SortedSet)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setSeeAlso</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setSeeAlso&#8203;(java.util.Set&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;&nbsp;seeAlso)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;setSeeAlso&#8203;(java.util.SortedSet&lt;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;seeAlso)</pre>
 <div class="block">Linked glossary terms that may also be of interest.</div>
 </li>
 </ul>
-<a id="setSynonyms(java.util.Set)">
+<a id="setSynonyms(java.util.SortedSet)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setSynonyms</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setSynonyms&#8203;(java.util.Set&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;&nbsp;synonyms)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;setSynonyms&#8203;(java.util.SortedSet&lt;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;synonyms)</pre>
 <div class="block">Glossary terms that have the same, or a very similar meaning in the same language.</div>
 </li>
 </ul>
-<a id="setAntonyms(java.util.Set)">
+<a id="setAntonyms(java.util.SortedSet)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setAntonyms</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setAntonyms&#8203;(java.util.Set&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;&nbsp;antonyms)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;setAntonyms&#8203;(java.util.SortedSet&lt;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;antonyms)</pre>
 <div class="block">Glossary terms that have the opposite (or near opposite) meaning in the same language.</div>
 </li>
 </ul>
-<a id="setPreferredTerms(java.util.Set)">
+<a id="setPreferredTerms(java.util.SortedSet)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setPreferredTerms</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setPreferredTerms&#8203;(java.util.Set&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;&nbsp;preferredTerms)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;setPreferredTerms&#8203;(java.util.SortedSet&lt;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;preferredTerms)</pre>
 <div class="block">These terms are preferred in place of this term.</div>
 </li>
 </ul>
-<a id="setReplacedBy(java.util.Set)">
+<a id="setReplacedBy(java.util.SortedSet)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setReplacedBy</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setReplacedBy&#8203;(java.util.Set&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;&nbsp;replacedBy)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;setReplacedBy&#8203;(java.util.SortedSet&lt;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;replacedBy)</pre>
 <div class="block">These terms should be used instead of this term.</div>
 </li>
 </ul>
-<a id="setTranslatedTerms(java.util.Set)">
+<a id="setTranslatedTerms(java.util.SortedSet)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setTranslatedTerms</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setTranslatedTerms&#8203;(java.util.Set&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;&nbsp;translatedTerms)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;setTranslatedTerms&#8203;(java.util.SortedSet&lt;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;translatedTerms)</pre>
 <div class="block">These terms represent the same meaning, but each is in a different language.</div>
 </li>
 </ul>
-<a id="setClassifies(java.util.Set)">
+<a id="setClassifies(java.util.SortedSet)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setClassifies</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setClassifies&#8203;(java.util.Set&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;&nbsp;classifies)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;setClassifies&#8203;(java.util.SortedSet&lt;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;classifies)</pre>
 <div class="block">Unused relationships.</div>
 </li>
 </ul>
-<a id="setValidValuesFor(java.util.Set)">
+<a id="setValidValuesFor(java.util.SortedSet)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setValidValuesFor</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setValidValuesFor&#8203;(java.util.Set&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;&nbsp;validValuesFor)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;setValidValuesFor&#8203;(java.util.SortedSet&lt;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;validValuesFor)</pre>
 <div class="block">These terms each represent one of the valid values that could be assigned to a data item that has the meaning
  described by this term.</div>
 </li>
@@ -1334,7 +1407,7 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 <div class="block">Fixed typeName for terms.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="../core/Entity.html#getTypeName()">getTypeName</a></code>&nbsp;in class&nbsp;<code><a href="../core/Entity.html" title="class in com.atlan.model.core">Entity</a></code></dd>
+<dd><code><a href="../relations/Reference.html#getTypeName()">getTypeName</a></code>&nbsp;in class&nbsp;<code><a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -1348,7 +1421,7 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 <div class="block">Fixed typeName for terms.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="../core/Entity.html#setTypeName(java.lang.String)">setTypeName</a></code>&nbsp;in class&nbsp;<code><a href="../core/Entity.html" title="class in com.atlan.model.core">Entity</a></code></dd>
+<dd><code><a href="../relations/Reference.html#setTypeName(java.lang.String)">setTypeName</a></code>&nbsp;in class&nbsp;<code><a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a></code></dd>
 </dl>
 </li>
 </ul>

@@ -125,6 +125,9 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li><a href="../core/AtlanObject.html" title="class in com.atlan.model.core">com.atlan.model.core.AtlanObject</a></li>
 <li>
 <ul class="inheritance">
+<li><a href="../relations/Reference.html" title="class in com.atlan.model.relations">com.atlan.model.relations.Reference</a></li>
+<li>
+<ul class="inheritance">
 <li><a href="../core/Entity.html" title="class in com.atlan.model.core">com.atlan.model.core.Entity</a></li>
 <li>
 <ul class="inheritance">
@@ -136,9 +139,15 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </ul>
 </li>
 </ul>
+</li>
+</ul>
 <div class="description">
 <ul class="blockList">
 <li class="blockList">
+<dl>
+<dt>All Implemented Interfaces:</dt>
+<dd><code>java.lang.Comparable&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;</code></dd>
+</dl>
 <dl>
 <dt>Direct Known Subclasses:</dt>
 <dd><code><a href="../lineage/AbstractProcess.html" title="class in com.atlan.model.lineage">AbstractProcess</a></code>, <code><a href="AWS.html" title="class in com.atlan.model.assets">AWS</a></code>, <code><a href="Connection.html" title="class in com.atlan.model.assets">Connection</a></code>, <code><a href="Glossary.html" title="class in com.atlan.model.assets">Glossary</a></code>, <code><a href="GlossaryCategory.html" title="class in com.atlan.model.assets">GlossaryCategory</a></code>, <code><a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a></code>, <code><a href="Google.html" title="class in com.atlan.model.assets">Google</a></code>, <code><a href="IndistinctAsset.html" title="class in com.atlan.model.assets">IndistinctAsset</a></code>, <code><a href="Preset.html" title="class in com.atlan.model.assets">Preset</a></code>, <code><a href="Resource.html" title="class in com.atlan.model.assets">Resource</a></code>, <code><a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></code></dd>
@@ -178,6 +187,13 @@ extends <a href="../core/Entity.html" title="class in com.atlan.model.core">Enti
 </a>
 <h3>Nested classes/interfaces inherited from class&nbsp;com.atlan.model.core.<a href="../core/Entity.html" title="class in com.atlan.model.core">Entity</a></h3>
 <code><a href="../core/Entity.EntityBuilder.html" title="class in com.atlan.model.core">Entity.EntityBuilder</a>&lt;<a href="../core/Entity.EntityBuilder.html" title="type parameter in Entity.EntityBuilder">C</a> extends <a href="../core/Entity.html" title="class in com.atlan.model.core">Entity</a>,&#8203;<a href="../core/Entity.EntityBuilder.html" title="type parameter in Entity.EntityBuilder">B</a> extends <a href="../core/Entity.EntityBuilder.html" title="class in com.atlan.model.core">Entity.EntityBuilder</a>&lt;<a href="../core/Entity.EntityBuilder.html" title="type parameter in Entity.EntityBuilder">C</a>,&#8203;<a href="../core/Entity.EntityBuilder.html" title="type parameter in Entity.EntityBuilder">B</a>&gt;&gt;</code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a id="nested.classes.inherited.from.class.com.atlan.model.relations.Reference">
+<!--   -->
+</a>
+<h3>Nested classes/interfaces inherited from class&nbsp;com.atlan.model.relations.<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a></h3>
+<code><a href="../relations/Reference.ReferenceBuilder.html" title="class in com.atlan.model.relations">Reference.ReferenceBuilder</a>&lt;<a href="../relations/Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">C</a> extends <a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>,&#8203;<a href="../relations/Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">B</a> extends <a href="../relations/Reference.ReferenceBuilder.html" title="class in com.atlan.model.relations">Reference.ReferenceBuilder</a>&lt;<a href="../relations/Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">C</a>,&#8203;<a href="../relations/Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">B</a>&gt;&gt;</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="nested.classes.inherited.from.class.com.atlan.model.core.AtlanObject">
@@ -253,7 +269,7 @@ extends <a href="../core/Entity.html" title="class in com.atlan.model.core">Enti
 <td class="colFirst"><code>protected static <a href="../core/Entity.html" title="class in com.atlan.model.core">Entity</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#appendTerms(java.lang.String,java.lang.String,java.util.List)">appendTerms</a></span>&#8203;(java.lang.String&nbsp;typeName,
            java.lang.String&nbsp;qualifiedName,
-           java.util.List&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;&nbsp;terms)</code></th>
+           java.util.List&lt;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;terms)</code></th>
 <td class="colLast">
 <div class="block">Link additional terms to an asset, without replacing existing terms linked to the asset.</div>
 </td>
@@ -269,21 +285,21 @@ extends <a href="../core/Entity.html" title="class in com.atlan.model.core">Enti
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code>java.util.Set&lt;java.lang.String&gt;</code></td>
+<td class="colFirst"><code>java.util.SortedSet&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAdminGroups()">getAdminGroups</a></span>()</code></th>
 <td class="colLast">
 <div class="block">List of groups who administer the asset.</div>
 </td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code>java.util.Set&lt;java.lang.String&gt;</code></td>
+<td class="colFirst"><code>java.util.SortedSet&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAdminRoles()">getAdminRoles</a></span>()</code></th>
 <td class="colLast">
 <div class="block">List of roles who administer the asset.</div>
 </td>
 </tr>
 <tr id="i5" class="rowColor">
-<td class="colFirst"><code>java.util.Set&lt;java.lang.String&gt;</code></td>
+<td class="colFirst"><code>java.util.SortedSet&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAdminUsers()">getAdminUsers</a></span>()</code></th>
 <td class="colLast">
 <div class="block">List of users who administer the asset.</div>
@@ -431,14 +447,14 @@ extends <a href="../core/Entity.html" title="class in com.atlan.model.core">Enti
 </td>
 </tr>
 <tr id="i26" class="altColor">
-<td class="colFirst"><code>java.util.Set&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;</code></td>
+<td class="colFirst"><code>java.util.SortedSet&lt;<a href="Link.html" title="class in com.atlan.model.assets">Link</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getLinks()">getLinks</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Resources that are linked to this asset.</div>
 </td>
 </tr>
 <tr id="i27" class="rowColor">
-<td class="colFirst"><code>java.util.Set&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;</code></td>
+<td class="colFirst"><code>java.util.SortedSet&lt;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMeanings()">getMeanings</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Terms that are linked to this asset.</div>
@@ -452,14 +468,14 @@ extends <a href="../core/Entity.html" title="class in com.atlan.model.core">Enti
 </td>
 </tr>
 <tr id="i29" class="rowColor">
-<td class="colFirst"><code>java.util.Set&lt;java.lang.String&gt;</code></td>
+<td class="colFirst"><code>java.util.SortedSet&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOwnerGroups()">getOwnerGroups</a></span>()</code></th>
 <td class="colLast">
 <div class="block">List of groups who own the asset.</div>
 </td>
 </tr>
 <tr id="i30" class="altColor">
-<td class="colFirst"><code>java.util.Set&lt;java.lang.String&gt;</code></td>
+<td class="colFirst"><code>java.util.SortedSet&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOwnerUsers()">getOwnerUsers</a></span>()</code></th>
 <td class="colLast">
 <div class="block">List of users who own the asset.</div>
@@ -480,7 +496,7 @@ extends <a href="../core/Entity.html" title="class in com.atlan.model.core">Enti
 </td>
 </tr>
 <tr id="i33" class="rowColor">
-<td class="colFirst"><code><a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a></code></td>
+<td class="colFirst"><code><a href="Readme.html" title="class in com.atlan.model.assets">Readme</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getReadme()">getReadme</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Readme that is linked to this asset.</div>
@@ -557,14 +573,14 @@ extends <a href="../core/Entity.html" title="class in com.atlan.model.core">Enti
 </td>
 </tr>
 <tr id="i44" class="altColor">
-<td class="colFirst"><code>java.util.Set&lt;java.lang.String&gt;</code></td>
+<td class="colFirst"><code>java.util.SortedSet&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getViewerGroups()">getViewerGroups</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Unused.</div>
 </td>
 </tr>
 <tr id="i45" class="rowColor">
-<td class="colFirst"><code>java.util.Set&lt;java.lang.String&gt;</code></td>
+<td class="colFirst"><code>java.util.SortedSet&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getViewerUsers()">getViewerUsers</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Unused.</div>
@@ -621,7 +637,7 @@ extends <a href="../core/Entity.html" title="class in com.atlan.model.core">Enti
 <td class="colFirst"><code>protected static <a href="../core/Entity.html" title="class in com.atlan.model.core">Entity</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeTerms(java.lang.String,java.lang.String,java.util.List)">removeTerms</a></span>&#8203;(java.lang.String&nbsp;typeName,
            java.lang.String&nbsp;qualifiedName,
-           java.util.List&lt;<a href="../relations/GuidReference.html" title="class in com.atlan.model.relations">GuidReference</a>&gt;&nbsp;terms)</code></th>
+           java.util.List&lt;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;terms)</code></th>
 <td class="colLast">
 <div class="block">Remove terms from an asset, without replacing all existing terms linked to the asset.</div>
 </td>
@@ -629,28 +645,28 @@ extends <a href="../core/Entity.html" title="class in com.atlan.model.core">Enti
 <tr id="i54" class="altColor">
 <td class="colFirst"><code>protected static <a href="../core/Entity.html" title="class in com.atlan.model.core">Entity</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#replaceTerms(com.atlan.model.assets.Asset.AssetBuilder,java.util.List)">replaceTerms</a></span>&#8203;(<a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets">Asset.AssetBuilder</a>&lt;?,&#8203;?&gt;&nbsp;builder,
-            java.util.List&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;&nbsp;terms)</code></th>
+            java.util.List&lt;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;terms)</code></th>
 <td class="colLast">
 <div class="block">Replace the terms linked to an asset.</div>
 </td>
 </tr>
 <tr id="i55" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAdminGroups(java.util.Set)">setAdminGroups</a></span>&#8203;(java.util.Set&lt;java.lang.String&gt;&nbsp;adminGroups)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAdminGroups(java.util.SortedSet)">setAdminGroups</a></span>&#8203;(java.util.SortedSet&lt;java.lang.String&gt;&nbsp;adminGroups)</code></th>
 <td class="colLast">
 <div class="block">List of groups who administer the asset.</div>
 </td>
 </tr>
 <tr id="i56" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAdminRoles(java.util.Set)">setAdminRoles</a></span>&#8203;(java.util.Set&lt;java.lang.String&gt;&nbsp;adminRoles)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAdminRoles(java.util.SortedSet)">setAdminRoles</a></span>&#8203;(java.util.SortedSet&lt;java.lang.String&gt;&nbsp;adminRoles)</code></th>
 <td class="colLast">
 <div class="block">List of roles who administer the asset.</div>
 </td>
 </tr>
 <tr id="i57" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAdminUsers(java.util.Set)">setAdminUsers</a></span>&#8203;(java.util.Set&lt;java.lang.String&gt;&nbsp;adminUsers)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAdminUsers(java.util.SortedSet)">setAdminUsers</a></span>&#8203;(java.util.SortedSet&lt;java.lang.String&gt;&nbsp;adminUsers)</code></th>
 <td class="colLast">
 <div class="block">List of users who administer the asset.</div>
 </td>
@@ -798,14 +814,14 @@ extends <a href="../core/Entity.html" title="class in com.atlan.model.core">Enti
 </tr>
 <tr id="i78" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setLinks(java.util.Set)">setLinks</a></span>&#8203;(java.util.Set&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;&nbsp;links)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setLinks(java.util.SortedSet)">setLinks</a></span>&#8203;(java.util.SortedSet&lt;<a href="Link.html" title="class in com.atlan.model.assets">Link</a>&gt;&nbsp;links)</code></th>
 <td class="colLast">
 <div class="block">Resources that are linked to this asset.</div>
 </td>
 </tr>
 <tr id="i79" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setMeanings(java.util.Set)">setMeanings</a></span>&#8203;(java.util.Set&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;&nbsp;meanings)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setMeanings(java.util.SortedSet)">setMeanings</a></span>&#8203;(java.util.SortedSet&lt;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;meanings)</code></th>
 <td class="colLast">
 <div class="block">Terms that are linked to this asset.</div>
 </td>
@@ -819,14 +835,14 @@ extends <a href="../core/Entity.html" title="class in com.atlan.model.core">Enti
 </tr>
 <tr id="i81" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setOwnerGroups(java.util.Set)">setOwnerGroups</a></span>&#8203;(java.util.Set&lt;java.lang.String&gt;&nbsp;ownerGroups)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setOwnerGroups(java.util.SortedSet)">setOwnerGroups</a></span>&#8203;(java.util.SortedSet&lt;java.lang.String&gt;&nbsp;ownerGroups)</code></th>
 <td class="colLast">
 <div class="block">List of groups who own the asset.</div>
 </td>
 </tr>
 <tr id="i82" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setOwnerUsers(java.util.Set)">setOwnerUsers</a></span>&#8203;(java.util.Set&lt;java.lang.String&gt;&nbsp;ownerUsers)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setOwnerUsers(java.util.SortedSet)">setOwnerUsers</a></span>&#8203;(java.util.SortedSet&lt;java.lang.String&gt;&nbsp;ownerUsers)</code></th>
 <td class="colLast">
 <div class="block">List of users who own the asset.</div>
 </td>
@@ -847,7 +863,7 @@ extends <a href="../core/Entity.html" title="class in com.atlan.model.core">Enti
 </tr>
 <tr id="i85" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setReadme(com.atlan.model.relations.Reference)">setReadme</a></span>&#8203;(<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&nbsp;readme)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setReadme(com.atlan.model.assets.Readme)">setReadme</a></span>&#8203;(<a href="Readme.html" title="class in com.atlan.model.assets">Readme</a>&nbsp;readme)</code></th>
 <td class="colLast">
 <div class="block">Readme that is linked to this asset.</div>
 </td>
@@ -924,14 +940,14 @@ extends <a href="../core/Entity.html" title="class in com.atlan.model.core">Enti
 </tr>
 <tr id="i96" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setViewerGroups(java.util.Set)">setViewerGroups</a></span>&#8203;(java.util.Set&lt;java.lang.String&gt;&nbsp;viewerGroups)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setViewerGroups(java.util.SortedSet)">setViewerGroups</a></span>&#8203;(java.util.SortedSet&lt;java.lang.String&gt;&nbsp;viewerGroups)</code></th>
 <td class="colLast">
 <div class="block">Unused.</div>
 </td>
 </tr>
 <tr id="i97" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setViewerUsers(java.util.Set)">setViewerUsers</a></span>&#8203;(java.util.Set&lt;java.lang.String&gt;&nbsp;viewerUsers)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setViewerUsers(java.util.SortedSet)">setViewerUsers</a></span>&#8203;(java.util.SortedSet&lt;java.lang.String&gt;&nbsp;viewerUsers)</code></th>
 <td class="colLast">
 <div class="block">Unused.</div>
 </td>
@@ -996,7 +1012,14 @@ extends <a href="../core/Entity.html" title="class in com.atlan.model.core">Enti
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;com.atlan.model.core.<a href="../core/Entity.html" title="class in com.atlan.model.core">Entity</a></h3>
-<code><a href="../core/Entity.html#addClassifications(java.lang.String,java.lang.String,java.util.List)">addClassifications</a>, <a href="../core/Entity.html#addNullField(java.lang.String)">addNullField</a>, <a href="../core/Entity.html#delete(java.lang.String)">delete</a>, <a href="../core/Entity.html#getClassificationNames()">getClassificationNames</a>, <a href="../core/Entity.html#getClassifications()">getClassifications</a>, <a href="../core/Entity.html#getCreatedBy()">getCreatedBy</a>, <a href="../core/Entity.html#getCreateTime()">getCreateTime</a>, <a href="../core/Entity.html#getCustomMetadataSets()">getCustomMetadataSets</a>, <a href="../core/Entity.html#getDeleteHandler()">getDeleteHandler</a>, <a href="../core/Entity.html#getDisplayText()">getDisplayText</a>, <a href="../core/Entity.html#getGuid()">getGuid</a>, <a href="../core/Entity.html#getIsIncomplete()">getIsIncomplete</a>, <a href="../core/Entity.html#getMeaningNames()">getMeaningNames</a>, <a href="../core/Entity.html#getNullFields()">getNullFields</a>, <a href="../core/Entity.html#getStatus()">getStatus</a>, <a href="../core/Entity.html#getTypeName()">getTypeName</a>, <a href="../core/Entity.html#getUpdatedBy()">getUpdatedBy</a>, <a href="../core/Entity.html#getUpdateTime()">getUpdateTime</a>, <a href="../core/Entity.html#purge(java.lang.String)">purge</a>, <a href="../core/Entity.html#removeClassification(java.lang.String,java.lang.String,java.lang.String)">removeClassification</a>, <a href="../core/Entity.html#removeClassifications()">removeClassifications</a>, <a href="../core/Entity.html#removeCustomMetadata()">removeCustomMetadata</a>, <a href="../core/Entity.html#removeCustomMetadata(java.lang.String,java.lang.String)">removeCustomMetadata</a>, <a href="../core/Entity.html#replaceCustomMetadata(java.lang.String,java.lang.String,com.atlan.model.core.CustomMetadataAttributes)">replaceCustomMetadata</a>, <a href="../core/Entity.html#retrieveFull(java.lang.String)">retrieveFull</a>, <a href="../core/Entity.html#retrieveFull(java.lang.String,java.lang.String)">retrieveFull</a>, <a href="../core/Entity.html#retrieveMinimal(java.lang.String)">retrieveMinimal</a>, <a href="../core/Entity.html#retrieveMinimal(java.lang.String,java.lang.String)">retrieveMinimal</a>, <a href="../core/Entity.html#setClassificationNames(java.util.Set)">setClassificationNames</a>, <a href="../core/Entity.html#setClassifications(java.util.Set)">setClassifications</a>, <a href="../core/Entity.html#setCustomMetadataSets(java.util.Map)">setCustomMetadataSets</a>, <a href="../core/Entity.html#setDisplayText(java.lang.String)">setDisplayText</a>, <a href="../core/Entity.html#setGuid(java.lang.String)">setGuid</a>, <a href="../core/Entity.html#setIsIncomplete(java.lang.Boolean)">setIsIncomplete</a>, <a href="../core/Entity.html#setMeaningNames(java.util.Set)">setMeaningNames</a>, <a href="../core/Entity.html#setNullFields(java.util.Set)">setNullFields</a>, <a href="../core/Entity.html#setTypeName(java.lang.String)">setTypeName</a>, <a href="../core/Entity.html#updateCustomMetadataAttributes(java.lang.String,java.lang.String,com.atlan.model.core.CustomMetadataAttributes)">updateCustomMetadataAttributes</a>, <a href="../core/Entity.html#upsert()">upsert</a>, <a href="../core/Entity.html#upsert(boolean,boolean)">upsert</a></code></li>
+<code><a href="../core/Entity.html#addClassifications(java.lang.String,java.lang.String,java.util.List)">addClassifications</a>, <a href="../core/Entity.html#addNullField(java.lang.String)">addNullField</a>, <a href="../core/Entity.html#delete(java.lang.String)">delete</a>, <a href="../core/Entity.html#getClassificationNames()">getClassificationNames</a>, <a href="../core/Entity.html#getClassifications()">getClassifications</a>, <a href="../core/Entity.html#getCreatedBy()">getCreatedBy</a>, <a href="../core/Entity.html#getCreateTime()">getCreateTime</a>, <a href="../core/Entity.html#getCustomMetadataSets()">getCustomMetadataSets</a>, <a href="../core/Entity.html#getDeleteHandler()">getDeleteHandler</a>, <a href="../core/Entity.html#getIsIncomplete()">getIsIncomplete</a>, <a href="../core/Entity.html#getMeaningNames()">getMeaningNames</a>, <a href="../core/Entity.html#getNullFields()">getNullFields</a>, <a href="../core/Entity.html#getStatus()">getStatus</a>, <a href="../core/Entity.html#getUpdatedBy()">getUpdatedBy</a>, <a href="../core/Entity.html#getUpdateTime()">getUpdateTime</a>, <a href="../core/Entity.html#purge(java.lang.String)">purge</a>, <a href="../core/Entity.html#removeClassification(java.lang.String,java.lang.String,java.lang.String)">removeClassification</a>, <a href="../core/Entity.html#removeClassifications()">removeClassifications</a>, <a href="../core/Entity.html#removeCustomMetadata()">removeCustomMetadata</a>, <a href="../core/Entity.html#removeCustomMetadata(java.lang.String,java.lang.String)">removeCustomMetadata</a>, <a href="../core/Entity.html#replaceCustomMetadata(java.lang.String,java.lang.String,com.atlan.model.core.CustomMetadataAttributes)">replaceCustomMetadata</a>, <a href="../core/Entity.html#retrieveFull(java.lang.String)">retrieveFull</a>, <a href="../core/Entity.html#retrieveFull(java.lang.String,java.lang.String)">retrieveFull</a>, <a href="../core/Entity.html#retrieveMinimal(java.lang.String)">retrieveMinimal</a>, <a href="../core/Entity.html#retrieveMinimal(java.lang.String,java.lang.String)">retrieveMinimal</a>, <a href="../core/Entity.html#setClassificationNames(java.util.Set)">setClassificationNames</a>, <a href="../core/Entity.html#setClassifications(java.util.Set)">setClassifications</a>, <a href="../core/Entity.html#setCustomMetadataSets(java.util.Map)">setCustomMetadataSets</a>, <a href="../core/Entity.html#setIsIncomplete(java.lang.Boolean)">setIsIncomplete</a>, <a href="../core/Entity.html#setMeaningNames(java.util.Set)">setMeaningNames</a>, <a href="../core/Entity.html#setNullFields(java.util.Set)">setNullFields</a>, <a href="../core/Entity.html#updateCustomMetadataAttributes(java.lang.String,java.lang.String,com.atlan.model.core.CustomMetadataAttributes)">updateCustomMetadataAttributes</a>, <a href="../core/Entity.html#upsert()">upsert</a>, <a href="../core/Entity.html#upsert(boolean,boolean)">upsert</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a id="methods.inherited.from.class.com.atlan.model.relations.Reference">
+<!--   -->
+</a>
+<h3>Methods inherited from class&nbsp;com.atlan.model.relations.<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a></h3>
+<code><a href="../relations/Reference.html#builder()">builder</a>, <a href="../relations/Reference.html#by(java.lang.String,java.lang.String)">by</a>, <a href="../relations/Reference.html#compareTo(com.atlan.model.relations.Reference)">compareTo</a>, <a href="../relations/Reference.html#getDisplayText()">getDisplayText</a>, <a href="../relations/Reference.html#getEntityStatus()">getEntityStatus</a>, <a href="../relations/Reference.html#getGuid()">getGuid</a>, <a href="../relations/Reference.html#getRelationshipAttributes()">getRelationshipAttributes</a>, <a href="../relations/Reference.html#getRelationshipGuid()">getRelationshipGuid</a>, <a href="../relations/Reference.html#getRelationshipStatus()">getRelationshipStatus</a>, <a href="../relations/Reference.html#getRelationshipType()">getRelationshipType</a>, <a href="../relations/Reference.html#getTypeName()">getTypeName</a>, <a href="../relations/Reference.html#getUniqueAttributes()">getUniqueAttributes</a>, <a href="../relations/Reference.html#setDisplayText(java.lang.String)">setDisplayText</a>, <a href="../relations/Reference.html#setEntityStatus(java.lang.String)">setEntityStatus</a>, <a href="../relations/Reference.html#setGuid(java.lang.String)">setGuid</a>, <a href="../relations/Reference.html#setRelationshipAttributes(java.util.Map)">setRelationshipAttributes</a>, <a href="../relations/Reference.html#setRelationshipGuid(java.lang.String)">setRelationshipGuid</a>, <a href="../relations/Reference.html#setRelationshipStatus(com.atlan.model.enums.AtlanStatus)">setRelationshipStatus</a>, <a href="../relations/Reference.html#setRelationshipType(java.lang.String)">setRelationshipType</a>, <a href="../relations/Reference.html#setTypeName(java.lang.String)">setTypeName</a>, <a href="../relations/Reference.html#setUniqueAttributes(com.atlan.model.relations.UniqueAttributes)">setUniqueAttributes</a>, <a href="../relations/Reference.html#to(java.lang.String,java.lang.String)">to</a>, <a href="../relations/Reference.html#toBuilder()">toBuilder</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.com.atlan.model.core.AtlanObject">
@@ -1258,7 +1281,7 @@ extends <a href="../core/Entity.html" title="class in com.atlan.model.core">Enti
 <li class="blockList">
 <h4>replaceTerms</h4>
 <pre class="methodSignature">protected static&nbsp;<a href="../core/Entity.html" title="class in com.atlan.model.core">Entity</a>&nbsp;replaceTerms&#8203;(<a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets">Asset.AssetBuilder</a>&lt;?,&#8203;?&gt;&nbsp;builder,
-                                     java.util.List&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;&nbsp;terms)
+                                     java.util.List&lt;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;terms)
                               throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
 <div class="block">Replace the terms linked to an asset.</div>
 <dl>
@@ -1280,7 +1303,7 @@ extends <a href="../core/Entity.html" title="class in com.atlan.model.core">Enti
 <h4>appendTerms</h4>
 <pre class="methodSignature">protected static&nbsp;<a href="../core/Entity.html" title="class in com.atlan.model.core">Entity</a>&nbsp;appendTerms&#8203;(java.lang.String&nbsp;typeName,
                                     java.lang.String&nbsp;qualifiedName,
-                                    java.util.List&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;&nbsp;terms)
+                                    java.util.List&lt;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;terms)
                              throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
 <div class="block">Link additional terms to an asset, without replacing existing terms linked to the asset.
  Note: this operation must make two API calls — one to retrieve the asset's existing terms,
@@ -1305,7 +1328,7 @@ extends <a href="../core/Entity.html" title="class in com.atlan.model.core">Enti
 <h4>removeTerms</h4>
 <pre class="methodSignature">protected static&nbsp;<a href="../core/Entity.html" title="class in com.atlan.model.core">Entity</a>&nbsp;removeTerms&#8203;(java.lang.String&nbsp;typeName,
                                     java.lang.String&nbsp;qualifiedName,
-                                    java.util.List&lt;<a href="../relations/GuidReference.html" title="class in com.atlan.model.relations">GuidReference</a>&gt;&nbsp;terms)
+                                    java.util.List&lt;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;terms)
                              throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
 <div class="block">Remove terms from an asset, without replacing all existing terms linked to the asset.
  Note: this operation must make two API calls — one to retrieve the asset's existing terms,
@@ -1482,7 +1505,7 @@ extends <a href="../core/Entity.html" title="class in com.atlan.model.core">Enti
 <ul class="blockList">
 <li class="blockList">
 <h4>getOwnerUsers</h4>
-<pre class="methodSignature">public&nbsp;java.util.Set&lt;java.lang.String&gt;&nbsp;getOwnerUsers()</pre>
+<pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;java.lang.String&gt;&nbsp;getOwnerUsers()</pre>
 <div class="block">List of users who own the asset.</div>
 </li>
 </ul>
@@ -1492,7 +1515,7 @@ extends <a href="../core/Entity.html" title="class in com.atlan.model.core">Enti
 <ul class="blockList">
 <li class="blockList">
 <h4>getOwnerGroups</h4>
-<pre class="methodSignature">public&nbsp;java.util.Set&lt;java.lang.String&gt;&nbsp;getOwnerGroups()</pre>
+<pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;java.lang.String&gt;&nbsp;getOwnerGroups()</pre>
 <div class="block">List of groups who own the asset.</div>
 </li>
 </ul>
@@ -1502,7 +1525,7 @@ extends <a href="../core/Entity.html" title="class in com.atlan.model.core">Enti
 <ul class="blockList">
 <li class="blockList">
 <h4>getAdminUsers</h4>
-<pre class="methodSignature">public&nbsp;java.util.Set&lt;java.lang.String&gt;&nbsp;getAdminUsers()</pre>
+<pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;java.lang.String&gt;&nbsp;getAdminUsers()</pre>
 <div class="block">List of users who administer the asset. (This is only used for Connection assets.)</div>
 </li>
 </ul>
@@ -1512,7 +1535,7 @@ extends <a href="../core/Entity.html" title="class in com.atlan.model.core">Enti
 <ul class="blockList">
 <li class="blockList">
 <h4>getAdminGroups</h4>
-<pre class="methodSignature">public&nbsp;java.util.Set&lt;java.lang.String&gt;&nbsp;getAdminGroups()</pre>
+<pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;java.lang.String&gt;&nbsp;getAdminGroups()</pre>
 <div class="block">List of groups who administer the asset. (This is only used for Connection assets.)</div>
 </li>
 </ul>
@@ -1522,7 +1545,7 @@ extends <a href="../core/Entity.html" title="class in com.atlan.model.core">Enti
 <ul class="blockList">
 <li class="blockList">
 <h4>getAdminRoles</h4>
-<pre class="methodSignature">public&nbsp;java.util.Set&lt;java.lang.String&gt;&nbsp;getAdminRoles()</pre>
+<pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;java.lang.String&gt;&nbsp;getAdminRoles()</pre>
 <div class="block">List of roles who administer the asset. (This is only used for Connection assets.)</div>
 </li>
 </ul>
@@ -1532,7 +1555,7 @@ extends <a href="../core/Entity.html" title="class in com.atlan.model.core">Enti
 <ul class="blockList">
 <li class="blockList">
 <h4>getViewerUsers</h4>
-<pre class="methodSignature">public&nbsp;java.util.Set&lt;java.lang.String&gt;&nbsp;getViewerUsers()</pre>
+<pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;java.lang.String&gt;&nbsp;getViewerUsers()</pre>
 <div class="block">Unused.</div>
 </li>
 </ul>
@@ -1542,7 +1565,7 @@ extends <a href="../core/Entity.html" title="class in com.atlan.model.core">Enti
 <ul class="blockList">
 <li class="blockList">
 <h4>getViewerGroups</h4>
-<pre class="methodSignature">public&nbsp;java.util.Set&lt;java.lang.String&gt;&nbsp;getViewerGroups()</pre>
+<pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;java.lang.String&gt;&nbsp;getViewerGroups()</pre>
 <div class="block">Unused.</div>
 </li>
 </ul>
@@ -1742,7 +1765,7 @@ extends <a href="../core/Entity.html" title="class in com.atlan.model.core">Enti
 <ul class="blockList">
 <li class="blockList">
 <h4>getLinks</h4>
-<pre class="methodSignature">public&nbsp;java.util.Set&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;&nbsp;getLinks()</pre>
+<pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="Link.html" title="class in com.atlan.model.assets">Link</a>&gt;&nbsp;getLinks()</pre>
 <div class="block">Resources that are linked to this asset.</div>
 </li>
 </ul>
@@ -1752,7 +1775,7 @@ extends <a href="../core/Entity.html" title="class in com.atlan.model.core">Enti
 <ul class="blockList">
 <li class="blockList">
 <h4>getReadme</h4>
-<pre class="methodSignature">public&nbsp;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&nbsp;getReadme()</pre>
+<pre class="methodSignature">public&nbsp;<a href="Readme.html" title="class in com.atlan.model.assets">Readme</a>&nbsp;getReadme()</pre>
 <div class="block">Readme that is linked to this asset.</div>
 </li>
 </ul>
@@ -1762,7 +1785,7 @@ extends <a href="../core/Entity.html" title="class in com.atlan.model.core">Enti
 <ul class="blockList">
 <li class="blockList">
 <h4>getMeanings</h4>
-<pre class="methodSignature">public&nbsp;java.util.Set&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;&nbsp;getMeanings()</pre>
+<pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;getMeanings()</pre>
 <div class="block">Terms that are linked to this asset.</div>
 </li>
 </ul>
@@ -1919,73 +1942,73 @@ extends <a href="../core/Entity.html" title="class in com.atlan.model.core">Enti
 <div class="block">Type of announcement on the asset.</div>
 </li>
 </ul>
-<a id="setOwnerUsers(java.util.Set)">
+<a id="setOwnerUsers(java.util.SortedSet)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setOwnerUsers</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setOwnerUsers&#8203;(java.util.Set&lt;java.lang.String&gt;&nbsp;ownerUsers)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;setOwnerUsers&#8203;(java.util.SortedSet&lt;java.lang.String&gt;&nbsp;ownerUsers)</pre>
 <div class="block">List of users who own the asset.</div>
 </li>
 </ul>
-<a id="setOwnerGroups(java.util.Set)">
+<a id="setOwnerGroups(java.util.SortedSet)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setOwnerGroups</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setOwnerGroups&#8203;(java.util.Set&lt;java.lang.String&gt;&nbsp;ownerGroups)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;setOwnerGroups&#8203;(java.util.SortedSet&lt;java.lang.String&gt;&nbsp;ownerGroups)</pre>
 <div class="block">List of groups who own the asset.</div>
 </li>
 </ul>
-<a id="setAdminUsers(java.util.Set)">
+<a id="setAdminUsers(java.util.SortedSet)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setAdminUsers</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setAdminUsers&#8203;(java.util.Set&lt;java.lang.String&gt;&nbsp;adminUsers)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;setAdminUsers&#8203;(java.util.SortedSet&lt;java.lang.String&gt;&nbsp;adminUsers)</pre>
 <div class="block">List of users who administer the asset. (This is only used for Connection assets.)</div>
 </li>
 </ul>
-<a id="setAdminGroups(java.util.Set)">
+<a id="setAdminGroups(java.util.SortedSet)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setAdminGroups</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setAdminGroups&#8203;(java.util.Set&lt;java.lang.String&gt;&nbsp;adminGroups)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;setAdminGroups&#8203;(java.util.SortedSet&lt;java.lang.String&gt;&nbsp;adminGroups)</pre>
 <div class="block">List of groups who administer the asset. (This is only used for Connection assets.)</div>
 </li>
 </ul>
-<a id="setAdminRoles(java.util.Set)">
+<a id="setAdminRoles(java.util.SortedSet)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setAdminRoles</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setAdminRoles&#8203;(java.util.Set&lt;java.lang.String&gt;&nbsp;adminRoles)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;setAdminRoles&#8203;(java.util.SortedSet&lt;java.lang.String&gt;&nbsp;adminRoles)</pre>
 <div class="block">List of roles who administer the asset. (This is only used for Connection assets.)</div>
 </li>
 </ul>
-<a id="setViewerUsers(java.util.Set)">
+<a id="setViewerUsers(java.util.SortedSet)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setViewerUsers</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setViewerUsers&#8203;(java.util.Set&lt;java.lang.String&gt;&nbsp;viewerUsers)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;setViewerUsers&#8203;(java.util.SortedSet&lt;java.lang.String&gt;&nbsp;viewerUsers)</pre>
 <div class="block">Unused.</div>
 </li>
 </ul>
-<a id="setViewerGroups(java.util.Set)">
+<a id="setViewerGroups(java.util.SortedSet)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setViewerGroups</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setViewerGroups&#8203;(java.util.Set&lt;java.lang.String&gt;&nbsp;viewerGroups)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;setViewerGroups&#8203;(java.util.SortedSet&lt;java.lang.String&gt;&nbsp;viewerGroups)</pre>
 <div class="block">Unused.</div>
 </li>
 </ul>
@@ -2179,33 +2202,33 @@ extends <a href="../core/Entity.html" title="class in com.atlan.model.core">Enti
 <div class="block">Who last updated the asset.</div>
 </li>
 </ul>
-<a id="setLinks(java.util.Set)">
+<a id="setLinks(java.util.SortedSet)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setLinks</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setLinks&#8203;(java.util.Set&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;&nbsp;links)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;setLinks&#8203;(java.util.SortedSet&lt;<a href="Link.html" title="class in com.atlan.model.assets">Link</a>&gt;&nbsp;links)</pre>
 <div class="block">Resources that are linked to this asset.</div>
 </li>
 </ul>
-<a id="setReadme(com.atlan.model.relations.Reference)">
+<a id="setReadme(com.atlan.model.assets.Readme)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setReadme</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setReadme&#8203;(<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&nbsp;readme)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;setReadme&#8203;(<a href="Readme.html" title="class in com.atlan.model.assets">Readme</a>&nbsp;readme)</pre>
 <div class="block">Readme that is linked to this asset.</div>
 </li>
 </ul>
-<a id="setMeanings(java.util.Set)">
+<a id="setMeanings(java.util.SortedSet)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setMeanings</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setMeanings&#8203;(java.util.Set&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;&nbsp;meanings)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;setMeanings&#8203;(java.util.SortedSet&lt;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;meanings)</pre>
 <div class="block">Terms that are linked to this asset.</div>
 </li>
 </ul>

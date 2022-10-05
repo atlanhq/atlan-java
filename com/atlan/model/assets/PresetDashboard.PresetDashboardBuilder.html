@@ -125,6 +125,9 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li><a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in com.atlan.model.core">com.atlan.model.core.AtlanObject.AtlanObjectBuilder</a>&lt;C,&#8203;B&gt;</li>
 <li>
 <ul class="inheritance">
+<li><a href="../relations/Reference.ReferenceBuilder.html" title="class in com.atlan.model.relations">com.atlan.model.relations.Reference.ReferenceBuilder</a>&lt;C,&#8203;B&gt;</li>
+<li>
+<ul class="inheritance">
 <li><a href="../core/Entity.EntityBuilder.html" title="class in com.atlan.model.core">com.atlan.model.core.Entity.EntityBuilder</a>&lt;C,&#8203;B&gt;</li>
 <li>
 <ul class="inheritance">
@@ -135,6 +138,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li>
 <ul class="inheritance">
 <li>com.atlan.model.assets.PresetDashboard.PresetDashboardBuilder&lt;C,&#8203;B&gt;</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -219,12 +224,12 @@ extends <a href="Preset.PresetBuilder.html" title="class in com.atlan.model.asse
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="PresetDashboard.PresetDashboardBuilder.html" title="type parameter in PresetDashboard.PresetDashboardBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#presetChart(com.atlan.model.relations.Reference)">presetChart</a></span>&#8203;(<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&nbsp;presetChart)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#presetChart(com.atlan.model.assets.PresetChart)">presetChart</a></span>&#8203;(<a href="PresetChart.html" title="class in com.atlan.model.assets">PresetChart</a>&nbsp;presetChart)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="PresetDashboard.PresetDashboardBuilder.html" title="type parameter in PresetDashboard.PresetDashboardBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#presetCharts(java.util.Collection)">presetCharts</a></span>&#8203;(java.util.Collection&lt;? extends <a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;&nbsp;presetCharts)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#presetCharts(java.util.Collection)">presetCharts</a></span>&#8203;(java.util.Collection&lt;? extends <a href="PresetChart.html" title="class in com.atlan.model.assets">PresetChart</a>&gt;&nbsp;presetCharts)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
@@ -259,17 +264,17 @@ extends <a href="Preset.PresetBuilder.html" title="class in com.atlan.model.asse
 </tr>
 <tr id="i12" class="altColor">
 <td class="colFirst"><code><a href="PresetDashboard.PresetDashboardBuilder.html" title="type parameter in PresetDashboard.PresetDashboardBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#presetDataset(com.atlan.model.relations.Reference)">presetDataset</a></span>&#8203;(<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&nbsp;presetDataset)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#presetDataset(com.atlan.model.assets.PresetDataset)">presetDataset</a></span>&#8203;(<a href="PresetDataset.html" title="class in com.atlan.model.assets">PresetDataset</a>&nbsp;presetDataset)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i13" class="rowColor">
 <td class="colFirst"><code><a href="PresetDashboard.PresetDashboardBuilder.html" title="type parameter in PresetDashboard.PresetDashboardBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#presetDatasets(java.util.Collection)">presetDatasets</a></span>&#8203;(java.util.Collection&lt;? extends <a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;&nbsp;presetDatasets)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#presetDatasets(java.util.Collection)">presetDatasets</a></span>&#8203;(java.util.Collection&lt;? extends <a href="PresetDataset.html" title="class in com.atlan.model.assets">PresetDataset</a>&gt;&nbsp;presetDatasets)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i14" class="altColor">
 <td class="colFirst"><code><a href="PresetDashboard.PresetDashboardBuilder.html" title="type parameter in PresetDashboard.PresetDashboardBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#presetWorkspace(com.atlan.model.relations.Reference)">presetWorkspace</a></span>&#8203;(<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&nbsp;presetWorkspace)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#presetWorkspace(com.atlan.model.assets.PresetWorkspace)">presetWorkspace</a></span>&#8203;(<a href="PresetWorkspace.html" title="class in com.atlan.model.assets">PresetWorkspace</a>&nbsp;presetWorkspace)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i15" class="rowColor">
@@ -300,14 +305,21 @@ extends <a href="Preset.PresetBuilder.html" title="class in com.atlan.model.asse
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;com.atlan.model.assets.<a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets">Asset.AssetBuilder</a></h3>
-<code><a href="Asset.AssetBuilder.html#adminGroup(java.lang.String)">adminGroup</a>, <a href="Asset.AssetBuilder.html#adminGroups(java.util.Collection)">adminGroups</a>, <a href="Asset.AssetBuilder.html#adminRole(java.lang.String)">adminRole</a>, <a href="Asset.AssetBuilder.html#adminRoles(java.util.Collection)">adminRoles</a>, <a href="Asset.AssetBuilder.html#adminUser(java.lang.String)">adminUser</a>, <a href="Asset.AssetBuilder.html#adminUsers(java.util.Collection)">adminUsers</a>, <a href="Asset.AssetBuilder.html#announcementMessage(java.lang.String)">announcementMessage</a>, <a href="Asset.AssetBuilder.html#announcementTitle(java.lang.String)">announcementTitle</a>, <a href="Asset.AssetBuilder.html#announcementType(com.atlan.model.enums.AtlanAnnouncementType)">announcementType</a>, <a href="Asset.AssetBuilder.html#announcementUpdatedAt(java.lang.Long)">announcementUpdatedAt</a>, <a href="Asset.AssetBuilder.html#announcementUpdatedBy(java.lang.String)">announcementUpdatedBy</a>, <a href="Asset.AssetBuilder.html#certificateStatus(com.atlan.model.enums.AtlanCertificateStatus)">certificateStatus</a>, <a href="Asset.AssetBuilder.html#certificateStatusMessage(java.lang.String)">certificateStatusMessage</a>, <a href="Asset.AssetBuilder.html#certificateUpdatedAt(java.lang.Long)">certificateUpdatedAt</a>, <a href="Asset.AssetBuilder.html#certificateUpdatedBy(java.lang.String)">certificateUpdatedBy</a>, <a href="Asset.AssetBuilder.html#clearAdminGroups()">clearAdminGroups</a>, <a href="Asset.AssetBuilder.html#clearAdminRoles()">clearAdminRoles</a>, <a href="Asset.AssetBuilder.html#clearAdminUsers()">clearAdminUsers</a>, <a href="Asset.AssetBuilder.html#clearLinks()">clearLinks</a>, <a href="Asset.AssetBuilder.html#clearMeanings()">clearMeanings</a>, <a href="Asset.AssetBuilder.html#clearOwnerGroups()">clearOwnerGroups</a>, <a href="Asset.AssetBuilder.html#clearOwnerUsers()">clearOwnerUsers</a>, <a href="Asset.AssetBuilder.html#clearViewerGroups()">clearViewerGroups</a>, <a href="Asset.AssetBuilder.html#clearViewerUsers()">clearViewerUsers</a>, <a href="Asset.AssetBuilder.html#connectionName(java.lang.String)">connectionName</a>, <a href="Asset.AssetBuilder.html#connectionQualifiedName(java.lang.String)">connectionQualifiedName</a>, <a href="Asset.AssetBuilder.html#connectorType(com.atlan.model.enums.AtlanConnectorType)">connectorType</a>, <a href="Asset.AssetBuilder.html#description(java.lang.String)">description</a>, <a href="Asset.AssetBuilder.html#displayName(java.lang.String)">displayName</a>, <a href="Asset.AssetBuilder.html#hasLineage(java.lang.Boolean)">hasLineage</a>, <a href="Asset.AssetBuilder.html#isDiscoverable(java.lang.Boolean)">isDiscoverable</a>, <a href="Asset.AssetBuilder.html#isEditable(java.lang.Boolean)">isEditable</a>, <a href="Asset.AssetBuilder.html#lastSyncRun(java.lang.String)">lastSyncRun</a>, <a href="Asset.AssetBuilder.html#lastSyncRunAt(java.lang.Long)">lastSyncRunAt</a>, <a href="Asset.AssetBuilder.html#lastSyncWorkflowName(java.lang.String)">lastSyncWorkflowName</a>, <a href="Asset.AssetBuilder.html#link(com.atlan.model.relations.Reference)">link</a>, <a href="Asset.AssetBuilder.html#links(java.util.Collection)">links</a>, <a href="Asset.AssetBuilder.html#meaning(com.atlan.model.relations.Reference)">meaning</a>, <a href="Asset.AssetBuilder.html#meanings(java.util.Collection)">meanings</a>, <a href="Asset.AssetBuilder.html#name(java.lang.String)">name</a>, <a href="Asset.AssetBuilder.html#ownerGroup(java.lang.String)">ownerGroup</a>, <a href="Asset.AssetBuilder.html#ownerGroups(java.util.Collection)">ownerGroups</a>, <a href="Asset.AssetBuilder.html#ownerUser(java.lang.String)">ownerUser</a>, <a href="Asset.AssetBuilder.html#ownerUsers(java.util.Collection)">ownerUsers</a>, <a href="Asset.AssetBuilder.html#popularityScore(java.lang.Double)">popularityScore</a>, <a href="Asset.AssetBuilder.html#qualifiedName(java.lang.String)">qualifiedName</a>, <a href="Asset.AssetBuilder.html#readme(com.atlan.model.relations.Reference)">readme</a>, <a href="Asset.AssetBuilder.html#sourceCreatedAt(java.lang.Long)">sourceCreatedAt</a>, <a href="Asset.AssetBuilder.html#sourceCreatedBy(java.lang.String)">sourceCreatedBy</a>, <a href="Asset.AssetBuilder.html#sourceEmbedURL(java.lang.String)">sourceEmbedURL</a>, <a href="Asset.AssetBuilder.html#sourceOwners(java.lang.String)">sourceOwners</a>, <a href="Asset.AssetBuilder.html#sourceUpdatedAt(java.lang.Long)">sourceUpdatedAt</a>, <a href="Asset.AssetBuilder.html#sourceUpdatedBy(java.lang.String)">sourceUpdatedBy</a>, <a href="Asset.AssetBuilder.html#sourceURL(java.lang.String)">sourceURL</a>, <a href="Asset.AssetBuilder.html#subType(java.lang.Object)">subType</a>, <a href="Asset.AssetBuilder.html#tenantId(java.lang.String)">tenantId</a>, <a href="Asset.AssetBuilder.html#userDescription(java.lang.String)">userDescription</a>, <a href="Asset.AssetBuilder.html#viewerGroup(java.lang.String)">viewerGroup</a>, <a href="Asset.AssetBuilder.html#viewerGroups(java.util.Collection)">viewerGroups</a>, <a href="Asset.AssetBuilder.html#viewerUser(java.lang.String)">viewerUser</a>, <a href="Asset.AssetBuilder.html#viewerUsers(java.util.Collection)">viewerUsers</a>, <a href="Asset.AssetBuilder.html#viewScore(java.lang.Double)">viewScore</a></code></li>
+<code><a href="Asset.AssetBuilder.html#adminGroup(java.lang.String)">adminGroup</a>, <a href="Asset.AssetBuilder.html#adminGroups(java.util.Collection)">adminGroups</a>, <a href="Asset.AssetBuilder.html#adminRole(java.lang.String)">adminRole</a>, <a href="Asset.AssetBuilder.html#adminRoles(java.util.Collection)">adminRoles</a>, <a href="Asset.AssetBuilder.html#adminUser(java.lang.String)">adminUser</a>, <a href="Asset.AssetBuilder.html#adminUsers(java.util.Collection)">adminUsers</a>, <a href="Asset.AssetBuilder.html#announcementMessage(java.lang.String)">announcementMessage</a>, <a href="Asset.AssetBuilder.html#announcementTitle(java.lang.String)">announcementTitle</a>, <a href="Asset.AssetBuilder.html#announcementType(com.atlan.model.enums.AtlanAnnouncementType)">announcementType</a>, <a href="Asset.AssetBuilder.html#announcementUpdatedAt(java.lang.Long)">announcementUpdatedAt</a>, <a href="Asset.AssetBuilder.html#announcementUpdatedBy(java.lang.String)">announcementUpdatedBy</a>, <a href="Asset.AssetBuilder.html#certificateStatus(com.atlan.model.enums.AtlanCertificateStatus)">certificateStatus</a>, <a href="Asset.AssetBuilder.html#certificateStatusMessage(java.lang.String)">certificateStatusMessage</a>, <a href="Asset.AssetBuilder.html#certificateUpdatedAt(java.lang.Long)">certificateUpdatedAt</a>, <a href="Asset.AssetBuilder.html#certificateUpdatedBy(java.lang.String)">certificateUpdatedBy</a>, <a href="Asset.AssetBuilder.html#clearAdminGroups()">clearAdminGroups</a>, <a href="Asset.AssetBuilder.html#clearAdminRoles()">clearAdminRoles</a>, <a href="Asset.AssetBuilder.html#clearAdminUsers()">clearAdminUsers</a>, <a href="Asset.AssetBuilder.html#clearLinks()">clearLinks</a>, <a href="Asset.AssetBuilder.html#clearMeanings()">clearMeanings</a>, <a href="Asset.AssetBuilder.html#clearOwnerGroups()">clearOwnerGroups</a>, <a href="Asset.AssetBuilder.html#clearOwnerUsers()">clearOwnerUsers</a>, <a href="Asset.AssetBuilder.html#clearViewerGroups()">clearViewerGroups</a>, <a href="Asset.AssetBuilder.html#clearViewerUsers()">clearViewerUsers</a>, <a href="Asset.AssetBuilder.html#connectionName(java.lang.String)">connectionName</a>, <a href="Asset.AssetBuilder.html#connectionQualifiedName(java.lang.String)">connectionQualifiedName</a>, <a href="Asset.AssetBuilder.html#connectorType(com.atlan.model.enums.AtlanConnectorType)">connectorType</a>, <a href="Asset.AssetBuilder.html#description(java.lang.String)">description</a>, <a href="Asset.AssetBuilder.html#displayName(java.lang.String)">displayName</a>, <a href="Asset.AssetBuilder.html#hasLineage(java.lang.Boolean)">hasLineage</a>, <a href="Asset.AssetBuilder.html#isDiscoverable(java.lang.Boolean)">isDiscoverable</a>, <a href="Asset.AssetBuilder.html#isEditable(java.lang.Boolean)">isEditable</a>, <a href="Asset.AssetBuilder.html#lastSyncRun(java.lang.String)">lastSyncRun</a>, <a href="Asset.AssetBuilder.html#lastSyncRunAt(java.lang.Long)">lastSyncRunAt</a>, <a href="Asset.AssetBuilder.html#lastSyncWorkflowName(java.lang.String)">lastSyncWorkflowName</a>, <a href="Asset.AssetBuilder.html#link(com.atlan.model.assets.Link)">link</a>, <a href="Asset.AssetBuilder.html#links(java.util.Collection)">links</a>, <a href="Asset.AssetBuilder.html#meaning(com.atlan.model.assets.GlossaryTerm)">meaning</a>, <a href="Asset.AssetBuilder.html#meanings(java.util.Collection)">meanings</a>, <a href="Asset.AssetBuilder.html#name(java.lang.String)">name</a>, <a href="Asset.AssetBuilder.html#ownerGroup(java.lang.String)">ownerGroup</a>, <a href="Asset.AssetBuilder.html#ownerGroups(java.util.Collection)">ownerGroups</a>, <a href="Asset.AssetBuilder.html#ownerUser(java.lang.String)">ownerUser</a>, <a href="Asset.AssetBuilder.html#ownerUsers(java.util.Collection)">ownerUsers</a>, <a href="Asset.AssetBuilder.html#popularityScore(java.lang.Double)">popularityScore</a>, <a href="Asset.AssetBuilder.html#qualifiedName(java.lang.String)">qualifiedName</a>, <a href="Asset.AssetBuilder.html#readme(com.atlan.model.assets.Readme)">readme</a>, <a href="Asset.AssetBuilder.html#sourceCreatedAt(java.lang.Long)">sourceCreatedAt</a>, <a href="Asset.AssetBuilder.html#sourceCreatedBy(java.lang.String)">sourceCreatedBy</a>, <a href="Asset.AssetBuilder.html#sourceEmbedURL(java.lang.String)">sourceEmbedURL</a>, <a href="Asset.AssetBuilder.html#sourceOwners(java.lang.String)">sourceOwners</a>, <a href="Asset.AssetBuilder.html#sourceUpdatedAt(java.lang.Long)">sourceUpdatedAt</a>, <a href="Asset.AssetBuilder.html#sourceUpdatedBy(java.lang.String)">sourceUpdatedBy</a>, <a href="Asset.AssetBuilder.html#sourceURL(java.lang.String)">sourceURL</a>, <a href="Asset.AssetBuilder.html#subType(java.lang.Object)">subType</a>, <a href="Asset.AssetBuilder.html#tenantId(java.lang.String)">tenantId</a>, <a href="Asset.AssetBuilder.html#userDescription(java.lang.String)">userDescription</a>, <a href="Asset.AssetBuilder.html#viewerGroup(java.lang.String)">viewerGroup</a>, <a href="Asset.AssetBuilder.html#viewerGroups(java.util.Collection)">viewerGroups</a>, <a href="Asset.AssetBuilder.html#viewerUser(java.lang.String)">viewerUser</a>, <a href="Asset.AssetBuilder.html#viewerUsers(java.util.Collection)">viewerUsers</a>, <a href="Asset.AssetBuilder.html#viewScore(java.lang.Double)">viewScore</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.com.atlan.model.core.Entity.EntityBuilder">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;com.atlan.model.core.<a href="../core/Entity.EntityBuilder.html" title="class in com.atlan.model.core">Entity.EntityBuilder</a></h3>
-<code><a href="../core/Entity.EntityBuilder.html#classification(com.atlan.model.core.Classification)">classification</a>, <a href="../core/Entity.EntityBuilder.html#classificationNames(java.util.Set)">classificationNames</a>, <a href="../core/Entity.EntityBuilder.html#classifications(java.util.Collection)">classifications</a>, <a href="../core/Entity.EntityBuilder.html#clearClassifications()">clearClassifications</a>, <a href="../core/Entity.EntityBuilder.html#clearCustomMetadataSets()">clearCustomMetadataSets</a>, <a href="../core/Entity.EntityBuilder.html#createdBy(java.lang.String)">createdBy</a>, <a href="../core/Entity.EntityBuilder.html#createTime(java.lang.Long)">createTime</a>, <a href="../core/Entity.EntityBuilder.html#customMetadata(java.lang.String,com.atlan.model.core.CustomMetadataAttributes)">customMetadata</a>, <a href="../core/Entity.EntityBuilder.html#customMetadataSets(java.util.Map)">customMetadataSets</a>, <a href="../core/Entity.EntityBuilder.html#deleteHandler(java.lang.String)">deleteHandler</a>, <a href="../core/Entity.EntityBuilder.html#displayText(java.lang.String)">displayText</a>, <a href="../core/Entity.EntityBuilder.html#guid(java.lang.String)">guid</a>, <a href="../core/Entity.EntityBuilder.html#isIncomplete(java.lang.Boolean)">isIncomplete</a>, <a href="../core/Entity.EntityBuilder.html#meaningNames(java.util.Set)">meaningNames</a>, <a href="../core/Entity.EntityBuilder.html#nullFields(java.util.Set)">nullFields</a>, <a href="../core/Entity.EntityBuilder.html#status(com.atlan.model.enums.AtlanStatus)">status</a>, <a href="../core/Entity.EntityBuilder.html#updatedBy(java.lang.String)">updatedBy</a>, <a href="../core/Entity.EntityBuilder.html#updateTime(java.lang.Long)">updateTime</a></code></li>
+<code><a href="../core/Entity.EntityBuilder.html#classification(com.atlan.model.core.Classification)">classification</a>, <a href="../core/Entity.EntityBuilder.html#classificationNames(java.util.Set)">classificationNames</a>, <a href="../core/Entity.EntityBuilder.html#classifications(java.util.Collection)">classifications</a>, <a href="../core/Entity.EntityBuilder.html#clearClassifications()">clearClassifications</a>, <a href="../core/Entity.EntityBuilder.html#clearCustomMetadataSets()">clearCustomMetadataSets</a>, <a href="../core/Entity.EntityBuilder.html#createdBy(java.lang.String)">createdBy</a>, <a href="../core/Entity.EntityBuilder.html#createTime(java.lang.Long)">createTime</a>, <a href="../core/Entity.EntityBuilder.html#customMetadata(java.lang.String,com.atlan.model.core.CustomMetadataAttributes)">customMetadata</a>, <a href="../core/Entity.EntityBuilder.html#customMetadataSets(java.util.Map)">customMetadataSets</a>, <a href="../core/Entity.EntityBuilder.html#deleteHandler(java.lang.String)">deleteHandler</a>, <a href="../core/Entity.EntityBuilder.html#isIncomplete(java.lang.Boolean)">isIncomplete</a>, <a href="../core/Entity.EntityBuilder.html#meaningNames(java.util.Set)">meaningNames</a>, <a href="../core/Entity.EntityBuilder.html#nullFields(java.util.Set)">nullFields</a>, <a href="../core/Entity.EntityBuilder.html#status(com.atlan.model.enums.AtlanStatus)">status</a>, <a href="../core/Entity.EntityBuilder.html#updatedBy(java.lang.String)">updatedBy</a>, <a href="../core/Entity.EntityBuilder.html#updateTime(java.lang.Long)">updateTime</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a id="methods.inherited.from.class.com.atlan.model.relations.Reference.ReferenceBuilder">
+<!--   -->
+</a>
+<h3>Methods inherited from class&nbsp;com.atlan.model.relations.<a href="../relations/Reference.ReferenceBuilder.html" title="class in com.atlan.model.relations">Reference.ReferenceBuilder</a></h3>
+<code><a href="../relations/Reference.ReferenceBuilder.html#displayText(java.lang.String)">displayText</a>, <a href="../relations/Reference.ReferenceBuilder.html#entityStatus(java.lang.String)">entityStatus</a>, <a href="../relations/Reference.ReferenceBuilder.html#guid(java.lang.String)">guid</a>, <a href="../relations/Reference.ReferenceBuilder.html#relationshipAttributes(java.util.Map)">relationshipAttributes</a>, <a href="../relations/Reference.ReferenceBuilder.html#relationshipGuid(java.lang.String)">relationshipGuid</a>, <a href="../relations/Reference.ReferenceBuilder.html#relationshipStatus(com.atlan.model.enums.AtlanStatus)">relationshipStatus</a>, <a href="../relations/Reference.ReferenceBuilder.html#relationshipType(java.lang.String)">relationshipType</a>, <a href="../relations/Reference.ReferenceBuilder.html#uniqueAttributes(com.atlan.model.relations.UniqueAttributes)">uniqueAttributes</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
@@ -401,7 +413,7 @@ extends <a href="Preset.PresetBuilder.html" title="class in com.atlan.model.asse
 <pre class="methodSignature">public&nbsp;<a href="PresetDashboard.PresetDashboardBuilder.html" title="type parameter in PresetDashboard.PresetDashboardBuilder">B</a>&nbsp;typeName&#8203;(java.lang.String&nbsp;typeName)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="../core/Entity.EntityBuilder.html#typeName(java.lang.String)">typeName</a></code>&nbsp;in class&nbsp;<code><a href="../core/Entity.EntityBuilder.html" title="class in com.atlan.model.core">Entity.EntityBuilder</a>&lt;<a href="PresetDashboard.PresetDashboardBuilder.html" title="type parameter in PresetDashboard.PresetDashboardBuilder">C</a> extends <a href="PresetDashboard.html" title="class in com.atlan.model.assets">PresetDashboard</a>,&#8203;<a href="PresetDashboard.PresetDashboardBuilder.html" title="type parameter in PresetDashboard.PresetDashboardBuilder">B</a> extends <a href="PresetDashboard.PresetDashboardBuilder.html" title="class in com.atlan.model.assets">PresetDashboard.PresetDashboardBuilder</a>&lt;<a href="PresetDashboard.PresetDashboardBuilder.html" title="type parameter in PresetDashboard.PresetDashboardBuilder">C</a>,&#8203;<a href="PresetDashboard.PresetDashboardBuilder.html" title="type parameter in PresetDashboard.PresetDashboardBuilder">B</a>&gt;&gt;</code></dd>
+<dd><code><a href="../relations/Reference.ReferenceBuilder.html#typeName(java.lang.String)">typeName</a></code>&nbsp;in class&nbsp;<code><a href="../relations/Reference.ReferenceBuilder.html" title="class in com.atlan.model.relations">Reference.ReferenceBuilder</a>&lt;<a href="PresetDashboard.PresetDashboardBuilder.html" title="type parameter in PresetDashboard.PresetDashboardBuilder">C</a> extends <a href="PresetDashboard.html" title="class in com.atlan.model.assets">PresetDashboard</a>,&#8203;<a href="PresetDashboard.PresetDashboardBuilder.html" title="type parameter in PresetDashboard.PresetDashboardBuilder">B</a> extends <a href="PresetDashboard.PresetDashboardBuilder.html" title="class in com.atlan.model.assets">PresetDashboard.PresetDashboardBuilder</a>&lt;<a href="PresetDashboard.PresetDashboardBuilder.html" title="type parameter in PresetDashboard.PresetDashboardBuilder">C</a>,&#8203;<a href="PresetDashboard.PresetDashboardBuilder.html" title="type parameter in PresetDashboard.PresetDashboardBuilder">B</a>&gt;&gt;</code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
 </dl>
@@ -485,26 +497,26 @@ extends <a href="Preset.PresetBuilder.html" title="class in com.atlan.model.asse
 </dl>
 </li>
 </ul>
-<a id="presetWorkspace(com.atlan.model.relations.Reference)">
+<a id="presetWorkspace(com.atlan.model.assets.PresetWorkspace)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>presetWorkspace</h4>
-<pre class="methodSignature">public&nbsp;<a href="PresetDashboard.PresetDashboardBuilder.html" title="type parameter in PresetDashboard.PresetDashboardBuilder">B</a>&nbsp;presetWorkspace&#8203;(<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&nbsp;presetWorkspace)</pre>
+<pre class="methodSignature">public&nbsp;<a href="PresetDashboard.PresetDashboardBuilder.html" title="type parameter in PresetDashboard.PresetDashboardBuilder">B</a>&nbsp;presetWorkspace&#8203;(<a href="PresetWorkspace.html" title="class in com.atlan.model.assets">PresetWorkspace</a>&nbsp;presetWorkspace)</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
 </dl>
 </li>
 </ul>
-<a id="presetChart(com.atlan.model.relations.Reference)">
+<a id="presetChart(com.atlan.model.assets.PresetChart)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>presetChart</h4>
-<pre class="methodSignature">public&nbsp;<a href="PresetDashboard.PresetDashboardBuilder.html" title="type parameter in PresetDashboard.PresetDashboardBuilder">B</a>&nbsp;presetChart&#8203;(<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&nbsp;presetChart)</pre>
+<pre class="methodSignature">public&nbsp;<a href="PresetDashboard.PresetDashboardBuilder.html" title="type parameter in PresetDashboard.PresetDashboardBuilder">B</a>&nbsp;presetChart&#8203;(<a href="PresetChart.html" title="class in com.atlan.model.assets">PresetChart</a>&nbsp;presetChart)</pre>
 </li>
 </ul>
 <a id="presetCharts(java.util.Collection)">
@@ -513,7 +525,7 @@ extends <a href="Preset.PresetBuilder.html" title="class in com.atlan.model.asse
 <ul class="blockList">
 <li class="blockList">
 <h4>presetCharts</h4>
-<pre class="methodSignature">public&nbsp;<a href="PresetDashboard.PresetDashboardBuilder.html" title="type parameter in PresetDashboard.PresetDashboardBuilder">B</a>&nbsp;presetCharts&#8203;(java.util.Collection&lt;? extends <a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;&nbsp;presetCharts)</pre>
+<pre class="methodSignature">public&nbsp;<a href="PresetDashboard.PresetDashboardBuilder.html" title="type parameter in PresetDashboard.PresetDashboardBuilder">B</a>&nbsp;presetCharts&#8203;(java.util.Collection&lt;? extends <a href="PresetChart.html" title="class in com.atlan.model.assets">PresetChart</a>&gt;&nbsp;presetCharts)</pre>
 </li>
 </ul>
 <a id="clearPresetCharts()">
@@ -525,13 +537,13 @@ extends <a href="Preset.PresetBuilder.html" title="class in com.atlan.model.asse
 <pre class="methodSignature">public&nbsp;<a href="PresetDashboard.PresetDashboardBuilder.html" title="type parameter in PresetDashboard.PresetDashboardBuilder">B</a>&nbsp;clearPresetCharts()</pre>
 </li>
 </ul>
-<a id="presetDataset(com.atlan.model.relations.Reference)">
+<a id="presetDataset(com.atlan.model.assets.PresetDataset)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>presetDataset</h4>
-<pre class="methodSignature">public&nbsp;<a href="PresetDashboard.PresetDashboardBuilder.html" title="type parameter in PresetDashboard.PresetDashboardBuilder">B</a>&nbsp;presetDataset&#8203;(<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&nbsp;presetDataset)</pre>
+<pre class="methodSignature">public&nbsp;<a href="PresetDashboard.PresetDashboardBuilder.html" title="type parameter in PresetDashboard.PresetDashboardBuilder">B</a>&nbsp;presetDataset&#8203;(<a href="PresetDataset.html" title="class in com.atlan.model.assets">PresetDataset</a>&nbsp;presetDataset)</pre>
 </li>
 </ul>
 <a id="presetDatasets(java.util.Collection)">
@@ -540,7 +552,7 @@ extends <a href="Preset.PresetBuilder.html" title="class in com.atlan.model.asse
 <ul class="blockList">
 <li class="blockList">
 <h4>presetDatasets</h4>
-<pre class="methodSignature">public&nbsp;<a href="PresetDashboard.PresetDashboardBuilder.html" title="type parameter in PresetDashboard.PresetDashboardBuilder">B</a>&nbsp;presetDatasets&#8203;(java.util.Collection&lt;? extends <a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;&nbsp;presetDatasets)</pre>
+<pre class="methodSignature">public&nbsp;<a href="PresetDashboard.PresetDashboardBuilder.html" title="type parameter in PresetDashboard.PresetDashboardBuilder">B</a>&nbsp;presetDatasets&#8203;(java.util.Collection&lt;? extends <a href="PresetDataset.html" title="class in com.atlan.model.assets">PresetDataset</a>&gt;&nbsp;presetDatasets)</pre>
 </li>
 </ul>
 <a id="clearPresetDatasets()">

@@ -136,7 +136,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockList">
 <dl>
 <dt>Direct Known Subclasses:</dt>
-<dd><code><a href="GuidReference.GuidReferenceBuilder.html" title="class in com.atlan.model.relations">GuidReference.GuidReferenceBuilder</a></code>, <code><a href="QualifiedNameReference.QualifiedNameReferenceBuilder.html" title="class in com.atlan.model.relations">QualifiedNameReference.QualifiedNameReferenceBuilder</a></code></dd>
+<dd><code><a href="../core/Entity.EntityBuilder.html" title="class in com.atlan.model.core">Entity.EntityBuilder</a></code></dd>
 </dl>
 <dl>
 <dt>Enclosing class:</dt>
@@ -187,8 +187,8 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code><a href="Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#attributes(java.util.Map)">attributes</a></span>&#8203;(java.util.Map&lt;java.lang.String,&#8203;java.lang.Object&gt;&nbsp;attributes)</code></th>
+<td class="colFirst"><code>protected <a href="Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#$fillValuesFrom(C)">$fillValuesFrom</a></span>&#8203;(<a href="Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">C</a>&nbsp;instance)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
@@ -253,13 +253,6 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a id="methods.inherited.from.class.com.atlan.model.core.AtlanObject.AtlanObjectBuilder">
-<!--   -->
-</a>
-<h3>Methods inherited from class&nbsp;com.atlan.model.core.<a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in com.atlan.model.core">AtlanObject.AtlanObjectBuilder</a></h3>
-<code><a href="../core/AtlanObject.AtlanObjectBuilder.html#$fillValuesFrom(C)">$fillValuesFrom</a></code></li>
-</ul>
-<ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
 <!--   -->
 </a>
@@ -301,6 +294,21 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a id="$fillValuesFrom(com.atlan.model.relations.Reference)">
+<!--   -->
+</a><a id="$fillValuesFrom(C)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>$fillValuesFrom</h4>
+<pre class="methodSignature">protected&nbsp;<a href="Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">B</a>&nbsp;$fillValuesFrom&#8203;(<a href="Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">C</a>&nbsp;instance)</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
+<dd><code><a href="../core/AtlanObject.AtlanObjectBuilder.html#$fillValuesFrom(C)">$fillValuesFrom</a></code>&nbsp;in class&nbsp;<code><a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in com.atlan.model.core">AtlanObject.AtlanObjectBuilder</a>&lt;<a href="Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">C</a> extends <a href="Reference.html" title="class in com.atlan.model.relations">Reference</a>,&#8203;<a href="Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">B</a> extends <a href="Reference.ReferenceBuilder.html" title="class in com.atlan.model.relations">Reference.ReferenceBuilder</a>&lt;<a href="Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">C</a>,&#8203;<a href="Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">B</a>&gt;&gt;</code></dd>
+</dl>
+</li>
+</ul>
 <a id="self()">
 <!--   -->
 </a>
@@ -327,19 +335,6 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 </dl>
 </li>
 </ul>
-<a id="guid(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>guid</h4>
-<pre class="methodSignature">public&nbsp;<a href="Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">B</a>&nbsp;guid&#8203;(java.lang.String&nbsp;guid)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
 <a id="typeName(java.lang.String)">
 <!--   -->
 </a>
@@ -353,13 +348,13 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 </dl>
 </li>
 </ul>
-<a id="entityStatus(java.lang.String)">
+<a id="guid(java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>entityStatus</h4>
-<pre class="methodSignature">public&nbsp;<a href="Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">B</a>&nbsp;entityStatus&#8203;(java.lang.String&nbsp;entityStatus)</pre>
+<h4>guid</h4>
+<pre class="methodSignature">public&nbsp;<a href="Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">B</a>&nbsp;guid&#8203;(java.lang.String&nbsp;guid)</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -373,6 +368,19 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <li class="blockList">
 <h4>displayText</h4>
 <pre class="methodSignature">public&nbsp;<a href="Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">B</a>&nbsp;displayText&#8203;(java.lang.String&nbsp;displayText)</pre>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="entityStatus(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>entityStatus</h4>
+<pre class="methodSignature">public&nbsp;<a href="Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">B</a>&nbsp;entityStatus&#8203;(java.lang.String&nbsp;entityStatus)</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -438,19 +446,6 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <li class="blockList">
 <h4>uniqueAttributes</h4>
 <pre class="methodSignature">public&nbsp;<a href="Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">B</a>&nbsp;uniqueAttributes&#8203;(<a href="UniqueAttributes.html" title="class in com.atlan.model.relations">UniqueAttributes</a>&nbsp;uniqueAttributes)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="attributes(java.util.Map)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>attributes</h4>
-<pre class="methodSignature">public&nbsp;<a href="Reference.ReferenceBuilder.html" title="type parameter in Reference.ReferenceBuilder">B</a>&nbsp;attributes&#8203;(java.util.Map&lt;java.lang.String,&#8203;java.lang.Object&gt;&nbsp;attributes)</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>

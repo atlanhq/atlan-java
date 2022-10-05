@@ -125,10 +125,15 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li><a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in com.atlan.model.core">com.atlan.model.core.AtlanObject.AtlanObjectBuilder</a>&lt;C,&#8203;B&gt;</li>
 <li>
 <ul class="inheritance">
+<li><a href="../relations/Reference.ReferenceBuilder.html" title="class in com.atlan.model.relations">com.atlan.model.relations.Reference.ReferenceBuilder</a>&lt;C,&#8203;B&gt;</li>
+<li>
+<ul class="inheritance">
 <li><a href="../core/Entity.EntityBuilder.html" title="class in com.atlan.model.core">com.atlan.model.core.Entity.EntityBuilder</a>&lt;C,&#8203;B&gt;</li>
 <li>
 <ul class="inheritance">
 <li>com.atlan.model.assets.Asset.AssetBuilder&lt;C,&#8203;B&gt;</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -378,22 +383,22 @@ extends <a href="../core/Entity.EntityBuilder.html" title="class in com.atlan.mo
 </tr>
 <tr id="i37" class="rowColor">
 <td class="colFirst"><code><a href="Asset.AssetBuilder.html" title="type parameter in Asset.AssetBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#link(com.atlan.model.relations.Reference)">link</a></span>&#8203;(<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&nbsp;link)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#link(com.atlan.model.assets.Link)">link</a></span>&#8203;(<a href="Link.html" title="class in com.atlan.model.assets">Link</a>&nbsp;link)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i38" class="altColor">
 <td class="colFirst"><code><a href="Asset.AssetBuilder.html" title="type parameter in Asset.AssetBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#links(java.util.Collection)">links</a></span>&#8203;(java.util.Collection&lt;? extends <a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;&nbsp;links)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#links(java.util.Collection)">links</a></span>&#8203;(java.util.Collection&lt;? extends <a href="Link.html" title="class in com.atlan.model.assets">Link</a>&gt;&nbsp;links)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i39" class="rowColor">
 <td class="colFirst"><code><a href="Asset.AssetBuilder.html" title="type parameter in Asset.AssetBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#meaning(com.atlan.model.relations.Reference)">meaning</a></span>&#8203;(<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&nbsp;meaning)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#meaning(com.atlan.model.assets.GlossaryTerm)">meaning</a></span>&#8203;(<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&nbsp;meaning)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i40" class="altColor">
 <td class="colFirst"><code><a href="Asset.AssetBuilder.html" title="type parameter in Asset.AssetBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#meanings(java.util.Collection)">meanings</a></span>&#8203;(java.util.Collection&lt;? extends <a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;&nbsp;meanings)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#meanings(java.util.Collection)">meanings</a></span>&#8203;(java.util.Collection&lt;? extends <a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;meanings)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i41" class="rowColor">
@@ -433,7 +438,7 @@ extends <a href="../core/Entity.EntityBuilder.html" title="class in com.atlan.mo
 </tr>
 <tr id="i48" class="altColor">
 <td class="colFirst"><code><a href="Asset.AssetBuilder.html" title="type parameter in Asset.AssetBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#readme(com.atlan.model.relations.Reference)">readme</a></span>&#8203;(<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&nbsp;readme)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#readme(com.atlan.model.assets.Readme)">readme</a></span>&#8203;(<a href="Readme.html" title="class in com.atlan.model.assets">Readme</a>&nbsp;readme)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i49" class="rowColor">
@@ -527,7 +532,14 @@ extends <a href="../core/Entity.EntityBuilder.html" title="class in com.atlan.mo
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;com.atlan.model.core.<a href="../core/Entity.EntityBuilder.html" title="class in com.atlan.model.core">Entity.EntityBuilder</a></h3>
-<code><a href="../core/Entity.EntityBuilder.html#classification(com.atlan.model.core.Classification)">classification</a>, <a href="../core/Entity.EntityBuilder.html#classificationNames(java.util.Set)">classificationNames</a>, <a href="../core/Entity.EntityBuilder.html#classifications(java.util.Collection)">classifications</a>, <a href="../core/Entity.EntityBuilder.html#clearClassifications()">clearClassifications</a>, <a href="../core/Entity.EntityBuilder.html#clearCustomMetadataSets()">clearCustomMetadataSets</a>, <a href="../core/Entity.EntityBuilder.html#createdBy(java.lang.String)">createdBy</a>, <a href="../core/Entity.EntityBuilder.html#createTime(java.lang.Long)">createTime</a>, <a href="../core/Entity.EntityBuilder.html#customMetadata(java.lang.String,com.atlan.model.core.CustomMetadataAttributes)">customMetadata</a>, <a href="../core/Entity.EntityBuilder.html#customMetadataSets(java.util.Map)">customMetadataSets</a>, <a href="../core/Entity.EntityBuilder.html#deleteHandler(java.lang.String)">deleteHandler</a>, <a href="../core/Entity.EntityBuilder.html#displayText(java.lang.String)">displayText</a>, <a href="../core/Entity.EntityBuilder.html#guid(java.lang.String)">guid</a>, <a href="../core/Entity.EntityBuilder.html#isIncomplete(java.lang.Boolean)">isIncomplete</a>, <a href="../core/Entity.EntityBuilder.html#meaningNames(java.util.Set)">meaningNames</a>, <a href="../core/Entity.EntityBuilder.html#nullFields(java.util.Set)">nullFields</a>, <a href="../core/Entity.EntityBuilder.html#status(com.atlan.model.enums.AtlanStatus)">status</a>, <a href="../core/Entity.EntityBuilder.html#typeName(java.lang.String)">typeName</a>, <a href="../core/Entity.EntityBuilder.html#updatedBy(java.lang.String)">updatedBy</a>, <a href="../core/Entity.EntityBuilder.html#updateTime(java.lang.Long)">updateTime</a></code></li>
+<code><a href="../core/Entity.EntityBuilder.html#classification(com.atlan.model.core.Classification)">classification</a>, <a href="../core/Entity.EntityBuilder.html#classificationNames(java.util.Set)">classificationNames</a>, <a href="../core/Entity.EntityBuilder.html#classifications(java.util.Collection)">classifications</a>, <a href="../core/Entity.EntityBuilder.html#clearClassifications()">clearClassifications</a>, <a href="../core/Entity.EntityBuilder.html#clearCustomMetadataSets()">clearCustomMetadataSets</a>, <a href="../core/Entity.EntityBuilder.html#createdBy(java.lang.String)">createdBy</a>, <a href="../core/Entity.EntityBuilder.html#createTime(java.lang.Long)">createTime</a>, <a href="../core/Entity.EntityBuilder.html#customMetadata(java.lang.String,com.atlan.model.core.CustomMetadataAttributes)">customMetadata</a>, <a href="../core/Entity.EntityBuilder.html#customMetadataSets(java.util.Map)">customMetadataSets</a>, <a href="../core/Entity.EntityBuilder.html#deleteHandler(java.lang.String)">deleteHandler</a>, <a href="../core/Entity.EntityBuilder.html#isIncomplete(java.lang.Boolean)">isIncomplete</a>, <a href="../core/Entity.EntityBuilder.html#meaningNames(java.util.Set)">meaningNames</a>, <a href="../core/Entity.EntityBuilder.html#nullFields(java.util.Set)">nullFields</a>, <a href="../core/Entity.EntityBuilder.html#status(com.atlan.model.enums.AtlanStatus)">status</a>, <a href="../core/Entity.EntityBuilder.html#updatedBy(java.lang.String)">updatedBy</a>, <a href="../core/Entity.EntityBuilder.html#updateTime(java.lang.Long)">updateTime</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a id="methods.inherited.from.class.com.atlan.model.relations.Reference.ReferenceBuilder">
+<!--   -->
+</a>
+<h3>Methods inherited from class&nbsp;com.atlan.model.relations.<a href="../relations/Reference.ReferenceBuilder.html" title="class in com.atlan.model.relations">Reference.ReferenceBuilder</a></h3>
+<code><a href="../relations/Reference.ReferenceBuilder.html#displayText(java.lang.String)">displayText</a>, <a href="../relations/Reference.ReferenceBuilder.html#entityStatus(java.lang.String)">entityStatus</a>, <a href="../relations/Reference.ReferenceBuilder.html#guid(java.lang.String)">guid</a>, <a href="../relations/Reference.ReferenceBuilder.html#relationshipAttributes(java.util.Map)">relationshipAttributes</a>, <a href="../relations/Reference.ReferenceBuilder.html#relationshipGuid(java.lang.String)">relationshipGuid</a>, <a href="../relations/Reference.ReferenceBuilder.html#relationshipStatus(com.atlan.model.enums.AtlanStatus)">relationshipStatus</a>, <a href="../relations/Reference.ReferenceBuilder.html#relationshipType(java.lang.String)">relationshipType</a>, <a href="../relations/Reference.ReferenceBuilder.html#typeName(java.lang.String)">typeName</a>, <a href="../relations/Reference.ReferenceBuilder.html#uniqueAttributes(com.atlan.model.relations.UniqueAttributes)">uniqueAttributes</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
@@ -1243,13 +1255,13 @@ extends <a href="../core/Entity.EntityBuilder.html" title="class in com.atlan.mo
 </dl>
 </li>
 </ul>
-<a id="link(com.atlan.model.relations.Reference)">
+<a id="link(com.atlan.model.assets.Link)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>link</h4>
-<pre class="methodSignature">public&nbsp;<a href="Asset.AssetBuilder.html" title="type parameter in Asset.AssetBuilder">B</a>&nbsp;link&#8203;(<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&nbsp;link)</pre>
+<pre class="methodSignature">public&nbsp;<a href="Asset.AssetBuilder.html" title="type parameter in Asset.AssetBuilder">B</a>&nbsp;link&#8203;(<a href="Link.html" title="class in com.atlan.model.assets">Link</a>&nbsp;link)</pre>
 </li>
 </ul>
 <a id="links(java.util.Collection)">
@@ -1258,7 +1270,7 @@ extends <a href="../core/Entity.EntityBuilder.html" title="class in com.atlan.mo
 <ul class="blockList">
 <li class="blockList">
 <h4>links</h4>
-<pre class="methodSignature">public&nbsp;<a href="Asset.AssetBuilder.html" title="type parameter in Asset.AssetBuilder">B</a>&nbsp;links&#8203;(java.util.Collection&lt;? extends <a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;&nbsp;links)</pre>
+<pre class="methodSignature">public&nbsp;<a href="Asset.AssetBuilder.html" title="type parameter in Asset.AssetBuilder">B</a>&nbsp;links&#8203;(java.util.Collection&lt;? extends <a href="Link.html" title="class in com.atlan.model.assets">Link</a>&gt;&nbsp;links)</pre>
 </li>
 </ul>
 <a id="clearLinks()">
@@ -1270,26 +1282,26 @@ extends <a href="../core/Entity.EntityBuilder.html" title="class in com.atlan.mo
 <pre class="methodSignature">public&nbsp;<a href="Asset.AssetBuilder.html" title="type parameter in Asset.AssetBuilder">B</a>&nbsp;clearLinks()</pre>
 </li>
 </ul>
-<a id="readme(com.atlan.model.relations.Reference)">
+<a id="readme(com.atlan.model.assets.Readme)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>readme</h4>
-<pre class="methodSignature">public&nbsp;<a href="Asset.AssetBuilder.html" title="type parameter in Asset.AssetBuilder">B</a>&nbsp;readme&#8203;(<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&nbsp;readme)</pre>
+<pre class="methodSignature">public&nbsp;<a href="Asset.AssetBuilder.html" title="type parameter in Asset.AssetBuilder">B</a>&nbsp;readme&#8203;(<a href="Readme.html" title="class in com.atlan.model.assets">Readme</a>&nbsp;readme)</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
 </dl>
 </li>
 </ul>
-<a id="meaning(com.atlan.model.relations.Reference)">
+<a id="meaning(com.atlan.model.assets.GlossaryTerm)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>meaning</h4>
-<pre class="methodSignature">public&nbsp;<a href="Asset.AssetBuilder.html" title="type parameter in Asset.AssetBuilder">B</a>&nbsp;meaning&#8203;(<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&nbsp;meaning)</pre>
+<pre class="methodSignature">public&nbsp;<a href="Asset.AssetBuilder.html" title="type parameter in Asset.AssetBuilder">B</a>&nbsp;meaning&#8203;(<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&nbsp;meaning)</pre>
 </li>
 </ul>
 <a id="meanings(java.util.Collection)">
@@ -1298,7 +1310,7 @@ extends <a href="../core/Entity.EntityBuilder.html" title="class in com.atlan.mo
 <ul class="blockList">
 <li class="blockList">
 <h4>meanings</h4>
-<pre class="methodSignature">public&nbsp;<a href="Asset.AssetBuilder.html" title="type parameter in Asset.AssetBuilder">B</a>&nbsp;meanings&#8203;(java.util.Collection&lt;? extends <a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;&nbsp;meanings)</pre>
+<pre class="methodSignature">public&nbsp;<a href="Asset.AssetBuilder.html" title="type parameter in Asset.AssetBuilder">B</a>&nbsp;meanings&#8203;(java.util.Collection&lt;? extends <a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;meanings)</pre>
 </li>
 </ul>
 <a id="clearMeanings()">
