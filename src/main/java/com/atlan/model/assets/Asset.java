@@ -5,16 +5,15 @@ package com.atlan.model.assets;
 import com.atlan.api.EntityBulkEndpoint;
 import com.atlan.api.EntityUniqueAttributesEndpoint;
 import com.atlan.exception.AtlanException;
+import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.core.Entity;
 import com.atlan.model.core.EntityMutationResponse;
-import com.atlan.model.core.EntityResponse;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.*;
-import java.util.stream.Collectors;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -457,6 +456,7 @@ public abstract class Asset extends Entity {
      *              in order to efficiently remove any existing terms)
      * @return the asset that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
+     * @throws InvalidRequestException if any of the passed terms are not valid references by GUID to a term
      */
     protected static Entity removeTerms(String typeName, String qualifiedName, List<GlossaryTerm> terms)
             throws AtlanException {
@@ -464,7 +464,19 @@ public abstract class Asset extends Entity {
         if (existing != null) {
             Set<GlossaryTerm> replacementTerms = new TreeSet<>();
             Set<GlossaryTerm> existingTerms = existing.getMeanings();
-            Set<String> removeGuids = terms.stream().map(GlossaryTerm::getGuid).collect(Collectors.toSet());
+            Set<String> removeGuids = new HashSet<>();
+            for (GlossaryTerm term : terms) {
+                if (term.isValidReferenceByGuid()) {
+                    removeGuids.add(term.getGuid());
+                } else {
+                    throw new InvalidRequestException(
+                            "Term provided for removal did not specify its GUID",
+                            "terms",
+                            "ATLAN_JAVA_CLIENT-400-301",
+                            400,
+                            null);
+                }
+            }
             for (GlossaryTerm term : existingTerms) {
                 String existingTermGuid = term.getGuid();
                 if (!removeGuids.contains(existingTermGuid) && term.getRelationshipStatus() != AtlanStatus.DELETED) {
@@ -488,11 +500,7 @@ public abstract class Asset extends Entity {
     }
 
     private static Asset getExistingAsset(String typeName, String qualifiedName) throws AtlanException {
-        EntityResponse response = EntityUniqueAttributesEndpoint.retrieve(typeName, qualifiedName, false, false);
-        if (response != null) {
-            return (Asset) response.getEntity();
-        }
-        return null;
+        return (Asset) Entity.retrieveFull(typeName, qualifiedName);
     }
 
     private static Entity updateRelationships(Asset asset) throws AtlanException {

@@ -160,6 +160,7 @@ public class GlossaryTest extends AtlanLiveTest {
         try {
             Entity one = Entity.retrieveFull(glossaryGuid);
             assertNotNull(one);
+            assertTrue(one.isComplete());
             assertEquals(one.getTypeName(), Glossary.TYPE_NAME);
             assertTrue(one instanceof Glossary);
             Glossary glossary = (Glossary) one;
@@ -202,6 +203,7 @@ public class GlossaryTest extends AtlanLiveTest {
         try {
             Entity one = Entity.retrieveFull(categoryGuid);
             assertNotNull(one);
+            assertTrue(one.isComplete());
             assertEquals(one.getTypeName(), GlossaryCategory.TYPE_NAME);
             assertTrue(one instanceof GlossaryCategory);
             GlossaryCategory category = (GlossaryCategory) one;
@@ -224,6 +226,7 @@ public class GlossaryTest extends AtlanLiveTest {
         try {
             Entity one = Entity.retrieveFull(termGuid1);
             assertNotNull(one);
+            assertTrue(one.isComplete());
             assertEquals(one.getTypeName(), GlossaryTerm.TYPE_NAME);
             assertTrue(one instanceof GlossaryTerm);
             GlossaryTerm term = (GlossaryTerm) one;

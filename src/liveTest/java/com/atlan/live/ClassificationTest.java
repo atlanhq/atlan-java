@@ -129,6 +129,7 @@ public class ClassificationTest extends AtlanLiveTest {
             assertTrue(result instanceof S3Object);
             S3Object object = (S3Object) result;
             assertNotNull(object);
+            assertTrue(object.isComplete());
             Set<Classification> classifications = object.getClassifications();
             assertNotNull(classifications);
             assertEquals(classifications.size(), 2);
@@ -162,6 +163,7 @@ public class ClassificationTest extends AtlanLiveTest {
             assertTrue(result instanceof S3Object);
             S3Object object = (S3Object) result;
             assertNotNull(object);
+            assertTrue(object.isComplete());
             Set<Classification> classifications = object.getClassifications();
             assertNotNull(classifications);
             assertEquals(classifications.size(), 1);
@@ -194,6 +196,7 @@ public class ClassificationTest extends AtlanLiveTest {
             assertTrue(result instanceof S3Object);
             S3Object object = (S3Object) result;
             assertNotNull(object);
+            assertTrue(object.isComplete());
             Set<Classification> classifications = object.getClassifications();
             assertNotNull(classifications);
             assertEquals(classifications.size(), 2);

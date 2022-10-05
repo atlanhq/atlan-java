@@ -244,6 +244,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
             assertTrue(result instanceof S3Object);
             S3Object object = (S3Object) result;
             assertNotNull(object);
+            assertTrue(object.isComplete());
             Map<String, CustomMetadataAttributes> sets = object.getCustomMetadataSets();
             assertNotNull(sets);
             assertEquals(sets.size(), 1);
@@ -274,6 +275,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
             assertTrue(result instanceof S3Object);
             S3Object object = (S3Object) result;
             assertNotNull(object);
+            assertTrue(object.isComplete());
             Map<String, CustomMetadataAttributes> sets = object.getCustomMetadataSets();
             assertNotNull(sets);
             assertEquals(sets.size(), 2);
@@ -300,6 +302,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
             assertTrue(result instanceof S3Object);
             S3Object object = (S3Object) result;
             assertNotNull(object);
+            assertTrue(object.isComplete());
             Map<String, CustomMetadataAttributes> sets = object.getCustomMetadataSets();
             assertNotNull(sets);
             assertEquals(sets.size(), 2);
@@ -323,6 +326,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
             assertTrue(result instanceof S3Object);
             S3Object object = (S3Object) result;
             assertNotNull(object);
+            assertTrue(object.isComplete());
             Map<String, CustomMetadataAttributes> sets = object.getCustomMetadataSets();
             assertNotNull(sets);
             assertEquals(sets.size(), 1);
@@ -344,6 +348,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
             assertTrue(result instanceof S3Object);
             S3Object object = (S3Object) result;
             assertNotNull(object);
+            assertTrue(object.isComplete());
             Map<String, CustomMetadataAttributes> sets = object.getCustomMetadataSets();
             assertNotNull(sets);
             assertTrue(sets.isEmpty());
@@ -691,6 +696,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
             assertEquals(term.getQualifiedName(), GlossaryTest.termQame1);
             one = Entity.retrieveFull(GlossaryTerm.TYPE_NAME, GlossaryTest.termQame1);
             assertNotNull(one);
+            assertTrue(one.isComplete());
             assertTrue(one instanceof GlossaryTerm);
             term = (GlossaryTerm) one;
             assertEquals(term.getQualifiedName(), GlossaryTest.termQame1);
@@ -724,6 +730,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
             assertEquals(term.getQualifiedName(), GlossaryTest.termQame1);
             one = Entity.retrieveFull(GlossaryTerm.TYPE_NAME, GlossaryTest.termQame1);
             assertNotNull(one);
+            assertTrue(one.isComplete());
             assertTrue(one instanceof GlossaryTerm);
             term = (GlossaryTerm) one;
             assertEquals(term.getQualifiedName(), GlossaryTest.termQame1);

@@ -263,6 +263,7 @@ public class PresetAssetTest extends AtlanLiveTest {
         try {
             Entity full = Entity.retrieveFull(collectionGuid);
             assertNotNull(full);
+            assertTrue(full.isComplete());
             assertTrue(full instanceof PresetDashboard);
             PresetDashboard collection = (PresetDashboard) full;
             assertEquals(collection.getGuid(), collectionGuid);

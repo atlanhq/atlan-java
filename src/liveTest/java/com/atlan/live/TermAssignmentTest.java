@@ -35,6 +35,7 @@ public class TermAssignmentTest extends AtlanLiveTest {
             assertEquals(response.getUpdatedEntities().size(), 3);
             Entity full = Entity.retrieveFull(GlossaryTest.termGuid1);
             assertTrue(full instanceof GlossaryTerm);
+            assertTrue(full.isComplete());
             term = (GlossaryTerm) full;
             assertEquals(term.getQualifiedName(), GlossaryTest.termQame1);
             assertEquals(term.getName(), GlossaryTest.TERM_NAME1);
@@ -66,6 +67,7 @@ public class TermAssignmentTest extends AtlanLiveTest {
             assertEquals(response.getUpdatedEntities().size(), 3);
             Entity full = Entity.retrieveFull(GlossaryTest.termGuid1);
             assertTrue(full instanceof GlossaryTerm);
+            assertTrue(full.isComplete());
             term = (GlossaryTerm) full;
             assertEquals(term.getQualifiedName(), GlossaryTest.termQame1);
             assertEquals(term.getName(), GlossaryTest.TERM_NAME1);
@@ -94,6 +96,7 @@ public class TermAssignmentTest extends AtlanLiveTest {
             assertNotNull(result);
             Entity full = Entity.retrieveFull(S3AssetTest.s3Object1Guid);
             assertTrue(full instanceof S3Object);
+            assertTrue(full.isComplete());
             S3Object s3Object1 = (S3Object) full;
             assertEquals(s3Object1.getQualifiedName(), S3AssetTest.s3Object1Qame);
             assertEquals(s3Object1.getName(), S3AssetTest.S3_OBJECT1_NAME);
@@ -126,6 +129,7 @@ public class TermAssignmentTest extends AtlanLiveTest {
             assertNotNull(result);
             Entity full = Entity.retrieveFull(S3AssetTest.s3Object1Guid);
             assertTrue(full instanceof S3Object);
+            assertTrue(full.isComplete());
             S3Object s3Object1 = (S3Object) full;
             assertEquals(s3Object1.getQualifiedName(), S3AssetTest.s3Object1Qame);
             assertEquals(s3Object1.getName(), S3AssetTest.S3_OBJECT1_NAME);
@@ -152,6 +156,7 @@ public class TermAssignmentTest extends AtlanLiveTest {
             assertNotNull(result);
             Entity full = Entity.retrieveFull(S3AssetTest.s3Object1Guid);
             assertTrue(full instanceof S3Object);
+            assertTrue(full.isComplete());
             S3Object s3Object1 = (S3Object) full;
             assertEquals(s3Object1.getQualifiedName(), S3AssetTest.s3Object1Qame);
             assertEquals(s3Object1.getName(), S3AssetTest.S3_OBJECT1_NAME);
@@ -184,6 +189,7 @@ public class TermAssignmentTest extends AtlanLiveTest {
             assertNotNull(result);
             Entity full = Entity.retrieveFull(S3AssetTest.s3Object1Guid);
             assertTrue(full instanceof S3Object);
+            assertTrue(full.isComplete());
             S3Object s3Object1 = (S3Object) full;
             assertEquals(s3Object1.getQualifiedName(), S3AssetTest.s3Object1Qame);
             assertEquals(s3Object1.getName(), S3AssetTest.S3_OBJECT1_NAME);
@@ -217,6 +223,7 @@ public class TermAssignmentTest extends AtlanLiveTest {
             assertNotNull(result);
             Entity full = Entity.retrieveFull(S3AssetTest.s3Object1Guid);
             assertTrue(full instanceof S3Object);
+            assertTrue(full.isComplete());
             S3Object s3Object1 = (S3Object) full;
             assertEquals(s3Object1.getQualifiedName(), S3AssetTest.s3Object1Qame);
             assertEquals(s3Object1.getName(), S3AssetTest.S3_OBJECT1_NAME);
@@ -249,6 +256,7 @@ public class TermAssignmentTest extends AtlanLiveTest {
             assertNotNull(result);
             Entity full = Entity.retrieveFull(S3AssetTest.s3Object1Guid);
             assertTrue(full instanceof S3Object);
+            assertTrue(full.isComplete());
             S3Object s3Object1 = (S3Object) full;
             assertEquals(s3Object1.getQualifiedName(), S3AssetTest.s3Object1Qame);
             assertEquals(s3Object1.getName(), S3AssetTest.S3_OBJECT1_NAME);

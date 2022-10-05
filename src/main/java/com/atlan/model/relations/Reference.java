@@ -4,11 +4,10 @@ package com.atlan.model.relations;
 
 import com.atlan.model.core.AtlanObject;
 import com.atlan.model.enums.AtlanStatus;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Comparator;
 import java.util.Map;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 
@@ -59,6 +58,65 @@ public class Reference extends AtlanObject implements Comparable<Reference> {
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
+    }
+
+    /** Internal tracking of whether this represents a complete view of an object, or not. */
+    @JsonIgnore
+    @Setter(AccessLevel.NONE)
+    @Builder.Default
+    transient boolean completeObject = false;
+
+    /**
+     * When true, indicates that this object represents a complete view of the entity.
+     * When false, this object is only a reference or some partial view of the entity.
+     */
+    @JsonIgnore
+    public boolean isComplete() {
+        return completeObject;
+    }
+
+    /**
+     * Sets the internal tracking of this object to indicate it is a complete representation of an entity.
+     */
+    @JsonIgnore
+    protected void setCompleteObject() {
+        this.completeObject = true;
+    }
+
+    /**
+     * Indicates whether this object can be used as a valid reference by GUID.
+     *
+     * @return true if it is a valid GUID reference, false otherwise
+     */
+    @JsonIgnore
+    public boolean isValidReferenceByGuid() {
+        // Careful: because typeName is overridden (for default setting) in
+        // derived classes, we must use the getter here and not the member directly
+        return getTypeName() != null && getGuid() != null;
+    }
+
+    /**
+     * Indicates whether this object can be used as a valid reference by qualifiedName.
+     *
+     * @return true if it is a valid qualifiedName reference, false otherwise
+     */
+    @JsonIgnore
+    public boolean isValidReferenceByQualifiedName() {
+        // Careful: because typeName is overridden (for default setting) in
+        // derived classes, we must use the getter here and not the member directly
+        return getTypeName() != null
+                && getUniqueAttributes() != null
+                && getUniqueAttributes().getQualifiedName() != null;
+    }
+
+    /**
+     * Indicates whether this object can be used as a reference (relationship).
+     *
+     * @return true if it is a valid reference, false otherwise
+     */
+    @JsonIgnore
+    public boolean isValidReference() {
+        return isValidReferenceByGuid() || isValidReferenceByQualifiedName();
     }
 
     /** Name of the type that defines the entity. */
