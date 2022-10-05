@@ -311,8 +311,10 @@ public class Glossary extends Asset {
                         .sortOption(SortOptions.of(s -> s.field(
                                 FieldSort.of(f -> f.field("name.keyword").order(SortOrder.Asc)))))
                         .build())
-                .attributes(attributes)
                 .attribute("parentCategory");
+        if (attributes != null) {
+            builder = builder.attributes(attributes);
+        }
         IndexSearchRequest request = builder.build();
         IndexSearchResponse response = request.search();
         if (response != null) {

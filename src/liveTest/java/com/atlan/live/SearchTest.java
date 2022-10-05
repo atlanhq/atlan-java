@@ -16,6 +16,7 @@ import com.atlan.model.assets.Glossary;
 import com.atlan.model.assets.GlossaryTerm;
 import com.atlan.model.assets.S3Object;
 import com.atlan.model.core.Entity;
+import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.search.IndexSearchDSL;
 import com.atlan.model.search.IndexSearchRequest;
 import com.atlan.model.search.IndexSearchResponse;
@@ -399,7 +400,7 @@ public class SearchTest extends AtlanLiveTest {
 
     @Test(
             groups = {"search.term.cm"},
-            dependsOnGroups = {"link.cm.term"})
+            dependsOnGroups = {"link.cm.term", "update.glossary"})
     void searchByCustomMetadata() throws InterruptedException {
 
         try {
@@ -413,6 +414,9 @@ public class SearchTest extends AtlanLiveTest {
             IndexSearchRequest index = IndexSearchRequest.builder()
                     .dsl(IndexSearchDSL.builder().query(combined).build())
                     .attribute("name")
+                    .attribute("anchor")
+                    .relationAttribute("name")
+                    .relationAttribute("certificateStatus")
                     .build();
 
             IndexSearchResponse response = index.search();
@@ -434,6 +438,10 @@ public class SearchTest extends AtlanLiveTest {
             GlossaryTerm term = (GlossaryTerm) one;
             assertEquals(term.getGuid(), GlossaryTest.termGuid1);
             assertEquals(term.getQualifiedName(), GlossaryTest.termQame1);
+            Glossary anchor = term.getAnchor();
+            assertNotNull(anchor);
+            assertEquals(anchor.getName(), GlossaryTest.GLOSSARY_NAME);
+            assertEquals(anchor.getCertificateStatus(), AtlanCertificateStatus.VERIFIED);
         } catch (AtlanException e) {
             e.printStackTrace();
             assertNull(e, "Unexpected exception while searching by a specific classification.");
