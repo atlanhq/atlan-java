@@ -164,7 +164,11 @@ public abstract class Entity extends Reference {
      */
     public static Entity retrieveFull(String guid) throws AtlanException {
         EntityResponse response = EntityGuidEndpoint.retrieve(guid, false, false);
-        return response.getEntity();
+        Entity entity = response.getEntity();
+        if (entity != null) {
+            entity.setCompleteObject();
+        }
+        return entity;
     }
 
     /**
@@ -187,7 +191,11 @@ public abstract class Entity extends Reference {
      */
     public static Entity retrieveFull(String typeName, String qualifiedName) throws AtlanException {
         EntityResponse response = EntityUniqueAttributesEndpoint.retrieve(typeName, qualifiedName, false, false);
-        return response.getEntity();
+        Entity entity = response.getEntity();
+        if (entity != null) {
+            entity.setCompleteObject();
+        }
+        return entity;
     }
 
     /**

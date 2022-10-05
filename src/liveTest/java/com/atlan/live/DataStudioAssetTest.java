@@ -174,6 +174,7 @@ public class DataStudioAssetTest extends AtlanLiveTest {
         try {
             Entity full = Entity.retrieveFull(reportGuid);
             assertNotNull(full);
+            assertTrue(full.isComplete());
             assertTrue(full instanceof DataStudioAsset);
             DataStudioAsset report = (DataStudioAsset) full;
             assertEquals(report.getGuid(), reportGuid);

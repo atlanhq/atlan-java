@@ -556,6 +556,7 @@ public class DataAssetTest extends AtlanLiveTest {
         try {
             Entity full = Entity.retrieveFull(columnGuid1);
             assertNotNull(full);
+            assertTrue(full.isComplete());
             assertTrue(full instanceof Column);
             Column column = (Column) full;
             assertEquals(column.getGuid(), columnGuid1);
@@ -578,6 +579,7 @@ public class DataAssetTest extends AtlanLiveTest {
         try {
             Entity full = Entity.retrieveFull(columnGuid3);
             assertNotNull(full);
+            assertTrue(full.isComplete());
             assertTrue(full instanceof Column);
             Column column = (Column) full;
             assertEquals(column.getGuid(), columnGuid3);
@@ -600,6 +602,7 @@ public class DataAssetTest extends AtlanLiveTest {
         try {
             Entity full = Entity.retrieveFull(columnGuid5);
             assertNotNull(full);
+            assertTrue(full.isComplete());
             assertTrue(full instanceof Column);
             Column column = (Column) full;
             assertEquals(column.getGuid(), columnGuid5);
@@ -642,6 +645,7 @@ public class DataAssetTest extends AtlanLiveTest {
         try {
             Entity full = Entity.retrieveFull(tableGuid);
             assertNotNull(full);
+            assertTrue(full.isComplete());
             assertTrue(full instanceof Table);
             Table table = (Table) full;
             assertEquals(table.getGuid(), tableGuid);
@@ -675,6 +679,7 @@ public class DataAssetTest extends AtlanLiveTest {
         try {
             Entity full = Entity.retrieveFull(viewGuid);
             assertNotNull(full);
+            assertTrue(full.isComplete());
             assertTrue(full instanceof View);
             View view = (View) full;
             assertEquals(view.getGuid(), viewGuid);
@@ -707,6 +712,7 @@ public class DataAssetTest extends AtlanLiveTest {
         try {
             Entity full = Entity.retrieveFull(mviewGuid);
             assertNotNull(full);
+            assertTrue(full.isComplete());
             assertTrue(full instanceof MaterializedView);
             MaterializedView mview = (MaterializedView) full;
             assertEquals(mview.getGuid(), mviewGuid);
@@ -739,6 +745,7 @@ public class DataAssetTest extends AtlanLiveTest {
         try {
             Entity full = Entity.retrieveFull(Schema.TYPE_NAME, schemaQame);
             assertNotNull(full);
+            assertTrue(full.isComplete());
             assertTrue(full instanceof Schema);
             Schema schema = (Schema) full;
             assertEquals(schema.getGuid(), schemaGuid);
@@ -746,6 +753,8 @@ public class DataAssetTest extends AtlanLiveTest {
             assertEquals(schema.getName(), SCHEMA_NAME);
             Database one = schema.getDatabase();
             assertNotNull(one);
+            assertFalse(one.isComplete());
+            assertTrue(one.isValidReference());
             assertEquals(one.getTypeName(), Database.TYPE_NAME);
             assertEquals(one.getGuid(), databaseGuid);
             assertNotNull(schema.getTables());
@@ -786,6 +795,7 @@ public class DataAssetTest extends AtlanLiveTest {
         try {
             Entity full = Entity.retrieveFull(Database.TYPE_NAME, databaseQame);
             assertNotNull(full);
+            assertTrue(full.isComplete());
             assertTrue(full instanceof Database);
             Database database = (Database) full;
             assertEquals(database.getGuid(), databaseGuid);

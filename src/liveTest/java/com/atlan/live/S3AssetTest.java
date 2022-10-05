@@ -271,6 +271,7 @@ public class S3AssetTest extends AtlanLiveTest {
         try {
             Entity full = Entity.retrieveFull(s3BucketGuid);
             assertNotNull(full);
+            assertTrue(full.isComplete());
             assertTrue(full instanceof S3Bucket);
             S3Bucket bucket = (S3Bucket) full;
             assertEquals(bucket.getGuid(), s3BucketGuid);

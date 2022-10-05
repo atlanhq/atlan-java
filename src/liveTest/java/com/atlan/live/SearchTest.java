@@ -67,6 +67,7 @@ public class SearchTest extends AtlanLiveTest {
             assertEquals(entities.size(), 1);
             Entity one = entities.get(0);
             assertTrue(one instanceof GlossaryTerm);
+            assertFalse(one.isComplete());
             GlossaryTerm term = (GlossaryTerm) one;
             assertEquals(term.getGuid(), GlossaryTest.termGuid1);
             assertEquals(term.getQualifiedName(), GlossaryTest.termQame1);
@@ -115,6 +116,7 @@ public class SearchTest extends AtlanLiveTest {
             assertEquals(entities.size(), 1);
             Entity one = entities.get(0);
             assertTrue(one instanceof S3Object);
+            assertFalse(one.isComplete());
             S3Object object = (S3Object) one;
             assertNotNull(object);
             assertEquals(object.getQualifiedName(), S3AssetTest.s3Object1Qame);
@@ -128,6 +130,7 @@ public class SearchTest extends AtlanLiveTest {
             assertEquals(entities.size(), 1);
             one = entities.get(0);
             assertTrue(one instanceof S3Object);
+            assertFalse(one.isComplete());
             object = (S3Object) one;
             assertNotNull(object);
             assertEquals(object.getQualifiedName(), S3AssetTest.s3Object2Qame);
@@ -141,6 +144,7 @@ public class SearchTest extends AtlanLiveTest {
             assertEquals(entities.size(), 1);
             one = entities.get(0);
             assertTrue(one instanceof S3Object);
+            assertFalse(one.isComplete());
             object = (S3Object) one;
             s3ObjectCreationTime = object.getCreateTime();
             assertNotNull(object);
@@ -186,6 +190,7 @@ public class SearchTest extends AtlanLiveTest {
             assertEquals(entities.size(), 1);
             Entity one = entities.get(0);
             assertTrue(one instanceof S3Object);
+            assertFalse(one.isComplete());
             S3Object object = (S3Object) one;
             assertNotNull(object);
             assertEquals(object.getQualifiedName(), S3AssetTest.s3Object3Qame);
@@ -224,6 +229,7 @@ public class SearchTest extends AtlanLiveTest {
             assertEquals(entities.size(), 1);
             Entity one = entities.get(0);
             assertTrue(one instanceof S3Object);
+            assertFalse(one.isComplete());
             S3Object object = (S3Object) one;
             assertNotNull(object);
             assertEquals(object.getQualifiedName(), S3AssetTest.s3Object2Qame);
@@ -424,6 +430,7 @@ public class SearchTest extends AtlanLiveTest {
             assertEquals(entities.size(), 1);
             Entity one = entities.get(0);
             assertTrue(one instanceof GlossaryTerm);
+            assertFalse(one.isComplete());
             GlossaryTerm term = (GlossaryTerm) one;
             assertEquals(term.getGuid(), GlossaryTest.termGuid1);
             assertEquals(term.getQualifiedName(), GlossaryTest.termQame1);
