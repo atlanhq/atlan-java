@@ -269,6 +269,18 @@ public class Glossary extends Asset {
      * Retrieve category hierarchy in this glossary, in a traversable form. You can traverse in either
      * depth-first ({@link CategoryHierarchy#depthFirst()}) or breadth-first ({@link CategoryHierarchy#breadthFirst()})
      * order. Both return an ordered list of {@link GlossaryCategory} objects.
+     *
+     * @return a traversable category hierarchy
+     * @throws AtlanException on any API problems, or if the glossary does not exist
+     */
+    public CategoryHierarchy getHierarchy() throws AtlanException {
+        return getHierarchy(null);
+    }
+
+    /**
+     * Retrieve category hierarchy in this glossary, in a traversable form. You can traverse in either
+     * depth-first ({@link CategoryHierarchy#depthFirst()}) or breadth-first ({@link CategoryHierarchy#breadthFirst()})
+     * order. Both return an ordered list of {@link GlossaryCategory} objects.
      * Note: by default, each category will have a minimal set of information (name, GUID, qualifiedName). If you
      * want additional details about each category, specify the attributes you want in the {@code attributes} parameter
      * to this method.
