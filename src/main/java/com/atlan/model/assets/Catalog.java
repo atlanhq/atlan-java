@@ -2,6 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
+import com.atlan.model.lineage.AbstractProcess;
 import java.util.List;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -20,10 +21,10 @@ public abstract class Catalog extends Asset {
     /** Processes that use this object as input. */
     @Attribute
     @Singular
-    List<Process> inputToProcesses;
+    List<AbstractProcess> inputToProcesses;
 
     /** Processes that produce this object as output. */
     @Attribute
     @Singular
-    List<Process> outputFromProcesses;
+    List<AbstractProcess> outputFromProcesses;
 }
