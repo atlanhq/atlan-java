@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10};
+var data = {"i0":9,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -234,52 +234,66 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getImageId()">getImageId</a></span>()</code></th>
+<td class="colLast">
+<div class="block">The id of the image used for the logo.</div>
+</td>
+</tr>
+<tr id="i5" class="rowColor">
+<td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIsLocked()">getIsLocked</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Indicates whether the custom metadata can be managed in the UI (false) or not (true).</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getLogoType()">getLogoType</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Type of logo used for the custom metadata.</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getLogoUrl()">getLogoUrl</a></span>()</code></th>
 <td class="colLast">
 <div class="block">If the <code>logoType</code> is image, this should hold a URL to the image.</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hashCode()">hashCode</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setEmoji(java.lang.String)">setEmoji</a></span>&#8203;(java.lang.String&nbsp;emoji)</code></th>
 <td class="colLast">
 <div class="block">If the <code>logoType</code> is emoji, this should hold the emoji character.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i10" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setImageId(java.lang.String)">setImageId</a></span>&#8203;(java.lang.String&nbsp;imageId)</code></th>
+<td class="colLast">
+<div class="block">The id of the image used for the logo.</div>
+</td>
+</tr>
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setIsLocked(java.lang.String)">setIsLocked</a></span>&#8203;(java.lang.String&nbsp;isLocked)</code></th>
 <td class="colLast">
 <div class="block">Indicates whether the custom metadata can be managed in the UI (false) or not (true).</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setLogoType(java.lang.String)">setLogoType</a></span>&#8203;(java.lang.String&nbsp;logoType)</code></th>
 <td class="colLast">
 <div class="block">Type of logo used for the custom metadata.</div>
 </td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setLogoUrl(java.lang.String)">setLogoUrl</a></span>&#8203;(java.lang.String&nbsp;logoUrl)</code></th>
 <td class="colLast">
@@ -385,6 +399,16 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <div class="block">Indicates whether the custom metadata can be managed in the UI (false) or not (true).</div>
 </li>
 </ul>
+<a id="getImageId()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getImageId</h4>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getImageId()</pre>
+<div class="block">The id of the image used for the logo.</div>
+</li>
+</ul>
 <a id="setLogoType(java.lang.String)">
 <!--   -->
 </a>
@@ -423,6 +447,16 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <h4>setIsLocked</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;setIsLocked&#8203;(java.lang.String&nbsp;isLocked)</pre>
 <div class="block">Indicates whether the custom metadata can be managed in the UI (false) or not (true).</div>
+</li>
+</ul>
+<a id="setImageId(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setImageId</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;setImageId&#8203;(java.lang.String&nbsp;imageId)</pre>
+<div class="block">The id of the image used for the logo.</div>
 </li>
 </ul>
 <a id="equals(java.lang.Object)">
