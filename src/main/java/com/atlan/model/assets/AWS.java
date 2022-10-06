@@ -13,7 +13,7 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
-public abstract class AWS extends Asset {
+public abstract class AWS extends Catalog {
 
     public static final String TYPE_NAME = "AWS";
 

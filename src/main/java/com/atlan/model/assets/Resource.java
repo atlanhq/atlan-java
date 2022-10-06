@@ -12,7 +12,7 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
-public abstract class Resource extends Asset {
+public abstract class Resource extends Catalog {
 
     public static final String TYPE_NAME = "Resource";
 

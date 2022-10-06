@@ -4,6 +4,7 @@ package com.atlan.model.lineage;
 
 import com.atlan.model.assets.Asset;
 import com.atlan.model.assets.Attribute;
+import com.atlan.model.assets.Catalog;
 import com.atlan.model.enums.AtlanConnectorType;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
@@ -42,12 +43,12 @@ public abstract class AbstractProcess extends Asset {
     /** Assets that are inputs to this process. */
     @Singular
     @Attribute
-    List<Asset> inputs;
+    List<Catalog> inputs;
 
     /** Assets that are outputs from this process. */
     @Singular
     @Attribute
-    List<Asset> outputs;
+    List<Catalog> outputs;
 
     /**
      * Generate a unique qualifiedName for a process.
@@ -64,8 +65,8 @@ public abstract class AbstractProcess extends Asset {
             AtlanConnectorType connectorType,
             String connectionName,
             String connectionQualifiedName,
-            List<Asset> inputs,
-            List<Asset> outputs,
+            List<Catalog> inputs,
+            List<Catalog> outputs,
             LineageProcess parent) {
         StringBuilder sb = new StringBuilder();
         sb.append(name).append(connectorType.getValue()).append(connectionName).append(connectionQualifiedName);
@@ -89,8 +90,8 @@ public abstract class AbstractProcess extends Asset {
      * @param sb into which to append
      * @param relationships to append
      */
-    private static void appendRelationships(StringBuilder sb, List<Asset> relationships) {
-        for (Asset relationship : relationships) {
+    private static void appendRelationships(StringBuilder sb, List<Catalog> relationships) {
+        for (Catalog relationship : relationships) {
             appendRelationship(sb, relationship);
         }
     }
