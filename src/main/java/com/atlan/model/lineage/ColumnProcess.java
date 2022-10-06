@@ -2,8 +2,8 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.lineage;
 
-import com.atlan.model.assets.Asset;
 import com.atlan.model.assets.Attribute;
+import com.atlan.model.assets.Catalog;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.List;
@@ -71,8 +71,8 @@ public class ColumnProcess extends AbstractProcess {
             AtlanConnectorType connectorType,
             String connectionName,
             String connectionQualifiedName,
-            List<Asset> inputs,
-            List<Asset> outputs) {
+            List<Catalog> inputs,
+            List<Catalog> outputs) {
         return ColumnProcess.builder()
                 .qualifiedName(generateQualifiedName(
                         name, connectorType, connectionName, connectionQualifiedName, inputs, outputs, null))

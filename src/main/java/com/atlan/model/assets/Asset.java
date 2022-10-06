@@ -209,6 +209,163 @@ public abstract class Asset extends Entity {
     @Attribute
     String sourceUpdatedBy;
 
+    /** TBC */
+    @Attribute
+    String dbtQualifiedName;
+
+    /** TBC */
+    @Attribute
+    String assetDbtAlias;
+
+    /** TBC */
+    @Attribute
+    String assetDbtMeta;
+
+    /** TBC */
+    @Attribute
+    String assetDbtUniqueId;
+
+    /** TBC */
+    @Attribute
+    String assetDbtAccountName;
+
+    /** TBC */
+    @Attribute
+    String assetDbtProjectName;
+
+    /** TBC */
+    @Attribute
+    String assetDbtPackageName;
+
+    /** TBC */
+    @Attribute
+    String assetDbtJobName;
+
+    /** TBC */
+    @Attribute
+    String assetDbtJobSchedule;
+
+    /** TBC */
+    @Attribute
+    String assetDbtJobStatus;
+
+    /** TBC */
+    @Attribute
+    String assetDbtJobScheduleCronHumanized;
+
+    /** TBC */
+    @Attribute
+    Long assetDbtJobLastRun;
+
+    /** TBC */
+    @Attribute
+    String assetDbtJobLastRunUrl;
+
+    /** TBC */
+    @Attribute
+    Long assetDbtJobLastRunCreatedAt;
+
+    /** TBC */
+    @Attribute
+    Long assetDbtJobLastRunUpdatedAt;
+
+    /** TBC */
+    @Attribute
+    Long assetDbtJobLastRunDequedAt;
+
+    /** TBC */
+    @Attribute
+    Long assetDbtJobLastRunStartedAt;
+
+    /** TBC */
+    @Attribute
+    String assetDbtJobLastRunTotalDuration;
+
+    /** TBC */
+    @Attribute
+    String assetDbtJobLastRunTotalDurationHumanized;
+
+    /** TBC */
+    @Attribute
+    String assetDbtJobLastRunQueuedDuration;
+
+    /** TBC */
+    @Attribute
+    String assetDbtJobLastRunQueuedDurationHumanized;
+
+    /** TBC */
+    @Attribute
+    String assetDbtJobLastRunRunDuration;
+
+    /** TBC */
+    @Attribute
+    String assetDbtJobLastRunRunDurationHumanized;
+
+    /** TBC */
+    @Attribute
+    String assetDbtJobLastRunGitBranch;
+
+    /** TBC */
+    @Attribute
+    String assetDbtJobLastRunGitSha;
+
+    /** TBC */
+    @Attribute
+    String assetDbtJobLastRunStatusMessage;
+
+    /** TBC */
+    @Attribute
+    String assetDbtJobLastRunOwnerThreadId;
+
+    /** TBC */
+    @Attribute
+    String assetDbtJobLastRunExecutedByThreadId;
+
+    /** TBC */
+    @Attribute
+    Boolean assetDbtJobLastRunArtifactsSaved;
+
+    /** TBC */
+    @Attribute
+    String assetDbtJobLastRunArtifactS3Path;
+
+    /** TBC */
+    @Attribute
+    Boolean assetDbtJobLastRunHasDocsGenerated;
+
+    /** TBC */
+    @Attribute
+    Boolean assetDbtJobLastRunHasSourcesGenerated;
+
+    /** TBC */
+    @Attribute
+    Boolean assetDbtJobLastRunNotificationsSent;
+
+    /** TBC */
+    @Attribute
+    Long assetDbtJobNextRun;
+
+    /** TBC */
+    @Attribute
+    String assetDbtJobNextRunHumanized;
+
+    /** TBC */
+    @Attribute
+    String assetDbtEnvironmentName;
+
+    /** TBC */
+    @Attribute
+    String assetDbtEnvironmentDbtVersion;
+
+    /** TBC */
+    @Singular
+    @Attribute
+    SortedSet<String> assetDbtTags;
+
+    /** TBC */
+    @Attribute
+    String assetDbtSemanticLayerProxyUrl;
+
     /** Resources that are linked to this asset. */
     @Singular
     @Attribute

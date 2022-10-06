@@ -178,4 +178,10 @@ public class AttributeDefOptions extends AtlanObject {
 
     /** User who deleted the attribute. */
     String archivedBy;
+
+    /** TBC */
+    String isSoftReference;
+
+    /** TBC */
+    String isAppendOnPartialUpdate;
 }

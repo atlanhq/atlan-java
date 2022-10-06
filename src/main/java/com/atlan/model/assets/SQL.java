@@ -14,7 +14,7 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
-public abstract class SQL extends Asset {
+public abstract class SQL extends Catalog {
 
     public static final String TYPE_NAME = "SQL";
 

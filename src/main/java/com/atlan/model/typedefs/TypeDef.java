@@ -21,6 +21,7 @@ import lombok.experimental.SuperBuilder;
 @JsonSubTypes({
     @JsonSubTypes.Type(value = ClassificationDef.class, name = "CLASSIFICATION"),
     @JsonSubTypes.Type(value = CustomMetadataDef.class, name = "BUSINESS_METADATA"),
+    @JsonSubTypes.Type(value = EntityDef.class, name = "ENTITY"),
 })
 public abstract class TypeDef extends AtlanObject {
     private static final long serialVersionUID = 2L;
@@ -51,6 +52,9 @@ public abstract class TypeDef extends AtlanObject {
 
     /** Explanation of the type definition. */
     String description;
+
+    /** TBC */
+    String serviceType;
 
     /** TBC */
     String typeVersion;

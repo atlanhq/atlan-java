@@ -5,6 +5,7 @@ package com.atlan.model.typedefs;
 import com.atlan.model.core.AtlanObject;
 import com.atlan.model.enums.AtlanCustomAttributeCardinality;
 import com.atlan.model.enums.AtlanCustomAttributePrimitiveType;
+import java.util.List;
 import java.util.Map;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -83,6 +84,9 @@ public class AttributeDef extends AtlanObject {
      */
     String typeName;
 
+    /** Specifies an (optional) default value for the attribute. */
+    String defaultValue;
+
     /** Indicates whether the attribute is mandatory (false) or optional (true). */
     @Builder.Default
     Boolean isOptional = true;
@@ -128,8 +132,14 @@ public class AttributeDef extends AtlanObject {
     Boolean isNew = true;
 
     /** TBC */
+    final List<Constraint> constraints;
+
+    /** TBC */
     final Map<String, String> indexTypeESConfig;
 
     /** TBC */
     final Map<String, Map<String, String>> indexTypeESFields;
+
+    /** TBC */
+    final Map<String, List<String>> autoUpdateAttributes;
 }

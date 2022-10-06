@@ -29,6 +29,6 @@ public class CustomMetadataOptions extends AtlanObject {
     /** Indicates whether the custom metadata can be managed in the UI (false) or not (true). */
     String isLocked;
 
-    /** The id of the image used for the logo. */
+    /** Unique identifier (GUID) of the image used for the logo. */
     String imageId;
 }

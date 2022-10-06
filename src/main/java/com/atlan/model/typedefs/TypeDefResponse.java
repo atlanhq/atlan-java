@@ -26,7 +26,7 @@ public class TypeDefResponse extends ApiResource {
     List<ClassificationDef> classificationDefs;
 
     /** List of entity type definitions. */
-    List<TypeDef> entityDefs;
+    List<EntityDef> entityDefs;
 
     /** List of relationship type definitions. */
     List<TypeDef> relationshipDefs;
