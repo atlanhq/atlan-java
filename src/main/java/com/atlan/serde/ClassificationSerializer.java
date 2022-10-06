@@ -21,7 +21,7 @@ import java.io.IOException;
 public class ClassificationSerializer extends StdSerializer<Classification> {
     private static final long serialVersionUID = 2L;
 
-    private final JsonSerializer<Classification> defaultSerializer;
+    private transient final JsonSerializer<Classification> defaultSerializer;
 
     public ClassificationSerializer() {
         this(null);
