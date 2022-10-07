@@ -3,10 +3,10 @@
 package com.atlan.model.typedefs;
 
 import com.atlan.model.assets.*;
+import com.atlan.model.assets.ColumnProcess;
+import com.atlan.model.assets.LineageProcess;
 import com.atlan.model.core.AtlanObject;
 import com.atlan.model.enums.AtlanCustomAttributePrimitiveType;
-import com.atlan.model.lineage.ColumnProcess;
-import com.atlan.model.lineage.LineageProcess;
 import com.atlan.serde.SetToStringSerializer;
 import com.atlan.serde.StringToSetDeserializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;

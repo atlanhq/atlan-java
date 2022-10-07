@@ -10,8 +10,6 @@ import com.atlan.model.assets.*;
 import com.atlan.model.core.Classification;
 import com.atlan.model.core.CustomMetadataAttributes;
 import com.atlan.model.core.Entity;
-import com.atlan.model.lineage.ColumnProcess;
-import com.atlan.model.lineage.LineageProcess;
 import com.atlan.util.JacksonUtils;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.core.JsonParser;

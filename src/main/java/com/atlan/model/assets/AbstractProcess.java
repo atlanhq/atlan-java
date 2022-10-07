@@ -1,10 +1,7 @@
 /* SPDX-License-Identifier: Apache-2.0 */
 /* Copyright 2022 Atlan Pte. Ltd. */
-package com.atlan.model.lineage;
+package com.atlan.model.assets;
 
-import com.atlan.model.assets.Asset;
-import com.atlan.model.assets.Attribute;
-import com.atlan.model.assets.Catalog;
 import com.atlan.model.enums.AtlanConnectorType;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;

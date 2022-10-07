@@ -2,7 +2,6 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
-import com.atlan.model.lineage.AbstractProcess;
 import java.util.List;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
