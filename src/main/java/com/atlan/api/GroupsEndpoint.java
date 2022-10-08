@@ -9,11 +9,10 @@ import com.atlan.model.admin.CreateGroupResponse;
 import com.atlan.model.admin.GroupResponse;
 import com.atlan.model.core.AtlanObject;
 import com.atlan.net.ApiResource;
+import java.util.List;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
-
-import java.util.List;
 
 /**
  * API endpoints for interacting with Atlan's groups.
@@ -36,7 +35,7 @@ public class GroupsEndpoint {
      * @throws AtlanException on any API communication issue
      */
     public static GroupResponse getGroups(String filter, String sort, boolean count, int offset, int limit)
-        throws AtlanException {
+            throws AtlanException {
         if (filter == null) {
             filter = "";
         }
@@ -44,14 +43,14 @@ public class GroupsEndpoint {
             sort = "";
         }
         String url = String.format(
-            "%s%s?filter=%s&sort=%s&count=%s&offset=%s&limit=%s",
-            Atlan.getBaseUrl(),
-            endpoint,
-            ApiResource.urlEncode(filter),
-            ApiResource.urlEncode(sort),
-            count,
-            offset,
-            limit);
+                "%s%s?filter=%s&sort=%s&count=%s&offset=%s&limit=%s",
+                Atlan.getBaseUrl(),
+                endpoint,
+                ApiResource.urlEncode(filter),
+                ApiResource.urlEncode(sort),
+                count,
+                offset,
+                limit);
         return ApiResource.request(ApiResource.RequestMethod.GET, url, "", GroupResponse.class, null);
     }
 
@@ -106,7 +105,8 @@ public class GroupsEndpoint {
      */
     public static CreateGroupResponse createGroup(AtlanGroup group, List<String> userIds) throws AtlanException {
         String url = String.format("%s%s", Atlan.getBaseUrl(), endpoint);
-        CreateGroupRequest.CreateGroupRequestBuilder<?, ?> cgr = CreateGroupRequest.builder().group(group);
+        CreateGroupRequest.CreateGroupRequestBuilder<?, ?> cgr =
+                CreateGroupRequest.builder().group(group);
         if (userIds != null && !userIds.isEmpty()) {
             cgr = cgr.users(userIds);
         }

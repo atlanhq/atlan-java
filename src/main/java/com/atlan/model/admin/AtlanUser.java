@@ -7,13 +7,12 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.core.AtlanObject;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
-import lombok.experimental.SuperBuilder;
-import lombok.extern.jackson.Jacksonized;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.SortedSet;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
+import lombok.extern.jackson.Jacksonized;
 
 @Getter
 @Setter
@@ -121,7 +120,8 @@ public class AtlanUser extends AtlanObject {
      */
     public UpdateUserResponse update() throws AtlanException {
         if (this.id == null || this.id.length() == 0) {
-            throw new InvalidRequestException("An id must be provided to update the user.", "id", "ATLAN_JAVA_CLIENT-400-402", 400, null);
+            throw new InvalidRequestException(
+                    "An id must be provided to update the user.", "id", "ATLAN_JAVA_CLIENT-400-402", 400, null);
         }
         return UsersEndpoint.updateUser(this.id, this);
     }
@@ -144,7 +144,12 @@ public class AtlanUser extends AtlanObject {
      */
     public void addToGroups(List<String> groupIds) throws AtlanException {
         if (this.id == null || this.id.length() == 0) {
-            throw new InvalidRequestException("An id must be provided to add the user into groups.", "id", "ATLAN_JAVA_CLIENT-400-403", 400, null);
+            throw new InvalidRequestException(
+                    "An id must be provided to add the user into groups.",
+                    "id",
+                    "ATLAN_JAVA_CLIENT-400-403",
+                    400,
+                    null);
         }
         UsersEndpoint.addToGroups(this.id, groupIds);
     }

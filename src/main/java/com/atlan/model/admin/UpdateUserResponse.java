@@ -3,8 +3,6 @@
 package com.atlan.model.admin;
 
 import com.atlan.net.ApiResource;
-import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

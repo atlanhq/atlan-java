@@ -11,10 +11,9 @@ import com.atlan.exception.AtlanException;
 import com.atlan.model.admin.AtlanGroup;
 import com.atlan.model.admin.AtlanUser;
 import com.atlan.model.admin.CreateGroupResponse;
-import org.testng.annotations.Test;
-
 import java.util.List;
 import java.util.Map;
+import org.testng.annotations.Test;
 
 @Test(groups = {"admin"})
 public class AdminTest extends AtlanLiveTest {
@@ -52,7 +51,9 @@ public class AdminTest extends AtlanLiveTest {
         }
     }
 
-    @Test(groups = {"read.groups.1"}, dependsOnGroups = {"create.groups"})
+    @Test(
+            groups = {"read.groups.1"},
+            dependsOnGroups = {"create.groups"})
     void retrieveGroups1() {
         try {
             List<AtlanGroup> groups = AtlanGroup.retrieveAll();
@@ -73,13 +74,15 @@ public class AdminTest extends AtlanLiveTest {
         }
     }
 
-    @Test(groups = {"update.groups"}, dependsOnGroups = {"create.groups"})
+    @Test(
+            groups = {"update.groups"},
+            dependsOnGroups = {"create.groups"})
     void updateGroups() {
         try {
             AtlanGroup group = AtlanGroup.updater(groupGuid, groupPath)
                     .attributes(AtlanGroup.GroupAttributes.builder()
-                        .description(List.of("Now with a description!"))
-                        .build())
+                            .description(List.of("Now with a description!"))
+                            .build())
                     .build();
             group.update();
         } catch (AtlanException e) {
@@ -102,7 +105,9 @@ public class AdminTest extends AtlanLiveTest {
         }
     }
 
-    @Test(groups = {"read.users.1"}, dependsOnGroups = {"create.users"})
+    @Test(
+            groups = {"read.users.1"},
+            dependsOnGroups = {"create.users"})
     void retrieveUsers1() {
         try {
             List<AtlanUser> users = AtlanUser.retrieveAll();
@@ -135,7 +140,9 @@ public class AdminTest extends AtlanLiveTest {
         }
     }
 
-    @Test(groups = {"create.groups.2"}, dependsOnGroups = {"read.users.1"})
+    @Test(
+            groups = {"create.groups.2"},
+            dependsOnGroups = {"read.users.1"})
     void createGroups2() {
         try {
             AtlanGroup group = AtlanGroup.creator("JC Group2").build();
@@ -154,7 +161,9 @@ public class AdminTest extends AtlanLiveTest {
         }
     }
 
-    @Test(groups = {"update.users"}, dependsOnGroups = {"create.users", "create.groups"})
+    @Test(
+            groups = {"update.users"},
+            dependsOnGroups = {"create.users", "create.groups"})
     void updateUsers() {
         try {
             AtlanUser user = AtlanUser.updater(userGuid).build();
@@ -165,7 +174,9 @@ public class AdminTest extends AtlanLiveTest {
         }
     }
 
-    @Test(groups = {"read.users.2"}, dependsOnGroups = {"update.users"})
+    @Test(
+            groups = {"read.users.2"},
+            dependsOnGroups = {"update.users"})
     void retrieveUsers2() {
         try {
             List<AtlanUser> users = AtlanUser.retrieveByEmail("guest@example.com");
@@ -181,7 +192,9 @@ public class AdminTest extends AtlanLiveTest {
         }
     }
 
-    @Test(groups = {"read.groups.2"}, dependsOnGroups = {"update.groups", "update.users"})
+    @Test(
+            groups = {"read.groups.2"},
+            dependsOnGroups = {"update.groups", "update.users"})
     void retrieveGroups2() {
         try {
             List<AtlanGroup> groups = AtlanGroup.retrieveByName(GROUP_NAME);
@@ -198,10 +211,11 @@ public class AdminTest extends AtlanLiveTest {
         }
     }
 
-    @Test(groups = {"purge.users"},
-// TODO        dependsOnGroups = {"create.*", "update.*", "read.*", "search.*", "link.*", "unlink.*"},
-        dependsOnGroups = {"create.*", "update.*", "read.*"},
-        alwaysRun = true)
+    @Test(
+            groups = {"purge.users"},
+            // TODO        dependsOnGroups = {"create.*", "update.*", "read.*", "search.*", "link.*", "unlink.*"},
+            dependsOnGroups = {"create.*", "update.*", "read.*"},
+            alwaysRun = true)
     void purgeUsers() {
         try {
             AtlanUser.delete(userGuid);
@@ -213,10 +227,11 @@ public class AdminTest extends AtlanLiveTest {
         }
     }
 
-    @Test(groups = {"purge.groups"},
-// TODO        dependsOnGroups = {"create.*", "update.*", "read.*", "search.*", "link.*", "unlink.*"},
-        dependsOnGroups = {"create.*", "update.*", "read.*"},
-        alwaysRun = true)
+    @Test(
+            groups = {"purge.groups"},
+            // TODO        dependsOnGroups = {"create.*", "update.*", "read.*", "search.*", "link.*", "unlink.*"},
+            dependsOnGroups = {"create.*", "update.*", "read.*"},
+            alwaysRun = true)
     void purgeGroups() {
         try {
             AtlanGroup.delete(groupGuid);

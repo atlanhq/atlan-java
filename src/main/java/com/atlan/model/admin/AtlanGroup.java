@@ -7,13 +7,12 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.core.AtlanObject;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
-import lombok.experimental.SuperBuilder;
-import lombok.extern.jackson.Jacksonized;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.SortedSet;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
+import lombok.extern.jackson.Jacksonized;
 
 @Getter
 @Setter
@@ -60,7 +59,9 @@ public class AtlanGroup extends AtlanObject {
      * @return the minimal request necessary to update the group, as a builder
      */
     public static AtlanGroupBuilder<?, ?> creator(String alias) {
-        return AtlanGroup.builder().name(generateName(alias)).attributes(GroupAttributes.builder().alias(List.of(alias)).build());
+        return AtlanGroup.builder()
+                .name(generateName(alias))
+                .attributes(GroupAttributes.builder().alias(List.of(alias)).build());
     }
 
     /**
@@ -101,7 +102,8 @@ public class AtlanGroup extends AtlanObject {
      */
     public void update() throws AtlanException {
         if (this.id == null || this.id.length() == 0) {
-            throw new InvalidRequestException("An id must be provided to update the group.", "id", "ATLAN_JAVA_CLIENT-400-401", 400, null);
+            throw new InvalidRequestException(
+                    "An id must be provided to update the group.", "id", "ATLAN_JAVA_CLIENT-400-401", 400, null);
         }
         GroupsEndpoint.updateGroup(this.id, this);
     }

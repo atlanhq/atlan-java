@@ -6,31 +6,30 @@ import static org.testng.Assert.*;
 
 import com.atlan.serde.Serde;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import org.testng.annotations.Test;
-
 import java.util.List;
+import org.testng.annotations.Test;
 
 public class AtlanGroupTest {
 
     private static final AtlanGroup full = AtlanGroup.builder()
-        .alias("alias")
-        .attributes(AtlanGroup.GroupAttributes.builder()
-            .alias(List.of("alias"))
-            .createdAt(List.of("123456789"))
-            .createdBy(List.of("createdBy"))
-            .updatedAt(List.of("123456789"))
-            .updatedBy(List.of("createdBy"))
-            .description(List.of("description"))
-            .isDefault(List.of("false"))
-            .build())
-        // .decentralizedRoles()
-        .id("id")
-        .name("name")
-        .path("path")
-        // .persona()
-        // .purpose()
-        .userCount(123L)
-        .build();
+            .alias("alias")
+            .attributes(AtlanGroup.GroupAttributes.builder()
+                    .alias(List.of("alias"))
+                    .createdAt(List.of("123456789"))
+                    .createdBy(List.of("createdBy"))
+                    .updatedAt(List.of("123456789"))
+                    .updatedBy(List.of("createdBy"))
+                    .description(List.of("description"))
+                    .isDefault(List.of("false"))
+                    .build())
+            // .decentralizedRoles()
+            .id("id")
+            .name("name")
+            .path("path")
+            // .persona()
+            // .purpose()
+            .userCount(123L)
+            .build();
 
     private static AtlanGroup frodo;
     private static String serialized;
@@ -43,8 +42,8 @@ public class AtlanGroupTest {
     }
 
     @Test(
-        groups = {"deserialize"},
-        dependsOnGroups = {"serialize"})
+            groups = {"deserialize"},
+            dependsOnGroups = {"serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, AtlanGroup.class);
@@ -52,8 +51,8 @@ public class AtlanGroupTest {
     }
 
     @Test(
-        groups = {"equivalency"},
-        dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"equivalency"},
+            dependsOnGroups = {"serialize", "deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -62,8 +61,8 @@ public class AtlanGroupTest {
     }
 
     @Test(
-        groups = {"equivalency"},
-        dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"equivalency"},
+            dependsOnGroups = {"serialize", "deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

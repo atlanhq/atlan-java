@@ -10,12 +10,11 @@ import com.atlan.model.admin.UpdateUserResponse;
 import com.atlan.model.admin.UserResponse;
 import com.atlan.model.core.AtlanObject;
 import com.atlan.net.ApiResource;
+import java.util.List;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Singular;
 import lombok.experimental.SuperBuilder;
-
-import java.util.List;
 
 /**
  * API endpoints for interacting with Atlan's users.
@@ -38,7 +37,7 @@ public class UsersEndpoint {
      * @throws AtlanException on any API communication issue
      */
     public static UserResponse getUsers(String filter, String sort, boolean count, int offset, int limit)
-        throws AtlanException {
+            throws AtlanException {
         if (filter == null) {
             filter = "";
         }
@@ -46,14 +45,14 @@ public class UsersEndpoint {
             sort = "";
         }
         String url = String.format(
-            "%s%s?filter=%s&sort=%s&count=%s&offset=%s&limit=%s",
-            Atlan.getBaseUrl(),
-            endpoint,
-            ApiResource.urlEncode(filter),
-            ApiResource.urlEncode(sort),
-            count,
-            offset,
-            limit);
+                "%s%s?filter=%s&sort=%s&count=%s&offset=%s&limit=%s",
+                Atlan.getBaseUrl(),
+                endpoint,
+                ApiResource.urlEncode(filter),
+                ApiResource.urlEncode(sort),
+                count,
+                offset,
+                limit);
         return ApiResource.request(ApiResource.RequestMethod.GET, url, "", UserResponse.class, null);
     }
 
@@ -108,7 +107,7 @@ public class UsersEndpoint {
                     .email(user.getEmail())
                     .roleName(roleName)
                     .roleId(RoleCache.getIdForName(roleName))
-                .build());
+                    .build());
         }
         ApiResource.request(ApiResource.RequestMethod.POST, url, cur.build(), null, null);
     }

@@ -4,9 +4,8 @@ package com.atlan.model.admin;
 
 import com.atlan.model.core.AtlanObject;
 import com.atlan.net.ApiResource;
-import java.util.Map;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.Map;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
