@@ -134,7 +134,17 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li><a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets">com.atlan.model.assets.Asset.AssetBuilder</a>&lt;C,&#8203;B&gt;</li>
 <li>
 <ul class="inheritance">
+<li><a href="Catalog.CatalogBuilder.html" title="class in com.atlan.model.assets">com.atlan.model.assets.Catalog.CatalogBuilder</a>&lt;C,&#8203;B&gt;</li>
+<li>
+<ul class="inheritance">
+<li><a href="BI.BIBuilder.html" title="class in com.atlan.model.assets">com.atlan.model.assets.BI.BIBuilder</a>&lt;C,&#8203;B&gt;</li>
+<li>
+<ul class="inheritance">
 <li>com.atlan.model.assets.Preset.PresetBuilder&lt;C,&#8203;B&gt;</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -159,7 +169,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dl>
 <hr>
 <pre>public abstract static class <span class="typeNameLabel">Preset.PresetBuilder&lt;C extends <a href="Preset.html" title="class in com.atlan.model.assets">Preset</a>,&#8203;B extends Preset.PresetBuilder&lt;C,&#8203;B&gt;&gt;</span>
-extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets">Asset.AssetBuilder</a>&lt;C,&#8203;B&gt;</pre>
+extends <a href="BI.BIBuilder.html" title="class in com.atlan.model.assets">BI.BIBuilder</a>&lt;C,&#8203;B&gt;</pre>
 </li>
 </ul>
 </div>
@@ -243,6 +253,13 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 </tr>
 </table>
 <ul class="blockList">
+<li class="blockList"><a id="methods.inherited.from.class.com.atlan.model.assets.Catalog.CatalogBuilder">
+<!--   -->
+</a>
+<h3>Methods inherited from class&nbsp;com.atlan.model.assets.<a href="Catalog.CatalogBuilder.html" title="class in com.atlan.model.assets">Catalog.CatalogBuilder</a></h3>
+<code><a href="Catalog.CatalogBuilder.html#clearInputToProcesses()">clearInputToProcesses</a>, <a href="Catalog.CatalogBuilder.html#clearOutputFromProcesses()">clearOutputFromProcesses</a>, <a href="Catalog.CatalogBuilder.html#inputToProcess(com.atlan.model.assets.AbstractProcess)">inputToProcess</a>, <a href="Catalog.CatalogBuilder.html#inputToProcesses(java.util.Collection)">inputToProcesses</a>, <a href="Catalog.CatalogBuilder.html#outputFromProcess(com.atlan.model.assets.AbstractProcess)">outputFromProcess</a>, <a href="Catalog.CatalogBuilder.html#outputFromProcesses(java.util.Collection)">outputFromProcesses</a></code></li>
+</ul>
+<ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.com.atlan.model.assets.Asset.AssetBuilder">
 <!--   -->
 </a>
@@ -254,7 +271,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;com.atlan.model.core.<a href="../core/Entity.EntityBuilder.html" title="class in com.atlan.model.core">Entity.EntityBuilder</a></h3>
-<code><a href="../core/Entity.EntityBuilder.html#classification(com.atlan.model.core.Classification)">classification</a>, <a href="../core/Entity.EntityBuilder.html#classificationNames(java.util.Set)">classificationNames</a>, <a href="../core/Entity.EntityBuilder.html#classifications(java.util.Collection)">classifications</a>, <a href="../core/Entity.EntityBuilder.html#clearClassifications()">clearClassifications</a>, <a href="../core/Entity.EntityBuilder.html#clearCustomMetadataSets()">clearCustomMetadataSets</a>, <a href="../core/Entity.EntityBuilder.html#createdBy(java.lang.String)">createdBy</a>, <a href="../core/Entity.EntityBuilder.html#createTime(java.lang.Long)">createTime</a>, <a href="../core/Entity.EntityBuilder.html#customMetadata(java.lang.String,com.atlan.model.core.CustomMetadataAttributes)">customMetadata</a>, <a href="../core/Entity.EntityBuilder.html#customMetadataSets(java.util.Map)">customMetadataSets</a>, <a href="../core/Entity.EntityBuilder.html#deleteHandler(java.lang.String)">deleteHandler</a>, <a href="../core/Entity.EntityBuilder.html#isIncomplete(java.lang.Boolean)">isIncomplete</a>, <a href="../core/Entity.EntityBuilder.html#meaningNames(java.util.Set)">meaningNames</a>, <a href="../core/Entity.EntityBuilder.html#nullFields(java.util.Set)">nullFields</a>, <a href="../core/Entity.EntityBuilder.html#status(com.atlan.model.enums.AtlanStatus)">status</a>, <a href="../core/Entity.EntityBuilder.html#updatedBy(java.lang.String)">updatedBy</a>, <a href="../core/Entity.EntityBuilder.html#updateTime(java.lang.Long)">updateTime</a></code></li>
+<code><a href="../core/Entity.EntityBuilder.html#classification(com.atlan.model.core.Classification)">classification</a>, <a href="../core/Entity.EntityBuilder.html#classificationNames(java.util.Set)">classificationNames</a>, <a href="../core/Entity.EntityBuilder.html#classifications(java.util.Collection)">classifications</a>, <a href="../core/Entity.EntityBuilder.html#clearClassifications()">clearClassifications</a>, <a href="../core/Entity.EntityBuilder.html#clearCustomMetadataSets()">clearCustomMetadataSets</a>, <a href="../core/Entity.EntityBuilder.html#createdBy(java.lang.String)">createdBy</a>, <a href="../core/Entity.EntityBuilder.html#createTime(java.lang.Long)">createTime</a>, <a href="../core/Entity.EntityBuilder.html#customMetadata(java.lang.String,com.atlan.model.core.CustomMetadataAttributes)">customMetadata</a>, <a href="../core/Entity.EntityBuilder.html#customMetadataSets(java.util.Map)">customMetadataSets</a>, <a href="../core/Entity.EntityBuilder.html#deleteHandler(java.lang.String)">deleteHandler</a>, <a href="../core/Entity.EntityBuilder.html#isIncomplete(java.lang.Boolean)">isIncomplete</a>, <a href="../core/Entity.EntityBuilder.html#meaningNames(java.util.Set)">meaningNames</a>, <a href="../core/Entity.EntityBuilder.html#nullFields(java.util.Set)">nullFields</a>, <a href="../core/Entity.EntityBuilder.html#pendingTasks(java.util.Set)">pendingTasks</a>, <a href="../core/Entity.EntityBuilder.html#status(com.atlan.model.enums.AtlanStatus)">status</a>, <a href="../core/Entity.EntityBuilder.html#updatedBy(java.lang.String)">updatedBy</a>, <a href="../core/Entity.EntityBuilder.html#updateTime(java.lang.Long)">updateTime</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.com.atlan.model.relations.Reference.ReferenceBuilder">
@@ -316,7 +333,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <pre class="methodSignature">protected&nbsp;<a href="Preset.PresetBuilder.html" title="type parameter in Preset.PresetBuilder">B</a>&nbsp;$fillValuesFrom&#8203;(<a href="Preset.PresetBuilder.html" title="type parameter in Preset.PresetBuilder">C</a>&nbsp;instance)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="Asset.AssetBuilder.html#$fillValuesFrom(C)">$fillValuesFrom</a></code>&nbsp;in class&nbsp;<code><a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets">Asset.AssetBuilder</a>&lt;<a href="Preset.PresetBuilder.html" title="type parameter in Preset.PresetBuilder">C</a> extends <a href="Preset.html" title="class in com.atlan.model.assets">Preset</a>,&#8203;<a href="Preset.PresetBuilder.html" title="type parameter in Preset.PresetBuilder">B</a> extends <a href="Preset.PresetBuilder.html" title="class in com.atlan.model.assets">Preset.PresetBuilder</a>&lt;<a href="Preset.PresetBuilder.html" title="type parameter in Preset.PresetBuilder">C</a>,&#8203;<a href="Preset.PresetBuilder.html" title="type parameter in Preset.PresetBuilder">B</a>&gt;&gt;</code></dd>
+<dd><code><a href="BI.BIBuilder.html#$fillValuesFrom(C)">$fillValuesFrom</a></code>&nbsp;in class&nbsp;<code><a href="BI.BIBuilder.html" title="class in com.atlan.model.assets">BI.BIBuilder</a>&lt;<a href="Preset.PresetBuilder.html" title="type parameter in Preset.PresetBuilder">C</a> extends <a href="Preset.html" title="class in com.atlan.model.assets">Preset</a>,&#8203;<a href="Preset.PresetBuilder.html" title="type parameter in Preset.PresetBuilder">B</a> extends <a href="Preset.PresetBuilder.html" title="class in com.atlan.model.assets">Preset.PresetBuilder</a>&lt;<a href="Preset.PresetBuilder.html" title="type parameter in Preset.PresetBuilder">C</a>,&#8203;<a href="Preset.PresetBuilder.html" title="type parameter in Preset.PresetBuilder">B</a>&gt;&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -329,7 +346,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <pre class="methodSignature">protected abstract&nbsp;<a href="Preset.PresetBuilder.html" title="type parameter in Preset.PresetBuilder">B</a>&nbsp;self()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="Asset.AssetBuilder.html#self()">self</a></code>&nbsp;in class&nbsp;<code><a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets">Asset.AssetBuilder</a>&lt;<a href="Preset.PresetBuilder.html" title="type parameter in Preset.PresetBuilder">C</a> extends <a href="Preset.html" title="class in com.atlan.model.assets">Preset</a>,&#8203;<a href="Preset.PresetBuilder.html" title="type parameter in Preset.PresetBuilder">B</a> extends <a href="Preset.PresetBuilder.html" title="class in com.atlan.model.assets">Preset.PresetBuilder</a>&lt;<a href="Preset.PresetBuilder.html" title="type parameter in Preset.PresetBuilder">C</a>,&#8203;<a href="Preset.PresetBuilder.html" title="type parameter in Preset.PresetBuilder">B</a>&gt;&gt;</code></dd>
+<dd><code><a href="BI.BIBuilder.html#self()">self</a></code>&nbsp;in class&nbsp;<code><a href="BI.BIBuilder.html" title="class in com.atlan.model.assets">BI.BIBuilder</a>&lt;<a href="Preset.PresetBuilder.html" title="type parameter in Preset.PresetBuilder">C</a> extends <a href="Preset.html" title="class in com.atlan.model.assets">Preset</a>,&#8203;<a href="Preset.PresetBuilder.html" title="type parameter in Preset.PresetBuilder">B</a> extends <a href="Preset.PresetBuilder.html" title="class in com.atlan.model.assets">Preset.PresetBuilder</a>&lt;<a href="Preset.PresetBuilder.html" title="type parameter in Preset.PresetBuilder">C</a>,&#8203;<a href="Preset.PresetBuilder.html" title="type parameter in Preset.PresetBuilder">B</a>&gt;&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -342,7 +359,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <pre class="methodSignature">public abstract&nbsp;<a href="Preset.PresetBuilder.html" title="type parameter in Preset.PresetBuilder">C</a>&nbsp;build()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="Asset.AssetBuilder.html#build()">build</a></code>&nbsp;in class&nbsp;<code><a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets">Asset.AssetBuilder</a>&lt;<a href="Preset.PresetBuilder.html" title="type parameter in Preset.PresetBuilder">C</a> extends <a href="Preset.html" title="class in com.atlan.model.assets">Preset</a>,&#8203;<a href="Preset.PresetBuilder.html" title="type parameter in Preset.PresetBuilder">B</a> extends <a href="Preset.PresetBuilder.html" title="class in com.atlan.model.assets">Preset.PresetBuilder</a>&lt;<a href="Preset.PresetBuilder.html" title="type parameter in Preset.PresetBuilder">C</a>,&#8203;<a href="Preset.PresetBuilder.html" title="type parameter in Preset.PresetBuilder">B</a>&gt;&gt;</code></dd>
+<dd><code><a href="BI.BIBuilder.html#build()">build</a></code>&nbsp;in class&nbsp;<code><a href="BI.BIBuilder.html" title="class in com.atlan.model.assets">BI.BIBuilder</a>&lt;<a href="Preset.PresetBuilder.html" title="type parameter in Preset.PresetBuilder">C</a> extends <a href="Preset.html" title="class in com.atlan.model.assets">Preset</a>,&#8203;<a href="Preset.PresetBuilder.html" title="type parameter in Preset.PresetBuilder">B</a> extends <a href="Preset.PresetBuilder.html" title="class in com.atlan.model.assets">Preset.PresetBuilder</a>&lt;<a href="Preset.PresetBuilder.html" title="type parameter in Preset.PresetBuilder">C</a>,&#8203;<a href="Preset.PresetBuilder.html" title="type parameter in Preset.PresetBuilder">B</a>&gt;&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -407,7 +424,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;toString()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="Asset.AssetBuilder.html#toString()">toString</a></code>&nbsp;in class&nbsp;<code><a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets">Asset.AssetBuilder</a>&lt;<a href="Preset.PresetBuilder.html" title="type parameter in Preset.PresetBuilder">C</a> extends <a href="Preset.html" title="class in com.atlan.model.assets">Preset</a>,&#8203;<a href="Preset.PresetBuilder.html" title="type parameter in Preset.PresetBuilder">B</a> extends <a href="Preset.PresetBuilder.html" title="class in com.atlan.model.assets">Preset.PresetBuilder</a>&lt;<a href="Preset.PresetBuilder.html" title="type parameter in Preset.PresetBuilder">C</a>,&#8203;<a href="Preset.PresetBuilder.html" title="type parameter in Preset.PresetBuilder">B</a>&gt;&gt;</code></dd>
+<dd><code><a href="BI.BIBuilder.html#toString()">toString</a></code>&nbsp;in class&nbsp;<code><a href="BI.BIBuilder.html" title="class in com.atlan.model.assets">BI.BIBuilder</a>&lt;<a href="Preset.PresetBuilder.html" title="type parameter in Preset.PresetBuilder">C</a> extends <a href="Preset.html" title="class in com.atlan.model.assets">Preset</a>,&#8203;<a href="Preset.PresetBuilder.html" title="type parameter in Preset.PresetBuilder">B</a> extends <a href="Preset.PresetBuilder.html" title="class in com.atlan.model.assets">Preset.PresetBuilder</a>&lt;<a href="Preset.PresetBuilder.html" title="type parameter in Preset.PresetBuilder">C</a>,&#8203;<a href="Preset.PresetBuilder.html" title="type parameter in Preset.PresetBuilder">B</a>&gt;&gt;</code></dd>
 </dl>
 </li>
 </ul>

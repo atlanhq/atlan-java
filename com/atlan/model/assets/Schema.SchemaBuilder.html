@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":6,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":6,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10};
+var data = {"i0":10,"i1":6,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":6,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -224,70 +224,85 @@ extends <a href="SQL.SQLBuilder.html" title="class in com.atlan.model.assets">SQ
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="Schema.SchemaBuilder.html" title="type parameter in Schema.SchemaBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearTables()">clearTables</a></span>()</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearProcedures()">clearProcedures</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="Schema.SchemaBuilder.html" title="type parameter in Schema.SchemaBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearViews()">clearViews</a></span>()</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearTables()">clearTables</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="Schema.SchemaBuilder.html" title="type parameter in Schema.SchemaBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#database(com.atlan.model.assets.Database)">database</a></span>&#8203;(<a href="Database.html" title="class in com.atlan.model.assets">Database</a>&nbsp;database)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearViews()">clearViews</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code><a href="Schema.SchemaBuilder.html" title="type parameter in Schema.SchemaBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#materializedView(com.atlan.model.assets.MaterializedView)">materializedView</a></span>&#8203;(<a href="MaterializedView.html" title="class in com.atlan.model.assets">MaterializedView</a>&nbsp;materializedView)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#database(com.atlan.model.assets.Database)">database</a></span>&#8203;(<a href="Database.html" title="class in com.atlan.model.assets">Database</a>&nbsp;database)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="Schema.SchemaBuilder.html" title="type parameter in Schema.SchemaBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#materializedViews(java.util.Collection)">materializedViews</a></span>&#8203;(java.util.Collection&lt;? extends <a href="MaterializedView.html" title="class in com.atlan.model.assets">MaterializedView</a>&gt;&nbsp;materializedViews)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#materializedView(com.atlan.model.assets.MaterializedView)">materializedView</a></span>&#8203;(<a href="MaterializedView.html" title="class in com.atlan.model.assets">MaterializedView</a>&nbsp;materializedView)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i8" class="altColor">
-<td class="colFirst"><code>protected abstract <a href="Schema.SchemaBuilder.html" title="type parameter in Schema.SchemaBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#self()">self</a></span>()</code></th>
+<td class="colFirst"><code><a href="Schema.SchemaBuilder.html" title="type parameter in Schema.SchemaBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#materializedViews(java.util.Collection)">materializedViews</a></span>&#8203;(java.util.Collection&lt;? extends <a href="MaterializedView.html" title="class in com.atlan.model.assets">MaterializedView</a>&gt;&nbsp;materializedViews)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code><a href="Schema.SchemaBuilder.html" title="type parameter in Schema.SchemaBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#table(com.atlan.model.assets.Table)">table</a></span>&#8203;(<a href="Table.html" title="class in com.atlan.model.assets">Table</a>&nbsp;table)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#procedure(com.atlan.model.assets.Procedure)">procedure</a></span>&#8203;(<a href="Procedure.html" title="class in com.atlan.model.assets">Procedure</a>&nbsp;procedure)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code><a href="Schema.SchemaBuilder.html" title="type parameter in Schema.SchemaBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#tableCount(java.lang.Integer)">tableCount</a></span>&#8203;(java.lang.Integer&nbsp;tableCount)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#procedures(java.util.Collection)">procedures</a></span>&#8203;(java.util.Collection&lt;? extends <a href="Procedure.html" title="class in com.atlan.model.assets">Procedure</a>&gt;&nbsp;procedures)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i11" class="rowColor">
-<td class="colFirst"><code><a href="Schema.SchemaBuilder.html" title="type parameter in Schema.SchemaBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#tables(java.util.Collection)">tables</a></span>&#8203;(java.util.Collection&lt;? extends <a href="Table.html" title="class in com.atlan.model.assets">Table</a>&gt;&nbsp;tables)</code></th>
+<td class="colFirst"><code>protected abstract <a href="Schema.SchemaBuilder.html" title="type parameter in Schema.SchemaBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#self()">self</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i12" class="altColor">
-<td class="colFirst"><code>java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
+<td class="colFirst"><code><a href="Schema.SchemaBuilder.html" title="type parameter in Schema.SchemaBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#table(com.atlan.model.assets.Table)">table</a></span>&#8203;(<a href="Table.html" title="class in com.atlan.model.assets">Table</a>&nbsp;table)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i13" class="rowColor">
 <td class="colFirst"><code><a href="Schema.SchemaBuilder.html" title="type parameter in Schema.SchemaBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#typeName(java.lang.String)">typeName</a></span>&#8203;(java.lang.String&nbsp;typeName)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#tableCount(java.lang.Integer)">tableCount</a></span>&#8203;(java.lang.Integer&nbsp;tableCount)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i14" class="altColor">
 <td class="colFirst"><code><a href="Schema.SchemaBuilder.html" title="type parameter in Schema.SchemaBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#view(com.atlan.model.assets.View)">view</a></span>&#8203;(<a href="View.html" title="class in com.atlan.model.assets">View</a>&nbsp;view)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#tables(java.util.Collection)">tables</a></span>&#8203;(java.util.Collection&lt;? extends <a href="Table.html" title="class in com.atlan.model.assets">Table</a>&gt;&nbsp;tables)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i15" class="rowColor">
+<td class="colFirst"><code>java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i16" class="altColor">
+<td class="colFirst"><code><a href="Schema.SchemaBuilder.html" title="type parameter in Schema.SchemaBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#typeName(java.lang.String)">typeName</a></span>&#8203;(java.lang.String&nbsp;typeName)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i17" class="rowColor">
+<td class="colFirst"><code><a href="Schema.SchemaBuilder.html" title="type parameter in Schema.SchemaBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#view(com.atlan.model.assets.View)">view</a></span>&#8203;(<a href="View.html" title="class in com.atlan.model.assets">View</a>&nbsp;view)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i18" class="altColor">
 <td class="colFirst"><code><a href="Schema.SchemaBuilder.html" title="type parameter in Schema.SchemaBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#viewCount(java.lang.Integer)">viewCount</a></span>&#8203;(java.lang.Integer&nbsp;viewCount)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i19" class="rowColor">
 <td class="colFirst"><code><a href="Schema.SchemaBuilder.html" title="type parameter in Schema.SchemaBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#views(java.util.Collection)">views</a></span>&#8203;(java.util.Collection&lt;? extends <a href="View.html" title="class in com.atlan.model.assets">View</a>&gt;&nbsp;views)</code></th>
 <td class="colLast">&nbsp;</td>
@@ -298,14 +313,14 @@ extends <a href="SQL.SQLBuilder.html" title="class in com.atlan.model.assets">SQ
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;com.atlan.model.assets.<a href="SQL.SQLBuilder.html" title="class in com.atlan.model.assets">SQL.SQLBuilder</a></h3>
-<code><a href="SQL.SQLBuilder.html#databaseName(java.lang.String)">databaseName</a>, <a href="SQL.SQLBuilder.html#databaseQualifiedName(java.lang.String)">databaseQualifiedName</a>, <a href="SQL.SQLBuilder.html#queryCount(java.lang.Long)">queryCount</a>, <a href="SQL.SQLBuilder.html#queryCountUpdatedAt(java.lang.Long)">queryCountUpdatedAt</a>, <a href="SQL.SQLBuilder.html#queryUserCount(java.lang.Long)">queryUserCount</a>, <a href="SQL.SQLBuilder.html#queryUserMap(java.util.Map)">queryUserMap</a>, <a href="SQL.SQLBuilder.html#schemaName(java.lang.String)">schemaName</a>, <a href="SQL.SQLBuilder.html#schemaQualifiedName(java.lang.String)">schemaQualifiedName</a>, <a href="SQL.SQLBuilder.html#tableName(java.lang.String)">tableName</a>, <a href="SQL.SQLBuilder.html#tableQualifiedName(java.lang.String)">tableQualifiedName</a>, <a href="SQL.SQLBuilder.html#viewName(java.lang.String)">viewName</a>, <a href="SQL.SQLBuilder.html#viewQualifiedName(java.lang.String)">viewQualifiedName</a></code></li>
+<code><a href="SQL.SQLBuilder.html#clearDbtModels()">clearDbtModels</a>, <a href="SQL.SQLBuilder.html#clearDbtSources()">clearDbtSources</a>, <a href="SQL.SQLBuilder.html#clearQueryUserMap()">clearQueryUserMap</a>, <a href="SQL.SQLBuilder.html#databaseName(java.lang.String)">databaseName</a>, <a href="SQL.SQLBuilder.html#databaseQualifiedName(java.lang.String)">databaseQualifiedName</a>, <a href="SQL.SQLBuilder.html#dbtModel(com.atlan.model.assets.DbtModel)">dbtModel</a>, <a href="SQL.SQLBuilder.html#dbtModels(java.util.Collection)">dbtModels</a>, <a href="SQL.SQLBuilder.html#dbtSource(com.atlan.model.assets.DbtSource)">dbtSource</a>, <a href="SQL.SQLBuilder.html#dbtSources(java.util.Collection)">dbtSources</a>, <a href="SQL.SQLBuilder.html#putQueryUserMap(java.lang.String,java.lang.Long)">putQueryUserMap</a>, <a href="SQL.SQLBuilder.html#queryCount(java.lang.Long)">queryCount</a>, <a href="SQL.SQLBuilder.html#queryCountUpdatedAt(java.lang.Long)">queryCountUpdatedAt</a>, <a href="SQL.SQLBuilder.html#queryUserCount(java.lang.Long)">queryUserCount</a>, <a href="SQL.SQLBuilder.html#queryUserMap(java.util.Map)">queryUserMap</a>, <a href="SQL.SQLBuilder.html#schemaName(java.lang.String)">schemaName</a>, <a href="SQL.SQLBuilder.html#schemaQualifiedName(java.lang.String)">schemaQualifiedName</a>, <a href="SQL.SQLBuilder.html#tableName(java.lang.String)">tableName</a>, <a href="SQL.SQLBuilder.html#tableQualifiedName(java.lang.String)">tableQualifiedName</a>, <a href="SQL.SQLBuilder.html#viewName(java.lang.String)">viewName</a>, <a href="SQL.SQLBuilder.html#viewQualifiedName(java.lang.String)">viewQualifiedName</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.com.atlan.model.assets.Catalog.CatalogBuilder">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;com.atlan.model.assets.<a href="Catalog.CatalogBuilder.html" title="class in com.atlan.model.assets">Catalog.CatalogBuilder</a></h3>
-<code><a href="Catalog.CatalogBuilder.html#clearInputToProcesses()">clearInputToProcesses</a>, <a href="Catalog.CatalogBuilder.html#clearOutputFromProcesses()">clearOutputFromProcesses</a>, <a href="Catalog.CatalogBuilder.html#inputToProcess(com.atlan.model.lineage.AbstractProcess)">inputToProcess</a>, <a href="Catalog.CatalogBuilder.html#inputToProcesses(java.util.Collection)">inputToProcesses</a>, <a href="Catalog.CatalogBuilder.html#outputFromProcess(com.atlan.model.lineage.AbstractProcess)">outputFromProcess</a>, <a href="Catalog.CatalogBuilder.html#outputFromProcesses(java.util.Collection)">outputFromProcesses</a></code></li>
+<code><a href="Catalog.CatalogBuilder.html#clearInputToProcesses()">clearInputToProcesses</a>, <a href="Catalog.CatalogBuilder.html#clearOutputFromProcesses()">clearOutputFromProcesses</a>, <a href="Catalog.CatalogBuilder.html#inputToProcess(com.atlan.model.assets.AbstractProcess)">inputToProcess</a>, <a href="Catalog.CatalogBuilder.html#inputToProcesses(java.util.Collection)">inputToProcesses</a>, <a href="Catalog.CatalogBuilder.html#outputFromProcess(com.atlan.model.assets.AbstractProcess)">outputFromProcess</a>, <a href="Catalog.CatalogBuilder.html#outputFromProcesses(java.util.Collection)">outputFromProcesses</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.com.atlan.model.assets.Asset.AssetBuilder">
@@ -319,7 +334,7 @@ extends <a href="SQL.SQLBuilder.html" title="class in com.atlan.model.assets">SQ
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;com.atlan.model.core.<a href="../core/Entity.EntityBuilder.html" title="class in com.atlan.model.core">Entity.EntityBuilder</a></h3>
-<code><a href="../core/Entity.EntityBuilder.html#classification(com.atlan.model.core.Classification)">classification</a>, <a href="../core/Entity.EntityBuilder.html#classificationNames(java.util.Set)">classificationNames</a>, <a href="../core/Entity.EntityBuilder.html#classifications(java.util.Collection)">classifications</a>, <a href="../core/Entity.EntityBuilder.html#clearClassifications()">clearClassifications</a>, <a href="../core/Entity.EntityBuilder.html#clearCustomMetadataSets()">clearCustomMetadataSets</a>, <a href="../core/Entity.EntityBuilder.html#createdBy(java.lang.String)">createdBy</a>, <a href="../core/Entity.EntityBuilder.html#createTime(java.lang.Long)">createTime</a>, <a href="../core/Entity.EntityBuilder.html#customMetadata(java.lang.String,com.atlan.model.core.CustomMetadataAttributes)">customMetadata</a>, <a href="../core/Entity.EntityBuilder.html#customMetadataSets(java.util.Map)">customMetadataSets</a>, <a href="../core/Entity.EntityBuilder.html#deleteHandler(java.lang.String)">deleteHandler</a>, <a href="../core/Entity.EntityBuilder.html#isIncomplete(java.lang.Boolean)">isIncomplete</a>, <a href="../core/Entity.EntityBuilder.html#meaningNames(java.util.Set)">meaningNames</a>, <a href="../core/Entity.EntityBuilder.html#nullFields(java.util.Set)">nullFields</a>, <a href="../core/Entity.EntityBuilder.html#status(com.atlan.model.enums.AtlanStatus)">status</a>, <a href="../core/Entity.EntityBuilder.html#updatedBy(java.lang.String)">updatedBy</a>, <a href="../core/Entity.EntityBuilder.html#updateTime(java.lang.Long)">updateTime</a></code></li>
+<code><a href="../core/Entity.EntityBuilder.html#classification(com.atlan.model.core.Classification)">classification</a>, <a href="../core/Entity.EntityBuilder.html#classificationNames(java.util.Set)">classificationNames</a>, <a href="../core/Entity.EntityBuilder.html#classifications(java.util.Collection)">classifications</a>, <a href="../core/Entity.EntityBuilder.html#clearClassifications()">clearClassifications</a>, <a href="../core/Entity.EntityBuilder.html#clearCustomMetadataSets()">clearCustomMetadataSets</a>, <a href="../core/Entity.EntityBuilder.html#createdBy(java.lang.String)">createdBy</a>, <a href="../core/Entity.EntityBuilder.html#createTime(java.lang.Long)">createTime</a>, <a href="../core/Entity.EntityBuilder.html#customMetadata(java.lang.String,com.atlan.model.core.CustomMetadataAttributes)">customMetadata</a>, <a href="../core/Entity.EntityBuilder.html#customMetadataSets(java.util.Map)">customMetadataSets</a>, <a href="../core/Entity.EntityBuilder.html#deleteHandler(java.lang.String)">deleteHandler</a>, <a href="../core/Entity.EntityBuilder.html#isIncomplete(java.lang.Boolean)">isIncomplete</a>, <a href="../core/Entity.EntityBuilder.html#meaningNames(java.util.Set)">meaningNames</a>, <a href="../core/Entity.EntityBuilder.html#nullFields(java.util.Set)">nullFields</a>, <a href="../core/Entity.EntityBuilder.html#pendingTasks(java.util.Set)">pendingTasks</a>, <a href="../core/Entity.EntityBuilder.html#status(com.atlan.model.enums.AtlanStatus)">status</a>, <a href="../core/Entity.EntityBuilder.html#updatedBy(java.lang.String)">updatedBy</a>, <a href="../core/Entity.EntityBuilder.html#updateTime(java.lang.Long)">updateTime</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.com.atlan.model.relations.Reference.ReferenceBuilder">
@@ -452,17 +467,31 @@ extends <a href="SQL.SQLBuilder.html" title="class in com.atlan.model.assets">SQ
 </dl>
 </li>
 </ul>
-<a id="database(com.atlan.model.assets.Database)">
+<a id="materializedView(com.atlan.model.assets.MaterializedView)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>database</h4>
-<pre class="methodSignature">public&nbsp;<a href="Schema.SchemaBuilder.html" title="type parameter in Schema.SchemaBuilder">B</a>&nbsp;database&#8203;(<a href="Database.html" title="class in com.atlan.model.assets">Database</a>&nbsp;database)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
+<h4>materializedView</h4>
+<pre class="methodSignature">public&nbsp;<a href="Schema.SchemaBuilder.html" title="type parameter in Schema.SchemaBuilder">B</a>&nbsp;materializedView&#8203;(<a href="MaterializedView.html" title="class in com.atlan.model.assets">MaterializedView</a>&nbsp;materializedView)</pre>
+</li>
+</ul>
+<a id="materializedViews(java.util.Collection)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>materializedViews</h4>
+<pre class="methodSignature">public&nbsp;<a href="Schema.SchemaBuilder.html" title="type parameter in Schema.SchemaBuilder">B</a>&nbsp;materializedViews&#8203;(java.util.Collection&lt;? extends <a href="MaterializedView.html" title="class in com.atlan.model.assets">MaterializedView</a>&gt;&nbsp;materializedViews)</pre>
+</li>
+</ul>
+<a id="clearMaterializedViews()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>clearMaterializedViews</h4>
+<pre class="methodSignature">public&nbsp;<a href="Schema.SchemaBuilder.html" title="type parameter in Schema.SchemaBuilder">B</a>&nbsp;clearMaterializedViews()</pre>
 </li>
 </ul>
 <a id="table(com.atlan.model.assets.Table)">
@@ -492,6 +521,46 @@ extends <a href="SQL.SQLBuilder.html" title="class in com.atlan.model.assets">SQ
 <pre class="methodSignature">public&nbsp;<a href="Schema.SchemaBuilder.html" title="type parameter in Schema.SchemaBuilder">B</a>&nbsp;clearTables()</pre>
 </li>
 </ul>
+<a id="database(com.atlan.model.assets.Database)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>database</h4>
+<pre class="methodSignature">public&nbsp;<a href="Schema.SchemaBuilder.html" title="type parameter in Schema.SchemaBuilder">B</a>&nbsp;database&#8203;(<a href="Database.html" title="class in com.atlan.model.assets">Database</a>&nbsp;database)</pre>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="procedure(com.atlan.model.assets.Procedure)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>procedure</h4>
+<pre class="methodSignature">public&nbsp;<a href="Schema.SchemaBuilder.html" title="type parameter in Schema.SchemaBuilder">B</a>&nbsp;procedure&#8203;(<a href="Procedure.html" title="class in com.atlan.model.assets">Procedure</a>&nbsp;procedure)</pre>
+</li>
+</ul>
+<a id="procedures(java.util.Collection)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>procedures</h4>
+<pre class="methodSignature">public&nbsp;<a href="Schema.SchemaBuilder.html" title="type parameter in Schema.SchemaBuilder">B</a>&nbsp;procedures&#8203;(java.util.Collection&lt;? extends <a href="Procedure.html" title="class in com.atlan.model.assets">Procedure</a>&gt;&nbsp;procedures)</pre>
+</li>
+</ul>
+<a id="clearProcedures()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>clearProcedures</h4>
+<pre class="methodSignature">public&nbsp;<a href="Schema.SchemaBuilder.html" title="type parameter in Schema.SchemaBuilder">B</a>&nbsp;clearProcedures()</pre>
+</li>
+</ul>
 <a id="view(com.atlan.model.assets.View)">
 <!--   -->
 </a>
@@ -517,33 +586,6 @@ extends <a href="SQL.SQLBuilder.html" title="class in com.atlan.model.assets">SQ
 <li class="blockList">
 <h4>clearViews</h4>
 <pre class="methodSignature">public&nbsp;<a href="Schema.SchemaBuilder.html" title="type parameter in Schema.SchemaBuilder">B</a>&nbsp;clearViews()</pre>
-</li>
-</ul>
-<a id="materializedView(com.atlan.model.assets.MaterializedView)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>materializedView</h4>
-<pre class="methodSignature">public&nbsp;<a href="Schema.SchemaBuilder.html" title="type parameter in Schema.SchemaBuilder">B</a>&nbsp;materializedView&#8203;(<a href="MaterializedView.html" title="class in com.atlan.model.assets">MaterializedView</a>&nbsp;materializedView)</pre>
-</li>
-</ul>
-<a id="materializedViews(java.util.Collection)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>materializedViews</h4>
-<pre class="methodSignature">public&nbsp;<a href="Schema.SchemaBuilder.html" title="type parameter in Schema.SchemaBuilder">B</a>&nbsp;materializedViews&#8203;(java.util.Collection&lt;? extends <a href="MaterializedView.html" title="class in com.atlan.model.assets">MaterializedView</a>&gt;&nbsp;materializedViews)</pre>
-</li>
-</ul>
-<a id="clearMaterializedViews()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>clearMaterializedViews</h4>
-<pre class="methodSignature">public&nbsp;<a href="Schema.SchemaBuilder.html" title="type parameter in Schema.SchemaBuilder">B</a>&nbsp;clearMaterializedViews()</pre>
 </li>
 </ul>
 <a id="toString()">

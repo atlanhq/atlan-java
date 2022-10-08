@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":9,"i2":9,"i3":10,"i4":9,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":9,"i15":9,"i16":9,"i17":9,"i18":9,"i19":9,"i20":9,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":9,"i31":9,"i32":9};
+var data = {"i0":9,"i1":9,"i2":9,"i3":10,"i4":9,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":9,"i16":9,"i17":9,"i18":9,"i19":9,"i20":9,"i21":9,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":10,"i32":9,"i33":9,"i34":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -303,7 +303,7 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addClassifications(java.lang.String,java.util.List)">addClassifications</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                   java.util.List&lt;java.lang.String&gt;&nbsp;classificationNames)</code></th>
 <td class="colLast">
-<div class="block">Add classifications to a schema.</div>
+<div class="block">Add classifications to a Schema.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
@@ -311,7 +311,7 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#appendTerms(java.lang.String,java.util.List)">appendTerms</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
            java.util.List&lt;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;terms)</code></th>
 <td class="colLast">
-<div class="block">Link additional terms to the schema, without replacing existing terms linked to the schema.</div>
+<div class="block">Link additional terms to the Schema, without replacing existing terms linked to the Schema.</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
@@ -352,187 +352,201 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
 </td>
 </tr>
 <tr id="i8" class="altColor">
+<td class="colFirst"><code>java.util.SortedSet&lt;<a href="Procedure.html" title="class in com.atlan.model.assets">Procedure</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getProcedures()">getProcedures</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Procedures that are defined within this schema.</div>
+</td>
+</tr>
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>java.lang.Integer</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTableCount()">getTableCount</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Number of tables in this schema.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="Table.html" title="class in com.atlan.model.assets">Table</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTables()">getTables</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Tables that exist within this schema.</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTypeName()">getTypeName</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Fixed typeName for schemas.</div>
+<div class="block">Fixed typeName for Schemas.</div>
 </td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>java.lang.Integer</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getViewCount()">getViewCount</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Number of views in this schema.</div>
 </td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="View.html" title="class in com.atlan.model.assets">View</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getViews()">getViews</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Views that exist within this schema.</div>
 </td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hashCode()">hashCode</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code>static <a href="Schema.html" title="class in com.atlan.model.assets">Schema</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#refByGuid(java.lang.String)">refByGuid</a></span>&#8203;(java.lang.String&nbsp;guid)</code></th>
 <td class="colLast">
-<div class="block">Reference to a schema by GUID.</div>
-</td>
-</tr>
-<tr id="i15" class="rowColor">
-<td class="colFirst"><code>static <a href="Schema.html" title="class in com.atlan.model.assets">Schema</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#refByQualifiedName(java.lang.String)">refByQualifiedName</a></span>&#8203;(java.lang.String&nbsp;qualifiedName)</code></th>
-<td class="colLast">
-<div class="block">Reference to a schema by qualifiedName.</div>
+<div class="block">Reference to a Schema by GUID.</div>
 </td>
 </tr>
 <tr id="i16" class="altColor">
 <td class="colFirst"><code>static <a href="Schema.html" title="class in com.atlan.model.assets">Schema</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeAnnouncement(java.lang.String,java.lang.String)">removeAnnouncement</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
-                  java.lang.String&nbsp;name)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#refByQualifiedName(java.lang.String)">refByQualifiedName</a></span>&#8203;(java.lang.String&nbsp;qualifiedName)</code></th>
 <td class="colLast">
-<div class="block">Remove the announcement from a schema.</div>
+<div class="block">Reference to a Schema by qualifiedName.</div>
 </td>
 </tr>
 <tr id="i17" class="rowColor">
 <td class="colFirst"><code>static <a href="Schema.html" title="class in com.atlan.model.assets">Schema</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeCertificate(java.lang.String,java.lang.String)">removeCertificate</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
-                 java.lang.String&nbsp;name)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeAnnouncement(java.lang.String,java.lang.String)">removeAnnouncement</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
+                  java.lang.String&nbsp;name)</code></th>
 <td class="colLast">
-<div class="block">Remove the certificate from a schema.</div>
+<div class="block">Remove the announcement from a Schema.</div>
 </td>
 </tr>
 <tr id="i18" class="altColor">
+<td class="colFirst"><code>static <a href="Schema.html" title="class in com.atlan.model.assets">Schema</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeCertificate(java.lang.String,java.lang.String)">removeCertificate</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
+                 java.lang.String&nbsp;name)</code></th>
+<td class="colLast">
+<div class="block">Remove the certificate from a Schema.</div>
+</td>
+</tr>
+<tr id="i19" class="rowColor">
 <td class="colFirst"><code>static void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeClassification(java.lang.String,java.lang.String)">removeClassification</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                     java.lang.String&nbsp;classificationName)</code></th>
 <td class="colLast">
-<div class="block">Remove a classification from a schema.</div>
+<div class="block">Remove a classification from a Schema.</div>
 </td>
 </tr>
-<tr id="i19" class="rowColor">
+<tr id="i20" class="altColor">
 <td class="colFirst"><code>static <a href="Schema.html" title="class in com.atlan.model.assets">Schema</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeTerms(java.lang.String,java.util.List)">removeTerms</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
            java.util.List&lt;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;terms)</code></th>
 <td class="colLast">
-<div class="block">Remove terms from a schema, without replacing all existing terms linked to the schema.</div>
+<div class="block">Remove terms from a Schema, without replacing all existing terms linked to the Schema.</div>
 </td>
 </tr>
-<tr id="i20" class="altColor">
+<tr id="i21" class="rowColor">
 <td class="colFirst"><code>static <a href="Schema.html" title="class in com.atlan.model.assets">Schema</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#replaceTerms(java.lang.String,java.lang.String,java.util.List)">replaceTerms</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
             java.lang.String&nbsp;name,
             java.util.List&lt;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;terms)</code></th>
 <td class="colLast">
-<div class="block">Replace the terms linked to the schema.</div>
+<div class="block">Replace the terms linked to the Schema.</div>
 </td>
 </tr>
-<tr id="i21" class="rowColor">
+<tr id="i22" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setDatabase(com.atlan.model.assets.Database)">setDatabase</a></span>&#8203;(<a href="Database.html" title="class in com.atlan.model.assets">Database</a>&nbsp;database)</code></th>
 <td class="colLast">
 <div class="block">Database in which this schema exists.</div>
 </td>
 </tr>
-<tr id="i22" class="altColor">
+<tr id="i23" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setMaterializedViews(java.util.SortedSet)">setMaterializedViews</a></span>&#8203;(java.util.SortedSet&lt;<a href="MaterializedView.html" title="class in com.atlan.model.assets">MaterializedView</a>&gt;&nbsp;materializedViews)</code></th>
 <td class="colLast">
 <div class="block">Materialized views that exist within this schema.</div>
 </td>
 </tr>
-<tr id="i23" class="rowColor">
+<tr id="i24" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setProcedures(java.util.SortedSet)">setProcedures</a></span>&#8203;(java.util.SortedSet&lt;<a href="Procedure.html" title="class in com.atlan.model.assets">Procedure</a>&gt;&nbsp;procedures)</code></th>
+<td class="colLast">
+<div class="block">Procedures that are defined within this schema.</div>
+</td>
+</tr>
+<tr id="i25" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setTableCount(java.lang.Integer)">setTableCount</a></span>&#8203;(java.lang.Integer&nbsp;tableCount)</code></th>
 <td class="colLast">
 <div class="block">Number of tables in this schema.</div>
 </td>
 </tr>
-<tr id="i24" class="altColor">
+<tr id="i26" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setTables(java.util.SortedSet)">setTables</a></span>&#8203;(java.util.SortedSet&lt;<a href="Table.html" title="class in com.atlan.model.assets">Table</a>&gt;&nbsp;tables)</code></th>
 <td class="colLast">
 <div class="block">Tables that exist within this schema.</div>
 </td>
 </tr>
-<tr id="i25" class="rowColor">
+<tr id="i27" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setTypeName(java.lang.String)">setTypeName</a></span>&#8203;(java.lang.String&nbsp;typeName)</code></th>
 <td class="colLast">
-<div class="block">Fixed typeName for schemas.</div>
+<div class="block">Fixed typeName for Schemas.</div>
 </td>
 </tr>
-<tr id="i26" class="altColor">
+<tr id="i28" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setViewCount(java.lang.Integer)">setViewCount</a></span>&#8203;(java.lang.Integer&nbsp;viewCount)</code></th>
 <td class="colLast">
 <div class="block">Number of views in this schema.</div>
 </td>
 </tr>
-<tr id="i27" class="rowColor">
+<tr id="i29" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setViews(java.util.SortedSet)">setViews</a></span>&#8203;(java.util.SortedSet&lt;<a href="View.html" title="class in com.atlan.model.assets">View</a>&gt;&nbsp;views)</code></th>
 <td class="colLast">
 <div class="block">Views that exist within this schema.</div>
 </td>
 </tr>
-<tr id="i28" class="altColor">
+<tr id="i30" class="altColor">
 <td class="colFirst"><code><a href="Schema.SchemaBuilder.html" title="class in com.atlan.model.assets">Schema.SchemaBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toBuilder()">toBuilder</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i29" class="rowColor">
+<tr id="i31" class="rowColor">
 <td class="colFirst"><code>protected <a href="Schema.SchemaBuilder.html" title="class in com.atlan.model.assets">Schema.SchemaBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#trimToRequired()">trimToRequired</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Builds the minimal object necessary to apply an update to a schema, from a potentially
- more-complete schema object.</div>
+<div class="block">Builds the minimal object necessary to apply an update to a Schema, from a potentially
+ more-complete Schema object.</div>
 </td>
 </tr>
-<tr id="i30" class="altColor">
+<tr id="i32" class="altColor">
 <td class="colFirst"><code>static <a href="Schema.html" title="class in com.atlan.model.assets">Schema</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateAnnouncement(java.lang.String,com.atlan.model.enums.AtlanAnnouncementType,java.lang.String,java.lang.String)">updateAnnouncement</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                   <a href="../enums/AtlanAnnouncementType.html" title="enum in com.atlan.model.enums">AtlanAnnouncementType</a>&nbsp;type,
                   java.lang.String&nbsp;title,
                   java.lang.String&nbsp;message)</code></th>
 <td class="colLast">
-<div class="block">Update the announcement on a schema.</div>
+<div class="block">Update the announcement on a Schema.</div>
 </td>
 </tr>
-<tr id="i31" class="rowColor">
+<tr id="i33" class="rowColor">
 <td class="colFirst"><code>static <a href="Schema.html" title="class in com.atlan.model.assets">Schema</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateCertificate(java.lang.String,com.atlan.model.enums.AtlanCertificateStatus,java.lang.String)">updateCertificate</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                  <a href="../enums/AtlanCertificateStatus.html" title="enum in com.atlan.model.enums">AtlanCertificateStatus</a>&nbsp;certificate,
                  java.lang.String&nbsp;message)</code></th>
 <td class="colLast">
-<div class="block">Update the certificate on a schema.</div>
+<div class="block">Update the certificate on a Schema.</div>
 </td>
 </tr>
-<tr id="i32" class="altColor">
+<tr id="i34" class="altColor">
 <td class="colFirst"><code>static <a href="Schema.SchemaBuilder.html" title="class in com.atlan.model.assets">Schema.SchemaBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updater(java.lang.String,java.lang.String)">updater</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
        java.lang.String&nbsp;name)</code></th>
 <td class="colLast">
-<div class="block">Builds the minimal object necessary to update a schema.</div>
+<div class="block">Builds the minimal object necessary to update a Schema.</div>
 </td>
 </tr>
 </table>
@@ -541,7 +555,7 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;com.atlan.model.assets.<a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></h3>
-<code><a href="SQL.html#getDatabaseName()">getDatabaseName</a>, <a href="SQL.html#getDatabaseQualifiedName()">getDatabaseQualifiedName</a>, <a href="SQL.html#getQueryCount()">getQueryCount</a>, <a href="SQL.html#getQueryCountUpdatedAt()">getQueryCountUpdatedAt</a>, <a href="SQL.html#getQueryUserCount()">getQueryUserCount</a>, <a href="SQL.html#getQueryUserMap()">getQueryUserMap</a>, <a href="SQL.html#getSchemaName()">getSchemaName</a>, <a href="SQL.html#getSchemaQualifiedName()">getSchemaQualifiedName</a>, <a href="SQL.html#getTableName()">getTableName</a>, <a href="SQL.html#getTableQualifiedName()">getTableQualifiedName</a>, <a href="SQL.html#getViewName()">getViewName</a>, <a href="SQL.html#getViewQualifiedName()">getViewQualifiedName</a>, <a href="SQL.html#setDatabaseName(java.lang.String)">setDatabaseName</a>, <a href="SQL.html#setDatabaseQualifiedName(java.lang.String)">setDatabaseQualifiedName</a>, <a href="SQL.html#setQueryCount(java.lang.Long)">setQueryCount</a>, <a href="SQL.html#setQueryCountUpdatedAt(java.lang.Long)">setQueryCountUpdatedAt</a>, <a href="SQL.html#setQueryUserCount(java.lang.Long)">setQueryUserCount</a>, <a href="SQL.html#setQueryUserMap(java.util.Map)">setQueryUserMap</a>, <a href="SQL.html#setSchemaName(java.lang.String)">setSchemaName</a>, <a href="SQL.html#setSchemaQualifiedName(java.lang.String)">setSchemaQualifiedName</a>, <a href="SQL.html#setTableName(java.lang.String)">setTableName</a>, <a href="SQL.html#setTableQualifiedName(java.lang.String)">setTableQualifiedName</a>, <a href="SQL.html#setViewName(java.lang.String)">setViewName</a>, <a href="SQL.html#setViewQualifiedName(java.lang.String)">setViewQualifiedName</a></code></li>
+<code><a href="SQL.html#getDatabaseName()">getDatabaseName</a>, <a href="SQL.html#getDatabaseQualifiedName()">getDatabaseQualifiedName</a>, <a href="SQL.html#getDbtModels()">getDbtModels</a>, <a href="SQL.html#getDbtSources()">getDbtSources</a>, <a href="SQL.html#getQueryCount()">getQueryCount</a>, <a href="SQL.html#getQueryCountUpdatedAt()">getQueryCountUpdatedAt</a>, <a href="SQL.html#getQueryUserCount()">getQueryUserCount</a>, <a href="SQL.html#getQueryUserMap()">getQueryUserMap</a>, <a href="SQL.html#getSchemaName()">getSchemaName</a>, <a href="SQL.html#getSchemaQualifiedName()">getSchemaQualifiedName</a>, <a href="SQL.html#getTableName()">getTableName</a>, <a href="SQL.html#getTableQualifiedName()">getTableQualifiedName</a>, <a href="SQL.html#getViewName()">getViewName</a>, <a href="SQL.html#getViewQualifiedName()">getViewQualifiedName</a>, <a href="SQL.html#setDatabaseName(java.lang.String)">setDatabaseName</a>, <a href="SQL.html#setDatabaseQualifiedName(java.lang.String)">setDatabaseQualifiedName</a>, <a href="SQL.html#setDbtModels(java.util.SortedSet)">setDbtModels</a>, <a href="SQL.html#setDbtSources(java.util.SortedSet)">setDbtSources</a>, <a href="SQL.html#setQueryCount(java.lang.Long)">setQueryCount</a>, <a href="SQL.html#setQueryCountUpdatedAt(java.lang.Long)">setQueryCountUpdatedAt</a>, <a href="SQL.html#setQueryUserCount(java.lang.Long)">setQueryUserCount</a>, <a href="SQL.html#setQueryUserMap(java.util.Map)">setQueryUserMap</a>, <a href="SQL.html#setSchemaName(java.lang.String)">setSchemaName</a>, <a href="SQL.html#setSchemaQualifiedName(java.lang.String)">setSchemaQualifiedName</a>, <a href="SQL.html#setTableName(java.lang.String)">setTableName</a>, <a href="SQL.html#setTableQualifiedName(java.lang.String)">setTableQualifiedName</a>, <a href="SQL.html#setViewName(java.lang.String)">setViewName</a>, <a href="SQL.html#setViewQualifiedName(java.lang.String)">setViewQualifiedName</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.com.atlan.model.assets.Catalog">
@@ -562,7 +576,7 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;com.atlan.model.core.<a href="../core/Entity.html" title="class in com.atlan.model.core">Entity</a></h3>
-<code><a href="../core/Entity.html#addClassifications(java.lang.String,java.lang.String,java.util.List)">addClassifications</a>, <a href="../core/Entity.html#addNullField(java.lang.String)">addNullField</a>, <a href="../core/Entity.html#delete(java.lang.String)">delete</a>, <a href="../core/Entity.html#getClassificationNames()">getClassificationNames</a>, <a href="../core/Entity.html#getClassifications()">getClassifications</a>, <a href="../core/Entity.html#getCreatedBy()">getCreatedBy</a>, <a href="../core/Entity.html#getCreateTime()">getCreateTime</a>, <a href="../core/Entity.html#getCustomMetadataSets()">getCustomMetadataSets</a>, <a href="../core/Entity.html#getDeleteHandler()">getDeleteHandler</a>, <a href="../core/Entity.html#getIsIncomplete()">getIsIncomplete</a>, <a href="../core/Entity.html#getMeaningNames()">getMeaningNames</a>, <a href="../core/Entity.html#getNullFields()">getNullFields</a>, <a href="../core/Entity.html#getStatus()">getStatus</a>, <a href="../core/Entity.html#getUpdatedBy()">getUpdatedBy</a>, <a href="../core/Entity.html#getUpdateTime()">getUpdateTime</a>, <a href="../core/Entity.html#purge(java.lang.String)">purge</a>, <a href="../core/Entity.html#removeClassification(java.lang.String,java.lang.String,java.lang.String)">removeClassification</a>, <a href="../core/Entity.html#removeClassifications()">removeClassifications</a>, <a href="../core/Entity.html#removeCustomMetadata()">removeCustomMetadata</a>, <a href="../core/Entity.html#removeCustomMetadata(java.lang.String,java.lang.String)">removeCustomMetadata</a>, <a href="../core/Entity.html#replaceCustomMetadata(java.lang.String,java.lang.String,com.atlan.model.core.CustomMetadataAttributes)">replaceCustomMetadata</a>, <a href="../core/Entity.html#retrieveFull(java.lang.String)">retrieveFull</a>, <a href="../core/Entity.html#retrieveFull(java.lang.String,java.lang.String)">retrieveFull</a>, <a href="../core/Entity.html#retrieveMinimal(java.lang.String)">retrieveMinimal</a>, <a href="../core/Entity.html#retrieveMinimal(java.lang.String,java.lang.String)">retrieveMinimal</a>, <a href="../core/Entity.html#setClassificationNames(java.util.Set)">setClassificationNames</a>, <a href="../core/Entity.html#setClassifications(java.util.Set)">setClassifications</a>, <a href="../core/Entity.html#setCustomMetadataSets(java.util.Map)">setCustomMetadataSets</a>, <a href="../core/Entity.html#setIsIncomplete(java.lang.Boolean)">setIsIncomplete</a>, <a href="../core/Entity.html#setMeaningNames(java.util.Set)">setMeaningNames</a>, <a href="../core/Entity.html#setNullFields(java.util.Set)">setNullFields</a>, <a href="../core/Entity.html#updateCustomMetadataAttributes(java.lang.String,java.lang.String,com.atlan.model.core.CustomMetadataAttributes)">updateCustomMetadataAttributes</a>, <a href="../core/Entity.html#upsert()">upsert</a>, <a href="../core/Entity.html#upsert(boolean,boolean)">upsert</a></code></li>
+<code><a href="../core/Entity.html#addClassifications(java.lang.String,java.lang.String,java.util.List)">addClassifications</a>, <a href="../core/Entity.html#addNullField(java.lang.String)">addNullField</a>, <a href="../core/Entity.html#delete(java.lang.String)">delete</a>, <a href="../core/Entity.html#getClassificationNames()">getClassificationNames</a>, <a href="../core/Entity.html#getClassifications()">getClassifications</a>, <a href="../core/Entity.html#getCreatedBy()">getCreatedBy</a>, <a href="../core/Entity.html#getCreateTime()">getCreateTime</a>, <a href="../core/Entity.html#getCustomMetadataSets()">getCustomMetadataSets</a>, <a href="../core/Entity.html#getDeleteHandler()">getDeleteHandler</a>, <a href="../core/Entity.html#getIsIncomplete()">getIsIncomplete</a>, <a href="../core/Entity.html#getMeaningNames()">getMeaningNames</a>, <a href="../core/Entity.html#getNullFields()">getNullFields</a>, <a href="../core/Entity.html#getPendingTasks()">getPendingTasks</a>, <a href="../core/Entity.html#getStatus()">getStatus</a>, <a href="../core/Entity.html#getUpdatedBy()">getUpdatedBy</a>, <a href="../core/Entity.html#getUpdateTime()">getUpdateTime</a>, <a href="../core/Entity.html#purge(java.lang.String)">purge</a>, <a href="../core/Entity.html#removeClassification(java.lang.String,java.lang.String,java.lang.String)">removeClassification</a>, <a href="../core/Entity.html#removeClassifications()">removeClassifications</a>, <a href="../core/Entity.html#removeCustomMetadata()">removeCustomMetadata</a>, <a href="../core/Entity.html#removeCustomMetadata(java.lang.String,java.lang.String)">removeCustomMetadata</a>, <a href="../core/Entity.html#replaceCustomMetadata(java.lang.String,java.lang.String,com.atlan.model.core.CustomMetadataAttributes)">replaceCustomMetadata</a>, <a href="../core/Entity.html#retrieveFull(java.lang.String)">retrieveFull</a>, <a href="../core/Entity.html#retrieveFull(java.lang.String,java.lang.String)">retrieveFull</a>, <a href="../core/Entity.html#retrieveMinimal(java.lang.String)">retrieveMinimal</a>, <a href="../core/Entity.html#retrieveMinimal(java.lang.String,java.lang.String)">retrieveMinimal</a>, <a href="../core/Entity.html#setClassificationNames(java.util.Set)">setClassificationNames</a>, <a href="../core/Entity.html#setClassifications(java.util.Set)">setClassifications</a>, <a href="../core/Entity.html#setCustomMetadataSets(java.util.Map)">setCustomMetadataSets</a>, <a href="../core/Entity.html#setIsIncomplete(java.lang.Boolean)">setIsIncomplete</a>, <a href="../core/Entity.html#setMeaningNames(java.util.Set)">setMeaningNames</a>, <a href="../core/Entity.html#setNullFields(java.util.Set)">setNullFields</a>, <a href="../core/Entity.html#updateCustomMetadataAttributes(java.lang.String,java.lang.String,com.atlan.model.core.CustomMetadataAttributes)">updateCustomMetadataAttributes</a>, <a href="../core/Entity.html#upsert()">upsert</a>, <a href="../core/Entity.html#upsert(boolean,boolean)">upsert</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.com.atlan.model.relations.Reference">
@@ -650,12 +664,12 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
 <li class="blockList">
 <h4>refByGuid</h4>
 <pre class="methodSignature">public static&nbsp;<a href="Schema.html" title="class in com.atlan.model.assets">Schema</a>&nbsp;refByGuid&#8203;(java.lang.String&nbsp;guid)</pre>
-<div class="block">Reference to a schema by GUID.</div>
+<div class="block">Reference to a Schema by GUID.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>guid</code> - the GUID of the schema to reference</dd>
+<dd><code>guid</code> - the GUID of the Schema to reference</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>reference to a schema that can be used for defining a relationship to a schema</dd>
+<dd>reference to a Schema that can be used for defining a relationship to a Schema</dd>
 </dl>
 </li>
 </ul>
@@ -666,12 +680,12 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
 <li class="blockList">
 <h4>refByQualifiedName</h4>
 <pre class="methodSignature">public static&nbsp;<a href="Schema.html" title="class in com.atlan.model.assets">Schema</a>&nbsp;refByQualifiedName&#8203;(java.lang.String&nbsp;qualifiedName)</pre>
-<div class="block">Reference to a schema by qualifiedName.</div>
+<div class="block">Reference to a Schema by qualifiedName.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>qualifiedName</code> - the qualifiedName of the schema to reference</dd>
+<dd><code>qualifiedName</code> - the qualifiedName of the Schema to reference</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>reference to a schema that can be used for defining a relationship to a schema</dd>
+<dd>reference to a Schema that can be used for defining a relationship to a Schema</dd>
 </dl>
 </li>
 </ul>
@@ -701,13 +715,13 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
 <h4>updater</h4>
 <pre class="methodSignature">public static&nbsp;<a href="Schema.SchemaBuilder.html" title="class in com.atlan.model.assets">Schema.SchemaBuilder</a>&lt;?,&#8203;?&gt;&nbsp;updater&#8203;(java.lang.String&nbsp;qualifiedName,
                                                       java.lang.String&nbsp;name)</pre>
-<div class="block">Builds the minimal object necessary to update a schema.</div>
+<div class="block">Builds the minimal object necessary to update a Schema.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>qualifiedName</code> - of the schema</dd>
-<dd><code>name</code> - of the schema</dd>
+<dd><code>qualifiedName</code> - of the Schema</dd>
+<dd><code>name</code> - of the Schema</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the minimal request necessary to update the schema, as a builder</dd>
+<dd>the minimal request necessary to update the Schema, as a builder</dd>
 </dl>
 </li>
 </ul>
@@ -718,13 +732,13 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
 <li class="blockList">
 <h4>trimToRequired</h4>
 <pre class="methodSignature">protected&nbsp;<a href="Schema.SchemaBuilder.html" title="class in com.atlan.model.assets">Schema.SchemaBuilder</a>&lt;?,&#8203;?&gt;&nbsp;trimToRequired()</pre>
-<div class="block">Builds the minimal object necessary to apply an update to a schema, from a potentially
- more-complete schema object.</div>
+<div class="block">Builds the minimal object necessary to apply an update to a Schema, from a potentially
+ more-complete Schema object.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="Asset.html#trimToRequired()">trimToRequired</a></code>&nbsp;in class&nbsp;<code><a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the minimal object necessary to update the schema, as a builder</dd>
+<dd>the minimal object necessary to update the Schema, as a builder</dd>
 </dl>
 </li>
 </ul>
@@ -738,14 +752,14 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
                                        <a href="../enums/AtlanCertificateStatus.html" title="enum in com.atlan.model.enums">AtlanCertificateStatus</a>&nbsp;certificate,
                                        java.lang.String&nbsp;message)
                                 throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
-<div class="block">Update the certificate on a schema.</div>
+<div class="block">Update the certificate on a Schema.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>qualifiedName</code> - of the schema</dd>
+<dd><code>qualifiedName</code> - of the Schema</dd>
 <dd><code>certificate</code> - to use</dd>
 <dd><code>message</code> - (optional) message, or null if no message</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the updated schema, or null if the update failed</dd>
+<dd>the updated Schema, or null if the update failed</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API problems</dd>
 </dl>
@@ -760,13 +774,13 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
 <pre class="methodSignature">public static&nbsp;<a href="Schema.html" title="class in com.atlan.model.assets">Schema</a>&nbsp;removeCertificate&#8203;(java.lang.String&nbsp;qualifiedName,
                                        java.lang.String&nbsp;name)
                                 throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
-<div class="block">Remove the certificate from a schema.</div>
+<div class="block">Remove the certificate from a Schema.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>qualifiedName</code> - of the schema</dd>
-<dd><code>name</code> - of the schema</dd>
+<dd><code>qualifiedName</code> - of the Schema</dd>
+<dd><code>name</code> - of the Schema</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the updated schema, or null if the removal failed</dd>
+<dd>the updated Schema, or null if the removal failed</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API problems</dd>
 </dl>
@@ -783,10 +797,10 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
                                         java.lang.String&nbsp;title,
                                         java.lang.String&nbsp;message)
                                  throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
-<div class="block">Update the announcement on a schema.</div>
+<div class="block">Update the announcement on a Schema.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>qualifiedName</code> - of the schema</dd>
+<dd><code>qualifiedName</code> - of the Schema</dd>
 <dd><code>type</code> - type of announcement to set</dd>
 <dd><code>title</code> - (optional) title of the announcement to set (or null for no title)</dd>
 <dd><code>message</code> - (optional) message of the announcement to set (or null for no message)</dd>
@@ -806,13 +820,13 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
 <pre class="methodSignature">public static&nbsp;<a href="Schema.html" title="class in com.atlan.model.assets">Schema</a>&nbsp;removeAnnouncement&#8203;(java.lang.String&nbsp;qualifiedName,
                                         java.lang.String&nbsp;name)
                                  throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
-<div class="block">Remove the announcement from a schema.</div>
+<div class="block">Remove the announcement from a Schema.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>qualifiedName</code> - of the schema</dd>
-<dd><code>name</code> - of the schema</dd>
+<dd><code>qualifiedName</code> - of the Schema</dd>
+<dd><code>name</code> - of the Schema</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the updated schema, or null if the removal failed</dd>
+<dd>the updated Schema, or null if the removal failed</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API problems</dd>
 </dl>
@@ -827,13 +841,13 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
 <pre class="methodSignature">public static&nbsp;void&nbsp;addClassifications&#8203;(java.lang.String&nbsp;qualifiedName,
                                       java.util.List&lt;java.lang.String&gt;&nbsp;classificationNames)
                                throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
-<div class="block">Add classifications to a schema.</div>
+<div class="block">Add classifications to a Schema.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>qualifiedName</code> - of the schema</dd>
+<dd><code>qualifiedName</code> - of the Schema</dd>
 <dd><code>classificationNames</code> - human-readable names of the classifications to add</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API problems, or if any of the classifications already exist on the schema</dd>
+<dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API problems, or if any of the classifications already exist on the Schema</dd>
 </dl>
 </li>
 </ul>
@@ -846,13 +860,13 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
 <pre class="methodSignature">public static&nbsp;void&nbsp;removeClassification&#8203;(java.lang.String&nbsp;qualifiedName,
                                         java.lang.String&nbsp;classificationName)
                                  throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
-<div class="block">Remove a classification from a schema.</div>
+<div class="block">Remove a classification from a Schema.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>qualifiedName</code> - of the schema</dd>
+<dd><code>qualifiedName</code> - of the Schema</dd>
 <dd><code>classificationName</code> - human-readable name of the classification to remove</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API problems, or if the classification does not exist on the schema</dd>
+<dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API problems, or if the classification does not exist on the Schema</dd>
 </dl>
 </li>
 </ul>
@@ -866,14 +880,14 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
                                   java.lang.String&nbsp;name,
                                   java.util.List&lt;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;terms)
                            throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
-<div class="block">Replace the terms linked to the schema.</div>
+<div class="block">Replace the terms linked to the Schema.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>qualifiedName</code> - for the schema</dd>
-<dd><code>name</code> - human-readable name of the schema</dd>
-<dd><code>terms</code> - the list of terms to replace on the schema, or null to remove all terms from the schema</dd>
+<dd><code>qualifiedName</code> - for the Schema</dd>
+<dd><code>name</code> - human-readable name of the Schema</dd>
+<dd><code>terms</code> - the list of terms to replace on the Schema, or null to remove all terms from the Schema</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the schema that was updated (note that it will NOT contain details of the replaced terms)</dd>
+<dd>the Schema that was updated (note that it will NOT contain details of the replaced terms)</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API problems</dd>
 </dl>
@@ -888,15 +902,15 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
 <pre class="methodSignature">public static&nbsp;<a href="Schema.html" title="class in com.atlan.model.assets">Schema</a>&nbsp;appendTerms&#8203;(java.lang.String&nbsp;qualifiedName,
                                  java.util.List&lt;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;terms)
                           throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
-<div class="block">Link additional terms to the schema, without replacing existing terms linked to the schema.
- Note: this operation must make two API calls — one to retrieve the schema's existing terms,
+<div class="block">Link additional terms to the Schema, without replacing existing terms linked to the Schema.
+ Note: this operation must make two API calls — one to retrieve the Schema's existing terms,
  and a second to append the new terms.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>qualifiedName</code> - for the schema</dd>
-<dd><code>terms</code> - the list of terms to append to the schema</dd>
+<dd><code>qualifiedName</code> - for the Schema</dd>
+<dd><code>terms</code> - the list of terms to append to the Schema</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the schema that was updated  (note that it will NOT contain details of the appended terms)</dd>
+<dd>the Schema that was updated  (note that it will NOT contain details of the appended terms)</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API problems</dd>
 </dl>
@@ -911,15 +925,15 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
 <pre class="methodSignature">public static&nbsp;<a href="Schema.html" title="class in com.atlan.model.assets">Schema</a>&nbsp;removeTerms&#8203;(java.lang.String&nbsp;qualifiedName,
                                  java.util.List&lt;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;terms)
                           throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
-<div class="block">Remove terms from a schema, without replacing all existing terms linked to the schema.
- Note: this operation must make two API calls — one to retrieve the schema's existing terms,
+<div class="block">Remove terms from a Schema, without replacing all existing terms linked to the Schema.
+ Note: this operation must make two API calls — one to retrieve the Schema's existing terms,
  and a second to remove the provided terms.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>qualifiedName</code> - for the schema</dd>
-<dd><code>terms</code> - the list of terms to remove from the schema, which must be referenced by GUID</dd>
+<dd><code>qualifiedName</code> - for the Schema</dd>
+<dd><code>terms</code> - the list of terms to remove from the Schema, which must be referenced by GUID</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the schema that was updated (note that it will NOT contain details of the resulting terms)</dd>
+<dd>the Schema that was updated (note that it will NOT contain details of the resulting terms)</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API problems</dd>
 </dl>
@@ -967,14 +981,14 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
 <div class="block">Number of views in this schema.</div>
 </li>
 </ul>
-<a id="getDatabase()">
+<a id="getMaterializedViews()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>getDatabase</h4>
-<pre class="methodSignature">public&nbsp;<a href="Database.html" title="class in com.atlan.model.assets">Database</a>&nbsp;getDatabase()</pre>
-<div class="block">Database in which this schema exists.</div>
+<h4>getMaterializedViews</h4>
+<pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="MaterializedView.html" title="class in com.atlan.model.assets">MaterializedView</a>&gt;&nbsp;getMaterializedViews()</pre>
+<div class="block">Materialized views that exist within this schema.</div>
 </li>
 </ul>
 <a id="getTables()">
@@ -987,6 +1001,26 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
 <div class="block">Tables that exist within this schema.</div>
 </li>
 </ul>
+<a id="getDatabase()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getDatabase</h4>
+<pre class="methodSignature">public&nbsp;<a href="Database.html" title="class in com.atlan.model.assets">Database</a>&nbsp;getDatabase()</pre>
+<div class="block">Database in which this schema exists.</div>
+</li>
+</ul>
+<a id="getProcedures()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getProcedures</h4>
+<pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="Procedure.html" title="class in com.atlan.model.assets">Procedure</a>&gt;&nbsp;getProcedures()</pre>
+<div class="block">Procedures that are defined within this schema.</div>
+</li>
+</ul>
 <a id="getViews()">
 <!--   -->
 </a>
@@ -995,16 +1029,6 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
 <h4>getViews</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="View.html" title="class in com.atlan.model.assets">View</a>&gt;&nbsp;getViews()</pre>
 <div class="block">Views that exist within this schema.</div>
-</li>
-</ul>
-<a id="getMaterializedViews()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getMaterializedViews</h4>
-<pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="MaterializedView.html" title="class in com.atlan.model.assets">MaterializedView</a>&gt;&nbsp;getMaterializedViews()</pre>
-<div class="block">Materialized views that exist within this schema.</div>
 </li>
 </ul>
 <a id="setTableCount(java.lang.Integer)">
@@ -1027,14 +1051,14 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
 <div class="block">Number of views in this schema.</div>
 </li>
 </ul>
-<a id="setDatabase(com.atlan.model.assets.Database)">
+<a id="setMaterializedViews(java.util.SortedSet)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>setDatabase</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setDatabase&#8203;(<a href="Database.html" title="class in com.atlan.model.assets">Database</a>&nbsp;database)</pre>
-<div class="block">Database in which this schema exists.</div>
+<h4>setMaterializedViews</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;setMaterializedViews&#8203;(java.util.SortedSet&lt;<a href="MaterializedView.html" title="class in com.atlan.model.assets">MaterializedView</a>&gt;&nbsp;materializedViews)</pre>
+<div class="block">Materialized views that exist within this schema.</div>
 </li>
 </ul>
 <a id="setTables(java.util.SortedSet)">
@@ -1047,6 +1071,26 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
 <div class="block">Tables that exist within this schema.</div>
 </li>
 </ul>
+<a id="setDatabase(com.atlan.model.assets.Database)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setDatabase</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;setDatabase&#8203;(<a href="Database.html" title="class in com.atlan.model.assets">Database</a>&nbsp;database)</pre>
+<div class="block">Database in which this schema exists.</div>
+</li>
+</ul>
+<a id="setProcedures(java.util.SortedSet)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setProcedures</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;setProcedures&#8203;(java.util.SortedSet&lt;<a href="Procedure.html" title="class in com.atlan.model.assets">Procedure</a>&gt;&nbsp;procedures)</pre>
+<div class="block">Procedures that are defined within this schema.</div>
+</li>
+</ul>
 <a id="setViews(java.util.SortedSet)">
 <!--   -->
 </a>
@@ -1055,16 +1099,6 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
 <h4>setViews</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;setViews&#8203;(java.util.SortedSet&lt;<a href="View.html" title="class in com.atlan.model.assets">View</a>&gt;&nbsp;views)</pre>
 <div class="block">Views that exist within this schema.</div>
-</li>
-</ul>
-<a id="setMaterializedViews(java.util.SortedSet)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setMaterializedViews</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setMaterializedViews&#8203;(java.util.SortedSet&lt;<a href="MaterializedView.html" title="class in com.atlan.model.assets">MaterializedView</a>&gt;&nbsp;materializedViews)</pre>
-<div class="block">Materialized views that exist within this schema.</div>
 </li>
 </ul>
 <a id="equals(java.lang.Object)">
@@ -1113,7 +1147,7 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
 <li class="blockList">
 <h4>getTypeName</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getTypeName()</pre>
-<div class="block">Fixed typeName for schemas.</div>
+<div class="block">Fixed typeName for Schemas.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code><a href="../relations/Reference.html#getTypeName()">getTypeName</a></code>&nbsp;in class&nbsp;<code><a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a></code></dd>
@@ -1127,7 +1161,7 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
 <li class="blockList">
 <h4>setTypeName</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;setTypeName&#8203;(java.lang.String&nbsp;typeName)</pre>
-<div class="block">Fixed typeName for schemas.</div>
+<div class="block">Fixed typeName for Schemas.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code><a href="../relations/Reference.html#setTypeName(java.lang.String)">setTypeName</a></code>&nbsp;in class&nbsp;<code><a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a></code></dd>

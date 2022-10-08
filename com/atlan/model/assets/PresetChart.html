@@ -134,10 +134,20 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li><a href="Asset.html" title="class in com.atlan.model.assets">com.atlan.model.assets.Asset</a></li>
 <li>
 <ul class="inheritance">
+<li><a href="Catalog.html" title="class in com.atlan.model.assets">com.atlan.model.assets.Catalog</a></li>
+<li>
+<ul class="inheritance">
+<li><a href="BI.html" title="class in com.atlan.model.assets">com.atlan.model.assets.BI</a></li>
+<li>
+<ul class="inheritance">
 <li><a href="Preset.html" title="class in com.atlan.model.assets">com.atlan.model.assets.Preset</a></li>
 <li>
 <ul class="inheritance">
 <li>com.atlan.model.assets.PresetChart</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -194,6 +204,20 @@ extends <a href="Preset.html" title="class in com.atlan.model.assets">Preset</a>
 </a>
 <h3>Nested classes/interfaces inherited from class&nbsp;com.atlan.model.assets.<a href="Preset.html" title="class in com.atlan.model.assets">Preset</a></h3>
 <code><a href="Preset.PresetBuilder.html" title="class in com.atlan.model.assets">Preset.PresetBuilder</a>&lt;<a href="Preset.PresetBuilder.html" title="type parameter in Preset.PresetBuilder">C</a> extends <a href="Preset.html" title="class in com.atlan.model.assets">Preset</a>,&#8203;<a href="Preset.PresetBuilder.html" title="type parameter in Preset.PresetBuilder">B</a> extends <a href="Preset.PresetBuilder.html" title="class in com.atlan.model.assets">Preset.PresetBuilder</a>&lt;<a href="Preset.PresetBuilder.html" title="type parameter in Preset.PresetBuilder">C</a>,&#8203;<a href="Preset.PresetBuilder.html" title="type parameter in Preset.PresetBuilder">B</a>&gt;&gt;</code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a id="nested.classes.inherited.from.class.com.atlan.model.assets.BI">
+<!--   -->
+</a>
+<h3>Nested classes/interfaces inherited from class&nbsp;com.atlan.model.assets.<a href="BI.html" title="class in com.atlan.model.assets">BI</a></h3>
+<code><a href="BI.BIBuilder.html" title="class in com.atlan.model.assets">BI.BIBuilder</a>&lt;<a href="BI.BIBuilder.html" title="type parameter in BI.BIBuilder">C</a> extends <a href="BI.html" title="class in com.atlan.model.assets">BI</a>,&#8203;<a href="BI.BIBuilder.html" title="type parameter in BI.BIBuilder">B</a> extends <a href="BI.BIBuilder.html" title="class in com.atlan.model.assets">BI.BIBuilder</a>&lt;<a href="BI.BIBuilder.html" title="type parameter in BI.BIBuilder">C</a>,&#8203;<a href="BI.BIBuilder.html" title="type parameter in BI.BIBuilder">B</a>&gt;&gt;</code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a id="nested.classes.inherited.from.class.com.atlan.model.assets.Catalog">
+<!--   -->
+</a>
+<h3>Nested classes/interfaces inherited from class&nbsp;com.atlan.model.assets.<a href="Catalog.html" title="class in com.atlan.model.assets">Catalog</a></h3>
+<code><a href="Catalog.CatalogBuilder.html" title="class in com.atlan.model.assets">Catalog.CatalogBuilder</a>&lt;<a href="Catalog.CatalogBuilder.html" title="type parameter in Catalog.CatalogBuilder">C</a> extends <a href="Catalog.html" title="class in com.atlan.model.assets">Catalog</a>,&#8203;<a href="Catalog.CatalogBuilder.html" title="type parameter in Catalog.CatalogBuilder">B</a> extends <a href="Catalog.CatalogBuilder.html" title="class in com.atlan.model.assets">Catalog.CatalogBuilder</a>&lt;<a href="Catalog.CatalogBuilder.html" title="type parameter in Catalog.CatalogBuilder">C</a>,&#8203;<a href="Catalog.CatalogBuilder.html" title="type parameter in Catalog.CatalogBuilder">B</a>&gt;&gt;</code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="nested.classes.inherited.from.class.com.atlan.model.assets.Asset">
@@ -291,7 +315,7 @@ extends <a href="Preset.html" title="class in com.atlan.model.assets">Preset</a>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addClassifications(java.lang.String,java.util.List)">addClassifications</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                   java.util.List&lt;java.lang.String&gt;&nbsp;classificationNames)</code></th>
 <td class="colLast">
-<div class="block">Add classifications to a Preset chart.</div>
+<div class="block">Add classifications to a PresetChart.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
@@ -299,7 +323,7 @@ extends <a href="Preset.html" title="class in com.atlan.model.assets">Preset</a>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#appendTerms(java.lang.String,java.util.List)">appendTerms</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
            java.util.List&lt;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;terms)</code></th>
 <td class="colLast">
-<div class="block">Link additional terms to the Preset chart, without replacing existing terms linked to the chart.</div>
+<div class="block">Link additional terms to the PresetChart, without replacing existing terms linked to the PresetChart.</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
@@ -350,7 +374,7 @@ extends <a href="Preset.html" title="class in com.atlan.model.assets">Preset</a>
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTypeName()">getTypeName</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Fixed typeName for Preset charts.</div>
+<div class="block">Fixed typeName for PresetCharts.</div>
 </td>
 </tr>
 <tr id="i10" class="altColor">
@@ -362,14 +386,14 @@ extends <a href="Preset.html" title="class in com.atlan.model.assets">Preset</a>
 <td class="colFirst"><code>static <a href="PresetChart.html" title="class in com.atlan.model.assets">PresetChart</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#refByGuid(java.lang.String)">refByGuid</a></span>&#8203;(java.lang.String&nbsp;guid)</code></th>
 <td class="colLast">
-<div class="block">Reference to a Preset chart by GUID.</div>
+<div class="block">Reference to a PresetChart by GUID.</div>
 </td>
 </tr>
 <tr id="i12" class="altColor">
 <td class="colFirst"><code>static <a href="PresetChart.html" title="class in com.atlan.model.assets">PresetChart</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#refByQualifiedName(java.lang.String)">refByQualifiedName</a></span>&#8203;(java.lang.String&nbsp;qualifiedName)</code></th>
 <td class="colLast">
-<div class="block">Reference to a Preset chart by qualifiedName.</div>
+<div class="block">Reference to a PresetChart by qualifiedName.</div>
 </td>
 </tr>
 <tr id="i13" class="rowColor">
@@ -377,7 +401,7 @@ extends <a href="Preset.html" title="class in com.atlan.model.assets">Preset</a>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeAnnouncement(java.lang.String,java.lang.String)">removeAnnouncement</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                   java.lang.String&nbsp;name)</code></th>
 <td class="colLast">
-<div class="block">Remove the announcement from a Preset chart.</div>
+<div class="block">Remove the announcement from a PresetChart.</div>
 </td>
 </tr>
 <tr id="i14" class="altColor">
@@ -385,7 +409,7 @@ extends <a href="Preset.html" title="class in com.atlan.model.assets">Preset</a>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeCertificate(java.lang.String,java.lang.String)">removeCertificate</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                  java.lang.String&nbsp;name)</code></th>
 <td class="colLast">
-<div class="block">Remove the certificate from a Preset chart.</div>
+<div class="block">Remove the certificate from a PresetChart.</div>
 </td>
 </tr>
 <tr id="i15" class="rowColor">
@@ -393,7 +417,7 @@ extends <a href="Preset.html" title="class in com.atlan.model.assets">Preset</a>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeClassification(java.lang.String,java.lang.String)">removeClassification</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                     java.lang.String&nbsp;classificationName)</code></th>
 <td class="colLast">
-<div class="block">Remove a classification from a Preset chart.</div>
+<div class="block">Remove a classification from a PresetChart.</div>
 </td>
 </tr>
 <tr id="i16" class="altColor">
@@ -401,7 +425,7 @@ extends <a href="Preset.html" title="class in com.atlan.model.assets">Preset</a>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeTerms(java.lang.String,java.util.List)">removeTerms</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
            java.util.List&lt;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;terms)</code></th>
 <td class="colLast">
-<div class="block">Remove terms from a Preset chart, without replacing all existing terms linked to the chart.</div>
+<div class="block">Remove terms from a PresetChart, without replacing all existing terms linked to the PresetChart.</div>
 </td>
 </tr>
 <tr id="i17" class="rowColor">
@@ -410,7 +434,7 @@ extends <a href="Preset.html" title="class in com.atlan.model.assets">Preset</a>
             java.lang.String&nbsp;name,
             java.util.List&lt;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;terms)</code></th>
 <td class="colLast">
-<div class="block">Replace the terms linked to the chart.</div>
+<div class="block">Replace the terms linked to the PresetChart.</div>
 </td>
 </tr>
 <tr id="i18" class="altColor">
@@ -438,7 +462,7 @@ extends <a href="Preset.html" title="class in com.atlan.model.assets">Preset</a>
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setTypeName(java.lang.String)">setTypeName</a></span>&#8203;(java.lang.String&nbsp;typeName)</code></th>
 <td class="colLast">
-<div class="block">Fixed typeName for Preset charts.</div>
+<div class="block">Fixed typeName for PresetCharts.</div>
 </td>
 </tr>
 <tr id="i22" class="altColor">
@@ -450,8 +474,8 @@ extends <a href="Preset.html" title="class in com.atlan.model.assets">Preset</a>
 <td class="colFirst"><code>protected <a href="PresetChart.PresetChartBuilder.html" title="class in com.atlan.model.assets">PresetChart.PresetChartBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#trimToRequired()">trimToRequired</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Builds the minimal object necessary to apply an update to a Preset chart, from a potentially
- more-complete Preset chart object.</div>
+<div class="block">Builds the minimal object necessary to apply an update to a PresetChart, from a potentially
+ more-complete PresetChart object.</div>
 </td>
 </tr>
 <tr id="i24" class="altColor">
@@ -461,7 +485,7 @@ extends <a href="Preset.html" title="class in com.atlan.model.assets">Preset</a>
                   java.lang.String&nbsp;title,
                   java.lang.String&nbsp;message)</code></th>
 <td class="colLast">
-<div class="block">Update the announcement on a Preset chart.</div>
+<div class="block">Update the announcement on a PresetChart.</div>
 </td>
 </tr>
 <tr id="i25" class="rowColor">
@@ -470,7 +494,7 @@ extends <a href="Preset.html" title="class in com.atlan.model.assets">Preset</a>
                  <a href="../enums/AtlanCertificateStatus.html" title="enum in com.atlan.model.enums">AtlanCertificateStatus</a>&nbsp;certificate,
                  java.lang.String&nbsp;message)</code></th>
 <td class="colLast">
-<div class="block">Update the certificate on a Preset chart.</div>
+<div class="block">Update the certificate on a PresetChart.</div>
 </td>
 </tr>
 <tr id="i26" class="altColor">
@@ -478,7 +502,7 @@ extends <a href="Preset.html" title="class in com.atlan.model.assets">Preset</a>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updater(java.lang.String,java.lang.String)">updater</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
        java.lang.String&nbsp;name)</code></th>
 <td class="colLast">
-<div class="block">Builds the minimal object necessary to update a Preset chart.</div>
+<div class="block">Builds the minimal object necessary to update a PresetChart.</div>
 </td>
 </tr>
 </table>
@@ -488,6 +512,13 @@ extends <a href="Preset.html" title="class in com.atlan.model.assets">Preset</a>
 </a>
 <h3>Methods inherited from class&nbsp;com.atlan.model.assets.<a href="Preset.html" title="class in com.atlan.model.assets">Preset</a></h3>
 <code><a href="Preset.html#getPresetDashboardId()">getPresetDashboardId</a>, <a href="Preset.html#getPresetDashboardQualifiedName()">getPresetDashboardQualifiedName</a>, <a href="Preset.html#getPresetWorkspaceId()">getPresetWorkspaceId</a>, <a href="Preset.html#getPresetWorkspaceQualifiedName()">getPresetWorkspaceQualifiedName</a>, <a href="Preset.html#setPresetDashboardId(java.lang.Long)">setPresetDashboardId</a>, <a href="Preset.html#setPresetDashboardQualifiedName(java.lang.String)">setPresetDashboardQualifiedName</a>, <a href="Preset.html#setPresetWorkspaceId(java.lang.Long)">setPresetWorkspaceId</a>, <a href="Preset.html#setPresetWorkspaceQualifiedName(java.lang.String)">setPresetWorkspaceQualifiedName</a></code></li>
+</ul>
+<ul class="blockList">
+<li class="blockList"><a id="methods.inherited.from.class.com.atlan.model.assets.Catalog">
+<!--   -->
+</a>
+<h3>Methods inherited from class&nbsp;com.atlan.model.assets.<a href="Catalog.html" title="class in com.atlan.model.assets">Catalog</a></h3>
+<code><a href="Catalog.html#getInputToProcesses()">getInputToProcesses</a>, <a href="Catalog.html#getOutputFromProcesses()">getOutputFromProcesses</a>, <a href="Catalog.html#setInputToProcesses(java.util.List)">setInputToProcesses</a>, <a href="Catalog.html#setOutputFromProcesses(java.util.List)">setOutputFromProcesses</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.com.atlan.model.assets.Asset">
@@ -501,7 +532,7 @@ extends <a href="Preset.html" title="class in com.atlan.model.assets">Preset</a>
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;com.atlan.model.core.<a href="../core/Entity.html" title="class in com.atlan.model.core">Entity</a></h3>
-<code><a href="../core/Entity.html#addClassifications(java.lang.String,java.lang.String,java.util.List)">addClassifications</a>, <a href="../core/Entity.html#addNullField(java.lang.String)">addNullField</a>, <a href="../core/Entity.html#delete(java.lang.String)">delete</a>, <a href="../core/Entity.html#getClassificationNames()">getClassificationNames</a>, <a href="../core/Entity.html#getClassifications()">getClassifications</a>, <a href="../core/Entity.html#getCreatedBy()">getCreatedBy</a>, <a href="../core/Entity.html#getCreateTime()">getCreateTime</a>, <a href="../core/Entity.html#getCustomMetadataSets()">getCustomMetadataSets</a>, <a href="../core/Entity.html#getDeleteHandler()">getDeleteHandler</a>, <a href="../core/Entity.html#getIsIncomplete()">getIsIncomplete</a>, <a href="../core/Entity.html#getMeaningNames()">getMeaningNames</a>, <a href="../core/Entity.html#getNullFields()">getNullFields</a>, <a href="../core/Entity.html#getStatus()">getStatus</a>, <a href="../core/Entity.html#getUpdatedBy()">getUpdatedBy</a>, <a href="../core/Entity.html#getUpdateTime()">getUpdateTime</a>, <a href="../core/Entity.html#purge(java.lang.String)">purge</a>, <a href="../core/Entity.html#removeClassification(java.lang.String,java.lang.String,java.lang.String)">removeClassification</a>, <a href="../core/Entity.html#removeClassifications()">removeClassifications</a>, <a href="../core/Entity.html#removeCustomMetadata()">removeCustomMetadata</a>, <a href="../core/Entity.html#removeCustomMetadata(java.lang.String,java.lang.String)">removeCustomMetadata</a>, <a href="../core/Entity.html#replaceCustomMetadata(java.lang.String,java.lang.String,com.atlan.model.core.CustomMetadataAttributes)">replaceCustomMetadata</a>, <a href="../core/Entity.html#retrieveFull(java.lang.String)">retrieveFull</a>, <a href="../core/Entity.html#retrieveFull(java.lang.String,java.lang.String)">retrieveFull</a>, <a href="../core/Entity.html#retrieveMinimal(java.lang.String)">retrieveMinimal</a>, <a href="../core/Entity.html#retrieveMinimal(java.lang.String,java.lang.String)">retrieveMinimal</a>, <a href="../core/Entity.html#setClassificationNames(java.util.Set)">setClassificationNames</a>, <a href="../core/Entity.html#setClassifications(java.util.Set)">setClassifications</a>, <a href="../core/Entity.html#setCustomMetadataSets(java.util.Map)">setCustomMetadataSets</a>, <a href="../core/Entity.html#setIsIncomplete(java.lang.Boolean)">setIsIncomplete</a>, <a href="../core/Entity.html#setMeaningNames(java.util.Set)">setMeaningNames</a>, <a href="../core/Entity.html#setNullFields(java.util.Set)">setNullFields</a>, <a href="../core/Entity.html#updateCustomMetadataAttributes(java.lang.String,java.lang.String,com.atlan.model.core.CustomMetadataAttributes)">updateCustomMetadataAttributes</a>, <a href="../core/Entity.html#upsert()">upsert</a>, <a href="../core/Entity.html#upsert(boolean,boolean)">upsert</a></code></li>
+<code><a href="../core/Entity.html#addClassifications(java.lang.String,java.lang.String,java.util.List)">addClassifications</a>, <a href="../core/Entity.html#addNullField(java.lang.String)">addNullField</a>, <a href="../core/Entity.html#delete(java.lang.String)">delete</a>, <a href="../core/Entity.html#getClassificationNames()">getClassificationNames</a>, <a href="../core/Entity.html#getClassifications()">getClassifications</a>, <a href="../core/Entity.html#getCreatedBy()">getCreatedBy</a>, <a href="../core/Entity.html#getCreateTime()">getCreateTime</a>, <a href="../core/Entity.html#getCustomMetadataSets()">getCustomMetadataSets</a>, <a href="../core/Entity.html#getDeleteHandler()">getDeleteHandler</a>, <a href="../core/Entity.html#getIsIncomplete()">getIsIncomplete</a>, <a href="../core/Entity.html#getMeaningNames()">getMeaningNames</a>, <a href="../core/Entity.html#getNullFields()">getNullFields</a>, <a href="../core/Entity.html#getPendingTasks()">getPendingTasks</a>, <a href="../core/Entity.html#getStatus()">getStatus</a>, <a href="../core/Entity.html#getUpdatedBy()">getUpdatedBy</a>, <a href="../core/Entity.html#getUpdateTime()">getUpdateTime</a>, <a href="../core/Entity.html#purge(java.lang.String)">purge</a>, <a href="../core/Entity.html#removeClassification(java.lang.String,java.lang.String,java.lang.String)">removeClassification</a>, <a href="../core/Entity.html#removeClassifications()">removeClassifications</a>, <a href="../core/Entity.html#removeCustomMetadata()">removeCustomMetadata</a>, <a href="../core/Entity.html#removeCustomMetadata(java.lang.String,java.lang.String)">removeCustomMetadata</a>, <a href="../core/Entity.html#replaceCustomMetadata(java.lang.String,java.lang.String,com.atlan.model.core.CustomMetadataAttributes)">replaceCustomMetadata</a>, <a href="../core/Entity.html#retrieveFull(java.lang.String)">retrieveFull</a>, <a href="../core/Entity.html#retrieveFull(java.lang.String,java.lang.String)">retrieveFull</a>, <a href="../core/Entity.html#retrieveMinimal(java.lang.String)">retrieveMinimal</a>, <a href="../core/Entity.html#retrieveMinimal(java.lang.String,java.lang.String)">retrieveMinimal</a>, <a href="../core/Entity.html#setClassificationNames(java.util.Set)">setClassificationNames</a>, <a href="../core/Entity.html#setClassifications(java.util.Set)">setClassifications</a>, <a href="../core/Entity.html#setCustomMetadataSets(java.util.Map)">setCustomMetadataSets</a>, <a href="../core/Entity.html#setIsIncomplete(java.lang.Boolean)">setIsIncomplete</a>, <a href="../core/Entity.html#setMeaningNames(java.util.Set)">setMeaningNames</a>, <a href="../core/Entity.html#setNullFields(java.util.Set)">setNullFields</a>, <a href="../core/Entity.html#updateCustomMetadataAttributes(java.lang.String,java.lang.String,com.atlan.model.core.CustomMetadataAttributes)">updateCustomMetadataAttributes</a>, <a href="../core/Entity.html#upsert()">upsert</a>, <a href="../core/Entity.html#upsert(boolean,boolean)">upsert</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.com.atlan.model.relations.Reference">
@@ -589,12 +620,12 @@ extends <a href="Preset.html" title="class in com.atlan.model.assets">Preset</a>
 <li class="blockList">
 <h4>refByGuid</h4>
 <pre class="methodSignature">public static&nbsp;<a href="PresetChart.html" title="class in com.atlan.model.assets">PresetChart</a>&nbsp;refByGuid&#8203;(java.lang.String&nbsp;guid)</pre>
-<div class="block">Reference to a Preset chart by GUID.</div>
+<div class="block">Reference to a PresetChart by GUID.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>guid</code> - the GUID of the Preset chart to reference</dd>
+<dd><code>guid</code> - the GUID of the PresetChart to reference</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>reference to a Preset chart that can be used for defining a relationship to a Preset chart</dd>
+<dd>reference to a PresetChart that can be used for defining a relationship to a PresetChart</dd>
 </dl>
 </li>
 </ul>
@@ -605,12 +636,12 @@ extends <a href="Preset.html" title="class in com.atlan.model.assets">Preset</a>
 <li class="blockList">
 <h4>refByQualifiedName</h4>
 <pre class="methodSignature">public static&nbsp;<a href="PresetChart.html" title="class in com.atlan.model.assets">PresetChart</a>&nbsp;refByQualifiedName&#8203;(java.lang.String&nbsp;qualifiedName)</pre>
-<div class="block">Reference to a Preset chart by qualifiedName.</div>
+<div class="block">Reference to a PresetChart by qualifiedName.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>qualifiedName</code> - the qualifiedName of the Preset chart to reference</dd>
+<dd><code>qualifiedName</code> - the qualifiedName of the PresetChart to reference</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>reference to a Preset chart that can be used for defining a relationship to a Preset chart</dd>
+<dd>reference to a PresetChart that can be used for defining a relationship to a PresetChart</dd>
 </dl>
 </li>
 </ul>
@@ -640,13 +671,13 @@ extends <a href="Preset.html" title="class in com.atlan.model.assets">Preset</a>
 <h4>updater</h4>
 <pre class="methodSignature">public static&nbsp;<a href="PresetChart.PresetChartBuilder.html" title="class in com.atlan.model.assets">PresetChart.PresetChartBuilder</a>&lt;?,&#8203;?&gt;&nbsp;updater&#8203;(java.lang.String&nbsp;qualifiedName,
                                                                 java.lang.String&nbsp;name)</pre>
-<div class="block">Builds the minimal object necessary to update a Preset chart.</div>
+<div class="block">Builds the minimal object necessary to update a PresetChart.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>qualifiedName</code> - of the chart</dd>
-<dd><code>name</code> - of the chart</dd>
+<dd><code>qualifiedName</code> - of the PresetChart</dd>
+<dd><code>name</code> - of the PresetChart</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the minimal object necessary to update the chart, as a builder</dd>
+<dd>the minimal request necessary to update the PresetChart, as a builder</dd>
 </dl>
 </li>
 </ul>
@@ -657,13 +688,13 @@ extends <a href="Preset.html" title="class in com.atlan.model.assets">Preset</a>
 <li class="blockList">
 <h4>trimToRequired</h4>
 <pre class="methodSignature">protected&nbsp;<a href="PresetChart.PresetChartBuilder.html" title="class in com.atlan.model.assets">PresetChart.PresetChartBuilder</a>&lt;?,&#8203;?&gt;&nbsp;trimToRequired()</pre>
-<div class="block">Builds the minimal object necessary to apply an update to a Preset chart, from a potentially
- more-complete Preset chart object.</div>
+<div class="block">Builds the minimal object necessary to apply an update to a PresetChart, from a potentially
+ more-complete PresetChart object.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="Asset.html#trimToRequired()">trimToRequired</a></code>&nbsp;in class&nbsp;<code><a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the minimal object necessary to update the Preset chart, as a builder</dd>
+<dd>the minimal object necessary to update the PresetChart, as a builder</dd>
 </dl>
 </li>
 </ul>
@@ -677,14 +708,14 @@ extends <a href="Preset.html" title="class in com.atlan.model.assets">Preset</a>
                                             <a href="../enums/AtlanCertificateStatus.html" title="enum in com.atlan.model.enums">AtlanCertificateStatus</a>&nbsp;certificate,
                                             java.lang.String&nbsp;message)
                                      throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
-<div class="block">Update the certificate on a Preset chart.</div>
+<div class="block">Update the certificate on a PresetChart.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>qualifiedName</code> - of the chart</dd>
+<dd><code>qualifiedName</code> - of the PresetChart</dd>
 <dd><code>certificate</code> - to use</dd>
 <dd><code>message</code> - (optional) message, or null if no message</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the updated chart, or null if the update failed</dd>
+<dd>the updated PresetChart, or null if the update failed</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API problems</dd>
 </dl>
@@ -699,13 +730,13 @@ extends <a href="Preset.html" title="class in com.atlan.model.assets">Preset</a>
 <pre class="methodSignature">public static&nbsp;<a href="PresetChart.html" title="class in com.atlan.model.assets">PresetChart</a>&nbsp;removeCertificate&#8203;(java.lang.String&nbsp;qualifiedName,
                                             java.lang.String&nbsp;name)
                                      throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
-<div class="block">Remove the certificate from a Preset chart.</div>
+<div class="block">Remove the certificate from a PresetChart.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>qualifiedName</code> - of the chart</dd>
-<dd><code>name</code> - of the chart</dd>
+<dd><code>qualifiedName</code> - of the PresetChart</dd>
+<dd><code>name</code> - of the PresetChart</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the updated chart, or null if the removal failed</dd>
+<dd>the updated PresetChart, or null if the removal failed</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API problems</dd>
 </dl>
@@ -722,10 +753,10 @@ extends <a href="Preset.html" title="class in com.atlan.model.assets">Preset</a>
                                              java.lang.String&nbsp;title,
                                              java.lang.String&nbsp;message)
                                       throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
-<div class="block">Update the announcement on a Preset chart.</div>
+<div class="block">Update the announcement on a PresetChart.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>qualifiedName</code> - of the chart</dd>
+<dd><code>qualifiedName</code> - of the PresetChart</dd>
 <dd><code>type</code> - type of announcement to set</dd>
 <dd><code>title</code> - (optional) title of the announcement to set (or null for no title)</dd>
 <dd><code>message</code> - (optional) message of the announcement to set (or null for no message)</dd>
@@ -745,13 +776,13 @@ extends <a href="Preset.html" title="class in com.atlan.model.assets">Preset</a>
 <pre class="methodSignature">public static&nbsp;<a href="PresetChart.html" title="class in com.atlan.model.assets">PresetChart</a>&nbsp;removeAnnouncement&#8203;(java.lang.String&nbsp;qualifiedName,
                                              java.lang.String&nbsp;name)
                                       throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
-<div class="block">Remove the announcement from a Preset chart.</div>
+<div class="block">Remove the announcement from a PresetChart.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>qualifiedName</code> - of the chart</dd>
-<dd><code>name</code> - of the chart</dd>
+<dd><code>qualifiedName</code> - of the PresetChart</dd>
+<dd><code>name</code> - of the PresetChart</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the updated chart, or null if the removal failed</dd>
+<dd>the updated PresetChart, or null if the removal failed</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API problems</dd>
 </dl>
@@ -766,13 +797,13 @@ extends <a href="Preset.html" title="class in com.atlan.model.assets">Preset</a>
 <pre class="methodSignature">public static&nbsp;void&nbsp;addClassifications&#8203;(java.lang.String&nbsp;qualifiedName,
                                       java.util.List&lt;java.lang.String&gt;&nbsp;classificationNames)
                                throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
-<div class="block">Add classifications to a Preset chart.</div>
+<div class="block">Add classifications to a PresetChart.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>qualifiedName</code> - of the chart</dd>
+<dd><code>qualifiedName</code> - of the PresetChart</dd>
 <dd><code>classificationNames</code> - human-readable names of the classifications to add</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API problems, or if any of the classifications already exist on the chart</dd>
+<dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API problems, or if any of the classifications already exist on the PresetChart</dd>
 </dl>
 </li>
 </ul>
@@ -785,13 +816,13 @@ extends <a href="Preset.html" title="class in com.atlan.model.assets">Preset</a>
 <pre class="methodSignature">public static&nbsp;void&nbsp;removeClassification&#8203;(java.lang.String&nbsp;qualifiedName,
                                         java.lang.String&nbsp;classificationName)
                                  throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
-<div class="block">Remove a classification from a Preset chart.</div>
+<div class="block">Remove a classification from a PresetChart.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>qualifiedName</code> - of the chart</dd>
+<dd><code>qualifiedName</code> - of the PresetChart</dd>
 <dd><code>classificationName</code> - human-readable name of the classification to remove</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API problems, or if the classification does not exist on the chart</dd>
+<dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API problems, or if the classification does not exist on the PresetChart</dd>
 </dl>
 </li>
 </ul>
@@ -805,14 +836,14 @@ extends <a href="Preset.html" title="class in com.atlan.model.assets">Preset</a>
                                        java.lang.String&nbsp;name,
                                        java.util.List&lt;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;terms)
                                 throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
-<div class="block">Replace the terms linked to the chart.</div>
+<div class="block">Replace the terms linked to the PresetChart.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>qualifiedName</code> - for the chart</dd>
-<dd><code>name</code> - human-readable name of the chart</dd>
-<dd><code>terms</code> - the list of terms to replace on the chart, or null to remove all terms from the chart</dd>
+<dd><code>qualifiedName</code> - for the PresetChart</dd>
+<dd><code>name</code> - human-readable name of the PresetChart</dd>
+<dd><code>terms</code> - the list of terms to replace on the PresetChart, or null to remove all terms from the PresetChart</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the chart that was updated (note that it will NOT contain details of the replaced terms)</dd>
+<dd>the PresetChart that was updated (note that it will NOT contain details of the replaced terms)</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API problems</dd>
 </dl>
@@ -827,15 +858,15 @@ extends <a href="Preset.html" title="class in com.atlan.model.assets">Preset</a>
 <pre class="methodSignature">public static&nbsp;<a href="PresetChart.html" title="class in com.atlan.model.assets">PresetChart</a>&nbsp;appendTerms&#8203;(java.lang.String&nbsp;qualifiedName,
                                       java.util.List&lt;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;terms)
                                throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
-<div class="block">Link additional terms to the Preset chart, without replacing existing terms linked to the chart.
- Note: this operation must make two API calls — one to retrieve the chart's existing terms,
+<div class="block">Link additional terms to the PresetChart, without replacing existing terms linked to the PresetChart.
+ Note: this operation must make two API calls — one to retrieve the PresetChart's existing terms,
  and a second to append the new terms.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>qualifiedName</code> - for the chart</dd>
-<dd><code>terms</code> - the list of terms to append to the chart</dd>
+<dd><code>qualifiedName</code> - for the PresetChart</dd>
+<dd><code>terms</code> - the list of terms to append to the PresetChart</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the chart that was updated  (note that it will NOT contain details of the appended terms)</dd>
+<dd>the PresetChart that was updated  (note that it will NOT contain details of the appended terms)</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API problems</dd>
 </dl>
@@ -850,15 +881,15 @@ extends <a href="Preset.html" title="class in com.atlan.model.assets">Preset</a>
 <pre class="methodSignature">public static&nbsp;<a href="PresetChart.html" title="class in com.atlan.model.assets">PresetChart</a>&nbsp;removeTerms&#8203;(java.lang.String&nbsp;qualifiedName,
                                       java.util.List&lt;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;terms)
                                throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
-<div class="block">Remove terms from a Preset chart, without replacing all existing terms linked to the chart.
- Note: this operation must make two API calls — one to retrieve the chart's existing terms,
+<div class="block">Remove terms from a PresetChart, without replacing all existing terms linked to the PresetChart.
+ Note: this operation must make two API calls — one to retrieve the PresetChart's existing terms,
  and a second to remove the provided terms.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>qualifiedName</code> - for the chart</dd>
-<dd><code>terms</code> - the list of terms to remove from the chart, which must be referenced by GUID</dd>
+<dd><code>qualifiedName</code> - for the PresetChart</dd>
+<dd><code>terms</code> - the list of terms to remove from the PresetChart, which must be referenced by GUID</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the chart that was updated (note that it will NOT contain details of the resulting terms)</dd>
+<dd>the PresetChart that was updated (note that it will NOT contain details of the resulting terms)</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API problems</dd>
 </dl>
@@ -992,7 +1023,7 @@ extends <a href="Preset.html" title="class in com.atlan.model.assets">Preset</a>
 <li class="blockList">
 <h4>getTypeName</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getTypeName()</pre>
-<div class="block">Fixed typeName for Preset charts.</div>
+<div class="block">Fixed typeName for PresetCharts.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code><a href="../relations/Reference.html#getTypeName()">getTypeName</a></code>&nbsp;in class&nbsp;<code><a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a></code></dd>
@@ -1006,7 +1037,7 @@ extends <a href="Preset.html" title="class in com.atlan.model.assets">Preset</a>
 <li class="blockList">
 <h4>setTypeName</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;setTypeName&#8203;(java.lang.String&nbsp;typeName)</pre>
-<div class="block">Fixed typeName for Preset charts.</div>
+<div class="block">Fixed typeName for PresetCharts.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code><a href="../relations/Reference.html#setTypeName(java.lang.String)">setTypeName</a></code>&nbsp;in class&nbsp;<code><a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a></code></dd>

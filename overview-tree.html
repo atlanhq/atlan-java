@@ -175,10 +175,17 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul>
 <li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/Asset.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Asset</span></a>
 <ul>
-<li class="circle">com.atlan.model.lineage.<a href="com/atlan/model/lineage/AbstractProcess.html" title="class in com.atlan.model.lineage"><span class="typeNameLink">AbstractProcess</span></a>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/AbstractProcess.html" title="class in com.atlan.model.assets"><span class="typeNameLink">AbstractProcess</span></a>
 <ul>
-<li class="circle">com.atlan.model.lineage.<a href="com/atlan/model/lineage/ColumnProcess.html" title="class in com.atlan.model.lineage"><span class="typeNameLink">ColumnProcess</span></a></li>
-<li class="circle">com.atlan.model.lineage.<a href="com/atlan/model/lineage/LineageProcess.html" title="class in com.atlan.model.lineage"><span class="typeNameLink">LineageProcess</span></a></li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/AbstractColumnProcess.html" title="class in com.atlan.model.assets"><span class="typeNameLink">AbstractColumnProcess</span></a>
+<ul>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/ColumnProcess.html" title="class in com.atlan.model.assets"><span class="typeNameLink">ColumnProcess</span></a></li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/DbtColumnProcess.html" title="class in com.atlan.model.assets"><span class="typeNameLink">DbtColumnProcess</span></a></li>
+</ul>
+</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/BIProcess.html" title="class in com.atlan.model.assets"><span class="typeNameLink">BIProcess</span></a></li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/DbtProcess.html" title="class in com.atlan.model.assets"><span class="typeNameLink">DbtProcess</span></a></li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/LineageProcess.html" title="class in com.atlan.model.assets"><span class="typeNameLink">LineageProcess</span></a></li>
 </ul>
 </li>
 <li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/Catalog.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Catalog</span></a>
@@ -193,40 +200,145 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </li>
 </ul>
 </li>
-<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/Resource.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Resource</span></a>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/BI.html" title="class in com.atlan.model.assets"><span class="typeNameLink">BI</span></a>
 <ul>
-<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/Link.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Link</span></a></li>
-<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/Readme.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Readme</span></a></li>
-</ul>
-</li>
-<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/SQL.html" title="class in com.atlan.model.assets"><span class="typeNameLink">SQL</span></a>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/Looker.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Looker</span></a>
 <ul>
-<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/Column.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Column</span></a></li>
-<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/Database.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Database</span></a></li>
-<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/MaterializedView.html" title="class in com.atlan.model.assets"><span class="typeNameLink">MaterializedView</span></a></li>
-<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/Schema.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Schema</span></a></li>
-<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/Table.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Table</span></a></li>
-<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/View.html" title="class in com.atlan.model.assets"><span class="typeNameLink">View</span></a></li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/LookerDashboard.html" title="class in com.atlan.model.assets"><span class="typeNameLink">LookerDashboard</span></a></li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/LookerExplore.html" title="class in com.atlan.model.assets"><span class="typeNameLink">LookerExplore</span></a></li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/LookerField.html" title="class in com.atlan.model.assets"><span class="typeNameLink">LookerField</span></a></li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/LookerFolder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">LookerFolder</span></a></li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/LookerLook.html" title="class in com.atlan.model.assets"><span class="typeNameLink">LookerLook</span></a></li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/LookerModel.html" title="class in com.atlan.model.assets"><span class="typeNameLink">LookerModel</span></a></li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/LookerProject.html" title="class in com.atlan.model.assets"><span class="typeNameLink">LookerProject</span></a></li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/LookerQuery.html" title="class in com.atlan.model.assets"><span class="typeNameLink">LookerQuery</span></a></li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/LookerTile.html" title="class in com.atlan.model.assets"><span class="typeNameLink">LookerTile</span></a></li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/LookerView.html" title="class in com.atlan.model.assets"><span class="typeNameLink">LookerView</span></a></li>
 </ul>
 </li>
-</ul>
-</li>
-<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/Connection.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Connection</span></a></li>
-<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/Glossary.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Glossary</span></a></li>
-<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/GlossaryCategory.html" title="class in com.atlan.model.assets"><span class="typeNameLink">GlossaryCategory</span></a></li>
-<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/GlossaryTerm.html" title="class in com.atlan.model.assets"><span class="typeNameLink">GlossaryTerm</span></a></li>
-<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/Google.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Google</span></a>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/Metabase.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Metabase</span></a>
 <ul>
-<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/DataStudioAsset.html" title="class in com.atlan.model.assets"><span class="typeNameLink">DataStudioAsset</span></a></li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/MetabaseCollection.html" title="class in com.atlan.model.assets"><span class="typeNameLink">MetabaseCollection</span></a></li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/MetabaseDashboard.html" title="class in com.atlan.model.assets"><span class="typeNameLink">MetabaseDashboard</span></a></li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/MetabaseQuestion.html" title="class in com.atlan.model.assets"><span class="typeNameLink">MetabaseQuestion</span></a></li>
 </ul>
 </li>
-<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/IndistinctAsset.html" title="class in com.atlan.model.assets"><span class="typeNameLink">IndistinctAsset</span></a></li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/Mode.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Mode</span></a>
+<ul>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/ModeChart.html" title="class in com.atlan.model.assets"><span class="typeNameLink">ModeChart</span></a></li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/ModeCollection.html" title="class in com.atlan.model.assets"><span class="typeNameLink">ModeCollection</span></a></li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/ModeQuery.html" title="class in com.atlan.model.assets"><span class="typeNameLink">ModeQuery</span></a></li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/ModeReport.html" title="class in com.atlan.model.assets"><span class="typeNameLink">ModeReport</span></a></li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/ModeWorkspace.html" title="class in com.atlan.model.assets"><span class="typeNameLink">ModeWorkspace</span></a></li>
+</ul>
+</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/PowerBI.html" title="class in com.atlan.model.assets"><span class="typeNameLink">PowerBI</span></a>
+<ul>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/PowerBIColumn.html" title="class in com.atlan.model.assets"><span class="typeNameLink">PowerBIColumn</span></a></li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/PowerBIDashboard.html" title="class in com.atlan.model.assets"><span class="typeNameLink">PowerBIDashboard</span></a></li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/PowerBIDataflow.html" title="class in com.atlan.model.assets"><span class="typeNameLink">PowerBIDataflow</span></a></li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/PowerBIDataset.html" title="class in com.atlan.model.assets"><span class="typeNameLink">PowerBIDataset</span></a></li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/PowerBIDatasource.html" title="class in com.atlan.model.assets"><span class="typeNameLink">PowerBIDatasource</span></a></li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/PowerBIMeasure.html" title="class in com.atlan.model.assets"><span class="typeNameLink">PowerBIMeasure</span></a></li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/PowerBIPage.html" title="class in com.atlan.model.assets"><span class="typeNameLink">PowerBIPage</span></a></li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/PowerBIReport.html" title="class in com.atlan.model.assets"><span class="typeNameLink">PowerBIReport</span></a></li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/PowerBITable.html" title="class in com.atlan.model.assets"><span class="typeNameLink">PowerBITable</span></a></li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/PowerBITile.html" title="class in com.atlan.model.assets"><span class="typeNameLink">PowerBITile</span></a></li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/PowerBIWorkspace.html" title="class in com.atlan.model.assets"><span class="typeNameLink">PowerBIWorkspace</span></a></li>
+</ul>
+</li>
 <li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/Preset.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Preset</span></a>
 <ul>
 <li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/PresetChart.html" title="class in com.atlan.model.assets"><span class="typeNameLink">PresetChart</span></a></li>
 <li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/PresetDashboard.html" title="class in com.atlan.model.assets"><span class="typeNameLink">PresetDashboard</span></a></li>
 <li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/PresetDataset.html" title="class in com.atlan.model.assets"><span class="typeNameLink">PresetDataset</span></a></li>
 <li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/PresetWorkspace.html" title="class in com.atlan.model.assets"><span class="typeNameLink">PresetWorkspace</span></a></li>
+</ul>
+</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/Tableau.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Tableau</span></a>
+<ul>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/TableauCalculatedField.html" title="class in com.atlan.model.assets"><span class="typeNameLink">TableauCalculatedField</span></a></li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/TableauDashboard.html" title="class in com.atlan.model.assets"><span class="typeNameLink">TableauDashboard</span></a></li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/TableauDatasource.html" title="class in com.atlan.model.assets"><span class="typeNameLink">TableauDatasource</span></a></li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/TableauDatasourceField.html" title="class in com.atlan.model.assets"><span class="typeNameLink">TableauDatasourceField</span></a></li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/TableauFlow.html" title="class in com.atlan.model.assets"><span class="typeNameLink">TableauFlow</span></a></li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/TableauMetric.html" title="class in com.atlan.model.assets"><span class="typeNameLink">TableauMetric</span></a></li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/TableauProject.html" title="class in com.atlan.model.assets"><span class="typeNameLink">TableauProject</span></a></li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/TableauSite.html" title="class in com.atlan.model.assets"><span class="typeNameLink">TableauSite</span></a></li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/TableauWorkbook.html" title="class in com.atlan.model.assets"><span class="typeNameLink">TableauWorkbook</span></a></li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/TableauWorksheet.html" title="class in com.atlan.model.assets"><span class="typeNameLink">TableauWorksheet</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/DataQuality.html" title="class in com.atlan.model.assets"><span class="typeNameLink">DataQuality</span></a>
+<ul>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/Metric.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Metric</span></a>
+<ul>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/DbtMetric.html" title="class in com.atlan.model.assets"><span class="typeNameLink">DbtMetric</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/Dbt.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Dbt</span></a>
+<ul>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/DbtModel.html" title="class in com.atlan.model.assets"><span class="typeNameLink">DbtModel</span></a></li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/DbtModelColumn.html" title="class in com.atlan.model.assets"><span class="typeNameLink">DbtModelColumn</span></a></li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/DbtSource.html" title="class in com.atlan.model.assets"><span class="typeNameLink">DbtSource</span></a></li>
+</ul>
+</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/Google.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Google</span></a>
+<ul>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/DataStudioAsset.html" title="class in com.atlan.model.assets"><span class="typeNameLink">DataStudioAsset</span></a></li>
+</ul>
+</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/Insight.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Insight</span></a></li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/ObjectStore.html" title="class in com.atlan.model.assets"><span class="typeNameLink">ObjectStore</span></a></li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/Resource.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Resource</span></a>
+<ul>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/Link.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Link</span></a></li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/Readme.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Readme</span></a></li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/ReadmeTemplate.html" title="class in com.atlan.model.assets"><span class="typeNameLink">ReadmeTemplate</span></a></li>
+</ul>
+</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/SaaS.html" title="class in com.atlan.model.assets"><span class="typeNameLink">SaaS</span></a>
+<ul>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/Salesforce.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Salesforce</span></a>
+<ul>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/SalesforceDashboard.html" title="class in com.atlan.model.assets"><span class="typeNameLink">SalesforceDashboard</span></a></li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/SalesforceField.html" title="class in com.atlan.model.assets"><span class="typeNameLink">SalesforceField</span></a></li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/SalesforceObject.html" title="class in com.atlan.model.assets"><span class="typeNameLink">SalesforceObject</span></a></li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/SalesforceOrganization.html" title="class in com.atlan.model.assets"><span class="typeNameLink">SalesforceOrganization</span></a></li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/SalesforceReport.html" title="class in com.atlan.model.assets"><span class="typeNameLink">SalesforceReport</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/SQL.html" title="class in com.atlan.model.assets"><span class="typeNameLink">SQL</span></a>
+<ul>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/AtlanQuery.html" title="class in com.atlan.model.assets"><span class="typeNameLink">AtlanQuery</span></a></li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/Column.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Column</span></a></li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/Database.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Database</span></a></li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/MaterializedView.html" title="class in com.atlan.model.assets"><span class="typeNameLink">MaterializedView</span></a></li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/Procedure.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Procedure</span></a></li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/Schema.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Schema</span></a></li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/Table.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Table</span></a></li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/TablePartition.html" title="class in com.atlan.model.assets"><span class="typeNameLink">TablePartition</span></a></li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/View.html" title="class in com.atlan.model.assets"><span class="typeNameLink">View</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/Cloud.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Cloud</span></a></li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/Connection.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Connection</span></a></li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/Glossary.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Glossary</span></a></li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/GlossaryCategory.html" title="class in com.atlan.model.assets"><span class="typeNameLink">GlossaryCategory</span></a></li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/GlossaryTerm.html" title="class in com.atlan.model.assets"><span class="typeNameLink">GlossaryTerm</span></a></li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/IndistinctAsset.html" title="class in com.atlan.model.assets"><span class="typeNameLink">IndistinctAsset</span></a></li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/Namespace.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Namespace</span></a>
+<ul>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/AtlanCollection.html" title="class in com.atlan.model.assets"><span class="typeNameLink">AtlanCollection</span></a></li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/Folder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Folder</span></a></li>
 </ul>
 </li>
 </ul>
@@ -288,10 +400,17 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul>
 <li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/Asset.AssetBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Asset.AssetBuilder</span></a>&lt;C,&#8203;B&gt;
 <ul>
-<li class="circle">com.atlan.model.lineage.<a href="com/atlan/model/lineage/AbstractProcess.AbstractProcessBuilder.html" title="class in com.atlan.model.lineage"><span class="typeNameLink">AbstractProcess.AbstractProcessBuilder</span></a>&lt;C,&#8203;B&gt;
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/AbstractProcess.AbstractProcessBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">AbstractProcess.AbstractProcessBuilder</span></a>&lt;C,&#8203;B&gt;
 <ul>
-<li class="circle">com.atlan.model.lineage.<a href="com/atlan/model/lineage/ColumnProcess.ColumnProcessBuilder.html" title="class in com.atlan.model.lineage"><span class="typeNameLink">ColumnProcess.ColumnProcessBuilder</span></a>&lt;C,&#8203;B&gt;</li>
-<li class="circle">com.atlan.model.lineage.<a href="com/atlan/model/lineage/LineageProcess.LineageProcessBuilder.html" title="class in com.atlan.model.lineage"><span class="typeNameLink">LineageProcess.LineageProcessBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/AbstractColumnProcess.AbstractColumnProcessBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">AbstractColumnProcess.AbstractColumnProcessBuilder</span></a>&lt;C,&#8203;B&gt;
+<ul>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/ColumnProcess.ColumnProcessBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">ColumnProcess.ColumnProcessBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/DbtColumnProcess.DbtColumnProcessBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">DbtColumnProcess.DbtColumnProcessBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+</ul>
+</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/BIProcess.BIProcessBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">BIProcess.BIProcessBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/DbtProcess.DbtProcessBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">DbtProcess.DbtProcessBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/LineageProcess.LineageProcessBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">LineageProcess.LineageProcessBuilder</span></a>&lt;C,&#8203;B&gt;</li>
 </ul>
 </li>
 <li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/Catalog.CatalogBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Catalog.CatalogBuilder</span></a>&lt;C,&#8203;B&gt;
@@ -306,40 +425,145 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </li>
 </ul>
 </li>
-<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/Resource.ResourceBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Resource.ResourceBuilder</span></a>&lt;C,&#8203;B&gt;
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/BI.BIBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">BI.BIBuilder</span></a>&lt;C,&#8203;B&gt;
 <ul>
-<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/Link.LinkBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Link.LinkBuilder</span></a>&lt;C,&#8203;B&gt;</li>
-<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/Readme.ReadmeBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Readme.ReadmeBuilder</span></a>&lt;C,&#8203;B&gt;</li>
-</ul>
-</li>
-<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/SQL.SQLBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">SQL.SQLBuilder</span></a>&lt;C,&#8203;B&gt;
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/Looker.LookerBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Looker.LookerBuilder</span></a>&lt;C,&#8203;B&gt;
 <ul>
-<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/Column.ColumnBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Column.ColumnBuilder</span></a>&lt;C,&#8203;B&gt;</li>
-<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/Database.DatabaseBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Database.DatabaseBuilder</span></a>&lt;C,&#8203;B&gt;</li>
-<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/MaterializedView.MaterializedViewBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">MaterializedView.MaterializedViewBuilder</span></a>&lt;C,&#8203;B&gt;</li>
-<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/Schema.SchemaBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Schema.SchemaBuilder</span></a>&lt;C,&#8203;B&gt;</li>
-<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/Table.TableBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Table.TableBuilder</span></a>&lt;C,&#8203;B&gt;</li>
-<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/View.ViewBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">View.ViewBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/LookerDashboard.LookerDashboardBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">LookerDashboard.LookerDashboardBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/LookerExplore.LookerExploreBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">LookerExplore.LookerExploreBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/LookerField.LookerFieldBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">LookerField.LookerFieldBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/LookerFolder.LookerFolderBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">LookerFolder.LookerFolderBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/LookerLook.LookerLookBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">LookerLook.LookerLookBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/LookerModel.LookerModelBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">LookerModel.LookerModelBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/LookerProject.LookerProjectBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">LookerProject.LookerProjectBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/LookerQuery.LookerQueryBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">LookerQuery.LookerQueryBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/LookerTile.LookerTileBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">LookerTile.LookerTileBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/LookerView.LookerViewBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">LookerView.LookerViewBuilder</span></a>&lt;C,&#8203;B&gt;</li>
 </ul>
 </li>
-</ul>
-</li>
-<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/Connection.ConnectionBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Connection.ConnectionBuilder</span></a>&lt;C,&#8203;B&gt;</li>
-<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/Glossary.GlossaryBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Glossary.GlossaryBuilder</span></a>&lt;C,&#8203;B&gt;</li>
-<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/GlossaryCategory.GlossaryCategoryBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">GlossaryCategory.GlossaryCategoryBuilder</span></a>&lt;C,&#8203;B&gt;</li>
-<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/GlossaryTerm.GlossaryTermBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">GlossaryTerm.GlossaryTermBuilder</span></a>&lt;C,&#8203;B&gt;</li>
-<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/Google.GoogleBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Google.GoogleBuilder</span></a>&lt;C,&#8203;B&gt;
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/Metabase.MetabaseBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Metabase.MetabaseBuilder</span></a>&lt;C,&#8203;B&gt;
 <ul>
-<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/DataStudioAsset.DataStudioAssetBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">DataStudioAsset.DataStudioAssetBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/MetabaseCollection.MetabaseCollectionBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">MetabaseCollection.MetabaseCollectionBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/MetabaseDashboard.MetabaseDashboardBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">MetabaseDashboard.MetabaseDashboardBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/MetabaseQuestion.MetabaseQuestionBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">MetabaseQuestion.MetabaseQuestionBuilder</span></a>&lt;C,&#8203;B&gt;</li>
 </ul>
 </li>
-<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/IndistinctAsset.IndistinctAssetBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">IndistinctAsset.IndistinctAssetBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/Mode.ModeBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Mode.ModeBuilder</span></a>&lt;C,&#8203;B&gt;
+<ul>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/ModeChart.ModeChartBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">ModeChart.ModeChartBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/ModeCollection.ModeCollectionBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">ModeCollection.ModeCollectionBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/ModeQuery.ModeQueryBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">ModeQuery.ModeQueryBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/ModeReport.ModeReportBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">ModeReport.ModeReportBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/ModeWorkspace.ModeWorkspaceBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">ModeWorkspace.ModeWorkspaceBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+</ul>
+</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/PowerBI.PowerBIBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">PowerBI.PowerBIBuilder</span></a>&lt;C,&#8203;B&gt;
+<ul>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/PowerBIColumn.PowerBIColumnBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">PowerBIColumn.PowerBIColumnBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/PowerBIDashboard.PowerBIDashboardBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">PowerBIDashboard.PowerBIDashboardBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/PowerBIDataflow.PowerBIDataflowBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">PowerBIDataflow.PowerBIDataflowBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/PowerBIDataset.PowerBIDatasetBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">PowerBIDataset.PowerBIDatasetBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/PowerBIDatasource.PowerBIDatasourceBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">PowerBIDatasource.PowerBIDatasourceBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/PowerBIMeasure.PowerBIMeasureBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">PowerBIMeasure.PowerBIMeasureBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/PowerBIPage.PowerBIPageBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">PowerBIPage.PowerBIPageBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/PowerBIReport.PowerBIReportBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">PowerBIReport.PowerBIReportBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/PowerBITable.PowerBITableBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">PowerBITable.PowerBITableBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/PowerBITile.PowerBITileBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">PowerBITile.PowerBITileBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/PowerBIWorkspace.PowerBIWorkspaceBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">PowerBIWorkspace.PowerBIWorkspaceBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+</ul>
+</li>
 <li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/Preset.PresetBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Preset.PresetBuilder</span></a>&lt;C,&#8203;B&gt;
 <ul>
 <li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/PresetChart.PresetChartBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">PresetChart.PresetChartBuilder</span></a>&lt;C,&#8203;B&gt;</li>
 <li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/PresetDashboard.PresetDashboardBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">PresetDashboard.PresetDashboardBuilder</span></a>&lt;C,&#8203;B&gt;</li>
 <li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/PresetDataset.PresetDatasetBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">PresetDataset.PresetDatasetBuilder</span></a>&lt;C,&#8203;B&gt;</li>
 <li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/PresetWorkspace.PresetWorkspaceBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">PresetWorkspace.PresetWorkspaceBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+</ul>
+</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/Tableau.TableauBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Tableau.TableauBuilder</span></a>&lt;C,&#8203;B&gt;
+<ul>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/TableauCalculatedField.TableauCalculatedFieldBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">TableauCalculatedField.TableauCalculatedFieldBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/TableauDashboard.TableauDashboardBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">TableauDashboard.TableauDashboardBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/TableauDatasource.TableauDatasourceBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">TableauDatasource.TableauDatasourceBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/TableauDatasourceField.TableauDatasourceFieldBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">TableauDatasourceField.TableauDatasourceFieldBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/TableauFlow.TableauFlowBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">TableauFlow.TableauFlowBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/TableauMetric.TableauMetricBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">TableauMetric.TableauMetricBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/TableauProject.TableauProjectBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">TableauProject.TableauProjectBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/TableauSite.TableauSiteBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">TableauSite.TableauSiteBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/TableauWorkbook.TableauWorkbookBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">TableauWorkbook.TableauWorkbookBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/TableauWorksheet.TableauWorksheetBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">TableauWorksheet.TableauWorksheetBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/DataQuality.DataQualityBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">DataQuality.DataQualityBuilder</span></a>&lt;C,&#8203;B&gt;
+<ul>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/Metric.MetricBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Metric.MetricBuilder</span></a>&lt;C,&#8203;B&gt;
+<ul>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/DbtMetric.DbtMetricBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">DbtMetric.DbtMetricBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/Dbt.DbtBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Dbt.DbtBuilder</span></a>&lt;C,&#8203;B&gt;
+<ul>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/DbtModel.DbtModelBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">DbtModel.DbtModelBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/DbtModelColumn.DbtModelColumnBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">DbtModelColumn.DbtModelColumnBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/DbtSource.DbtSourceBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">DbtSource.DbtSourceBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+</ul>
+</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/Google.GoogleBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Google.GoogleBuilder</span></a>&lt;C,&#8203;B&gt;
+<ul>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/DataStudioAsset.DataStudioAssetBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">DataStudioAsset.DataStudioAssetBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+</ul>
+</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/Insight.InsightBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Insight.InsightBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/ObjectStore.ObjectStoreBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">ObjectStore.ObjectStoreBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/Resource.ResourceBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Resource.ResourceBuilder</span></a>&lt;C,&#8203;B&gt;
+<ul>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/Link.LinkBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Link.LinkBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/Readme.ReadmeBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Readme.ReadmeBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/ReadmeTemplate.ReadmeTemplateBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">ReadmeTemplate.ReadmeTemplateBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+</ul>
+</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/SaaS.SaaSBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">SaaS.SaaSBuilder</span></a>&lt;C,&#8203;B&gt;
+<ul>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/Salesforce.SalesforceBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Salesforce.SalesforceBuilder</span></a>&lt;C,&#8203;B&gt;
+<ul>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/SalesforceDashboard.SalesforceDashboardBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">SalesforceDashboard.SalesforceDashboardBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/SalesforceField.SalesforceFieldBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">SalesforceField.SalesforceFieldBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/SalesforceObject.SalesforceObjectBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">SalesforceObject.SalesforceObjectBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/SalesforceOrganization.SalesforceOrganizationBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">SalesforceOrganization.SalesforceOrganizationBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/SalesforceReport.SalesforceReportBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">SalesforceReport.SalesforceReportBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/SQL.SQLBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">SQL.SQLBuilder</span></a>&lt;C,&#8203;B&gt;
+<ul>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/AtlanQuery.AtlanQueryBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">AtlanQuery.AtlanQueryBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/Column.ColumnBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Column.ColumnBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/Database.DatabaseBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Database.DatabaseBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/MaterializedView.MaterializedViewBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">MaterializedView.MaterializedViewBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/Procedure.ProcedureBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Procedure.ProcedureBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/Schema.SchemaBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Schema.SchemaBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/Table.TableBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Table.TableBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/TablePartition.TablePartitionBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">TablePartition.TablePartitionBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/View.ViewBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">View.ViewBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/Cloud.CloudBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Cloud.CloudBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/Connection.ConnectionBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Connection.ConnectionBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/Glossary.GlossaryBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Glossary.GlossaryBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/GlossaryCategory.GlossaryCategoryBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">GlossaryCategory.GlossaryCategoryBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/GlossaryTerm.GlossaryTermBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">GlossaryTerm.GlossaryTermBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/IndistinctAsset.IndistinctAssetBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">IndistinctAsset.IndistinctAssetBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/Namespace.NamespaceBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Namespace.NamespaceBuilder</span></a>&lt;C,&#8203;B&gt;
+<ul>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/AtlanCollection.AtlanCollectionBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">AtlanCollection.AtlanCollectionBuilder</span></a>&lt;C,&#8203;B&gt;</li>
+<li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/Folder.FolderBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Folder.FolderBuilder</span></a>&lt;C,&#8203;B&gt;</li>
 </ul>
 </li>
 </ul>

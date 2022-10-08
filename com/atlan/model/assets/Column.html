@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":9,"i2":9,"i3":10,"i4":9,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":10,"i32":10,"i33":10,"i34":9,"i35":9,"i36":9,"i37":9,"i38":9,"i39":9,"i40":9,"i41":10,"i42":10,"i43":10,"i44":10,"i45":10,"i46":10,"i47":10,"i48":10,"i49":10,"i50":10,"i51":10,"i52":10,"i53":10,"i54":10,"i55":10,"i56":10,"i57":10,"i58":10,"i59":10,"i60":10,"i61":10,"i62":10,"i63":10,"i64":10,"i65":10,"i66":10,"i67":10,"i68":10,"i69":9,"i70":9,"i71":9};
+var data = {"i0":9,"i1":9,"i2":9,"i3":10,"i4":9,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":10,"i32":10,"i33":10,"i34":10,"i35":10,"i36":10,"i37":9,"i38":9,"i39":9,"i40":9,"i41":9,"i42":9,"i43":9,"i44":10,"i45":10,"i46":10,"i47":10,"i48":10,"i49":10,"i50":10,"i51":10,"i52":10,"i53":10,"i54":10,"i55":10,"i56":10,"i57":10,"i58":10,"i59":10,"i60":10,"i61":10,"i62":10,"i63":10,"i64":10,"i65":10,"i66":10,"i67":10,"i68":10,"i69":10,"i70":10,"i71":10,"i72":10,"i73":10,"i74":10,"i75":9,"i76":9,"i77":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -166,7 +166,6 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <hr>
 <pre>public class <span class="typeNameLabel">Column</span>
 extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
-<div class="block">Instance of a column in Atlan, with its detailed information.</div>
 </li>
 </ul>
 </div>
@@ -303,7 +302,7 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addClassifications(java.lang.String,java.util.List)">addClassifications</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                   java.util.List&lt;java.lang.String&gt;&nbsp;classificationNames)</code></th>
 <td class="colLast">
-<div class="block">Add classifications to a column.</div>
+<div class="block">Add classifications to a Column.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
@@ -311,7 +310,7 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#appendTerms(java.lang.String,java.util.List)">appendTerms</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
            java.util.List&lt;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;terms)</code></th>
 <td class="colLast">
-<div class="block">Link additional terms to the column, without replacing existing terms linked to the column.</div>
+<div class="block">Link additional terms to the Column, without replacing existing terms linked to the Column.</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
@@ -339,474 +338,516 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
+<td class="colFirst"><code>java.util.SortedSet&lt;<a href="Metric.html" title="class in com.atlan.model.assets">Metric</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDataQualityMetricDimensions()">getDataQualityMetricDimensions</a></span>()</code></th>
+<td class="colLast">
+<div class="block">TBC</div>
+</td>
+</tr>
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDataType()">getDataType</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Type of the column.</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i8" class="altColor">
+<td class="colFirst"><code>java.util.SortedSet&lt;<a href="DbtModelColumn.html" title="class in com.atlan.model.assets">DbtModelColumn</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDbtModelColumns()">getDbtModelColumns</a></span>()</code></th>
+<td class="colLast">
+<div class="block">TBC</div>
+</td>
+</tr>
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDefaultValue()">getDefaultValue</a></span>()</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIsClustered()">getIsClustered</a></span>()</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIsDist()">getIsDist</a></span>()</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIsForeign()">getIsForeign</a></span>()</code></th>
 <td class="colLast">
 <div class="block">When true, this column is a foreign key to another table.</div>
 </td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIsIndexed()">getIsIndexed</a></span>()</code></th>
 <td class="colLast">
 <div class="block">When true, this column is indexed in the database.</div>
 </td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIsNullable()">getIsNullable</a></span>()</code></th>
 <td class="colLast">
 <div class="block">When true, the values in this column can be null.</div>
 </td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIsPartition()">getIsPartition</a></span>()</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIsPinned()">getIsPinned</a></span>()</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIsPrimary()">getIsPrimary</a></span>()</code></th>
 <td class="colLast">
 <div class="block">When true, this column is the primary key for the table.</div>
 </td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i18" class="altColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIsSort()">getIsSort</a></span>()</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i17" class="rowColor">
+<tr id="i19" class="rowColor">
 <td class="colFirst"><code><a href="MaterializedView.html" title="class in com.atlan.model.assets">MaterializedView</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMaterializedView()">getMaterializedView</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Materialized view in which this column exists, or null if the column exists in a table or view.</div>
 </td>
 </tr>
-<tr id="i18" class="altColor">
+<tr id="i20" class="altColor">
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMaxLength()">getMaxLength</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Maximum length of a value in this column.</div>
 </td>
 </tr>
-<tr id="i19" class="rowColor">
-<td class="colFirst"><code>java.lang.Float</code></td>
+<tr id="i21" class="rowColor">
+<td class="colFirst"><code>java.util.SortedSet&lt;<a href="Metric.html" title="class in com.atlan.model.assets">Metric</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMetricTimestamps()">getMetricTimestamps</a></span>()</code></th>
+<td class="colLast">
+<div class="block">TBC</div>
+</td>
+</tr>
+<tr id="i22" class="altColor">
+<td class="colFirst"><code>java.lang.Double</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getNumericScale()">getNumericScale</a></span>()</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i20" class="altColor">
+<tr id="i23" class="rowColor">
 <td class="colFirst"><code>java.lang.Integer</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOrder()">getOrder</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Order in which the column appears in the table (starting at 1).</div>
 </td>
 </tr>
-<tr id="i21" class="rowColor">
+<tr id="i24" class="altColor">
 <td class="colFirst"><code><a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getParent()">getParent</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Retrieve the parent of this column, irrespective of its type.</div>
 </td>
 </tr>
-<tr id="i22" class="altColor">
+<tr id="i25" class="rowColor">
 <td class="colFirst"><code>java.lang.Integer</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPartitionOrder()">getPartitionOrder</a></span>()</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i23" class="rowColor">
+<tr id="i26" class="altColor">
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPinnedAt()">getPinnedAt</a></span>()</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i24" class="altColor">
+<tr id="i27" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPinnedBy()">getPinnedBy</a></span>()</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i25" class="rowColor">
+<tr id="i28" class="altColor">
 <td class="colFirst"><code>java.lang.Integer</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPrecision()">getPrecision</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Total number of digits allowed when the <a href="#dataType"><code>dataType</code></a> is numeric.</div>
 </td>
 </tr>
-<tr id="i26" class="altColor">
-<td class="colFirst"><code>java.util.SortedSet&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;</code></td>
+<tr id="i29" class="rowColor">
+<td class="colFirst"><code>java.util.SortedSet&lt;<a href="AtlanQuery.html" title="class in com.atlan.model.assets">AtlanQuery</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getQueries()">getQueries</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Queries that involve this column.</div>
 </td>
 </tr>
-<tr id="i27" class="rowColor">
+<tr id="i30" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSubDataType()">getSubDataType</a></span>()</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i28" class="altColor">
+<tr id="i31" class="rowColor">
 <td class="colFirst"><code><a href="Table.html" title="class in com.atlan.model.assets">Table</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTable()">getTable</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Table in which this column exists, or null if the column exists in a view.</div>
 </td>
 </tr>
-<tr id="i29" class="rowColor">
-<td class="colFirst"><code><a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a></code></td>
+<tr id="i32" class="altColor">
+<td class="colFirst"><code><a href="TablePartition.html" title="class in com.atlan.model.assets">TablePartition</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTablePartition()">getTablePartition</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Table partition in which this column exists, if any.</div>
+<div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i30" class="altColor">
+<tr id="i33" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTypeName()">getTypeName</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Fixed typeName for tables.</div>
+<div class="block">Fixed typeName for Columns.</div>
 </td>
 </tr>
-<tr id="i31" class="rowColor">
+<tr id="i34" class="altColor">
 <td class="colFirst"><code>java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getValidations()">getValidations</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Unused attributes.</div>
+<div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i32" class="altColor">
+<tr id="i35" class="rowColor">
 <td class="colFirst"><code><a href="View.html" title="class in com.atlan.model.assets">View</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getView()">getView</a></span>()</code></th>
 <td class="colLast">
 <div class="block">View in which this column exists, or null if the column exists in a table or materialized view.</div>
 </td>
 </tr>
-<tr id="i33" class="rowColor">
+<tr id="i36" class="altColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hashCode()">hashCode</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i34" class="altColor">
+<tr id="i37" class="rowColor">
 <td class="colFirst"><code>static <a href="Column.html" title="class in com.atlan.model.assets">Column</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#refByGuid(java.lang.String)">refByGuid</a></span>&#8203;(java.lang.String&nbsp;guid)</code></th>
 <td class="colLast">
-<div class="block">Reference to a column by GUID.</div>
-</td>
-</tr>
-<tr id="i35" class="rowColor">
-<td class="colFirst"><code>static <a href="Column.html" title="class in com.atlan.model.assets">Column</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#refByQualifiedName(java.lang.String)">refByQualifiedName</a></span>&#8203;(java.lang.String&nbsp;qualifiedName)</code></th>
-<td class="colLast">
-<div class="block">Reference to a column by qualifiedName.</div>
-</td>
-</tr>
-<tr id="i36" class="altColor">
-<td class="colFirst"><code>static <a href="Column.html" title="class in com.atlan.model.assets">Column</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeAnnouncement(java.lang.String,java.lang.String)">removeAnnouncement</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
-                  java.lang.String&nbsp;name)</code></th>
-<td class="colLast">
-<div class="block">Remove the announcement from a column.</div>
-</td>
-</tr>
-<tr id="i37" class="rowColor">
-<td class="colFirst"><code>static <a href="Column.html" title="class in com.atlan.model.assets">Column</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeCertificate(java.lang.String,java.lang.String)">removeCertificate</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
-                 java.lang.String&nbsp;name)</code></th>
-<td class="colLast">
-<div class="block">Remove the certificate from a column.</div>
+<div class="block">Reference to a Column by GUID.</div>
 </td>
 </tr>
 <tr id="i38" class="altColor">
-<td class="colFirst"><code>static void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeClassification(java.lang.String,java.lang.String)">removeClassification</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
-                    java.lang.String&nbsp;classificationName)</code></th>
+<td class="colFirst"><code>static <a href="Column.html" title="class in com.atlan.model.assets">Column</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#refByQualifiedName(java.lang.String)">refByQualifiedName</a></span>&#8203;(java.lang.String&nbsp;qualifiedName)</code></th>
 <td class="colLast">
-<div class="block">Remove a classification from a column.</div>
+<div class="block">Reference to a Column by qualifiedName.</div>
 </td>
 </tr>
 <tr id="i39" class="rowColor">
 <td class="colFirst"><code>static <a href="Column.html" title="class in com.atlan.model.assets">Column</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeTerms(java.lang.String,java.util.List)">removeTerms</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
-           java.util.List&lt;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;terms)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeAnnouncement(java.lang.String,java.lang.String)">removeAnnouncement</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
+                  java.lang.String&nbsp;name)</code></th>
 <td class="colLast">
-<div class="block">Remove terms from a column, without replacing all existing terms linked to the column.</div>
+<div class="block">Remove the announcement from a Column.</div>
 </td>
 </tr>
 <tr id="i40" class="altColor">
+<td class="colFirst"><code>static <a href="Column.html" title="class in com.atlan.model.assets">Column</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeCertificate(java.lang.String,java.lang.String)">removeCertificate</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
+                 java.lang.String&nbsp;name)</code></th>
+<td class="colLast">
+<div class="block">Remove the certificate from a Column.</div>
+</td>
+</tr>
+<tr id="i41" class="rowColor">
+<td class="colFirst"><code>static void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeClassification(java.lang.String,java.lang.String)">removeClassification</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
+                    java.lang.String&nbsp;classificationName)</code></th>
+<td class="colLast">
+<div class="block">Remove a classification from a Column.</div>
+</td>
+</tr>
+<tr id="i42" class="altColor">
+<td class="colFirst"><code>static <a href="Column.html" title="class in com.atlan.model.assets">Column</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeTerms(java.lang.String,java.util.List)">removeTerms</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
+           java.util.List&lt;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;terms)</code></th>
+<td class="colLast">
+<div class="block">Remove terms from a Column, without replacing all existing terms linked to the Column.</div>
+</td>
+</tr>
+<tr id="i43" class="rowColor">
 <td class="colFirst"><code>static <a href="Column.html" title="class in com.atlan.model.assets">Column</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#replaceTerms(java.lang.String,java.lang.String,java.util.List)">replaceTerms</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
             java.lang.String&nbsp;name,
             java.util.List&lt;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;terms)</code></th>
 <td class="colLast">
-<div class="block">Replace the terms linked to the column.</div>
-</td>
-</tr>
-<tr id="i41" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setDataType(java.lang.String)">setDataType</a></span>&#8203;(java.lang.String&nbsp;dataType)</code></th>
-<td class="colLast">
-<div class="block">Type of the column.</div>
-</td>
-</tr>
-<tr id="i42" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setDefaultValue(java.lang.String)">setDefaultValue</a></span>&#8203;(java.lang.String&nbsp;defaultValue)</code></th>
-<td class="colLast">
-<div class="block">TBC</div>
-</td>
-</tr>
-<tr id="i43" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setIsClustered(java.lang.Boolean)">setIsClustered</a></span>&#8203;(java.lang.Boolean&nbsp;isClustered)</code></th>
-<td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Replace the terms linked to the Column.</div>
 </td>
 </tr>
 <tr id="i44" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setIsDist(java.lang.Boolean)">setIsDist</a></span>&#8203;(java.lang.Boolean&nbsp;isDist)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setDataQualityMetricDimensions(java.util.SortedSet)">setDataQualityMetricDimensions</a></span>&#8203;(java.util.SortedSet&lt;<a href="Metric.html" title="class in com.atlan.model.assets">Metric</a>&gt;&nbsp;dataQualityMetricDimensions)</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr id="i45" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setIsForeign(java.lang.Boolean)">setIsForeign</a></span>&#8203;(java.lang.Boolean&nbsp;isForeign)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setDataType(java.lang.String)">setDataType</a></span>&#8203;(java.lang.String&nbsp;dataType)</code></th>
 <td class="colLast">
-<div class="block">When true, this column is a foreign key to another table.</div>
+<div class="block">Type of the column.</div>
 </td>
 </tr>
 <tr id="i46" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setIsIndexed(java.lang.Boolean)">setIsIndexed</a></span>&#8203;(java.lang.Boolean&nbsp;isIndexed)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setDbtModelColumns(java.util.SortedSet)">setDbtModelColumns</a></span>&#8203;(java.util.SortedSet&lt;<a href="DbtModelColumn.html" title="class in com.atlan.model.assets">DbtModelColumn</a>&gt;&nbsp;dbtModelColumns)</code></th>
 <td class="colLast">
-<div class="block">When true, this column is indexed in the database.</div>
+<div class="block">TBC</div>
 </td>
 </tr>
 <tr id="i47" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setIsNullable(java.lang.Boolean)">setIsNullable</a></span>&#8203;(java.lang.Boolean&nbsp;isNullable)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setDefaultValue(java.lang.String)">setDefaultValue</a></span>&#8203;(java.lang.String&nbsp;defaultValue)</code></th>
 <td class="colLast">
-<div class="block">When true, the values in this column can be null.</div>
+<div class="block">TBC</div>
 </td>
 </tr>
 <tr id="i48" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setIsPartition(java.lang.Boolean)">setIsPartition</a></span>&#8203;(java.lang.Boolean&nbsp;isPartition)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setIsClustered(java.lang.Boolean)">setIsClustered</a></span>&#8203;(java.lang.Boolean&nbsp;isClustered)</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr id="i49" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setIsPinned(java.lang.Boolean)">setIsPinned</a></span>&#8203;(java.lang.Boolean&nbsp;isPinned)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setIsDist(java.lang.Boolean)">setIsDist</a></span>&#8203;(java.lang.Boolean&nbsp;isDist)</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr id="i50" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setIsPrimary(java.lang.Boolean)">setIsPrimary</a></span>&#8203;(java.lang.Boolean&nbsp;isPrimary)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setIsForeign(java.lang.Boolean)">setIsForeign</a></span>&#8203;(java.lang.Boolean&nbsp;isForeign)</code></th>
 <td class="colLast">
-<div class="block">When true, this column is the primary key for the table.</div>
+<div class="block">When true, this column is a foreign key to another table.</div>
 </td>
 </tr>
 <tr id="i51" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setIsSort(java.lang.Boolean)">setIsSort</a></span>&#8203;(java.lang.Boolean&nbsp;isSort)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setIsIndexed(java.lang.Boolean)">setIsIndexed</a></span>&#8203;(java.lang.Boolean&nbsp;isIndexed)</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">When true, this column is indexed in the database.</div>
 </td>
 </tr>
 <tr id="i52" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setMaterializedView(com.atlan.model.assets.MaterializedView)">setMaterializedView</a></span>&#8203;(<a href="MaterializedView.html" title="class in com.atlan.model.assets">MaterializedView</a>&nbsp;materializedView)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setIsNullable(java.lang.Boolean)">setIsNullable</a></span>&#8203;(java.lang.Boolean&nbsp;isNullable)</code></th>
 <td class="colLast">
-<div class="block">Materialized view in which this column exists, or null if the column exists in a table or view.</div>
+<div class="block">When true, the values in this column can be null.</div>
 </td>
 </tr>
 <tr id="i53" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setMaxLength(java.lang.Long)">setMaxLength</a></span>&#8203;(java.lang.Long&nbsp;maxLength)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setIsPartition(java.lang.Boolean)">setIsPartition</a></span>&#8203;(java.lang.Boolean&nbsp;isPartition)</code></th>
 <td class="colLast">
-<div class="block">Maximum length of a value in this column.</div>
+<div class="block">TBC</div>
 </td>
 </tr>
 <tr id="i54" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setNumericScale(java.lang.Float)">setNumericScale</a></span>&#8203;(java.lang.Float&nbsp;numericScale)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setIsPinned(java.lang.Boolean)">setIsPinned</a></span>&#8203;(java.lang.Boolean&nbsp;isPinned)</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr id="i55" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setOrder(java.lang.Integer)">setOrder</a></span>&#8203;(java.lang.Integer&nbsp;order)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setIsPrimary(java.lang.Boolean)">setIsPrimary</a></span>&#8203;(java.lang.Boolean&nbsp;isPrimary)</code></th>
 <td class="colLast">
-<div class="block">Order in which the column appears in the table (starting at 1).</div>
+<div class="block">When true, this column is the primary key for the table.</div>
 </td>
 </tr>
 <tr id="i56" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setPartitionOrder(java.lang.Integer)">setPartitionOrder</a></span>&#8203;(java.lang.Integer&nbsp;partitionOrder)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setIsSort(java.lang.Boolean)">setIsSort</a></span>&#8203;(java.lang.Boolean&nbsp;isSort)</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr id="i57" class="rowColor">
 <td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setMaterializedView(com.atlan.model.assets.MaterializedView)">setMaterializedView</a></span>&#8203;(<a href="MaterializedView.html" title="class in com.atlan.model.assets">MaterializedView</a>&nbsp;materializedView)</code></th>
+<td class="colLast">
+<div class="block">Materialized view in which this column exists, or null if the column exists in a table or view.</div>
+</td>
+</tr>
+<tr id="i58" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setMaxLength(java.lang.Long)">setMaxLength</a></span>&#8203;(java.lang.Long&nbsp;maxLength)</code></th>
+<td class="colLast">
+<div class="block">Maximum length of a value in this column.</div>
+</td>
+</tr>
+<tr id="i59" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setMetricTimestamps(java.util.SortedSet)">setMetricTimestamps</a></span>&#8203;(java.util.SortedSet&lt;<a href="Metric.html" title="class in com.atlan.model.assets">Metric</a>&gt;&nbsp;metricTimestamps)</code></th>
+<td class="colLast">
+<div class="block">TBC</div>
+</td>
+</tr>
+<tr id="i60" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setNumericScale(java.lang.Double)">setNumericScale</a></span>&#8203;(java.lang.Double&nbsp;numericScale)</code></th>
+<td class="colLast">
+<div class="block">TBC</div>
+</td>
+</tr>
+<tr id="i61" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setOrder(java.lang.Integer)">setOrder</a></span>&#8203;(java.lang.Integer&nbsp;order)</code></th>
+<td class="colLast">
+<div class="block">Order in which the column appears in the table (starting at 1).</div>
+</td>
+</tr>
+<tr id="i62" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setPartitionOrder(java.lang.Integer)">setPartitionOrder</a></span>&#8203;(java.lang.Integer&nbsp;partitionOrder)</code></th>
+<td class="colLast">
+<div class="block">TBC</div>
+</td>
+</tr>
+<tr id="i63" class="rowColor">
+<td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setPinnedAt(java.lang.Long)">setPinnedAt</a></span>&#8203;(java.lang.Long&nbsp;pinnedAt)</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i58" class="altColor">
+<tr id="i64" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setPinnedBy(java.lang.String)">setPinnedBy</a></span>&#8203;(java.lang.String&nbsp;pinnedBy)</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i59" class="rowColor">
+<tr id="i65" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setPrecision(java.lang.Integer)">setPrecision</a></span>&#8203;(java.lang.Integer&nbsp;precision)</code></th>
 <td class="colLast">
 <div class="block">Total number of digits allowed when the <a href="#dataType"><code>dataType</code></a> is numeric.</div>
 </td>
 </tr>
-<tr id="i60" class="altColor">
+<tr id="i66" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setQueries(java.util.SortedSet)">setQueries</a></span>&#8203;(java.util.SortedSet&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;&nbsp;queries)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setQueries(java.util.SortedSet)">setQueries</a></span>&#8203;(java.util.SortedSet&lt;<a href="AtlanQuery.html" title="class in com.atlan.model.assets">AtlanQuery</a>&gt;&nbsp;queries)</code></th>
 <td class="colLast">
 <div class="block">Queries that involve this column.</div>
 </td>
 </tr>
-<tr id="i61" class="rowColor">
+<tr id="i67" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setSubDataType(java.lang.String)">setSubDataType</a></span>&#8203;(java.lang.String&nbsp;subDataType)</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i62" class="altColor">
+<tr id="i68" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setTable(com.atlan.model.assets.Table)">setTable</a></span>&#8203;(<a href="Table.html" title="class in com.atlan.model.assets">Table</a>&nbsp;table)</code></th>
 <td class="colLast">
 <div class="block">Table in which this column exists, or null if the column exists in a view.</div>
 </td>
 </tr>
-<tr id="i63" class="rowColor">
+<tr id="i69" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setTablePartition(com.atlan.model.relations.Reference)">setTablePartition</a></span>&#8203;(<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&nbsp;tablePartition)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setTablePartition(com.atlan.model.assets.TablePartition)">setTablePartition</a></span>&#8203;(<a href="TablePartition.html" title="class in com.atlan.model.assets">TablePartition</a>&nbsp;tablePartition)</code></th>
 <td class="colLast">
-<div class="block">Table partition in which this column exists, if any.</div>
+<div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i64" class="altColor">
+<tr id="i70" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setTypeName(java.lang.String)">setTypeName</a></span>&#8203;(java.lang.String&nbsp;typeName)</code></th>
 <td class="colLast">
-<div class="block">Fixed typeName for tables.</div>
+<div class="block">Fixed typeName for Columns.</div>
 </td>
 </tr>
-<tr id="i65" class="rowColor">
+<tr id="i71" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setValidations(java.util.Map)">setValidations</a></span>&#8203;(java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;validations)</code></th>
 <td class="colLast">
-<div class="block">Unused attributes.</div>
+<div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i66" class="altColor">
+<tr id="i72" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setView(com.atlan.model.assets.View)">setView</a></span>&#8203;(<a href="View.html" title="class in com.atlan.model.assets">View</a>&nbsp;view)</code></th>
 <td class="colLast">
 <div class="block">View in which this column exists, or null if the column exists in a table or materialized view.</div>
 </td>
 </tr>
-<tr id="i67" class="rowColor">
+<tr id="i73" class="rowColor">
 <td class="colFirst"><code><a href="Column.ColumnBuilder.html" title="class in com.atlan.model.assets">Column.ColumnBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toBuilder()">toBuilder</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i68" class="altColor">
+<tr id="i74" class="altColor">
 <td class="colFirst"><code>protected <a href="Column.ColumnBuilder.html" title="class in com.atlan.model.assets">Column.ColumnBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#trimToRequired()">trimToRequired</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Builds the minimal object necessary to apply an update to a column, from a potentially
- more-complete column object.</div>
+<div class="block">Builds the minimal object necessary to apply an update to a Column, from a potentially
+ more-complete Column object.</div>
 </td>
 </tr>
-<tr id="i69" class="rowColor">
+<tr id="i75" class="rowColor">
 <td class="colFirst"><code>static <a href="Column.html" title="class in com.atlan.model.assets">Column</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateAnnouncement(java.lang.String,com.atlan.model.enums.AtlanAnnouncementType,java.lang.String,java.lang.String)">updateAnnouncement</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                   <a href="../enums/AtlanAnnouncementType.html" title="enum in com.atlan.model.enums">AtlanAnnouncementType</a>&nbsp;type,
                   java.lang.String&nbsp;title,
                   java.lang.String&nbsp;message)</code></th>
 <td class="colLast">
-<div class="block">Update the announcement on a column.</div>
+<div class="block">Update the announcement on a Column.</div>
 </td>
 </tr>
-<tr id="i70" class="altColor">
+<tr id="i76" class="altColor">
 <td class="colFirst"><code>static <a href="Column.html" title="class in com.atlan.model.assets">Column</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateCertificate(java.lang.String,com.atlan.model.enums.AtlanCertificateStatus,java.lang.String)">updateCertificate</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                  <a href="../enums/AtlanCertificateStatus.html" title="enum in com.atlan.model.enums">AtlanCertificateStatus</a>&nbsp;certificate,
                  java.lang.String&nbsp;message)</code></th>
 <td class="colLast">
-<div class="block">Update the certificate on a column.</div>
+<div class="block">Update the certificate on a Column.</div>
 </td>
 </tr>
-<tr id="i71" class="rowColor">
+<tr id="i77" class="rowColor">
 <td class="colFirst"><code>static <a href="Column.ColumnBuilder.html" title="class in com.atlan.model.assets">Column.ColumnBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updater(java.lang.String,java.lang.String)">updater</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
        java.lang.String&nbsp;name)</code></th>
 <td class="colLast">
-<div class="block">Builds the minimal object necessary to update a column.</div>
+<div class="block">Builds the minimal object necessary to update a Column.</div>
 </td>
 </tr>
 </table>
@@ -815,7 +856,7 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;com.atlan.model.assets.<a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></h3>
-<code><a href="SQL.html#getDatabaseName()">getDatabaseName</a>, <a href="SQL.html#getDatabaseQualifiedName()">getDatabaseQualifiedName</a>, <a href="SQL.html#getQueryCount()">getQueryCount</a>, <a href="SQL.html#getQueryCountUpdatedAt()">getQueryCountUpdatedAt</a>, <a href="SQL.html#getQueryUserCount()">getQueryUserCount</a>, <a href="SQL.html#getQueryUserMap()">getQueryUserMap</a>, <a href="SQL.html#getSchemaName()">getSchemaName</a>, <a href="SQL.html#getSchemaQualifiedName()">getSchemaQualifiedName</a>, <a href="SQL.html#getTableName()">getTableName</a>, <a href="SQL.html#getTableQualifiedName()">getTableQualifiedName</a>, <a href="SQL.html#getViewName()">getViewName</a>, <a href="SQL.html#getViewQualifiedName()">getViewQualifiedName</a>, <a href="SQL.html#setDatabaseName(java.lang.String)">setDatabaseName</a>, <a href="SQL.html#setDatabaseQualifiedName(java.lang.String)">setDatabaseQualifiedName</a>, <a href="SQL.html#setQueryCount(java.lang.Long)">setQueryCount</a>, <a href="SQL.html#setQueryCountUpdatedAt(java.lang.Long)">setQueryCountUpdatedAt</a>, <a href="SQL.html#setQueryUserCount(java.lang.Long)">setQueryUserCount</a>, <a href="SQL.html#setQueryUserMap(java.util.Map)">setQueryUserMap</a>, <a href="SQL.html#setSchemaName(java.lang.String)">setSchemaName</a>, <a href="SQL.html#setSchemaQualifiedName(java.lang.String)">setSchemaQualifiedName</a>, <a href="SQL.html#setTableName(java.lang.String)">setTableName</a>, <a href="SQL.html#setTableQualifiedName(java.lang.String)">setTableQualifiedName</a>, <a href="SQL.html#setViewName(java.lang.String)">setViewName</a>, <a href="SQL.html#setViewQualifiedName(java.lang.String)">setViewQualifiedName</a></code></li>
+<code><a href="SQL.html#getDatabaseName()">getDatabaseName</a>, <a href="SQL.html#getDatabaseQualifiedName()">getDatabaseQualifiedName</a>, <a href="SQL.html#getDbtModels()">getDbtModels</a>, <a href="SQL.html#getDbtSources()">getDbtSources</a>, <a href="SQL.html#getQueryCount()">getQueryCount</a>, <a href="SQL.html#getQueryCountUpdatedAt()">getQueryCountUpdatedAt</a>, <a href="SQL.html#getQueryUserCount()">getQueryUserCount</a>, <a href="SQL.html#getQueryUserMap()">getQueryUserMap</a>, <a href="SQL.html#getSchemaName()">getSchemaName</a>, <a href="SQL.html#getSchemaQualifiedName()">getSchemaQualifiedName</a>, <a href="SQL.html#getTableName()">getTableName</a>, <a href="SQL.html#getTableQualifiedName()">getTableQualifiedName</a>, <a href="SQL.html#getViewName()">getViewName</a>, <a href="SQL.html#getViewQualifiedName()">getViewQualifiedName</a>, <a href="SQL.html#setDatabaseName(java.lang.String)">setDatabaseName</a>, <a href="SQL.html#setDatabaseQualifiedName(java.lang.String)">setDatabaseQualifiedName</a>, <a href="SQL.html#setDbtModels(java.util.SortedSet)">setDbtModels</a>, <a href="SQL.html#setDbtSources(java.util.SortedSet)">setDbtSources</a>, <a href="SQL.html#setQueryCount(java.lang.Long)">setQueryCount</a>, <a href="SQL.html#setQueryCountUpdatedAt(java.lang.Long)">setQueryCountUpdatedAt</a>, <a href="SQL.html#setQueryUserCount(java.lang.Long)">setQueryUserCount</a>, <a href="SQL.html#setQueryUserMap(java.util.Map)">setQueryUserMap</a>, <a href="SQL.html#setSchemaName(java.lang.String)">setSchemaName</a>, <a href="SQL.html#setSchemaQualifiedName(java.lang.String)">setSchemaQualifiedName</a>, <a href="SQL.html#setTableName(java.lang.String)">setTableName</a>, <a href="SQL.html#setTableQualifiedName(java.lang.String)">setTableQualifiedName</a>, <a href="SQL.html#setViewName(java.lang.String)">setViewName</a>, <a href="SQL.html#setViewQualifiedName(java.lang.String)">setViewQualifiedName</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.com.atlan.model.assets.Catalog">
@@ -836,7 +877,7 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;com.atlan.model.core.<a href="../core/Entity.html" title="class in com.atlan.model.core">Entity</a></h3>
-<code><a href="../core/Entity.html#addClassifications(java.lang.String,java.lang.String,java.util.List)">addClassifications</a>, <a href="../core/Entity.html#addNullField(java.lang.String)">addNullField</a>, <a href="../core/Entity.html#delete(java.lang.String)">delete</a>, <a href="../core/Entity.html#getClassificationNames()">getClassificationNames</a>, <a href="../core/Entity.html#getClassifications()">getClassifications</a>, <a href="../core/Entity.html#getCreatedBy()">getCreatedBy</a>, <a href="../core/Entity.html#getCreateTime()">getCreateTime</a>, <a href="../core/Entity.html#getCustomMetadataSets()">getCustomMetadataSets</a>, <a href="../core/Entity.html#getDeleteHandler()">getDeleteHandler</a>, <a href="../core/Entity.html#getIsIncomplete()">getIsIncomplete</a>, <a href="../core/Entity.html#getMeaningNames()">getMeaningNames</a>, <a href="../core/Entity.html#getNullFields()">getNullFields</a>, <a href="../core/Entity.html#getStatus()">getStatus</a>, <a href="../core/Entity.html#getUpdatedBy()">getUpdatedBy</a>, <a href="../core/Entity.html#getUpdateTime()">getUpdateTime</a>, <a href="../core/Entity.html#purge(java.lang.String)">purge</a>, <a href="../core/Entity.html#removeClassification(java.lang.String,java.lang.String,java.lang.String)">removeClassification</a>, <a href="../core/Entity.html#removeClassifications()">removeClassifications</a>, <a href="../core/Entity.html#removeCustomMetadata()">removeCustomMetadata</a>, <a href="../core/Entity.html#removeCustomMetadata(java.lang.String,java.lang.String)">removeCustomMetadata</a>, <a href="../core/Entity.html#replaceCustomMetadata(java.lang.String,java.lang.String,com.atlan.model.core.CustomMetadataAttributes)">replaceCustomMetadata</a>, <a href="../core/Entity.html#retrieveFull(java.lang.String)">retrieveFull</a>, <a href="../core/Entity.html#retrieveFull(java.lang.String,java.lang.String)">retrieveFull</a>, <a href="../core/Entity.html#retrieveMinimal(java.lang.String)">retrieveMinimal</a>, <a href="../core/Entity.html#retrieveMinimal(java.lang.String,java.lang.String)">retrieveMinimal</a>, <a href="../core/Entity.html#setClassificationNames(java.util.Set)">setClassificationNames</a>, <a href="../core/Entity.html#setClassifications(java.util.Set)">setClassifications</a>, <a href="../core/Entity.html#setCustomMetadataSets(java.util.Map)">setCustomMetadataSets</a>, <a href="../core/Entity.html#setIsIncomplete(java.lang.Boolean)">setIsIncomplete</a>, <a href="../core/Entity.html#setMeaningNames(java.util.Set)">setMeaningNames</a>, <a href="../core/Entity.html#setNullFields(java.util.Set)">setNullFields</a>, <a href="../core/Entity.html#updateCustomMetadataAttributes(java.lang.String,java.lang.String,com.atlan.model.core.CustomMetadataAttributes)">updateCustomMetadataAttributes</a>, <a href="../core/Entity.html#upsert()">upsert</a>, <a href="../core/Entity.html#upsert(boolean,boolean)">upsert</a></code></li>
+<code><a href="../core/Entity.html#addClassifications(java.lang.String,java.lang.String,java.util.List)">addClassifications</a>, <a href="../core/Entity.html#addNullField(java.lang.String)">addNullField</a>, <a href="../core/Entity.html#delete(java.lang.String)">delete</a>, <a href="../core/Entity.html#getClassificationNames()">getClassificationNames</a>, <a href="../core/Entity.html#getClassifications()">getClassifications</a>, <a href="../core/Entity.html#getCreatedBy()">getCreatedBy</a>, <a href="../core/Entity.html#getCreateTime()">getCreateTime</a>, <a href="../core/Entity.html#getCustomMetadataSets()">getCustomMetadataSets</a>, <a href="../core/Entity.html#getDeleteHandler()">getDeleteHandler</a>, <a href="../core/Entity.html#getIsIncomplete()">getIsIncomplete</a>, <a href="../core/Entity.html#getMeaningNames()">getMeaningNames</a>, <a href="../core/Entity.html#getNullFields()">getNullFields</a>, <a href="../core/Entity.html#getPendingTasks()">getPendingTasks</a>, <a href="../core/Entity.html#getStatus()">getStatus</a>, <a href="../core/Entity.html#getUpdatedBy()">getUpdatedBy</a>, <a href="../core/Entity.html#getUpdateTime()">getUpdateTime</a>, <a href="../core/Entity.html#purge(java.lang.String)">purge</a>, <a href="../core/Entity.html#removeClassification(java.lang.String,java.lang.String,java.lang.String)">removeClassification</a>, <a href="../core/Entity.html#removeClassifications()">removeClassifications</a>, <a href="../core/Entity.html#removeCustomMetadata()">removeCustomMetadata</a>, <a href="../core/Entity.html#removeCustomMetadata(java.lang.String,java.lang.String)">removeCustomMetadata</a>, <a href="../core/Entity.html#replaceCustomMetadata(java.lang.String,java.lang.String,com.atlan.model.core.CustomMetadataAttributes)">replaceCustomMetadata</a>, <a href="../core/Entity.html#retrieveFull(java.lang.String)">retrieveFull</a>, <a href="../core/Entity.html#retrieveFull(java.lang.String,java.lang.String)">retrieveFull</a>, <a href="../core/Entity.html#retrieveMinimal(java.lang.String)">retrieveMinimal</a>, <a href="../core/Entity.html#retrieveMinimal(java.lang.String,java.lang.String)">retrieveMinimal</a>, <a href="../core/Entity.html#setClassificationNames(java.util.Set)">setClassificationNames</a>, <a href="../core/Entity.html#setClassifications(java.util.Set)">setClassifications</a>, <a href="../core/Entity.html#setCustomMetadataSets(java.util.Map)">setCustomMetadataSets</a>, <a href="../core/Entity.html#setIsIncomplete(java.lang.Boolean)">setIsIncomplete</a>, <a href="../core/Entity.html#setMeaningNames(java.util.Set)">setMeaningNames</a>, <a href="../core/Entity.html#setNullFields(java.util.Set)">setNullFields</a>, <a href="../core/Entity.html#updateCustomMetadataAttributes(java.lang.String,java.lang.String,com.atlan.model.core.CustomMetadataAttributes)">updateCustomMetadataAttributes</a>, <a href="../core/Entity.html#upsert()">upsert</a>, <a href="../core/Entity.html#upsert(boolean,boolean)">upsert</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.com.atlan.model.relations.Reference">
@@ -938,12 +979,12 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
 <li class="blockList">
 <h4>refByGuid</h4>
 <pre class="methodSignature">public static&nbsp;<a href="Column.html" title="class in com.atlan.model.assets">Column</a>&nbsp;refByGuid&#8203;(java.lang.String&nbsp;guid)</pre>
-<div class="block">Reference to a column by GUID.</div>
+<div class="block">Reference to a Column by GUID.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>guid</code> - the GUID of the column to reference</dd>
+<dd><code>guid</code> - the GUID of the Column to reference</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>reference to a column that can be used for defining a relationship to a column</dd>
+<dd>reference to a Column that can be used for defining a relationship to a Column</dd>
 </dl>
 </li>
 </ul>
@@ -954,12 +995,12 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
 <li class="blockList">
 <h4>refByQualifiedName</h4>
 <pre class="methodSignature">public static&nbsp;<a href="Column.html" title="class in com.atlan.model.assets">Column</a>&nbsp;refByQualifiedName&#8203;(java.lang.String&nbsp;qualifiedName)</pre>
-<div class="block">Reference to a column by qualifiedName.</div>
+<div class="block">Reference to a Column by qualifiedName.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>qualifiedName</code> - the qualifiedName of the column to reference</dd>
+<dd><code>qualifiedName</code> - the qualifiedName of the Column to reference</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>reference to a column that can be used for defining a relationship to a column</dd>
+<dd>reference to a Column that can be used for defining a relationship to a Column</dd>
 </dl>
 </li>
 </ul>
@@ -991,13 +1032,13 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
 <h4>updater</h4>
 <pre class="methodSignature">public static&nbsp;<a href="Column.ColumnBuilder.html" title="class in com.atlan.model.assets">Column.ColumnBuilder</a>&lt;?,&#8203;?&gt;&nbsp;updater&#8203;(java.lang.String&nbsp;qualifiedName,
                                                       java.lang.String&nbsp;name)</pre>
-<div class="block">Builds the minimal object necessary to update a column.</div>
+<div class="block">Builds the minimal object necessary to update a Column.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>qualifiedName</code> - of the column</dd>
-<dd><code>name</code> - of the column</dd>
+<dd><code>qualifiedName</code> - of the Column</dd>
+<dd><code>name</code> - of the Column</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the minimal request necessary to update the column, as a builder</dd>
+<dd>the minimal request necessary to update the Column, as a builder</dd>
 </dl>
 </li>
 </ul>
@@ -1008,13 +1049,13 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
 <li class="blockList">
 <h4>trimToRequired</h4>
 <pre class="methodSignature">protected&nbsp;<a href="Column.ColumnBuilder.html" title="class in com.atlan.model.assets">Column.ColumnBuilder</a>&lt;?,&#8203;?&gt;&nbsp;trimToRequired()</pre>
-<div class="block">Builds the minimal object necessary to apply an update to a column, from a potentially
- more-complete column object.</div>
+<div class="block">Builds the minimal object necessary to apply an update to a Column, from a potentially
+ more-complete Column object.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="Asset.html#trimToRequired()">trimToRequired</a></code>&nbsp;in class&nbsp;<code><a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the minimal object necessary to update the column, as a builder</dd>
+<dd>the minimal object necessary to update the Column, as a builder</dd>
 </dl>
 </li>
 </ul>
@@ -1028,14 +1069,14 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
                                        <a href="../enums/AtlanCertificateStatus.html" title="enum in com.atlan.model.enums">AtlanCertificateStatus</a>&nbsp;certificate,
                                        java.lang.String&nbsp;message)
                                 throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
-<div class="block">Update the certificate on a column.</div>
+<div class="block">Update the certificate on a Column.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>qualifiedName</code> - of the column</dd>
+<dd><code>qualifiedName</code> - of the Column</dd>
 <dd><code>certificate</code> - to use</dd>
 <dd><code>message</code> - (optional) message, or null if no message</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the updated column, or null if the update failed</dd>
+<dd>the updated Column, or null if the update failed</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API problems</dd>
 </dl>
@@ -1050,13 +1091,13 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
 <pre class="methodSignature">public static&nbsp;<a href="Column.html" title="class in com.atlan.model.assets">Column</a>&nbsp;removeCertificate&#8203;(java.lang.String&nbsp;qualifiedName,
                                        java.lang.String&nbsp;name)
                                 throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
-<div class="block">Remove the certificate from a column.</div>
+<div class="block">Remove the certificate from a Column.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>qualifiedName</code> - of the column</dd>
-<dd><code>name</code> - of the column</dd>
+<dd><code>qualifiedName</code> - of the Column</dd>
+<dd><code>name</code> - of the Column</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the updated column, or null if the removal failed</dd>
+<dd>the updated Column, or null if the removal failed</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API problems</dd>
 </dl>
@@ -1073,10 +1114,10 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
                                         java.lang.String&nbsp;title,
                                         java.lang.String&nbsp;message)
                                  throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
-<div class="block">Update the announcement on a column.</div>
+<div class="block">Update the announcement on a Column.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>qualifiedName</code> - of the column</dd>
+<dd><code>qualifiedName</code> - of the Column</dd>
 <dd><code>type</code> - type of announcement to set</dd>
 <dd><code>title</code> - (optional) title of the announcement to set (or null for no title)</dd>
 <dd><code>message</code> - (optional) message of the announcement to set (or null for no message)</dd>
@@ -1096,13 +1137,13 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
 <pre class="methodSignature">public static&nbsp;<a href="Column.html" title="class in com.atlan.model.assets">Column</a>&nbsp;removeAnnouncement&#8203;(java.lang.String&nbsp;qualifiedName,
                                         java.lang.String&nbsp;name)
                                  throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
-<div class="block">Remove the announcement from a column.</div>
+<div class="block">Remove the announcement from a Column.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>qualifiedName</code> - of the column</dd>
-<dd><code>name</code> - of the column</dd>
+<dd><code>qualifiedName</code> - of the Column</dd>
+<dd><code>name</code> - of the Column</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the updated column, or null if the removal failed</dd>
+<dd>the updated Column, or null if the removal failed</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API problems</dd>
 </dl>
@@ -1117,13 +1158,13 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
 <pre class="methodSignature">public static&nbsp;void&nbsp;addClassifications&#8203;(java.lang.String&nbsp;qualifiedName,
                                       java.util.List&lt;java.lang.String&gt;&nbsp;classificationNames)
                                throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
-<div class="block">Add classifications to a column.</div>
+<div class="block">Add classifications to a Column.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>qualifiedName</code> - of the column</dd>
+<dd><code>qualifiedName</code> - of the Column</dd>
 <dd><code>classificationNames</code> - human-readable names of the classifications to add</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API problems, or if any of the classifications already exist on the column</dd>
+<dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API problems, or if any of the classifications already exist on the Column</dd>
 </dl>
 </li>
 </ul>
@@ -1136,13 +1177,13 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
 <pre class="methodSignature">public static&nbsp;void&nbsp;removeClassification&#8203;(java.lang.String&nbsp;qualifiedName,
                                         java.lang.String&nbsp;classificationName)
                                  throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
-<div class="block">Remove a classification from a column.</div>
+<div class="block">Remove a classification from a Column.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>qualifiedName</code> - of the column</dd>
+<dd><code>qualifiedName</code> - of the Column</dd>
 <dd><code>classificationName</code> - human-readable name of the classification to remove</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API problems, or if the classification does not exist on the column</dd>
+<dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API problems, or if the classification does not exist on the Column</dd>
 </dl>
 </li>
 </ul>
@@ -1156,14 +1197,14 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
                                   java.lang.String&nbsp;name,
                                   java.util.List&lt;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;terms)
                            throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
-<div class="block">Replace the terms linked to the column.</div>
+<div class="block">Replace the terms linked to the Column.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>qualifiedName</code> - for the column</dd>
-<dd><code>name</code> - human-readable name of the column</dd>
-<dd><code>terms</code> - the list of terms to replace on the column, or null to remove all terms from the column</dd>
+<dd><code>qualifiedName</code> - for the Column</dd>
+<dd><code>name</code> - human-readable name of the Column</dd>
+<dd><code>terms</code> - the list of terms to replace on the Column, or null to remove all terms from the Column</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the column that was updated (note that it will NOT contain details of the replaced terms)</dd>
+<dd>the Column that was updated (note that it will NOT contain details of the replaced terms)</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API problems</dd>
 </dl>
@@ -1178,15 +1219,15 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
 <pre class="methodSignature">public static&nbsp;<a href="Column.html" title="class in com.atlan.model.assets">Column</a>&nbsp;appendTerms&#8203;(java.lang.String&nbsp;qualifiedName,
                                  java.util.List&lt;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;terms)
                           throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
-<div class="block">Link additional terms to the column, without replacing existing terms linked to the column.
- Note: this operation must make two API calls — one to retrieve the column's existing terms,
+<div class="block">Link additional terms to the Column, without replacing existing terms linked to the Column.
+ Note: this operation must make two API calls — one to retrieve the Column's existing terms,
  and a second to append the new terms.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>qualifiedName</code> - for the column</dd>
-<dd><code>terms</code> - the list of terms to append to the column</dd>
+<dd><code>qualifiedName</code> - for the Column</dd>
+<dd><code>terms</code> - the list of terms to append to the Column</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the column that was updated  (note that it will NOT contain details of the appended terms)</dd>
+<dd>the Column that was updated  (note that it will NOT contain details of the appended terms)</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API problems</dd>
 </dl>
@@ -1201,15 +1242,15 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
 <pre class="methodSignature">public static&nbsp;<a href="Column.html" title="class in com.atlan.model.assets">Column</a>&nbsp;removeTerms&#8203;(java.lang.String&nbsp;qualifiedName,
                                  java.util.List&lt;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;terms)
                           throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
-<div class="block">Remove terms from a column, without replacing all existing terms linked to the column.
- Note: this operation must make two API calls — one to retrieve the column's existing terms,
+<div class="block">Remove terms from a Column, without replacing all existing terms linked to the Column.
+ Note: this operation must make two API calls — one to retrieve the Column's existing terms,
  and a second to remove the provided terms.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>qualifiedName</code> - for the column</dd>
-<dd><code>terms</code> - the list of terms to remove from the column, which must be referenced by GUID</dd>
+<dd><code>qualifiedName</code> - for the Column</dd>
+<dd><code>terms</code> - the list of terms to remove from the Column, which must be referenced by GUID</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the column that was updated (note that it will NOT contain details of the resulting terms)</dd>
+<dd>the Column that was updated (note that it will NOT contain details of the resulting terms)</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API problems</dd>
 </dl>
@@ -1413,7 +1454,7 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getNumericScale</h4>
-<pre class="methodSignature">public&nbsp;java.lang.Float&nbsp;getNumericScale()</pre>
+<pre class="methodSignature">public&nbsp;java.lang.Double&nbsp;getNumericScale()</pre>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -1434,37 +1475,7 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
 <li class="blockList">
 <h4>getValidations</h4>
 <pre class="methodSignature">public&nbsp;java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;getValidations()</pre>
-<div class="block">Unused attributes.</div>
-</li>
-</ul>
-<a id="getTable()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getTable</h4>
-<pre class="methodSignature">public&nbsp;<a href="Table.html" title="class in com.atlan.model.assets">Table</a>&nbsp;getTable()</pre>
-<div class="block">Table in which this column exists, or null if the column exists in a view.</div>
-</li>
-</ul>
-<a id="getTablePartition()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getTablePartition</h4>
-<pre class="methodSignature">public&nbsp;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&nbsp;getTablePartition()</pre>
-<div class="block">Table partition in which this column exists, if any.</div>
-</li>
-</ul>
-<a id="getView()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getView</h4>
-<pre class="methodSignature">public&nbsp;<a href="View.html" title="class in com.atlan.model.assets">View</a>&nbsp;getView()</pre>
-<div class="block">View in which this column exists, or null if the column exists in a table or materialized view.</div>
+<div class="block">TBC</div>
 </li>
 </ul>
 <a id="getMaterializedView()">
@@ -1483,8 +1494,68 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getQueries</h4>
-<pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;&nbsp;getQueries()</pre>
+<pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="AtlanQuery.html" title="class in com.atlan.model.assets">AtlanQuery</a>&gt;&nbsp;getQueries()</pre>
 <div class="block">Queries that involve this column.</div>
+</li>
+</ul>
+<a id="getMetricTimestamps()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getMetricTimestamps</h4>
+<pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="Metric.html" title="class in com.atlan.model.assets">Metric</a>&gt;&nbsp;getMetricTimestamps()</pre>
+<div class="block">TBC</div>
+</li>
+</ul>
+<a id="getView()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getView</h4>
+<pre class="methodSignature">public&nbsp;<a href="View.html" title="class in com.atlan.model.assets">View</a>&nbsp;getView()</pre>
+<div class="block">View in which this column exists, or null if the column exists in a table or materialized view.</div>
+</li>
+</ul>
+<a id="getTablePartition()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getTablePartition</h4>
+<pre class="methodSignature">public&nbsp;<a href="TablePartition.html" title="class in com.atlan.model.assets">TablePartition</a>&nbsp;getTablePartition()</pre>
+<div class="block">TBC</div>
+</li>
+</ul>
+<a id="getDataQualityMetricDimensions()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getDataQualityMetricDimensions</h4>
+<pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="Metric.html" title="class in com.atlan.model.assets">Metric</a>&gt;&nbsp;getDataQualityMetricDimensions()</pre>
+<div class="block">TBC</div>
+</li>
+</ul>
+<a id="getDbtModelColumns()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getDbtModelColumns</h4>
+<pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="DbtModelColumn.html" title="class in com.atlan.model.assets">DbtModelColumn</a>&gt;&nbsp;getDbtModelColumns()</pre>
+<div class="block">TBC</div>
+</li>
+</ul>
+<a id="getTable()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getTable</h4>
+<pre class="methodSignature">public&nbsp;<a href="Table.html" title="class in com.atlan.model.assets">Table</a>&nbsp;getTable()</pre>
+<div class="block">Table in which this column exists, or null if the column exists in a view.</div>
 </li>
 </ul>
 <a id="setDataType(java.lang.String)">
@@ -1657,13 +1728,13 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
 <div class="block">When true, the values in this column can be null.</div>
 </li>
 </ul>
-<a id="setNumericScale(java.lang.Float)">
+<a id="setNumericScale(java.lang.Double)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setNumericScale</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setNumericScale&#8203;(java.lang.Float&nbsp;numericScale)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;setNumericScale&#8203;(java.lang.Double&nbsp;numericScale)</pre>
 <div class="block">TBC</div>
 </li>
 </ul>
@@ -1684,37 +1755,7 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
 <li class="blockList">
 <h4>setValidations</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;setValidations&#8203;(java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;validations)</pre>
-<div class="block">Unused attributes.</div>
-</li>
-</ul>
-<a id="setTable(com.atlan.model.assets.Table)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setTable</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setTable&#8203;(<a href="Table.html" title="class in com.atlan.model.assets">Table</a>&nbsp;table)</pre>
-<div class="block">Table in which this column exists, or null if the column exists in a view.</div>
-</li>
-</ul>
-<a id="setTablePartition(com.atlan.model.relations.Reference)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setTablePartition</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setTablePartition&#8203;(<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&nbsp;tablePartition)</pre>
-<div class="block">Table partition in which this column exists, if any.</div>
-</li>
-</ul>
-<a id="setView(com.atlan.model.assets.View)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setView</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setView&#8203;(<a href="View.html" title="class in com.atlan.model.assets">View</a>&nbsp;view)</pre>
-<div class="block">View in which this column exists, or null if the column exists in a table or materialized view.</div>
+<div class="block">TBC</div>
 </li>
 </ul>
 <a id="setMaterializedView(com.atlan.model.assets.MaterializedView)">
@@ -1733,8 +1774,68 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>setQueries</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setQueries&#8203;(java.util.SortedSet&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;&nbsp;queries)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;setQueries&#8203;(java.util.SortedSet&lt;<a href="AtlanQuery.html" title="class in com.atlan.model.assets">AtlanQuery</a>&gt;&nbsp;queries)</pre>
 <div class="block">Queries that involve this column.</div>
+</li>
+</ul>
+<a id="setMetricTimestamps(java.util.SortedSet)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setMetricTimestamps</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;setMetricTimestamps&#8203;(java.util.SortedSet&lt;<a href="Metric.html" title="class in com.atlan.model.assets">Metric</a>&gt;&nbsp;metricTimestamps)</pre>
+<div class="block">TBC</div>
+</li>
+</ul>
+<a id="setView(com.atlan.model.assets.View)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setView</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;setView&#8203;(<a href="View.html" title="class in com.atlan.model.assets">View</a>&nbsp;view)</pre>
+<div class="block">View in which this column exists, or null if the column exists in a table or materialized view.</div>
+</li>
+</ul>
+<a id="setTablePartition(com.atlan.model.assets.TablePartition)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setTablePartition</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;setTablePartition&#8203;(<a href="TablePartition.html" title="class in com.atlan.model.assets">TablePartition</a>&nbsp;tablePartition)</pre>
+<div class="block">TBC</div>
+</li>
+</ul>
+<a id="setDataQualityMetricDimensions(java.util.SortedSet)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setDataQualityMetricDimensions</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;setDataQualityMetricDimensions&#8203;(java.util.SortedSet&lt;<a href="Metric.html" title="class in com.atlan.model.assets">Metric</a>&gt;&nbsp;dataQualityMetricDimensions)</pre>
+<div class="block">TBC</div>
+</li>
+</ul>
+<a id="setDbtModelColumns(java.util.SortedSet)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setDbtModelColumns</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;setDbtModelColumns&#8203;(java.util.SortedSet&lt;<a href="DbtModelColumn.html" title="class in com.atlan.model.assets">DbtModelColumn</a>&gt;&nbsp;dbtModelColumns)</pre>
+<div class="block">TBC</div>
+</li>
+</ul>
+<a id="setTable(com.atlan.model.assets.Table)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setTable</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;setTable&#8203;(<a href="Table.html" title="class in com.atlan.model.assets">Table</a>&nbsp;table)</pre>
+<div class="block">Table in which this column exists, or null if the column exists in a view.</div>
 </li>
 </ul>
 <a id="equals(java.lang.Object)">
@@ -1783,7 +1884,7 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
 <li class="blockList">
 <h4>getTypeName</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getTypeName()</pre>
-<div class="block">Fixed typeName for tables.</div>
+<div class="block">Fixed typeName for Columns.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code><a href="../relations/Reference.html#getTypeName()">getTypeName</a></code>&nbsp;in class&nbsp;<code><a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a></code></dd>
@@ -1797,7 +1898,7 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
 <li class="blockList">
 <h4>setTypeName</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;setTypeName&#8203;(java.lang.String&nbsp;typeName)</pre>
-<div class="block">Fixed typeName for tables.</div>
+<div class="block">Fixed typeName for Columns.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code><a href="../relations/Reference.html#setTypeName(java.lang.String)">setTypeName</a></code>&nbsp;in class&nbsp;<code><a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a></code></dd>

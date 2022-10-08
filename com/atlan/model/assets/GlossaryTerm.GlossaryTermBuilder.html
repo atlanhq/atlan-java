@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":6,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":6,"i31":10,"i32":10,"i33":10,"i34":10,"i35":10,"i36":10,"i37":10,"i38":10,"i39":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":6,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":10,"i32":10,"i33":10,"i34":10,"i35":10,"i36":10,"i37":10,"i38":10,"i39":10,"i40":10,"i41":10,"i42":10,"i43":10,"i44":10,"i45":10,"i46":6,"i47":10,"i48":10,"i49":10,"i50":10,"i51":10,"i52":10,"i53":10,"i54":10,"i55":10,"i56":10,"i57":10,"i58":10,"i59":10,"i60":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -209,67 +209,68 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#additionalAttributes(java.util.Map)">additionalAttributes</a></span>&#8203;(java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;additionalAttributes)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#additionalAttribute(java.lang.String,java.lang.String)">additionalAttribute</a></span>&#8203;(java.lang.String&nbsp;additionalAttributeKey,
+                   java.lang.String&nbsp;additionalAttributeValue)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addToReplacedBy(com.atlan.model.assets.GlossaryTerm)">addToReplacedBy</a></span>&#8203;(<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&nbsp;addToReplacedBy)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#additionalAttributes(java.util.Map)">additionalAttributes</a></span>&#8203;(java.util.Map&lt;? extends java.lang.String,&#8203;? extends java.lang.String&gt;&nbsp;additionalAttributes)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addToSeeAlso(com.atlan.model.assets.GlossaryTerm)">addToSeeAlso</a></span>&#8203;(<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&nbsp;addToSeeAlso)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#anchor(com.atlan.model.assets.Glossary)">anchor</a></span>&#8203;(<a href="Glossary.html" title="class in com.atlan.model.assets">Glossary</a>&nbsp;anchor)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addToValidValuesFor(com.atlan.model.assets.GlossaryTerm)">addToValidValuesFor</a></span>&#8203;(<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&nbsp;addToValidValuesFor)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#antonym(com.atlan.model.assets.GlossaryTerm)">antonym</a></span>&#8203;(<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&nbsp;antonym)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code><a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#anchor(com.atlan.model.assets.Glossary)">anchor</a></span>&#8203;(<a href="Glossary.html" title="class in com.atlan.model.assets">Glossary</a>&nbsp;anchor)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#antonyms(java.util.Collection)">antonyms</a></span>&#8203;(java.util.Collection&lt;? extends <a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;antonyms)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#antonym(com.atlan.model.assets.GlossaryTerm)">antonym</a></span>&#8203;(<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&nbsp;antonym)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#assignedEntities(java.util.Collection)">assignedEntities</a></span>&#8203;(java.util.Collection&lt;? extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;&nbsp;assignedEntities)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code><a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#antonyms(java.util.Collection)">antonyms</a></span>&#8203;(java.util.Collection&lt;? extends <a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;antonyms)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i9" class="rowColor">
-<td class="colFirst"><code><a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#assignedEntities(java.util.Collection)">assignedEntities</a></span>&#8203;(java.util.Collection&lt;? extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;&nbsp;assignedEntities)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i10" class="altColor">
-<td class="colFirst"><code><a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#assignedEntity(com.atlan.model.assets.Asset)">assignedEntity</a></span>&#8203;(<a href="Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;assignedEntity)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>abstract <a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">C</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#build()">build</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code><a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#categories(java.util.Collection)">categories</a></span>&#8203;(java.util.Collection&lt;? extends <a href="GlossaryCategory.html" title="class in com.atlan.model.assets">GlossaryCategory</a>&gt;&nbsp;categories)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code><a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#category(com.atlan.model.assets.GlossaryCategory)">category</a></span>&#8203;(<a href="GlossaryCategory.html" title="class in com.atlan.model.assets">GlossaryCategory</a>&nbsp;category)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
+<tr id="i12" class="altColor">
+<td class="colFirst"><code><a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#classifies(java.util.Collection)">classifies</a></span>&#8203;(java.util.Collection&lt;? extends <a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;classifies)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i13" class="rowColor">
+<td class="colFirst"><code><a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#classify(com.atlan.model.assets.GlossaryTerm)">classify</a></span>&#8203;(<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&nbsp;classify)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
 <tr id="i14" class="altColor">
 <td class="colFirst"><code><a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#classifies(java.util.SortedSet)">classifies</a></span>&#8203;(java.util.SortedSet&lt;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;classifies)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearAdditionalAttributes()">clearAdditionalAttributes</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i15" class="rowColor">
@@ -289,110 +290,215 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 </tr>
 <tr id="i18" class="altColor">
 <td class="colFirst"><code><a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearPreferredTerms()">clearPreferredTerms</a></span>()</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearClassifies()">clearClassifies</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i19" class="rowColor">
 <td class="colFirst"><code><a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearReplacedBy()">clearReplacedBy</a></span>()</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearExamples()">clearExamples</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i20" class="altColor">
 <td class="colFirst"><code><a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearSeeAlso()">clearSeeAlso</a></span>()</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearIsA()">clearIsA</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i21" class="rowColor">
 <td class="colFirst"><code><a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearSynonyms()">clearSynonyms</a></span>()</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearPreferredTerms()">clearPreferredTerms</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i22" class="altColor">
 <td class="colFirst"><code><a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearTranslatedTerms()">clearTranslatedTerms</a></span>()</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearPreferredToTerms()">clearPreferredToTerms</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i23" class="rowColor">
 <td class="colFirst"><code><a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearValidValuesFor()">clearValidValuesFor</a></span>()</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearReplacedBy()">clearReplacedBy</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i24" class="altColor">
 <td class="colFirst"><code><a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#examples(java.util.List)">examples</a></span>&#8203;(java.util.List&lt;java.lang.String&gt;&nbsp;examples)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearReplacementTerms()">clearReplacementTerms</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i25" class="rowColor">
 <td class="colFirst"><code><a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#longDescription(java.lang.String)">longDescription</a></span>&#8203;(java.lang.String&nbsp;longDescription)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearSeeAlso()">clearSeeAlso</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i26" class="altColor">
 <td class="colFirst"><code><a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#preferredTerm(com.atlan.model.assets.GlossaryTerm)">preferredTerm</a></span>&#8203;(<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&nbsp;preferredTerm)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearSynonyms()">clearSynonyms</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i27" class="rowColor">
 <td class="colFirst"><code><a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#preferredTerms(java.util.Collection)">preferredTerms</a></span>&#8203;(java.util.Collection&lt;? extends <a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;preferredTerms)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearTranslatedTerms()">clearTranslatedTerms</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i28" class="altColor">
 <td class="colFirst"><code><a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#replacedBy(java.util.Collection)">replacedBy</a></span>&#8203;(java.util.Collection&lt;? extends <a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;replacedBy)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearTranslationTerms()">clearTranslationTerms</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i29" class="rowColor">
 <td class="colFirst"><code><a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#seeAlso(java.util.Collection)">seeAlso</a></span>&#8203;(java.util.Collection&lt;? extends <a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;seeAlso)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearValidValues()">clearValidValues</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i30" class="altColor">
-<td class="colFirst"><code>protected abstract <a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#self()">self</a></span>()</code></th>
+<td class="colFirst"><code><a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearValidValuesFor()">clearValidValuesFor</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i31" class="rowColor">
 <td class="colFirst"><code><a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#shortDescription(java.lang.String)">shortDescription</a></span>&#8203;(java.lang.String&nbsp;shortDescription)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#example(java.lang.String)">example</a></span>&#8203;(java.lang.String&nbsp;example)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i32" class="altColor">
 <td class="colFirst"><code><a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#synonym(com.atlan.model.assets.GlossaryTerm)">synonym</a></span>&#8203;(<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&nbsp;synonym)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#examples(java.util.Collection)">examples</a></span>&#8203;(java.util.Collection&lt;? extends java.lang.String&gt;&nbsp;examples)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i33" class="rowColor">
 <td class="colFirst"><code><a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#synonyms(java.util.Collection)">synonyms</a></span>&#8203;(java.util.Collection&lt;? extends <a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;synonyms)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isA(java.util.Collection)">isA</a></span>&#8203;(java.util.Collection&lt;? extends <a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;isA)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i34" class="altColor">
-<td class="colFirst"><code>java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
+<td class="colFirst"><code><a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isATerm(com.atlan.model.assets.GlossaryTerm)">isATerm</a></span>&#8203;(<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&nbsp;isATerm)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i35" class="rowColor">
 <td class="colFirst"><code><a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#translatedTerm(com.atlan.model.assets.GlossaryTerm)">translatedTerm</a></span>&#8203;(<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&nbsp;translatedTerm)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#longDescription(java.lang.String)">longDescription</a></span>&#8203;(java.lang.String&nbsp;longDescription)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i36" class="altColor">
 <td class="colFirst"><code><a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#translatedTerms(java.util.Collection)">translatedTerms</a></span>&#8203;(java.util.Collection&lt;? extends <a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;translatedTerms)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#preferredTerm(com.atlan.model.assets.GlossaryTerm)">preferredTerm</a></span>&#8203;(<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&nbsp;preferredTerm)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i37" class="rowColor">
 <td class="colFirst"><code><a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#typeName(java.lang.String)">typeName</a></span>&#8203;(java.lang.String&nbsp;typeName)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#preferredTerms(java.util.Collection)">preferredTerms</a></span>&#8203;(java.util.Collection&lt;? extends <a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;preferredTerms)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i38" class="altColor">
 <td class="colFirst"><code><a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#usage(java.lang.String)">usage</a></span>&#8203;(java.lang.String&nbsp;usage)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#preferredToTerm(com.atlan.model.assets.GlossaryTerm)">preferredToTerm</a></span>&#8203;(<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&nbsp;preferredToTerm)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i39" class="rowColor">
+<td class="colFirst"><code><a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#preferredToTerms(java.util.Collection)">preferredToTerms</a></span>&#8203;(java.util.Collection&lt;? extends <a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;preferredToTerms)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i40" class="altColor">
+<td class="colFirst"><code><a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#replacedBy(java.util.Collection)">replacedBy</a></span>&#8203;(java.util.Collection&lt;? extends <a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;replacedBy)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i41" class="rowColor">
+<td class="colFirst"><code><a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#replacedByTerm(com.atlan.model.assets.GlossaryTerm)">replacedByTerm</a></span>&#8203;(<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&nbsp;replacedByTerm)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i42" class="altColor">
+<td class="colFirst"><code><a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#replacementTerm(com.atlan.model.assets.GlossaryTerm)">replacementTerm</a></span>&#8203;(<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&nbsp;replacementTerm)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i43" class="rowColor">
+<td class="colFirst"><code><a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#replacementTerms(java.util.Collection)">replacementTerms</a></span>&#8203;(java.util.Collection&lt;? extends <a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;replacementTerms)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i44" class="altColor">
+<td class="colFirst"><code><a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#seeAlso(java.util.Collection)">seeAlso</a></span>&#8203;(java.util.Collection&lt;? extends <a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;seeAlso)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i45" class="rowColor">
+<td class="colFirst"><code><a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#seeAlsoOne(com.atlan.model.assets.GlossaryTerm)">seeAlsoOne</a></span>&#8203;(<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&nbsp;seeAlsoOne)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i46" class="altColor">
+<td class="colFirst"><code>protected abstract <a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#self()">self</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i47" class="rowColor">
+<td class="colFirst"><code><a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#shortDescription(java.lang.String)">shortDescription</a></span>&#8203;(java.lang.String&nbsp;shortDescription)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i48" class="altColor">
+<td class="colFirst"><code><a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#synonym(com.atlan.model.assets.GlossaryTerm)">synonym</a></span>&#8203;(<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&nbsp;synonym)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i49" class="rowColor">
+<td class="colFirst"><code><a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#synonyms(java.util.Collection)">synonyms</a></span>&#8203;(java.util.Collection&lt;? extends <a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;synonyms)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i50" class="altColor">
+<td class="colFirst"><code>java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i51" class="rowColor">
+<td class="colFirst"><code><a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#translatedTerm(com.atlan.model.assets.GlossaryTerm)">translatedTerm</a></span>&#8203;(<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&nbsp;translatedTerm)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i52" class="altColor">
+<td class="colFirst"><code><a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#translatedTerms(java.util.Collection)">translatedTerms</a></span>&#8203;(java.util.Collection&lt;? extends <a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;translatedTerms)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i53" class="rowColor">
+<td class="colFirst"><code><a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#translationTerm(com.atlan.model.assets.GlossaryTerm)">translationTerm</a></span>&#8203;(<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&nbsp;translationTerm)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i54" class="altColor">
+<td class="colFirst"><code><a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#translationTerms(java.util.Collection)">translationTerms</a></span>&#8203;(java.util.Collection&lt;? extends <a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;translationTerms)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i55" class="rowColor">
+<td class="colFirst"><code><a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#typeName(java.lang.String)">typeName</a></span>&#8203;(java.lang.String&nbsp;typeName)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i56" class="altColor">
+<td class="colFirst"><code><a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#usage(java.lang.String)">usage</a></span>&#8203;(java.lang.String&nbsp;usage)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i57" class="rowColor">
+<td class="colFirst"><code><a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#validValue(com.atlan.model.assets.GlossaryTerm)">validValue</a></span>&#8203;(<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&nbsp;validValue)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i58" class="altColor">
+<td class="colFirst"><code><a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#validValueFor(com.atlan.model.assets.GlossaryTerm)">validValueFor</a></span>&#8203;(<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&nbsp;validValueFor)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i59" class="rowColor">
+<td class="colFirst"><code><a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#validValues(java.util.Collection)">validValues</a></span>&#8203;(java.util.Collection&lt;? extends <a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;validValues)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i60" class="altColor">
 <td class="colFirst"><code><a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#validValuesFor(java.util.Collection)">validValuesFor</a></span>&#8203;(java.util.Collection&lt;? extends <a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;validValuesFor)</code></th>
 <td class="colLast">&nbsp;</td>
@@ -410,7 +516,7 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;com.atlan.model.core.<a href="../core/Entity.EntityBuilder.html" title="class in com.atlan.model.core">Entity.EntityBuilder</a></h3>
-<code><a href="../core/Entity.EntityBuilder.html#classification(com.atlan.model.core.Classification)">classification</a>, <a href="../core/Entity.EntityBuilder.html#classificationNames(java.util.Set)">classificationNames</a>, <a href="../core/Entity.EntityBuilder.html#classifications(java.util.Collection)">classifications</a>, <a href="../core/Entity.EntityBuilder.html#clearClassifications()">clearClassifications</a>, <a href="../core/Entity.EntityBuilder.html#clearCustomMetadataSets()">clearCustomMetadataSets</a>, <a href="../core/Entity.EntityBuilder.html#createdBy(java.lang.String)">createdBy</a>, <a href="../core/Entity.EntityBuilder.html#createTime(java.lang.Long)">createTime</a>, <a href="../core/Entity.EntityBuilder.html#customMetadata(java.lang.String,com.atlan.model.core.CustomMetadataAttributes)">customMetadata</a>, <a href="../core/Entity.EntityBuilder.html#customMetadataSets(java.util.Map)">customMetadataSets</a>, <a href="../core/Entity.EntityBuilder.html#deleteHandler(java.lang.String)">deleteHandler</a>, <a href="../core/Entity.EntityBuilder.html#isIncomplete(java.lang.Boolean)">isIncomplete</a>, <a href="../core/Entity.EntityBuilder.html#meaningNames(java.util.Set)">meaningNames</a>, <a href="../core/Entity.EntityBuilder.html#nullFields(java.util.Set)">nullFields</a>, <a href="../core/Entity.EntityBuilder.html#status(com.atlan.model.enums.AtlanStatus)">status</a>, <a href="../core/Entity.EntityBuilder.html#updatedBy(java.lang.String)">updatedBy</a>, <a href="../core/Entity.EntityBuilder.html#updateTime(java.lang.Long)">updateTime</a></code></li>
+<code><a href="../core/Entity.EntityBuilder.html#classification(com.atlan.model.core.Classification)">classification</a>, <a href="../core/Entity.EntityBuilder.html#classificationNames(java.util.Set)">classificationNames</a>, <a href="../core/Entity.EntityBuilder.html#classifications(java.util.Collection)">classifications</a>, <a href="../core/Entity.EntityBuilder.html#clearClassifications()">clearClassifications</a>, <a href="../core/Entity.EntityBuilder.html#clearCustomMetadataSets()">clearCustomMetadataSets</a>, <a href="../core/Entity.EntityBuilder.html#createdBy(java.lang.String)">createdBy</a>, <a href="../core/Entity.EntityBuilder.html#createTime(java.lang.Long)">createTime</a>, <a href="../core/Entity.EntityBuilder.html#customMetadata(java.lang.String,com.atlan.model.core.CustomMetadataAttributes)">customMetadata</a>, <a href="../core/Entity.EntityBuilder.html#customMetadataSets(java.util.Map)">customMetadataSets</a>, <a href="../core/Entity.EntityBuilder.html#deleteHandler(java.lang.String)">deleteHandler</a>, <a href="../core/Entity.EntityBuilder.html#isIncomplete(java.lang.Boolean)">isIncomplete</a>, <a href="../core/Entity.EntityBuilder.html#meaningNames(java.util.Set)">meaningNames</a>, <a href="../core/Entity.EntityBuilder.html#nullFields(java.util.Set)">nullFields</a>, <a href="../core/Entity.EntityBuilder.html#pendingTasks(java.util.Set)">pendingTasks</a>, <a href="../core/Entity.EntityBuilder.html#status(com.atlan.model.enums.AtlanStatus)">status</a>, <a href="../core/Entity.EntityBuilder.html#updatedBy(java.lang.String)">updatedBy</a>, <a href="../core/Entity.EntityBuilder.html#updateTime(java.lang.Long)">updateTime</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.com.atlan.model.relations.Reference.ReferenceBuilder">
@@ -543,17 +649,31 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 </dl>
 </li>
 </ul>
-<a id="examples(java.util.List)">
+<a id="example(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>example</h4>
+<pre class="methodSignature">public&nbsp;<a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a>&nbsp;example&#8203;(java.lang.String&nbsp;example)</pre>
+</li>
+</ul>
+<a id="examples(java.util.Collection)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>examples</h4>
-<pre class="methodSignature">public&nbsp;<a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a>&nbsp;examples&#8203;(java.util.List&lt;java.lang.String&gt;&nbsp;examples)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
+<pre class="methodSignature">public&nbsp;<a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a>&nbsp;examples&#8203;(java.util.Collection&lt;? extends java.lang.String&gt;&nbsp;examples)</pre>
+</li>
+</ul>
+<a id="clearExamples()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>clearExamples</h4>
+<pre class="methodSignature">public&nbsp;<a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a>&nbsp;clearExamples()</pre>
 </li>
 </ul>
 <a id="abbreviation(java.lang.String)">
@@ -582,17 +702,275 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 </dl>
 </li>
 </ul>
+<a id="additionalAttribute(java.lang.String,java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>additionalAttribute</h4>
+<pre class="methodSignature">public&nbsp;<a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a>&nbsp;additionalAttribute&#8203;(java.lang.String&nbsp;additionalAttributeKey,
+                             java.lang.String&nbsp;additionalAttributeValue)</pre>
+</li>
+</ul>
 <a id="additionalAttributes(java.util.Map)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>additionalAttributes</h4>
-<pre class="methodSignature">public&nbsp;<a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a>&nbsp;additionalAttributes&#8203;(java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;additionalAttributes)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
+<pre class="methodSignature">public&nbsp;<a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a>&nbsp;additionalAttributes&#8203;(java.util.Map&lt;? extends java.lang.String,&#8203;? extends java.lang.String&gt;&nbsp;additionalAttributes)</pre>
+</li>
+</ul>
+<a id="clearAdditionalAttributes()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>clearAdditionalAttributes</h4>
+<pre class="methodSignature">public&nbsp;<a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a>&nbsp;clearAdditionalAttributes()</pre>
+</li>
+</ul>
+<a id="translationTerm(com.atlan.model.assets.GlossaryTerm)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>translationTerm</h4>
+<pre class="methodSignature">public&nbsp;<a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a>&nbsp;translationTerm&#8203;(<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&nbsp;translationTerm)</pre>
+</li>
+</ul>
+<a id="translationTerms(java.util.Collection)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>translationTerms</h4>
+<pre class="methodSignature">public&nbsp;<a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a>&nbsp;translationTerms&#8203;(java.util.Collection&lt;? extends <a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;translationTerms)</pre>
+</li>
+</ul>
+<a id="clearTranslationTerms()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>clearTranslationTerms</h4>
+<pre class="methodSignature">public&nbsp;<a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a>&nbsp;clearTranslationTerms()</pre>
+</li>
+</ul>
+<a id="validValueFor(com.atlan.model.assets.GlossaryTerm)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>validValueFor</h4>
+<pre class="methodSignature">public&nbsp;<a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a>&nbsp;validValueFor&#8203;(<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&nbsp;validValueFor)</pre>
+</li>
+</ul>
+<a id="validValuesFor(java.util.Collection)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>validValuesFor</h4>
+<pre class="methodSignature">public&nbsp;<a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a>&nbsp;validValuesFor&#8203;(java.util.Collection&lt;? extends <a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;validValuesFor)</pre>
+</li>
+</ul>
+<a id="clearValidValuesFor()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>clearValidValuesFor</h4>
+<pre class="methodSignature">public&nbsp;<a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a>&nbsp;clearValidValuesFor()</pre>
+</li>
+</ul>
+<a id="synonym(com.atlan.model.assets.GlossaryTerm)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>synonym</h4>
+<pre class="methodSignature">public&nbsp;<a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a>&nbsp;synonym&#8203;(<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&nbsp;synonym)</pre>
+</li>
+</ul>
+<a id="synonyms(java.util.Collection)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>synonyms</h4>
+<pre class="methodSignature">public&nbsp;<a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a>&nbsp;synonyms&#8203;(java.util.Collection&lt;? extends <a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;synonyms)</pre>
+</li>
+</ul>
+<a id="clearSynonyms()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>clearSynonyms</h4>
+<pre class="methodSignature">public&nbsp;<a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a>&nbsp;clearSynonyms()</pre>
+</li>
+</ul>
+<a id="replacedByTerm(com.atlan.model.assets.GlossaryTerm)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>replacedByTerm</h4>
+<pre class="methodSignature">public&nbsp;<a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a>&nbsp;replacedByTerm&#8203;(<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&nbsp;replacedByTerm)</pre>
+</li>
+</ul>
+<a id="replacedBy(java.util.Collection)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>replacedBy</h4>
+<pre class="methodSignature">public&nbsp;<a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a>&nbsp;replacedBy&#8203;(java.util.Collection&lt;? extends <a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;replacedBy)</pre>
+</li>
+</ul>
+<a id="clearReplacedBy()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>clearReplacedBy</h4>
+<pre class="methodSignature">public&nbsp;<a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a>&nbsp;clearReplacedBy()</pre>
+</li>
+</ul>
+<a id="validValue(com.atlan.model.assets.GlossaryTerm)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>validValue</h4>
+<pre class="methodSignature">public&nbsp;<a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a>&nbsp;validValue&#8203;(<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&nbsp;validValue)</pre>
+</li>
+</ul>
+<a id="validValues(java.util.Collection)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>validValues</h4>
+<pre class="methodSignature">public&nbsp;<a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a>&nbsp;validValues&#8203;(java.util.Collection&lt;? extends <a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;validValues)</pre>
+</li>
+</ul>
+<a id="clearValidValues()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>clearValidValues</h4>
+<pre class="methodSignature">public&nbsp;<a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a>&nbsp;clearValidValues()</pre>
+</li>
+</ul>
+<a id="replacementTerm(com.atlan.model.assets.GlossaryTerm)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>replacementTerm</h4>
+<pre class="methodSignature">public&nbsp;<a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a>&nbsp;replacementTerm&#8203;(<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&nbsp;replacementTerm)</pre>
+</li>
+</ul>
+<a id="replacementTerms(java.util.Collection)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>replacementTerms</h4>
+<pre class="methodSignature">public&nbsp;<a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a>&nbsp;replacementTerms&#8203;(java.util.Collection&lt;? extends <a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;replacementTerms)</pre>
+</li>
+</ul>
+<a id="clearReplacementTerms()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>clearReplacementTerms</h4>
+<pre class="methodSignature">public&nbsp;<a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a>&nbsp;clearReplacementTerms()</pre>
+</li>
+</ul>
+<a id="seeAlsoOne(com.atlan.model.assets.GlossaryTerm)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>seeAlsoOne</h4>
+<pre class="methodSignature">public&nbsp;<a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a>&nbsp;seeAlsoOne&#8203;(<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&nbsp;seeAlsoOne)</pre>
+</li>
+</ul>
+<a id="seeAlso(java.util.Collection)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>seeAlso</h4>
+<pre class="methodSignature">public&nbsp;<a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a>&nbsp;seeAlso&#8203;(java.util.Collection&lt;? extends <a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;seeAlso)</pre>
+</li>
+</ul>
+<a id="clearSeeAlso()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>clearSeeAlso</h4>
+<pre class="methodSignature">public&nbsp;<a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a>&nbsp;clearSeeAlso()</pre>
+</li>
+</ul>
+<a id="translatedTerm(com.atlan.model.assets.GlossaryTerm)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>translatedTerm</h4>
+<pre class="methodSignature">public&nbsp;<a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a>&nbsp;translatedTerm&#8203;(<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&nbsp;translatedTerm)</pre>
+</li>
+</ul>
+<a id="translatedTerms(java.util.Collection)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>translatedTerms</h4>
+<pre class="methodSignature">public&nbsp;<a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a>&nbsp;translatedTerms&#8203;(java.util.Collection&lt;? extends <a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;translatedTerms)</pre>
+</li>
+</ul>
+<a id="clearTranslatedTerms()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>clearTranslatedTerms</h4>
+<pre class="methodSignature">public&nbsp;<a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a>&nbsp;clearTranslatedTerms()</pre>
+</li>
+</ul>
+<a id="isATerm(com.atlan.model.assets.GlossaryTerm)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isATerm</h4>
+<pre class="methodSignature">public&nbsp;<a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a>&nbsp;isATerm&#8203;(<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&nbsp;isATerm)</pre>
+</li>
+</ul>
+<a id="isA(java.util.Collection)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isA</h4>
+<pre class="methodSignature">public&nbsp;<a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a>&nbsp;isA&#8203;(java.util.Collection&lt;? extends <a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;isA)</pre>
+</li>
+</ul>
+<a id="clearIsA()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>clearIsA</h4>
+<pre class="methodSignature">public&nbsp;<a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a>&nbsp;clearIsA()</pre>
 </li>
 </ul>
 <a id="anchor(com.atlan.model.assets.Glossary)">
@@ -606,6 +984,33 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
 </dl>
+</li>
+</ul>
+<a id="antonym(com.atlan.model.assets.GlossaryTerm)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>antonym</h4>
+<pre class="methodSignature">public&nbsp;<a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a>&nbsp;antonym&#8203;(<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&nbsp;antonym)</pre>
+</li>
+</ul>
+<a id="antonyms(java.util.Collection)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>antonyms</h4>
+<pre class="methodSignature">public&nbsp;<a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a>&nbsp;antonyms&#8203;(java.util.Collection&lt;? extends <a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;antonyms)</pre>
+</li>
+</ul>
+<a id="clearAntonyms()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>clearAntonyms</h4>
+<pre class="methodSignature">public&nbsp;<a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a>&nbsp;clearAntonyms()</pre>
 </li>
 </ul>
 <a id="assignedEntity(com.atlan.model.assets.Asset)">
@@ -662,85 +1067,58 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <pre class="methodSignature">public&nbsp;<a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a>&nbsp;clearCategories()</pre>
 </li>
 </ul>
-<a id="addToSeeAlso(com.atlan.model.assets.GlossaryTerm)">
+<a id="classify(com.atlan.model.assets.GlossaryTerm)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>addToSeeAlso</h4>
-<pre class="methodSignature">public&nbsp;<a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a>&nbsp;addToSeeAlso&#8203;(<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&nbsp;addToSeeAlso)</pre>
+<h4>classify</h4>
+<pre class="methodSignature">public&nbsp;<a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a>&nbsp;classify&#8203;(<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&nbsp;classify)</pre>
 </li>
 </ul>
-<a id="seeAlso(java.util.Collection)">
+<a id="classifies(java.util.Collection)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>seeAlso</h4>
-<pre class="methodSignature">public&nbsp;<a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a>&nbsp;seeAlso&#8203;(java.util.Collection&lt;? extends <a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;seeAlso)</pre>
+<h4>classifies</h4>
+<pre class="methodSignature">public&nbsp;<a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a>&nbsp;classifies&#8203;(java.util.Collection&lt;? extends <a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;classifies)</pre>
 </li>
 </ul>
-<a id="clearSeeAlso()">
+<a id="clearClassifies()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>clearSeeAlso</h4>
-<pre class="methodSignature">public&nbsp;<a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a>&nbsp;clearSeeAlso()</pre>
+<h4>clearClassifies</h4>
+<pre class="methodSignature">public&nbsp;<a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a>&nbsp;clearClassifies()</pre>
 </li>
 </ul>
-<a id="synonym(com.atlan.model.assets.GlossaryTerm)">
+<a id="preferredToTerm(com.atlan.model.assets.GlossaryTerm)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>synonym</h4>
-<pre class="methodSignature">public&nbsp;<a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a>&nbsp;synonym&#8203;(<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&nbsp;synonym)</pre>
+<h4>preferredToTerm</h4>
+<pre class="methodSignature">public&nbsp;<a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a>&nbsp;preferredToTerm&#8203;(<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&nbsp;preferredToTerm)</pre>
 </li>
 </ul>
-<a id="synonyms(java.util.Collection)">
+<a id="preferredToTerms(java.util.Collection)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>synonyms</h4>
-<pre class="methodSignature">public&nbsp;<a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a>&nbsp;synonyms&#8203;(java.util.Collection&lt;? extends <a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;synonyms)</pre>
+<h4>preferredToTerms</h4>
+<pre class="methodSignature">public&nbsp;<a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a>&nbsp;preferredToTerms&#8203;(java.util.Collection&lt;? extends <a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;preferredToTerms)</pre>
 </li>
 </ul>
-<a id="clearSynonyms()">
+<a id="clearPreferredToTerms()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>clearSynonyms</h4>
-<pre class="methodSignature">public&nbsp;<a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a>&nbsp;clearSynonyms()</pre>
-</li>
-</ul>
-<a id="antonym(com.atlan.model.assets.GlossaryTerm)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>antonym</h4>
-<pre class="methodSignature">public&nbsp;<a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a>&nbsp;antonym&#8203;(<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&nbsp;antonym)</pre>
-</li>
-</ul>
-<a id="antonyms(java.util.Collection)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>antonyms</h4>
-<pre class="methodSignature">public&nbsp;<a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a>&nbsp;antonyms&#8203;(java.util.Collection&lt;? extends <a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;antonyms)</pre>
-</li>
-</ul>
-<a id="clearAntonyms()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>clearAntonyms</h4>
-<pre class="methodSignature">public&nbsp;<a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a>&nbsp;clearAntonyms()</pre>
+<h4>clearPreferredToTerms</h4>
+<pre class="methodSignature">public&nbsp;<a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a>&nbsp;clearPreferredToTerms()</pre>
 </li>
 </ul>
 <a id="preferredTerm(com.atlan.model.assets.GlossaryTerm)">
@@ -768,100 +1146,6 @@ extends <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets
 <li class="blockList">
 <h4>clearPreferredTerms</h4>
 <pre class="methodSignature">public&nbsp;<a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a>&nbsp;clearPreferredTerms()</pre>
-</li>
-</ul>
-<a id="addToReplacedBy(com.atlan.model.assets.GlossaryTerm)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>addToReplacedBy</h4>
-<pre class="methodSignature">public&nbsp;<a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a>&nbsp;addToReplacedBy&#8203;(<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&nbsp;addToReplacedBy)</pre>
-</li>
-</ul>
-<a id="replacedBy(java.util.Collection)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>replacedBy</h4>
-<pre class="methodSignature">public&nbsp;<a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a>&nbsp;replacedBy&#8203;(java.util.Collection&lt;? extends <a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;replacedBy)</pre>
-</li>
-</ul>
-<a id="clearReplacedBy()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>clearReplacedBy</h4>
-<pre class="methodSignature">public&nbsp;<a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a>&nbsp;clearReplacedBy()</pre>
-</li>
-</ul>
-<a id="translatedTerm(com.atlan.model.assets.GlossaryTerm)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>translatedTerm</h4>
-<pre class="methodSignature">public&nbsp;<a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a>&nbsp;translatedTerm&#8203;(<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&nbsp;translatedTerm)</pre>
-</li>
-</ul>
-<a id="translatedTerms(java.util.Collection)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>translatedTerms</h4>
-<pre class="methodSignature">public&nbsp;<a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a>&nbsp;translatedTerms&#8203;(java.util.Collection&lt;? extends <a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;translatedTerms)</pre>
-</li>
-</ul>
-<a id="clearTranslatedTerms()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>clearTranslatedTerms</h4>
-<pre class="methodSignature">public&nbsp;<a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a>&nbsp;clearTranslatedTerms()</pre>
-</li>
-</ul>
-<a id="classifies(java.util.SortedSet)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>classifies</h4>
-<pre class="methodSignature">public&nbsp;<a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a>&nbsp;classifies&#8203;(java.util.SortedSet&lt;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;classifies)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="addToValidValuesFor(com.atlan.model.assets.GlossaryTerm)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>addToValidValuesFor</h4>
-<pre class="methodSignature">public&nbsp;<a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a>&nbsp;addToValidValuesFor&#8203;(<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&nbsp;addToValidValuesFor)</pre>
-</li>
-</ul>
-<a id="validValuesFor(java.util.Collection)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>validValuesFor</h4>
-<pre class="methodSignature">public&nbsp;<a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a>&nbsp;validValuesFor&#8203;(java.util.Collection&lt;? extends <a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;validValuesFor)</pre>
-</li>
-</ul>
-<a id="clearValidValuesFor()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>clearValidValuesFor</h4>
-<pre class="methodSignature">public&nbsp;<a href="GlossaryTerm.GlossaryTermBuilder.html" title="type parameter in GlossaryTerm.GlossaryTermBuilder">B</a>&nbsp;clearValidValuesFor()</pre>
 </li>
 </ul>
 <a id="toString()">
