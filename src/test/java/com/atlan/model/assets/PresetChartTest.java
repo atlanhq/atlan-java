@@ -4,12 +4,10 @@ package com.atlan.model.assets;
 
 import static org.testng.Assert.*;
 
-import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.AtlanCertificateStatus;
-import com.atlan.model.enums.AtlanConnectorType;
-import com.atlan.model.enums.AtlanStatus;
+import com.atlan.model.enums.*;
 import com.atlan.serde.Serde;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import java.util.*;
 import org.testng.annotations.Test;
 
 public class PresetChartTest {
@@ -45,7 +43,7 @@ public class PresetChartTest {
             .adminRole("adminRole")
             .viewerUser("viewerUser")
             .viewerGroup("viewerGroup")
-            .connectorType(AtlanConnectorType.S3)
+            .connectorType(AtlanConnectorType.PRESTO)
             .connectionName("connectionName")
             .connectionQualifiedName("connectionQualifiedName")
             .hasLineage(false)
@@ -108,14 +106,20 @@ public class PresetChartTest {
             .readme(Readme.refByGuid("readmeGuid"))
             .meaning(GlossaryTerm.refByGuid("termGuid1"))
             .meaning(GlossaryTerm.refByGuid("termGuid2"))
-            .presetWorkspaceId(123456L)
+            .inputToProcesses(Set.of(
+                    LineageProcess.refByGuid("fe359cf8-64b9-4bf4-a239-f80786bc7a33"),
+                    LineageProcess.refByGuid("e675caa2-d69f-43af-92a9-6f4316eae839")))
+            .outputFromProcesses(Set.of(
+                    LineageProcess.refByGuid("70d026f7-1075-4a26-885c-6e5e82ae52da"),
+                    LineageProcess.refByGuid("b2aa0532-b8e6-4a3d-af65-c110e3e6195d")))
+            .presetWorkspaceId(5831110046842544806L)
             .presetWorkspaceQualifiedName("presetWorkspaceQualifiedName")
-            .presetDashboardId(654321L)
+            .presetDashboardId(493713277130449615L)
             .presetDashboardQualifiedName("presetDashboardQualifiedName")
             .presetChartDescriptionMarkdown("presetChartDescriptionMarkdown")
-            .presetDashboard(PresetDashboard.refByGuid("dashboardGuid"))
+            .presetChartFormData(Map.of("key1", "value1", "key2", "value2"))
+            .presetDashboard(PresetDashboard.refByGuid("8d109a49-5c7d-4d98-b57b-cb171e0a8994"))
             .build();
-
     private static PresetChart frodo;
     private static String serialized;
 

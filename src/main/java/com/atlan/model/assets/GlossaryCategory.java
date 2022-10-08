@@ -6,7 +6,6 @@ import com.atlan.exception.AtlanException;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
@@ -20,26 +19,41 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@SuppressWarnings("cast")
 public class GlossaryCategory extends Asset {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "AtlasGlossaryCategory";
 
-    /** Fixed typeName for categories. */
+    /** Fixed typeName for GlossaryCategories. */
     @Getter(onMethod_ = {@Override})
     @Setter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Unused attributes. */
-    @JsonIgnore
+    /**
+     * Unused.
+     * @see #description
+     */
+    @Attribute
     String shortDescription;
 
-    @JsonIgnore
+    /**
+     * Unused.
+     * @see #description
+     */
+    @Attribute
     String longDescription;
 
-    @JsonIgnore
+    /** Unused. */
+    @Attribute
+    @Singular
     Map<String, String> additionalAttributes;
+
+    /** Terms organized within this category. */
+    @Attribute
+    @Singular
+    SortedSet<GlossaryTerm> terms;
 
     /** Glossary in which the category is located. */
     @Attribute
@@ -49,31 +63,26 @@ public class GlossaryCategory extends Asset {
     @Attribute
     GlossaryCategory parentCategory;
 
-    /** Terms organized within this category. */
-    @Singular
-    @Attribute
-    SortedSet<GlossaryTerm> terms;
-
     /** Child categories organized within this category. */
-    @Singular("childCategory")
     @Attribute
+    @Singular("childCategory")
     SortedSet<GlossaryCategory> childrenCategories;
 
     /**
-     * Reference to a category by GUID.
+     * Reference to a GlossaryCategory by GUID.
      *
-     * @param guid the GUID of the category to reference
-     * @return reference to a category that can be used for defining a relationship to a category
+     * @param guid the GUID of the GlossaryCategory to reference
+     * @return reference to a GlossaryCategory that can be used for defining a relationship to a GlossaryCategory
      */
     public static GlossaryCategory refByGuid(String guid) {
         return GlossaryCategory.builder().guid(guid).build();
     }
 
     /**
-     * Reference to a category by qualifiedName.
+     * Reference to a GlossaryCategory by qualifiedName.
      *
-     * @param qualifiedName the qualifiedName of the category to reference
-     * @return reference to a category that can be used for defining a relationship to a category
+     * @param qualifiedName the qualifiedName of the GlossaryCategory to reference
+     * @return reference to a GlossaryCategory that can be used for defining a relationship to a GlossaryCategory
      */
     public static GlossaryCategory refByQualifiedName(String qualifiedName) {
         return GlossaryCategory.builder()
@@ -118,10 +127,10 @@ public class GlossaryCategory extends Asset {
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a category, from a potentially
-     * more-complete category object.
+     * Builds the minimal object necessary to apply an update to a GlossaryCategory, from a potentially
+     * more-complete GlossaryCategory object.
      *
-     * @return the minimal object necessary to update the category, as a builder
+     * @return the minimal object necessary to update the GlossaryCategory, as a builder
      */
     @Override
     protected GlossaryCategoryBuilder<?, ?> trimToRequired() {
@@ -129,14 +138,14 @@ public class GlossaryCategory extends Asset {
     }
 
     /**
-     * Update the certificate on a category.
+     * Update the certificate on a GlossaryCategory.
      *
-     * @param qualifiedName of the category
-     * @param name of the category
-     * @param glossaryGuid unique ID (GUID) of the category's glossary
+     * @param qualifiedName of the GlossaryCategory
+     * @param name of the GlossaryCategory
+     * @param glossaryGuid unique ID (GUID) of the GlossaryCategory's glossary
      * @param certificate to use
      * @param message (optional) message, or null if no message
-     * @return the updated category, or null if the update failed
+     * @return the updated GlossaryCategory, or null if the update failed
      * @throws AtlanException on any API problems
      */
     public static GlossaryCategory updateCertificate(
@@ -147,12 +156,12 @@ public class GlossaryCategory extends Asset {
     }
 
     /**
-     * Remove the certificate from a category.
+     * Remove the certificate from a GlossaryCategory.
      *
-     * @param qualifiedName of the category
-     * @param name of the category
-     * @param glossaryGuid unique ID (GUID) of the category's glossary
-     * @return the updated category, or null if the removal failed
+     * @param qualifiedName of the GlossaryCategory
+     * @param name of the GlossaryCategory
+     * @param glossaryGuid unique ID (GUID) of the GlossaryCategory's glossary
+     * @return the updated GlossaryCategory, or null if the removal failed
      * @throws AtlanException on any API problems
      */
     public static GlossaryCategory removeCertificate(String qualifiedName, String name, String glossaryGuid)
@@ -161,15 +170,15 @@ public class GlossaryCategory extends Asset {
     }
 
     /**
-     * Update the announcement on a category.
+     * Update the announcement on a GlossaryCategory.
      *
-     * @param qualifiedName of the category
+     * @param qualifiedName of the GlossaryCategory
      * @param name of the category
-     * @param glossaryGuid unique ID (GUID) of the category's glossary
+     * @param glossaryGuid unique ID (GUID) of the GlossaryCategory's glossary
      * @param type type of announcement to set
      * @param title (optional) title of the announcement to set (or null for no title)
      * @param message (optional) message of the announcement to set (or null for no message)
-     * @return the result of the update, or null if the update failed
+     * @return the updated GlossaryCategory, or null if the update failed
      * @throws AtlanException on any API problems
      */
     public static GlossaryCategory updateAnnouncement(
@@ -185,12 +194,12 @@ public class GlossaryCategory extends Asset {
     }
 
     /**
-     * Remove the announcement from a category.
+     * Remove the announcement from a GlossaryCategory.
      *
-     * @param qualifiedName of the category
-     * @param name of the category
-     * @param glossaryGuid unique ID (GUID) of the category's glossary
-     * @return the updated category, or null if the removal failed
+     * @param qualifiedName of the GlossaryCategory
+     * @param name of the GlossaryCategory
+     * @param glossaryGuid unique ID (GUID) of the GlossaryCategory's glossary
+     * @return the updated GlossaryCategory, or null if the removal failed
      * @throws AtlanException on any API problems
      */
     public static GlossaryCategory removeAnnouncement(String qualifiedName, String name, String glossaryGuid)
@@ -199,11 +208,11 @@ public class GlossaryCategory extends Asset {
     }
 
     /**
-     * Add classifications to a category.
+     * Add classifications to a GlossaryCategory.
      *
-     * @param qualifiedName of the category
+     * @param qualifiedName of the GlossaryCategory
      * @param classificationNames human-readable names of the classifications to add
-     * @throws AtlanException on any API problems, or if any of the classifications already exist on the category
+     * @throws AtlanException on any API problems, or if any of the classifications already exist on the GlossaryCategory
      */
     public static void addClassifications(String qualifiedName, List<String> classificationNames)
             throws AtlanException {
@@ -211,11 +220,11 @@ public class GlossaryCategory extends Asset {
     }
 
     /**
-     * Remove a classification from a category.
+     * Remove a classification from a GlossaryCategory.
      *
-     * @param qualifiedName of the category
+     * @param qualifiedName of the GlossaryCategory
      * @param classificationName human-readable name of the classification to remove
-     * @throws AtlanException on any API problems, or if the classification does not exist on the category
+     * @throws AtlanException on any API problems, or if the classification does not exist on the GlossaryCategory
      */
     public static void removeClassification(String qualifiedName, String classificationName) throws AtlanException {
         Asset.removeClassification(TYPE_NAME, qualifiedName, classificationName);

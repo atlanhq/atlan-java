@@ -13,7 +13,6 @@ import com.atlan.model.relations.Reference;
 import com.atlan.serde.EntityDeserializer;
 import com.atlan.serde.EntitySerializer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -27,10 +26,11 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 @JsonSerialize(using = EntitySerializer.class)
 @JsonDeserialize(using = EntityDeserializer.class)
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "typeName")
-@JsonSubTypes({
-    @JsonSubTypes.Type(value = IndistinctAsset.class, name = IndistinctAsset.TYPE_NAME),
-})
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.EXISTING_PROPERTY,
+        property = "typeName",
+        defaultImpl = IndistinctAsset.class)
 @SuppressWarnings("cast")
 public abstract class Entity extends Reference {
     /** Internal tracking of fields that should be serialized with null values. */
@@ -94,6 +94,9 @@ public abstract class Entity extends Reference {
 
     /** Names of terms that have been linked to this asset. */
     Set<String> meaningNames;
+
+    /** Unique identifiers (GUIDs) for any background tasks that are yet to operate on this asset. */
+    final Set<String> pendingTasks;
 
     /** Remove the certificate from the asset, if any is set on the asset. */
     public void removeCustomMetadata() {

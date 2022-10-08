@@ -4,12 +4,10 @@ package com.atlan.model.assets;
 
 import static org.testng.Assert.*;
 
-import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.AtlanCertificateStatus;
-import com.atlan.model.enums.AtlanConnectorType;
-import com.atlan.model.enums.AtlanStatus;
+import com.atlan.model.enums.*;
 import com.atlan.serde.Serde;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import java.util.*;
 import org.testng.annotations.Test;
 
 public class TableTest {
@@ -45,7 +43,7 @@ public class TableTest {
             .adminRole("adminRole")
             .viewerUser("viewerUser")
             .viewerGroup("viewerGroup")
-            .connectorType(AtlanConnectorType.SNOWFLAKE)
+            .connectorType(AtlanConnectorType.PRESTO)
             .connectionName("connectionName")
             .connectionQualifiedName("connectionQualifiedName")
             .hasLineage(false)
@@ -108,9 +106,16 @@ public class TableTest {
             .readme(Readme.refByGuid("readmeGuid"))
             .meaning(GlossaryTerm.refByGuid("termGuid1"))
             .meaning(GlossaryTerm.refByGuid("termGuid2"))
-            .queryCount(123L)
-            .queryUserCount(123L)
-            .queryCountUpdatedAt(123456789L)
+            .inputToProcesses(Set.of(
+                    LineageProcess.refByGuid("fb6e975c-494c-4043-ad1a-74d7206ed6cb"),
+                    LineageProcess.refByGuid("829ac1e8-4c6e-4cd8-bdcc-26f26939daee")))
+            .outputFromProcesses(Set.of(
+                    LineageProcess.refByGuid("211ec8e4-f47e-4f39-a100-0330580ec425"),
+                    LineageProcess.refByGuid("ca7844c2-b090-4673-acc0-7589d6ef6b1c")))
+            .queryCount(5593136444823387055L)
+            .queryUserCount(-2504782676441769647L)
+            // .queryUserMap(Map.of("key1", 123456L, "key2", 654321L))
+            .queryCountUpdatedAt(-3019884122298215214L)
             .databaseName("databaseName")
             .databaseQualifiedName("databaseQualifiedName")
             .schemaName("schemaName")
@@ -119,24 +124,37 @@ public class TableTest {
             .tableQualifiedName("tableQualifiedName")
             .viewName("viewName")
             .viewQualifiedName("viewQualifiedName")
-            .columnCount(123L)
-            .rowCount(1234567890L)
-            .sizeBytes(1234567890L)
+            .dbtModels(Set.of(
+                    DbtModel.refByGuid("5931e8be-09c2-4beb-a8ac-68e3a41772fa"),
+                    DbtModel.refByGuid("0feefcc6-2dcc-40a2-bc2c-27d1fa4a330b")))
+            .dbtSources(Set.of(
+                    DbtSource.refByGuid("2047a5b0-1287-4897-a0ef-e1aafd8354ee"),
+                    DbtSource.refByGuid("c21a830e-79a2-4b90-8da1-04895c6ff72c")))
+            .columnCount(4383463849834591400L)
+            .rowCount(3436894873169458769L)
+            .sizeBytes(1423921858742695292L)
             .alias("alias")
             .isTemporary(false)
             .isQueryPreview(true)
+            .queryPreviewConfig(Map.of("key1", "value1", "key2", "value2"))
             .externalLocation("externalLocation")
             .externalLocationRegion("externalLocationRegion")
             .externalLocationFormat("externalLocationFormat")
-            .isPartitioned(true)
+            .isPartitioned(false)
             .partitionStrategy("partitionStrategy")
-            .partitionCount(12L)
+            .partitionCount(-1975468973547775862L)
             .partitionList("partitionList")
-            .schema(Schema.refByGuid("schemaGuid"))
-            .column(Column.refByGuid("columnGuid1"))
-            .column(Column.refByGuid("columnGuid2"))
+            .partitions(Set.of(
+                    TablePartition.refByGuid("7b08dd50-5664-4aae-ae84-5c6b9d48f769"),
+                    TablePartition.refByGuid("9e8d5020-cc9c-4458-af51-74c0ca8189a9")))
+            .schema(Schema.refByGuid("2cc72098-add0-4679-969b-3e7c76fc5fa0"))
+            .columns(Set.of(
+                    Column.refByGuid("69ac6980-b5a1-4497-a70c-d64f0fc39756"),
+                    Column.refByGuid("47f5a357-313f-4393-b3a2-3aa2ae1c78c5")))
+            .queries(Set.of(
+                    AtlanQuery.refByGuid("c662399d-ddad-431f-a94e-5e861fb806a3"),
+                    AtlanQuery.refByGuid("54aebe3d-7fe5-433f-a008-06480ccff777")))
             .build();
-
     private static Table frodo;
     private static String serialized;
 
@@ -170,7 +188,7 @@ public class TableTest {
         assertNotNull(serialized);
         assertNotNull(frodo);
         String backAgain = frodo.toJson();
-        assertEquals(backAgain, serialized, "Serialization is equivalent after serde loop.");
+        assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
     }
 
     @Test(
@@ -179,6 +197,6 @@ public class TableTest {
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);
-        assertEquals(frodo, full, "Deserialization is equivalent after serde loop.");
+        assertEquals(frodo, full, "Deserialization is not equivalent after serde loop,");
     }
 }

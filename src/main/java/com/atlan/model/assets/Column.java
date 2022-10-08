@@ -6,10 +6,8 @@ import com.atlan.exception.AtlanException;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.enums.AtlanConnectorType;
-import com.atlan.model.relations.Reference;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.StringUtils;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 import java.util.Map;
@@ -17,19 +15,17 @@ import java.util.SortedSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-/**
- * Instance of a column in Atlan, with its detailed information.
- */
 @Getter
 @Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@SuppressWarnings("cast")
 public class Column extends SQL {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "Column";
 
-    /** Fixed typeName for tables. */
+    /** Fixed typeName for Columns. */
     @Getter(onMethod_ = {@Override})
     @Setter(onMethod_ = {@Override})
     @Builder.Default
@@ -105,27 +101,16 @@ public class Column extends SQL {
 
     /** TBC */
     @Attribute
-    Float numericScale;
+    Double numericScale;
 
     /** Maximum length of a value in this column. */
     @Attribute
     Long maxLength;
 
-    /** Unused attributes. */
-    @JsonIgnore
+    /** TBC */
+    @Attribute
+    @Singular
     Map<String, String> validations;
-
-    /** Table in which this column exists, or null if the column exists in a view. */
-    @Attribute
-    Table table;
-
-    /** Table partition in which this column exists, if any. */
-    @Attribute
-    Reference tablePartition;
-
-    /** View in which this column exists, or null if the column exists in a table or materialized view. */
-    @Attribute
-    View view;
 
     /** Materialized view in which this column exists, or null if the column exists in a table or view. */
     @Attribute
@@ -133,9 +118,36 @@ public class Column extends SQL {
     MaterializedView materializedView;
 
     /** Queries that involve this column. */
-    @Singular
     @Attribute
-    SortedSet<Reference> queries;
+    @Singular
+    SortedSet<AtlanQuery> queries;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<Metric> metricTimestamps;
+
+    /** View in which this column exists, or null if the column exists in a table or materialized view. */
+    @Attribute
+    View view;
+
+    /** TBC */
+    @Attribute
+    TablePartition tablePartition;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<Metric> dataQualityMetricDimensions;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<DbtModelColumn> dbtModelColumns;
+
+    /** Table in which this column exists, or null if the column exists in a view. */
+    @Attribute
+    Table table;
 
     /**
      * Retrieve the parent of this column, irrespective of its type.
@@ -153,20 +165,20 @@ public class Column extends SQL {
     }
 
     /**
-     * Reference to a column by GUID.
+     * Reference to a Column by GUID.
      *
-     * @param guid the GUID of the column to reference
-     * @return reference to a column that can be used for defining a relationship to a column
+     * @param guid the GUID of the Column to reference
+     * @return reference to a Column that can be used for defining a relationship to a Column
      */
     public static Column refByGuid(String guid) {
         return Column.builder().guid(guid).build();
     }
 
     /**
-     * Reference to a column by qualifiedName.
+     * Reference to a Column by qualifiedName.
      *
-     * @param qualifiedName the qualifiedName of the column to reference
-     * @return reference to a column that can be used for defining a relationship to a column
+     * @param qualifiedName the qualifiedName of the Column to reference
+     * @return reference to a Column that can be used for defining a relationship to a Column
      */
     public static Column refByQualifiedName(String qualifiedName) {
         return Column.builder()
@@ -222,21 +234,21 @@ public class Column extends SQL {
     }
 
     /**
-     * Builds the minimal object necessary to update a column.
+     * Builds the minimal object necessary to update a Column.
      *
-     * @param qualifiedName of the column
-     * @param name of the column
-     * @return the minimal request necessary to update the column, as a builder
+     * @param qualifiedName of the Column
+     * @param name of the Column
+     * @return the minimal request necessary to update the Column, as a builder
      */
     public static ColumnBuilder<?, ?> updater(String qualifiedName, String name) {
         return Column.builder().qualifiedName(qualifiedName).name(name);
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a column, from a potentially
-     * more-complete column object.
+     * Builds the minimal object necessary to apply an update to a Column, from a potentially
+     * more-complete Column object.
      *
-     * @return the minimal object necessary to update the column, as a builder
+     * @return the minimal object necessary to update the Column, as a builder
      */
     @Override
     protected ColumnBuilder<?, ?> trimToRequired() {
@@ -244,12 +256,12 @@ public class Column extends SQL {
     }
 
     /**
-     * Update the certificate on a column.
+     * Update the certificate on a Column.
      *
-     * @param qualifiedName of the column
+     * @param qualifiedName of the Column
      * @param certificate to use
      * @param message (optional) message, or null if no message
-     * @return the updated column, or null if the update failed
+     * @return the updated Column, or null if the update failed
      * @throws AtlanException on any API problems
      */
     public static Column updateCertificate(String qualifiedName, AtlanCertificateStatus certificate, String message)
@@ -258,11 +270,11 @@ public class Column extends SQL {
     }
 
     /**
-     * Remove the certificate from a column.
+     * Remove the certificate from a Column.
      *
-     * @param qualifiedName of the column
-     * @param name of the column
-     * @return the updated column, or null if the removal failed
+     * @param qualifiedName of the Column
+     * @param name of the Column
+     * @return the updated Column, or null if the removal failed
      * @throws AtlanException on any API problems
      */
     public static Column removeCertificate(String qualifiedName, String name) throws AtlanException {
@@ -271,9 +283,9 @@ public class Column extends SQL {
     }
 
     /**
-     * Update the announcement on a column.
+     * Update the announcement on a Column.
      *
-     * @param qualifiedName of the column
+     * @param qualifiedName of the Column
      * @param type type of announcement to set
      * @param title (optional) title of the announcement to set (or null for no title)
      * @param message (optional) message of the announcement to set (or null for no message)
@@ -286,11 +298,11 @@ public class Column extends SQL {
     }
 
     /**
-     * Remove the announcement from a column.
+     * Remove the announcement from a Column.
      *
-     * @param qualifiedName of the column
-     * @param name of the column
-     * @return the updated column, or null if the removal failed
+     * @param qualifiedName of the Column
+     * @param name of the Column
+     * @return the updated Column, or null if the removal failed
      * @throws AtlanException on any API problems
      */
     public static Column removeAnnouncement(String qualifiedName, String name) throws AtlanException {
@@ -299,11 +311,11 @@ public class Column extends SQL {
     }
 
     /**
-     * Add classifications to a column.
+     * Add classifications to a Column.
      *
-     * @param qualifiedName of the column
+     * @param qualifiedName of the Column
      * @param classificationNames human-readable names of the classifications to add
-     * @throws AtlanException on any API problems, or if any of the classifications already exist on the column
+     * @throws AtlanException on any API problems, or if any of the classifications already exist on the Column
      */
     public static void addClassifications(String qualifiedName, List<String> classificationNames)
             throws AtlanException {
@@ -311,23 +323,23 @@ public class Column extends SQL {
     }
 
     /**
-     * Remove a classification from a column.
+     * Remove a classification from a Column.
      *
-     * @param qualifiedName of the column
+     * @param qualifiedName of the Column
      * @param classificationName human-readable name of the classification to remove
-     * @throws AtlanException on any API problems, or if the classification does not exist on the column
+     * @throws AtlanException on any API problems, or if the classification does not exist on the Column
      */
     public static void removeClassification(String qualifiedName, String classificationName) throws AtlanException {
         Asset.removeClassification(TYPE_NAME, qualifiedName, classificationName);
     }
 
     /**
-     * Replace the terms linked to the column.
+     * Replace the terms linked to the Column.
      *
-     * @param qualifiedName for the column
-     * @param name human-readable name of the column
-     * @param terms the list of terms to replace on the column, or null to remove all terms from the column
-     * @return the column that was updated (note that it will NOT contain details of the replaced terms)
+     * @param qualifiedName for the Column
+     * @param name human-readable name of the Column
+     * @param terms the list of terms to replace on the Column, or null to remove all terms from the Column
+     * @return the Column that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
     public static Column replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
@@ -336,13 +348,13 @@ public class Column extends SQL {
     }
 
     /**
-     * Link additional terms to the column, without replacing existing terms linked to the column.
-     * Note: this operation must make two API calls — one to retrieve the column's existing terms,
+     * Link additional terms to the Column, without replacing existing terms linked to the Column.
+     * Note: this operation must make two API calls — one to retrieve the Column's existing terms,
      * and a second to append the new terms.
      *
-     * @param qualifiedName for the column
-     * @param terms the list of terms to append to the column
-     * @return the column that was updated  (note that it will NOT contain details of the appended terms)
+     * @param qualifiedName for the Column
+     * @param terms the list of terms to append to the Column
+     * @return the Column that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
     public static Column appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
@@ -350,13 +362,13 @@ public class Column extends SQL {
     }
 
     /**
-     * Remove terms from a column, without replacing all existing terms linked to the column.
-     * Note: this operation must make two API calls — one to retrieve the column's existing terms,
+     * Remove terms from a Column, without replacing all existing terms linked to the Column.
+     * Note: this operation must make two API calls — one to retrieve the Column's existing terms,
      * and a second to remove the provided terms.
      *
-     * @param qualifiedName for the column
-     * @param terms the list of terms to remove from the column, which must be referenced by GUID
-     * @return the column that was updated (note that it will NOT contain details of the resulting terms)
+     * @param qualifiedName for the Column
+     * @param terms the list of terms to remove from the Column, which must be referenced by GUID
+     * @return the Column that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
     public static Column removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {

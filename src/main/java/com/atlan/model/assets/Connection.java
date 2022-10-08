@@ -9,7 +9,6 @@ import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.enums.AtlanConnectionCategory;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.relations.UniqueAttributes;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
@@ -23,12 +22,13 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@SuppressWarnings("cast")
 public class Connection extends Asset {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "Connection";
 
-    /** Fixed typeName for column processes. */
+    /** Fixed typeName for Connections. */
     @Getter(onMethod_ = {@Override})
     @Setter(onMethod_ = {@Override})
     @Builder.Default
@@ -38,15 +38,9 @@ public class Connection extends Asset {
     @Attribute
     AtlanConnectionCategory category;
 
-    /** Unused attributes */
-    @JsonIgnore
+    /** TBC */
+    @Attribute
     String subCategory;
-
-    @JsonIgnore
-    Map<String, String> queryPreviewConfig;
-
-    @JsonIgnore
-    String queryConfig;
 
     /** Host name of the connection's source. */
     @Attribute
@@ -63,6 +57,15 @@ public class Connection extends Asset {
     /** When true, allow data previews of the source. */
     @Attribute
     Boolean allowQueryPreview;
+
+    /** TBC */
+    @Attribute
+    @Singular("putQueryPreviewConfig")
+    Map<String, String> queryPreviewConfig;
+
+    /** TBC */
+    @Attribute
+    String queryConfig;
 
     /** TBC */
     @Attribute
@@ -107,20 +110,20 @@ public class Connection extends Asset {
     }
 
     /**
-     * Reference to a connection by GUID.
+     * Reference to a Connection by GUID.
      *
-     * @param guid the GUID of the connection to reference
-     * @return reference to a connection that can be used for defining a relationship to a connection
+     * @param guid the GUID of the Connection to reference
+     * @return reference to a Connection that can be used for defining a relationship to a Connection
      */
     public static Connection refByGuid(String guid) {
         return Connection.builder().guid(guid).build();
     }
 
     /**
-     * Reference to a connection by qualifiedName.
+     * Reference to a Connection by qualifiedName.
      *
-     * @param qualifiedName the qualifiedName of the connection to reference
-     * @return reference to a connection that can be used for defining a relationship to a connection
+     * @param qualifiedName the qualifiedName of the Connection to reference
+     * @return reference to a Connection that can be used for defining a relationship to a Connection
      */
     public static Connection refByQualifiedName(String qualifiedName) {
         return Connection.builder()
@@ -180,29 +183,8 @@ public class Connection extends Asset {
     }
 
     /**
-     * Builds the minimal object necessary to update a connection.
-     *
-     * @param qualifiedName of the connection
-     * @param name of the connection
-     * @return the minimal object necessary to update the connection, as a builder
-     */
-    public static ConnectionBuilder<?, ?> updater(String qualifiedName, String name) {
-        return Connection.builder().qualifiedName(qualifiedName).name(name);
-    }
-
-    /**
-     * Builds the minimal object necessary to apply an update to a connection, from a potentially
-     * more-complete connection object.
-     *
-     * @return the minimal object necessary to update the connection, as a builder
-     */
-    @Override
-    protected ConnectionBuilder<?, ?> trimToRequired() {
-        return updater(this.getQualifiedName(), this.getName());
-    }
-
-    /**
      * Generate a unique connection name.
+     *
      * @param connectorType type of the connection's connector
      * @return a unique name for the connection
      */
@@ -212,12 +194,34 @@ public class Connection extends Asset {
     }
 
     /**
-     * Update the certificate on a connection.
+     * Builds the minimal object necessary to update a Connection.
      *
-     * @param qualifiedName of the connection
+     * @param qualifiedName of the Connection
+     * @param name of the Connection
+     * @return the minimal request necessary to update the Connection, as a builder
+     */
+    public static ConnectionBuilder<?, ?> updater(String qualifiedName, String name) {
+        return Connection.builder().qualifiedName(qualifiedName).name(name);
+    }
+
+    /**
+     * Builds the minimal object necessary to apply an update to a Connection, from a potentially
+     * more-complete Connection object.
+     *
+     * @return the minimal object necessary to update the Connection, as a builder
+     */
+    @Override
+    protected ConnectionBuilder<?, ?> trimToRequired() {
+        return updater(this.getQualifiedName(), this.getName());
+    }
+
+    /**
+     * Update the certificate on a Connection.
+     *
+     * @param qualifiedName of the Connection
      * @param certificate to use
      * @param message (optional) message, or null if no message
-     * @return the updated connection, or null if the update failed
+     * @return the updated Connection, or null if the update failed
      * @throws AtlanException on any API problems
      */
     public static Connection updateCertificate(String qualifiedName, AtlanCertificateStatus certificate, String message)
@@ -226,11 +230,11 @@ public class Connection extends Asset {
     }
 
     /**
-     * Remove the certificate from a connection.
+     * Remove the certificate from a Connection.
      *
-     * @param qualifiedName of the connection
-     * @param name of the connection
-     * @return the updated connection, or null if the removal failed
+     * @param qualifiedName of the Connection
+     * @param name of the Connection
+     * @return the updated Connection, or null if the removal failed
      * @throws AtlanException on any API problems
      */
     public static Connection removeCertificate(String qualifiedName, String name) throws AtlanException {
@@ -239,9 +243,9 @@ public class Connection extends Asset {
     }
 
     /**
-     * Update the announcement on a connection.
+     * Update the announcement on a Connection.
      *
-     * @param qualifiedName of the connection
+     * @param qualifiedName of the Connection
      * @param type type of announcement to set
      * @param title (optional) title of the announcement to set (or null for no title)
      * @param message (optional) message of the announcement to set (or null for no message)
@@ -254,11 +258,11 @@ public class Connection extends Asset {
     }
 
     /**
-     * Remove the announcement from a connection.
+     * Remove the announcement from a Connection.
      *
-     * @param qualifiedName of the connection
-     * @param name of the connection
-     * @return the updated connection, or null if the removal failed
+     * @param qualifiedName of the Connection
+     * @param name of the Connection
+     * @return the updated Connection, or null if the removal failed
      * @throws AtlanException on any API problems
      */
     public static Connection removeAnnouncement(String qualifiedName, String name) throws AtlanException {
@@ -267,11 +271,11 @@ public class Connection extends Asset {
     }
 
     /**
-     * Add classifications to a connection.
+     * Add classifications to a Connection.
      *
-     * @param qualifiedName of the connection
+     * @param qualifiedName of the Connection
      * @param classificationNames human-readable names of the classifications to add
-     * @throws AtlanException on any API problems, or if any of the classifications already exist on the connection
+     * @throws AtlanException on any API problems, or if any of the classifications already exist on the Connection
      */
     public static void addClassifications(String qualifiedName, List<String> classificationNames)
             throws AtlanException {
@@ -279,23 +283,23 @@ public class Connection extends Asset {
     }
 
     /**
-     * Remove a classification from a connection.
+     * Remove a classification from a Connection.
      *
-     * @param qualifiedName of the connection
+     * @param qualifiedName of the Connection
      * @param classificationName human-readable name of the classification to remove
-     * @throws AtlanException on any API problems, or if the classification does not exist on the connection
+     * @throws AtlanException on any API problems, or if the classification does not exist on the Connection
      */
     public static void removeClassification(String qualifiedName, String classificationName) throws AtlanException {
         Asset.removeClassification(TYPE_NAME, qualifiedName, classificationName);
     }
 
     /**
-     * Replace the terms linked to the connection.
+     * Replace the terms linked to the Connection.
      *
-     * @param qualifiedName for the connection
-     * @param name human-readable name of the connection
-     * @param terms the list of terms to replace on the connection, or null to remove all terms from the connection
-     * @return the connection that was updated (note that it will NOT contain details of the replaced terms)
+     * @param qualifiedName for the Connection
+     * @param name human-readable name of the Connection
+     * @param terms the list of terms to replace on the Connection, or null to remove all terms from the Connection
+     * @return the Connection that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
     public static Connection replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
@@ -304,13 +308,13 @@ public class Connection extends Asset {
     }
 
     /**
-     * Link additional terms to the connection, without replacing existing terms linked to the connection.
-     * Note: this operation must make two API calls — one to retrieve the connection's existing terms,
+     * Link additional terms to the Connection, without replacing existing terms linked to the Connection.
+     * Note: this operation must make two API calls — one to retrieve the Connection's existing terms,
      * and a second to append the new terms.
      *
-     * @param qualifiedName for the connection
-     * @param terms the list of terms to append to the connection
-     * @return the connection that was updated  (note that it will NOT contain details of the appended terms)
+     * @param qualifiedName for the Connection
+     * @param terms the list of terms to append to the Connection
+     * @return the Connection that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
     public static Connection appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
@@ -318,13 +322,13 @@ public class Connection extends Asset {
     }
 
     /**
-     * Remove terms from a connection, without replacing all existing terms linked to the connection.
-     * Note: this operation must make two API calls — one to retrieve the connection's existing terms,
+     * Remove terms from a Connection, without replacing all existing terms linked to the Connection.
+     * Note: this operation must make two API calls — one to retrieve the Connection's existing terms,
      * and a second to remove the provided terms.
      *
-     * @param qualifiedName for the connection
-     * @param terms the list of terms to remove from the connection, which must be referenced by GUID
-     * @return the connection that was updated (note that it will NOT contain details of the resulting terms)
+     * @param qualifiedName for the Connection
+     * @param terms the list of terms to remove from the Connection, which must be referenced by GUID
+     * @return the Connection that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
     public static Connection removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {

@@ -8,7 +8,6 @@ import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.StringUtils;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 import java.util.Map;
@@ -23,12 +22,13 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@SuppressWarnings("cast")
 public class View extends SQL {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "View";
 
-    /** Fixed typeName for views. */
+    /** Fixed typeName for Views. */
     @Getter(onMethod_ = {@Override})
     @Setter(onMethod_ = {@Override})
     @Builder.Default
@@ -48,19 +48,20 @@ public class View extends SQL {
 
     /** TBC */
     @Attribute
+    Boolean isQueryPreview;
+
+    /** TBC */
+    @Attribute
+    @Singular("putQueryPreviewConfig")
+    Map<String, String> queryPreviewConfig;
+
+    /** TBC */
+    @Attribute
     String alias;
 
     /** Whether this view is temporary (true) or not (false). */
     @Attribute
     Boolean isTemporary;
-
-    /** TBC */
-    @Attribute
-    Boolean isQueryPreview;
-
-    /** Unused attributes. */
-    @JsonIgnore
-    Map<String, String> queryPreviewConfig;
 
     /** Definition of the view (DDL). */
     @Attribute
@@ -72,25 +73,30 @@ public class View extends SQL {
     Schema schema;
 
     /** Columns that exist within this view. */
-    @Singular
     @Attribute
+    @Singular
     SortedSet<Column> columns;
 
+    /** Queries that involve this view. */
+    @Attribute
+    @Singular
+    SortedSet<AtlanQuery> queries;
+
     /**
-     * Reference to a view by GUID.
+     * Reference to a View by GUID.
      *
-     * @param guid the GUID of the view to reference
-     * @return reference to a view that can be used for defining a relationship to a view
+     * @param guid the GUID of the View to reference
+     * @return reference to a View that can be used for defining a relationship to a View
      */
     public static View refByGuid(String guid) {
         return View.builder().guid(guid).build();
     }
 
     /**
-     * Reference to a view by qualifiedName.
+     * Reference to a View by qualifiedName.
      *
-     * @param qualifiedName the qualifiedName of the view to reference
-     * @return reference to a view that can be used for defining a relationship to a view
+     * @param qualifiedName the qualifiedName of the View to reference
+     * @return reference to a View that can be used for defining a relationship to a View
      */
     public static View refByQualifiedName(String qualifiedName) {
         return View.builder()
@@ -126,21 +132,21 @@ public class View extends SQL {
     }
 
     /**
-     * Builds the minimal object necessary to update a view.
+     * Builds the minimal object necessary to update a View.
      *
-     * @param qualifiedName of the view
-     * @param name of the view
-     * @return the minimal request necessary to update the view, as a builder
+     * @param qualifiedName of the View
+     * @param name of the View
+     * @return the minimal request necessary to update the View, as a builder
      */
     public static ViewBuilder<?, ?> updater(String qualifiedName, String name) {
         return View.builder().qualifiedName(qualifiedName).name(name);
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a view, from a potentially
-     * more-complete view object.
+     * Builds the minimal object necessary to apply an update to a View, from a potentially
+     * more-complete View object.
      *
-     * @return the minimal object necessary to update the view, as a builder
+     * @return the minimal object necessary to update the View, as a builder
      */
     @Override
     protected ViewBuilder<?, ?> trimToRequired() {
@@ -148,12 +154,12 @@ public class View extends SQL {
     }
 
     /**
-     * Update the certificate on a view.
+     * Update the certificate on a View.
      *
-     * @param qualifiedName of the view
+     * @param qualifiedName of the View
      * @param certificate to use
      * @param message (optional) message, or null if no message
-     * @return the updated view, or null if the update failed
+     * @return the updated View, or null if the update failed
      * @throws AtlanException on any API problems
      */
     public static View updateCertificate(String qualifiedName, AtlanCertificateStatus certificate, String message)
@@ -162,11 +168,11 @@ public class View extends SQL {
     }
 
     /**
-     * Remove the certificate from a view.
+     * Remove the certificate from a View.
      *
-     * @param qualifiedName of the view
-     * @param name of the view
-     * @return the updated view, or null if the removal failed
+     * @param qualifiedName of the View
+     * @param name of the View
+     * @return the updated View, or null if the removal failed
      * @throws AtlanException on any API problems
      */
     public static View removeCertificate(String qualifiedName, String name) throws AtlanException {
@@ -175,9 +181,9 @@ public class View extends SQL {
     }
 
     /**
-     * Update the announcement on a view.
+     * Update the announcement on a View.
      *
-     * @param qualifiedName of the view
+     * @param qualifiedName of the View
      * @param type type of announcement to set
      * @param title (optional) title of the announcement to set (or null for no title)
      * @param message (optional) message of the announcement to set (or null for no message)
@@ -190,11 +196,11 @@ public class View extends SQL {
     }
 
     /**
-     * Remove the announcement from a view.
+     * Remove the announcement from a View.
      *
-     * @param qualifiedName of the view
-     * @param name of the view
-     * @return the updated view, or null if the removal failed
+     * @param qualifiedName of the View
+     * @param name of the View
+     * @return the updated View, or null if the removal failed
      * @throws AtlanException on any API problems
      */
     public static View removeAnnouncement(String qualifiedName, String name) throws AtlanException {
@@ -203,11 +209,11 @@ public class View extends SQL {
     }
 
     /**
-     * Add classifications to a view.
+     * Add classifications to a View.
      *
-     * @param qualifiedName of the view
+     * @param qualifiedName of the View
      * @param classificationNames human-readable names of the classifications to add
-     * @throws AtlanException on any API problems, or if any of the classifications already exist on the view
+     * @throws AtlanException on any API problems, or if any of the classifications already exist on the View
      */
     public static void addClassifications(String qualifiedName, List<String> classificationNames)
             throws AtlanException {
@@ -215,23 +221,23 @@ public class View extends SQL {
     }
 
     /**
-     * Remove a classification from a view.
+     * Remove a classification from a View.
      *
-     * @param qualifiedName of the view
+     * @param qualifiedName of the View
      * @param classificationName human-readable name of the classification to remove
-     * @throws AtlanException on any API problems, or if the classification does not exist on the view
+     * @throws AtlanException on any API problems, or if the classification does not exist on the View
      */
     public static void removeClassification(String qualifiedName, String classificationName) throws AtlanException {
         Asset.removeClassification(TYPE_NAME, qualifiedName, classificationName);
     }
 
     /**
-     * Replace the terms linked to the view.
+     * Replace the terms linked to the View.
      *
-     * @param qualifiedName for the view
-     * @param name human-readable name of the view
-     * @param terms the list of terms to replace on the view, or null to remove all terms from the view
-     * @return the view that was updated (note that it will NOT contain details of the replaced terms)
+     * @param qualifiedName for the View
+     * @param name human-readable name of the View
+     * @param terms the list of terms to replace on the View, or null to remove all terms from the View
+     * @return the View that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
     public static View replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms) throws AtlanException {
@@ -239,13 +245,13 @@ public class View extends SQL {
     }
 
     /**
-     * Link additional terms to the view, without replacing existing terms linked to the view.
-     * Note: this operation must make two API calls — one to retrieve the view's existing terms,
+     * Link additional terms to the View, without replacing existing terms linked to the View.
+     * Note: this operation must make two API calls — one to retrieve the View's existing terms,
      * and a second to append the new terms.
      *
-     * @param qualifiedName for the view
-     * @param terms the list of terms to append to the view
-     * @return the view that was updated  (note that it will NOT contain details of the appended terms)
+     * @param qualifiedName for the View
+     * @param terms the list of terms to append to the View
+     * @return the View that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
     public static View appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
@@ -253,13 +259,13 @@ public class View extends SQL {
     }
 
     /**
-     * Remove terms from a view, without replacing all existing terms linked to the view.
-     * Note: this operation must make two API calls — one to retrieve the view's existing terms,
+     * Remove terms from a View, without replacing all existing terms linked to the View.
+     * Note: this operation must make two API calls — one to retrieve the View's existing terms,
      * and a second to remove the provided terms.
      *
-     * @param qualifiedName for the view
-     * @param terms the list of terms to remove from the view, which must be referenced by GUID
-     * @return the view that was updated (note that it will NOT contain details of the resulting terms)
+     * @param qualifiedName for the View
+     * @param terms the list of terms to remove from the View, which must be referenced by GUID
+     * @return the View that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
     public static View removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {

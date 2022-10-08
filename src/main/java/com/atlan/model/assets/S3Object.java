@@ -23,7 +23,7 @@ public class S3Object extends S3 {
 
     public static final String TYPE_NAME = "S3Object";
 
-    /** Fixed typeName for S3 objects. */
+    /** Fixed typeName for S3Objects. */
     @Getter(onMethod_ = {@Override})
     @Setter(onMethod_ = {@Override})
     @Builder.Default
@@ -81,20 +81,20 @@ public class S3Object extends S3 {
     S3Bucket bucket;
 
     /**
-     * Reference to a S3 object by GUID.
+     * Reference to a S3Object by GUID.
      *
-     * @param guid the GUID of the S3 object to reference
-     * @return reference to a S3 object that can be used for defining a relationship to a S3 object
+     * @param guid the GUID of the S3Object to reference
+     * @return reference to a S3Object that can be used for defining a relationship to a S3Object
      */
     public static S3Object refByGuid(String guid) {
         return S3Object.builder().guid(guid).build();
     }
 
     /**
-     * Reference to a S3 object by qualifiedName.
+     * Reference to a S3Object by qualifiedName.
      *
-     * @param qualifiedName the qualifiedName of the S3 object to reference
-     * @return reference to a S3 object that can be used for defining a relationship to a S3 object
+     * @param qualifiedName the qualifiedName of the S3Object to reference
+     * @return reference to a S3Object that can be used for defining a relationship to a S3Object
      */
     public static S3Object refByQualifiedName(String qualifiedName) {
         return S3Object.builder()
@@ -121,21 +121,21 @@ public class S3Object extends S3 {
     }
 
     /**
-     * Builds the minimal object necessary to update an S3 object.
+     * Builds the minimal object necessary to update a S3Object.
      *
-     * @param qualifiedName unique name of the S3 object
-     * @param name of the S3 object
-     * @return the minimal object necessary to update the S3 object, as a builder
+     * @param qualifiedName of the S3Object
+     * @param name of the S3Object
+     * @return the minimal request necessary to update the S3Object, as a builder
      */
     public static S3ObjectBuilder<?, ?> updater(String qualifiedName, String name) {
         return S3Object.builder().qualifiedName(qualifiedName).name(name);
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to an S3 object, from a potentially
-     * more-complete S3 object.
+     * Builds the minimal object necessary to apply an update to a S3Object, from a potentially
+     * more-complete S3Object object.
      *
-     * @return the minimal object necessary to update the S3 object, as a builder
+     * @return the minimal object necessary to update the S3Object, as a builder
      */
     @Override
     protected S3ObjectBuilder<?, ?> trimToRequired() {
@@ -143,22 +143,12 @@ public class S3Object extends S3 {
     }
 
     /**
-     * Generate a unique S3 object name.
-     * @param connectionQualifiedName unique name of the connection
-     * @param awsArn unique ARN for the object
-     * @return a unique name for the S3 object
-     */
-    private static String generateQualifiedName(String connectionQualifiedName, String awsArn) {
-        return connectionQualifiedName + "/" + awsArn;
-    }
-
-    /**
-     * Update the certificate on an S3 object.
+     * Update the certificate on a S3Object.
      *
-     * @param qualifiedName of the S3 object
+     * @param qualifiedName of the S3Object
      * @param certificate to use
      * @param message (optional) message, or null if no message
-     * @return the updated S3 object, or null if the update failed
+     * @return the updated S3Object, or null if the update failed
      * @throws AtlanException on any API problems
      */
     public static S3Object updateCertificate(String qualifiedName, AtlanCertificateStatus certificate, String message)
@@ -167,11 +157,11 @@ public class S3Object extends S3 {
     }
 
     /**
-     * Remove the certificate from an S3 object.
+     * Remove the certificate from a S3Object.
      *
-     * @param qualifiedName of the S3 object
-     * @param name of the S3 object
-     * @return the updated S3 object, or null if the removal failed
+     * @param qualifiedName of the S3Object
+     * @param name of the S3Object
+     * @return the updated S3Object, or null if the removal failed
      * @throws AtlanException on any API problems
      */
     public static S3Object removeCertificate(String qualifiedName, String name) throws AtlanException {
@@ -180,9 +170,9 @@ public class S3Object extends S3 {
     }
 
     /**
-     * Update the announcement on an S3 object.
+     * Update the announcement on a S3Object.
      *
-     * @param qualifiedName of the S3 object
+     * @param qualifiedName of the S3Object
      * @param type type of announcement to set
      * @param title (optional) title of the announcement to set (or null for no title)
      * @param message (optional) message of the announcement to set (or null for no message)
@@ -195,11 +185,11 @@ public class S3Object extends S3 {
     }
 
     /**
-     * Remove the announcement from an S3 object.
+     * Remove the announcement from a S3Object.
      *
-     * @param qualifiedName of the S3 object
-     * @param name of the S3 object
-     * @return the updated S3 object, or null if the removal failed
+     * @param qualifiedName of the S3Object
+     * @param name of the S3Object
+     * @return the updated S3Object, or null if the removal failed
      * @throws AtlanException on any API problems
      */
     public static S3Object removeAnnouncement(String qualifiedName, String name) throws AtlanException {
@@ -208,11 +198,11 @@ public class S3Object extends S3 {
     }
 
     /**
-     * Add classifications to an S3 object.
+     * Add classifications to a S3Object.
      *
-     * @param qualifiedName of the S3 object
+     * @param qualifiedName of the S3Object
      * @param classificationNames human-readable names of the classifications to add
-     * @throws AtlanException on any API problems, or if any of the classifications already exist on the S3 object
+     * @throws AtlanException on any API problems, or if any of the classifications already exist on the S3Object
      */
     public static void addClassifications(String qualifiedName, List<String> classificationNames)
             throws AtlanException {
@@ -220,23 +210,23 @@ public class S3Object extends S3 {
     }
 
     /**
-     * Remove a classification from an S3 object.
+     * Remove a classification from a S3Object.
      *
-     * @param qualifiedName of the S3 object
+     * @param qualifiedName of the S3Object
      * @param classificationName human-readable name of the classification to remove
-     * @throws AtlanException on any API problems, or if the classification does not exist on the S3 object
+     * @throws AtlanException on any API problems, or if the classification does not exist on the S3Object
      */
     public static void removeClassification(String qualifiedName, String classificationName) throws AtlanException {
         Asset.removeClassification(TYPE_NAME, qualifiedName, classificationName);
     }
 
     /**
-     * Replace the terms linked to the S3 object.
+     * Replace the terms linked to the S3Object.
      *
-     * @param qualifiedName for the S3 object
-     * @param name human-readable name of the S3 object
-     * @param terms the list of terms to replace on the S3 object, or null to remove all terms from the S3 object
-     * @return the S3 object that was updated (note that it will NOT contain details of the replaced terms)
+     * @param qualifiedName for the S3Object
+     * @param name human-readable name of the S3Object
+     * @param terms the list of terms to replace on the S3Object, or null to remove all terms from the S3Object
+     * @return the S3Object that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
     public static S3Object replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
@@ -245,13 +235,13 @@ public class S3Object extends S3 {
     }
 
     /**
-     * Link additional terms to the S3 object, without replacing existing terms linked to the S3 object.
-     * Note: this operation must make two API calls — one to retrieve the S3 object's existing terms,
+     * Link additional terms to the S3Object, without replacing existing terms linked to the S3Object.
+     * Note: this operation must make two API calls — one to retrieve the S3Object's existing terms,
      * and a second to append the new terms.
      *
-     * @param qualifiedName for the S3 object
-     * @param terms the list of terms to append to the S3 object
-     * @return the S3 object that was updated  (note that it will NOT contain details of the appended terms)
+     * @param qualifiedName for the S3Object
+     * @param terms the list of terms to append to the S3Object
+     * @return the S3Object that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
     public static S3Object appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
@@ -259,13 +249,13 @@ public class S3Object extends S3 {
     }
 
     /**
-     * Remove terms from an S3 object, without replacing all existing terms linked to the S3 object.
-     * Note: this operation must make two API calls — one to retrieve the S3 object's existing terms,
+     * Remove terms from a S3Object, without replacing all existing terms linked to the S3Object.
+     * Note: this operation must make two API calls — one to retrieve the S3Object's existing terms,
      * and a second to remove the provided terms.
      *
-     * @param qualifiedName for the S3 object
-     * @param terms the list of terms to remove from the S3 object, which must be referenced by GUID
-     * @return the S3 object that was updated (note that it will NOT contain details of the resulting terms)
+     * @param qualifiedName for the S3Object
+     * @param terms the list of terms to remove from the S3Object, which must be referenced by GUID
+     * @return the S3Object that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
     public static S3Object removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {

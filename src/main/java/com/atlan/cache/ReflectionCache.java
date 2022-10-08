@@ -253,6 +253,11 @@ public class ReflectionCache {
             Type[] typeArguments = ((ParameterizedType) parameterizedType).getActualTypeArguments();
             parameterType = typeArguments[0];
         }
+        if (parameterType instanceof ParameterizedType) {
+            // We need to see if the embedded type is another wrapper, as there are
+            // cases where we have List<Map<String, String>>
+            parameterType = ((ParameterizedType) parameterType).getRawType();
+        }
         return (Class<?>) parameterType;
     }
 }

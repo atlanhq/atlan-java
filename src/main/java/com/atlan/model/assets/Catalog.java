@@ -2,9 +2,8 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
-import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonSubTypes;
+import java.util.List;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 

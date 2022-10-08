@@ -13,9 +13,8 @@ import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import java.util.*;
-
 import com.fasterxml.jackson.annotation.JsonSubTypes;
+import java.util.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 

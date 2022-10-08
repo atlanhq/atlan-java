@@ -3,6 +3,7 @@
 package com.atlan.model.assets;
 
 import com.atlan.model.relations.UniqueAttributes;
+import java.util.SortedSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -18,7 +19,7 @@ public class Readme extends Resource {
 
     public static final String TYPE_NAME = "Readme";
 
-    /** Fixed typeName for READMEs. */
+    /** Fixed typeName for Readmes. */
     @Getter(onMethod_ = {@Override})
     @Setter(onMethod_ = {@Override})
     @Builder.Default
@@ -28,21 +29,26 @@ public class Readme extends Resource {
     @Attribute
     Asset asset;
 
+    /** TBC */
+    @Attribute
+    @Singular("seeAlsoOne")
+    SortedSet<Readme> seeAlso;
+
     /**
-     * Reference to a README by GUID.
+     * Reference to a Readme by GUID.
      *
-     * @param guid the GUID of the README to reference
-     * @return reference to a README that can be used for defining a relationship to a README
+     * @param guid the GUID of the Readme to reference
+     * @return reference to a Readme that can be used for defining a relationship to a Readme
      */
     public static Readme refByGuid(String guid) {
         return Readme.builder().guid(guid).build();
     }
 
     /**
-     * Reference to a README by qualifiedName.
+     * Reference to a Readme by qualifiedName.
      *
-     * @param qualifiedName the qualifiedName of the README to reference
-     * @return reference to a README that can be used for defining a relationship to a README
+     * @param qualifiedName the qualifiedName of the Readme to reference
+     * @return reference to a Readme that can be used for defining a relationship to a Readme
      */
     public static Readme refByQualifiedName(String qualifiedName) {
         return Readme.builder()
@@ -68,25 +74,25 @@ public class Readme extends Resource {
     }
 
     /**
-     * Builds the minimal object necessary to update a README.
+     * Builds the minimal object necessary to update a Readme.
      *
      * @param assetGuid the GUID of the asset to which the README is attached
      * @param assetName name of the asset to which the README is attached
-     * @return the minimal object necessary to update the README, as a builder
+     * @return the minimal request necessary to update the Readme, as a builder
      */
     public static ReadmeBuilder<?, ?> updater(String assetGuid, String assetName) {
         return Readme.builder().qualifiedName(generateQualifiedName(assetGuid)).name(generateName(assetName));
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a readme, from a potentially
-     * more-complete readme object.
+     * Builds the minimal object necessary to apply an update to a Readme, from a potentially
+     * more-complete Readme object.
      *
-     * @return the minimal object necessary to update the readme, as a builder
+     * @return the minimal object necessary to update the Readme, as a builder
      */
     @Override
     protected ReadmeBuilder<?, ?> trimToRequired() {
-        return updater(this.getQualifiedName(), this.getName());
+        return Readme.builder().qualifiedName(this.getQualifiedName()).name(this.getName());
     }
 
     /**

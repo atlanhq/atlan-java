@@ -4,12 +4,10 @@ package com.atlan.model.assets;
 
 import static org.testng.Assert.*;
 
-import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.AtlanCertificateStatus;
-import com.atlan.model.enums.AtlanConnectorType;
-import com.atlan.model.enums.AtlanStatus;
+import com.atlan.model.enums.*;
 import com.atlan.serde.Serde;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import java.util.*;
 import org.testng.annotations.Test;
 
 public class ColumnProcessTest {
@@ -45,7 +43,7 @@ public class ColumnProcessTest {
             .adminRole("adminRole")
             .viewerUser("viewerUser")
             .viewerGroup("viewerGroup")
-            .connectorType(AtlanConnectorType.BIGQUERY)
+            .connectorType(AtlanConnectorType.PRESTO)
             .connectionName("connectionName")
             .connectionQualifiedName("connectionQualifiedName")
             .hasLineage(false)
@@ -111,13 +109,17 @@ public class ColumnProcessTest {
             .code("code")
             .sql("sql")
             .ast("ast")
-            .input(S3Object.refByGuid("input1"))
-            .input(Table.refByGuid("input2"))
-            .output(S3Object.refByGuid("output1"))
-            .output(MaterializedView.refByGuid("output2"))
-            .process(LineageProcess.refByGuid("processGuid"))
+            .outputs(Set.of(
+                    Table.refByGuid("6bb5c102-558e-40ed-af21-e7708c269c8f"),
+                    Table.refByGuid("5a74cfd3-021e-444b-97ec-26b01ad3dbd6")))
+            .inputs(Set.of(
+                    Table.refByGuid("5e57018c-992a-4511-a61e-6249612c2ca3"),
+                    Table.refByGuid("1cb129cb-6979-41b2-80a4-05851dde5641")))
+            .columnProcesses(Set.of(
+                    ColumnProcess.refByGuid("c4b5df42-c42e-492e-bf74-1ab4fbc270c4"),
+                    ColumnProcess.refByGuid("2942987c-f04b-4992-9634-c3f2ac09de2e")))
+            .process(LineageProcess.refByGuid("02b7197c-95ee-488f-9c8a-13bb046bc8ae"))
             .build();
-
     private static ColumnProcess frodo;
     private static String serialized;
 

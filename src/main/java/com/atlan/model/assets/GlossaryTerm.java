@@ -3,7 +3,10 @@
 package com.atlan.model.assets;
 
 import co.elastic.clients.elasticsearch._types.FieldValue;
-import co.elastic.clients.elasticsearch._types.query_dsl.*;
+import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
+import co.elastic.clients.elasticsearch._types.query_dsl.Query;
+import co.elastic.clients.elasticsearch._types.query_dsl.TermsQuery;
+import co.elastic.clients.elasticsearch._types.query_dsl.TermsQueryField;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.LogicException;
 import com.atlan.exception.NotFoundException;
@@ -15,8 +18,10 @@ import com.atlan.model.search.IndexSearchDSL;
 import com.atlan.model.search.IndexSearchRequest;
 import com.atlan.model.search.IndexSearchResponse;
 import com.atlan.util.QueryFactory;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.util.*;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.SortedSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
@@ -29,107 +34,144 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
+@SuppressWarnings("cast")
 public class GlossaryTerm extends Asset {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "AtlasGlossaryTerm";
 
-    /** Fixed typeName for terms. */
+    /** Fixed typeName for GlossaryTerms. */
     @Getter(onMethod_ = {@Override})
     @Setter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Unused attributes. */
-    @JsonIgnore
+    /**
+     * Unused.
+     * @see #description
+     */
+    @Attribute
     String shortDescription;
 
-    @JsonIgnore
+    /**
+     * Unused.
+     * @see #description
+     */
+    @Attribute
     String longDescription;
 
-    @JsonIgnore
-    List<String> examples;
+    /** Unused. */
+    @Attribute
+    @Singular
+    SortedSet<String> examples;
 
-    @JsonIgnore
+    /** Unused. */
+    @Attribute
     String abbreviation;
 
-    @JsonIgnore
+    /** Unused. */
+    @Attribute
     String usage;
 
-    @JsonIgnore
+    /** Unused. */
+    @Attribute
+    @Singular
     Map<String, String> additionalAttributes;
+
+    /** Unused. */
+    @Attribute
+    @Singular
+    SortedSet<GlossaryTerm> translationTerms;
+
+    /** Unused. */
+    @Attribute
+    @Singular("validValueFor")
+    SortedSet<GlossaryTerm> validValuesFor;
+
+    /** Glossary terms that have the same, or a very similar meaning in the same language. */
+    @Attribute
+    @Singular
+    SortedSet<GlossaryTerm> synonyms;
+
+    /** Unused. */
+    @Attribute
+    @Singular("replacedByTerm")
+    SortedSet<GlossaryTerm> replacedBy;
+
+    /** Unused. */
+    @Attribute
+    @Singular
+    SortedSet<GlossaryTerm> validValues;
+
+    /** Unused. */
+    @Attribute
+    @Singular
+    SortedSet<GlossaryTerm> replacementTerms;
+
+    /** Linked glossary terms that may also be of interest. */
+    @Attribute
+    @Singular("seeAlsoOne")
+    SortedSet<GlossaryTerm> seeAlso;
+
+    /** Unused. */
+    @Attribute
+    @Singular
+    SortedSet<GlossaryTerm> translatedTerms;
+
+    /** Unused. */
+    @Attribute
+    @Singular("isATerm")
+    SortedSet<GlossaryTerm> isA;
 
     /** Glossary in which the term is located. */
     @Attribute
     Glossary anchor;
 
-    /** Assets that are attached to this term. */
-    @Singular
+    /** Glossary terms that have the opposite (or near opposite) meaning in the same language. */
     @Attribute
+    @Singular
+    SortedSet<GlossaryTerm> antonyms;
+
+    /** Assets that are attached to this term. */
+    @Attribute
+    @Singular
     SortedSet<Asset> assignedEntities;
 
     /** Categories within which this term is organized. */
-    @Singular
     @Attribute
+    @Singular
     SortedSet<GlossaryCategory> categories;
 
-    /** Linked glossary terms that may also be of interest. */
-    @Singular("addToSeeAlso")
+    /** Unused. */
     @Attribute
-    SortedSet<GlossaryTerm> seeAlso;
-
-    /** Glossary terms that have the same, or a very similar meaning in the same language. */
     @Singular
-    @Attribute
-    SortedSet<GlossaryTerm> synonyms;
-
-    /** Glossary terms that have the opposite (or near opposite) meaning in the same language. */
-    @Singular
-    @Attribute
-    SortedSet<GlossaryTerm> antonyms;
-
-    /** These terms are preferred in place of this term. */
-    @Singular
-    @Attribute
-    SortedSet<GlossaryTerm> preferredTerms;
-
-    /** These terms should be used instead of this term. */
-    @Singular("addToReplacedBy")
-    @Attribute
-    SortedSet<GlossaryTerm> replacedBy;
-
-    /** These terms represent the same meaning, but each is in a different language. */
-    @Singular
-    @Attribute
-    SortedSet<GlossaryTerm> translatedTerms;
-
-    /** Unused relationships. */
-    @JsonIgnore
     SortedSet<GlossaryTerm> classifies;
 
-    /**
-     * These terms each represent one of the valid values that could be assigned to a data item that has the meaning
-     * described by this term.
-     */
-    @Singular("addToValidValuesFor")
+    /** Unused. */
     @Attribute
-    SortedSet<GlossaryTerm> validValuesFor;
+    @Singular
+    SortedSet<GlossaryTerm> preferredToTerms;
+
+    /** Unused. */
+    @Attribute
+    @Singular
+    SortedSet<GlossaryTerm> preferredTerms;
 
     /**
-     * Reference to a term by GUID.
+     * Reference to a GlossaryTerm by GUID.
      *
-     * @param guid the GUID of the term to reference
-     * @return reference to a term that can be used for defining a relationship to a term
+     * @param guid the GUID of the GlossaryTerm to reference
+     * @return reference to a GlossaryTerm that can be used for defining a relationship to a GlossaryTerm
      */
     public static GlossaryTerm refByGuid(String guid) {
         return GlossaryTerm.builder().guid(guid).build();
     }
 
     /**
-     * Reference to a term by qualifiedName.
+     * Reference to a GlossaryTerm by qualifiedName.
      *
-     * @param qualifiedName the qualifiedName of the term to reference
-     * @return reference to a term that can be used for defining a relationship to a term
+     * @param qualifiedName the qualifiedName of the GlossaryTerm to reference
+     * @return reference to a GlossaryTerm that can be used for defining a relationship to a GlossaryTerm
      */
     public static GlossaryTerm refByQualifiedName(String qualifiedName) {
         return GlossaryTerm.builder()
@@ -160,13 +202,12 @@ public class GlossaryTerm extends Asset {
     }
 
     /**
-     * Builds the minimal object necessary to update a term. At least one of glossaryGuid or
-     * glossaryQualifiedName must be provided.
+     * Builds the minimal object necessary to update a term.
      *
-     * @param qualifiedName of the term
-     * @param name of the term
-     * @param glossaryGuid unique identifier of the term's glossary
-     * @return the minimal object necessary to update the term, as a builder
+     * @param qualifiedName of the GlossaryTerm
+     * @param name of the GlossaryTerm
+     * @param glossaryGuid unique identifier of the GlossaryTerm's glossary
+     * @return the minimal request necessary to update the GlossaryTerm, as a builder
      */
     public static GlossaryTermBuilder<?, ?> updater(String qualifiedName, String name, String glossaryGuid) {
         // Turns out that updating a term requires the glossary GUID, and will not work
@@ -178,106 +219,14 @@ public class GlossaryTerm extends Asset {
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a term, from a potentially
-     * more-complete term object.
+     * Builds the minimal object necessary to apply an update to a GlossaryTerm, from a potentially
+     * more-complete GlossaryTerm object.
      *
-     * @return the minimal object necessary to update the term, as a builder
+     * @return the minimal object necessary to update the GlossaryTerm, as a builder
      */
     @Override
     protected GlossaryTermBuilder<?, ?> trimToRequired() {
         return updater(this.getQualifiedName(), this.getName(), this.getAnchor().getGuid());
-    }
-
-    /**
-     * Update the certificate on a term.
-     *
-     * @param qualifiedName of the term
-     * @param name of the term
-     * @param glossaryGuid unique ID (GUID) of the term's glossary
-     * @param certificate to use
-     * @param message (optional) message, or null if no message
-     * @return the updated term, or null if the update failed
-     * @throws AtlanException on any API problems
-     */
-    public static GlossaryTerm updateCertificate(
-            String qualifiedName, String name, String glossaryGuid, AtlanCertificateStatus certificate, String message)
-            throws AtlanException {
-        return (GlossaryTerm) Asset.updateCertificate(updater(qualifiedName, name, glossaryGuid), certificate, message);
-    }
-
-    /**
-     * Remove the certificate from a term.
-     *
-     * @param qualifiedName of the term
-     * @param name of the term
-     * @param glossaryGuid unique ID (GUID) of the term's glossary
-     * @return the updated term, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static GlossaryTerm removeCertificate(String qualifiedName, String name, String glossaryGuid)
-            throws AtlanException {
-        return (GlossaryTerm) Asset.removeCertificate(updater(qualifiedName, name, glossaryGuid));
-    }
-
-    /**
-     * Update the announcement on a term.
-     *
-     * @param qualifiedName of the term
-     * @param name of the term
-     * @param glossaryGuid unique ID (GUID) of the term's glossary
-     * @param type type of announcement to set
-     * @param title (optional) title of the announcement to set (or null for no title)
-     * @param message (optional) message of the announcement to set (or null for no message)
-     * @return the result of the update, or null if the update failed
-     * @throws AtlanException on any API problems
-     */
-    public static GlossaryTerm updateAnnouncement(
-            String qualifiedName,
-            String name,
-            String glossaryGuid,
-            AtlanAnnouncementType type,
-            String title,
-            String message)
-            throws AtlanException {
-        return (GlossaryTerm)
-                Asset.updateAnnouncement(updater(qualifiedName, name, glossaryGuid), type, title, message);
-    }
-
-    /**
-     * Remove the announcement from a term.
-     *
-     * @param qualifiedName of the term
-     * @param name of the term
-     * @param glossaryGuid unique ID (GUID) of the term's glossary
-     * @return the updated term, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static GlossaryTerm removeAnnouncement(String qualifiedName, String name, String glossaryGuid)
-            throws AtlanException {
-        return (GlossaryTerm) Asset.removeAnnouncement(updater(qualifiedName, name, glossaryGuid));
-    }
-
-    /**
-     * Add classifications to a term.
-     *
-     * @param qualifiedName of the term
-     * @param classificationNames human-readable names of the classifications to add
-     * @throws AtlanException on any API problems, or if any of the classifications already exist on the term
-     */
-    public static void addClassifications(String qualifiedName, List<String> classificationNames)
-            throws AtlanException {
-        Asset.addClassifications(TYPE_NAME, qualifiedName, classificationNames);
-    }
-
-    /**
-     * Remove a classification from a term.
-     *
-     * @param qualifiedName of the term
-     * @param classificationName human-readable name of the classification to remove
-     * @throws AtlanException on any API problems, or if the classification does not exist on the term
-     */
-    public static void removeClassification(String qualifiedName, String classificationName) throws AtlanException {
-        Asset.removeClassification(TYPE_NAME, qualifiedName, classificationName);
     }
 
     /**
@@ -329,5 +278,97 @@ public class GlossaryTerm extends Asset {
         }
         throw new NotFoundException(
                 "Unable to find a glossary term with the name: " + name, "ATLAN-JAVA-CLIENT-404-091", 404, null);
+    }
+
+    /**
+     * Update the certificate on a GlossaryTerm.
+     *
+     * @param qualifiedName of the GlossaryTerm
+     * @param name of the GlossaryTerm
+     * @param glossaryGuid unique ID (GUID) of the GlossaryTerm's glossary
+     * @param certificate to use
+     * @param message (optional) message, or null if no message
+     * @return the updated GlossaryTerm, or null if the update failed
+     * @throws AtlanException on any API problems
+     */
+    public static GlossaryTerm updateCertificate(
+            String qualifiedName, String name, String glossaryGuid, AtlanCertificateStatus certificate, String message)
+            throws AtlanException {
+        return (GlossaryTerm) Asset.updateCertificate(updater(qualifiedName, name, glossaryGuid), certificate, message);
+    }
+
+    /**
+     * Remove the certificate from a GlossaryTerm.
+     *
+     * @param qualifiedName of the GlossaryTerm
+     * @param name of the GlossaryTerm
+     * @param glossaryGuid unique ID (GUID) of the GlossaryTerm's glossary
+     * @return the updated GlossaryTerm, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static GlossaryTerm removeCertificate(String qualifiedName, String name, String glossaryGuid)
+            throws AtlanException {
+        return (GlossaryTerm) Asset.removeCertificate(updater(qualifiedName, name, glossaryGuid));
+    }
+
+    /**
+     * Update the announcement on a GlossaryTerm.
+     *
+     * @param qualifiedName of the GlossaryTerm
+     * @param name of the GlossaryTerm
+     * @param glossaryGuid unique ID (GUID) of the GlossaryTerm's glossary
+     * @param type type of announcement to set
+     * @param title (optional) title of the announcement to set (or null for no title)
+     * @param message (optional) message of the announcement to set (or null for no message)
+     * @return the updated GlossaryTerm, or null if the update failed
+     * @throws AtlanException on any API problems
+     */
+    public static GlossaryTerm updateAnnouncement(
+            String qualifiedName,
+            String name,
+            String glossaryGuid,
+            AtlanAnnouncementType type,
+            String title,
+            String message)
+            throws AtlanException {
+        return (GlossaryTerm)
+                Asset.updateAnnouncement(updater(qualifiedName, name, glossaryGuid), type, title, message);
+    }
+
+    /**
+     * Remove the announcement from a GlossaryTerm.
+     *
+     * @param qualifiedName of the GlossaryTerm
+     * @param name of the GlossaryTerm
+     * @param glossaryGuid unique ID (GUID) of the GlossaryTerm's glossary
+     * @return the updated GlossaryTerm, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static GlossaryTerm removeAnnouncement(String qualifiedName, String name, String glossaryGuid)
+            throws AtlanException {
+        return (GlossaryTerm) Asset.removeAnnouncement(updater(qualifiedName, name, glossaryGuid));
+    }
+
+    /**
+     * Add classifications to a GlossaryTerm.
+     *
+     * @param qualifiedName of the GlossaryTerm
+     * @param classificationNames human-readable names of the classifications to add
+     * @throws AtlanException on any API problems, or if any of the classifications already exist on the GlossaryTerm
+     */
+    public static void addClassifications(String qualifiedName, List<String> classificationNames)
+            throws AtlanException {
+        Asset.addClassifications(TYPE_NAME, qualifiedName, classificationNames);
+    }
+
+    /**
+     * Remove a classification from a GlossaryTerm.
+     *
+     * @param qualifiedName of the GlossaryTerm
+     * @param classificationName human-readable name of the classification to remove
+     * @throws AtlanException on any API problems, or if the classification does not exist on the GlossaryTerm
+     */
+    public static void removeClassification(String qualifiedName, String classificationName) throws AtlanException {
+        Asset.removeClassification(TYPE_NAME, qualifiedName, classificationName);
     }
 }

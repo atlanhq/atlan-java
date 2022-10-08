@@ -4,12 +4,10 @@ package com.atlan.model.assets;
 
 import static org.testng.Assert.*;
 
-import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.AtlanCertificateStatus;
-import com.atlan.model.enums.AtlanConnectorType;
-import com.atlan.model.enums.AtlanStatus;
+import com.atlan.model.enums.*;
 import com.atlan.serde.Serde;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import java.util.*;
 import org.testng.annotations.Test;
 
 public class PresetWorkspaceTest {
@@ -45,7 +43,7 @@ public class PresetWorkspaceTest {
             .adminRole("adminRole")
             .viewerUser("viewerUser")
             .viewerGroup("viewerGroup")
-            .connectorType(AtlanConnectorType.S3)
+            .connectorType(AtlanConnectorType.PRESTO)
             .connectionName("connectionName")
             .connectionQualifiedName("connectionQualifiedName")
             .hasLineage(false)
@@ -108,23 +106,29 @@ public class PresetWorkspaceTest {
             .readme(Readme.refByGuid("readmeGuid"))
             .meaning(GlossaryTerm.refByGuid("termGuid1"))
             .meaning(GlossaryTerm.refByGuid("termGuid2"))
-            .presetWorkspaceId(123456L)
+            .inputToProcesses(Set.of(
+                    LineageProcess.refByGuid("fbe00eda-fedc-42de-973c-04f98d3f5242"),
+                    LineageProcess.refByGuid("edc2112c-329c-41a8-8be9-765e9cf74805")))
+            .outputFromProcesses(Set.of(
+                    LineageProcess.refByGuid("a6eeeced-3b80-4c8a-823b-e6ed7a5a9895"),
+                    LineageProcess.refByGuid("a7370868-679d-49b7-8b1f-df7ec2bae8b9")))
+            .presetWorkspaceId(-5037505705709102800L)
             .presetWorkspaceQualifiedName("presetWorkspaceQualifiedName")
-            .presetDashboardId(654321L)
+            .presetDashboardId(-2053725390677020465L)
             .presetDashboardQualifiedName("presetDashboardQualifiedName")
             .presetWorkspacePublicDashboardsAllowed(true)
-            .presetWorkspaceClusterId(123456L)
-            .presetWorkspaceDeploymentId(654321L)
+            .presetWorkspaceClusterId(-8717035498585774898L)
             .presetWorkspaceHostname("presetWorkspaceHostname")
             .presetWorkspaceIsInMaintenanceMode(false)
             .presetWorkspaceRegion("presetWorkspaceRegion")
             .presetWorkspaceStatus("presetWorkspaceStatus")
-            .presetWorkspaceDashboardCount(123L)
-            .presetWorkspaceDatasetCount(321L)
-            .presetDashboard(PresetDashboard.refByGuid("collectionGuid1"))
-            .presetDashboard(PresetDashboard.refByGuid("collectionGuid2"))
+            .presetWorkspaceDeploymentId(-4969027351968316596L)
+            .presetWorkspaceDashboardCount(7659218209804310791L)
+            .presetWorkspaceDatasetCount(2441272767179136961L)
+            .presetDashboards(Set.of(
+                    PresetDashboard.refByGuid("f72263ca-d148-46f1-a3c3-78082a13d9c2"),
+                    PresetDashboard.refByGuid("b6bf5fa7-8a23-4fc2-b4dc-f5f25ea71d00")))
             .build();
-
     private static PresetWorkspace frodo;
     private static String serialized;
 

@@ -20,12 +20,13 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@SuppressWarnings("cast")
 public class PresetChart extends Preset {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "PresetChart";
 
-    /** Fixed typeName for Preset charts. */
+    /** Fixed typeName for PresetCharts. */
     @Getter(onMethod_ = {@Override})
     @Setter(onMethod_ = {@Override})
     @Builder.Default
@@ -37,6 +38,7 @@ public class PresetChart extends Preset {
 
     /** TBC */
     @Attribute
+    @Singular("putPresetChartFormData")
     Map<String, String> presetChartFormData;
 
     /** Collection in which the chart exists. */
@@ -44,20 +46,20 @@ public class PresetChart extends Preset {
     PresetDashboard presetDashboard;
 
     /**
-     * Reference to a Preset chart by GUID.
+     * Reference to a PresetChart by GUID.
      *
-     * @param guid the GUID of the Preset chart to reference
-     * @return reference to a Preset chart that can be used for defining a relationship to a Preset chart
+     * @param guid the GUID of the PresetChart to reference
+     * @return reference to a PresetChart that can be used for defining a relationship to a PresetChart
      */
     public static PresetChart refByGuid(String guid) {
         return PresetChart.builder().guid(guid).build();
     }
 
     /**
-     * Reference to a Preset chart by qualifiedName.
+     * Reference to a PresetChart by qualifiedName.
      *
-     * @param qualifiedName the qualifiedName of the Preset chart to reference
-     * @return reference to a Preset chart that can be used for defining a relationship to a Preset chart
+     * @param qualifiedName the qualifiedName of the PresetChart to reference
+     * @return reference to a PresetChart that can be used for defining a relationship to a PresetChart
      */
     public static PresetChart refByQualifiedName(String qualifiedName) {
         return PresetChart.builder()
@@ -89,21 +91,21 @@ public class PresetChart extends Preset {
     }
 
     /**
-     * Builds the minimal object necessary to update a Preset chart.
+     * Builds the minimal object necessary to update a PresetChart.
      *
-     * @param qualifiedName of the chart
-     * @param name of the chart
-     * @return the minimal object necessary to update the chart, as a builder
+     * @param qualifiedName of the PresetChart
+     * @param name of the PresetChart
+     * @return the minimal request necessary to update the PresetChart, as a builder
      */
     public static PresetChartBuilder<?, ?> updater(String qualifiedName, String name) {
         return PresetChart.builder().qualifiedName(qualifiedName).name(name);
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a Preset chart, from a potentially
-     * more-complete Preset chart object.
+     * Builds the minimal object necessary to apply an update to a PresetChart, from a potentially
+     * more-complete PresetChart object.
      *
-     * @return the minimal object necessary to update the Preset chart, as a builder
+     * @return the minimal object necessary to update the PresetChart, as a builder
      */
     @Override
     protected PresetChartBuilder<?, ?> trimToRequired() {
@@ -111,12 +113,12 @@ public class PresetChart extends Preset {
     }
 
     /**
-     * Update the certificate on a Preset chart.
+     * Update the certificate on a PresetChart.
      *
-     * @param qualifiedName of the chart
+     * @param qualifiedName of the PresetChart
      * @param certificate to use
      * @param message (optional) message, or null if no message
-     * @return the updated chart, or null if the update failed
+     * @return the updated PresetChart, or null if the update failed
      * @throws AtlanException on any API problems
      */
     public static PresetChart updateCertificate(
@@ -125,11 +127,11 @@ public class PresetChart extends Preset {
     }
 
     /**
-     * Remove the certificate from a Preset chart.
+     * Remove the certificate from a PresetChart.
      *
-     * @param qualifiedName of the chart
-     * @param name of the chart
-     * @return the updated chart, or null if the removal failed
+     * @param qualifiedName of the PresetChart
+     * @param name of the PresetChart
+     * @return the updated PresetChart, or null if the removal failed
      * @throws AtlanException on any API problems
      */
     public static PresetChart removeCertificate(String qualifiedName, String name) throws AtlanException {
@@ -138,9 +140,9 @@ public class PresetChart extends Preset {
     }
 
     /**
-     * Update the announcement on a Preset chart.
+     * Update the announcement on a PresetChart.
      *
-     * @param qualifiedName of the chart
+     * @param qualifiedName of the PresetChart
      * @param type type of announcement to set
      * @param title (optional) title of the announcement to set (or null for no title)
      * @param message (optional) message of the announcement to set (or null for no message)
@@ -153,11 +155,11 @@ public class PresetChart extends Preset {
     }
 
     /**
-     * Remove the announcement from a Preset chart.
+     * Remove the announcement from a PresetChart.
      *
-     * @param qualifiedName of the chart
-     * @param name of the chart
-     * @return the updated chart, or null if the removal failed
+     * @param qualifiedName of the PresetChart
+     * @param name of the PresetChart
+     * @return the updated PresetChart, or null if the removal failed
      * @throws AtlanException on any API problems
      */
     public static PresetChart removeAnnouncement(String qualifiedName, String name) throws AtlanException {
@@ -166,11 +168,11 @@ public class PresetChart extends Preset {
     }
 
     /**
-     * Add classifications to a Preset chart.
+     * Add classifications to a PresetChart.
      *
-     * @param qualifiedName of the chart
+     * @param qualifiedName of the PresetChart
      * @param classificationNames human-readable names of the classifications to add
-     * @throws AtlanException on any API problems, or if any of the classifications already exist on the chart
+     * @throws AtlanException on any API problems, or if any of the classifications already exist on the PresetChart
      */
     public static void addClassifications(String qualifiedName, List<String> classificationNames)
             throws AtlanException {
@@ -178,23 +180,23 @@ public class PresetChart extends Preset {
     }
 
     /**
-     * Remove a classification from a Preset chart.
+     * Remove a classification from a PresetChart.
      *
-     * @param qualifiedName of the chart
+     * @param qualifiedName of the PresetChart
      * @param classificationName human-readable name of the classification to remove
-     * @throws AtlanException on any API problems, or if the classification does not exist on the chart
+     * @throws AtlanException on any API problems, or if the classification does not exist on the PresetChart
      */
     public static void removeClassification(String qualifiedName, String classificationName) throws AtlanException {
         Asset.removeClassification(TYPE_NAME, qualifiedName, classificationName);
     }
 
     /**
-     * Replace the terms linked to the chart.
+     * Replace the terms linked to the PresetChart.
      *
-     * @param qualifiedName for the chart
-     * @param name human-readable name of the chart
-     * @param terms the list of terms to replace on the chart, or null to remove all terms from the chart
-     * @return the chart that was updated (note that it will NOT contain details of the replaced terms)
+     * @param qualifiedName for the PresetChart
+     * @param name human-readable name of the PresetChart
+     * @param terms the list of terms to replace on the PresetChart, or null to remove all terms from the PresetChart
+     * @return the PresetChart that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
     public static PresetChart replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
@@ -203,13 +205,13 @@ public class PresetChart extends Preset {
     }
 
     /**
-     * Link additional terms to the Preset chart, without replacing existing terms linked to the chart.
-     * Note: this operation must make two API calls — one to retrieve the chart's existing terms,
+     * Link additional terms to the PresetChart, without replacing existing terms linked to the PresetChart.
+     * Note: this operation must make two API calls — one to retrieve the PresetChart's existing terms,
      * and a second to append the new terms.
      *
-     * @param qualifiedName for the chart
-     * @param terms the list of terms to append to the chart
-     * @return the chart that was updated  (note that it will NOT contain details of the appended terms)
+     * @param qualifiedName for the PresetChart
+     * @param terms the list of terms to append to the PresetChart
+     * @return the PresetChart that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
     public static PresetChart appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
@@ -217,13 +219,13 @@ public class PresetChart extends Preset {
     }
 
     /**
-     * Remove terms from a Preset chart, without replacing all existing terms linked to the chart.
-     * Note: this operation must make two API calls — one to retrieve the chart's existing terms,
+     * Remove terms from a PresetChart, without replacing all existing terms linked to the PresetChart.
+     * Note: this operation must make two API calls — one to retrieve the PresetChart's existing terms,
      * and a second to remove the provided terms.
      *
-     * @param qualifiedName for the chart
-     * @param terms the list of terms to remove from the chart, which must be referenced by GUID
-     * @return the chart that was updated (note that it will NOT contain details of the resulting terms)
+     * @param qualifiedName for the PresetChart
+     * @param terms the list of terms to remove from the PresetChart, which must be referenced by GUID
+     * @return the PresetChart that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
     public static PresetChart removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {

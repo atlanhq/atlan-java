@@ -4,12 +4,10 @@ package com.atlan.model.assets;
 
 import static org.testng.Assert.*;
 
-import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.AtlanCertificateStatus;
-import com.atlan.model.enums.AtlanConnectorType;
-import com.atlan.model.enums.AtlanStatus;
+import com.atlan.model.enums.*;
 import com.atlan.serde.Serde;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import java.util.*;
 import org.testng.annotations.Test;
 
 public class ConnectionTest {
@@ -45,7 +43,7 @@ public class ConnectionTest {
             .adminRole("adminRole")
             .viewerUser("viewerUser")
             .viewerGroup("viewerGroup")
-            .connectorType(AtlanConnectorType.S3)
+            .connectorType(AtlanConnectorType.PRESTO)
             .connectionName("connectionName")
             .connectionQualifiedName("connectionQualifiedName")
             .hasLineage(false)
@@ -108,20 +106,22 @@ public class ConnectionTest {
             .readme(Readme.refByGuid("readmeGuid"))
             .meaning(GlossaryTerm.refByGuid("termGuid1"))
             .meaning(GlossaryTerm.refByGuid("termGuid2"))
+            .category(AtlanConnectionCategory.DATABASE)
+            .subCategory("subCategory")
             .host("host")
-            .port(1234)
-            .allowQuery(true)
+            .port(-583368867)
+            .allowQuery(false)
             .allowQueryPreview(true)
+            .queryPreviewConfig(Map.of("key1", "value1", "key2", "value2"))
+            .queryConfig("queryConfig")
             .credentialStrategy("credentialStrategy")
-            .rowLimit(123456L)
+            .rowLimit(3028736751300018007L)
             .defaultCredentialGuid("defaultCredentialGuid")
             .connectorIcon("connectorIcon")
             .connectorImage("connectorImage")
             .sourceLogo("sourceLogo")
-            .connectionDbtEnvironment("dbtEnv1")
-            .connectionDbtEnvironment("dbtEnv2")
+            .connectionDbtEnvironments(Set.of("one", "two", "three"))
             .build();
-
     private static Connection frodo;
     private static String serialized;
 
@@ -155,7 +155,7 @@ public class ConnectionTest {
         assertNotNull(serialized);
         assertNotNull(frodo);
         String backAgain = frodo.toJson();
-        assertEquals(backAgain, serialized, "Serialization is equivalent after serde loop.");
+        assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
     }
 
     @Test(
@@ -164,6 +164,6 @@ public class ConnectionTest {
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);
-        assertEquals(frodo, full, "Deserialization is equivalent after serde loop.");
+        assertEquals(frodo, full, "Deserialization is not equivalent after serde loop,");
     }
 }

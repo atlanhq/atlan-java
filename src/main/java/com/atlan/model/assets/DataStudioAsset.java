@@ -24,7 +24,7 @@ public class DataStudioAsset extends Google {
 
     public static final String TYPE_NAME = "DataStudioAsset";
 
-    /** Fixed typeName for Google Data Studio assets. */
+    /** Fixed typeName for DataStudioAssets. */
     @Getter(onMethod_ = {@Override})
     @Setter(onMethod_ = {@Override})
     @Builder.Default
@@ -47,20 +47,20 @@ public class DataStudioAsset extends Google {
     Boolean isTrashedDataStudioAsset;
 
     /**
-     * Reference to a Google Data Studio asset by GUID.
+     * Reference to a DataStudioAsset by GUID.
      *
-     * @param guid the GUID of the Google Data Studio asset to reference
-     * @return reference to a Google Data Studio asset that can be used for defining a relationship to a Google Data Studio asset
+     * @param guid the GUID of the DataStudioAsset to reference
+     * @return reference to a DataStudioAsset that can be used for defining a relationship to a DataStudioAsset
      */
     public static DataStudioAsset refByGuid(String guid) {
         return DataStudioAsset.builder().guid(guid).build();
     }
 
     /**
-     * Reference to a Google Data Studio asset by qualifiedName.
+     * Reference to a DataStudioAsset by qualifiedName.
      *
-     * @param qualifiedName the qualifiedName of the Google Data Studio asset to reference
-     * @return reference to a Google Data Studio asset that can be used for defining a relationship to a Google Data Studio asset
+     * @param qualifiedName the qualifiedName of the DataStudioAsset to reference
+     * @return reference to a DataStudioAsset that can be used for defining a relationship to a DataStudioAsset
      */
     public static DataStudioAsset refByQualifiedName(String qualifiedName) {
         return DataStudioAsset.builder()
@@ -88,21 +88,21 @@ public class DataStudioAsset extends Google {
     }
 
     /**
-     * Builds the minimal object necessary to update a Google Data Studio asset.
+     * Builds the minimal object necessary to update a DataStudioAsset.
      *
-     * @param qualifiedName of the asset
-     * @param name of the asset
-     * @return the minimal object necessary to update the asset, as a builder
+     * @param qualifiedName of the DataStudioAsset
+     * @param name of the DataStudioAsset
+     * @return the minimal request necessary to update the DataStudioAsset, as a builder
      */
     public static DataStudioAssetBuilder<?, ?> updater(String qualifiedName, String name) {
         return DataStudioAsset.builder().qualifiedName(qualifiedName).name(name);
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a Google Data Studio asset, from a potentially
-     * more-complete Google Data Studio asset object.
+     * Builds the minimal object necessary to apply an update to a DataStudioAsset, from a potentially
+     * more-complete DataStudioAsset object.
      *
-     * @return the minimal object necessary to update the asset, as a builder
+     * @return the minimal object necessary to update the DataStudioAsset, as a builder
      */
     @Override
     protected DataStudioAssetBuilder<?, ?> trimToRequired() {
@@ -110,12 +110,12 @@ public class DataStudioAsset extends Google {
     }
 
     /**
-     * Update the certificate on a Google Data Studio asset.
+     * Update the certificate on a DataStudioAsset.
      *
-     * @param qualifiedName of the asset
+     * @param qualifiedName of the DataStudioAsset
      * @param certificate to use
      * @param message (optional) message, or null if no message
-     * @return the updated asset, or null if the update failed
+     * @return the updated DataStudioAsset, or null if the update failed
      * @throws AtlanException on any API problems
      */
     public static DataStudioAsset updateCertificate(
@@ -124,11 +124,11 @@ public class DataStudioAsset extends Google {
     }
 
     /**
-     * Remove the certificate from a Google Data Studio asset.
+     * Remove the certificate from a DataStudioAsset.
      *
-     * @param qualifiedName of the asset
-     * @param name of the asset
-     * @return the updated asset, or null if the removal failed
+     * @param qualifiedName of the DataStudioAsset
+     * @param name of the DataStudioAsset
+     * @return the updated DataStudioAsset, or null if the removal failed
      * @throws AtlanException on any API problems
      */
     public static DataStudioAsset removeCertificate(String qualifiedName, String name) throws AtlanException {
@@ -137,9 +137,9 @@ public class DataStudioAsset extends Google {
     }
 
     /**
-     * Update the announcement on a Google Data Studio asset.
+     * Update the announcement on a DataStudioAsset.
      *
-     * @param qualifiedName of the asset
+     * @param qualifiedName of the DataStudioAsset
      * @param type type of announcement to set
      * @param title (optional) title of the announcement to set (or null for no title)
      * @param message (optional) message of the announcement to set (or null for no message)
@@ -152,11 +152,11 @@ public class DataStudioAsset extends Google {
     }
 
     /**
-     * Remove the announcement from a Google Data Studio asset.
+     * Remove the announcement from a DataStudioAsset.
      *
-     * @param qualifiedName of the asset
-     * @param name of the asset
-     * @return the updated asset, or null if the removal failed
+     * @param qualifiedName of the DataStudioAsset
+     * @param name of the DataStudioAsset
+     * @return the updated DataStudioAsset, or null if the removal failed
      * @throws AtlanException on any API problems
      */
     public static DataStudioAsset removeAnnouncement(String qualifiedName, String name) throws AtlanException {
@@ -165,11 +165,11 @@ public class DataStudioAsset extends Google {
     }
 
     /**
-     * Add classifications to a Google Data Studio asset.
+     * Add classifications to a DataStudioAsset.
      *
-     * @param qualifiedName of the asset
+     * @param qualifiedName of the DataStudioAsset
      * @param classificationNames human-readable names of the classifications to add
-     * @throws AtlanException on any API problems, or if any of the classifications already exist on the asset
+     * @throws AtlanException on any API problems, or if any of the classifications already exist on the DataStudioAsset
      */
     public static void addClassifications(String qualifiedName, List<String> classificationNames)
             throws AtlanException {
@@ -177,23 +177,23 @@ public class DataStudioAsset extends Google {
     }
 
     /**
-     * Remove a classification from a Google Data Studio asset.
+     * Remove a classification from a DataStudioAsset.
      *
-     * @param qualifiedName of the asset
+     * @param qualifiedName of the DataStudioAsset
      * @param classificationName human-readable name of the classification to remove
-     * @throws AtlanException on any API problems, or if the classification does not exist on the asset
+     * @throws AtlanException on any API problems, or if the classification does not exist on the DataStudioAsset
      */
     public static void removeClassification(String qualifiedName, String classificationName) throws AtlanException {
         Asset.removeClassification(TYPE_NAME, qualifiedName, classificationName);
     }
 
     /**
-     * Replace the terms linked to the asset.
+     * Replace the terms linked to the DataStudioAsset.
      *
-     * @param qualifiedName for the asset
-     * @param name human-readable name of the asset
-     * @param terms the list of terms to replace on the asset, or null to remove all terms from the asset
-     * @return the asset that was updated (note that it will NOT contain details of the replaced terms)
+     * @param qualifiedName for the DataStudioAsset
+     * @param name human-readable name of the DataStudioAsset
+     * @param terms the list of terms to replace on the DataStudioAsset, or null to remove all terms from the DataStudioAsset
+     * @return the DataStudioAsset that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
     public static DataStudioAsset replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
@@ -202,13 +202,13 @@ public class DataStudioAsset extends Google {
     }
 
     /**
-     * Link additional terms to the asset, without replacing existing terms linked to the asset.
-     * Note: this operation must make two API calls — one to retrieve the asset's existing terms,
+     * Link additional terms to the DataStudioAsset, without replacing existing terms linked to the DataStudioAsset.
+     * Note: this operation must make two API calls — one to retrieve the DataStudioAsset's existing terms,
      * and a second to append the new terms.
      *
-     * @param qualifiedName for the asset
-     * @param terms the list of terms to append to the asset
-     * @return the asset that was updated  (note that it will NOT contain details of the appended terms)
+     * @param qualifiedName for the DataStudioAsset
+     * @param terms the list of terms to append to the DataStudioAsset
+     * @return the DataStudioAsset that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
     public static DataStudioAsset appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
@@ -216,13 +216,13 @@ public class DataStudioAsset extends Google {
     }
 
     /**
-     * Remove terms from a Google Data Studio asset, without replacing all existing terms linked to the asset.
-     * Note: this operation must make two API calls — one to retrieve the asset's existing terms,
+     * Remove terms from a DataStudioAsset, without replacing all existing terms linked to the DataStudioAsset.
+     * Note: this operation must make two API calls — one to retrieve the DataStudioAsset's existing terms,
      * and a second to remove the provided terms.
      *
-     * @param qualifiedName for the asset
-     * @param terms the list of terms to remove from the asset, which must be referenced by GUID
-     * @return the asset that was updated (note that it will NOT contain details of the resulting terms)
+     * @param qualifiedName for the DataStudioAsset
+     * @param terms the list of terms to remove from the DataStudioAsset, which must be referenced by GUID
+     * @return the DataStudioAsset that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
     public static DataStudioAsset removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {

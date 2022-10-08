@@ -24,7 +24,7 @@ public class Database extends SQL {
 
     public static final String TYPE_NAME = "Database";
 
-    /** Fixed typeName for databases. */
+    /** Fixed typeName for Databases. */
     @Getter(onMethod_ = {@Override})
     @Setter(onMethod_ = {@Override})
     @Builder.Default
@@ -35,25 +35,25 @@ public class Database extends SQL {
     Integer schemaCount;
 
     /** Schemas that exist within this database. */
-    @Singular
     @Attribute
+    @Singular
     SortedSet<Schema> schemas;
 
     /**
-     * Reference to a database by GUID.
+     * Reference to a Database by GUID.
      *
-     * @param guid the GUID of the database to reference
-     * @return reference to a database that can be used for defining a relationship to a database
+     * @param guid the GUID of the Database to reference
+     * @return reference to a Database that can be used for defining a relationship to a Database
      */
     public static Database refByGuid(String guid) {
         return Database.builder().guid(guid).build();
     }
 
     /**
-     * Reference to a database by qualifiedName.
+     * Reference to a Database by qualifiedName.
      *
-     * @param qualifiedName the qualifiedName of the database to reference
-     * @return reference to a database that can be used for defining a relationship to a database
+     * @param qualifiedName the qualifiedName of the Database to reference
+     * @return reference to a Database that can be used for defining a relationship to a Database
      */
     public static Database refByQualifiedName(String qualifiedName) {
         return Database.builder()
@@ -80,21 +80,21 @@ public class Database extends SQL {
     }
 
     /**
-     * Builds the minimal object necessary to update a database.
+     * Builds the minimal object necessary to update a Database.
      *
-     * @param qualifiedName of the database
-     * @param name of the database
-     * @return the minimal request necessary to update the database, as a builder
+     * @param qualifiedName of the Database
+     * @param name of the Database
+     * @return the minimal request necessary to update the Database, as a builder
      */
     public static DatabaseBuilder<?, ?> updater(String qualifiedName, String name) {
         return Database.builder().qualifiedName(qualifiedName).name(name);
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a database, from a potentially
-     * more-complete database object.
+     * Builds the minimal object necessary to apply an update to a Database, from a potentially
+     * more-complete Database object.
      *
-     * @return the minimal object necessary to update the database, as a builder
+     * @return the minimal object necessary to update the Database, as a builder
      */
     @Override
     protected DatabaseBuilder<?, ?> trimToRequired() {
@@ -102,12 +102,12 @@ public class Database extends SQL {
     }
 
     /**
-     * Update the certificate on a database.
+     * Update the certificate on a Database.
      *
-     * @param qualifiedName of the database
+     * @param qualifiedName of the Database
      * @param certificate to use
      * @param message (optional) message, or null if no message
-     * @return the updated database, or null if the update failed
+     * @return the updated Database, or null if the update failed
      * @throws AtlanException on any API problems
      */
     public static Database updateCertificate(String qualifiedName, AtlanCertificateStatus certificate, String message)
@@ -116,11 +116,11 @@ public class Database extends SQL {
     }
 
     /**
-     * Remove the certificate from a database.
+     * Remove the certificate from a Database.
      *
-     * @param qualifiedName of the database
-     * @param name of the database
-     * @return the updated database, or null if the removal failed
+     * @param qualifiedName of the Database
+     * @param name of the Database
+     * @return the updated Database, or null if the removal failed
      * @throws AtlanException on any API problems
      */
     public static Database removeCertificate(String qualifiedName, String name) throws AtlanException {
@@ -129,9 +129,9 @@ public class Database extends SQL {
     }
 
     /**
-     * Update the announcement on a database.
+     * Update the announcement on a Database.
      *
-     * @param qualifiedName of the database
+     * @param qualifiedName of the Database
      * @param type type of announcement to set
      * @param title (optional) title of the announcement to set (or null for no title)
      * @param message (optional) message of the announcement to set (or null for no message)
@@ -144,11 +144,11 @@ public class Database extends SQL {
     }
 
     /**
-     * Remove the announcement from a database.
+     * Remove the announcement from a Database.
      *
-     * @param qualifiedName of the database
-     * @param name of the database
-     * @return the updated database, or null if the removal failed
+     * @param qualifiedName of the Database
+     * @param name of the Database
+     * @return the updated Database, or null if the removal failed
      * @throws AtlanException on any API problems
      */
     public static Database removeAnnouncement(String qualifiedName, String name) throws AtlanException {
@@ -157,11 +157,11 @@ public class Database extends SQL {
     }
 
     /**
-     * Add classifications to a database.
+     * Add classifications to a Database.
      *
-     * @param qualifiedName of the database
+     * @param qualifiedName of the Database
      * @param classificationNames human-readable names of the classifications to add
-     * @throws AtlanException on any API problems, or if any of the classifications already exist on the database
+     * @throws AtlanException on any API problems, or if any of the classifications already exist on the Database
      */
     public static void addClassifications(String qualifiedName, List<String> classificationNames)
             throws AtlanException {
@@ -169,23 +169,23 @@ public class Database extends SQL {
     }
 
     /**
-     * Remove a classification from a database.
+     * Remove a classification from a Database.
      *
-     * @param qualifiedName of the database
+     * @param qualifiedName of the Database
      * @param classificationName human-readable name of the classification to remove
-     * @throws AtlanException on any API problems, or if the classification does not exist on the database
+     * @throws AtlanException on any API problems, or if the classification does not exist on the Database
      */
     public static void removeClassification(String qualifiedName, String classificationName) throws AtlanException {
         Asset.removeClassification(TYPE_NAME, qualifiedName, classificationName);
     }
 
     /**
-     * Replace the terms linked to the database.
+     * Replace the terms linked to the Database.
      *
-     * @param qualifiedName for the database
-     * @param name human-readable name of the database
-     * @param terms the list of terms to replace on the database, or null to remove all terms from the database
-     * @return the database that was updated (note that it will NOT contain details of the replaced terms)
+     * @param qualifiedName for the Database
+     * @param name human-readable name of the Database
+     * @param terms the list of terms to replace on the Database, or null to remove all terms from the Database
+     * @return the Database that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
     public static Database replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
@@ -194,13 +194,13 @@ public class Database extends SQL {
     }
 
     /**
-     * Link additional terms to the database, without replacing existing terms linked to the database.
-     * Note: this operation must make two API calls — one to retrieve the database's existing terms,
+     * Link additional terms to the Database, without replacing existing terms linked to the Database.
+     * Note: this operation must make two API calls — one to retrieve the Database's existing terms,
      * and a second to append the new terms.
      *
-     * @param qualifiedName for the database
-     * @param terms the list of terms to append to the database
-     * @return the database that was updated  (note that it will NOT contain details of the appended terms)
+     * @param qualifiedName for the Database
+     * @param terms the list of terms to append to the Database
+     * @return the Database that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
     public static Database appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
@@ -208,13 +208,13 @@ public class Database extends SQL {
     }
 
     /**
-     * Remove terms from a database, without replacing all existing terms linked to the database.
-     * Note: this operation must make two API calls — one to retrieve the database's existing terms,
+     * Remove terms from a Database, without replacing all existing terms linked to the Database.
+     * Note: this operation must make two API calls — one to retrieve the Database's existing terms,
      * and a second to remove the provided terms.
      *
-     * @param qualifiedName for the database
-     * @param terms the list of terms to remove from the database, which must be referenced by GUID
-     * @return the database that was updated (note that it will NOT contain details of the resulting terms)
+     * @param qualifiedName for the Database
+     * @param terms the list of terms to remove from the Database, which must be referenced by GUID
+     * @return the Database that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
     public static Database removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {

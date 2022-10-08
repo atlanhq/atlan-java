@@ -24,7 +24,7 @@ public class PresetDataset extends Preset {
 
     public static final String TYPE_NAME = "PresetDataset";
 
-    /** Fixed typeName for Preset datasets. */
+    /** Fixed typeName for PresetDatasets. */
     @Getter(onMethod_ = {@Override})
     @Setter(onMethod_ = {@Override})
     @Builder.Default
@@ -47,20 +47,20 @@ public class PresetDataset extends Preset {
     PresetDashboard presetDashboard;
 
     /**
-     * Reference to a Preset dataset by GUID.
+     * Reference to a PresetDataset by GUID.
      *
-     * @param guid the GUID of the Preset dataset to reference
-     * @return reference to a Preset dataset that can be used for defining a relationship to a Preset dataset
+     * @param guid the GUID of the PresetDataset to reference
+     * @return reference to a PresetDataset that can be used for defining a relationship to a PresetDataset
      */
     public static PresetDataset refByGuid(String guid) {
         return PresetDataset.builder().guid(guid).build();
     }
 
     /**
-     * Reference to a Preset dataset by qualifiedName.
+     * Reference to a PresetDataset by qualifiedName.
      *
-     * @param qualifiedName the qualifiedName of the Preset dataset to reference
-     * @return reference to a Preset dataset that can be used for defining a relationship to a Preset dataset
+     * @param qualifiedName the qualifiedName of the PresetDataset to reference
+     * @return reference to a PresetDataset that can be used for defining a relationship to a PresetDataset
      */
     public static PresetDataset refByQualifiedName(String qualifiedName) {
         return PresetDataset.builder()
@@ -92,21 +92,21 @@ public class PresetDataset extends Preset {
     }
 
     /**
-     * Builds the minimal object necessary to update a Preset dataset.
+     * Builds the minimal object necessary to update a PresetDataset.
      *
-     * @param qualifiedName of the dataset
-     * @param name of the dataset
-     * @return the minimal object necessary to update the dataset, as a builder
+     * @param qualifiedName of the PresetDataset
+     * @param name of the PresetDataset
+     * @return the minimal request necessary to update the PresetDataset, as a builder
      */
     public static PresetDatasetBuilder<?, ?> updater(String qualifiedName, String name) {
         return PresetDataset.builder().qualifiedName(qualifiedName).name(name);
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a Preset dataset, from a potentially
-     * more-complete Preset dataset object.
+     * Builds the minimal object necessary to apply an update to a PresetDataset, from a potentially
+     * more-complete PresetDataset object.
      *
-     * @return the minimal object necessary to update the Preset dataset, as a builder
+     * @return the minimal object necessary to update the PresetDataset, as a builder
      */
     @Override
     protected PresetDatasetBuilder<?, ?> trimToRequired() {
@@ -114,12 +114,12 @@ public class PresetDataset extends Preset {
     }
 
     /**
-     * Update the certificate on a Preset dataset.
+     * Update the certificate on a PresetDataset.
      *
-     * @param qualifiedName of the dataset
+     * @param qualifiedName of the PresetDataset
      * @param certificate to use
      * @param message (optional) message, or null if no message
-     * @return the updated dataset, or null if the update failed
+     * @return the updated PresetDataset, or null if the update failed
      * @throws AtlanException on any API problems
      */
     public static PresetDataset updateCertificate(
@@ -128,11 +128,11 @@ public class PresetDataset extends Preset {
     }
 
     /**
-     * Remove the certificate from a Preset dataset.
+     * Remove the certificate from a PresetDataset.
      *
-     * @param qualifiedName of the dataset
-     * @param name of the dataset
-     * @return the updated dataset, or null if the removal failed
+     * @param qualifiedName of the PresetDataset
+     * @param name of the PresetDataset
+     * @return the updated PresetDataset, or null if the removal failed
      * @throws AtlanException on any API problems
      */
     public static PresetDataset removeCertificate(String qualifiedName, String name) throws AtlanException {
@@ -141,9 +141,9 @@ public class PresetDataset extends Preset {
     }
 
     /**
-     * Update the announcement on a Preset dataset.
+     * Update the announcement on a PresetDataset.
      *
-     * @param qualifiedName of the dataset
+     * @param qualifiedName of the PresetDataset
      * @param type type of announcement to set
      * @param title (optional) title of the announcement to set (or null for no title)
      * @param message (optional) message of the announcement to set (or null for no message)
@@ -156,11 +156,11 @@ public class PresetDataset extends Preset {
     }
 
     /**
-     * Remove the announcement from a Preset dataset.
+     * Remove the announcement from a PresetDataset.
      *
-     * @param qualifiedName of the dataset
-     * @param name of the dataset
-     * @return the updated dataset, or null if the removal failed
+     * @param qualifiedName of the PresetDataset
+     * @param name of the PresetDataset
+     * @return the updated PresetDataset, or null if the removal failed
      * @throws AtlanException on any API problems
      */
     public static PresetDataset removeAnnouncement(String qualifiedName, String name) throws AtlanException {
@@ -169,11 +169,11 @@ public class PresetDataset extends Preset {
     }
 
     /**
-     * Add classifications to a Preset dataset.
+     * Add classifications to a PresetDataset.
      *
-     * @param qualifiedName of the dataset
+     * @param qualifiedName of the PresetDataset
      * @param classificationNames human-readable names of the classifications to add
-     * @throws AtlanException on any API problems, or if any of the classifications already exist on the dataset
+     * @throws AtlanException on any API problems, or if any of the classifications already exist on the PresetDataset
      */
     public static void addClassifications(String qualifiedName, List<String> classificationNames)
             throws AtlanException {
@@ -181,23 +181,23 @@ public class PresetDataset extends Preset {
     }
 
     /**
-     * Remove a classification from a Preset dataset.
+     * Remove a classification from a PresetDataset.
      *
-     * @param qualifiedName of the dataset
+     * @param qualifiedName of the PresetDataset
      * @param classificationName human-readable name of the classification to remove
-     * @throws AtlanException on any API problems, or if the classification does not exist on the dataset
+     * @throws AtlanException on any API problems, or if the classification does not exist on the PresetDataset
      */
     public static void removeClassification(String qualifiedName, String classificationName) throws AtlanException {
         Asset.removeClassification(TYPE_NAME, qualifiedName, classificationName);
     }
 
     /**
-     * Replace the terms linked to the dataset.
+     * Replace the terms linked to the PresetDataset.
      *
-     * @param qualifiedName for the dataset
-     * @param name human-readable name of the dataset
-     * @param terms the list of terms to replace on the dataset, or null to remove all terms from the dataset
-     * @return the dataset that was updated (note that it will NOT contain details of the replaced terms)
+     * @param qualifiedName for the PresetDataset
+     * @param name human-readable name of the PresetDataset
+     * @param terms the list of terms to replace on the PresetDataset, or null to remove all terms from the PresetDataset
+     * @return the PresetDataset that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
     public static PresetDataset replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
@@ -206,13 +206,13 @@ public class PresetDataset extends Preset {
     }
 
     /**
-     * Link additional terms to the Preset dataset, without replacing existing terms linked to the dataset.
-     * Note: this operation must make two API calls — one to retrieve the dataset's existing terms,
+     * Link additional terms to the PresetDataset, without replacing existing terms linked to the PresetDataset.
+     * Note: this operation must make two API calls — one to retrieve the PresetDataset's existing terms,
      * and a second to append the new terms.
      *
-     * @param qualifiedName for the dataset
-     * @param terms the list of terms to append to the dataset
-     * @return the dataset that was updated  (note that it will NOT contain details of the appended terms)
+     * @param qualifiedName for the PresetDataset
+     * @param terms the list of terms to append to the PresetDataset
+     * @return the PresetDataset that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
     public static PresetDataset appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
@@ -220,13 +220,13 @@ public class PresetDataset extends Preset {
     }
 
     /**
-     * Remove terms from a Preset dataset, without replacing all existing terms linked to the dataset.
-     * Note: this operation must make two API calls — one to retrieve the dataset's existing terms,
+     * Remove terms from a PresetDataset, without replacing all existing terms linked to the PresetDataset.
+     * Note: this operation must make two API calls — one to retrieve the PresetDataset's existing terms,
      * and a second to remove the provided terms.
      *
-     * @param qualifiedName for the dataset
-     * @param terms the list of terms to remove from the dataset, which must be referenced by GUID
-     * @return the dataset that was updated (note that it will NOT contain details of the resulting terms)
+     * @param qualifiedName for the PresetDataset
+     * @param terms the list of terms to remove from the PresetDataset, which must be referenced by GUID
+     * @return the PresetDataset that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
     public static PresetDataset removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {

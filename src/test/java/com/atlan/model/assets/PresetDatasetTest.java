@@ -4,12 +4,10 @@ package com.atlan.model.assets;
 
 import static org.testng.Assert.*;
 
-import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.AtlanCertificateStatus;
-import com.atlan.model.enums.AtlanConnectorType;
-import com.atlan.model.enums.AtlanStatus;
+import com.atlan.model.enums.*;
 import com.atlan.serde.Serde;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import java.util.*;
 import org.testng.annotations.Test;
 
 public class PresetDatasetTest {
@@ -45,7 +43,7 @@ public class PresetDatasetTest {
             .adminRole("adminRole")
             .viewerUser("viewerUser")
             .viewerGroup("viewerGroup")
-            .connectorType(AtlanConnectorType.S3)
+            .connectorType(AtlanConnectorType.PRESTO)
             .connectionName("connectionName")
             .connectionQualifiedName("connectionQualifiedName")
             .hasLineage(false)
@@ -108,16 +106,21 @@ public class PresetDatasetTest {
             .readme(Readme.refByGuid("readmeGuid"))
             .meaning(GlossaryTerm.refByGuid("termGuid1"))
             .meaning(GlossaryTerm.refByGuid("termGuid2"))
-            .presetWorkspaceId(123456L)
+            .inputToProcesses(Set.of(
+                    LineageProcess.refByGuid("3c1dbe07-e54e-42d2-9ab9-77e4d948b189"),
+                    LineageProcess.refByGuid("44ae09bf-ff39-40a0-af14-435bf24657e2")))
+            .outputFromProcesses(Set.of(
+                    LineageProcess.refByGuid("dd24c8f9-89e2-459a-b349-b148d92b02a3"),
+                    LineageProcess.refByGuid("a92d3cdc-b069-44b2-8579-bba4a381556a")))
+            .presetWorkspaceId(-5994717840282851867L)
             .presetWorkspaceQualifiedName("presetWorkspaceQualifiedName")
-            .presetDashboardId(654321L)
+            .presetDashboardId(5435600488633070415L)
             .presetDashboardQualifiedName("presetDashboardQualifiedName")
             .presetDatasetDatasourceName("presetDatasetDatasourceName")
-            .presetDatasetId(123456789L)
+            .presetDatasetId(-580562722078805535L)
             .presetDatasetType("presetDatasetType")
-            .presetDashboard(PresetDashboard.refByGuid("dashboardGuid"))
+            .presetDashboard(PresetDashboard.refByGuid("8d735a6f-7ea6-48fb-b7c9-505a67adf6c4"))
             .build();
-
     private static PresetDataset frodo;
     private static String serialized;
 
