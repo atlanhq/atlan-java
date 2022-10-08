@@ -6,13 +6,13 @@ import static org.testng.Assert.*;
 
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.InvalidRequestException;
-import com.atlan.model.assets.Asset;
+import com.atlan.model.assets.Catalog;
+import com.atlan.model.assets.LineageProcess;
 import com.atlan.model.assets.S3Object;
 import com.atlan.model.core.Entity;
 import com.atlan.model.core.EntityMutationResponse;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
-import com.atlan.model.lineage.LineageProcess;
 import com.atlan.model.lineage.LineageRequest;
 import com.atlan.model.lineage.LineageResponse;
 import java.util.Collections;
@@ -56,16 +56,18 @@ public class LineageTest extends AtlanLiveTest {
             assertEquals(process.getName(), processName);
             assertNotNull(process.getInputs());
             assertEquals(process.getInputs().size(), 1);
-            Asset input = process.getInputs().get(0);
-            assertNotNull(input);
-            assertEquals(input.getTypeName(), S3Object.TYPE_NAME);
-            assertEquals(input.getGuid(), S3AssetTest.s3Object1Guid);
+            for (Catalog input : process.getInputs()) {
+                assertNotNull(input);
+                assertEquals(input.getTypeName(), S3Object.TYPE_NAME);
+                assertEquals(input.getGuid(), S3AssetTest.s3Object1Guid);
+            }
             assertNotNull(process.getOutputs());
             assertEquals(process.getOutputs().size(), 1);
-            Asset output = process.getOutputs().get(0);
-            assertNotNull(output);
-            assertEquals(output.getTypeName(), S3Object.TYPE_NAME);
-            assertEquals(output.getGuid(), S3AssetTest.s3Object2Guid);
+            for (Catalog output : process.getOutputs()) {
+                assertNotNull(output);
+                assertEquals(output.getTypeName(), S3Object.TYPE_NAME);
+                assertEquals(output.getGuid(), S3AssetTest.s3Object2Guid);
+            }
             assertEquals(response.getUpdatedEntities().size(), 2);
             Entity updated = response.getUpdatedEntities().get(0);
             assertNotNull(updated);
@@ -106,16 +108,18 @@ public class LineageTest extends AtlanLiveTest {
             assertEquals(process.getName(), processName);
             assertNotNull(process.getInputs());
             assertEquals(process.getInputs().size(), 1);
-            Asset input = process.getInputs().get(0);
-            assertNotNull(input);
-            assertEquals(input.getTypeName(), S3Object.TYPE_NAME);
-            assertEquals(input.getGuid(), S3AssetTest.s3Object2Guid);
+            for (Catalog input : process.getInputs()) {
+                assertNotNull(input);
+                assertEquals(input.getTypeName(), S3Object.TYPE_NAME);
+                assertEquals(input.getGuid(), S3AssetTest.s3Object2Guid);
+            }
             assertNotNull(process.getOutputs());
             assertEquals(process.getOutputs().size(), 1);
-            Asset output = process.getOutputs().get(0);
-            assertNotNull(output);
-            assertEquals(output.getTypeName(), S3Object.TYPE_NAME);
-            assertEquals(output.getGuid(), S3AssetTest.s3Object3Guid);
+            for (Catalog output : process.getOutputs()) {
+                assertNotNull(output);
+                assertEquals(output.getTypeName(), S3Object.TYPE_NAME);
+                assertEquals(output.getGuid(), S3AssetTest.s3Object3Guid);
+            }
             assertEquals(response.getUpdatedEntities().size(), 2);
             Entity updated = response.getUpdatedEntities().get(0);
             assertNotNull(updated);

@@ -1,0 +1,213 @@
+/* SPDX-License-Identifier: Apache-2.0 */
+/* Copyright 2022 Atlan Pte. Ltd. */
+package com.atlan.model.assets;
+
+import com.atlan.exception.AtlanException;
+import com.atlan.model.enums.AtlanAnnouncementType;
+import com.atlan.model.enums.AtlanCertificateStatus;
+import com.atlan.model.relations.UniqueAttributes;
+import java.util.List;
+import java.util.SortedSet;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
+
+@Getter
+@Setter
+@SuperBuilder(toBuilder = true)
+@EqualsAndHashCode(callSuper = true)
+public class LookerProject extends Looker {
+    private static final long serialVersionUID = 2L;
+
+    public static final String TYPE_NAME = "LookerProject";
+
+    /** Fixed typeName for LookerProjects. */
+    @Getter(onMethod_ = {@Override})
+    @Setter(onMethod_ = {@Override})
+    @Builder.Default
+    String typeName = TYPE_NAME;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<LookerModel> models;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<LookerExplore> explores;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<LookerField> fields;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<LookerView> views;
+
+    /**
+     * Reference to a LookerProject by GUID.
+     *
+     * @param guid the GUID of the LookerProject to reference
+     * @return reference to a LookerProject that can be used for defining a relationship to a LookerProject
+     */
+    public static LookerProject refByGuid(String guid) {
+        return LookerProject.builder().guid(guid).build();
+    }
+
+    /**
+     * Reference to a LookerProject by qualifiedName.
+     *
+     * @param qualifiedName the qualifiedName of the LookerProject to reference
+     * @return reference to a LookerProject that can be used for defining a relationship to a LookerProject
+     */
+    public static LookerProject refByQualifiedName(String qualifiedName) {
+        return LookerProject.builder()
+                .uniqueAttributes(
+                        UniqueAttributes.builder().qualifiedName(qualifiedName).build())
+                .build();
+    }
+
+    /**
+     * Builds the minimal object necessary to update a LookerProject.
+     *
+     * @param qualifiedName of the LookerProject
+     * @param name of the LookerProject
+     * @return the minimal request necessary to update the LookerProject, as a builder
+     */
+    public static LookerProjectBuilder<?, ?> updater(String qualifiedName, String name) {
+        return LookerProject.builder().qualifiedName(qualifiedName).name(name);
+    }
+
+    /**
+     * Builds the minimal object necessary to apply an update to a LookerProject, from a potentially
+     * more-complete LookerProject object.
+     *
+     * @return the minimal object necessary to update the LookerProject, as a builder
+     */
+    @Override
+    protected LookerProjectBuilder<?, ?> trimToRequired() {
+        return updater(this.getQualifiedName(), this.getName());
+    }
+
+    /**
+     * Update the certificate on a LookerProject.
+     *
+     * @param qualifiedName of the LookerProject
+     * @param certificate to use
+     * @param message (optional) message, or null if no message
+     * @return the updated LookerProject, or null if the update failed
+     * @throws AtlanException on any API problems
+     */
+    public static LookerProject updateCertificate(
+            String qualifiedName, AtlanCertificateStatus certificate, String message) throws AtlanException {
+        return (LookerProject) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
+    }
+
+    /**
+     * Remove the certificate from a LookerProject.
+     *
+     * @param qualifiedName of the LookerProject
+     * @param name of the LookerProject
+     * @return the updated LookerProject, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static LookerProject removeCertificate(String qualifiedName, String name) throws AtlanException {
+        return (LookerProject)
+                Asset.removeCertificate(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Update the announcement on a LookerProject.
+     *
+     * @param qualifiedName of the LookerProject
+     * @param type type of announcement to set
+     * @param title (optional) title of the announcement to set (or null for no title)
+     * @param message (optional) message of the announcement to set (or null for no message)
+     * @return the result of the update, or null if the update failed
+     * @throws AtlanException on any API problems
+     */
+    public static LookerProject updateAnnouncement(
+            String qualifiedName, AtlanAnnouncementType type, String title, String message) throws AtlanException {
+        return (LookerProject) Asset.updateAnnouncement(builder(), TYPE_NAME, qualifiedName, type, title, message);
+    }
+
+    /**
+     * Remove the announcement from a LookerProject.
+     *
+     * @param qualifiedName of the LookerProject
+     * @param name of the LookerProject
+     * @return the updated LookerProject, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static LookerProject removeAnnouncement(String qualifiedName, String name) throws AtlanException {
+        return (LookerProject)
+                Asset.removeAnnouncement(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Add classifications to a LookerProject.
+     *
+     * @param qualifiedName of the LookerProject
+     * @param classificationNames human-readable names of the classifications to add
+     * @throws AtlanException on any API problems, or if any of the classifications already exist on the LookerProject
+     */
+    public static void addClassifications(String qualifiedName, List<String> classificationNames)
+            throws AtlanException {
+        Asset.addClassifications(TYPE_NAME, qualifiedName, classificationNames);
+    }
+
+    /**
+     * Remove a classification from a LookerProject.
+     *
+     * @param qualifiedName of the LookerProject
+     * @param classificationName human-readable name of the classification to remove
+     * @throws AtlanException on any API problems, or if the classification does not exist on the LookerProject
+     */
+    public static void removeClassification(String qualifiedName, String classificationName) throws AtlanException {
+        Asset.removeClassification(TYPE_NAME, qualifiedName, classificationName);
+    }
+
+    /**
+     * Replace the terms linked to the LookerProject.
+     *
+     * @param qualifiedName for the LookerProject
+     * @param name human-readable name of the LookerProject
+     * @param terms the list of terms to replace on the LookerProject, or null to remove all terms from the LookerProject
+     * @return the LookerProject that was updated (note that it will NOT contain details of the replaced terms)
+     * @throws AtlanException on any API problems
+     */
+    public static LookerProject replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+            throws AtlanException {
+        return (LookerProject) Asset.replaceTerms(updater(qualifiedName, name), terms);
+    }
+
+    /**
+     * Link additional terms to the LookerProject, without replacing existing terms linked to the LookerProject.
+     * Note: this operation must make two API calls — one to retrieve the LookerProject's existing terms,
+     * and a second to append the new terms.
+     *
+     * @param qualifiedName for the LookerProject
+     * @param terms the list of terms to append to the LookerProject
+     * @return the LookerProject that was updated  (note that it will NOT contain details of the appended terms)
+     * @throws AtlanException on any API problems
+     */
+    public static LookerProject appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (LookerProject) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
+    }
+
+    /**
+     * Remove terms from a LookerProject, without replacing all existing terms linked to the LookerProject.
+     * Note: this operation must make two API calls — one to retrieve the LookerProject's existing terms,
+     * and a second to remove the provided terms.
+     *
+     * @param qualifiedName for the LookerProject
+     * @param terms the list of terms to remove from the LookerProject, which must be referenced by GUID
+     * @return the LookerProject that was updated (note that it will NOT contain details of the resulting terms)
+     * @throws AtlanException on any API problems
+     */
+    public static LookerProject removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (LookerProject) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
+    }
+}

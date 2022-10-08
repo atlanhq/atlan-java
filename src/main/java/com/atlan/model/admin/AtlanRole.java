@@ -34,4 +34,7 @@ public class AtlanRole extends AtlanObject {
 
     /** Number of users with this role. */
     String memberCount;
+
+    /** TBC */
+    String userCount;
 }

@@ -4,16 +4,13 @@ package com.atlan.model.assets;
 
 import static org.testng.Assert.*;
 
-import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.AtlanCertificateStatus;
-import com.atlan.model.enums.AtlanStatus;
+import com.atlan.model.enums.*;
 import com.atlan.serde.Serde;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import java.util.*;
 import org.testng.annotations.Test;
 
 public class GlossaryTest {
-
-    // TODO: classifications, meaningNames, customMetadataSets
 
     private static final Glossary full = Glossary.builder()
             .guid("guid")
@@ -41,12 +38,29 @@ public class GlossaryTest {
             .announcementType(AtlanAnnouncementType.INFORMATION)
             .ownerUser("ownerUser")
             .ownerGroup("ownerGroup")
+            .adminUser("adminUser")
+            .adminGroup("adminGroup")
+            .adminRole("adminRole")
             .viewerUser("viewerUser")
             .viewerGroup("viewerGroup")
+            .connectorType(AtlanConnectorType.PRESTO)
+            .connectionName("connectionName")
+            .connectionQualifiedName("connectionQualifiedName")
+            .hasLineage(false)
             .isDiscoverable(true)
             .isEditable(true)
             .viewScore(123456.0)
             .popularityScore(123456.0)
+            .sourceOwners("sourceOwners")
+            .sourceURL("sourceURL")
+            .sourceEmbedURL("sourceEmbedURL")
+            .lastSyncWorkflowName("lastSyncWorkflowName")
+            .lastSyncRunAt(123456789L)
+            .lastSyncRun("lastSyncRun")
+            .sourceCreatedBy("sourceCreatedBy")
+            .sourceCreatedAt(123456789L)
+            .sourceUpdatedAt(123456789L)
+            .sourceUpdatedBy("sourceUpdatedBy")
             .dbtQualifiedName("dbtQualifiedName")
             .assetDbtAlias("assetDbtAlias")
             .assetDbtMeta("assetDbtMeta")
@@ -92,12 +106,18 @@ public class GlossaryTest {
             .readme(Readme.refByGuid("readmeGuid"))
             .meaning(GlossaryTerm.refByGuid("termGuid1"))
             .meaning(GlossaryTerm.refByGuid("termGuid2"))
-            .term(GlossaryTerm.refByGuid("termGuid1"))
-            .term(GlossaryTerm.refByGuid("termGuid2"))
-            .category(GlossaryCategory.refByGuid("categoryGuid1"))
-            .category(GlossaryCategory.refByGuid("categoryGuid2"))
+            .shortDescription("shortDescription")
+            .longDescription("longDescription")
+            .language("language")
+            .usage("usage")
+            .additionalAttributes(Map.of("key1", "value1", "key2", "value2"))
+            .terms(Set.of(
+                    GlossaryTerm.refByGuid("42b97b5e-4781-4d24-a464-0e1f393093b9"),
+                    GlossaryTerm.refByGuid("c7919a75-4d4c-4576-82a7-9001440e1714")))
+            .categories(Set.of(
+                    GlossaryCategory.refByGuid("7090bca4-2064-427e-b2d3-72a4985fa263"),
+                    GlossaryCategory.refByGuid("e0623ef8-646f-49f3-97e4-ea2b90242d8d")))
             .build();
-
     private static Glossary frodo;
     private static String serialized;
 
@@ -131,7 +151,7 @@ public class GlossaryTest {
         assertNotNull(serialized);
         assertNotNull(frodo);
         String backAgain = frodo.toJson();
-        assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop.");
+        assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
     }
 
     @Test(
@@ -140,7 +160,7 @@ public class GlossaryTest {
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);
-        assertEquals(frodo, full, "Deserialization is not equivalent after serde loop.");
+        assertEquals(frodo, full, "Deserialization is not equivalent after serde loop,");
     }
 
     @Test

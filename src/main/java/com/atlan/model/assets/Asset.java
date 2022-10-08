@@ -13,6 +13,7 @@ import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
 import java.util.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -21,6 +22,15 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@JsonSubTypes({
+    @JsonSubTypes.Type(value = Catalog.class, name = Catalog.TYPE_NAME),
+    @JsonSubTypes.Type(value = Namespace.class, name = Namespace.TYPE_NAME),
+    @JsonSubTypes.Type(value = Glossary.class, name = Glossary.TYPE_NAME),
+    @JsonSubTypes.Type(value = GlossaryCategory.class, name = GlossaryCategory.TYPE_NAME),
+    @JsonSubTypes.Type(value = GlossaryTerm.class, name = GlossaryTerm.TYPE_NAME),
+    @JsonSubTypes.Type(value = Cloud.class, name = Cloud.TYPE_NAME),
+    @JsonSubTypes.Type(value = Connection.class, name = Connection.TYPE_NAME),
+})
 public abstract class Asset extends Entity {
 
     public static final String TYPE_NAME = "Asset";

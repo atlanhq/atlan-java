@@ -7,6 +7,7 @@ import static org.testng.Assert.*;
 import com.atlan.model.enums.*;
 import com.atlan.serde.Serde;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import java.util.*;
 import org.testng.annotations.Test;
 
 public class DataStudioAssetTest {
@@ -42,7 +43,7 @@ public class DataStudioAssetTest {
             .adminRole("adminRole")
             .viewerUser("viewerUser")
             .viewerGroup("viewerGroup")
-            .connectorType(AtlanConnectorType.S3)
+            .connectorType(AtlanConnectorType.PRESTO)
             .connectionName("connectionName")
             .connectionQualifiedName("connectionQualifiedName")
             .hasLineage(false)
@@ -105,16 +106,21 @@ public class DataStudioAssetTest {
             .readme(Readme.refByGuid("readmeGuid"))
             .meaning(GlossaryTerm.refByGuid("termGuid1"))
             .meaning(GlossaryTerm.refByGuid("termGuid2"))
+            .inputToProcesses(Set.of(
+                    LineageProcess.refByGuid("5edb9a1b-6799-4b21-83ca-e84c6791d7f0"),
+                    LineageProcess.refByGuid("398ce2dd-f0a4-4839-8b20-c0d6b0582fb9")))
+            .outputFromProcesses(Set.of(
+                    LineageProcess.refByGuid("13c2390b-f8ac-415f-ac06-e5a67651151f"),
+                    LineageProcess.refByGuid("c31b29bd-1238-4205-bc82-490f8016a8aa")))
             .googleService("googleService")
             .googleProjectName("googleProjectName")
             .googleProjectId("googleProjectId")
-            .googleProjectNumber(123456789L)
+            .googleProjectNumber(-8753008744437615677L)
             .dataStudioAssetType(GoogleDataStudioAssetType.REPORT)
             .dataStudioAssetTitle("dataStudioAssetTitle")
             .dataStudioAssetOwner("dataStudioAssetOwner")
             .isTrashedDataStudioAsset(false)
             .build();
-
     private static DataStudioAsset frodo;
     private static String serialized;
 

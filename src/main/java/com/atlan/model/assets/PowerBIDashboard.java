@@ -1,0 +1,214 @@
+/* SPDX-License-Identifier: Apache-2.0 */
+/* Copyright 2022 Atlan Pte. Ltd. */
+package com.atlan.model.assets;
+
+import com.atlan.exception.AtlanException;
+import com.atlan.model.enums.AtlanAnnouncementType;
+import com.atlan.model.enums.AtlanCertificateStatus;
+import com.atlan.model.relations.UniqueAttributes;
+import java.util.List;
+import java.util.SortedSet;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
+
+@Getter
+@Setter
+@SuperBuilder(toBuilder = true)
+@EqualsAndHashCode(callSuper = true)
+public class PowerBIDashboard extends PowerBI {
+    private static final long serialVersionUID = 2L;
+
+    public static final String TYPE_NAME = "PowerBIDashboard";
+
+    /** Fixed typeName for PowerBIDashboards. */
+    @Getter(onMethod_ = {@Override})
+    @Setter(onMethod_ = {@Override})
+    @Builder.Default
+    String typeName = TYPE_NAME;
+
+    /** TBC */
+    @Attribute
+    String workspaceQualifiedName;
+
+    /** TBC */
+    @Attribute
+    String webUrl;
+
+    /** TBC */
+    @Attribute
+    Long tileCount;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<PowerBITile> tiles;
+
+    /** TBC */
+    @Attribute
+    PowerBIWorkspace workspace;
+
+    /**
+     * Reference to a PowerBIDashboard by GUID.
+     *
+     * @param guid the GUID of the PowerBIDashboard to reference
+     * @return reference to a PowerBIDashboard that can be used for defining a relationship to a PowerBIDashboard
+     */
+    public static PowerBIDashboard refByGuid(String guid) {
+        return PowerBIDashboard.builder().guid(guid).build();
+    }
+
+    /**
+     * Reference to a PowerBIDashboard by qualifiedName.
+     *
+     * @param qualifiedName the qualifiedName of the PowerBIDashboard to reference
+     * @return reference to a PowerBIDashboard that can be used for defining a relationship to a PowerBIDashboard
+     */
+    public static PowerBIDashboard refByQualifiedName(String qualifiedName) {
+        return PowerBIDashboard.builder()
+                .uniqueAttributes(
+                        UniqueAttributes.builder().qualifiedName(qualifiedName).build())
+                .build();
+    }
+
+    /**
+     * Builds the minimal object necessary to update a PowerBIDashboard.
+     *
+     * @param qualifiedName of the PowerBIDashboard
+     * @param name of the PowerBIDashboard
+     * @return the minimal request necessary to update the PowerBIDashboard, as a builder
+     */
+    public static PowerBIDashboardBuilder<?, ?> updater(String qualifiedName, String name) {
+        return PowerBIDashboard.builder().qualifiedName(qualifiedName).name(name);
+    }
+
+    /**
+     * Builds the minimal object necessary to apply an update to a PowerBIDashboard, from a potentially
+     * more-complete PowerBIDashboard object.
+     *
+     * @return the minimal object necessary to update the PowerBIDashboard, as a builder
+     */
+    @Override
+    protected PowerBIDashboardBuilder<?, ?> trimToRequired() {
+        return updater(this.getQualifiedName(), this.getName());
+    }
+
+    /**
+     * Update the certificate on a PowerBIDashboard.
+     *
+     * @param qualifiedName of the PowerBIDashboard
+     * @param certificate to use
+     * @param message (optional) message, or null if no message
+     * @return the updated PowerBIDashboard, or null if the update failed
+     * @throws AtlanException on any API problems
+     */
+    public static PowerBIDashboard updateCertificate(
+            String qualifiedName, AtlanCertificateStatus certificate, String message) throws AtlanException {
+        return (PowerBIDashboard) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
+    }
+
+    /**
+     * Remove the certificate from a PowerBIDashboard.
+     *
+     * @param qualifiedName of the PowerBIDashboard
+     * @param name of the PowerBIDashboard
+     * @return the updated PowerBIDashboard, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static PowerBIDashboard removeCertificate(String qualifiedName, String name) throws AtlanException {
+        return (PowerBIDashboard)
+                Asset.removeCertificate(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Update the announcement on a PowerBIDashboard.
+     *
+     * @param qualifiedName of the PowerBIDashboard
+     * @param type type of announcement to set
+     * @param title (optional) title of the announcement to set (or null for no title)
+     * @param message (optional) message of the announcement to set (or null for no message)
+     * @return the result of the update, or null if the update failed
+     * @throws AtlanException on any API problems
+     */
+    public static PowerBIDashboard updateAnnouncement(
+            String qualifiedName, AtlanAnnouncementType type, String title, String message) throws AtlanException {
+        return (PowerBIDashboard) Asset.updateAnnouncement(builder(), TYPE_NAME, qualifiedName, type, title, message);
+    }
+
+    /**
+     * Remove the announcement from a PowerBIDashboard.
+     *
+     * @param qualifiedName of the PowerBIDashboard
+     * @param name of the PowerBIDashboard
+     * @return the updated PowerBIDashboard, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static PowerBIDashboard removeAnnouncement(String qualifiedName, String name) throws AtlanException {
+        return (PowerBIDashboard)
+                Asset.removeAnnouncement(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Add classifications to a PowerBIDashboard.
+     *
+     * @param qualifiedName of the PowerBIDashboard
+     * @param classificationNames human-readable names of the classifications to add
+     * @throws AtlanException on any API problems, or if any of the classifications already exist on the PowerBIDashboard
+     */
+    public static void addClassifications(String qualifiedName, List<String> classificationNames)
+            throws AtlanException {
+        Asset.addClassifications(TYPE_NAME, qualifiedName, classificationNames);
+    }
+
+    /**
+     * Remove a classification from a PowerBIDashboard.
+     *
+     * @param qualifiedName of the PowerBIDashboard
+     * @param classificationName human-readable name of the classification to remove
+     * @throws AtlanException on any API problems, or if the classification does not exist on the PowerBIDashboard
+     */
+    public static void removeClassification(String qualifiedName, String classificationName) throws AtlanException {
+        Asset.removeClassification(TYPE_NAME, qualifiedName, classificationName);
+    }
+
+    /**
+     * Replace the terms linked to the PowerBIDashboard.
+     *
+     * @param qualifiedName for the PowerBIDashboard
+     * @param name human-readable name of the PowerBIDashboard
+     * @param terms the list of terms to replace on the PowerBIDashboard, or null to remove all terms from the PowerBIDashboard
+     * @return the PowerBIDashboard that was updated (note that it will NOT contain details of the replaced terms)
+     * @throws AtlanException on any API problems
+     */
+    public static PowerBIDashboard replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+            throws AtlanException {
+        return (PowerBIDashboard) Asset.replaceTerms(updater(qualifiedName, name), terms);
+    }
+
+    /**
+     * Link additional terms to the PowerBIDashboard, without replacing existing terms linked to the PowerBIDashboard.
+     * Note: this operation must make two API calls — one to retrieve the PowerBIDashboard's existing terms,
+     * and a second to append the new terms.
+     *
+     * @param qualifiedName for the PowerBIDashboard
+     * @param terms the list of terms to append to the PowerBIDashboard
+     * @return the PowerBIDashboard that was updated  (note that it will NOT contain details of the appended terms)
+     * @throws AtlanException on any API problems
+     */
+    public static PowerBIDashboard appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (PowerBIDashboard) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
+    }
+
+    /**
+     * Remove terms from a PowerBIDashboard, without replacing all existing terms linked to the PowerBIDashboard.
+     * Note: this operation must make two API calls — one to retrieve the PowerBIDashboard's existing terms,
+     * and a second to remove the provided terms.
+     *
+     * @param qualifiedName for the PowerBIDashboard
+     * @param terms the list of terms to remove from the PowerBIDashboard, which must be referenced by GUID
+     * @return the PowerBIDashboard that was updated (note that it will NOT contain details of the resulting terms)
+     * @throws AtlanException on any API problems
+     */
+    public static PowerBIDashboard removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (PowerBIDashboard) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
+    }
+}

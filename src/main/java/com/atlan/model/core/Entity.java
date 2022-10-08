@@ -9,13 +9,10 @@ import com.atlan.exception.AtlanException;
 import com.atlan.model.assets.*;
 import com.atlan.model.enums.AtlanDeleteType;
 import com.atlan.model.enums.AtlanStatus;
-import com.atlan.model.lineage.ColumnProcess;
-import com.atlan.model.lineage.LineageProcess;
 import com.atlan.model.relations.Reference;
 import com.atlan.serde.EntityDeserializer;
 import com.atlan.serde.EntitySerializer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -29,30 +26,11 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 @JsonSerialize(using = EntitySerializer.class)
 @JsonDeserialize(using = EntityDeserializer.class)
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "typeName")
-@JsonSubTypes({
-    @JsonSubTypes.Type(value = Readme.class, name = Readme.TYPE_NAME),
-    @JsonSubTypes.Type(value = Link.class, name = Link.TYPE_NAME),
-    @JsonSubTypes.Type(value = Glossary.class, name = Glossary.TYPE_NAME),
-    @JsonSubTypes.Type(value = GlossaryCategory.class, name = GlossaryCategory.TYPE_NAME),
-    @JsonSubTypes.Type(value = GlossaryTerm.class, name = GlossaryTerm.TYPE_NAME),
-    @JsonSubTypes.Type(value = Connection.class, name = Connection.TYPE_NAME),
-    @JsonSubTypes.Type(value = Database.class, name = Database.TYPE_NAME),
-    @JsonSubTypes.Type(value = Schema.class, name = Schema.TYPE_NAME),
-    @JsonSubTypes.Type(value = Table.class, name = Table.TYPE_NAME),
-    @JsonSubTypes.Type(value = View.class, name = View.TYPE_NAME),
-    @JsonSubTypes.Type(value = MaterializedView.class, name = MaterializedView.TYPE_NAME),
-    @JsonSubTypes.Type(value = Column.class, name = Column.TYPE_NAME),
-    @JsonSubTypes.Type(value = DataStudioAsset.class, name = DataStudioAsset.TYPE_NAME),
-    @JsonSubTypes.Type(value = S3Bucket.class, name = S3Bucket.TYPE_NAME),
-    @JsonSubTypes.Type(value = S3Object.class, name = S3Object.TYPE_NAME),
-    @JsonSubTypes.Type(value = PresetWorkspace.class, name = PresetWorkspace.TYPE_NAME),
-    @JsonSubTypes.Type(value = PresetDashboard.class, name = PresetDashboard.TYPE_NAME),
-    @JsonSubTypes.Type(value = PresetChart.class, name = PresetChart.TYPE_NAME),
-    @JsonSubTypes.Type(value = PresetDataset.class, name = PresetDataset.TYPE_NAME),
-    @JsonSubTypes.Type(value = LineageProcess.class, name = LineageProcess.TYPE_NAME),
-    @JsonSubTypes.Type(value = ColumnProcess.class, name = ColumnProcess.TYPE_NAME),
-})
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.EXISTING_PROPERTY,
+        property = "typeName",
+        defaultImpl = IndistinctAsset.class)
 @SuppressWarnings("cast")
 public abstract class Entity extends Reference {
     /** Internal tracking of fields that should be serialized with null values. */
@@ -116,6 +94,9 @@ public abstract class Entity extends Reference {
 
     /** Names of terms that have been linked to this asset. */
     Set<String> meaningNames;
+
+    /** Unique identifiers (GUIDs) for any background tasks that are yet to operate on this asset. */
+    final Set<String> pendingTasks;
 
     /** Remove the certificate from the asset, if any is set on the asset. */
     public void removeCustomMetadata() {

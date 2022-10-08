@@ -4,12 +4,10 @@ package com.atlan.model.assets;
 
 import static org.testng.Assert.*;
 
-import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.AtlanCertificateStatus;
-import com.atlan.model.enums.AtlanConnectorType;
-import com.atlan.model.enums.AtlanStatus;
+import com.atlan.model.enums.*;
 import com.atlan.serde.Serde;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import java.util.*;
 import org.testng.annotations.Test;
 
 public class ViewTest {
@@ -45,7 +43,7 @@ public class ViewTest {
             .adminRole("adminRole")
             .viewerUser("viewerUser")
             .viewerGroup("viewerGroup")
-            .connectorType(AtlanConnectorType.SNOWFLAKE)
+            .connectorType(AtlanConnectorType.PRESTO)
             .connectionName("connectionName")
             .connectionQualifiedName("connectionQualifiedName")
             .hasLineage(false)
@@ -108,9 +106,16 @@ public class ViewTest {
             .readme(Readme.refByGuid("readmeGuid"))
             .meaning(GlossaryTerm.refByGuid("termGuid1"))
             .meaning(GlossaryTerm.refByGuid("termGuid2"))
-            .queryCount(123L)
-            .queryUserCount(123L)
-            .queryCountUpdatedAt(123456789L)
+            .inputToProcesses(Set.of(
+                    LineageProcess.refByGuid("92c162ac-0500-4a67-8c7d-d4898e9186af"),
+                    LineageProcess.refByGuid("efb1a276-45d5-4c56-9802-9e53e3697c98")))
+            .outputFromProcesses(Set.of(
+                    LineageProcess.refByGuid("dac91092-adde-4bd1-a865-579f1d7b2bfd"),
+                    LineageProcess.refByGuid("262572cd-9cd9-408d-a6d9-86483f0013d6")))
+            .queryCount(-6048180546327909758L)
+            .queryUserCount(394881341237521710L)
+            // .queryUserMap(Map.of("key1", 123456L, "key2", 654321L))
+            .queryCountUpdatedAt(-6678227075591644031L)
             .databaseName("databaseName")
             .databaseQualifiedName("databaseQualifiedName")
             .schemaName("schemaName")
@@ -119,18 +124,28 @@ public class ViewTest {
             .tableQualifiedName("tableQualifiedName")
             .viewName("viewName")
             .viewQualifiedName("viewQualifiedName")
-            .columnCount(123L)
-            .rowCount(1234567890L)
-            .sizeBytes(1234567890L)
+            .dbtModels(Set.of(
+                    DbtModel.refByGuid("0b36f7a2-4039-429a-a091-f29830ee47ef"),
+                    DbtModel.refByGuid("704409c0-6fd8-40e4-a8d6-d034f95420bb")))
+            .dbtSources(Set.of(
+                    DbtSource.refByGuid("d8186f0a-fd29-4ad3-9fca-0447344921de"),
+                    DbtSource.refByGuid("4d79a09d-9fa4-43d7-9bce-62b75e6a74db")))
+            .columnCount(6070031754823687739L)
+            .rowCount(-265224386360591210L)
+            .sizeBytes(5811623847963451509L)
+            .isQueryPreview(false)
+            .queryPreviewConfig(Map.of("key1", "value1", "key2", "value2"))
             .alias("alias")
             .isTemporary(false)
-            .isQueryPreview(true)
             .definition("definition")
-            .schema(Schema.refByGuid("schemaGuid"))
-            .column(Column.refByGuid("columnGuid1"))
-            .column(Column.refByGuid("columnGuid2"))
+            .schema(Schema.refByGuid("049cc4fc-bb0f-4628-a5fe-db7eae77fe70"))
+            .columns(Set.of(
+                    Column.refByGuid("fb8e20ee-5ffb-4012-a852-ea729385d2ef"),
+                    Column.refByGuid("8b058c83-21f8-4f5f-90c8-d6bc602448f6")))
+            .queries(Set.of(
+                    AtlanQuery.refByGuid("53c3a4ca-a9bb-4aad-9f4e-145bbd86b954"),
+                    AtlanQuery.refByGuid("c9a96966-4bc9-4f11-be3a-dc9a11d50550")))
             .build();
-
     private static View frodo;
     private static String serialized;
 
@@ -164,7 +179,7 @@ public class ViewTest {
         assertNotNull(serialized);
         assertNotNull(frodo);
         String backAgain = frodo.toJson();
-        assertEquals(backAgain, serialized, "Serialization is equivalent after serde loop.");
+        assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
     }
 
     @Test(
@@ -173,6 +188,6 @@ public class ViewTest {
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);
-        assertEquals(frodo, full, "Deserialization is equivalent after serde loop.");
+        assertEquals(frodo, full, "Deserialization is not equivalent after serde loop,");
     }
 }

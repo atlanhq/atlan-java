@@ -10,8 +10,6 @@ import com.atlan.model.assets.*;
 import com.atlan.model.core.Classification;
 import com.atlan.model.core.CustomMetadataAttributes;
 import com.atlan.model.core.Entity;
-import com.atlan.model.lineage.ColumnProcess;
-import com.atlan.model.lineage.LineageProcess;
 import com.atlan.util.JacksonUtils;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.core.JsonParser;
@@ -77,11 +75,47 @@ public class EntityDeserializer extends StdDeserializer<Entity> {
             builder = IndistinctAsset.builder();
         } else {
             switch (typeName) {
-                case Readme.TYPE_NAME:
-                    builder = Readme.builder();
+                case AtlanCollection.TYPE_NAME:
+                    builder = AtlanCollection.builder();
                     break;
-                case Link.TYPE_NAME:
-                    builder = Link.builder();
+                case BIProcess.TYPE_NAME:
+                    builder = BIProcess.builder();
+                    break;
+                case Column.TYPE_NAME:
+                    builder = Column.builder();
+                    break;
+                case ColumnProcess.TYPE_NAME:
+                    builder = ColumnProcess.builder();
+                    break;
+                case Connection.TYPE_NAME:
+                    builder = Connection.builder();
+                    break;
+                case DataStudioAsset.TYPE_NAME:
+                    builder = DataStudioAsset.builder();
+                    break;
+                case Database.TYPE_NAME:
+                    builder = Database.builder();
+                    break;
+                case DbtColumnProcess.TYPE_NAME:
+                    builder = DbtColumnProcess.builder();
+                    break;
+                case DbtMetric.TYPE_NAME:
+                    builder = DbtMetric.builder();
+                    break;
+                case DbtModel.TYPE_NAME:
+                    builder = DbtModel.builder();
+                    break;
+                case DbtModelColumn.TYPE_NAME:
+                    builder = DbtModelColumn.builder();
+                    break;
+                case DbtProcess.TYPE_NAME:
+                    builder = DbtProcess.builder();
+                    break;
+                case DbtSource.TYPE_NAME:
+                    builder = DbtSource.builder();
+                    break;
+                case Folder.TYPE_NAME:
+                    builder = Folder.builder();
                     break;
                 case Glossary.TYPE_NAME:
                     builder = Glossary.builder();
@@ -92,29 +126,128 @@ public class EntityDeserializer extends StdDeserializer<Entity> {
                 case GlossaryTerm.TYPE_NAME:
                     builder = GlossaryTerm.builder();
                     break;
-                case Connection.TYPE_NAME:
-                    builder = Connection.builder();
+                case Insight.TYPE_NAME:
+                    builder = Insight.builder();
                     break;
-                case Database.TYPE_NAME:
-                    builder = Database.builder();
+                case LineageProcess.TYPE_NAME:
+                    builder = LineageProcess.builder();
                     break;
-                case Schema.TYPE_NAME:
-                    builder = Schema.builder();
+                case Link.TYPE_NAME:
+                    builder = Link.builder();
                     break;
-                case Table.TYPE_NAME:
-                    builder = Table.builder();
+                case LookerDashboard.TYPE_NAME:
+                    builder = LookerDashboard.builder();
                     break;
-                case View.TYPE_NAME:
-                    builder = View.builder();
+                case LookerExplore.TYPE_NAME:
+                    builder = LookerExplore.builder();
+                    break;
+                case LookerField.TYPE_NAME:
+                    builder = LookerField.builder();
+                    break;
+                case LookerFolder.TYPE_NAME:
+                    builder = LookerFolder.builder();
+                    break;
+                case LookerLook.TYPE_NAME:
+                    builder = LookerLook.builder();
+                    break;
+                case LookerModel.TYPE_NAME:
+                    builder = LookerModel.builder();
+                    break;
+                case LookerProject.TYPE_NAME:
+                    builder = LookerProject.builder();
+                    break;
+                case LookerQuery.TYPE_NAME:
+                    builder = LookerQuery.builder();
+                    break;
+                case LookerTile.TYPE_NAME:
+                    builder = LookerTile.builder();
+                    break;
+                case LookerView.TYPE_NAME:
+                    builder = LookerView.builder();
                     break;
                 case MaterializedView.TYPE_NAME:
                     builder = MaterializedView.builder();
                     break;
-                case Column.TYPE_NAME:
-                    builder = Column.builder();
+                case MetabaseCollection.TYPE_NAME:
+                    builder = MetabaseCollection.builder();
                     break;
-                case DataStudioAsset.TYPE_NAME:
-                    builder = DataStudioAsset.builder();
+                case MetabaseDashboard.TYPE_NAME:
+                    builder = MetabaseDashboard.builder();
+                    break;
+                case MetabaseQuestion.TYPE_NAME:
+                    builder = MetabaseQuestion.builder();
+                    break;
+                case ModeChart.TYPE_NAME:
+                    builder = ModeChart.builder();
+                    break;
+                case ModeCollection.TYPE_NAME:
+                    builder = ModeCollection.builder();
+                    break;
+                case ModeQuery.TYPE_NAME:
+                    builder = ModeQuery.builder();
+                    break;
+                case ModeReport.TYPE_NAME:
+                    builder = ModeReport.builder();
+                    break;
+                case ModeWorkspace.TYPE_NAME:
+                    builder = ModeWorkspace.builder();
+                    break;
+                case PowerBIColumn.TYPE_NAME:
+                    builder = PowerBIColumn.builder();
+                    break;
+                case PowerBIDashboard.TYPE_NAME:
+                    builder = PowerBIDashboard.builder();
+                    break;
+                case PowerBIDataflow.TYPE_NAME:
+                    builder = PowerBIDataflow.builder();
+                    break;
+                case PowerBIDataset.TYPE_NAME:
+                    builder = PowerBIDataset.builder();
+                    break;
+                case PowerBIDatasource.TYPE_NAME:
+                    builder = PowerBIDatasource.builder();
+                    break;
+                case PowerBIMeasure.TYPE_NAME:
+                    builder = PowerBIMeasure.builder();
+                    break;
+                case PowerBIPage.TYPE_NAME:
+                    builder = PowerBIPage.builder();
+                    break;
+                case PowerBIReport.TYPE_NAME:
+                    builder = PowerBIReport.builder();
+                    break;
+                case PowerBITable.TYPE_NAME:
+                    builder = PowerBITable.builder();
+                    break;
+                case PowerBITile.TYPE_NAME:
+                    builder = PowerBITile.builder();
+                    break;
+                case PowerBIWorkspace.TYPE_NAME:
+                    builder = PowerBIWorkspace.builder();
+                    break;
+                case PresetChart.TYPE_NAME:
+                    builder = PresetChart.builder();
+                    break;
+                case PresetDashboard.TYPE_NAME:
+                    builder = PresetDashboard.builder();
+                    break;
+                case PresetDataset.TYPE_NAME:
+                    builder = PresetDataset.builder();
+                    break;
+                case PresetWorkspace.TYPE_NAME:
+                    builder = PresetWorkspace.builder();
+                    break;
+                case Procedure.TYPE_NAME:
+                    builder = Procedure.builder();
+                    break;
+                case AtlanQuery.TYPE_NAME:
+                    builder = AtlanQuery.builder();
+                    break;
+                case Readme.TYPE_NAME:
+                    builder = Readme.builder();
+                    break;
+                case ReadmeTemplate.TYPE_NAME:
+                    builder = ReadmeTemplate.builder();
                     break;
                 case S3Bucket.TYPE_NAME:
                     builder = S3Bucket.builder();
@@ -122,23 +255,62 @@ public class EntityDeserializer extends StdDeserializer<Entity> {
                 case S3Object.TYPE_NAME:
                     builder = S3Object.builder();
                     break;
-                case PresetWorkspace.TYPE_NAME:
-                    builder = PresetWorkspace.builder();
+                case SalesforceDashboard.TYPE_NAME:
+                    builder = SalesforceDashboard.builder();
                     break;
-                case PresetDashboard.TYPE_NAME:
-                    builder = PresetDashboard.builder();
+                case SalesforceField.TYPE_NAME:
+                    builder = SalesforceField.builder();
                     break;
-                case PresetChart.TYPE_NAME:
-                    builder = PresetChart.builder();
+                case SalesforceObject.TYPE_NAME:
+                    builder = SalesforceObject.builder();
                     break;
-                case PresetDataset.TYPE_NAME:
-                    builder = PresetDataset.builder();
+                case SalesforceOrganization.TYPE_NAME:
+                    builder = SalesforceOrganization.builder();
                     break;
-                case LineageProcess.TYPE_NAME:
-                    builder = LineageProcess.builder();
+                case SalesforceReport.TYPE_NAME:
+                    builder = SalesforceReport.builder();
                     break;
-                case ColumnProcess.TYPE_NAME:
-                    builder = ColumnProcess.builder();
+                case Schema.TYPE_NAME:
+                    builder = Schema.builder();
+                    break;
+                case Table.TYPE_NAME:
+                    builder = Table.builder();
+                    break;
+                case TablePartition.TYPE_NAME:
+                    builder = TablePartition.builder();
+                    break;
+                case TableauCalculatedField.TYPE_NAME:
+                    builder = TableauCalculatedField.builder();
+                    break;
+                case TableauDashboard.TYPE_NAME:
+                    builder = TableauDashboard.builder();
+                    break;
+                case TableauDatasource.TYPE_NAME:
+                    builder = TableauDatasource.builder();
+                    break;
+                case TableauDatasourceField.TYPE_NAME:
+                    builder = TableauDatasourceField.builder();
+                    break;
+                case TableauFlow.TYPE_NAME:
+                    builder = TableauFlow.builder();
+                    break;
+                case TableauMetric.TYPE_NAME:
+                    builder = TableauMetric.builder();
+                    break;
+                case TableauProject.TYPE_NAME:
+                    builder = TableauProject.builder();
+                    break;
+                case TableauSite.TYPE_NAME:
+                    builder = TableauSite.builder();
+                    break;
+                case TableauWorkbook.TYPE_NAME:
+                    builder = TableauWorkbook.builder();
+                    break;
+                case TableauWorksheet.TYPE_NAME:
+                    builder = TableauWorksheet.builder();
+                    break;
+                case View.TYPE_NAME:
+                    builder = View.builder();
                     break;
                 default:
                     builder = IndistinctAsset.builder();
@@ -172,6 +344,10 @@ public class EntityDeserializer extends StdDeserializer<Entity> {
         Set<String> meaningNames = JacksonUtils.deserializeObject(root, "meaningNames", new TypeReference<>() {});
         if (meaningNames != null) {
             builder = builder.meaningNames(meaningNames);
+        }
+        Set<String> pendingTasks = JacksonUtils.deserializeObject(root, "pendingTasks", new TypeReference<>() {});
+        if (pendingTasks != null) {
+            builder = builder.pendingTasks(pendingTasks);
         }
 
         Entity value = builder.build();

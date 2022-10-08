@@ -5,8 +5,6 @@ package com.atlan.model.assets;
 import static org.testng.Assert.*;
 
 import com.atlan.model.enums.AtlanConnectorType;
-import com.atlan.model.lineage.AbstractProcess;
-import com.atlan.model.lineage.LineageProcess;
 import java.util.Collections;
 import org.testng.annotations.Test;
 

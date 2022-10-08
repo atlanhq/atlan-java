@@ -4,12 +4,10 @@ package com.atlan.model.assets;
 
 import static org.testng.Assert.*;
 
-import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.AtlanCertificateStatus;
-import com.atlan.model.enums.AtlanConnectorType;
-import com.atlan.model.enums.AtlanStatus;
+import com.atlan.model.enums.*;
 import com.atlan.serde.Serde;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import java.util.*;
 import org.testng.annotations.Test;
 
 public class S3ObjectTest {
@@ -45,7 +43,7 @@ public class S3ObjectTest {
             .adminRole("adminRole")
             .viewerUser("viewerUser")
             .viewerGroup("viewerGroup")
-            .connectorType(AtlanConnectorType.S3)
+            .connectorType(AtlanConnectorType.PRESTO)
             .connectionName("connectionName")
             .connectionQualifiedName("connectionQualifiedName")
             .hasLineage(false)
@@ -108,6 +106,12 @@ public class S3ObjectTest {
             .readme(Readme.refByGuid("readmeGuid"))
             .meaning(GlossaryTerm.refByGuid("termGuid1"))
             .meaning(GlossaryTerm.refByGuid("termGuid2"))
+            .inputToProcesses(Set.of(
+                    LineageProcess.refByGuid("8a5b4445-9622-4b3d-8f8e-2ca915351d72"),
+                    LineageProcess.refByGuid("90a6dd8c-d682-43b6-83b9-7ba537f39014")))
+            .outputFromProcesses(Set.of(
+                    LineageProcess.refByGuid("3be42f06-f1d5-4eba-ac03-0585252f2751"),
+                    LineageProcess.refByGuid("95efdf97-7d91-4d85-b384-ba619b9a30f4")))
             .awsArn("awsArn")
             .awsPartition("awsPartition")
             .awsService("awsService")
@@ -116,28 +120,20 @@ public class S3ObjectTest {
             .awsResourceId("awsResourceId")
             .awsOwnerName("awsOwnerName")
             .awsOwnerId("awsOwnerId")
-            .awsTag(AWSTag.builder()
-                    .awsTagKey("awsTagKey1")
-                    .awsTagValue("awsTagValue1")
-                    .build())
-            .awsTag(AWSTag.builder()
-                    .awsTagKey("awsTagKey2")
-                    .awsTagValue("awsTagValue2")
-                    .build())
+            .awsTags(List.of(AWSTag.of("key1", "value1"), AWSTag.of("key2", "value2")))
             .s3ETag("s3ETag")
             .s3Encryption("s3Encryption")
-            .s3ObjectLastModifiedTime(123456789L)
+            .s3ObjectLastModifiedTime(-4244751360319023666L)
             .s3BucketName("s3BucketName")
             .s3BucketQualifiedName("s3BucketQualifiedName")
-            .s3ObjectSize(123456L)
+            .s3ObjectSize(-5253501176141955502L)
             .s3ObjectStorageClass("s3ObjectStorageClass")
             .s3ObjectKey("s3ObjectKey")
             .s3ObjectContentType("s3ObjectContentType")
             .s3ObjectContentDisposition("s3ObjectContentDisposition")
             .s3ObjectVersionId("s3ObjectVersionId")
-            .bucket(S3Bucket.refByGuid("bucketGuid"))
+            .bucket(S3Bucket.refByGuid("14770132-faf5-4dc0-a3c1-533b771e942a"))
             .build();
-
     private static S3Object frodo;
     private static String serialized;
 

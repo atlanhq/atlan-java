@@ -4,13 +4,10 @@ package com.atlan.model.assets;
 
 import static org.testng.Assert.*;
 
-import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.AtlanCertificateStatus;
-import com.atlan.model.enums.AtlanConnectorType;
-import com.atlan.model.enums.AtlanStatus;
-import com.atlan.model.relations.Reference;
+import com.atlan.model.enums.*;
 import com.atlan.serde.Serde;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import java.util.*;
 import org.testng.annotations.Test;
 
 public class ColumnTest {
@@ -46,7 +43,7 @@ public class ColumnTest {
             .adminRole("adminRole")
             .viewerUser("viewerUser")
             .viewerGroup("viewerGroup")
-            .connectorType(AtlanConnectorType.REDSHIFT)
+            .connectorType(AtlanConnectorType.PRESTO)
             .connectionName("connectionName")
             .connectionQualifiedName("connectionQualifiedName")
             .hasLineage(false)
@@ -109,9 +106,16 @@ public class ColumnTest {
             .readme(Readme.refByGuid("readmeGuid"))
             .meaning(GlossaryTerm.refByGuid("termGuid1"))
             .meaning(GlossaryTerm.refByGuid("termGuid2"))
-            .queryCount(123L)
-            .queryUserCount(123L)
-            .queryCountUpdatedAt(123456789L)
+            .inputToProcesses(Set.of(
+                    LineageProcess.refByGuid("f76bb2c6-2968-476f-b33d-fe0b4a75e980"),
+                    LineageProcess.refByGuid("aaedd884-c653-49c7-8143-540a36ba66b6")))
+            .outputFromProcesses(Set.of(
+                    LineageProcess.refByGuid("2492a268-8761-49b8-ba53-7e208cff3dcd"),
+                    LineageProcess.refByGuid("e8d27461-2f24-49e5-bc5a-f0fe0b5eeb32")))
+            .queryCount(-3022545005103052920L)
+            .queryUserCount(-5308765275880160862L)
+            // .queryUserMap(Map.of("key1", 123456L, "key2", 654321L))
+            .queryCountUpdatedAt(3464630707843017083L)
             .databaseName("databaseName")
             .databaseQualifiedName("databaseQualifiedName")
             .schemaName("schemaName")
@@ -120,33 +124,49 @@ public class ColumnTest {
             .tableQualifiedName("tableQualifiedName")
             .viewName("viewName")
             .viewQualifiedName("viewQualifiedName")
+            .dbtModels(Set.of(
+                    DbtModel.refByGuid("a70efc0e-a17f-4b5d-9e35-88f10fff9fcd"),
+                    DbtModel.refByGuid("2abeec3e-69c5-48ed-b067-187bab851285")))
+            .dbtSources(Set.of(
+                    DbtSource.refByGuid("172d726a-70ed-4074-a9b1-0f58c8c76709"),
+                    DbtSource.refByGuid("0d9495b0-98aa-4656-990c-8abba34dfcc8")))
             .dataType("dataType")
             .subDataType("subDataType")
-            .order(1)
+            .order(-1966902301)
             .isPartition(false)
-            .partitionOrder(1)
-            .isClustered(true)
+            .partitionOrder(592110913)
+            .isClustered(false)
             .isPrimary(true)
-            .isForeign(false)
+            .isForeign(true)
             .isIndexed(true)
-            .isSort(false)
-            .isDist(true)
+            .isSort(true)
+            .isDist(false)
             .isPinned(true)
             .pinnedBy("pinnedBy")
-            .pinnedAt(123456789L)
-            .precision(123)
+            .pinnedAt(3844993251426572894L)
+            .precision(-1475323273)
             .defaultValue("defaultValue")
             .isNullable(false)
-            .numericScale(123.456F)
-            .maxLength(123456L)
-            .table(Table.refByGuid("tableGuid"))
-            .tablePartition(Reference.to("TablePartition", "tablePartitionGuid"))
-            .view(View.refByGuid("viewGuid"))
-            .materializedView(MaterializedView.refByGuid("materializedViewGuid"))
-            .query(Reference.to("Query", "queryGuid1"))
-            .query(Reference.to("Query", "queryGuid2"))
+            .numericScale(0.11822494766105718)
+            .maxLength(3539946568009515085L)
+            .validations(Map.of("key1", "value1", "key2", "value2"))
+            .materializedView(MaterializedView.refByGuid("057c3961-3a26-4151-8606-f795a0a33908"))
+            .queries(Set.of(
+                    AtlanQuery.refByGuid("2c5b2b2d-018b-4c06-96d3-000d45414df6"),
+                    AtlanQuery.refByGuid("6aae2b13-9670-4c52-8ace-1e0d1ca3bf3b")))
+            .metricTimestamps(Set.of(
+                    DbtMetric.refByGuid("4855f267-bc65-467e-b7a8-62cb54fa1a10"),
+                    DbtMetric.refByGuid("d4683d16-b53a-44e7-86e3-3d26badcf4b7")))
+            .view(View.refByGuid("3932639b-588b-406b-8b1f-0973fd93d8b4"))
+            .tablePartition(TablePartition.refByGuid("93a45ab9-874f-4825-ab4c-d60b33c79f0f"))
+            .dataQualityMetricDimensions(Set.of(
+                    DbtMetric.refByGuid("987adbda-32c4-4f17-a773-89c8944bb702"),
+                    DbtMetric.refByGuid("d7114c8c-a113-42d8-a6b3-792d44cf1e89")))
+            .dbtModelColumns(Set.of(
+                    DbtModelColumn.refByGuid("0542e16e-8ca0-48b8-bd33-d2f2b7380d4c"),
+                    DbtModelColumn.refByGuid("d4c7db64-6f49-4f84-b895-e5f411f747ab")))
+            .table(Table.refByGuid("544e0b61-9091-4645-bbe3-bec40303d9b3"))
             .build();
-
     private static Column frodo;
     private static String serialized;
 

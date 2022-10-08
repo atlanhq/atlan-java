@@ -4,12 +4,10 @@ package com.atlan.model.assets;
 
 import static org.testng.Assert.*;
 
-import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.AtlanCertificateStatus;
-import com.atlan.model.enums.AtlanConnectorType;
-import com.atlan.model.enums.AtlanStatus;
+import com.atlan.model.enums.*;
 import com.atlan.serde.Serde;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import java.util.*;
 import org.testng.annotations.Test;
 
 public class PresetDashboardTest {
@@ -45,7 +43,7 @@ public class PresetDashboardTest {
             .adminRole("adminRole")
             .viewerUser("viewerUser")
             .viewerGroup("viewerGroup")
-            .connectorType(AtlanConnectorType.S3)
+            .connectorType(AtlanConnectorType.PRESTO)
             .connectionName("connectionName")
             .connectionQualifiedName("connectionQualifiedName")
             .hasLineage(false)
@@ -108,23 +106,30 @@ public class PresetDashboardTest {
             .readme(Readme.refByGuid("readmeGuid"))
             .meaning(GlossaryTerm.refByGuid("termGuid1"))
             .meaning(GlossaryTerm.refByGuid("termGuid2"))
-            .presetWorkspaceId(123456L)
+            .inputToProcesses(Set.of(
+                    LineageProcess.refByGuid("9a4c2aa9-0653-4ea0-a0b6-4ca2ab1e4ea0"),
+                    LineageProcess.refByGuid("2bfef743-51d4-44b2-8a8c-478f32b31f79")))
+            .outputFromProcesses(Set.of(
+                    LineageProcess.refByGuid("4df673ae-1f6b-4950-8ff4-5334277a4164"),
+                    LineageProcess.refByGuid("d32dd8ce-6662-4016-87e2-36f289618bb7")))
+            .presetWorkspaceId(-3897600202147196153L)
             .presetWorkspaceQualifiedName("presetWorkspaceQualifiedName")
-            .presetDashboardId(654321L)
+            .presetDashboardId(9006251846872037153L)
             .presetDashboardQualifiedName("presetDashboardQualifiedName")
             .presetDashboardChangedByName("presetDashboardChangedByName")
             .presetDashboardChangedByURL("presetDashboardChangedByURL")
             .presetDashboardIsManagedExternally(true)
             .presetDashboardIsPublished(false)
             .presetDashboardThumbnailURL("presetDashboardThumbnailURL")
-            .presetDashboardChartCount(123L)
-            .presetWorkspace(PresetWorkspace.refByGuid("workspaceGuid"))
-            .presetChart(PresetChart.refByGuid("chartGuid1"))
-            .presetChart(PresetChart.refByGuid("chartGuid2"))
-            .presetDataset(PresetDataset.refByGuid("datasetGuid1"))
-            .presetDataset(PresetDataset.refByGuid("datasetGuid2"))
+            .presetDashboardChartCount(-3307836735547316488L)
+            .presetDatasets(Set.of(
+                    PresetDataset.refByGuid("0ba444df-cc21-4841-b0e3-a803919f33f5"),
+                    PresetDataset.refByGuid("4e2a8229-35e3-4273-a7ae-4aefede4c310")))
+            .presetCharts(Set.of(
+                    PresetChart.refByGuid("101ed576-2a65-4ea8-b596-c8f39ccf6ce2"),
+                    PresetChart.refByGuid("a0fc6656-956b-4c75-b7b3-310679fba4f6")))
+            .presetWorkspace(PresetWorkspace.refByGuid("2fa808b7-e243-406c-94f1-6b2b44073a7e"))
             .build();
-
     private static PresetDashboard frodo;
     private static String serialized;
 

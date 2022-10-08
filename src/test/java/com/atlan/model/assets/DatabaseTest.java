@@ -4,12 +4,10 @@ package com.atlan.model.assets;
 
 import static org.testng.Assert.*;
 
-import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.AtlanCertificateStatus;
-import com.atlan.model.enums.AtlanConnectorType;
-import com.atlan.model.enums.AtlanStatus;
+import com.atlan.model.enums.*;
 import com.atlan.serde.Serde;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import java.util.*;
 import org.testng.annotations.Test;
 
 public class DatabaseTest {
@@ -108,9 +106,16 @@ public class DatabaseTest {
             .readme(Readme.refByGuid("readmeGuid"))
             .meaning(GlossaryTerm.refByGuid("termGuid1"))
             .meaning(GlossaryTerm.refByGuid("termGuid2"))
-            .queryCount(123L)
-            .queryUserCount(123L)
-            .queryCountUpdatedAt(123456789L)
+            .inputToProcesses(Set.of(
+                    LineageProcess.refByGuid("e4dbc11e-fda9-4cb2-b2fa-4b7c9aa4c23e"),
+                    LineageProcess.refByGuid("7ae6ca4d-5b2e-43a2-8f2e-5b7a554f2a3b")))
+            .outputFromProcesses(Set.of(
+                    LineageProcess.refByGuid("04abe6cc-297f-4c7c-be66-5ba4f3224fed"),
+                    LineageProcess.refByGuid("be7a9693-7392-42f4-9f20-a88e9f67e0fe")))
+            .queryCount(286012725161563379L)
+            .queryUserCount(202413607703866469L)
+            // .queryUserMap(Map.of("key1", 123456L, "key2", 654321L))
+            .queryCountUpdatedAt(7964669356991516131L)
             .databaseName("databaseName")
             .databaseQualifiedName("databaseQualifiedName")
             .schemaName("schemaName")
@@ -119,11 +124,17 @@ public class DatabaseTest {
             .tableQualifiedName("tableQualifiedName")
             .viewName("viewName")
             .viewQualifiedName("viewQualifiedName")
-            .schemaCount(123)
-            .schema(Schema.refByGuid("schemaGuid1"))
-            .schema(Schema.refByGuid("schemaGuid2"))
+            .dbtModels(Set.of(
+                    DbtModel.refByGuid("209e84d8-4811-431c-9104-c52064bcb6b9"),
+                    DbtModel.refByGuid("7de8e307-3d28-4c9e-8d95-5048656b59a3")))
+            .dbtSources(Set.of(
+                    DbtSource.refByGuid("b47648b7-10f1-415c-9df9-743dd2ba06ea"),
+                    DbtSource.refByGuid("53f4b1b4-5be9-4098-aaec-f61f9dd5973b")))
+            .schemaCount(-1656928774)
+            .schemas(Set.of(
+                    Schema.refByGuid("af1d7593-4d37-45eb-b6c4-665ecb47ef1d"),
+                    Schema.refByGuid("ade12179-bfef-4337-8348-78937047dd79")))
             .build();
-
     private static Database frodo;
     private static String serialized;
 
@@ -157,7 +168,7 @@ public class DatabaseTest {
         assertNotNull(serialized);
         assertNotNull(frodo);
         String backAgain = frodo.toJson();
-        assertEquals(backAgain, serialized, "Serialization is equivalent after serde loop.");
+        assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
     }
 
     @Test(
@@ -166,6 +177,6 @@ public class DatabaseTest {
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);
-        assertEquals(frodo, full, "Deserialization is equivalent after serde loop.");
+        assertEquals(frodo, full, "Deserialization is not equivalent after serde loop,");
     }
 }

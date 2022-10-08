@@ -24,7 +24,7 @@ public class S3Bucket extends S3 {
 
     public static final String TYPE_NAME = "S3Bucket";
 
-    /** Fixed typeName for S3 buckets. */
+    /** Fixed typeName for S3Buckets. */
     @Getter(onMethod_ = {@Override})
     @Setter(onMethod_ = {@Override})
     @Builder.Default
@@ -39,25 +39,25 @@ public class S3Bucket extends S3 {
     Boolean s3BucketVersioningEnabled;
 
     /** S3 objects within this bucket. */
-    @Singular
     @Attribute
+    @Singular
     SortedSet<S3Object> objects;
 
     /**
-     * Reference to a S3 bucket by GUID.
+     * Reference to a S3Bucket by GUID.
      *
-     * @param guid the GUID of the S3 bucket to reference
-     * @return reference to a S3 bucket that can be used for defining a relationship to a S3 bucket
+     * @param guid the GUID of the S3Bucket to reference
+     * @return reference to a S3Bucket that can be used for defining a relationship to a S3Bucket
      */
     public static S3Bucket refByGuid(String guid) {
         return S3Bucket.builder().guid(guid).build();
     }
 
     /**
-     * Reference to a S3 bucket by qualifiedName.
+     * Reference to a S3Bucket by qualifiedName.
      *
-     * @param qualifiedName the qualifiedName of the S3 bucket to reference
-     * @return reference to a S3 bucket that can be used for defining a relationship to a S3 bucket
+     * @param qualifiedName the qualifiedName of the S3Bucket to reference
+     * @return reference to a S3Bucket that can be used for defining a relationship to a S3Bucket
      */
     public static S3Bucket refByQualifiedName(String qualifiedName) {
         return S3Bucket.builder()
@@ -84,21 +84,21 @@ public class S3Bucket extends S3 {
     }
 
     /**
-     * Builds the minimal object necessary to update an S3 bucket.
+     * Builds the minimal object necessary to update a S3Bucket.
      *
-     * @param qualifiedName of the S3 bucket
-     * @param name of the S3 bucket
-     * @return the minimal object necessary to update the S3 bucket, as a builder
+     * @param qualifiedName of the S3Bucket
+     * @param name of the S3Bucket
+     * @return the minimal request necessary to update the S3Bucket, as a builder
      */
     public static S3BucketBuilder<?, ?> updater(String qualifiedName, String name) {
         return S3Bucket.builder().qualifiedName(qualifiedName).name(name);
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to an S3 bucket, from a potentially
-     * more-complete S3 bucket object.
+     * Builds the minimal object necessary to apply an update to a S3Bucket, from a potentially
+     * more-complete S3Bucket object.
      *
-     * @return the minimal object necessary to update the S3 bucket, as a builder
+     * @return the minimal object necessary to update the S3Bucket, as a builder
      */
     @Override
     protected S3BucketBuilder<?, ?> trimToRequired() {
@@ -106,22 +106,12 @@ public class S3Bucket extends S3 {
     }
 
     /**
-     * Generate a unique S3 bucket name.
-     * @param connectionQualifiedName unique name of the connection
-     * @param awsArn unique ARN for the bucket
-     * @return a unique name for the S3 bucket
-     */
-    private static String generateQualifiedName(String connectionQualifiedName, String awsArn) {
-        return connectionQualifiedName + "/" + awsArn;
-    }
-
-    /**
-     * Update the certificate on an S3 bucket.
+     * Update the certificate on a S3Bucket.
      *
-     * @param qualifiedName of the S3 bucket
+     * @param qualifiedName of the S3Bucket
      * @param certificate to use
      * @param message (optional) message, or null if no message
-     * @return the updated S3 bucket, or null if the update failed
+     * @return the updated S3Bucket, or null if the update failed
      * @throws AtlanException on any API problems
      */
     public static S3Bucket updateCertificate(String qualifiedName, AtlanCertificateStatus certificate, String message)
@@ -130,11 +120,11 @@ public class S3Bucket extends S3 {
     }
 
     /**
-     * Remove the certificate from an S3 bucket.
+     * Remove the certificate from a S3Bucket.
      *
-     * @param qualifiedName of the S3 bucket
-     * @param name of the S3 bucket
-     * @return the updated S3 bucket, or null if the removal failed
+     * @param qualifiedName of the S3Bucket
+     * @param name of the S3Bucket
+     * @return the updated S3Bucket, or null if the removal failed
      * @throws AtlanException on any API problems
      */
     public static S3Bucket removeCertificate(String qualifiedName, String name) throws AtlanException {
@@ -143,9 +133,9 @@ public class S3Bucket extends S3 {
     }
 
     /**
-     * Update the announcement on an S3 bucket.
+     * Update the announcement on a S3Bucket.
      *
-     * @param qualifiedName of the S3 bucket
+     * @param qualifiedName of the S3Bucket
      * @param type type of announcement to set
      * @param title (optional) title of the announcement to set (or null for no title)
      * @param message (optional) message of the announcement to set (or null for no message)
@@ -158,11 +148,11 @@ public class S3Bucket extends S3 {
     }
 
     /**
-     * Remove the announcement from an S3 bucket.
+     * Remove the announcement from a S3Bucket.
      *
-     * @param qualifiedName of the S3 bucket
-     * @param name of the S3 bucket
-     * @return the updated S3 bucket, or null if the removal failed
+     * @param qualifiedName of the S3Bucket
+     * @param name of the S3Bucket
+     * @return the updated S3Bucket, or null if the removal failed
      * @throws AtlanException on any API problems
      */
     public static S3Bucket removeAnnouncement(String qualifiedName, String name) throws AtlanException {
@@ -171,11 +161,11 @@ public class S3Bucket extends S3 {
     }
 
     /**
-     * Add classifications to an S3 bucket.
+     * Add classifications to a S3Bucket.
      *
-     * @param qualifiedName of the S3 bucket
+     * @param qualifiedName of the S3Bucket
      * @param classificationNames human-readable names of the classifications to add
-     * @throws AtlanException on any API problems, or if any of the classifications already exist on the S3 bucket
+     * @throws AtlanException on any API problems, or if any of the classifications already exist on the S3Bucket
      */
     public static void addClassifications(String qualifiedName, List<String> classificationNames)
             throws AtlanException {
@@ -183,23 +173,23 @@ public class S3Bucket extends S3 {
     }
 
     /**
-     * Remove a classification from an S3 bucket.
+     * Remove a classification from a S3Bucket.
      *
-     * @param qualifiedName of the S3 bucket
+     * @param qualifiedName of the S3Bucket
      * @param classificationName human-readable name of the classification to remove
-     * @throws AtlanException on any API problems, or if the classification does not exist on the S3 bucket
+     * @throws AtlanException on any API problems, or if the classification does not exist on the S3Bucket
      */
     public static void removeClassification(String qualifiedName, String classificationName) throws AtlanException {
         Asset.removeClassification(TYPE_NAME, qualifiedName, classificationName);
     }
 
     /**
-     * Replace the terms linked to the S3 bucket.
+     * Replace the terms linked to the S3Bucket.
      *
-     * @param qualifiedName for the S3 bucket
-     * @param name human-readable name of the S3 bucket
-     * @param terms the list of terms to replace on the S3 bucket, or null to remove all terms from the S3 bucket
-     * @return the S3 bucket that was updated (note that it will NOT contain details of the replaced terms)
+     * @param qualifiedName for the S3Bucket
+     * @param name human-readable name of the S3Bucket
+     * @param terms the list of terms to replace on the S3Bucket, or null to remove all terms from the S3Bucket
+     * @return the S3Bucket that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
     public static S3Bucket replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
@@ -208,13 +198,13 @@ public class S3Bucket extends S3 {
     }
 
     /**
-     * Link additional terms to the S3 bucket, without replacing existing terms linked to the S3 bucket.
-     * Note: this operation must make two API calls — one to retrieve the S3 bucket's existing terms,
+     * Link additional terms to the S3Bucket, without replacing existing terms linked to the S3Bucket.
+     * Note: this operation must make two API calls — one to retrieve the S3Bucket's existing terms,
      * and a second to append the new terms.
      *
-     * @param qualifiedName for the S3 bucket
-     * @param terms the list of terms to append to the S3 bucket
-     * @return the S3 bucket that was updated  (note that it will NOT contain details of the appended terms)
+     * @param qualifiedName for the S3Bucket
+     * @param terms the list of terms to append to the S3Bucket
+     * @return the S3Bucket that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
     public static S3Bucket appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
@@ -222,13 +212,13 @@ public class S3Bucket extends S3 {
     }
 
     /**
-     * Remove terms from an S3 bucket, without replacing all existing terms linked to the S3 bucket.
-     * Note: this operation must make two API calls — one to retrieve the S3 bucket's existing terms,
+     * Remove terms from a S3Bucket, without replacing all existing terms linked to the S3Bucket.
+     * Note: this operation must make two API calls — one to retrieve the S3Bucket's existing terms,
      * and a second to remove the provided terms.
      *
-     * @param qualifiedName for the S3 bucket
-     * @param terms the list of terms to remove from the S3 bucket, which must be referenced by GUID
-     * @return the S3 bucket that was updated (note that it will NOT contain details of the resulting terms)
+     * @param qualifiedName for the S3Bucket
+     * @param terms the list of terms to remove from the S3Bucket, which must be referenced by GUID
+     * @return the S3Bucket that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
     public static S3Bucket removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {

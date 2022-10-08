@@ -4,12 +4,10 @@ package com.atlan.model.assets;
 
 import static org.testng.Assert.*;
 
-import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.AtlanCertificateStatus;
-import com.atlan.model.enums.AtlanConnectorType;
-import com.atlan.model.enums.AtlanStatus;
+import com.atlan.model.enums.*;
 import com.atlan.serde.Serde;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import java.util.*;
 import org.testng.annotations.Test;
 
 public class MaterializedViewTest {
@@ -45,7 +43,7 @@ public class MaterializedViewTest {
             .adminRole("adminRole")
             .viewerUser("viewerUser")
             .viewerGroup("viewerGroup")
-            .connectorType(AtlanConnectorType.TRINO)
+            .connectorType(AtlanConnectorType.PRESTO)
             .connectionName("connectionName")
             .connectionQualifiedName("connectionQualifiedName")
             .hasLineage(false)
@@ -108,9 +106,16 @@ public class MaterializedViewTest {
             .readme(Readme.refByGuid("readmeGuid"))
             .meaning(GlossaryTerm.refByGuid("termGuid1"))
             .meaning(GlossaryTerm.refByGuid("termGuid2"))
-            .queryCount(123L)
-            .queryUserCount(123L)
-            .queryCountUpdatedAt(123456789L)
+            .inputToProcesses(Set.of(
+                    LineageProcess.refByGuid("3e045a71-a5ca-4ec9-ac1a-0a516b89d64d"),
+                    LineageProcess.refByGuid("2d0b1f0f-afc9-4727-ae0f-9f52782243be")))
+            .outputFromProcesses(Set.of(
+                    LineageProcess.refByGuid("6ade8f3e-6757-4064-8e4c-2b8fd94bbac1"),
+                    LineageProcess.refByGuid("953b6d6a-7944-494c-8374-027de4d77412")))
+            .queryCount(-7034941422205517900L)
+            .queryUserCount(-3246559587581554028L)
+            // .queryUserMap(Map.of("key1", 123456L, "key2", 654321L))
+            .queryCountUpdatedAt(607913222162689196L)
             .databaseName("databaseName")
             .databaseQualifiedName("databaseQualifiedName")
             .schemaName("schemaName")
@@ -119,18 +124,29 @@ public class MaterializedViewTest {
             .tableQualifiedName("tableQualifiedName")
             .viewName("viewName")
             .viewQualifiedName("viewQualifiedName")
-            .columnCount(123L)
-            .rowCount(1234567890L)
-            .sizeBytes(1234567890L)
+            .dbtModels(Set.of(
+                    DbtModel.refByGuid("f2e0fbf4-ef30-45e8-beec-f0b9e292a8dc"),
+                    DbtModel.refByGuid("c03c0e19-285c-42d2-9d02-ba28a31c1130")))
+            .dbtSources(Set.of(
+                    DbtSource.refByGuid("8671a5b4-cf5b-4a78-b939-62d5dcf21dbb"),
+                    DbtSource.refByGuid("237d1039-81c5-478b-81ef-c25ecbdd79e7")))
+            .refreshMode("refreshMode")
+            .refreshMethod("refreshMethod")
+            .staleness("staleness")
+            .staleSinceDate(-6410106751212336728L)
+            .columnCount(-2338053567411409352L)
+            .rowCount(-594037127363138063L)
+            .sizeBytes(-5779826309815501387L)
+            .isQueryPreview(false)
+            .queryPreviewConfig(Map.of("key1", "value1", "key2", "value2"))
             .alias("alias")
             .isTemporary(false)
-            .isQueryPreview(true)
             .definition("definition")
-            .schema(Schema.refByGuid("schemaGuid"))
-            .column(Column.refByGuid("columnGuid1"))
-            .column(Column.refByGuid("columnGuid2"))
+            .schema(Schema.refByGuid("781a6ccb-cfbe-4c44-a91c-57930d901768"))
+            .columns(Set.of(
+                    Column.refByGuid("3fb8feff-a8d9-49ef-b005-03b06e03a5c2"),
+                    Column.refByGuid("234728c1-3297-46ec-bca2-483897f90926")))
             .build();
-
     private static MaterializedView frodo;
     private static String serialized;
 
@@ -164,7 +180,7 @@ public class MaterializedViewTest {
         assertNotNull(serialized);
         assertNotNull(frodo);
         String backAgain = frodo.toJson();
-        assertEquals(backAgain, serialized, "Serialization is equivalent after serde loop.");
+        assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
     }
 
     @Test(
@@ -173,6 +189,6 @@ public class MaterializedViewTest {
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);
-        assertEquals(frodo, full, "Deserialization is equivalent after serde loop.");
+        assertEquals(frodo, full, "Deserialization is not equivalent after serde loop,");
     }
 }

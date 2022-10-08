@@ -2,17 +2,18 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
 import java.util.List;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-/**
- * Detailed information about AWS-related assets.
- */
 @Getter
 @Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@JsonSubTypes({
+    @JsonSubTypes.Type(value = S3.class, name = S3.TYPE_NAME),
+})
 public abstract class AWS extends Catalog {
 
     public static final String TYPE_NAME = "AWS";

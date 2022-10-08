@@ -2,6 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -12,7 +13,12 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@JsonSubTypes({
+    @JsonSubTypes.Type(value = S3Bucket.class, name = S3Bucket.TYPE_NAME),
+    @JsonSubTypes.Type(value = S3Object.class, name = S3Object.TYPE_NAME),
+})
 public abstract class S3 extends AWS {
+
     public static final String TYPE_NAME = "S3";
 
     /**
@@ -25,4 +31,15 @@ public abstract class S3 extends AWS {
     /** TBC */
     @Attribute
     String s3Encryption;
+
+    /**
+     * Generate a unique S3 name.
+     *
+     * @param connectionQualifiedName unique name of the connection
+     * @param awsArn unique ARN for the S3 artifact
+     * @return a unique name for the S3 artifact
+     */
+    protected static String generateQualifiedName(String connectionQualifiedName, String awsArn) {
+        return connectionQualifiedName + "/" + awsArn;
+    }
 }

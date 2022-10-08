@@ -2,8 +2,9 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
 import java.util.Map;
+import java.util.SortedSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -14,31 +15,36 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@JsonSubTypes({
+    @JsonSubTypes.Type(value = TablePartition.class, name = TablePartition.TYPE_NAME),
+    @JsonSubTypes.Type(value = Table.class, name = Table.TYPE_NAME),
+    @JsonSubTypes.Type(value = AtlanQuery.class, name = AtlanQuery.TYPE_NAME),
+    @JsonSubTypes.Type(value = Column.class, name = Column.TYPE_NAME),
+    @JsonSubTypes.Type(value = Schema.class, name = Schema.TYPE_NAME),
+    @JsonSubTypes.Type(value = Database.class, name = Database.TYPE_NAME),
+    @JsonSubTypes.Type(value = Procedure.class, name = Procedure.TYPE_NAME),
+    @JsonSubTypes.Type(value = View.class, name = View.TYPE_NAME),
+    @JsonSubTypes.Type(value = MaterializedView.class, name = MaterializedView.TYPE_NAME),
+})
+@SuppressWarnings("cast")
 public abstract class SQL extends Catalog {
 
     public static final String TYPE_NAME = "SQL";
 
-    /**
-     * TBC
-     */
+    /** TBC */
     @Attribute
     Long queryCount;
 
-    /**
-     * TBC
-     */
+    /** TBC */
     @Attribute
     Long queryUserCount;
 
-    /**
-     * Unused attribues.
-     */
-    @JsonIgnore
+    /** TBC */
+    @Attribute
+    @Singular("putQueryUserMap")
     Map<String, Long> queryUserMap;
 
-    /**
-     * Time (epoch) at which the query count was last updated, in milliseconds.
-     */
+    /** Time (epoch) at which the query count was last updated, in milliseconds. */
     @Attribute
     Long queryCountUpdatedAt;
 
@@ -97,4 +103,14 @@ public abstract class SQL extends Catalog {
      */
     @Attribute
     String viewQualifiedName;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<DbtModel> dbtModels;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<DbtSource> dbtSources;
 }

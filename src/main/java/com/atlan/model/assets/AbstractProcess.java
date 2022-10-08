@@ -1,16 +1,15 @@
 /* SPDX-License-Identifier: Apache-2.0 */
 /* Copyright 2022 Atlan Pte. Ltd. */
-package com.atlan.model.lineage;
+package com.atlan.model.assets;
 
-import com.atlan.model.assets.Asset;
-import com.atlan.model.assets.Attribute;
-import com.atlan.model.assets.Catalog;
 import com.atlan.model.enums.AtlanConnectorType;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
+import java.util.SortedSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -24,6 +23,12 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@JsonSubTypes({
+    @JsonSubTypes.Type(value = BIProcess.class, name = BIProcess.TYPE_NAME),
+    @JsonSubTypes.Type(value = DbtProcess.class, name = DbtProcess.TYPE_NAME),
+    @JsonSubTypes.Type(value = ColumnProcess.class, name = ColumnProcess.TYPE_NAME),
+    @JsonSubTypes.Type(value = LineageProcess.class, name = LineageProcess.TYPE_NAME),
+})
 public abstract class AbstractProcess extends Asset {
 
     public static final String TYPE_NAME = "Process";
@@ -40,15 +45,20 @@ public abstract class AbstractProcess extends Asset {
     @Attribute
     String ast;
 
-    /** Assets that are inputs to this process. */
-    @Singular
-    @Attribute
-    List<Catalog> inputs;
-
     /** Assets that are outputs from this process. */
-    @Singular
     @Attribute
-    List<Catalog> outputs;
+    @Singular
+    SortedSet<Catalog> outputs;
+
+    /** Assets that are inputs to this process. */
+    @Attribute
+    @Singular
+    SortedSet<Catalog> inputs;
+
+    /** Processes that detail column-level lineage for this process. */
+    @Attribute
+    @Singular
+    SortedSet<AbstractColumnProcess> columnProcesses;
 
     /**
      * Generate a unique qualifiedName for a process.
