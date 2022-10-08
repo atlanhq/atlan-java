@@ -1,10 +1,9 @@
 /* SPDX-License-Identifier: Apache-2.0 */
 /* Copyright 2022 Atlan Pte. Ltd. */
-package com.atlan.model.assets;
+package com.atlan.model.admin;
 
 import static org.testng.Assert.*;
 
-import com.atlan.model.admin.AtlanRole;
 import com.atlan.serde.Serde;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.testng.annotations.Test;
