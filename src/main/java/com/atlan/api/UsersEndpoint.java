@@ -6,7 +6,8 @@ import com.atlan.Atlan;
 import com.atlan.cache.RoleCache;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.admin.AtlanUser;
-import com.atlan.model.admin.UpdateUserResponse;
+import com.atlan.model.admin.SessionResponse;
+import com.atlan.model.admin.UserMinimalResponse;
 import com.atlan.model.admin.UserResponse;
 import com.atlan.model.core.AtlanObject;
 import com.atlan.net.ApiResource;
@@ -121,9 +122,9 @@ public class UsersEndpoint {
      * @param user the details to update on the user
      * @throws AtlanException on any API communication issue
      */
-    public static UpdateUserResponse updateUser(String id, AtlanUser user) throws AtlanException {
+    public static UserMinimalResponse updateUser(String id, AtlanUser user) throws AtlanException {
         String url = String.format("%s%s/%s", Atlan.getBaseUrl(), endpoint, id);
-        return ApiResource.request(ApiResource.RequestMethod.POST, url, user, UpdateUserResponse.class, null);
+        return ApiResource.request(ApiResource.RequestMethod.POST, url, user, UserMinimalResponse.class, null);
     }
 
     /**
@@ -150,6 +151,42 @@ public class UsersEndpoint {
         ApiResource.request(ApiResource.RequestMethod.POST, url, atgr, null, null);
     }
 
+    /**
+     * Change the role of a user.
+     *
+     * @param id unique identifier (GUID) of the user whose role should be changed
+     * @param roleId unique identifier (GUID) of the role to move the user into
+     * @throws AtlanException on any API communication issue
+     */
+    public static void changeRole(String id, String roleId) throws AtlanException {
+        String url = String.format("%s%s/%s/roles/update", Atlan.getBaseUrl(), endpoint, id);
+        ChangeRoleRequest crr = ChangeRoleRequest.builder().roleId(roleId).build();
+        ApiResource.request(ApiResource.RequestMethod.POST, url, crr, null, null);
+    }
+
+    /**
+     * Retrieve the current user (representing the API token).
+     *
+     * @return minimalist details about the current user (API token)
+     * @throws AtlanException on any API communication issue
+     */
+    public static UserMinimalResponse getCurrentUser() throws AtlanException {
+        String url = String.format("%s%s/current", Atlan.getBaseUrl(), endpoint);
+        return ApiResource.request(ApiResource.RequestMethod.GET, url, "", UserMinimalResponse.class, null);
+    }
+
+    /**
+     * Retrieve the sessions for a given user.
+     *
+     * @param id unique identifier (GUID) of the user whose sessions should be retrieved
+     * @return the list of sessions for that user
+     * @throws AtlanException on any API communication issue
+     */
+    public static SessionResponse getSessions(String id) throws AtlanException {
+        String url = String.format("%s%s/%s/sessions", Atlan.getBaseUrl(), endpoint, id);
+        return ApiResource.request(ApiResource.RequestMethod.GET, url, "", SessionResponse.class, null);
+    }
+
     /** Request class for creating a user. */
     @Data
     @SuperBuilder
@@ -157,6 +194,14 @@ public class UsersEndpoint {
     static final class CreateUserRequest extends AtlanObject {
         @Singular
         List<CreateUser> users;
+    }
+
+    /** Request class for changing a user's role. */
+    @Data
+    @SuperBuilder
+    @EqualsAndHashCode(callSuper = false)
+    static final class ChangeRoleRequest extends AtlanObject {
+        String roleId;
     }
 
     @Data

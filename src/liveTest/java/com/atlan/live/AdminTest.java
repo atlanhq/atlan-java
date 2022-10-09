@@ -8,9 +8,7 @@ import com.atlan.api.GroupsEndpoint;
 import com.atlan.api.UsersEndpoint;
 import com.atlan.cache.RoleCache;
 import com.atlan.exception.AtlanException;
-import com.atlan.model.admin.AtlanGroup;
-import com.atlan.model.admin.AtlanUser;
-import com.atlan.model.admin.CreateGroupResponse;
+import com.atlan.model.admin.*;
 import java.util.List;
 import java.util.Map;
 import org.testng.annotations.Test;
@@ -36,6 +34,22 @@ public class AdminTest extends AtlanLiveTest {
         } catch (AtlanException e) {
             e.printStackTrace();
             assertNull(e, "Unexpected exception when retrieving roles.");
+        }
+    }
+
+    @Test(groups = {"read.sessions"})
+    void retrieveSessions() {
+        try {
+            UserMinimalResponse response = UsersEndpoint.getCurrentUser();
+            assertNotNull(response);
+            AtlanUser user = response.toAtlanUser();
+            assertNotNull(user);
+            assertNotNull(user.getId());
+            SessionResponse sessions = user.getSessions();
+            assertNotNull(sessions);
+        } catch (AtlanException e) {
+            e.printStackTrace();
+            assertNull(e, "Unexpected exception when retrieving sessions.");
         }
     }
 
@@ -168,6 +182,14 @@ public class AdminTest extends AtlanLiveTest {
         try {
             AtlanUser user = AtlanUser.updater(userGuid).build();
             user.addToGroups(List.of(groupGuid));
+            user.changeRole(RoleCache.getIdForName("$member"));
+            // TODO: these won't work before we have a verified user
+            /*UpdateUserResponse response = user.activate();
+            assertNotNull(response);
+            assertTrue(response.getEnabled());
+            response = user.deactivate();
+            assertNotNull(response);
+            assertFalse(response.getEnabled());*/
         } catch (AtlanException e) {
             e.printStackTrace();
             assertNull(e, "Unexpected exception when updating users.");
@@ -186,6 +208,8 @@ public class AdminTest extends AtlanLiveTest {
             assertNotNull(one);
             assertEquals(one.getId(), userGuid);
             assertEquals(one.getGroupCount().longValue(), 1L);
+            AtlanUser guest = AtlanUser.retrieveByUsername("guest");
+            assertEquals(guest, one);
         } catch (AtlanException e) {
             e.printStackTrace();
             assertNull(e, "Unexpected exception when retrieving users.");

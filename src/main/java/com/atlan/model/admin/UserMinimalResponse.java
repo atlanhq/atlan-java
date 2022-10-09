@@ -8,13 +8,31 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * Specialized response for updating a user, as the details included are different
- * from those when creating or retrieving a user.
+ * Specialized response for minimalist user details, as returned by some operations.
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class UpdateUserResponse extends ApiResource {
+public class UserMinimalResponse extends ApiResource {
     private static final long serialVersionUID = 2L;
+
+    /**
+     * Convert this minimalist response into an AtlanUser object.
+     *
+     * @return an AtlanUser representation of the same user
+     */
+    public AtlanUser toAtlanUser() {
+        return AtlanUser.builder()
+                .username(username)
+                .id(id)
+                .email(email)
+                .emailVerified(emailVerified)
+                .enabled(enabled)
+                .firstName(firstName)
+                .lastName(lastName)
+                .attributes(attributes)
+                .createdTimestamp(createdTimestamp)
+                .build();
+    }
 
     /** Username of the user within Atlan. */
     String username;

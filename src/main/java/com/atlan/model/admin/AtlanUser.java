@@ -118,7 +118,7 @@ public class AtlanUser extends AtlanObject {
      *
      * @throws AtlanException on any error during API invocation
      */
-    public UpdateUserResponse update() throws AtlanException {
+    public UserMinimalResponse update() throws AtlanException {
         if (this.id == null || this.id.length() == 0) {
             throw new InvalidRequestException(
                     "An id must be provided to update the user.", "id", "ATLAN_JAVA_CLIENT-400-402", 400, null);
@@ -180,12 +180,73 @@ public class AtlanUser extends AtlanObject {
      * @throws AtlanException on any error during API invocation
      */
     public static List<AtlanUser> retrieveByEmail(String email) throws AtlanException {
-        UserResponse response = UsersEndpoint.getUsers("{\"$and\":[{\"email\":{\"$ilike\":\"%" + email + "%\"}}]}");
+        UserResponse response = UsersEndpoint.getUsers("{\"email\":{\"$ilike\":\"%" + email + "%\"}}");
         if (response != null && response.getRecords() != null) {
             return response.getRecords();
         } else {
             return null;
         }
+    }
+
+    /**
+     * Retrieves a user based on the username. (This attemps an exact match on username rather than a
+     * contains search.)
+     *
+     * @param user the username by which to find the user
+     * @return the user with that username
+     * @throws AtlanException on any error during API invocation
+     */
+    public static AtlanUser retrieveByUsername(String user) throws AtlanException {
+        UserResponse response = UsersEndpoint.getUsers("{\"username\":\"" + user + "\"}");
+        if (response != null && response.getRecords() != null) {
+            return response.getRecords().get(0);
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Enable this user to log into Atlan. This will only affect users who are deactivated, and will
+     * allow them to login again once completed.
+     *
+     * @return the result of the update to the user
+     * @throws AtlanException on any error during API invocation
+     */
+    public UserMinimalResponse activate() throws AtlanException {
+        return UsersEndpoint.updateUser(
+                this.id, AtlanUser.builder().enabled(true).build());
+    }
+
+    /**
+     * Prevent this user from logging into Atlan. This will only affect users who are activated, and will
+     * prevent them logging in once completed.
+     *
+     * @return the result of the update to the user
+     * @throws AtlanException on any error during API invocation
+     */
+    public UserMinimalResponse deactivate() throws AtlanException {
+        return UsersEndpoint.updateUser(
+                this.id, AtlanUser.builder().enabled(false).build());
+    }
+
+    /**
+     * Change the role of this user.
+     *
+     * @param roleId unique identifier (GUID) of the role to move the user into
+     * @throws AtlanException on any API communication issue
+     */
+    public void changeRole(String roleId) throws AtlanException {
+        UsersEndpoint.changeRole(this.id, roleId);
+    }
+
+    /**
+     * Retrieve the sessions for this user.
+     *
+     * @return the list of sessions for this user
+     * @throws AtlanException on any API communication issue
+     */
+    public SessionResponse getSessions() throws AtlanException {
+        return UsersEndpoint.getSessions(this.id);
     }
 
     @Getter
