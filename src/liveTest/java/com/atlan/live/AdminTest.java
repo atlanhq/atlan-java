@@ -45,7 +45,7 @@ public class AdminTest extends AtlanLiveTest {
             AtlanUser user = response.toAtlanUser();
             assertNotNull(user);
             assertNotNull(user.getId());
-            SessionResponse sessions = user.getSessions();
+            SessionResponse sessions = user.fetchSessions();
             assertNotNull(sessions);
         } catch (AtlanException e) {
             e.printStackTrace();

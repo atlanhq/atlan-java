@@ -245,7 +245,7 @@ public class AtlanUser extends AtlanObject {
      * @return the list of sessions for this user
      * @throws AtlanException on any API communication issue
      */
-    public SessionResponse getSessions() throws AtlanException {
+    public SessionResponse fetchSessions() throws AtlanException {
         return UsersEndpoint.getSessions(this.id);
     }
 
