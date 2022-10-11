@@ -7,6 +7,7 @@ import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.List;
+import java.util.SortedSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -24,6 +25,11 @@ public class DbtMetric extends Metric {
     @Setter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<Column> dbtMetricFilterColumns;
 
     /** TBC */
     @Attribute

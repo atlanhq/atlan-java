@@ -9,6 +9,7 @@ import co.elastic.clients.json.JsonpMapper;
 import co.elastic.clients.json.jackson.JacksonJsonpMapper;
 import com.atlan.model.core.Classification;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
@@ -52,7 +53,9 @@ public class Serde {
     }
 
     private static ObjectMapper createMapper() {
-        ObjectMapper om = new ObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_EMPTY);
+        ObjectMapper om = new ObjectMapper()
+                .setSerializationInclusion(JsonInclude.Include.NON_EMPTY)
+                .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         for (Module m : modules) {
             om.registerModule(m);
         }

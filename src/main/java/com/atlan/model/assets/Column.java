@@ -127,6 +127,11 @@ public class Column extends SQL {
     @Singular
     SortedSet<Metric> metricTimestamps;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<DbtMetric> dbtMetrics;
+
     /** View in which this column exists, or null if the column exists in a table or materialized view. */
     @Attribute
     View view;

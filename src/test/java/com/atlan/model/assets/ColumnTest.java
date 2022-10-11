@@ -157,6 +157,9 @@ public class ColumnTest {
             .metricTimestamps(Set.of(
                     DbtMetric.refByGuid("4855f267-bc65-467e-b7a8-62cb54fa1a10"),
                     DbtMetric.refByGuid("d4683d16-b53a-44e7-86e3-3d26badcf4b7")))
+            .dbtMetrics(Set.of(
+                    DbtMetric.refByGuid("4d17bc7b-dad5-4c3e-8895-f5981d3ef81f"),
+                    DbtMetric.refByGuid("e108cade-398d-4d49-a34e-baea44cbbe6d")))
             .view(View.refByGuid("3932639b-588b-406b-8b1f-0973fd93d8b4"))
             .tablePartition(TablePartition.refByGuid("93a45ab9-874f-4825-ab4c-d60b33c79f0f"))
             .dataQualityMetricDimensions(Set.of(
