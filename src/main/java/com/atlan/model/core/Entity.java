@@ -98,7 +98,7 @@ public abstract class Entity extends Reference {
     /** Unique identifiers (GUIDs) for any background tasks that are yet to operate on this asset. */
     final Set<String> pendingTasks;
 
-    /** Remove the certificate from the asset, if any is set on the asset. */
+    /** Remove all custom metadata from the asset, if any is set on the asset. */
     public void removeCustomMetadata() {
         // It is sufficient to simply exclude businessAttributes from a request in order
         // for them to be removed, as long as the "replaceBusinessAttributes" flag is set

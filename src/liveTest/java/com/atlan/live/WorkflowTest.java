@@ -7,8 +7,8 @@ import static org.testng.Assert.assertNull;
 
 import com.atlan.api.WorkflowsEndpoint;
 import com.atlan.exception.AtlanException;
-import com.atlan.model.admin.*;
 import com.atlan.model.enums.AtlanWorkflowPhase;
+import com.atlan.model.packages.ConnectionDelete;
 import com.atlan.model.workflow.Workflow;
 import com.atlan.model.workflow.WorkflowResponse;
 import com.atlan.model.workflow.WorkflowSearchRequest;
@@ -33,7 +33,7 @@ public class WorkflowTest extends AtlanLiveTest {
             alwaysRun = true)
     void purgeConnectionS3() {
         try {
-            Workflow deleteWorkflow = Packages.getConnectionDelete(S3AssetTest.connectionQame, true);
+            Workflow deleteWorkflow = ConnectionDelete.creator(S3AssetTest.connectionQame, true);
             WorkflowResponse response = deleteWorkflow.run();
             assertNotNull(response);
             workflowNameS3 = response.getMetadata().getName();
@@ -63,7 +63,7 @@ public class WorkflowTest extends AtlanLiveTest {
             alwaysRun = true)
     void purgeConnectionData() {
         try {
-            Workflow deleteWorkflow = Packages.getConnectionDelete(DataAssetTest.connectionQame, true);
+            Workflow deleteWorkflow = ConnectionDelete.creator(DataAssetTest.connectionQame, true);
             WorkflowResponse response = deleteWorkflow.run();
             assertNotNull(response);
             workflowNameData = response.getMetadata().getName();
@@ -93,7 +93,7 @@ public class WorkflowTest extends AtlanLiveTest {
             alwaysRun = true)
     void purgeConnectionPreset() {
         try {
-            Workflow deleteWorkflow = Packages.getConnectionDelete(PresetAssetTest.connectionQame, true);
+            Workflow deleteWorkflow = ConnectionDelete.creator(PresetAssetTest.connectionQame, true);
             WorkflowResponse response = deleteWorkflow.run();
             assertNotNull(response);
             workflowNamePreset = response.getMetadata().getName();
@@ -123,7 +123,7 @@ public class WorkflowTest extends AtlanLiveTest {
             alwaysRun = true)
     void purgeConnectionGDS() {
         try {
-            Workflow deleteWorkflow = Packages.getConnectionDelete(DataStudioAssetTest.connectionQame, true);
+            Workflow deleteWorkflow = ConnectionDelete.creator(DataStudioAssetTest.connectionQame, true);
             WorkflowResponse response = deleteWorkflow.run();
             assertNotNull(response);
             workflowNameDataStudio = response.getMetadata().getName();

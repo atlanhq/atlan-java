@@ -12,6 +12,7 @@ import com.atlan.model.core.Entity;
 import com.atlan.model.core.EntityMutationResponse;
 import com.atlan.model.enums.*;
 import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.testng.annotations.Test;
@@ -109,6 +110,23 @@ public class DataAssetTest extends AtlanLiveTest {
                 assertNull(e, "Unexpected exception while trying to read-back the created connection.");
             }
         } while (full == null);
+    }
+
+    @Test(
+            groups = {"search.connection.data"},
+            dependsOnGroups = {"read.connection.data"})
+    void findConnection() {
+        try {
+            List<Connection> results = Connection.findByName(CONNECTION_NAME, AtlanConnectorType.DYNAMODB, null);
+            assertNotNull(results);
+            assertEquals(results.size(), 1);
+            Connection one = results.get(0);
+            assertEquals(one.getGuid(), connectionGuid);
+            assertEquals(one.getQualifiedName(), connectionQame);
+        } catch (AtlanException e) {
+            e.printStackTrace();
+            assertNull(e, "Unexpected exception while trying to find the created connection by its name.");
+        }
     }
 
     @Test(

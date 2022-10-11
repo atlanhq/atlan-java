@@ -2,16 +2,24 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
+import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
+import co.elastic.clients.elasticsearch._types.query_dsl.Query;
+import co.elastic.clients.elasticsearch._types.query_dsl.TermQuery;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.InvalidRequestException;
+import com.atlan.exception.NotFoundException;
+import com.atlan.model.core.Entity;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.enums.AtlanConnectionCategory;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.relations.UniqueAttributes;
-import java.util.List;
-import java.util.Map;
-import java.util.SortedSet;
+import com.atlan.model.search.IndexSearchDSL;
+import com.atlan.model.search.IndexSearchRequest;
+import com.atlan.model.search.IndexSearchResponse;
+import com.atlan.util.QueryFactory;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -213,6 +221,66 @@ public class Connection extends Asset {
     @Override
     protected ConnectionBuilder<?, ?> trimToRequired() {
         return updater(this.getQualifiedName(), this.getName());
+    }
+
+    /**
+     * Retrieve the epoch component of the connection name from its qualifiedName.
+     *
+     * @param qualifiedName of the connection
+     * @return the epoch component of the qualifiedName
+     */
+    @JsonIgnore
+    public static String getEpochFromQualifiedName(String qualifiedName) {
+        return qualifiedName.substring(qualifiedName.lastIndexOf("/") + 1);
+    }
+
+    /**
+     * Find a connection by its human-readable name and type.
+     *
+     * @param name of the connection
+     * @param type of the connection
+     * @param attributes an optional collection of attributes to retrieve for the connection
+     * @return all connections with that name and type, if found
+     * @throws AtlanException on any API problems, or if the connection does not exist
+     */
+    public static List<Connection> findByName(String name, AtlanConnectorType type, Collection<String> attributes)
+            throws AtlanException {
+        Query byType = QueryFactory.withType(TYPE_NAME);
+        Query byName = QueryFactory.withExactName(name);
+        Query active = QueryFactory.active();
+        Query byConnectorType = TermQuery.of(t -> t.field("connectorName").value(type.getValue()))
+                ._toQuery();
+        Query filter = BoolQuery.of(b -> b.filter(byType, byName, active, byConnectorType))
+                ._toQuery();
+        IndexSearchRequest.IndexSearchRequestBuilder<?, ?> builder = IndexSearchRequest.builder()
+                .dsl(IndexSearchDSL.builder().query(filter).build());
+        if (attributes != null && !attributes.isEmpty()) {
+            builder.attributes(attributes);
+        }
+        IndexSearchRequest request = builder.build();
+        IndexSearchResponse response = request.search();
+        List<Connection> connections = new ArrayList<>();
+        if (response != null) {
+            List<Entity> results = response.getEntities();
+            while (results != null) {
+                for (Entity result : results) {
+                    if (result instanceof Connection) {
+                        connections.add((Connection) result);
+                    }
+                }
+                response = response.getNextPage();
+                results = response.getEntities();
+            }
+        }
+        if (connections.isEmpty()) {
+            throw new NotFoundException(
+                    "Unable to find a connection with the name '" + name + "' of type: " + type.getValue(),
+                    "ATLAN-JAVA-CLIENT-404-095",
+                    404,
+                    null);
+        } else {
+            return connections;
+        }
     }
 
     /**

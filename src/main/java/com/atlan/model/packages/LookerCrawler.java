@@ -1,0 +1,239 @@
+/* SPDX-License-Identifier: Apache-2.0 */
+/* Copyright 2022 Atlan Pte. Ltd. */
+package com.atlan.model.packages;
+
+import com.atlan.cache.RoleCache;
+import com.atlan.exception.AtlanException;
+import com.atlan.exception.InvalidRequestException;
+import com.atlan.model.admin.PackageParameter;
+import com.atlan.model.assets.Connection;
+import com.atlan.model.enums.AtlanConnectorType;
+import com.atlan.model.workflow.*;
+import com.atlan.serde.Serde;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class LookerCrawler extends AbstractCrawler {
+
+    /**
+     * Builds the minimal object necessary to create a new crawler for Looker,
+     * using basic authentication, with the default settings.
+     *
+     * @param connectionName name of the connection to create
+     * @param hostname of the Looker instance
+     * @param clientId through which to access Looker
+     * @param clientSecret through which to access Looker
+     * @return the minimal workflow necessary to crawl Looker
+     * @throws AtlanException if there is any issue obtaining the admin role GUID
+     */
+    public static Workflow directResourceOwner(
+            String connectionName, String hostname, String clientId, String clientSecret) throws AtlanException {
+        return directResourceOwner(
+                connectionName,
+                hostname,
+                443,
+                clientId,
+                clientSecret,
+                null,
+                null,
+                List.of(RoleCache.getIdForName("$admin")),
+                null,
+                null,
+                null,
+                null,
+                null,
+                null);
+    }
+
+    /**
+     * Builds the minimal object necessary to create a new crawler for Looker.
+     *
+     * @param connectionName name of the connection to create
+     * @param hostname of the Looker instance
+     * @param port on which the Looker instance is running
+     * @param clientId through which to access Looker
+     * @param clientSecret through which to access Looker
+     * @param privateKey the SSH private key to use to connect to Git for field-level lineage (or null, to skip field-level lineage)
+     * @param privateKeyPassphrase the passphrase for the SSH private key
+     * @param adminRoles the GUIDs of the roles that can administer this connection
+     * @param adminGroups the names of the groups that can administer this connection
+     * @param adminUsers the names of the users that can administer this connection
+     * @param includeFolders the numeric IDs of folders to include when crawling (when null: all)
+     * @param includeProjects the names of projects to include when crawling (when null: all)
+     * @param excludeFolders the numeric IDs of folders to exclude when crawling (when null: none)
+     * @param excludeProjects the names of projects to exclude when crawling (when null: none)
+     * @return the minimal workflow necessary to crawl Looker
+     * @throws InvalidRequestException if there is no administrator specified for the connection, or the provided filters cannot be serialized to JSON
+     */
+    public static Workflow directResourceOwner(
+            String connectionName,
+            String hostname,
+            int port,
+            String clientId,
+            String clientSecret,
+            String privateKey,
+            String privateKeyPassphrase,
+            List<String> adminRoles,
+            List<String> adminGroups,
+            List<String> adminUsers,
+            List<String> includeFolders,
+            List<String> includeProjects,
+            List<String> excludeFolders,
+            List<String> excludeProjects)
+            throws InvalidRequestException {
+
+        boolean fieldLevelLineage = privateKey != null && !privateKey.equals("");
+
+        Connection connection = Connection.creator(
+                        connectionName, AtlanConnectorType.LOOKER, adminRoles, adminGroups, adminUsers)
+                .allowQuery(true)
+                .allowQueryPreview(true)
+                .rowLimit(10000L)
+                .defaultCredentialGuid("{{credentialGuid}}")
+                .sourceLogo("https://www.pngrepo.com/png/354012/512/looker-icon.png")
+                .isDiscoverable(true)
+                .isEditable(false)
+                .build();
+
+        String epoch = Connection.getEpochFromQualifiedName(connection.getQualifiedName());
+
+        Map<String, String> extraMap = new HashMap<>();
+        if (fieldLevelLineage) {
+            extraMap.put("ssh_private_key", privateKey);
+            extraMap.put("passphrase", privateKeyPassphrase);
+        }
+
+        Map<String, Object> credentialBody = new HashMap<>();
+        credentialBody.put("name", "default-looker-" + epoch + "-0");
+        credentialBody.put("host", hostname);
+        credentialBody.put("port", port);
+        credentialBody.put("authType", "resource_owner");
+        credentialBody.put("username", clientId);
+        credentialBody.put("password", clientSecret);
+        credentialBody.put("extra", extraMap);
+        credentialBody.put("connectorConfigName", "atlan-connectors-looker");
+
+        Map<String, Map<String, String>> toIncludeFolders = buildFlatFilter(includeFolders);
+        Map<String, Map<String, String>> toExcludeFolders = buildFlatFilter(excludeFolders);
+        Map<String, Map<String, String>> toIncludeProjects = buildFlatFilter(includeProjects);
+        Map<String, Map<String, String>> toExcludeProjects = buildFlatFilter(excludeProjects);
+
+        WorkflowTaskArguments.WorkflowTaskArgumentsBuilder<?, ?> argsBuilder;
+        try {
+            argsBuilder = WorkflowTaskArguments.builder()
+                    .parameter(NameValuePair.builder()
+                            .name("credential-guid")
+                            .value("{{credentialGuid}}")
+                            .build())
+                    .parameter(NameValuePair.builder()
+                            .name("connection")
+                            .value(connection.toJson())
+                            .build())
+                    .parameter(NameValuePair.builder()
+                            .name("include-folders")
+                            .value(Serde.allInclusiveMapper.writeValueAsString(toIncludeFolders))
+                            .build())
+                    .parameter(NameValuePair.builder()
+                            .name("exclude-folders")
+                            .value(Serde.allInclusiveMapper.writeValueAsString(toExcludeFolders))
+                            .build())
+                    .parameter(NameValuePair.builder()
+                            .name("include-projects")
+                            .value(Serde.allInclusiveMapper.writeValueAsString(toIncludeProjects))
+                            .build())
+                    .parameter(NameValuePair.builder()
+                            .name("exclude-projects")
+                            .value(Serde.allInclusiveMapper.writeValueAsString(toExcludeProjects))
+                            .build())
+                    .parameter(NameValuePair.builder()
+                            .name("use-field-level-lineage")
+                            .value("" + fieldLevelLineage)
+                            .build())
+                    .parameter(NameValuePair.builder()
+                            .name("extraction-method")
+                            .value("direct")
+                            .build());
+        } catch (JsonProcessingException e) {
+            throw new InvalidRequestException(
+                    "Unable to translate the provided include/exclude asset filters into JSON.",
+                    "includeAssets/excludeAssets",
+                    "ATLAN_JAVA_CLIENT-400-600",
+                    400,
+                    e);
+        }
+
+        String atlanName = "atlan-looker-default-looker-" + epoch;
+        String runName = "atlan-looker-" + epoch;
+        return Workflow.builder()
+                .metadata(WorkflowMetadata.builder()
+                        .label("orchestration.atlan.com/certified", "true")
+                        .label("orchestration.atlan.com/source", "looker")
+                        .label("orchestration.atlan.com/sourceCategory", "bi")
+                        .label("orchestration.atlan.com/type", "connector")
+                        .label("orchestration.atlan.com/verified", "true")
+                        .label("package.argoproj.io/installer", "argopm")
+                        .label("package.argoproj.io/name", "a-t-ratlans-l-a-s-hlooker")
+                        .label("package.argoproj.io/registry", "httpsc-o-l-o-ns-l-a-s-hs-l-a-s-hpackages.atlan.com")
+                        .label("orchestration.atlan.com/default-looker-" + epoch, "true")
+                        .label("orchestration.atlan.com/atlan-ui", "true")
+                        .annotation("orchestration.atlan.com/allowSchedule", "true")
+                        .annotation("orchestration.atlan.com/dependentPackage", "")
+                        .annotation(
+                                "orchestration.atlan.com/docsUrl",
+                                "https://ask.atlan.com/hc/en-us/articles/6330214610193")
+                        .annotation("orchestration.atlan.com/emoji", "\uD83D\uDE80")
+                        .annotation(
+                                "orchestration.atlan.com/icon",
+                                "https://www.pngrepo.com/png/354012/512/looker-icon.png")
+                        .annotation(
+                                "orchestration.atlan.com/logo", "https://looker.com/assets/img/images/logos/looker.svg")
+                        .annotation(
+                                "orchestration.atlan.com/marketplaceLink",
+                                "https://packages.atlan.com/-/web/detail/@atlan/looker")
+                        .annotation("orchestration.atlan.com/name", "Looker Assets")
+                        .annotation("package.argoproj.io/author", "Atlan")
+                        .annotation(
+                                "package.argoproj.io/description",
+                                "Package to crawl Looker assets and publish to Atlan for discovery")
+                        .annotation(
+                                "package.argoproj.io/homepage", "https://packages.atlan.com/-/web/detail/@atlan/looker")
+                        .annotation(
+                                "package.argoproj.io/keywords",
+                                "[\"looker\",\"bi\",\"connector\",\"crawler\",\"lookml\"]")
+                        .annotation("package.argoproj.io/name", "@atlan/looker")
+                        .annotation("package.argoproj.io/registry", "https://packages.atlan.com")
+                        .annotation(
+                                "package.argoproj.io/repository",
+                                "git+https://github.com/atlanhq/marketplace-packages.git")
+                        .annotation("package.argoproj.io/support", "support@atlan.com")
+                        .annotation("orchestration.atlan.com/atlanName", atlanName)
+                        .name(runName)
+                        .namespace("default")
+                        .build())
+                .spec(WorkflowSpec.builder()
+                        .templates(List.of(WorkflowTemplate.builder()
+                                .name("main")
+                                .dag(WorkflowDAG.builder()
+                                        .task(WorkflowTask.builder()
+                                                .name("run")
+                                                .arguments(argsBuilder.build())
+                                                .templateRef(WorkflowTemplateRef.builder()
+                                                        .name("atlan-looker")
+                                                        .template("main")
+                                                        .clusterScope(true)
+                                                        .build())
+                                                .build())
+                                        .build())
+                                .build()))
+                        .entrypoint("main")
+                        .build())
+                .payload(List.of(PackageParameter.builder()
+                        .parameter("credentialGuid")
+                        .type("credential")
+                        .body(credentialBody)
+                        .build()))
+                .build();
+    }
+}

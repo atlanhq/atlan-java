@@ -1,26 +1,37 @@
 /* SPDX-License-Identifier: Apache-2.0 */
 /* Copyright 2022 Atlan Pte. Ltd. */
-package com.atlan.model.assets;
+package com.atlan.model.admin;
 
 import static org.testng.Assert.*;
 
-import com.atlan.model.admin.AtlanRole;
 import com.atlan.serde.Serde;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import java.util.List;
 import org.testng.annotations.Test;
 
-public class AtlanRoleTest {
+public class AtlanGroupTest {
 
-    private static final AtlanRole full = AtlanRole.builder()
+    private static final AtlanGroup full = AtlanGroup.builder()
+            .alias("alias")
+            .attributes(AtlanGroup.GroupAttributes.builder()
+                    .alias(List.of("alias"))
+                    .createdAt(List.of("123456789"))
+                    .createdBy(List.of("createdBy"))
+                    .updatedAt(List.of("123456789"))
+                    .updatedBy(List.of("createdBy"))
+                    .description(List.of("description"))
+                    .isDefault(List.of("false"))
+                    .build())
+            // .decentralizedRoles()
             .id("id")
-            .description("description")
             .name("name")
-            .clientRole(false)
-            .level("level")
-            .memberCount("memberCount")
+            .path("path")
+            // .persona()
+            // .purpose()
+            .userCount(123L)
             .build();
 
-    private static AtlanRole frodo;
+    private static AtlanGroup frodo;
     private static String serialized;
 
     @Test(groups = {"serialize"})
@@ -35,7 +46,7 @@ public class AtlanRoleTest {
             dependsOnGroups = {"serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
-        frodo = Serde.mapper.readValue(serialized, AtlanRole.class);
+        frodo = Serde.mapper.readValue(serialized, AtlanGroup.class);
         assertNotNull(frodo);
     }
 
