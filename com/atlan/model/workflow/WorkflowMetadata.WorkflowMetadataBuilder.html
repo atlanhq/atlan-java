@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":6,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":6,"i11":10,"i12":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":6,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":6,"i15":10,"i16":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -189,60 +189,82 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="WorkflowMetadata.WorkflowMetadataBuilder.html" title="type parameter in WorkflowMetadata.WorkflowMetadataBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#annotations(java.util.Map)">annotations</a></span>&#8203;(java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;annotations)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#annotation(java.lang.String,java.lang.String)">annotation</a></span>&#8203;(java.lang.String&nbsp;annotationKey,
+          java.lang.String&nbsp;annotationValue)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
+<td class="colFirst"><code><a href="WorkflowMetadata.WorkflowMetadataBuilder.html" title="type parameter in WorkflowMetadata.WorkflowMetadataBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#annotations(java.util.Map)">annotations</a></span>&#8203;(java.util.Map&lt;? extends java.lang.String,&#8203;? extends java.lang.String&gt;&nbsp;annotations)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>abstract <a href="WorkflowMetadata.WorkflowMetadataBuilder.html" title="type parameter in WorkflowMetadata.WorkflowMetadataBuilder">C</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#build()">build</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i3" class="rowColor">
-<td class="colFirst"><code><a href="WorkflowMetadata.WorkflowMetadataBuilder.html" title="type parameter in WorkflowMetadata.WorkflowMetadataBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#creationTimestamp(java.lang.String)">creationTimestamp</a></span>&#8203;(java.lang.String&nbsp;creationTimestamp)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="WorkflowMetadata.WorkflowMetadataBuilder.html" title="type parameter in WorkflowMetadata.WorkflowMetadataBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#generation(java.lang.Long)">generation</a></span>&#8203;(java.lang.Long&nbsp;generation)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearAnnotations()">clearAnnotations</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="WorkflowMetadata.WorkflowMetadataBuilder.html" title="type parameter in WorkflowMetadata.WorkflowMetadataBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#labels(java.util.Map)">labels</a></span>&#8203;(java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;labels)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearLabels()">clearLabels</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code><a href="WorkflowMetadata.WorkflowMetadataBuilder.html" title="type parameter in WorkflowMetadata.WorkflowMetadataBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#managedFields(java.util.List)">managedFields</a></span>&#8203;(java.util.List&lt;java.lang.Object&gt;&nbsp;managedFields)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#creationTimestamp(java.lang.String)">creationTimestamp</a></span>&#8203;(java.lang.String&nbsp;creationTimestamp)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="WorkflowMetadata.WorkflowMetadataBuilder.html" title="type parameter in WorkflowMetadata.WorkflowMetadataBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#name(java.lang.String)">name</a></span>&#8203;(java.lang.String&nbsp;name)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#generation(java.lang.Long)">generation</a></span>&#8203;(java.lang.Long&nbsp;generation)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code><a href="WorkflowMetadata.WorkflowMetadataBuilder.html" title="type parameter in WorkflowMetadata.WorkflowMetadataBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#namespace(java.lang.String)">namespace</a></span>&#8203;(java.lang.String&nbsp;namespace)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#label(java.lang.String,java.lang.String)">label</a></span>&#8203;(java.lang.String&nbsp;labelKey,
+     java.lang.String&nbsp;labelValue)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code><a href="WorkflowMetadata.WorkflowMetadataBuilder.html" title="type parameter in WorkflowMetadata.WorkflowMetadataBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#resourceVersion(java.lang.String)">resourceVersion</a></span>&#8203;(java.lang.String&nbsp;resourceVersion)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#labels(java.util.Map)">labels</a></span>&#8203;(java.util.Map&lt;? extends java.lang.String,&#8203;? extends java.lang.String&gt;&nbsp;labels)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i10" class="altColor">
+<td class="colFirst"><code><a href="WorkflowMetadata.WorkflowMetadataBuilder.html" title="type parameter in WorkflowMetadata.WorkflowMetadataBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#managedFields(java.util.List)">managedFields</a></span>&#8203;(java.util.List&lt;java.lang.Object&gt;&nbsp;managedFields)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i11" class="rowColor">
+<td class="colFirst"><code><a href="WorkflowMetadata.WorkflowMetadataBuilder.html" title="type parameter in WorkflowMetadata.WorkflowMetadataBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#name(java.lang.String)">name</a></span>&#8203;(java.lang.String&nbsp;name)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i12" class="altColor">
+<td class="colFirst"><code><a href="WorkflowMetadata.WorkflowMetadataBuilder.html" title="type parameter in WorkflowMetadata.WorkflowMetadataBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#namespace(java.lang.String)">namespace</a></span>&#8203;(java.lang.String&nbsp;namespace)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i13" class="rowColor">
+<td class="colFirst"><code><a href="WorkflowMetadata.WorkflowMetadataBuilder.html" title="type parameter in WorkflowMetadata.WorkflowMetadataBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#resourceVersion(java.lang.String)">resourceVersion</a></span>&#8203;(java.lang.String&nbsp;resourceVersion)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>protected abstract <a href="WorkflowMetadata.WorkflowMetadataBuilder.html" title="type parameter in WorkflowMetadata.WorkflowMetadataBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#self()">self</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code><a href="WorkflowMetadata.WorkflowMetadataBuilder.html" title="type parameter in WorkflowMetadata.WorkflowMetadataBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#uid(java.lang.String)">uid</a></span>&#8203;(java.lang.String&nbsp;uid)</code></th>
 <td class="colLast">&nbsp;</td>
@@ -331,17 +353,42 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 </dl>
 </li>
 </ul>
+<a id="label(java.lang.String,java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>label</h4>
+<pre class="methodSignature">public&nbsp;<a href="WorkflowMetadata.WorkflowMetadataBuilder.html" title="type parameter in WorkflowMetadata.WorkflowMetadataBuilder">B</a>&nbsp;label&#8203;(java.lang.String&nbsp;labelKey,
+               java.lang.String&nbsp;labelValue)</pre>
+</li>
+</ul>
 <a id="labels(java.util.Map)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>labels</h4>
-<pre class="methodSignature">public&nbsp;<a href="WorkflowMetadata.WorkflowMetadataBuilder.html" title="type parameter in WorkflowMetadata.WorkflowMetadataBuilder">B</a>&nbsp;labels&#8203;(java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;labels)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
+<pre class="methodSignature">public&nbsp;<a href="WorkflowMetadata.WorkflowMetadataBuilder.html" title="type parameter in WorkflowMetadata.WorkflowMetadataBuilder">B</a>&nbsp;labels&#8203;(java.util.Map&lt;? extends java.lang.String,&#8203;? extends java.lang.String&gt;&nbsp;labels)</pre>
+</li>
+</ul>
+<a id="clearLabels()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>clearLabels</h4>
+<pre class="methodSignature">public&nbsp;<a href="WorkflowMetadata.WorkflowMetadataBuilder.html" title="type parameter in WorkflowMetadata.WorkflowMetadataBuilder">B</a>&nbsp;clearLabels()</pre>
+</li>
+</ul>
+<a id="annotation(java.lang.String,java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>annotation</h4>
+<pre class="methodSignature">public&nbsp;<a href="WorkflowMetadata.WorkflowMetadataBuilder.html" title="type parameter in WorkflowMetadata.WorkflowMetadataBuilder">B</a>&nbsp;annotation&#8203;(java.lang.String&nbsp;annotationKey,
+                    java.lang.String&nbsp;annotationValue)</pre>
 </li>
 </ul>
 <a id="annotations(java.util.Map)">
@@ -350,11 +397,16 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <ul class="blockList">
 <li class="blockList">
 <h4>annotations</h4>
-<pre class="methodSignature">public&nbsp;<a href="WorkflowMetadata.WorkflowMetadataBuilder.html" title="type parameter in WorkflowMetadata.WorkflowMetadataBuilder">B</a>&nbsp;annotations&#8203;(java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;annotations)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
+<pre class="methodSignature">public&nbsp;<a href="WorkflowMetadata.WorkflowMetadataBuilder.html" title="type parameter in WorkflowMetadata.WorkflowMetadataBuilder">B</a>&nbsp;annotations&#8203;(java.util.Map&lt;? extends java.lang.String,&#8203;? extends java.lang.String&gt;&nbsp;annotations)</pre>
+</li>
+</ul>
+<a id="clearAnnotations()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>clearAnnotations</h4>
+<pre class="methodSignature">public&nbsp;<a href="WorkflowMetadata.WorkflowMetadataBuilder.html" title="type parameter in WorkflowMetadata.WorkflowMetadataBuilder">B</a>&nbsp;clearAnnotations()</pre>
 </li>
 </ul>
 <a id="name(java.lang.String)">

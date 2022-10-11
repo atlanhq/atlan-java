@@ -7,6 +7,7 @@ com.atlan.model.assets
 com.atlan.model.core
 com.atlan.model.enums
 com.atlan.model.lineage
+com.atlan.model.packages
 com.atlan.model.relations
 com.atlan.model.search
 com.atlan.model.typedefs
