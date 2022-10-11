@@ -8,6 +8,7 @@ import java.util.Map;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.Singular;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 
@@ -16,10 +17,14 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@SuppressWarnings("cast")
 public class WorkflowMetadata extends AtlanObject {
     private static final long serialVersionUID = 2L;
 
+    @Singular
     Map<String, String> labels;
+
+    @Singular
     Map<String, String> annotations;
 
     String name;

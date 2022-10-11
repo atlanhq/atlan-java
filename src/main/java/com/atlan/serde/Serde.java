@@ -25,6 +25,10 @@ public class Serde {
     /** Singular ObjectMapper through which to do Jackson-based (de-)serialization. */
     public static final ObjectMapper mapper = createMapper();
 
+    /** Singular ObjectMapper through which to (de-)serialize native POJOs, including all details. */
+    public static final ObjectMapper allInclusiveMapper =
+            new ObjectMapper().setSerializationInclusion(JsonInclude.Include.ALWAYS);
+
     /** JSONP mapper through which to do Jackson-based (de-)serialization of Elastic objects. */
     static final JsonpMapper jsonpMapper = new JacksonJsonpMapper();
 
