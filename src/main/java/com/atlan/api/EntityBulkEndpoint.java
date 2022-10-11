@@ -54,8 +54,8 @@ public class EntityBulkEndpoint {
                 "%s%s",
                 Atlan.getBaseUrl(),
                 String.format(
-                        "%s?replaceClassifications=%s&replaceBusinessAttributes=%s",
-                        endpoint, replaceClassifications, replaceCustomMetadata));
+                        "%s?replaceClassifications=%s&replaceBusinessAttributes=%s&overwriteBusinessAttributes=%s",
+                        endpoint, replaceClassifications, replaceCustomMetadata, replaceCustomMetadata));
         BulkEntityRequest beq = BulkEntityRequest.builder().entities(values).build();
         return ApiResource.request(ApiResource.RequestMethod.POST, url, beq, EntityMutationResponse.class, null);
     }
