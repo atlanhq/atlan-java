@@ -123,6 +123,9 @@ public class DbtMetricTest {
                     Column.refByGuid("3f1e0e65-2db9-43d6-84de-420af153e0d2"),
                     Column.refByGuid("4e78d9fa-2fcb-42e4-9cde-59b52283958c")))
             .metricTimestampColumn(Column.refByGuid("0caa99e0-448f-4950-a845-de2a11512396"))
+            .dbtMetricFilterColumns(Set.of(
+                    Column.refByGuid("23667e86-6216-460c-87e9-4a20d203caa3"),
+                    Column.refByGuid("0ffb0172-bd1a-4f2a-aa2e-662d09ee1993")))
             .dbtModel(DbtModel.refByGuid("e8e6ec00-4aee-4203-a7c3-a732361f3163"))
             .build();
     private static DbtMetric frodo;
