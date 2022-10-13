@@ -54,14 +54,17 @@ public class Persona extends AtlanObject {
     @Builder.Default
     String personaType = "persona";
 
-    @JsonIgnore // TODO
-    String metadataPolicies;
+    /** Set of metadata policies defined for this persona. */
+    @Singular
+    SortedSet<PersonaMetadataPolicy> metadataPolicies;
 
-    @JsonIgnore // TODO
-    String dataPolicies;
+    /** Set of data policies defined for this persona. */
+    @Singular
+    SortedSet<PersonaDataPolicy> dataPolicies;
 
-    @JsonIgnore // TODO
-    String glossaryPolicies;
+    /** Set of glossary policies defined for this persona. */
+    @Singular
+    SortedSet<GlossaryPolicy> glossaryPolicies;
 
     /** Whether this persona is currently active (true) or deactivated (false). */
     Boolean enabled;
@@ -138,6 +141,25 @@ public class Persona extends AtlanObject {
                     "An id must be provided to update the persona.", "id", "ATLAN_JAVA_CLIENT-400-501", 400, null);
         }
         PersonasEndpoint.updatePersona(this.id, this);
+    }
+
+    /**
+     * Add the provided policy to this persona in Atlan.
+     *
+     * @param policy to add
+     * @return the policy that was added
+     * @throws AtlanException on any error during API invocation
+     */
+    public AbstractPolicy addPolicy(AbstractPolicy policy) throws AtlanException {
+        if (this.id == null || this.id.length() == 0) {
+            throw new InvalidRequestException(
+                    "An id must be provided to add policies to the persona.",
+                    "id",
+                    "ATLAN_JAVA_CLIENT-400-502",
+                    400,
+                    null);
+        }
+        return PersonasEndpoint.addPolicyToPersona(this.id, policy);
     }
 
     /**

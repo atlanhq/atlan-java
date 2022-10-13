@@ -17,6 +17,8 @@ import java.util.Map;
 
 public class LookerCrawler extends AbstractCrawler {
 
+    public static final String PREFIX = "atlan-looker";
+
     /**
      * Builds the minimal object necessary to create a new crawler for Looker,
      * using basic authentication, with the default settings.
@@ -164,8 +166,8 @@ public class LookerCrawler extends AbstractCrawler {
                     e);
         }
 
-        String atlanName = "atlan-looker-default-looker-" + epoch;
-        String runName = "atlan-looker-" + epoch;
+        String atlanName = PREFIX + "-default-looker-" + epoch;
+        String runName = PREFIX + "-" + epoch;
         return Workflow.builder()
                 .metadata(WorkflowMetadata.builder()
                         .label("orchestration.atlan.com/certified", "true")
@@ -220,7 +222,7 @@ public class LookerCrawler extends AbstractCrawler {
                                                 .name("run")
                                                 .arguments(argsBuilder.build())
                                                 .templateRef(WorkflowTemplateRef.builder()
-                                                        .name("atlan-looker")
+                                                        .name(PREFIX)
                                                         .template("main")
                                                         .clusterScope(true)
                                                         .build())

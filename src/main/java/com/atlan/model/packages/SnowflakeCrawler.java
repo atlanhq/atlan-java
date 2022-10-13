@@ -17,6 +17,8 @@ import java.util.Map;
 
 public class SnowflakeCrawler extends AbstractCrawler {
 
+    public static final String PREFIX = "atlan-snowflake";
+
     /**
      * Builds the minimal object necessary to create a new crawler for Snowflake,
      * using basic authentication, with the default settings.
@@ -171,8 +173,8 @@ public class SnowflakeCrawler extends AbstractCrawler {
                     e);
         }
 
-        String atlanName = "atlan-snowflake-default-snowflake-" + epoch;
-        String runName = "atlan-snowflake-" + epoch;
+        String atlanName = PREFIX + "-default-snowflake-" + epoch;
+        String runName = PREFIX + "-" + epoch;
         return Workflow.builder()
                 .metadata(WorkflowMetadata.builder()
                         .label("orchestration.atlan.com/certified", "true")
@@ -230,7 +232,7 @@ public class SnowflakeCrawler extends AbstractCrawler {
                                                 .name("run")
                                                 .arguments(argsBuilder.build())
                                                 .templateRef(WorkflowTemplateRef.builder()
-                                                        .name("atlan-snowflake")
+                                                        .name(PREFIX)
                                                         .template("main")
                                                         .clusterScope(true)
                                                         .build())

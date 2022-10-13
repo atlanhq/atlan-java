@@ -5,6 +5,9 @@ package com.atlan.model.admin;
 import static org.testng.Assert.*;
 
 import com.atlan.model.enums.AssetSidebarTab;
+import com.atlan.model.enums.DataPolicyAction;
+import com.atlan.model.enums.GlossaryPolicyAction;
+import com.atlan.model.enums.PersonaMetadataPolicyAction;
 import com.atlan.serde.Serde;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.Set;
@@ -22,9 +25,32 @@ public class PersonaTest {
             .group("group2")
             .user("user1")
             .user("user2")
-            // .metadataPolicies()
-            // .dataPolicies()
-            // .glossaryPolicies()
+            .metadataPolicy(PersonaMetadataPolicy.builder()
+                    .name("name")
+                    .description("description")
+                    .allow(true)
+                    .actions(Set.of(PersonaMetadataPolicyAction.values()))
+                    .connectionId("connectionId")
+                    .asset("asset1")
+                    .asset("asset2")
+                    .build())
+            .dataPolicy(PersonaDataPolicy.builder()
+                    .name("name")
+                    .description("description")
+                    .allow(true)
+                    .actions(Set.of(DataPolicyAction.values()))
+                    .connectionId("connectionId")
+                    .asset("asset1")
+                    .asset("asset2")
+                    .build())
+            .glossaryPolicy(GlossaryPolicy.builder()
+                    .name("name")
+                    .description("description")
+                    .allow(true)
+                    .actions(Set.of(GlossaryPolicyAction.values()))
+                    .glossaryQualifiedName("glossary1")
+                    .glossaryQualifiedName("glossary2")
+                    .build())
             .enabled(true)
             .createdAt(123456789L)
             .createdBy("createdBy")
