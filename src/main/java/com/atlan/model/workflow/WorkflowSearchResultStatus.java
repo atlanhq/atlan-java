@@ -6,6 +6,8 @@ import com.atlan.model.core.AtlanObject;
 import com.atlan.model.enums.AtlanWorkflowPhase;
 import java.util.List;
 import java.util.Map;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -13,6 +15,18 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 public class WorkflowSearchResultStatus extends AtlanObject {
     private static final long serialVersionUID = 2L;
+
+    @JsonIgnore
+    Object artifactRepositoryRef;
+
+    @JsonIgnore
+    Object nodes;
+
+    @JsonIgnore
+    Object storedTemplates;
+
+    @JsonIgnore
+    Object storedWorkflowTemplateSpec;
 
     AtlanWorkflowPhase phase;
     String startedAt;

@@ -266,6 +266,9 @@ public class AtlanUser extends AtlanObject {
         /** Unique Slack member identifier. */
         List<String> slack;
 
+        /** Unique JIRA user identifier. */
+        List<String> jira;
+
         /** Time at which the user was invited (as a formatted string). */
         List<String> invitedAt;
 
