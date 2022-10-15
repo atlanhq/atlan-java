@@ -16,8 +16,9 @@ import com.atlan.net.ApiResource;
 public class WorkflowsEndpoint {
 
     private static final String workflows_endpoint = "/api/service/workflows";
+    private static final String workflows_search_endpoint = workflows_endpoint + "/indexsearch";
     private static final String runs_endpoint = "/api/service/runs";
-    private static final String search_endpoint = runs_endpoint + "/indexsearch";
+    private static final String runs_search_endpoint = runs_endpoint + "/indexsearch";
 
     /**
      * Run the provided workflow.
@@ -44,6 +45,18 @@ public class WorkflowsEndpoint {
     }
 
     /**
+     * Search for workflow runs that meet the provided criteria.
+     *
+     * @param request criteria by which to find workflow runs
+     * @return the matching workflow runs
+     * @throws AtlanException on any API communication issue
+     */
+    public static WorkflowSearchResponse searchRuns(WorkflowSearchRequest request) throws AtlanException {
+        String url = String.format("%s%s", Atlan.getBaseUrl(), runs_search_endpoint);
+        return ApiResource.request(ApiResource.RequestMethod.POST, url, request, WorkflowSearchResponse.class, null);
+    }
+
+    /**
      * Search for workflows that meet the provided criteria.
      *
      * @param request criteria by which to find workflows
@@ -51,7 +64,7 @@ public class WorkflowsEndpoint {
      * @throws AtlanException on any API communication issue
      */
     public static WorkflowSearchResponse search(WorkflowSearchRequest request) throws AtlanException {
-        String url = String.format("%s%s", Atlan.getBaseUrl(), search_endpoint);
+        String url = String.format("%s%s", Atlan.getBaseUrl(), workflows_search_endpoint);
         return ApiResource.request(ApiResource.RequestMethod.POST, url, request, WorkflowSearchResponse.class, null);
     }
 }

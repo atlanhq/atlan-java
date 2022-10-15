@@ -16,6 +16,8 @@ import java.util.Map;
 
 public class FivetranCrawler extends AbstractCrawler {
 
+    public static final String PREFIX = "atlan-fivetran";
+
     /**
      * Builds the minimal object necessary to create a new crawler for Fivetran,
      * using basic authentication, with the default settings.
@@ -65,7 +67,7 @@ public class FivetranCrawler extends AbstractCrawler {
         String epoch = Connection.getEpochFromQualifiedName(connection.getQualifiedName());
 
         Map<String, Object> credentialBody = new HashMap<>();
-        credentialBody.put("name", "atlan-fivetran-" + epoch + "-0");
+        credentialBody.put("name", PREFIX + "-" + epoch + "-0");
         credentialBody.put("host", "https://api.fivetran.com");
         credentialBody.put("port", 443);
         credentialBody.put("authType", "api");
@@ -84,7 +86,7 @@ public class FivetranCrawler extends AbstractCrawler {
         .value(connection.toJson())
         .build());*/
 
-        String runName = "atlan-fivetran-" + epoch;
+        String runName = PREFIX + "-" + epoch;
         return Workflow.builder()
                 .metadata(WorkflowMetadata.builder()
                         .label("orchestration.atlan.com/certified", "true")
@@ -140,7 +142,7 @@ public class FivetranCrawler extends AbstractCrawler {
                                                 .name("run")
                                                 .arguments(argsBuilder.build())
                                                 .templateRef(WorkflowTemplateRef.builder()
-                                                        .name("atlan-fivetran")
+                                                        .name(PREFIX)
                                                         .template("main")
                                                         .clusterScope(true)
                                                         .build())

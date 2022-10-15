@@ -3,6 +3,7 @@
 package com.atlan.model.admin;
 
 import com.atlan.model.core.AtlanObject;
+import java.util.Comparator;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,7 +13,15 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
-public abstract class AbstractPolicy extends AtlanObject {
+public abstract class AbstractPolicy extends AtlanObject implements Comparable<AbstractPolicy> {
+
+    // Sort policies in a set based first on their name (mandatory and required to be unique)
+    private static final Comparator<String> stringComparator = Comparator.nullsFirst(String::compareTo);
+    private static final Comparator<AbstractPolicy> policyComparator =
+            Comparator.comparing(AbstractPolicy::getName, stringComparator);
+
+    /** Unique identifier (GUID) of the policy. */
+    final String id;
 
     /** Name of the policy. */
     String name;
@@ -22,4 +31,18 @@ public abstract class AbstractPolicy extends AtlanObject {
 
     /** Whether the actions are granted (true) or explicitly denied (false). */
     Boolean allow;
+
+    /** Time (epoch) at which this policy was created, in milliseconds. */
+    final Long createdAt;
+
+    /** Username of the user who created this policy. */
+    final String createdBy;
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int compareTo(AbstractPolicy o) {
+        return policyComparator.compare(this, o);
+    }
 }

@@ -17,6 +17,8 @@ import java.util.Map;
 
 public class PostgreSQLCrawler extends AbstractCrawler {
 
+    public static final String PREFIX = "atlan-postgres";
+
     /**
      * Builds the minimal object necessary to create a new crawler for PostgreSQL,
      * using basic authentication, with the default settings.
@@ -156,8 +158,8 @@ public class PostgreSQLCrawler extends AbstractCrawler {
                         .value("direct")
                         .build());
 
-        String atlanName = "atlan-postgres-default-postgres-" + epoch;
-        String runName = "atlan-postgres-" + epoch;
+        String atlanName = PREFIX + "-default-postgres-" + epoch;
+        String runName = PREFIX + "-" + epoch;
         return Workflow.builder()
                 .metadata(WorkflowMetadata.builder()
                         .label("orchestration.atlan.com/certified", "true")
@@ -212,7 +214,7 @@ public class PostgreSQLCrawler extends AbstractCrawler {
                                                 .name("run")
                                                 .arguments(argsBuilder.build())
                                                 .templateRef(WorkflowTemplateRef.builder()
-                                                        .name("atlan-postgres")
+                                                        .name(PREFIX)
                                                         .template("main")
                                                         .clusterScope(true)
                                                         .build())

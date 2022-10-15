@@ -17,14 +17,8 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
-public class PurposeDataPolicy extends AbstractPolicy {
+public class PurposeDataPolicy extends AbstractPurposePolicy {
     private static final long serialVersionUID = 2L;
-
-    /** All groups' names to whom the policy will apply. */
-    SortedSet<String> groups;
-
-    /** All users' names to whom the policy will apply. */
-    SortedSet<String> users;
 
     /** All the actions included in the policy. */
     SortedSet<DataPolicyAction> actions;

@@ -7,6 +7,8 @@ import java.util.List;
 
 public class ConnectionDelete {
 
+    public static final String PREFIX = "atlan-connection-delete";
+
     /**
      * Builds the minimal object necessary to create a new column delete workflow.
      *
@@ -15,7 +17,7 @@ public class ConnectionDelete {
      * @return the minimal workflow necessary to do the deletion
      */
     public static Workflow creator(String qualifiedName, boolean purge) {
-        String runName = "atlan-connection-delete-" + (System.currentTimeMillis() / 1000);
+        String runName = PREFIX + "-" + (System.currentTimeMillis() / 1000);
         return Workflow.builder()
                 .metadata(WorkflowMetadata.builder()
                         .label("orchestration.atlan.com/certified", "true")

@@ -35,7 +35,9 @@ public enum AtlanConnectorType implements AtlanEnum {
     DBT("dbt", AtlanConnectionCategory.ENRICHER),
     VERTICA("vertica", AtlanConnectionCategory.WAREHOUSE),
     PRESET("preset", AtlanConnectionCategory.BI),
-    DYNAMODB("dynamodb", AtlanConnectionCategory.WAREHOUSE);
+    DYNAMODB("dynamodb", AtlanConnectionCategory.WAREHOUSE),
+    API("api", AtlanConnectionCategory.API),
+    GCS("gcs", AtlanConnectionCategory.OBJECT_STORE);
 
     @JsonValue
     @Getter(onMethod_ = {@Override})
