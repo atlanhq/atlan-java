@@ -6,13 +6,7 @@ import com.atlan.exception.AtlanException;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.enums.AtlanConnectorType;
-import com.atlan.model.enums.GoogleDataStudioAssetType;
-import com.atlan.model.enums.LinkIconType;
-import com.atlan.model.enums.PowerBIEndorsementType;
 import com.atlan.model.relations.UniqueAttributes;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import java.util.Map;
 import java.util.List;
 import java.util.SortedSet;
 import lombok.*;
@@ -91,6 +85,21 @@ public class APISpec extends API {
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
+    }
+
+    /**
+     * Builds the minimal object necessary to create an API spec.
+     *
+     * @param name of the API spec
+     * @param connectionQualifiedName unique name of the connection through which the spec is accessible
+     * @return the minimal object necessary to create the API spec, as a builder
+     */
+    public static APISpecBuilder<?, ?> creator(String name, String connectionQualifiedName) {
+        return APISpec.builder()
+                .qualifiedName(connectionQualifiedName + "/" + name)
+                .name(name)
+                .connectionQualifiedName(connectionQualifiedName)
+                .connectorType(AtlanConnectorType.API);
     }
 
     /**
@@ -234,5 +243,4 @@ public class APISpec extends API {
     public static APISpec removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
         return (APISpec) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
-
 }

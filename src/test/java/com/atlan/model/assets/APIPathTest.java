@@ -5,9 +5,9 @@ package com.atlan.model.assets;
 import static org.testng.Assert.*;
 
 import com.atlan.model.enums.*;
-import java.util.*;
 import com.atlan.serde.Serde;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import java.util.*;
 import org.testng.annotations.Test;
 
 public class APIPathTest {
@@ -106,8 +106,12 @@ public class APIPathTest {
             .readme(Readme.refByGuid("readmeGuid"))
             .meaning(GlossaryTerm.refByGuid("termGuid1"))
             .meaning(GlossaryTerm.refByGuid("termGuid2"))
-            .inputToProcesses(Set.of(LineageProcess.refByGuid("58a6e5b9-5fe8-47af-af92-88a59eb3b492"), LineageProcess.refByGuid("2dbec5e6-3970-4588-91a3-b0f7a8472f56")))
-            .outputFromProcesses(Set.of(LineageProcess.refByGuid("3ee64b06-6059-4f9f-bc6c-4839cb6a88d3"), LineageProcess.refByGuid("60360424-9d47-4b7d-9723-9965aee79663")))
+            .inputToProcesses(Set.of(
+                    LineageProcess.refByGuid("58a6e5b9-5fe8-47af-af92-88a59eb3b492"),
+                    LineageProcess.refByGuid("2dbec5e6-3970-4588-91a3-b0f7a8472f56")))
+            .outputFromProcesses(Set.of(
+                    LineageProcess.refByGuid("3ee64b06-6059-4f9f-bc6c-4839cb6a88d3"),
+                    LineageProcess.refByGuid("60360424-9d47-4b7d-9723-9965aee79663")))
             .apiSpecType("apiSpecType")
             .apiSpecVersion("apiSpecVersion")
             .apiSpecName("apiSpecName")
@@ -166,5 +170,4 @@ public class APIPathTest {
         assertNotNull(frodo);
         assertEquals(frodo, full, "Deserialization is not equivalent after serde loop,");
     }
-
 }

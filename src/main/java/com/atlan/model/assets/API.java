@@ -2,19 +2,8 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
-import com.atlan.exception.AtlanException;
-import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.AtlanCertificateStatus;
-import com.atlan.model.enums.AtlanConnectorType;
-import com.atlan.model.enums.GoogleDataStudioAssetType;
-import com.atlan.model.enums.LinkIconType;
-import com.atlan.model.enums.PowerBIEndorsementType;
-import com.atlan.model.relations.UniqueAttributes;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Map;
-import java.util.List;
-import java.util.SortedSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -55,5 +44,4 @@ public abstract class API extends Catalog {
     /** TBC */
     @Attribute
     Boolean apiIsAuthOptional;
-
 }

@@ -6,14 +6,10 @@ import com.atlan.exception.AtlanException;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.enums.AtlanConnectorType;
-import com.atlan.model.enums.GoogleDataStudioAssetType;
-import com.atlan.model.enums.LinkIconType;
-import com.atlan.model.enums.PowerBIEndorsementType;
 import com.atlan.model.relations.UniqueAttributes;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import java.util.Map;
+import com.atlan.util.StringUtils;
 import java.util.List;
+import java.util.Map;
 import java.util.SortedSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -85,6 +81,25 @@ public class APIPath extends API {
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
+    }
+
+    /**
+     * Builds the minimal object necessary to create an API path.
+     *
+     * @param pathURI unique URI of the API path
+     * @param apiSpecQualifiedName unique name of the API spec through which the path is accessible
+     * @return the minimal object necessary to create the API path, as a builder
+     */
+    public static APIPathBuilder<?, ?> creator(String pathURI, String apiSpecQualifiedName) {
+        String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(apiSpecQualifiedName);
+        String normalizedURI = pathURI.startsWith("/") ? pathURI : "/" + pathURI;
+        return APIPath.builder()
+                .qualifiedName(apiSpecQualifiedName + normalizedURI)
+                .name(normalizedURI)
+                .apiPathRawURI(normalizedURI)
+                .apiSpec(APISpec.refByQualifiedName(apiSpecQualifiedName))
+                .connectionQualifiedName(connectionQualifiedName)
+                .connectorType(AtlanConnectorType.API);
     }
 
     /**
@@ -228,5 +243,4 @@ public class APIPath extends API {
     public static APIPath removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
         return (APIPath) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
-
 }

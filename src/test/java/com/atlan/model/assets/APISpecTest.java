@@ -5,9 +5,9 @@ package com.atlan.model.assets;
 import static org.testng.Assert.*;
 
 import com.atlan.model.enums.*;
-import java.util.*;
 import com.atlan.serde.Serde;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import java.util.*;
 import org.testng.annotations.Test;
 
 public class APISpecTest {
@@ -106,8 +106,12 @@ public class APISpecTest {
             .readme(Readme.refByGuid("readmeGuid"))
             .meaning(GlossaryTerm.refByGuid("termGuid1"))
             .meaning(GlossaryTerm.refByGuid("termGuid2"))
-            .inputToProcesses(Set.of(LineageProcess.refByGuid("ab22c0e0-c8f3-4751-9893-b74d514fd587"), LineageProcess.refByGuid("d40cdbd4-8a17-4875-8381-80d13c876295")))
-            .outputFromProcesses(Set.of(LineageProcess.refByGuid("b7321fbc-1a29-4e26-8b5f-35709e8bf2af"), LineageProcess.refByGuid("be591976-12d9-4b7b-9103-2c0230709348")))
+            .inputToProcesses(Set.of(
+                    LineageProcess.refByGuid("ab22c0e0-c8f3-4751-9893-b74d514fd587"),
+                    LineageProcess.refByGuid("d40cdbd4-8a17-4875-8381-80d13c876295")))
+            .outputFromProcesses(Set.of(
+                    LineageProcess.refByGuid("b7321fbc-1a29-4e26-8b5f-35709e8bf2af"),
+                    LineageProcess.refByGuid("be591976-12d9-4b7b-9103-2c0230709348")))
             .apiSpecType("apiSpecType")
             .apiSpecVersion("apiSpecVersion")
             .apiSpecName("apiSpecName")
@@ -122,7 +126,9 @@ public class APISpecTest {
             .apiSpecLicenseURL("apiSpecLicenseURL")
             .apiSpecContractVersion("apiSpecContractVersion")
             .apiSpecServiceAlias("apiSpecServiceAlias")
-            .apiPaths(Set.of(APIPath.refByGuid("1345ffd4-d637-45be-afc6-135a825534f0"), APIPath.refByGuid("77e6fa05-6ab2-49f5-ae3c-7f6c47d84de5")))
+            .apiPaths(Set.of(
+                    APIPath.refByGuid("1345ffd4-d637-45be-afc6-135a825534f0"),
+                    APIPath.refByGuid("77e6fa05-6ab2-49f5-ae3c-7f6c47d84de5")))
             .build();
     private static APISpec frodo;
     private static String serialized;
@@ -168,5 +174,4 @@ public class APISpecTest {
         assertNotNull(frodo);
         assertEquals(frodo, full, "Deserialization is not equivalent after serde loop,");
     }
-
 }

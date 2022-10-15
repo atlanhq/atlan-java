@@ -26,6 +26,7 @@ public class WorkflowTest extends AtlanLiveTest {
     private static String workflowNameData = null;
     private static String workflowNamePreset = null;
     private static String workflowNameDataStudio = null;
+    private static String workflowNameAPI = null;
 
     @Test(
             groups = {"purge.connection.s3"},
@@ -145,6 +146,36 @@ public class WorkflowTest extends AtlanLiveTest {
             dependsOnGroups = {"workflow.status.gds"})
     void archiveWorkflowRunGDS() {
         archiveWorkflowRun(workflowNameDataStudio);
+    }
+
+    @Test(
+            groups = {"purge.connection.api"},
+            dependsOnGroups = {"purge.lineage"},
+            alwaysRun = true)
+    void purgeConnectionAPI() {
+        try {
+            Workflow deleteWorkflow = ConnectionDelete.creator(APIAssetTest.connectionQame, true);
+            WorkflowResponse response = deleteWorkflow.run();
+            assertNotNull(response);
+            workflowNameAPI = response.getMetadata().getName();
+        } catch (AtlanException e) {
+            e.printStackTrace();
+            assertNull(e, "Unexpected exception while trying to delete the API connection.");
+        }
+    }
+
+    @Test(
+            groups = {"workflow.status.api"},
+            dependsOnGroups = {"purge.connection.api"})
+    void monitorStatusAPI() {
+        monitorStatus(workflowNameAPI);
+    }
+
+    @Test(
+            groups = {"workflow.archive.api"},
+            dependsOnGroups = {"workflow.status.api"})
+    void archiveWorkflowRunAPI() {
+        archiveWorkflowRun(workflowNameAPI);
     }
 
     private void monitorStatus(String workflowName) {
