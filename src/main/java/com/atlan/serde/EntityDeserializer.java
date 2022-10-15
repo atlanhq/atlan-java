@@ -75,8 +75,17 @@ public class EntityDeserializer extends StdDeserializer<Entity> {
             builder = IndistinctAsset.builder();
         } else {
             switch (typeName) {
+                case APIPath.TYPE_NAME:
+                    builder = APIPath.builder();
+                    break;
+                case APISpec.TYPE_NAME:
+                    builder = APISpec.builder();
+                    break;
                 case AtlanCollection.TYPE_NAME:
                     builder = AtlanCollection.builder();
+                    break;
+                case AtlanQuery.TYPE_NAME:
+                    builder = AtlanQuery.builder();
                     break;
                 case BIProcess.TYPE_NAME:
                     builder = BIProcess.builder();
@@ -239,9 +248,6 @@ public class EntityDeserializer extends StdDeserializer<Entity> {
                     break;
                 case Procedure.TYPE_NAME:
                     builder = Procedure.builder();
-                    break;
-                case AtlanQuery.TYPE_NAME:
-                    builder = AtlanQuery.builder();
                     break;
                 case Readme.TYPE_NAME:
                     builder = Readme.builder();

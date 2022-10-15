@@ -15,6 +15,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @JsonSubTypes({
+    @JsonSubTypes.Type(value = API.class, name = API.TYPE_NAME),
     @JsonSubTypes.Type(value = DataQuality.class, name = DataQuality.TYPE_NAME),
     @JsonSubTypes.Type(value = Dbt.class, name = Dbt.TYPE_NAME),
     @JsonSubTypes.Type(value = Resource.class, name = Resource.TYPE_NAME),
