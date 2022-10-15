@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9};
+var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -175,34 +175,42 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
+<td class="colFirst"><code>static <a href="../model/admin/AbstractPolicy.html" title="class in com.atlan.model.admin">AbstractPolicy</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addPolicyToPersona(java.lang.String,com.atlan.model.admin.AbstractPolicy)">addPolicyToPersona</a></span>&#8203;(java.lang.String&nbsp;id,
+                  <a href="../model/admin/AbstractPolicy.html" title="class in com.atlan.model.admin">AbstractPolicy</a>&nbsp;policy)</code></th>
+<td class="colLast">
+<div class="block">Add the provided policy to the persona with the specified ID.</div>
+</td>
+</tr>
+<tr id="i1" class="rowColor">
 <td class="colFirst"><code>static <a href="../model/admin/Persona.html" title="class in com.atlan.model.admin">Persona</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createPersona(com.atlan.model.admin.Persona)">createPersona</a></span>&#8203;(<a href="../model/admin/Persona.html" title="class in com.atlan.model.admin">Persona</a>&nbsp;persona)</code></th>
 <td class="colLast">
 <div class="block">Create a new persona.</div>
 </td>
 </tr>
-<tr id="i1" class="rowColor">
+<tr id="i2" class="altColor">
 <td class="colFirst"><code>static void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#deletePersona(java.lang.String)">deletePersona</a></span>&#8203;(java.lang.String&nbsp;id)</code></th>
 <td class="colLast">
 <div class="block">Delete a persona.</div>
 </td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>static <a href="../model/admin/PersonaResponse.html" title="class in com.atlan.model.admin">PersonaResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAllPersonas()">getAllPersonas</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Retrieve all personas defined in Atlan.</div>
 </td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>static <a href="../model/admin/PersonaResponse.html" title="class in com.atlan.model.admin">PersonaResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPersonas(java.lang.String)">getPersonas</a></span>&#8203;(java.lang.String&nbsp;filter)</code></th>
 <td class="colLast">
 <div class="block">Retrieves a list of the personas defined in Atlan.</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>static <a href="../model/admin/PersonaResponse.html" title="class in com.atlan.model.admin">PersonaResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPersonas(java.lang.String,java.lang.String,boolean,int,int)">getPersonas</a></span>&#8203;(java.lang.String&nbsp;filter,
            java.lang.String&nbsp;sort,
@@ -213,7 +221,7 @@ extends java.lang.Object</pre>
 <div class="block">Retrieves a list of the personas defined in Atlan.</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>static void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updatePersona(java.lang.String,com.atlan.model.admin.Persona)">updatePersona</a></span>&#8203;(java.lang.String&nbsp;id,
              <a href="../model/admin/Persona.html" title="class in com.atlan.model.admin">Persona</a>&nbsp;persona)</code></th>
@@ -368,7 +376,7 @@ extends java.lang.Object</pre>
 <a id="deletePersona(java.lang.String)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>deletePersona</h4>
 <pre class="methodSignature">public static&nbsp;void&nbsp;deletePersona&#8203;(java.lang.String&nbsp;id)
@@ -377,6 +385,27 @@ extends java.lang.Object</pre>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>id</code> - unique identifier (GUID) of the persona to delete</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication issue</dd>
+</dl>
+</li>
+</ul>
+<a id="addPolicyToPersona(java.lang.String,com.atlan.model.admin.AbstractPolicy)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>addPolicyToPersona</h4>
+<pre class="methodSignature">public static&nbsp;<a href="../model/admin/AbstractPolicy.html" title="class in com.atlan.model.admin">AbstractPolicy</a>&nbsp;addPolicyToPersona&#8203;(java.lang.String&nbsp;id,
+                                                <a href="../model/admin/AbstractPolicy.html" title="class in com.atlan.model.admin">AbstractPolicy</a>&nbsp;policy)
+                                         throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Add the provided policy to the persona with the specified ID.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>id</code> - unique identifier (GUID) of the persona to add the policy to</dd>
+<dd><code>policy</code> - the policy to add to the persona</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the policy that was added</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication issue</dd>
 </dl>

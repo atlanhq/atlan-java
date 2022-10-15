@@ -128,7 +128,12 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li><a href="AbstractPolicy.AbstractPolicyBuilder.html" title="class in com.atlan.model.admin">com.atlan.model.admin.AbstractPolicy.AbstractPolicyBuilder</a>&lt;C,&#8203;B&gt;</li>
 <li>
 <ul class="inheritance">
+<li><a href="AbstractPersonaPolicy.AbstractPersonaPolicyBuilder.html" title="class in com.atlan.model.admin">com.atlan.model.admin.AbstractPersonaPolicy.AbstractPersonaPolicyBuilder</a>&lt;C,&#8203;B&gt;</li>
+<li>
+<ul class="inheritance">
 <li>com.atlan.model.admin.PersonaMetadataPolicy.PersonaMetadataPolicyBuilder&lt;C,&#8203;B&gt;</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -145,7 +150,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dl>
 <hr>
 <pre>public abstract static class <span class="typeNameLabel">PersonaMetadataPolicy.PersonaMetadataPolicyBuilder&lt;C extends <a href="PersonaMetadataPolicy.html" title="class in com.atlan.model.admin">PersonaMetadataPolicy</a>,&#8203;B extends PersonaMetadataPolicy.PersonaMetadataPolicyBuilder&lt;C,&#8203;B&gt;&gt;</span>
-extends <a href="AbstractPolicy.AbstractPolicyBuilder.html" title="class in com.atlan.model.admin">AbstractPolicy.AbstractPolicyBuilder</a>&lt;C,&#8203;B&gt;</pre>
+extends <a href="AbstractPersonaPolicy.AbstractPersonaPolicyBuilder.html" title="class in com.atlan.model.admin">AbstractPersonaPolicy.AbstractPersonaPolicyBuilder</a>&lt;C,&#8203;B&gt;</pre>
 </li>
 </ul>
 </div>
@@ -194,12 +199,12 @@ extends <a href="AbstractPolicy.AbstractPolicyBuilder.html" title="class in com.
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="PersonaMetadataPolicy.PersonaMetadataPolicyBuilder.html" title="type parameter in PersonaMetadataPolicy.PersonaMetadataPolicyBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#actions(java.util.SortedSet)">actions</a></span>&#8203;(java.util.SortedSet&lt;<a href="../enums/PersonaMetadataPolicyAction.html" title="enum in com.atlan.model.enums">PersonaMetadataPolicyAction</a>&gt;&nbsp;actions)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#action(com.atlan.model.enums.PersonaMetadataPolicyAction)">action</a></span>&#8203;(<a href="../enums/PersonaMetadataPolicyAction.html" title="enum in com.atlan.model.enums">PersonaMetadataPolicyAction</a>&nbsp;action)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="PersonaMetadataPolicy.PersonaMetadataPolicyBuilder.html" title="type parameter in PersonaMetadataPolicy.PersonaMetadataPolicyBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#assets(java.util.SortedSet)">assets</a></span>&#8203;(java.util.SortedSet&lt;java.lang.String&gt;&nbsp;assets)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#actions(java.util.Collection)">actions</a></span>&#8203;(java.util.Collection&lt;? extends <a href="../enums/PersonaMetadataPolicyAction.html" title="enum in com.atlan.model.enums">PersonaMetadataPolicyAction</a>&gt;&nbsp;actions)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
@@ -209,7 +214,7 @@ extends <a href="AbstractPolicy.AbstractPolicyBuilder.html" title="class in com.
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="PersonaMetadataPolicy.PersonaMetadataPolicyBuilder.html" title="type parameter in PersonaMetadataPolicy.PersonaMetadataPolicyBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#connectionId(java.lang.String)">connectionId</a></span>&#8203;(java.lang.String&nbsp;connectionId)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearActions()">clearActions</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
@@ -224,11 +229,18 @@ extends <a href="AbstractPolicy.AbstractPolicyBuilder.html" title="class in com.
 </tr>
 </table>
 <ul class="blockList">
+<li class="blockList"><a id="methods.inherited.from.class.com.atlan.model.admin.AbstractPersonaPolicy.AbstractPersonaPolicyBuilder">
+<!--   -->
+</a>
+<h3>Methods inherited from class&nbsp;com.atlan.model.admin.<a href="AbstractPersonaPolicy.AbstractPersonaPolicyBuilder.html" title="class in com.atlan.model.admin">AbstractPersonaPolicy.AbstractPersonaPolicyBuilder</a></h3>
+<code><a href="AbstractPersonaPolicy.AbstractPersonaPolicyBuilder.html#asset(java.lang.String)">asset</a>, <a href="AbstractPersonaPolicy.AbstractPersonaPolicyBuilder.html#assets(java.util.Collection)">assets</a>, <a href="AbstractPersonaPolicy.AbstractPersonaPolicyBuilder.html#clearAssets()">clearAssets</a>, <a href="AbstractPersonaPolicy.AbstractPersonaPolicyBuilder.html#connectionId(java.lang.String)">connectionId</a></code></li>
+</ul>
+<ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.com.atlan.model.admin.AbstractPolicy.AbstractPolicyBuilder">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;com.atlan.model.admin.<a href="AbstractPolicy.AbstractPolicyBuilder.html" title="class in com.atlan.model.admin">AbstractPolicy.AbstractPolicyBuilder</a></h3>
-<code><a href="AbstractPolicy.AbstractPolicyBuilder.html#allow(java.lang.Boolean)">allow</a>, <a href="AbstractPolicy.AbstractPolicyBuilder.html#description(java.lang.String)">description</a>, <a href="AbstractPolicy.AbstractPolicyBuilder.html#name(java.lang.String)">name</a></code></li>
+<code><a href="AbstractPolicy.AbstractPolicyBuilder.html#allow(java.lang.Boolean)">allow</a>, <a href="AbstractPolicy.AbstractPolicyBuilder.html#createdAt(java.lang.Long)">createdAt</a>, <a href="AbstractPolicy.AbstractPolicyBuilder.html#createdBy(java.lang.String)">createdBy</a>, <a href="AbstractPolicy.AbstractPolicyBuilder.html#description(java.lang.String)">description</a>, <a href="AbstractPolicy.AbstractPolicyBuilder.html#id(java.lang.String)">id</a>, <a href="AbstractPolicy.AbstractPolicyBuilder.html#name(java.lang.String)">name</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
@@ -283,7 +295,7 @@ extends <a href="AbstractPolicy.AbstractPolicyBuilder.html" title="class in com.
 <pre class="methodSignature">protected&nbsp;<a href="PersonaMetadataPolicy.PersonaMetadataPolicyBuilder.html" title="type parameter in PersonaMetadataPolicy.PersonaMetadataPolicyBuilder">B</a>&nbsp;$fillValuesFrom&#8203;(<a href="PersonaMetadataPolicy.PersonaMetadataPolicyBuilder.html" title="type parameter in PersonaMetadataPolicy.PersonaMetadataPolicyBuilder">C</a>&nbsp;instance)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="AbstractPolicy.AbstractPolicyBuilder.html#$fillValuesFrom(C)">$fillValuesFrom</a></code>&nbsp;in class&nbsp;<code><a href="AbstractPolicy.AbstractPolicyBuilder.html" title="class in com.atlan.model.admin">AbstractPolicy.AbstractPolicyBuilder</a>&lt;<a href="PersonaMetadataPolicy.PersonaMetadataPolicyBuilder.html" title="type parameter in PersonaMetadataPolicy.PersonaMetadataPolicyBuilder">C</a> extends <a href="PersonaMetadataPolicy.html" title="class in com.atlan.model.admin">PersonaMetadataPolicy</a>,&#8203;<a href="PersonaMetadataPolicy.PersonaMetadataPolicyBuilder.html" title="type parameter in PersonaMetadataPolicy.PersonaMetadataPolicyBuilder">B</a> extends <a href="PersonaMetadataPolicy.PersonaMetadataPolicyBuilder.html" title="class in com.atlan.model.admin">PersonaMetadataPolicy.PersonaMetadataPolicyBuilder</a>&lt;<a href="PersonaMetadataPolicy.PersonaMetadataPolicyBuilder.html" title="type parameter in PersonaMetadataPolicy.PersonaMetadataPolicyBuilder">C</a>,&#8203;<a href="PersonaMetadataPolicy.PersonaMetadataPolicyBuilder.html" title="type parameter in PersonaMetadataPolicy.PersonaMetadataPolicyBuilder">B</a>&gt;&gt;</code></dd>
+<dd><code><a href="AbstractPersonaPolicy.AbstractPersonaPolicyBuilder.html#$fillValuesFrom(C)">$fillValuesFrom</a></code>&nbsp;in class&nbsp;<code><a href="AbstractPersonaPolicy.AbstractPersonaPolicyBuilder.html" title="class in com.atlan.model.admin">AbstractPersonaPolicy.AbstractPersonaPolicyBuilder</a>&lt;<a href="PersonaMetadataPolicy.PersonaMetadataPolicyBuilder.html" title="type parameter in PersonaMetadataPolicy.PersonaMetadataPolicyBuilder">C</a> extends <a href="PersonaMetadataPolicy.html" title="class in com.atlan.model.admin">PersonaMetadataPolicy</a>,&#8203;<a href="PersonaMetadataPolicy.PersonaMetadataPolicyBuilder.html" title="type parameter in PersonaMetadataPolicy.PersonaMetadataPolicyBuilder">B</a> extends <a href="PersonaMetadataPolicy.PersonaMetadataPolicyBuilder.html" title="class in com.atlan.model.admin">PersonaMetadataPolicy.PersonaMetadataPolicyBuilder</a>&lt;<a href="PersonaMetadataPolicy.PersonaMetadataPolicyBuilder.html" title="type parameter in PersonaMetadataPolicy.PersonaMetadataPolicyBuilder">C</a>,&#8203;<a href="PersonaMetadataPolicy.PersonaMetadataPolicyBuilder.html" title="type parameter in PersonaMetadataPolicy.PersonaMetadataPolicyBuilder">B</a>&gt;&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -296,7 +308,7 @@ extends <a href="AbstractPolicy.AbstractPolicyBuilder.html" title="class in com.
 <pre class="methodSignature">protected abstract&nbsp;<a href="PersonaMetadataPolicy.PersonaMetadataPolicyBuilder.html" title="type parameter in PersonaMetadataPolicy.PersonaMetadataPolicyBuilder">B</a>&nbsp;self()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="AbstractPolicy.AbstractPolicyBuilder.html#self()">self</a></code>&nbsp;in class&nbsp;<code><a href="AbstractPolicy.AbstractPolicyBuilder.html" title="class in com.atlan.model.admin">AbstractPolicy.AbstractPolicyBuilder</a>&lt;<a href="PersonaMetadataPolicy.PersonaMetadataPolicyBuilder.html" title="type parameter in PersonaMetadataPolicy.PersonaMetadataPolicyBuilder">C</a> extends <a href="PersonaMetadataPolicy.html" title="class in com.atlan.model.admin">PersonaMetadataPolicy</a>,&#8203;<a href="PersonaMetadataPolicy.PersonaMetadataPolicyBuilder.html" title="type parameter in PersonaMetadataPolicy.PersonaMetadataPolicyBuilder">B</a> extends <a href="PersonaMetadataPolicy.PersonaMetadataPolicyBuilder.html" title="class in com.atlan.model.admin">PersonaMetadataPolicy.PersonaMetadataPolicyBuilder</a>&lt;<a href="PersonaMetadataPolicy.PersonaMetadataPolicyBuilder.html" title="type parameter in PersonaMetadataPolicy.PersonaMetadataPolicyBuilder">C</a>,&#8203;<a href="PersonaMetadataPolicy.PersonaMetadataPolicyBuilder.html" title="type parameter in PersonaMetadataPolicy.PersonaMetadataPolicyBuilder">B</a>&gt;&gt;</code></dd>
+<dd><code><a href="AbstractPersonaPolicy.AbstractPersonaPolicyBuilder.html#self()">self</a></code>&nbsp;in class&nbsp;<code><a href="AbstractPersonaPolicy.AbstractPersonaPolicyBuilder.html" title="class in com.atlan.model.admin">AbstractPersonaPolicy.AbstractPersonaPolicyBuilder</a>&lt;<a href="PersonaMetadataPolicy.PersonaMetadataPolicyBuilder.html" title="type parameter in PersonaMetadataPolicy.PersonaMetadataPolicyBuilder">C</a> extends <a href="PersonaMetadataPolicy.html" title="class in com.atlan.model.admin">PersonaMetadataPolicy</a>,&#8203;<a href="PersonaMetadataPolicy.PersonaMetadataPolicyBuilder.html" title="type parameter in PersonaMetadataPolicy.PersonaMetadataPolicyBuilder">B</a> extends <a href="PersonaMetadataPolicy.PersonaMetadataPolicyBuilder.html" title="class in com.atlan.model.admin">PersonaMetadataPolicy.PersonaMetadataPolicyBuilder</a>&lt;<a href="PersonaMetadataPolicy.PersonaMetadataPolicyBuilder.html" title="type parameter in PersonaMetadataPolicy.PersonaMetadataPolicyBuilder">C</a>,&#8203;<a href="PersonaMetadataPolicy.PersonaMetadataPolicyBuilder.html" title="type parameter in PersonaMetadataPolicy.PersonaMetadataPolicyBuilder">B</a>&gt;&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -309,47 +321,35 @@ extends <a href="AbstractPolicy.AbstractPolicyBuilder.html" title="class in com.
 <pre class="methodSignature">public abstract&nbsp;<a href="PersonaMetadataPolicy.PersonaMetadataPolicyBuilder.html" title="type parameter in PersonaMetadataPolicy.PersonaMetadataPolicyBuilder">C</a>&nbsp;build()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="AbstractPolicy.AbstractPolicyBuilder.html#build()">build</a></code>&nbsp;in class&nbsp;<code><a href="AbstractPolicy.AbstractPolicyBuilder.html" title="class in com.atlan.model.admin">AbstractPolicy.AbstractPolicyBuilder</a>&lt;<a href="PersonaMetadataPolicy.PersonaMetadataPolicyBuilder.html" title="type parameter in PersonaMetadataPolicy.PersonaMetadataPolicyBuilder">C</a> extends <a href="PersonaMetadataPolicy.html" title="class in com.atlan.model.admin">PersonaMetadataPolicy</a>,&#8203;<a href="PersonaMetadataPolicy.PersonaMetadataPolicyBuilder.html" title="type parameter in PersonaMetadataPolicy.PersonaMetadataPolicyBuilder">B</a> extends <a href="PersonaMetadataPolicy.PersonaMetadataPolicyBuilder.html" title="class in com.atlan.model.admin">PersonaMetadataPolicy.PersonaMetadataPolicyBuilder</a>&lt;<a href="PersonaMetadataPolicy.PersonaMetadataPolicyBuilder.html" title="type parameter in PersonaMetadataPolicy.PersonaMetadataPolicyBuilder">C</a>,&#8203;<a href="PersonaMetadataPolicy.PersonaMetadataPolicyBuilder.html" title="type parameter in PersonaMetadataPolicy.PersonaMetadataPolicyBuilder">B</a>&gt;&gt;</code></dd>
+<dd><code><a href="AbstractPersonaPolicy.AbstractPersonaPolicyBuilder.html#build()">build</a></code>&nbsp;in class&nbsp;<code><a href="AbstractPersonaPolicy.AbstractPersonaPolicyBuilder.html" title="class in com.atlan.model.admin">AbstractPersonaPolicy.AbstractPersonaPolicyBuilder</a>&lt;<a href="PersonaMetadataPolicy.PersonaMetadataPolicyBuilder.html" title="type parameter in PersonaMetadataPolicy.PersonaMetadataPolicyBuilder">C</a> extends <a href="PersonaMetadataPolicy.html" title="class in com.atlan.model.admin">PersonaMetadataPolicy</a>,&#8203;<a href="PersonaMetadataPolicy.PersonaMetadataPolicyBuilder.html" title="type parameter in PersonaMetadataPolicy.PersonaMetadataPolicyBuilder">B</a> extends <a href="PersonaMetadataPolicy.PersonaMetadataPolicyBuilder.html" title="class in com.atlan.model.admin">PersonaMetadataPolicy.PersonaMetadataPolicyBuilder</a>&lt;<a href="PersonaMetadataPolicy.PersonaMetadataPolicyBuilder.html" title="type parameter in PersonaMetadataPolicy.PersonaMetadataPolicyBuilder">C</a>,&#8203;<a href="PersonaMetadataPolicy.PersonaMetadataPolicyBuilder.html" title="type parameter in PersonaMetadataPolicy.PersonaMetadataPolicyBuilder">B</a>&gt;&gt;</code></dd>
 </dl>
 </li>
 </ul>
-<a id="connectionId(java.lang.String)">
+<a id="action(com.atlan.model.enums.PersonaMetadataPolicyAction)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>connectionId</h4>
-<pre class="methodSignature">public&nbsp;<a href="PersonaMetadataPolicy.PersonaMetadataPolicyBuilder.html" title="type parameter in PersonaMetadataPolicy.PersonaMetadataPolicyBuilder">B</a>&nbsp;connectionId&#8203;(java.lang.String&nbsp;connectionId)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
+<h4>action</h4>
+<pre class="methodSignature">public&nbsp;<a href="PersonaMetadataPolicy.PersonaMetadataPolicyBuilder.html" title="type parameter in PersonaMetadataPolicy.PersonaMetadataPolicyBuilder">B</a>&nbsp;action&#8203;(<a href="../enums/PersonaMetadataPolicyAction.html" title="enum in com.atlan.model.enums">PersonaMetadataPolicyAction</a>&nbsp;action)</pre>
 </li>
 </ul>
-<a id="assets(java.util.SortedSet)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>assets</h4>
-<pre class="methodSignature">public&nbsp;<a href="PersonaMetadataPolicy.PersonaMetadataPolicyBuilder.html" title="type parameter in PersonaMetadataPolicy.PersonaMetadataPolicyBuilder">B</a>&nbsp;assets&#8203;(java.util.SortedSet&lt;java.lang.String&gt;&nbsp;assets)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="actions(java.util.SortedSet)">
+<a id="actions(java.util.Collection)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>actions</h4>
-<pre class="methodSignature">public&nbsp;<a href="PersonaMetadataPolicy.PersonaMetadataPolicyBuilder.html" title="type parameter in PersonaMetadataPolicy.PersonaMetadataPolicyBuilder">B</a>&nbsp;actions&#8203;(java.util.SortedSet&lt;<a href="../enums/PersonaMetadataPolicyAction.html" title="enum in com.atlan.model.enums">PersonaMetadataPolicyAction</a>&gt;&nbsp;actions)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
+<pre class="methodSignature">public&nbsp;<a href="PersonaMetadataPolicy.PersonaMetadataPolicyBuilder.html" title="type parameter in PersonaMetadataPolicy.PersonaMetadataPolicyBuilder">B</a>&nbsp;actions&#8203;(java.util.Collection&lt;? extends <a href="../enums/PersonaMetadataPolicyAction.html" title="enum in com.atlan.model.enums">PersonaMetadataPolicyAction</a>&gt;&nbsp;actions)</pre>
+</li>
+</ul>
+<a id="clearActions()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>clearActions</h4>
+<pre class="methodSignature">public&nbsp;<a href="PersonaMetadataPolicy.PersonaMetadataPolicyBuilder.html" title="type parameter in PersonaMetadataPolicy.PersonaMetadataPolicyBuilder">B</a>&nbsp;clearActions()</pre>
 </li>
 </ul>
 <a id="toString()">
@@ -361,7 +361,7 @@ extends <a href="AbstractPolicy.AbstractPolicyBuilder.html" title="class in com.
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;toString()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="AbstractPolicy.AbstractPolicyBuilder.html#toString()">toString</a></code>&nbsp;in class&nbsp;<code><a href="AbstractPolicy.AbstractPolicyBuilder.html" title="class in com.atlan.model.admin">AbstractPolicy.AbstractPolicyBuilder</a>&lt;<a href="PersonaMetadataPolicy.PersonaMetadataPolicyBuilder.html" title="type parameter in PersonaMetadataPolicy.PersonaMetadataPolicyBuilder">C</a> extends <a href="PersonaMetadataPolicy.html" title="class in com.atlan.model.admin">PersonaMetadataPolicy</a>,&#8203;<a href="PersonaMetadataPolicy.PersonaMetadataPolicyBuilder.html" title="type parameter in PersonaMetadataPolicy.PersonaMetadataPolicyBuilder">B</a> extends <a href="PersonaMetadataPolicy.PersonaMetadataPolicyBuilder.html" title="class in com.atlan.model.admin">PersonaMetadataPolicy.PersonaMetadataPolicyBuilder</a>&lt;<a href="PersonaMetadataPolicy.PersonaMetadataPolicyBuilder.html" title="type parameter in PersonaMetadataPolicy.PersonaMetadataPolicyBuilder">C</a>,&#8203;<a href="PersonaMetadataPolicy.PersonaMetadataPolicyBuilder.html" title="type parameter in PersonaMetadataPolicy.PersonaMetadataPolicyBuilder">B</a>&gt;&gt;</code></dd>
+<dd><code><a href="AbstractPersonaPolicy.AbstractPersonaPolicyBuilder.html#toString()">toString</a></code>&nbsp;in class&nbsp;<code><a href="AbstractPersonaPolicy.AbstractPersonaPolicyBuilder.html" title="class in com.atlan.model.admin">AbstractPersonaPolicy.AbstractPersonaPolicyBuilder</a>&lt;<a href="PersonaMetadataPolicy.PersonaMetadataPolicyBuilder.html" title="type parameter in PersonaMetadataPolicy.PersonaMetadataPolicyBuilder">C</a> extends <a href="PersonaMetadataPolicy.html" title="class in com.atlan.model.admin">PersonaMetadataPolicy</a>,&#8203;<a href="PersonaMetadataPolicy.PersonaMetadataPolicyBuilder.html" title="type parameter in PersonaMetadataPolicy.PersonaMetadataPolicyBuilder">B</a> extends <a href="PersonaMetadataPolicy.PersonaMetadataPolicyBuilder.html" title="class in com.atlan.model.admin">PersonaMetadataPolicy.PersonaMetadataPolicyBuilder</a>&lt;<a href="PersonaMetadataPolicy.PersonaMetadataPolicyBuilder.html" title="type parameter in PersonaMetadataPolicy.PersonaMetadataPolicyBuilder">C</a>,&#8203;<a href="PersonaMetadataPolicy.PersonaMetadataPolicyBuilder.html" title="type parameter in PersonaMetadataPolicy.PersonaMetadataPolicyBuilder">B</a>&gt;&gt;</code></dd>
 </dl>
 </li>
 </ul>

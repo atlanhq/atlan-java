@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10};
+var data = {"i0":9,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -128,7 +128,12 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li><a href="AbstractPolicy.html" title="class in com.atlan.model.admin">com.atlan.model.admin.AbstractPolicy</a></li>
 <li>
 <ul class="inheritance">
+<li><a href="AbstractPersonaPolicy.html" title="class in com.atlan.model.admin">com.atlan.model.admin.AbstractPersonaPolicy</a></li>
+<li>
+<ul class="inheritance">
 <li>com.atlan.model.admin.PersonaDataPolicy</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -139,9 +144,13 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="description">
 <ul class="blockList">
 <li class="blockList">
+<dl>
+<dt>All Implemented Interfaces:</dt>
+<dd><code>java.lang.Comparable&lt;<a href="AbstractPolicy.html" title="class in com.atlan.model.admin">AbstractPolicy</a>&gt;</code></dd>
+</dl>
 <hr>
 <pre>public class <span class="typeNameLabel">PersonaDataPolicy</span>
-extends <a href="AbstractPolicy.html" title="class in com.atlan.model.admin">AbstractPolicy</a></pre>
+extends <a href="AbstractPersonaPolicy.html" title="class in com.atlan.model.admin">AbstractPersonaPolicy</a></pre>
 </li>
 </ul>
 </div>
@@ -168,6 +177,13 @@ extends <a href="AbstractPolicy.html" title="class in com.atlan.model.admin">Abs
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
+<ul class="blockList">
+<li class="blockList"><a id="nested.classes.inherited.from.class.com.atlan.model.admin.AbstractPersonaPolicy">
+<!--   -->
+</a>
+<h3>Nested classes/interfaces inherited from class&nbsp;com.atlan.model.admin.<a href="AbstractPersonaPolicy.html" title="class in com.atlan.model.admin">AbstractPersonaPolicy</a></h3>
+<code><a href="AbstractPersonaPolicy.AbstractPersonaPolicyBuilder.html" title="class in com.atlan.model.admin">AbstractPersonaPolicy.AbstractPersonaPolicyBuilder</a>&lt;<a href="AbstractPersonaPolicy.AbstractPersonaPolicyBuilder.html" title="type parameter in AbstractPersonaPolicy.AbstractPersonaPolicyBuilder">C</a> extends <a href="AbstractPersonaPolicy.html" title="class in com.atlan.model.admin">AbstractPersonaPolicy</a>,&#8203;<a href="AbstractPersonaPolicy.AbstractPersonaPolicyBuilder.html" title="type parameter in AbstractPersonaPolicy.AbstractPersonaPolicyBuilder">B</a> extends <a href="AbstractPersonaPolicy.AbstractPersonaPolicyBuilder.html" title="class in com.atlan.model.admin">AbstractPersonaPolicy.AbstractPersonaPolicyBuilder</a>&lt;<a href="AbstractPersonaPolicy.AbstractPersonaPolicyBuilder.html" title="type parameter in AbstractPersonaPolicy.AbstractPersonaPolicyBuilder">C</a>,&#8203;<a href="AbstractPersonaPolicy.AbstractPersonaPolicyBuilder.html" title="type parameter in AbstractPersonaPolicy.AbstractPersonaPolicyBuilder">B</a>&gt;&gt;</code></li>
+</ul>
 <ul class="blockList">
 <li class="blockList"><a id="nested.classes.inherited.from.class.com.atlan.model.admin.AbstractPolicy">
 <!--   -->
@@ -245,71 +261,50 @@ extends <a href="AbstractPolicy.html" title="class in com.atlan.model.admin">Abs
 </td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code>java.util.SortedSet&lt;java.lang.String&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAssets()">getAssets</a></span>()</code></th>
-<td class="colLast">
-<div class="block">All assets' qualifiedNames to include in the policy.</div>
-</td>
-</tr>
-<tr id="i5" class="rowColor">
-<td class="colFirst"><code>java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getConnectionId()">getConnectionId</a></span>()</code></th>
-<td class="colLast">
-<div class="block">Unique identifier (GUID) of the connection to which this policy applies.</div>
-</td>
-</tr>
-<tr id="i6" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getConnectionName()">getConnectionName</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Unused.</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="../enums/DataPolicyType.html" title="enum in com.atlan.model.enums">DataPolicyType</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getType()">getType</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Fixed value (cannot apply masking on persona data policies).</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hashCode()">hashCode</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setActions(java.util.SortedSet)">setActions</a></span>&#8203;(java.util.SortedSet&lt;<a href="../enums/DataPolicyAction.html" title="enum in com.atlan.model.enums">DataPolicyAction</a>&gt;&nbsp;actions)</code></th>
 <td class="colLast">
 <div class="block">All the actions included in the policy.</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAssets(java.util.SortedSet)">setAssets</a></span>&#8203;(java.util.SortedSet&lt;java.lang.String&gt;&nbsp;assets)</code></th>
-<td class="colLast">
-<div class="block">All assets' qualifiedNames to include in the policy.</div>
-</td>
-</tr>
-<tr id="i11" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setConnectionId(java.lang.String)">setConnectionId</a></span>&#8203;(java.lang.String&nbsp;connectionId)</code></th>
-<td class="colLast">
-<div class="block">Unique identifier (GUID) of the connection to which this policy applies.</div>
-</td>
-</tr>
-<tr id="i12" class="altColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code><a href="PersonaDataPolicy.PersonaDataPolicyBuilder.html" title="class in com.atlan.model.admin">PersonaDataPolicy.PersonaDataPolicyBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toBuilder()">toBuilder</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
+<li class="blockList"><a id="methods.inherited.from.class.com.atlan.model.admin.AbstractPersonaPolicy">
+<!--   -->
+</a>
+<h3>Methods inherited from class&nbsp;com.atlan.model.admin.<a href="AbstractPersonaPolicy.html" title="class in com.atlan.model.admin">AbstractPersonaPolicy</a></h3>
+<code><a href="AbstractPersonaPolicy.html#getAssets()">getAssets</a>, <a href="AbstractPersonaPolicy.html#getConnectionId()">getConnectionId</a>, <a href="AbstractPersonaPolicy.html#setAssets(java.util.SortedSet)">setAssets</a>, <a href="AbstractPersonaPolicy.html#setConnectionId(java.lang.String)">setConnectionId</a></code></li>
+</ul>
+<ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.com.atlan.model.admin.AbstractPolicy">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;com.atlan.model.admin.<a href="AbstractPolicy.html" title="class in com.atlan.model.admin">AbstractPolicy</a></h3>
-<code><a href="AbstractPolicy.html#getAllow()">getAllow</a>, <a href="AbstractPolicy.html#getDescription()">getDescription</a>, <a href="AbstractPolicy.html#getName()">getName</a>, <a href="AbstractPolicy.html#setAllow(java.lang.Boolean)">setAllow</a>, <a href="AbstractPolicy.html#setDescription(java.lang.String)">setDescription</a>, <a href="AbstractPolicy.html#setName(java.lang.String)">setName</a></code></li>
+<code><a href="AbstractPolicy.html#compareTo(com.atlan.model.admin.AbstractPolicy)">compareTo</a>, <a href="AbstractPolicy.html#getAllow()">getAllow</a>, <a href="AbstractPolicy.html#getCreatedAt()">getCreatedAt</a>, <a href="AbstractPolicy.html#getCreatedBy()">getCreatedBy</a>, <a href="AbstractPolicy.html#getDescription()">getDescription</a>, <a href="AbstractPolicy.html#getId()">getId</a>, <a href="AbstractPolicy.html#getName()">getName</a>, <a href="AbstractPolicy.html#setAllow(java.lang.Boolean)">setAllow</a>, <a href="AbstractPolicy.html#setDescription(java.lang.String)">setDescription</a>, <a href="AbstractPolicy.html#setName(java.lang.String)">setName</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.com.atlan.model.core.AtlanObject">
@@ -378,16 +373,6 @@ extends <a href="AbstractPolicy.html" title="class in com.atlan.model.admin">Abs
 <pre class="methodSignature">public&nbsp;<a href="PersonaDataPolicy.PersonaDataPolicyBuilder.html" title="class in com.atlan.model.admin">PersonaDataPolicy.PersonaDataPolicyBuilder</a>&lt;?,&#8203;?&gt;&nbsp;toBuilder()</pre>
 </li>
 </ul>
-<a id="getConnectionId()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getConnectionId</h4>
-<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getConnectionId()</pre>
-<div class="block">Unique identifier (GUID) of the connection to which this policy applies.</div>
-</li>
-</ul>
 <a id="getConnectionName()">
 <!--   -->
 </a>
@@ -396,19 +381,6 @@ extends <a href="AbstractPolicy.html" title="class in com.atlan.model.admin">Abs
 <h4>getConnectionName</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getConnectionName()</pre>
 <div class="block">Unused.</div>
-</li>
-</ul>
-<a id="getAssets()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getAssets</h4>
-<pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;java.lang.String&gt;&nbsp;getAssets()</pre>
-<div class="block">All assets' qualifiedNames to include in the policy.
- These act as prefixes, so any assets within these will also be included in the
- policy. (For example, if you give the qualifiedName of a schema, all tables and
- columns in that schema are also included in the policy.)</div>
 </li>
 </ul>
 <a id="getActions()">
@@ -431,29 +403,6 @@ extends <a href="AbstractPolicy.html" title="class in com.atlan.model.admin">Abs
 <div class="block">Fixed value (cannot apply masking on persona data policies).</div>
 </li>
 </ul>
-<a id="setConnectionId(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setConnectionId</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setConnectionId&#8203;(java.lang.String&nbsp;connectionId)</pre>
-<div class="block">Unique identifier (GUID) of the connection to which this policy applies.</div>
-</li>
-</ul>
-<a id="setAssets(java.util.SortedSet)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setAssets</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setAssets&#8203;(java.util.SortedSet&lt;java.lang.String&gt;&nbsp;assets)</pre>
-<div class="block">All assets' qualifiedNames to include in the policy.
- These act as prefixes, so any assets within these will also be included in the
- policy. (For example, if you give the qualifiedName of a schema, all tables and
- columns in that schema are also included in the policy.)</div>
-</li>
-</ul>
 <a id="setActions(java.util.SortedSet)">
 <!--   -->
 </a>
@@ -473,7 +422,7 @@ extends <a href="AbstractPolicy.html" title="class in com.atlan.model.admin">Abs
 <pre class="methodSignature">public&nbsp;boolean&nbsp;equals&#8203;(java.lang.Object&nbsp;o)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="AbstractPolicy.html#equals(java.lang.Object)">equals</a></code>&nbsp;in class&nbsp;<code><a href="AbstractPolicy.html" title="class in com.atlan.model.admin">AbstractPolicy</a></code></dd>
+<dd><code><a href="AbstractPersonaPolicy.html#equals(java.lang.Object)">equals</a></code>&nbsp;in class&nbsp;<code><a href="AbstractPersonaPolicy.html" title="class in com.atlan.model.admin">AbstractPersonaPolicy</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -486,7 +435,7 @@ extends <a href="AbstractPolicy.html" title="class in com.atlan.model.admin">Abs
 <pre class="methodSignature">protected&nbsp;boolean&nbsp;canEqual&#8203;(java.lang.Object&nbsp;other)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="AbstractPolicy.html#canEqual(java.lang.Object)">canEqual</a></code>&nbsp;in class&nbsp;<code><a href="AbstractPolicy.html" title="class in com.atlan.model.admin">AbstractPolicy</a></code></dd>
+<dd><code><a href="AbstractPersonaPolicy.html#canEqual(java.lang.Object)">canEqual</a></code>&nbsp;in class&nbsp;<code><a href="AbstractPersonaPolicy.html" title="class in com.atlan.model.admin">AbstractPersonaPolicy</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -499,7 +448,7 @@ extends <a href="AbstractPolicy.html" title="class in com.atlan.model.admin">Abs
 <pre class="methodSignature">public&nbsp;int&nbsp;hashCode()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="AbstractPolicy.html#hashCode()">hashCode</a></code>&nbsp;in class&nbsp;<code><a href="AbstractPolicy.html" title="class in com.atlan.model.admin">AbstractPolicy</a></code></dd>
+<dd><code><a href="AbstractPersonaPolicy.html#hashCode()">hashCode</a></code>&nbsp;in class&nbsp;<code><a href="AbstractPersonaPolicy.html" title="class in com.atlan.model.admin">AbstractPersonaPolicy</a></code></dd>
 </dl>
 </li>
 </ul>

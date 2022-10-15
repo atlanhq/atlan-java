@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10};
+var data = {"i0":9,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -259,66 +259,80 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>java.util.List&lt;java.lang.String&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getJira()">getJira</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Unique JIRA user identifier.</div>
+</td>
+</tr>
+<tr id="i8" class="altColor">
+<td class="colFirst"><code>java.util.List&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSkills()">getSkills</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Skills the user possesses.</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>java.util.List&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSlack()">getSlack</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Unique Slack member identifier.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hashCode()">hashCode</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setDesignation(java.util.List)">setDesignation</a></span>&#8203;(java.util.List&lt;java.lang.String&gt;&nbsp;designation)</code></th>
 <td class="colLast">
 <div class="block">Designation for the user, such as an honorific or title.</div>
 </td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setInvitedAt(java.util.List)">setInvitedAt</a></span>&#8203;(java.util.List&lt;java.lang.String&gt;&nbsp;invitedAt)</code></th>
 <td class="colLast">
 <div class="block">Time at which the user was invited (as a formatted string).</div>
 </td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setInvitedBy(java.util.List)">setInvitedBy</a></span>&#8203;(java.util.List&lt;java.lang.String&gt;&nbsp;invitedBy)</code></th>
 <td class="colLast">
 <div class="block">User who invited this user.</div>
 </td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setInvitedByName(java.util.List)">setInvitedByName</a></span>&#8203;(java.util.List&lt;java.lang.String&gt;&nbsp;invitedByName)</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i15" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setJira(java.util.List)">setJira</a></span>&#8203;(java.util.List&lt;java.lang.String&gt;&nbsp;jira)</code></th>
+<td class="colLast">
+<div class="block">Unique JIRA user identifier.</div>
+</td>
+</tr>
+<tr id="i16" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setSkills(java.util.List)">setSkills</a></span>&#8203;(java.util.List&lt;java.lang.String&gt;&nbsp;skills)</code></th>
 <td class="colLast">
 <div class="block">Skills the user possesses.</div>
 </td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setSlack(java.util.List)">setSlack</a></span>&#8203;(java.util.List&lt;java.lang.String&gt;&nbsp;slack)</code></th>
 <td class="colLast">
 <div class="block">Unique Slack member identifier.</div>
 </td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i18" class="altColor">
 <td class="colFirst"><code><a href="AtlanUser.UserAttributes.UserAttributesBuilder.html" title="class in com.atlan.model.admin">AtlanUser.UserAttributes.UserAttributesBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toBuilder()">toBuilder</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
@@ -421,6 +435,16 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <div class="block">Unique Slack member identifier.</div>
 </li>
 </ul>
+<a id="getJira()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getJira</h4>
+<pre class="methodSignature">public&nbsp;java.util.List&lt;java.lang.String&gt;&nbsp;getJira()</pre>
+<div class="block">Unique JIRA user identifier.</div>
+</li>
+</ul>
 <a id="getInvitedAt()">
 <!--   -->
 </a>
@@ -479,6 +503,16 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <h4>setSlack</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;setSlack&#8203;(java.util.List&lt;java.lang.String&gt;&nbsp;slack)</pre>
 <div class="block">Unique Slack member identifier.</div>
+</li>
+</ul>
+<a id="setJira(java.util.List)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setJira</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;setJira&#8203;(java.util.List&lt;java.lang.String&gt;&nbsp;jira)</pre>
+<div class="block">Unique JIRA user identifier.</div>
 </li>
 </ul>
 <a id="setInvitedAt(java.util.List)">

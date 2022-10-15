@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -135,12 +135,17 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul class="blockList">
 <li class="blockList">
 <dl>
+<dt>All Implemented Interfaces:</dt>
+<dd><code>java.lang.Comparable&lt;<a href="AbstractPolicy.html" title="class in com.atlan.model.admin">AbstractPolicy</a>&gt;</code></dd>
+</dl>
+<dl>
 <dt>Direct Known Subclasses:</dt>
-<dd><code><a href="GlossaryPolicy.html" title="class in com.atlan.model.admin">GlossaryPolicy</a></code>, <code><a href="PersonaDataPolicy.html" title="class in com.atlan.model.admin">PersonaDataPolicy</a></code>, <code><a href="PersonaMetadataPolicy.html" title="class in com.atlan.model.admin">PersonaMetadataPolicy</a></code>, <code><a href="PurposeDataPolicy.html" title="class in com.atlan.model.admin">PurposeDataPolicy</a></code>, <code><a href="PurposeMetadataPolicy.html" title="class in com.atlan.model.admin">PurposeMetadataPolicy</a></code></dd>
+<dd><code><a href="AbstractPersonaPolicy.html" title="class in com.atlan.model.admin">AbstractPersonaPolicy</a></code>, <code><a href="AbstractPurposePolicy.html" title="class in com.atlan.model.admin">AbstractPurposePolicy</a></code>, <code><a href="GlossaryPolicy.html" title="class in com.atlan.model.admin">GlossaryPolicy</a></code></dd>
 </dl>
 <hr>
 <pre>public abstract class <span class="typeNameLabel">AbstractPolicy</span>
-extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core">AtlanObject</a></pre>
+extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core">AtlanObject</a>
+implements java.lang.Comparable&lt;<a href="AbstractPolicy.html" title="class in com.atlan.model.admin">AbstractPolicy</a>&gt;</pre>
 </li>
 </ul>
 </div>
@@ -220,51 +225,76 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
+<td class="colFirst"><code>int</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#compareTo(com.atlan.model.admin.AbstractPolicy)">compareTo</a></span>&#8203;(<a href="AbstractPolicy.html" title="class in com.atlan.model.admin">AbstractPolicy</a>&nbsp;o)</code></th>
+</tr>
+<tr id="i2" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#equals(java.lang.Object)">equals</a></span>&#8203;(java.lang.Object&nbsp;o)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAllow()">getAllow</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Whether the actions are granted (true) or explicitly denied (false).</div>
 </td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i4" class="altColor">
+<td class="colFirst"><code>java.lang.Long</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCreatedAt()">getCreatedAt</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Time (epoch) at which this policy was created, in milliseconds.</div>
+</td>
+</tr>
+<tr id="i5" class="rowColor">
+<td class="colFirst"><code>java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCreatedBy()">getCreatedBy</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Username of the user who created this policy.</div>
+</td>
+</tr>
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDescription()">getDescription</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Explanation of the policy.</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i7" class="rowColor">
+<td class="colFirst"><code>java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getId()">getId</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Unique identifier (GUID) of the policy.</div>
+</td>
+</tr>
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getName()">getName</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Name of the policy.</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hashCode()">hashCode</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAllow(java.lang.Boolean)">setAllow</a></span>&#8203;(java.lang.Boolean&nbsp;allow)</code></th>
 <td class="colLast">
 <div class="block">Whether the actions are granted (true) or explicitly denied (false).</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setDescription(java.lang.String)">setDescription</a></span>&#8203;(java.lang.String&nbsp;description)</code></th>
 <td class="colLast">
 <div class="block">Explanation of the policy.</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setName(java.lang.String)">setName</a></span>&#8203;(java.lang.String&nbsp;name)</code></th>
 <td class="colLast">
@@ -321,6 +351,29 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a id="compareTo(com.atlan.model.admin.AbstractPolicy)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>compareTo</h4>
+<pre class="methodSignature">public&nbsp;int&nbsp;compareTo&#8203;(<a href="AbstractPolicy.html" title="class in com.atlan.model.admin">AbstractPolicy</a>&nbsp;o)</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code>compareTo</code>&nbsp;in interface&nbsp;<code>java.lang.Comparable&lt;<a href="AbstractPolicy.html" title="class in com.atlan.model.admin">AbstractPolicy</a>&gt;</code></dd>
+</dl>
+</li>
+</ul>
+<a id="getId()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getId</h4>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getId()</pre>
+<div class="block">Unique identifier (GUID) of the policy.</div>
+</li>
+</ul>
 <a id="getName()">
 <!--   -->
 </a>
@@ -349,6 +402,26 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <h4>getAllow</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Boolean&nbsp;getAllow()</pre>
 <div class="block">Whether the actions are granted (true) or explicitly denied (false).</div>
+</li>
+</ul>
+<a id="getCreatedAt()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getCreatedAt</h4>
+<pre class="methodSignature">public&nbsp;java.lang.Long&nbsp;getCreatedAt()</pre>
+<div class="block">Time (epoch) at which this policy was created, in milliseconds.</div>
+</li>
+</ul>
+<a id="getCreatedBy()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getCreatedBy</h4>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getCreatedBy()</pre>
+<div class="block">Username of the user who created this policy.</div>
 </li>
 </ul>
 <a id="setName(java.lang.String)">

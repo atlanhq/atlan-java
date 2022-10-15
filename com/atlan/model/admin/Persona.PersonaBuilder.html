@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":6,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":6,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":6,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":6,"i31":10,"i32":10,"i33":10,"i34":10,"i35":10,"i36":10,"i37":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -214,130 +214,160 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code><a href="Persona.PersonaBuilder.html" title="type parameter in Persona.PersonaBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearGroups()">clearGroups</a></span>()</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearDataPolicies()">clearDataPolicies</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="Persona.PersonaBuilder.html" title="type parameter in Persona.PersonaBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearUsers()">clearUsers</a></span>()</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearGlossaryPolicies()">clearGlossaryPolicies</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code><a href="Persona.PersonaBuilder.html" title="type parameter in Persona.PersonaBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createdAt(java.lang.Long)">createdAt</a></span>&#8203;(java.lang.Long&nbsp;createdAt)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearGroups()">clearGroups</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code><a href="Persona.PersonaBuilder.html" title="type parameter in Persona.PersonaBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createdBy(java.lang.String)">createdBy</a></span>&#8203;(java.lang.String&nbsp;createdBy)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearMetadataPolicies()">clearMetadataPolicies</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code><a href="Persona.PersonaBuilder.html" title="type parameter in Persona.PersonaBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#dataPolicies(java.lang.String)">dataPolicies</a></span>&#8203;(java.lang.String&nbsp;dataPolicies)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearUsers()">clearUsers</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i11" class="rowColor">
 <td class="colFirst"><code><a href="Persona.PersonaBuilder.html" title="type parameter in Persona.PersonaBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#description(java.lang.String)">description</a></span>&#8203;(java.lang.String&nbsp;description)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createdAt(java.lang.Long)">createdAt</a></span>&#8203;(java.lang.Long&nbsp;createdAt)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i12" class="altColor">
 <td class="colFirst"><code><a href="Persona.PersonaBuilder.html" title="type parameter in Persona.PersonaBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#displayName(java.lang.String)">displayName</a></span>&#8203;(java.lang.String&nbsp;displayName)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createdBy(java.lang.String)">createdBy</a></span>&#8203;(java.lang.String&nbsp;createdBy)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i13" class="rowColor">
 <td class="colFirst"><code><a href="Persona.PersonaBuilder.html" title="type parameter in Persona.PersonaBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#enabled(java.lang.Boolean)">enabled</a></span>&#8203;(java.lang.Boolean&nbsp;enabled)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#dataPolicies(java.util.Collection)">dataPolicies</a></span>&#8203;(java.util.Collection&lt;? extends <a href="PersonaDataPolicy.html" title="class in com.atlan.model.admin">PersonaDataPolicy</a>&gt;&nbsp;dataPolicies)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i14" class="altColor">
 <td class="colFirst"><code><a href="Persona.PersonaBuilder.html" title="type parameter in Persona.PersonaBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#glossaryPolicies(java.lang.String)">glossaryPolicies</a></span>&#8203;(java.lang.String&nbsp;glossaryPolicies)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#dataPolicy(com.atlan.model.admin.PersonaDataPolicy)">dataPolicy</a></span>&#8203;(<a href="PersonaDataPolicy.html" title="class in com.atlan.model.admin">PersonaDataPolicy</a>&nbsp;dataPolicy)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i15" class="rowColor">
 <td class="colFirst"><code><a href="Persona.PersonaBuilder.html" title="type parameter in Persona.PersonaBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#group(java.lang.String)">group</a></span>&#8203;(java.lang.String&nbsp;group)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#description(java.lang.String)">description</a></span>&#8203;(java.lang.String&nbsp;description)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i16" class="altColor">
 <td class="colFirst"><code><a href="Persona.PersonaBuilder.html" title="type parameter in Persona.PersonaBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#groups(java.util.Collection)">groups</a></span>&#8203;(java.util.Collection&lt;? extends java.lang.String&gt;&nbsp;groups)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#displayName(java.lang.String)">displayName</a></span>&#8203;(java.lang.String&nbsp;displayName)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i17" class="rowColor">
 <td class="colFirst"><code><a href="Persona.PersonaBuilder.html" title="type parameter in Persona.PersonaBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#id(java.lang.String)">id</a></span>&#8203;(java.lang.String&nbsp;id)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#enabled(java.lang.Boolean)">enabled</a></span>&#8203;(java.lang.Boolean&nbsp;enabled)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i18" class="altColor">
 <td class="colFirst"><code><a href="Persona.PersonaBuilder.html" title="type parameter in Persona.PersonaBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#level(java.lang.String)">level</a></span>&#8203;(java.lang.String&nbsp;level)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#glossaryPolicies(java.util.Collection)">glossaryPolicies</a></span>&#8203;(java.util.Collection&lt;? extends <a href="GlossaryPolicy.html" title="class in com.atlan.model.admin">GlossaryPolicy</a>&gt;&nbsp;glossaryPolicies)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i19" class="rowColor">
 <td class="colFirst"><code><a href="Persona.PersonaBuilder.html" title="type parameter in Persona.PersonaBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#metadataPolicies(java.lang.String)">metadataPolicies</a></span>&#8203;(java.lang.String&nbsp;metadataPolicies)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#glossaryPolicy(com.atlan.model.admin.GlossaryPolicy)">glossaryPolicy</a></span>&#8203;(<a href="GlossaryPolicy.html" title="class in com.atlan.model.admin">GlossaryPolicy</a>&nbsp;glossaryPolicy)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i20" class="altColor">
 <td class="colFirst"><code><a href="Persona.PersonaBuilder.html" title="type parameter in Persona.PersonaBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#name(java.lang.String)">name</a></span>&#8203;(java.lang.String&nbsp;name)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#group(java.lang.String)">group</a></span>&#8203;(java.lang.String&nbsp;group)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i21" class="rowColor">
 <td class="colFirst"><code><a href="Persona.PersonaBuilder.html" title="type parameter in Persona.PersonaBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#personaType(java.lang.String)">personaType</a></span>&#8203;(java.lang.String&nbsp;personaType)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#groups(java.util.Collection)">groups</a></span>&#8203;(java.util.Collection&lt;? extends java.lang.String&gt;&nbsp;groups)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i22" class="altColor">
 <td class="colFirst"><code><a href="Persona.PersonaBuilder.html" title="type parameter in Persona.PersonaBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#readme(java.lang.String)">readme</a></span>&#8203;(java.lang.String&nbsp;readme)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#id(java.lang.String)">id</a></span>&#8203;(java.lang.String&nbsp;id)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i23" class="rowColor">
 <td class="colFirst"><code><a href="Persona.PersonaBuilder.html" title="type parameter in Persona.PersonaBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#resources(java.lang.String)">resources</a></span>&#8203;(java.lang.String&nbsp;resources)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#level(java.lang.String)">level</a></span>&#8203;(java.lang.String&nbsp;level)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i24" class="altColor">
-<td class="colFirst"><code>protected abstract <a href="Persona.PersonaBuilder.html" title="type parameter in Persona.PersonaBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#self()">self</a></span>()</code></th>
+<td class="colFirst"><code><a href="Persona.PersonaBuilder.html" title="type parameter in Persona.PersonaBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#metadataPolicies(java.util.Collection)">metadataPolicies</a></span>&#8203;(java.util.Collection&lt;? extends <a href="PersonaMetadataPolicy.html" title="class in com.atlan.model.admin">PersonaMetadataPolicy</a>&gt;&nbsp;metadataPolicies)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i25" class="rowColor">
-<td class="colFirst"><code>java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
+<td class="colFirst"><code><a href="Persona.PersonaBuilder.html" title="type parameter in Persona.PersonaBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#metadataPolicy(com.atlan.model.admin.PersonaMetadataPolicy)">metadataPolicy</a></span>&#8203;(<a href="PersonaMetadataPolicy.html" title="class in com.atlan.model.admin">PersonaMetadataPolicy</a>&nbsp;metadataPolicy)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i26" class="altColor">
 <td class="colFirst"><code><a href="Persona.PersonaBuilder.html" title="type parameter in Persona.PersonaBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#type(java.lang.String)">type</a></span>&#8203;(java.lang.String&nbsp;type)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#name(java.lang.String)">name</a></span>&#8203;(java.lang.String&nbsp;name)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i27" class="rowColor">
 <td class="colFirst"><code><a href="Persona.PersonaBuilder.html" title="type parameter in Persona.PersonaBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updatedAt(java.lang.String)">updatedAt</a></span>&#8203;(java.lang.String&nbsp;updatedAt)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#personaType(java.lang.String)">personaType</a></span>&#8203;(java.lang.String&nbsp;personaType)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i28" class="altColor">
 <td class="colFirst"><code><a href="Persona.PersonaBuilder.html" title="type parameter in Persona.PersonaBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updatedBy(java.lang.String)">updatedBy</a></span>&#8203;(java.lang.String&nbsp;updatedBy)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#readme(java.lang.String)">readme</a></span>&#8203;(java.lang.String&nbsp;readme)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i29" class="rowColor">
 <td class="colFirst"><code><a href="Persona.PersonaBuilder.html" title="type parameter in Persona.PersonaBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#user(java.lang.String)">user</a></span>&#8203;(java.lang.String&nbsp;user)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#resources(java.lang.String)">resources</a></span>&#8203;(java.lang.String&nbsp;resources)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i30" class="altColor">
+<td class="colFirst"><code>protected abstract <a href="Persona.PersonaBuilder.html" title="type parameter in Persona.PersonaBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#self()">self</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i31" class="rowColor">
+<td class="colFirst"><code>java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i32" class="altColor">
+<td class="colFirst"><code><a href="Persona.PersonaBuilder.html" title="type parameter in Persona.PersonaBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#type(java.lang.String)">type</a></span>&#8203;(java.lang.String&nbsp;type)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i33" class="rowColor">
+<td class="colFirst"><code><a href="Persona.PersonaBuilder.html" title="type parameter in Persona.PersonaBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updatedAt(java.lang.String)">updatedAt</a></span>&#8203;(java.lang.String&nbsp;updatedAt)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i34" class="altColor">
+<td class="colFirst"><code><a href="Persona.PersonaBuilder.html" title="type parameter in Persona.PersonaBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updatedBy(java.lang.String)">updatedBy</a></span>&#8203;(java.lang.String&nbsp;updatedBy)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i35" class="rowColor">
+<td class="colFirst"><code><a href="Persona.PersonaBuilder.html" title="type parameter in Persona.PersonaBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#user(java.lang.String)">user</a></span>&#8203;(java.lang.String&nbsp;user)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i36" class="altColor">
 <td class="colFirst"><code><a href="Persona.PersonaBuilder.html" title="type parameter in Persona.PersonaBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#users(java.util.Collection)">users</a></span>&#8203;(java.util.Collection&lt;? extends java.lang.String&gt;&nbsp;users)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i31" class="rowColor">
+<tr id="i37" class="rowColor">
 <td class="colFirst"><code><a href="Persona.PersonaBuilder.html" title="type parameter in Persona.PersonaBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#version(java.lang.String)">version</a></span>&#8203;(java.lang.String&nbsp;version)</code></th>
 <td class="colLast">&nbsp;</td>
@@ -572,43 +602,85 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 </dl>
 </li>
 </ul>
-<a id="metadataPolicies(java.lang.String)">
+<a id="metadataPolicy(com.atlan.model.admin.PersonaMetadataPolicy)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>metadataPolicy</h4>
+<pre class="methodSignature">public&nbsp;<a href="Persona.PersonaBuilder.html" title="type parameter in Persona.PersonaBuilder">B</a>&nbsp;metadataPolicy&#8203;(<a href="PersonaMetadataPolicy.html" title="class in com.atlan.model.admin">PersonaMetadataPolicy</a>&nbsp;metadataPolicy)</pre>
+</li>
+</ul>
+<a id="metadataPolicies(java.util.Collection)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>metadataPolicies</h4>
-<pre class="methodSignature">public&nbsp;<a href="Persona.PersonaBuilder.html" title="type parameter in Persona.PersonaBuilder">B</a>&nbsp;metadataPolicies&#8203;(java.lang.String&nbsp;metadataPolicies)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
+<pre class="methodSignature">public&nbsp;<a href="Persona.PersonaBuilder.html" title="type parameter in Persona.PersonaBuilder">B</a>&nbsp;metadataPolicies&#8203;(java.util.Collection&lt;? extends <a href="PersonaMetadataPolicy.html" title="class in com.atlan.model.admin">PersonaMetadataPolicy</a>&gt;&nbsp;metadataPolicies)</pre>
 </li>
 </ul>
-<a id="dataPolicies(java.lang.String)">
+<a id="clearMetadataPolicies()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>clearMetadataPolicies</h4>
+<pre class="methodSignature">public&nbsp;<a href="Persona.PersonaBuilder.html" title="type parameter in Persona.PersonaBuilder">B</a>&nbsp;clearMetadataPolicies()</pre>
+</li>
+</ul>
+<a id="dataPolicy(com.atlan.model.admin.PersonaDataPolicy)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>dataPolicy</h4>
+<pre class="methodSignature">public&nbsp;<a href="Persona.PersonaBuilder.html" title="type parameter in Persona.PersonaBuilder">B</a>&nbsp;dataPolicy&#8203;(<a href="PersonaDataPolicy.html" title="class in com.atlan.model.admin">PersonaDataPolicy</a>&nbsp;dataPolicy)</pre>
+</li>
+</ul>
+<a id="dataPolicies(java.util.Collection)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>dataPolicies</h4>
-<pre class="methodSignature">public&nbsp;<a href="Persona.PersonaBuilder.html" title="type parameter in Persona.PersonaBuilder">B</a>&nbsp;dataPolicies&#8203;(java.lang.String&nbsp;dataPolicies)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
+<pre class="methodSignature">public&nbsp;<a href="Persona.PersonaBuilder.html" title="type parameter in Persona.PersonaBuilder">B</a>&nbsp;dataPolicies&#8203;(java.util.Collection&lt;? extends <a href="PersonaDataPolicy.html" title="class in com.atlan.model.admin">PersonaDataPolicy</a>&gt;&nbsp;dataPolicies)</pre>
 </li>
 </ul>
-<a id="glossaryPolicies(java.lang.String)">
+<a id="clearDataPolicies()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>clearDataPolicies</h4>
+<pre class="methodSignature">public&nbsp;<a href="Persona.PersonaBuilder.html" title="type parameter in Persona.PersonaBuilder">B</a>&nbsp;clearDataPolicies()</pre>
+</li>
+</ul>
+<a id="glossaryPolicy(com.atlan.model.admin.GlossaryPolicy)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>glossaryPolicy</h4>
+<pre class="methodSignature">public&nbsp;<a href="Persona.PersonaBuilder.html" title="type parameter in Persona.PersonaBuilder">B</a>&nbsp;glossaryPolicy&#8203;(<a href="GlossaryPolicy.html" title="class in com.atlan.model.admin">GlossaryPolicy</a>&nbsp;glossaryPolicy)</pre>
+</li>
+</ul>
+<a id="glossaryPolicies(java.util.Collection)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>glossaryPolicies</h4>
-<pre class="methodSignature">public&nbsp;<a href="Persona.PersonaBuilder.html" title="type parameter in Persona.PersonaBuilder">B</a>&nbsp;glossaryPolicies&#8203;(java.lang.String&nbsp;glossaryPolicies)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
+<pre class="methodSignature">public&nbsp;<a href="Persona.PersonaBuilder.html" title="type parameter in Persona.PersonaBuilder">B</a>&nbsp;glossaryPolicies&#8203;(java.util.Collection&lt;? extends <a href="GlossaryPolicy.html" title="class in com.atlan.model.admin">GlossaryPolicy</a>&gt;&nbsp;glossaryPolicies)</pre>
+</li>
+</ul>
+<a id="clearGlossaryPolicies()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>clearGlossaryPolicies</h4>
+<pre class="methodSignature">public&nbsp;<a href="Persona.PersonaBuilder.html" title="type parameter in Persona.PersonaBuilder">B</a>&nbsp;clearGlossaryPolicies()</pre>
 </li>
 </ul>
 <a id="enabled(java.lang.Boolean)">
