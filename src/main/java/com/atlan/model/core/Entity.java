@@ -116,7 +116,10 @@ public abstract class Entity extends Reference {
     }
 
     /**
-     * Creates the entity. If no entity exists, the classifications and businessAttributes will be ?
+     * If an entity with the same qualifiedName exists, updates the existing entity. Otherwise, creates the entity.
+     * No classifications or custom metadata will be changed if updating an existing entity, irrespective of what
+     * is included in the entity itself when the method is called.
+     *
      * @return details of the created or updated entity
      * @throws AtlanException on any error during the API invocation
      */
@@ -126,7 +129,8 @@ public abstract class Entity extends Reference {
 
     /**
      * If no entity exists, has the same behavior as the {@link #upsert()} method.
-     * If an entity does exist, optionally overwrites any classifications and / or businessAttributes.
+     * If an entity does exist, optionally overwrites any classifications and / or custom metadata.
+     *
      * @param replaceClassifications whether to replace classifications during an update (true) or not (false)
      * @param replaceCustomMetadata whether to replace custom metadata during an update (true) or not (false)
      * @return details of the created or updated entity
@@ -139,6 +143,8 @@ public abstract class Entity extends Reference {
 
     /**
      * Retrieves an entity by its GUID, complete with all of its relationships.
+     * The type of the entity will only be determined at runtime.
+     *
      * @param guid of the entity to retrieve
      * @return the requested full entity, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link com.atlan.exception.NotFoundException} if the entity does not exist
@@ -154,6 +160,8 @@ public abstract class Entity extends Reference {
 
     /**
      * Retrieves a minimal entity by its GUID, without its relationships.
+     * The type of the entity will only be determined at runtime.
+     *
      * @param guid of the entity to retrieve
      * @return the requested minimal entity, without its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link com.atlan.exception.NotFoundException} if the entity does not exist
@@ -165,12 +173,14 @@ public abstract class Entity extends Reference {
 
     /**
      * Retrieves an entity by its qualifiedName, complete with all of its relationships.
+     * The type of the entity will only be determined at runtime.
+     *
      * @param typeName the type of the entity to retrieve
      * @param qualifiedName the unique name of the entity to retrieve
      * @return the requested full entity, complete with all of its relationships
      * @throws AtlanException on any error during the API invocation, such as the {@link com.atlan.exception.NotFoundException} if the entity does not exist
      */
-    public static Entity retrieveFull(String typeName, String qualifiedName) throws AtlanException {
+    protected static Entity retrieveFull(String typeName, String qualifiedName) throws AtlanException {
         EntityResponse response = EntityUniqueAttributesEndpoint.retrieve(typeName, qualifiedName, false, false);
         Entity entity = response.getEntity();
         if (entity != null) {
@@ -181,6 +191,8 @@ public abstract class Entity extends Reference {
 
     /**
      * Retrieves an entity by its qualifiedName, without its relationships.
+     * The type of the entity will only be determined at runtime.
+     *
      * @param typeName the type of the entity to retrieve
      * @param qualifiedName the unique name of the entity to retrieve
      * @return the requested minimal entity, without its relationships
@@ -194,6 +206,7 @@ public abstract class Entity extends Reference {
     /**
      * Soft-deletes an entity by its GUID. This operation can be reversed by updating the entity and changing
      * its {@link #status} to {@code ACTIVE}.
+     *
      * @param guid of the entity to soft-delete
      * @return details of the soft-deleted entity
      * @throws AtlanException on any error during the API invocation
@@ -205,6 +218,7 @@ public abstract class Entity extends Reference {
     /**
      * Hard-deletes (purges) an entity by its GUID. This operation is irreversible. The entity to purge must
      * currently be in an active state (soft-deleted entities cannot be purged).
+     *
      * @param guid of the entity to hard-delete
      * @return details of the hard-deleted entity
      * @throws AtlanException on any error during the API invocation

@@ -281,6 +281,45 @@ public class GlossaryTerm extends Asset {
     }
 
     /**
+     * Retrieves a GlossaryTerm by its GUID, complete with all of its relationships.
+     *
+     * @param guid of the GlossaryTerm to retrieve
+     * @return the requested full GlossaryTerm, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the GlossaryTerm does not exist or the provided GUID is not a GlossaryTerm
+     */
+    public static GlossaryTerm retrieveByGuid(String guid) throws AtlanException {
+        Entity entity = Entity.retrieveFull(guid);
+        if (entity == null) {
+            throw new NotFoundException("No entity found with GUID: " + guid, "ATLAN_JAVA_CLIENT-404-001", 404, null);
+        } else if (entity instanceof GlossaryTerm) {
+            return (GlossaryTerm) entity;
+        } else {
+            throw new NotFoundException(
+                    "Entity with GUID " + guid + " is not a GlossaryTerm.", "ATLAN_JAVA_CLIENT-404-002", 404, null);
+        }
+    }
+
+    /**
+     * Retrieves a GlossaryTerm by its qualifiedName, complete with all of its relationships.
+     *
+     * @param qualifiedName of the GlossaryTerm to retrieve
+     * @return the requested full GlossaryTerm, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the GlossaryTerm does not exist
+     */
+    public static GlossaryTerm retrieveByQualifiedName(String qualifiedName) throws AtlanException {
+        Entity entity = Entity.retrieveFull(TYPE_NAME, qualifiedName);
+        if (entity instanceof GlossaryTerm) {
+            return (GlossaryTerm) entity;
+        } else {
+            throw new NotFoundException(
+                    "No GlossaryTerm found with qualifiedName: " + qualifiedName,
+                    "ATLAN_JAVA_CLIENT-404-003",
+                    404,
+                    null);
+        }
+    }
+
+    /**
      * Update the certificate on a GlossaryTerm.
      *
      * @param qualifiedName of the GlossaryTerm
