@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":9,"i2":9,"i3":10,"i4":9,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":9,"i19":9,"i20":9,"i21":9,"i22":9,"i23":9,"i24":9,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":10,"i32":10,"i33":10,"i34":10,"i35":10,"i36":10,"i37":10,"i38":9,"i39":9,"i40":9};
+var data = {"i0":9,"i1":9,"i2":9,"i3":10,"i4":9,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":9,"i19":9,"i20":9,"i21":9,"i22":9,"i23":9,"i24":9,"i25":9,"i26":9,"i27":10,"i28":10,"i29":10,"i30":10,"i31":10,"i32":10,"i33":10,"i34":10,"i35":10,"i36":10,"i37":10,"i38":10,"i39":10,"i40":9,"i41":9,"i42":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -490,48 +490,62 @@ extends <a href="S3.html" title="class in com.atlan.model.assets">S3</a></pre>
 </td>
 </tr>
 <tr id="i25" class="rowColor">
+<td class="colFirst"><code>static <a href="S3Object.html" title="class in com.atlan.model.assets">S3Object</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#retrieveByGuid(java.lang.String)">retrieveByGuid</a></span>&#8203;(java.lang.String&nbsp;guid)</code></th>
+<td class="colLast">
+<div class="block">Retrieves a S3Object by its GUID, complete with all of its relationships.</div>
+</td>
+</tr>
+<tr id="i26" class="altColor">
+<td class="colFirst"><code>static <a href="S3Object.html" title="class in com.atlan.model.assets">S3Object</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#retrieveByQualifiedName(java.lang.String)">retrieveByQualifiedName</a></span>&#8203;(java.lang.String&nbsp;qualifiedName)</code></th>
+<td class="colLast">
+<div class="block">Retrieves a S3Object by its qualifiedName, complete with all of its relationships.</div>
+</td>
+</tr>
+<tr id="i27" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setBucket(com.atlan.model.assets.S3Bucket)">setBucket</a></span>&#8203;(<a href="S3Bucket.html" title="class in com.atlan.model.assets">S3Bucket</a>&nbsp;bucket)</code></th>
 <td class="colLast">
 <div class="block">S3 bucket in which the object exists.</div>
 </td>
 </tr>
-<tr id="i26" class="altColor">
+<tr id="i28" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setS3BucketName(java.lang.String)">setS3BucketName</a></span>&#8203;(java.lang.String&nbsp;s3BucketName)</code></th>
 <td class="colLast">
 <div class="block">Name of the bucket in which the object exists.</div>
 </td>
 </tr>
-<tr id="i27" class="rowColor">
+<tr id="i29" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setS3BucketQualifiedName(java.lang.String)">setS3BucketQualifiedName</a></span>&#8203;(java.lang.String&nbsp;s3BucketQualifiedName)</code></th>
 <td class="colLast">
 <div class="block">Qualified name of the bucket in which the object exists.</div>
 </td>
 </tr>
-<tr id="i28" class="altColor">
+<tr id="i30" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setS3ObjectContentDisposition(java.lang.String)">setS3ObjectContentDisposition</a></span>&#8203;(java.lang.String&nbsp;s3ObjectContentDisposition)</code></th>
 <td class="colLast">
 <div class="block">Information about how the object's content should be presented.</div>
 </td>
 </tr>
-<tr id="i29" class="rowColor">
+<tr id="i31" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setS3ObjectContentType(java.lang.String)">setS3ObjectContentType</a></span>&#8203;(java.lang.String&nbsp;s3ObjectContentType)</code></th>
 <td class="colLast">
 <div class="block">Type of content in the object.</div>
 </td>
 </tr>
-<tr id="i30" class="altColor">
+<tr id="i32" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setS3ObjectKey(java.lang.String)">setS3ObjectKey</a></span>&#8203;(java.lang.String&nbsp;s3ObjectKey)</code></th>
 <td class="colLast">
 <div class="block">Unique identity of the object in an S3 bucket.</div>
 </td>
 </tr>
-<tr id="i31" class="rowColor">
+<tr id="i33" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setS3ObjectLastModifiedTime(java.lang.Long)">setS3ObjectLastModifiedTime</a></span>&#8203;(java.lang.Long&nbsp;s3ObjectLastModifiedTime)</code></th>
 <td class="colLast">
@@ -540,40 +554,40 @@ extends <a href="S3.html" title="class in com.atlan.model.assets">S3</a></pre>
  been modified.</div>
 </td>
 </tr>
-<tr id="i32" class="altColor">
+<tr id="i34" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setS3ObjectSize(java.lang.Long)">setS3ObjectSize</a></span>&#8203;(java.lang.Long&nbsp;s3ObjectSize)</code></th>
 <td class="colLast">
 <div class="block">Object size in bytes.</div>
 </td>
 </tr>
-<tr id="i33" class="rowColor">
+<tr id="i35" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setS3ObjectStorageClass(java.lang.String)">setS3ObjectStorageClass</a></span>&#8203;(java.lang.String&nbsp;s3ObjectStorageClass)</code></th>
 <td class="colLast">
 <div class="block">Storage class used for storing the object.</div>
 </td>
 </tr>
-<tr id="i34" class="altColor">
+<tr id="i36" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setS3ObjectVersionId(java.lang.String)">setS3ObjectVersionId</a></span>&#8203;(java.lang.String&nbsp;s3ObjectVersionId)</code></th>
 <td class="colLast">
 <div class="block">Version of the object.</div>
 </td>
 </tr>
-<tr id="i35" class="rowColor">
+<tr id="i37" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setTypeName(java.lang.String)">setTypeName</a></span>&#8203;(java.lang.String&nbsp;typeName)</code></th>
 <td class="colLast">
 <div class="block">Fixed typeName for S3Objects.</div>
 </td>
 </tr>
-<tr id="i36" class="altColor">
+<tr id="i38" class="altColor">
 <td class="colFirst"><code><a href="S3Object.S3ObjectBuilder.html" title="class in com.atlan.model.assets">S3Object.S3ObjectBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toBuilder()">toBuilder</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i37" class="rowColor">
+<tr id="i39" class="rowColor">
 <td class="colFirst"><code>protected <a href="S3Object.S3ObjectBuilder.html" title="class in com.atlan.model.assets">S3Object.S3ObjectBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#trimToRequired()">trimToRequired</a></span>()</code></th>
 <td class="colLast">
@@ -581,7 +595,7 @@ extends <a href="S3.html" title="class in com.atlan.model.assets">S3</a></pre>
  more-complete S3Object object.</div>
 </td>
 </tr>
-<tr id="i38" class="altColor">
+<tr id="i40" class="altColor">
 <td class="colFirst"><code>static <a href="S3Object.html" title="class in com.atlan.model.assets">S3Object</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateAnnouncement(java.lang.String,com.atlan.model.enums.AtlanAnnouncementType,java.lang.String,java.lang.String)">updateAnnouncement</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                   <a href="../enums/AtlanAnnouncementType.html" title="enum in com.atlan.model.enums">AtlanAnnouncementType</a>&nbsp;type,
@@ -591,7 +605,7 @@ extends <a href="S3.html" title="class in com.atlan.model.assets">S3</a></pre>
 <div class="block">Update the announcement on a S3Object.</div>
 </td>
 </tr>
-<tr id="i39" class="rowColor">
+<tr id="i41" class="rowColor">
 <td class="colFirst"><code>static <a href="S3Object.html" title="class in com.atlan.model.assets">S3Object</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateCertificate(java.lang.String,com.atlan.model.enums.AtlanCertificateStatus,java.lang.String)">updateCertificate</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                  <a href="../enums/AtlanCertificateStatus.html" title="enum in com.atlan.model.enums">AtlanCertificateStatus</a>&nbsp;certificate,
@@ -600,7 +614,7 @@ extends <a href="S3.html" title="class in com.atlan.model.assets">S3</a></pre>
 <div class="block">Update the certificate on a S3Object.</div>
 </td>
 </tr>
-<tr id="i40" class="altColor">
+<tr id="i42" class="altColor">
 <td class="colFirst"><code>static <a href="S3Object.S3ObjectBuilder.html" title="class in com.atlan.model.assets">S3Object.S3ObjectBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updater(java.lang.String,java.lang.String)">updater</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
        java.lang.String&nbsp;name)</code></th>
@@ -807,6 +821,44 @@ extends <a href="S3.html" title="class in com.atlan.model.assets">S3</a></pre>
 <dd><code><a href="Asset.html#trimToRequired()">trimToRequired</a></code>&nbsp;in class&nbsp;<code><a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the minimal object necessary to update the S3Object, as a builder</dd>
+</dl>
+</li>
+</ul>
+<a id="retrieveByGuid(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>retrieveByGuid</h4>
+<pre class="methodSignature">public static&nbsp;<a href="S3Object.html" title="class in com.atlan.model.assets">S3Object</a>&nbsp;retrieveByGuid&#8203;(java.lang.String&nbsp;guid)
+                               throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Retrieves a S3Object by its GUID, complete with all of its relationships.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>guid</code> - of the S3Object to retrieve</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the requested full S3Object, complete with all of its relationships</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any error during the API invocation, such as the <a href="../../exception/NotFoundException.html" title="class in com.atlan.exception"><code>NotFoundException</code></a> if the S3Object does not exist or the provided GUID is not a S3Object</dd>
+</dl>
+</li>
+</ul>
+<a id="retrieveByQualifiedName(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>retrieveByQualifiedName</h4>
+<pre class="methodSignature">public static&nbsp;<a href="S3Object.html" title="class in com.atlan.model.assets">S3Object</a>&nbsp;retrieveByQualifiedName&#8203;(java.lang.String&nbsp;qualifiedName)
+                                        throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Retrieves a S3Object by its qualifiedName, complete with all of its relationships.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>qualifiedName</code> - of the S3Object to retrieve</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the requested full S3Object, complete with all of its relationships</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any error during the API invocation, such as the <a href="../../exception/NotFoundException.html" title="class in com.atlan.exception"><code>NotFoundException</code></a> if the S3Object does not exist</dd>
 </dl>
 </li>
 </ul>

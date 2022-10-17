@@ -414,7 +414,7 @@ extends <a href="../relations/Reference.html" title="class in com.atlan.model.re
 </td>
 </tr>
 <tr id="i26" class="altColor">
-<td class="colFirst"><code>static <a href="Entity.html" title="class in com.atlan.model.core">Entity</a></code></td>
+<td class="colFirst"><code>protected static <a href="Entity.html" title="class in com.atlan.model.core">Entity</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#retrieveFull(java.lang.String,java.lang.String)">retrieveFull</a></span>&#8203;(java.lang.String&nbsp;typeName,
             java.lang.String&nbsp;qualifiedName)</code></th>
 <td class="colLast">
@@ -491,7 +491,7 @@ extends <a href="../relations/Reference.html" title="class in com.atlan.model.re
 <td class="colFirst"><code><a href="EntityMutationResponse.html" title="class in com.atlan.model.core">EntityMutationResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#upsert()">upsert</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Creates the entity.</div>
+<div class="block">If an entity with the same qualifiedName exists, updates the existing entity.</div>
 </td>
 </tr>
 <tr id="i37" class="rowColor">
@@ -611,7 +611,9 @@ extends <a href="../relations/Reference.html" title="class in com.atlan.model.re
 <h4>upsert</h4>
 <pre class="methodSignature">public&nbsp;<a href="EntityMutationResponse.html" title="class in com.atlan.model.core">EntityMutationResponse</a>&nbsp;upsert()
                               throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
-<div class="block">Creates the entity. If no entity exists, the classifications and businessAttributes will be ?</div>
+<div class="block">If an entity with the same qualifiedName exists, updates the existing entity. Otherwise, creates the entity.
+ No classifications or custom metadata will be changed if updating an existing entity, irrespective of what
+ is included in the entity itself when the method is called.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>details of the created or updated entity</dd>
@@ -630,7 +632,7 @@ extends <a href="../relations/Reference.html" title="class in com.atlan.model.re
                                      boolean&nbsp;replaceCustomMetadata)
                               throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
 <div class="block">If no entity exists, has the same behavior as the <a href="#upsert()"><code>upsert()</code></a> method.
- If an entity does exist, optionally overwrites any classifications and / or businessAttributes.</div>
+ If an entity does exist, optionally overwrites any classifications and / or custom metadata.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>replaceClassifications</code> - whether to replace classifications during an update (true) or not (false)</dd>
@@ -650,7 +652,8 @@ extends <a href="../relations/Reference.html" title="class in com.atlan.model.re
 <h4>retrieveFull</h4>
 <pre class="methodSignature">public static&nbsp;<a href="Entity.html" title="class in com.atlan.model.core">Entity</a>&nbsp;retrieveFull&#8203;(java.lang.String&nbsp;guid)
                            throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
-<div class="block">Retrieves an entity by its GUID, complete with all of its relationships.</div>
+<div class="block">Retrieves an entity by its GUID, complete with all of its relationships.
+ The type of the entity will only be determined at runtime.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>guid</code> - of the entity to retrieve</dd>
@@ -669,7 +672,8 @@ extends <a href="../relations/Reference.html" title="class in com.atlan.model.re
 <h4>retrieveMinimal</h4>
 <pre class="methodSignature">public static&nbsp;<a href="Entity.html" title="class in com.atlan.model.core">Entity</a>&nbsp;retrieveMinimal&#8203;(java.lang.String&nbsp;guid)
                               throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
-<div class="block">Retrieves a minimal entity by its GUID, without its relationships.</div>
+<div class="block">Retrieves a minimal entity by its GUID, without its relationships.
+ The type of the entity will only be determined at runtime.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>guid</code> - of the entity to retrieve</dd>
@@ -686,10 +690,11 @@ extends <a href="../relations/Reference.html" title="class in com.atlan.model.re
 <ul class="blockList">
 <li class="blockList">
 <h4>retrieveFull</h4>
-<pre class="methodSignature">public static&nbsp;<a href="Entity.html" title="class in com.atlan.model.core">Entity</a>&nbsp;retrieveFull&#8203;(java.lang.String&nbsp;typeName,
-                                  java.lang.String&nbsp;qualifiedName)
-                           throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
-<div class="block">Retrieves an entity by its qualifiedName, complete with all of its relationships.</div>
+<pre class="methodSignature">protected static&nbsp;<a href="Entity.html" title="class in com.atlan.model.core">Entity</a>&nbsp;retrieveFull&#8203;(java.lang.String&nbsp;typeName,
+                                     java.lang.String&nbsp;qualifiedName)
+                              throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Retrieves an entity by its qualifiedName, complete with all of its relationships.
+ The type of the entity will only be determined at runtime.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>typeName</code> - the type of the entity to retrieve</dd>
@@ -710,7 +715,8 @@ extends <a href="../relations/Reference.html" title="class in com.atlan.model.re
 <pre class="methodSignature">public static&nbsp;<a href="Entity.html" title="class in com.atlan.model.core">Entity</a>&nbsp;retrieveMinimal&#8203;(java.lang.String&nbsp;typeName,
                                      java.lang.String&nbsp;qualifiedName)
                               throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
-<div class="block">Retrieves an entity by its qualifiedName, without its relationships.</div>
+<div class="block">Retrieves an entity by its qualifiedName, without its relationships.
+ The type of the entity will only be determined at runtime.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>typeName</code> - the type of the entity to retrieve</dd>

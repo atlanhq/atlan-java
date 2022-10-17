@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":9,"i2":9,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":9,"i17":9,"i18":9,"i19":9,"i20":9,"i21":9,"i22":9,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":10,"i32":10,"i33":10,"i34":10,"i35":9,"i36":9,"i37":9};
+var data = {"i0":9,"i1":9,"i2":9,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":9,"i17":9,"i18":9,"i19":9,"i20":9,"i21":9,"i22":9,"i23":9,"i24":9,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":10,"i32":10,"i33":10,"i34":10,"i35":10,"i36":10,"i37":9,"i38":9,"i39":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -471,81 +471,95 @@ extends <a href="Tableau.html" title="class in com.atlan.model.assets">Tableau</
 </td>
 </tr>
 <tr id="i23" class="rowColor">
+<td class="colFirst"><code>static <a href="TableauWorkbook.html" title="class in com.atlan.model.assets">TableauWorkbook</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#retrieveByGuid(java.lang.String)">retrieveByGuid</a></span>&#8203;(java.lang.String&nbsp;guid)</code></th>
+<td class="colLast">
+<div class="block">Retrieves a TableauWorkbook by its GUID, complete with all of its relationships.</div>
+</td>
+</tr>
+<tr id="i24" class="altColor">
+<td class="colFirst"><code>static <a href="TableauWorkbook.html" title="class in com.atlan.model.assets">TableauWorkbook</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#retrieveByQualifiedName(java.lang.String)">retrieveByQualifiedName</a></span>&#8203;(java.lang.String&nbsp;qualifiedName)</code></th>
+<td class="colLast">
+<div class="block">Retrieves a TableauWorkbook by its qualifiedName, complete with all of its relationships.</div>
+</td>
+</tr>
+<tr id="i25" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setDashboards(java.util.SortedSet)">setDashboards</a></span>&#8203;(java.util.SortedSet&lt;<a href="TableauDashboard.html" title="class in com.atlan.model.assets">TableauDashboard</a>&gt;&nbsp;dashboards)</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i24" class="altColor">
+<tr id="i26" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setDatasources(java.util.SortedSet)">setDatasources</a></span>&#8203;(java.util.SortedSet&lt;<a href="TableauDatasource.html" title="class in com.atlan.model.assets">TableauDatasource</a>&gt;&nbsp;datasources)</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i25" class="rowColor">
+<tr id="i27" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setProject(com.atlan.model.assets.TableauProject)">setProject</a></span>&#8203;(<a href="TableauProject.html" title="class in com.atlan.model.assets">TableauProject</a>&nbsp;project)</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i26" class="altColor">
+<tr id="i28" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setProjectHierarchy(java.util.List)">setProjectHierarchy</a></span>&#8203;(java.util.List&lt;java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&gt;&nbsp;projectHierarchy)</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i27" class="rowColor">
+<tr id="i29" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setProjectQualifiedName(java.lang.String)">setProjectQualifiedName</a></span>&#8203;(java.lang.String&nbsp;projectQualifiedName)</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i28" class="altColor">
+<tr id="i30" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setSiteQualifiedName(java.lang.String)">setSiteQualifiedName</a></span>&#8203;(java.lang.String&nbsp;siteQualifiedName)</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i29" class="rowColor">
+<tr id="i31" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setTopLevelProjectName(java.lang.String)">setTopLevelProjectName</a></span>&#8203;(java.lang.String&nbsp;topLevelProjectName)</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i30" class="altColor">
+<tr id="i32" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setTopLevelProjectQualifiedName(java.lang.String)">setTopLevelProjectQualifiedName</a></span>&#8203;(java.lang.String&nbsp;topLevelProjectQualifiedName)</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i31" class="rowColor">
+<tr id="i33" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setTypeName(java.lang.String)">setTypeName</a></span>&#8203;(java.lang.String&nbsp;typeName)</code></th>
 <td class="colLast">
 <div class="block">Fixed typeName for TableauWorkbooks.</div>
 </td>
 </tr>
-<tr id="i32" class="altColor">
+<tr id="i34" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setWorksheets(java.util.SortedSet)">setWorksheets</a></span>&#8203;(java.util.SortedSet&lt;<a href="TableauWorksheet.html" title="class in com.atlan.model.assets">TableauWorksheet</a>&gt;&nbsp;worksheets)</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i33" class="rowColor">
+<tr id="i35" class="rowColor">
 <td class="colFirst"><code><a href="TableauWorkbook.TableauWorkbookBuilder.html" title="class in com.atlan.model.assets">TableauWorkbook.TableauWorkbookBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toBuilder()">toBuilder</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i34" class="altColor">
+<tr id="i36" class="altColor">
 <td class="colFirst"><code>protected <a href="TableauWorkbook.TableauWorkbookBuilder.html" title="class in com.atlan.model.assets">TableauWorkbook.TableauWorkbookBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#trimToRequired()">trimToRequired</a></span>()</code></th>
 <td class="colLast">
@@ -553,7 +567,7 @@ extends <a href="Tableau.html" title="class in com.atlan.model.assets">Tableau</
  more-complete TableauWorkbook object.</div>
 </td>
 </tr>
-<tr id="i35" class="rowColor">
+<tr id="i37" class="rowColor">
 <td class="colFirst"><code>static <a href="TableauWorkbook.html" title="class in com.atlan.model.assets">TableauWorkbook</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateAnnouncement(java.lang.String,com.atlan.model.enums.AtlanAnnouncementType,java.lang.String,java.lang.String)">updateAnnouncement</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                   <a href="../enums/AtlanAnnouncementType.html" title="enum in com.atlan.model.enums">AtlanAnnouncementType</a>&nbsp;type,
@@ -563,7 +577,7 @@ extends <a href="Tableau.html" title="class in com.atlan.model.assets">Tableau</
 <div class="block">Update the announcement on a TableauWorkbook.</div>
 </td>
 </tr>
-<tr id="i36" class="altColor">
+<tr id="i38" class="altColor">
 <td class="colFirst"><code>static <a href="TableauWorkbook.html" title="class in com.atlan.model.assets">TableauWorkbook</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateCertificate(java.lang.String,com.atlan.model.enums.AtlanCertificateStatus,java.lang.String)">updateCertificate</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                  <a href="../enums/AtlanCertificateStatus.html" title="enum in com.atlan.model.enums">AtlanCertificateStatus</a>&nbsp;certificate,
@@ -572,7 +586,7 @@ extends <a href="Tableau.html" title="class in com.atlan.model.assets">Tableau</
 <div class="block">Update the certificate on a TableauWorkbook.</div>
 </td>
 </tr>
-<tr id="i37" class="rowColor">
+<tr id="i39" class="rowColor">
 <td class="colFirst"><code>static <a href="TableauWorkbook.TableauWorkbookBuilder.html" title="class in com.atlan.model.assets">TableauWorkbook.TableauWorkbookBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updater(java.lang.String,java.lang.String)">updater</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
        java.lang.String&nbsp;name)</code></th>
@@ -745,6 +759,44 @@ extends <a href="Tableau.html" title="class in com.atlan.model.assets">Tableau</
 <dd><code><a href="Asset.html#trimToRequired()">trimToRequired</a></code>&nbsp;in class&nbsp;<code><a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the minimal object necessary to update the TableauWorkbook, as a builder</dd>
+</dl>
+</li>
+</ul>
+<a id="retrieveByGuid(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>retrieveByGuid</h4>
+<pre class="methodSignature">public static&nbsp;<a href="TableauWorkbook.html" title="class in com.atlan.model.assets">TableauWorkbook</a>&nbsp;retrieveByGuid&#8203;(java.lang.String&nbsp;guid)
+                                      throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Retrieves a TableauWorkbook by its GUID, complete with all of its relationships.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>guid</code> - of the TableauWorkbook to retrieve</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the requested full TableauWorkbook, complete with all of its relationships</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any error during the API invocation, such as the <a href="../../exception/NotFoundException.html" title="class in com.atlan.exception"><code>NotFoundException</code></a> if the TableauWorkbook does not exist or the provided GUID is not a TableauWorkbook</dd>
+</dl>
+</li>
+</ul>
+<a id="retrieveByQualifiedName(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>retrieveByQualifiedName</h4>
+<pre class="methodSignature">public static&nbsp;<a href="TableauWorkbook.html" title="class in com.atlan.model.assets">TableauWorkbook</a>&nbsp;retrieveByQualifiedName&#8203;(java.lang.String&nbsp;qualifiedName)
+                                               throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Retrieves a TableauWorkbook by its qualifiedName, complete with all of its relationships.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>qualifiedName</code> - of the TableauWorkbook to retrieve</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the requested full TableauWorkbook, complete with all of its relationships</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any error during the API invocation, such as the <a href="../../exception/NotFoundException.html" title="class in com.atlan.exception"><code>NotFoundException</code></a> if the TableauWorkbook does not exist</dd>
 </dl>
 </li>
 </ul>

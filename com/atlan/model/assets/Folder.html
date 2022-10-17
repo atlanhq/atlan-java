@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":9,"i2":9,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":9,"i11":9,"i12":9,"i13":9,"i14":9,"i15":9,"i16":9,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":9,"i24":9,"i25":9};
+var data = {"i0":9,"i1":9,"i2":9,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":9,"i11":9,"i12":9,"i13":9,"i14":9,"i15":9,"i16":9,"i17":9,"i18":9,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":9,"i26":9,"i27":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -405,39 +405,53 @@ extends <a href="Namespace.html" title="class in com.atlan.model.assets">Namespa
 </td>
 </tr>
 <tr id="i17" class="rowColor">
+<td class="colFirst"><code>static <a href="Folder.html" title="class in com.atlan.model.assets">Folder</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#retrieveByGuid(java.lang.String)">retrieveByGuid</a></span>&#8203;(java.lang.String&nbsp;guid)</code></th>
+<td class="colLast">
+<div class="block">Retrieves a Folder by its GUID, complete with all of its relationships.</div>
+</td>
+</tr>
+<tr id="i18" class="altColor">
+<td class="colFirst"><code>static <a href="Folder.html" title="class in com.atlan.model.assets">Folder</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#retrieveByQualifiedName(java.lang.String)">retrieveByQualifiedName</a></span>&#8203;(java.lang.String&nbsp;qualifiedName)</code></th>
+<td class="colLast">
+<div class="block">Retrieves a Folder by its qualifiedName, complete with all of its relationships.</div>
+</td>
+</tr>
+<tr id="i19" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setCollectionQualifiedName(java.lang.String)">setCollectionQualifiedName</a></span>&#8203;(java.lang.String&nbsp;collectionQualifiedName)</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i18" class="altColor">
+<tr id="i20" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setParent(com.atlan.model.assets.Namespace)">setParent</a></span>&#8203;(<a href="Namespace.html" title="class in com.atlan.model.assets">Namespace</a>&nbsp;parent)</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i19" class="rowColor">
+<tr id="i21" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setParentQualifiedName(java.lang.String)">setParentQualifiedName</a></span>&#8203;(java.lang.String&nbsp;parentQualifiedName)</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i20" class="altColor">
+<tr id="i22" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setTypeName(java.lang.String)">setTypeName</a></span>&#8203;(java.lang.String&nbsp;typeName)</code></th>
 <td class="colLast">
 <div class="block">Fixed typeName for Folders.</div>
 </td>
 </tr>
-<tr id="i21" class="rowColor">
+<tr id="i23" class="rowColor">
 <td class="colFirst"><code><a href="Folder.FolderBuilder.html" title="class in com.atlan.model.assets">Folder.FolderBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toBuilder()">toBuilder</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i22" class="altColor">
+<tr id="i24" class="altColor">
 <td class="colFirst"><code>protected <a href="Folder.FolderBuilder.html" title="class in com.atlan.model.assets">Folder.FolderBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#trimToRequired()">trimToRequired</a></span>()</code></th>
 <td class="colLast">
@@ -445,7 +459,7 @@ extends <a href="Namespace.html" title="class in com.atlan.model.assets">Namespa
  more-complete Folder object.</div>
 </td>
 </tr>
-<tr id="i23" class="rowColor">
+<tr id="i25" class="rowColor">
 <td class="colFirst"><code>static <a href="Folder.html" title="class in com.atlan.model.assets">Folder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateAnnouncement(java.lang.String,com.atlan.model.enums.AtlanAnnouncementType,java.lang.String,java.lang.String)">updateAnnouncement</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                   <a href="../enums/AtlanAnnouncementType.html" title="enum in com.atlan.model.enums">AtlanAnnouncementType</a>&nbsp;type,
@@ -455,7 +469,7 @@ extends <a href="Namespace.html" title="class in com.atlan.model.assets">Namespa
 <div class="block">Update the announcement on a Folder.</div>
 </td>
 </tr>
-<tr id="i24" class="altColor">
+<tr id="i26" class="altColor">
 <td class="colFirst"><code>static <a href="Folder.html" title="class in com.atlan.model.assets">Folder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateCertificate(java.lang.String,com.atlan.model.enums.AtlanCertificateStatus,java.lang.String)">updateCertificate</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                  <a href="../enums/AtlanCertificateStatus.html" title="enum in com.atlan.model.enums">AtlanCertificateStatus</a>&nbsp;certificate,
@@ -464,7 +478,7 @@ extends <a href="Namespace.html" title="class in com.atlan.model.assets">Namespa
 <div class="block">Update the certificate on a Folder.</div>
 </td>
 </tr>
-<tr id="i25" class="rowColor">
+<tr id="i27" class="rowColor">
 <td class="colFirst"><code>static <a href="Folder.FolderBuilder.html" title="class in com.atlan.model.assets">Folder.FolderBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updater(java.lang.String,java.lang.String)">updater</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
        java.lang.String&nbsp;name)</code></th>
@@ -637,6 +651,44 @@ extends <a href="Namespace.html" title="class in com.atlan.model.assets">Namespa
 <dd><code><a href="Asset.html#trimToRequired()">trimToRequired</a></code>&nbsp;in class&nbsp;<code><a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the minimal object necessary to update the Folder, as a builder</dd>
+</dl>
+</li>
+</ul>
+<a id="retrieveByGuid(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>retrieveByGuid</h4>
+<pre class="methodSignature">public static&nbsp;<a href="Folder.html" title="class in com.atlan.model.assets">Folder</a>&nbsp;retrieveByGuid&#8203;(java.lang.String&nbsp;guid)
+                             throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Retrieves a Folder by its GUID, complete with all of its relationships.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>guid</code> - of the Folder to retrieve</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the requested full Folder, complete with all of its relationships</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any error during the API invocation, such as the <a href="../../exception/NotFoundException.html" title="class in com.atlan.exception"><code>NotFoundException</code></a> if the Folder does not exist or the provided GUID is not a Folder</dd>
+</dl>
+</li>
+</ul>
+<a id="retrieveByQualifiedName(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>retrieveByQualifiedName</h4>
+<pre class="methodSignature">public static&nbsp;<a href="Folder.html" title="class in com.atlan.model.assets">Folder</a>&nbsp;retrieveByQualifiedName&#8203;(java.lang.String&nbsp;qualifiedName)
+                                      throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Retrieves a Folder by its qualifiedName, complete with all of its relationships.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>qualifiedName</code> - of the Folder to retrieve</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the requested full Folder, complete with all of its relationships</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any error during the API invocation, such as the <a href="../../exception/NotFoundException.html" title="class in com.atlan.exception"><code>NotFoundException</code></a> if the Folder does not exist</dd>
 </dl>
 </li>
 </ul>

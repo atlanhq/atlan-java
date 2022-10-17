@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":9,"i2":9,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":9,"i14":9,"i15":9,"i16":9,"i17":9,"i18":9,"i19":9,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":9,"i30":9,"i31":9};
+var data = {"i0":9,"i1":9,"i2":9,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":9,"i14":9,"i15":9,"i16":9,"i17":9,"i18":9,"i19":9,"i20":9,"i21":9,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":9,"i32":9,"i33":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -450,60 +450,74 @@ extends <a href="Looker.html" title="class in com.atlan.model.assets">Looker</a>
 </td>
 </tr>
 <tr id="i20" class="altColor">
+<td class="colFirst"><code>static <a href="LookerModel.html" title="class in com.atlan.model.assets">LookerModel</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#retrieveByGuid(java.lang.String)">retrieveByGuid</a></span>&#8203;(java.lang.String&nbsp;guid)</code></th>
+<td class="colLast">
+<div class="block">Retrieves a LookerModel by its GUID, complete with all of its relationships.</div>
+</td>
+</tr>
+<tr id="i21" class="rowColor">
+<td class="colFirst"><code>static <a href="LookerModel.html" title="class in com.atlan.model.assets">LookerModel</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#retrieveByQualifiedName(java.lang.String)">retrieveByQualifiedName</a></span>&#8203;(java.lang.String&nbsp;qualifiedName)</code></th>
+<td class="colLast">
+<div class="block">Retrieves a LookerModel by its qualifiedName, complete with all of its relationships.</div>
+</td>
+</tr>
+<tr id="i22" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setExplores(java.util.SortedSet)">setExplores</a></span>&#8203;(java.util.SortedSet&lt;<a href="LookerExplore.html" title="class in com.atlan.model.assets">LookerExplore</a>&gt;&nbsp;explores)</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i21" class="rowColor">
+<tr id="i23" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setFields(java.util.SortedSet)">setFields</a></span>&#8203;(java.util.SortedSet&lt;<a href="LookerField.html" title="class in com.atlan.model.assets">LookerField</a>&gt;&nbsp;fields)</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i22" class="altColor">
+<tr id="i24" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setLook(com.atlan.model.assets.LookerLook)">setLook</a></span>&#8203;(<a href="LookerLook.html" title="class in com.atlan.model.assets">LookerLook</a>&nbsp;look)</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i23" class="rowColor">
+<tr id="i25" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setProject(com.atlan.model.assets.LookerProject)">setProject</a></span>&#8203;(<a href="LookerProject.html" title="class in com.atlan.model.assets">LookerProject</a>&nbsp;project)</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i24" class="altColor">
+<tr id="i26" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setProjectName(java.lang.String)">setProjectName</a></span>&#8203;(java.lang.String&nbsp;projectName)</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i25" class="rowColor">
+<tr id="i27" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setQueries(java.util.SortedSet)">setQueries</a></span>&#8203;(java.util.SortedSet&lt;<a href="LookerQuery.html" title="class in com.atlan.model.assets">LookerQuery</a>&gt;&nbsp;queries)</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i26" class="altColor">
+<tr id="i28" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setTypeName(java.lang.String)">setTypeName</a></span>&#8203;(java.lang.String&nbsp;typeName)</code></th>
 <td class="colLast">
 <div class="block">Fixed typeName for LookerModels.</div>
 </td>
 </tr>
-<tr id="i27" class="rowColor">
+<tr id="i29" class="rowColor">
 <td class="colFirst"><code><a href="LookerModel.LookerModelBuilder.html" title="class in com.atlan.model.assets">LookerModel.LookerModelBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toBuilder()">toBuilder</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i28" class="altColor">
+<tr id="i30" class="altColor">
 <td class="colFirst"><code>protected <a href="LookerModel.LookerModelBuilder.html" title="class in com.atlan.model.assets">LookerModel.LookerModelBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#trimToRequired()">trimToRequired</a></span>()</code></th>
 <td class="colLast">
@@ -511,7 +525,7 @@ extends <a href="Looker.html" title="class in com.atlan.model.assets">Looker</a>
  more-complete LookerModel object.</div>
 </td>
 </tr>
-<tr id="i29" class="rowColor">
+<tr id="i31" class="rowColor">
 <td class="colFirst"><code>static <a href="LookerModel.html" title="class in com.atlan.model.assets">LookerModel</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateAnnouncement(java.lang.String,com.atlan.model.enums.AtlanAnnouncementType,java.lang.String,java.lang.String)">updateAnnouncement</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                   <a href="../enums/AtlanAnnouncementType.html" title="enum in com.atlan.model.enums">AtlanAnnouncementType</a>&nbsp;type,
@@ -521,7 +535,7 @@ extends <a href="Looker.html" title="class in com.atlan.model.assets">Looker</a>
 <div class="block">Update the announcement on a LookerModel.</div>
 </td>
 </tr>
-<tr id="i30" class="altColor">
+<tr id="i32" class="altColor">
 <td class="colFirst"><code>static <a href="LookerModel.html" title="class in com.atlan.model.assets">LookerModel</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateCertificate(java.lang.String,com.atlan.model.enums.AtlanCertificateStatus,java.lang.String)">updateCertificate</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                  <a href="../enums/AtlanCertificateStatus.html" title="enum in com.atlan.model.enums">AtlanCertificateStatus</a>&nbsp;certificate,
@@ -530,7 +544,7 @@ extends <a href="Looker.html" title="class in com.atlan.model.assets">Looker</a>
 <div class="block">Update the certificate on a LookerModel.</div>
 </td>
 </tr>
-<tr id="i31" class="rowColor">
+<tr id="i33" class="rowColor">
 <td class="colFirst"><code>static <a href="LookerModel.LookerModelBuilder.html" title="class in com.atlan.model.assets">LookerModel.LookerModelBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updater(java.lang.String,java.lang.String)">updater</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
        java.lang.String&nbsp;name)</code></th>
@@ -703,6 +717,44 @@ extends <a href="Looker.html" title="class in com.atlan.model.assets">Looker</a>
 <dd><code><a href="Asset.html#trimToRequired()">trimToRequired</a></code>&nbsp;in class&nbsp;<code><a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the minimal object necessary to update the LookerModel, as a builder</dd>
+</dl>
+</li>
+</ul>
+<a id="retrieveByGuid(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>retrieveByGuid</h4>
+<pre class="methodSignature">public static&nbsp;<a href="LookerModel.html" title="class in com.atlan.model.assets">LookerModel</a>&nbsp;retrieveByGuid&#8203;(java.lang.String&nbsp;guid)
+                                  throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Retrieves a LookerModel by its GUID, complete with all of its relationships.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>guid</code> - of the LookerModel to retrieve</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the requested full LookerModel, complete with all of its relationships</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any error during the API invocation, such as the <a href="../../exception/NotFoundException.html" title="class in com.atlan.exception"><code>NotFoundException</code></a> if the LookerModel does not exist or the provided GUID is not a LookerModel</dd>
+</dl>
+</li>
+</ul>
+<a id="retrieveByQualifiedName(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>retrieveByQualifiedName</h4>
+<pre class="methodSignature">public static&nbsp;<a href="LookerModel.html" title="class in com.atlan.model.assets">LookerModel</a>&nbsp;retrieveByQualifiedName&#8203;(java.lang.String&nbsp;qualifiedName)
+                                           throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Retrieves a LookerModel by its qualifiedName, complete with all of its relationships.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>qualifiedName</code> - of the LookerModel to retrieve</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the requested full LookerModel, complete with all of its relationships</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any error during the API invocation, such as the <a href="../../exception/NotFoundException.html" title="class in com.atlan.exception"><code>NotFoundException</code></a> if the LookerModel does not exist</dd>
 </dl>
 </li>
 </ul>

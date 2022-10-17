@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":9,"i2":9,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":9,"i22":9,"i23":9,"i24":9,"i25":9,"i26":9,"i27":9,"i28":10,"i29":10,"i30":10,"i31":10,"i32":10,"i33":10,"i34":10,"i35":10,"i36":10,"i37":10,"i38":10,"i39":10,"i40":10,"i41":10,"i42":10,"i43":10,"i44":10,"i45":9,"i46":9,"i47":9};
+var data = {"i0":9,"i1":9,"i2":9,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":9,"i22":9,"i23":9,"i24":9,"i25":9,"i26":9,"i27":9,"i28":9,"i29":9,"i30":10,"i31":10,"i32":10,"i33":10,"i34":10,"i35":10,"i36":10,"i37":10,"i38":10,"i39":10,"i40":10,"i41":10,"i42":10,"i43":10,"i44":10,"i45":10,"i46":10,"i47":9,"i48":9,"i49":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -302,7 +302,7 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addClassifications(java.lang.String,java.util.List)">addClassifications</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                   java.util.List&lt;java.lang.String&gt;&nbsp;classificationNames)</code></th>
 <td class="colLast">
-<div class="block">Add classifications to a Query.</div>
+<div class="block">Add classifications to a AtlanQuery.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
@@ -310,7 +310,7 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#appendTerms(java.lang.String,java.util.List)">appendTerms</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
            java.util.List&lt;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;terms)</code></th>
 <td class="colLast">
-<div class="block">Link additional terms to the Query, without replacing existing terms linked to the Query.</div>
+<div class="block">Link additional terms to the AtlanQuery, without replacing existing terms linked to the AtlanQuery.</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
@@ -409,7 +409,7 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTypeName()">getTypeName</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Fixed typeName for Querys.</div>
+<div class="block">Fixed typeName for AtlanQuerys.</div>
 </td>
 </tr>
 <tr id="i17" class="rowColor">
@@ -442,14 +442,14 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
 <td class="colFirst"><code>static <a href="AtlanQuery.html" title="class in com.atlan.model.assets">AtlanQuery</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#refByGuid(java.lang.String)">refByGuid</a></span>&#8203;(java.lang.String&nbsp;guid)</code></th>
 <td class="colLast">
-<div class="block">Reference to a Query by GUID.</div>
+<div class="block">Reference to a AtlanQuery by GUID.</div>
 </td>
 </tr>
 <tr id="i22" class="altColor">
 <td class="colFirst"><code>static <a href="AtlanQuery.html" title="class in com.atlan.model.assets">AtlanQuery</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#refByQualifiedName(java.lang.String)">refByQualifiedName</a></span>&#8203;(java.lang.String&nbsp;qualifiedName)</code></th>
 <td class="colLast">
-<div class="block">Reference to a Query by qualifiedName.</div>
+<div class="block">Reference to a AtlanQuery by qualifiedName.</div>
 </td>
 </tr>
 <tr id="i23" class="rowColor">
@@ -457,7 +457,7 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeAnnouncement(java.lang.String,java.lang.String)">removeAnnouncement</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                   java.lang.String&nbsp;name)</code></th>
 <td class="colLast">
-<div class="block">Remove the announcement from a Query.</div>
+<div class="block">Remove the announcement from a AtlanQuery.</div>
 </td>
 </tr>
 <tr id="i24" class="altColor">
@@ -465,7 +465,7 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeCertificate(java.lang.String,java.lang.String)">removeCertificate</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                  java.lang.String&nbsp;name)</code></th>
 <td class="colLast">
-<div class="block">Remove the certificate from a Query.</div>
+<div class="block">Remove the certificate from a AtlanQuery.</div>
 </td>
 </tr>
 <tr id="i25" class="rowColor">
@@ -473,7 +473,7 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeClassification(java.lang.String,java.lang.String)">removeClassification</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                     java.lang.String&nbsp;classificationName)</code></th>
 <td class="colLast">
-<div class="block">Remove a classification from a Query.</div>
+<div class="block">Remove a classification from a AtlanQuery.</div>
 </td>
 </tr>
 <tr id="i26" class="altColor">
@@ -481,7 +481,7 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeTerms(java.lang.String,java.util.List)">removeTerms</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
            java.util.List&lt;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;terms)</code></th>
 <td class="colLast">
-<div class="block">Remove terms from a Query, without replacing all existing terms linked to the Query.</div>
+<div class="block">Remove terms from a AtlanQuery, without replacing all existing terms linked to the AtlanQuery.</div>
 </td>
 </tr>
 <tr id="i27" class="rowColor">
@@ -490,152 +490,166 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
             java.lang.String&nbsp;name,
             java.util.List&lt;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;terms)</code></th>
 <td class="colLast">
-<div class="block">Replace the terms linked to the Query.</div>
+<div class="block">Replace the terms linked to the AtlanQuery.</div>
 </td>
 </tr>
 <tr id="i28" class="altColor">
+<td class="colFirst"><code>static <a href="AtlanQuery.html" title="class in com.atlan.model.assets">AtlanQuery</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#retrieveByGuid(java.lang.String)">retrieveByGuid</a></span>&#8203;(java.lang.String&nbsp;guid)</code></th>
+<td class="colLast">
+<div class="block">Retrieves a AtlanQuery by its GUID, complete with all of its relationships.</div>
+</td>
+</tr>
+<tr id="i29" class="rowColor">
+<td class="colFirst"><code>static <a href="AtlanQuery.html" title="class in com.atlan.model.assets">AtlanQuery</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#retrieveByQualifiedName(java.lang.String)">retrieveByQualifiedName</a></span>&#8203;(java.lang.String&nbsp;qualifiedName)</code></th>
+<td class="colLast">
+<div class="block">Retrieves a AtlanQuery by its qualifiedName, complete with all of its relationships.</div>
+</td>
+</tr>
+<tr id="i30" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setCollectionQualifiedName(java.lang.String)">setCollectionQualifiedName</a></span>&#8203;(java.lang.String&nbsp;collectionQualifiedName)</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i29" class="rowColor">
+<tr id="i31" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setColumns(java.util.SortedSet)">setColumns</a></span>&#8203;(java.util.SortedSet&lt;<a href="Column.html" title="class in com.atlan.model.assets">Column</a>&gt;&nbsp;columns)</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i30" class="altColor">
+<tr id="i32" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setDefaultDatabaseQualifiedName(java.lang.String)">setDefaultDatabaseQualifiedName</a></span>&#8203;(java.lang.String&nbsp;defaultDatabaseQualifiedName)</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i31" class="rowColor">
+<tr id="i33" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setDefaultSchemaQualifiedName(java.lang.String)">setDefaultSchemaQualifiedName</a></span>&#8203;(java.lang.String&nbsp;defaultSchemaQualifiedName)</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i32" class="altColor">
+<tr id="i34" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setIsPrivate(java.lang.Boolean)">setIsPrivate</a></span>&#8203;(java.lang.Boolean&nbsp;isPrivate)</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i33" class="rowColor">
+<tr id="i35" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setIsSqlSnippet(java.lang.Boolean)">setIsSqlSnippet</a></span>&#8203;(java.lang.Boolean&nbsp;isSqlSnippet)</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i34" class="altColor">
+<tr id="i36" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setIsVisualQuery(java.lang.Boolean)">setIsVisualQuery</a></span>&#8203;(java.lang.Boolean&nbsp;isVisualQuery)</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i35" class="rowColor">
+<tr id="i37" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setParent(com.atlan.model.assets.Namespace)">setParent</a></span>&#8203;(<a href="Namespace.html" title="class in com.atlan.model.assets">Namespace</a>&nbsp;parent)</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i36" class="altColor">
+<tr id="i38" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setParentQualifiedName(java.lang.String)">setParentQualifiedName</a></span>&#8203;(java.lang.String&nbsp;parentQualifiedName)</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i37" class="rowColor">
+<tr id="i39" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setRawQuery(java.lang.String)">setRawQuery</a></span>&#8203;(java.lang.String&nbsp;rawQuery)</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i38" class="altColor">
+<tr id="i40" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setTables(java.util.SortedSet)">setTables</a></span>&#8203;(java.util.SortedSet&lt;<a href="Table.html" title="class in com.atlan.model.assets">Table</a>&gt;&nbsp;tables)</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i39" class="rowColor">
+<tr id="i41" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setTypeName(java.lang.String)">setTypeName</a></span>&#8203;(java.lang.String&nbsp;typeName)</code></th>
 <td class="colLast">
-<div class="block">Fixed typeName for Querys.</div>
+<div class="block">Fixed typeName for AtlanQuerys.</div>
 </td>
 </tr>
-<tr id="i40" class="altColor">
+<tr id="i42" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setVariablesSchemaBase64(java.lang.String)">setVariablesSchemaBase64</a></span>&#8203;(java.lang.String&nbsp;variablesSchemaBase64)</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i41" class="rowColor">
+<tr id="i43" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setViews(java.util.SortedSet)">setViews</a></span>&#8203;(java.util.SortedSet&lt;<a href="View.html" title="class in com.atlan.model.assets">View</a>&gt;&nbsp;views)</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i42" class="altColor">
+<tr id="i44" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setVisualBuilderSchemaBase64(java.lang.String)">setVisualBuilderSchemaBase64</a></span>&#8203;(java.lang.String&nbsp;visualBuilderSchemaBase64)</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i43" class="rowColor">
+<tr id="i45" class="rowColor">
 <td class="colFirst"><code><a href="AtlanQuery.AtlanQueryBuilder.html" title="class in com.atlan.model.assets">AtlanQuery.AtlanQueryBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toBuilder()">toBuilder</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i44" class="altColor">
+<tr id="i46" class="altColor">
 <td class="colFirst"><code>protected <a href="AtlanQuery.AtlanQueryBuilder.html" title="class in com.atlan.model.assets">AtlanQuery.AtlanQueryBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#trimToRequired()">trimToRequired</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Builds the minimal object necessary to apply an update to a Query, from a potentially
- more-complete Query object.</div>
+<div class="block">Builds the minimal object necessary to apply an update to a AtlanQuery, from a potentially
+ more-complete AtlanQuery object.</div>
 </td>
 </tr>
-<tr id="i45" class="rowColor">
+<tr id="i47" class="rowColor">
 <td class="colFirst"><code>static <a href="AtlanQuery.html" title="class in com.atlan.model.assets">AtlanQuery</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateAnnouncement(java.lang.String,com.atlan.model.enums.AtlanAnnouncementType,java.lang.String,java.lang.String)">updateAnnouncement</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                   <a href="../enums/AtlanAnnouncementType.html" title="enum in com.atlan.model.enums">AtlanAnnouncementType</a>&nbsp;type,
                   java.lang.String&nbsp;title,
                   java.lang.String&nbsp;message)</code></th>
 <td class="colLast">
-<div class="block">Update the announcement on a Query.</div>
+<div class="block">Update the announcement on a AtlanQuery.</div>
 </td>
 </tr>
-<tr id="i46" class="altColor">
+<tr id="i48" class="altColor">
 <td class="colFirst"><code>static <a href="AtlanQuery.html" title="class in com.atlan.model.assets">AtlanQuery</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateCertificate(java.lang.String,com.atlan.model.enums.AtlanCertificateStatus,java.lang.String)">updateCertificate</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                  <a href="../enums/AtlanCertificateStatus.html" title="enum in com.atlan.model.enums">AtlanCertificateStatus</a>&nbsp;certificate,
                  java.lang.String&nbsp;message)</code></th>
 <td class="colLast">
-<div class="block">Update the certificate on a Query.</div>
+<div class="block">Update the certificate on a AtlanQuery.</div>
 </td>
 </tr>
-<tr id="i47" class="rowColor">
+<tr id="i49" class="rowColor">
 <td class="colFirst"><code>static <a href="AtlanQuery.AtlanQueryBuilder.html" title="class in com.atlan.model.assets">AtlanQuery.AtlanQueryBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updater(java.lang.String,java.lang.String)">updater</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
        java.lang.String&nbsp;name)</code></th>
 <td class="colLast">
-<div class="block">Builds the minimal object necessary to update a Query.</div>
+<div class="block">Builds the minimal object necessary to update a AtlanQuery.</div>
 </td>
 </tr>
 </table>
@@ -753,12 +767,12 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
 <li class="blockList">
 <h4>refByGuid</h4>
 <pre class="methodSignature">public static&nbsp;<a href="AtlanQuery.html" title="class in com.atlan.model.assets">AtlanQuery</a>&nbsp;refByGuid&#8203;(java.lang.String&nbsp;guid)</pre>
-<div class="block">Reference to a Query by GUID.</div>
+<div class="block">Reference to a AtlanQuery by GUID.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>guid</code> - the GUID of the Query to reference</dd>
+<dd><code>guid</code> - the GUID of the AtlanQuery to reference</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>reference to a Query that can be used for defining a relationship to a Query</dd>
+<dd>reference to a AtlanQuery that can be used for defining a relationship to a AtlanQuery</dd>
 </dl>
 </li>
 </ul>
@@ -769,12 +783,12 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
 <li class="blockList">
 <h4>refByQualifiedName</h4>
 <pre class="methodSignature">public static&nbsp;<a href="AtlanQuery.html" title="class in com.atlan.model.assets">AtlanQuery</a>&nbsp;refByQualifiedName&#8203;(java.lang.String&nbsp;qualifiedName)</pre>
-<div class="block">Reference to a Query by qualifiedName.</div>
+<div class="block">Reference to a AtlanQuery by qualifiedName.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>qualifiedName</code> - the qualifiedName of the Query to reference</dd>
+<dd><code>qualifiedName</code> - the qualifiedName of the AtlanQuery to reference</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>reference to a Query that can be used for defining a relationship to a Query</dd>
+<dd>reference to a AtlanQuery that can be used for defining a relationship to a AtlanQuery</dd>
 </dl>
 </li>
 </ul>
@@ -786,13 +800,13 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
 <h4>updater</h4>
 <pre class="methodSignature">public static&nbsp;<a href="AtlanQuery.AtlanQueryBuilder.html" title="class in com.atlan.model.assets">AtlanQuery.AtlanQueryBuilder</a>&lt;?,&#8203;?&gt;&nbsp;updater&#8203;(java.lang.String&nbsp;qualifiedName,
                                                               java.lang.String&nbsp;name)</pre>
-<div class="block">Builds the minimal object necessary to update a Query.</div>
+<div class="block">Builds the minimal object necessary to update a AtlanQuery.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>qualifiedName</code> - of the Query</dd>
-<dd><code>name</code> - of the Query</dd>
+<dd><code>qualifiedName</code> - of the AtlanQuery</dd>
+<dd><code>name</code> - of the AtlanQuery</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the minimal request necessary to update the Query, as a builder</dd>
+<dd>the minimal request necessary to update the AtlanQuery, as a builder</dd>
 </dl>
 </li>
 </ul>
@@ -803,13 +817,51 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
 <li class="blockList">
 <h4>trimToRequired</h4>
 <pre class="methodSignature">protected&nbsp;<a href="AtlanQuery.AtlanQueryBuilder.html" title="class in com.atlan.model.assets">AtlanQuery.AtlanQueryBuilder</a>&lt;?,&#8203;?&gt;&nbsp;trimToRequired()</pre>
-<div class="block">Builds the minimal object necessary to apply an update to a Query, from a potentially
- more-complete Query object.</div>
+<div class="block">Builds the minimal object necessary to apply an update to a AtlanQuery, from a potentially
+ more-complete AtlanQuery object.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="Asset.html#trimToRequired()">trimToRequired</a></code>&nbsp;in class&nbsp;<code><a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the minimal object necessary to update the Query, as a builder</dd>
+<dd>the minimal object necessary to update the AtlanQuery, as a builder</dd>
+</dl>
+</li>
+</ul>
+<a id="retrieveByGuid(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>retrieveByGuid</h4>
+<pre class="methodSignature">public static&nbsp;<a href="AtlanQuery.html" title="class in com.atlan.model.assets">AtlanQuery</a>&nbsp;retrieveByGuid&#8203;(java.lang.String&nbsp;guid)
+                                 throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Retrieves a AtlanQuery by its GUID, complete with all of its relationships.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>guid</code> - of the AtlanQuery to retrieve</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the requested full AtlanQuery, complete with all of its relationships</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any error during the API invocation, such as the <a href="../../exception/NotFoundException.html" title="class in com.atlan.exception"><code>NotFoundException</code></a> if the AtlanQuery does not exist or the provided GUID is not a AtlanQuery</dd>
+</dl>
+</li>
+</ul>
+<a id="retrieveByQualifiedName(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>retrieveByQualifiedName</h4>
+<pre class="methodSignature">public static&nbsp;<a href="AtlanQuery.html" title="class in com.atlan.model.assets">AtlanQuery</a>&nbsp;retrieveByQualifiedName&#8203;(java.lang.String&nbsp;qualifiedName)
+                                          throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Retrieves a AtlanQuery by its qualifiedName, complete with all of its relationships.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>qualifiedName</code> - of the AtlanQuery to retrieve</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the requested full AtlanQuery, complete with all of its relationships</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any error during the API invocation, such as the <a href="../../exception/NotFoundException.html" title="class in com.atlan.exception"><code>NotFoundException</code></a> if the AtlanQuery does not exist</dd>
 </dl>
 </li>
 </ul>
@@ -823,14 +875,14 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
                                            <a href="../enums/AtlanCertificateStatus.html" title="enum in com.atlan.model.enums">AtlanCertificateStatus</a>&nbsp;certificate,
                                            java.lang.String&nbsp;message)
                                     throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
-<div class="block">Update the certificate on a Query.</div>
+<div class="block">Update the certificate on a AtlanQuery.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>qualifiedName</code> - of the Query</dd>
+<dd><code>qualifiedName</code> - of the AtlanQuery</dd>
 <dd><code>certificate</code> - to use</dd>
 <dd><code>message</code> - (optional) message, or null if no message</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the updated Query, or null if the update failed</dd>
+<dd>the updated AtlanQuery, or null if the update failed</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API problems</dd>
 </dl>
@@ -845,13 +897,13 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
 <pre class="methodSignature">public static&nbsp;<a href="AtlanQuery.html" title="class in com.atlan.model.assets">AtlanQuery</a>&nbsp;removeCertificate&#8203;(java.lang.String&nbsp;qualifiedName,
                                            java.lang.String&nbsp;name)
                                     throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
-<div class="block">Remove the certificate from a Query.</div>
+<div class="block">Remove the certificate from a AtlanQuery.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>qualifiedName</code> - of the Query</dd>
-<dd><code>name</code> - of the Query</dd>
+<dd><code>qualifiedName</code> - of the AtlanQuery</dd>
+<dd><code>name</code> - of the AtlanQuery</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the updated Query, or null if the removal failed</dd>
+<dd>the updated AtlanQuery, or null if the removal failed</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API problems</dd>
 </dl>
@@ -868,10 +920,10 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
                                             java.lang.String&nbsp;title,
                                             java.lang.String&nbsp;message)
                                      throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
-<div class="block">Update the announcement on a Query.</div>
+<div class="block">Update the announcement on a AtlanQuery.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>qualifiedName</code> - of the Query</dd>
+<dd><code>qualifiedName</code> - of the AtlanQuery</dd>
 <dd><code>type</code> - type of announcement to set</dd>
 <dd><code>title</code> - (optional) title of the announcement to set (or null for no title)</dd>
 <dd><code>message</code> - (optional) message of the announcement to set (or null for no message)</dd>
@@ -891,13 +943,13 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
 <pre class="methodSignature">public static&nbsp;<a href="AtlanQuery.html" title="class in com.atlan.model.assets">AtlanQuery</a>&nbsp;removeAnnouncement&#8203;(java.lang.String&nbsp;qualifiedName,
                                             java.lang.String&nbsp;name)
                                      throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
-<div class="block">Remove the announcement from a Query.</div>
+<div class="block">Remove the announcement from a AtlanQuery.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>qualifiedName</code> - of the Query</dd>
-<dd><code>name</code> - of the Query</dd>
+<dd><code>qualifiedName</code> - of the AtlanQuery</dd>
+<dd><code>name</code> - of the AtlanQuery</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the updated Query, or null if the removal failed</dd>
+<dd>the updated AtlanQuery, or null if the removal failed</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API problems</dd>
 </dl>
@@ -912,13 +964,13 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
 <pre class="methodSignature">public static&nbsp;void&nbsp;addClassifications&#8203;(java.lang.String&nbsp;qualifiedName,
                                       java.util.List&lt;java.lang.String&gt;&nbsp;classificationNames)
                                throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
-<div class="block">Add classifications to a Query.</div>
+<div class="block">Add classifications to a AtlanQuery.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>qualifiedName</code> - of the Query</dd>
+<dd><code>qualifiedName</code> - of the AtlanQuery</dd>
 <dd><code>classificationNames</code> - human-readable names of the classifications to add</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API problems, or if any of the classifications already exist on the Query</dd>
+<dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API problems, or if any of the classifications already exist on the AtlanQuery</dd>
 </dl>
 </li>
 </ul>
@@ -931,13 +983,13 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
 <pre class="methodSignature">public static&nbsp;void&nbsp;removeClassification&#8203;(java.lang.String&nbsp;qualifiedName,
                                         java.lang.String&nbsp;classificationName)
                                  throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
-<div class="block">Remove a classification from a Query.</div>
+<div class="block">Remove a classification from a AtlanQuery.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>qualifiedName</code> - of the Query</dd>
+<dd><code>qualifiedName</code> - of the AtlanQuery</dd>
 <dd><code>classificationName</code> - human-readable name of the classification to remove</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API problems, or if the classification does not exist on the Query</dd>
+<dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API problems, or if the classification does not exist on the AtlanQuery</dd>
 </dl>
 </li>
 </ul>
@@ -951,14 +1003,14 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
                                       java.lang.String&nbsp;name,
                                       java.util.List&lt;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;terms)
                                throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
-<div class="block">Replace the terms linked to the Query.</div>
+<div class="block">Replace the terms linked to the AtlanQuery.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>qualifiedName</code> - for the Query</dd>
-<dd><code>name</code> - human-readable name of the Query</dd>
-<dd><code>terms</code> - the list of terms to replace on the Query, or null to remove all terms from the Query</dd>
+<dd><code>qualifiedName</code> - for the AtlanQuery</dd>
+<dd><code>name</code> - human-readable name of the AtlanQuery</dd>
+<dd><code>terms</code> - the list of terms to replace on the AtlanQuery, or null to remove all terms from the AtlanQuery</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the Query that was updated (note that it will NOT contain details of the replaced terms)</dd>
+<dd>the AtlanQuery that was updated (note that it will NOT contain details of the replaced terms)</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API problems</dd>
 </dl>
@@ -973,15 +1025,15 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
 <pre class="methodSignature">public static&nbsp;<a href="AtlanQuery.html" title="class in com.atlan.model.assets">AtlanQuery</a>&nbsp;appendTerms&#8203;(java.lang.String&nbsp;qualifiedName,
                                      java.util.List&lt;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;terms)
                               throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
-<div class="block">Link additional terms to the Query, without replacing existing terms linked to the Query.
- Note: this operation must make two API calls — one to retrieve the Query's existing terms,
+<div class="block">Link additional terms to the AtlanQuery, without replacing existing terms linked to the AtlanQuery.
+ Note: this operation must make two API calls — one to retrieve the AtlanQuery's existing terms,
  and a second to append the new terms.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>qualifiedName</code> - for the Query</dd>
-<dd><code>terms</code> - the list of terms to append to the Query</dd>
+<dd><code>qualifiedName</code> - for the AtlanQuery</dd>
+<dd><code>terms</code> - the list of terms to append to the AtlanQuery</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the Query that was updated  (note that it will NOT contain details of the appended terms)</dd>
+<dd>the AtlanQuery that was updated  (note that it will NOT contain details of the appended terms)</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API problems</dd>
 </dl>
@@ -996,15 +1048,15 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
 <pre class="methodSignature">public static&nbsp;<a href="AtlanQuery.html" title="class in com.atlan.model.assets">AtlanQuery</a>&nbsp;removeTerms&#8203;(java.lang.String&nbsp;qualifiedName,
                                      java.util.List&lt;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;terms)
                               throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
-<div class="block">Remove terms from a Query, without replacing all existing terms linked to the Query.
- Note: this operation must make two API calls — one to retrieve the Query's existing terms,
+<div class="block">Remove terms from a AtlanQuery, without replacing all existing terms linked to the AtlanQuery.
+ Note: this operation must make two API calls — one to retrieve the AtlanQuery's existing terms,
  and a second to remove the provided terms.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>qualifiedName</code> - for the Query</dd>
-<dd><code>terms</code> - the list of terms to remove from the Query, which must be referenced by GUID</dd>
+<dd><code>qualifiedName</code> - for the AtlanQuery</dd>
+<dd><code>terms</code> - the list of terms to remove from the AtlanQuery, which must be referenced by GUID</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the Query that was updated (note that it will NOT contain details of the resulting terms)</dd>
+<dd>the AtlanQuery that was updated (note that it will NOT contain details of the resulting terms)</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API problems</dd>
 </dl>
@@ -1358,7 +1410,7 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
 <li class="blockList">
 <h4>getTypeName</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getTypeName()</pre>
-<div class="block">Fixed typeName for Querys.</div>
+<div class="block">Fixed typeName for AtlanQuerys.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code><a href="../relations/Reference.html#getTypeName()">getTypeName</a></code>&nbsp;in class&nbsp;<code><a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a></code></dd>
@@ -1372,7 +1424,7 @@ extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a></pre>
 <li class="blockList">
 <h4>setTypeName</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;setTypeName&#8203;(java.lang.String&nbsp;typeName)</pre>
-<div class="block">Fixed typeName for Querys.</div>
+<div class="block">Fixed typeName for AtlanQuerys.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code><a href="../relations/Reference.html#setTypeName(java.lang.String)">setTypeName</a></code>&nbsp;in class&nbsp;<code><a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a></code></dd>
