@@ -2,6 +2,9 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
+import com.atlan.exception.AtlanException;
+import com.atlan.exception.NotFoundException;
+import com.atlan.model.core.Entity;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.SortedSet;
 import lombok.*;
@@ -97,6 +100,7 @@ public class Readme extends Resource {
 
     /**
      * Generate a unique README name.
+     *
      * @param assetGuid GUID of the asset to which the README should be attached
      * @return a unique name for the README
      */
@@ -106,10 +110,47 @@ public class Readme extends Resource {
 
     /**
      * Generate a readable README name (although this does not appear anywhere in the UI).
+     *
      * @param assetName name of the asset to which the README should be attached
      * @return a readable name for the README
      */
     private static String generateName(String assetName) {
         return assetName + " Readme";
+    }
+
+    /**
+     * Retrieves a Readme by its GUID, complete with all of its relationships.
+     *
+     * @param guid of the Readme to retrieve
+     * @return the requested full Readme, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Readme does not exist or the provided GUID is not a Readme
+     */
+    public static Readme retrieveByGuid(String guid) throws AtlanException {
+        Entity entity = Entity.retrieveFull(guid);
+        if (entity == null) {
+            throw new NotFoundException("No entity found with GUID: " + guid, "ATLAN_JAVA_CLIENT-404-001", 404, null);
+        } else if (entity instanceof Readme) {
+            return (Readme) entity;
+        } else {
+            throw new NotFoundException(
+                    "Entity with GUID " + guid + " is not a Readme.", "ATLAN_JAVA_CLIENT-404-002", 404, null);
+        }
+    }
+
+    /**
+     * Retrieves a Readme by its qualifiedName, complete with all of its relationships.
+     *
+     * @param qualifiedName of the Readme to retrieve
+     * @return the requested full Readme, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Readme does not exist
+     */
+    public static Readme retrieveByQualifiedName(String qualifiedName) throws AtlanException {
+        Entity entity = Entity.retrieveFull(TYPE_NAME, qualifiedName);
+        if (entity instanceof Readme) {
+            return (Readme) entity;
+        } else {
+            throw new NotFoundException(
+                    "No Readme found with qualifiedName: " + qualifiedName, "ATLAN_JAVA_CLIENT-404-003", 404, null);
+        }
     }
 }

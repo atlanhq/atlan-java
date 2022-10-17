@@ -199,6 +199,42 @@ public class Glossary extends Asset {
     }
 
     /**
+     * Retrieves a Glossary by its GUID, complete with all of its relationships.
+     *
+     * @param guid of the Glossary to retrieve
+     * @return the requested full Glossary, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Glossary does not exist or the provided GUID is not a Glossary
+     */
+    public static Glossary retrieveByGuid(String guid) throws AtlanException {
+        Entity entity = Entity.retrieveFull(guid);
+        if (entity == null) {
+            throw new NotFoundException("No entity found with GUID: " + guid, "ATLAN_JAVA_CLIENT-404-001", 404, null);
+        } else if (entity instanceof Glossary) {
+            return (Glossary) entity;
+        } else {
+            throw new NotFoundException(
+                    "Entity with GUID " + guid + " is not a Glossary.", "ATLAN_JAVA_CLIENT-404-002", 404, null);
+        }
+    }
+
+    /**
+     * Retrieves a Glossary by its qualifiedName, complete with all of its relationships.
+     *
+     * @param qualifiedName of the Glossary to retrieve
+     * @return the requested full Glossary, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Glossary does not exist
+     */
+    public static Glossary retrieveByQualifiedName(String qualifiedName) throws AtlanException {
+        Entity entity = Entity.retrieveFull(TYPE_NAME, qualifiedName);
+        if (entity instanceof Glossary) {
+            return (Glossary) entity;
+        } else {
+            throw new NotFoundException(
+                    "No Glossary found with qualifiedName: " + qualifiedName, "ATLAN_JAVA_CLIENT-404-003", 404, null);
+        }
+    }
+
+    /**
      * Retrieve category hierarchy in this glossary, in a traversable form. You can traverse in either
      * depth-first ({@link CategoryHierarchy#depthFirst()}) or breadth-first ({@link CategoryHierarchy#breadthFirst()})
      * order. Both return an ordered list of {@link GlossaryCategory} objects.

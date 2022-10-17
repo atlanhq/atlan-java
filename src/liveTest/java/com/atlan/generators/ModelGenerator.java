@@ -403,7 +403,91 @@ public class ModelGenerator extends AtlanLiveTest {
         fs.append(System.lineSeparator());
         fs.append("    }");
         fs.append(System.lineSeparator()).append(System.lineSeparator());
-        ;
+    }
+
+    private void retrievals(BufferedWriter fs, String className) throws IOException {
+        fs.append("    /**").append(System.lineSeparator());
+        fs.append("     * Retrieves a ")
+                .append(className)
+                .append(" by its GUID, complete with all of its relationships.")
+                .append(System.lineSeparator());
+        fs.append("     *").append(System.lineSeparator());
+        fs.append("     * @param guid of the ")
+                .append(className)
+                .append(" to retrieve")
+                .append(System.lineSeparator());
+        fs.append("     * @return the requested full ")
+                .append(className)
+                .append(", complete with all of its relationships")
+                .append(System.lineSeparator());
+        fs.append(
+                        "     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ")
+                .append(className)
+                .append(" does not exist or the provided GUID is not a ")
+                .append(className)
+                .append(System.lineSeparator());
+        fs.append("     */").append(System.lineSeparator());
+        fs.append("    public static ")
+                .append(className)
+                .append(" retrieveByGuid(String guid) throws AtlanException {")
+                .append(System.lineSeparator());
+        fs.append("        Entity entity = Entity.retrieveFull(guid);").append(System.lineSeparator());
+        fs.append("        if (entity == null) {").append(System.lineSeparator());
+        fs.append(
+                        "            throw new NotFoundException(\"No entity found with GUID: \" + guid, \"ATLAN_JAVA_CLIENT-404-001\", 404, null);")
+                .append(System.lineSeparator());
+        fs.append("        } else if (entity instanceof ")
+                .append(className)
+                .append(") {")
+                .append(System.lineSeparator());
+        fs.append("            return (").append(className).append(") entity;").append(System.lineSeparator());
+        fs.append("        } else {").append(System.lineSeparator());
+        fs.append("            throw new NotFoundException(\"Entity with GUID \" + guid + \" is not a ")
+                .append(className)
+                .append(".\", \"ATLAN_JAVA_CLIENT-404-002\", 404, null);")
+                .append(System.lineSeparator());
+        fs.append("        }").append(System.lineSeparator());
+        fs.append("    }").append(System.lineSeparator());
+        fs.append(System.lineSeparator());
+        fs.append("    /**").append(System.lineSeparator());
+        fs.append("     * Retrieves a ")
+                .append(className)
+                .append(" by its qualifiedName, complete with all of its relationships.")
+                .append(System.lineSeparator());
+        fs.append("     *").append(System.lineSeparator());
+        fs.append("     * @param qualifiedName of the ")
+                .append(className)
+                .append(" to retrieve")
+                .append(System.lineSeparator());
+        fs.append("     * @return the requested full ")
+                .append(className)
+                .append(", complete with all of its relationships")
+                .append(System.lineSeparator());
+        fs.append(
+                        "     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ")
+                .append(className)
+                .append(" does not exist")
+                .append(System.lineSeparator());
+        fs.append("     */").append(System.lineSeparator());
+        fs.append("    public static ")
+                .append(className)
+                .append(" retrieveByQualifiedName(String qualifiedName) throws AtlanException {")
+                .append(System.lineSeparator());
+        fs.append("        Entity entity = Entity.retrieveFull(TYPE_NAME, qualifiedName);")
+                .append(System.lineSeparator());
+        fs.append("        if (entity instanceof ")
+                .append(className)
+                .append(") {")
+                .append(System.lineSeparator());
+        fs.append("            return (").append(className).append(") entity;").append(System.lineSeparator());
+        fs.append("        } else {").append(System.lineSeparator());
+        fs.append("            throw new NotFoundException(\"No ")
+                .append(className)
+                .append(" found with qualifiedName: \" + qualifiedName, \"ATLAN_JAVA_CLIENT-404-003\", 404, null);")
+                .append(System.lineSeparator());
+        fs.append("        }").append(System.lineSeparator());
+        fs.append("    }").append(System.lineSeparator());
+        fs.append(System.lineSeparator());
     }
 
     private void updateCertificate(BufferedWriter fs, String className) throws IOException {
@@ -437,7 +521,6 @@ public class ModelGenerator extends AtlanLiveTest {
         fs.append(System.lineSeparator());
         fs.append("    }");
         fs.append(System.lineSeparator()).append(System.lineSeparator());
-        ;
     }
 
     private void removeCertificate(BufferedWriter fs, String className) throws IOException {
@@ -467,7 +550,6 @@ public class ModelGenerator extends AtlanLiveTest {
         fs.append(System.lineSeparator());
         fs.append("    }");
         fs.append(System.lineSeparator()).append(System.lineSeparator());
-        ;
     }
 
     private void updateAnnouncement(BufferedWriter fs, String className) throws IOException {
@@ -502,7 +584,6 @@ public class ModelGenerator extends AtlanLiveTest {
         fs.append(System.lineSeparator());
         fs.append("    }");
         fs.append(System.lineSeparator()).append(System.lineSeparator());
-        ;
     }
 
     private void removeAnnouncement(BufferedWriter fs, String className) throws IOException {
@@ -559,7 +640,6 @@ public class ModelGenerator extends AtlanLiveTest {
         fs.append(System.lineSeparator());
         fs.append("    }");
         fs.append(System.lineSeparator()).append(System.lineSeparator());
-        ;
     }
 
     private void removeClassification(BufferedWriter fs, String className) throws IOException {
@@ -585,7 +665,6 @@ public class ModelGenerator extends AtlanLiveTest {
         fs.append(System.lineSeparator());
         fs.append("    }");
         fs.append(System.lineSeparator()).append(System.lineSeparator());
-        ;
     }
 
     private void replaceTerms(BufferedWriter fs, String className) throws IOException {
@@ -624,7 +703,6 @@ public class ModelGenerator extends AtlanLiveTest {
         fs.append(System.lineSeparator());
         fs.append("    }");
         fs.append(System.lineSeparator()).append(System.lineSeparator());
-        ;
     }
 
     private void appendTerms(BufferedWriter fs, String className) throws IOException {
@@ -773,6 +851,7 @@ public class ModelGenerator extends AtlanLiveTest {
             refByQualifiedName(fs, className);
             updater(fs, className);
             trimToRequired(fs, className);
+            retrievals(fs, className);
             updateCertificate(fs, className);
             removeCertificate(fs, className);
             updateAnnouncement(fs, className);
@@ -812,6 +891,7 @@ public class ModelGenerator extends AtlanLiveTest {
                 refByQualifiedName(fs, className);
                 updater(fs, className);
                 trimToRequired(fs, className);
+                retrievals(fs, className);
                 updateCertificate(fs, className);
                 removeCertificate(fs, className);
                 updateAnnouncement(fs, className);
@@ -911,6 +991,8 @@ public class ModelGenerator extends AtlanLiveTest {
         fs.append("package com.atlan.model.assets;").append(System.lineSeparator());
         fs.append(System.lineSeparator());
         fs.append("import com.atlan.exception.AtlanException;").append(System.lineSeparator());
+        fs.append("import com.atlan.exception.NotFoundException;").append(System.lineSeparator());
+        fs.append("import com.atlan.model.core.Entity;").append(System.lineSeparator());
         fs.append("import com.atlan.model.enums.AtlanAnnouncementType;").append(System.lineSeparator());
         fs.append("import com.atlan.model.enums.AtlanCertificateStatus;").append(System.lineSeparator());
         fs.append("import com.atlan.model.enums.AtlanConnectorType;").append(System.lineSeparator());

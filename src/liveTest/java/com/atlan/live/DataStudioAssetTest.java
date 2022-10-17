@@ -71,15 +71,15 @@ public class DataStudioAssetTest extends AtlanLiveTest {
             groups = {"read.connection.gds"},
             dependsOnGroups = {"create.connection.gds"})
     void retrieveConnection() {
-        Entity full = null;
+        Entity minimal = null;
         do {
             try {
-                full = Entity.retrieveFull(connectionGuid);
+                minimal = Entity.retrieveMinimal(connectionGuid);
             } catch (AtlanException e) {
                 e.printStackTrace();
                 assertNull(e, "Unexpected exception while trying to read-back the created connection.");
             }
-        } while (full == null);
+        } while (minimal == null);
     }
 
     @Test(
@@ -172,11 +172,9 @@ public class DataStudioAssetTest extends AtlanLiveTest {
             dependsOnGroups = {"create.gds.*", "update.gds.report"})
     void retrieveReport() {
         try {
-            Entity full = Entity.retrieveFull(reportGuid);
-            assertNotNull(full);
-            assertTrue(full.isComplete());
-            assertTrue(full instanceof DataStudioAsset);
-            DataStudioAsset report = (DataStudioAsset) full;
+            DataStudioAsset report = DataStudioAsset.retrieveByGuid(reportGuid);
+            assertNotNull(report);
+            assertTrue(report.isComplete());
             assertEquals(report.getGuid(), reportGuid);
             assertEquals(report.getQualifiedName(), reportQame);
             assertEquals(report.getName(), REPORT_NAME);

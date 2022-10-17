@@ -377,12 +377,9 @@ public class GlossaryTest extends AtlanLiveTest {
             dependsOnGroups = {"create.glossary", "create.category", "create.term"})
     void readGlossary() {
         try {
-            Entity one = Entity.retrieveFull(glossaryGuid);
-            assertNotNull(one);
-            assertTrue(one.isComplete());
-            assertEquals(one.getTypeName(), Glossary.TYPE_NAME);
-            assertTrue(one instanceof Glossary);
-            Glossary glossary = (Glossary) one;
+            Glossary glossary = Glossary.retrieveByGuid(glossaryGuid);
+            assertNotNull(glossary);
+            assertTrue(glossary.isComplete());
             assertEquals(glossary.getGuid(), glossaryGuid);
             assertEquals(glossary.getQualifiedName(), glossaryQame);
             assertEquals(glossary.getName(), GLOSSARY_NAME);
@@ -420,12 +417,9 @@ public class GlossaryTest extends AtlanLiveTest {
             dependsOnGroups = {"create.category"})
     void readCategory() {
         try {
-            Entity one = Entity.retrieveFull(categoryGuid);
-            assertNotNull(one);
-            assertTrue(one.isComplete());
-            assertEquals(one.getTypeName(), GlossaryCategory.TYPE_NAME);
-            assertTrue(one instanceof GlossaryCategory);
-            GlossaryCategory category = (GlossaryCategory) one;
+            GlossaryCategory category = GlossaryCategory.retrieveByGuid(categoryGuid);
+            assertNotNull(category);
+            assertTrue(category.isComplete());
             assertEquals(category.getGuid(), categoryGuid);
             assertEquals(category.getQualifiedName(), categoryQame);
             assertEquals(category.getName(), CATEGORY_NAME);
@@ -443,12 +437,9 @@ public class GlossaryTest extends AtlanLiveTest {
             dependsOnGroups = {"create.term"})
     void readTerm() {
         try {
-            Entity one = Entity.retrieveFull(termGuid1);
-            assertNotNull(one);
-            assertTrue(one.isComplete());
-            assertEquals(one.getTypeName(), GlossaryTerm.TYPE_NAME);
-            assertTrue(one instanceof GlossaryTerm);
-            GlossaryTerm term = (GlossaryTerm) one;
+            GlossaryTerm term = GlossaryTerm.retrieveByGuid(termGuid1);
+            assertNotNull(term);
+            assertTrue(term.isComplete());
             assertEquals(term.getGuid(), termGuid1);
             assertEquals(term.getQualifiedName(), termQame1);
             assertEquals(term.getName(), TERM_NAME1);

@@ -3,6 +3,8 @@
 package com.atlan.model.assets;
 
 import com.atlan.exception.AtlanException;
+import com.atlan.exception.NotFoundException;
+import com.atlan.model.core.Entity;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
@@ -98,6 +100,44 @@ public class PowerBIColumn extends PowerBI {
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    /**
+     * Retrieves a PowerBIColumn by its GUID, complete with all of its relationships.
+     *
+     * @param guid of the PowerBIColumn to retrieve
+     * @return the requested full PowerBIColumn, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PowerBIColumn does not exist or the provided GUID is not a PowerBIColumn
+     */
+    public static PowerBIColumn retrieveByGuid(String guid) throws AtlanException {
+        Entity entity = Entity.retrieveFull(guid);
+        if (entity == null) {
+            throw new NotFoundException("No entity found with GUID: " + guid, "ATLAN_JAVA_CLIENT-404-001", 404, null);
+        } else if (entity instanceof PowerBIColumn) {
+            return (PowerBIColumn) entity;
+        } else {
+            throw new NotFoundException(
+                    "Entity with GUID " + guid + " is not a PowerBIColumn.", "ATLAN_JAVA_CLIENT-404-002", 404, null);
+        }
+    }
+
+    /**
+     * Retrieves a PowerBIColumn by its qualifiedName, complete with all of its relationships.
+     *
+     * @param qualifiedName of the PowerBIColumn to retrieve
+     * @return the requested full PowerBIColumn, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PowerBIColumn does not exist
+     */
+    public static PowerBIColumn retrieveByQualifiedName(String qualifiedName) throws AtlanException {
+        Entity entity = Entity.retrieveFull(TYPE_NAME, qualifiedName);
+        if (entity instanceof PowerBIColumn) {
+            return (PowerBIColumn) entity;
+        } else {
+            throw new NotFoundException(
+                    "No PowerBIColumn found with qualifiedName: " + qualifiedName,
+                    "ATLAN_JAVA_CLIENT-404-003",
+                    404,
+                    null);
+        }
+    }
     /**
      * Update the certificate on a PowerBIColumn.
      *

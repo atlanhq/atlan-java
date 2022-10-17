@@ -3,6 +3,8 @@
 package com.atlan.model.assets;
 
 import com.atlan.exception.AtlanException;
+import com.atlan.exception.NotFoundException;
+import com.atlan.model.core.Entity;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
@@ -111,6 +113,44 @@ public class PowerBIWorkspace extends PowerBI {
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    /**
+     * Retrieves a PowerBIWorkspace by its GUID, complete with all of its relationships.
+     *
+     * @param guid of the PowerBIWorkspace to retrieve
+     * @return the requested full PowerBIWorkspace, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PowerBIWorkspace does not exist or the provided GUID is not a PowerBIWorkspace
+     */
+    public static PowerBIWorkspace retrieveByGuid(String guid) throws AtlanException {
+        Entity entity = Entity.retrieveFull(guid);
+        if (entity == null) {
+            throw new NotFoundException("No entity found with GUID: " + guid, "ATLAN_JAVA_CLIENT-404-001", 404, null);
+        } else if (entity instanceof PowerBIWorkspace) {
+            return (PowerBIWorkspace) entity;
+        } else {
+            throw new NotFoundException(
+                    "Entity with GUID " + guid + " is not a PowerBIWorkspace.", "ATLAN_JAVA_CLIENT-404-002", 404, null);
+        }
+    }
+
+    /**
+     * Retrieves a PowerBIWorkspace by its qualifiedName, complete with all of its relationships.
+     *
+     * @param qualifiedName of the PowerBIWorkspace to retrieve
+     * @return the requested full PowerBIWorkspace, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PowerBIWorkspace does not exist
+     */
+    public static PowerBIWorkspace retrieveByQualifiedName(String qualifiedName) throws AtlanException {
+        Entity entity = Entity.retrieveFull(TYPE_NAME, qualifiedName);
+        if (entity instanceof PowerBIWorkspace) {
+            return (PowerBIWorkspace) entity;
+        } else {
+            throw new NotFoundException(
+                    "No PowerBIWorkspace found with qualifiedName: " + qualifiedName,
+                    "ATLAN_JAVA_CLIENT-404-003",
+                    404,
+                    null);
+        }
+    }
     /**
      * Update the certificate on a PowerBIWorkspace.
      *

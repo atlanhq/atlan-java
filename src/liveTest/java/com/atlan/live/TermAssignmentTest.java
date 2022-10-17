@@ -8,7 +8,6 @@ import com.atlan.exception.AtlanException;
 import com.atlan.model.assets.Asset;
 import com.atlan.model.assets.GlossaryTerm;
 import com.atlan.model.assets.S3Object;
-import com.atlan.model.core.Entity;
 import com.atlan.model.core.EntityMutationResponse;
 import com.atlan.model.enums.AtlanStatus;
 import java.util.List;
@@ -33,10 +32,9 @@ public class TermAssignmentTest extends AtlanLiveTest {
             assertTrue(response.getDeletedEntities().isEmpty());
             assertTrue(response.getCreatedEntities().isEmpty());
             assertEquals(response.getUpdatedEntities().size(), 3);
-            Entity full = Entity.retrieveFull(GlossaryTest.termGuid1);
-            assertTrue(full instanceof GlossaryTerm);
-            assertTrue(full.isComplete());
-            term = (GlossaryTerm) full;
+            term = GlossaryTerm.retrieveByGuid(GlossaryTest.termGuid1);
+            assertNotNull(term);
+            assertTrue(term.isComplete());
             assertEquals(term.getQualifiedName(), GlossaryTest.termQame1);
             assertEquals(term.getName(), GlossaryTest.TERM_NAME1);
             Set<Asset> entities = term.getAssignedEntities();
@@ -65,10 +63,9 @@ public class TermAssignmentTest extends AtlanLiveTest {
             assertTrue(response.getDeletedEntities().isEmpty());
             assertTrue(response.getCreatedEntities().isEmpty());
             assertEquals(response.getUpdatedEntities().size(), 3);
-            Entity full = Entity.retrieveFull(GlossaryTest.termGuid1);
-            assertTrue(full instanceof GlossaryTerm);
-            assertTrue(full.isComplete());
-            term = (GlossaryTerm) full;
+            term = GlossaryTerm.retrieveByGuid(GlossaryTest.termGuid1);
+            assertNotNull(term);
+            assertTrue(term.isComplete());
             assertEquals(term.getQualifiedName(), GlossaryTest.termQame1);
             assertEquals(term.getName(), GlossaryTest.TERM_NAME1);
             Set<Asset> entities = term.getAssignedEntities();
@@ -94,10 +91,9 @@ public class TermAssignmentTest extends AtlanLiveTest {
                     S3AssetTest.S3_OBJECT1_NAME,
                     List.of(GlossaryTerm.refByGuid(GlossaryTest.termGuid1)));
             assertNotNull(result);
-            Entity full = Entity.retrieveFull(S3AssetTest.s3Object1Guid);
-            assertTrue(full instanceof S3Object);
-            assertTrue(full.isComplete());
-            S3Object s3Object1 = (S3Object) full;
+            S3Object s3Object1 = S3Object.retrieveByGuid(S3AssetTest.s3Object1Guid);
+            assertNotNull(s3Object1);
+            assertTrue(s3Object1.isComplete());
             assertEquals(s3Object1.getQualifiedName(), S3AssetTest.s3Object1Qame);
             assertEquals(s3Object1.getName(), S3AssetTest.S3_OBJECT1_NAME);
             Set<GlossaryTerm> terms = s3Object1.getMeanings();
@@ -127,10 +123,9 @@ public class TermAssignmentTest extends AtlanLiveTest {
         try {
             S3Object result = S3Object.replaceTerms(S3AssetTest.s3Object1Qame, S3AssetTest.S3_OBJECT1_NAME, null);
             assertNotNull(result);
-            Entity full = Entity.retrieveFull(S3AssetTest.s3Object1Guid);
-            assertTrue(full instanceof S3Object);
-            assertTrue(full.isComplete());
-            S3Object s3Object1 = (S3Object) full;
+            S3Object s3Object1 = S3Object.retrieveByGuid(S3AssetTest.s3Object1Guid);
+            assertNotNull(s3Object1);
+            assertTrue(s3Object1.isComplete());
             assertEquals(s3Object1.getQualifiedName(), S3AssetTest.s3Object1Qame);
             assertEquals(s3Object1.getName(), S3AssetTest.S3_OBJECT1_NAME);
             Set<GlossaryTerm> terms = s3Object1.getMeanings();
@@ -154,10 +149,9 @@ public class TermAssignmentTest extends AtlanLiveTest {
             S3Object result = S3Object.appendTerms(
                     S3AssetTest.s3Object1Qame, List.of(GlossaryTerm.refByGuid(GlossaryTest.termGuid1)));
             assertNotNull(result);
-            Entity full = Entity.retrieveFull(S3AssetTest.s3Object1Guid);
-            assertTrue(full instanceof S3Object);
-            assertTrue(full.isComplete());
-            S3Object s3Object1 = (S3Object) full;
+            S3Object s3Object1 = S3Object.retrieveByGuid(S3AssetTest.s3Object1Guid);
+            assertNotNull(s3Object1);
+            assertTrue(s3Object1.isComplete());
             assertEquals(s3Object1.getQualifiedName(), S3AssetTest.s3Object1Qame);
             assertEquals(s3Object1.getName(), S3AssetTest.S3_OBJECT1_NAME);
             Set<GlossaryTerm> terms = s3Object1.getMeanings();
@@ -187,10 +181,9 @@ public class TermAssignmentTest extends AtlanLiveTest {
             S3Object result = S3Object.appendTerms(
                     S3AssetTest.s3Object1Qame, List.of(GlossaryTerm.refByGuid(GlossaryTest.termGuid2)));
             assertNotNull(result);
-            Entity full = Entity.retrieveFull(S3AssetTest.s3Object1Guid);
-            assertTrue(full instanceof S3Object);
-            assertTrue(full.isComplete());
-            S3Object s3Object1 = (S3Object) full;
+            S3Object s3Object1 = S3Object.retrieveByGuid(S3AssetTest.s3Object1Guid);
+            assertNotNull(s3Object1);
+            assertTrue(s3Object1.isComplete());
             assertEquals(s3Object1.getQualifiedName(), S3AssetTest.s3Object1Qame);
             assertEquals(s3Object1.getName(), S3AssetTest.S3_OBJECT1_NAME);
             Set<GlossaryTerm> terms = s3Object1.getMeanings();
@@ -221,10 +214,9 @@ public class TermAssignmentTest extends AtlanLiveTest {
             S3Object result = S3Object.removeTerms(
                     S3AssetTest.s3Object1Qame, List.of(GlossaryTerm.refByGuid(GlossaryTest.termGuid1)));
             assertNotNull(result);
-            Entity full = Entity.retrieveFull(S3AssetTest.s3Object1Guid);
-            assertTrue(full instanceof S3Object);
-            assertTrue(full.isComplete());
-            S3Object s3Object1 = (S3Object) full;
+            S3Object s3Object1 = S3Object.retrieveByGuid(S3AssetTest.s3Object1Guid);
+            assertNotNull(s3Object1);
+            assertTrue(s3Object1.isComplete());
             assertEquals(s3Object1.getQualifiedName(), S3AssetTest.s3Object1Qame);
             assertEquals(s3Object1.getName(), S3AssetTest.S3_OBJECT1_NAME);
             Set<GlossaryTerm> terms = s3Object1.getMeanings();
@@ -254,10 +246,9 @@ public class TermAssignmentTest extends AtlanLiveTest {
             S3Object result = S3Object.removeTerms(
                     S3AssetTest.s3Object1Qame, List.of(GlossaryTerm.refByGuid(GlossaryTest.termGuid2)));
             assertNotNull(result);
-            Entity full = Entity.retrieveFull(S3AssetTest.s3Object1Guid);
-            assertTrue(full instanceof S3Object);
-            assertTrue(full.isComplete());
-            S3Object s3Object1 = (S3Object) full;
+            S3Object s3Object1 = S3Object.retrieveByGuid(S3AssetTest.s3Object1Guid);
+            assertNotNull(s3Object1);
+            assertTrue(s3Object1.isComplete());
             assertEquals(s3Object1.getQualifiedName(), S3AssetTest.s3Object1Qame);
             assertEquals(s3Object1.getName(), S3AssetTest.S3_OBJECT1_NAME);
             Set<GlossaryTerm> terms = s3Object1.getMeanings();

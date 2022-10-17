@@ -87,15 +87,15 @@ public class S3AssetTest extends AtlanLiveTest {
             groups = {"read.connection.s3"},
             dependsOnGroups = {"create.connection.s3"})
     void retrieveConnection() {
-        Entity full = null;
+        Entity minimal = null;
         do {
             try {
-                full = Entity.retrieveFull(connectionGuid);
+                minimal = Entity.retrieveMinimal(connectionGuid);
             } catch (AtlanException e) {
                 e.printStackTrace();
                 assertNull(e, "Unexpected exception while trying to read-back the created connection.");
             }
-        } while (full == null);
+        } while (minimal == null);
     }
 
     @Test(
@@ -269,11 +269,9 @@ public class S3AssetTest extends AtlanLiveTest {
             dependsOnGroups = {"create.s3object", "create.readme", "create.link", "update.s3bucket"})
     void retrieveS3Bucket() {
         try {
-            Entity full = Entity.retrieveFull(s3BucketGuid);
-            assertNotNull(full);
-            assertTrue(full.isComplete());
-            assertTrue(full instanceof S3Bucket);
-            S3Bucket bucket = (S3Bucket) full;
+            S3Bucket bucket = S3Bucket.retrieveByGuid(s3BucketGuid);
+            assertNotNull(bucket);
+            assertTrue(bucket.isComplete());
             assertEquals(bucket.getGuid(), s3BucketGuid);
             assertEquals(bucket.getQualifiedName(), s3BucketQame);
             assertEquals(bucket.getName(), S3_BUCKET_NAME);

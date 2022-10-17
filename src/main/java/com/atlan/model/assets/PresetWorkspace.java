@@ -3,6 +3,8 @@
 package com.atlan.model.assets;
 
 import com.atlan.exception.AtlanException;
+import com.atlan.exception.NotFoundException;
+import com.atlan.model.core.Entity;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.enums.AtlanConnectorType;
@@ -135,11 +137,50 @@ public class PresetWorkspace extends Preset {
      * Generate a unique Preset workspace name.
      *
      * @param connectionQualifiedName unique name of the connection
-     * @param name name for the workspace
+     * @param name for the workspace
      * @return a unique name for the workspace
      */
     private static String generateQualifiedName(String connectionQualifiedName, String name) {
         return connectionQualifiedName + "/" + name;
+    }
+
+    /**
+     * Retrieves a PresetWorkspace by its GUID, complete with all of its relationships.
+     *
+     * @param guid of the PresetWorkspace to retrieve
+     * @return the requested full PresetWorkspace, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PresetWorkspace does not exist or the provided GUID is not a PresetWorkspace
+     */
+    public static PresetWorkspace retrieveByGuid(String guid) throws AtlanException {
+        Entity entity = Entity.retrieveFull(guid);
+        if (entity == null) {
+            throw new NotFoundException("No entity found with GUID: " + guid, "ATLAN_JAVA_CLIENT-404-001", 404, null);
+        } else if (entity instanceof PresetWorkspace) {
+            return (PresetWorkspace) entity;
+        } else {
+            throw new NotFoundException(
+                    "Entity with GUID " + guid + " is not a PresetWorkspace.", "ATLAN_JAVA_CLIENT-404-002", 404, null);
+        }
+    }
+
+    /**
+     * Retrieves a PresetWorkspace by its qualifiedName, complete with all of its relationships.
+     *
+     * @param qualifiedName of the PresetWorkspace to retrieve
+     * @return the requested full PresetWorkspace, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PresetWorkspace does not exist
+     */
+    public static PresetWorkspace retrieveByQualifiedName(String qualifiedName) throws AtlanException {
+        Entity entity = Entity.retrieveFull(TYPE_NAME, qualifiedName);
+        if (entity instanceof PresetWorkspace) {
+            return (PresetWorkspace) entity;
+        } else {
+            throw new NotFoundException(
+                    "No PresetWorkspace found with qualifiedName: " + qualifiedName,
+                    "ATLAN_JAVA_CLIENT-404-003",
+                    404,
+                    null);
+        }
     }
 
     /**

@@ -3,6 +3,8 @@
 package com.atlan.model.assets;
 
 import com.atlan.exception.AtlanException;
+import com.atlan.exception.NotFoundException;
+import com.atlan.model.core.Entity;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
@@ -88,6 +90,44 @@ public class ModeCollection extends Mode {
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    /**
+     * Retrieves a ModeCollection by its GUID, complete with all of its relationships.
+     *
+     * @param guid of the ModeCollection to retrieve
+     * @return the requested full ModeCollection, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ModeCollection does not exist or the provided GUID is not a ModeCollection
+     */
+    public static ModeCollection retrieveByGuid(String guid) throws AtlanException {
+        Entity entity = Entity.retrieveFull(guid);
+        if (entity == null) {
+            throw new NotFoundException("No entity found with GUID: " + guid, "ATLAN_JAVA_CLIENT-404-001", 404, null);
+        } else if (entity instanceof ModeCollection) {
+            return (ModeCollection) entity;
+        } else {
+            throw new NotFoundException(
+                    "Entity with GUID " + guid + " is not a ModeCollection.", "ATLAN_JAVA_CLIENT-404-002", 404, null);
+        }
+    }
+
+    /**
+     * Retrieves a ModeCollection by its qualifiedName, complete with all of its relationships.
+     *
+     * @param qualifiedName of the ModeCollection to retrieve
+     * @return the requested full ModeCollection, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ModeCollection does not exist
+     */
+    public static ModeCollection retrieveByQualifiedName(String qualifiedName) throws AtlanException {
+        Entity entity = Entity.retrieveFull(TYPE_NAME, qualifiedName);
+        if (entity instanceof ModeCollection) {
+            return (ModeCollection) entity;
+        } else {
+            throw new NotFoundException(
+                    "No ModeCollection found with qualifiedName: " + qualifiedName,
+                    "ATLAN_JAVA_CLIENT-404-003",
+                    404,
+                    null);
+        }
+    }
     /**
      * Update the certificate on a ModeCollection.
      *

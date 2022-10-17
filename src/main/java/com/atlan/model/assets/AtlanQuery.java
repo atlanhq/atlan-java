@@ -3,6 +3,8 @@
 package com.atlan.model.assets;
 
 import com.atlan.exception.AtlanException;
+import com.atlan.exception.NotFoundException;
+import com.atlan.model.core.Entity;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
@@ -20,7 +22,7 @@ public class AtlanQuery extends SQL {
 
     public static final String TYPE_NAME = "Query";
 
-    /** Fixed typeName for Querys. */
+    /** Fixed typeName for AtlanQuerys. */
     @Getter(onMethod_ = {@Override})
     @Setter(onMethod_ = {@Override})
     @Builder.Default
@@ -86,20 +88,20 @@ public class AtlanQuery extends SQL {
     SortedSet<View> views;
 
     /**
-     * Reference to a Query by GUID.
+     * Reference to a AtlanQuery by GUID.
      *
-     * @param guid the GUID of the Query to reference
-     * @return reference to a Query that can be used for defining a relationship to a Query
+     * @param guid the GUID of the AtlanQuery to reference
+     * @return reference to a AtlanQuery that can be used for defining a relationship to a AtlanQuery
      */
     public static AtlanQuery refByGuid(String guid) {
         return AtlanQuery.builder().guid(guid).build();
     }
 
     /**
-     * Reference to a Query by qualifiedName.
+     * Reference to a AtlanQuery by qualifiedName.
      *
-     * @param qualifiedName the qualifiedName of the Query to reference
-     * @return reference to a Query that can be used for defining a relationship to a Query
+     * @param qualifiedName the qualifiedName of the AtlanQuery to reference
+     * @return reference to a AtlanQuery that can be used for defining a relationship to a AtlanQuery
      */
     public static AtlanQuery refByQualifiedName(String qualifiedName) {
         return AtlanQuery.builder()
@@ -109,21 +111,21 @@ public class AtlanQuery extends SQL {
     }
 
     /**
-     * Builds the minimal object necessary to update a Query.
+     * Builds the minimal object necessary to update a AtlanQuery.
      *
-     * @param qualifiedName of the Query
-     * @param name of the Query
-     * @return the minimal request necessary to update the Query, as a builder
+     * @param qualifiedName of the AtlanQuery
+     * @param name of the AtlanQuery
+     * @return the minimal request necessary to update the AtlanQuery, as a builder
      */
     public static AtlanQueryBuilder<?, ?> updater(String qualifiedName, String name) {
         return AtlanQuery.builder().qualifiedName(qualifiedName).name(name);
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a Query, from a potentially
-     * more-complete Query object.
+     * Builds the minimal object necessary to apply an update to a AtlanQuery, from a potentially
+     * more-complete AtlanQuery object.
      *
-     * @return the minimal object necessary to update the Query, as a builder
+     * @return the minimal object necessary to update the AtlanQuery, as a builder
      */
     @Override
     protected AtlanQueryBuilder<?, ?> trimToRequired() {
@@ -131,12 +133,47 @@ public class AtlanQuery extends SQL {
     }
 
     /**
-     * Update the certificate on a Query.
+     * Retrieves a AtlanQuery by its GUID, complete with all of its relationships.
      *
-     * @param qualifiedName of the Query
+     * @param guid of the AtlanQuery to retrieve
+     * @return the requested full AtlanQuery, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the AtlanQuery does not exist or the provided GUID is not a AtlanQuery
+     */
+    public static AtlanQuery retrieveByGuid(String guid) throws AtlanException {
+        Entity entity = Entity.retrieveFull(guid);
+        if (entity == null) {
+            throw new NotFoundException("No entity found with GUID: " + guid, "ATLAN_JAVA_CLIENT-404-001", 404, null);
+        } else if (entity instanceof AtlanQuery) {
+            return (AtlanQuery) entity;
+        } else {
+            throw new NotFoundException(
+                    "Entity with GUID " + guid + " is not a AtlanQuery.", "ATLAN_JAVA_CLIENT-404-002", 404, null);
+        }
+    }
+
+    /**
+     * Retrieves a AtlanQuery by its qualifiedName, complete with all of its relationships.
+     *
+     * @param qualifiedName of the AtlanQuery to retrieve
+     * @return the requested full AtlanQuery, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the AtlanQuery does not exist
+     */
+    public static AtlanQuery retrieveByQualifiedName(String qualifiedName) throws AtlanException {
+        Entity entity = Entity.retrieveFull(TYPE_NAME, qualifiedName);
+        if (entity instanceof AtlanQuery) {
+            return (AtlanQuery) entity;
+        } else {
+            throw new NotFoundException(
+                    "No AtlanQuery found with qualifiedName: " + qualifiedName, "ATLAN_JAVA_CLIENT-404-003", 404, null);
+        }
+    }
+    /**
+     * Update the certificate on a AtlanQuery.
+     *
+     * @param qualifiedName of the AtlanQuery
      * @param certificate to use
      * @param message (optional) message, or null if no message
-     * @return the updated Query, or null if the update failed
+     * @return the updated AtlanQuery, or null if the update failed
      * @throws AtlanException on any API problems
      */
     public static AtlanQuery updateCertificate(String qualifiedName, AtlanCertificateStatus certificate, String message)
@@ -145,11 +182,11 @@ public class AtlanQuery extends SQL {
     }
 
     /**
-     * Remove the certificate from a Query.
+     * Remove the certificate from a AtlanQuery.
      *
-     * @param qualifiedName of the Query
-     * @param name of the Query
-     * @return the updated Query, or null if the removal failed
+     * @param qualifiedName of the AtlanQuery
+     * @param name of the AtlanQuery
+     * @return the updated AtlanQuery, or null if the removal failed
      * @throws AtlanException on any API problems
      */
     public static AtlanQuery removeCertificate(String qualifiedName, String name) throws AtlanException {
@@ -158,9 +195,9 @@ public class AtlanQuery extends SQL {
     }
 
     /**
-     * Update the announcement on a Query.
+     * Update the announcement on a AtlanQuery.
      *
-     * @param qualifiedName of the Query
+     * @param qualifiedName of the AtlanQuery
      * @param type type of announcement to set
      * @param title (optional) title of the announcement to set (or null for no title)
      * @param message (optional) message of the announcement to set (or null for no message)
@@ -173,11 +210,11 @@ public class AtlanQuery extends SQL {
     }
 
     /**
-     * Remove the announcement from a Query.
+     * Remove the announcement from a AtlanQuery.
      *
-     * @param qualifiedName of the Query
-     * @param name of the Query
-     * @return the updated Query, or null if the removal failed
+     * @param qualifiedName of the AtlanQuery
+     * @param name of the AtlanQuery
+     * @return the updated AtlanQuery, or null if the removal failed
      * @throws AtlanException on any API problems
      */
     public static AtlanQuery removeAnnouncement(String qualifiedName, String name) throws AtlanException {
@@ -186,11 +223,11 @@ public class AtlanQuery extends SQL {
     }
 
     /**
-     * Add classifications to a Query.
+     * Add classifications to a AtlanQuery.
      *
-     * @param qualifiedName of the Query
+     * @param qualifiedName of the AtlanQuery
      * @param classificationNames human-readable names of the classifications to add
-     * @throws AtlanException on any API problems, or if any of the classifications already exist on the Query
+     * @throws AtlanException on any API problems, or if any of the classifications already exist on the AtlanQuery
      */
     public static void addClassifications(String qualifiedName, List<String> classificationNames)
             throws AtlanException {
@@ -198,23 +235,23 @@ public class AtlanQuery extends SQL {
     }
 
     /**
-     * Remove a classification from a Query.
+     * Remove a classification from a AtlanQuery.
      *
-     * @param qualifiedName of the Query
+     * @param qualifiedName of the AtlanQuery
      * @param classificationName human-readable name of the classification to remove
-     * @throws AtlanException on any API problems, or if the classification does not exist on the Query
+     * @throws AtlanException on any API problems, or if the classification does not exist on the AtlanQuery
      */
     public static void removeClassification(String qualifiedName, String classificationName) throws AtlanException {
         Asset.removeClassification(TYPE_NAME, qualifiedName, classificationName);
     }
 
     /**
-     * Replace the terms linked to the Query.
+     * Replace the terms linked to the AtlanQuery.
      *
-     * @param qualifiedName for the Query
-     * @param name human-readable name of the Query
-     * @param terms the list of terms to replace on the Query, or null to remove all terms from the Query
-     * @return the Query that was updated (note that it will NOT contain details of the replaced terms)
+     * @param qualifiedName for the AtlanQuery
+     * @param name human-readable name of the AtlanQuery
+     * @param terms the list of terms to replace on the AtlanQuery, or null to remove all terms from the AtlanQuery
+     * @return the AtlanQuery that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
     public static AtlanQuery replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
@@ -223,13 +260,13 @@ public class AtlanQuery extends SQL {
     }
 
     /**
-     * Link additional terms to the Query, without replacing existing terms linked to the Query.
-     * Note: this operation must make two API calls — one to retrieve the Query's existing terms,
+     * Link additional terms to the AtlanQuery, without replacing existing terms linked to the AtlanQuery.
+     * Note: this operation must make two API calls — one to retrieve the AtlanQuery's existing terms,
      * and a second to append the new terms.
      *
-     * @param qualifiedName for the Query
-     * @param terms the list of terms to append to the Query
-     * @return the Query that was updated  (note that it will NOT contain details of the appended terms)
+     * @param qualifiedName for the AtlanQuery
+     * @param terms the list of terms to append to the AtlanQuery
+     * @return the AtlanQuery that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
     public static AtlanQuery appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
@@ -237,13 +274,13 @@ public class AtlanQuery extends SQL {
     }
 
     /**
-     * Remove terms from a Query, without replacing all existing terms linked to the Query.
-     * Note: this operation must make two API calls — one to retrieve the Query's existing terms,
+     * Remove terms from a AtlanQuery, without replacing all existing terms linked to the AtlanQuery.
+     * Note: this operation must make two API calls — one to retrieve the AtlanQuery's existing terms,
      * and a second to remove the provided terms.
      *
-     * @param qualifiedName for the Query
-     * @param terms the list of terms to remove from the Query, which must be referenced by GUID
-     * @return the Query that was updated (note that it will NOT contain details of the resulting terms)
+     * @param qualifiedName for the AtlanQuery
+     * @param terms the list of terms to remove from the AtlanQuery, which must be referenced by GUID
+     * @return the AtlanQuery that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
     public static AtlanQuery removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
