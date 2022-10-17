@@ -3,6 +3,8 @@
 package com.atlan.model.assets;
 
 import com.atlan.exception.AtlanException;
+import com.atlan.exception.NotFoundException;
+import com.atlan.model.core.Entity;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.enums.LinkIconType;
@@ -79,6 +81,44 @@ public class ReadmeTemplate extends Resource {
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    /**
+     * Retrieves a ReadmeTemplate by its GUID, complete with all of its relationships.
+     *
+     * @param guid of the ReadmeTemplate to retrieve
+     * @return the requested full ReadmeTemplate, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ReadmeTemplate does not exist or the provided GUID is not a ReadmeTemplate
+     */
+    public static ReadmeTemplate retrieveByGuid(String guid) throws AtlanException {
+        Entity entity = Entity.retrieveFull(guid);
+        if (entity == null) {
+            throw new NotFoundException("No entity found with GUID: " + guid, "ATLAN_JAVA_CLIENT-404-001", 404, null);
+        } else if (entity instanceof ReadmeTemplate) {
+            return (ReadmeTemplate) entity;
+        } else {
+            throw new NotFoundException(
+                    "Entity with GUID " + guid + " is not a ReadmeTemplate.", "ATLAN_JAVA_CLIENT-404-002", 404, null);
+        }
+    }
+
+    /**
+     * Retrieves a ReadmeTemplate by its qualifiedName, complete with all of its relationships.
+     *
+     * @param qualifiedName of the ReadmeTemplate to retrieve
+     * @return the requested full ReadmeTemplate, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ReadmeTemplate does not exist
+     */
+    public static ReadmeTemplate retrieveByQualifiedName(String qualifiedName) throws AtlanException {
+        Entity entity = Entity.retrieveFull(TYPE_NAME, qualifiedName);
+        if (entity instanceof ReadmeTemplate) {
+            return (ReadmeTemplate) entity;
+        } else {
+            throw new NotFoundException(
+                    "No ReadmeTemplate found with qualifiedName: " + qualifiedName,
+                    "ATLAN_JAVA_CLIENT-404-003",
+                    404,
+                    null);
+        }
+    }
     /**
      * Update the certificate on a ReadmeTemplate.
      *

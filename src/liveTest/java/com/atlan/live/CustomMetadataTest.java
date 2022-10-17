@@ -240,9 +240,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
                     .attribute(CM_ATTR_SQL, "SELECT * from SOMEWHERE;")
                     .build();
             S3Object.replaceCustomMetadata(S3AssetTest.s3Object1Guid, CM_NAME1, cm);
-            Entity result = S3Object.retrieveFull(S3AssetTest.s3Object1Guid);
-            assertTrue(result instanceof S3Object);
-            S3Object object = (S3Object) result;
+            S3Object object = S3Object.retrieveByGuid(S3AssetTest.s3Object1Guid);
             assertNotNull(object);
             assertTrue(object.isComplete());
             Map<String, CustomMetadataAttributes> sets = object.getCustomMetadataSets();
@@ -271,9 +269,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
                     .attribute(CM_ATTR_SQL, "SELECT * from SOMEWHERE;")
                     .build();
             S3Object.replaceCustomMetadata(S3AssetTest.s3Object1Guid, CM_NAME2, cm);
-            Entity result = S3Object.retrieveFull(S3AssetTest.s3Object1Guid);
-            assertTrue(result instanceof S3Object);
-            S3Object object = (S3Object) result;
+            S3Object object = S3Object.retrieveByGuid(S3AssetTest.s3Object1Guid);
             assertNotNull(object);
             assertTrue(object.isComplete());
             Map<String, CustomMetadataAttributes> sets = object.getCustomMetadataSets();
@@ -298,9 +294,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
                     .attribute(CM_ATTR_BOOLEAN, false)
                     .build();
             S3Object.updateCustomMetadataAttributes(S3AssetTest.s3Object1Guid, CM_NAME1, cm);
-            Entity result = S3Object.retrieveFull(S3AssetTest.s3Object1Guid);
-            assertTrue(result instanceof S3Object);
-            S3Object object = (S3Object) result;
+            S3Object object = S3Object.retrieveByGuid(S3AssetTest.s3Object1Guid);
             assertNotNull(object);
             assertTrue(object.isComplete());
             Map<String, CustomMetadataAttributes> sets = object.getCustomMetadataSets();
@@ -322,9 +316,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
     void removeObjectCM1() {
         try {
             S3Object.removeCustomMetadata(S3AssetTest.s3Object1Guid, CM_NAME1);
-            Entity result = S3Object.retrieveFull(S3AssetTest.s3Object1Guid);
-            assertTrue(result instanceof S3Object);
-            S3Object object = (S3Object) result;
+            S3Object object = S3Object.retrieveByGuid(S3AssetTest.s3Object1Guid);
             assertNotNull(object);
             assertTrue(object.isComplete());
             Map<String, CustomMetadataAttributes> sets = object.getCustomMetadataSets();
@@ -344,9 +336,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
     void removeObjectCM2() {
         try {
             S3Object.removeCustomMetadata(S3AssetTest.s3Object1Guid, CM_NAME2);
-            Entity result = S3Object.retrieveFull(S3AssetTest.s3Object1Guid);
-            assertTrue(result instanceof S3Object);
-            S3Object object = (S3Object) result;
+            S3Object object = S3Object.retrieveByGuid(S3AssetTest.s3Object1Guid);
             assertNotNull(object);
             assertTrue(object.isComplete());
             Map<String, CustomMetadataAttributes> sets = object.getCustomMetadataSets();
@@ -694,11 +684,9 @@ public class CustomMetadataTest extends AtlanLiveTest {
             assertTrue(one instanceof GlossaryTerm);
             GlossaryTerm term = (GlossaryTerm) one;
             assertEquals(term.getQualifiedName(), GlossaryTest.termQame1);
-            one = Entity.retrieveFull(GlossaryTerm.TYPE_NAME, GlossaryTest.termQame1);
-            assertNotNull(one);
-            assertTrue(one.isComplete());
-            assertTrue(one instanceof GlossaryTerm);
-            term = (GlossaryTerm) one;
+            term = GlossaryTerm.retrieveByQualifiedName(GlossaryTest.termQame1);
+            assertNotNull(term);
+            assertTrue(term.isComplete());
             assertEquals(term.getQualifiedName(), GlossaryTest.termQame1);
             assertNotNull(term.getCustomMetadataSets());
             cm1 = term.getCustomMetadataSets().get(CM_NAME1);
@@ -728,11 +716,9 @@ public class CustomMetadataTest extends AtlanLiveTest {
             assertTrue(one instanceof GlossaryTerm);
             GlossaryTerm term = (GlossaryTerm) one;
             assertEquals(term.getQualifiedName(), GlossaryTest.termQame1);
-            one = Entity.retrieveFull(GlossaryTerm.TYPE_NAME, GlossaryTest.termQame1);
-            assertNotNull(one);
-            assertTrue(one.isComplete());
-            assertTrue(one instanceof GlossaryTerm);
-            term = (GlossaryTerm) one;
+            term = GlossaryTerm.retrieveByQualifiedName(GlossaryTest.termQame1);
+            assertNotNull(term);
+            assertTrue(term.isComplete());
             assertEquals(term.getQualifiedName(), GlossaryTest.termQame1);
             assertTrue(term.getCustomMetadataSets().isEmpty());
         } catch (AtlanException e) {

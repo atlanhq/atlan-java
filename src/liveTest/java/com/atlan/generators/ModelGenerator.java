@@ -487,6 +487,7 @@ public class ModelGenerator extends AtlanLiveTest {
                 .append(System.lineSeparator());
         fs.append("        }").append(System.lineSeparator());
         fs.append("    }").append(System.lineSeparator());
+        fs.append(System.lineSeparator());
     }
 
     private void updateCertificate(BufferedWriter fs, String className) throws IOException {
@@ -990,6 +991,8 @@ public class ModelGenerator extends AtlanLiveTest {
         fs.append("package com.atlan.model.assets;").append(System.lineSeparator());
         fs.append(System.lineSeparator());
         fs.append("import com.atlan.exception.AtlanException;").append(System.lineSeparator());
+        fs.append("import com.atlan.exception.NotFoundException;").append(System.lineSeparator());
+        fs.append("import com.atlan.model.core.Entity;").append(System.lineSeparator());
         fs.append("import com.atlan.model.enums.AtlanAnnouncementType;").append(System.lineSeparator());
         fs.append("import com.atlan.model.enums.AtlanCertificateStatus;").append(System.lineSeparator());
         fs.append("import com.atlan.model.enums.AtlanConnectorType;").append(System.lineSeparator());

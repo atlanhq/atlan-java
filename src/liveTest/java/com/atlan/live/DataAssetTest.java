@@ -101,15 +101,15 @@ public class DataAssetTest extends AtlanLiveTest {
             groups = {"read.connection.data"},
             dependsOnGroups = {"create.connection.data"})
     void retrieveConnection() {
-        Entity full = null;
+        Entity minimal = null;
         do {
             try {
-                full = Entity.retrieveFull(connectionGuid);
+                minimal = Entity.retrieveMinimal(connectionGuid);
             } catch (AtlanException e) {
                 e.printStackTrace();
                 assertNull(e, "Unexpected exception while trying to read-back the created connection.");
             }
-        } while (full == null);
+        } while (minimal == null);
     }
 
     @Test(
@@ -572,11 +572,9 @@ public class DataAssetTest extends AtlanLiveTest {
             dependsOnGroups = {"create.column.*"})
     void retrieveColumn1() {
         try {
-            Entity full = Entity.retrieveFull(columnGuid1);
-            assertNotNull(full);
-            assertTrue(full.isComplete());
-            assertTrue(full instanceof Column);
-            Column column = (Column) full;
+            Column column = Column.retrieveByGuid(columnGuid1);
+            assertNotNull(column);
+            assertTrue(column.isComplete());
             assertEquals(column.getGuid(), columnGuid1);
             assertEquals(column.getQualifiedName(), columnQame1);
             assertEquals(column.getName(), COLUMN_NAME1);
@@ -595,11 +593,9 @@ public class DataAssetTest extends AtlanLiveTest {
             dependsOnGroups = {"create.column.*"})
     void retrieveColumn3() {
         try {
-            Entity full = Entity.retrieveFull(columnGuid3);
-            assertNotNull(full);
-            assertTrue(full.isComplete());
-            assertTrue(full instanceof Column);
-            Column column = (Column) full;
+            Column column = Column.retrieveByGuid(columnGuid3);
+            assertNotNull(column);
+            assertTrue(column.isComplete());
             assertEquals(column.getGuid(), columnGuid3);
             assertEquals(column.getQualifiedName(), columnQame3);
             assertEquals(column.getName(), COLUMN_NAME3);
@@ -618,11 +614,9 @@ public class DataAssetTest extends AtlanLiveTest {
             dependsOnGroups = {"create.column.*"})
     void retrieveColumn5() {
         try {
-            Entity full = Entity.retrieveFull(columnGuid5);
-            assertNotNull(full);
-            assertTrue(full.isComplete());
-            assertTrue(full instanceof Column);
-            Column column = (Column) full;
+            Column column = Column.retrieveByGuid(columnGuid5);
+            assertNotNull(column);
+            assertTrue(column.isComplete());
             assertEquals(column.getGuid(), columnGuid5);
             assertEquals(column.getQualifiedName(), columnQame5);
             assertEquals(column.getName(), COLUMN_NAME5);
@@ -661,11 +655,9 @@ public class DataAssetTest extends AtlanLiveTest {
             dependsOnGroups = {"create.column.*", "update.table"})
     void retrieveTable() {
         try {
-            Entity full = Entity.retrieveFull(tableGuid);
-            assertNotNull(full);
-            assertTrue(full.isComplete());
-            assertTrue(full instanceof Table);
-            Table table = (Table) full;
+            Table table = Table.retrieveByGuid(tableGuid);
+            assertNotNull(table);
+            assertTrue(table.isComplete());
             assertEquals(table.getGuid(), tableGuid);
             assertEquals(table.getQualifiedName(), tableQame);
             assertEquals(table.getName(), TABLE_NAME);
@@ -695,11 +687,9 @@ public class DataAssetTest extends AtlanLiveTest {
             dependsOnGroups = {"create.column.*"})
     void retrieveView() {
         try {
-            Entity full = Entity.retrieveFull(viewGuid);
-            assertNotNull(full);
-            assertTrue(full.isComplete());
-            assertTrue(full instanceof View);
-            View view = (View) full;
+            View view = View.retrieveByGuid(viewGuid);
+            assertNotNull(view);
+            assertTrue(view.isComplete());
             assertEquals(view.getGuid(), viewGuid);
             assertEquals(view.getQualifiedName(), viewQame);
             assertEquals(view.getName(), VIEW_NAME);
@@ -728,11 +718,9 @@ public class DataAssetTest extends AtlanLiveTest {
             dependsOnGroups = {"create.column.*"})
     void retrieveMaterializedView() {
         try {
-            Entity full = Entity.retrieveFull(mviewGuid);
-            assertNotNull(full);
-            assertTrue(full.isComplete());
-            assertTrue(full instanceof MaterializedView);
-            MaterializedView mview = (MaterializedView) full;
+            MaterializedView mview = MaterializedView.retrieveByGuid(mviewGuid);
+            assertNotNull(mview);
+            assertTrue(mview.isComplete());
             assertEquals(mview.getGuid(), mviewGuid);
             assertEquals(mview.getQualifiedName(), mviewQame);
             assertEquals(mview.getName(), MVIEW_NAME);
@@ -761,11 +749,9 @@ public class DataAssetTest extends AtlanLiveTest {
             dependsOnGroups = {"create.column.*"})
     void retrieveSchema() {
         try {
-            Entity full = Entity.retrieveFull(Schema.TYPE_NAME, schemaQame);
-            assertNotNull(full);
-            assertTrue(full.isComplete());
-            assertTrue(full instanceof Schema);
-            Schema schema = (Schema) full;
+            Schema schema = Schema.retrieveByQualifiedName(schemaQame);
+            assertNotNull(schema);
+            assertTrue(schema.isComplete());
             assertEquals(schema.getGuid(), schemaGuid);
             assertEquals(schema.getQualifiedName(), schemaQame);
             assertEquals(schema.getName(), SCHEMA_NAME);
@@ -811,11 +797,9 @@ public class DataAssetTest extends AtlanLiveTest {
             dependsOnGroups = {"create.column.*"})
     void retrieveDatabase() {
         try {
-            Entity full = Entity.retrieveFull(Database.TYPE_NAME, databaseQame);
-            assertNotNull(full);
-            assertTrue(full.isComplete());
-            assertTrue(full instanceof Database);
-            Database database = (Database) full;
+            Database database = Database.retrieveByQualifiedName(databaseQame);
+            assertNotNull(database);
+            assertTrue(database.isComplete());
             assertEquals(database.getGuid(), databaseGuid);
             assertEquals(database.getQualifiedName(), databaseQame);
             assertEquals(database.getName(), DATABASE_NAME);

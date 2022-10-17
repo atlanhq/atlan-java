@@ -71,15 +71,15 @@ public class APIAssetTest extends AtlanLiveTest {
             groups = {"read.connection.api"},
             dependsOnGroups = {"create.connection.api"})
     void retrieveConnection() {
-        Entity full = null;
+        Entity minimal = null;
         do {
             try {
-                full = Entity.retrieveFull(connectionGuid);
+                minimal = Entity.retrieveMinimal(connectionGuid);
             } catch (AtlanException e) {
                 e.printStackTrace();
                 assertNull(e, "Unexpected exception while trying to read-back the created connection.");
             }
-        } while (full == null);
+        } while (minimal == null);
     }
 
     @Test(
@@ -172,11 +172,9 @@ public class APIAssetTest extends AtlanLiveTest {
             dependsOnGroups = {"create.api.*", "update.api.spec"})
     void retrieveSpec() {
         try {
-            Entity full = Entity.retrieveFull(specGuid);
-            assertNotNull(full);
-            assertTrue(full.isComplete());
-            assertTrue(full instanceof APISpec);
-            APISpec spec = (APISpec) full;
+            APISpec spec = APISpec.retrieveByGuid(specGuid);
+            assertNotNull(spec);
+            assertTrue(spec.isComplete());
             assertEquals(spec.getGuid(), specGuid);
             assertEquals(spec.getQualifiedName(), specQame);
             assertEquals(spec.getName(), SPEC_NAME);

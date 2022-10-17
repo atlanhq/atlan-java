@@ -79,15 +79,15 @@ public class PresetAssetTest extends AtlanLiveTest {
             groups = {"read.connection.preset"},
             dependsOnGroups = {"create.connection.preset"})
     void retrieveConnection() {
-        Entity full = null;
+        Entity minimal = null;
         do {
             try {
-                full = Entity.retrieveFull(connectionGuid);
+                minimal = Entity.retrieveMinimal(connectionGuid);
             } catch (AtlanException e) {
                 e.printStackTrace();
                 assertNull(e, "Unexpected exception while trying to read-back the created connection.");
             }
-        } while (full == null);
+        } while (minimal == null);
     }
 
     @Test(
@@ -261,11 +261,9 @@ public class PresetAssetTest extends AtlanLiveTest {
             dependsOnGroups = {"create.preset.*", "update.preset.collection"})
     void retrieveCollection() {
         try {
-            Entity full = Entity.retrieveFull(collectionGuid);
-            assertNotNull(full);
-            assertTrue(full.isComplete());
-            assertTrue(full instanceof PresetDashboard);
-            PresetDashboard collection = (PresetDashboard) full;
+            PresetDashboard collection = PresetDashboard.retrieveByGuid(collectionGuid);
+            assertNotNull(collection);
+            assertTrue(collection.isComplete());
             assertEquals(collection.getGuid(), collectionGuid);
             assertEquals(collection.getQualifiedName(), collectionQame);
             assertEquals(collection.getName(), COLLECTION_NAME);

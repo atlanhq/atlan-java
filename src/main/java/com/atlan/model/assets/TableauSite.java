@@ -3,6 +3,8 @@
 package com.atlan.model.assets;
 
 import com.atlan.exception.AtlanException;
+import com.atlan.exception.NotFoundException;
+import com.atlan.model.core.Entity;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
@@ -76,6 +78,44 @@ public class TableauSite extends Tableau {
         return updater(this.getQualifiedName(), this.getName());
     }
 
+    /**
+     * Retrieves a TableauSite by its GUID, complete with all of its relationships.
+     *
+     * @param guid of the TableauSite to retrieve
+     * @return the requested full TableauSite, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the TableauSite does not exist or the provided GUID is not a TableauSite
+     */
+    public static TableauSite retrieveByGuid(String guid) throws AtlanException {
+        Entity entity = Entity.retrieveFull(guid);
+        if (entity == null) {
+            throw new NotFoundException("No entity found with GUID: " + guid, "ATLAN_JAVA_CLIENT-404-001", 404, null);
+        } else if (entity instanceof TableauSite) {
+            return (TableauSite) entity;
+        } else {
+            throw new NotFoundException(
+                    "Entity with GUID " + guid + " is not a TableauSite.", "ATLAN_JAVA_CLIENT-404-002", 404, null);
+        }
+    }
+
+    /**
+     * Retrieves a TableauSite by its qualifiedName, complete with all of its relationships.
+     *
+     * @param qualifiedName of the TableauSite to retrieve
+     * @return the requested full TableauSite, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the TableauSite does not exist
+     */
+    public static TableauSite retrieveByQualifiedName(String qualifiedName) throws AtlanException {
+        Entity entity = Entity.retrieveFull(TYPE_NAME, qualifiedName);
+        if (entity instanceof TableauSite) {
+            return (TableauSite) entity;
+        } else {
+            throw new NotFoundException(
+                    "No TableauSite found with qualifiedName: " + qualifiedName,
+                    "ATLAN_JAVA_CLIENT-404-003",
+                    404,
+                    null);
+        }
+    }
     /**
      * Update the certificate on a TableauSite.
      *

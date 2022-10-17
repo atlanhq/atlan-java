@@ -125,9 +125,7 @@ public class ClassificationTest extends AtlanLiveTest {
     void addObjectClassification() {
         try {
             S3Object.addClassifications(S3AssetTest.s3Object2Qame, List.of(CLASSIFICATION_NAME1, CLASSIFICATION_NAME2));
-            Entity result = S3Object.retrieveFull(S3AssetTest.s3Object2Guid);
-            assertTrue(result instanceof S3Object);
-            S3Object object = (S3Object) result;
+            S3Object object = S3Object.retrieveByGuid(S3AssetTest.s3Object2Guid);
             assertNotNull(object);
             assertTrue(object.isComplete());
             Set<Classification> classifications = object.getClassifications();
@@ -159,9 +157,7 @@ public class ClassificationTest extends AtlanLiveTest {
     void removeObjectClassification() {
         try {
             S3Object.removeClassification(S3AssetTest.s3Object2Qame, CLASSIFICATION_NAME2);
-            Entity result = S3Object.retrieveFull(S3AssetTest.s3Object2Guid);
-            assertTrue(result instanceof S3Object);
-            S3Object object = (S3Object) result;
+            S3Object object = S3Object.retrieveByGuid(S3AssetTest.s3Object2Guid);
             assertNotNull(object);
             assertTrue(object.isComplete());
             Set<Classification> classifications = object.getClassifications();
@@ -192,9 +188,7 @@ public class ClassificationTest extends AtlanLiveTest {
     void addObjectClassificationAgain() {
         try {
             S3Object.addClassifications(S3AssetTest.s3Object2Qame, List.of(CLASSIFICATION_NAME2));
-            Entity result = S3Object.retrieveFull(S3AssetTest.s3Object2Guid);
-            assertTrue(result instanceof S3Object);
-            S3Object object = (S3Object) result;
+            S3Object object = S3Object.retrieveByGuid(S3AssetTest.s3Object2Guid);
             assertNotNull(object);
             assertTrue(object.isComplete());
             Set<Classification> classifications = object.getClassifications();
