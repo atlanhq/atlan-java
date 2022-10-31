@@ -318,6 +318,7 @@ public class Connection extends Asset {
                     "No Connection found with qualifiedName: " + qualifiedName, "ATLAN_JAVA_CLIENT-404-003", 404, null);
         }
     }
+
     /**
      * Update the certificate on a Connection.
      *

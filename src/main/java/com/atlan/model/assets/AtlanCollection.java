@@ -119,6 +119,7 @@ public class AtlanCollection extends Namespace {
                     null);
         }
     }
+
     /**
      * Update the certificate on a AtlanCollection.
      *

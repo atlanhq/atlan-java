@@ -149,6 +149,7 @@ public class DataStudioAsset extends Google {
                     null);
         }
     }
+
     /**
      * Update the certificate on a DataStudioAsset.
      *

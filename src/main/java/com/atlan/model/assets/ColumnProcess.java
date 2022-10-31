@@ -137,6 +137,7 @@ public class ColumnProcess extends AbstractColumnProcess {
                     null);
         }
     }
+
     /**
      * Update the certificate on a ColumnProcess.
      *
