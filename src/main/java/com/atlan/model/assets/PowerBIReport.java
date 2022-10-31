@@ -145,6 +145,7 @@ public class PowerBIReport extends PowerBI {
                     null);
         }
     }
+
     /**
      * Update the certificate on a PowerBIReport.
      *

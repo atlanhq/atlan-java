@@ -133,6 +133,7 @@ public class TableauMetric extends Tableau {
                     null);
         }
     }
+
     /**
      * Update the certificate on a TableauMetric.
      *

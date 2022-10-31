@@ -141,6 +141,7 @@ public class SalesforceObject extends Salesforce {
                     null);
         }
     }
+
     /**
      * Update the certificate on a SalesforceObject.
      *

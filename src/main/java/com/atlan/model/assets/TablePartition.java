@@ -183,6 +183,7 @@ public class TablePartition extends SQL {
                     null);
         }
     }
+
     /**
      * Update the certificate on a TablePartition.
      *

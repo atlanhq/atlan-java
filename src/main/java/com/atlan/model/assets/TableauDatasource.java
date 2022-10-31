@@ -190,6 +190,7 @@ public class TableauDatasource extends Tableau {
                     null);
         }
     }
+
     /**
      * Update the certificate on a TableauDatasource.
      *

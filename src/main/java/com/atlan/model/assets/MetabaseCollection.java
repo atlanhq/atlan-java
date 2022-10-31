@@ -140,6 +140,7 @@ public class MetabaseCollection extends Metabase {
                     null);
         }
     }
+
     /**
      * Update the certificate on a MetabaseCollection.
      *

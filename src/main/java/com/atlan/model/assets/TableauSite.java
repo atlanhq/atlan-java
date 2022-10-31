@@ -116,6 +116,7 @@ public class TableauSite extends Tableau {
                     null);
         }
     }
+
     /**
      * Update the certificate on a TableauSite.
      *

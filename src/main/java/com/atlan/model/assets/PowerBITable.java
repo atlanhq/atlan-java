@@ -146,6 +146,7 @@ public class PowerBITable extends PowerBI {
                     null);
         }
     }
+
     /**
      * Update the certificate on a PowerBITable.
      *

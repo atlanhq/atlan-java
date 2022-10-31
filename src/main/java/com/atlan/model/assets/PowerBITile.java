@@ -130,6 +130,7 @@ public class PowerBITile extends PowerBI {
                     null);
         }
     }
+
     /**
      * Update the certificate on a PowerBITile.
      *

@@ -107,6 +107,7 @@ public class Insight extends Catalog {
                     "No Insight found with qualifiedName: " + qualifiedName, "ATLAN_JAVA_CLIENT-404-003", 404, null);
         }
     }
+
     /**
      * Update the certificate on a Insight.
      *

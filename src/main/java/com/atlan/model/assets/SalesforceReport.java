@@ -136,6 +136,7 @@ public class SalesforceReport extends Salesforce {
                     null);
         }
     }
+
     /**
      * Update the certificate on a SalesforceReport.
      *

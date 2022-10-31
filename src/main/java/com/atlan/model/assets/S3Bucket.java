@@ -142,6 +142,7 @@ public class S3Bucket extends S3 {
                     "No S3Bucket found with qualifiedName: " + qualifiedName, "ATLAN_JAVA_CLIENT-404-003", 404, null);
         }
     }
+
     /**
      * Update the certificate on a S3Bucket.
      *

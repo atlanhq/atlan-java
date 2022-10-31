@@ -132,6 +132,7 @@ public class PowerBIDashboard extends PowerBI {
                     null);
         }
     }
+
     /**
      * Update the certificate on a PowerBIDashboard.
      *

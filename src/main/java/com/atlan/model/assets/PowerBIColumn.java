@@ -138,6 +138,7 @@ public class PowerBIColumn extends PowerBI {
                     null);
         }
     }
+
     /**
      * Update the certificate on a PowerBIColumn.
      *

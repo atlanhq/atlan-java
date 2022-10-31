@@ -142,6 +142,7 @@ public class LookerQuery extends Looker {
                     null);
         }
     }
+
     /**
      * Update the certificate on a LookerQuery.
      *

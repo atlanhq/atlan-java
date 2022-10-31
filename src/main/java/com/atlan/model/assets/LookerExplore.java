@@ -144,6 +144,7 @@ public class LookerExplore extends Looker {
                     null);
         }
     }
+
     /**
      * Update the certificate on a LookerExplore.
      *

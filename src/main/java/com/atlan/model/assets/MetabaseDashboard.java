@@ -127,6 +127,7 @@ public class MetabaseDashboard extends Metabase {
                     null);
         }
     }
+
     /**
      * Update the certificate on a MetabaseDashboard.
      *

@@ -138,6 +138,7 @@ public class LookerModel extends Looker {
                     null);
         }
     }
+
     /**
      * Update the certificate on a LookerModel.
      *

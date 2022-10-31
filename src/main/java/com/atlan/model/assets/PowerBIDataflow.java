@@ -128,6 +128,7 @@ public class PowerBIDataflow extends PowerBI {
                     null);
         }
     }
+
     /**
      * Update the certificate on a PowerBIDataflow.
      *

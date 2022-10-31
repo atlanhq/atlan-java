@@ -126,6 +126,7 @@ public class PowerBIDatasource extends PowerBI {
                     null);
         }
     }
+
     /**
      * Update the certificate on a PowerBIDatasource.
      *
