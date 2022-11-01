@@ -153,6 +153,7 @@ public class LookerDashboard extends Looker {
                     null);
         }
     }
+
     /**
      * Update the certificate on a LookerDashboard.
      *

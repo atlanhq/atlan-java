@@ -171,6 +171,7 @@ public class TableauCalculatedField extends Tableau {
                     null);
         }
     }
+
     /**
      * Update the certificate on a TableauCalculatedField.
      *

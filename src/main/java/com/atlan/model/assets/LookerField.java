@@ -154,6 +154,7 @@ public class LookerField extends Looker {
                     null);
         }
     }
+
     /**
      * Update the certificate on a LookerField.
      *

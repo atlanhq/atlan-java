@@ -3,6 +3,7 @@
 package com.atlan.model.assets;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
+import java.util.List;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -14,6 +15,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @JsonSubTypes({
+    @JsonSubTypes.Type(value = GCS.class, name = GCS.TYPE_NAME),
     @JsonSubTypes.Type(value = DataStudioAsset.class, name = DataStudioAsset.TYPE_NAME),
 })
 public abstract class Google extends Catalog {
@@ -35,4 +37,22 @@ public abstract class Google extends Catalog {
     /** TBC */
     @Attribute
     Long googleProjectNumber;
+
+    /** TBC */
+    @Attribute
+    String googleLocation;
+
+    /** TBC */
+    @Attribute
+    String googleLocationType;
+
+    /** List of labels that have been applied to the asset in Google. */
+    @Singular
+    @Attribute
+    List<GoogleLabel> googleLabels;
+
+    /** List of tags that have been applied to the asset in Google. */
+    @Singular
+    @Attribute
+    List<GoogleTag> googleTags;
 }

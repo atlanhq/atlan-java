@@ -115,6 +115,7 @@ public class ModeChart extends Mode {
                     "No ModeChart found with qualifiedName: " + qualifiedName, "ATLAN_JAVA_CLIENT-404-003", 404, null);
         }
     }
+
     /**
      * Update the certificate on a ModeChart.
      *

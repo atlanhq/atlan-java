@@ -204,6 +204,7 @@ public class MaterializedView extends SQL {
                     null);
         }
     }
+
     /**
      * Update the certificate on a MaterializedView.
      *

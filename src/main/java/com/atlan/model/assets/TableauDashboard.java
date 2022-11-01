@@ -143,6 +143,7 @@ public class TableauDashboard extends Tableau {
                     null);
         }
     }
+
     /**
      * Update the certificate on a TableauDashboard.
      *

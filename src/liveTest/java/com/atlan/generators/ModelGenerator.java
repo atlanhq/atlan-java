@@ -97,7 +97,8 @@ public class ModelGenerator extends AtlanLiveTest {
             Map.entry("DbtProcess", "Process"),
             Map.entry("DbtMetric", "Metric"),
             Map.entry("AWS", "Catalog"),
-            Map.entry("Google", "Catalog"));
+            Map.entry("Google", "Catalog"),
+            Map.entry("GCS", "Google"));
 
     // Provide a name that Lombok can use for the singularization of these multivalued attributes
     private static final Map<String, String> SINGULAR_MAPPINGS = Map.ofEntries(

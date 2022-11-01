@@ -125,6 +125,7 @@ public class DbtColumnProcess extends AbstractColumnProcess {
                     null);
         }
     }
+
     /**
      * Update the certificate on a DbtColumnProcess.
      *

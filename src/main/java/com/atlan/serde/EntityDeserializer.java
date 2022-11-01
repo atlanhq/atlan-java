@@ -126,6 +126,12 @@ public class EntityDeserializer extends StdDeserializer<Entity> {
                 case Folder.TYPE_NAME:
                     builder = Folder.builder();
                     break;
+                case GCSBucket.TYPE_NAME:
+                    builder = GCSBucket.builder();
+                    break;
+                case GCSObject.TYPE_NAME:
+                    builder = GCSObject.builder();
+                    break;
                 case Glossary.TYPE_NAME:
                     builder = Glossary.builder();
                     break;

@@ -130,6 +130,7 @@ public class DbtModelColumn extends Dbt {
                     null);
         }
     }
+
     /**
      * Update the certificate on a DbtModelColumn.
      *

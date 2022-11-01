@@ -219,6 +219,7 @@ public class Table extends SQL {
                     "No Table found with qualifiedName: " + qualifiedName, "ATLAN_JAVA_CLIENT-404-003", 404, null);
         }
     }
+
     /**
      * Update the certificate on a Table.
      *

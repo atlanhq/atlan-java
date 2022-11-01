@@ -143,6 +143,7 @@ public class LineageProcess extends AbstractProcess {
                     null);
         }
     }
+
     /**
      * Update the certificate on a LineageProcess.
      *

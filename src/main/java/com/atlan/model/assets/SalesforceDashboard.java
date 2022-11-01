@@ -135,6 +135,7 @@ public class SalesforceDashboard extends Salesforce {
                     null);
         }
     }
+
     /**
      * Update the certificate on a SalesforceDashboard.
      *

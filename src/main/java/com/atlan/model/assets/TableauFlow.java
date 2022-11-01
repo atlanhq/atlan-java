@@ -148,6 +148,7 @@ public class TableauFlow extends Tableau {
                     null);
         }
     }
+
     /**
      * Update the certificate on a TableauFlow.
      *

@@ -158,6 +158,7 @@ public class TableauProject extends Tableau {
                     null);
         }
     }
+
     /**
      * Update the certificate on a TableauProject.
      *

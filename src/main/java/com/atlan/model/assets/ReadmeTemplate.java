@@ -119,6 +119,7 @@ public class ReadmeTemplate extends Resource {
                     null);
         }
     }
+
     /**
      * Update the certificate on a ReadmeTemplate.
      *

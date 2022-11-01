@@ -132,6 +132,7 @@ public class MetabaseQuestion extends Metabase {
                     null);
         }
     }
+
     /**
      * Update the certificate on a MetabaseQuestion.
      *

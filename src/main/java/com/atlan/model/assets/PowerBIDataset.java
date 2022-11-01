@@ -148,6 +148,7 @@ public class PowerBIDataset extends PowerBI {
                     null);
         }
     }
+
     /**
      * Update the certificate on a PowerBIDataset.
      *

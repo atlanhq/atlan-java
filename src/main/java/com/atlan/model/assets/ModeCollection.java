@@ -128,6 +128,7 @@ public class ModeCollection extends Mode {
                     null);
         }
     }
+
     /**
      * Update the certificate on a ModeCollection.
      *

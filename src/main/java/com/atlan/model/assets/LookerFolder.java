@@ -137,6 +137,7 @@ public class LookerFolder extends Looker {
                     null);
         }
     }
+
     /**
      * Update the certificate on a LookerFolder.
      *

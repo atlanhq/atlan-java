@@ -120,6 +120,7 @@ public class ModeWorkspace extends Mode {
                     null);
         }
     }
+
     /**
      * Update the certificate on a ModeWorkspace.
      *

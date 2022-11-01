@@ -151,6 +151,7 @@ public class PowerBIWorkspace extends PowerBI {
                     null);
         }
     }
+
     /**
      * Update the certificate on a PowerBIWorkspace.
      *

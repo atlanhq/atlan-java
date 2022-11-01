@@ -152,6 +152,7 @@ public class PresetChart extends Preset {
                     null);
         }
     }
+
     /**
      * Update the certificate on a PresetChart.
      *

@@ -131,6 +131,7 @@ public class LookerProject extends Looker {
                     null);
         }
     }
+
     /**
      * Update the certificate on a LookerProject.
      *

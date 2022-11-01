@@ -130,6 +130,7 @@ public class PowerBIMeasure extends PowerBI {
                     null);
         }
     }
+
     /**
      * Update the certificate on a PowerBIMeasure.
      *

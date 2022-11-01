@@ -179,6 +179,7 @@ public class S3Object extends S3 {
                     "No S3Object found with qualifiedName: " + qualifiedName, "ATLAN_JAVA_CLIENT-404-003", 404, null);
         }
     }
+
     /**
      * Update the certificate on a S3Object.
      *

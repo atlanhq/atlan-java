@@ -122,6 +122,7 @@ public class DbtProcess extends AbstractProcess {
                     "No DbtProcess found with qualifiedName: " + qualifiedName, "ATLAN_JAVA_CLIENT-404-003", 404, null);
         }
     }
+
     /**
      * Update the certificate on a DbtProcess.
      *

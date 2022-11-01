@@ -153,6 +153,7 @@ public class TableauWorkbook extends Tableau {
                     null);
         }
     }
+
     /**
      * Update the certificate on a TableauWorkbook.
      *
