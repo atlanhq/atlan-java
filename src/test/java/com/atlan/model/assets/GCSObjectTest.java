@@ -10,9 +10,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.*;
 import org.testng.annotations.Test;
 
-public class DataStudioAssetTest {
+public class GCSObjectTest {
 
-    private static final DataStudioAsset full = DataStudioAsset.builder()
+    private static final GCSObject full = GCSObject.builder()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -107,25 +107,45 @@ public class DataStudioAssetTest {
             .meaning(GlossaryTerm.refByGuid("termGuid1"))
             .meaning(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("5edb9a1b-6799-4b21-83ca-e84c6791d7f0"),
-                    LineageProcess.refByGuid("398ce2dd-f0a4-4839-8b20-c0d6b0582fb9")))
+                    LineageProcess.refByGuid("b8234c44-48d2-45c8-ba8e-5e52f7760eff"),
+                    LineageProcess.refByGuid("aba7e3dd-4beb-4885-9177-c9574e01b1c2")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("13c2390b-f8ac-415f-ac06-e5a67651151f"),
-                    LineageProcess.refByGuid("c31b29bd-1238-4205-bc82-490f8016a8aa")))
+                    LineageProcess.refByGuid("951c0959-b1e0-483c-a468-323273996a8c"),
+                    LineageProcess.refByGuid("faff5fc6-237f-4029-885a-80f460553467")))
             .googleService("googleService")
             .googleProjectName("googleProjectName")
             .googleProjectId("googleProjectId")
-            .googleProjectNumber(-8753008744437615677L)
+            .googleProjectNumber(453881899512736412L)
+            .googleLocation("googleLocation")
+            .googleLocationType("googleLocationType")
             .googleLabel(GoogleLabel.of("key1", "value1"))
             .googleLabel(GoogleLabel.of("key2", "value2"))
             .googleTag(GoogleTag.of("key1", "value1"))
             .googleTag(GoogleTag.of("key2", "value2"))
-            .dataStudioAssetType(GoogleDataStudioAssetType.REPORT)
-            .dataStudioAssetTitle("dataStudioAssetTitle")
-            .dataStudioAssetOwner("dataStudioAssetOwner")
-            .isTrashedDataStudioAsset(false)
+            .gcsStorageClass("gcsStorageClass")
+            .gcsEncryptionType("gcsEncryptionType")
+            .gcsETag("gcsETag")
+            .gcsRequesterPays(true)
+            .gcsAccessControl("gcsAccessControl")
+            .gcsMetaGenerationId(-6203784219991084327L)
+            .gcsBucketName("gcsBucketName")
+            .gcsBucketQualifiedName("gcsBucketQualifiedName")
+            .gcsObjectSize(-8014471683314565842L)
+            .gcsObjectKey("gcsObjectKey")
+            .gcsObjectMediaLink("gcsObjectMediaLink")
+            .gcsObjectHoldType("gcsObjectHoldType")
+            .gcsObjectGenerationId(8250429657138933949L)
+            .gcsObjectCRC32CHash("gcsObjectCRC32CHash")
+            .gcsObjectMD5Hash("gcsObjectMD5Hash")
+            .gcsObjectDataLastModifiedTime(-4137136745878046810L)
+            .gcsObjectContentType("gcsObjectContentType")
+            .gcsObjectContentEncoding("gcsObjectContentEncoding")
+            .gcsObjectContentDisposition("gcsObjectContentDisposition")
+            .gcsObjectContentLanguage("gcsObjectContentLanguage")
+            .gcsObjectRetentionExpirationDate(3484827525323156340L)
+            .gcsBucket(GCSBucket.refByGuid("2d8a6623-e6ac-46ee-90a4-1165bae1a16c"))
             .build();
-    private static DataStudioAsset frodo;
+    private static GCSObject frodo;
     private static String serialized;
 
     @Test(groups = {"builderEquivalency"})
@@ -147,7 +167,7 @@ public class DataStudioAssetTest {
             dependsOnGroups = {"serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
-        frodo = Serde.mapper.readValue(serialized, DataStudioAsset.class);
+        frodo = Serde.mapper.readValue(serialized, GCSObject.class);
         assertNotNull(frodo);
     }
 
