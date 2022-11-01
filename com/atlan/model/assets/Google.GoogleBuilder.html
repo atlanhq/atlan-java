@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":6,"i2":10,"i3":10,"i4":10,"i5":10,"i6":6,"i7":10};
+var data = {"i0":10,"i1":6,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":6,"i15":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -156,7 +156,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockList">
 <dl>
 <dt>Direct Known Subclasses:</dt>
-<dd><code><a href="DataStudioAsset.DataStudioAssetBuilder.html" title="class in com.atlan.model.assets">DataStudioAsset.DataStudioAssetBuilder</a></code></dd>
+<dd><code><a href="DataStudioAsset.DataStudioAssetBuilder.html" title="class in com.atlan.model.assets">DataStudioAsset.DataStudioAssetBuilder</a></code>, <code><a href="GCS.GCSBuilder.html" title="class in com.atlan.model.assets">GCS.GCSBuilder</a></code></dd>
 </dl>
 <dl>
 <dt>Enclosing class:</dt>
@@ -218,30 +218,70 @@ extends <a href="Catalog.CatalogBuilder.html" title="class in com.atlan.model.as
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="Google.GoogleBuilder.html" title="type parameter in Google.GoogleBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#googleProjectId(java.lang.String)">googleProjectId</a></span>&#8203;(java.lang.String&nbsp;googleProjectId)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearGoogleLabels()">clearGoogleLabels</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="Google.GoogleBuilder.html" title="type parameter in Google.GoogleBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#googleProjectName(java.lang.String)">googleProjectName</a></span>&#8203;(java.lang.String&nbsp;googleProjectName)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearGoogleTags()">clearGoogleTags</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="Google.GoogleBuilder.html" title="type parameter in Google.GoogleBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#googleProjectNumber(java.lang.Long)">googleProjectNumber</a></span>&#8203;(java.lang.Long&nbsp;googleProjectNumber)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#googleLabel(com.atlan.model.assets.GoogleLabel)">googleLabel</a></span>&#8203;(<a href="GoogleLabel.html" title="class in com.atlan.model.assets">GoogleLabel</a>&nbsp;googleLabel)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="Google.GoogleBuilder.html" title="type parameter in Google.GoogleBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#googleService(java.lang.String)">googleService</a></span>&#8203;(java.lang.String&nbsp;googleService)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#googleLabels(java.util.Collection)">googleLabels</a></span>&#8203;(java.util.Collection&lt;? extends <a href="GoogleLabel.html" title="class in com.atlan.model.assets">GoogleLabel</a>&gt;&nbsp;googleLabels)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
+<td class="colFirst"><code><a href="Google.GoogleBuilder.html" title="type parameter in Google.GoogleBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#googleLocation(java.lang.String)">googleLocation</a></span>&#8203;(java.lang.String&nbsp;googleLocation)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i7" class="rowColor">
+<td class="colFirst"><code><a href="Google.GoogleBuilder.html" title="type parameter in Google.GoogleBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#googleLocationType(java.lang.String)">googleLocationType</a></span>&#8203;(java.lang.String&nbsp;googleLocationType)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i8" class="altColor">
+<td class="colFirst"><code><a href="Google.GoogleBuilder.html" title="type parameter in Google.GoogleBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#googleProjectId(java.lang.String)">googleProjectId</a></span>&#8203;(java.lang.String&nbsp;googleProjectId)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i9" class="rowColor">
+<td class="colFirst"><code><a href="Google.GoogleBuilder.html" title="type parameter in Google.GoogleBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#googleProjectName(java.lang.String)">googleProjectName</a></span>&#8203;(java.lang.String&nbsp;googleProjectName)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i10" class="altColor">
+<td class="colFirst"><code><a href="Google.GoogleBuilder.html" title="type parameter in Google.GoogleBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#googleProjectNumber(java.lang.Long)">googleProjectNumber</a></span>&#8203;(java.lang.Long&nbsp;googleProjectNumber)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i11" class="rowColor">
+<td class="colFirst"><code><a href="Google.GoogleBuilder.html" title="type parameter in Google.GoogleBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#googleService(java.lang.String)">googleService</a></span>&#8203;(java.lang.String&nbsp;googleService)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i12" class="altColor">
+<td class="colFirst"><code><a href="Google.GoogleBuilder.html" title="type parameter in Google.GoogleBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#googleTag(com.atlan.model.assets.GoogleTag)">googleTag</a></span>&#8203;(<a href="GoogleTag.html" title="class in com.atlan.model.assets">GoogleTag</a>&nbsp;googleTag)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i13" class="rowColor">
+<td class="colFirst"><code><a href="Google.GoogleBuilder.html" title="type parameter in Google.GoogleBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#googleTags(java.util.Collection)">googleTags</a></span>&#8203;(java.util.Collection&lt;? extends <a href="GoogleTag.html" title="class in com.atlan.model.assets">GoogleTag</a>&gt;&nbsp;googleTags)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>protected abstract <a href="Google.GoogleBuilder.html" title="type parameter in Google.GoogleBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#self()">self</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
@@ -408,6 +448,86 @@ extends <a href="Catalog.CatalogBuilder.html" title="class in com.atlan.model.as
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
 </dl>
+</li>
+</ul>
+<a id="googleLocation(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>googleLocation</h4>
+<pre class="methodSignature">public&nbsp;<a href="Google.GoogleBuilder.html" title="type parameter in Google.GoogleBuilder">B</a>&nbsp;googleLocation&#8203;(java.lang.String&nbsp;googleLocation)</pre>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="googleLocationType(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>googleLocationType</h4>
+<pre class="methodSignature">public&nbsp;<a href="Google.GoogleBuilder.html" title="type parameter in Google.GoogleBuilder">B</a>&nbsp;googleLocationType&#8203;(java.lang.String&nbsp;googleLocationType)</pre>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="googleLabel(com.atlan.model.assets.GoogleLabel)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>googleLabel</h4>
+<pre class="methodSignature">public&nbsp;<a href="Google.GoogleBuilder.html" title="type parameter in Google.GoogleBuilder">B</a>&nbsp;googleLabel&#8203;(<a href="GoogleLabel.html" title="class in com.atlan.model.assets">GoogleLabel</a>&nbsp;googleLabel)</pre>
+</li>
+</ul>
+<a id="googleLabels(java.util.Collection)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>googleLabels</h4>
+<pre class="methodSignature">public&nbsp;<a href="Google.GoogleBuilder.html" title="type parameter in Google.GoogleBuilder">B</a>&nbsp;googleLabels&#8203;(java.util.Collection&lt;? extends <a href="GoogleLabel.html" title="class in com.atlan.model.assets">GoogleLabel</a>&gt;&nbsp;googleLabels)</pre>
+</li>
+</ul>
+<a id="clearGoogleLabels()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>clearGoogleLabels</h4>
+<pre class="methodSignature">public&nbsp;<a href="Google.GoogleBuilder.html" title="type parameter in Google.GoogleBuilder">B</a>&nbsp;clearGoogleLabels()</pre>
+</li>
+</ul>
+<a id="googleTag(com.atlan.model.assets.GoogleTag)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>googleTag</h4>
+<pre class="methodSignature">public&nbsp;<a href="Google.GoogleBuilder.html" title="type parameter in Google.GoogleBuilder">B</a>&nbsp;googleTag&#8203;(<a href="GoogleTag.html" title="class in com.atlan.model.assets">GoogleTag</a>&nbsp;googleTag)</pre>
+</li>
+</ul>
+<a id="googleTags(java.util.Collection)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>googleTags</h4>
+<pre class="methodSignature">public&nbsp;<a href="Google.GoogleBuilder.html" title="type parameter in Google.GoogleBuilder">B</a>&nbsp;googleTags&#8203;(java.util.Collection&lt;? extends <a href="GoogleTag.html" title="class in com.atlan.model.assets">GoogleTag</a>&gt;&nbsp;googleTags)</pre>
+</li>
+</ul>
+<a id="clearGoogleTags()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>clearGoogleTags</h4>
+<pre class="methodSignature">public&nbsp;<a href="Google.GoogleBuilder.html" title="type parameter in Google.GoogleBuilder">B</a>&nbsp;clearGoogleTags()</pre>
 </li>
 </ul>
 <a id="toString()">
