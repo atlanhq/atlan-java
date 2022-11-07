@@ -8,6 +8,7 @@ import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.core.AtlanObject;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.SortedSet;
 import lombok.*;
@@ -69,8 +70,7 @@ public class AtlanUser extends AtlanObject {
     String decentralizedRoles;
 
     /** Personas the user is associated with. */
-    @JsonIgnore // TODO
-    SortedSet<String> personas;
+    SortedSet<AtlanUser.Persona> personas;
 
     /** Purposes the user is associated with. */
     @JsonIgnore // TODO
@@ -152,6 +152,24 @@ public class AtlanUser extends AtlanObject {
                     null);
         }
         UsersEndpoint.addToGroups(this.id, groupIds);
+    }
+
+    /**
+     * Fetch the groups this user belongs to.
+     *
+     * @return details of the groups the user belongs to
+     * @throws AtlanException on any API communication issue
+     */
+    public GroupResponse fetchGroups() throws AtlanException {
+        if (this.id == null || this.id.length() == 0) {
+            throw new InvalidRequestException(
+                    "An id must be provided to retrieve a user's group membership.",
+                    "id",
+                    "ATLAN_JAVA_CLIENT-400-404",
+                    400,
+                    null);
+        }
+        return UsersEndpoint.getGroups(this.id);
     }
 
     /**
@@ -311,6 +329,39 @@ public class AtlanUser extends AtlanObject {
 
         /** Unique identifier (GUID) of the user that logged in. */
         String userId;
+    }
+
+    /**
+     * Personas associated with a user.
+     */
+    @Getter
+    @Setter
+    @Jacksonized
+    @SuperBuilder(toBuilder = true)
+    @EqualsAndHashCode(callSuper = true)
+    public static final class Persona extends AtlanObject implements Comparable<Persona> {
+        private static final long serialVersionUID = 2L;
+
+        private static final Comparator<String> stringComparator = Comparator.nullsFirst(String::compareTo);
+        private static final Comparator<Persona> personaComparator =
+                Comparator.comparing(Persona::getId, stringComparator);
+
+        /** Unique identifier (GUID) of the persona. */
+        String id;
+
+        /** Internal name of the persona. */
+        String name;
+
+        /** Human-readable name of the persona. */
+        String displayName;
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public int compareTo(Persona o) {
+            return personaComparator.compare(this, o);
+        }
     }
 
     @Getter

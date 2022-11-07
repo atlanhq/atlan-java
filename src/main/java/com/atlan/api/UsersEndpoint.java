@@ -5,10 +5,7 @@ package com.atlan.api;
 import com.atlan.Atlan;
 import com.atlan.cache.RoleCache;
 import com.atlan.exception.AtlanException;
-import com.atlan.model.admin.AtlanUser;
-import com.atlan.model.admin.SessionResponse;
-import com.atlan.model.admin.UserMinimalResponse;
-import com.atlan.model.admin.UserResponse;
+import com.atlan.model.admin.*;
 import com.atlan.model.core.AtlanObject;
 import com.atlan.net.ApiResource;
 import java.util.List;
@@ -136,6 +133,17 @@ public class UsersEndpoint {
     public static void deleteUser(String id) throws AtlanException {
         String url = String.format("%s%s/%s/delete", Atlan.getBaseUrl(), endpoint, id);
         ApiResource.request(ApiResource.RequestMethod.POST, url, "", null, null);
+    }
+
+    /**
+     * Retrieve the groups this user belongs to.
+     *
+     * @param id unique identifier (GUID) of the user
+     * @throws AtlanException on any API communication issue
+     */
+    public static GroupResponse getGroups(String id) throws AtlanException {
+        String url = String.format("%s%s/%s/groups", Atlan.getBaseUrl(), endpoint, id);
+        return ApiResource.request(ApiResource.RequestMethod.GET, url, "", GroupResponse.class, null);
     }
 
     /**
