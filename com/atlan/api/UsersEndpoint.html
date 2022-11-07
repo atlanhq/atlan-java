@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9,"i9":9,"i10":9};
+var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9,"i9":9,"i10":9,"i11":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -226,20 +226,27 @@ extends java.lang.Object</pre>
 </td>
 </tr>
 <tr id="i7" class="rowColor">
+<td class="colFirst"><code>static <a href="../model/admin/GroupResponse.html" title="class in com.atlan.model.admin">GroupResponse</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getGroups(java.lang.String)">getGroups</a></span>&#8203;(java.lang.String&nbsp;id)</code></th>
+<td class="colLast">
+<div class="block">Retrieve the groups this user belongs to.</div>
+</td>
+</tr>
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>static <a href="../model/admin/SessionResponse.html" title="class in com.atlan.model.admin">SessionResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSessions(java.lang.String)">getSessions</a></span>&#8203;(java.lang.String&nbsp;id)</code></th>
 <td class="colLast">
 <div class="block">Retrieve the sessions for a given user.</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>static <a href="../model/admin/UserResponse.html" title="class in com.atlan.model.admin">UserResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getUsers(java.lang.String)">getUsers</a></span>&#8203;(java.lang.String&nbsp;filter)</code></th>
 <td class="colLast">
 <div class="block">Retrieves a list of the users defined in Atlan.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>static <a href="../model/admin/UserResponse.html" title="class in com.atlan.model.admin">UserResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getUsers(java.lang.String,java.lang.String,boolean,int,int)">getUsers</a></span>&#8203;(java.lang.String&nbsp;filter,
         java.lang.String&nbsp;sort,
@@ -250,7 +257,7 @@ extends java.lang.Object</pre>
 <div class="block">Retrieves a list of the users defined in Atlan.</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>static <a href="../model/admin/UserMinimalResponse.html" title="class in com.atlan.model.admin">UserMinimalResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateUser(java.lang.String,com.atlan.model.admin.AtlanUser)">updateUser</a></span>&#8203;(java.lang.String&nbsp;id,
           <a href="../model/admin/AtlanUser.html" title="class in com.atlan.model.admin">AtlanUser</a>&nbsp;user)</code></th>
@@ -431,6 +438,23 @@ extends java.lang.Object</pre>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>id</code> - unique identifier (GUID) of the user to delete</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication issue</dd>
+</dl>
+</li>
+</ul>
+<a id="getGroups(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getGroups</h4>
+<pre class="methodSignature">public static&nbsp;<a href="../model/admin/GroupResponse.html" title="class in com.atlan.model.admin">GroupResponse</a>&nbsp;getGroups&#8203;(java.lang.String&nbsp;id)
+                               throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Retrieve the groups this user belongs to.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>id</code> - unique identifier (GUID) of the user</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication issue</dd>
 </dl>
