@@ -20,20 +20,20 @@ import org.testng.annotations.Test;
 @Test(groups = {"data_asset"})
 public class DataAssetTest extends AtlanLiveTest {
 
-    public static final AtlanConnectorType CONNECTOR_TYPE = AtlanConnectorType.DYNAMODB;
+    public static final AtlanConnectorType CONNECTOR_TYPE = AtlanConnectorType.SAPHANA;
 
-    public static final String CONNECTION_NAME = "dynamo-connection";
-    public static final String DATABASE_NAME = "dyn_db";
-    public static final String SCHEMA_NAME = "dyn_schema";
-    public static final String TABLE_NAME = "dyn_table";
-    public static final String VIEW_NAME = "dyn_view";
-    public static final String MVIEW_NAME = "dyn_mat_view";
-    public static final String COLUMN_NAME1 = "dyn_col1";
-    public static final String COLUMN_NAME2 = "dyn_col2";
-    public static final String COLUMN_NAME3 = "dyn_col3";
-    public static final String COLUMN_NAME4 = "dyn_col4";
-    public static final String COLUMN_NAME5 = "dyn_col5";
-    public static final String COLUMN_NAME6 = "dyn_col6";
+    public static final String CONNECTION_NAME = "hana-connection";
+    public static final String DATABASE_NAME = "hana_db";
+    public static final String SCHEMA_NAME = "hana_schema";
+    public static final String TABLE_NAME = "hana_table";
+    public static final String VIEW_NAME = "hana_view";
+    public static final String MVIEW_NAME = "hana_mat_view";
+    public static final String COLUMN_NAME1 = "hana_col1";
+    public static final String COLUMN_NAME2 = "hana_col2";
+    public static final String COLUMN_NAME3 = "hana_col3";
+    public static final String COLUMN_NAME4 = "hana_col4";
+    public static final String COLUMN_NAME5 = "hana_col5";
+    public static final String COLUMN_NAME6 = "hana_col6";
 
     public static String connectionGuid = null;
     public static String connectionQame = null;
@@ -117,7 +117,7 @@ public class DataAssetTest extends AtlanLiveTest {
             dependsOnGroups = {"read.connection.data"})
     void findConnection() {
         try {
-            List<Connection> results = Connection.findByName(CONNECTION_NAME, AtlanConnectorType.DYNAMODB, null);
+            List<Connection> results = Connection.findByName(CONNECTION_NAME, CONNECTOR_TYPE, null);
             assertNotNull(results);
             assertEquals(results.size(), 1);
             Connection one = results.get(0);
