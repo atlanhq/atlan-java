@@ -13,7 +13,7 @@ public class WorkflowSearchResultDetail extends AtlanObject {
 
     String kind;
     String apiVersion;
-    Object metadata;
-    Object spec;
+    WorkflowMetadata metadata;
+    WorkflowSpec spec;
     WorkflowSearchResultStatus status;
 }
