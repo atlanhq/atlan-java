@@ -43,4 +43,27 @@ public abstract class AbstractCrawler {
         }
         return toInclude;
     }
+
+    /**
+     * Build a filter for dbt projects from the provided map of account and project IDs.
+     *
+     * @param rawFilter map keyed by account ID with a list of project IDs as its value
+     * @return a filter map, usable in the dbt Cloud crawler include / exclude filters
+     */
+    static Map<String, Map<String, Map<String, String>>> buildDbtCloudFilter(Map<String, List<String>> rawFilter) {
+        Map<String, Map<String, Map<String, String>>> toInclude = new HashMap<>();
+        if (rawFilter != null) {
+            for (Map.Entry<String, List<String>> entry : rawFilter.entrySet()) {
+                String accountId = entry.getKey();
+                if (!toInclude.containsKey(accountId)) {
+                    toInclude.put(accountId, new HashMap<>());
+                }
+                List<String> projects = entry.getValue();
+                for (String projectId : projects) {
+                    toInclude.get(accountId).put(projectId, Collections.emptyMap());
+                }
+            }
+        }
+        return toInclude;
+    }
 }
