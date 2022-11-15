@@ -135,14 +135,13 @@ public class ModelGenerator extends AtlanLiveTest {
 
     public static void main(String[] args) {
 
-        if (Atlan.getApiToken().equals("") || Atlan.getBaseUrl().equals("")) {
-            System.out.println("Inadequate parameters provided.");
-            printUsage();
-            System.exit(1);
-        }
-
         ModelGenerator generator = new ModelGenerator();
         try {
+            if (Atlan.getApiToken().equals("") || Atlan.getBaseUrl().equals("")) {
+                System.out.println("Inadequate parameters provided.");
+                printUsage();
+                System.exit(1);
+            }
             TypeDefResponse response = TypeDefsEndpoint.getTypeDefs(AtlanTypeCategory.ENTITY);
             List<EntityDef> entityDefs = response.getEntityDefs();
             generator.generateModels(entityDefs);
