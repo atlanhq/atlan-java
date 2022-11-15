@@ -59,7 +59,7 @@ public class FivetranCrawler extends AbstractCrawler {
                 .allowQueryPreview(true)
                 .rowLimit(10000L)
                 .defaultCredentialGuid("{{credentialGuid}}")
-                .sourceLogo("https://alternative.me/media/256/fivetran-icon-qfxkppdpdx2oh4r9-c.png")
+                .sourceLogo("https://res.cloudinary.com/crunchbase-production/image/upload/c_lpad,f_auto,q_auto:eco,dpr_1/mmhosuxvz2msbiieekl3")
                 .isDiscoverable(true)
                 .isEditable(false)
                 .build();
@@ -78,15 +78,16 @@ public class FivetranCrawler extends AbstractCrawler {
 
         WorkflowTaskArguments.WorkflowTaskArgumentsBuilder<?, ?> argsBuilder = WorkflowTaskArguments.builder()
                 .parameter(NameValuePair.builder()
+                        .name("connection")
+                        .value(connection.toJson())
+                        .build())
+                .parameter(NameValuePair.builder()
                         .name("credential-guid")
                         .value("{{credentialGuid}}")
                         .build());
-        /*.parameter(NameValuePair.builder() // TODO: once there is a connector
-        .name("connection")
-        .value(connection.toJson())
-        .build());*/
 
         String runName = PREFIX + "-" + epoch;
+        String atlanName = PREFIX + "-default-fivetran-" + epoch;
         return Workflow.builder()
                 .metadata(WorkflowMetadata.builder()
                         .label("orchestration.atlan.com/certified", "true")
@@ -97,7 +98,7 @@ public class FivetranCrawler extends AbstractCrawler {
                         .label("package.argoproj.io/installer", "argopm")
                         .label("package.argoproj.io/name", "a-t-ratlans-l-a-s-hfivetran")
                         .label("package.argoproj.io/registry", "httpsc-o-l-o-ns-l-a-s-hs-l-a-s-hpackages.atlan.com")
-                        // .label("orchestration.atlan.com/default-fivetran-" + epoch, "true")
+                        .label("orchestration.atlan.com/default-fivetran-" + epoch, "true")
                         .label("orchestration.atlan.com/atlan-ui", "true")
                         .annotation("orchestration.atlan.com/allowSchedule", "true")
                         .annotation("orchestration.atlan.com/dependentPackage", "")
@@ -130,7 +131,7 @@ public class FivetranCrawler extends AbstractCrawler {
                                 "package.argoproj.io/repository",
                                 "git+https://github.com/atlanhq/marketplace-packages.git")
                         .annotation("package.argoproj.io/support", "support@atlan.com")
-                        .annotation("orchestration.atlan.com/atlanName", runName)
+                        .annotation("orchestration.atlan.com/atlanName", atlanName)
                         .name(runName)
                         .namespace("default")
                         .build())
