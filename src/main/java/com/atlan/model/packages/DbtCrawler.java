@@ -11,7 +11,6 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.workflow.*;
 import com.atlan.serde.Serde;
 import com.fasterxml.jackson.core.JsonProcessingException;
-
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -31,7 +30,8 @@ public class DbtCrawler extends AbstractCrawler {
      * @throws AtlanException if there is any issue obtaining the admin role GUID
      */
     public static Workflow mtCloudAuth(String connectionName, String apiToken) throws AtlanException {
-        return mtCloudAuth(connectionName, apiToken, List.of(RoleCache.getIdForName("$admin")), null, null, null, null, null);
+        return mtCloudAuth(
+                connectionName, apiToken, List.of(RoleCache.getIdForName("$admin")), null, null, null, null, null);
     }
 
     /**
@@ -52,28 +52,28 @@ public class DbtCrawler extends AbstractCrawler {
      * @throws InvalidRequestException if there is no administrator specified for the connection, or the provided filters cannot be serialized to JSON
      */
     public static Workflow mtCloudAuth(
-        String connectionName,
-        String apiToken,
-        List<String> adminRoles,
-        List<String> adminGroups,
-        List<String> adminUsers,
-        Map<String, List<String>> includeAssets,
-        Map<String, List<String>> excludeAssets,
-        String connectionQualifiedName)
-        throws InvalidRequestException {
+            String connectionName,
+            String apiToken,
+            List<String> adminRoles,
+            List<String> adminGroups,
+            List<String> adminUsers,
+            Map<String, List<String>> includeAssets,
+            Map<String, List<String>> excludeAssets,
+            String connectionQualifiedName)
+            throws InvalidRequestException {
 
         // Note: no actual connection object created by the crawler (yet)
         // this is only to obtain a consistent epoch and be ready for a future
         // when there may be a connection object
         Connection connection = Connection.creator(
-                connectionName, AtlanConnectorType.DBT, adminRoles, adminGroups, adminUsers)
-            .allowQuery(true)
-            .allowQueryPreview(true)
-            .rowLimit(10000L)
-            .defaultCredentialGuid("{{credentialGuid}}")
-            .isDiscoverable(true)
-            .isEditable(false)
-            .build();
+                        connectionName, AtlanConnectorType.DBT, adminRoles, adminGroups, adminUsers)
+                .allowQuery(true)
+                .allowQueryPreview(true)
+                .rowLimit(10000L)
+                .defaultCredentialGuid("{{credentialGuid}}")
+                .isDiscoverable(true)
+                .isEditable(false)
+                .build();
 
         String epoch = Connection.getEpochFromQualifiedName(connection.getQualifiedName());
 
@@ -91,102 +91,103 @@ public class DbtCrawler extends AbstractCrawler {
         Map<String, Map<String, Map<String, String>>> toExclude = buildDbtCloudFilter(excludeAssets);
 
         WorkflowTaskArguments.WorkflowTaskArgumentsBuilder<?, ?> argsBuilder = WorkflowTaskArguments.builder()
-            /*.parameter(NameValuePair.builder()
+                /*.parameter(NameValuePair.builder()
                 .name("connection")
                 .value(connection.toJson())
                 .build())*/
-            .parameter(NameValuePair.of("extraction-method", "api"))
-            .parameter(NameValuePair.of("deployment-type", "multi"))
-            .parameter(NameValuePair.of("core-extraction-method", "s3"))
-            .parameter(NameValuePair.of("api-credential-guid", "{{credentialGuid}}"));
+                .parameter(NameValuePair.of("extraction-method", "api"))
+                .parameter(NameValuePair.of("deployment-type", "multi"))
+                .parameter(NameValuePair.of("core-extraction-method", "s3"))
+                .parameter(NameValuePair.of("api-credential-guid", "{{credentialGuid}}"));
         try {
-            argsBuilder = argsBuilder.parameter(NameValuePair.of("include-filter", Serde.mapper.writeValueAsString(toInclude)));
-            argsBuilder = argsBuilder.parameter(NameValuePair.of("exclude-filter", Serde.mapper.writeValueAsString(toExclude)));
+            argsBuilder = argsBuilder.parameter(
+                    NameValuePair.of("include-filter", Serde.mapper.writeValueAsString(toInclude)));
+            argsBuilder = argsBuilder.parameter(
+                    NameValuePair.of("exclude-filter", Serde.mapper.writeValueAsString(toExclude)));
         } catch (JsonProcessingException e) {
             throw new InvalidRequestException(
-                "Unable to translate the provided include/exclude asset filters into JSON.",
-                "includeAssets/excludeAssets",
-                "ATLAN_JAVA_CLIENT-400-601",
-                400,
-                e);
+                    "Unable to translate the provided include/exclude asset filters into JSON.",
+                    "includeAssets/excludeAssets",
+                    "ATLAN_JAVA_CLIENT-400-601",
+                    400,
+                    e);
         }
         argsBuilder = argsBuilder
-            .parameter(NameValuePair.of("include-filter-core", "*"))
-            .parameter(NameValuePair.of("exclude-filter-core", "*"));
+                .parameter(NameValuePair.of("include-filter-core", "*"))
+                .parameter(NameValuePair.of("exclude-filter-core", "*"));
         if (connectionQualifiedName != null) {
             argsBuilder = argsBuilder.parameter(NameValuePair.of("connection-qualified-name", connectionQualifiedName));
         }
 
         String runName = PREFIX + "-" + epoch;
         return Workflow.builder()
-            .metadata(WorkflowMetadata.builder()
-                .label("orchestration.atlan.com/certified", "true")
-                .label("orchestration.atlan.com/source", "dbt")
-                .label("orchestration.atlan.com/sourceCategory", "enricher")
-                .label("orchestration.atlan.com/type", "connector")
-                .label("orchestration.atlan.com/verified", "true")
-                .label("package.argoproj.io/installer", "argopm")
-                .label("package.argoproj.io/name", "a-t-ratlans-l-a-s-hdbt")
-                .label("package.argoproj.io/registry", "httpsc-o-l-o-ns-l-a-s-hs-l-a-s-hpackages.atlan.com")
-                //.label("orchestration.atlan.com/default-dbt-" + epoch, "true")
-                .label("orchestration.atlan.com/atlan-ui", "true")
-                .annotation("orchestration.atlan.com/allowSchedule", "true")
-                .annotation("orchestration.atlan.com/dependentPackage", "")
-                .annotation(
-                    "orchestration.atlan.com/docsUrl",
-                    "https://ask.atlan.com/hc/en-us/articles/6335824578705")
-                .annotation("orchestration.atlan.com/emoji", "\uD83D\uDE80")
-                .annotation(
-                    "orchestration.atlan.com/icon",
-                    "https://www.getdbt.com/ui/img/social/apple-touch-icon-149x149.png")
-                .annotation(
-                    "orchestration.atlan.com/logo",
-                    "https://www.getdbt.com/ui/img/social/apple-touch-icon-149x149.png")
-                .annotation(
-                    "orchestration.atlan.com/marketplaceLink",
-                    "https://packages.atlan.com/-/web/detail/@atlan/dbt")
-                .annotation("orchestration.atlan.com/name", "dbt Enrichment")
-                .annotation("orchestration.atlan.com/usecase", "crawling,enrichment")
-                .annotation("package.argoproj.io/author", "Atlan")
-                .annotation(
-                    "package.argoproj.io/description",
-                    "Scan all your dbt models and enrich the corresponding assets on Atlan.")
-                .annotation(
-                    "package.argoproj.io/homepage",
-                    "https://packages.atlan.com/-/web/detail/@atlan/dbt")
-                .annotation("package.argoproj.io/keywords", "[\"connector\",\"crawler\",\"dbt\"]")
-                .annotation("package.argoproj.io/name", "@atlan/dbt")
-                .annotation("package.argoproj.io/registry", "https://packages.atlan.com")
-                .annotation(
-                    "package.argoproj.io/repository",
-                    "git+https://github.com/atlanhq/marketplace-packages.git")
-                .annotation("package.argoproj.io/support", "support@atlan.com")
-                .annotation("orchestration.atlan.com/atlanName", runName)
-                .name(runName)
-                .namespace("default")
-                .build())
-            .spec(WorkflowSpec.builder()
-                .templates(List.of(WorkflowTemplate.builder()
-                    .name("main")
-                    .dag(WorkflowDAG.builder()
-                        .task(WorkflowTask.builder()
-                            .name("run")
-                            .arguments(argsBuilder.build())
-                            .templateRef(WorkflowTemplateRef.builder()
-                                .name(PREFIX)
-                                .template("main")
-                                .clusterScope(true)
-                                .build())
-                            .build())
+                .metadata(WorkflowMetadata.builder()
+                        .label("orchestration.atlan.com/certified", "true")
+                        .label("orchestration.atlan.com/source", "dbt")
+                        .label("orchestration.atlan.com/sourceCategory", "enricher")
+                        .label("orchestration.atlan.com/type", "connector")
+                        .label("orchestration.atlan.com/verified", "true")
+                        .label("package.argoproj.io/installer", "argopm")
+                        .label("package.argoproj.io/name", "a-t-ratlans-l-a-s-hdbt")
+                        .label("package.argoproj.io/registry", "httpsc-o-l-o-ns-l-a-s-hs-l-a-s-hpackages.atlan.com")
+                        // .label("orchestration.atlan.com/default-dbt-" + epoch, "true")
+                        .label("orchestration.atlan.com/atlan-ui", "true")
+                        .annotation("orchestration.atlan.com/allowSchedule", "true")
+                        .annotation("orchestration.atlan.com/dependentPackage", "")
+                        .annotation(
+                                "orchestration.atlan.com/docsUrl",
+                                "https://ask.atlan.com/hc/en-us/articles/6335824578705")
+                        .annotation("orchestration.atlan.com/emoji", "\uD83D\uDE80")
+                        .annotation(
+                                "orchestration.atlan.com/icon",
+                                "https://www.getdbt.com/ui/img/social/apple-touch-icon-149x149.png")
+                        .annotation(
+                                "orchestration.atlan.com/logo",
+                                "https://www.getdbt.com/ui/img/social/apple-touch-icon-149x149.png")
+                        .annotation(
+                                "orchestration.atlan.com/marketplaceLink",
+                                "https://packages.atlan.com/-/web/detail/@atlan/dbt")
+                        .annotation("orchestration.atlan.com/name", "dbt Enrichment")
+                        .annotation("orchestration.atlan.com/usecase", "crawling,enrichment")
+                        .annotation("package.argoproj.io/author", "Atlan")
+                        .annotation(
+                                "package.argoproj.io/description",
+                                "Scan all your dbt models and enrich the corresponding assets on Atlan.")
+                        .annotation(
+                                "package.argoproj.io/homepage", "https://packages.atlan.com/-/web/detail/@atlan/dbt")
+                        .annotation("package.argoproj.io/keywords", "[\"connector\",\"crawler\",\"dbt\"]")
+                        .annotation("package.argoproj.io/name", "@atlan/dbt")
+                        .annotation("package.argoproj.io/registry", "https://packages.atlan.com")
+                        .annotation(
+                                "package.argoproj.io/repository",
+                                "git+https://github.com/atlanhq/marketplace-packages.git")
+                        .annotation("package.argoproj.io/support", "support@atlan.com")
+                        .annotation("orchestration.atlan.com/atlanName", runName)
+                        .name(runName)
+                        .namespace("default")
                         .build())
-                    .build()))
-                .entrypoint("main")
-                .build())
-            .payload(List.of(PackageParameter.builder()
-                .parameter("credentialGuid")
-                .type("credential")
-                .body(credentialBody)
-                .build()))
-            .build();
+                .spec(WorkflowSpec.builder()
+                        .templates(List.of(WorkflowTemplate.builder()
+                                .name("main")
+                                .dag(WorkflowDAG.builder()
+                                        .task(WorkflowTask.builder()
+                                                .name("run")
+                                                .arguments(argsBuilder.build())
+                                                .templateRef(WorkflowTemplateRef.builder()
+                                                        .name(PREFIX)
+                                                        .template("main")
+                                                        .clusterScope(true)
+                                                        .build())
+                                                .build())
+                                        .build())
+                                .build()))
+                        .entrypoint("main")
+                        .build())
+                .payload(List.of(PackageParameter.builder()
+                        .parameter("credentialGuid")
+                        .type("credential")
+                        .body(credentialBody)
+                        .build()))
+                .build();
     }
 }

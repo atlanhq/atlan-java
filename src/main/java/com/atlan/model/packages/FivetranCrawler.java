@@ -59,7 +59,8 @@ public class FivetranCrawler extends AbstractCrawler {
                 .allowQueryPreview(true)
                 .rowLimit(10000L)
                 .defaultCredentialGuid("{{credentialGuid}}")
-                .sourceLogo("https://res.cloudinary.com/crunchbase-production/image/upload/c_lpad,f_auto,q_auto:eco,dpr_1/mmhosuxvz2msbiieekl3")
+                .sourceLogo(
+                        "https://res.cloudinary.com/crunchbase-production/image/upload/c_lpad,f_auto,q_auto:eco,dpr_1/mmhosuxvz2msbiieekl3")
                 .isDiscoverable(true)
                 .isEditable(false)
                 .build();
