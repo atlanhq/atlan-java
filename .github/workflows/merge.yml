@@ -35,3 +35,19 @@ jobs:
         env:
           GRGIT_USER: ${{ github.actor }}
           GRGIT_PASS: ${{ secrets.GITHUB_TOKEN }}
+  publish-snapshot:
+    runs-on: ubuntu-latest
+    name: "Snapshot"
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v3
+        with:
+          java-version: 11
+          distribution: adopt
+      - name: Publish package
+        run: |
+          ./gradlew publish -Dorg.gradle.project.NEXUS_USERNAME=$NEXUS_USERNAME
+          -Dorg.gradle.project.NEXUS_PASSWORD=$NEXUS_PASSWORD
+        env:
+          NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
+          NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}

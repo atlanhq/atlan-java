@@ -3,6 +3,8 @@
 package com.atlan.model.packages;
 
 import com.atlan.model.workflow.*;
+
+import java.util.Collections;
 import java.util.List;
 
 public class ConnectionDelete {
@@ -89,6 +91,7 @@ public class ConnectionDelete {
                                 .build()))
                         .entrypoint("main")
                         .build())
+                .payload(Collections.emptyList())
                 .build();
     }
 }
