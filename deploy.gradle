@@ -12,7 +12,7 @@ apply plugin: "signing"
 apply plugin: "io.codearte.nexus-staging"
 
 def isReleaseBuild() {
-    return VERSION_NAME.contains("SNAPSHOT") == false
+    return !VERSION_NAME.contains("SNAPSHOT")
 }
 
 def getReleaseRepositoryUrl() {

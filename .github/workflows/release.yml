@@ -1,0 +1,33 @@
+# SPDX-License-Identifier: Apache-2.0
+# Copyright 2022 Atlan Pte. Ltd.
+name: "Release"
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: "Release"
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v3
+        with:
+          java-version: 11
+          distribution: adopt
+      - name: Configure GPG key
+        run: |
+          set -ex
+          echo $GPG_SIGNING_PRIVKEY | base64 --decode | gpg --import --batch --yes --pinentry-mode loopback --passphrase "$GPG_SIGNING_PASSPHRASE"
+        env:
+          GPG_SIGNING_PRIVKEY: ${{ secrets.GPG_SIGNING_PRIVKEY }}
+          GPG_SIGNING_PASSPHRASE: ${{ secrets.GPG_SIGNING_PASSPHRASE }}
+      - name: Stage release
+        run: |
+          ./gradlew publish -Dorg.gradle.project.NEXUS_USERNAME=$NEXUS_USERNAME -Dorg.gradle.project.NEXUS_PASSWORD=$NEXUS_PASSWORD -Dorg.gradle.project.signing.gnupg.keyName=$GPG_SIGNING_KEYID -Dorg.gradle.project.signing.gnupg.passphrase=$GPG_SIGNING_PASSPHRASE
+        env:
+          NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
+          NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
+          GPG_SIGNING_KEYID: ${{ secrets.GPG_SIGNING_KEYID }}
+          GPG_SIGNING_PASSPHRASE: ${{ secrets.GPG_SIGNING_PASSPHRASE }}
