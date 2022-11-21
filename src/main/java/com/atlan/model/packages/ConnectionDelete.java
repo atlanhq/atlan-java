@@ -3,7 +3,6 @@
 package com.atlan.model.packages;
 
 import com.atlan.model.workflow.*;
-
 import java.util.Collections;
 import java.util.List;
 
