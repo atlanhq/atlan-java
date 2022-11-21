@@ -19,4 +19,15 @@ public class NameValuePair extends AtlanObject {
 
     String name;
     Object value;
+
+    /**
+     * Build a NameValuePair from the provided name and value.
+     *
+     * @param name for the pair
+     * @param value for the name
+     * @return the NameValuePair
+     */
+    public static NameValuePair of(String name, String value) {
+        return NameValuePair.builder().name(name).value(value).build();
+    }
 }

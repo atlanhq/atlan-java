@@ -11,7 +11,6 @@ import java.io.OutputStream;
 import java.net.Authenticator;
 import java.net.HttpURLConnection;
 import java.net.PasswordAuthentication;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -55,7 +54,7 @@ public class HttpURLConnectionClient extends HttpClient {
                                     + "Please check your internet connection and try again. If this problem persists,"
                                     + "you should check Atlan's availability via a browser,"
                                     + " or let us know at support@atlan.com.",
-                            Atlan.getBaseUrl(), e.getMessage()),
+                            Atlan.getBaseUrlSafe(), e.getMessage()),
                     e);
         }
     }
@@ -79,7 +78,7 @@ public class HttpURLConnectionClient extends HttpClient {
                                     + "Please check your internet connection and try again. If this problem persists,"
                                     + "you should check Atlan's availability via a browser,"
                                     + " or let us know at support@atlan.com.",
-                            Atlan.getBaseUrl(), e.getMessage()),
+                            Atlan.getBaseUrlSafe(), e.getMessage()),
                     e);
         }
     }
@@ -93,8 +92,10 @@ public class HttpURLConnectionClient extends HttpClient {
     static HttpHeaders getHeaders(AtlanRequest request) {
         Map<String, List<String>> userAgentHeadersMap = new HashMap<>();
 
-        userAgentHeadersMap.put("User-Agent", Arrays.asList(buildUserAgentString()));
-        userAgentHeadersMap.put("X-Atlan-Client-User-Agent", Arrays.asList(buildXAtlanClientUserAgentString()));
+        userAgentHeadersMap.put("User-Agent", List.of(buildUserAgentString()));
+        userAgentHeadersMap.put("X-Atlan-Client-User-Agent", List.of(buildXAtlanClientUserAgentString()));
+        userAgentHeadersMap.put("x-atlan-agent", List.of("sdk"));
+        userAgentHeadersMap.put("x-atlan-agent-id", List.of("java"));
 
         return request.headers().withAdditionalHeaders(userAgentHeadersMap);
     }

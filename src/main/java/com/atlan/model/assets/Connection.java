@@ -79,6 +79,10 @@ public class Connection extends Asset {
     @Attribute
     String credentialStrategy;
 
+    /** TBC */
+    @Attribute
+    String previewCredentialStrategy;
+
     /** Maximum number of rows that can be returned for the source. */
     @Attribute
     Long rowLimit;

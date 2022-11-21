@@ -77,7 +77,7 @@ public class AtlanRequest {
                                     + "Please check your internet connection and try again. If this problem persists,"
                                     + "you should check Atlan's availability via a browser,"
                                     + " or let us know at support@atlan.com.",
-                            Atlan.getBaseUrl(), e.getMessage()),
+                            Atlan.getBaseUrlSafe(), e.getMessage()),
                     e);
         }
     }
