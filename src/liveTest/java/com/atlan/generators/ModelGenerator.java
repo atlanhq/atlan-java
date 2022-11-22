@@ -113,7 +113,8 @@ public class ModelGenerator extends AtlanLiveTest {
             Map.entry("reportType", "putReportType"),
             Map.entry("projectHierarchy", "addProjectHierarchy"),
             Map.entry("certifier", "putCertifier"),
-            Map.entry("presetChartFormData", "putPresetChartFormData"));
+            Map.entry("presetChartFormData", "putPresetChartFormData"),
+            Map.entry("resourceMetadata", "putResourceMetadata"));
 
     // Rename these attributes for consistency (handled via JsonProperty serde)
     private static final Map<String, String> ATTRIBUTE_RENAMING = Map.ofEntries(

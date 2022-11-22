@@ -115,6 +115,7 @@ public class LinkTest {
             .link("link")
             .isGlobal(false)
             .reference("reference")
+            .resourceMetadata(Map.of("key1", "value1", "key2", "value2"))
             .icon("icon")
             .iconType(LinkIconType.EMOJI)
             .asset(Table.refByGuid("894ebeaa-ca1a-44e7-9399-82e55fa1faf8"))

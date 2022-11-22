@@ -10,9 +10,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.*;
 import org.testng.annotations.Test;
 
-public class ConnectionTest {
+public class BadgeTest {
 
-    private static final Connection full = Connection.builder()
+    private static final Badge full = Badge.builder()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -106,26 +106,9 @@ public class ConnectionTest {
             .readme(Readme.refByGuid("readmeGuid"))
             .meaning(GlossaryTerm.refByGuid("termGuid1"))
             .meaning(GlossaryTerm.refByGuid("termGuid2"))
-            .category(AtlanConnectionCategory.DATABASE)
-            .subCategory("subCategory")
-            .host("host")
-            .port(-583368867)
-            .allowQuery(false)
-            .allowQueryPreview(true)
-            .queryPreviewConfig(Map.of("key1", "value1", "key2", "value2"))
-            .queryConfig("queryConfig")
-            .credentialStrategy("credentialStrategy")
-            .previewCredentialStrategy("previewCredentialStrategy")
-            .rowLimit(3028736751300018007L)
-            .defaultCredentialGuid("defaultCredentialGuid")
-            .connectorIcon("connectorIcon")
-            .connectorImage("connectorImage")
-            .sourceLogo("sourceLogo")
-            .popularityInsightsTimeframe(-3923148251533697428L)
-            .hasPopularityInsights(true)
-            .connectionDbtEnvironments(Set.of("one", "two", "three"))
+            .badgeMetadataAttribute("badgeMetadataAttribute")
             .build();
-    private static Connection frodo;
+    private static Badge frodo;
     private static String serialized;
 
     @Test(groups = {"builderEquivalency"})
@@ -147,7 +130,7 @@ public class ConnectionTest {
             dependsOnGroups = {"serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
-        frodo = Serde.mapper.readValue(serialized, Connection.class);
+        frodo = Serde.mapper.readValue(serialized, Badge.class);
         assertNotNull(frodo);
     }
 

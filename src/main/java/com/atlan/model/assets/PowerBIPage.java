@@ -122,6 +122,7 @@ public class PowerBIPage extends PowerBI {
                     null);
         }
     }
+
     /**
      * Update the certificate on a PowerBIPage.
      *

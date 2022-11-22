@@ -105,6 +105,14 @@ public class Connection extends Asset {
 
     /** TBC */
     @Attribute
+    Long popularityInsightsTimeframe;
+
+    /** TBC */
+    @Attribute
+    Boolean hasPopularityInsights;
+
+    /** TBC */
+    @Attribute
     @Singular
     SortedSet<String> connectionDbtEnvironments;
 

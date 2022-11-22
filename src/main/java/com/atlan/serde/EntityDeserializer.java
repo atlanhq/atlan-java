@@ -90,6 +90,9 @@ public class EntityDeserializer extends StdDeserializer<Entity> {
                 case BIProcess.TYPE_NAME:
                     builder = BIProcess.builder();
                     break;
+                case Badge.TYPE_NAME:
+                    builder = Badge.builder();
+                    break;
                 case Column.TYPE_NAME:
                     builder = Column.builder();
                     break;

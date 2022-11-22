@@ -3,6 +3,7 @@
 package com.atlan.model.assets;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
+import java.util.Map;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -18,6 +19,7 @@ import lombok.experimental.SuperBuilder;
     @JsonSubTypes.Type(value = Readme.class, name = Readme.TYPE_NAME),
     @JsonSubTypes.Type(value = Link.class, name = Link.TYPE_NAME),
 })
+@SuppressWarnings("cast")
 public abstract class Resource extends Catalog {
 
     public static final String TYPE_NAME = "Resource";
@@ -33,4 +35,9 @@ public abstract class Resource extends Catalog {
     /** TBC */
     @Attribute
     String reference;
+
+    /** TBC */
+    @Attribute
+    @Singular("putResourceMetadata")
+    Map<String, String> resourceMetadata;
 }
