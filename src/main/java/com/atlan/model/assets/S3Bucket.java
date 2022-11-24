@@ -144,6 +144,56 @@ public class S3Bucket extends S3 {
     }
 
     /**
+     * Restore the archived (soft-deleted) S3Bucket to active.
+     *
+     * @param qualifiedName for the S3Bucket
+     * @return the S3Bucket that was restored
+     * @throws AtlanException on any API problems
+     */
+    public static S3Bucket restore(String qualifiedName) throws AtlanException {
+        return (S3Bucket) Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a S3Bucket.
+     *
+     * @param qualifiedName of the S3Bucket
+     * @param name of the S3Bucket
+     * @return the updated S3Bucket, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static S3Bucket removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (S3Bucket)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a S3Bucket.
+     *
+     * @param qualifiedName of the S3Bucket
+     * @param name of the S3Bucket
+     * @return the updated S3Bucket, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static S3Bucket removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (S3Bucket) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a S3Bucket.
+     *
+     * @param qualifiedName of the S3Bucket
+     * @param name of the S3Bucket
+     * @return the updated S3Bucket, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static S3Bucket removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (S3Bucket)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a S3Bucket.
      *
      * @param qualifiedName of the S3Bucket

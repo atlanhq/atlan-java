@@ -130,6 +130,56 @@ public class PowerBIDataflow extends PowerBI {
     }
 
     /**
+     * Restore the archived (soft-deleted) PowerBIDataflow to active.
+     *
+     * @param qualifiedName for the PowerBIDataflow
+     * @return the PowerBIDataflow that was restored
+     * @throws AtlanException on any API problems
+     */
+    public static PowerBIDataflow restore(String qualifiedName) throws AtlanException {
+        return (PowerBIDataflow) Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a PowerBIDataflow.
+     *
+     * @param qualifiedName of the PowerBIDataflow
+     * @param name of the PowerBIDataflow
+     * @return the updated PowerBIDataflow, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static PowerBIDataflow removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (PowerBIDataflow)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a PowerBIDataflow.
+     *
+     * @param qualifiedName of the PowerBIDataflow
+     * @param name of the PowerBIDataflow
+     * @return the updated PowerBIDataflow, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static PowerBIDataflow removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (PowerBIDataflow) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a PowerBIDataflow.
+     *
+     * @param qualifiedName of the PowerBIDataflow
+     * @param name of the PowerBIDataflow
+     * @return the updated PowerBIDataflow, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static PowerBIDataflow removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (PowerBIDataflow)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a PowerBIDataflow.
      *
      * @param qualifiedName of the PowerBIDataflow

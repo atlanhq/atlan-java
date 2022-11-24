@@ -172,6 +172,56 @@ public class Schema extends SQL {
     }
 
     /**
+     * Restore the archived (soft-deleted) Schema to active.
+     *
+     * @param qualifiedName for the Schema
+     * @return the Schema that was restored
+     * @throws AtlanException on any API problems
+     */
+    public static Schema restore(String qualifiedName) throws AtlanException {
+        return (Schema) Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a Schema.
+     *
+     * @param qualifiedName of the Schema
+     * @param name of the Schema
+     * @return the updated Schema, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static Schema removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (Schema)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a Schema.
+     *
+     * @param qualifiedName of the Schema
+     * @param name of the Schema
+     * @return the updated Schema, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static Schema removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (Schema) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a Schema.
+     *
+     * @param qualifiedName of the Schema
+     * @param name of the Schema
+     * @return the updated Schema, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static Schema removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (Schema)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a Schema.
      *
      * @param qualifiedName of the Schema

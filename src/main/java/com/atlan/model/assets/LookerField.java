@@ -156,6 +156,56 @@ public class LookerField extends Looker {
     }
 
     /**
+     * Restore the archived (soft-deleted) LookerField to active.
+     *
+     * @param qualifiedName for the LookerField
+     * @return the LookerField that was restored
+     * @throws AtlanException on any API problems
+     */
+    public static LookerField restore(String qualifiedName) throws AtlanException {
+        return (LookerField) Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a LookerField.
+     *
+     * @param qualifiedName of the LookerField
+     * @param name of the LookerField
+     * @return the updated LookerField, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static LookerField removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (LookerField)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a LookerField.
+     *
+     * @param qualifiedName of the LookerField
+     * @param name of the LookerField
+     * @return the updated LookerField, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static LookerField removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (LookerField) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a LookerField.
+     *
+     * @param qualifiedName of the LookerField
+     * @param name of the LookerField
+     * @return the updated LookerField, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static LookerField removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (LookerField)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a LookerField.
      *
      * @param qualifiedName of the LookerField

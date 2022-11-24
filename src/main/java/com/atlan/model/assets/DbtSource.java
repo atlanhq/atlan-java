@@ -121,6 +121,56 @@ public class DbtSource extends Dbt {
     }
 
     /**
+     * Restore the archived (soft-deleted) DbtSource to active.
+     *
+     * @param qualifiedName for the DbtSource
+     * @return the DbtSource that was restored
+     * @throws AtlanException on any API problems
+     */
+    public static DbtSource restore(String qualifiedName) throws AtlanException {
+        return (DbtSource) Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a DbtSource.
+     *
+     * @param qualifiedName of the DbtSource
+     * @param name of the DbtSource
+     * @return the updated DbtSource, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static DbtSource removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (DbtSource)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a DbtSource.
+     *
+     * @param qualifiedName of the DbtSource
+     * @param name of the DbtSource
+     * @return the updated DbtSource, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static DbtSource removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (DbtSource) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a DbtSource.
+     *
+     * @param qualifiedName of the DbtSource
+     * @param name of the DbtSource
+     * @return the updated DbtSource, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static DbtSource removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (DbtSource)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a DbtSource.
      *
      * @param qualifiedName of the DbtSource

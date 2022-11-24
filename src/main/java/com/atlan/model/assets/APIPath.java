@@ -163,6 +163,56 @@ public class APIPath extends API {
     }
 
     /**
+     * Restore the archived (soft-deleted) APIPath to active.
+     *
+     * @param qualifiedName for the APIPath
+     * @return the APIPath that was restored
+     * @throws AtlanException on any API problems
+     */
+    public static APIPath restore(String qualifiedName) throws AtlanException {
+        return (APIPath) Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a APIPath.
+     *
+     * @param qualifiedName of the APIPath
+     * @param name of the APIPath
+     * @return the updated APIPath, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static APIPath removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (APIPath)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a APIPath.
+     *
+     * @param qualifiedName of the APIPath
+     * @param name of the APIPath
+     * @return the updated APIPath, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static APIPath removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (APIPath) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a APIPath.
+     *
+     * @param qualifiedName of the APIPath
+     * @param name of the APIPath
+     * @return the updated APIPath, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static APIPath removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (APIPath)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a APIPath.
      *
      * @param qualifiedName of the APIPath

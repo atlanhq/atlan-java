@@ -138,6 +138,56 @@ public class SalesforceReport extends Salesforce {
     }
 
     /**
+     * Restore the archived (soft-deleted) SalesforceReport to active.
+     *
+     * @param qualifiedName for the SalesforceReport
+     * @return the SalesforceReport that was restored
+     * @throws AtlanException on any API problems
+     */
+    public static SalesforceReport restore(String qualifiedName) throws AtlanException {
+        return (SalesforceReport) Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a SalesforceReport.
+     *
+     * @param qualifiedName of the SalesforceReport
+     * @param name of the SalesforceReport
+     * @return the updated SalesforceReport, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static SalesforceReport removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (SalesforceReport)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a SalesforceReport.
+     *
+     * @param qualifiedName of the SalesforceReport
+     * @param name of the SalesforceReport
+     * @return the updated SalesforceReport, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static SalesforceReport removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (SalesforceReport) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a SalesforceReport.
+     *
+     * @param qualifiedName of the SalesforceReport
+     * @param name of the SalesforceReport
+     * @return the updated SalesforceReport, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static SalesforceReport removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (SalesforceReport)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a SalesforceReport.
      *
      * @param qualifiedName of the SalesforceReport

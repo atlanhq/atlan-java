@@ -109,6 +109,56 @@ public class BIProcess extends AbstractProcess {
     }
 
     /**
+     * Restore the archived (soft-deleted) BIProcess to active.
+     *
+     * @param qualifiedName for the BIProcess
+     * @return the BIProcess that was restored
+     * @throws AtlanException on any API problems
+     */
+    public static BIProcess restore(String qualifiedName) throws AtlanException {
+        return (BIProcess) Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a BIProcess.
+     *
+     * @param qualifiedName of the BIProcess
+     * @param name of the BIProcess
+     * @return the updated BIProcess, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static BIProcess removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (BIProcess)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a BIProcess.
+     *
+     * @param qualifiedName of the BIProcess
+     * @param name of the BIProcess
+     * @return the updated BIProcess, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static BIProcess removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (BIProcess) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a BIProcess.
+     *
+     * @param qualifiedName of the BIProcess
+     * @param name of the BIProcess
+     * @return the updated BIProcess, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static BIProcess removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (BIProcess)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a BIProcess.
      *
      * @param qualifiedName of the BIProcess

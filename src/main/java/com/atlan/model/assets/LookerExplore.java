@@ -146,6 +146,56 @@ public class LookerExplore extends Looker {
     }
 
     /**
+     * Restore the archived (soft-deleted) LookerExplore to active.
+     *
+     * @param qualifiedName for the LookerExplore
+     * @return the LookerExplore that was restored
+     * @throws AtlanException on any API problems
+     */
+    public static LookerExplore restore(String qualifiedName) throws AtlanException {
+        return (LookerExplore) Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a LookerExplore.
+     *
+     * @param qualifiedName of the LookerExplore
+     * @param name of the LookerExplore
+     * @return the updated LookerExplore, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static LookerExplore removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (LookerExplore)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a LookerExplore.
+     *
+     * @param qualifiedName of the LookerExplore
+     * @param name of the LookerExplore
+     * @return the updated LookerExplore, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static LookerExplore removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (LookerExplore) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a LookerExplore.
+     *
+     * @param qualifiedName of the LookerExplore
+     * @param name of the LookerExplore
+     * @return the updated LookerExplore, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static LookerExplore removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (LookerExplore)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a LookerExplore.
      *
      * @param qualifiedName of the LookerExplore

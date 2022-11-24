@@ -195,6 +195,57 @@ public class TableauDatasourceField extends Tableau {
     }
 
     /**
+     * Restore the archived (soft-deleted) TableauDatasourceField to active.
+     *
+     * @param qualifiedName for the TableauDatasourceField
+     * @return the TableauDatasourceField that was restored
+     * @throws AtlanException on any API problems
+     */
+    public static TableauDatasourceField restore(String qualifiedName) throws AtlanException {
+        return (TableauDatasourceField) Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a TableauDatasourceField.
+     *
+     * @param qualifiedName of the TableauDatasourceField
+     * @param name of the TableauDatasourceField
+     * @return the updated TableauDatasourceField, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static TableauDatasourceField removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (TableauDatasourceField)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a TableauDatasourceField.
+     *
+     * @param qualifiedName of the TableauDatasourceField
+     * @param name of the TableauDatasourceField
+     * @return the updated TableauDatasourceField, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static TableauDatasourceField removeUserDescription(String qualifiedName, String name)
+            throws AtlanException {
+        return (TableauDatasourceField) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a TableauDatasourceField.
+     *
+     * @param qualifiedName of the TableauDatasourceField
+     * @param name of the TableauDatasourceField
+     * @return the updated TableauDatasourceField, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static TableauDatasourceField removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (TableauDatasourceField)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a TableauDatasourceField.
      *
      * @param qualifiedName of the TableauDatasourceField

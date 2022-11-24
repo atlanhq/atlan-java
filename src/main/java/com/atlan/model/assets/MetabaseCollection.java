@@ -142,6 +142,56 @@ public class MetabaseCollection extends Metabase {
     }
 
     /**
+     * Restore the archived (soft-deleted) MetabaseCollection to active.
+     *
+     * @param qualifiedName for the MetabaseCollection
+     * @return the MetabaseCollection that was restored
+     * @throws AtlanException on any API problems
+     */
+    public static MetabaseCollection restore(String qualifiedName) throws AtlanException {
+        return (MetabaseCollection) Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a MetabaseCollection.
+     *
+     * @param qualifiedName of the MetabaseCollection
+     * @param name of the MetabaseCollection
+     * @return the updated MetabaseCollection, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static MetabaseCollection removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (MetabaseCollection)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a MetabaseCollection.
+     *
+     * @param qualifiedName of the MetabaseCollection
+     * @param name of the MetabaseCollection
+     * @return the updated MetabaseCollection, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static MetabaseCollection removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (MetabaseCollection) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a MetabaseCollection.
+     *
+     * @param qualifiedName of the MetabaseCollection
+     * @param name of the MetabaseCollection
+     * @return the updated MetabaseCollection, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static MetabaseCollection removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (MetabaseCollection)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a MetabaseCollection.
      *
      * @param qualifiedName of the MetabaseCollection

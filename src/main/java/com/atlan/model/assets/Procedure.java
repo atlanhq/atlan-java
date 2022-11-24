@@ -119,6 +119,56 @@ public class Procedure extends SQL {
     }
 
     /**
+     * Restore the archived (soft-deleted) Procedure to active.
+     *
+     * @param qualifiedName for the Procedure
+     * @return the Procedure that was restored
+     * @throws AtlanException on any API problems
+     */
+    public static Procedure restore(String qualifiedName) throws AtlanException {
+        return (Procedure) Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a Procedure.
+     *
+     * @param qualifiedName of the Procedure
+     * @param name of the Procedure
+     * @return the updated Procedure, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static Procedure removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (Procedure)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a Procedure.
+     *
+     * @param qualifiedName of the Procedure
+     * @param name of the Procedure
+     * @return the updated Procedure, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static Procedure removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (Procedure) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a Procedure.
+     *
+     * @param qualifiedName of the Procedure
+     * @param name of the Procedure
+     * @return the updated Procedure, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static Procedure removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (Procedure)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a Procedure.
      *
      * @param qualifiedName of the Procedure

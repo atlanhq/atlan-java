@@ -148,6 +148,56 @@ public class ModeReport extends Mode {
     }
 
     /**
+     * Restore the archived (soft-deleted) ModeReport to active.
+     *
+     * @param qualifiedName for the ModeReport
+     * @return the ModeReport that was restored
+     * @throws AtlanException on any API problems
+     */
+    public static ModeReport restore(String qualifiedName) throws AtlanException {
+        return (ModeReport) Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a ModeReport.
+     *
+     * @param qualifiedName of the ModeReport
+     * @param name of the ModeReport
+     * @return the updated ModeReport, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static ModeReport removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (ModeReport)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a ModeReport.
+     *
+     * @param qualifiedName of the ModeReport
+     * @param name of the ModeReport
+     * @return the updated ModeReport, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static ModeReport removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (ModeReport) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a ModeReport.
+     *
+     * @param qualifiedName of the ModeReport
+     * @param name of the ModeReport
+     * @return the updated ModeReport, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static ModeReport removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (ModeReport)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a ModeReport.
      *
      * @param qualifiedName of the ModeReport

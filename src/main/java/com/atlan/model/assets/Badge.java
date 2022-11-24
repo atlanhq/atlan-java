@@ -113,6 +113,55 @@ public class Badge extends Asset {
     }
 
     /**
+     * Restore the archived (soft-deleted) Badge to active.
+     *
+     * @param qualifiedName for the Badge
+     * @return the Badge that was restored
+     * @throws AtlanException on any API problems
+     */
+    public static Badge restore(String qualifiedName) throws AtlanException {
+        return (Badge) Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a Badge.
+     *
+     * @param qualifiedName of the Badge
+     * @param name of the Badge
+     * @return the updated Badge, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static Badge removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (Badge)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a Badge.
+     *
+     * @param qualifiedName of the Badge
+     * @param name of the Badge
+     * @return the updated Badge, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static Badge removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (Badge) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a Badge.
+     *
+     * @param qualifiedName of the Badge
+     * @param name of the Badge
+     * @return the updated Badge, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static Badge removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (Badge) Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a Badge.
      *
      * @param qualifiedName of the Badge

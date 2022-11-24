@@ -163,6 +163,56 @@ public class APISpec extends API {
     }
 
     /**
+     * Restore the archived (soft-deleted) APISpec to active.
+     *
+     * @param qualifiedName for the APISpec
+     * @return the APISpec that was restored
+     * @throws AtlanException on any API problems
+     */
+    public static APISpec restore(String qualifiedName) throws AtlanException {
+        return (APISpec) Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a APISpec.
+     *
+     * @param qualifiedName of the APISpec
+     * @param name of the APISpec
+     * @return the updated APISpec, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static APISpec removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (APISpec)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a APISpec.
+     *
+     * @param qualifiedName of the APISpec
+     * @param name of the APISpec
+     * @return the updated APISpec, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static APISpec removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (APISpec) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a APISpec.
+     *
+     * @param qualifiedName of the APISpec
+     * @param name of the APISpec
+     * @return the updated APISpec, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static APISpec removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (APISpec)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a APISpec.
      *
      * @param qualifiedName of the APISpec

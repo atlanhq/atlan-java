@@ -132,6 +132,56 @@ public class PowerBIMeasure extends PowerBI {
     }
 
     /**
+     * Restore the archived (soft-deleted) PowerBIMeasure to active.
+     *
+     * @param qualifiedName for the PowerBIMeasure
+     * @return the PowerBIMeasure that was restored
+     * @throws AtlanException on any API problems
+     */
+    public static PowerBIMeasure restore(String qualifiedName) throws AtlanException {
+        return (PowerBIMeasure) Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a PowerBIMeasure.
+     *
+     * @param qualifiedName of the PowerBIMeasure
+     * @param name of the PowerBIMeasure
+     * @return the updated PowerBIMeasure, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static PowerBIMeasure removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (PowerBIMeasure)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a PowerBIMeasure.
+     *
+     * @param qualifiedName of the PowerBIMeasure
+     * @param name of the PowerBIMeasure
+     * @return the updated PowerBIMeasure, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static PowerBIMeasure removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (PowerBIMeasure) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a PowerBIMeasure.
+     *
+     * @param qualifiedName of the PowerBIMeasure
+     * @param name of the PowerBIMeasure
+     * @return the updated PowerBIMeasure, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static PowerBIMeasure removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (PowerBIMeasure)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a PowerBIMeasure.
      *
      * @param qualifiedName of the PowerBIMeasure

@@ -160,6 +160,56 @@ public class TableauProject extends Tableau {
     }
 
     /**
+     * Restore the archived (soft-deleted) TableauProject to active.
+     *
+     * @param qualifiedName for the TableauProject
+     * @return the TableauProject that was restored
+     * @throws AtlanException on any API problems
+     */
+    public static TableauProject restore(String qualifiedName) throws AtlanException {
+        return (TableauProject) Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a TableauProject.
+     *
+     * @param qualifiedName of the TableauProject
+     * @param name of the TableauProject
+     * @return the updated TableauProject, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static TableauProject removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (TableauProject)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a TableauProject.
+     *
+     * @param qualifiedName of the TableauProject
+     * @param name of the TableauProject
+     * @return the updated TableauProject, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static TableauProject removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (TableauProject) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a TableauProject.
+     *
+     * @param qualifiedName of the TableauProject
+     * @param name of the TableauProject
+     * @return the updated TableauProject, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static TableauProject removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (TableauProject)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a TableauProject.
      *
      * @param qualifiedName of the TableauProject

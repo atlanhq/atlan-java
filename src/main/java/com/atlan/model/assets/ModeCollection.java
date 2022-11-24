@@ -130,6 +130,56 @@ public class ModeCollection extends Mode {
     }
 
     /**
+     * Restore the archived (soft-deleted) ModeCollection to active.
+     *
+     * @param qualifiedName for the ModeCollection
+     * @return the ModeCollection that was restored
+     * @throws AtlanException on any API problems
+     */
+    public static ModeCollection restore(String qualifiedName) throws AtlanException {
+        return (ModeCollection) Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a ModeCollection.
+     *
+     * @param qualifiedName of the ModeCollection
+     * @param name of the ModeCollection
+     * @return the updated ModeCollection, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static ModeCollection removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (ModeCollection)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a ModeCollection.
+     *
+     * @param qualifiedName of the ModeCollection
+     * @param name of the ModeCollection
+     * @return the updated ModeCollection, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static ModeCollection removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (ModeCollection) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a ModeCollection.
+     *
+     * @param qualifiedName of the ModeCollection
+     * @param name of the ModeCollection
+     * @return the updated ModeCollection, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static ModeCollection removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (ModeCollection)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a ModeCollection.
      *
      * @param qualifiedName of the ModeCollection

@@ -143,6 +143,56 @@ public class SalesforceObject extends Salesforce {
     }
 
     /**
+     * Restore the archived (soft-deleted) SalesforceObject to active.
+     *
+     * @param qualifiedName for the SalesforceObject
+     * @return the SalesforceObject that was restored
+     * @throws AtlanException on any API problems
+     */
+    public static SalesforceObject restore(String qualifiedName) throws AtlanException {
+        return (SalesforceObject) Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a SalesforceObject.
+     *
+     * @param qualifiedName of the SalesforceObject
+     * @param name of the SalesforceObject
+     * @return the updated SalesforceObject, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static SalesforceObject removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (SalesforceObject)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a SalesforceObject.
+     *
+     * @param qualifiedName of the SalesforceObject
+     * @param name of the SalesforceObject
+     * @return the updated SalesforceObject, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static SalesforceObject removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (SalesforceObject) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a SalesforceObject.
+     *
+     * @param qualifiedName of the SalesforceObject
+     * @param name of the SalesforceObject
+     * @return the updated SalesforceObject, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static SalesforceObject removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (SalesforceObject)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a SalesforceObject.
      *
      * @param qualifiedName of the SalesforceObject

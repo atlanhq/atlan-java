@@ -119,6 +119,56 @@ public class DbtMetric extends Metric {
     }
 
     /**
+     * Restore the archived (soft-deleted) DbtMetric to active.
+     *
+     * @param qualifiedName for the DbtMetric
+     * @return the DbtMetric that was restored
+     * @throws AtlanException on any API problems
+     */
+    public static DbtMetric restore(String qualifiedName) throws AtlanException {
+        return (DbtMetric) Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a DbtMetric.
+     *
+     * @param qualifiedName of the DbtMetric
+     * @param name of the DbtMetric
+     * @return the updated DbtMetric, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static DbtMetric removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (DbtMetric)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a DbtMetric.
+     *
+     * @param qualifiedName of the DbtMetric
+     * @param name of the DbtMetric
+     * @return the updated DbtMetric, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static DbtMetric removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (DbtMetric) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a DbtMetric.
+     *
+     * @param qualifiedName of the DbtMetric
+     * @param name of the DbtMetric
+     * @return the updated DbtMetric, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static DbtMetric removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (DbtMetric)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a DbtMetric.
      *
      * @param qualifiedName of the DbtMetric

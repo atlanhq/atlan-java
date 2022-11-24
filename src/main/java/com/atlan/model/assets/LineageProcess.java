@@ -145,6 +145,56 @@ public class LineageProcess extends AbstractProcess {
     }
 
     /**
+     * Restore the archived (soft-deleted) LineageProcess to active.
+     *
+     * @param qualifiedName for the LineageProcess
+     * @return the LineageProcess that was restored
+     * @throws AtlanException on any API problems
+     */
+    public static LineageProcess restore(String qualifiedName) throws AtlanException {
+        return (LineageProcess) Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a LineageProcess.
+     *
+     * @param qualifiedName of the LineageProcess
+     * @param name of the LineageProcess
+     * @return the updated LineageProcess, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static LineageProcess removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (LineageProcess)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a LineageProcess.
+     *
+     * @param qualifiedName of the LineageProcess
+     * @param name of the LineageProcess
+     * @return the updated LineageProcess, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static LineageProcess removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (LineageProcess) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a LineageProcess.
+     *
+     * @param qualifiedName of the LineageProcess
+     * @param name of the LineageProcess
+     * @return the updated LineageProcess, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static LineageProcess removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (LineageProcess)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a LineageProcess.
      *
      * @param qualifiedName of the LineageProcess

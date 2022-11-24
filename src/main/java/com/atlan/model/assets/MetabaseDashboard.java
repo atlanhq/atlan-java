@@ -129,6 +129,56 @@ public class MetabaseDashboard extends Metabase {
     }
 
     /**
+     * Restore the archived (soft-deleted) MetabaseDashboard to active.
+     *
+     * @param qualifiedName for the MetabaseDashboard
+     * @return the MetabaseDashboard that was restored
+     * @throws AtlanException on any API problems
+     */
+    public static MetabaseDashboard restore(String qualifiedName) throws AtlanException {
+        return (MetabaseDashboard) Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a MetabaseDashboard.
+     *
+     * @param qualifiedName of the MetabaseDashboard
+     * @param name of the MetabaseDashboard
+     * @return the updated MetabaseDashboard, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static MetabaseDashboard removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (MetabaseDashboard)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a MetabaseDashboard.
+     *
+     * @param qualifiedName of the MetabaseDashboard
+     * @param name of the MetabaseDashboard
+     * @return the updated MetabaseDashboard, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static MetabaseDashboard removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (MetabaseDashboard) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a MetabaseDashboard.
+     *
+     * @param qualifiedName of the MetabaseDashboard
+     * @param name of the MetabaseDashboard
+     * @return the updated MetabaseDashboard, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static MetabaseDashboard removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (MetabaseDashboard)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a MetabaseDashboard.
      *
      * @param qualifiedName of the MetabaseDashboard

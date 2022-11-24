@@ -153,6 +153,56 @@ public class PowerBIWorkspace extends PowerBI {
     }
 
     /**
+     * Restore the archived (soft-deleted) PowerBIWorkspace to active.
+     *
+     * @param qualifiedName for the PowerBIWorkspace
+     * @return the PowerBIWorkspace that was restored
+     * @throws AtlanException on any API problems
+     */
+    public static PowerBIWorkspace restore(String qualifiedName) throws AtlanException {
+        return (PowerBIWorkspace) Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a PowerBIWorkspace.
+     *
+     * @param qualifiedName of the PowerBIWorkspace
+     * @param name of the PowerBIWorkspace
+     * @return the updated PowerBIWorkspace, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static PowerBIWorkspace removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (PowerBIWorkspace)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a PowerBIWorkspace.
+     *
+     * @param qualifiedName of the PowerBIWorkspace
+     * @param name of the PowerBIWorkspace
+     * @return the updated PowerBIWorkspace, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static PowerBIWorkspace removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (PowerBIWorkspace) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a PowerBIWorkspace.
+     *
+     * @param qualifiedName of the PowerBIWorkspace
+     * @param name of the PowerBIWorkspace
+     * @return the updated PowerBIWorkspace, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static PowerBIWorkspace removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (PowerBIWorkspace)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a PowerBIWorkspace.
      *
      * @param qualifiedName of the PowerBIWorkspace

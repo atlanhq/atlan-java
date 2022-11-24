@@ -173,6 +173,57 @@ public class TableauCalculatedField extends Tableau {
     }
 
     /**
+     * Restore the archived (soft-deleted) TableauCalculatedField to active.
+     *
+     * @param qualifiedName for the TableauCalculatedField
+     * @return the TableauCalculatedField that was restored
+     * @throws AtlanException on any API problems
+     */
+    public static TableauCalculatedField restore(String qualifiedName) throws AtlanException {
+        return (TableauCalculatedField) Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a TableauCalculatedField.
+     *
+     * @param qualifiedName of the TableauCalculatedField
+     * @param name of the TableauCalculatedField
+     * @return the updated TableauCalculatedField, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static TableauCalculatedField removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (TableauCalculatedField)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a TableauCalculatedField.
+     *
+     * @param qualifiedName of the TableauCalculatedField
+     * @param name of the TableauCalculatedField
+     * @return the updated TableauCalculatedField, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static TableauCalculatedField removeUserDescription(String qualifiedName, String name)
+            throws AtlanException {
+        return (TableauCalculatedField) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a TableauCalculatedField.
+     *
+     * @param qualifiedName of the TableauCalculatedField
+     * @param name of the TableauCalculatedField
+     * @return the updated TableauCalculatedField, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static TableauCalculatedField removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (TableauCalculatedField)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a TableauCalculatedField.
      *
      * @param qualifiedName of the TableauCalculatedField

@@ -150,6 +150,56 @@ public class PowerBIDataset extends PowerBI {
     }
 
     /**
+     * Restore the archived (soft-deleted) PowerBIDataset to active.
+     *
+     * @param qualifiedName for the PowerBIDataset
+     * @return the PowerBIDataset that was restored
+     * @throws AtlanException on any API problems
+     */
+    public static PowerBIDataset restore(String qualifiedName) throws AtlanException {
+        return (PowerBIDataset) Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a PowerBIDataset.
+     *
+     * @param qualifiedName of the PowerBIDataset
+     * @param name of the PowerBIDataset
+     * @return the updated PowerBIDataset, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static PowerBIDataset removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (PowerBIDataset)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a PowerBIDataset.
+     *
+     * @param qualifiedName of the PowerBIDataset
+     * @param name of the PowerBIDataset
+     * @return the updated PowerBIDataset, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static PowerBIDataset removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (PowerBIDataset) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a PowerBIDataset.
+     *
+     * @param qualifiedName of the PowerBIDataset
+     * @param name of the PowerBIDataset
+     * @return the updated PowerBIDataset, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static PowerBIDataset removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (PowerBIDataset)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a PowerBIDataset.
      *
      * @param qualifiedName of the PowerBIDataset

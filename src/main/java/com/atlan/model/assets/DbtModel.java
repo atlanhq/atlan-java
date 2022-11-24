@@ -176,6 +176,56 @@ public class DbtModel extends Dbt {
     }
 
     /**
+     * Restore the archived (soft-deleted) DbtModel to active.
+     *
+     * @param qualifiedName for the DbtModel
+     * @return the DbtModel that was restored
+     * @throws AtlanException on any API problems
+     */
+    public static DbtModel restore(String qualifiedName) throws AtlanException {
+        return (DbtModel) Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a DbtModel.
+     *
+     * @param qualifiedName of the DbtModel
+     * @param name of the DbtModel
+     * @return the updated DbtModel, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static DbtModel removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (DbtModel)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a DbtModel.
+     *
+     * @param qualifiedName of the DbtModel
+     * @param name of the DbtModel
+     * @return the updated DbtModel, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static DbtModel removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (DbtModel) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a DbtModel.
+     *
+     * @param qualifiedName of the DbtModel
+     * @param name of the DbtModel
+     * @return the updated DbtModel, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static DbtModel removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (DbtModel)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a DbtModel.
      *
      * @param qualifiedName of the DbtModel

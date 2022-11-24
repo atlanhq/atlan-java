@@ -332,6 +332,56 @@ public class Connection extends Asset {
     }
 
     /**
+     * Restore the archived (soft-deleted) Connection to active.
+     *
+     * @param qualifiedName for the Connection
+     * @return the Connection that was restored
+     * @throws AtlanException on any API problems
+     */
+    public static Connection restore(String qualifiedName) throws AtlanException {
+        return (Connection) Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a Connection.
+     *
+     * @param qualifiedName of the Connection
+     * @param name of the Connection
+     * @return the updated Connection, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static Connection removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (Connection)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a Connection.
+     *
+     * @param qualifiedName of the Connection
+     * @param name of the Connection
+     * @return the updated Connection, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static Connection removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (Connection) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a Connection.
+     *
+     * @param qualifiedName of the Connection
+     * @param name of the Connection
+     * @return the updated Connection, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static Connection removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (Connection)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a Connection.
      *
      * @param qualifiedName of the Connection

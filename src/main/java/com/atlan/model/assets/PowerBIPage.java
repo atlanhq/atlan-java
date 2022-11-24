@@ -124,6 +124,56 @@ public class PowerBIPage extends PowerBI {
     }
 
     /**
+     * Restore the archived (soft-deleted) PowerBIPage to active.
+     *
+     * @param qualifiedName for the PowerBIPage
+     * @return the PowerBIPage that was restored
+     * @throws AtlanException on any API problems
+     */
+    public static PowerBIPage restore(String qualifiedName) throws AtlanException {
+        return (PowerBIPage) Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a PowerBIPage.
+     *
+     * @param qualifiedName of the PowerBIPage
+     * @param name of the PowerBIPage
+     * @return the updated PowerBIPage, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static PowerBIPage removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (PowerBIPage)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a PowerBIPage.
+     *
+     * @param qualifiedName of the PowerBIPage
+     * @param name of the PowerBIPage
+     * @return the updated PowerBIPage, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static PowerBIPage removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (PowerBIPage) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a PowerBIPage.
+     *
+     * @param qualifiedName of the PowerBIPage
+     * @param name of the PowerBIPage
+     * @return the updated PowerBIPage, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static PowerBIPage removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (PowerBIPage)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a PowerBIPage.
      *
      * @param qualifiedName of the PowerBIPage

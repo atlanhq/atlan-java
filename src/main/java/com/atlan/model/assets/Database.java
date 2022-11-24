@@ -140,6 +140,56 @@ public class Database extends SQL {
     }
 
     /**
+     * Restore the archived (soft-deleted) Database to active.
+     *
+     * @param qualifiedName for the Database
+     * @return the Database that was restored
+     * @throws AtlanException on any API problems
+     */
+    public static Database restore(String qualifiedName) throws AtlanException {
+        return (Database) Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a Database.
+     *
+     * @param qualifiedName of the Database
+     * @param name of the Database
+     * @return the updated Database, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static Database removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (Database)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a Database.
+     *
+     * @param qualifiedName of the Database
+     * @param name of the Database
+     * @return the updated Database, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static Database removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (Database) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a Database.
+     *
+     * @param qualifiedName of the Database
+     * @param name of the Database
+     * @return the updated Database, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static Database removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (Database)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a Database.
      *
      * @param qualifiedName of the Database

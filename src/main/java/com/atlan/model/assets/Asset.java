@@ -503,6 +503,60 @@ public abstract class Asset extends Entity {
         }
     }
 
+    /**
+     * Remove the system description from an asset.
+     *
+     * @param builder the builder to use for removing the description
+     * @return the result of the removal, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    protected static Entity removeDescription(AssetBuilder<?, ?> builder) throws AtlanException {
+        Asset asset = builder.build();
+        asset.removeDescription();
+        EntityMutationResponse response = asset.upsert();
+        if (response != null && !response.getUpdatedEntities().isEmpty()) {
+            return response.getUpdatedEntities().get(0);
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Remove the user-provided description from an asset.
+     *
+     * @param builder the builder to use for removing the description
+     * @return the result of the removal, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    protected static Entity removeUserDescription(AssetBuilder<?, ?> builder) throws AtlanException {
+        Asset asset = builder.build();
+        asset.removeUserDescription();
+        EntityMutationResponse response = asset.upsert();
+        if (response != null && !response.getUpdatedEntities().isEmpty()) {
+            return response.getUpdatedEntities().get(0);
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Remove the owners from an asset.
+     *
+     * @param builder the builder to use for removing the owners
+     * @return the result of the removal, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    protected static Entity removeOwners(AssetBuilder<?, ?> builder) throws AtlanException {
+        Asset asset = builder.build();
+        asset.removeOwners();
+        EntityMutationResponse response = asset.upsert();
+        if (response != null && !response.getUpdatedEntities().isEmpty()) {
+            return response.getUpdatedEntities().get(0);
+        } else {
+            return null;
+        }
+    }
+
     private static Entity updateAttributes(Asset asset) throws AtlanException {
         EntityMutationResponse response = EntityBulkEndpoint.upsert(asset, false, false);
         if (response != null && !response.getUpdatedEntities().isEmpty()) {

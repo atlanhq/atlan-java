@@ -128,6 +128,56 @@ public class PowerBIDatasource extends PowerBI {
     }
 
     /**
+     * Restore the archived (soft-deleted) PowerBIDatasource to active.
+     *
+     * @param qualifiedName for the PowerBIDatasource
+     * @return the PowerBIDatasource that was restored
+     * @throws AtlanException on any API problems
+     */
+    public static PowerBIDatasource restore(String qualifiedName) throws AtlanException {
+        return (PowerBIDatasource) Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a PowerBIDatasource.
+     *
+     * @param qualifiedName of the PowerBIDatasource
+     * @param name of the PowerBIDatasource
+     * @return the updated PowerBIDatasource, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static PowerBIDatasource removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (PowerBIDatasource)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a PowerBIDatasource.
+     *
+     * @param qualifiedName of the PowerBIDatasource
+     * @param name of the PowerBIDatasource
+     * @return the updated PowerBIDatasource, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static PowerBIDatasource removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (PowerBIDatasource) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a PowerBIDatasource.
+     *
+     * @param qualifiedName of the PowerBIDatasource
+     * @param name of the PowerBIDatasource
+     * @return the updated PowerBIDatasource, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static PowerBIDatasource removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (PowerBIDatasource)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a PowerBIDatasource.
      *
      * @param qualifiedName of the PowerBIDatasource

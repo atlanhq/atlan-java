@@ -124,6 +124,56 @@ public class DbtProcess extends AbstractProcess {
     }
 
     /**
+     * Restore the archived (soft-deleted) DbtProcess to active.
+     *
+     * @param qualifiedName for the DbtProcess
+     * @return the DbtProcess that was restored
+     * @throws AtlanException on any API problems
+     */
+    public static DbtProcess restore(String qualifiedName) throws AtlanException {
+        return (DbtProcess) Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a DbtProcess.
+     *
+     * @param qualifiedName of the DbtProcess
+     * @param name of the DbtProcess
+     * @return the updated DbtProcess, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static DbtProcess removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (DbtProcess)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a DbtProcess.
+     *
+     * @param qualifiedName of the DbtProcess
+     * @param name of the DbtProcess
+     * @return the updated DbtProcess, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static DbtProcess removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (DbtProcess) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a DbtProcess.
+     *
+     * @param qualifiedName of the DbtProcess
+     * @param name of the DbtProcess
+     * @return the updated DbtProcess, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static DbtProcess removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (DbtProcess)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a DbtProcess.
      *
      * @param qualifiedName of the DbtProcess

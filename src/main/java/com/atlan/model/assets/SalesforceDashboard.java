@@ -137,6 +137,56 @@ public class SalesforceDashboard extends Salesforce {
     }
 
     /**
+     * Restore the archived (soft-deleted) SalesforceDashboard to active.
+     *
+     * @param qualifiedName for the SalesforceDashboard
+     * @return the SalesforceDashboard that was restored
+     * @throws AtlanException on any API problems
+     */
+    public static SalesforceDashboard restore(String qualifiedName) throws AtlanException {
+        return (SalesforceDashboard) Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a SalesforceDashboard.
+     *
+     * @param qualifiedName of the SalesforceDashboard
+     * @param name of the SalesforceDashboard
+     * @return the updated SalesforceDashboard, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static SalesforceDashboard removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (SalesforceDashboard)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a SalesforceDashboard.
+     *
+     * @param qualifiedName of the SalesforceDashboard
+     * @param name of the SalesforceDashboard
+     * @return the updated SalesforceDashboard, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static SalesforceDashboard removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (SalesforceDashboard) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a SalesforceDashboard.
+     *
+     * @param qualifiedName of the SalesforceDashboard
+     * @param name of the SalesforceDashboard
+     * @return the updated SalesforceDashboard, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static SalesforceDashboard removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (SalesforceDashboard)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a SalesforceDashboard.
      *
      * @param qualifiedName of the SalesforceDashboard

@@ -150,6 +150,56 @@ public class TableauFlow extends Tableau {
     }
 
     /**
+     * Restore the archived (soft-deleted) TableauFlow to active.
+     *
+     * @param qualifiedName for the TableauFlow
+     * @return the TableauFlow that was restored
+     * @throws AtlanException on any API problems
+     */
+    public static TableauFlow restore(String qualifiedName) throws AtlanException {
+        return (TableauFlow) Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a TableauFlow.
+     *
+     * @param qualifiedName of the TableauFlow
+     * @param name of the TableauFlow
+     * @return the updated TableauFlow, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static TableauFlow removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (TableauFlow)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a TableauFlow.
+     *
+     * @param qualifiedName of the TableauFlow
+     * @param name of the TableauFlow
+     * @return the updated TableauFlow, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static TableauFlow removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (TableauFlow) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a TableauFlow.
+     *
+     * @param qualifiedName of the TableauFlow
+     * @param name of the TableauFlow
+     * @return the updated TableauFlow, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static TableauFlow removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (TableauFlow)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a TableauFlow.
      *
      * @param qualifiedName of the TableauFlow

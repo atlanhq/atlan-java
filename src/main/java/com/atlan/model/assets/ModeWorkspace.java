@@ -122,6 +122,56 @@ public class ModeWorkspace extends Mode {
     }
 
     /**
+     * Restore the archived (soft-deleted) ModeWorkspace to active.
+     *
+     * @param qualifiedName for the ModeWorkspace
+     * @return the ModeWorkspace that was restored
+     * @throws AtlanException on any API problems
+     */
+    public static ModeWorkspace restore(String qualifiedName) throws AtlanException {
+        return (ModeWorkspace) Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a ModeWorkspace.
+     *
+     * @param qualifiedName of the ModeWorkspace
+     * @param name of the ModeWorkspace
+     * @return the updated ModeWorkspace, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static ModeWorkspace removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (ModeWorkspace)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a ModeWorkspace.
+     *
+     * @param qualifiedName of the ModeWorkspace
+     * @param name of the ModeWorkspace
+     * @return the updated ModeWorkspace, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static ModeWorkspace removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (ModeWorkspace) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a ModeWorkspace.
+     *
+     * @param qualifiedName of the ModeWorkspace
+     * @param name of the ModeWorkspace
+     * @return the updated ModeWorkspace, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static ModeWorkspace removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (ModeWorkspace)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a ModeWorkspace.
      *
      * @param qualifiedName of the ModeWorkspace

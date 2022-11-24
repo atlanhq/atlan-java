@@ -165,6 +165,56 @@ public class LookerLook extends Looker {
     }
 
     /**
+     * Restore the archived (soft-deleted) LookerLook to active.
+     *
+     * @param qualifiedName for the LookerLook
+     * @return the LookerLook that was restored
+     * @throws AtlanException on any API problems
+     */
+    public static LookerLook restore(String qualifiedName) throws AtlanException {
+        return (LookerLook) Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a LookerLook.
+     *
+     * @param qualifiedName of the LookerLook
+     * @param name of the LookerLook
+     * @return the updated LookerLook, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static LookerLook removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (LookerLook)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a LookerLook.
+     *
+     * @param qualifiedName of the LookerLook
+     * @param name of the LookerLook
+     * @return the updated LookerLook, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static LookerLook removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (LookerLook) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a LookerLook.
+     *
+     * @param qualifiedName of the LookerLook
+     * @param name of the LookerLook
+     * @return the updated LookerLook, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static LookerLook removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (LookerLook)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a LookerLook.
      *
      * @param qualifiedName of the LookerLook

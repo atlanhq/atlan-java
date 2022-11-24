@@ -181,6 +181,56 @@ public class S3Object extends S3 {
     }
 
     /**
+     * Restore the archived (soft-deleted) S3Object to active.
+     *
+     * @param qualifiedName for the S3Object
+     * @return the S3Object that was restored
+     * @throws AtlanException on any API problems
+     */
+    public static S3Object restore(String qualifiedName) throws AtlanException {
+        return (S3Object) Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a S3Object.
+     *
+     * @param qualifiedName of the S3Object
+     * @param name of the S3Object
+     * @return the updated S3Object, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static S3Object removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (S3Object)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a S3Object.
+     *
+     * @param qualifiedName of the S3Object
+     * @param name of the S3Object
+     * @return the updated S3Object, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static S3Object removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (S3Object) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a S3Object.
+     *
+     * @param qualifiedName of the S3Object
+     * @param name of the S3Object
+     * @return the updated S3Object, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static S3Object removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (S3Object)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a S3Object.
      *
      * @param qualifiedName of the S3Object

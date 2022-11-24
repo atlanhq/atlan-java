@@ -149,6 +149,56 @@ public class LookerTile extends Looker {
     }
 
     /**
+     * Restore the archived (soft-deleted) LookerTile to active.
+     *
+     * @param qualifiedName for the LookerTile
+     * @return the LookerTile that was restored
+     * @throws AtlanException on any API problems
+     */
+    public static LookerTile restore(String qualifiedName) throws AtlanException {
+        return (LookerTile) Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a LookerTile.
+     *
+     * @param qualifiedName of the LookerTile
+     * @param name of the LookerTile
+     * @return the updated LookerTile, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static LookerTile removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (LookerTile)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a LookerTile.
+     *
+     * @param qualifiedName of the LookerTile
+     * @param name of the LookerTile
+     * @return the updated LookerTile, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static LookerTile removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (LookerTile) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a LookerTile.
+     *
+     * @param qualifiedName of the LookerTile
+     * @param name of the LookerTile
+     * @return the updated LookerTile, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static LookerTile removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (LookerTile)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a LookerTile.
      *
      * @param qualifiedName of the LookerTile

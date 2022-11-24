@@ -121,6 +121,56 @@ public class Folder extends Namespace {
     }
 
     /**
+     * Restore the archived (soft-deleted) Folder to active.
+     *
+     * @param qualifiedName for the Folder
+     * @return the Folder that was restored
+     * @throws AtlanException on any API problems
+     */
+    public static Folder restore(String qualifiedName) throws AtlanException {
+        return (Folder) Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a Folder.
+     *
+     * @param qualifiedName of the Folder
+     * @param name of the Folder
+     * @return the updated Folder, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static Folder removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (Folder)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a Folder.
+     *
+     * @param qualifiedName of the Folder
+     * @param name of the Folder
+     * @return the updated Folder, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static Folder removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (Folder) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a Folder.
+     *
+     * @param qualifiedName of the Folder
+     * @param name of the Folder
+     * @return the updated Folder, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static Folder removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (Folder)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a Folder.
      *
      * @param qualifiedName of the Folder

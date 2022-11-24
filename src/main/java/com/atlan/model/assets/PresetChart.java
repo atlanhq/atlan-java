@@ -154,6 +154,56 @@ public class PresetChart extends Preset {
     }
 
     /**
+     * Restore the archived (soft-deleted) PresetChart to active.
+     *
+     * @param qualifiedName for the PresetChart
+     * @return the PresetChart that was restored
+     * @throws AtlanException on any API problems
+     */
+    public static PresetChart restore(String qualifiedName) throws AtlanException {
+        return (PresetChart) Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a PresetChart.
+     *
+     * @param qualifiedName of the PresetChart
+     * @param name of the PresetChart
+     * @return the updated PresetChart, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static PresetChart removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (PresetChart)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a PresetChart.
+     *
+     * @param qualifiedName of the PresetChart
+     * @param name of the PresetChart
+     * @return the updated PresetChart, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static PresetChart removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (PresetChart) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a PresetChart.
+     *
+     * @param qualifiedName of the PresetChart
+     * @param name of the PresetChart
+     * @return the updated PresetChart, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static PresetChart removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (PresetChart)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a PresetChart.
      *
      * @param qualifiedName of the PresetChart

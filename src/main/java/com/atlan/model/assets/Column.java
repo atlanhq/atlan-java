@@ -299,6 +299,56 @@ public class Column extends SQL {
     }
 
     /**
+     * Restore the archived (soft-deleted) Column to active.
+     *
+     * @param qualifiedName for the Column
+     * @return the Column that was restored
+     * @throws AtlanException on any API problems
+     */
+    public static Column restore(String qualifiedName) throws AtlanException {
+        return (Column) Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a Column.
+     *
+     * @param qualifiedName of the Column
+     * @param name of the Column
+     * @return the updated Column, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static Column removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (Column)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a Column.
+     *
+     * @param qualifiedName of the Column
+     * @param name of the Column
+     * @return the updated Column, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static Column removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (Column) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a Column.
+     *
+     * @param qualifiedName of the Column
+     * @param name of the Column
+     * @return the updated Column, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static Column removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (Column)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a Column.
      *
      * @param qualifiedName of the Column

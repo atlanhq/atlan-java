@@ -135,6 +135,57 @@ public class SalesforceOrganization extends Salesforce {
     }
 
     /**
+     * Restore the archived (soft-deleted) SalesforceOrganization to active.
+     *
+     * @param qualifiedName for the SalesforceOrganization
+     * @return the SalesforceOrganization that was restored
+     * @throws AtlanException on any API problems
+     */
+    public static SalesforceOrganization restore(String qualifiedName) throws AtlanException {
+        return (SalesforceOrganization) Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a SalesforceOrganization.
+     *
+     * @param qualifiedName of the SalesforceOrganization
+     * @param name of the SalesforceOrganization
+     * @return the updated SalesforceOrganization, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static SalesforceOrganization removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (SalesforceOrganization)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a SalesforceOrganization.
+     *
+     * @param qualifiedName of the SalesforceOrganization
+     * @param name of the SalesforceOrganization
+     * @return the updated SalesforceOrganization, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static SalesforceOrganization removeUserDescription(String qualifiedName, String name)
+            throws AtlanException {
+        return (SalesforceOrganization) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a SalesforceOrganization.
+     *
+     * @param qualifiedName of the SalesforceOrganization
+     * @param name of the SalesforceOrganization
+     * @return the updated SalesforceOrganization, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static SalesforceOrganization removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (SalesforceOrganization)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a SalesforceOrganization.
      *
      * @param qualifiedName of the SalesforceOrganization

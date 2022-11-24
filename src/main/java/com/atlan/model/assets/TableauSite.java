@@ -118,6 +118,56 @@ public class TableauSite extends Tableau {
     }
 
     /**
+     * Restore the archived (soft-deleted) TableauSite to active.
+     *
+     * @param qualifiedName for the TableauSite
+     * @return the TableauSite that was restored
+     * @throws AtlanException on any API problems
+     */
+    public static TableauSite restore(String qualifiedName) throws AtlanException {
+        return (TableauSite) Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a TableauSite.
+     *
+     * @param qualifiedName of the TableauSite
+     * @param name of the TableauSite
+     * @return the updated TableauSite, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static TableauSite removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (TableauSite)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a TableauSite.
+     *
+     * @param qualifiedName of the TableauSite
+     * @param name of the TableauSite
+     * @return the updated TableauSite, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static TableauSite removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (TableauSite) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a TableauSite.
+     *
+     * @param qualifiedName of the TableauSite
+     * @param name of the TableauSite
+     * @return the updated TableauSite, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static TableauSite removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (TableauSite)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a TableauSite.
      *
      * @param qualifiedName of the TableauSite

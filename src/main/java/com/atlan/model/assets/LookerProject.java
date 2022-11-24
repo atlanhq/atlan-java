@@ -133,6 +133,56 @@ public class LookerProject extends Looker {
     }
 
     /**
+     * Restore the archived (soft-deleted) LookerProject to active.
+     *
+     * @param qualifiedName for the LookerProject
+     * @return the LookerProject that was restored
+     * @throws AtlanException on any API problems
+     */
+    public static LookerProject restore(String qualifiedName) throws AtlanException {
+        return (LookerProject) Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a LookerProject.
+     *
+     * @param qualifiedName of the LookerProject
+     * @param name of the LookerProject
+     * @return the updated LookerProject, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static LookerProject removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (LookerProject)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a LookerProject.
+     *
+     * @param qualifiedName of the LookerProject
+     * @param name of the LookerProject
+     * @return the updated LookerProject, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static LookerProject removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (LookerProject) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a LookerProject.
+     *
+     * @param qualifiedName of the LookerProject
+     * @param name of the LookerProject
+     * @return the updated LookerProject, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static LookerProject removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (LookerProject)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a LookerProject.
      *
      * @param qualifiedName of the LookerProject
