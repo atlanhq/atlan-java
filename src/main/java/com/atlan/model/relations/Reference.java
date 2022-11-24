@@ -4,6 +4,7 @@ package com.atlan.model.relations;
 
 import com.atlan.model.core.AtlanObject;
 import com.atlan.model.enums.AtlanStatus;
+import com.atlan.model.search.AuditDetail;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Comparator;
 import java.util.Map;
@@ -16,7 +17,7 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = false)
-public class Reference extends AtlanObject implements Comparable<Reference> {
+public class Reference extends AtlanObject implements Comparable<Reference>, AuditDetail {
     private static final long serialVersionUID = 2L;
 
     // Sort references in a set based first on their relationshipGuid (if any),

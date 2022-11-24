@@ -59,8 +59,18 @@ public class EntityDeserializer extends StdDeserializer<Entity> {
      */
     @Override
     public Entity deserialize(JsonParser parser, DeserializationContext context) throws IOException {
+        return deserialize(parser.getCodec().readTree(parser));
+    }
 
-        JsonNode root = parser.getCodec().readTree(parser);
+    /**
+     * Actually do the work of deserializing an entity.
+     *
+     * @param root of the parsed JSON tree
+     * @return the deserialized entity
+     * @throws IOException on any issues parsing the JSON
+     */
+    Entity deserialize(JsonNode root) throws IOException {
+
         JsonNode attributes = root.get("attributes");
         JsonNode relationshipGuid = root.get("relationshipGuid");
         JsonNode relationshipAttributes = root.get("relationshipAttributes");

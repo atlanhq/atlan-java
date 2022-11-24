@@ -47,7 +47,7 @@ public class Serde {
         // Classification translators
         SimpleModule clsSerde = new SimpleModule()
                 .addDeserializer(Classification.class, new ClassificationDeserializer())
-                .setSerializerModifier(new ClassificationBeanSerializerModifier());
+                .addSerializer(Classification.class, new ClassificationSerializer());
         set.add(clsSerde);
         return set;
     }

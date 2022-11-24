@@ -40,9 +40,17 @@ public class ClassificationDeserializer extends StdDeserializer<Classification> 
      */
     @Override
     public Classification deserialize(JsonParser parser, DeserializationContext context) throws IOException {
+        return deserialize(parser.getCodec().readTree(parser));
+    }
 
-        JsonNode root = parser.getCodec().readTree(parser);
-
+    /**
+     * Actually do the work of deserializing a classification.
+     *
+     * @param root of the parsed JSON tree
+     * @return the deserialized classification
+     * @throws IOException on any issues parsing the JSON
+     */
+    Classification deserialize(JsonNode root) throws IOException {
         String clsId = root.get("typeName").asText();
         if (clsId == null) {
             throw new IOException("Unable to deserialize classification from: " + root);

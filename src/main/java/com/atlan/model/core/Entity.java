@@ -69,7 +69,7 @@ public abstract class Entity extends Reference {
     Map<String, CustomMetadataAttributes> customMetadataSets;
 
     /** Status of the entity. */
-    final AtlanStatus status;
+    AtlanStatus status;
 
     /** User or account that created the entity. */
     final String createdBy;

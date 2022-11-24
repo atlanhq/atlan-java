@@ -3,6 +3,7 @@
 package com.atlan.model.core;
 
 import com.atlan.model.enums.AtlanStatus;
+import com.atlan.model.search.AuditDetail;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,7 +13,7 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @SuperBuilder
 @EqualsAndHashCode(callSuper = false)
-public class Classification extends AtlanObject {
+public class Classification extends AtlanObject implements AuditDetail {
 
     public static Classification of(String classificationName, String entityGuid) {
         return Classification.builder()

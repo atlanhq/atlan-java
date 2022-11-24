@@ -390,6 +390,22 @@ public abstract class Asset extends Entity {
     @Attribute
     SortedSet<GlossaryTerm> meanings;
 
+    /** Remove the system description from the asset, if any is set on the asset. */
+    public void removeDescription() {
+        addNullField("description");
+    }
+
+    /** Remove the user's description from the asset, if any is set on the asset. */
+    public void removeUserDescription() {
+        addNullField("userDescription");
+    }
+
+    /** Remove the owners from the asset, if any are set on the asset. */
+    public void removeOwners() {
+        addNullField("ownerUsers");
+        addNullField("ownerGroups");
+    }
+
     /** Remove the certificate from the asset, if any is set on the asset. */
     public void removeCertificate() {
         addNullField("certificateStatus");
@@ -560,6 +576,22 @@ public abstract class Asset extends Entity {
             return response.getUpdatedEntities().get(0);
         }
         return null;
+    }
+
+    /**
+     * Restore an archived (soft-deleted) asset to active.
+     *
+     * @return the asset that was restored
+     * @throws AtlanException on any API problems
+     */
+    protected static Entity restore(String typeName, String qualifiedName) throws AtlanException {
+        Asset existing = getExistingAsset(typeName, qualifiedName);
+        if (existing != null && existing.getStatus() != AtlanStatus.ACTIVE) {
+            existing.setStatus(AtlanStatus.ACTIVE);
+            return updateRelationships(existing);
+        } else {
+            return existing;
+        }
     }
 
     /**
