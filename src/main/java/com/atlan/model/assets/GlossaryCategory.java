@@ -179,11 +179,62 @@ public class GlossaryCategory extends Asset {
     }
 
     /**
-     * Update the certificate on a GlossaryCategory.
+     * Restore the archived (soft-deleted) GlossaryCategory to active.
+     *
+     * @param qualifiedName for the GlossaryCategory
+     * @return the GlossaryCategory that was restored
+     * @throws AtlanException on any API problems
+     */
+    public static GlossaryCategory restore(String qualifiedName) throws AtlanException {
+        return (GlossaryCategory) Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a GlossaryCategory.
      *
      * @param qualifiedName of the GlossaryCategory
      * @param name of the GlossaryCategory
      * @param glossaryGuid unique ID (GUID) of the GlossaryCategory's glossary
+     * @return the updated GlossaryCategory, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static GlossaryCategory removeDescription(String qualifiedName, String name, String glossaryGuid)
+            throws AtlanException {
+        return (GlossaryCategory) Asset.removeDescription(updater(qualifiedName, name, glossaryGuid));
+    }
+
+    /**
+     * Remove the user's description from a GlossaryCategory.
+     *
+     * @param qualifiedName of the GlossaryCategory
+     * @param name of the GlossaryCategory
+     * @param glossaryGuid unique ID (GUID) of the GlossaryCategory's glossary
+     * @return the updated GlossaryCategory, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static GlossaryCategory removeUserDescription(String qualifiedName, String name, String glossaryGuid)
+            throws AtlanException {
+        return (GlossaryCategory) Asset.removeUserDescription(updater(qualifiedName, name, glossaryGuid));
+    }
+
+    /**
+     * Remove the owners from a GlossaryCategory.
+     *
+     * @param qualifiedName of the GlossaryCategory
+     * @param name of the GlossaryCategory
+     * @param glossaryGuid unique ID (GUID) of the GlossaryCategory's glossary
+     * @return the updated GlossaryCategory, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static GlossaryCategory removeOwners(String qualifiedName, String name, String glossaryGuid)
+            throws AtlanException {
+        return (GlossaryCategory) Asset.removeOwners(updater(qualifiedName, name, glossaryGuid));
+    }
+
+    /**
+     * Update the certificate on a GlossaryCategory.
+     *
+     * @param qualifiedName of the GlossaryCategory
      * @param certificate to use
      * @param message (optional) message, or null if no message
      * @return the updated GlossaryCategory, or null if the update failed

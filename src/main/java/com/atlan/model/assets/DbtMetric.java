@@ -31,6 +31,11 @@ public class DbtMetric extends Metric {
     /** TBC */
     @Attribute
     @Singular
+    List<DbtMetricFilter> dbtMetricFilters;
+
+    /** TBC */
+    @Attribute
+    @Singular
     SortedSet<Column> dbtMetricFilterColumns;
 
     /** TBC */

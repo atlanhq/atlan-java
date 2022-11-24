@@ -106,6 +106,11 @@ public class BadgeTest {
             .readme(Readme.refByGuid("readmeGuid"))
             .meaning(GlossaryTerm.refByGuid("termGuid1"))
             .meaning(GlossaryTerm.refByGuid("termGuid2"))
+            .badgeCondition(BadgeCondition.builder()
+                    .badgeConditionOperator("badgeConditionOperator")
+                    .badgeConditionValue("badgeConditionValue")
+                    .badgeConditionColorhex("badgeConditionColorhex")
+                    .build())
             .badgeMetadataAttribute("badgeMetadataAttribute")
             .build();
     private static Badge frodo;

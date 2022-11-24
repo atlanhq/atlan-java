@@ -320,6 +320,59 @@ public class GlossaryTerm extends Asset {
     }
 
     /**
+     * Restore the archived (soft-deleted) GlossaryTerm to active.
+     *
+     * @param qualifiedName for the GlossaryTerm
+     * @return the GlossaryTerm that was restored
+     * @throws AtlanException on any API problems
+     */
+    public static GlossaryTerm restore(String qualifiedName) throws AtlanException {
+        return (GlossaryTerm) Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a GlossaryTerm.
+     *
+     * @param qualifiedName of the GlossaryTerm
+     * @param name of the GlossaryTerm
+     * @param glossaryGuid unique ID (GUID) of the GlossaryTerm's glossary
+     * @return the updated GlossaryTerm, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static GlossaryTerm removeDescription(String qualifiedName, String name, String glossaryGuid)
+            throws AtlanException {
+        return (GlossaryTerm) Asset.removeDescription(updater(qualifiedName, name, glossaryGuid));
+    }
+
+    /**
+     * Remove the user's description from a GlossaryTerm.
+     *
+     * @param qualifiedName of the GlossaryTerm
+     * @param name of the GlossaryTerm
+     * @param glossaryGuid unique ID (GUID) of the GlossaryTerm's glossary
+     * @return the updated GlossaryTerm, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static GlossaryTerm removeUserDescription(String qualifiedName, String name, String glossaryGuid)
+            throws AtlanException {
+        return (GlossaryTerm) Asset.removeUserDescription(updater(qualifiedName, name, glossaryGuid));
+    }
+
+    /**
+     * Remove the owners from a GlossaryTerm.
+     *
+     * @param qualifiedName of the GlossaryTerm
+     * @param name of the GlossaryTerm
+     * @param glossaryGuid unique ID (GUID) of the GlossaryTerm's glossary
+     * @return the updated GlossaryTerm, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static GlossaryTerm removeOwners(String qualifiedName, String name, String glossaryGuid)
+            throws AtlanException {
+        return (GlossaryTerm) Asset.removeOwners(updater(qualifiedName, name, glossaryGuid));
+    }
+
+    /**
      * Update the certificate on a GlossaryTerm.
      *
      * @param qualifiedName of the GlossaryTerm

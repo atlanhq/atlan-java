@@ -29,6 +29,11 @@ public class Badge extends Asset {
 
     /** TBC */
     @Attribute
+    @Singular
+    List<BadgeCondition> badgeConditions;
+
+    /** TBC */
+    @Attribute
     String badgeMetadataAttribute;
 
     /**
