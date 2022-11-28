@@ -199,7 +199,7 @@ public class DataAssetTest extends AtlanLiveTest {
             dependsOnGroups = {"create.schema"})
     void createTable() {
         try {
-            Table table = Table.creator(TABLE_NAME, schemaQame).build();
+            Table table = Table.creator(TABLE_NAME, schemaQame).columnCount(2L).build();
             EntityMutationResponse response = table.upsert();
             assertNotNull(response);
             assertTrue(response.getDeletedEntities().isEmpty());
@@ -239,7 +239,7 @@ public class DataAssetTest extends AtlanLiveTest {
             dependsOnGroups = {"create.schema"})
     void createView() {
         try {
-            View view = View.creator(VIEW_NAME, schemaQame).build();
+            View view = View.creator(VIEW_NAME, schemaQame).columnCount(2L).build();
             EntityMutationResponse response = view.upsert();
             assertNotNull(response);
             assertTrue(response.getDeletedEntities().isEmpty());
@@ -279,8 +279,9 @@ public class DataAssetTest extends AtlanLiveTest {
             dependsOnGroups = {"create.schema"})
     void createMView() {
         try {
-            MaterializedView mview =
-                    MaterializedView.creator(MVIEW_NAME, schemaQame).build();
+            MaterializedView mview = MaterializedView.creator(MVIEW_NAME, schemaQame)
+                    .columnCount(2L)
+                    .build();
             EntityMutationResponse response = mview.upsert();
             assertNotNull(response);
             assertTrue(response.getDeletedEntities().isEmpty());
@@ -321,7 +322,7 @@ public class DataAssetTest extends AtlanLiveTest {
     void createColumn1() {
         try {
             Column column =
-                    Column.creator(COLUMN_NAME1, Table.TYPE_NAME, tableQame).build();
+                    Column.creator(COLUMN_NAME1, Table.TYPE_NAME, tableQame, 1).build();
             EntityMutationResponse response = column.upsert();
             assertNotNull(response);
             assertTrue(response.getDeletedEntities().isEmpty());
@@ -363,7 +364,7 @@ public class DataAssetTest extends AtlanLiveTest {
     void createColumn2() {
         try {
             Column column =
-                    Column.creator(COLUMN_NAME2, Table.TYPE_NAME, tableQame).build();
+                    Column.creator(COLUMN_NAME2, Table.TYPE_NAME, tableQame, 2).build();
             EntityMutationResponse response = column.upsert();
             assertNotNull(response);
             assertTrue(response.getDeletedEntities().isEmpty());
@@ -405,7 +406,7 @@ public class DataAssetTest extends AtlanLiveTest {
     void createColumn3() {
         try {
             Column column =
-                    Column.creator(COLUMN_NAME3, View.TYPE_NAME, viewQame).build();
+                    Column.creator(COLUMN_NAME3, View.TYPE_NAME, viewQame, 1).build();
             EntityMutationResponse response = column.upsert();
             assertNotNull(response);
             assertTrue(response.getDeletedEntities().isEmpty());
@@ -447,7 +448,7 @@ public class DataAssetTest extends AtlanLiveTest {
     void createColumn4() {
         try {
             Column column =
-                    Column.creator(COLUMN_NAME4, View.TYPE_NAME, viewQame).build();
+                    Column.creator(COLUMN_NAME4, View.TYPE_NAME, viewQame, 2).build();
             EntityMutationResponse response = column.upsert();
             assertNotNull(response);
             assertTrue(response.getDeletedEntities().isEmpty());
@@ -488,7 +489,7 @@ public class DataAssetTest extends AtlanLiveTest {
             dependsOnGroups = {"create.view"})
     void createColumn5() {
         try {
-            Column column = Column.creator(COLUMN_NAME5, MaterializedView.TYPE_NAME, mviewQame)
+            Column column = Column.creator(COLUMN_NAME5, MaterializedView.TYPE_NAME, mviewQame, 1)
                     .build();
             EntityMutationResponse response = column.upsert();
             assertNotNull(response);
@@ -530,7 +531,7 @@ public class DataAssetTest extends AtlanLiveTest {
             dependsOnGroups = {"create.view"})
     void createColumn6() {
         try {
-            Column column = Column.creator(COLUMN_NAME6, MaterializedView.TYPE_NAME, mviewQame)
+            Column column = Column.creator(COLUMN_NAME6, MaterializedView.TYPE_NAME, mviewQame, 2)
                     .build();
             EntityMutationResponse response = column.upsert();
             assertNotNull(response);

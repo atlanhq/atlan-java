@@ -200,9 +200,10 @@ public class Column extends SQL {
      * @param name of the column
      * @param parentType type of parent (table, view, materialized view), should be a TYPE_NAME static string
      * @param parentQualifiedName unique name of the table / view / materialized view in which this column exists
+     * @param order the order the column appears within its parent (the column's position)
      * @return the minimal request necessary to create the column, as a builder
      */
-    public static ColumnBuilder<?, ?> creator(String name, String parentType, String parentQualifiedName) {
+    public static ColumnBuilder<?, ?> creator(String name, String parentType, String parentQualifiedName, int order) {
         String[] tokens = parentQualifiedName.split("/");
         AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(tokens);
         String parentName = StringUtils.getNameFromQualifiedName(parentQualifiedName);
@@ -219,7 +220,8 @@ public class Column extends SQL {
                 .schemaQualifiedName(schemaQualifiedName)
                 .databaseName(databaseName)
                 .databaseQualifiedName(databaseQualifiedName)
-                .connectionQualifiedName(connectionQualifiedName);
+                .connectionQualifiedName(connectionQualifiedName)
+                .order(order);
         switch (parentType) {
             case Table.TYPE_NAME:
                 builder = builder.tableName(parentName)
