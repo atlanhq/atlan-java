@@ -132,7 +132,12 @@ public class GlossaryTerm extends Asset {
     @Singular
     SortedSet<GlossaryTerm> antonyms;
 
-    /** Assets that are attached to this term. */
+    /**
+     * Assets that are attached to this term.
+     * Note: this should ONLY be used to view such relationships, never to set such relationships.
+     * Only set such relationships in the other direction.
+     * @see Asset#meanings
+     */
     @Attribute
     @Singular
     SortedSet<Asset> assignedEntities;
