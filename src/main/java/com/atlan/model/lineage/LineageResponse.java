@@ -27,7 +27,16 @@ public class LineageResponse extends ApiResource {
     Integer lineageDepth;
 
     /** TBC */
-    Integer limit;
+    Long limit;
+
+    /** TBC */
+    Long offset;
+
+    /** Whether there is more lineage upstream than returned (true) or not (false). */
+    Boolean hasMoreUpstreamVertices;
+
+    /** Whether there is more lineage downstream than returned (true) or not (false). */
+    Boolean hasMoreDownstreamVertices;
 
     /**
      * Details of the assets that exist in the lineage graph.
@@ -50,8 +59,13 @@ public class LineageResponse extends ApiResource {
      * {@code INPUT} count is missing for most assets.
      * Note: this should not be used, instead traverse the graph representation.
      */
+    @Deprecated
     @Getter(AccessLevel.PRIVATE)
     Object childrenCounts;
+
+    /** TBC */
+    @Getter(AccessLevel.PRIVATE)
+    Object vertexChildrenInfo;
 
     /** Traversable graph representation of the lineage results. */
     @JsonIgnore

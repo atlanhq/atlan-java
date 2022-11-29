@@ -31,6 +31,7 @@ public class WorkflowMetadata extends AtlanObject {
     String namespace;
     final String uid;
     final String resourceVersion;
+    final String generateName;
     final Long generation;
     final String creationTimestamp;
     final List<Object> managedFields;

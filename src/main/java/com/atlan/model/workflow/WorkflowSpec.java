@@ -4,6 +4,7 @@ package com.atlan.model.workflow;
 
 import com.atlan.model.core.AtlanObject;
 import java.util.List;
+import java.util.Map;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,4 +22,5 @@ public class WorkflowSpec extends AtlanObject {
     List<WorkflowTemplate> templates;
     String entrypoint;
     final Object arguments;
+    final Map<String, String> workflowTemplateRef;
 }
