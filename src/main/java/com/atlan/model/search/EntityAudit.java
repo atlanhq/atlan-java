@@ -7,43 +7,44 @@ import com.atlan.model.core.Entity;
 import com.atlan.model.enums.AuditActionType;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 
+/**
+ * Detailed entry in the audit log. These objects should be treated as immutable.
+ */
 @Getter
-@Setter
 @Jacksonized
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = false)
 public class EntityAudit extends AtlanObject {
 
     /** Unique name of the asset. */
-    String entityQualifiedName;
+    final String entityQualifiedName;
 
     /** Type of the asset. */
-    String typeName;
+    final String typeName;
 
     /** Unique identifier (GUID) of the asset. */
-    String entityId;
+    final String entityId;
 
     /** Time (epoch) at which the activity started, in milliseconds. */
-    Long timestamp;
+    final Long timestamp;
 
     /** Time (epoch) at which the activity completed, in milliseconds. */
-    Long created;
+    final Long created;
 
     /** User who carried out the activity. */
-    String user;
+    final String user;
 
     /** The type of activity that was done. */
-    AuditActionType action;
+    final AuditActionType action;
 
     /** Unused. */
     final Object details;
 
     /** Unique identifier of the activity. */
-    String eventKey;
+    final String eventKey;
 
     /** Unused. */
     final Object entity;
@@ -56,14 +57,14 @@ public class EntityAudit extends AtlanObject {
      * In practice this will either be details about a classification (for classification-
      * related actions) or an entity (for other actions).
      */
-    AuditDetail detail;
+    final AuditDetail detail;
 
     /**
      * Minimal details about the asset that was acted upon.
      * Note that this contains current details about the asset, not the state of the
      * asset immediately before or after the given activity.
      */
-    Entity entityDetail;
+    final Entity entityDetail;
 
     /** Unused. */
     final Object headers;

@@ -389,7 +389,7 @@ public class EntityDeserializer extends StdDeserializer<Entity> {
                 Method method = ReflectionCache.getSetter(clazz, deserializeName);
                 if (method != null) {
                     try {
-                        deserialize(value, attributes.get(attrKey), method);
+                        deserialize(value, attributes.get(attrKey), method, deserializeName);
                     } catch (NoSuchMethodException e) {
                         throw new IOException("Missing fromValue method for enum.", e);
                     } catch (IllegalAccessException | InvocationTargetException e) {
@@ -414,7 +414,7 @@ public class EntityDeserializer extends StdDeserializer<Entity> {
                     Method method = ReflectionCache.getSetter(clazz, deserializeName);
                     if (method != null) {
                         try {
-                            deserialize(value, relationshipAttributes.get(relnKey), method);
+                            deserialize(value, relationshipAttributes.get(relnKey), method, deserializeName);
                         } catch (NoSuchMethodException e) {
                             throw new IOException("Missing fromValue method for enum.", e);
                         } catch (IllegalAccessException | InvocationTargetException e) {
@@ -477,16 +477,15 @@ public class EntityDeserializer extends StdDeserializer<Entity> {
         return value;
     }
 
-    private void deserialize(Entity value, JsonNode jsonNode, Method method)
+    private void deserialize(Entity value, JsonNode jsonNode, Method method, String fieldName)
             throws IllegalAccessException, InvocationTargetException, NoSuchMethodException, IOException {
         if (jsonNode.isValueNode()) {
-            deserializePrimitive(value, jsonNode, method);
+            deserializePrimitive(value, jsonNode, method, fieldName);
         } else if (jsonNode.isArray()) {
             deserializeList(value, (ArrayNode) jsonNode, method);
         } else if (jsonNode.isObject()) {
             deserializeObject(value, jsonNode, method);
         }
-        // Only type left is null, which we don't need to explicitly set (it's the default)
     }
 
     private void deserializeList(Entity value, ArrayNode array, Method method)
@@ -532,7 +531,7 @@ public class EntityDeserializer extends StdDeserializer<Entity> {
         return null;
     }
 
-    private void deserializePrimitive(Entity value, JsonNode primitive, Method method)
+    private void deserializePrimitive(Entity value, JsonNode primitive, Method method, String fieldName)
             throws IllegalAccessException, InvocationTargetException, NoSuchMethodException, IOException {
         if (primitive.isTextual()) {
             Class<?> paramClass = ReflectionCache.getParameterOfMethod(method);
@@ -546,6 +545,10 @@ public class EntityDeserializer extends StdDeserializer<Entity> {
             method.invoke(value, primitive.asBoolean());
         } else if (primitive.isNumber()) {
             deserializeNumber(value, primitive, method);
+        } else if (primitive.isNull()) {
+            // Explicitly deserialize null values to a representation
+            // that we can identify on the object — necessary for audit entries
+            value.addNullField(fieldName);
         }
     }
 

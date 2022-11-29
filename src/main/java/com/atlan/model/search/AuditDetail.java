@@ -3,9 +3,7 @@
 package com.atlan.model.search;
 
 import com.atlan.serde.AuditDetailDeserializer;
-import com.atlan.serde.AuditDetailSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 /**
  * An interface used to describe the detailed information within an audit entry.
@@ -13,7 +11,6 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
  * (You should be able to type-check through instanceof and then explicitly cast
  * to either of these more detailed objects.)
  */
-@JsonSerialize(using = AuditDetailSerializer.class)
 @JsonDeserialize(using = AuditDetailDeserializer.class)
 public interface AuditDetail {
 

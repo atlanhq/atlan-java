@@ -20,6 +20,7 @@ public class AdminTest extends AtlanLiveTest {
 
     public static String groupGuid = null;
     public static String groupPath = null;
+    public static String groupName = null;
     private static String groupGuid2 = null;
 
     public static String userGuid = null;
@@ -79,6 +80,7 @@ public class AdminTest extends AtlanLiveTest {
             AtlanGroup one = groups.get(0);
             assertNotNull(one);
             groupPath = one.getPath();
+            groupName = one.getName();
             assertNotNull(groupPath);
             assertEquals(one.getId(), groupGuid);
             assertNull(one.getAttributes().getDescription());
@@ -237,8 +239,9 @@ public class AdminTest extends AtlanLiveTest {
 
     @Test(
             groups = {"purge.users"},
-            // TODO        dependsOnGroups = {"create.*", "update.*", "read.*", "search.*", "link.*", "unlink.*"},
-            dependsOnGroups = {"create.*", "update.*", "read.*"},
+            // TODO        dependsOnGroups = {"create.*", "update.*", "read.*", "search.*", "link.*", "unlink.*",
+            // "delete.*", "restore.*"},
+            dependsOnGroups = {"create.*", "update.*", "read.*", "link.*", "unlink.*"},
             alwaysRun = true)
     void purgeUsers() {
         try {
@@ -253,8 +256,9 @@ public class AdminTest extends AtlanLiveTest {
 
     @Test(
             groups = {"purge.groups"},
-            // TODO        dependsOnGroups = {"create.*", "update.*", "read.*", "search.*", "link.*", "unlink.*"},
-            dependsOnGroups = {"create.*", "update.*", "read.*"},
+            // TODO        dependsOnGroups = {"create.*", "update.*", "read.*", "search.*", "link.*", "unlink.*",
+            // "delete.*", "restore.*"},
+            dependsOnGroups = {"create.*", "update.*", "read.*", "link.*", "unlink.*"},
             alwaysRun = true)
     void purgeGroups() {
         try {

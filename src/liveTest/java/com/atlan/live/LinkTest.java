@@ -56,7 +56,16 @@ public class LinkTest extends AtlanLiveTest {
 
     @Test(
             groups = {"purge.link"},
-            dependsOnGroups = {"create.*", "update.*", "read.*", "search.*", "link.*", "unlink.*"},
+            dependsOnGroups = {
+                "create.*",
+                "update.*",
+                "read.*",
+                "search.*",
+                "link.*",
+                "unlink.*",
+                "delete.*",
+                "restore.*"
+            },
             alwaysRun = true)
     void purgeLink() {
         try {

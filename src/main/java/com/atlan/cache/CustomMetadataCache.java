@@ -450,7 +450,7 @@ public class CustomMetadataCache {
                     // removed retain an empty set for that attribute, but this is equivalent to the
                     // custom metadata not existing from a UI and delete-ability perspective (so we will
                     // treat as non-existent in the deserialization as well)
-                    if (!archivedAttrIds.containsKey(attrId)) {
+                    if (archivedAttrIds.containsKey(attrId)) {
                         builder.archivedAttribute(cmAttrName, values);
                     } else {
                         builder.attribute(cmAttrName, values);
@@ -554,6 +554,8 @@ public class CustomMetadataCache {
                 return jsonValue.asLong();
             } else if (jsonValue.isFloatingPointNumber()) {
                 return jsonValue.asDouble();
+            } else if (jsonValue.isNull()) {
+                return null;
             } else {
                 throw new LogicException(
                         "Unable to deserialize unrecognized primitive custom metadata value: " + jsonValue,
