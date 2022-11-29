@@ -125,11 +125,11 @@ public class ModeWorkspace extends Mode {
      * Restore the archived (soft-deleted) ModeWorkspace to active.
      *
      * @param qualifiedName for the ModeWorkspace
-     * @return the ModeWorkspace that was restored
+     * @return true if the ModeWorkspace is now active, and false otherwise
      * @throws AtlanException on any API problems
      */
-    public static ModeWorkspace restore(String qualifiedName) throws AtlanException {
-        return (ModeWorkspace) Asset.restore(TYPE_NAME, qualifiedName);
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**

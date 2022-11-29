@@ -156,11 +156,11 @@ public class PowerBIWorkspace extends PowerBI {
      * Restore the archived (soft-deleted) PowerBIWorkspace to active.
      *
      * @param qualifiedName for the PowerBIWorkspace
-     * @return the PowerBIWorkspace that was restored
+     * @return true if the PowerBIWorkspace is now active, and false otherwise
      * @throws AtlanException on any API problems
      */
-    public static PowerBIWorkspace restore(String qualifiedName) throws AtlanException {
-        return (PowerBIWorkspace) Asset.restore(TYPE_NAME, qualifiedName);
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**

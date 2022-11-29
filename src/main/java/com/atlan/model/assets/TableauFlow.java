@@ -153,11 +153,11 @@ public class TableauFlow extends Tableau {
      * Restore the archived (soft-deleted) TableauFlow to active.
      *
      * @param qualifiedName for the TableauFlow
-     * @return the TableauFlow that was restored
+     * @return true if the TableauFlow is now active, and false otherwise
      * @throws AtlanException on any API problems
      */
-    public static TableauFlow restore(String qualifiedName) throws AtlanException {
-        return (TableauFlow) Asset.restore(TYPE_NAME, qualifiedName);
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**

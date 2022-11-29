@@ -179,11 +179,11 @@ public class DbtModel extends Dbt {
      * Restore the archived (soft-deleted) DbtModel to active.
      *
      * @param qualifiedName for the DbtModel
-     * @return the DbtModel that was restored
+     * @return true if the DbtModel is now active, and false otherwise
      * @throws AtlanException on any API problems
      */
-    public static DbtModel restore(String qualifiedName) throws AtlanException {
-        return (DbtModel) Asset.restore(TYPE_NAME, qualifiedName);
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**

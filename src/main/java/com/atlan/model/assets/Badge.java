@@ -121,11 +121,11 @@ public class Badge extends Asset {
      * Restore the archived (soft-deleted) Badge to active.
      *
      * @param qualifiedName for the Badge
-     * @return the Badge that was restored
+     * @return true if the Badge is now active, and false otherwise
      * @throws AtlanException on any API problems
      */
-    public static Badge restore(String qualifiedName) throws AtlanException {
-        return (Badge) Asset.restore(TYPE_NAME, qualifiedName);
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**

@@ -112,11 +112,11 @@ public class Insight extends Catalog {
      * Restore the archived (soft-deleted) Insight to active.
      *
      * @param qualifiedName for the Insight
-     * @return the Insight that was restored
+     * @return true if the Insight is now active, and false otherwise
      * @throws AtlanException on any API problems
      */
-    public static Insight restore(String qualifiedName) throws AtlanException {
-        return (Insight) Asset.restore(TYPE_NAME, qualifiedName);
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**

@@ -328,11 +328,11 @@ public class GlossaryTerm extends Asset {
      * Restore the archived (soft-deleted) GlossaryTerm to active.
      *
      * @param qualifiedName for the GlossaryTerm
-     * @return the GlossaryTerm that was restored
+     * @return true if the GlossaryTerm is now active, and false otherwise
      * @throws AtlanException on any API problems
      */
-    public static GlossaryTerm restore(String qualifiedName) throws AtlanException {
-        return (GlossaryTerm) Asset.restore(TYPE_NAME, qualifiedName);
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**

@@ -146,11 +146,11 @@ public class SalesforceObject extends Salesforce {
      * Restore the archived (soft-deleted) SalesforceObject to active.
      *
      * @param qualifiedName for the SalesforceObject
-     * @return the SalesforceObject that was restored
+     * @return true if the SalesforceObject is now active, and false otherwise
      * @throws AtlanException on any API problems
      */
-    public static SalesforceObject restore(String qualifiedName) throws AtlanException {
-        return (SalesforceObject) Asset.restore(TYPE_NAME, qualifiedName);
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**

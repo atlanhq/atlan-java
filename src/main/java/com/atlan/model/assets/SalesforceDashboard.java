@@ -140,11 +140,11 @@ public class SalesforceDashboard extends Salesforce {
      * Restore the archived (soft-deleted) SalesforceDashboard to active.
      *
      * @param qualifiedName for the SalesforceDashboard
-     * @return the SalesforceDashboard that was restored
+     * @return true if the SalesforceDashboard is now active, and false otherwise
      * @throws AtlanException on any API problems
      */
-    public static SalesforceDashboard restore(String qualifiedName) throws AtlanException {
-        return (SalesforceDashboard) Asset.restore(TYPE_NAME, qualifiedName);
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**

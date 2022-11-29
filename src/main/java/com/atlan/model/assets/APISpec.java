@@ -166,11 +166,11 @@ public class APISpec extends API {
      * Restore the archived (soft-deleted) APISpec to active.
      *
      * @param qualifiedName for the APISpec
-     * @return the APISpec that was restored
+     * @return true if the APISpec is now active, and false otherwise
      * @throws AtlanException on any API problems
      */
-    public static APISpec restore(String qualifiedName) throws AtlanException {
-        return (APISpec) Asset.restore(TYPE_NAME, qualifiedName);
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**

@@ -154,11 +154,11 @@ public class DataStudioAsset extends Google {
      * Restore the archived (soft-deleted) DataStudioAsset to active.
      *
      * @param qualifiedName for the DataStudioAsset
-     * @return the DataStudioAsset that was restored
+     * @return true if the DataStudioAsset is now active, and false otherwise
      * @throws AtlanException on any API problems
      */
-    public static DataStudioAsset restore(String qualifiedName) throws AtlanException {
-        return (DataStudioAsset) Asset.restore(TYPE_NAME, qualifiedName);
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**

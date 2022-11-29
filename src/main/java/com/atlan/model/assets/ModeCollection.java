@@ -133,11 +133,11 @@ public class ModeCollection extends Mode {
      * Restore the archived (soft-deleted) ModeCollection to active.
      *
      * @param qualifiedName for the ModeCollection
-     * @return the ModeCollection that was restored
+     * @return true if the ModeCollection is now active, and false otherwise
      * @throws AtlanException on any API problems
      */
-    public static ModeCollection restore(String qualifiedName) throws AtlanException {
-        return (ModeCollection) Asset.restore(TYPE_NAME, qualifiedName);
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**

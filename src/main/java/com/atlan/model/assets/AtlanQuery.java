@@ -172,11 +172,11 @@ public class AtlanQuery extends SQL {
      * Restore the archived (soft-deleted) AtlanQuery to active.
      *
      * @param qualifiedName for the AtlanQuery
-     * @return the AtlanQuery that was restored
+     * @return true if the AtlanQuery is now active, and false otherwise
      * @throws AtlanException on any API problems
      */
-    public static AtlanQuery restore(String qualifiedName) throws AtlanException {
-        return (AtlanQuery) Asset.restore(TYPE_NAME, qualifiedName);
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**

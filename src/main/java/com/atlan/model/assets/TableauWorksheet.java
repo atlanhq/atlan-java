@@ -158,11 +158,11 @@ public class TableauWorksheet extends Tableau {
      * Restore the archived (soft-deleted) TableauWorksheet to active.
      *
      * @param qualifiedName for the TableauWorksheet
-     * @return the TableauWorksheet that was restored
+     * @return true if the TableauWorksheet is now active, and false otherwise
      * @throws AtlanException on any API problems
      */
-    public static TableauWorksheet restore(String qualifiedName) throws AtlanException {
-        return (TableauWorksheet) Asset.restore(TYPE_NAME, qualifiedName);
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**

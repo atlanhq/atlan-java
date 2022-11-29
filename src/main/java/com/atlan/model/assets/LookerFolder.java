@@ -142,11 +142,11 @@ public class LookerFolder extends Looker {
      * Restore the archived (soft-deleted) LookerFolder to active.
      *
      * @param qualifiedName for the LookerFolder
-     * @return the LookerFolder that was restored
+     * @return true if the LookerFolder is now active, and false otherwise
      * @throws AtlanException on any API problems
      */
-    public static LookerFolder restore(String qualifiedName) throws AtlanException {
-        return (LookerFolder) Asset.restore(TYPE_NAME, qualifiedName);
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**

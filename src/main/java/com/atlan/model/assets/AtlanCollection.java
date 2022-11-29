@@ -124,11 +124,11 @@ public class AtlanCollection extends Namespace {
      * Restore the archived (soft-deleted) AtlanCollection to active.
      *
      * @param qualifiedName for the AtlanCollection
-     * @return the AtlanCollection that was restored
+     * @return true if the AtlanCollection is now active, and false otherwise
      * @throws AtlanException on any API problems
      */
-    public static AtlanCollection restore(String qualifiedName) throws AtlanException {
-        return (AtlanCollection) Asset.restore(TYPE_NAME, qualifiedName);
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**

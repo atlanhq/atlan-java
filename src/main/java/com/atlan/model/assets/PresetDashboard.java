@@ -179,11 +179,11 @@ public class PresetDashboard extends Preset {
      * Restore the archived (soft-deleted) PresetDashboard to active.
      *
      * @param qualifiedName for the PresetDashboard
-     * @return the PresetDashboard that was restored
+     * @return true if the PresetDashboard is now active, and false otherwise
      * @throws AtlanException on any API problems
      */
-    public static PresetDashboard restore(String qualifiedName) throws AtlanException {
-        return (PresetDashboard) Asset.restore(TYPE_NAME, qualifiedName);
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**

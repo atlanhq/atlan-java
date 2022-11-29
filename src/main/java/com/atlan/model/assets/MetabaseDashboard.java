@@ -132,11 +132,11 @@ public class MetabaseDashboard extends Metabase {
      * Restore the archived (soft-deleted) MetabaseDashboard to active.
      *
      * @param qualifiedName for the MetabaseDashboard
-     * @return the MetabaseDashboard that was restored
+     * @return true if the MetabaseDashboard is now active, and false otherwise
      * @throws AtlanException on any API problems
      */
-    public static MetabaseDashboard restore(String qualifiedName) throws AtlanException {
-        return (MetabaseDashboard) Asset.restore(TYPE_NAME, qualifiedName);
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**

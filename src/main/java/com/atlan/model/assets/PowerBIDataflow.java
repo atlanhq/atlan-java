@@ -133,11 +133,11 @@ public class PowerBIDataflow extends PowerBI {
      * Restore the archived (soft-deleted) PowerBIDataflow to active.
      *
      * @param qualifiedName for the PowerBIDataflow
-     * @return the PowerBIDataflow that was restored
+     * @return true if the PowerBIDataflow is now active, and false otherwise
      * @throws AtlanException on any API problems
      */
-    public static PowerBIDataflow restore(String qualifiedName) throws AtlanException {
-        return (PowerBIDataflow) Asset.restore(TYPE_NAME, qualifiedName);
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**

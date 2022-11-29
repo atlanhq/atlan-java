@@ -135,11 +135,11 @@ public class DbtModelColumn extends Dbt {
      * Restore the archived (soft-deleted) DbtModelColumn to active.
      *
      * @param qualifiedName for the DbtModelColumn
-     * @return the DbtModelColumn that was restored
+     * @return true if the DbtModelColumn is now active, and false otherwise
      * @throws AtlanException on any API problems
      */
-    public static DbtModelColumn restore(String qualifiedName) throws AtlanException {
-        return (DbtModelColumn) Asset.restore(TYPE_NAME, qualifiedName);
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**

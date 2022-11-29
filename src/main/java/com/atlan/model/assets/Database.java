@@ -143,11 +143,11 @@ public class Database extends SQL {
      * Restore the archived (soft-deleted) Database to active.
      *
      * @param qualifiedName for the Database
-     * @return the Database that was restored
+     * @return true if the Database is now active, and false otherwise
      * @throws AtlanException on any API problems
      */
-    public static Database restore(String qualifiedName) throws AtlanException {
-        return (Database) Asset.restore(TYPE_NAME, qualifiedName);
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**

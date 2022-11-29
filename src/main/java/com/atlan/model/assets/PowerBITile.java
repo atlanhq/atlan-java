@@ -135,11 +135,11 @@ public class PowerBITile extends PowerBI {
      * Restore the archived (soft-deleted) PowerBITile to active.
      *
      * @param qualifiedName for the PowerBITile
-     * @return the PowerBITile that was restored
+     * @return true if the PowerBITile is now active, and false otherwise
      * @throws AtlanException on any API problems
      */
-    public static PowerBITile restore(String qualifiedName) throws AtlanException {
-        return (PowerBITile) Asset.restore(TYPE_NAME, qualifiedName);
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**

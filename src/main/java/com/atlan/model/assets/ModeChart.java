@@ -120,11 +120,11 @@ public class ModeChart extends Mode {
      * Restore the archived (soft-deleted) ModeChart to active.
      *
      * @param qualifiedName for the ModeChart
-     * @return the ModeChart that was restored
+     * @return true if the ModeChart is now active, and false otherwise
      * @throws AtlanException on any API problems
      */
-    public static ModeChart restore(String qualifiedName) throws AtlanException {
-        return (ModeChart) Asset.restore(TYPE_NAME, qualifiedName);
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**

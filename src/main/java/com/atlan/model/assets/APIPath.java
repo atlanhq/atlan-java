@@ -166,11 +166,11 @@ public class APIPath extends API {
      * Restore the archived (soft-deleted) APIPath to active.
      *
      * @param qualifiedName for the APIPath
-     * @return the APIPath that was restored
+     * @return true if the APIPath is now active, and false otherwise
      * @throws AtlanException on any API problems
      */
-    public static APIPath restore(String qualifiedName) throws AtlanException {
-        return (APIPath) Asset.restore(TYPE_NAME, qualifiedName);
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**

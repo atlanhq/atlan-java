@@ -135,11 +135,11 @@ public class PowerBIMeasure extends PowerBI {
      * Restore the archived (soft-deleted) PowerBIMeasure to active.
      *
      * @param qualifiedName for the PowerBIMeasure
-     * @return the PowerBIMeasure that was restored
+     * @return true if the PowerBIMeasure is now active, and false otherwise
      * @throws AtlanException on any API problems
      */
-    public static PowerBIMeasure restore(String qualifiedName) throws AtlanException {
-        return (PowerBIMeasure) Asset.restore(TYPE_NAME, qualifiedName);
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**

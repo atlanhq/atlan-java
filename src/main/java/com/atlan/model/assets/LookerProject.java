@@ -136,11 +136,11 @@ public class LookerProject extends Looker {
      * Restore the archived (soft-deleted) LookerProject to active.
      *
      * @param qualifiedName for the LookerProject
-     * @return the LookerProject that was restored
+     * @return true if the LookerProject is now active, and false otherwise
      * @throws AtlanException on any API problems
      */
-    public static LookerProject restore(String qualifiedName) throws AtlanException {
-        return (LookerProject) Asset.restore(TYPE_NAME, qualifiedName);
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**

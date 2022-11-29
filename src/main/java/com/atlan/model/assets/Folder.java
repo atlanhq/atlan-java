@@ -124,11 +124,11 @@ public class Folder extends Namespace {
      * Restore the archived (soft-deleted) Folder to active.
      *
      * @param qualifiedName for the Folder
-     * @return the Folder that was restored
+     * @return true if the Folder is now active, and false otherwise
      * @throws AtlanException on any API problems
      */
-    public static Folder restore(String qualifiedName) throws AtlanException {
-        return (Folder) Asset.restore(TYPE_NAME, qualifiedName);
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**

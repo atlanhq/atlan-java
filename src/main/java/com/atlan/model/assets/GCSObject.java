@@ -198,11 +198,11 @@ public class GCSObject extends GCS {
      * Restore the archived (soft-deleted) GCSObject to active.
      *
      * @param qualifiedName for the GCSObject
-     * @return the GCSObject that was restored
+     * @return true if the GCSObject is now active, and false otherwise
      * @throws AtlanException on any API problems
      */
-    public static GCSObject restore(String qualifiedName) throws AtlanException {
-        return (GCSObject) Asset.restore(TYPE_NAME, qualifiedName);
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**

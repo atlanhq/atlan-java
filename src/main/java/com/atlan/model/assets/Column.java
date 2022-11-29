@@ -304,11 +304,11 @@ public class Column extends SQL {
      * Restore the archived (soft-deleted) Column to active.
      *
      * @param qualifiedName for the Column
-     * @return the Column that was restored
+     * @return true if the Column is now active, and false otherwise
      * @throws AtlanException on any API problems
      */
-    public static Column restore(String qualifiedName) throws AtlanException {
-        return (Column) Asset.restore(TYPE_NAME, qualifiedName);
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**

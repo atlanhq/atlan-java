@@ -143,11 +143,11 @@ public class LookerModel extends Looker {
      * Restore the archived (soft-deleted) LookerModel to active.
      *
      * @param qualifiedName for the LookerModel
-     * @return the LookerModel that was restored
+     * @return true if the LookerModel is now active, and false otherwise
      * @throws AtlanException on any API problems
      */
-    public static LookerModel restore(String qualifiedName) throws AtlanException {
-        return (LookerModel) Asset.restore(TYPE_NAME, qualifiedName);
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**

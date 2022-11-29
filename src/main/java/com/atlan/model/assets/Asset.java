@@ -635,16 +635,21 @@ public abstract class Asset extends Entity {
     /**
      * Restore an archived (soft-deleted) asset to active.
      *
-     * @return the asset that was restored
+     * @return true if the asset is now restored, or false if not
      * @throws AtlanException on any API problems
      */
-    protected static Entity restore(String typeName, String qualifiedName) throws AtlanException {
+    protected static boolean restore(String typeName, String qualifiedName) throws AtlanException {
         Asset existing = getExistingAsset(typeName, qualifiedName);
-        if (existing != null && existing.getStatus() != AtlanStatus.ACTIVE) {
-            existing.setStatus(AtlanStatus.ACTIVE);
-            return updateRelationships(existing);
+        if (existing == null) {
+            // Nothing to restore, so cannot be restored
+            return false;
+        } else if (existing.getStatus() == AtlanStatus.ACTIVE) {
+            // Already active, no need to restore
+            return true;
         } else {
-            return existing;
+            Optional<String> guidRestored =
+                    restore(existing.trimToRequired().status(AtlanStatus.ACTIVE).build());
+            return guidRestored.isPresent() && guidRestored.get().equals(existing.getGuid());
         }
     }
 
@@ -762,13 +767,25 @@ public abstract class Asset extends Entity {
         if (response != null && !response.getUpdatedEntities().isEmpty()) {
             for (Entity result : response.getUpdatedEntities()) {
                 if (result.getTypeName().equals(typeNameToUpdate)) {
-                    // Return the first result that matches the type that we attempted to update
-                    // (This may not work if the type in a relationship is the same as the type
-                    // of asset being updated — term-to-term relationships maybe the only example?)
-                    return result;
+                    String foundQN = ((Asset) result).getQualifiedName();
+                    if (foundQN != null && foundQN.equals(asset.getQualifiedName())) {
+                        // Return the first result that matches both the type that we attempted to update
+                        // and the qualifiedName of the asset we attempted to update. Irrespective of
+                        // the kind of relationship, this should uniquely identify the asset that we
+                        // attempted to update
+                        return result;
+                    }
                 }
             }
         }
         return null;
+    }
+
+    private static Optional<String> restore(Asset asset) throws AtlanException {
+        EntityMutationResponse response = EntityBulkEndpoint.upsert(asset, false, false);
+        if (response != null && !response.getGuidAssignments().isEmpty()) {
+            return response.getGuidAssignments().values().stream().findFirst();
+        }
+        return Optional.empty();
     }
 }

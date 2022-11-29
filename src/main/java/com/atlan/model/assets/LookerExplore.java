@@ -149,11 +149,11 @@ public class LookerExplore extends Looker {
      * Restore the archived (soft-deleted) LookerExplore to active.
      *
      * @param qualifiedName for the LookerExplore
-     * @return the LookerExplore that was restored
+     * @return true if the LookerExplore is now active, and false otherwise
      * @throws AtlanException on any API problems
      */
-    public static LookerExplore restore(String qualifiedName) throws AtlanException {
-        return (LookerExplore) Asset.restore(TYPE_NAME, qualifiedName);
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**

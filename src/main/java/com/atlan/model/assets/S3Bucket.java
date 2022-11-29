@@ -147,11 +147,11 @@ public class S3Bucket extends S3 {
      * Restore the archived (soft-deleted) S3Bucket to active.
      *
      * @param qualifiedName for the S3Bucket
-     * @return the S3Bucket that was restored
+     * @return true if the S3Bucket is now active, and false otherwise
      * @throws AtlanException on any API problems
      */
-    public static S3Bucket restore(String qualifiedName) throws AtlanException {
-        return (S3Bucket) Asset.restore(TYPE_NAME, qualifiedName);
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**

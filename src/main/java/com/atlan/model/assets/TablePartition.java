@@ -188,11 +188,11 @@ public class TablePartition extends SQL {
      * Restore the archived (soft-deleted) TablePartition to active.
      *
      * @param qualifiedName for the TablePartition
-     * @return the TablePartition that was restored
+     * @return true if the TablePartition is now active, and false otherwise
      * @throws AtlanException on any API problems
      */
-    public static TablePartition restore(String qualifiedName) throws AtlanException {
-        return (TablePartition) Asset.restore(TYPE_NAME, qualifiedName);
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**

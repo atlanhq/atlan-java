@@ -148,11 +148,11 @@ public class TableauDashboard extends Tableau {
      * Restore the archived (soft-deleted) TableauDashboard to active.
      *
      * @param qualifiedName for the TableauDashboard
-     * @return the TableauDashboard that was restored
+     * @return true if the TableauDashboard is now active, and false otherwise
      * @throws AtlanException on any API problems
      */
-    public static TableauDashboard restore(String qualifiedName) throws AtlanException {
-        return (TableauDashboard) Asset.restore(TYPE_NAME, qualifiedName);
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**

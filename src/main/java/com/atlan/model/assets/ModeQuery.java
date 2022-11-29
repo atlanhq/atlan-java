@@ -130,11 +130,11 @@ public class ModeQuery extends Mode {
      * Restore the archived (soft-deleted) ModeQuery to active.
      *
      * @param qualifiedName for the ModeQuery
-     * @return the ModeQuery that was restored
+     * @return true if the ModeQuery is now active, and false otherwise
      * @throws AtlanException on any API problems
      */
-    public static ModeQuery restore(String qualifiedName) throws AtlanException {
-        return (ModeQuery) Asset.restore(TYPE_NAME, qualifiedName);
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**

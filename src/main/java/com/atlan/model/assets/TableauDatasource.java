@@ -195,11 +195,11 @@ public class TableauDatasource extends Tableau {
      * Restore the archived (soft-deleted) TableauDatasource to active.
      *
      * @param qualifiedName for the TableauDatasource
-     * @return the TableauDatasource that was restored
+     * @return true if the TableauDatasource is now active, and false otherwise
      * @throws AtlanException on any API problems
      */
-    public static TableauDatasource restore(String qualifiedName) throws AtlanException {
-        return (TableauDatasource) Asset.restore(TYPE_NAME, qualifiedName);
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**

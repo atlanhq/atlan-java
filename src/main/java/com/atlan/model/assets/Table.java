@@ -224,11 +224,11 @@ public class Table extends SQL {
      * Restore the archived (soft-deleted) Table to active.
      *
      * @param qualifiedName for the Table
-     * @return the Table that was restored
+     * @return true if the Table is now active, and false otherwise
      * @throws AtlanException on any API problems
      */
-    public static Table restore(String qualifiedName) throws AtlanException {
-        return (Table) Asset.restore(TYPE_NAME, qualifiedName);
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**

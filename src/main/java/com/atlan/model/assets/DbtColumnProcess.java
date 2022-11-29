@@ -130,11 +130,11 @@ public class DbtColumnProcess extends AbstractColumnProcess {
      * Restore the archived (soft-deleted) DbtColumnProcess to active.
      *
      * @param qualifiedName for the DbtColumnProcess
-     * @return the DbtColumnProcess that was restored
+     * @return true if the DbtColumnProcess is now active, and false otherwise
      * @throws AtlanException on any API problems
      */
-    public static DbtColumnProcess restore(String qualifiedName) throws AtlanException {
-        return (DbtColumnProcess) Asset.restore(TYPE_NAME, qualifiedName);
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**

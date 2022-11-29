@@ -152,11 +152,11 @@ public class LookerTile extends Looker {
      * Restore the archived (soft-deleted) LookerTile to active.
      *
      * @param qualifiedName for the LookerTile
-     * @return the LookerTile that was restored
+     * @return true if the LookerTile is now active, and false otherwise
      * @throws AtlanException on any API problems
      */
-    public static LookerTile restore(String qualifiedName) throws AtlanException {
-        return (LookerTile) Asset.restore(TYPE_NAME, qualifiedName);
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**

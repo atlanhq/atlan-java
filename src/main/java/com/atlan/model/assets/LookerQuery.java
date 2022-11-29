@@ -147,11 +147,11 @@ public class LookerQuery extends Looker {
      * Restore the archived (soft-deleted) LookerQuery to active.
      *
      * @param qualifiedName for the LookerQuery
-     * @return the LookerQuery that was restored
+     * @return true if the LookerQuery is now active, and false otherwise
      * @throws AtlanException on any API problems
      */
-    public static LookerQuery restore(String qualifiedName) throws AtlanException {
-        return (LookerQuery) Asset.restore(TYPE_NAME, qualifiedName);
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**

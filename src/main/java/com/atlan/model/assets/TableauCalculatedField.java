@@ -176,11 +176,11 @@ public class TableauCalculatedField extends Tableau {
      * Restore the archived (soft-deleted) TableauCalculatedField to active.
      *
      * @param qualifiedName for the TableauCalculatedField
-     * @return the TableauCalculatedField that was restored
+     * @return true if the TableauCalculatedField is now active, and false otherwise
      * @throws AtlanException on any API problems
      */
-    public static TableauCalculatedField restore(String qualifiedName) throws AtlanException {
-        return (TableauCalculatedField) Asset.restore(TYPE_NAME, qualifiedName);
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**

@@ -145,11 +145,11 @@ public class MetabaseCollection extends Metabase {
      * Restore the archived (soft-deleted) MetabaseCollection to active.
      *
      * @param qualifiedName for the MetabaseCollection
-     * @return the MetabaseCollection that was restored
+     * @return true if the MetabaseCollection is now active, and false otherwise
      * @throws AtlanException on any API problems
      */
-    public static MetabaseCollection restore(String qualifiedName) throws AtlanException {
-        return (MetabaseCollection) Asset.restore(TYPE_NAME, qualifiedName);
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**

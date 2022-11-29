@@ -407,11 +407,11 @@ public class Glossary extends Asset {
      * Restore the archived (soft-deleted) Glossary to active.
      *
      * @param qualifiedName for the Glossary
-     * @return the Glossary that was restored
+     * @return true if the Glossary is now active, and false otherwise
      * @throws AtlanException on any API problems
      */
-    public static Glossary restore(String qualifiedName) throws AtlanException {
-        return (Glossary) Asset.restore(TYPE_NAME, qualifiedName);
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**

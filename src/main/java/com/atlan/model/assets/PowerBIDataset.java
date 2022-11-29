@@ -153,11 +153,11 @@ public class PowerBIDataset extends PowerBI {
      * Restore the archived (soft-deleted) PowerBIDataset to active.
      *
      * @param qualifiedName for the PowerBIDataset
-     * @return the PowerBIDataset that was restored
+     * @return true if the PowerBIDataset is now active, and false otherwise
      * @throws AtlanException on any API problems
      */
-    public static PowerBIDataset restore(String qualifiedName) throws AtlanException {
-        return (PowerBIDataset) Asset.restore(TYPE_NAME, qualifiedName);
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**

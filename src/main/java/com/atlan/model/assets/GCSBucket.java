@@ -162,11 +162,11 @@ public class GCSBucket extends GCS {
      * Restore the archived (soft-deleted) GCSBucket to active.
      *
      * @param qualifiedName for the GCSBucket
-     * @return the GCSBucket that was restored
+     * @return true if the GCSBucket is now active, and false otherwise
      * @throws AtlanException on any API problems
      */
-    public static GCSBucket restore(String qualifiedName) throws AtlanException {
-        return (GCSBucket) Asset.restore(TYPE_NAME, qualifiedName);
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**

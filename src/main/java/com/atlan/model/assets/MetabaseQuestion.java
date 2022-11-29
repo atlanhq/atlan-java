@@ -137,11 +137,11 @@ public class MetabaseQuestion extends Metabase {
      * Restore the archived (soft-deleted) MetabaseQuestion to active.
      *
      * @param qualifiedName for the MetabaseQuestion
-     * @return the MetabaseQuestion that was restored
+     * @return true if the MetabaseQuestion is now active, and false otherwise
      * @throws AtlanException on any API problems
      */
-    public static MetabaseQuestion restore(String qualifiedName) throws AtlanException {
-        return (MetabaseQuestion) Asset.restore(TYPE_NAME, qualifiedName);
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**

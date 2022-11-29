@@ -175,11 +175,11 @@ public class Schema extends SQL {
      * Restore the archived (soft-deleted) Schema to active.
      *
      * @param qualifiedName for the Schema
-     * @return the Schema that was restored
+     * @return true if the Schema is now active, and false otherwise
      * @throws AtlanException on any API problems
      */
-    public static Schema restore(String qualifiedName) throws AtlanException {
-        return (Schema) Asset.restore(TYPE_NAME, qualifiedName);
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**

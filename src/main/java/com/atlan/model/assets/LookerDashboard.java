@@ -158,11 +158,11 @@ public class LookerDashboard extends Looker {
      * Restore the archived (soft-deleted) LookerDashboard to active.
      *
      * @param qualifiedName for the LookerDashboard
-     * @return the LookerDashboard that was restored
+     * @return true if the LookerDashboard is now active, and false otherwise
      * @throws AtlanException on any API problems
      */
-    public static LookerDashboard restore(String qualifiedName) throws AtlanException {
-        return (LookerDashboard) Asset.restore(TYPE_NAME, qualifiedName);
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**

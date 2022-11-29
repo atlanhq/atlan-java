@@ -124,11 +124,11 @@ public class DbtSource extends Dbt {
      * Restore the archived (soft-deleted) DbtSource to active.
      *
      * @param qualifiedName for the DbtSource
-     * @return the DbtSource that was restored
+     * @return true if the DbtSource is now active, and false otherwise
      * @throws AtlanException on any API problems
      */
-    public static DbtSource restore(String qualifiedName) throws AtlanException {
-        return (DbtSource) Asset.restore(TYPE_NAME, qualifiedName);
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**

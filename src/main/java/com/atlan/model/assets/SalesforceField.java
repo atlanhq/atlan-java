@@ -190,11 +190,11 @@ public class SalesforceField extends Salesforce {
      * Restore the archived (soft-deleted) SalesforceField to active.
      *
      * @param qualifiedName for the SalesforceField
-     * @return the SalesforceField that was restored
+     * @return true if the SalesforceField is now active, and false otherwise
      * @throws AtlanException on any API problems
      */
-    public static SalesforceField restore(String qualifiedName) throws AtlanException {
-        return (SalesforceField) Asset.restore(TYPE_NAME, qualifiedName);
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**

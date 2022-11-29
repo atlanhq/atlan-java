@@ -157,11 +157,11 @@ public class PresetChart extends Preset {
      * Restore the archived (soft-deleted) PresetChart to active.
      *
      * @param qualifiedName for the PresetChart
-     * @return the PresetChart that was restored
+     * @return true if the PresetChart is now active, and false otherwise
      * @throws AtlanException on any API problems
      */
-    public static PresetChart restore(String qualifiedName) throws AtlanException {
-        return (PresetChart) Asset.restore(TYPE_NAME, qualifiedName);
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**

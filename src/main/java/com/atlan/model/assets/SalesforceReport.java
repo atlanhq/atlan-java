@@ -141,11 +141,11 @@ public class SalesforceReport extends Salesforce {
      * Restore the archived (soft-deleted) SalesforceReport to active.
      *
      * @param qualifiedName for the SalesforceReport
-     * @return the SalesforceReport that was restored
+     * @return true if the SalesforceReport is now active, and false otherwise
      * @throws AtlanException on any API problems
      */
-    public static SalesforceReport restore(String qualifiedName) throws AtlanException {
-        return (SalesforceReport) Asset.restore(TYPE_NAME, qualifiedName);
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**

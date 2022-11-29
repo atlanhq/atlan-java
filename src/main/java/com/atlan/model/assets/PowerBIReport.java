@@ -150,11 +150,11 @@ public class PowerBIReport extends PowerBI {
      * Restore the archived (soft-deleted) PowerBIReport to active.
      *
      * @param qualifiedName for the PowerBIReport
-     * @return the PowerBIReport that was restored
+     * @return true if the PowerBIReport is now active, and false otherwise
      * @throws AtlanException on any API problems
      */
-    public static PowerBIReport restore(String qualifiedName) throws AtlanException {
-        return (PowerBIReport) Asset.restore(TYPE_NAME, qualifiedName);
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**

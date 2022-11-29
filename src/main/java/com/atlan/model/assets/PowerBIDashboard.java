@@ -137,11 +137,11 @@ public class PowerBIDashboard extends PowerBI {
      * Restore the archived (soft-deleted) PowerBIDashboard to active.
      *
      * @param qualifiedName for the PowerBIDashboard
-     * @return the PowerBIDashboard that was restored
+     * @return true if the PowerBIDashboard is now active, and false otherwise
      * @throws AtlanException on any API problems
      */
-    public static PowerBIDashboard restore(String qualifiedName) throws AtlanException {
-        return (PowerBIDashboard) Asset.restore(TYPE_NAME, qualifiedName);
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**

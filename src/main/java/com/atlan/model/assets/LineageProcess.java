@@ -148,11 +148,11 @@ public class LineageProcess extends AbstractProcess {
      * Restore the archived (soft-deleted) LineageProcess to active.
      *
      * @param qualifiedName for the LineageProcess
-     * @return the LineageProcess that was restored
+     * @return true if the LineageProcess is now active, and false otherwise
      * @throws AtlanException on any API problems
      */
-    public static LineageProcess restore(String qualifiedName) throws AtlanException {
-        return (LineageProcess) Asset.restore(TYPE_NAME, qualifiedName);
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**

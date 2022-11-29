@@ -138,11 +138,11 @@ public class SalesforceOrganization extends Salesforce {
      * Restore the archived (soft-deleted) SalesforceOrganization to active.
      *
      * @param qualifiedName for the SalesforceOrganization
-     * @return the SalesforceOrganization that was restored
+     * @return true if the SalesforceOrganization is now active, and false otherwise
      * @throws AtlanException on any API problems
      */
-    public static SalesforceOrganization restore(String qualifiedName) throws AtlanException {
-        return (SalesforceOrganization) Asset.restore(TYPE_NAME, qualifiedName);
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**

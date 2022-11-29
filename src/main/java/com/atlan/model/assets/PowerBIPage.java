@@ -127,11 +127,11 @@ public class PowerBIPage extends PowerBI {
      * Restore the archived (soft-deleted) PowerBIPage to active.
      *
      * @param qualifiedName for the PowerBIPage
-     * @return the PowerBIPage that was restored
+     * @return true if the PowerBIPage is now active, and false otherwise
      * @throws AtlanException on any API problems
      */
-    public static PowerBIPage restore(String qualifiedName) throws AtlanException {
-        return (PowerBIPage) Asset.restore(TYPE_NAME, qualifiedName);
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**

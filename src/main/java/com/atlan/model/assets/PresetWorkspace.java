@@ -187,11 +187,11 @@ public class PresetWorkspace extends Preset {
      * Restore the archived (soft-deleted) PresetWorkspace to active.
      *
      * @param qualifiedName for the PresetWorkspace
-     * @return the PresetWorkspace that was restored
+     * @return true if the PresetWorkspace is now active, and false otherwise
      * @throws AtlanException on any API problems
      */
-    public static PresetWorkspace restore(String qualifiedName) throws AtlanException {
-        return (PresetWorkspace) Asset.restore(TYPE_NAME, qualifiedName);
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**

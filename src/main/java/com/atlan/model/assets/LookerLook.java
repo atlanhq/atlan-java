@@ -168,11 +168,11 @@ public class LookerLook extends Looker {
      * Restore the archived (soft-deleted) LookerLook to active.
      *
      * @param qualifiedName for the LookerLook
-     * @return the LookerLook that was restored
+     * @return true if the LookerLook is now active, and false otherwise
      * @throws AtlanException on any API problems
      */
-    public static LookerLook restore(String qualifiedName) throws AtlanException {
-        return (LookerLook) Asset.restore(TYPE_NAME, qualifiedName);
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**

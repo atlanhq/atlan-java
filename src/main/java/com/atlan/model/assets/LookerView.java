@@ -126,11 +126,11 @@ public class LookerView extends Looker {
      * Restore the archived (soft-deleted) LookerView to active.
      *
      * @param qualifiedName for the LookerView
-     * @return the LookerView that was restored
+     * @return true if the LookerView is now active, and false otherwise
      * @throws AtlanException on any API problems
      */
-    public static LookerView restore(String qualifiedName) throws AtlanException {
-        return (LookerView) Asset.restore(TYPE_NAME, qualifiedName);
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**
