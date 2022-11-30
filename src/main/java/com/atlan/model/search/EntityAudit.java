@@ -5,6 +5,7 @@ package com.atlan.model.search;
 import com.atlan.model.core.AtlanObject;
 import com.atlan.model.core.Entity;
 import com.atlan.model.enums.AuditActionType;
+import java.util.Map;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.experimental.SuperBuilder;
@@ -66,6 +67,6 @@ public class EntityAudit extends AtlanObject {
      */
     final Entity entityDetail;
 
-    /** Unused. */
-    final Object headers;
+    /** Headers detailing how the action was taken, if not by a user. */
+    final Map<String, String> headers;
 }

@@ -4,6 +4,10 @@ package com.atlan.model.core;
 
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.search.AuditDetail;
+import com.atlan.serde.ClassificationDeserializer;
+import com.atlan.serde.ClassificationSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,6 +17,8 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @SuperBuilder
 @EqualsAndHashCode(callSuper = false)
+@JsonDeserialize(using = ClassificationDeserializer.class)
+@JsonSerialize(using = ClassificationSerializer.class)
 public class Classification extends AtlanObject implements AuditDetail {
 
     public static Classification of(String classificationName, String entityGuid) {
