@@ -140,6 +140,56 @@ public class LookerModel extends Looker {
     }
 
     /**
+     * Restore the archived (soft-deleted) LookerModel to active.
+     *
+     * @param qualifiedName for the LookerModel
+     * @return true if the LookerModel is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a LookerModel.
+     *
+     * @param qualifiedName of the LookerModel
+     * @param name of the LookerModel
+     * @return the updated LookerModel, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static LookerModel removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (LookerModel)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a LookerModel.
+     *
+     * @param qualifiedName of the LookerModel
+     * @param name of the LookerModel
+     * @return the updated LookerModel, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static LookerModel removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (LookerModel) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a LookerModel.
+     *
+     * @param qualifiedName of the LookerModel
+     * @param name of the LookerModel
+     * @return the updated LookerModel, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static LookerModel removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (LookerModel)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a LookerModel.
      *
      * @param qualifiedName of the LookerModel

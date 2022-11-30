@@ -55,7 +55,7 @@ public class ClassificationTest extends AtlanLiveTest {
 
     @Test(
             groups = {"link.classification.term"},
-            dependsOnGroups = {"unlink.asset.term.*", "unlink.term.asset"})
+            dependsOnGroups = {"unlink.asset.term.*"})
     void updateTermClassification() {
         try {
             GlossaryTerm toUpdate = GlossaryTerm.updater(

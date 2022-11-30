@@ -311,7 +311,16 @@ public class LineageTest extends AtlanLiveTest {
 
     @Test(
             groups = {"purge.lineage"},
-            dependsOnGroups = {"create.*", "update.*", "read.*", "search.*", "link.*", "unlink.*"},
+            dependsOnGroups = {
+                "create.*",
+                "update.*",
+                "read.*",
+                "search.*",
+                "link.*",
+                "unlink.*",
+                "delete.*",
+                "restore.*"
+            },
             alwaysRun = true)
     void deleteLineage() {
         try {

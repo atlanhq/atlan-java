@@ -121,6 +121,56 @@ public class AtlanCollection extends Namespace {
     }
 
     /**
+     * Restore the archived (soft-deleted) AtlanCollection to active.
+     *
+     * @param qualifiedName for the AtlanCollection
+     * @return true if the AtlanCollection is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a AtlanCollection.
+     *
+     * @param qualifiedName of the AtlanCollection
+     * @param name of the AtlanCollection
+     * @return the updated AtlanCollection, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static AtlanCollection removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (AtlanCollection)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a AtlanCollection.
+     *
+     * @param qualifiedName of the AtlanCollection
+     * @param name of the AtlanCollection
+     * @return the updated AtlanCollection, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static AtlanCollection removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (AtlanCollection) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a AtlanCollection.
+     *
+     * @param qualifiedName of the AtlanCollection
+     * @param name of the AtlanCollection
+     * @return the updated AtlanCollection, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static AtlanCollection removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (AtlanCollection)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a AtlanCollection.
      *
      * @param qualifiedName of the AtlanCollection

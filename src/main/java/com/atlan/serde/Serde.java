@@ -7,7 +7,6 @@ import co.elastic.clients.elasticsearch._types.aggregations.Aggregation;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import co.elastic.clients.json.JsonpMapper;
 import co.elastic.clients.json.jackson.JacksonJsonpMapper;
-import com.atlan.model.core.Classification;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.Module;
@@ -44,11 +43,6 @@ public class Serde {
                 .addSerializer(SortOptions.class, new ElasticObjectSerializer<>())
                 .addDeserializer(SortOptions.class, new ElasticSortOptionsDeserializer());
         set.add(elastic);
-        // Classification translators
-        SimpleModule clsSerde = new SimpleModule()
-                .addDeserializer(Classification.class, new ClassificationDeserializer())
-                .setSerializerModifier(new ClassificationBeanSerializerModifier());
-        set.add(clsSerde);
         return set;
     }
 

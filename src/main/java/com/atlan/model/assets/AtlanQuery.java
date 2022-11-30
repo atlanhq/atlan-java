@@ -169,6 +169,56 @@ public class AtlanQuery extends SQL {
     }
 
     /**
+     * Restore the archived (soft-deleted) AtlanQuery to active.
+     *
+     * @param qualifiedName for the AtlanQuery
+     * @return true if the AtlanQuery is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a AtlanQuery.
+     *
+     * @param qualifiedName of the AtlanQuery
+     * @param name of the AtlanQuery
+     * @return the updated AtlanQuery, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static AtlanQuery removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (AtlanQuery)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a AtlanQuery.
+     *
+     * @param qualifiedName of the AtlanQuery
+     * @param name of the AtlanQuery
+     * @return the updated AtlanQuery, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static AtlanQuery removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (AtlanQuery) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a AtlanQuery.
+     *
+     * @param qualifiedName of the AtlanQuery
+     * @param name of the AtlanQuery
+     * @return the updated AtlanQuery, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static AtlanQuery removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (AtlanQuery)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a AtlanQuery.
      *
      * @param qualifiedName of the AtlanQuery

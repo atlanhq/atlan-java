@@ -155,6 +155,56 @@ public class TableauWorkbook extends Tableau {
     }
 
     /**
+     * Restore the archived (soft-deleted) TableauWorkbook to active.
+     *
+     * @param qualifiedName for the TableauWorkbook
+     * @return true if the TableauWorkbook is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a TableauWorkbook.
+     *
+     * @param qualifiedName of the TableauWorkbook
+     * @param name of the TableauWorkbook
+     * @return the updated TableauWorkbook, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static TableauWorkbook removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (TableauWorkbook)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a TableauWorkbook.
+     *
+     * @param qualifiedName of the TableauWorkbook
+     * @param name of the TableauWorkbook
+     * @return the updated TableauWorkbook, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static TableauWorkbook removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (TableauWorkbook) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a TableauWorkbook.
+     *
+     * @param qualifiedName of the TableauWorkbook
+     * @param name of the TableauWorkbook
+     * @return the updated TableauWorkbook, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static TableauWorkbook removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (TableauWorkbook)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a TableauWorkbook.
      *
      * @param qualifiedName of the TableauWorkbook

@@ -146,4 +146,41 @@ public class Link extends Resource {
                     "No Link found with qualifiedName: " + qualifiedName, "ATLAN_JAVA_CLIENT-404-003", 404, null);
         }
     }
+
+    /**
+     * Restore the archived (soft-deleted) Link to active.
+     *
+     * @param qualifiedName for the Link
+     * @return true if the Link is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a Link.
+     *
+     * @param qualifiedName of the Link
+     * @param name of the Link
+     * @return the updated Link, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static Link removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (Link)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a Link.
+     *
+     * @param qualifiedName of the Link
+     * @param name of the Link
+     * @return the updated Link, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static Link removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (Link) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
 }

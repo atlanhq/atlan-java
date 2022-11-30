@@ -390,6 +390,22 @@ public abstract class Asset extends Entity {
     @Attribute
     SortedSet<GlossaryTerm> meanings;
 
+    /** Remove the system description from the asset, if any is set on the asset. */
+    public void removeDescription() {
+        addNullField("description");
+    }
+
+    /** Remove the user's description from the asset, if any is set on the asset. */
+    public void removeUserDescription() {
+        addNullField("userDescription");
+    }
+
+    /** Remove the owners from the asset, if any are set on the asset. */
+    public void removeOwners() {
+        addNullField("ownerUsers");
+        addNullField("ownerGroups");
+    }
+
     /** Remove the certificate from the asset, if any is set on the asset. */
     public void removeCertificate() {
         addNullField("certificateStatus");
@@ -487,6 +503,60 @@ public abstract class Asset extends Entity {
         }
     }
 
+    /**
+     * Remove the system description from an asset.
+     *
+     * @param builder the builder to use for removing the description
+     * @return the result of the removal, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    protected static Entity removeDescription(AssetBuilder<?, ?> builder) throws AtlanException {
+        Asset asset = builder.build();
+        asset.removeDescription();
+        EntityMutationResponse response = asset.upsert();
+        if (response != null && !response.getUpdatedEntities().isEmpty()) {
+            return response.getUpdatedEntities().get(0);
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Remove the user-provided description from an asset.
+     *
+     * @param builder the builder to use for removing the description
+     * @return the result of the removal, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    protected static Entity removeUserDescription(AssetBuilder<?, ?> builder) throws AtlanException {
+        Asset asset = builder.build();
+        asset.removeUserDescription();
+        EntityMutationResponse response = asset.upsert();
+        if (response != null && !response.getUpdatedEntities().isEmpty()) {
+            return response.getUpdatedEntities().get(0);
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Remove the owners from an asset.
+     *
+     * @param builder the builder to use for removing the owners
+     * @return the result of the removal, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    protected static Entity removeOwners(AssetBuilder<?, ?> builder) throws AtlanException {
+        Asset asset = builder.build();
+        asset.removeOwners();
+        EntityMutationResponse response = asset.upsert();
+        if (response != null && !response.getUpdatedEntities().isEmpty()) {
+            return response.getUpdatedEntities().get(0);
+        } else {
+            return null;
+        }
+    }
+
     private static Entity updateAttributes(Asset asset) throws AtlanException {
         EntityMutationResponse response = EntityBulkEndpoint.upsert(asset, false, false);
         if (response != null && !response.getUpdatedEntities().isEmpty()) {
@@ -560,6 +630,27 @@ public abstract class Asset extends Entity {
             return response.getUpdatedEntities().get(0);
         }
         return null;
+    }
+
+    /**
+     * Restore an archived (soft-deleted) asset to active.
+     *
+     * @return true if the asset is now restored, or false if not
+     * @throws AtlanException on any API problems
+     */
+    protected static boolean restore(String typeName, String qualifiedName) throws AtlanException {
+        Asset existing = getExistingAsset(typeName, qualifiedName);
+        if (existing == null) {
+            // Nothing to restore, so cannot be restored
+            return false;
+        } else if (existing.getStatus() == AtlanStatus.ACTIVE) {
+            // Already active, no need to restore
+            return true;
+        } else {
+            Optional<String> guidRestored =
+                    restore(existing.trimToRequired().status(AtlanStatus.ACTIVE).build());
+            return guidRestored.isPresent() && guidRestored.get().equals(existing.getGuid());
+        }
     }
 
     /**
@@ -676,13 +767,25 @@ public abstract class Asset extends Entity {
         if (response != null && !response.getUpdatedEntities().isEmpty()) {
             for (Entity result : response.getUpdatedEntities()) {
                 if (result.getTypeName().equals(typeNameToUpdate)) {
-                    // Return the first result that matches the type that we attempted to update
-                    // (This may not work if the type in a relationship is the same as the type
-                    // of asset being updated — term-to-term relationships maybe the only example?)
-                    return result;
+                    String foundQN = ((Asset) result).getQualifiedName();
+                    if (foundQN != null && foundQN.equals(asset.getQualifiedName())) {
+                        // Return the first result that matches both the type that we attempted to update
+                        // and the qualifiedName of the asset we attempted to update. Irrespective of
+                        // the kind of relationship, this should uniquely identify the asset that we
+                        // attempted to update
+                        return result;
+                    }
                 }
             }
         }
         return null;
+    }
+
+    private static Optional<String> restore(Asset asset) throws AtlanException {
+        EntityMutationResponse response = EntityBulkEndpoint.upsert(asset, false, false);
+        if (response != null && !response.getGuidAssignments().isEmpty()) {
+            return response.getGuidAssignments().values().stream().findFirst();
+        }
+        return Optional.empty();
     }
 }

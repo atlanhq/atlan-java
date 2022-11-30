@@ -153,6 +153,57 @@ public class PresetDataset extends Preset {
                     null);
         }
     }
+
+    /**
+     * Restore the archived (soft-deleted) PresetDataset to active.
+     *
+     * @param qualifiedName for the PresetDataset
+     * @return true if the PresetDataset is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a PresetDataset.
+     *
+     * @param qualifiedName of the PresetDataset
+     * @param name of the PresetDataset
+     * @return the updated PresetDataset, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static PresetDataset removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (PresetDataset)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a PresetDataset.
+     *
+     * @param qualifiedName of the PresetDataset
+     * @param name of the PresetDataset
+     * @return the updated PresetDataset, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static PresetDataset removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (PresetDataset) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a PresetDataset.
+     *
+     * @param qualifiedName of the PresetDataset
+     * @param name of the PresetDataset
+     * @return the updated PresetDataset, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static PresetDataset removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (PresetDataset)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
     /**
      * Update the certificate on a PresetDataset.
      *

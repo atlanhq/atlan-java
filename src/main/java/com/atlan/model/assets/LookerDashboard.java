@@ -155,6 +155,56 @@ public class LookerDashboard extends Looker {
     }
 
     /**
+     * Restore the archived (soft-deleted) LookerDashboard to active.
+     *
+     * @param qualifiedName for the LookerDashboard
+     * @return true if the LookerDashboard is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a LookerDashboard.
+     *
+     * @param qualifiedName of the LookerDashboard
+     * @param name of the LookerDashboard
+     * @return the updated LookerDashboard, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static LookerDashboard removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (LookerDashboard)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a LookerDashboard.
+     *
+     * @param qualifiedName of the LookerDashboard
+     * @param name of the LookerDashboard
+     * @return the updated LookerDashboard, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static LookerDashboard removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (LookerDashboard) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a LookerDashboard.
+     *
+     * @param qualifiedName of the LookerDashboard
+     * @param name of the LookerDashboard
+     * @return the updated LookerDashboard, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static LookerDashboard removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (LookerDashboard)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a LookerDashboard.
      *
      * @param qualifiedName of the LookerDashboard

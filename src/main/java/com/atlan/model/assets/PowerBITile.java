@@ -132,6 +132,56 @@ public class PowerBITile extends PowerBI {
     }
 
     /**
+     * Restore the archived (soft-deleted) PowerBITile to active.
+     *
+     * @param qualifiedName for the PowerBITile
+     * @return true if the PowerBITile is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a PowerBITile.
+     *
+     * @param qualifiedName of the PowerBITile
+     * @param name of the PowerBITile
+     * @return the updated PowerBITile, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static PowerBITile removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (PowerBITile)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a PowerBITile.
+     *
+     * @param qualifiedName of the PowerBITile
+     * @param name of the PowerBITile
+     * @return the updated PowerBITile, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static PowerBITile removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (PowerBITile) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a PowerBITile.
+     *
+     * @param qualifiedName of the PowerBITile
+     * @param name of the PowerBITile
+     * @return the updated PowerBITile, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static PowerBITile removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (PowerBITile)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a PowerBITile.
      *
      * @param qualifiedName of the PowerBITile

@@ -147,6 +147,56 @@ public class PowerBIReport extends PowerBI {
     }
 
     /**
+     * Restore the archived (soft-deleted) PowerBIReport to active.
+     *
+     * @param qualifiedName for the PowerBIReport
+     * @return true if the PowerBIReport is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a PowerBIReport.
+     *
+     * @param qualifiedName of the PowerBIReport
+     * @param name of the PowerBIReport
+     * @return the updated PowerBIReport, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static PowerBIReport removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (PowerBIReport)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a PowerBIReport.
+     *
+     * @param qualifiedName of the PowerBIReport
+     * @param name of the PowerBIReport
+     * @return the updated PowerBIReport, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static PowerBIReport removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (PowerBIReport) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a PowerBIReport.
+     *
+     * @param qualifiedName of the PowerBIReport
+     * @param name of the PowerBIReport
+     * @return the updated PowerBIReport, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static PowerBIReport removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (PowerBIReport)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a PowerBIReport.
      *
      * @param qualifiedName of the PowerBIReport

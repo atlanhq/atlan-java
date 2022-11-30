@@ -151,6 +151,56 @@ public class DataStudioAsset extends Google {
     }
 
     /**
+     * Restore the archived (soft-deleted) DataStudioAsset to active.
+     *
+     * @param qualifiedName for the DataStudioAsset
+     * @return true if the DataStudioAsset is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a DataStudioAsset.
+     *
+     * @param qualifiedName of the DataStudioAsset
+     * @param name of the DataStudioAsset
+     * @return the updated DataStudioAsset, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static DataStudioAsset removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (DataStudioAsset)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a DataStudioAsset.
+     *
+     * @param qualifiedName of the DataStudioAsset
+     * @param name of the DataStudioAsset
+     * @return the updated DataStudioAsset, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static DataStudioAsset removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (DataStudioAsset) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a DataStudioAsset.
+     *
+     * @param qualifiedName of the DataStudioAsset
+     * @param name of the DataStudioAsset
+     * @return the updated DataStudioAsset, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static DataStudioAsset removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (DataStudioAsset)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a DataStudioAsset.
      *
      * @param qualifiedName of the DataStudioAsset

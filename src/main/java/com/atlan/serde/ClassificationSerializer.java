@@ -5,9 +5,10 @@ package com.atlan.serde;
 import com.atlan.cache.ClassificationCache;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.core.Classification;
+import com.atlan.model.enums.AtlanStatus;
+import com.atlan.util.JacksonUtils;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.jsontype.TypeSerializer;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
@@ -21,15 +22,12 @@ import java.io.IOException;
 public class ClassificationSerializer extends StdSerializer<Classification> {
     private static final long serialVersionUID = 2L;
 
-    private final transient JsonSerializer<Classification> defaultSerializer;
-
     public ClassificationSerializer() {
         this(null);
     }
 
-    public ClassificationSerializer(JsonSerializer<Classification> defaultSerializer) {
-        super(Classification.class);
-        this.defaultSerializer = defaultSerializer;
+    public ClassificationSerializer(Class<Classification> t) {
+        super(t);
     }
 
     /**
@@ -48,6 +46,7 @@ public class ClassificationSerializer extends StdSerializer<Classification> {
     @Override
     public void serialize(Classification cls, JsonGenerator gen, SerializerProvider sp)
             throws IOException, JsonProcessingException {
+
         String clsName = cls.getTypeName();
         String clsId;
         try {
@@ -56,6 +55,21 @@ public class ClassificationSerializer extends StdSerializer<Classification> {
             throw new IOException("Unable to find classification with name: " + clsName, e);
         }
         cls.setTypeName(clsId);
-        defaultSerializer.serialize(cls, gen, sp);
+
+        // TODO: Unfortunately, the use of ClassificationBeanSerializerModifier to avoid the direct
+        //  deserialization below made things too complicated when trying to incorporate AuditDetail interface
+        gen.writeStartObject();
+        JacksonUtils.serializeString(gen, "typeName", cls.getTypeName());
+        JacksonUtils.serializeString(gen, "entityGuid", cls.getEntityGuid());
+        AtlanStatus status = cls.getEntityStatus();
+        if (status != null) {
+            JacksonUtils.serializeString(gen, "entityStatus", status.getValue());
+        }
+        JacksonUtils.serializeBoolean(gen, "propagate", cls.getPropagate());
+        JacksonUtils.serializeBoolean(
+                gen, "removePropagationsOnEntityDelete", cls.getRemovePropagationsOnEntityDelete());
+        JacksonUtils.serializeBoolean(
+                gen, "restrictPropagationThroughLineage", cls.getRestrictPropagationThroughLineage());
+        gen.writeEndObject();
     }
 }

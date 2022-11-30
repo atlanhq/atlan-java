@@ -86,8 +86,12 @@ public class ModelGenerator extends AtlanLiveTest {
             Map.entry("array<map<string,string>>", "List<Map<String, String>>"),
             Map.entry("icon_type", "LinkIconType"),
             Map.entry("google_datastudio_asset_type", "GoogleDataStudioAssetType"),
-            Map.entry("array<AwsTag>", "AWSTag"),
-            Map.entry("powerbi_endorsement", "PowerBIEndorsementType"));
+            Map.entry("array<AwsTag>", "List<AWSTag>"),
+            Map.entry("powerbi_endorsement", "PowerBIEndorsementType"),
+            Map.entry("array<GoogleLabel>", "List<GoogleLabel>"),
+            Map.entry("array<GoogleTag>", "List<GoogleTag>"),
+            Map.entry("array<DbtMetricFilter>", "List<DbtMetricFilter>"),
+            Map.entry("array<BadgeCondition>", "List<BadgeCondition>"));
 
     // Map types that use polymorphism to only a single supertype
     private static final Map<String, String> INHERITANCE_OVERRIDES = Map.ofEntries(
@@ -113,7 +117,8 @@ public class ModelGenerator extends AtlanLiveTest {
             Map.entry("reportType", "putReportType"),
             Map.entry("projectHierarchy", "addProjectHierarchy"),
             Map.entry("certifier", "putCertifier"),
-            Map.entry("presetChartFormData", "putPresetChartFormData"));
+            Map.entry("presetChartFormData", "putPresetChartFormData"),
+            Map.entry("resourceMetadata", "putResourceMetadata"));
 
     // Rename these attributes for consistency (handled via JsonProperty serde)
     private static final Map<String, String> ATTRIBUTE_RENAMING = Map.ofEntries(
@@ -586,6 +591,97 @@ public class ModelGenerator extends AtlanLiveTest {
         fs.append(System.lineSeparator()).append(System.lineSeparator());
     }
 
+    private void removeDescription(BufferedWriter fs, String className) throws IOException {
+        fs.append("    /**");
+        fs.append(System.lineSeparator());
+        fs.append("     * Remove the system description from a ")
+                .append(className)
+                .append(".");
+        fs.append(System.lineSeparator());
+        fs.append("     *");
+        fs.append(System.lineSeparator());
+        fs.append("     * @param qualifiedName of the ").append(className);
+        fs.append(System.lineSeparator());
+        fs.append("     * @param name of the ").append(className);
+        fs.append(System.lineSeparator());
+        fs.append("     * @return the updated ").append(className).append(", or null if the removal failed");
+        fs.append(System.lineSeparator());
+        fs.append("     * @throws AtlanException on any API problems");
+        fs.append(System.lineSeparator());
+        fs.append("     */");
+        fs.append(System.lineSeparator());
+        fs.append("    public static ")
+                .append(className)
+                .append(" removeDescription(String qualifiedName, String name) throws AtlanException {");
+        fs.append(System.lineSeparator());
+        fs.append("        return (").append(className).append(")");
+        fs.append(System.lineSeparator());
+        fs.append("                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));");
+        fs.append(System.lineSeparator());
+        fs.append("    }");
+        fs.append(System.lineSeparator()).append(System.lineSeparator());
+    }
+
+    private void removeUserDescription(BufferedWriter fs, String className) throws IOException {
+        fs.append("    /**");
+        fs.append(System.lineSeparator());
+        fs.append("     * Remove the user's description from a ")
+                .append(className)
+                .append(".");
+        fs.append(System.lineSeparator());
+        fs.append("     *");
+        fs.append(System.lineSeparator());
+        fs.append("     * @param qualifiedName of the ").append(className);
+        fs.append(System.lineSeparator());
+        fs.append("     * @param name of the ").append(className);
+        fs.append(System.lineSeparator());
+        fs.append("     * @return the updated ").append(className).append(", or null if the removal failed");
+        fs.append(System.lineSeparator());
+        fs.append("     * @throws AtlanException on any API problems");
+        fs.append(System.lineSeparator());
+        fs.append("     */");
+        fs.append(System.lineSeparator());
+        fs.append("    public static ")
+                .append(className)
+                .append(" removeUserDescription(String qualifiedName, String name) throws AtlanException {");
+        fs.append(System.lineSeparator());
+        fs.append("        return (").append(className).append(")");
+        fs.append(System.lineSeparator());
+        fs.append("                Asset.removeUserDescription(builder().qualifiedName(qualifiedName).name(name));");
+        fs.append(System.lineSeparator());
+        fs.append("    }");
+        fs.append(System.lineSeparator()).append(System.lineSeparator());
+    }
+
+    private void removeOwners(BufferedWriter fs, String className) throws IOException {
+        fs.append("    /**");
+        fs.append(System.lineSeparator());
+        fs.append("     * Remove the owners from a ").append(className).append(".");
+        fs.append(System.lineSeparator());
+        fs.append("     *");
+        fs.append(System.lineSeparator());
+        fs.append("     * @param qualifiedName of the ").append(className);
+        fs.append(System.lineSeparator());
+        fs.append("     * @param name of the ").append(className);
+        fs.append(System.lineSeparator());
+        fs.append("     * @return the updated ").append(className).append(", or null if the removal failed");
+        fs.append(System.lineSeparator());
+        fs.append("     * @throws AtlanException on any API problems");
+        fs.append(System.lineSeparator());
+        fs.append("     */");
+        fs.append(System.lineSeparator());
+        fs.append("    public static ")
+                .append(className)
+                .append(" removeOwners(String qualifiedName, String name) throws AtlanException {");
+        fs.append(System.lineSeparator());
+        fs.append("        return (").append(className).append(")");
+        fs.append(System.lineSeparator());
+        fs.append("                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));");
+        fs.append(System.lineSeparator());
+        fs.append("    }");
+        fs.append(System.lineSeparator()).append(System.lineSeparator());
+    }
+
     private void removeAnnouncement(BufferedWriter fs, String className) throws IOException {
         fs.append("    /**");
         fs.append(System.lineSeparator());
@@ -662,6 +758,33 @@ public class ModelGenerator extends AtlanLiveTest {
                 "    public static void removeClassification(String qualifiedName, String classificationName) throws AtlanException {");
         fs.append(System.lineSeparator());
         fs.append("        Asset.removeClassification(TYPE_NAME, qualifiedName, classificationName);");
+        fs.append(System.lineSeparator());
+        fs.append("    }");
+        fs.append(System.lineSeparator()).append(System.lineSeparator());
+    }
+
+    private void restore(BufferedWriter fs, String className) throws IOException {
+        fs.append("    /**");
+        fs.append(System.lineSeparator());
+        fs.append("     * Restore the archived (soft-deleted) ")
+                .append(className)
+                .append(" to active.");
+        fs.append(System.lineSeparator());
+        fs.append("     *");
+        fs.append(System.lineSeparator());
+        fs.append("     * @param qualifiedName for the ").append(className);
+        fs.append(System.lineSeparator());
+        fs.append("     * @return true if the ").append(className).append(" is now active, and false otherwise");
+        fs.append(System.lineSeparator());
+        fs.append("     * @throws AtlanException on any API problems");
+        fs.append(System.lineSeparator());
+        fs.append("     */");
+        fs.append(System.lineSeparator());
+        fs.append("    public static boolean restore(String qualifiedName)");
+        fs.append(System.lineSeparator());
+        fs.append("            throws AtlanException {");
+        fs.append(System.lineSeparator());
+        fs.append("        return Asset.restore(TYPE_NAME, qualifiedName);");
         fs.append(System.lineSeparator());
         fs.append("    }");
         fs.append(System.lineSeparator()).append(System.lineSeparator());
@@ -852,6 +975,10 @@ public class ModelGenerator extends AtlanLiveTest {
             updater(fs, className);
             trimToRequired(fs, className);
             retrievals(fs, className);
+            restore(fs, className);
+            removeDescription(fs, className);
+            removeUserDescription(fs, className);
+            removeOwners(fs, className);
             updateCertificate(fs, className);
             removeCertificate(fs, className);
             updateAnnouncement(fs, className);
@@ -892,6 +1019,10 @@ public class ModelGenerator extends AtlanLiveTest {
                 updater(fs, className);
                 trimToRequired(fs, className);
                 retrievals(fs, className);
+                restore(fs, className);
+                removeDescription(fs, className);
+                removeUserDescription(fs, className);
+                removeOwners(fs, className);
                 updateCertificate(fs, className);
                 removeCertificate(fs, className);
                 updateAnnouncement(fs, className);

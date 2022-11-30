@@ -135,6 +135,56 @@ public class TableauMetric extends Tableau {
     }
 
     /**
+     * Restore the archived (soft-deleted) TableauMetric to active.
+     *
+     * @param qualifiedName for the TableauMetric
+     * @return true if the TableauMetric is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a TableauMetric.
+     *
+     * @param qualifiedName of the TableauMetric
+     * @param name of the TableauMetric
+     * @return the updated TableauMetric, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static TableauMetric removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (TableauMetric)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a TableauMetric.
+     *
+     * @param qualifiedName of the TableauMetric
+     * @param name of the TableauMetric
+     * @return the updated TableauMetric, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static TableauMetric removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (TableauMetric) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a TableauMetric.
+     *
+     * @param qualifiedName of the TableauMetric
+     * @param name of the TableauMetric
+     * @return the updated TableauMetric, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static TableauMetric removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (TableauMetric)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a TableauMetric.
      *
      * @param qualifiedName of the TableauMetric

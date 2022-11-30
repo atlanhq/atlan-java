@@ -127,6 +127,56 @@ public class DbtColumnProcess extends AbstractColumnProcess {
     }
 
     /**
+     * Restore the archived (soft-deleted) DbtColumnProcess to active.
+     *
+     * @param qualifiedName for the DbtColumnProcess
+     * @return true if the DbtColumnProcess is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a DbtColumnProcess.
+     *
+     * @param qualifiedName of the DbtColumnProcess
+     * @param name of the DbtColumnProcess
+     * @return the updated DbtColumnProcess, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static DbtColumnProcess removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (DbtColumnProcess)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a DbtColumnProcess.
+     *
+     * @param qualifiedName of the DbtColumnProcess
+     * @param name of the DbtColumnProcess
+     * @return the updated DbtColumnProcess, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static DbtColumnProcess removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (DbtColumnProcess) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a DbtColumnProcess.
+     *
+     * @param qualifiedName of the DbtColumnProcess
+     * @param name of the DbtColumnProcess
+     * @return the updated DbtColumnProcess, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static DbtColumnProcess removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (DbtColumnProcess)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a DbtColumnProcess.
      *
      * @param qualifiedName of the DbtColumnProcess

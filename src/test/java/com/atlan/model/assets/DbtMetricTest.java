@@ -107,26 +107,32 @@ public class DbtMetricTest {
             .meaning(GlossaryTerm.refByGuid("termGuid1"))
             .meaning(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("a5a19118-c39b-4b43-b976-3e22aae54796"),
-                    LineageProcess.refByGuid("61f998c9-262c-4890-bb4d-315081af53f8")))
+                    LineageProcess.refByGuid("785f09da-0670-4e41-a68c-387cda6e08ba"),
+                    LineageProcess.refByGuid("e1636796-676e-4bb0-a03c-6ae4bf74544e")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("54e58197-e7c2-4e4b-b00e-7eba34a93fa9"),
-                    LineageProcess.refByGuid("29a20fe3-65f3-49bc-8931-9f576ecc9aca")))
+                    LineageProcess.refByGuid("3f6dc6f0-3825-4452-a871-aa1a0e59fe94"),
+                    LineageProcess.refByGuid("643548ca-9da6-4be6-8a2f-0a2810c697bb")))
             .metricType("metricType")
             .metricSQL("metricSQL")
             .metricFilters("metricFilters")
             .metricTimeGrains(Set.of("one", "two", "three"))
             .assets(Set.of(
-                    Table.refByGuid("15057726-07d0-41b6-be19-46b918195ba8"),
-                    Table.refByGuid("6849cfdc-6198-459f-bf57-a5e32674e23a")))
+                    Table.refByGuid("bf674b21-4136-493d-8a0c-9151450e2e92"),
+                    Table.refByGuid("393329bb-a768-4949-ab1b-111204e859d9")))
             .metricDimensionColumns(Set.of(
-                    Column.refByGuid("3f1e0e65-2db9-43d6-84de-420af153e0d2"),
-                    Column.refByGuid("4e78d9fa-2fcb-42e4-9cde-59b52283958c")))
-            .metricTimestampColumn(Column.refByGuid("0caa99e0-448f-4950-a845-de2a11512396"))
+                    Column.refByGuid("ba62c99b-4863-473d-ae77-a1db9acab97d"),
+                    Column.refByGuid("788bd781-9e25-4694-b766-d3c89a14bf44")))
+            .metricTimestampColumn(Column.refByGuid("a7f84fe7-2ddc-46ba-b287-90ba2e6a2dbd"))
+            .dbtMetricFilter(DbtMetricFilter.builder()
+                    .dbtMetricFilterColumnQualifiedName("dbtMetricFilterColumnQualifiedName")
+                    .dbtMetricFilterField("dbtMetricFilterField")
+                    .dbtMetricFilterOperator("dbtMetricFilterOperator")
+                    .dbtMetricFilterValue("dbtMetricFilterValue")
+                    .build())
             .dbtMetricFilterColumns(Set.of(
-                    Column.refByGuid("23667e86-6216-460c-87e9-4a20d203caa3"),
-                    Column.refByGuid("0ffb0172-bd1a-4f2a-aa2e-662d09ee1993")))
-            .dbtModel(DbtModel.refByGuid("e8e6ec00-4aee-4203-a7c3-a732361f3163"))
+                    Column.refByGuid("c3c07b72-ae87-4312-97d7-52bc4aae0a42"),
+                    Column.refByGuid("c6e03cd7-dadb-46a4-b560-a85bb7653132")))
+            .dbtModel(DbtModel.refByGuid("898d7380-4596-4f2f-a8a7-91e30c3f7482"))
             .build();
     private static DbtMetric frodo;
     private static String serialized;

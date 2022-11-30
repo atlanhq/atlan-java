@@ -176,6 +176,56 @@ public class PresetDashboard extends Preset {
     }
 
     /**
+     * Restore the archived (soft-deleted) PresetDashboard to active.
+     *
+     * @param qualifiedName for the PresetDashboard
+     * @return true if the PresetDashboard is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a PresetDashboard.
+     *
+     * @param qualifiedName of the PresetDashboard
+     * @param name of the PresetDashboard
+     * @return the updated PresetDashboard, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static PresetDashboard removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (PresetDashboard)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a PresetDashboard.
+     *
+     * @param qualifiedName of the PresetDashboard
+     * @param name of the PresetDashboard
+     * @return the updated PresetDashboard, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static PresetDashboard removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (PresetDashboard) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a PresetDashboard.
+     *
+     * @param qualifiedName of the PresetDashboard
+     * @param name of the PresetDashboard
+     * @return the updated PresetDashboard, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static PresetDashboard removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (PresetDashboard)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a PresetDashboard.
      *
      * @param qualifiedName of the PresetDashboard

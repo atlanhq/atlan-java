@@ -200,9 +200,10 @@ public class Column extends SQL {
      * @param name of the column
      * @param parentType type of parent (table, view, materialized view), should be a TYPE_NAME static string
      * @param parentQualifiedName unique name of the table / view / materialized view in which this column exists
+     * @param order the order the column appears within its parent (the column's position)
      * @return the minimal request necessary to create the column, as a builder
      */
-    public static ColumnBuilder<?, ?> creator(String name, String parentType, String parentQualifiedName) {
+    public static ColumnBuilder<?, ?> creator(String name, String parentType, String parentQualifiedName, int order) {
         String[] tokens = parentQualifiedName.split("/");
         AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(tokens);
         String parentName = StringUtils.getNameFromQualifiedName(parentQualifiedName);
@@ -219,7 +220,8 @@ public class Column extends SQL {
                 .schemaQualifiedName(schemaQualifiedName)
                 .databaseName(databaseName)
                 .databaseQualifiedName(databaseQualifiedName)
-                .connectionQualifiedName(connectionQualifiedName);
+                .connectionQualifiedName(connectionQualifiedName)
+                .order(order);
         switch (parentType) {
             case Table.TYPE_NAME:
                 builder = builder.tableName(parentName)
@@ -296,6 +298,56 @@ public class Column extends SQL {
             throw new NotFoundException(
                     "No Column found with qualifiedName: " + qualifiedName, "ATLAN_JAVA_CLIENT-404-003", 404, null);
         }
+    }
+
+    /**
+     * Restore the archived (soft-deleted) Column to active.
+     *
+     * @param qualifiedName for the Column
+     * @return true if the Column is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a Column.
+     *
+     * @param qualifiedName of the Column
+     * @param name of the Column
+     * @return the updated Column, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static Column removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (Column)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a Column.
+     *
+     * @param qualifiedName of the Column
+     * @param name of the Column
+     * @return the updated Column, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static Column removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (Column) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a Column.
+     *
+     * @param qualifiedName of the Column
+     * @param name of the Column
+     * @return the updated Column, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static Column removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (Column)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
     }
 
     /**

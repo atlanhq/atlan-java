@@ -404,6 +404,56 @@ public class Glossary extends Asset {
     }
 
     /**
+     * Restore the archived (soft-deleted) Glossary to active.
+     *
+     * @param qualifiedName for the Glossary
+     * @return true if the Glossary is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a Glossary.
+     *
+     * @param qualifiedName of the Glossary
+     * @param name of the Glossary
+     * @return the updated Glossary, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static Glossary removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (Glossary)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a Glossary.
+     *
+     * @param qualifiedName of the Glossary
+     * @param name of the Glossary
+     * @return the updated Glossary, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static Glossary removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (Glossary) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a Glossary.
+     *
+     * @param qualifiedName of the Glossary
+     * @param name of the Glossary
+     * @return the updated Glossary, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static Glossary removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (Glossary)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a Glossary.
      *
      * @param qualifiedName of the Glossary

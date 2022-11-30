@@ -31,6 +31,11 @@ public class DbtMetric extends Metric {
     /** TBC */
     @Attribute
     @Singular
+    List<DbtMetricFilter> dbtMetricFilters;
+
+    /** TBC */
+    @Attribute
+    @Singular
     SortedSet<Column> dbtMetricFilterColumns;
 
     /** TBC */
@@ -116,6 +121,56 @@ public class DbtMetric extends Metric {
             throw new NotFoundException(
                     "No DbtMetric found with qualifiedName: " + qualifiedName, "ATLAN_JAVA_CLIENT-404-003", 404, null);
         }
+    }
+
+    /**
+     * Restore the archived (soft-deleted) DbtMetric to active.
+     *
+     * @param qualifiedName for the DbtMetric
+     * @return true if the DbtMetric is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a DbtMetric.
+     *
+     * @param qualifiedName of the DbtMetric
+     * @param name of the DbtMetric
+     * @return the updated DbtMetric, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static DbtMetric removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (DbtMetric)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a DbtMetric.
+     *
+     * @param qualifiedName of the DbtMetric
+     * @param name of the DbtMetric
+     * @return the updated DbtMetric, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static DbtMetric removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (DbtMetric) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a DbtMetric.
+     *
+     * @param qualifiedName of the DbtMetric
+     * @param name of the DbtMetric
+     * @return the updated DbtMetric, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static DbtMetric removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (DbtMetric)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
     }
 
     /**

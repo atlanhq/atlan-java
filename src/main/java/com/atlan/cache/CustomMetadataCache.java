@@ -346,20 +346,36 @@ public class CustomMetadataCache {
                 String cmId = getIdForName(cmName);
                 CustomMetadataAttributes attrs = entry.getValue();
                 Map<String, Object> bmAttrs = businessAttributes.getOrDefault(cmId, new LinkedHashMap<>());
-                // Start by placing in any custom metadata for archived attributes
-                if (attrs.getArchivedAttributes() != null) {
-                    for (Map.Entry<String, Object> archived :
-                            attrs.getArchivedAttributes().entrySet()) {
-                        String archivedAttrName = archived.getKey();
-                        String archivedAttrId = getAttrIdForNameFromSetId(cmId, archivedAttrName);
-                        bmAttrs.put(archivedAttrId, entry.getValue());
-                    }
-                }
-                // Then layer on top all the active custom metadata attributes
-                getIdMapFromNameMap(cmName, attrs.getAttributes(), bmAttrs);
+                getAttributesFromCustomMetadata(cmId, cmName, attrs, bmAttrs);
                 businessAttributes.put(cmId, bmAttrs);
             }
         }
+    }
+
+    /**
+     * Translate the provided custom metadata attributes object into a hashed-string ID map of attributes and values.
+     * We receive the attributes object (rather than creating a new one) to initialize it with any existing attributes.
+     *
+     * @param cmId hashed-string ID of the custom metadata set (structure)
+     * @param cmName human-readable name of the custom metadata set (structure)
+     * @param cma custom metadata attributes in human-readable form
+     * @param attributes map of custom metadata attributes keyed by hashed-string ID of the attribute
+     * @throws AtlanException on any API communication problem if the cache needs to be refreshed
+     */
+    public static void getAttributesFromCustomMetadata(
+            String cmId, String cmName, CustomMetadataAttributes cma, Map<String, Object> attributes)
+            throws AtlanException {
+        // Start by placing in any custom metadata for archived attributes
+        if (cma.getArchivedAttributes() != null) {
+            for (Map.Entry<String, Object> archived :
+                    cma.getArchivedAttributes().entrySet()) {
+                String archivedAttrName = archived.getKey();
+                String archivedAttrId = getAttrIdForNameFromSetId(cmId, archivedAttrName);
+                attributes.put(archivedAttrId, archived.getValue());
+            }
+        }
+        // Then layer on top all the active custom metadata attributes
+        getIdMapFromNameMap(cmName, cma.getAttributes(), attributes);
     }
 
     /**
@@ -398,50 +414,63 @@ public class CustomMetadataCache {
             String cmId = itrCM.next();
             String cmName = getNameForId(cmId);
             JsonNode bmAttrs = businessAttributes.get(cmId);
-            CustomMetadataAttributes.CustomMetadataAttributesBuilder<?, ?> builder = CustomMetadataAttributes.builder();
-            Iterator<String> itrCMA = bmAttrs.fieldNames();
-            while (itrCMA.hasNext()) {
-                String attrId = itrCMA.next();
-                String cmAttrName = getAttrNameForIdFromSetId(cmId, attrId);
-                JsonNode jsonValue = bmAttrs.get(attrId);
-                if (jsonValue.isArray()) {
-                    Set<Object> values = new HashSet<>();
-                    ArrayNode array = (ArrayNode) jsonValue;
-                    for (JsonNode element : array) {
-                        Object primitive = deserializePrimitive(element);
-                        values.add(primitive);
-                    }
-                    if (!values.isEmpty()) {
-                        // It seems assets that previously had multivalued custom metadata that was later
-                        // removed retain an empty set for that attribute, but this is equivalent to the
-                        // custom metadata not existing from a UI and delete-ability perspective (so we will
-                        // treat as non-existent in the deserialization as well)
-                        if (archivedAttrIds.containsKey(attrId)) {
-                            builder.archivedAttribute(cmAttrName, values);
-                        } else {
-                            builder.attribute(cmAttrName, values);
-                        }
-                    }
-                } else if (jsonValue.isValueNode()) {
-                    Object primitive = deserializePrimitive(jsonValue);
-                    if (archivedAttrIds.containsKey(attrId)) {
-                        builder.archivedAttribute(cmAttrName, primitive);
-                    } else {
-                        builder.attribute(cmAttrName, primitive);
-                    }
-                } else {
-                    throw new LogicException(
-                            "Unable to deserialize non-primitive custom metadata value: " + jsonValue,
-                            "ATLAN-CLIENT-CM-500-002",
-                            500);
-                }
-            }
-            CustomMetadataAttributes cma = builder.build();
+            CustomMetadataAttributes cma = getCustomMetadataAttributes(cmId, bmAttrs);
             if (!cma.isEmpty()) {
                 map.put(cmName, cma);
             }
         }
         return map;
+    }
+
+    /**
+     * Translate the provided attributes structure into a human-readable map of attribute names to values.
+     *
+     * @param cmId custom metadata hashed-string ID
+     * @param attributes embedded attributes structure with hashed-string IDs
+     * @return deserialized CustomMetadataAttributes object
+     * @throws AtlanException on any API communication problem if the cache needs to be refreshed
+     */
+    public static CustomMetadataAttributes getCustomMetadataAttributes(String cmId, JsonNode attributes)
+            throws AtlanException {
+        CustomMetadataAttributes.CustomMetadataAttributesBuilder<?, ?> builder = CustomMetadataAttributes.builder();
+        Iterator<String> itrCMA = attributes.fieldNames();
+        while (itrCMA.hasNext()) {
+            String attrId = itrCMA.next();
+            String cmAttrName = getAttrNameForIdFromSetId(cmId, attrId);
+            JsonNode jsonValue = attributes.get(attrId);
+            if (jsonValue.isArray()) {
+                Set<Object> values = new HashSet<>();
+                ArrayNode array = (ArrayNode) jsonValue;
+                for (JsonNode element : array) {
+                    Object primitive = deserializePrimitive(element);
+                    values.add(primitive);
+                }
+                if (!values.isEmpty()) {
+                    // It seems assets that previously had multivalued custom metadata that was later
+                    // removed retain an empty set for that attribute, but this is equivalent to the
+                    // custom metadata not existing from a UI and delete-ability perspective (so we will
+                    // treat as non-existent in the deserialization as well)
+                    if (archivedAttrIds.containsKey(attrId)) {
+                        builder.archivedAttribute(cmAttrName, values);
+                    } else {
+                        builder.attribute(cmAttrName, values);
+                    }
+                }
+            } else if (jsonValue.isValueNode()) {
+                Object primitive = deserializePrimitive(jsonValue);
+                if (archivedAttrIds.containsKey(attrId)) {
+                    builder.archivedAttribute(cmAttrName, primitive);
+                } else {
+                    builder.attribute(cmAttrName, primitive);
+                }
+            } else {
+                throw new LogicException(
+                        "Unable to deserialize non-primitive custom metadata value: " + jsonValue,
+                        "ATLAN-CLIENT-CM-500-002",
+                        500);
+            }
+        }
+        return builder.build();
     }
 
     /**
@@ -525,6 +554,8 @@ public class CustomMetadataCache {
                 return jsonValue.asLong();
             } else if (jsonValue.isFloatingPointNumber()) {
                 return jsonValue.asDouble();
+            } else if (jsonValue.isNull()) {
+                return null;
             } else {
                 throw new LogicException(
                         "Unable to deserialize unrecognized primitive custom metadata value: " + jsonValue,

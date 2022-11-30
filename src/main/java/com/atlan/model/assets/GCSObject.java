@@ -195,6 +195,56 @@ public class GCSObject extends GCS {
     }
 
     /**
+     * Restore the archived (soft-deleted) GCSObject to active.
+     *
+     * @param qualifiedName for the GCSObject
+     * @return true if the GCSObject is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a GCSObject.
+     *
+     * @param qualifiedName of the GCSObject
+     * @param name of the GCSObject
+     * @return the updated GCSObject, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static GCSObject removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (GCSObject)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a GCSObject.
+     *
+     * @param qualifiedName of the GCSObject
+     * @param name of the GCSObject
+     * @return the updated GCSObject, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static GCSObject removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (GCSObject) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a GCSObject.
+     *
+     * @param qualifiedName of the GCSObject
+     * @param name of the GCSObject
+     * @return the updated GCSObject, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static GCSObject removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (GCSObject)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a GCSObject.
      *
      * @param qualifiedName of the GCSObject

@@ -221,6 +221,55 @@ public class Table extends SQL {
     }
 
     /**
+     * Restore the archived (soft-deleted) Table to active.
+     *
+     * @param qualifiedName for the Table
+     * @return true if the Table is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a Table.
+     *
+     * @param qualifiedName of the Table
+     * @param name of the Table
+     * @return the updated Table, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static Table removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (Table)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a Table.
+     *
+     * @param qualifiedName of the Table
+     * @param name of the Table
+     * @return the updated Table, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static Table removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (Table) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a Table.
+     *
+     * @param qualifiedName of the Table
+     * @param name of the Table
+     * @return the updated Table, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static Table removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (Table) Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a Table.
      *
      * @param qualifiedName of the Table

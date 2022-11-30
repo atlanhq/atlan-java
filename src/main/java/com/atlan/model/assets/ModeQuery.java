@@ -127,6 +127,56 @@ public class ModeQuery extends Mode {
     }
 
     /**
+     * Restore the archived (soft-deleted) ModeQuery to active.
+     *
+     * @param qualifiedName for the ModeQuery
+     * @return true if the ModeQuery is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a ModeQuery.
+     *
+     * @param qualifiedName of the ModeQuery
+     * @param name of the ModeQuery
+     * @return the updated ModeQuery, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static ModeQuery removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (ModeQuery)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a ModeQuery.
+     *
+     * @param qualifiedName of the ModeQuery
+     * @param name of the ModeQuery
+     * @return the updated ModeQuery, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static ModeQuery removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (ModeQuery) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a ModeQuery.
+     *
+     * @param qualifiedName of the ModeQuery
+     * @param name of the ModeQuery
+     * @return the updated ModeQuery, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static ModeQuery removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (ModeQuery)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a ModeQuery.
      *
      * @param qualifiedName of the ModeQuery

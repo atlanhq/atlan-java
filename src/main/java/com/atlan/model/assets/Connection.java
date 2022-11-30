@@ -105,6 +105,14 @@ public class Connection extends Asset {
 
     /** TBC */
     @Attribute
+    Long popularityInsightsTimeframe;
+
+    /** TBC */
+    @Attribute
+    Boolean hasPopularityInsights;
+
+    /** TBC */
+    @Attribute
     @Singular
     SortedSet<String> connectionDbtEnvironments;
 
@@ -321,6 +329,56 @@ public class Connection extends Asset {
             throw new NotFoundException(
                     "No Connection found with qualifiedName: " + qualifiedName, "ATLAN_JAVA_CLIENT-404-003", 404, null);
         }
+    }
+
+    /**
+     * Restore the archived (soft-deleted) Connection to active.
+     *
+     * @param qualifiedName for the Connection
+     * @return true if the Connection is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a Connection.
+     *
+     * @param qualifiedName of the Connection
+     * @param name of the Connection
+     * @return the updated Connection, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static Connection removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (Connection)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a Connection.
+     *
+     * @param qualifiedName of the Connection
+     * @param name of the Connection
+     * @return the updated Connection, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static Connection removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (Connection) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a Connection.
+     *
+     * @param qualifiedName of the Connection
+     * @param name of the Connection
+     * @return the updated Connection, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static Connection removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (Connection)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
     }
 
     /**

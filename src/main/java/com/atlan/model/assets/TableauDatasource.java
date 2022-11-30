@@ -192,6 +192,56 @@ public class TableauDatasource extends Tableau {
     }
 
     /**
+     * Restore the archived (soft-deleted) TableauDatasource to active.
+     *
+     * @param qualifiedName for the TableauDatasource
+     * @return true if the TableauDatasource is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a TableauDatasource.
+     *
+     * @param qualifiedName of the TableauDatasource
+     * @param name of the TableauDatasource
+     * @return the updated TableauDatasource, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static TableauDatasource removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (TableauDatasource)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a TableauDatasource.
+     *
+     * @param qualifiedName of the TableauDatasource
+     * @param name of the TableauDatasource
+     * @return the updated TableauDatasource, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static TableauDatasource removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (TableauDatasource) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a TableauDatasource.
+     *
+     * @param qualifiedName of the TableauDatasource
+     * @param name of the TableauDatasource
+     * @return the updated TableauDatasource, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static TableauDatasource removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (TableauDatasource)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a TableauDatasource.
      *
      * @param qualifiedName of the TableauDatasource

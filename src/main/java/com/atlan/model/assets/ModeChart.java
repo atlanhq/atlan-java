@@ -117,6 +117,56 @@ public class ModeChart extends Mode {
     }
 
     /**
+     * Restore the archived (soft-deleted) ModeChart to active.
+     *
+     * @param qualifiedName for the ModeChart
+     * @return true if the ModeChart is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a ModeChart.
+     *
+     * @param qualifiedName of the ModeChart
+     * @param name of the ModeChart
+     * @return the updated ModeChart, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static ModeChart removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (ModeChart)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a ModeChart.
+     *
+     * @param qualifiedName of the ModeChart
+     * @param name of the ModeChart
+     * @return the updated ModeChart, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static ModeChart removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (ModeChart) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a ModeChart.
+     *
+     * @param qualifiedName of the ModeChart
+     * @param name of the ModeChart
+     * @return the updated ModeChart, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static ModeChart removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (ModeChart)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a ModeChart.
      *
      * @param qualifiedName of the ModeChart

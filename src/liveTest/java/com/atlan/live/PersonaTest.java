@@ -96,7 +96,8 @@ public class PersonaTest extends AtlanLiveTest {
 
     @Test(
             groups = {"purge.personas"},
-            // TODO        dependsOnGroups = {"create.*", "update.*", "read.*", "search.*", "link.*", "unlink.*"},
+            // TODO        dependsOnGroups = {"create.*", "update.*", "read.*", "search.*", "link.*", "unlink.*",
+            // "delete.*", "restore.*"},
             dependsOnGroups = {"create.*", "update.*", "read.*"},
             alwaysRun = true)
     void purgePersonas() {

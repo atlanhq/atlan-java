@@ -300,57 +300,6 @@ public class SearchTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"search.s3object.term.specific"},
-            dependsOnGroups = {"link.term.asset"})
-    void searchByTermAssignment() throws InterruptedException {
-
-        // TODO: currently relationship setup in this direction does not resolve via search (TBC)...
-        /*try {
-            Glossary glossary = Glossary.findByName(GlossaryTest.GLOSSARY_NAME, null);
-            String glossaryQN = glossary.getQualifiedName();
-            GlossaryTerm term = GlossaryTerm.findByName(GlossaryTest.TERM_NAME1, glossaryQN, null);
-            String termQN = term.getQualifiedName();
-            Query byTermAssignment = QueryFactory.withAtLeastOneTerm(List.of(termQN));
-            Query byState = QueryFactory.active();
-            Query byType = QueryFactory.withType(S3Object.TYPE_NAME);
-            Query combined = BoolQuery.of(b -> b.filter(byState, byType, byTermAssignment))
-                    ._toQuery();
-
-            IndexSearchRequest index = IndexSearchRequest.builder()
-                    .dsl(IndexSearchDSL.builder().query(combined).build())
-                    .attribute("name")
-                    .attribute("meanings")
-                    .attribute("connectionQualifiedName")
-                    .build();
-
-            IndexSearchResponse response = index.search();
-
-            assertNotNull(response);
-            int count = 0;
-            while (response.getApproximateCount() == 0L && count < Atlan.getMaxNetworkRetries()) {
-                Thread.sleep(2000);
-                response = index.search();
-                count++;
-            }
-
-            assertEquals(response.getApproximateCount().longValue(), 2L);
-            List<Entity> entities = response.getEntities();
-            assertNotNull(entities);
-            assertEquals(entities.size(), 2);
-            Set<String> types = entities.stream().map(Entity::getTypeName).collect(Collectors.toSet());
-            assertEquals(types.size(), 1);
-            assertTrue(types.contains(S3Object.TYPE_NAME));
-            Set<String> guids = entities.stream().map(Entity::getGuid).collect(Collectors.toSet());
-            assertEquals(guids.size(), 2);
-            assertTrue(guids.contains(S3AssetTest.s3Object1Guid));
-            assertTrue(guids.contains(S3AssetTest.s3Object2Guid));
-        } catch (AtlanException e) {
-            e.printStackTrace();
-            assertNull(e, "Unexpected exception while searching by a specific classification.");
-        }*/
-    }
-
-    @Test(
             groups = {"search.s3object.term.fromAsset"},
             dependsOnGroups = {"link.asset.term"})
     void searchByAssignedTerm() throws InterruptedException {
@@ -405,7 +354,7 @@ public class SearchTest extends AtlanLiveTest {
 
         try {
             String attributeId = CustomMetadataCache.getAttrIdForName(
-                    CustomMetadataTest.CM_NAME1, CustomMetadataTest.CM_ATTR_STRING);
+                    CustomMetadataTest.CM_RACI, CustomMetadataTest.CM_ATTR_RACI_ACCOUNTABLE);
             Query byCM = QueryFactory.withAnyValueFor(attributeId);
             Query byState = QueryFactory.active();
             Query byType = QueryFactory.withType(GlossaryTerm.TYPE_NAME);

@@ -145,6 +145,56 @@ public class TableauDashboard extends Tableau {
     }
 
     /**
+     * Restore the archived (soft-deleted) TableauDashboard to active.
+     *
+     * @param qualifiedName for the TableauDashboard
+     * @return true if the TableauDashboard is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a TableauDashboard.
+     *
+     * @param qualifiedName of the TableauDashboard
+     * @param name of the TableauDashboard
+     * @return the updated TableauDashboard, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static TableauDashboard removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (TableauDashboard)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a TableauDashboard.
+     *
+     * @param qualifiedName of the TableauDashboard
+     * @param name of the TableauDashboard
+     * @return the updated TableauDashboard, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static TableauDashboard removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (TableauDashboard) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a TableauDashboard.
+     *
+     * @param qualifiedName of the TableauDashboard
+     * @param name of the TableauDashboard
+     * @return the updated TableauDashboard, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static TableauDashboard removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (TableauDashboard)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a TableauDashboard.
      *
      * @param qualifiedName of the TableauDashboard

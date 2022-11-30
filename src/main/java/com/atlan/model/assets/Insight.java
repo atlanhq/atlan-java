@@ -109,6 +109,56 @@ public class Insight extends Catalog {
     }
 
     /**
+     * Restore the archived (soft-deleted) Insight to active.
+     *
+     * @param qualifiedName for the Insight
+     * @return true if the Insight is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a Insight.
+     *
+     * @param qualifiedName of the Insight
+     * @param name of the Insight
+     * @return the updated Insight, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static Insight removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (Insight)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a Insight.
+     *
+     * @param qualifiedName of the Insight
+     * @param name of the Insight
+     * @return the updated Insight, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static Insight removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (Insight) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a Insight.
+     *
+     * @param qualifiedName of the Insight
+     * @param name of the Insight
+     * @return the updated Insight, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static Insight removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (Insight)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a Insight.
      *
      * @param qualifiedName of the Insight

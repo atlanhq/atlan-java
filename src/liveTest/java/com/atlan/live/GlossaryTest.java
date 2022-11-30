@@ -608,8 +608,64 @@ public class GlossaryTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"purge.term.1"},
+            groups = {"delete.term.1"},
             dependsOnGroups = {"create.*", "update.*", "read.*", "search.*", "link.*", "unlink.*"},
+            alwaysRun = true)
+    void deleteTerm1() {
+        try {
+            EntityMutationResponse response = GlossaryTerm.delete(termGuid1);
+            assertNotNull(response);
+            assertEquals(response.getCreatedEntities().size(), 0);
+            assertEquals(response.getUpdatedEntities().size(), 0);
+            List<Entity> entities = response.getDeletedEntities();
+            assertNotNull(entities);
+            assertEquals(entities.size(), 1);
+            Entity one = entities.get(0);
+            assertNotNull(one);
+            assertEquals(one.getTypeName(), GlossaryTerm.TYPE_NAME);
+            assertTrue(one instanceof GlossaryTerm);
+            GlossaryTerm term = (GlossaryTerm) one;
+            assertEquals(term.getGuid(), termGuid1);
+            assertEquals(term.getQualifiedName(), termQame1);
+            assertEquals(term.getName(), TERM_NAME1);
+            assertEquals(term.getCertificateStatus(), AtlanCertificateStatus.DEPRECATED);
+            assertEquals(term.getAnnouncementType(), AtlanAnnouncementType.ISSUE);
+            assertEquals(term.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
+            assertEquals(term.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
+            assertEquals(term.getStatus(), AtlanStatus.DELETED);
+            assertEquals(term.getDeleteHandler(), "SOFT");
+        } catch (AtlanException e) {
+            e.printStackTrace();
+            assertNull(e, "Unexpected exception trying to archive a term: " + e.getMessage());
+        }
+    }
+
+    @Test(
+            groups = "restore.term.1",
+            dependsOnGroups = {"delete.term.1"},
+            alwaysRun = true)
+    void restoreTerm1() {
+        try {
+            assertTrue(GlossaryTerm.restore(termQame1));
+            GlossaryTerm term = GlossaryTerm.retrieveByQualifiedName(termQame1);
+            assertNotNull(term);
+            assertEquals(term.getGuid(), termGuid1);
+            assertEquals(term.getQualifiedName(), termQame1);
+            assertEquals(term.getName(), TERM_NAME1);
+            assertEquals(term.getCertificateStatus(), AtlanCertificateStatus.DEPRECATED);
+            assertEquals(term.getAnnouncementType(), AtlanAnnouncementType.ISSUE);
+            assertEquals(term.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
+            assertEquals(term.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
+            assertEquals(term.getStatus(), AtlanStatus.ACTIVE);
+        } catch (AtlanException e) {
+            e.printStackTrace();
+            assertNull(e, "Unexpected exception trying to restore a term: " + e.getMessage());
+        }
+    }
+
+    @Test(
+            groups = {"purge.term.1"},
+            dependsOnGroups = {"restore.term.1"},
             alwaysRun = true)
     void purgeTerm1() {
         try {

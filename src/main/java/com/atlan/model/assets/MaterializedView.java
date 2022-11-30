@@ -206,6 +206,56 @@ public class MaterializedView extends SQL {
     }
 
     /**
+     * Restore the archived (soft-deleted) MaterializedView to active.
+     *
+     * @param qualifiedName for the MaterializedView
+     * @return true if the MaterializedView is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a MaterializedView.
+     *
+     * @param qualifiedName of the MaterializedView
+     * @param name of the MaterializedView
+     * @return the updated MaterializedView, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static MaterializedView removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (MaterializedView)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a MaterializedView.
+     *
+     * @param qualifiedName of the MaterializedView
+     * @param name of the MaterializedView
+     * @return the updated MaterializedView, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static MaterializedView removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (MaterializedView) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a MaterializedView.
+     *
+     * @param qualifiedName of the MaterializedView
+     * @param name of the MaterializedView
+     * @return the updated MaterializedView, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static MaterializedView removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (MaterializedView)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a MaterializedView.
      *
      * @param qualifiedName of the MaterializedView

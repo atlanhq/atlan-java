@@ -132,6 +132,56 @@ public class DbtModelColumn extends Dbt {
     }
 
     /**
+     * Restore the archived (soft-deleted) DbtModelColumn to active.
+     *
+     * @param qualifiedName for the DbtModelColumn
+     * @return true if the DbtModelColumn is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a DbtModelColumn.
+     *
+     * @param qualifiedName of the DbtModelColumn
+     * @param name of the DbtModelColumn
+     * @return the updated DbtModelColumn, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static DbtModelColumn removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (DbtModelColumn)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a DbtModelColumn.
+     *
+     * @param qualifiedName of the DbtModelColumn
+     * @param name of the DbtModelColumn
+     * @return the updated DbtModelColumn, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static DbtModelColumn removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (DbtModelColumn) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a DbtModelColumn.
+     *
+     * @param qualifiedName of the DbtModelColumn
+     * @param name of the DbtModelColumn
+     * @return the updated DbtModelColumn, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static DbtModelColumn removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (DbtModelColumn)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a DbtModelColumn.
      *
      * @param qualifiedName of the DbtModelColumn

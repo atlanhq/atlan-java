@@ -159,6 +159,56 @@ public class GCSBucket extends GCS {
     }
 
     /**
+     * Restore the archived (soft-deleted) GCSBucket to active.
+     *
+     * @param qualifiedName for the GCSBucket
+     * @return true if the GCSBucket is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a GCSBucket.
+     *
+     * @param qualifiedName of the GCSBucket
+     * @param name of the GCSBucket
+     * @return the updated GCSBucket, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static GCSBucket removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (GCSBucket)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a GCSBucket.
+     *
+     * @param qualifiedName of the GCSBucket
+     * @param name of the GCSBucket
+     * @return the updated GCSBucket, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static GCSBucket removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (GCSBucket) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a GCSBucket.
+     *
+     * @param qualifiedName of the GCSBucket
+     * @param name of the GCSBucket
+     * @return the updated GCSBucket, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static GCSBucket removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (GCSBucket)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a GCSBucket.
      *
      * @param qualifiedName of the GCSBucket

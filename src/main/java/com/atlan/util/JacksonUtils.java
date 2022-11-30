@@ -3,6 +3,7 @@
 package com.atlan.util;
 
 import com.atlan.serde.Serde;
+import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -79,6 +80,21 @@ public class JacksonUtils {
     }
 
     /**
+     * Serialize the provided field into a string, or leave it out if there is no value.
+     *
+     * @param gen generator through which to serialize
+     * @param name of the field
+     * @param value for the field
+     * @throws IOException on any issues writing to the generator
+     */
+    public static void serializeString(JsonGenerator gen, String name, String value) throws IOException {
+        if (value != null) {
+            gen.writeFieldName(name);
+            gen.writeString(value);
+        }
+    }
+
+    /**
      * Deserialize the provided path into a long, or null if there is no value at the path.
      *
      * @param node from which to pull the value
@@ -100,6 +116,21 @@ public class JacksonUtils {
     public static Boolean deserializeBoolean(JsonNode node, String path) {
         JsonNode value = node.get(path);
         return value == null || value.isNull() ? null : value.asBoolean();
+    }
+
+    /**
+     * Serialize the provided field into a boolean, or leave it out if there is no value.
+     *
+     * @param gen generator through which to serialize
+     * @param name of the field
+     * @param value for the field
+     * @throws IOException on any issues writing to the generator
+     */
+    public static void serializeBoolean(JsonGenerator gen, String name, Boolean value) throws IOException {
+        if (value != null) {
+            gen.writeFieldName(name);
+            gen.writeBoolean(value);
+        }
     }
 
     /**

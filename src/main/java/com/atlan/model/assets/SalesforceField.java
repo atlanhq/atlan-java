@@ -187,6 +187,56 @@ public class SalesforceField extends Salesforce {
     }
 
     /**
+     * Restore the archived (soft-deleted) SalesforceField to active.
+     *
+     * @param qualifiedName for the SalesforceField
+     * @return true if the SalesforceField is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a SalesforceField.
+     *
+     * @param qualifiedName of the SalesforceField
+     * @param name of the SalesforceField
+     * @return the updated SalesforceField, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static SalesforceField removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (SalesforceField)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a SalesforceField.
+     *
+     * @param qualifiedName of the SalesforceField
+     * @param name of the SalesforceField
+     * @return the updated SalesforceField, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static SalesforceField removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (SalesforceField) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a SalesforceField.
+     *
+     * @param qualifiedName of the SalesforceField
+     * @param name of the SalesforceField
+     * @return the updated SalesforceField, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static SalesforceField removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (SalesforceField)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a SalesforceField.
      *
      * @param qualifiedName of the SalesforceField

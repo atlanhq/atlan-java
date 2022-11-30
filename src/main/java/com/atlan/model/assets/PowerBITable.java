@@ -148,6 +148,56 @@ public class PowerBITable extends PowerBI {
     }
 
     /**
+     * Restore the archived (soft-deleted) PowerBITable to active.
+     *
+     * @param qualifiedName for the PowerBITable
+     * @return true if the PowerBITable is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a PowerBITable.
+     *
+     * @param qualifiedName of the PowerBITable
+     * @param name of the PowerBITable
+     * @return the updated PowerBITable, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static PowerBITable removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (PowerBITable)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a PowerBITable.
+     *
+     * @param qualifiedName of the PowerBITable
+     * @param name of the PowerBITable
+     * @return the updated PowerBITable, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static PowerBITable removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (PowerBITable) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a PowerBITable.
+     *
+     * @param qualifiedName of the PowerBITable
+     * @param name of the PowerBITable
+     * @return the updated PowerBITable, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static PowerBITable removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (PowerBITable)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a PowerBITable.
      *
      * @param qualifiedName of the PowerBITable

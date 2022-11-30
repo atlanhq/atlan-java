@@ -56,7 +56,16 @@ public class ReadmeTest extends AtlanLiveTest {
 
     @Test(
             groups = {"purge.readme"},
-            dependsOnGroups = {"create.*", "update.*", "read.*", "search.*", "link.*", "unlink.*"},
+            dependsOnGroups = {
+                "create.*",
+                "update.*",
+                "read.*",
+                "search.*",
+                "link.*",
+                "unlink.*",
+                "delete.*",
+                "restore.*"
+            },
             alwaysRun = true)
     void purgeReadme() {
         try {

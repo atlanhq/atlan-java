@@ -123,6 +123,56 @@ public class LookerView extends Looker {
     }
 
     /**
+     * Restore the archived (soft-deleted) LookerView to active.
+     *
+     * @param qualifiedName for the LookerView
+     * @return true if the LookerView is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a LookerView.
+     *
+     * @param qualifiedName of the LookerView
+     * @param name of the LookerView
+     * @return the updated LookerView, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static LookerView removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (LookerView)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a LookerView.
+     *
+     * @param qualifiedName of the LookerView
+     * @param name of the LookerView
+     * @return the updated LookerView, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static LookerView removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (LookerView) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a LookerView.
+     *
+     * @param qualifiedName of the LookerView
+     * @param name of the LookerView
+     * @return the updated LookerView, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static LookerView removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (LookerView)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a LookerView.
      *
      * @param qualifiedName of the LookerView

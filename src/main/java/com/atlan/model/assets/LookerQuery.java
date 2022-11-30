@@ -144,6 +144,56 @@ public class LookerQuery extends Looker {
     }
 
     /**
+     * Restore the archived (soft-deleted) LookerQuery to active.
+     *
+     * @param qualifiedName for the LookerQuery
+     * @return true if the LookerQuery is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a LookerQuery.
+     *
+     * @param qualifiedName of the LookerQuery
+     * @param name of the LookerQuery
+     * @return the updated LookerQuery, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static LookerQuery removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (LookerQuery)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a LookerQuery.
+     *
+     * @param qualifiedName of the LookerQuery
+     * @param name of the LookerQuery
+     * @return the updated LookerQuery, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static LookerQuery removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (LookerQuery) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a LookerQuery.
+     *
+     * @param qualifiedName of the LookerQuery
+     * @param name of the LookerQuery
+     * @return the updated LookerQuery, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static LookerQuery removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (LookerQuery)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a LookerQuery.
      *
      * @param qualifiedName of the LookerQuery

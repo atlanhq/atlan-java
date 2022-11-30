@@ -121,6 +121,56 @@ public class ReadmeTemplate extends Resource {
     }
 
     /**
+     * Restore the archived (soft-deleted) ReadmeTemplate to active.
+     *
+     * @param qualifiedName for the ReadmeTemplate
+     * @return true if the ReadmeTemplate is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a ReadmeTemplate.
+     *
+     * @param qualifiedName of the ReadmeTemplate
+     * @param name of the ReadmeTemplate
+     * @return the updated ReadmeTemplate, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static ReadmeTemplate removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (ReadmeTemplate)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a ReadmeTemplate.
+     *
+     * @param qualifiedName of the ReadmeTemplate
+     * @param name of the ReadmeTemplate
+     * @return the updated ReadmeTemplate, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static ReadmeTemplate removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (ReadmeTemplate) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a ReadmeTemplate.
+     *
+     * @param qualifiedName of the ReadmeTemplate
+     * @param name of the ReadmeTemplate
+     * @return the updated ReadmeTemplate, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static ReadmeTemplate removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (ReadmeTemplate)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a ReadmeTemplate.
      *
      * @param qualifiedName of the ReadmeTemplate

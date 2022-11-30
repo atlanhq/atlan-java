@@ -122,6 +122,57 @@ public class PowerBIPage extends PowerBI {
                     null);
         }
     }
+
+    /**
+     * Restore the archived (soft-deleted) PowerBIPage to active.
+     *
+     * @param qualifiedName for the PowerBIPage
+     * @return true if the PowerBIPage is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a PowerBIPage.
+     *
+     * @param qualifiedName of the PowerBIPage
+     * @param name of the PowerBIPage
+     * @return the updated PowerBIPage, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static PowerBIPage removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (PowerBIPage)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a PowerBIPage.
+     *
+     * @param qualifiedName of the PowerBIPage
+     * @param name of the PowerBIPage
+     * @return the updated PowerBIPage, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static PowerBIPage removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (PowerBIPage) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a PowerBIPage.
+     *
+     * @param qualifiedName of the PowerBIPage
+     * @param name of the PowerBIPage
+     * @return the updated PowerBIPage, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static PowerBIPage removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (PowerBIPage)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
     /**
      * Update the certificate on a PowerBIPage.
      *

@@ -139,6 +139,56 @@ public class ColumnProcess extends AbstractColumnProcess {
     }
 
     /**
+     * Restore the archived (soft-deleted) ColumnProcess to active.
+     *
+     * @param qualifiedName for the ColumnProcess
+     * @return true if the ColumnProcess is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a ColumnProcess.
+     *
+     * @param qualifiedName of the ColumnProcess
+     * @param name of the ColumnProcess
+     * @return the updated ColumnProcess, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static ColumnProcess removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (ColumnProcess)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a ColumnProcess.
+     *
+     * @param qualifiedName of the ColumnProcess
+     * @param name of the ColumnProcess
+     * @return the updated ColumnProcess, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static ColumnProcess removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (ColumnProcess) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a ColumnProcess.
+     *
+     * @param qualifiedName of the ColumnProcess
+     * @param name of the ColumnProcess
+     * @return the updated ColumnProcess, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static ColumnProcess removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (ColumnProcess)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a ColumnProcess.
      *
      * @param qualifiedName of the ColumnProcess

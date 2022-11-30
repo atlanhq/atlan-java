@@ -153,4 +153,41 @@ public class Readme extends Resource {
                     "No Readme found with qualifiedName: " + qualifiedName, "ATLAN_JAVA_CLIENT-404-003", 404, null);
         }
     }
+
+    /**
+     * Restore the archived (soft-deleted) Readme to active.
+     *
+     * @param qualifiedName for the Readme
+     * @return true if the Readme is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a Readme.
+     *
+     * @param qualifiedName of the Readme
+     * @param name of the Readme
+     * @return the updated Readme, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static Readme removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (Readme)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a Readme.
+     *
+     * @param qualifiedName of the Readme
+     * @param name of the Readme
+     * @return the updated Readme, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static Readme removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (Readme) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
 }

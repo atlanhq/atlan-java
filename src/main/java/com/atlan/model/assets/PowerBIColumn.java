@@ -140,6 +140,56 @@ public class PowerBIColumn extends PowerBI {
     }
 
     /**
+     * Restore the archived (soft-deleted) PowerBIColumn to active.
+     *
+     * @param qualifiedName for the PowerBIColumn
+     * @return true if the PowerBIColumn is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a PowerBIColumn.
+     *
+     * @param qualifiedName of the PowerBIColumn
+     * @param name of the PowerBIColumn
+     * @return the updated PowerBIColumn, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static PowerBIColumn removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (PowerBIColumn)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a PowerBIColumn.
+     *
+     * @param qualifiedName of the PowerBIColumn
+     * @param name of the PowerBIColumn
+     * @return the updated PowerBIColumn, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static PowerBIColumn removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (PowerBIColumn) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a PowerBIColumn.
+     *
+     * @param qualifiedName of the PowerBIColumn
+     * @param name of the PowerBIColumn
+     * @return the updated PowerBIColumn, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static PowerBIColumn removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (PowerBIColumn)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a PowerBIColumn.
      *
      * @param qualifiedName of the PowerBIColumn

@@ -139,6 +139,56 @@ public class LookerFolder extends Looker {
     }
 
     /**
+     * Restore the archived (soft-deleted) LookerFolder to active.
+     *
+     * @param qualifiedName for the LookerFolder
+     * @return true if the LookerFolder is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a LookerFolder.
+     *
+     * @param qualifiedName of the LookerFolder
+     * @param name of the LookerFolder
+     * @return the updated LookerFolder, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static LookerFolder removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (LookerFolder)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a LookerFolder.
+     *
+     * @param qualifiedName of the LookerFolder
+     * @param name of the LookerFolder
+     * @return the updated LookerFolder, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static LookerFolder removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (LookerFolder) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a LookerFolder.
+     *
+     * @param qualifiedName of the LookerFolder
+     * @param name of the LookerFolder
+     * @return the updated LookerFolder, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static LookerFolder removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (LookerFolder)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a LookerFolder.
      *
      * @param qualifiedName of the LookerFolder

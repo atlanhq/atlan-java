@@ -134,6 +134,56 @@ public class MetabaseQuestion extends Metabase {
     }
 
     /**
+     * Restore the archived (soft-deleted) MetabaseQuestion to active.
+     *
+     * @param qualifiedName for the MetabaseQuestion
+     * @return true if the MetabaseQuestion is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a MetabaseQuestion.
+     *
+     * @param qualifiedName of the MetabaseQuestion
+     * @param name of the MetabaseQuestion
+     * @return the updated MetabaseQuestion, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static MetabaseQuestion removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (MetabaseQuestion)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a MetabaseQuestion.
+     *
+     * @param qualifiedName of the MetabaseQuestion
+     * @param name of the MetabaseQuestion
+     * @return the updated MetabaseQuestion, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static MetabaseQuestion removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (MetabaseQuestion) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a MetabaseQuestion.
+     *
+     * @param qualifiedName of the MetabaseQuestion
+     * @param name of the MetabaseQuestion
+     * @return the updated MetabaseQuestion, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static MetabaseQuestion removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (MetabaseQuestion)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a MetabaseQuestion.
      *
      * @param qualifiedName of the MetabaseQuestion

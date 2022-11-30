@@ -185,6 +185,56 @@ public class TablePartition extends SQL {
     }
 
     /**
+     * Restore the archived (soft-deleted) TablePartition to active.
+     *
+     * @param qualifiedName for the TablePartition
+     * @return true if the TablePartition is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a TablePartition.
+     *
+     * @param qualifiedName of the TablePartition
+     * @param name of the TablePartition
+     * @return the updated TablePartition, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static TablePartition removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (TablePartition)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a TablePartition.
+     *
+     * @param qualifiedName of the TablePartition
+     * @param name of the TablePartition
+     * @return the updated TablePartition, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static TablePartition removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (TablePartition) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a TablePartition.
+     *
+     * @param qualifiedName of the TablePartition
+     * @param name of the TablePartition
+     * @return the updated TablePartition, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static TablePartition removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (TablePartition)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a TablePartition.
      *
      * @param qualifiedName of the TablePartition

@@ -134,6 +134,56 @@ public class PowerBIDashboard extends PowerBI {
     }
 
     /**
+     * Restore the archived (soft-deleted) PowerBIDashboard to active.
+     *
+     * @param qualifiedName for the PowerBIDashboard
+     * @return true if the PowerBIDashboard is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Remove the system description from a PowerBIDashboard.
+     *
+     * @param qualifiedName of the PowerBIDashboard
+     * @param name of the PowerBIDashboard
+     * @return the updated PowerBIDashboard, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static PowerBIDashboard removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (PowerBIDashboard)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a PowerBIDashboard.
+     *
+     * @param qualifiedName of the PowerBIDashboard
+     * @param name of the PowerBIDashboard
+     * @return the updated PowerBIDashboard, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static PowerBIDashboard removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (PowerBIDashboard) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a PowerBIDashboard.
+     *
+     * @param qualifiedName of the PowerBIDashboard
+     * @param name of the PowerBIDashboard
+     * @return the updated PowerBIDashboard, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static PowerBIDashboard removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (PowerBIDashboard)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
      * Update the certificate on a PowerBIDashboard.
      *
      * @param qualifiedName of the PowerBIDashboard

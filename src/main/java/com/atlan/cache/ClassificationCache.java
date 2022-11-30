@@ -21,6 +21,8 @@ public class ClassificationCache {
     private static Map<String, ClassificationDef> cacheById = new ConcurrentHashMap<>();
     private static Map<String, String> mapIdToName = new ConcurrentHashMap<>();
     private static Map<String, String> mapNameToId = new ConcurrentHashMap<>();
+    private static Set<String> deletedIds = ConcurrentHashMap.newKeySet();
+    private static Set<String> deletedNames = ConcurrentHashMap.newKeySet();
 
     private static synchronized void refreshCache() throws AtlanException {
         log.debug("Refreshing cache of classifications...");
@@ -50,15 +52,20 @@ public class ClassificationCache {
      * @throws AtlanException on any API communication problem if the cache needs to be refreshed
      */
     public static String getIdForName(String name) throws AtlanException {
-        String cmId = mapNameToId.get(name);
-        if (cmId != null) {
-            // If found, return straight away
-            return cmId;
-        } else {
-            // Otherwise, refresh the cache and look again (could be stale)
-            refreshCache();
-            return mapNameToId.get(name);
+        String cmId = null;
+        if (name != null) {
+            cmId = mapNameToId.get(name);
+            if (cmId == null && !deletedNames.contains(name)) {
+                // If not found, refresh the cache and look again (could be stale)
+                refreshCache();
+                cmId = mapNameToId.get(name);
+                if (cmId == null) {
+                    // If it's still not found after the refresh, mark it as deleted
+                    deletedNames.add(name);
+                }
+            }
         }
+        return cmId;
     }
 
     /**
@@ -69,14 +76,19 @@ public class ClassificationCache {
      * @throws AtlanException on any API communication problem if the cache needs to be refreshed
      */
     public static String getNameForId(String id) throws AtlanException {
-        String cmName = mapIdToName.get(id);
-        if (cmName != null) {
-            // If found, return straight away
-            return cmName;
-        } else {
-            // Otherwise, refresh the cache and look again (could be stale)
-            refreshCache();
-            return mapIdToName.get(id);
+        String cmName = null;
+        if (id != null) {
+            cmName = mapIdToName.get(id);
+            if (cmName == null && !deletedIds.contains(id)) {
+                // If not found, refresh the cache and look again (could be stale)
+                refreshCache();
+                cmName = mapIdToName.get(id);
+                if (cmName == null) {
+                    // If it's still not found after the refresh, mark it as deleted
+                    deletedIds.add(id);
+                }
+            }
         }
+        return cmName;
     }
 }

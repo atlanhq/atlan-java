@@ -115,11 +115,14 @@ public class ConnectionTest {
             .queryPreviewConfig(Map.of("key1", "value1", "key2", "value2"))
             .queryConfig("queryConfig")
             .credentialStrategy("credentialStrategy")
+            .previewCredentialStrategy("previewCredentialStrategy")
             .rowLimit(3028736751300018007L)
             .defaultCredentialGuid("defaultCredentialGuid")
             .connectorIcon("connectorIcon")
             .connectorImage("connectorImage")
             .sourceLogo("sourceLogo")
+            .popularityInsightsTimeframe(-3923148251533697428L)
+            .hasPopularityInsights(true)
             .connectionDbtEnvironments(Set.of("one", "two", "three"))
             .build();
     private static Connection frodo;
