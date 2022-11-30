@@ -5,10 +5,8 @@ package com.atlan.live;
 import static org.testng.Assert.*;
 
 import com.atlan.exception.AtlanException;
-import com.atlan.model.assets.Asset;
 import com.atlan.model.assets.GlossaryTerm;
 import com.atlan.model.assets.S3Object;
-import com.atlan.model.core.EntityMutationResponse;
 import com.atlan.model.enums.AtlanStatus;
 import java.util.List;
 import java.util.Set;
@@ -18,72 +16,8 @@ import org.testng.annotations.Test;
 public class TermAssignmentTest extends AtlanLiveTest {
 
     @Test(
-            groups = {"link.term.asset"},
-            dependsOnGroups = {"create.*"})
-    void linkTermToAssets() {
-        GlossaryTerm term = GlossaryTerm.updater(
-                        GlossaryTest.termQame1, GlossaryTest.TERM_NAME1, GlossaryTest.glossaryGuid)
-                .assignedEntity(S3Object.refByGuid(S3AssetTest.s3Object1Guid))
-                .assignedEntity(S3Object.refByQualifiedName(S3AssetTest.s3Object2Qame))
-                .build();
-        try {
-            EntityMutationResponse response = term.upsert();
-            assertNotNull(response);
-            assertTrue(response.getDeletedEntities().isEmpty());
-            assertTrue(response.getCreatedEntities().isEmpty());
-            assertEquals(response.getUpdatedEntities().size(), 3);
-            term = GlossaryTerm.retrieveByGuid(GlossaryTest.termGuid1);
-            assertNotNull(term);
-            assertTrue(term.isComplete());
-            assertEquals(term.getQualifiedName(), GlossaryTest.termQame1);
-            assertEquals(term.getName(), GlossaryTest.TERM_NAME1);
-            Set<Asset> entities = term.getAssignedEntities();
-            assertNotNull(entities);
-            assertEquals(entities.size(), 2);
-            Set<String> types = entities.stream().map(Asset::getTypeName).collect(Collectors.toSet());
-            assertEquals(types.size(), 1);
-            assertTrue(types.contains(S3Object.TYPE_NAME));
-        } catch (AtlanException e) {
-            e.printStackTrace();
-            assertNull(e, "Unexpected exception while trying to link a term to multiple assets.");
-        }
-    }
-
-    @Test(
-            groups = {"unlink.term.asset"},
-            dependsOnGroups = {"link.term.asset", "search.s3object.term.specific"})
-    void removeTermToAssetLinks() {
-        GlossaryTerm term = GlossaryTerm.updater(
-                        GlossaryTest.termQame1, GlossaryTest.TERM_NAME1, GlossaryTest.glossaryGuid)
-                .build();
-        term.removeAssignedEntities();
-        try {
-            EntityMutationResponse response = term.upsert();
-            assertNotNull(response);
-            assertTrue(response.getDeletedEntities().isEmpty());
-            assertTrue(response.getCreatedEntities().isEmpty());
-            assertEquals(response.getUpdatedEntities().size(), 3);
-            term = GlossaryTerm.retrieveByGuid(GlossaryTest.termGuid1);
-            assertNotNull(term);
-            assertTrue(term.isComplete());
-            assertEquals(term.getQualifiedName(), GlossaryTest.termQame1);
-            assertEquals(term.getName(), GlossaryTest.TERM_NAME1);
-            Set<Asset> entities = term.getAssignedEntities();
-            assertNotNull(entities);
-            assertEquals(entities.size(), 2);
-            Set<AtlanStatus> statuses =
-                    entities.stream().map(Asset::getRelationshipStatus).collect(Collectors.toSet());
-            assertEquals(statuses.size(), 1);
-            assertTrue(statuses.contains(AtlanStatus.DELETED));
-        } catch (AtlanException e) {
-            e.printStackTrace();
-            assertNull(e, "Unexpected exception while trying to remove assigned assets from a term.");
-        }
-    }
-
-    @Test(
             groups = {"link.asset.term"},
-            dependsOnGroups = {"unlink.term.asset"})
+            dependsOnGroups = {"create.*"})
     void linkAssetToTerms() {
         try {
             S3Object result = S3Object.replaceTerms(
@@ -98,11 +32,10 @@ public class TermAssignmentTest extends AtlanLiveTest {
             assertEquals(s3Object1.getName(), S3AssetTest.S3_OBJECT1_NAME);
             Set<GlossaryTerm> terms = s3Object1.getMeanings();
             assertNotNull(terms);
-            assertEquals(terms.size(), 2);
+            assertEquals(terms.size(), 1);
             Set<AtlanStatus> statuses =
                     terms.stream().map(GlossaryTerm::getRelationshipStatus).collect(Collectors.toSet());
-            assertEquals(statuses.size(), 2);
-            assertTrue(statuses.contains(AtlanStatus.DELETED));
+            assertEquals(statuses.size(), 1);
             assertTrue(statuses.contains(AtlanStatus.ACTIVE));
             Set<String> types = terms.stream().map(GlossaryTerm::getTypeName).collect(Collectors.toSet());
             assertEquals(types.size(), 1);
@@ -130,14 +63,14 @@ public class TermAssignmentTest extends AtlanLiveTest {
             assertEquals(s3Object1.getName(), S3AssetTest.S3_OBJECT1_NAME);
             Set<GlossaryTerm> terms = s3Object1.getMeanings();
             assertNotNull(terms);
-            assertEquals(terms.size(), 2);
+            assertEquals(terms.size(), 1);
             Set<AtlanStatus> status =
                     terms.stream().map(GlossaryTerm::getRelationshipStatus).collect(Collectors.toSet());
             assertEquals(status.size(), 1);
             assertTrue(status.contains(AtlanStatus.DELETED));
         } catch (AtlanException e) {
             e.printStackTrace();
-            assertNull(e, "Unexpected exception while trying to remove assigned assets from a term.");
+            assertNull(e, "Unexpected exception while trying to remove assigned terms from an asset.");
         }
     }
 
@@ -156,7 +89,7 @@ public class TermAssignmentTest extends AtlanLiveTest {
             assertEquals(s3Object1.getName(), S3AssetTest.S3_OBJECT1_NAME);
             Set<GlossaryTerm> terms = s3Object1.getMeanings();
             assertNotNull(terms);
-            assertEquals(terms.size(), 3);
+            assertEquals(terms.size(), 2);
             Set<AtlanStatus> status =
                     terms.stream().map(GlossaryTerm::getRelationshipStatus).collect(Collectors.toSet());
             assertEquals(status.size(), 2);
@@ -169,7 +102,7 @@ public class TermAssignmentTest extends AtlanLiveTest {
             }
         } catch (AtlanException e) {
             e.printStackTrace();
-            assertNull(e, "Unexpected exception while trying to remove assigned assets from a term.");
+            assertNull(e, "Unexpected exception while trying to re-assign a term to an asset.");
         }
     }
 
@@ -188,7 +121,7 @@ public class TermAssignmentTest extends AtlanLiveTest {
             assertEquals(s3Object1.getName(), S3AssetTest.S3_OBJECT1_NAME);
             Set<GlossaryTerm> terms = s3Object1.getMeanings();
             assertNotNull(terms);
-            assertEquals(terms.size(), 4);
+            assertEquals(terms.size(), 3);
             Set<AtlanStatus> status =
                     terms.stream().map(GlossaryTerm::getRelationshipStatus).collect(Collectors.toSet());
             assertEquals(status.size(), 2);
@@ -202,7 +135,7 @@ public class TermAssignmentTest extends AtlanLiveTest {
             }
         } catch (AtlanException e) {
             e.printStackTrace();
-            assertNull(e, "Unexpected exception while trying to remove assigned assets from a term.");
+            assertNull(e, "Unexpected exception while trying to assign an additional term to an asset.");
         }
     }
 
@@ -221,7 +154,7 @@ public class TermAssignmentTest extends AtlanLiveTest {
             assertEquals(s3Object1.getName(), S3AssetTest.S3_OBJECT1_NAME);
             Set<GlossaryTerm> terms = s3Object1.getMeanings();
             assertNotNull(terms);
-            assertEquals(terms.size(), 4);
+            assertEquals(terms.size(), 3);
             Set<AtlanStatus> status =
                     terms.stream().map(GlossaryTerm::getRelationshipStatus).collect(Collectors.toSet());
             assertEquals(status.size(), 2);
@@ -234,7 +167,7 @@ public class TermAssignmentTest extends AtlanLiveTest {
             }
         } catch (AtlanException e) {
             e.printStackTrace();
-            assertNull(e, "Unexpected exception while trying to remove assigned assets from a term.");
+            assertNull(e, "Unexpected exception while trying to remove an assigned term from an asset.");
         }
     }
 
@@ -253,14 +186,14 @@ public class TermAssignmentTest extends AtlanLiveTest {
             assertEquals(s3Object1.getName(), S3AssetTest.S3_OBJECT1_NAME);
             Set<GlossaryTerm> terms = s3Object1.getMeanings();
             assertNotNull(terms);
-            assertEquals(terms.size(), 4);
+            assertEquals(terms.size(), 3);
             Set<AtlanStatus> status =
                     terms.stream().map(GlossaryTerm::getRelationshipStatus).collect(Collectors.toSet());
             assertEquals(status.size(), 1);
             assertTrue(status.contains(AtlanStatus.DELETED));
         } catch (AtlanException e) {
             e.printStackTrace();
-            assertNull(e, "Unexpected exception while trying to remove assigned assets from a term.");
+            assertNull(e, "Unexpected exception while trying to remove another assigned term from an asset.");
         }
     }
 }
