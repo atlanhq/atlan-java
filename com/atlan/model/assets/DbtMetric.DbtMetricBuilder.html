@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":6,"i2":10,"i3":10,"i4":10,"i5":10,"i6":6,"i7":10,"i8":10};
+var data = {"i0":10,"i1":6,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":6,"i10":10,"i11":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -229,30 +229,45 @@ extends <a href="Metric.MetricBuilder.html" title="class in com.atlan.model.asse
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="DbtMetric.DbtMetricBuilder.html" title="type parameter in DbtMetric.DbtMetricBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#dbtMetricFilterColumn(com.atlan.model.assets.Column)">dbtMetricFilterColumn</a></span>&#8203;(<a href="Column.html" title="class in com.atlan.model.assets">Column</a>&nbsp;dbtMetricFilterColumn)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearDbtMetricFilters()">clearDbtMetricFilters</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="DbtMetric.DbtMetricBuilder.html" title="type parameter in DbtMetric.DbtMetricBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#dbtMetricFilterColumns(java.util.Collection)">dbtMetricFilterColumns</a></span>&#8203;(java.util.Collection&lt;? extends <a href="Column.html" title="class in com.atlan.model.assets">Column</a>&gt;&nbsp;dbtMetricFilterColumns)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#dbtMetricFilter(com.atlan.model.assets.DbtMetricFilter)">dbtMetricFilter</a></span>&#8203;(<a href="DbtMetricFilter.html" title="class in com.atlan.model.assets">DbtMetricFilter</a>&nbsp;dbtMetricFilter)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="DbtMetric.DbtMetricBuilder.html" title="type parameter in DbtMetric.DbtMetricBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#dbtModel(com.atlan.model.assets.DbtModel)">dbtModel</a></span>&#8203;(<a href="DbtModel.html" title="class in com.atlan.model.assets">DbtModel</a>&nbsp;dbtModel)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#dbtMetricFilterColumn(com.atlan.model.assets.Column)">dbtMetricFilterColumn</a></span>&#8203;(<a href="Column.html" title="class in com.atlan.model.assets">Column</a>&nbsp;dbtMetricFilterColumn)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
+<td class="colFirst"><code><a href="DbtMetric.DbtMetricBuilder.html" title="type parameter in DbtMetric.DbtMetricBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#dbtMetricFilterColumns(java.util.Collection)">dbtMetricFilterColumns</a></span>&#8203;(java.util.Collection&lt;? extends <a href="Column.html" title="class in com.atlan.model.assets">Column</a>&gt;&nbsp;dbtMetricFilterColumns)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i7" class="rowColor">
+<td class="colFirst"><code><a href="DbtMetric.DbtMetricBuilder.html" title="type parameter in DbtMetric.DbtMetricBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#dbtMetricFilters(java.util.Collection)">dbtMetricFilters</a></span>&#8203;(java.util.Collection&lt;? extends <a href="DbtMetricFilter.html" title="class in com.atlan.model.assets">DbtMetricFilter</a>&gt;&nbsp;dbtMetricFilters)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i8" class="altColor">
+<td class="colFirst"><code><a href="DbtMetric.DbtMetricBuilder.html" title="type parameter in DbtMetric.DbtMetricBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#dbtModel(com.atlan.model.assets.DbtModel)">dbtModel</a></span>&#8203;(<a href="DbtModel.html" title="class in com.atlan.model.assets">DbtModel</a>&nbsp;dbtModel)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>protected abstract <a href="DbtMetric.DbtMetricBuilder.html" title="type parameter in DbtMetric.DbtMetricBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#self()">self</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code><a href="DbtMetric.DbtMetricBuilder.html" title="type parameter in DbtMetric.DbtMetricBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#typeName(java.lang.String)">typeName</a></span>&#8203;(java.lang.String&nbsp;typeName)</code></th>
 <td class="colLast">&nbsp;</td>
@@ -389,6 +404,33 @@ extends <a href="Metric.MetricBuilder.html" title="class in com.atlan.model.asse
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
 </dl>
+</li>
+</ul>
+<a id="dbtMetricFilter(com.atlan.model.assets.DbtMetricFilter)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>dbtMetricFilter</h4>
+<pre class="methodSignature">public&nbsp;<a href="DbtMetric.DbtMetricBuilder.html" title="type parameter in DbtMetric.DbtMetricBuilder">B</a>&nbsp;dbtMetricFilter&#8203;(<a href="DbtMetricFilter.html" title="class in com.atlan.model.assets">DbtMetricFilter</a>&nbsp;dbtMetricFilter)</pre>
+</li>
+</ul>
+<a id="dbtMetricFilters(java.util.Collection)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>dbtMetricFilters</h4>
+<pre class="methodSignature">public&nbsp;<a href="DbtMetric.DbtMetricBuilder.html" title="type parameter in DbtMetric.DbtMetricBuilder">B</a>&nbsp;dbtMetricFilters&#8203;(java.util.Collection&lt;? extends <a href="DbtMetricFilter.html" title="class in com.atlan.model.assets">DbtMetricFilter</a>&gt;&nbsp;dbtMetricFilters)</pre>
+</li>
+</ul>
+<a id="clearDbtMetricFilters()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>clearDbtMetricFilters</h4>
+<pre class="methodSignature">public&nbsp;<a href="DbtMetric.DbtMetricBuilder.html" title="type parameter in DbtMetric.DbtMetricBuilder">B</a>&nbsp;clearDbtMetricFilters()</pre>
 </li>
 </ul>
 <a id="dbtMetricFilterColumn(com.atlan.model.assets.Column)">

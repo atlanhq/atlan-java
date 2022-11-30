@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9};
+var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -223,6 +223,24 @@ extends java.lang.Object</pre>
 <div class="block">Deserialize the provided path into a string, or null if there is no value at the path.</div>
 </td>
 </tr>
+<tr id="i6" class="altColor">
+<td class="colFirst"><code>static void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#serializeBoolean(com.fasterxml.jackson.core.JsonGenerator,java.lang.String,java.lang.Boolean)">serializeBoolean</a></span>&#8203;(com.fasterxml.jackson.core.JsonGenerator&nbsp;gen,
+                java.lang.String&nbsp;name,
+                java.lang.Boolean&nbsp;value)</code></th>
+<td class="colLast">
+<div class="block">Serialize the provided field into a boolean, or leave it out if there is no value.</div>
+</td>
+</tr>
+<tr id="i7" class="rowColor">
+<td class="colFirst"><code>static void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#serializeString(com.fasterxml.jackson.core.JsonGenerator,java.lang.String,java.lang.String)">serializeString</a></span>&#8203;(com.fasterxml.jackson.core.JsonGenerator&nbsp;gen,
+               java.lang.String&nbsp;name,
+               java.lang.String&nbsp;value)</code></th>
+<td class="colLast">
+<div class="block">Serialize the provided field into a string, or leave it out if there is no value.</div>
+</td>
+</tr>
 </table>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
@@ -326,6 +344,27 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
+<a id="serializeString(com.fasterxml.jackson.core.JsonGenerator,java.lang.String,java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>serializeString</h4>
+<pre class="methodSignature">public static&nbsp;void&nbsp;serializeString&#8203;(com.fasterxml.jackson.core.JsonGenerator&nbsp;gen,
+                                   java.lang.String&nbsp;name,
+                                   java.lang.String&nbsp;value)
+                            throws java.io.IOException</pre>
+<div class="block">Serialize the provided field into a string, or leave it out if there is no value.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>gen</code> - generator through which to serialize</dd>
+<dd><code>name</code> - of the field</dd>
+<dd><code>value</code> - for the field</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code>java.io.IOException</code> - on any issues writing to the generator</dd>
+</dl>
+</li>
+</ul>
 <a id="deserializeLong(com.fasterxml.jackson.databind.JsonNode,java.lang.String)">
 <!--   -->
 </a>
@@ -359,6 +398,27 @@ extends java.lang.Object</pre>
 <dd><code>path</code> - at which to find the value</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the boolean value, or null</dd>
+</dl>
+</li>
+</ul>
+<a id="serializeBoolean(com.fasterxml.jackson.core.JsonGenerator,java.lang.String,java.lang.Boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>serializeBoolean</h4>
+<pre class="methodSignature">public static&nbsp;void&nbsp;serializeBoolean&#8203;(com.fasterxml.jackson.core.JsonGenerator&nbsp;gen,
+                                    java.lang.String&nbsp;name,
+                                    java.lang.Boolean&nbsp;value)
+                             throws java.io.IOException</pre>
+<div class="block">Serialize the provided field into a boolean, or leave it out if there is no value.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>gen</code> - generator through which to serialize</dd>
+<dd><code>name</code> - of the field</dd>
+<dd><code>value</code> - for the field</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code>java.io.IOException</code> - on any issues writing to the generator</dd>
 </dl>
 </li>
 </ul>

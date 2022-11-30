@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":6,"i2":10,"i3":10,"i4":10,"i5":6,"i6":10};
+var data = {"i0":10,"i1":6,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":6,"i9":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -218,25 +218,41 @@ extends <a href="Catalog.CatalogBuilder.html" title="class in com.atlan.model.as
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="Resource.ResourceBuilder.html" title="type parameter in Resource.ResourceBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isGlobal(java.lang.Boolean)">isGlobal</a></span>&#8203;(java.lang.Boolean&nbsp;isGlobal)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearResourceMetadata()">clearResourceMetadata</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="Resource.ResourceBuilder.html" title="type parameter in Resource.ResourceBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#link(java.lang.String)">link</a></span>&#8203;(java.lang.String&nbsp;link)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isGlobal(java.lang.Boolean)">isGlobal</a></span>&#8203;(java.lang.Boolean&nbsp;isGlobal)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="Resource.ResourceBuilder.html" title="type parameter in Resource.ResourceBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#reference(java.lang.String)">reference</a></span>&#8203;(java.lang.String&nbsp;reference)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#link(java.lang.String)">link</a></span>&#8203;(java.lang.String&nbsp;link)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
+<td class="colFirst"><code><a href="Resource.ResourceBuilder.html" title="type parameter in Resource.ResourceBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#putResourceMetadata(java.lang.String,java.lang.String)">putResourceMetadata</a></span>&#8203;(java.lang.String&nbsp;putResourceMetadataKey,
+                   java.lang.String&nbsp;putResourceMetadataValue)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i6" class="altColor">
+<td class="colFirst"><code><a href="Resource.ResourceBuilder.html" title="type parameter in Resource.ResourceBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#reference(java.lang.String)">reference</a></span>&#8203;(java.lang.String&nbsp;reference)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i7" class="rowColor">
+<td class="colFirst"><code><a href="Resource.ResourceBuilder.html" title="type parameter in Resource.ResourceBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#resourceMetadata(java.util.Map)">resourceMetadata</a></span>&#8203;(java.util.Map&lt;? extends java.lang.String,&#8203;? extends java.lang.String&gt;&nbsp;resourceMetadata)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>protected abstract <a href="Resource.ResourceBuilder.html" title="type parameter in Resource.ResourceBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#self()">self</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
@@ -390,6 +406,34 @@ extends <a href="Catalog.CatalogBuilder.html" title="class in com.atlan.model.as
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
 </dl>
+</li>
+</ul>
+<a id="putResourceMetadata(java.lang.String,java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>putResourceMetadata</h4>
+<pre class="methodSignature">public&nbsp;<a href="Resource.ResourceBuilder.html" title="type parameter in Resource.ResourceBuilder">B</a>&nbsp;putResourceMetadata&#8203;(java.lang.String&nbsp;putResourceMetadataKey,
+                             java.lang.String&nbsp;putResourceMetadataValue)</pre>
+</li>
+</ul>
+<a id="resourceMetadata(java.util.Map)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>resourceMetadata</h4>
+<pre class="methodSignature">public&nbsp;<a href="Resource.ResourceBuilder.html" title="type parameter in Resource.ResourceBuilder">B</a>&nbsp;resourceMetadata&#8203;(java.util.Map&lt;? extends java.lang.String,&#8203;? extends java.lang.String&gt;&nbsp;resourceMetadata)</pre>
+</li>
+</ul>
+<a id="clearResourceMetadata()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>clearResourceMetadata</h4>
+<pre class="methodSignature">public&nbsp;<a href="Resource.ResourceBuilder.html" title="type parameter in Resource.ResourceBuilder">B</a>&nbsp;clearResourceMetadata()</pre>
 </li>
 </ul>
 <a id="toString()">

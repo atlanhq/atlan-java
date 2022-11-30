@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":10,"i2":10,"i3":9,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":9,"i20":9,"i21":10,"i22":10,"i23":9,"i24":9,"i25":9,"i26":9,"i27":9,"i28":9,"i29":10,"i30":10,"i31":10,"i32":10,"i33":10,"i34":10,"i35":9,"i36":10,"i37":10};
+var data = {"i0":9,"i1":10,"i2":10,"i3":9,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":9,"i20":9,"i21":10,"i22":10,"i23":9,"i24":9,"i25":9,"i26":9,"i27":9,"i28":9,"i29":10,"i30":10,"i31":10,"i32":10,"i33":10,"i34":10,"i35":10,"i36":9,"i37":10,"i38":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -141,7 +141,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><code>java.lang.Comparable&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;</code></dd>
+<dd><code><a href="../search/AuditDetail.html" title="interface in com.atlan.model.search">AuditDetail</a></code>, <code>java.lang.Comparable&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;</code></dd>
 </dl>
 <dl>
 <dt>Direct Known Subclasses:</dt>
@@ -479,6 +479,13 @@ extends <a href="../relations/Reference.html" title="class in com.atlan.model.re
 </td>
 </tr>
 <tr id="i35" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setStatus(com.atlan.model.enums.AtlanStatus)">setStatus</a></span>&#8203;(<a href="../enums/AtlanStatus.html" title="enum in com.atlan.model.enums">AtlanStatus</a>&nbsp;status)</code></th>
+<td class="colLast">
+<div class="block">Status of the entity.</div>
+</td>
+</tr>
+<tr id="i36" class="altColor">
 <td class="colFirst"><code>static void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateCustomMetadataAttributes(java.lang.String,java.lang.String,com.atlan.model.core.CustomMetadataAttributes)">updateCustomMetadataAttributes</a></span>&#8203;(java.lang.String&nbsp;guid,
                               java.lang.String&nbsp;cmName,
@@ -487,14 +494,14 @@ extends <a href="../relations/Reference.html" title="class in com.atlan.model.re
 <div class="block">Update only the provided custom metadata attributes on the asset.</div>
 </td>
 </tr>
-<tr id="i36" class="altColor">
+<tr id="i37" class="rowColor">
 <td class="colFirst"><code><a href="EntityMutationResponse.html" title="class in com.atlan.model.core">EntityMutationResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#upsert()">upsert</a></span>()</code></th>
 <td class="colLast">
 <div class="block">If an entity with the same qualifiedName exists, updates the existing entity.</div>
 </td>
 </tr>
-<tr id="i37" class="rowColor">
+<tr id="i38" class="altColor">
 <td class="colFirst"><code><a href="EntityMutationResponse.html" title="class in com.atlan.model.core">EntityMutationResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#upsert(boolean,boolean)">upsert</a></span>&#8203;(boolean&nbsp;replaceClassifications,
       boolean&nbsp;replaceCustomMetadata)</code></th>
@@ -1025,6 +1032,16 @@ extends <a href="../relations/Reference.html" title="class in com.atlan.model.re
 <div class="block">Map of custom metadata attributes and values defined on the entity. The map is keyed by the human-readable
  name of the custom metadata set, and the values are a further mapping from human-readable attribute name
  to the value for that attribute on this entity.</div>
+</li>
+</ul>
+<a id="setStatus(com.atlan.model.enums.AtlanStatus)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setStatus</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;setStatus&#8203;(<a href="../enums/AtlanStatus.html" title="enum in com.atlan.model.enums">AtlanStatus</a>&nbsp;status)</pre>
+<div class="block">Status of the entity.</div>
 </li>
 </ul>
 <a id="setClassificationNames(java.util.Set)">

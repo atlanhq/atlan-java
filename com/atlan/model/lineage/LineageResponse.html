@@ -26,8 +26,8 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":10,"i32":10,"i33":10,"i34":10,"i35":10};
-var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":10,"i32":10,"i33":42,"i34":10,"i35":10,"i36":10,"i37":10,"i38":10,"i39":10,"i40":10,"i41":10,"i42":10};
+var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -222,7 +222,7 @@ extends <a href="../../net/ApiResource.html" title="class in com.atlan.net">ApiR
 </a>
 <h3>Method Summary</h3>
 <table class="memberSummary">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t6" class="tableTab"><span><a href="javascript:show(32);">Deprecated Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colSecond" scope="col">Method</th>
@@ -359,127 +359,176 @@ extends <a href="../../net/ApiResource.html" title="class in com.atlan.net">ApiR
 </td>
 </tr>
 <tr id="i18" class="altColor">
-<td class="colFirst"><code>java.lang.Integer</code></td>
+<td class="colFirst"><code>java.lang.Boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getHasMoreDownstreamVertices()">getHasMoreDownstreamVertices</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Whether there is more lineage downstream than returned (true) or not (false).</div>
+</td>
+</tr>
+<tr id="i19" class="rowColor">
+<td class="colFirst"><code>java.lang.Boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getHasMoreUpstreamVertices()">getHasMoreUpstreamVertices</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Whether there is more lineage upstream than returned (true) or not (false).</div>
+</td>
+</tr>
+<tr id="i20" class="altColor">
+<td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getLimit()">getLimit</a></span>()</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i19" class="rowColor">
+<tr id="i21" class="rowColor">
 <td class="colFirst"><code>java.lang.Integer</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getLineageDepth()">getLineageDepth</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Number of degrees of separation (hops) across which the lineage was produced.</div>
 </td>
 </tr>
-<tr id="i20" class="altColor">
+<tr id="i22" class="altColor">
 <td class="colFirst"><code><a href="../enums/AtlanLineageDirection.html" title="enum in com.atlan.model.enums">AtlanLineageDirection</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getLineageDirection()">getLineageDirection</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Type of lineage covered by the response: upstream only, downstream only, or both.</div>
 </td>
 </tr>
-<tr id="i21" class="rowColor">
+<tr id="i23" class="rowColor">
+<td class="colFirst"><code>java.lang.Long</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOffset()">getOffset</a></span>()</code></th>
+<td class="colLast">
+<div class="block">TBC</div>
+</td>
+</tr>
+<tr id="i24" class="altColor">
 <td class="colFirst"><code>java.util.List&lt;<a href="../core/Entity.html" title="class in com.atlan.model.core">Entity</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getUpstreamEntities()">getUpstreamEntities</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Retrieve entities that are immediately upstream from the originally-requested entity.</div>
 </td>
 </tr>
-<tr id="i22" class="altColor">
+<tr id="i25" class="rowColor">
 <td class="colFirst"><code>java.util.List&lt;<a href="../core/Entity.html" title="class in com.atlan.model.core">Entity</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getUpstreamEntities(java.lang.String)">getUpstreamEntities</a></span>&#8203;(java.lang.String&nbsp;guid)</code></th>
 <td class="colLast">
 <div class="block">Retrieve entities that are immediately upstream from the specified entity.</div>
 </td>
 </tr>
-<tr id="i23" class="rowColor">
+<tr id="i26" class="altColor">
 <td class="colFirst"><code>java.util.Set&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getUpstreamEntityGuids()">getUpstreamEntityGuids</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Retrieve GUIDs of entities that are immediately upstream from the originally-requested entity.</div>
 </td>
 </tr>
-<tr id="i24" class="altColor">
+<tr id="i27" class="rowColor">
 <td class="colFirst"><code>java.util.Set&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getUpstreamEntityGuids(java.lang.String)">getUpstreamEntityGuids</a></span>&#8203;(java.lang.String&nbsp;guid)</code></th>
 <td class="colLast">
 <div class="block">Retrieve GUIDs of entities that are immediately upstream from the specified entity.</div>
 </td>
 </tr>
-<tr id="i25" class="rowColor">
+<tr id="i28" class="altColor">
 <td class="colFirst"><code>java.util.Set&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getUpstreamProcessGuids()">getUpstreamProcessGuids</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Retrieve GUIDs of processes that run immediately upstream to produce the originally-requested entity.</div>
 </td>
 </tr>
-<tr id="i26" class="altColor">
+<tr id="i29" class="rowColor">
 <td class="colFirst"><code>java.util.Set&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getUpstreamProcessGuids(java.lang.String)">getUpstreamProcessGuids</a></span>&#8203;(java.lang.String&nbsp;guid)</code></th>
 <td class="colLast">
 <div class="block">Retrieve GUIDs of processes that run immediately upstream to produce the specified entity.</div>
 </td>
 </tr>
-<tr id="i27" class="rowColor">
+<tr id="i30" class="altColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hashCode()">hashCode</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i28" class="altColor">
+<tr id="i31" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAssetDetails(java.util.Map)">setAssetDetails</a></span>&#8203;(java.util.Map&lt;java.lang.String,&#8203;<a href="../core/Entity.html" title="class in com.atlan.model.core">Entity</a>&gt;&nbsp;assetDetails)</code></th>
 <td class="colLast">
 <div class="block">Details of the assets that exist in the lineage graph.</div>
 </td>
 </tr>
-<tr id="i29" class="rowColor">
+<tr id="i32" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setBaseEntityGuid(java.lang.String)">setBaseEntityGuid</a></span>&#8203;(java.lang.String&nbsp;baseEntityGuid)</code></th>
 <td class="colLast">
 <div class="block">Unique identifier of the root asset for which these lineage details exist.</div>
 </td>
 </tr>
-<tr id="i30" class="altColor">
+<tr id="i33" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setChildrenCounts(java.lang.Object)">setChildrenCounts</a></span>&#8203;(java.lang.Object&nbsp;childrenCounts)</code></th>
 <td class="colLast">
-<div class="block">Mapping of assets to their upstream and downstream asset counts.</div>
+<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 </td>
 </tr>
-<tr id="i31" class="rowColor">
+<tr id="i34" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setGraph(com.atlan.model.lineage.LineageGraph)">setGraph</a></span>&#8203;(com.atlan.model.lineage.LineageGraph&nbsp;graph)</code></th>
 <td class="colLast">
 <div class="block">Traversable graph representation of the lineage results.</div>
 </td>
 </tr>
-<tr id="i32" class="altColor">
+<tr id="i35" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setLimit(java.lang.Integer)">setLimit</a></span>&#8203;(java.lang.Integer&nbsp;limit)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setHasMoreDownstreamVertices(java.lang.Boolean)">setHasMoreDownstreamVertices</a></span>&#8203;(java.lang.Boolean&nbsp;hasMoreDownstreamVertices)</code></th>
+<td class="colLast">
+<div class="block">Whether there is more lineage downstream than returned (true) or not (false).</div>
+</td>
+</tr>
+<tr id="i36" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setHasMoreUpstreamVertices(java.lang.Boolean)">setHasMoreUpstreamVertices</a></span>&#8203;(java.lang.Boolean&nbsp;hasMoreUpstreamVertices)</code></th>
+<td class="colLast">
+<div class="block">Whether there is more lineage upstream than returned (true) or not (false).</div>
+</td>
+</tr>
+<tr id="i37" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setLimit(java.lang.Long)">setLimit</a></span>&#8203;(java.lang.Long&nbsp;limit)</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i33" class="rowColor">
+<tr id="i38" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setLineageDepth(java.lang.Integer)">setLineageDepth</a></span>&#8203;(java.lang.Integer&nbsp;lineageDepth)</code></th>
 <td class="colLast">
 <div class="block">Number of degrees of separation (hops) across which the lineage was produced.</div>
 </td>
 </tr>
-<tr id="i34" class="altColor">
+<tr id="i39" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setLineageDirection(com.atlan.model.enums.AtlanLineageDirection)">setLineageDirection</a></span>&#8203;(<a href="../enums/AtlanLineageDirection.html" title="enum in com.atlan.model.enums">AtlanLineageDirection</a>&nbsp;lineageDirection)</code></th>
 <td class="colLast">
 <div class="block">Type of lineage covered by the response: upstream only, downstream only, or both.</div>
 </td>
 </tr>
-<tr id="i35" class="rowColor">
+<tr id="i40" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setOffset(java.lang.Long)">setOffset</a></span>&#8203;(java.lang.Long&nbsp;offset)</code></th>
+<td class="colLast">
+<div class="block">TBC</div>
+</td>
+</tr>
+<tr id="i41" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setRelations(java.util.Set)">setRelations</a></span>&#8203;(java.util.Set&lt;<a href="LineageRelation.html" title="class in com.atlan.model.lineage">LineageRelation</a>&gt;&nbsp;relations)</code></th>
 <td class="colLast">
 <div class="block">List of relationships describing the lineage between each asset.</div>
+</td>
+</tr>
+<tr id="i42" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setVertexChildrenInfo(java.lang.Object)">setVertexChildrenInfo</a></span>&#8203;(java.lang.Object&nbsp;vertexChildrenInfo)</code></th>
+<td class="colLast">
+<div class="block">TBC</div>
 </td>
 </tr>
 </table>
@@ -943,8 +992,38 @@ extends <a href="../../net/ApiResource.html" title="class in com.atlan.net">ApiR
 <ul class="blockList">
 <li class="blockList">
 <h4>getLimit</h4>
-<pre class="methodSignature">public&nbsp;java.lang.Integer&nbsp;getLimit()</pre>
+<pre class="methodSignature">public&nbsp;java.lang.Long&nbsp;getLimit()</pre>
 <div class="block">TBC</div>
+</li>
+</ul>
+<a id="getOffset()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getOffset</h4>
+<pre class="methodSignature">public&nbsp;java.lang.Long&nbsp;getOffset()</pre>
+<div class="block">TBC</div>
+</li>
+</ul>
+<a id="getHasMoreUpstreamVertices()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getHasMoreUpstreamVertices</h4>
+<pre class="methodSignature">public&nbsp;java.lang.Boolean&nbsp;getHasMoreUpstreamVertices()</pre>
+<div class="block">Whether there is more lineage upstream than returned (true) or not (false).</div>
+</li>
+</ul>
+<a id="getHasMoreDownstreamVertices()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getHasMoreDownstreamVertices</h4>
+<pre class="methodSignature">public&nbsp;java.lang.Boolean&nbsp;getHasMoreDownstreamVertices()</pre>
+<div class="block">Whether there is more lineage downstream than returned (true) or not (false).</div>
 </li>
 </ul>
 <a id="getAssetDetails()">
@@ -990,14 +1069,44 @@ extends <a href="../../net/ApiResource.html" title="class in com.atlan.net">ApiR
 <div class="block">Number of degrees of separation (hops) across which the lineage was produced.</div>
 </li>
 </ul>
-<a id="setLimit(java.lang.Integer)">
+<a id="setLimit(java.lang.Long)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>setLimit</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setLimit&#8203;(java.lang.Integer&nbsp;limit)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;setLimit&#8203;(java.lang.Long&nbsp;limit)</pre>
 <div class="block">TBC</div>
+</li>
+</ul>
+<a id="setOffset(java.lang.Long)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setOffset</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;setOffset&#8203;(java.lang.Long&nbsp;offset)</pre>
+<div class="block">TBC</div>
+</li>
+</ul>
+<a id="setHasMoreUpstreamVertices(java.lang.Boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setHasMoreUpstreamVertices</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;setHasMoreUpstreamVertices&#8203;(java.lang.Boolean&nbsp;hasMoreUpstreamVertices)</pre>
+<div class="block">Whether there is more lineage upstream than returned (true) or not (false).</div>
+</li>
+</ul>
+<a id="setHasMoreDownstreamVertices(java.lang.Boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setHasMoreDownstreamVertices</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;setHasMoreDownstreamVertices&#8203;(java.lang.Boolean&nbsp;hasMoreDownstreamVertices)</pre>
+<div class="block">Whether there is more lineage downstream than returned (true) or not (false).</div>
 </li>
 </ul>
 <a id="setAssetDetails(java.util.Map)">
@@ -1029,13 +1138,25 @@ extends <a href="../../net/ApiResource.html" title="class in com.atlan.net">ApiR
 <ul class="blockList">
 <li class="blockList">
 <h4>setChildrenCounts</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setChildrenCounts&#8203;(java.lang.Object&nbsp;childrenCounts)</pre>
+<pre class="methodSignature">@Deprecated
+public&nbsp;void&nbsp;setChildrenCounts&#8203;(java.lang.Object&nbsp;childrenCounts)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">Mapping of assets to their upstream and downstream asset counts.
  In theory, the keys of the map are the unique identifiers (GUIDs) of each asset in lineage,
  and their value is an object containing a count of upstream <code>INPUT</code> and
  downstream <code>OUTPUT</code> assets in lineage from that asset. In reality, the
  <code>INPUT</code> count is missing for most assets.
  Note: this should not be used, instead traverse the graph representation.</div>
+</li>
+</ul>
+<a id="setVertexChildrenInfo(java.lang.Object)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setVertexChildrenInfo</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;setVertexChildrenInfo&#8203;(java.lang.Object&nbsp;vertexChildrenInfo)</pre>
+<div class="block">TBC</div>
 </li>
 </ul>
 <a id="setGraph(com.atlan.model.lineage.LineageGraph)">

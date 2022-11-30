@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":9,"i2":9,"i3":10,"i4":9,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":9,"i18":9,"i19":9,"i20":9,"i21":9,"i22":9,"i23":9,"i24":9,"i25":9,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":10,"i32":10,"i33":10,"i34":10,"i35":10,"i36":10,"i37":10,"i38":9,"i39":9,"i40":9};
+var data = {"i0":9,"i1":9,"i2":9,"i3":10,"i4":9,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":9,"i18":9,"i19":9,"i20":9,"i21":9,"i22":9,"i23":9,"i24":9,"i25":9,"i26":9,"i27":9,"i28":9,"i29":9,"i30":10,"i31":10,"i32":10,"i33":10,"i34":10,"i35":10,"i36":10,"i37":10,"i38":10,"i39":10,"i40":10,"i41":10,"i42":9,"i43":9,"i44":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -161,7 +161,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><code>java.lang.Comparable&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;</code></dd>
+<dd><code><a href="../search/AuditDetail.html" title="interface in com.atlan.model.search">AuditDetail</a></code>, <code>java.lang.Comparable&lt;<a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a>&gt;</code></dd>
 </dl>
 <hr>
 <pre>public class <span class="typeNameLabel">APISpec</span>
@@ -451,13 +451,37 @@ extends <a href="API.html" title="class in com.atlan.model.assets">API</a></pre>
 </tr>
 <tr id="i22" class="altColor">
 <td class="colFirst"><code>static <a href="APISpec.html" title="class in com.atlan.model.assets">APISpec</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeDescription(java.lang.String,java.lang.String)">removeDescription</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
+                 java.lang.String&nbsp;name)</code></th>
+<td class="colLast">
+<div class="block">Remove the system description from a APISpec.</div>
+</td>
+</tr>
+<tr id="i23" class="rowColor">
+<td class="colFirst"><code>static <a href="APISpec.html" title="class in com.atlan.model.assets">APISpec</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeOwners(java.lang.String,java.lang.String)">removeOwners</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
+            java.lang.String&nbsp;name)</code></th>
+<td class="colLast">
+<div class="block">Remove the owners from a APISpec.</div>
+</td>
+</tr>
+<tr id="i24" class="altColor">
+<td class="colFirst"><code>static <a href="APISpec.html" title="class in com.atlan.model.assets">APISpec</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeTerms(java.lang.String,java.util.List)">removeTerms</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
            java.util.List&lt;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;terms)</code></th>
 <td class="colLast">
 <div class="block">Remove terms from a APISpec, without replacing all existing terms linked to the APISpec.</div>
 </td>
 </tr>
-<tr id="i23" class="rowColor">
+<tr id="i25" class="rowColor">
+<td class="colFirst"><code>static <a href="APISpec.html" title="class in com.atlan.model.assets">APISpec</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeUserDescription(java.lang.String,java.lang.String)">removeUserDescription</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
+                     java.lang.String&nbsp;name)</code></th>
+<td class="colLast">
+<div class="block">Remove the user's description from a APISpec.</div>
+</td>
+</tr>
+<tr id="i26" class="altColor">
 <td class="colFirst"><code>static <a href="APISpec.html" title="class in com.atlan.model.assets">APISpec</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#replaceTerms(java.lang.String,java.lang.String,java.util.List)">replaceTerms</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
             java.lang.String&nbsp;name,
@@ -466,96 +490,103 @@ extends <a href="API.html" title="class in com.atlan.model.assets">API</a></pre>
 <div class="block">Replace the terms linked to the APISpec.</div>
 </td>
 </tr>
-<tr id="i24" class="altColor">
+<tr id="i27" class="rowColor">
+<td class="colFirst"><code>static boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#restore(java.lang.String)">restore</a></span>&#8203;(java.lang.String&nbsp;qualifiedName)</code></th>
+<td class="colLast">
+<div class="block">Restore the archived (soft-deleted) APISpec to active.</div>
+</td>
+</tr>
+<tr id="i28" class="altColor">
 <td class="colFirst"><code>static <a href="APISpec.html" title="class in com.atlan.model.assets">APISpec</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#retrieveByGuid(java.lang.String)">retrieveByGuid</a></span>&#8203;(java.lang.String&nbsp;guid)</code></th>
 <td class="colLast">
 <div class="block">Retrieves a APISpec by its GUID, complete with all of its relationships.</div>
 </td>
 </tr>
-<tr id="i25" class="rowColor">
+<tr id="i29" class="rowColor">
 <td class="colFirst"><code>static <a href="APISpec.html" title="class in com.atlan.model.assets">APISpec</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#retrieveByQualifiedName(java.lang.String)">retrieveByQualifiedName</a></span>&#8203;(java.lang.String&nbsp;qualifiedName)</code></th>
 <td class="colLast">
 <div class="block">Retrieves a APISpec by its qualifiedName, complete with all of its relationships.</div>
 </td>
 </tr>
-<tr id="i26" class="altColor">
+<tr id="i30" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setApiPaths(java.util.SortedSet)">setApiPaths</a></span>&#8203;(java.util.SortedSet&lt;<a href="APIPath.html" title="class in com.atlan.model.assets">APIPath</a>&gt;&nbsp;apiPaths)</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i27" class="rowColor">
+<tr id="i31" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setApiSpecContactEmail(java.lang.String)">setApiSpecContactEmail</a></span>&#8203;(java.lang.String&nbsp;apiSpecContactEmail)</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i28" class="altColor">
+<tr id="i32" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setApiSpecContactName(java.lang.String)">setApiSpecContactName</a></span>&#8203;(java.lang.String&nbsp;apiSpecContactName)</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i29" class="rowColor">
+<tr id="i33" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setApiSpecContactURL(java.lang.String)">setApiSpecContactURL</a></span>&#8203;(java.lang.String&nbsp;apiSpecContactURL)</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i30" class="altColor">
+<tr id="i34" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setApiSpecContractVersion(java.lang.String)">setApiSpecContractVersion</a></span>&#8203;(java.lang.String&nbsp;apiSpecContractVersion)</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i31" class="rowColor">
+<tr id="i35" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setApiSpecLicenseName(java.lang.String)">setApiSpecLicenseName</a></span>&#8203;(java.lang.String&nbsp;apiSpecLicenseName)</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i32" class="altColor">
+<tr id="i36" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setApiSpecLicenseURL(java.lang.String)">setApiSpecLicenseURL</a></span>&#8203;(java.lang.String&nbsp;apiSpecLicenseURL)</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i33" class="rowColor">
+<tr id="i37" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setApiSpecServiceAlias(java.lang.String)">setApiSpecServiceAlias</a></span>&#8203;(java.lang.String&nbsp;apiSpecServiceAlias)</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i34" class="altColor">
+<tr id="i38" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setApiSpecTermsOfServiceURL(java.lang.String)">setApiSpecTermsOfServiceURL</a></span>&#8203;(java.lang.String&nbsp;apiSpecTermsOfServiceURL)</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i35" class="rowColor">
+<tr id="i39" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setTypeName(java.lang.String)">setTypeName</a></span>&#8203;(java.lang.String&nbsp;typeName)</code></th>
 <td class="colLast">
 <div class="block">Fixed typeName for APISpecs.</div>
 </td>
 </tr>
-<tr id="i36" class="altColor">
+<tr id="i40" class="altColor">
 <td class="colFirst"><code><a href="APISpec.APISpecBuilder.html" title="class in com.atlan.model.assets">APISpec.APISpecBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toBuilder()">toBuilder</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i37" class="rowColor">
+<tr id="i41" class="rowColor">
 <td class="colFirst"><code>protected <a href="APISpec.APISpecBuilder.html" title="class in com.atlan.model.assets">APISpec.APISpecBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#trimToRequired()">trimToRequired</a></span>()</code></th>
 <td class="colLast">
@@ -563,7 +594,7 @@ extends <a href="API.html" title="class in com.atlan.model.assets">API</a></pre>
  more-complete APISpec object.</div>
 </td>
 </tr>
-<tr id="i38" class="altColor">
+<tr id="i42" class="altColor">
 <td class="colFirst"><code>static <a href="APISpec.html" title="class in com.atlan.model.assets">APISpec</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateAnnouncement(java.lang.String,com.atlan.model.enums.AtlanAnnouncementType,java.lang.String,java.lang.String)">updateAnnouncement</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                   <a href="../enums/AtlanAnnouncementType.html" title="enum in com.atlan.model.enums">AtlanAnnouncementType</a>&nbsp;type,
@@ -573,7 +604,7 @@ extends <a href="API.html" title="class in com.atlan.model.assets">API</a></pre>
 <div class="block">Update the announcement on a APISpec.</div>
 </td>
 </tr>
-<tr id="i39" class="rowColor">
+<tr id="i43" class="rowColor">
 <td class="colFirst"><code>static <a href="APISpec.html" title="class in com.atlan.model.assets">APISpec</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateCertificate(java.lang.String,com.atlan.model.enums.AtlanCertificateStatus,java.lang.String)">updateCertificate</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                  <a href="../enums/AtlanCertificateStatus.html" title="enum in com.atlan.model.enums">AtlanCertificateStatus</a>&nbsp;certificate,
@@ -582,7 +613,7 @@ extends <a href="API.html" title="class in com.atlan.model.assets">API</a></pre>
 <div class="block">Update the certificate on a APISpec.</div>
 </td>
 </tr>
-<tr id="i40" class="altColor">
+<tr id="i44" class="altColor">
 <td class="colFirst"><code>static <a href="APISpec.APISpecBuilder.html" title="class in com.atlan.model.assets">APISpec.APISpecBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updater(java.lang.String,java.lang.String)">updater</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
        java.lang.String&nbsp;name)</code></th>
@@ -610,14 +641,14 @@ extends <a href="API.html" title="class in com.atlan.model.assets">API</a></pre>
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;com.atlan.model.assets.<a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></h3>
-<code><a href="Asset.html#appendTerms(java.lang.String,java.lang.String,java.util.List)">appendTerms</a>, <a href="Asset.html#getAdminGroups()">getAdminGroups</a>, <a href="Asset.html#getAdminRoles()">getAdminRoles</a>, <a href="Asset.html#getAdminUsers()">getAdminUsers</a>, <a href="Asset.html#getAnnouncementMessage()">getAnnouncementMessage</a>, <a href="Asset.html#getAnnouncementTitle()">getAnnouncementTitle</a>, <a href="Asset.html#getAnnouncementType()">getAnnouncementType</a>, <a href="Asset.html#getAnnouncementUpdatedAt()">getAnnouncementUpdatedAt</a>, <a href="Asset.html#getAnnouncementUpdatedBy()">getAnnouncementUpdatedBy</a>, <a href="Asset.html#getAssetDbtAccountName()">getAssetDbtAccountName</a>, <a href="Asset.html#getAssetDbtAlias()">getAssetDbtAlias</a>, <a href="Asset.html#getAssetDbtEnvironmentDbtVersion()">getAssetDbtEnvironmentDbtVersion</a>, <a href="Asset.html#getAssetDbtEnvironmentName()">getAssetDbtEnvironmentName</a>, <a href="Asset.html#getAssetDbtJobLastRun()">getAssetDbtJobLastRun</a>, <a href="Asset.html#getAssetDbtJobLastRunArtifactS3Path()">getAssetDbtJobLastRunArtifactS3Path</a>, <a href="Asset.html#getAssetDbtJobLastRunArtifactsSaved()">getAssetDbtJobLastRunArtifactsSaved</a>, <a href="Asset.html#getAssetDbtJobLastRunCreatedAt()">getAssetDbtJobLastRunCreatedAt</a>, <a href="Asset.html#getAssetDbtJobLastRunDequedAt()">getAssetDbtJobLastRunDequedAt</a>, <a href="Asset.html#getAssetDbtJobLastRunExecutedByThreadId()">getAssetDbtJobLastRunExecutedByThreadId</a>, <a href="Asset.html#getAssetDbtJobLastRunGitBranch()">getAssetDbtJobLastRunGitBranch</a>, <a href="Asset.html#getAssetDbtJobLastRunGitSha()">getAssetDbtJobLastRunGitSha</a>, <a href="Asset.html#getAssetDbtJobLastRunHasDocsGenerated()">getAssetDbtJobLastRunHasDocsGenerated</a>, <a href="Asset.html#getAssetDbtJobLastRunHasSourcesGenerated()">getAssetDbtJobLastRunHasSourcesGenerated</a>, <a href="Asset.html#getAssetDbtJobLastRunNotificationsSent()">getAssetDbtJobLastRunNotificationsSent</a>, <a href="Asset.html#getAssetDbtJobLastRunOwnerThreadId()">getAssetDbtJobLastRunOwnerThreadId</a>, <a href="Asset.html#getAssetDbtJobLastRunQueuedDuration()">getAssetDbtJobLastRunQueuedDuration</a>, <a href="Asset.html#getAssetDbtJobLastRunQueuedDurationHumanized()">getAssetDbtJobLastRunQueuedDurationHumanized</a>, <a href="Asset.html#getAssetDbtJobLastRunRunDuration()">getAssetDbtJobLastRunRunDuration</a>, <a href="Asset.html#getAssetDbtJobLastRunRunDurationHumanized()">getAssetDbtJobLastRunRunDurationHumanized</a>, <a href="Asset.html#getAssetDbtJobLastRunStartedAt()">getAssetDbtJobLastRunStartedAt</a>, <a href="Asset.html#getAssetDbtJobLastRunStatusMessage()">getAssetDbtJobLastRunStatusMessage</a>, <a href="Asset.html#getAssetDbtJobLastRunTotalDuration()">getAssetDbtJobLastRunTotalDuration</a>, <a href="Asset.html#getAssetDbtJobLastRunTotalDurationHumanized()">getAssetDbtJobLastRunTotalDurationHumanized</a>, <a href="Asset.html#getAssetDbtJobLastRunUpdatedAt()">getAssetDbtJobLastRunUpdatedAt</a>, <a href="Asset.html#getAssetDbtJobLastRunUrl()">getAssetDbtJobLastRunUrl</a>, <a href="Asset.html#getAssetDbtJobName()">getAssetDbtJobName</a>, <a href="Asset.html#getAssetDbtJobNextRun()">getAssetDbtJobNextRun</a>, <a href="Asset.html#getAssetDbtJobNextRunHumanized()">getAssetDbtJobNextRunHumanized</a>, <a href="Asset.html#getAssetDbtJobSchedule()">getAssetDbtJobSchedule</a>, <a href="Asset.html#getAssetDbtJobScheduleCronHumanized()">getAssetDbtJobScheduleCronHumanized</a>, <a href="Asset.html#getAssetDbtJobStatus()">getAssetDbtJobStatus</a>, <a href="Asset.html#getAssetDbtMeta()">getAssetDbtMeta</a>, <a href="Asset.html#getAssetDbtPackageName()">getAssetDbtPackageName</a>, <a href="Asset.html#getAssetDbtProjectName()">getAssetDbtProjectName</a>, <a href="Asset.html#getAssetDbtSemanticLayerProxyUrl()">getAssetDbtSemanticLayerProxyUrl</a>, <a href="Asset.html#getAssetDbtTags()">getAssetDbtTags</a>, <a href="Asset.html#getAssetDbtUniqueId()">getAssetDbtUniqueId</a>, <a href="Asset.html#getCertificateStatus()">getCertificateStatus</a>, <a href="Asset.html#getCertificateStatusMessage()">getCertificateStatusMessage</a>, <a href="Asset.html#getCertificateUpdatedAt()">getCertificateUpdatedAt</a>, <a href="Asset.html#getCertificateUpdatedBy()">getCertificateUpdatedBy</a>, <a href="Asset.html#getConnectionName()">getConnectionName</a>, <a href="Asset.html#getConnectionQualifiedName()">getConnectionQualifiedName</a>, <a href="Asset.html#getConnectorType()">getConnectorType</a>, <a href="Asset.html#getDbtQualifiedName()">getDbtQualifiedName</a>, <a href="Asset.html#getDescription()">getDescription</a>, <a href="Asset.html#getDisplayName()">getDisplayName</a>, <a href="Asset.html#getHasLineage()">getHasLineage</a>, <a href="Asset.html#getIsDiscoverable()">getIsDiscoverable</a>, <a href="Asset.html#getIsEditable()">getIsEditable</a>, <a href="Asset.html#getLastSyncRun()">getLastSyncRun</a>, <a href="Asset.html#getLastSyncRunAt()">getLastSyncRunAt</a>, <a href="Asset.html#getLastSyncWorkflowName()">getLastSyncWorkflowName</a>, <a href="Asset.html#getLinks()">getLinks</a>, <a href="Asset.html#getMeanings()">getMeanings</a>, <a href="Asset.html#getName()">getName</a>, <a href="Asset.html#getOwnerGroups()">getOwnerGroups</a>, <a href="Asset.html#getOwnerUsers()">getOwnerUsers</a>, <a href="Asset.html#getPopularityScore()">getPopularityScore</a>, <a href="Asset.html#getQualifiedName()">getQualifiedName</a>, <a href="Asset.html#getReadme()">getReadme</a>, <a href="Asset.html#getSourceCreatedAt()">getSourceCreatedAt</a>, <a href="Asset.html#getSourceCreatedBy()">getSourceCreatedBy</a>, <a href="Asset.html#getSourceEmbedURL()">getSourceEmbedURL</a>, <a href="Asset.html#getSourceOwners()">getSourceOwners</a>, <a href="Asset.html#getSourceUpdatedAt()">getSourceUpdatedAt</a>, <a href="Asset.html#getSourceUpdatedBy()">getSourceUpdatedBy</a>, <a href="Asset.html#getSourceURL()">getSourceURL</a>, <a href="Asset.html#getSubType()">getSubType</a>, <a href="Asset.html#getTenantId()">getTenantId</a>, <a href="Asset.html#getUserDescription()">getUserDescription</a>, <a href="Asset.html#getViewerGroups()">getViewerGroups</a>, <a href="Asset.html#getViewerUsers()">getViewerUsers</a>, <a href="Asset.html#getViewScore()">getViewScore</a>, <a href="Asset.html#removeAnnouncement()">removeAnnouncement</a>, <a href="Asset.html#removeAnnouncement(com.atlan.model.assets.Asset.AssetBuilder)">removeAnnouncement</a>, <a href="Asset.html#removeCertificate()">removeCertificate</a>, <a href="Asset.html#removeCertificate(com.atlan.model.assets.Asset.AssetBuilder)">removeCertificate</a>, <a href="Asset.html#removeMeanings()">removeMeanings</a>, <a href="Asset.html#removeTerms(java.lang.String,java.lang.String,java.util.List)">removeTerms</a>, <a href="Asset.html#replaceTerms(com.atlan.model.assets.Asset.AssetBuilder,java.util.List)">replaceTerms</a>, <a href="Asset.html#setAdminGroups(java.util.SortedSet)">setAdminGroups</a>, <a href="Asset.html#setAdminRoles(java.util.SortedSet)">setAdminRoles</a>, <a href="Asset.html#setAdminUsers(java.util.SortedSet)">setAdminUsers</a>, <a href="Asset.html#setAnnouncementMessage(java.lang.String)">setAnnouncementMessage</a>, <a href="Asset.html#setAnnouncementTitle(java.lang.String)">setAnnouncementTitle</a>, <a href="Asset.html#setAnnouncementType(com.atlan.model.enums.AtlanAnnouncementType)">setAnnouncementType</a>, <a href="Asset.html#setAnnouncementUpdatedAt(java.lang.Long)">setAnnouncementUpdatedAt</a>, <a href="Asset.html#setAnnouncementUpdatedBy(java.lang.String)">setAnnouncementUpdatedBy</a>, <a href="Asset.html#setAssetDbtAccountName(java.lang.String)">setAssetDbtAccountName</a>, <a href="Asset.html#setAssetDbtAlias(java.lang.String)">setAssetDbtAlias</a>, <a href="Asset.html#setAssetDbtEnvironmentDbtVersion(java.lang.String)">setAssetDbtEnvironmentDbtVersion</a>, <a href="Asset.html#setAssetDbtEnvironmentName(java.lang.String)">setAssetDbtEnvironmentName</a>, <a href="Asset.html#setAssetDbtJobLastRun(java.lang.Long)">setAssetDbtJobLastRun</a>, <a href="Asset.html#setAssetDbtJobLastRunArtifactS3Path(java.lang.String)">setAssetDbtJobLastRunArtifactS3Path</a>, <a href="Asset.html#setAssetDbtJobLastRunArtifactsSaved(java.lang.Boolean)">setAssetDbtJobLastRunArtifactsSaved</a>, <a href="Asset.html#setAssetDbtJobLastRunCreatedAt(java.lang.Long)">setAssetDbtJobLastRunCreatedAt</a>, <a href="Asset.html#setAssetDbtJobLastRunDequedAt(java.lang.Long)">setAssetDbtJobLastRunDequedAt</a>, <a href="Asset.html#setAssetDbtJobLastRunExecutedByThreadId(java.lang.String)">setAssetDbtJobLastRunExecutedByThreadId</a>, <a href="Asset.html#setAssetDbtJobLastRunGitBranch(java.lang.String)">setAssetDbtJobLastRunGitBranch</a>, <a href="Asset.html#setAssetDbtJobLastRunGitSha(java.lang.String)">setAssetDbtJobLastRunGitSha</a>, <a href="Asset.html#setAssetDbtJobLastRunHasDocsGenerated(java.lang.Boolean)">setAssetDbtJobLastRunHasDocsGenerated</a>, <a href="Asset.html#setAssetDbtJobLastRunHasSourcesGenerated(java.lang.Boolean)">setAssetDbtJobLastRunHasSourcesGenerated</a>, <a href="Asset.html#setAssetDbtJobLastRunNotificationsSent(java.lang.Boolean)">setAssetDbtJobLastRunNotificationsSent</a>, <a href="Asset.html#setAssetDbtJobLastRunOwnerThreadId(java.lang.String)">setAssetDbtJobLastRunOwnerThreadId</a>, <a href="Asset.html#setAssetDbtJobLastRunQueuedDuration(java.lang.String)">setAssetDbtJobLastRunQueuedDuration</a>, <a href="Asset.html#setAssetDbtJobLastRunQueuedDurationHumanized(java.lang.String)">setAssetDbtJobLastRunQueuedDurationHumanized</a>, <a href="Asset.html#setAssetDbtJobLastRunRunDuration(java.lang.String)">setAssetDbtJobLastRunRunDuration</a>, <a href="Asset.html#setAssetDbtJobLastRunRunDurationHumanized(java.lang.String)">setAssetDbtJobLastRunRunDurationHumanized</a>, <a href="Asset.html#setAssetDbtJobLastRunStartedAt(java.lang.Long)">setAssetDbtJobLastRunStartedAt</a>, <a href="Asset.html#setAssetDbtJobLastRunStatusMessage(java.lang.String)">setAssetDbtJobLastRunStatusMessage</a>, <a href="Asset.html#setAssetDbtJobLastRunTotalDuration(java.lang.String)">setAssetDbtJobLastRunTotalDuration</a>, <a href="Asset.html#setAssetDbtJobLastRunTotalDurationHumanized(java.lang.String)">setAssetDbtJobLastRunTotalDurationHumanized</a>, <a href="Asset.html#setAssetDbtJobLastRunUpdatedAt(java.lang.Long)">setAssetDbtJobLastRunUpdatedAt</a>, <a href="Asset.html#setAssetDbtJobLastRunUrl(java.lang.String)">setAssetDbtJobLastRunUrl</a>, <a href="Asset.html#setAssetDbtJobName(java.lang.String)">setAssetDbtJobName</a>, <a href="Asset.html#setAssetDbtJobNextRun(java.lang.Long)">setAssetDbtJobNextRun</a>, <a href="Asset.html#setAssetDbtJobNextRunHumanized(java.lang.String)">setAssetDbtJobNextRunHumanized</a>, <a href="Asset.html#setAssetDbtJobSchedule(java.lang.String)">setAssetDbtJobSchedule</a>, <a href="Asset.html#setAssetDbtJobScheduleCronHumanized(java.lang.String)">setAssetDbtJobScheduleCronHumanized</a>, <a href="Asset.html#setAssetDbtJobStatus(java.lang.String)">setAssetDbtJobStatus</a>, <a href="Asset.html#setAssetDbtMeta(java.lang.String)">setAssetDbtMeta</a>, <a href="Asset.html#setAssetDbtPackageName(java.lang.String)">setAssetDbtPackageName</a>, <a href="Asset.html#setAssetDbtProjectName(java.lang.String)">setAssetDbtProjectName</a>, <a href="Asset.html#setAssetDbtSemanticLayerProxyUrl(java.lang.String)">setAssetDbtSemanticLayerProxyUrl</a>, <a href="Asset.html#setAssetDbtTags(java.util.SortedSet)">setAssetDbtTags</a>, <a href="Asset.html#setAssetDbtUniqueId(java.lang.String)">setAssetDbtUniqueId</a>, <a href="Asset.html#setCertificateStatus(com.atlan.model.enums.AtlanCertificateStatus)">setCertificateStatus</a>, <a href="Asset.html#setCertificateStatusMessage(java.lang.String)">setCertificateStatusMessage</a>, <a href="Asset.html#setCertificateUpdatedAt(java.lang.Long)">setCertificateUpdatedAt</a>, <a href="Asset.html#setCertificateUpdatedBy(java.lang.String)">setCertificateUpdatedBy</a>, <a href="Asset.html#setConnectionName(java.lang.String)">setConnectionName</a>, <a href="Asset.html#setConnectionQualifiedName(java.lang.String)">setConnectionQualifiedName</a>, <a href="Asset.html#setConnectorType(com.atlan.model.enums.AtlanConnectorType)">setConnectorType</a>, <a href="Asset.html#setDbtQualifiedName(java.lang.String)">setDbtQualifiedName</a>, <a href="Asset.html#setDescription(java.lang.String)">setDescription</a>, <a href="Asset.html#setDisplayName(java.lang.String)">setDisplayName</a>, <a href="Asset.html#setHasLineage(java.lang.Boolean)">setHasLineage</a>, <a href="Asset.html#setIsDiscoverable(java.lang.Boolean)">setIsDiscoverable</a>, <a href="Asset.html#setIsEditable(java.lang.Boolean)">setIsEditable</a>, <a href="Asset.html#setLastSyncRun(java.lang.String)">setLastSyncRun</a>, <a href="Asset.html#setLastSyncRunAt(java.lang.Long)">setLastSyncRunAt</a>, <a href="Asset.html#setLastSyncWorkflowName(java.lang.String)">setLastSyncWorkflowName</a>, <a href="Asset.html#setLinks(java.util.SortedSet)">setLinks</a>, <a href="Asset.html#setMeanings(java.util.SortedSet)">setMeanings</a>, <a href="Asset.html#setName(java.lang.String)">setName</a>, <a href="Asset.html#setOwnerGroups(java.util.SortedSet)">setOwnerGroups</a>, <a href="Asset.html#setOwnerUsers(java.util.SortedSet)">setOwnerUsers</a>, <a href="Asset.html#setPopularityScore(java.lang.Double)">setPopularityScore</a>, <a href="Asset.html#setQualifiedName(java.lang.String)">setQualifiedName</a>, <a href="Asset.html#setReadme(com.atlan.model.assets.Readme)">setReadme</a>, <a href="Asset.html#setSourceCreatedAt(java.lang.Long)">setSourceCreatedAt</a>, <a href="Asset.html#setSourceCreatedBy(java.lang.String)">setSourceCreatedBy</a>, <a href="Asset.html#setSourceEmbedURL(java.lang.String)">setSourceEmbedURL</a>, <a href="Asset.html#setSourceOwners(java.lang.String)">setSourceOwners</a>, <a href="Asset.html#setSourceUpdatedAt(java.lang.Long)">setSourceUpdatedAt</a>, <a href="Asset.html#setSourceUpdatedBy(java.lang.String)">setSourceUpdatedBy</a>, <a href="Asset.html#setSourceURL(java.lang.String)">setSourceURL</a>, <a href="Asset.html#setSubType(java.lang.Object)">setSubType</a>, <a href="Asset.html#setTenantId(java.lang.String)">setTenantId</a>, <a href="Asset.html#setUserDescription(java.lang.String)">setUserDescription</a>, <a href="Asset.html#setViewerGroups(java.util.SortedSet)">setViewerGroups</a>, <a href="Asset.html#setViewerUsers(java.util.SortedSet)">setViewerUsers</a>, <a href="Asset.html#setViewScore(java.lang.Double)">setViewScore</a>, <a href="Asset.html#updateAnnouncement(com.atlan.model.assets.Asset.AssetBuilder,com.atlan.model.enums.AtlanAnnouncementType,java.lang.String,java.lang.String)">updateAnnouncement</a>, <a href="Asset.html#updateAnnouncement(com.atlan.model.assets.Asset.AssetBuilder,java.lang.String,java.lang.String,com.atlan.model.enums.AtlanAnnouncementType,java.lang.String,java.lang.String)">updateAnnouncement</a>, <a href="Asset.html#updateCertificate(com.atlan.model.assets.Asset.AssetBuilder,com.atlan.model.enums.AtlanCertificateStatus,java.lang.String)">updateCertificate</a>, <a href="Asset.html#updateCertificate(com.atlan.model.assets.Asset.AssetBuilder,java.lang.String,java.lang.String,com.atlan.model.enums.AtlanCertificateStatus,java.lang.String)">updateCertificate</a></code></li>
+<code><a href="Asset.html#appendTerms(java.lang.String,java.lang.String,java.util.List)">appendTerms</a>, <a href="Asset.html#getAdminGroups()">getAdminGroups</a>, <a href="Asset.html#getAdminRoles()">getAdminRoles</a>, <a href="Asset.html#getAdminUsers()">getAdminUsers</a>, <a href="Asset.html#getAnnouncementMessage()">getAnnouncementMessage</a>, <a href="Asset.html#getAnnouncementTitle()">getAnnouncementTitle</a>, <a href="Asset.html#getAnnouncementType()">getAnnouncementType</a>, <a href="Asset.html#getAnnouncementUpdatedAt()">getAnnouncementUpdatedAt</a>, <a href="Asset.html#getAnnouncementUpdatedBy()">getAnnouncementUpdatedBy</a>, <a href="Asset.html#getAssetDbtAccountName()">getAssetDbtAccountName</a>, <a href="Asset.html#getAssetDbtAlias()">getAssetDbtAlias</a>, <a href="Asset.html#getAssetDbtEnvironmentDbtVersion()">getAssetDbtEnvironmentDbtVersion</a>, <a href="Asset.html#getAssetDbtEnvironmentName()">getAssetDbtEnvironmentName</a>, <a href="Asset.html#getAssetDbtJobLastRun()">getAssetDbtJobLastRun</a>, <a href="Asset.html#getAssetDbtJobLastRunArtifactS3Path()">getAssetDbtJobLastRunArtifactS3Path</a>, <a href="Asset.html#getAssetDbtJobLastRunArtifactsSaved()">getAssetDbtJobLastRunArtifactsSaved</a>, <a href="Asset.html#getAssetDbtJobLastRunCreatedAt()">getAssetDbtJobLastRunCreatedAt</a>, <a href="Asset.html#getAssetDbtJobLastRunDequedAt()">getAssetDbtJobLastRunDequedAt</a>, <a href="Asset.html#getAssetDbtJobLastRunExecutedByThreadId()">getAssetDbtJobLastRunExecutedByThreadId</a>, <a href="Asset.html#getAssetDbtJobLastRunGitBranch()">getAssetDbtJobLastRunGitBranch</a>, <a href="Asset.html#getAssetDbtJobLastRunGitSha()">getAssetDbtJobLastRunGitSha</a>, <a href="Asset.html#getAssetDbtJobLastRunHasDocsGenerated()">getAssetDbtJobLastRunHasDocsGenerated</a>, <a href="Asset.html#getAssetDbtJobLastRunHasSourcesGenerated()">getAssetDbtJobLastRunHasSourcesGenerated</a>, <a href="Asset.html#getAssetDbtJobLastRunNotificationsSent()">getAssetDbtJobLastRunNotificationsSent</a>, <a href="Asset.html#getAssetDbtJobLastRunOwnerThreadId()">getAssetDbtJobLastRunOwnerThreadId</a>, <a href="Asset.html#getAssetDbtJobLastRunQueuedDuration()">getAssetDbtJobLastRunQueuedDuration</a>, <a href="Asset.html#getAssetDbtJobLastRunQueuedDurationHumanized()">getAssetDbtJobLastRunQueuedDurationHumanized</a>, <a href="Asset.html#getAssetDbtJobLastRunRunDuration()">getAssetDbtJobLastRunRunDuration</a>, <a href="Asset.html#getAssetDbtJobLastRunRunDurationHumanized()">getAssetDbtJobLastRunRunDurationHumanized</a>, <a href="Asset.html#getAssetDbtJobLastRunStartedAt()">getAssetDbtJobLastRunStartedAt</a>, <a href="Asset.html#getAssetDbtJobLastRunStatusMessage()">getAssetDbtJobLastRunStatusMessage</a>, <a href="Asset.html#getAssetDbtJobLastRunTotalDuration()">getAssetDbtJobLastRunTotalDuration</a>, <a href="Asset.html#getAssetDbtJobLastRunTotalDurationHumanized()">getAssetDbtJobLastRunTotalDurationHumanized</a>, <a href="Asset.html#getAssetDbtJobLastRunUpdatedAt()">getAssetDbtJobLastRunUpdatedAt</a>, <a href="Asset.html#getAssetDbtJobLastRunUrl()">getAssetDbtJobLastRunUrl</a>, <a href="Asset.html#getAssetDbtJobName()">getAssetDbtJobName</a>, <a href="Asset.html#getAssetDbtJobNextRun()">getAssetDbtJobNextRun</a>, <a href="Asset.html#getAssetDbtJobNextRunHumanized()">getAssetDbtJobNextRunHumanized</a>, <a href="Asset.html#getAssetDbtJobSchedule()">getAssetDbtJobSchedule</a>, <a href="Asset.html#getAssetDbtJobScheduleCronHumanized()">getAssetDbtJobScheduleCronHumanized</a>, <a href="Asset.html#getAssetDbtJobStatus()">getAssetDbtJobStatus</a>, <a href="Asset.html#getAssetDbtMeta()">getAssetDbtMeta</a>, <a href="Asset.html#getAssetDbtPackageName()">getAssetDbtPackageName</a>, <a href="Asset.html#getAssetDbtProjectName()">getAssetDbtProjectName</a>, <a href="Asset.html#getAssetDbtSemanticLayerProxyUrl()">getAssetDbtSemanticLayerProxyUrl</a>, <a href="Asset.html#getAssetDbtTags()">getAssetDbtTags</a>, <a href="Asset.html#getAssetDbtUniqueId()">getAssetDbtUniqueId</a>, <a href="Asset.html#getCertificateStatus()">getCertificateStatus</a>, <a href="Asset.html#getCertificateStatusMessage()">getCertificateStatusMessage</a>, <a href="Asset.html#getCertificateUpdatedAt()">getCertificateUpdatedAt</a>, <a href="Asset.html#getCertificateUpdatedBy()">getCertificateUpdatedBy</a>, <a href="Asset.html#getConnectionName()">getConnectionName</a>, <a href="Asset.html#getConnectionQualifiedName()">getConnectionQualifiedName</a>, <a href="Asset.html#getConnectorType()">getConnectorType</a>, <a href="Asset.html#getDbtQualifiedName()">getDbtQualifiedName</a>, <a href="Asset.html#getDescription()">getDescription</a>, <a href="Asset.html#getDisplayName()">getDisplayName</a>, <a href="Asset.html#getHasLineage()">getHasLineage</a>, <a href="Asset.html#getIsDiscoverable()">getIsDiscoverable</a>, <a href="Asset.html#getIsEditable()">getIsEditable</a>, <a href="Asset.html#getLastSyncRun()">getLastSyncRun</a>, <a href="Asset.html#getLastSyncRunAt()">getLastSyncRunAt</a>, <a href="Asset.html#getLastSyncWorkflowName()">getLastSyncWorkflowName</a>, <a href="Asset.html#getLinks()">getLinks</a>, <a href="Asset.html#getMeanings()">getMeanings</a>, <a href="Asset.html#getName()">getName</a>, <a href="Asset.html#getOwnerGroups()">getOwnerGroups</a>, <a href="Asset.html#getOwnerUsers()">getOwnerUsers</a>, <a href="Asset.html#getPopularityScore()">getPopularityScore</a>, <a href="Asset.html#getQualifiedName()">getQualifiedName</a>, <a href="Asset.html#getReadme()">getReadme</a>, <a href="Asset.html#getSourceCreatedAt()">getSourceCreatedAt</a>, <a href="Asset.html#getSourceCreatedBy()">getSourceCreatedBy</a>, <a href="Asset.html#getSourceEmbedURL()">getSourceEmbedURL</a>, <a href="Asset.html#getSourceOwners()">getSourceOwners</a>, <a href="Asset.html#getSourceUpdatedAt()">getSourceUpdatedAt</a>, <a href="Asset.html#getSourceUpdatedBy()">getSourceUpdatedBy</a>, <a href="Asset.html#getSourceURL()">getSourceURL</a>, <a href="Asset.html#getSubType()">getSubType</a>, <a href="Asset.html#getTenantId()">getTenantId</a>, <a href="Asset.html#getUserDescription()">getUserDescription</a>, <a href="Asset.html#getViewerGroups()">getViewerGroups</a>, <a href="Asset.html#getViewerUsers()">getViewerUsers</a>, <a href="Asset.html#getViewScore()">getViewScore</a>, <a href="Asset.html#removeAnnouncement()">removeAnnouncement</a>, <a href="Asset.html#removeAnnouncement(com.atlan.model.assets.Asset.AssetBuilder)">removeAnnouncement</a>, <a href="Asset.html#removeCertificate()">removeCertificate</a>, <a href="Asset.html#removeCertificate(com.atlan.model.assets.Asset.AssetBuilder)">removeCertificate</a>, <a href="Asset.html#removeDescription()">removeDescription</a>, <a href="Asset.html#removeDescription(com.atlan.model.assets.Asset.AssetBuilder)">removeDescription</a>, <a href="Asset.html#removeMeanings()">removeMeanings</a>, <a href="Asset.html#removeOwners()">removeOwners</a>, <a href="Asset.html#removeOwners(com.atlan.model.assets.Asset.AssetBuilder)">removeOwners</a>, <a href="Asset.html#removeTerms(java.lang.String,java.lang.String,java.util.List)">removeTerms</a>, <a href="Asset.html#removeUserDescription()">removeUserDescription</a>, <a href="Asset.html#removeUserDescription(com.atlan.model.assets.Asset.AssetBuilder)">removeUserDescription</a>, <a href="Asset.html#replaceTerms(com.atlan.model.assets.Asset.AssetBuilder,java.util.List)">replaceTerms</a>, <a href="Asset.html#restore(java.lang.String,java.lang.String)">restore</a>, <a href="Asset.html#setAdminGroups(java.util.SortedSet)">setAdminGroups</a>, <a href="Asset.html#setAdminRoles(java.util.SortedSet)">setAdminRoles</a>, <a href="Asset.html#setAdminUsers(java.util.SortedSet)">setAdminUsers</a>, <a href="Asset.html#setAnnouncementMessage(java.lang.String)">setAnnouncementMessage</a>, <a href="Asset.html#setAnnouncementTitle(java.lang.String)">setAnnouncementTitle</a>, <a href="Asset.html#setAnnouncementType(com.atlan.model.enums.AtlanAnnouncementType)">setAnnouncementType</a>, <a href="Asset.html#setAnnouncementUpdatedAt(java.lang.Long)">setAnnouncementUpdatedAt</a>, <a href="Asset.html#setAnnouncementUpdatedBy(java.lang.String)">setAnnouncementUpdatedBy</a>, <a href="Asset.html#setAssetDbtAccountName(java.lang.String)">setAssetDbtAccountName</a>, <a href="Asset.html#setAssetDbtAlias(java.lang.String)">setAssetDbtAlias</a>, <a href="Asset.html#setAssetDbtEnvironmentDbtVersion(java.lang.String)">setAssetDbtEnvironmentDbtVersion</a>, <a href="Asset.html#setAssetDbtEnvironmentName(java.lang.String)">setAssetDbtEnvironmentName</a>, <a href="Asset.html#setAssetDbtJobLastRun(java.lang.Long)">setAssetDbtJobLastRun</a>, <a href="Asset.html#setAssetDbtJobLastRunArtifactS3Path(java.lang.String)">setAssetDbtJobLastRunArtifactS3Path</a>, <a href="Asset.html#setAssetDbtJobLastRunArtifactsSaved(java.lang.Boolean)">setAssetDbtJobLastRunArtifactsSaved</a>, <a href="Asset.html#setAssetDbtJobLastRunCreatedAt(java.lang.Long)">setAssetDbtJobLastRunCreatedAt</a>, <a href="Asset.html#setAssetDbtJobLastRunDequedAt(java.lang.Long)">setAssetDbtJobLastRunDequedAt</a>, <a href="Asset.html#setAssetDbtJobLastRunExecutedByThreadId(java.lang.String)">setAssetDbtJobLastRunExecutedByThreadId</a>, <a href="Asset.html#setAssetDbtJobLastRunGitBranch(java.lang.String)">setAssetDbtJobLastRunGitBranch</a>, <a href="Asset.html#setAssetDbtJobLastRunGitSha(java.lang.String)">setAssetDbtJobLastRunGitSha</a>, <a href="Asset.html#setAssetDbtJobLastRunHasDocsGenerated(java.lang.Boolean)">setAssetDbtJobLastRunHasDocsGenerated</a>, <a href="Asset.html#setAssetDbtJobLastRunHasSourcesGenerated(java.lang.Boolean)">setAssetDbtJobLastRunHasSourcesGenerated</a>, <a href="Asset.html#setAssetDbtJobLastRunNotificationsSent(java.lang.Boolean)">setAssetDbtJobLastRunNotificationsSent</a>, <a href="Asset.html#setAssetDbtJobLastRunOwnerThreadId(java.lang.String)">setAssetDbtJobLastRunOwnerThreadId</a>, <a href="Asset.html#setAssetDbtJobLastRunQueuedDuration(java.lang.String)">setAssetDbtJobLastRunQueuedDuration</a>, <a href="Asset.html#setAssetDbtJobLastRunQueuedDurationHumanized(java.lang.String)">setAssetDbtJobLastRunQueuedDurationHumanized</a>, <a href="Asset.html#setAssetDbtJobLastRunRunDuration(java.lang.String)">setAssetDbtJobLastRunRunDuration</a>, <a href="Asset.html#setAssetDbtJobLastRunRunDurationHumanized(java.lang.String)">setAssetDbtJobLastRunRunDurationHumanized</a>, <a href="Asset.html#setAssetDbtJobLastRunStartedAt(java.lang.Long)">setAssetDbtJobLastRunStartedAt</a>, <a href="Asset.html#setAssetDbtJobLastRunStatusMessage(java.lang.String)">setAssetDbtJobLastRunStatusMessage</a>, <a href="Asset.html#setAssetDbtJobLastRunTotalDuration(java.lang.String)">setAssetDbtJobLastRunTotalDuration</a>, <a href="Asset.html#setAssetDbtJobLastRunTotalDurationHumanized(java.lang.String)">setAssetDbtJobLastRunTotalDurationHumanized</a>, <a href="Asset.html#setAssetDbtJobLastRunUpdatedAt(java.lang.Long)">setAssetDbtJobLastRunUpdatedAt</a>, <a href="Asset.html#setAssetDbtJobLastRunUrl(java.lang.String)">setAssetDbtJobLastRunUrl</a>, <a href="Asset.html#setAssetDbtJobName(java.lang.String)">setAssetDbtJobName</a>, <a href="Asset.html#setAssetDbtJobNextRun(java.lang.Long)">setAssetDbtJobNextRun</a>, <a href="Asset.html#setAssetDbtJobNextRunHumanized(java.lang.String)">setAssetDbtJobNextRunHumanized</a>, <a href="Asset.html#setAssetDbtJobSchedule(java.lang.String)">setAssetDbtJobSchedule</a>, <a href="Asset.html#setAssetDbtJobScheduleCronHumanized(java.lang.String)">setAssetDbtJobScheduleCronHumanized</a>, <a href="Asset.html#setAssetDbtJobStatus(java.lang.String)">setAssetDbtJobStatus</a>, <a href="Asset.html#setAssetDbtMeta(java.lang.String)">setAssetDbtMeta</a>, <a href="Asset.html#setAssetDbtPackageName(java.lang.String)">setAssetDbtPackageName</a>, <a href="Asset.html#setAssetDbtProjectName(java.lang.String)">setAssetDbtProjectName</a>, <a href="Asset.html#setAssetDbtSemanticLayerProxyUrl(java.lang.String)">setAssetDbtSemanticLayerProxyUrl</a>, <a href="Asset.html#setAssetDbtTags(java.util.SortedSet)">setAssetDbtTags</a>, <a href="Asset.html#setAssetDbtUniqueId(java.lang.String)">setAssetDbtUniqueId</a>, <a href="Asset.html#setCertificateStatus(com.atlan.model.enums.AtlanCertificateStatus)">setCertificateStatus</a>, <a href="Asset.html#setCertificateStatusMessage(java.lang.String)">setCertificateStatusMessage</a>, <a href="Asset.html#setCertificateUpdatedAt(java.lang.Long)">setCertificateUpdatedAt</a>, <a href="Asset.html#setCertificateUpdatedBy(java.lang.String)">setCertificateUpdatedBy</a>, <a href="Asset.html#setConnectionName(java.lang.String)">setConnectionName</a>, <a href="Asset.html#setConnectionQualifiedName(java.lang.String)">setConnectionQualifiedName</a>, <a href="Asset.html#setConnectorType(com.atlan.model.enums.AtlanConnectorType)">setConnectorType</a>, <a href="Asset.html#setDbtQualifiedName(java.lang.String)">setDbtQualifiedName</a>, <a href="Asset.html#setDescription(java.lang.String)">setDescription</a>, <a href="Asset.html#setDisplayName(java.lang.String)">setDisplayName</a>, <a href="Asset.html#setHasLineage(java.lang.Boolean)">setHasLineage</a>, <a href="Asset.html#setIsDiscoverable(java.lang.Boolean)">setIsDiscoverable</a>, <a href="Asset.html#setIsEditable(java.lang.Boolean)">setIsEditable</a>, <a href="Asset.html#setLastSyncRun(java.lang.String)">setLastSyncRun</a>, <a href="Asset.html#setLastSyncRunAt(java.lang.Long)">setLastSyncRunAt</a>, <a href="Asset.html#setLastSyncWorkflowName(java.lang.String)">setLastSyncWorkflowName</a>, <a href="Asset.html#setLinks(java.util.SortedSet)">setLinks</a>, <a href="Asset.html#setMeanings(java.util.SortedSet)">setMeanings</a>, <a href="Asset.html#setName(java.lang.String)">setName</a>, <a href="Asset.html#setOwnerGroups(java.util.SortedSet)">setOwnerGroups</a>, <a href="Asset.html#setOwnerUsers(java.util.SortedSet)">setOwnerUsers</a>, <a href="Asset.html#setPopularityScore(java.lang.Double)">setPopularityScore</a>, <a href="Asset.html#setQualifiedName(java.lang.String)">setQualifiedName</a>, <a href="Asset.html#setReadme(com.atlan.model.assets.Readme)">setReadme</a>, <a href="Asset.html#setSourceCreatedAt(java.lang.Long)">setSourceCreatedAt</a>, <a href="Asset.html#setSourceCreatedBy(java.lang.String)">setSourceCreatedBy</a>, <a href="Asset.html#setSourceEmbedURL(java.lang.String)">setSourceEmbedURL</a>, <a href="Asset.html#setSourceOwners(java.lang.String)">setSourceOwners</a>, <a href="Asset.html#setSourceUpdatedAt(java.lang.Long)">setSourceUpdatedAt</a>, <a href="Asset.html#setSourceUpdatedBy(java.lang.String)">setSourceUpdatedBy</a>, <a href="Asset.html#setSourceURL(java.lang.String)">setSourceURL</a>, <a href="Asset.html#setSubType(java.lang.Object)">setSubType</a>, <a href="Asset.html#setTenantId(java.lang.String)">setTenantId</a>, <a href="Asset.html#setUserDescription(java.lang.String)">setUserDescription</a>, <a href="Asset.html#setViewerGroups(java.util.SortedSet)">setViewerGroups</a>, <a href="Asset.html#setViewerUsers(java.util.SortedSet)">setViewerUsers</a>, <a href="Asset.html#setViewScore(java.lang.Double)">setViewScore</a>, <a href="Asset.html#updateAnnouncement(com.atlan.model.assets.Asset.AssetBuilder,com.atlan.model.enums.AtlanAnnouncementType,java.lang.String,java.lang.String)">updateAnnouncement</a>, <a href="Asset.html#updateAnnouncement(com.atlan.model.assets.Asset.AssetBuilder,java.lang.String,java.lang.String,com.atlan.model.enums.AtlanAnnouncementType,java.lang.String,java.lang.String)">updateAnnouncement</a>, <a href="Asset.html#updateCertificate(com.atlan.model.assets.Asset.AssetBuilder,com.atlan.model.enums.AtlanCertificateStatus,java.lang.String)">updateCertificate</a>, <a href="Asset.html#updateCertificate(com.atlan.model.assets.Asset.AssetBuilder,java.lang.String,java.lang.String,com.atlan.model.enums.AtlanCertificateStatus,java.lang.String)">updateCertificate</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.com.atlan.model.core.Entity">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;com.atlan.model.core.<a href="../core/Entity.html" title="class in com.atlan.model.core">Entity</a></h3>
-<code><a href="../core/Entity.html#addClassifications(java.lang.String,java.lang.String,java.util.List)">addClassifications</a>, <a href="../core/Entity.html#addNullField(java.lang.String)">addNullField</a>, <a href="../core/Entity.html#delete(java.lang.String)">delete</a>, <a href="../core/Entity.html#getClassificationNames()">getClassificationNames</a>, <a href="../core/Entity.html#getClassifications()">getClassifications</a>, <a href="../core/Entity.html#getCreatedBy()">getCreatedBy</a>, <a href="../core/Entity.html#getCreateTime()">getCreateTime</a>, <a href="../core/Entity.html#getCustomMetadataSets()">getCustomMetadataSets</a>, <a href="../core/Entity.html#getDeleteHandler()">getDeleteHandler</a>, <a href="../core/Entity.html#getIsIncomplete()">getIsIncomplete</a>, <a href="../core/Entity.html#getMeaningNames()">getMeaningNames</a>, <a href="../core/Entity.html#getNullFields()">getNullFields</a>, <a href="../core/Entity.html#getPendingTasks()">getPendingTasks</a>, <a href="../core/Entity.html#getStatus()">getStatus</a>, <a href="../core/Entity.html#getUpdatedBy()">getUpdatedBy</a>, <a href="../core/Entity.html#getUpdateTime()">getUpdateTime</a>, <a href="../core/Entity.html#purge(java.lang.String)">purge</a>, <a href="../core/Entity.html#removeClassification(java.lang.String,java.lang.String,java.lang.String)">removeClassification</a>, <a href="../core/Entity.html#removeClassifications()">removeClassifications</a>, <a href="../core/Entity.html#removeCustomMetadata()">removeCustomMetadata</a>, <a href="../core/Entity.html#removeCustomMetadata(java.lang.String,java.lang.String)">removeCustomMetadata</a>, <a href="../core/Entity.html#replaceCustomMetadata(java.lang.String,java.lang.String,com.atlan.model.core.CustomMetadataAttributes)">replaceCustomMetadata</a>, <a href="../core/Entity.html#retrieveFull(java.lang.String)">retrieveFull</a>, <a href="../core/Entity.html#retrieveFull(java.lang.String,java.lang.String)">retrieveFull</a>, <a href="../core/Entity.html#retrieveMinimal(java.lang.String)">retrieveMinimal</a>, <a href="../core/Entity.html#retrieveMinimal(java.lang.String,java.lang.String)">retrieveMinimal</a>, <a href="../core/Entity.html#setClassificationNames(java.util.Set)">setClassificationNames</a>, <a href="../core/Entity.html#setClassifications(java.util.Set)">setClassifications</a>, <a href="../core/Entity.html#setCustomMetadataSets(java.util.Map)">setCustomMetadataSets</a>, <a href="../core/Entity.html#setIsIncomplete(java.lang.Boolean)">setIsIncomplete</a>, <a href="../core/Entity.html#setMeaningNames(java.util.Set)">setMeaningNames</a>, <a href="../core/Entity.html#setNullFields(java.util.Set)">setNullFields</a>, <a href="../core/Entity.html#updateCustomMetadataAttributes(java.lang.String,java.lang.String,com.atlan.model.core.CustomMetadataAttributes)">updateCustomMetadataAttributes</a>, <a href="../core/Entity.html#upsert()">upsert</a>, <a href="../core/Entity.html#upsert(boolean,boolean)">upsert</a></code></li>
+<code><a href="../core/Entity.html#addClassifications(java.lang.String,java.lang.String,java.util.List)">addClassifications</a>, <a href="../core/Entity.html#addNullField(java.lang.String)">addNullField</a>, <a href="../core/Entity.html#delete(java.lang.String)">delete</a>, <a href="../core/Entity.html#getClassificationNames()">getClassificationNames</a>, <a href="../core/Entity.html#getClassifications()">getClassifications</a>, <a href="../core/Entity.html#getCreatedBy()">getCreatedBy</a>, <a href="../core/Entity.html#getCreateTime()">getCreateTime</a>, <a href="../core/Entity.html#getCustomMetadataSets()">getCustomMetadataSets</a>, <a href="../core/Entity.html#getDeleteHandler()">getDeleteHandler</a>, <a href="../core/Entity.html#getIsIncomplete()">getIsIncomplete</a>, <a href="../core/Entity.html#getMeaningNames()">getMeaningNames</a>, <a href="../core/Entity.html#getNullFields()">getNullFields</a>, <a href="../core/Entity.html#getPendingTasks()">getPendingTasks</a>, <a href="../core/Entity.html#getStatus()">getStatus</a>, <a href="../core/Entity.html#getUpdatedBy()">getUpdatedBy</a>, <a href="../core/Entity.html#getUpdateTime()">getUpdateTime</a>, <a href="../core/Entity.html#purge(java.lang.String)">purge</a>, <a href="../core/Entity.html#removeClassification(java.lang.String,java.lang.String,java.lang.String)">removeClassification</a>, <a href="../core/Entity.html#removeClassifications()">removeClassifications</a>, <a href="../core/Entity.html#removeCustomMetadata()">removeCustomMetadata</a>, <a href="../core/Entity.html#removeCustomMetadata(java.lang.String,java.lang.String)">removeCustomMetadata</a>, <a href="../core/Entity.html#replaceCustomMetadata(java.lang.String,java.lang.String,com.atlan.model.core.CustomMetadataAttributes)">replaceCustomMetadata</a>, <a href="../core/Entity.html#retrieveFull(java.lang.String)">retrieveFull</a>, <a href="../core/Entity.html#retrieveFull(java.lang.String,java.lang.String)">retrieveFull</a>, <a href="../core/Entity.html#retrieveMinimal(java.lang.String)">retrieveMinimal</a>, <a href="../core/Entity.html#retrieveMinimal(java.lang.String,java.lang.String)">retrieveMinimal</a>, <a href="../core/Entity.html#setClassificationNames(java.util.Set)">setClassificationNames</a>, <a href="../core/Entity.html#setClassifications(java.util.Set)">setClassifications</a>, <a href="../core/Entity.html#setCustomMetadataSets(java.util.Map)">setCustomMetadataSets</a>, <a href="../core/Entity.html#setIsIncomplete(java.lang.Boolean)">setIsIncomplete</a>, <a href="../core/Entity.html#setMeaningNames(java.util.Set)">setMeaningNames</a>, <a href="../core/Entity.html#setNullFields(java.util.Set)">setNullFields</a>, <a href="../core/Entity.html#setStatus(com.atlan.model.enums.AtlanStatus)">setStatus</a>, <a href="../core/Entity.html#updateCustomMetadataAttributes(java.lang.String,java.lang.String,com.atlan.model.core.CustomMetadataAttributes)">updateCustomMetadataAttributes</a>, <a href="../core/Entity.html#upsert()">upsert</a>, <a href="../core/Entity.html#upsert(boolean,boolean)">upsert</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.com.atlan.model.relations.Reference">
@@ -818,6 +849,88 @@ extends <a href="API.html" title="class in com.atlan.model.assets">API</a></pre>
 <dd>the requested full APISpec, complete with all of its relationships</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any error during the API invocation, such as the <a href="../../exception/NotFoundException.html" title="class in com.atlan.exception"><code>NotFoundException</code></a> if the APISpec does not exist</dd>
+</dl>
+</li>
+</ul>
+<a id="restore(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>restore</h4>
+<pre class="methodSignature">public static&nbsp;boolean&nbsp;restore&#8203;(java.lang.String&nbsp;qualifiedName)
+                       throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Restore the archived (soft-deleted) APISpec to active.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>qualifiedName</code> - for the APISpec</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>true if the APISpec is now active, and false otherwise</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API problems</dd>
+</dl>
+</li>
+</ul>
+<a id="removeDescription(java.lang.String,java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>removeDescription</h4>
+<pre class="methodSignature">public static&nbsp;<a href="APISpec.html" title="class in com.atlan.model.assets">APISpec</a>&nbsp;removeDescription&#8203;(java.lang.String&nbsp;qualifiedName,
+                                        java.lang.String&nbsp;name)
+                                 throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Remove the system description from a APISpec.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>qualifiedName</code> - of the APISpec</dd>
+<dd><code>name</code> - of the APISpec</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the updated APISpec, or null if the removal failed</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API problems</dd>
+</dl>
+</li>
+</ul>
+<a id="removeUserDescription(java.lang.String,java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>removeUserDescription</h4>
+<pre class="methodSignature">public static&nbsp;<a href="APISpec.html" title="class in com.atlan.model.assets">APISpec</a>&nbsp;removeUserDescription&#8203;(java.lang.String&nbsp;qualifiedName,
+                                            java.lang.String&nbsp;name)
+                                     throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Remove the user's description from a APISpec.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>qualifiedName</code> - of the APISpec</dd>
+<dd><code>name</code> - of the APISpec</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the updated APISpec, or null if the removal failed</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API problems</dd>
+</dl>
+</li>
+</ul>
+<a id="removeOwners(java.lang.String,java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>removeOwners</h4>
+<pre class="methodSignature">public static&nbsp;<a href="APISpec.html" title="class in com.atlan.model.assets">APISpec</a>&nbsp;removeOwners&#8203;(java.lang.String&nbsp;qualifiedName,
+                                   java.lang.String&nbsp;name)
+                            throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Remove the owners from a APISpec.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>qualifiedName</code> - of the APISpec</dd>
+<dd><code>name</code> - of the APISpec</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the updated APISpec, or null if the removal failed</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API problems</dd>
 </dl>
 </li>
 </ul>
@@ -1268,6 +1381,8 @@ extends <a href="API.html" title="class in com.atlan.model.assets">API</a></pre>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getTypeName()</pre>
 <div class="block">Fixed typeName for APISpecs.</div>
 <dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../search/AuditDetail.html#getTypeName()">getTypeName</a></code>&nbsp;in interface&nbsp;<code><a href="../search/AuditDetail.html" title="interface in com.atlan.model.search">AuditDetail</a></code></dd>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code><a href="../relations/Reference.html#getTypeName()">getTypeName</a></code>&nbsp;in class&nbsp;<code><a href="../relations/Reference.html" title="class in com.atlan.model.relations">Reference</a></code></dd>
 </dl>
