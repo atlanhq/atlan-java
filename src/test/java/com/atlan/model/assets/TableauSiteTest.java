@@ -104,8 +104,8 @@ public class TableauSiteTest {
             .link(Link.refByGuid("linkGuid1"))
             .link(Link.refByGuid("linkGuid2"))
             .readme(Readme.refByGuid("readmeGuid"))
-            .meaning(GlossaryTerm.refByGuid("termGuid1"))
-            .meaning(GlossaryTerm.refByGuid("termGuid2"))
+            .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
+            .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
                     LineageProcess.refByGuid("f1d7d8c3-2dac-4169-8a87-c3496b1b7d8c"),
                     LineageProcess.refByGuid("ad067dea-069d-49f2-a44e-1123b112ca4e")))

@@ -104,8 +104,8 @@ public class ProcedureTest {
             .link(Link.refByGuid("linkGuid1"))
             .link(Link.refByGuid("linkGuid2"))
             .readme(Readme.refByGuid("readmeGuid"))
-            .meaning(GlossaryTerm.refByGuid("termGuid1"))
-            .meaning(GlossaryTerm.refByGuid("termGuid2"))
+            .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
+            .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
                     LineageProcess.refByGuid("18330dd8-396b-4bc4-a5f0-161d18e68ff9"),
                     LineageProcess.refByGuid("e8c6880b-1719-4547-bcff-d40ae78bd7f6")))

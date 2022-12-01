@@ -104,8 +104,8 @@ public class TableauDatasourceFieldTest {
             .link(Link.refByGuid("linkGuid1"))
             .link(Link.refByGuid("linkGuid2"))
             .readme(Readme.refByGuid("readmeGuid"))
-            .meaning(GlossaryTerm.refByGuid("termGuid1"))
-            .meaning(GlossaryTerm.refByGuid("termGuid2"))
+            .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
+            .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
                     LineageProcess.refByGuid("89e86bb7-44bf-4d17-9362-d56dd3e66e15"),
                     LineageProcess.refByGuid("ed10a7c3-6dec-42ea-b8a9-eb2d65c8f3ff")))

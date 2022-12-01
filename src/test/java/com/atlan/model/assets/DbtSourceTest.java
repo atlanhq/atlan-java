@@ -104,8 +104,8 @@ public class DbtSourceTest {
             .link(Link.refByGuid("linkGuid1"))
             .link(Link.refByGuid("linkGuid2"))
             .readme(Readme.refByGuid("readmeGuid"))
-            .meaning(GlossaryTerm.refByGuid("termGuid1"))
-            .meaning(GlossaryTerm.refByGuid("termGuid2"))
+            .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
+            .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
                     LineageProcess.refByGuid("d0fbae70-adb7-42bf-aa7f-d545ea69c73a"),
                     LineageProcess.refByGuid("f5cdf9fd-6025-41b9-8853-fcd4c302e7eb")))

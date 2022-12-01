@@ -388,7 +388,8 @@ public abstract class Asset extends Entity {
     /** Terms that are linked to this asset. */
     @Singular
     @Attribute
-    SortedSet<GlossaryTerm> meanings;
+    @JsonProperty("meanings")
+    SortedSet<GlossaryTerm> assignedTerms;
 
     /** Remove the system description from the asset, if any is set on the asset. */
     public void removeDescription() {
@@ -420,8 +421,8 @@ public abstract class Asset extends Entity {
     }
 
     /** Remove the linked terms from the asset, if any are set on the asset. */
-    public void removeMeanings() {
-        addNullField("meanings");
+    public void removeAssignedTerms() {
+        addNullField("assignedTerms");
     }
 
     protected abstract AssetBuilder<?, ?> trimToRequired();
@@ -664,10 +665,10 @@ public abstract class Asset extends Entity {
     protected static Entity replaceTerms(AssetBuilder<?, ?> builder, List<GlossaryTerm> terms) throws AtlanException {
         if (terms == null || terms.isEmpty()) {
             Asset asset = builder.build();
-            asset.removeMeanings();
+            asset.removeAssignedTerms();
             return updateRelationships(asset);
         } else {
-            return updateRelationships(builder.meanings(getTermRefs(terms)).build());
+            return updateRelationships(builder.assignedTerms(getTermRefs(terms)).build());
         }
     }
 
@@ -689,7 +690,7 @@ public abstract class Asset extends Entity {
             return existing;
         } else if (existing != null) {
             Set<GlossaryTerm> replacementTerms = new TreeSet<>();
-            Set<GlossaryTerm> existingTerms = existing.getMeanings();
+            Set<GlossaryTerm> existingTerms = existing.getAssignedTerms();
             if (existingTerms != null) {
                 for (GlossaryTerm term : existingTerms) {
                     if (term.getRelationshipStatus() != AtlanStatus.DELETED) {
@@ -701,7 +702,7 @@ public abstract class Asset extends Entity {
             replacementTerms.addAll(terms);
             AssetBuilder<?, ?> minimal = existing.trimToRequired();
             return updateRelationships(
-                    minimal.meanings(getTermRefs(replacementTerms)).build());
+                    minimal.assignedTerms(getTermRefs(replacementTerms)).build());
         }
         return null;
     }
@@ -724,7 +725,7 @@ public abstract class Asset extends Entity {
         Asset existing = getExistingAsset(typeName, qualifiedName);
         if (existing != null) {
             Set<GlossaryTerm> replacementTerms = new TreeSet<>();
-            Set<GlossaryTerm> existingTerms = existing.getMeanings();
+            Set<GlossaryTerm> existingTerms = existing.getAssignedTerms();
             Set<String> removeGuids = new HashSet<>();
             for (GlossaryTerm term : terms) {
                 if (term.isValidReferenceByGuid()) {
@@ -750,10 +751,10 @@ public abstract class Asset extends Entity {
             if (replacementTerms.isEmpty()) {
                 // If there are no terms left after the removal, we need to do the same as removing all terms
                 update = minimal.build();
-                update.removeMeanings();
+                update.removeAssignedTerms();
             } else {
                 // Otherwise we should do the update with the difference
-                update = minimal.meanings(getTermRefs(replacementTerms)).build();
+                update = minimal.assignedTerms(getTermRefs(replacementTerms)).build();
             }
             return updateRelationships(update);
         }

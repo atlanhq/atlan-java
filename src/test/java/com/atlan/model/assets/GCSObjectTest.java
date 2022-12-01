@@ -104,8 +104,8 @@ public class GCSObjectTest {
             .link(Link.refByGuid("linkGuid1"))
             .link(Link.refByGuid("linkGuid2"))
             .readme(Readme.refByGuid("readmeGuid"))
-            .meaning(GlossaryTerm.refByGuid("termGuid1"))
-            .meaning(GlossaryTerm.refByGuid("termGuid2"))
+            .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
+            .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
                     LineageProcess.refByGuid("b8234c44-48d2-45c8-ba8e-5e52f7760eff"),
                     LineageProcess.refByGuid("aba7e3dd-4beb-4885-9177-c9574e01b1c2")))

@@ -104,8 +104,8 @@ public class SalesforceFieldTest {
             .link(Link.refByGuid("linkGuid1"))
             .link(Link.refByGuid("linkGuid2"))
             .readme(Readme.refByGuid("readmeGuid"))
-            .meaning(GlossaryTerm.refByGuid("termGuid1"))
-            .meaning(GlossaryTerm.refByGuid("termGuid2"))
+            .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
+            .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
                     LineageProcess.refByGuid("5b303876-d3e2-4b8f-8ad6-88e59cf52b10"),
                     LineageProcess.refByGuid("fcbfa156-ecad-4573-86c5-68d8d5abbe17")))

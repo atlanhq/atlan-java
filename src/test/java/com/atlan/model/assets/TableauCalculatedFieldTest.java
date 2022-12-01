@@ -104,8 +104,8 @@ public class TableauCalculatedFieldTest {
             .link(Link.refByGuid("linkGuid1"))
             .link(Link.refByGuid("linkGuid2"))
             .readme(Readme.refByGuid("readmeGuid"))
-            .meaning(GlossaryTerm.refByGuid("termGuid1"))
-            .meaning(GlossaryTerm.refByGuid("termGuid2"))
+            .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
+            .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
                     LineageProcess.refByGuid("de7a491c-d16f-4aa3-a5cc-3b4f8d59fbb6"),
                     LineageProcess.refByGuid("dd5847ff-5bd4-4068-99a4-72e92aa81fef")))

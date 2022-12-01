@@ -104,8 +104,8 @@ public class FolderTest {
             .link(Link.refByGuid("linkGuid1"))
             .link(Link.refByGuid("linkGuid2"))
             .readme(Readme.refByGuid("readmeGuid"))
-            .meaning(GlossaryTerm.refByGuid("termGuid1"))
-            .meaning(GlossaryTerm.refByGuid("termGuid2"))
+            .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
+            .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .childrenQueries(Set.of(
                     AtlanQuery.refByGuid("283ad369-4aa5-47ca-8f75-81017ed27b81"),
                     AtlanQuery.refByGuid("40c42d73-e810-483c-9495-ce9b0ecf8ebe")))

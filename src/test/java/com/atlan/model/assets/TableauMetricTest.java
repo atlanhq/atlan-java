@@ -104,8 +104,8 @@ public class TableauMetricTest {
             .link(Link.refByGuid("linkGuid1"))
             .link(Link.refByGuid("linkGuid2"))
             .readme(Readme.refByGuid("readmeGuid"))
-            .meaning(GlossaryTerm.refByGuid("termGuid1"))
-            .meaning(GlossaryTerm.refByGuid("termGuid2"))
+            .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
+            .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
                     LineageProcess.refByGuid("4bb549ff-431a-4c79-9222-9b806a8e4c06"),
                     LineageProcess.refByGuid("653f1ded-c3a3-42f0-84b7-3e4e459582d3")))

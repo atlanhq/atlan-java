@@ -104,8 +104,8 @@ public class MaterializedViewTest {
             .link(Link.refByGuid("linkGuid1"))
             .link(Link.refByGuid("linkGuid2"))
             .readme(Readme.refByGuid("readmeGuid"))
-            .meaning(GlossaryTerm.refByGuid("termGuid1"))
-            .meaning(GlossaryTerm.refByGuid("termGuid2"))
+            .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
+            .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
                     LineageProcess.refByGuid("3e045a71-a5ca-4ec9-ac1a-0a516b89d64d"),
                     LineageProcess.refByGuid("2d0b1f0f-afc9-4727-ae0f-9f52782243be")))

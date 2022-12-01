@@ -95,6 +95,9 @@ public abstract class Entity extends Reference {
     /** Names of terms that have been linked to this asset. */
     Set<String> meaningNames;
 
+    /** Details of terms that have been linked to this asset. */
+    Set<Meaning> meanings;
+
     /** Unique identifiers (GUIDs) for any background tasks that are yet to operate on this asset. */
     final Set<String> pendingTasks;
 

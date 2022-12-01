@@ -104,8 +104,8 @@ public class PowerBIReportTest {
             .link(Link.refByGuid("linkGuid1"))
             .link(Link.refByGuid("linkGuid2"))
             .readme(Readme.refByGuid("readmeGuid"))
-            .meaning(GlossaryTerm.refByGuid("termGuid1"))
-            .meaning(GlossaryTerm.refByGuid("termGuid2"))
+            .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
+            .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
                     LineageProcess.refByGuid("d4afe630-57c4-4f47-bf81-6193937f5d77"),
                     LineageProcess.refByGuid("39dcf5c6-aa44-41ee-a531-3e1e7deb862e")))

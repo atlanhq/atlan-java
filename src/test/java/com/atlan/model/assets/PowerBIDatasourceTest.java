@@ -104,8 +104,8 @@ public class PowerBIDatasourceTest {
             .link(Link.refByGuid("linkGuid1"))
             .link(Link.refByGuid("linkGuid2"))
             .readme(Readme.refByGuid("readmeGuid"))
-            .meaning(GlossaryTerm.refByGuid("termGuid1"))
-            .meaning(GlossaryTerm.refByGuid("termGuid2"))
+            .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
+            .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
                     LineageProcess.refByGuid("cc687fab-d593-458c-b830-b27ed12e4cc5"),
                     LineageProcess.refByGuid("cb93d580-aef4-42cd-b6b2-64a748b382f0")))

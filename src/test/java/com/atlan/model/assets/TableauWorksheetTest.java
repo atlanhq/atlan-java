@@ -104,8 +104,8 @@ public class TableauWorksheetTest {
             .link(Link.refByGuid("linkGuid1"))
             .link(Link.refByGuid("linkGuid2"))
             .readme(Readme.refByGuid("readmeGuid"))
-            .meaning(GlossaryTerm.refByGuid("termGuid1"))
-            .meaning(GlossaryTerm.refByGuid("termGuid2"))
+            .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
+            .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
                     LineageProcess.refByGuid("82b37eb8-41f0-4260-adfb-f6ffdb3a6074"),
                     LineageProcess.refByGuid("ae608c41-70ae-4d82-a761-ccb083c2c90b")))

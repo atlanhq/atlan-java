@@ -104,8 +104,8 @@ public class LookerProjectTest {
             .link(Link.refByGuid("linkGuid1"))
             .link(Link.refByGuid("linkGuid2"))
             .readme(Readme.refByGuid("readmeGuid"))
-            .meaning(GlossaryTerm.refByGuid("termGuid1"))
-            .meaning(GlossaryTerm.refByGuid("termGuid2"))
+            .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
+            .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
                     LineageProcess.refByGuid("d8da3c5b-84f2-4d60-952b-4a843f3536bc"),
                     LineageProcess.refByGuid("45ea7752-828e-4cdf-8449-a6f2ae74d757")))

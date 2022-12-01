@@ -104,8 +104,8 @@ public class LookerFieldTest {
             .link(Link.refByGuid("linkGuid1"))
             .link(Link.refByGuid("linkGuid2"))
             .readme(Readme.refByGuid("readmeGuid"))
-            .meaning(GlossaryTerm.refByGuid("termGuid1"))
-            .meaning(GlossaryTerm.refByGuid("termGuid2"))
+            .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
+            .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
                     LineageProcess.refByGuid("61ce0c8c-4b38-4f90-a9b5-fd90a9e57b2d"),
                     LineageProcess.refByGuid("ad44a4f5-a23c-4e29-b59a-848986d6c95b")))

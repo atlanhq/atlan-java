@@ -104,8 +104,8 @@ public class SalesforceOrganizationTest {
             .link(Link.refByGuid("linkGuid1"))
             .link(Link.refByGuid("linkGuid2"))
             .readme(Readme.refByGuid("readmeGuid"))
-            .meaning(GlossaryTerm.refByGuid("termGuid1"))
-            .meaning(GlossaryTerm.refByGuid("termGuid2"))
+            .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
+            .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
                     LineageProcess.refByGuid("bb203906-e0db-4df7-bede-6e3f71b34e0a"),
                     LineageProcess.refByGuid("74596a83-e2d2-4b97-91a1-17c396f20859")))

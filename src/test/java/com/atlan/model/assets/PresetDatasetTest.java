@@ -104,8 +104,8 @@ public class PresetDatasetTest {
             .link(Link.refByGuid("linkGuid1"))
             .link(Link.refByGuid("linkGuid2"))
             .readme(Readme.refByGuid("readmeGuid"))
-            .meaning(GlossaryTerm.refByGuid("termGuid1"))
-            .meaning(GlossaryTerm.refByGuid("termGuid2"))
+            .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
+            .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
                     LineageProcess.refByGuid("3c1dbe07-e54e-42d2-9ab9-77e4d948b189"),
                     LineageProcess.refByGuid("44ae09bf-ff39-40a0-af14-435bf24657e2")))

@@ -104,8 +104,8 @@ public class S3BucketTest {
             .link(Link.refByGuid("linkGuid1"))
             .link(Link.refByGuid("linkGuid2"))
             .readme(Readme.refByGuid("readmeGuid"))
-            .meaning(GlossaryTerm.refByGuid("termGuid1"))
-            .meaning(GlossaryTerm.refByGuid("termGuid2"))
+            .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
+            .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
                     LineageProcess.refByGuid("95cf9e2e-cdd8-4190-b86a-fce1daea3be7"),
                     LineageProcess.refByGuid("105631b5-e4c9-4bbe-a17d-4b55c288d104")))
