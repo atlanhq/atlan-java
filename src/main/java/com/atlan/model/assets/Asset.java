@@ -667,7 +667,7 @@ public abstract class Asset extends Entity {
             asset.removeMeanings();
             return updateRelationships(asset);
         } else {
-            return updateRelationships(builder.meanings(terms).build());
+            return updateRelationships(builder.meanings(getTermRefs(terms)).build());
         }
     }
 
@@ -685,7 +685,9 @@ public abstract class Asset extends Entity {
     protected static Entity appendTerms(String typeName, String qualifiedName, List<GlossaryTerm> terms)
             throws AtlanException {
         Asset existing = getExistingAsset(typeName, qualifiedName);
-        if (existing != null) {
+        if (terms == null) {
+            return existing;
+        } else if (existing != null) {
             Set<GlossaryTerm> replacementTerms = new TreeSet<>();
             Set<GlossaryTerm> existingTerms = existing.getMeanings();
             if (existingTerms != null) {
@@ -698,7 +700,8 @@ public abstract class Asset extends Entity {
             }
             replacementTerms.addAll(terms);
             AssetBuilder<?, ?> minimal = existing.trimToRequired();
-            return updateRelationships(minimal.meanings(replacementTerms).build());
+            return updateRelationships(
+                    minimal.meanings(getTermRefs(replacementTerms)).build());
         }
         return null;
     }
@@ -750,11 +753,27 @@ public abstract class Asset extends Entity {
                 update.removeMeanings();
             } else {
                 // Otherwise we should do the update with the difference
-                update = minimal.meanings(replacementTerms).build();
+                update = minimal.meanings(getTermRefs(replacementTerms)).build();
             }
             return updateRelationships(update);
         }
         return null;
+    }
+
+    private static Collection<GlossaryTerm> getTermRefs(Collection<GlossaryTerm> terms) {
+        if (terms != null && !terms.isEmpty()) {
+            Set<GlossaryTerm> termRefs = new TreeSet<>();
+            for (GlossaryTerm term : terms) {
+                if (term.getGuid() != null) {
+                    termRefs.add(GlossaryTerm.refByGuid(term.getGuid()));
+                } else if (term.getQualifiedName() != null) {
+                    termRefs.add(GlossaryTerm.refByQualifiedName(term.getQualifiedName()));
+                }
+            }
+            return termRefs;
+        } else {
+            return Collections.emptySet();
+        }
     }
 
     private static Asset getExistingAsset(String typeName, String qualifiedName) throws AtlanException {
