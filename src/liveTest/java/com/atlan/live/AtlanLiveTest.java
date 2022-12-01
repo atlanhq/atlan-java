@@ -10,6 +10,9 @@ import com.atlan.model.core.EntityMutationResponse;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanCertificateStatus;
 
+/**
+ * Base class with utility methods and constants for live (integration) tests.
+ */
 public abstract class AtlanLiveTest {
 
     private static final String TESTING_STRING = "Automated testing of the Java SDK.";
@@ -41,5 +44,19 @@ public abstract class AtlanLiveTest {
         assertTrue(response.getDeletedEntities().isEmpty());
         assertEquals(response.getUpdatedEntities().size(), 1);
         return response.getUpdatedEntities().get(0);
+    }
+
+    /**
+     * Validate an entity creation response only includes a single created entity.
+     *
+     * @param response the create response to validate
+     * @return the single created entity from the response
+     */
+    static Entity validateSingleCreate(EntityMutationResponse response) {
+        assertNotNull(response);
+        assertTrue(response.getUpdatedEntities().isEmpty());
+        assertTrue(response.getDeletedEntities().isEmpty());
+        assertEquals(response.getCreatedEntities().size(), 1);
+        return response.getCreatedEntities().get(0);
     }
 }

@@ -4,6 +4,8 @@ package com.atlan.live;
 
 import static org.testng.Assert.*;
 
+import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
+import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import com.atlan.api.EntityBulkEndpoint;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.assets.Asset;
@@ -12,10 +14,13 @@ import com.atlan.model.assets.GlossaryCategory;
 import com.atlan.model.assets.GlossaryTerm;
 import com.atlan.model.core.Entity;
 import com.atlan.model.core.EntityMutationResponse;
-import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.AtlanCertificateStatus;
-import com.atlan.model.enums.AtlanDeleteType;
-import com.atlan.model.enums.AtlanStatus;
+import com.atlan.model.enums.*;
+import com.atlan.model.search.IndexSearchDSL;
+import com.atlan.model.search.IndexSearchRequest;
+import com.atlan.model.search.IndexSearchResponse;
+import com.atlan.util.QueryFactory;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -24,25 +29,17 @@ import org.testng.annotations.Test;
 @Test(groups = {"glossary"})
 public class GlossaryTest extends AtlanLiveTest {
 
-    public static final String GLOSSARY_NAME = "JavaClient Test Glossary";
-    public static final String CATEGORY_NAME = "JavaClient Test Category";
-    public static final String TERM_NAME1 = "JavaClient Test Term1";
-    public static final String TERM_NAME2 = "JavaClient Test Term2";
+    private static final String PREFIX = "GlossaryTest";
 
-    public static String glossaryGuid = null;
-    public static String glossaryQame = null;
+    private static final String GLOSSARY_NAME = PREFIX + " Traversable";
+    private static final String TERM_NAME1 = PREFIX + " Term1";
+    private static final String TERM_NAME2 = PREFIX + " Term2";
 
-    private static String categoryGuid = null;
-    private static String categoryQame = null;
+    private static Glossary glossary = null;
+    private static GlossaryCategory category = null;
+    private static GlossaryTerm term1 = null;
+    private static GlossaryTerm term2 = null;
 
-    public static String termGuid1 = null;
-    public static String termQame1 = null;
-    public static String termGuid2 = null;
-    public static String termQame2 = null;
-
-    private static final String TRAVERSE_GLOSSARY_NAME = "JavaClient Traversable";
-    private static String traverseGlossaryGuid = null;
-    private static String traverseGlossaryQame = null;
     private static String top1Guid = null;
     private static String top2Guid = null;
     private static String mid1aGuid = null;
@@ -58,816 +55,627 @@ public class GlossaryTest extends AtlanLiveTest {
     private static String leaf2baGuid = null;
     private static String leaf2bbGuid = null;
 
-    @Test(groups = {"create.glossary"})
-    void createGlossary() {
-        Glossary glossary = Glossary.creator(GLOSSARY_NAME).build();
-        try {
-            EntityMutationResponse response = glossary.upsert();
-            assertNotNull(response);
-            assertEquals(response.getDeletedEntities().size(), 0);
-            assertEquals(response.getUpdatedEntities().size(), 0);
-            List<Entity> entities = response.getCreatedEntities();
-            assertNotNull(entities);
-            assertEquals(entities.size(), 1);
-            Entity one = entities.get(0);
-            assertNotNull(one);
-            assertEquals(one.getTypeName(), Glossary.TYPE_NAME);
-            assertTrue(one instanceof Glossary);
-            glossary = (Glossary) one;
-            glossaryGuid = glossary.getGuid();
-            assertNotNull(glossaryGuid);
-            glossaryQame = glossary.getQualifiedName();
-            assertNotNull(glossaryQame);
-            assertEquals(glossary.getName(), GLOSSARY_NAME);
-            assertNotEquals(glossaryQame, GLOSSARY_NAME);
-        } catch (AtlanException e) {
-            e.printStackTrace();
-            assertNull(e, "Unexpected exception: " + e.getMessage());
-        }
-        glossary = Glossary.creator(TRAVERSE_GLOSSARY_NAME).build();
-        try {
-            EntityMutationResponse response = glossary.upsert();
-            assertNotNull(response);
-            assertEquals(response.getDeletedEntities().size(), 0);
-            assertEquals(response.getUpdatedEntities().size(), 0);
-            List<Entity> entities = response.getCreatedEntities();
-            assertNotNull(entities);
-            assertEquals(entities.size(), 1);
-            Entity one = entities.get(0);
-            assertNotNull(one);
-            assertEquals(one.getTypeName(), Glossary.TYPE_NAME);
-            assertTrue(one instanceof Glossary);
-            glossary = (Glossary) one;
-            traverseGlossaryGuid = glossary.getGuid();
-            assertNotNull(traverseGlossaryGuid);
-            traverseGlossaryQame = glossary.getQualifiedName();
-            assertNotNull(traverseGlossaryQame);
-            assertEquals(glossary.getName(), TRAVERSE_GLOSSARY_NAME);
-            assertNotEquals(traverseGlossaryQame, TRAVERSE_GLOSSARY_NAME);
-        } catch (AtlanException e) {
-            e.printStackTrace();
-            assertNull(e, "Unexpected exception: " + e.getMessage());
-        }
+    /**
+     * Create a new glossary with a unique name.
+     *
+     * @param name to make the glossary unique
+     * @return the glossary that was created
+     * @throws AtlanException on any error creating or reading-back the glossary
+     */
+    static Glossary createGlossary(String name) throws AtlanException {
+        Glossary glossary = Glossary.creator(name).build();
+        EntityMutationResponse response = glossary.upsert();
+        assertNotNull(response);
+        assertEquals(response.getDeletedEntities().size(), 0);
+        assertEquals(response.getUpdatedEntities().size(), 0);
+        assertEquals(response.getCreatedEntities().size(), 1);
+        Entity one = response.getCreatedEntities().get(0);
+        assertNotNull(one);
+        assertTrue(one instanceof Glossary);
+        glossary = (Glossary) one;
+        assertNotNull(glossary.getGuid());
+        assertNotNull(glossary.getQualifiedName());
+        assertEquals(glossary.getName(), name);
+        assertNotEquals(glossary.getQualifiedName(), name);
+        return glossary;
     }
 
-    @Test(
-            groups = {"create.category"},
-            dependsOnGroups = {"create.glossary"})
-    void createCategory() {
-        GlossaryCategory category =
-                GlossaryCategory.creator(CATEGORY_NAME, glossaryGuid, null).build();
-        try {
-            EntityMutationResponse response = category.upsert();
-            assertNotNull(response);
-            assertEquals(response.getDeletedEntities().size(), 0);
-            validateGlossaryUpdate(response.getUpdatedEntities());
-            List<Entity> entities = response.getCreatedEntities();
-            assertNotNull(entities);
-            assertEquals(entities.size(), 1);
-            Entity one = entities.get(0);
-            assertNotNull(one);
-            assertEquals(one.getTypeName(), GlossaryCategory.TYPE_NAME);
-            assertTrue(one instanceof GlossaryCategory);
-            category = (GlossaryCategory) one;
-            categoryGuid = category.getGuid();
-            assertNotNull(categoryGuid);
-            categoryQame = category.getQualifiedName();
-            assertNotNull(categoryQame);
-            assertEquals(category.getName(), CATEGORY_NAME);
-        } catch (AtlanException e) {
-            e.printStackTrace();
-            assertNull(e, "Unexpected exception: " + e.getMessage());
+    /**
+     * Create multiple categories at the same time, from the details provided.
+     *
+     * @param names of the categories to create
+     * @param glossaryId GUID of the glossary in which to create the categories
+     * @param parentCategoryId GUID of the parent in which to create the categories (or null if they should be root-level categories)
+     * @return the list of categories that were created, in the same order as in the names provided
+     * @throws AtlanException on any error creating or reading-back the categories
+     */
+    static List<GlossaryCategory> createCategories(List<String> names, String glossaryId, String parentCategoryId)
+            throws AtlanException {
+        List<Entity> toCreate = new ArrayList<>();
+        for (String name : names) {
+            GlossaryCategory one;
+            if (parentCategoryId == null) {
+                one = GlossaryCategory.creator(name, glossaryId, null).build();
+            } else {
+                one = GlossaryCategory.creator(name, glossaryId, null)
+                        .parentCategory(GlossaryCategory.refByGuid(parentCategoryId))
+                        .build();
+            }
+            toCreate.add(one);
         }
+        EntityMutationResponse response = EntityBulkEndpoint.upsert(toCreate, false, false);
+        assertNotNull(response);
+        assertEquals(response.getDeletedEntities().size(), 0);
+        assertEquals(response.getCreatedEntities().size(), names.size());
+        List<Entity> entities = response.getCreatedEntities();
+        List<GlossaryCategory> toReturn = new ArrayList<>(names.size());
+        for (Entity created : entities) {
+            if (created instanceof GlossaryCategory) {
+                GlossaryCategory one = (GlossaryCategory) created;
+                String name = one.getName();
+                int index = names.indexOf(name);
+                toReturn.add(index, one);
+            }
+        }
+        return toReturn;
+    }
+
+    /**
+     * Create a new glossary term with a unique name.
+     *
+     * @param name to make the glossary term unique
+     * @param glossaryId GUID of the glossary in which to create the term
+     * @return the glossary term that was created
+     * @throws AtlanException on any error creating or reading-back the glossary term
+     */
+    static GlossaryTerm createTerm(String name, String glossaryId) throws AtlanException {
+        GlossaryTerm term = GlossaryTerm.creator(name, glossaryId, null).build();
+        EntityMutationResponse response = term.upsert();
+        assertNotNull(response);
+        assertEquals(response.getDeletedEntities().size(), 0);
+        assertEquals(response.getUpdatedEntities().size(), 1);
+        Entity one = response.getUpdatedEntities().get(0);
+        assertTrue(one instanceof Glossary);
+        Glossary glossary = (Glossary) one;
+        assertEquals(glossary.getGuid(), glossaryId);
+        assertEquals(response.getCreatedEntities().size(), 1);
+        one = response.getCreatedEntities().get(0);
+        assertNotNull(one);
+        assertTrue(one instanceof GlossaryTerm);
+        term = (GlossaryTerm) one;
+        assertNotNull(term.getGuid());
+        assertNotNull(term.getQualifiedName());
+        assertEquals(term.getName(), name);
+        assertNotEquals(term.getQualifiedName(), name);
+        return term;
+    }
+
+    /**
+     * Delete (purge) the glossary with the provided GUID.
+     *
+     * @param guid of the glossary to purge
+     * @return the purged glossary
+     * @throws AtlanException on any errors purging the glossary
+     */
+    static Glossary deleteGlossary(String guid) throws AtlanException {
+        EntityMutationResponse response = Glossary.purge(guid);
+        assertNotNull(response);
+        assertEquals(response.getCreatedEntities().size(), 0);
+        assertEquals(response.getUpdatedEntities().size(), 0);
+        assertEquals(response.getDeletedEntities().size(), 1);
+        Entity one = response.getDeletedEntities().get(0);
+        assertTrue(one instanceof Glossary);
+        Glossary deletedGlossary = (Glossary) one;
+        assertEquals(deletedGlossary.getGuid(), guid);
+        assertEquals(deletedGlossary.getStatus(), AtlanStatus.DELETED);
+        return deletedGlossary;
+    }
+
+    /**
+     * Delete (purge) the category with the provided GUID.
+     *
+     * @param guid of the category to purge
+     * @return the purged category
+     * @throws AtlanException on any errors purging the category
+     */
+    static GlossaryCategory deleteCategory(String guid) throws AtlanException {
+        EntityMutationResponse response = GlossaryCategory.purge(guid);
+        assertNotNull(response);
+        assertEquals(response.getCreatedEntities().size(), 0);
+        assertEquals(response.getUpdatedEntities().size(), 0);
+        assertEquals(response.getDeletedEntities().size(), 1);
+        Entity one = response.getDeletedEntities().get(0);
+        assertTrue(one instanceof GlossaryCategory);
+        GlossaryCategory deletedCategory = (GlossaryCategory) one;
+        assertEquals(deletedCategory.getGuid(), guid);
+        assertEquals(deletedCategory.getStatus(), AtlanStatus.DELETED);
+        return deletedCategory;
+    }
+
+    /**
+     * Delete (purge) the term with the provided GUID.
+     *
+     * @param guid of the term to purge
+     * @return the purged term
+     * @throws AtlanException on any errors purging the term
+     */
+    static GlossaryTerm deleteTerm(String guid) throws AtlanException {
+        EntityMutationResponse response = GlossaryTerm.purge(guid);
+        assertNotNull(response);
+        assertEquals(response.getCreatedEntities().size(), 0);
+        assertEquals(response.getUpdatedEntities().size(), 0);
+        assertEquals(response.getDeletedEntities().size(), 1);
+        Entity one = response.getDeletedEntities().get(0);
+        assertTrue(one instanceof GlossaryTerm);
+        GlossaryTerm deletedTerm = (GlossaryTerm) one;
+        assertEquals(deletedTerm.getGuid(), guid);
+        assertEquals(deletedTerm.getStatus(), AtlanStatus.DELETED);
+        return deletedTerm;
+    }
+
+    @Test(groups = {"create.glossary"})
+    void createGlossary() throws AtlanException {
+        glossary = createGlossary(GLOSSARY_NAME);
     }
 
     @Test(
             groups = {"create.hierarchy"},
-            dependsOnGroups = {"create.category"})
-    void createHierarchy() {
-        try {
+            dependsOnGroups = {"create.glossary"})
+    void createHierarchy() throws AtlanException {
 
-            GlossaryCategory top1 =
-                    GlossaryCategory.creator("top1", traverseGlossaryGuid, null).build();
-            GlossaryCategory top2 =
-                    GlossaryCategory.creator("top2", traverseGlossaryGuid, null).build();
-            EntityMutationResponse response = EntityBulkEndpoint.upsert(List.of(top1, top2), false, false);
-            assertNotNull(response);
-            assertEquals(response.getDeletedEntities().size(), 0);
-            assertEquals(response.getCreatedEntities().size(), 2);
-            List<Entity> entities = response.getCreatedEntities();
-            for (Entity created : entities) {
-                if (created instanceof GlossaryCategory) {
-                    String name = ((GlossaryCategory) created).getName();
-                    if (name.equals("top1")) {
-                        top1Guid = created.getGuid();
-                    } else if (name.equals("top2")) {
-                        top2Guid = created.getGuid();
-                    }
-                }
-            }
+        List<String> topNames = List.of("top1" + PREFIX, "top2" + PREFIX);
 
-            GlossaryCategory mid1a = GlossaryCategory.creator("mid1a", traverseGlossaryGuid, null)
-                    .parentCategory(GlossaryCategory.refByGuid(top1Guid))
-                    .build();
-            GlossaryCategory mid1b = GlossaryCategory.creator("mid1b", traverseGlossaryGuid, null)
-                    .parentCategory(GlossaryCategory.refByGuid(top1Guid))
-                    .build();
-            GlossaryCategory mid2a = GlossaryCategory.creator("mid2a", traverseGlossaryGuid, null)
-                    .parentCategory(GlossaryCategory.refByGuid(top2Guid))
-                    .build();
-            GlossaryCategory mid2b = GlossaryCategory.creator("mid2b", traverseGlossaryGuid, null)
-                    .parentCategory(GlossaryCategory.refByGuid(top2Guid))
-                    .build();
-            response = EntityBulkEndpoint.upsert(List.of(mid1a, mid1b, mid2a, mid2b), false, false);
-            assertNotNull(response);
-            assertEquals(response.getDeletedEntities().size(), 0);
-            assertEquals(response.getCreatedEntities().size(), 4);
-            entities = response.getCreatedEntities();
-            for (Entity created : entities) {
-                if (created instanceof GlossaryCategory) {
-                    String name = ((GlossaryCategory) created).getName();
-                    if (name.equals("mid1a")) {
-                        mid1aGuid = created.getGuid();
-                    } else if (name.equals("mid1b")) {
-                        mid1bGuid = created.getGuid();
-                    } else if (name.equals("mid2a")) {
-                        mid2aGuid = created.getGuid();
-                    } else if (name.equals("mid2b")) {
-                        mid2bGuid = created.getGuid();
-                    }
-                }
-            }
+        List<GlossaryCategory> tops = createCategories(topNames, glossary.getGuid(), null);
+        assertEquals(tops.size(), 2);
+        top1Guid = tops.get(0).getGuid();
+        top2Guid = tops.get(1).getGuid();
 
-            GlossaryCategory leaf1aa = GlossaryCategory.creator("leaf1aa", traverseGlossaryGuid, null)
-                    .parentCategory(GlossaryCategory.refByGuid(mid1aGuid))
-                    .build();
-            GlossaryCategory leaf1ab = GlossaryCategory.creator("leaf1ab", traverseGlossaryGuid, null)
-                    .parentCategory(GlossaryCategory.refByGuid(mid1aGuid))
-                    .build();
-            GlossaryCategory leaf1ba = GlossaryCategory.creator("leaf1ba", traverseGlossaryGuid, null)
-                    .parentCategory(GlossaryCategory.refByGuid(mid1bGuid))
-                    .build();
-            GlossaryCategory leaf1bb = GlossaryCategory.creator("leaf1bb", traverseGlossaryGuid, null)
-                    .parentCategory(GlossaryCategory.refByGuid(mid1bGuid))
-                    .build();
-            GlossaryCategory leaf2aa = GlossaryCategory.creator("leaf2aa", traverseGlossaryGuid, null)
-                    .parentCategory(GlossaryCategory.refByGuid(mid2aGuid))
-                    .build();
-            GlossaryCategory leaf2ab = GlossaryCategory.creator("leaf2ab", traverseGlossaryGuid, null)
-                    .parentCategory(GlossaryCategory.refByGuid(mid2aGuid))
-                    .build();
-            GlossaryCategory leaf2ba = GlossaryCategory.creator("leaf2ba", traverseGlossaryGuid, null)
-                    .parentCategory(GlossaryCategory.refByGuid(mid2bGuid))
-                    .build();
-            GlossaryCategory leaf2bb = GlossaryCategory.creator("leaf2bb", traverseGlossaryGuid, null)
-                    .parentCategory(GlossaryCategory.refByGuid(mid2bGuid))
-                    .build();
-            response = EntityBulkEndpoint.upsert(
-                    List.of(leaf1aa, leaf1ab, leaf1ba, leaf1bb, leaf2aa, leaf2ab, leaf2ba, leaf2bb), false, false);
-            assertNotNull(response);
-            assertEquals(response.getDeletedEntities().size(), 0);
-            assertEquals(response.getCreatedEntities().size(), 8);
-            entities = response.getCreatedEntities();
-            for (Entity created : entities) {
-                if (created instanceof GlossaryCategory) {
-                    String name = ((GlossaryCategory) created).getName();
-                    if (name.equals("leaf1aa")) {
-                        leaf1aaGuid = created.getGuid();
-                    } else if (name.equals("leaf1ab")) {
-                        leaf1abGuid = created.getGuid();
-                    } else if (name.equals("leaf1ba")) {
-                        leaf1baGuid = created.getGuid();
-                    } else if (name.equals("leaf1bb")) {
-                        leaf1bbGuid = created.getGuid();
-                    } else if (name.equals("leaf2aa")) {
-                        leaf2aaGuid = created.getGuid();
-                    } else if (name.equals("leaf2ab")) {
-                        leaf2abGuid = created.getGuid();
-                    } else if (name.equals("leaf2ba")) {
-                        leaf2baGuid = created.getGuid();
-                    } else if (name.equals("leaf2bb")) {
-                        leaf2bbGuid = created.getGuid();
-                    }
-                }
-            }
+        List<String> midNames = List.of("mid1a" + PREFIX, "mid1b" + PREFIX);
 
-        } catch (AtlanException e) {
-            e.printStackTrace();
-            assertNull(e, "Unexpected exception: " + e.getMessage());
-        }
+        List<GlossaryCategory> mids = createCategories(midNames, glossary.getGuid(), top1Guid);
+        assertEquals(mids.size(), 2);
+        mid1aGuid = mids.get(0).getGuid();
+        mid1bGuid = mids.get(1).getGuid();
+
+        midNames = List.of("mid2a" + PREFIX, "mid2b" + PREFIX);
+
+        mids = createCategories(midNames, glossary.getGuid(), top2Guid);
+        assertEquals(mids.size(), 2);
+        mid2aGuid = mids.get(0).getGuid();
+        mid2bGuid = mids.get(1).getGuid();
+
+        List<String> leafNames = List.of("leaf1aa" + PREFIX, "leaf1ab" + PREFIX);
+
+        List<GlossaryCategory> leaves = createCategories(leafNames, glossary.getGuid(), mid1aGuid);
+        assertEquals(leaves.size(), 2);
+        leaf1aaGuid = leaves.get(0).getGuid();
+        leaf1abGuid = leaves.get(1).getGuid();
+
+        leafNames = List.of("leaf1ba" + PREFIX, "leaf1bb" + PREFIX);
+
+        leaves = createCategories(leafNames, glossary.getGuid(), mid1bGuid);
+        assertEquals(leaves.size(), 2);
+        leaf1baGuid = leaves.get(0).getGuid();
+        leaf1bbGuid = leaves.get(1).getGuid();
+
+        leafNames = List.of("leaf2aa" + PREFIX, "leaf2ab" + PREFIX);
+
+        leaves = createCategories(leafNames, glossary.getGuid(), mid2aGuid);
+        assertEquals(leaves.size(), 2);
+        leaf2aaGuid = leaves.get(0).getGuid();
+        leaf2abGuid = leaves.get(1).getGuid();
+
+        leafNames = List.of("leaf2ba" + PREFIX, "leaf2bb" + PREFIX);
+
+        leaves = createCategories(leafNames, glossary.getGuid(), mid2bGuid);
+        assertEquals(leaves.size(), 2);
+        leaf2baGuid = leaves.get(0).getGuid();
+        leaf2bbGuid = leaves.get(1).getGuid();
     }
 
     @Test(
             groups = {"read.hierarchy"},
             dependsOnGroups = {"create.hierarchy"})
-    void traverseHierarchy() {
-        try {
-            Glossary glossary = Glossary.findByName(TRAVERSE_GLOSSARY_NAME, null);
-            assertNotNull(glossary);
-            Glossary.CategoryHierarchy tree = glossary.getHierarchy();
-            assertNotNull(tree);
-            List<GlossaryCategory> dfs = tree.depthFirst();
-            assertNotNull(dfs);
-            assertEquals(dfs.size(), 14);
-            List<String> names = dfs.stream().map(GlossaryCategory::getName).collect(Collectors.toList());
-            assertTrue(names.get(0).startsWith("top"));
-            assertTrue(names.get(1).startsWith("mid"));
-            assertTrue(names.get(2).startsWith("leaf"));
-            assertTrue(names.get(3).startsWith("leaf"));
-            assertTrue(names.get(4).startsWith("mid"));
-            assertTrue(names.get(5).startsWith("leaf"));
-            assertTrue(names.get(6).startsWith("leaf"));
-            assertTrue(names.get(7).startsWith("top"));
-            assertTrue(names.get(8).startsWith("mid"));
-            assertTrue(names.get(9).startsWith("leaf"));
-            assertTrue(names.get(10).startsWith("leaf"));
-            assertTrue(names.get(11).startsWith("mid"));
-            assertTrue(names.get(12).startsWith("leaf"));
-            assertTrue(names.get(13).startsWith("leaf"));
-            List<GlossaryCategory> bfs = tree.breadthFirst();
-            assertNotNull(bfs);
-            assertEquals(bfs.size(), 14);
-            names = bfs.stream().map(Asset::getName).collect(Collectors.toList());
-            assertTrue(names.get(0).startsWith("top"));
-            assertTrue(names.get(1).startsWith("top"));
-            assertTrue(names.get(2).startsWith("mid"));
-            assertTrue(names.get(3).startsWith("mid"));
-            assertTrue(names.get(4).startsWith("mid"));
-            assertTrue(names.get(5).startsWith("mid"));
-            assertTrue(names.get(6).startsWith("leaf"));
-            assertTrue(names.get(7).startsWith("leaf"));
-            assertTrue(names.get(8).startsWith("leaf"));
-            assertTrue(names.get(9).startsWith("leaf"));
-            assertTrue(names.get(10).startsWith("leaf"));
-            assertTrue(names.get(11).startsWith("leaf"));
-            assertTrue(names.get(12).startsWith("leaf"));
-            assertTrue(names.get(13).startsWith("leaf"));
-            List<GlossaryCategory> root = tree.getRootCategories();
-            assertNotNull(root);
-            assertEquals(root.size(), 2);
-            names = root.stream().map(Asset::getName).collect(Collectors.toList());
-            assertTrue(names.get(0).startsWith("top"));
-            assertTrue(names.get(1).startsWith("top"));
-        } catch (AtlanException e) {
-            e.printStackTrace();
-            assertNull(e, "Unexpected exception: " + e.getMessage());
-        }
+    void traverseHierarchy() throws AtlanException {
+        Glossary glossary = Glossary.findByName(GLOSSARY_NAME, null);
+        assertNotNull(glossary);
+        Glossary.CategoryHierarchy tree = glossary.getHierarchy();
+        assertNotNull(tree);
+        List<GlossaryCategory> dfs = tree.depthFirst();
+        assertNotNull(dfs);
+        assertEquals(dfs.size(), 14);
+        List<String> names = dfs.stream().map(GlossaryCategory::getName).collect(Collectors.toList());
+        assertTrue(names.get(0).startsWith("top"));
+        assertTrue(names.get(1).startsWith("mid"));
+        assertTrue(names.get(2).startsWith("leaf"));
+        assertTrue(names.get(3).startsWith("leaf"));
+        assertTrue(names.get(4).startsWith("mid"));
+        assertTrue(names.get(5).startsWith("leaf"));
+        assertTrue(names.get(6).startsWith("leaf"));
+        assertTrue(names.get(7).startsWith("top"));
+        assertTrue(names.get(8).startsWith("mid"));
+        assertTrue(names.get(9).startsWith("leaf"));
+        assertTrue(names.get(10).startsWith("leaf"));
+        assertTrue(names.get(11).startsWith("mid"));
+        assertTrue(names.get(12).startsWith("leaf"));
+        assertTrue(names.get(13).startsWith("leaf"));
+        List<GlossaryCategory> bfs = tree.breadthFirst();
+        assertNotNull(bfs);
+        assertEquals(bfs.size(), 14);
+        names = bfs.stream().map(Asset::getName).collect(Collectors.toList());
+        assertTrue(names.get(0).startsWith("top"));
+        assertTrue(names.get(1).startsWith("top"));
+        assertTrue(names.get(2).startsWith("mid"));
+        assertTrue(names.get(3).startsWith("mid"));
+        assertTrue(names.get(4).startsWith("mid"));
+        assertTrue(names.get(5).startsWith("mid"));
+        assertTrue(names.get(6).startsWith("leaf"));
+        assertTrue(names.get(7).startsWith("leaf"));
+        assertTrue(names.get(8).startsWith("leaf"));
+        assertTrue(names.get(9).startsWith("leaf"));
+        assertTrue(names.get(10).startsWith("leaf"));
+        assertTrue(names.get(11).startsWith("leaf"));
+        assertTrue(names.get(12).startsWith("leaf"));
+        assertTrue(names.get(13).startsWith("leaf"));
+        List<GlossaryCategory> root = tree.getRootCategories();
+        assertNotNull(root);
+        assertEquals(root.size(), 2);
+        names = root.stream().map(Asset::getName).collect(Collectors.toList());
+        assertTrue(names.get(0).startsWith("top"));
+        assertTrue(names.get(1).startsWith("top"));
     }
 
     @Test(
             groups = {"create.term"},
             dependsOnGroups = {"create.glossary"})
-    void createTerm1() {
-        GlossaryTerm term = GlossaryTerm.creator(TERM_NAME1, glossaryGuid, null).build();
-        try {
-            EntityMutationResponse response = term.upsert();
-            assertNotNull(response);
-            assertEquals(response.getDeletedEntities().size(), 0);
-            validateGlossaryUpdate(response.getUpdatedEntities());
-            List<Entity> entities = response.getCreatedEntities();
-            assertNotNull(entities);
-            assertEquals(entities.size(), 1);
-            Entity one = entities.get(0);
-            assertNotNull(one);
-            assertEquals(one.getTypeName(), GlossaryTerm.TYPE_NAME);
-            assertTrue(one instanceof GlossaryTerm);
-            term = (GlossaryTerm) one;
-            termGuid1 = term.getGuid();
-            assertNotNull(termGuid1);
-            termQame1 = term.getQualifiedName();
-            assertNotNull(termQame1);
-            assertEquals(term.getName(), TERM_NAME1);
-        } catch (AtlanException e) {
-            e.printStackTrace();
-            assertNull(e, "Unexpected exception: " + e.getMessage());
-        }
+    void createTerm1() throws AtlanException {
+        term1 = createTerm(TERM_NAME1, glossary.getGuid());
+        assertEquals(term1.getName(), TERM_NAME1);
     }
 
     @Test(
             groups = {"create.term"},
-            dependsOnGroups = {"create.glossary", "create.category"})
-    void createTerm2() {
-        GlossaryTerm term = GlossaryTerm.creator(TERM_NAME2, glossaryGuid, null).build();
-        try {
-            EntityMutationResponse response = term.upsert();
-            assertNotNull(response);
-            assertEquals(response.getDeletedEntities().size(), 0);
-            validateGlossaryUpdate(response.getUpdatedEntities());
-            List<Entity> entities = response.getCreatedEntities();
-            assertNotNull(entities);
-            assertEquals(entities.size(), 1);
-            Entity one = entities.get(0);
-            assertNotNull(one);
-            assertEquals(one.getTypeName(), GlossaryTerm.TYPE_NAME);
-            assertTrue(one instanceof GlossaryTerm);
-            term = (GlossaryTerm) one;
-            termGuid2 = term.getGuid();
-            assertNotNull(termGuid2);
-            termQame2 = term.getQualifiedName();
-            assertNotNull(termQame2);
-            assertEquals(term.getName(), TERM_NAME2);
-        } catch (AtlanException e) {
-            e.printStackTrace();
-            assertNull(e, "Unexpected exception: " + e.getMessage());
-        }
+            dependsOnGroups = {"create.glossary"})
+    void createTerm2() throws AtlanException {
+        term2 = createTerm(TERM_NAME2, glossary.getGuid());
+        assertEquals(term2.getName(), TERM_NAME2);
     }
 
     @Test(
             groups = {"read.glossary"},
-            dependsOnGroups = {"create.glossary", "create.category", "create.term"})
-    void readGlossary() {
-        try {
-            Glossary glossary = Glossary.retrieveByGuid(glossaryGuid);
-            assertNotNull(glossary);
-            assertTrue(glossary.isComplete());
-            assertEquals(glossary.getGuid(), glossaryGuid);
-            assertEquals(glossary.getQualifiedName(), glossaryQame);
-            assertEquals(glossary.getName(), GLOSSARY_NAME);
-            assertNotNull(glossary.getTerms());
-            assertEquals(glossary.getTerms().size(), 2);
-            Set<String> types =
-                    glossary.getTerms().stream().map(GlossaryTerm::getTypeName).collect(Collectors.toSet());
-            assertNotNull(types);
-            assertEquals(types.size(), 1);
-            assertTrue(types.contains(GlossaryTerm.TYPE_NAME));
-            Set<String> guids =
-                    glossary.getTerms().stream().map(GlossaryTerm::getGuid).collect(Collectors.toSet());
-            assertNotNull(guids);
-            assertEquals(guids.size(), 2);
-            assertTrue(guids.contains(termGuid1));
-            assertTrue(guids.contains(termGuid2));
-            assertNotNull(glossary.getCategories());
-            assertEquals(glossary.getCategories().size(), 1);
-            types = glossary.getCategories().stream()
-                    .map(GlossaryCategory::getTypeName)
-                    .collect(Collectors.toSet());
-            assertTrue(types.contains(GlossaryCategory.TYPE_NAME));
-            guids = glossary.getCategories().stream()
-                    .map(GlossaryCategory::getGuid)
-                    .collect(Collectors.toSet());
-            assertTrue(guids.contains(categoryGuid));
-        } catch (AtlanException e) {
-            e.printStackTrace();
-            assertNull(e, "Unexpected exception: " + e.getMessage());
-        }
-    }
-
-    @Test(
-            groups = {"read.category"},
-            dependsOnGroups = {"create.category"})
-    void readCategory() {
-        try {
-            GlossaryCategory category = GlossaryCategory.retrieveByGuid(categoryGuid);
-            assertNotNull(category);
-            assertTrue(category.isComplete());
-            assertEquals(category.getGuid(), categoryGuid);
-            assertEquals(category.getQualifiedName(), categoryQame);
-            assertEquals(category.getName(), CATEGORY_NAME);
-            assertNotNull(category.getAnchor());
-            assertEquals(category.getAnchor().getTypeName(), Glossary.TYPE_NAME);
-            assertEquals(category.getAnchor().getGuid(), glossaryGuid);
-        } catch (AtlanException e) {
-            e.printStackTrace();
-            assertNull(e, "Unexpected exception: " + e.getMessage());
-        }
+            dependsOnGroups = {"create.glossary", "create.hierarchy", "create.term"})
+    void readGlossary() throws AtlanException {
+        Glossary g = Glossary.retrieveByGuid(glossary.getGuid());
+        assertNotNull(g);
+        assertTrue(g.isComplete());
+        assertEquals(g.getGuid(), glossary.getGuid());
+        assertEquals(g.getQualifiedName(), glossary.getQualifiedName());
+        assertEquals(g.getName(), glossary.getName());
+        Set<GlossaryTerm> terms = g.getTerms();
+        assertNotNull(terms);
+        assertEquals(terms.size(), 2);
+        Set<String> guids = terms.stream().map(GlossaryTerm::getGuid).collect(Collectors.toSet());
+        assertNotNull(guids);
+        assertEquals(guids.size(), 2);
+        assertTrue(guids.contains(term1.getGuid()));
+        assertTrue(guids.contains(term2.getGuid()));
+        Set<GlossaryCategory> categories = g.getCategories();
+        assertNotNull(categories);
+        assertEquals(categories.size(), 14);
+        guids = categories.stream().map(GlossaryCategory::getGuid).collect(Collectors.toSet());
+        assertEquals(guids.size(), 14);
     }
 
     @Test(
             groups = {"read.term"},
             dependsOnGroups = {"create.term"})
-    void readTerm() {
-        try {
-            GlossaryTerm term = GlossaryTerm.retrieveByGuid(termGuid1);
-            assertNotNull(term);
-            assertTrue(term.isComplete());
-            assertEquals(term.getGuid(), termGuid1);
-            assertEquals(term.getQualifiedName(), termQame1);
-            assertEquals(term.getName(), TERM_NAME1);
-            assertNotNull(term.getAnchor());
-            assertEquals(term.getAnchor().getTypeName(), Glossary.TYPE_NAME);
-            assertEquals(term.getAnchor().getGuid(), glossaryGuid);
-        } catch (AtlanException e) {
-            e.printStackTrace();
-            assertNull(e, "Unexpected exception: " + e.getMessage());
-        }
+    void readTerm() throws AtlanException {
+        GlossaryTerm term = GlossaryTerm.retrieveByGuid(term1.getGuid());
+        assertNotNull(term);
+        assertTrue(term.isComplete());
+        assertEquals(term.getGuid(), term1.getGuid());
+        assertEquals(term.getQualifiedName(), term1.getQualifiedName());
+        assertEquals(term.getName(), term1.getName());
+        assertNotNull(term.getAnchor());
+        assertEquals(term.getAnchor().getGuid(), glossary.getGuid());
     }
 
     @Test(
             groups = {"update.glossary"},
             dependsOnGroups = {"read.glossary"})
-    void updateGlossary() {
-        Glossary glossary = Glossary.updater(glossaryGuid, GLOSSARY_NAME).build();
-        glossary = glossary.toBuilder()
-                .certificateStatus(AtlanCertificateStatus.VERIFIED)
-                .announcementType(AtlanAnnouncementType.INFORMATION)
+    void updateGlossary() throws AtlanException {
+        Glossary g = Glossary.updater(glossary.getGuid(), GLOSSARY_NAME)
+                .certificateStatus(CERTIFICATE_STATUS)
+                .certificateStatusMessage(CERTIFICATE_MESSAGE)
+                .announcementType(ANNOUNCEMENT_TYPE)
                 .announcementTitle(ANNOUNCEMENT_TITLE)
                 .announcementMessage(ANNOUNCEMENT_MESSAGE)
                 .build();
-        try {
-            EntityMutationResponse response = glossary.upsert();
-            assertNotNull(response);
-            assertEquals(response.getDeletedEntities().size(), 0);
-            assertEquals(response.getCreatedEntities().size(), 0);
-            List<Entity> entities = response.getUpdatedEntities();
-            assertNotNull(entities);
-            assertEquals(entities.size(), 1);
-            Entity one = entities.get(0);
-            assertNotNull(one);
-            assertEquals(one.getTypeName(), Glossary.TYPE_NAME);
-            assertTrue(one instanceof Glossary);
-            glossary = (Glossary) one;
-            assertEquals(glossary.getGuid(), glossaryGuid);
-            assertEquals(glossary.getQualifiedName(), glossaryQame);
-            assertEquals(glossary.getName(), GLOSSARY_NAME);
-            assertEquals(glossary.getCertificateStatus(), AtlanCertificateStatus.VERIFIED);
-            assertEquals(glossary.getAnnouncementType(), AtlanAnnouncementType.INFORMATION);
-            assertEquals(glossary.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
-            assertEquals(glossary.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
-        } catch (AtlanException e) {
-            e.printStackTrace();
-            assertNull(e, "Unexpected exception: " + e.getMessage());
-        }
+        EntityMutationResponse response = g.upsert();
+        Entity one = validateSingleUpdate(response);
+        assertTrue(one instanceof Glossary);
+        g = (Glossary) one;
+        assertEquals(g.getGuid(), glossary.getGuid());
+        assertEquals(g.getQualifiedName(), glossary.getQualifiedName());
+        assertEquals(g.getName(), glossary.getName());
+        assertEquals(g.getCertificateStatus(), CERTIFICATE_STATUS);
+        assertEquals(g.getCertificateStatusMessage(), CERTIFICATE_MESSAGE);
+        assertEquals(g.getAnnouncementType(), ANNOUNCEMENT_TYPE);
+        assertEquals(g.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
+        assertEquals(g.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
     }
 
     @Test(
             groups = {"update.category"},
-            dependsOnGroups = {"create.category"})
-    void updateCategory() {
-        GlossaryCategory category = GlossaryCategory.updater(categoryQame, CATEGORY_NAME, glossaryGuid)
-                .build();
-        category = category.toBuilder()
-                .certificateStatus(AtlanCertificateStatus.DRAFT)
-                .announcementType(AtlanAnnouncementType.WARNING)
+            dependsOnGroups = {"create.hierarchy"})
+    void updateCategory() throws AtlanException {
+        category = GlossaryCategory.retrieveByGuid(leaf1baGuid);
+        GlossaryCategory toUpdate = GlossaryCategory.updater(
+                        category.getQualifiedName(),
+                        category.getName(),
+                        category.getAnchor().getGuid())
+                .certificateStatus(CERTIFICATE_STATUS)
+                .certificateStatusMessage(CERTIFICATE_MESSAGE)
+                .announcementType(ANNOUNCEMENT_TYPE)
                 .announcementTitle(ANNOUNCEMENT_TITLE)
                 .announcementMessage(ANNOUNCEMENT_MESSAGE)
                 .build();
-        try {
-            EntityMutationResponse response = category.upsert();
-            assertNotNull(response);
-            assertEquals(response.getDeletedEntities().size(), 0);
-            assertEquals(response.getCreatedEntities().size(), 0);
-            List<Entity> entities = response.getUpdatedEntities();
-            assertNotNull(entities);
-            assertEquals(entities.size(), 1);
-            Entity one = entities.get(0);
-            assertNotNull(one);
-            assertEquals(one.getTypeName(), GlossaryCategory.TYPE_NAME);
-            assertTrue(one instanceof GlossaryCategory);
-            category = (GlossaryCategory) one;
-            assertEquals(category.getGuid(), categoryGuid);
-            assertEquals(category.getQualifiedName(), categoryQame);
-            assertEquals(category.getName(), CATEGORY_NAME);
-            assertEquals(category.getCertificateStatus(), AtlanCertificateStatus.DRAFT);
-            assertEquals(category.getAnnouncementType(), AtlanAnnouncementType.WARNING);
-            assertEquals(category.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
-            assertEquals(category.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
-        } catch (AtlanException e) {
-            e.printStackTrace();
-            assertNull(e, "Unexpected exception: " + e.getMessage());
-        }
+        EntityMutationResponse response = toUpdate.upsert();
+        Entity one = validateSingleUpdate(response);
+        assertTrue(one instanceof GlossaryCategory);
+        GlossaryCategory c = (GlossaryCategory) one;
+        assertEquals(c.getGuid(), category.getGuid());
+        assertEquals(c.getQualifiedName(), category.getQualifiedName());
+        assertEquals(c.getName(), category.getName());
+        assertEquals(c.getCertificateStatus(), CERTIFICATE_STATUS);
+        assertEquals(c.getCertificateStatusMessage(), CERTIFICATE_MESSAGE);
+        assertEquals(c.getAnnouncementType(), ANNOUNCEMENT_TYPE);
+        assertEquals(c.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
+        assertEquals(c.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
     }
 
     @Test(
             groups = {"update.category.attributes"},
             dependsOnGroups = {"update.category"})
-    void removeCategoryAttributes() {
-        GlossaryCategory category2 = GlossaryCategory.updater(categoryQame, CATEGORY_NAME, glossaryGuid)
+    void removeCategoryAttributes() throws AtlanException {
+        GlossaryCategory toUpdate = GlossaryCategory.updater(
+                        category.getQualifiedName(),
+                        category.getName(),
+                        category.getAnchor().getGuid())
                 .build();
-        category2.removeAnnouncement();
-        try {
-            EntityMutationResponse response = category2.upsert();
-            assertNotNull(response);
-            assertEquals(response.getDeletedEntities().size(), 0);
-            assertEquals(response.getCreatedEntities().size(), 0);
-            List<Entity> entities = response.getUpdatedEntities();
-            assertNotNull(entities);
-            assertEquals(entities.size(), 1);
-            Entity one = entities.get(0);
-            assertNotNull(one);
-            assertEquals(one.getTypeName(), GlossaryCategory.TYPE_NAME);
-            assertTrue(one instanceof GlossaryCategory);
-            category2 = (GlossaryCategory) one;
-            assertEquals(category2.getGuid(), categoryGuid);
-            assertEquals(category2.getQualifiedName(), categoryQame);
-            assertEquals(category2.getName(), CATEGORY_NAME);
-            assertEquals(category2.getCertificateStatus(), AtlanCertificateStatus.DRAFT);
-            assertNull(category2.getAnnouncementType());
-            assertNull(category2.getAnnouncementTitle());
-            assertNull(category2.getAnnouncementMessage());
-        } catch (AtlanException e) {
-            e.printStackTrace();
-            assertNull(e, "Unexpected exception: " + e.getMessage());
-        }
+        toUpdate.removeAnnouncement();
+        EntityMutationResponse response = toUpdate.upsert();
+        Entity one = validateSingleUpdate(response);
+        assertTrue(one instanceof GlossaryCategory);
+        GlossaryCategory c = (GlossaryCategory) one;
+        assertEquals(c.getGuid(), category.getGuid());
+        assertEquals(c.getQualifiedName(), category.getQualifiedName());
+        assertEquals(c.getName(), category.getName());
+        assertEquals(c.getCertificateStatus(), CERTIFICATE_STATUS);
+        assertEquals(c.getCertificateStatusMessage(), CERTIFICATE_MESSAGE);
+        assertNull(c.getAnnouncementType());
+        assertNull(c.getAnnouncementTitle());
+        assertNull(c.getAnnouncementMessage());
     }
 
     @Test(
             groups = {"update.term"},
-            dependsOnGroups = {"create.term", "create.category"})
-    void updateTerm() {
-        GlossaryTerm term = GlossaryTerm.updater(termQame1, TERM_NAME1, glossaryGuid)
-                .announcementType(AtlanAnnouncementType.ISSUE)
+            dependsOnGroups = {"create.term", "create.hierarchy"})
+    void updateTerm() throws AtlanException {
+        GlossaryTerm term = GlossaryTerm.updater(term1.getQualifiedName(), term1.getName(), glossary.getGuid())
+                .announcementType(ANNOUNCEMENT_TYPE)
                 .announcementTitle(ANNOUNCEMENT_TITLE)
                 .announcementMessage(ANNOUNCEMENT_MESSAGE)
-                .category(GlossaryCategory.refByGuid(categoryGuid))
+                .category(GlossaryCategory.refByGuid(category.getGuid()))
                 .build();
-        try {
-            EntityMutationResponse response = term.upsert();
-            assertNotNull(response);
-            assertEquals(response.getDeletedEntities().size(), 0);
-            assertEquals(response.getCreatedEntities().size(), 0);
-            List<Entity> entities = response.getUpdatedEntities();
-            assertNotNull(entities);
-            assertEquals(entities.size(), 2);
-            Entity one = entities.get(0);
-            assertNotNull(one);
-            assertEquals(one.getTypeName(), GlossaryTerm.TYPE_NAME);
-            assertTrue(one instanceof GlossaryTerm);
-            term = (GlossaryTerm) one;
-            assertEquals(term.getGuid(), termGuid1);
-            assertEquals(term.getQualifiedName(), termQame1);
-            assertEquals(term.getName(), TERM_NAME1);
-            assertEquals(term.getAnnouncementType(), AtlanAnnouncementType.ISSUE);
-            assertEquals(term.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
-            assertEquals(term.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
-            one = entities.get(1);
-            assertNotNull(one);
-            assertEquals(one.getTypeName(), GlossaryCategory.TYPE_NAME);
-            assertTrue(one instanceof GlossaryCategory);
-            GlossaryCategory category = (GlossaryCategory) one;
-            assertEquals(category.getGuid(), categoryGuid);
-            assertEquals(category.getQualifiedName(), categoryQame);
-            assertEquals(category.getName(), CATEGORY_NAME);
-            term = GlossaryTerm.updateCertificate(
-                    termQame1, TERM_NAME1, glossaryGuid, AtlanCertificateStatus.DEPRECATED, null);
-            assertNotNull(term);
-            assertEquals(term.getCertificateStatus(), AtlanCertificateStatus.DEPRECATED);
-        } catch (AtlanException e) {
-            e.printStackTrace();
-            assertNull(e, "Unexpected exception: " + e.getMessage());
-        }
+        EntityMutationResponse response = term.upsert();
+        assertNotNull(response);
+        assertEquals(response.getDeletedEntities().size(), 0);
+        assertEquals(response.getCreatedEntities().size(), 0);
+        List<Entity> entities = response.getUpdatedEntities();
+        assertNotNull(entities);
+        assertEquals(entities.size(), 2);
+
+        Entity one = entities.get(0);
+        assertTrue(one instanceof GlossaryTerm);
+        term = (GlossaryTerm) one;
+        assertEquals(term.getGuid(), term1.getGuid());
+        assertEquals(term.getQualifiedName(), term1.getQualifiedName());
+        assertEquals(term.getName(), term1.getName());
+        assertEquals(term.getAnnouncementType(), ANNOUNCEMENT_TYPE);
+        assertEquals(term.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
+        assertEquals(term.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
+
+        one = entities.get(1);
+        assertTrue(one instanceof GlossaryCategory);
+        GlossaryCategory c = (GlossaryCategory) one;
+        assertEquals(c.getGuid(), category.getGuid());
+        assertEquals(c.getQualifiedName(), category.getQualifiedName());
+        assertEquals(c.getName(), category.getName());
+        term = GlossaryTerm.updateCertificate(
+                term1.getQualifiedName(), term1.getName(), glossary.getGuid(), CERTIFICATE_STATUS, CERTIFICATE_MESSAGE);
+        assertNotNull(term);
+        assertEquals(term.getCertificateStatus(), CERTIFICATE_STATUS);
+        assertEquals(term.getCertificateStatusMessage(), CERTIFICATE_MESSAGE);
     }
 
     @Test(
-            groups = {"delete.term.1"},
-            dependsOnGroups = {"create.*", "update.*", "read.*", "search.*", "link.*", "unlink.*"},
-            alwaysRun = true)
-    void deleteTerm1() {
-        try {
-            EntityMutationResponse response = GlossaryTerm.delete(termGuid1);
-            assertNotNull(response);
-            assertEquals(response.getCreatedEntities().size(), 0);
-            assertEquals(response.getUpdatedEntities().size(), 0);
-            List<Entity> entities = response.getDeletedEntities();
-            assertNotNull(entities);
-            assertEquals(entities.size(), 1);
-            Entity one = entities.get(0);
-            assertNotNull(one);
-            assertEquals(one.getTypeName(), GlossaryTerm.TYPE_NAME);
-            assertTrue(one instanceof GlossaryTerm);
-            GlossaryTerm term = (GlossaryTerm) one;
-            assertEquals(term.getGuid(), termGuid1);
-            assertEquals(term.getQualifiedName(), termQame1);
-            assertEquals(term.getName(), TERM_NAME1);
-            assertEquals(term.getCertificateStatus(), AtlanCertificateStatus.DEPRECATED);
-            assertEquals(term.getAnnouncementType(), AtlanAnnouncementType.ISSUE);
-            assertEquals(term.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
-            assertEquals(term.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
-            assertEquals(term.getStatus(), AtlanStatus.DELETED);
-            assertEquals(term.getDeleteHandler(), "SOFT");
-        } catch (AtlanException e) {
-            e.printStackTrace();
-            assertNull(e, "Unexpected exception trying to archive a term: " + e.getMessage());
-        }
+            groups = {"search.term"},
+            dependsOnGroups = {"update.term"})
+    void searchTerms() throws AtlanException {
+
+        Query byState = QueryFactory.active();
+        Query byType = QueryFactory.withType(GlossaryTerm.TYPE_NAME);
+        Query byName = QueryFactory.withExactName(TERM_NAME1);
+
+        Query combined = BoolQuery.of(b -> b.filter(byState, byType, byName))._toQuery();
+
+        IndexSearchRequest index = IndexSearchRequest.builder()
+                .dsl(IndexSearchDSL.builder().from(0).size(100).query(combined).build())
+                .attributes(Collections.singletonList("anchor"))
+                .relationAttributes(Collections.singletonList("certificateStatus"))
+                .build();
+
+        IndexSearchResponse response = index.search();
+
+        assertNotNull(response);
+        assertEquals(response.getApproximateCount().longValue(), 1L);
+        List<Entity> entities = response.getEntities();
+        assertNotNull(entities);
+        assertEquals(entities.size(), 1);
+        Entity one = entities.get(0);
+        assertTrue(one instanceof GlossaryTerm);
+        assertFalse(one.isComplete());
+        GlossaryTerm term = (GlossaryTerm) one;
+        assertEquals(term.getGuid(), term1.getGuid());
+        assertEquals(term.getQualifiedName(), term1.getQualifiedName());
+        assertNotNull(term.getAnchor());
+        assertEquals(term.getAnchor().getTypeName(), Glossary.TYPE_NAME);
+        assertEquals(term.getAnchor().getGuid(), glossary.getGuid());
     }
 
     @Test(
-            groups = "restore.term.1",
-            dependsOnGroups = {"delete.term.1"},
+            groups = {"delete.term"},
+            dependsOnGroups = {"create.*", "update.*", "read.*", "search.*"},
             alwaysRun = true)
-    void restoreTerm1() {
-        try {
-            assertTrue(GlossaryTerm.restore(termQame1));
-            GlossaryTerm term = GlossaryTerm.retrieveByQualifiedName(termQame1);
-            assertNotNull(term);
-            assertEquals(term.getGuid(), termGuid1);
-            assertEquals(term.getQualifiedName(), termQame1);
-            assertEquals(term.getName(), TERM_NAME1);
-            assertEquals(term.getCertificateStatus(), AtlanCertificateStatus.DEPRECATED);
-            assertEquals(term.getAnnouncementType(), AtlanAnnouncementType.ISSUE);
-            assertEquals(term.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
-            assertEquals(term.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
-            assertEquals(term.getStatus(), AtlanStatus.ACTIVE);
-        } catch (AtlanException e) {
-            e.printStackTrace();
-            assertNull(e, "Unexpected exception trying to restore a term: " + e.getMessage());
-        }
+    void deleteTerm1() throws AtlanException {
+        EntityMutationResponse response = GlossaryTerm.delete(term1.getGuid());
+        assertNotNull(response);
+        assertEquals(response.getCreatedEntities().size(), 0);
+        assertEquals(response.getUpdatedEntities().size(), 0);
+        List<Entity> entities = response.getDeletedEntities();
+        assertNotNull(entities);
+        assertEquals(entities.size(), 1);
+        Entity one = entities.get(0);
+        assertTrue(one instanceof GlossaryTerm);
+        GlossaryTerm term = (GlossaryTerm) one;
+        assertEquals(term.getGuid(), term1.getGuid());
+        assertEquals(term.getQualifiedName(), term1.getQualifiedName());
+        assertEquals(term.getName(), term1.getName());
+        assertEquals(term.getCertificateStatus(), CERTIFICATE_STATUS);
+        assertEquals(term.getCertificateStatusMessage(), CERTIFICATE_MESSAGE);
+        assertEquals(term.getAnnouncementType(), ANNOUNCEMENT_TYPE);
+        assertEquals(term.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
+        assertEquals(term.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
+        assertEquals(term.getStatus(), AtlanStatus.DELETED);
+        assertEquals(term.getDeleteHandler(), "SOFT");
     }
 
     @Test(
-            groups = {"purge.term.1"},
-            dependsOnGroups = {"restore.term.1"},
+            groups = "restore.term",
+            dependsOnGroups = {"delete.term"},
             alwaysRun = true)
-    void purgeTerm1() {
-        try {
-            EntityMutationResponse response = GlossaryTerm.purge(termGuid1);
-            assertNotNull(response);
-            assertEquals(response.getCreatedEntities().size(), 0);
-            assertEquals(response.getUpdatedEntities().size(), 0);
-            List<Entity> entities = response.getDeletedEntities();
-            assertNotNull(entities);
-            assertEquals(entities.size(), 1);
-            Entity one = entities.get(0);
-            assertNotNull(one);
-            assertEquals(one.getTypeName(), GlossaryTerm.TYPE_NAME);
-            assertTrue(one instanceof GlossaryTerm);
-            GlossaryTerm term = (GlossaryTerm) one;
-            assertEquals(term.getGuid(), termGuid1);
-            assertEquals(term.getQualifiedName(), termQame1);
-            assertEquals(term.getName(), TERM_NAME1);
-            assertEquals(term.getCertificateStatus(), AtlanCertificateStatus.DEPRECATED);
-            assertEquals(term.getAnnouncementType(), AtlanAnnouncementType.ISSUE);
-            assertEquals(term.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
-            assertEquals(term.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
-            assertEquals(term.getStatus(), AtlanStatus.DELETED);
-            assertEquals(term.getDeleteHandler(), "HARD");
-        } catch (AtlanException e) {
-            e.printStackTrace();
-            assertNull(e, "Unexpected exception: " + e.getMessage());
-        }
+    void restoreTerm1() throws AtlanException {
+        assertTrue(GlossaryTerm.restore(term1.getQualifiedName()));
+        GlossaryTerm term = GlossaryTerm.retrieveByQualifiedName(term1.getQualifiedName());
+        assertNotNull(term);
+        assertEquals(term.getGuid(), term1.getGuid());
+        assertEquals(term.getQualifiedName(), term1.getQualifiedName());
+        assertEquals(term.getName(), term1.getName());
+        assertEquals(term.getCertificateStatus(), CERTIFICATE_STATUS);
+        assertEquals(term.getCertificateStatusMessage(), CERTIFICATE_MESSAGE);
+        assertEquals(term.getAnnouncementType(), ANNOUNCEMENT_TYPE);
+        assertEquals(term.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
+        assertEquals(term.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
+        assertEquals(term.getStatus(), AtlanStatus.ACTIVE);
     }
 
     @Test(
-            groups = {"purge.term.2"},
-            dependsOnGroups = {"create.*", "update.*", "read.*", "search.*", "link.*", "unlink.*"},
+            groups = {"purge.term"},
+            dependsOnGroups = {"restore.term"},
             alwaysRun = true)
-    void purgeTerm2() {
-        try {
-            EntityMutationResponse response = GlossaryTerm.purge(termGuid2);
-            assertNotNull(response);
-            assertEquals(response.getCreatedEntities().size(), 0);
-            assertEquals(response.getUpdatedEntities().size(), 0);
-            List<Entity> entities = response.getDeletedEntities();
-            assertNotNull(entities);
-            assertEquals(entities.size(), 1);
-            Entity one = entities.get(0);
-            assertNotNull(one);
-            assertEquals(one.getTypeName(), GlossaryTerm.TYPE_NAME);
-            assertTrue(one instanceof GlossaryTerm);
-            GlossaryTerm term = (GlossaryTerm) one;
-            assertEquals(term.getGuid(), termGuid2);
-            assertEquals(term.getQualifiedName(), termQame2);
-            assertEquals(term.getName(), TERM_NAME2);
-            assertNull(term.getCertificateStatus());
-            assertNull(term.getCertificateStatusMessage());
-            assertNull(term.getAnnouncementType());
-            assertNull(term.getAnnouncementTitle());
-            assertNull(term.getAnnouncementMessage());
-            assertEquals(term.getStatus(), AtlanStatus.DELETED);
-            assertEquals(term.getDeleteHandler(), "HARD");
-        } catch (AtlanException e) {
-            e.printStackTrace();
-            assertNull(e, "Unexpected exception: " + e.getMessage());
-        }
+    void purgeTerm1() throws AtlanException {
+        GlossaryTerm term = deleteTerm(term1.getGuid());
+        assertEquals(term.getQualifiedName(), term1.getQualifiedName());
+        assertEquals(term.getName(), term1.getName());
+        assertEquals(term.getCertificateStatus(), CERTIFICATE_STATUS);
+        assertEquals(term.getCertificateStatusMessage(), CERTIFICATE_MESSAGE);
+        assertEquals(term.getAnnouncementType(), ANNOUNCEMENT_TYPE);
+        assertEquals(term.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
+        assertEquals(term.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
+        assertEquals(term.getStatus(), AtlanStatus.DELETED);
+        assertEquals(term.getDeleteHandler(), "HARD");
+    }
+
+    @Test(
+            groups = {"purge.term"},
+            dependsOnGroups = {"restore.term"},
+            alwaysRun = true)
+    void purgeTerm2() throws AtlanException {
+        GlossaryTerm term = deleteTerm(term2.getGuid());
+        assertEquals(term.getQualifiedName(), term2.getQualifiedName());
+        assertEquals(term.getName(), term2.getName());
+        assertNull(term.getCertificateStatus());
+        assertNull(term.getCertificateStatusMessage());
+        assertNull(term.getAnnouncementType());
+        assertNull(term.getAnnouncementTitle());
+        assertNull(term.getAnnouncementMessage());
+        assertEquals(term.getStatus(), AtlanStatus.DELETED);
+        assertEquals(term.getDeleteHandler(), "HARD");
     }
 
     @Test(
             groups = {"purge.category"},
-            dependsOnGroups = {"purge.term.*"},
+            dependsOnGroups = {"purge.term"},
             alwaysRun = true)
-    void purgeCategory() {
-        try {
-            EntityMutationResponse response = GlossaryCategory.purge(categoryGuid);
-            assertNotNull(response);
-            assertEquals(response.getCreatedEntities().size(), 0);
-            assertEquals(response.getUpdatedEntities().size(), 0);
-            List<Entity> entities = response.getDeletedEntities();
-            assertNotNull(entities);
-            assertEquals(entities.size(), 1);
-            Entity one = entities.get(0);
-            assertNotNull(one);
-            assertEquals(one.getTypeName(), GlossaryCategory.TYPE_NAME);
-            assertTrue(one instanceof GlossaryCategory);
-            GlossaryCategory category = (GlossaryCategory) one;
-            assertEquals(category.getGuid(), categoryGuid);
-            assertEquals(category.getQualifiedName(), categoryQame);
-            assertEquals(category.getName(), CATEGORY_NAME);
-            assertEquals(category.getCertificateStatus(), AtlanCertificateStatus.DRAFT);
-            assertNull(category.getAnnouncementType());
-            assertNull(category.getAnnouncementTitle());
-            assertNull(category.getAnnouncementMessage());
-            assertEquals(category.getStatus(), AtlanStatus.DELETED);
-            assertEquals(category.getDeleteHandler(), "HARD");
-        } catch (AtlanException e) {
-            e.printStackTrace();
-            assertNull(e, "Unexpected exception: " + e.getMessage());
-        }
+    void purgeCategory() throws AtlanException {
+        GlossaryCategory c = deleteCategory(category.getGuid());
+        assertEquals(c.getQualifiedName(), category.getQualifiedName());
+        assertEquals(c.getName(), category.getName());
+        assertEquals(c.getCertificateStatus(), CERTIFICATE_STATUS);
+        assertEquals(c.getCertificateStatusMessage(), CERTIFICATE_MESSAGE);
+        assertNull(c.getAnnouncementType());
+        assertNull(c.getAnnouncementTitle());
+        assertNull(c.getAnnouncementMessage());
+        assertEquals(c.getStatus(), AtlanStatus.DELETED);
+        assertEquals(c.getDeleteHandler(), "HARD");
     }
 
     @Test(
             groups = {"purge.hierarchy"},
-            dependsOnGroups = {"create.*", "update.*", "read.*", "search.*", "link.*", "unlink.*"},
+            dependsOnGroups = {"purge.category", "purge.term"},
             alwaysRun = true)
-    void purgeHierarchy() {
-        try {
-            EntityMutationResponse response = EntityBulkEndpoint.delete(
-                    List.of(
-                            leaf1aaGuid,
-                            leaf1abGuid,
-                            leaf1baGuid,
-                            leaf1bbGuid,
-                            leaf2aaGuid,
-                            leaf2abGuid,
-                            leaf2baGuid,
-                            leaf2bbGuid),
-                    AtlanDeleteType.HARD);
-            assertNotNull(response);
-            assertEquals(response.getCreatedEntities().size(), 0);
-            assertEquals(response.getUpdatedEntities().size(), 0);
-            List<Entity> entities = response.getDeletedEntities();
-            assertNotNull(entities);
-            assertEquals(entities.size(), 8);
+    void purgeHierarchy() throws AtlanException {
+        EntityMutationResponse response = EntityBulkEndpoint.delete(
+                List.of(leaf1aaGuid, leaf1abGuid, leaf1bbGuid, leaf2aaGuid, leaf2abGuid, leaf2baGuid, leaf2bbGuid),
+                AtlanDeleteType.HARD);
+        assertNotNull(response);
+        assertEquals(response.getCreatedEntities().size(), 0);
+        assertEquals(response.getUpdatedEntities().size(), 0);
+        List<Entity> entities = response.getDeletedEntities();
+        assertNotNull(entities);
+        assertEquals(entities.size(), 7);
 
-            response = EntityBulkEndpoint.delete(
-                    List.of(mid1aGuid, mid1bGuid, mid2aGuid, mid2bGuid), AtlanDeleteType.HARD);
-            assertNotNull(response);
-            assertEquals(response.getCreatedEntities().size(), 0);
-            assertEquals(response.getUpdatedEntities().size(), 0);
-            entities = response.getDeletedEntities();
-            assertNotNull(entities);
-            assertEquals(entities.size(), 4);
+        response = EntityBulkEndpoint.delete(List.of(mid1aGuid, mid1bGuid, mid2aGuid, mid2bGuid), AtlanDeleteType.HARD);
+        assertNotNull(response);
+        assertEquals(response.getCreatedEntities().size(), 0);
+        assertEquals(response.getUpdatedEntities().size(), 0);
+        entities = response.getDeletedEntities();
+        assertNotNull(entities);
+        assertEquals(entities.size(), 4);
 
-            response = EntityBulkEndpoint.delete(List.of(top1Guid, top2Guid), AtlanDeleteType.HARD);
-            assertNotNull(response);
-            assertEquals(response.getCreatedEntities().size(), 0);
-            assertEquals(response.getUpdatedEntities().size(), 0);
-            entities = response.getDeletedEntities();
-            assertNotNull(entities);
-            assertEquals(entities.size(), 2);
-        } catch (AtlanException e) {
-            e.printStackTrace();
-            assertNull(e, "Unexpected exception: " + e.getMessage());
-        }
+        response = EntityBulkEndpoint.delete(List.of(top1Guid, top2Guid), AtlanDeleteType.HARD);
+        assertNotNull(response);
+        assertEquals(response.getCreatedEntities().size(), 0);
+        assertEquals(response.getUpdatedEntities().size(), 0);
+        entities = response.getDeletedEntities();
+        assertNotNull(entities);
+        assertEquals(entities.size(), 2);
     }
 
     @Test(
             groups = {"purge.glossary"},
             dependsOnGroups = {"purge.category", "purge.hierarchy"},
             alwaysRun = true)
-    void purgeGlossary() {
-        try {
-            EntityMutationResponse response = Glossary.purge(glossaryGuid);
-            assertNotNull(response);
-            assertEquals(response.getCreatedEntities().size(), 0);
-            assertEquals(response.getUpdatedEntities().size(), 0);
-            List<Entity> entities = response.getDeletedEntities();
-            assertNotNull(entities);
-            assertEquals(entities.size(), 1);
-            Entity one = entities.get(0);
-            assertNotNull(one);
-            assertEquals(one.getTypeName(), Glossary.TYPE_NAME);
-            assertTrue(one instanceof Glossary);
-            Glossary glossary = (Glossary) one;
-            assertEquals(glossary.getGuid(), glossaryGuid);
-            assertEquals(glossary.getQualifiedName(), glossaryQame);
-            assertEquals(glossary.getName(), GLOSSARY_NAME);
-            assertEquals(glossary.getCertificateStatus(), AtlanCertificateStatus.VERIFIED);
-            assertEquals(glossary.getAnnouncementType(), AtlanAnnouncementType.INFORMATION);
-            assertEquals(glossary.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
-            assertEquals(glossary.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
-            assertEquals(glossary.getStatus(), AtlanStatus.DELETED);
-            assertEquals(glossary.getDeleteHandler(), "HARD");
-            response = Glossary.purge(traverseGlossaryGuid);
-            assertNotNull(response);
-            assertEquals(response.getCreatedEntities().size(), 0);
-            assertEquals(response.getUpdatedEntities().size(), 0);
-            entities = response.getDeletedEntities();
-            assertNotNull(entities);
-            assertEquals(entities.size(), 1);
-            one = entities.get(0);
-            assertNotNull(one);
-            assertEquals(one.getTypeName(), Glossary.TYPE_NAME);
-            assertTrue(one instanceof Glossary);
-            glossary = (Glossary) one;
-            assertEquals(glossary.getGuid(), traverseGlossaryGuid);
-            assertEquals(glossary.getQualifiedName(), traverseGlossaryQame);
-            assertEquals(glossary.getName(), TRAVERSE_GLOSSARY_NAME);
-            assertEquals(glossary.getStatus(), AtlanStatus.DELETED);
-            assertEquals(glossary.getDeleteHandler(), "HARD");
-        } catch (AtlanException e) {
-            e.printStackTrace();
-            assertNull(e, "Unexpected exception: " + e.getMessage());
-        }
-    }
-
-    private void validateGlossaryUpdate(List<Entity> entities) {
-        assertNotNull(entities);
-        assertEquals(entities.size(), 1);
-        Entity one = entities.get(0);
-        assertNotNull(one);
-        assertEquals(one.getTypeName(), Glossary.TYPE_NAME);
-        assertTrue(one instanceof Glossary);
-        Glossary glossary = (Glossary) one;
-        assertEquals(glossary.getGuid(), glossaryGuid);
-        assertEquals(glossary.getQualifiedName(), glossaryQame);
+    void purgeGlossary() throws AtlanException {
+        Glossary g = deleteGlossary(glossary.getGuid());
+        assertEquals(g.getQualifiedName(), glossary.getQualifiedName());
+        assertEquals(g.getName(), glossary.getName());
+        assertEquals(g.getCertificateStatus(), AtlanCertificateStatus.VERIFIED);
+        assertEquals(g.getAnnouncementType(), AtlanAnnouncementType.INFORMATION);
+        assertEquals(g.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
+        assertEquals(g.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
+        assertEquals(g.getStatus(), AtlanStatus.DELETED);
+        assertEquals(g.getDeleteHandler(), "HARD");
     }
 }

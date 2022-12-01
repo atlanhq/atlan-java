@@ -4,212 +4,246 @@ package com.atlan.live;
 
 import static org.testng.Assert.*;
 
-import com.atlan.cache.RoleCache;
+import co.elastic.clients.elasticsearch._types.FieldSort;
+import co.elastic.clients.elasticsearch._types.SortOptions;
+import co.elastic.clients.elasticsearch._types.SortOrder;
+import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
+import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import com.atlan.exception.AtlanException;
-import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.assets.*;
 import com.atlan.model.core.Entity;
 import com.atlan.model.core.EntityMutationResponse;
 import com.atlan.model.enums.*;
-import java.util.List;
+import com.atlan.model.search.IndexSearchDSL;
+import com.atlan.model.search.IndexSearchRequest;
+import com.atlan.model.search.IndexSearchResponse;
+import com.atlan.util.QueryFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.Test;
 
+import java.util.List;
+
+/**
+ * Tests all aspects of Google Data Studio assets.
+ */
 @Test(groups = {"gds-asset"})
+@Slf4j
 public class DataStudioAssetTest extends AtlanLiveTest {
 
-    public static final String CONNECTION_NAME = "gds-connection";
-    public static final String REPORT_NAME = "gds-report";
-    public static final String SOURCE_NAME = "gds-source";
+    private static final String PREFIX = "DataStudioAssetTest";
 
-    public static String connectionGuid = null;
-    public static String connectionQame = null;
+    private static final AtlanConnectorType CONNECTOR_TYPE = AtlanConnectorType.DATASTUDIO;
+    private static final String CONNECTION_NAME = "java-sdk-" + PREFIX;
+    private static final String REPORT_NAME = PREFIX + "-report";
+    private static final String SOURCE_NAME = PREFIX + "-source";
 
-    public static String reportGuid = null;
-    public static String reportQame = null;
+    private static Connection connection = null;
+    private static DataStudioAsset report = null;
+    private static DataStudioAsset source = null;
 
-    public static String sourceGuid = null;
-    public static String sourceQame = null;
-
-    @Test(groups = {"invalid.connection"})
-    void invalidConnection() {
-        assertThrows(
-                InvalidRequestException.class,
-                () -> Connection.creator(CONNECTION_NAME, AtlanConnectorType.DATASTUDIO, null, null, null));
-    }
-
-    @Test(groups = {"create.connection.gds"})
-    void createConnection() {
-        try {
-            String adminRoleGuid = RoleCache.getIdForName("$admin");
-            if (adminRoleGuid != null) {
-                Connection connection = Connection.creator(
-                                CONNECTION_NAME, AtlanConnectorType.DATASTUDIO, List.of(adminRoleGuid), null, null)
-                        .build();
-                EntityMutationResponse response = connection.upsert();
-                assertNotNull(response);
-                assertTrue(response.getUpdatedEntities().isEmpty());
-                assertTrue(response.getDeletedEntities().isEmpty());
-                assertEquals(response.getCreatedEntities().size(), 1);
-                Entity one = response.getCreatedEntities().get(0);
-                assertNotNull(one);
-                assertEquals(one.getTypeName(), Connection.TYPE_NAME);
-                assertTrue(one instanceof Connection);
-                connection = (Connection) one;
-                connectionGuid = connection.getGuid();
-                assertNotNull(connectionGuid);
-                connectionQame = connection.getQualifiedName();
-                assertNotNull(connectionQame);
-                assertEquals(connection.getName(), CONNECTION_NAME);
-            }
-        } catch (AtlanException e) {
-            e.printStackTrace();
-            assertNull(e, "Unexpected exception while trying to create a connection.");
-        }
+    @Test(groups = {"create.connection"})
+    void createConnection() throws AtlanException {
+        connection = ConnectionTest.createConnection(CONNECTION_NAME, CONNECTOR_TYPE);
     }
 
     @Test(
-            groups = {"read.connection.gds"},
-            dependsOnGroups = {"create.connection.gds"})
-    void retrieveConnection() {
-        Entity minimal = null;
-        do {
-            try {
-                minimal = Entity.retrieveMinimal(connectionGuid);
-            } catch (AtlanException e) {
-                e.printStackTrace();
-                assertNull(e, "Unexpected exception while trying to read-back the created connection.");
-            }
-        } while (minimal == null);
+            groups = {"create.report"},
+            dependsOnGroups = {"create.connection"})
+    void createReport() throws AtlanException {
+        DataStudioAsset toCreate = DataStudioAsset.creator(
+                        REPORT_NAME, connection.getQualifiedName(), GoogleDataStudioAssetType.REPORT)
+                .build();
+        EntityMutationResponse response = toCreate.upsert();
+        Entity one = validateSingleCreate(response);
+        assertTrue(one instanceof DataStudioAsset);
+        report = (DataStudioAsset) one;
+        assertNotNull(report.getGuid());
+        assertNotNull(report.getQualifiedName());
+        assertEquals(report.getName(), REPORT_NAME);
+        assertEquals(report.getConnectorType(), AtlanConnectorType.DATASTUDIO);
+        assertEquals(report.getConnectionQualifiedName(), connection.getQualifiedName());
+        assertEquals(report.getDataStudioAssetType(), GoogleDataStudioAssetType.REPORT);
     }
 
     @Test(
-            groups = {"create.gds.report"},
-            dependsOnGroups = {"read.connection.gds"})
-    void createReport() {
-        try {
-            DataStudioAsset report = DataStudioAsset.creator(
-                            REPORT_NAME, connectionQame, GoogleDataStudioAssetType.REPORT)
-                    .build();
-            EntityMutationResponse response = report.upsert();
-            assertNotNull(response);
-            assertTrue(response.getUpdatedEntities().isEmpty());
-            assertTrue(response.getDeletedEntities().isEmpty());
-            assertEquals(response.getCreatedEntities().size(), 1);
-            Entity one = response.getCreatedEntities().get(0);
-            assertNotNull(one);
-            assertEquals(one.getTypeName(), DataStudioAsset.TYPE_NAME);
-            assertTrue(one instanceof DataStudioAsset);
-            report = (DataStudioAsset) one;
-            reportGuid = report.getGuid();
-            assertNotNull(reportGuid);
-            reportQame = report.getQualifiedName();
-            assertNotNull(reportQame);
-            assertEquals(report.getName(), REPORT_NAME);
-            assertEquals(report.getConnectorType(), AtlanConnectorType.DATASTUDIO);
-            assertEquals(report.getConnectionQualifiedName(), connectionQame);
-            assertEquals(report.getDataStudioAssetType(), GoogleDataStudioAssetType.REPORT);
-        } catch (AtlanException e) {
-            e.printStackTrace();
-            assertNull(e, "Unexpected exception while trying to create a Google Data Studio report.");
-        }
+            groups = {"create.source"},
+            dependsOnGroups = {"create.report"})
+    void createSource() throws AtlanException {
+        DataStudioAsset toCreate = DataStudioAsset.creator(
+                        SOURCE_NAME, connection.getQualifiedName(), GoogleDataStudioAssetType.DATA_SOURCE)
+                .build();
+        EntityMutationResponse response = toCreate.upsert();
+        Entity one = validateSingleCreate(response);
+        assertTrue(one instanceof DataStudioAsset);
+        source = (DataStudioAsset) one;
+        assertNotNull(source.getGuid());
+        assertNotNull(source.getQualifiedName());
+        assertEquals(source.getName(), SOURCE_NAME);
+        assertEquals(source.getConnectorType(), AtlanConnectorType.DATASTUDIO);
+        assertEquals(source.getConnectionQualifiedName(), connection.getQualifiedName());
+        assertEquals(source.getDataStudioAssetType(), GoogleDataStudioAssetType.DATA_SOURCE);
     }
 
     @Test(
-            groups = {"create.gds.source"},
-            dependsOnGroups = {"read.connection.gds"})
-    void createSource() {
-        try {
-            DataStudioAsset source = DataStudioAsset.creator(
-                            SOURCE_NAME, connectionQame, GoogleDataStudioAssetType.DATA_SOURCE)
-                    .build();
-            EntityMutationResponse response = source.upsert();
-            assertNotNull(response);
-            assertTrue(response.getUpdatedEntities().isEmpty());
-            assertTrue(response.getDeletedEntities().isEmpty());
-            assertEquals(response.getCreatedEntities().size(), 1);
-            Entity one = response.getCreatedEntities().get(0);
-            assertNotNull(one);
-            assertEquals(one.getTypeName(), DataStudioAsset.TYPE_NAME);
-            assertTrue(one instanceof DataStudioAsset);
-            source = (DataStudioAsset) one;
-            sourceGuid = source.getGuid();
-            assertNotNull(sourceGuid);
-            sourceQame = source.getQualifiedName();
-            assertNotNull(sourceQame);
-            assertEquals(source.getName(), SOURCE_NAME);
-            assertEquals(source.getConnectorType(), AtlanConnectorType.DATASTUDIO);
-            assertEquals(source.getConnectionQualifiedName(), connectionQame);
-            assertEquals(source.getDataStudioAssetType(), GoogleDataStudioAssetType.DATA_SOURCE);
-        } catch (AtlanException e) {
-            e.printStackTrace();
-            assertNull(e, "Unexpected exception while trying to create a Google Data Studio data source.");
-        }
+            groups = {"update.report"},
+            dependsOnGroups = {"create.report"})
+    void updateReport() throws AtlanException {
+        DataStudioAsset updated =
+                DataStudioAsset.updateCertificate(report.getQualifiedName(), CERTIFICATE_STATUS, CERTIFICATE_MESSAGE);
+        assertNotNull(updated);
+        assertEquals(updated.getCertificateStatus(), CERTIFICATE_STATUS);
+        assertEquals(updated.getCertificateStatusMessage(), CERTIFICATE_MESSAGE);
+        updated = DataStudioAsset.updateAnnouncement(
+                report.getQualifiedName(), ANNOUNCEMENT_TYPE, ANNOUNCEMENT_TITLE, ANNOUNCEMENT_MESSAGE);
+        assertNotNull(updated);
+        assertEquals(updated.getAnnouncementType(), ANNOUNCEMENT_TYPE);
+        assertEquals(updated.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
+        assertEquals(updated.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
     }
 
     @Test(
-            groups = {"update.gds.report"},
-            dependsOnGroups = {"create.gds.report"})
-    void updateReport() {
-        try {
-            DataStudioAsset updated =
-                    DataStudioAsset.updateCertificate(reportQame, AtlanCertificateStatus.VERIFIED, null);
-            assertNotNull(updated);
-            assertEquals(updated.getCertificateStatus(), AtlanCertificateStatus.VERIFIED);
-            updated = DataStudioAsset.updateAnnouncement(
-                    reportQame, AtlanAnnouncementType.INFORMATION, ANNOUNCEMENT_TITLE, ANNOUNCEMENT_MESSAGE);
-            assertNotNull(updated);
-            assertEquals(updated.getAnnouncementType(), AtlanAnnouncementType.INFORMATION);
-            assertEquals(updated.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
-            assertEquals(updated.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
-        } catch (AtlanException e) {
-            e.printStackTrace();
-            assertNull(e, "Unexpected exception while trying to update a Google Data Studio report.");
-        }
+            groups = {"read.report"},
+            dependsOnGroups = {"update.report"})
+    void retrieveReport() throws AtlanException {
+        DataStudioAsset r = DataStudioAsset.retrieveByGuid(report.getGuid());
+        assertNotNull(r);
+        assertTrue(r.isComplete());
+        assertEquals(r.getGuid(), report.getGuid());
+        assertEquals(r.getQualifiedName(), report.getQualifiedName());
+        assertEquals(r.getName(), REPORT_NAME);
+        assertEquals(r.getCertificateStatus(), CERTIFICATE_STATUS);
+        assertEquals(r.getCertificateStatusMessage(), CERTIFICATE_MESSAGE);
+        assertEquals(r.getAnnouncementType(), ANNOUNCEMENT_TYPE);
+        assertEquals(r.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
+        assertEquals(r.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
     }
 
     @Test(
-            groups = {"read.gds.report"},
-            dependsOnGroups = {"create.gds.*", "update.gds.report"})
-    void retrieveReport() {
-        try {
-            DataStudioAsset report = DataStudioAsset.retrieveByGuid(reportGuid);
-            assertNotNull(report);
-            assertTrue(report.isComplete());
-            assertEquals(report.getGuid(), reportGuid);
-            assertEquals(report.getQualifiedName(), reportQame);
-            assertEquals(report.getName(), REPORT_NAME);
-            assertEquals(report.getCertificateStatus(), AtlanCertificateStatus.VERIFIED);
-            assertEquals(report.getAnnouncementType(), AtlanAnnouncementType.INFORMATION);
-            assertEquals(report.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
-            assertEquals(report.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
-        } catch (AtlanException e) {
-            e.printStackTrace();
-            assertNull(e, "Unexpected exception while trying to retrieve a Google Data Studio report.");
-        }
+            groups = {"update.report.again"},
+            dependsOnGroups = {"read.report"})
+    void updateReportAgain() throws AtlanException {
+        DataStudioAsset updated = DataStudioAsset.removeCertificate(report.getQualifiedName(), REPORT_NAME);
+        assertNotNull(updated);
+        assertNull(updated.getCertificateStatus());
+        assertNull(updated.getCertificateStatusMessage());
+        assertEquals(updated.getAnnouncementType(), ANNOUNCEMENT_TYPE);
+        assertEquals(updated.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
+        assertEquals(updated.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
+        updated = DataStudioAsset.removeAnnouncement(report.getQualifiedName(), REPORT_NAME);
+        assertNotNull(updated);
+        assertNull(updated.getAnnouncementType());
+        assertNull(updated.getAnnouncementTitle());
+        assertNull(updated.getAnnouncementMessage());
     }
 
     @Test(
-            groups = {"update.gds.report.again"},
-            dependsOnGroups = {"read.gds.report"})
-    void updateReportAgain() {
-        try {
-            DataStudioAsset updated = DataStudioAsset.removeCertificate(reportQame, REPORT_NAME);
-            assertNotNull(updated);
-            assertNull(updated.getCertificateStatus());
-            assertNull(updated.getCertificateStatusMessage());
-            assertEquals(updated.getAnnouncementType(), AtlanAnnouncementType.INFORMATION);
-            assertEquals(updated.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
-            assertEquals(updated.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
-            updated = DataStudioAsset.removeAnnouncement(reportQame, REPORT_NAME);
-            assertNotNull(updated);
-            assertNull(updated.getAnnouncementType());
-            assertNull(updated.getAnnouncementTitle());
-            assertNull(updated.getAnnouncementMessage());
-        } catch (AtlanException e) {
-            e.printStackTrace();
-            assertNull(
-                    e,
-                    "Unexpected exception while trying to remove certificates and announcements from a Google Data Studio report.");
-        }
+        groups = {"search.assets"},
+        dependsOnGroups = {"update.report.again"})
+    void searchAssets() throws AtlanException {
+        Query byState = QueryFactory.active();
+        Query byType = QueryFactory.withType(DataStudioAsset.TYPE_NAME);
+        Query combined = BoolQuery.of(b -> b.filter(byState, byType))._toQuery();
+
+        SortOptions sort = SortOptions.of(
+            s -> s.field(FieldSort.of(f -> f.field("__timestamp").order(SortOrder.Asc))));
+
+        IndexSearchRequest index = IndexSearchRequest.builder()
+            .dsl(IndexSearchDSL.builder()
+                .from(0)
+                .size(10)
+                .query(combined)
+                .sortOption(sort)
+                .build())
+            .attribute("name")
+            .attribute("connectionQualifiedName")
+            .build();
+
+        IndexSearchResponse response = index.search();
+        assertNotNull(response);
+        assertEquals(response.getApproximateCount().longValue(), 2L);
+        List<Entity> entities = response.getEntities();
+        assertNotNull(entities);
+        assertEquals(entities.size(), 2);
+
+        Entity one = entities.get(0);
+        assertTrue(one instanceof DataStudioAsset);
+        assertFalse(one.isComplete());
+        DataStudioAsset asset = (DataStudioAsset) one;
+        assertEquals(asset.getQualifiedName(), report.getQualifiedName());
+        assertEquals(asset.getName(), report.getName());
+        assertEquals(asset.getConnectionQualifiedName(), connection.getQualifiedName());
+
+        one = entities.get(1);
+        assertTrue(one instanceof DataStudioAsset);
+        assertFalse(one.isComplete());
+        asset = (DataStudioAsset) one;
+        assertEquals(asset.getQualifiedName(), source.getQualifiedName());
+        assertEquals(asset.getName(), source.getName());
+        assertEquals(asset.getConnectionQualifiedName(), connection.getQualifiedName());
+    }
+
+    @Test(
+            groups = {"delete.source"},
+            dependsOnGroups = {"update.*", "search.*"})
+    void deleteSource() throws AtlanException {
+        EntityMutationResponse response = Entity.delete(source.getGuid());
+        assertNotNull(response);
+        assertTrue(response.getCreatedEntities().isEmpty());
+        assertTrue(response.getUpdatedEntities().isEmpty());
+        assertEquals(response.getDeletedEntities().size(), 1);
+        Entity one = response.getDeletedEntities().get(0);
+        assertTrue(one instanceof DataStudioAsset);
+        DataStudioAsset s = (DataStudioAsset) one;
+        assertEquals(s.getGuid(), source.getGuid());
+        assertEquals(s.getQualifiedName(), source.getQualifiedName());
+        assertEquals(s.getDeleteHandler(), "SOFT");
+        assertEquals(s.getStatus(), AtlanStatus.DELETED);
+    }
+
+    @Test(
+            groups = {"delete.source.read"},
+            dependsOnGroups = {"delete.source"})
+    void readDeletedSource() throws AtlanException {
+        DataStudioAsset deleted = DataStudioAsset.retrieveByGuid(source.getGuid());
+        assertEquals(deleted.getGuid(), source.getGuid());
+        assertEquals(deleted.getQualifiedName(), source.getQualifiedName());
+        assertEquals(deleted.getStatus(), AtlanStatus.DELETED);
+    }
+
+    @Test(
+            groups = {"delete.source.restore"},
+            dependsOnGroups = {"delete.source.read"})
+    void restoreSource() throws AtlanException {
+        assertTrue(DataStudioAsset.restore(source.getQualifiedName()));
+        DataStudioAsset restored = DataStudioAsset.retrieveByQualifiedName(source.getQualifiedName());
+        assertEquals(restored.getGuid(), source.getGuid());
+        assertEquals(restored.getQualifiedName(), source.getQualifiedName());
+        assertEquals(restored.getStatus(), AtlanStatus.ACTIVE);
+    }
+
+    @Test(
+            groups = {"purge.source"},
+            dependsOnGroups = {"delete.source.restore"})
+    void purgeSource() throws AtlanException {
+        EntityMutationResponse response = Entity.purge(source.getGuid());
+        assertNotNull(response);
+        assertTrue(response.getCreatedEntities().isEmpty());
+        assertTrue(response.getUpdatedEntities().isEmpty());
+        assertEquals(response.getDeletedEntities().size(), 1);
+        Entity one = response.getDeletedEntities().get(0);
+        assertTrue(one instanceof DataStudioAsset);
+        DataStudioAsset s = (DataStudioAsset) one;
+        assertEquals(s.getGuid(), source.getGuid());
+        assertEquals(s.getQualifiedName(), source.getQualifiedName());
+        assertEquals(s.getDeleteHandler(), "HARD");
+        assertEquals(s.getStatus(), AtlanStatus.DELETED);
+    }
+
+    @Test(
+            groups = {"purge.connection"},
+            dependsOnGroups = {"create.*", "read.*", "search.*", "update.*", "purge.source"},
+            alwaysRun = true)
+    void purgeConnection() throws AtlanException, InterruptedException {
+        ConnectionTest.deleteConnection(connection.getQualifiedName(), log);
     }
 }
