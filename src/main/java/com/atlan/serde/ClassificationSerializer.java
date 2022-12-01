@@ -54,12 +54,11 @@ public class ClassificationSerializer extends StdSerializer<Classification> {
         } catch (AtlanException e) {
             throw new IOException("Unable to find classification with name: " + clsName, e);
         }
-        cls.setTypeName(clsId);
 
         // TODO: Unfortunately, the use of ClassificationBeanSerializerModifier to avoid the direct
         //  deserialization below made things too complicated when trying to incorporate AuditDetail interface
         gen.writeStartObject();
-        JacksonUtils.serializeString(gen, "typeName", cls.getTypeName());
+        JacksonUtils.serializeString(gen, "typeName", clsId);
         JacksonUtils.serializeString(gen, "entityGuid", cls.getEntityGuid());
         AtlanStatus status = cls.getEntityStatus();
         if (status != null) {
