@@ -10,7 +10,6 @@ import com.atlan.model.core.Entity;
 import com.atlan.model.core.EntityMutationResponse;
 import com.atlan.model.enums.AtlanStatus;
 import java.util.SortedSet;
-
 import org.testng.annotations.Test;
 
 /**

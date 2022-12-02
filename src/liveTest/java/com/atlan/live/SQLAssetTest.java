@@ -590,7 +590,7 @@ public class SQLAssetTest extends AtlanLiveTest {
 
     @Test(
             groups = {"update.column.certificate"},
-            dependsOnGroups = {"update.column.owners*"})
+            dependsOnGroups = {"update.column.owners.x"})
     void updateColumnCertificate() throws AtlanException {
         Column column = Column.updateCertificate(column5.getQualifiedName(), CERTIFICATE_STATUS, CERTIFICATE_MESSAGE);
         validateUpdatedColumn(column);
@@ -610,7 +610,7 @@ public class SQLAssetTest extends AtlanLiveTest {
 
     @Test(
             groups = {"update.column.announcement"},
-            dependsOnGroups = {"update.column.certificate*"})
+            dependsOnGroups = {"update.column.certificate.x"})
     void updateColumnAnnouncement() throws AtlanException {
         Column column = Column.updateAnnouncement(
                 column5.getQualifiedName(), ANNOUNCEMENT_TYPE, ANNOUNCEMENT_TITLE, ANNOUNCEMENT_MESSAGE);
@@ -633,7 +633,7 @@ public class SQLAssetTest extends AtlanLiveTest {
 
     @Test(
             groups = {"update.column.descriptions"},
-            dependsOnGroups = {"update.column.announcement*"})
+            dependsOnGroups = {"update.column.announcement.x"})
     void updateColumnDescriptions() throws AtlanException {
         Column toUpdate = Column.updater(column5.getQualifiedName(), COLUMN_NAME5)
                 .description(DESCRIPTION)
@@ -759,8 +759,8 @@ public class SQLAssetTest extends AtlanLiveTest {
         Query byState = QueryFactory.active();
         Query byType = QueryFactory.withType(Column.TYPE_NAME);
         Query byQN = QueryFactory.whereQualifiedNameStartsWith(connection.getQualifiedName());
-        Query combined =
-                BoolQuery.of(b -> b.filter(byState, byType, byClassification, byQN))._toQuery();
+        Query combined = BoolQuery.of(b -> b.filter(byState, byType, byClassification, byQN))
+                ._toQuery();
 
         IndexSearchRequest index = IndexSearchRequest.builder()
                 .dsl(IndexSearchDSL.builder().query(combined).build())
@@ -988,8 +988,8 @@ public class SQLAssetTest extends AtlanLiveTest {
         Query byState = QueryFactory.active();
         Query byType = QueryFactory.withType(Column.TYPE_NAME);
         Query byQN = QueryFactory.whereQualifiedNameStartsWith(connection.getQualifiedName());
-        Query combined =
-                BoolQuery.of(b -> b.filter(byState, byType, byTermAssignment, byQN))._toQuery();
+        Query combined = BoolQuery.of(b -> b.filter(byState, byType, byTermAssignment, byQN))
+                ._toQuery();
 
         IndexSearchRequest index = IndexSearchRequest.builder()
                 .dsl(IndexSearchDSL.builder().query(combined).build())
@@ -1196,10 +1196,30 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertTrue(detail instanceof Column);
         column = (Column) detail;
         validateUpdatedColumn(column);
+        assertTrue(column.getOwnerGroups().isEmpty());
+
+        one = audits.get(25);
+        assertNotNull(one);
+        assertEquals(one.getAction(), AuditActionType.ENTITY_UPDATE);
+        detail = one.getDetail();
+        assertTrue(detail instanceof Column);
+        column = (Column) detail;
+        validateUpdatedColumn(column);
         assertEquals(column.getCertificateStatus(), CERTIFICATE_STATUS);
         assertEquals(column.getCertificateStatusMessage(), CERTIFICATE_MESSAGE);
 
-        one = audits.get(25);
+        one = audits.get(24);
+        assertNotNull(one);
+        assertEquals(one.getAction(), AuditActionType.ENTITY_UPDATE);
+        detail = one.getDetail();
+        assertTrue(detail instanceof Column);
+        column = (Column) detail;
+        validateUpdatedColumn(column);
+        Set<String> clearedFields = column.getNullFields();
+        assertTrue(clearedFields.contains("certificateStatus"));
+        assertTrue(clearedFields.contains("certificateStatusMessage"));
+
+        one = audits.get(23);
         assertNotNull(one);
         assertEquals(one.getAction(), AuditActionType.ENTITY_UPDATE);
         detail = one.getDetail();
@@ -1210,19 +1230,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertEquals(column.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
         assertEquals(column.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
 
-        one = audits.get(24);
-        assertNotNull(one);
-        assertEquals(one.getAction(), AuditActionType.ENTITY_UPDATE);
-        detail = one.getDetail();
-        assertTrue(detail instanceof Column);
-        column = (Column) detail;
-        validateUpdatedColumn(column);
-        Set<String> clearedFields = column.getNullFields();
-        assertTrue(clearedFields.contains("announcementType"));
-        assertTrue(clearedFields.contains("announcementTitle"));
-        assertTrue(clearedFields.contains("announcementMessage"));
-
-        one = audits.get(23);
+        one = audits.get(22);
         assertNotNull(one);
         assertEquals(one.getAction(), AuditActionType.ENTITY_UPDATE);
         detail = one.getDetail();
@@ -1230,10 +1238,11 @@ public class SQLAssetTest extends AtlanLiveTest {
         column = (Column) detail;
         validateUpdatedColumn(column);
         clearedFields = column.getNullFields();
-        assertTrue(clearedFields.contains("certificateStatus"));
-        assertTrue(clearedFields.contains("certificateStatusMessage"));
+        assertTrue(clearedFields.contains("announcementType"));
+        assertTrue(clearedFields.contains("announcementTitle"));
+        assertTrue(clearedFields.contains("announcementMessage"));
 
-        one = audits.get(22);
+        one = audits.get(21);
         assertNotNull(one);
         assertEquals(one.getAction(), AuditActionType.ENTITY_UPDATE);
         detail = one.getDetail();
@@ -1243,7 +1252,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertEquals(column.getDescription(), DESCRIPTION);
         assertEquals(column.getUserDescription(), DESCRIPTION);
 
-        one = audits.get(21);
+        one = audits.get(20);
         assertNotNull(one);
         assertEquals(one.getAction(), AuditActionType.ENTITY_UPDATE);
         detail = one.getDetail();
@@ -1252,15 +1261,6 @@ public class SQLAssetTest extends AtlanLiveTest {
         validateUpdatedColumn(column);
         clearedFields = column.getNullFields();
         assertTrue(clearedFields.contains("description"));
-
-        one = audits.get(20);
-        assertNotNull(one);
-        assertEquals(one.getAction(), AuditActionType.ENTITY_UPDATE);
-        detail = one.getDetail();
-        assertTrue(detail instanceof Column);
-        column = (Column) detail;
-        validateUpdatedColumn(column);
-        assertTrue(column.getOwnerGroups().isEmpty());
 
         one = audits.get(19);
         assertNotNull(one);

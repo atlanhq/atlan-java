@@ -95,7 +95,7 @@ public class ConnectionTest extends AtlanLiveTest {
             // Can happen if two deletion workflows are run at the same time,
             // in which case we should wait a few seconds and try again
             int attempt = retryCount.incrementAndGet();
-            log.info("Race condition on parallel deletion, waiting to retry ({})...", attempt, e);
+            log.warn("Race condition on parallel deletion, waiting to retry ({})...", attempt);
             Thread.sleep(HttpClient.waitTime(attempt).toMillis());
             if (attempt < Atlan.getMaxNetworkRetries()) {
                 deleteConnection(qualifiedName, log);
