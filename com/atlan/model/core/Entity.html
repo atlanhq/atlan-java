@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":10,"i2":10,"i3":9,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":9,"i20":9,"i21":10,"i22":10,"i23":9,"i24":9,"i25":9,"i26":9,"i27":9,"i28":9,"i29":10,"i30":10,"i31":10,"i32":10,"i33":10,"i34":10,"i35":10,"i36":9,"i37":10,"i38":10};
+var data = {"i0":9,"i1":10,"i2":10,"i3":9,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":9,"i21":9,"i22":10,"i23":10,"i24":9,"i25":9,"i26":9,"i27":9,"i28":9,"i29":9,"i30":10,"i31":10,"i32":10,"i33":10,"i34":10,"i35":10,"i36":10,"i37":10,"i38":9,"i39":10,"i40":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -320,53 +320,60 @@ extends <a href="../relations/Reference.html" title="class in com.atlan.model.re
 </td>
 </tr>
 <tr id="i13" class="rowColor">
+<td class="colFirst"><code>java.util.Set&lt;<a href="../assets/Meaning.html" title="class in com.atlan.model.assets">Meaning</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMeanings()">getMeanings</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Details of terms that have been linked to this asset.</div>
+</td>
+</tr>
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>java.util.Set&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getNullFields()">getNullFields</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Retrieve the list of fields to be serialized with null values.</div>
 </td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code>java.util.Set&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPendingTasks()">getPendingTasks</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Unique identifiers (GUIDs) for any background tasks that are yet to operate on this asset.</div>
 </td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code><a href="../enums/AtlanStatus.html" title="enum in com.atlan.model.enums">AtlanStatus</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getStatus()">getStatus</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Status of the entity.</div>
 </td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getUpdatedBy()">getUpdatedBy</a></span>()</code></th>
 <td class="colLast">
 <div class="block">User or account that last updated the entity.</div>
 </td>
 </tr>
-<tr id="i17" class="rowColor">
+<tr id="i18" class="altColor">
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getUpdateTime()">getUpdateTime</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Time (epoch) at which the entity was last updated, in milliseconds.</div>
 </td>
 </tr>
-<tr id="i18" class="altColor">
+<tr id="i19" class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hashCode()">hashCode</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i19" class="rowColor">
+<tr id="i20" class="altColor">
 <td class="colFirst"><code>static <a href="EntityMutationResponse.html" title="class in com.atlan.model.core">EntityMutationResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#purge(java.lang.String)">purge</a></span>&#8203;(java.lang.String&nbsp;guid)</code></th>
 <td class="colLast">
 <div class="block">Hard-deletes (purges) an entity by its GUID.</div>
 </td>
 </tr>
-<tr id="i20" class="altColor">
+<tr id="i21" class="rowColor">
 <td class="colFirst"><code>protected static void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeClassification(java.lang.String,java.lang.String,java.lang.String)">removeClassification</a></span>&#8203;(java.lang.String&nbsp;typeName,
                     java.lang.String&nbsp;qualifiedName,
@@ -375,21 +382,21 @@ extends <a href="../relations/Reference.html" title="class in com.atlan.model.re
 <div class="block">Remove a classification from an asset.</div>
 </td>
 </tr>
-<tr id="i21" class="rowColor">
+<tr id="i22" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeClassifications()">removeClassifications</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Remove the classifications from the asset, if the asset is classified with any.</div>
 </td>
 </tr>
-<tr id="i22" class="altColor">
+<tr id="i23" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeCustomMetadata()">removeCustomMetadata</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Remove all custom metadata from the asset, if any is set on the asset.</div>
 </td>
 </tr>
-<tr id="i23" class="rowColor">
+<tr id="i24" class="altColor">
 <td class="colFirst"><code>static void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeCustomMetadata(java.lang.String,java.lang.String)">removeCustomMetadata</a></span>&#8203;(java.lang.String&nbsp;guid,
                     java.lang.String&nbsp;cmName)</code></th>
@@ -397,7 +404,7 @@ extends <a href="../relations/Reference.html" title="class in com.atlan.model.re
 <div class="block">Remove specific custom metadata from an asset.</div>
 </td>
 </tr>
-<tr id="i24" class="altColor">
+<tr id="i25" class="rowColor">
 <td class="colFirst"><code>static void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#replaceCustomMetadata(java.lang.String,java.lang.String,com.atlan.model.core.CustomMetadataAttributes)">replaceCustomMetadata</a></span>&#8203;(java.lang.String&nbsp;guid,
                      java.lang.String&nbsp;cmName,
@@ -406,14 +413,14 @@ extends <a href="../relations/Reference.html" title="class in com.atlan.model.re
 <div class="block">Replace specific custom metadata on the asset.</div>
 </td>
 </tr>
-<tr id="i25" class="rowColor">
+<tr id="i26" class="altColor">
 <td class="colFirst"><code>static <a href="Entity.html" title="class in com.atlan.model.core">Entity</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#retrieveFull(java.lang.String)">retrieveFull</a></span>&#8203;(java.lang.String&nbsp;guid)</code></th>
 <td class="colLast">
 <div class="block">Retrieves an entity by its GUID, complete with all of its relationships.</div>
 </td>
 </tr>
-<tr id="i26" class="altColor">
+<tr id="i27" class="rowColor">
 <td class="colFirst"><code>protected static <a href="Entity.html" title="class in com.atlan.model.core">Entity</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#retrieveFull(java.lang.String,java.lang.String)">retrieveFull</a></span>&#8203;(java.lang.String&nbsp;typeName,
             java.lang.String&nbsp;qualifiedName)</code></th>
@@ -421,14 +428,14 @@ extends <a href="../relations/Reference.html" title="class in com.atlan.model.re
 <div class="block">Retrieves an entity by its qualifiedName, complete with all of its relationships.</div>
 </td>
 </tr>
-<tr id="i27" class="rowColor">
+<tr id="i28" class="altColor">
 <td class="colFirst"><code>static <a href="Entity.html" title="class in com.atlan.model.core">Entity</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#retrieveMinimal(java.lang.String)">retrieveMinimal</a></span>&#8203;(java.lang.String&nbsp;guid)</code></th>
 <td class="colLast">
 <div class="block">Retrieves a minimal entity by its GUID, without its relationships.</div>
 </td>
 </tr>
-<tr id="i28" class="altColor">
+<tr id="i29" class="rowColor">
 <td class="colFirst"><code>static <a href="Entity.html" title="class in com.atlan.model.core">Entity</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#retrieveMinimal(java.lang.String,java.lang.String)">retrieveMinimal</a></span>&#8203;(java.lang.String&nbsp;typeName,
                java.lang.String&nbsp;qualifiedName)</code></th>
@@ -436,56 +443,63 @@ extends <a href="../relations/Reference.html" title="class in com.atlan.model.re
 <div class="block">Retrieves an entity by its qualifiedName, without its relationships.</div>
 </td>
 </tr>
-<tr id="i29" class="rowColor">
+<tr id="i30" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setClassificationNames(java.util.Set)">setClassificationNames</a></span>&#8203;(java.util.Set&lt;java.lang.String&gt;&nbsp;classificationNames)</code></th>
 <td class="colLast">
 <div class="block">The names of the classifications that exist on the asset.</div>
 </td>
 </tr>
-<tr id="i30" class="altColor">
+<tr id="i31" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setClassifications(java.util.Set)">setClassifications</a></span>&#8203;(java.util.Set&lt;<a href="Classification.html" title="class in com.atlan.model.core">Classification</a>&gt;&nbsp;classifications)</code></th>
 <td class="colLast">
 <div class="block">Classifications assigned to the entity.</div>
 </td>
 </tr>
-<tr id="i31" class="rowColor">
+<tr id="i32" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setCustomMetadataSets(java.util.Map)">setCustomMetadataSets</a></span>&#8203;(java.util.Map&lt;java.lang.String,&#8203;<a href="CustomMetadataAttributes.html" title="class in com.atlan.model.core">CustomMetadataAttributes</a>&gt;&nbsp;customMetadataSets)</code></th>
 <td class="colLast">
 <div class="block">Map of custom metadata attributes and values defined on the entity.</div>
 </td>
 </tr>
-<tr id="i32" class="altColor">
+<tr id="i33" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setIsIncomplete(java.lang.Boolean)">setIsIncomplete</a></span>&#8203;(java.lang.Boolean&nbsp;isIncomplete)</code></th>
 <td class="colLast">
 <div class="block">Unused.</div>
 </td>
 </tr>
-<tr id="i33" class="rowColor">
+<tr id="i34" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setMeaningNames(java.util.Set)">setMeaningNames</a></span>&#8203;(java.util.Set&lt;java.lang.String&gt;&nbsp;meaningNames)</code></th>
 <td class="colLast">
 <div class="block">Names of terms that have been linked to this asset.</div>
 </td>
 </tr>
-<tr id="i34" class="altColor">
+<tr id="i35" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setMeanings(java.util.Set)">setMeanings</a></span>&#8203;(java.util.Set&lt;<a href="../assets/Meaning.html" title="class in com.atlan.model.assets">Meaning</a>&gt;&nbsp;meanings)</code></th>
+<td class="colLast">
+<div class="block">Details of terms that have been linked to this asset.</div>
+</td>
+</tr>
+<tr id="i36" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setNullFields(java.util.Set)">setNullFields</a></span>&#8203;(java.util.Set&lt;java.lang.String&gt;&nbsp;nullFields)</code></th>
 <td class="colLast">
 <div class="block">Internal tracking of fields that should be serialized with null values.</div>
 </td>
 </tr>
-<tr id="i35" class="rowColor">
+<tr id="i37" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setStatus(com.atlan.model.enums.AtlanStatus)">setStatus</a></span>&#8203;(<a href="../enums/AtlanStatus.html" title="enum in com.atlan.model.enums">AtlanStatus</a>&nbsp;status)</code></th>
 <td class="colLast">
 <div class="block">Status of the entity.</div>
 </td>
 </tr>
-<tr id="i36" class="altColor">
+<tr id="i38" class="altColor">
 <td class="colFirst"><code>static void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateCustomMetadataAttributes(java.lang.String,java.lang.String,com.atlan.model.core.CustomMetadataAttributes)">updateCustomMetadataAttributes</a></span>&#8203;(java.lang.String&nbsp;guid,
                               java.lang.String&nbsp;cmName,
@@ -494,14 +508,14 @@ extends <a href="../relations/Reference.html" title="class in com.atlan.model.re
 <div class="block">Update only the provided custom metadata attributes on the asset.</div>
 </td>
 </tr>
-<tr id="i37" class="rowColor">
+<tr id="i39" class="rowColor">
 <td class="colFirst"><code><a href="EntityMutationResponse.html" title="class in com.atlan.model.core">EntityMutationResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#upsert()">upsert</a></span>()</code></th>
 <td class="colLast">
 <div class="block">If an entity with the same qualifiedName exists, updates the existing entity.</div>
 </td>
 </tr>
-<tr id="i38" class="altColor">
+<tr id="i40" class="altColor">
 <td class="colFirst"><code><a href="EntityMutationResponse.html" title="class in com.atlan.model.core">EntityMutationResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#upsert(boolean,boolean)">upsert</a></span>&#8203;(boolean&nbsp;replaceClassifications,
       boolean&nbsp;replaceCustomMetadata)</code></th>
@@ -992,6 +1006,16 @@ extends <a href="../relations/Reference.html" title="class in com.atlan.model.re
 <div class="block">Names of terms that have been linked to this asset.</div>
 </li>
 </ul>
+<a id="getMeanings()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getMeanings</h4>
+<pre class="methodSignature">public&nbsp;java.util.Set&lt;<a href="../assets/Meaning.html" title="class in com.atlan.model.assets">Meaning</a>&gt;&nbsp;getMeanings()</pre>
+<div class="block">Details of terms that have been linked to this asset.</div>
+</li>
+</ul>
 <a id="getPendingTasks()">
 <!--   -->
 </a>
@@ -1072,6 +1096,16 @@ extends <a href="../relations/Reference.html" title="class in com.atlan.model.re
 <h4>setMeaningNames</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;setMeaningNames&#8203;(java.util.Set&lt;java.lang.String&gt;&nbsp;meaningNames)</pre>
 <div class="block">Names of terms that have been linked to this asset.</div>
+</li>
+</ul>
+<a id="setMeanings(java.util.Set)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setMeanings</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;setMeanings&#8203;(java.util.Set&lt;<a href="../assets/Meaning.html" title="class in com.atlan.model.assets">Meaning</a>&gt;&nbsp;meanings)</pre>
+<div class="block">Details of terms that have been linked to this asset.</div>
 </li>
 </ul>
 <a id="equals(java.lang.Object)">
