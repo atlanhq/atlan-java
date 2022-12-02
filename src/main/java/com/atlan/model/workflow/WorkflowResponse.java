@@ -6,6 +6,8 @@ import com.atlan.exception.AtlanException;
 import com.atlan.model.enums.AtlanWorkflowPhase;
 import com.atlan.net.ApiResource;
 import java.util.List;
+
+import com.atlan.net.HttpClient;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.slf4j.Logger;
@@ -39,7 +41,9 @@ public class WorkflowResponse extends ApiResource {
                     status = runDetails.getStatus();
                 }
                 log.info("Workflow status: {}", status);
-                Thread.sleep(5000);
+                // Fix a value here so that we go to the high-end of the wait duration,
+                // but still apply a jitter each time
+                Thread.sleep(HttpClient.waitTime(5).toMillis());
             } while (status != null
                     && status != AtlanWorkflowPhase.SUCCESS
                     && status != AtlanWorkflowPhase.ERROR

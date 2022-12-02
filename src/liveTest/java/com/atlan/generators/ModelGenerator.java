@@ -1381,8 +1381,10 @@ public class ModelGenerator extends AtlanLiveTest {
         fs.append("            .link(Link.refByGuid(\"linkGuid1\"))").append(System.lineSeparator());
         fs.append("            .link(Link.refByGuid(\"linkGuid2\"))").append(System.lineSeparator());
         fs.append("            .readme(Readme.refByGuid(\"readmeGuid\"))").append(System.lineSeparator());
-        fs.append("            .assignedTerm(GlossaryTerm.refByGuid(\"termGuid1\"))").append(System.lineSeparator());
-        fs.append("            .assignedTerm(GlossaryTerm.refByGuid(\"termGuid2\"))").append(System.lineSeparator());
+        fs.append("            .assignedTerm(GlossaryTerm.refByGuid(\"termGuid1\"))")
+                .append(System.lineSeparator());
+        fs.append("            .assignedTerm(GlossaryTerm.refByGuid(\"termGuid2\"))")
+                .append(System.lineSeparator());
         addTestAttributes(fs, typeDetails);
         fs.append("            .build();");
         fs.append(System.lineSeparator());

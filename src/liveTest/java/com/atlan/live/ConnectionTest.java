@@ -4,6 +4,7 @@ package com.atlan.live;
 
 import static org.testng.Assert.*;
 
+import com.atlan.Atlan;
 import com.atlan.api.WorkflowsEndpoint;
 import com.atlan.cache.RoleCache;
 import com.atlan.exception.AtlanException;
@@ -18,15 +19,22 @@ import com.atlan.model.packages.ConnectionDelete;
 import com.atlan.model.workflow.Workflow;
 import com.atlan.model.workflow.WorkflowResponse;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import com.atlan.net.HttpClient;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.testng.annotations.Test;
 
 /**
  * Utility methods for managing connections.
  */
+@Slf4j
 public class ConnectionTest extends AtlanLiveTest {
 
     private static final String PREFIX = "ConnectionTest";
+
+    private static AtomicInteger retryCount = new AtomicInteger(0);
 
     /**
      * Create a new connection with a unique name.
@@ -73,14 +81,27 @@ public class ConnectionTest extends AtlanLiveTest {
      * @throws InterruptedException if the busy-wait loop for monitoring is interuppted
      */
     static void deleteConnection(String qualifiedName, Logger log) throws AtlanException, InterruptedException {
-        Workflow deleteWorkflow = ConnectionDelete.creator(qualifiedName, true);
-        WorkflowResponse response = deleteWorkflow.run();
-        assertNotNull(response);
-        String workflowName = response.getMetadata().getName();
-        AtlanWorkflowPhase state = response.monitorStatus(log);
-        assertNotNull(state);
-        assertEquals(state, AtlanWorkflowPhase.SUCCESS);
-        WorkflowsEndpoint.archive(workflowName);
+        try {
+            Workflow deleteWorkflow = ConnectionDelete.creator(qualifiedName, true);
+            WorkflowResponse response = deleteWorkflow.run();
+            assertNotNull(response);
+            // If we get here we've succeeded in running, so we'll reset our retry counter
+            retryCount.set(0);
+            String workflowName = response.getMetadata().getName();
+            AtlanWorkflowPhase state = response.monitorStatus(log);
+            assertNotNull(state);
+            assertEquals(state, AtlanWorkflowPhase.SUCCESS);
+            WorkflowsEndpoint.archive(workflowName);
+        } catch (InvalidRequestException e) {
+            // Can happen if two deletion workflows are run at the same time,
+            // in which case we should wait a few seconds and try again
+            int attempt = retryCount.incrementAndGet();
+            log.info("Race condition on parallel deletion, waiting to retry ({})...", attempt, e);
+            Thread.sleep(HttpClient.waitTime(attempt).toMillis());
+            if (attempt < Atlan.getMaxNetworkRetries()) {
+                deleteConnection(qualifiedName, log);
+            }
+        }
     }
 
     @Test(groups = {"invalid.connection"})
