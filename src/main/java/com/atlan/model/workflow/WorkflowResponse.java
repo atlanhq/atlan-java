@@ -44,8 +44,8 @@ public class WorkflowResponse extends ApiResource {
                 // but still apply a jitter each time
                 Thread.sleep(HttpClient.waitTime(5).toMillis());
             } while (status != AtlanWorkflowPhase.SUCCESS
-                && status != AtlanWorkflowPhase.ERROR
-                && status != AtlanWorkflowPhase.FAILED);
+                    && status != AtlanWorkflowPhase.ERROR
+                    && status != AtlanWorkflowPhase.FAILED);
             return status;
         } else {
             log.info("... skipping workflow monitoring — nothing to monitor.");
