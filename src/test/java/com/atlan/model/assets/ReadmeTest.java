@@ -104,8 +104,8 @@ public class ReadmeTest {
             .link(Link.refByGuid("linkGuid1"))
             .link(Link.refByGuid("linkGuid2"))
             .readme(Readme.refByGuid("readmeGuid"))
-            .meaning(GlossaryTerm.refByGuid("termGuid1"))
-            .meaning(GlossaryTerm.refByGuid("termGuid2"))
+            .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
+            .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
                     LineageProcess.refByGuid("bd9b412a-6191-4fa7-876b-fb11846f1de8"),
                     LineageProcess.refByGuid("00803ac3-11dc-4a6e-ae2f-9e1a48f98adb")))

@@ -104,8 +104,8 @@ public class DbtModelColumnTest {
             .link(Link.refByGuid("linkGuid1"))
             .link(Link.refByGuid("linkGuid2"))
             .readme(Readme.refByGuid("readmeGuid"))
-            .meaning(GlossaryTerm.refByGuid("termGuid1"))
-            .meaning(GlossaryTerm.refByGuid("termGuid2"))
+            .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
+            .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
                     LineageProcess.refByGuid("9e6b8359-e565-409b-9fec-325c9399b899"),
                     LineageProcess.refByGuid("5a6ddba4-629d-4953-ba29-1ee53588c0fd")))

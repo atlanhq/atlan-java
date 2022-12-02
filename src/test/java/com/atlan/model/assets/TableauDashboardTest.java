@@ -104,8 +104,8 @@ public class TableauDashboardTest {
             .link(Link.refByGuid("linkGuid1"))
             .link(Link.refByGuid("linkGuid2"))
             .readme(Readme.refByGuid("readmeGuid"))
-            .meaning(GlossaryTerm.refByGuid("termGuid1"))
-            .meaning(GlossaryTerm.refByGuid("termGuid2"))
+            .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
+            .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
                     LineageProcess.refByGuid("4fb3eedf-ab8e-43be-b278-a49d591ce776"),
                     LineageProcess.refByGuid("153c31a6-77d9-4cc6-9cbb-e56078c01778")))

@@ -104,8 +104,8 @@ public class ModeCollectionTest {
             .link(Link.refByGuid("linkGuid1"))
             .link(Link.refByGuid("linkGuid2"))
             .readme(Readme.refByGuid("readmeGuid"))
-            .meaning(GlossaryTerm.refByGuid("termGuid1"))
-            .meaning(GlossaryTerm.refByGuid("termGuid2"))
+            .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
+            .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
                     LineageProcess.refByGuid("f26c666a-3bbb-4eef-b4e6-43b9a2ef84e4"),
                     LineageProcess.refByGuid("994c7e98-f741-447f-ac61-7ab8e63c61c9")))

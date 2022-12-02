@@ -104,8 +104,8 @@ public class ModeQueryTest {
             .link(Link.refByGuid("linkGuid1"))
             .link(Link.refByGuid("linkGuid2"))
             .readme(Readme.refByGuid("readmeGuid"))
-            .meaning(GlossaryTerm.refByGuid("termGuid1"))
-            .meaning(GlossaryTerm.refByGuid("termGuid2"))
+            .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
+            .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
                     LineageProcess.refByGuid("fcd3d184-2d1e-44b3-a252-f070941bd9da"),
                     LineageProcess.refByGuid("59f1417a-3295-4621-9bdb-8e75dc37ba13")))

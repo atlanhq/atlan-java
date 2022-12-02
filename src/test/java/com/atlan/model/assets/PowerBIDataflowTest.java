@@ -104,8 +104,8 @@ public class PowerBIDataflowTest {
             .link(Link.refByGuid("linkGuid1"))
             .link(Link.refByGuid("linkGuid2"))
             .readme(Readme.refByGuid("readmeGuid"))
-            .meaning(GlossaryTerm.refByGuid("termGuid1"))
-            .meaning(GlossaryTerm.refByGuid("termGuid2"))
+            .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
+            .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
                     LineageProcess.refByGuid("b50d81b6-ee9d-4f5e-9fb4-17f7e0c60ad4"),
                     LineageProcess.refByGuid("fea2a0e9-9f87-462c-8ce8-c92fd4c400c8")))

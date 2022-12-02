@@ -4,15 +4,12 @@ package com.atlan.model.admin;
 
 import com.atlan.net.ApiResource;
 import com.atlan.serde.SessionResponseDeserializer;
-import com.atlan.serde.SessionResponseSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.List;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Data
-@JsonSerialize(using = SessionResponseSerializer.class)
 @JsonDeserialize(using = SessionResponseDeserializer.class)
 @EqualsAndHashCode(callSuper = false)
 public class SessionResponse extends ApiResource {

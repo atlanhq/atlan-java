@@ -104,8 +104,8 @@ public class PresetDashboardTest {
             .link(Link.refByGuid("linkGuid1"))
             .link(Link.refByGuid("linkGuid2"))
             .readme(Readme.refByGuid("readmeGuid"))
-            .meaning(GlossaryTerm.refByGuid("termGuid1"))
-            .meaning(GlossaryTerm.refByGuid("termGuid2"))
+            .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
+            .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
                     LineageProcess.refByGuid("9a4c2aa9-0653-4ea0-a0b6-4ca2ab1e4ea0"),
                     LineageProcess.refByGuid("2bfef743-51d4-44b2-8a8c-478f32b31f79")))

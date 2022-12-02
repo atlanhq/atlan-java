@@ -104,8 +104,8 @@ public class PowerBITableTest {
             .link(Link.refByGuid("linkGuid1"))
             .link(Link.refByGuid("linkGuid2"))
             .readme(Readme.refByGuid("readmeGuid"))
-            .meaning(GlossaryTerm.refByGuid("termGuid1"))
-            .meaning(GlossaryTerm.refByGuid("termGuid2"))
+            .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
+            .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
                     LineageProcess.refByGuid("de121c17-5598-4ae7-beea-54bad894a2ac"),
                     LineageProcess.refByGuid("bcb54bf3-6c8c-4df1-92e0-6561c0580d1b")))

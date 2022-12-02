@@ -104,8 +104,8 @@ public class AtlanCollectionTest {
             .link(Link.refByGuid("linkGuid1"))
             .link(Link.refByGuid("linkGuid2"))
             .readme(Readme.refByGuid("readmeGuid"))
-            .meaning(GlossaryTerm.refByGuid("termGuid1"))
-            .meaning(GlossaryTerm.refByGuid("termGuid2"))
+            .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
+            .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .childrenQueries(Set.of(
                     AtlanQuery.refByGuid("a734c779-91ba-4708-85c7-b7891317de6d"),
                     AtlanQuery.refByGuid("6a461066-079a-471d-94e6-77f668af8cd5")))

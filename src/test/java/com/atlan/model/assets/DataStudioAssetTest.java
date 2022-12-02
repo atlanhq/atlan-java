@@ -104,8 +104,8 @@ public class DataStudioAssetTest {
             .link(Link.refByGuid("linkGuid1"))
             .link(Link.refByGuid("linkGuid2"))
             .readme(Readme.refByGuid("readmeGuid"))
-            .meaning(GlossaryTerm.refByGuid("termGuid1"))
-            .meaning(GlossaryTerm.refByGuid("termGuid2"))
+            .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
+            .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
                     LineageProcess.refByGuid("5edb9a1b-6799-4b21-83ca-e84c6791d7f0"),
                     LineageProcess.refByGuid("398ce2dd-f0a4-4839-8b20-c0d6b0582fb9")))

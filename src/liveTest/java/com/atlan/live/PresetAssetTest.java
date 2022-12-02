@@ -4,322 +4,345 @@ package com.atlan.live;
 
 import static org.testng.Assert.*;
 
-import com.atlan.cache.RoleCache;
+import co.elastic.clients.elasticsearch._types.FieldSort;
+import co.elastic.clients.elasticsearch._types.SortOptions;
+import co.elastic.clients.elasticsearch._types.SortOrder;
+import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
+import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import com.atlan.exception.AtlanException;
-import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.assets.*;
 import com.atlan.model.core.Entity;
 import com.atlan.model.core.EntityMutationResponse;
 import com.atlan.model.enums.*;
+import com.atlan.model.search.IndexSearchDSL;
+import com.atlan.model.search.IndexSearchRequest;
+import com.atlan.model.search.IndexSearchResponse;
+import com.atlan.util.QueryFactory;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.Test;
 
-@Test(groups = {"preset-asset"})
+/**
+ * Tests all aspects of Preset assets.
+ */
+@Test(groups = {"preset"})
+@Slf4j
 public class PresetAssetTest extends AtlanLiveTest {
 
-    public static final String CONNECTION_NAME = "preset-connection";
-    public static final String WORKSPACE_NAME = "ps-workspace";
-    public static final String COLLECTION_NAME = "ps-collection";
-    public static final String CHART_NAME = "ps-chart";
-    public static final String DATASET_NAME = "ps-dataset";
+    private static final String PREFIX = "PresetAssetTest";
 
-    public static String connectionGuid = null;
-    public static String connectionQame = null;
+    private static final AtlanConnectorType CONNECTOR_TYPE = AtlanConnectorType.PRESET;
+    private static final String CONNECTION_NAME = "java-sdk-" + PREFIX;
 
-    public static String workspaceGuid = null;
-    public static String workspaceQame = null;
+    private static final String WORKSPACE_NAME = PREFIX + "-ws";
+    private static final String COLLECTION_NAME = PREFIX + "-coll";
+    private static final String CHART_NAME = PREFIX + "-cht";
+    private static final String DATASET_NAME = PREFIX + "-ds";
 
-    public static String collectionGuid = null;
-    public static String collectionQame = null;
-    public static String chartGuid = null;
-    public static String chartQame = null;
-    public static String datasetGuid = null;
-    public static String datasetQame = null;
+    private static Connection connection = null;
+    private static PresetWorkspace workspace = null;
+    private static PresetDashboard collection = null;
+    private static PresetChart chart = null;
+    private static PresetDataset dataset = null;
 
-    @Test(groups = {"invalid.connection"})
-    void invalidConnection() {
-        assertThrows(
-                InvalidRequestException.class,
-                () -> Connection.creator(CONNECTION_NAME, AtlanConnectorType.PRESET, null, null, null));
-    }
-
-    @Test(groups = {"create.connection.preset"})
-    void createConnection() {
-        try {
-            String adminRoleGuid = RoleCache.getIdForName("$admin");
-            if (adminRoleGuid != null) {
-                Connection connection = Connection.creator(
-                                CONNECTION_NAME, AtlanConnectorType.PRESET, List.of(adminRoleGuid), null, null)
-                        .build();
-                EntityMutationResponse response = connection.upsert();
-                assertNotNull(response);
-                assertTrue(response.getUpdatedEntities().isEmpty());
-                assertTrue(response.getDeletedEntities().isEmpty());
-                assertEquals(response.getCreatedEntities().size(), 1);
-                Entity one = response.getCreatedEntities().get(0);
-                assertNotNull(one);
-                assertEquals(one.getTypeName(), Connection.TYPE_NAME);
-                assertTrue(one instanceof Connection);
-                connection = (Connection) one;
-                connectionGuid = connection.getGuid();
-                assertNotNull(connectionGuid);
-                connectionQame = connection.getQualifiedName();
-                assertNotNull(connectionQame);
-                assertEquals(connection.getName(), CONNECTION_NAME);
-            }
-        } catch (AtlanException e) {
-            e.printStackTrace();
-            assertNull(e, "Unexpected exception while trying to create a connection.");
-        }
+    @Test(groups = {"create.connection"})
+    void createConnection() throws AtlanException {
+        connection = ConnectionTest.createConnection(CONNECTION_NAME, CONNECTOR_TYPE);
     }
 
     @Test(
-            groups = {"read.connection.preset"},
-            dependsOnGroups = {"create.connection.preset"})
-    void retrieveConnection() {
-        Entity minimal = null;
-        do {
-            try {
-                minimal = Entity.retrieveMinimal(connectionGuid);
-            } catch (AtlanException e) {
-                e.printStackTrace();
-                assertNull(e, "Unexpected exception while trying to read-back the created connection.");
-            }
-        } while (minimal == null);
+            groups = {"create.workspace"},
+            dependsOnGroups = {"create.connection"})
+    void createWorkspace() throws AtlanException {
+        PresetWorkspace toCreate = PresetWorkspace.creator(WORKSPACE_NAME, connection.getQualifiedName())
+                .build();
+        EntityMutationResponse response = toCreate.upsert();
+        Entity one = validateSingleCreate(response);
+        assertTrue(one instanceof PresetWorkspace);
+        workspace = (PresetWorkspace) one;
+        assertNotNull(workspace.getGuid());
+        assertNotNull(workspace.getQualifiedName());
+        assertEquals(workspace.getName(), WORKSPACE_NAME);
+        assertEquals(workspace.getConnectorType(), AtlanConnectorType.PRESET);
+        assertEquals(workspace.getConnectionQualifiedName(), connection.getQualifiedName());
     }
 
     @Test(
-            groups = {"create.preset.workspace"},
-            dependsOnGroups = {"read.connection.preset"})
-    void createWorkspace() {
-        try {
-            PresetWorkspace workspace =
-                    PresetWorkspace.creator(WORKSPACE_NAME, connectionQame).build();
-            EntityMutationResponse response = workspace.upsert();
-            assertNotNull(response);
-            assertTrue(response.getUpdatedEntities().isEmpty());
-            assertTrue(response.getDeletedEntities().isEmpty());
-            assertEquals(response.getCreatedEntities().size(), 1);
-            Entity one = response.getCreatedEntities().get(0);
-            assertNotNull(one);
-            assertEquals(one.getTypeName(), PresetWorkspace.TYPE_NAME);
-            assertTrue(one instanceof PresetWorkspace);
-            workspace = (PresetWorkspace) one;
-            workspaceGuid = workspace.getGuid();
-            assertNotNull(workspaceGuid);
-            workspaceQame = workspace.getQualifiedName();
-            assertNotNull(workspaceQame);
-            assertEquals(workspace.getName(), WORKSPACE_NAME);
-            assertEquals(workspace.getConnectorType(), AtlanConnectorType.PRESET);
-            assertEquals(workspace.getConnectionQualifiedName(), connectionQame);
-        } catch (AtlanException e) {
-            e.printStackTrace();
-            assertNull(e, "Unexpected exception while trying to create a Preset workspace.");
-        }
+            groups = {"create.collection"},
+            dependsOnGroups = {"create.workspace"})
+    void createCollection() throws AtlanException {
+        PresetDashboard toCreate = PresetDashboard.creator(COLLECTION_NAME, workspace.getQualifiedName())
+                .build();
+        EntityMutationResponse response = toCreate.upsert();
+        assertNotNull(response);
+        assertTrue(response.getDeletedEntities().isEmpty());
+        assertEquals(response.getUpdatedEntities().size(), 1);
+        Entity one = response.getUpdatedEntities().get(0);
+        assertTrue(one instanceof PresetWorkspace);
+        PresetWorkspace w = (PresetWorkspace) one;
+        assertEquals(w.getGuid(), workspace.getGuid());
+        assertEquals(w.getQualifiedName(), workspace.getQualifiedName());
+        assertEquals(response.getCreatedEntities().size(), 1);
+        one = response.getCreatedEntities().get(0);
+        assertTrue(one instanceof PresetDashboard);
+        collection = (PresetDashboard) one;
+        assertNotNull(collection.getGuid());
+        assertNotNull(collection.getQualifiedName());
+        assertEquals(collection.getName(), COLLECTION_NAME);
+        assertEquals(collection.getConnectorType(), AtlanConnectorType.PRESET);
+        assertEquals(collection.getPresetWorkspaceQualifiedName(), workspace.getQualifiedName());
+        assertEquals(collection.getConnectionQualifiedName(), connection.getQualifiedName());
     }
 
     @Test(
-            groups = {"create.preset.collection"},
-            dependsOnGroups = {"create.preset.workspace"})
-    void createCollection() {
-        try {
-            PresetDashboard collection =
-                    PresetDashboard.creator(COLLECTION_NAME, workspaceQame).build();
-            EntityMutationResponse response = collection.upsert();
-            assertNotNull(response);
-            assertTrue(response.getDeletedEntities().isEmpty());
-            assertEquals(response.getUpdatedEntities().size(), 1);
-            Entity one = response.getUpdatedEntities().get(0);
-            assertNotNull(one);
-            assertEquals(one.getTypeName(), PresetWorkspace.TYPE_NAME);
-            assertTrue(one instanceof PresetWorkspace);
-            PresetWorkspace workspace = (PresetWorkspace) one;
-            assertEquals(workspace.getGuid(), workspaceGuid);
-            assertEquals(workspace.getQualifiedName(), workspaceQame);
-            assertEquals(response.getCreatedEntities().size(), 1);
-            one = response.getCreatedEntities().get(0);
-            assertNotNull(one);
-            assertEquals(one.getTypeName(), PresetDashboard.TYPE_NAME);
-            assertTrue(one instanceof PresetDashboard);
-            collection = (PresetDashboard) one;
-            collectionGuid = collection.getGuid();
-            assertNotNull(collectionGuid);
-            collectionQame = collection.getQualifiedName();
-            assertNotNull(collectionQame);
-            assertEquals(collection.getName(), COLLECTION_NAME);
-            assertEquals(collection.getConnectorType(), AtlanConnectorType.PRESET);
-            assertEquals(collection.getPresetWorkspaceQualifiedName(), workspaceQame);
-            assertEquals(collection.getConnectionQualifiedName(), connectionQame);
-        } catch (AtlanException e) {
-            e.printStackTrace();
-            assertNull(e, "Unexpected exception while trying to create a Preset collection.");
-        }
+            groups = {"create.chart"},
+            dependsOnGroups = {"create.collection"})
+    void createChart() throws AtlanException {
+        PresetChart toCreate =
+                PresetChart.creator(CHART_NAME, collection.getQualifiedName()).build();
+        EntityMutationResponse response = toCreate.upsert();
+        assertNotNull(response);
+        assertTrue(response.getDeletedEntities().isEmpty());
+        assertEquals(response.getUpdatedEntities().size(), 1);
+        Entity one = response.getUpdatedEntities().get(0);
+        assertTrue(one instanceof PresetDashboard);
+        PresetDashboard c = (PresetDashboard) one;
+        assertEquals(c.getGuid(), collection.getGuid());
+        assertEquals(c.getQualifiedName(), collection.getQualifiedName());
+        assertEquals(response.getCreatedEntities().size(), 1);
+        one = response.getCreatedEntities().get(0);
+        assertTrue(one instanceof PresetChart);
+        chart = (PresetChart) one;
+        assertNotNull(chart.getGuid());
+        assertNotNull(chart.getQualifiedName());
+        assertEquals(chart.getName(), CHART_NAME);
+        assertEquals(chart.getConnectorType(), AtlanConnectorType.PRESET);
+        assertEquals(chart.getPresetDashboardQualifiedName(), collection.getQualifiedName());
+        assertEquals(chart.getPresetWorkspaceQualifiedName(), workspace.getQualifiedName());
+        assertEquals(chart.getConnectionQualifiedName(), connection.getQualifiedName());
     }
 
     @Test(
-            groups = {"create.preset.chart"},
-            dependsOnGroups = {"create.preset.collection"})
-    void createChart() {
-        try {
-            PresetChart chart = PresetChart.creator(CHART_NAME, collectionQame).build();
-            EntityMutationResponse response = chart.upsert();
-            assertNotNull(response);
-            assertTrue(response.getDeletedEntities().isEmpty());
-            assertEquals(response.getUpdatedEntities().size(), 1);
-            Entity one = response.getUpdatedEntities().get(0);
-            assertNotNull(one);
-            assertEquals(one.getTypeName(), PresetDashboard.TYPE_NAME);
-            assertTrue(one instanceof PresetDashboard);
-            PresetDashboard collection = (PresetDashboard) one;
-            assertEquals(collection.getGuid(), collectionGuid);
-            assertEquals(collection.getQualifiedName(), collectionQame);
-            assertEquals(response.getCreatedEntities().size(), 1);
-            one = response.getCreatedEntities().get(0);
-            assertNotNull(one);
-            assertEquals(one.getTypeName(), PresetChart.TYPE_NAME);
-            assertTrue(one instanceof PresetChart);
-            chart = (PresetChart) one;
-            chartGuid = chart.getGuid();
-            assertNotNull(chartGuid);
-            chartQame = chart.getQualifiedName();
-            assertNotNull(chartQame);
-            assertEquals(chart.getName(), CHART_NAME);
-            assertEquals(chart.getConnectorType(), AtlanConnectorType.PRESET);
-            assertEquals(chart.getPresetDashboardQualifiedName(), collectionQame);
-            assertEquals(chart.getPresetWorkspaceQualifiedName(), workspaceQame);
-            assertEquals(chart.getConnectionQualifiedName(), connectionQame);
-        } catch (AtlanException e) {
-            e.printStackTrace();
-            assertNull(e, "Unexpected exception while trying to create a Preset chart.");
-        }
+            groups = {"create.dataset"},
+            dependsOnGroups = {"create.collection"})
+    void createDataset() throws AtlanException {
+        PresetDataset toCreate = PresetDataset.creator(DATASET_NAME, collection.getQualifiedName())
+                .build();
+        EntityMutationResponse response = toCreate.upsert();
+        assertNotNull(response);
+        assertTrue(response.getDeletedEntities().isEmpty());
+        assertEquals(response.getUpdatedEntities().size(), 1);
+        Entity one = response.getUpdatedEntities().get(0);
+        assertTrue(one instanceof PresetDashboard);
+        PresetDashboard c = (PresetDashboard) one;
+        assertEquals(c.getGuid(), collection.getGuid());
+        assertEquals(c.getQualifiedName(), collection.getQualifiedName());
+        assertEquals(response.getCreatedEntities().size(), 1);
+        one = response.getCreatedEntities().get(0);
+        assertTrue(one instanceof PresetDataset);
+        dataset = (PresetDataset) one;
+        assertNotNull(dataset.getGuid());
+        assertNotNull(dataset.getQualifiedName());
+        assertEquals(dataset.getName(), DATASET_NAME);
+        assertEquals(dataset.getConnectorType(), AtlanConnectorType.PRESET);
+        assertEquals(dataset.getPresetDashboardQualifiedName(), collection.getQualifiedName());
+        assertEquals(dataset.getPresetWorkspaceQualifiedName(), workspace.getQualifiedName());
+        assertEquals(dataset.getConnectionQualifiedName(), connection.getQualifiedName());
     }
 
     @Test(
-            groups = {"create.preset.dataset"},
-            dependsOnGroups = {"create.preset.collection"})
-    void createDataset() {
-        try {
-            PresetDataset dataset =
-                    PresetDataset.creator(DATASET_NAME, collectionQame).build();
-            EntityMutationResponse response = dataset.upsert();
-            assertNotNull(response);
-            assertTrue(response.getDeletedEntities().isEmpty());
-            assertEquals(response.getUpdatedEntities().size(), 1);
-            Entity one = response.getUpdatedEntities().get(0);
-            assertNotNull(one);
-            assertEquals(one.getTypeName(), PresetDashboard.TYPE_NAME);
-            assertTrue(one instanceof PresetDashboard);
-            PresetDashboard collection = (PresetDashboard) one;
-            assertEquals(collection.getGuid(), collectionGuid);
-            assertEquals(collection.getQualifiedName(), collectionQame);
-            assertEquals(response.getCreatedEntities().size(), 1);
-            one = response.getCreatedEntities().get(0);
-            assertNotNull(one);
-            assertEquals(one.getTypeName(), PresetDataset.TYPE_NAME);
-            assertTrue(one instanceof PresetDataset);
-            dataset = (PresetDataset) one;
-            datasetGuid = dataset.getGuid();
-            assertNotNull(datasetGuid);
-            datasetQame = dataset.getQualifiedName();
-            assertNotNull(datasetQame);
-            assertEquals(dataset.getName(), DATASET_NAME);
-            assertEquals(dataset.getConnectorType(), AtlanConnectorType.PRESET);
-            assertEquals(dataset.getPresetDashboardQualifiedName(), collectionQame);
-            assertEquals(dataset.getPresetWorkspaceQualifiedName(), workspaceQame);
-            assertEquals(dataset.getConnectionQualifiedName(), connectionQame);
-        } catch (AtlanException e) {
-            e.printStackTrace();
-            assertNull(e, "Unexpected exception while trying to create a Preset dataset.");
-        }
+            groups = {"update.collection"},
+            dependsOnGroups = {"create.collection"})
+    void updateCollection() throws AtlanException {
+        PresetDashboard updated = PresetDashboard.updateCertificate(
+                collection.getQualifiedName(), CERTIFICATE_STATUS, CERTIFICATE_MESSAGE);
+        assertNotNull(updated);
+        assertEquals(updated.getCertificateStatus(), CERTIFICATE_STATUS);
+        assertEquals(updated.getCertificateStatusMessage(), CERTIFICATE_MESSAGE);
+        updated = PresetDashboard.updateAnnouncement(
+                collection.getQualifiedName(), ANNOUNCEMENT_TYPE, ANNOUNCEMENT_TITLE, ANNOUNCEMENT_MESSAGE);
+        assertNotNull(updated);
+        assertEquals(updated.getAnnouncementType(), ANNOUNCEMENT_TYPE);
+        assertEquals(updated.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
+        assertEquals(updated.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
     }
 
     @Test(
-            groups = {"update.preset.collection"},
-            dependsOnGroups = {"create.preset.collection"})
-    void updateCollection() {
-        try {
-            PresetDashboard updated =
-                    PresetDashboard.updateCertificate(collectionQame, AtlanCertificateStatus.VERIFIED, null);
-            assertNotNull(updated);
-            assertEquals(updated.getCertificateStatus(), AtlanCertificateStatus.VERIFIED);
-            updated = PresetDashboard.updateAnnouncement(
-                    collectionQame, AtlanAnnouncementType.INFORMATION, ANNOUNCEMENT_TITLE, ANNOUNCEMENT_MESSAGE);
-            assertNotNull(updated);
-            assertEquals(updated.getAnnouncementType(), AtlanAnnouncementType.INFORMATION);
-            assertEquals(updated.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
-            assertEquals(updated.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
-        } catch (AtlanException e) {
-            e.printStackTrace();
-            assertNull(e, "Unexpected exception while trying to update a Preset collection.");
-        }
+            groups = {"read.collection"},
+            dependsOnGroups = {"create.*", "update.collection"})
+    void retrieveCollection() throws AtlanException {
+        PresetDashboard c = PresetDashboard.retrieveByGuid(collection.getGuid());
+        assertNotNull(c);
+        assertTrue(c.isComplete());
+        assertEquals(c.getGuid(), collection.getGuid());
+        assertEquals(c.getQualifiedName(), collection.getQualifiedName());
+        assertEquals(c.getName(), COLLECTION_NAME);
+        assertEquals(c.getCertificateStatus(), CERTIFICATE_STATUS);
+        assertNotNull(c.getPresetCharts());
+        assertEquals(c.getPresetCharts().size(), 1);
+        Set<String> types =
+                c.getPresetCharts().stream().map(PresetChart::getTypeName).collect(Collectors.toSet());
+        assertEquals(types.size(), 1);
+        assertTrue(types.contains(PresetChart.TYPE_NAME));
+        Set<String> guids =
+                c.getPresetCharts().stream().map(PresetChart::getGuid).collect(Collectors.toSet());
+        assertEquals(guids.size(), 1);
+        assertTrue(guids.contains(chart.getGuid()));
+        assertNotNull(c.getPresetDatasets());
+        assertEquals(c.getPresetDatasets().size(), 1);
+        types = c.getPresetDatasets().stream().map(PresetDataset::getTypeName).collect(Collectors.toSet());
+        assertEquals(types.size(), 1);
+        assertTrue(types.contains(PresetDataset.TYPE_NAME));
+        guids = c.getPresetDatasets().stream().map(PresetDataset::getGuid).collect(Collectors.toSet());
+        assertEquals(guids.size(), 1);
+        assertTrue(guids.contains(dataset.getGuid()));
     }
 
     @Test(
-            groups = {"read.preset.collection"},
-            dependsOnGroups = {"create.preset.*", "update.preset.collection"})
-    void retrieveCollection() {
-        try {
-            PresetDashboard collection = PresetDashboard.retrieveByGuid(collectionGuid);
-            assertNotNull(collection);
-            assertTrue(collection.isComplete());
-            assertEquals(collection.getGuid(), collectionGuid);
-            assertEquals(collection.getQualifiedName(), collectionQame);
-            assertEquals(collection.getName(), COLLECTION_NAME);
-            assertEquals(collection.getCertificateStatus(), AtlanCertificateStatus.VERIFIED);
-            assertNotNull(collection.getPresetCharts());
-            assertEquals(collection.getPresetCharts().size(), 1);
-            Set<String> types = collection.getPresetCharts().stream()
-                    .map(PresetChart::getTypeName)
-                    .collect(Collectors.toSet());
-            assertEquals(types.size(), 1);
-            assertTrue(types.contains(PresetChart.TYPE_NAME));
-            Set<String> guids = collection.getPresetCharts().stream()
-                    .map(PresetChart::getGuid)
-                    .collect(Collectors.toSet());
-            assertEquals(guids.size(), 1);
-            assertTrue(guids.contains(chartGuid));
-            assertNotNull(collection.getPresetDatasets());
-            assertEquals(collection.getPresetDatasets().size(), 1);
-            types = collection.getPresetDatasets().stream()
-                    .map(PresetDataset::getTypeName)
-                    .collect(Collectors.toSet());
-            assertEquals(types.size(), 1);
-            assertTrue(types.contains(PresetDataset.TYPE_NAME));
-            guids = collection.getPresetDatasets().stream()
-                    .map(PresetDataset::getGuid)
-                    .collect(Collectors.toSet());
-            assertEquals(guids.size(), 1);
-            assertTrue(guids.contains(datasetGuid));
-        } catch (AtlanException e) {
-            e.printStackTrace();
-            assertNull(e, "Unexpected exception while trying to retrieve a Preset collection.");
-        }
+            groups = {"update.collection.again"},
+            dependsOnGroups = {"read.collection"})
+    void updateCollectionAgain() throws AtlanException {
+        PresetDashboard updated = PresetDashboard.removeCertificate(collection.getQualifiedName(), COLLECTION_NAME);
+        assertNotNull(updated);
+        assertNull(updated.getCertificateStatus());
+        assertNull(updated.getCertificateStatusMessage());
+        assertEquals(updated.getAnnouncementType(), ANNOUNCEMENT_TYPE);
+        assertEquals(updated.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
+        assertEquals(updated.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
+        updated = PresetDashboard.removeAnnouncement(collection.getQualifiedName(), COLLECTION_NAME);
+        assertNotNull(updated);
+        assertNull(updated.getAnnouncementType());
+        assertNull(updated.getAnnouncementTitle());
+        assertNull(updated.getAnnouncementMessage());
     }
 
     @Test(
-            groups = {"update.preset.collection.again"},
-            dependsOnGroups = {"read.preset.collection"})
-    void updateCollectionAgain() {
-        try {
-            PresetDashboard updated = PresetDashboard.removeCertificate(collectionQame, COLLECTION_NAME);
-            assertNotNull(updated);
-            assertNull(updated.getCertificateStatus());
-            assertNull(updated.getCertificateStatusMessage());
-            assertEquals(updated.getAnnouncementType(), AtlanAnnouncementType.INFORMATION);
-            assertEquals(updated.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
-            assertEquals(updated.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
-            updated = PresetDashboard.removeAnnouncement(collectionQame, COLLECTION_NAME);
-            assertNotNull(updated);
-            assertNull(updated.getAnnouncementType());
-            assertNull(updated.getAnnouncementTitle());
-            assertNull(updated.getAnnouncementMessage());
-        } catch (AtlanException e) {
-            e.printStackTrace();
-            assertNull(
-                    e,
-                    "Unexpected exception while trying to remove certificates and announcements from a Preset collection.");
-        }
+            groups = {"search.assets"},
+            dependsOnGroups = {"update.collection.again"})
+    void searchAssets() throws AtlanException {
+        Query byState = QueryFactory.active();
+        Query byType = QueryFactory.withSuperType(Preset.TYPE_NAME);
+        Query byQN = QueryFactory.whereQualifiedNameStartsWith(connection.getQualifiedName());
+        Query combined = BoolQuery.of(b -> b.filter(byState, byType, byQN))._toQuery();
+
+        SortOptions sort = SortOptions.of(
+                s -> s.field(FieldSort.of(f -> f.field("__timestamp").order(SortOrder.Asc))));
+
+        IndexSearchRequest index = IndexSearchRequest.builder()
+                .dsl(IndexSearchDSL.builder()
+                        .from(0)
+                        .size(10)
+                        .query(combined)
+                        .sortOption(sort)
+                        .build())
+                .attribute("name")
+                .attribute("connectionQualifiedName")
+                .build();
+
+        IndexSearchResponse response = index.search();
+        assertNotNull(response);
+        assertEquals(response.getApproximateCount().longValue(), 4L);
+        List<Entity> entities = response.getEntities();
+        assertNotNull(entities);
+        assertEquals(entities.size(), 4);
+
+        Entity one = entities.get(0);
+        assertTrue(one instanceof PresetWorkspace);
+        assertFalse(one.isComplete());
+        PresetWorkspace w = (PresetWorkspace) one;
+        assertEquals(w.getQualifiedName(), workspace.getQualifiedName());
+        assertEquals(w.getName(), workspace.getName());
+        assertEquals(w.getConnectionQualifiedName(), connection.getQualifiedName());
+
+        one = entities.get(1);
+        assertTrue(one instanceof PresetDashboard);
+        assertFalse(one.isComplete());
+        PresetDashboard d = (PresetDashboard) one;
+        assertEquals(d.getQualifiedName(), collection.getQualifiedName());
+        assertEquals(d.getName(), collection.getName());
+        assertEquals(d.getConnectionQualifiedName(), connection.getQualifiedName());
+
+        one = entities.get(2);
+        assertTrue(one instanceof PresetChart);
+        assertFalse(one.isComplete());
+        PresetChart c = (PresetChart) one;
+        assertEquals(c.getQualifiedName(), chart.getQualifiedName());
+        assertEquals(c.getName(), chart.getName());
+        assertEquals(c.getConnectionQualifiedName(), connection.getQualifiedName());
+
+        one = entities.get(3);
+        assertTrue(one instanceof PresetDataset);
+        assertFalse(one.isComplete());
+        PresetDataset ds = (PresetDataset) one;
+        assertEquals(ds.getQualifiedName(), dataset.getQualifiedName());
+        assertEquals(ds.getName(), dataset.getName());
+        assertEquals(ds.getConnectionQualifiedName(), connection.getQualifiedName());
+    }
+
+    @Test(
+            groups = {"delete.chart"},
+            dependsOnGroups = {"update.*", "search.*"})
+    void deleteChart() throws AtlanException {
+        EntityMutationResponse response = Entity.delete(chart.getGuid());
+        assertNotNull(response);
+        assertTrue(response.getCreatedEntities().isEmpty());
+        assertTrue(response.getUpdatedEntities().isEmpty());
+        assertEquals(response.getDeletedEntities().size(), 1);
+        Entity one = response.getDeletedEntities().get(0);
+        assertTrue(one instanceof PresetChart);
+        PresetChart s = (PresetChart) one;
+        assertEquals(s.getGuid(), chart.getGuid());
+        assertEquals(s.getQualifiedName(), chart.getQualifiedName());
+        assertEquals(s.getDeleteHandler(), "SOFT");
+        assertEquals(s.getStatus(), AtlanStatus.DELETED);
+    }
+
+    @Test(
+            groups = {"delete.chart.read"},
+            dependsOnGroups = {"delete.chart"})
+    void readDeletedChart() throws AtlanException {
+        PresetChart deleted = PresetChart.retrieveByGuid(chart.getGuid());
+        assertEquals(deleted.getGuid(), chart.getGuid());
+        assertEquals(deleted.getQualifiedName(), chart.getQualifiedName());
+        assertEquals(deleted.getStatus(), AtlanStatus.DELETED);
+    }
+
+    @Test(
+            groups = {"delete.chart.restore"},
+            dependsOnGroups = {"delete.chart.read"})
+    void restoreChart() throws AtlanException {
+        assertTrue(PresetChart.restore(chart.getQualifiedName()));
+        PresetChart restored = PresetChart.retrieveByQualifiedName(chart.getQualifiedName());
+        assertEquals(restored.getGuid(), chart.getGuid());
+        assertEquals(restored.getQualifiedName(), chart.getQualifiedName());
+        assertEquals(restored.getStatus(), AtlanStatus.ACTIVE);
+    }
+
+    @Test(
+            groups = {"purge.chart"},
+            dependsOnGroups = {"delete.chart.restore"})
+    void purgeChart() throws AtlanException {
+        EntityMutationResponse response = Entity.purge(chart.getGuid());
+        assertNotNull(response);
+        assertTrue(response.getCreatedEntities().isEmpty());
+        assertTrue(response.getUpdatedEntities().isEmpty());
+        assertEquals(response.getDeletedEntities().size(), 1);
+        Entity one = response.getDeletedEntities().get(0);
+        assertTrue(one instanceof PresetChart);
+        PresetChart s = (PresetChart) one;
+        assertEquals(s.getGuid(), chart.getGuid());
+        assertEquals(s.getQualifiedName(), chart.getQualifiedName());
+        assertEquals(s.getDeleteHandler(), "HARD");
+        assertEquals(s.getStatus(), AtlanStatus.DELETED);
+    }
+
+    @Test(
+            groups = {"purge.connection"},
+            dependsOnGroups = {"create.*", "read.*", "search.*", "update.*", "purge.chart"},
+            alwaysRun = true)
+    void purgeConnection() throws AtlanException, InterruptedException {
+        ConnectionTest.deleteConnection(connection.getQualifiedName(), log);
     }
 }

@@ -104,8 +104,8 @@ public class PowerBIColumnTest {
             .link(Link.refByGuid("linkGuid1"))
             .link(Link.refByGuid("linkGuid2"))
             .readme(Readme.refByGuid("readmeGuid"))
-            .meaning(GlossaryTerm.refByGuid("termGuid1"))
-            .meaning(GlossaryTerm.refByGuid("termGuid2"))
+            .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
+            .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
                     LineageProcess.refByGuid("8886c64c-5d9c-42f9-a863-e7f4f73040e4"),
                     LineageProcess.refByGuid("0fb8f389-a781-4d7a-bcb6-edc386ce85a6")))

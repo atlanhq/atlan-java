@@ -104,8 +104,8 @@ public class DatabaseTest {
             .link(Link.refByGuid("linkGuid1"))
             .link(Link.refByGuid("linkGuid2"))
             .readme(Readme.refByGuid("readmeGuid"))
-            .meaning(GlossaryTerm.refByGuid("termGuid1"))
-            .meaning(GlossaryTerm.refByGuid("termGuid2"))
+            .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
+            .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
                     LineageProcess.refByGuid("e4dbc11e-fda9-4cb2-b2fa-4b7c9aa4c23e"),
                     LineageProcess.refByGuid("7ae6ca4d-5b2e-43a2-8f2e-5b7a554f2a3b")))

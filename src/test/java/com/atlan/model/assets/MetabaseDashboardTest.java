@@ -104,8 +104,8 @@ public class MetabaseDashboardTest {
             .link(Link.refByGuid("linkGuid1"))
             .link(Link.refByGuid("linkGuid2"))
             .readme(Readme.refByGuid("readmeGuid"))
-            .meaning(GlossaryTerm.refByGuid("termGuid1"))
-            .meaning(GlossaryTerm.refByGuid("termGuid2"))
+            .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
+            .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
                     LineageProcess.refByGuid("fa180dac-48ba-4f0d-817b-f08986bcfb46"),
                     LineageProcess.refByGuid("f58a4781-6b74-48a4-bb80-3271bc8a221c")))

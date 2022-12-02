@@ -231,10 +231,19 @@ public abstract class HttpClient {
         if (!this.networkRetriesSleep) {
             return Duration.ZERO;
         }
+        return waitTime(numRetries);
+    }
 
+    /**
+     * Calculate an exponential-backoff time to wait, with a jitter.
+     *
+     * @param attempt the retry attempt (count)
+     * @return a duration giving the time to wait (sleep)
+     */
+    public static Duration waitTime(int attempt) {
         // Apply exponential backoff with MinNetworkRetriesDelay on the number of numRetries
         // so far as inputs.
-        Duration delay = Duration.ofNanos((long) (minNetworkRetriesDelay.toNanos() * Math.pow(2, numRetries - 1)));
+        Duration delay = Duration.ofNanos((long) (minNetworkRetriesDelay.toNanos() * Math.pow(2, attempt - 1)));
 
         // Do not allow the number to exceed MaxNetworkRetriesDelay
         if (delay.compareTo(maxNetworkRetriesDelay) > 0) {

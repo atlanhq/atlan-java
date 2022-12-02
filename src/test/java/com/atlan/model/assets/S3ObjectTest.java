@@ -104,8 +104,8 @@ public class S3ObjectTest {
             .link(Link.refByGuid("linkGuid1"))
             .link(Link.refByGuid("linkGuid2"))
             .readme(Readme.refByGuid("readmeGuid"))
-            .meaning(GlossaryTerm.refByGuid("termGuid1"))
-            .meaning(GlossaryTerm.refByGuid("termGuid2"))
+            .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
+            .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
                     LineageProcess.refByGuid("8a5b4445-9622-4b3d-8f8e-2ca915351d72"),
                     LineageProcess.refByGuid("90a6dd8c-d682-43b6-83b9-7ba537f39014")))
