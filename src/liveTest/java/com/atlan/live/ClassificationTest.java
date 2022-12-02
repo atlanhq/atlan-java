@@ -8,15 +8,11 @@ import com.atlan.exception.AtlanException;
 import com.atlan.model.enums.AtlanClassificationColor;
 import com.atlan.model.enums.AtlanTypeCategory;
 import com.atlan.model.typedefs.ClassificationDef;
-import org.testng.annotations.Test;
 
 /**
- * Test management of classifications.
+ * Utility methods for managing classifications during testing.
  */
-@Test(groups = {"classification"})
-public class ClassificationTest extends AtlanLiveTest {
-
-    private static final String PREFIX = "ClassificationTest";
+public abstract class ClassificationTest extends AtlanLiveTest {
 
     /**
      * Create a new classification with a unique name.
@@ -44,20 +40,5 @@ public class ClassificationTest extends AtlanLiveTest {
      */
     static void deleteClassification(String name) throws AtlanException {
         ClassificationDef.purge(name);
-    }
-
-    @Test(groups = {"create.classification"})
-    void createClassification() throws AtlanException {
-        createClassification(PREFIX);
-    }
-
-    // TODO: test propagation
-
-    @Test(
-            groups = {"purge.classifications"},
-            dependsOnGroups = {"create.classification"},
-            alwaysRun = true)
-    void purgeClassification() throws AtlanException {
-        deleteClassification(PREFIX);
     }
 }

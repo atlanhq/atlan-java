@@ -26,6 +26,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import org.testng.annotations.Test;
 
+/**
+ * Tests all aspects of glossaries and related assets (categories and terms).
+ */
 @Test(groups = {"glossary"})
 public class GlossaryTest extends AtlanLiveTest {
 

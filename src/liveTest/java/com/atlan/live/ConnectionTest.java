@@ -18,10 +18,9 @@ import com.atlan.model.enums.AtlanWorkflowPhase;
 import com.atlan.model.packages.ConnectionDelete;
 import com.atlan.model.workflow.Workflow;
 import com.atlan.model.workflow.WorkflowResponse;
+import com.atlan.net.HttpClient;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
-
-import com.atlan.net.HttpClient;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.testng.annotations.Test;

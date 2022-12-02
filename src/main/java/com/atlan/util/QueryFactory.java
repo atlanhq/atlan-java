@@ -59,6 +59,17 @@ public class QueryFactory {
     }
 
     /**
+     * Returns a query that will match all assets that are a subtype of the type provided.
+     *
+     * @param typeName of the supertype for assets to match
+     * @return a query that will only match assets of a subtype of the type provided
+     */
+    public static Query withSuperType(String typeName) {
+        return TermQuery.of(t -> t.field("__superTypeNames.keyword").value(typeName))
+                ._toQuery();
+    }
+
+    /**
      * Returns a query that will only match assets with the certificate status provided.
      *
      * @param certificate for assets to match

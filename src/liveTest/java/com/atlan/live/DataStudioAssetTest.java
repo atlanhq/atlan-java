@@ -18,15 +18,14 @@ import com.atlan.model.search.IndexSearchDSL;
 import com.atlan.model.search.IndexSearchRequest;
 import com.atlan.model.search.IndexSearchResponse;
 import com.atlan.util.QueryFactory;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.Test;
-
-import java.util.List;
 
 /**
  * Tests all aspects of Google Data Studio assets.
  */
-@Test(groups = {"gds-asset"})
+@Test(groups = {"gds"})
 @Slf4j
 public class DataStudioAssetTest extends AtlanLiveTest {
 
@@ -137,26 +136,27 @@ public class DataStudioAssetTest extends AtlanLiveTest {
     }
 
     @Test(
-        groups = {"search.assets"},
-        dependsOnGroups = {"update.report.again"})
+            groups = {"search.assets"},
+            dependsOnGroups = {"update.report.again"})
     void searchAssets() throws AtlanException {
         Query byState = QueryFactory.active();
         Query byType = QueryFactory.withType(DataStudioAsset.TYPE_NAME);
-        Query combined = BoolQuery.of(b -> b.filter(byState, byType))._toQuery();
+        Query byQN = QueryFactory.whereQualifiedNameStartsWith(connection.getQualifiedName());
+        Query combined = BoolQuery.of(b -> b.filter(byState, byType, byQN))._toQuery();
 
         SortOptions sort = SortOptions.of(
-            s -> s.field(FieldSort.of(f -> f.field("__timestamp").order(SortOrder.Asc))));
+                s -> s.field(FieldSort.of(f -> f.field("__timestamp").order(SortOrder.Asc))));
 
         IndexSearchRequest index = IndexSearchRequest.builder()
-            .dsl(IndexSearchDSL.builder()
-                .from(0)
-                .size(10)
-                .query(combined)
-                .sortOption(sort)
-                .build())
-            .attribute("name")
-            .attribute("connectionQualifiedName")
-            .build();
+                .dsl(IndexSearchDSL.builder()
+                        .from(0)
+                        .size(10)
+                        .query(combined)
+                        .sortOption(sort)
+                        .build())
+                .attribute("name")
+                .attribute("connectionQualifiedName")
+                .build();
 
         IndexSearchResponse response = index.search();
         assertNotNull(response);

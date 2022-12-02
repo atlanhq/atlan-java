@@ -23,6 +23,7 @@ import com.atlan.model.typedefs.AttributeDef;
 import com.atlan.model.typedefs.AttributeDefOptions;
 import com.atlan.model.typedefs.CustomMetadataDef;
 import com.atlan.model.typedefs.CustomMetadataOptions;
+import com.atlan.net.HttpClient;
 import com.atlan.util.QueryFactory;
 import java.time.Instant;
 import java.util.*;
@@ -362,7 +363,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
         assertNotNull(response);
         int count = 0;
         while (response.getApproximateCount() == 0L && count < Atlan.getMaxNetworkRetries()) {
-            Thread.sleep(2000);
+            Thread.sleep(HttpClient.waitTime(count).toMillis());
             response = index.search();
             count++;
         }
@@ -404,7 +405,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
         assertNotNull(response);
         int count = 0;
         while (response.getApproximateCount() == 0L && count < Atlan.getMaxNetworkRetries()) {
-            Thread.sleep(2000);
+            Thread.sleep(HttpClient.waitTime(count).toMillis());
             response = index.search();
             count++;
         }

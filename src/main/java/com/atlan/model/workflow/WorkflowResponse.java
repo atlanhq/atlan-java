@@ -5,9 +5,8 @@ package com.atlan.model.workflow;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.enums.AtlanWorkflowPhase;
 import com.atlan.net.ApiResource;
-import java.util.List;
-
 import com.atlan.net.HttpClient;
+import java.util.List;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.slf4j.Logger;
