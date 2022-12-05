@@ -18,7 +18,7 @@ import java.util.Map;
 
 public class DbtCrawler extends AbstractCrawler {
 
-    public static final String PREFIX = "atlan-dbt";
+    public static final String PREFIX = "default-dbt";
 
     /**
      * Builds the minimal object necessary to create a new crawler for dbt,
@@ -31,7 +31,7 @@ public class DbtCrawler extends AbstractCrawler {
      */
     public static Workflow mtCloudAuth(String connectionName, String apiToken) throws AtlanException {
         return mtCloudAuth(
-                connectionName, apiToken, List.of(RoleCache.getIdForName("$admin")), null, null, null, null, null);
+                connectionName, apiToken, List.of(RoleCache.getIdForName("$admin")), null, null, null, null);
     }
 
     /**
@@ -46,8 +46,6 @@ public class DbtCrawler extends AbstractCrawler {
      *                      by dbt Cloud account ID, with the list of values being project IDs.
      * @param excludeAssets which assets to exclude when crawling (when null: none). The map should be keyed
      *                      by dbt Cloud account ID, with the list of values being project IDs.
-     * @param connectionQualifiedName qualifiedName of the existing data source connection to limit the dbt
-     *                                crawler's scope
      * @return the minimal workflow necessary to crawl dbt
      * @throws InvalidRequestException if there is no administrator specified for the connection, or the provided filters cannot be serialized to JSON
      */
@@ -58,8 +56,7 @@ public class DbtCrawler extends AbstractCrawler {
             List<String> adminGroups,
             List<String> adminUsers,
             Map<String, List<String>> includeAssets,
-            Map<String, List<String>> excludeAssets,
-            String connectionQualifiedName)
+            Map<String, List<String>> excludeAssets)
             throws InvalidRequestException {
 
         // Note: no actual connection object created by the crawler (yet)
@@ -71,6 +68,7 @@ public class DbtCrawler extends AbstractCrawler {
                 .allowQueryPreview(true)
                 .rowLimit(10000L)
                 .defaultCredentialGuid("{{credentialGuid}}")
+                .sourceLogo("https://assets.atlan.com/assets/dbt-new.svg")
                 .isDiscoverable(true)
                 .isEditable(false)
                 .build();
@@ -91,10 +89,7 @@ public class DbtCrawler extends AbstractCrawler {
         Map<String, Map<String, Map<String, String>>> toExclude = buildDbtCloudFilter(excludeAssets);
 
         WorkflowTaskArguments.WorkflowTaskArgumentsBuilder<?, ?> argsBuilder = WorkflowTaskArguments.builder()
-                /*.parameter(NameValuePair.builder()
-                .name("connection")
-                .value(connection.toJson())
-                .build())*/
+                .parameter(NameValuePair.of("connection", connection.toJson()))
                 .parameter(NameValuePair.of("extraction-method", "api"))
                 .parameter(NameValuePair.of("deployment-type", "multi"))
                 .parameter(NameValuePair.of("core-extraction-method", "s3"))
@@ -115,22 +110,20 @@ public class DbtCrawler extends AbstractCrawler {
         argsBuilder = argsBuilder
                 .parameter(NameValuePair.of("include-filter-core", "*"))
                 .parameter(NameValuePair.of("exclude-filter-core", "*"));
-        if (connectionQualifiedName != null) {
-            argsBuilder = argsBuilder.parameter(NameValuePair.of("connection-qualified-name", connectionQualifiedName));
-        }
 
-        String runName = PREFIX + "-" + epoch;
+        String name = "atlan-dbt-" + epoch;
+        String runName = "atlan-dbt-" + PREFIX + "-" + epoch;
         return Workflow.builder()
                 .metadata(WorkflowMetadata.builder()
                         .label("orchestration.atlan.com/certified", "true")
                         .label("orchestration.atlan.com/source", "dbt")
-                        .label("orchestration.atlan.com/sourceCategory", "enricher")
+                        .label("orchestration.atlan.com/sourceCategory", "elt")
                         .label("orchestration.atlan.com/type", "connector")
                         .label("orchestration.atlan.com/verified", "true")
                         .label("package.argoproj.io/installer", "argopm")
                         .label("package.argoproj.io/name", "a-t-ratlans-l-a-s-hdbt")
                         .label("package.argoproj.io/registry", "httpsc-o-l-o-ns-l-a-s-hs-l-a-s-hpackages.atlan.com")
-                        // .label("orchestration.atlan.com/default-dbt-" + epoch, "true")
+                        .label("orchestration.atlan.com/" + PREFIX + "-" + epoch, "true")
                         .label("orchestration.atlan.com/atlan-ui", "true")
                         .annotation("orchestration.atlan.com/allowSchedule", "true")
                         .annotation("orchestration.atlan.com/dependentPackage", "")
@@ -140,19 +133,19 @@ public class DbtCrawler extends AbstractCrawler {
                         .annotation("orchestration.atlan.com/emoji", "\uD83D\uDE80")
                         .annotation(
                                 "orchestration.atlan.com/icon",
-                                "https://www.getdbt.com/ui/img/social/apple-touch-icon-149x149.png")
+                                "https://assets.atlan.com/assets/dbt-new.svg")
                         .annotation(
                                 "orchestration.atlan.com/logo",
-                                "https://www.getdbt.com/ui/img/social/apple-touch-icon-149x149.png")
+                                "https://assets.atlan.com/assets/dbt-new.svg")
                         .annotation(
                                 "orchestration.atlan.com/marketplaceLink",
                                 "https://packages.atlan.com/-/web/detail/@atlan/dbt")
-                        .annotation("orchestration.atlan.com/name", "dbt Enrichment")
-                        .annotation("orchestration.atlan.com/usecase", "crawling,enrichment")
+                        .annotation("orchestration.atlan.com/name", "dbt Assets")
+                        .annotation("orchestration.atlan.com/usecase", "crawling")
                         .annotation("package.argoproj.io/author", "Atlan")
                         .annotation(
                                 "package.argoproj.io/description",
-                                "Scan all your dbt models and enrich the corresponding assets on Atlan.")
+                                "Package to crawl dbt Assets and publish to Atlan for discovery.")
                         .annotation(
                                 "package.argoproj.io/homepage", "https://packages.atlan.com/-/web/detail/@atlan/dbt")
                         .annotation("package.argoproj.io/keywords", "[\"connector\",\"crawler\",\"dbt\"]")
@@ -163,7 +156,7 @@ public class DbtCrawler extends AbstractCrawler {
                                 "git+https://github.com/atlanhq/marketplace-packages.git")
                         .annotation("package.argoproj.io/support", "support@atlan.com")
                         .annotation("orchestration.atlan.com/atlanName", runName)
-                        .name(runName)
+                        .name(name)
                         .namespace("default")
                         .build())
                 .spec(WorkflowSpec.builder()
@@ -174,7 +167,7 @@ public class DbtCrawler extends AbstractCrawler {
                                                 .name("run")
                                                 .arguments(argsBuilder.build())
                                                 .templateRef(WorkflowTemplateRef.builder()
-                                                        .name(PREFIX)
+                                                        .name("atlan-dbt")
                                                         .template("main")
                                                         .clusterScope(true)
                                                         .build())
