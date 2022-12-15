@@ -114,6 +114,100 @@ public class Column extends SQL {
     @Singular
     Map<String, String> validations;
 
+    /** TBC */
+    @Attribute
+    Integer columnDistinctValuesCount;
+
+    /** TBC */
+    @Attribute
+    Long columnDistinctValuesCountLong;
+
+    /** TBC */
+    @Attribute
+    Double columnMax;
+
+    /** TBC */
+    @Attribute
+    Double columnMin;
+
+    /** TBC */
+    @Attribute
+    Double columnMean;
+
+    /** TBC */
+    @Attribute
+    Double columnSum;
+
+    /** TBC */
+    @Attribute
+    Double columnMedian;
+
+    /** TBC */
+    @Attribute
+    Double columnStandardDeviation;
+
+    /** TBC */
+    @Attribute
+    Integer columnUniqueValuesCount;
+
+    /** TBC */
+    @Attribute
+    Long columnUniqueValuesCountLong;
+
+    /** TBC */
+    @Attribute
+    Double columnAverage;
+
+    /** TBC */
+    @Attribute
+    Double columnAverageLength;
+
+    /** TBC */
+    @Attribute
+    Integer columnDuplicateValuesCount;
+
+    /** TBC */
+    @Attribute
+    Long columnDuplicateValuesCountLong;
+
+    /** TBC */
+    @Attribute
+    Integer columnMaximumStringLength;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<String> columnMaxs;
+
+    /** TBC */
+    @Attribute
+    Integer columnMinimumStringLength;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<String> columnMins;
+
+    /** TBC */
+    @Attribute
+    Integer columnMissingValuesCount;
+
+    /** TBC */
+    @Attribute
+    Long columnMissingValuesCountLong;
+
+    /** TBC */
+    @Attribute
+    Double columnMissingValuesPercentage;
+
+    /** TBC */
+    @Attribute
+    Double columnUniquenessPercentage;
+
+    /** TBC */
+    @Attribute
+    Double columnVariance;
+
     /** Materialized view in which this column exists, or null if the column exists in a table or view. */
     @Attribute
     @JsonProperty("materialisedView")

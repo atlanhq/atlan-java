@@ -58,6 +58,16 @@ public class Schema extends SQL {
     @Attribute
     Database database;
 
+    /** Snowflake Pipes that are defined within this schema. */
+    @Attribute
+    @Singular
+    SortedSet<SnowflakePipe> snowflakePipes;
+
+    /** Snowflake Streams that are defined within this schema. */
+    @Attribute
+    @Singular
+    SortedSet<SnowflakeStream> snowflakeStreams;
+
     /** Procedures that are defined within this schema. */
     @Attribute
     @Singular

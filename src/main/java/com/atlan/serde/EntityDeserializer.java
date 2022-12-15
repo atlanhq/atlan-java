@@ -298,6 +298,12 @@ public class EntityDeserializer extends StdDeserializer<Entity> {
                 case Schema.TYPE_NAME:
                     builder = Schema.builder();
                     break;
+                case SnowflakePipe.TYPE_NAME:
+                    builder = SnowflakePipe.builder();
+                    break;
+                case SnowflakeStream.TYPE_NAME:
+                    builder = SnowflakeStream.builder();
+                    break;
                 case Table.TYPE_NAME:
                     builder = Table.builder();
                     break;

@@ -121,6 +121,7 @@ public class ConnectionTest {
             .connectorIcon("connectorIcon")
             .connectorImage("connectorImage")
             .sourceLogo("sourceLogo")
+            .isSampleDataPreviewEnabled(false)
             .popularityInsightsTimeframe(-3923148251533697428L)
             .hasPopularityInsights(true)
             .connectionDbtEnvironments(Set.of("one", "two", "three"))
