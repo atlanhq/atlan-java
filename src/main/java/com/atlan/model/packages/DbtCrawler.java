@@ -30,8 +30,7 @@ public class DbtCrawler extends AbstractCrawler {
      * @throws AtlanException if there is any issue obtaining the admin role GUID
      */
     public static Workflow mtCloudAuth(String connectionName, String apiToken) throws AtlanException {
-        return mtCloudAuth(
-                connectionName, apiToken, List.of(RoleCache.getIdForName("$admin")), null, null, null, null);
+        return mtCloudAuth(connectionName, apiToken, List.of(RoleCache.getIdForName("$admin")), null, null, null, null);
     }
 
     /**
@@ -131,12 +130,8 @@ public class DbtCrawler extends AbstractCrawler {
                                 "orchestration.atlan.com/docsUrl",
                                 "https://ask.atlan.com/hc/en-us/articles/6335824578705")
                         .annotation("orchestration.atlan.com/emoji", "\uD83D\uDE80")
-                        .annotation(
-                                "orchestration.atlan.com/icon",
-                                "https://assets.atlan.com/assets/dbt-new.svg")
-                        .annotation(
-                                "orchestration.atlan.com/logo",
-                                "https://assets.atlan.com/assets/dbt-new.svg")
+                        .annotation("orchestration.atlan.com/icon", "https://assets.atlan.com/assets/dbt-new.svg")
+                        .annotation("orchestration.atlan.com/logo", "https://assets.atlan.com/assets/dbt-new.svg")
                         .annotation(
                                 "orchestration.atlan.com/marketplaceLink",
                                 "https://packages.atlan.com/-/web/detail/@atlan/dbt")
