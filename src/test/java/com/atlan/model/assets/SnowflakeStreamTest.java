@@ -114,7 +114,7 @@ public class SnowflakeStreamTest {
                     LineageProcess.refByGuid("aefc7c28-757b-4441-9ade-a0921b116d28")))
             .queryCount(-100394149386355066L)
             .queryUserCount(2823640624279697250L)
-            .queryUserMap(Map.of("key1", 123456L, "key2", 654321L))
+            // .queryUserMap(Map.of("key1", 123456L, "key2", 654321L))
             .queryCountUpdatedAt(-6575188186558174073L)
             .databaseName("databaseName")
             .databaseQualifiedName("databaseQualifiedName")

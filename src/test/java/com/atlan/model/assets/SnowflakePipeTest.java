@@ -114,7 +114,7 @@ public class SnowflakePipeTest {
                     LineageProcess.refByGuid("89382cd2-8969-4340-88a6-316a1adb815f")))
             .queryCount(-5015143433325265509L)
             .queryUserCount(-4523629699615405752L)
-            .queryUserMap(Map.of("key1", 123456L, "key2", 654321L))
+            // .queryUserMap(Map.of("key1", 123456L, "key2", 654321L))
             .queryCountUpdatedAt(-2366363794938144435L)
             .databaseName("databaseName")
             .databaseQualifiedName("databaseQualifiedName")
