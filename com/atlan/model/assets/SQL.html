@@ -6,15 +6,16 @@
 <title>SQL (atlan-java 0.0.3-SNAPSHOT API)</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
-<link rel="stylesheet" type="text/css" href="../../../../jquery/jquery-ui.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../jquery/jquery-ui.min.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../jquery-ui.overrides.css" title="Style">
 <script type="text/javascript" src="../../../../script.js"></script>
 <script type="text/javascript" src="../../../../jquery/jszip/dist/jszip.min.js"></script>
 <script type="text/javascript" src="../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
 <!--[if IE]>
 <script type="text/javascript" src="../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
 <![endif]-->
-<script type="text/javascript" src="../../../../jquery/jquery-3.5.1.js"></script>
-<script type="text/javascript" src="../../../../jquery/jquery-ui.js"></script>
+<script type="text/javascript" src="../../../../jquery/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="../../../../jquery/jquery-ui.min.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -26,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":10,"i32":10,"i33":10,"i34":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -160,7 +161,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dl>
 <dl>
 <dt>Direct Known Subclasses:</dt>
-<dd><code><a href="AtlanQuery.html" title="class in com.atlan.model.assets">AtlanQuery</a></code>, <code><a href="Column.html" title="class in com.atlan.model.assets">Column</a></code>, <code><a href="Database.html" title="class in com.atlan.model.assets">Database</a></code>, <code><a href="MaterializedView.html" title="class in com.atlan.model.assets">MaterializedView</a></code>, <code><a href="Procedure.html" title="class in com.atlan.model.assets">Procedure</a></code>, <code><a href="Schema.html" title="class in com.atlan.model.assets">Schema</a></code>, <code><a href="Table.html" title="class in com.atlan.model.assets">Table</a></code>, <code><a href="TablePartition.html" title="class in com.atlan.model.assets">TablePartition</a></code>, <code><a href="View.html" title="class in com.atlan.model.assets">View</a></code></dd>
+<dd><code><a href="AtlanQuery.html" title="class in com.atlan.model.assets">AtlanQuery</a></code>, <code><a href="Column.html" title="class in com.atlan.model.assets">Column</a></code>, <code><a href="Database.html" title="class in com.atlan.model.assets">Database</a></code>, <code><a href="MaterializedView.html" title="class in com.atlan.model.assets">MaterializedView</a></code>, <code><a href="Procedure.html" title="class in com.atlan.model.assets">Procedure</a></code>, <code><a href="Schema.html" title="class in com.atlan.model.assets">Schema</a></code>, <code><a href="SnowflakePipe.html" title="class in com.atlan.model.assets">SnowflakePipe</a></code>, <code><a href="SnowflakeStream.html" title="class in com.atlan.model.assets">SnowflakeStream</a></code>, <code><a href="Table.html" title="class in com.atlan.model.assets">Table</a></code>, <code><a href="TablePartition.html" title="class in com.atlan.model.assets">TablePartition</a></code>, <code><a href="View.html" title="class in com.atlan.model.assets">View</a></code></dd>
 </dl>
 <hr>
 <pre>public abstract class <span class="typeNameLabel">SQL</span>
@@ -173,7 +174,7 @@ extends <a href="Catalog.html" title="class in com.atlan.model.assets">Catalog</
 <ul class="blockList">
 <li class="blockList">
 <!-- ======== NESTED CLASS SUMMARY ======== -->
-<section role="region">
+<section>
 <ul class="blockList">
 <li class="blockList"><a id="nested.class.summary">
 <!--   -->
@@ -231,7 +232,7 @@ extends <a href="Catalog.html" title="class in com.atlan.model.assets">Catalog</
 </ul>
 </section>
 <!-- =========== FIELD SUMMARY =========== -->
-<section role="region">
+<section>
 <ul class="blockList">
 <li class="blockList"><a id="field.summary">
 <!--   -->
@@ -254,7 +255,7 @@ extends <a href="Catalog.html" title="class in com.atlan.model.assets">Catalog</
 </ul>
 </section>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
-<section role="region">
+<section>
 <ul class="blockList">
 <li class="blockList"><a id="constructor.summary">
 <!--   -->
@@ -277,7 +278,7 @@ extends <a href="Catalog.html" title="class in com.atlan.model.assets">Catalog</
 </ul>
 </section>
 <!-- ========== METHOD SUMMARY =========== -->
-<section role="region">
+<section>
 <ul class="blockList">
 <li class="blockList"><a id="method.summary">
 <!--   -->
@@ -331,34 +332,48 @@ extends <a href="Catalog.html" title="class in com.atlan.model.assets">Catalog</
 </td>
 </tr>
 <tr id="i6" class="altColor">
+<td class="colFirst"><code>java.lang.Boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIsProfiled()">getIsProfiled</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Whether the asset has been profiled (true) or not (false).</div>
+</td>
+</tr>
+<tr id="i7" class="rowColor">
+<td class="colFirst"><code>java.lang.Long</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getLastProfiledAt()">getLastProfiledAt</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Time (epoch) at which the asset was last profiled, in milliseconds.</div>
+</td>
+</tr>
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getQueryCount()">getQueryCount</a></span>()</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getQueryCountUpdatedAt()">getQueryCountUpdatedAt</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Time (epoch) at which the query count was last updated, in milliseconds.</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getQueryUserCount()">getQueryUserCount</a></span>()</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>java.util.Map&lt;java.lang.String,&#8203;java.lang.Long&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getQueryUserMap()">getQueryUserMap</a></span>()</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSchemaName()">getSchemaName</a></span>()</code></th>
 <td class="colLast">
@@ -366,7 +381,7 @@ extends <a href="Catalog.html" title="class in com.atlan.model.assets">Catalog</
  exist within a schema.</div>
 </td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSchemaQualifiedName()">getSchemaQualifiedName</a></span>()</code></th>
 <td class="colLast">
@@ -374,7 +389,7 @@ extends <a href="Catalog.html" title="class in com.atlan.model.assets">Catalog</
  exist within a schema.</div>
 </td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTableName()">getTableName</a></span>()</code></th>
 <td class="colLast">
@@ -382,7 +397,7 @@ extends <a href="Catalog.html" title="class in com.atlan.model.assets">Catalog</
  exist within a table.</div>
 </td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTableQualifiedName()">getTableQualifiedName</a></span>()</code></th>
 <td class="colLast">
@@ -390,7 +405,7 @@ extends <a href="Catalog.html" title="class in com.atlan.model.assets">Catalog</
  exist within a table.</div>
 </td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getViewName()">getViewName</a></span>()</code></th>
 <td class="colLast">
@@ -398,7 +413,7 @@ extends <a href="Catalog.html" title="class in com.atlan.model.assets">Catalog</
  exist within a view.</div>
 </td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getViewQualifiedName()">getViewQualifiedName</a></span>()</code></th>
 <td class="colLast">
@@ -406,12 +421,12 @@ extends <a href="Catalog.html" title="class in com.atlan.model.assets">Catalog</
  exist within a view.</div>
 </td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i18" class="altColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hashCode()">hashCode</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i17" class="rowColor">
+<tr id="i19" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setDatabaseName(java.lang.String)">setDatabaseName</a></span>&#8203;(java.lang.String&nbsp;databaseName)</code></th>
 <td class="colLast">
@@ -419,7 +434,7 @@ extends <a href="Catalog.html" title="class in com.atlan.model.assets">Catalog</
  exist within a database.</div>
 </td>
 </tr>
-<tr id="i18" class="altColor">
+<tr id="i20" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setDatabaseQualifiedName(java.lang.String)">setDatabaseQualifiedName</a></span>&#8203;(java.lang.String&nbsp;databaseQualifiedName)</code></th>
 <td class="colLast">
@@ -427,49 +442,63 @@ extends <a href="Catalog.html" title="class in com.atlan.model.assets">Catalog</
  exist within a database.</div>
 </td>
 </tr>
-<tr id="i19" class="rowColor">
+<tr id="i21" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setDbtModels(java.util.SortedSet)">setDbtModels</a></span>&#8203;(java.util.SortedSet&lt;<a href="DbtModel.html" title="class in com.atlan.model.assets">DbtModel</a>&gt;&nbsp;dbtModels)</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i20" class="altColor">
+<tr id="i22" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setDbtSources(java.util.SortedSet)">setDbtSources</a></span>&#8203;(java.util.SortedSet&lt;<a href="DbtSource.html" title="class in com.atlan.model.assets">DbtSource</a>&gt;&nbsp;dbtSources)</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i21" class="rowColor">
+<tr id="i23" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setIsProfiled(java.lang.Boolean)">setIsProfiled</a></span>&#8203;(java.lang.Boolean&nbsp;isProfiled)</code></th>
+<td class="colLast">
+<div class="block">Whether the asset has been profiled (true) or not (false).</div>
+</td>
+</tr>
+<tr id="i24" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setLastProfiledAt(java.lang.Long)">setLastProfiledAt</a></span>&#8203;(java.lang.Long&nbsp;lastProfiledAt)</code></th>
+<td class="colLast">
+<div class="block">Time (epoch) at which the asset was last profiled, in milliseconds.</div>
+</td>
+</tr>
+<tr id="i25" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setQueryCount(java.lang.Long)">setQueryCount</a></span>&#8203;(java.lang.Long&nbsp;queryCount)</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i22" class="altColor">
+<tr id="i26" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setQueryCountUpdatedAt(java.lang.Long)">setQueryCountUpdatedAt</a></span>&#8203;(java.lang.Long&nbsp;queryCountUpdatedAt)</code></th>
 <td class="colLast">
 <div class="block">Time (epoch) at which the query count was last updated, in milliseconds.</div>
 </td>
 </tr>
-<tr id="i23" class="rowColor">
+<tr id="i27" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setQueryUserCount(java.lang.Long)">setQueryUserCount</a></span>&#8203;(java.lang.Long&nbsp;queryUserCount)</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i24" class="altColor">
+<tr id="i28" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setQueryUserMap(java.util.Map)">setQueryUserMap</a></span>&#8203;(java.util.Map&lt;java.lang.String,&#8203;java.lang.Long&gt;&nbsp;queryUserMap)</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i25" class="rowColor">
+<tr id="i29" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setSchemaName(java.lang.String)">setSchemaName</a></span>&#8203;(java.lang.String&nbsp;schemaName)</code></th>
 <td class="colLast">
@@ -477,7 +506,7 @@ extends <a href="Catalog.html" title="class in com.atlan.model.assets">Catalog</
  exist within a schema.</div>
 </td>
 </tr>
-<tr id="i26" class="altColor">
+<tr id="i30" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setSchemaQualifiedName(java.lang.String)">setSchemaQualifiedName</a></span>&#8203;(java.lang.String&nbsp;schemaQualifiedName)</code></th>
 <td class="colLast">
@@ -485,7 +514,7 @@ extends <a href="Catalog.html" title="class in com.atlan.model.assets">Catalog</
  exist within a schema.</div>
 </td>
 </tr>
-<tr id="i27" class="rowColor">
+<tr id="i31" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setTableName(java.lang.String)">setTableName</a></span>&#8203;(java.lang.String&nbsp;tableName)</code></th>
 <td class="colLast">
@@ -493,7 +522,7 @@ extends <a href="Catalog.html" title="class in com.atlan.model.assets">Catalog</
  exist within a table.</div>
 </td>
 </tr>
-<tr id="i28" class="altColor">
+<tr id="i32" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setTableQualifiedName(java.lang.String)">setTableQualifiedName</a></span>&#8203;(java.lang.String&nbsp;tableQualifiedName)</code></th>
 <td class="colLast">
@@ -501,7 +530,7 @@ extends <a href="Catalog.html" title="class in com.atlan.model.assets">Catalog</
  exist within a table.</div>
 </td>
 </tr>
-<tr id="i29" class="rowColor">
+<tr id="i33" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setViewName(java.lang.String)">setViewName</a></span>&#8203;(java.lang.String&nbsp;viewName)</code></th>
 <td class="colLast">
@@ -509,7 +538,7 @@ extends <a href="Catalog.html" title="class in com.atlan.model.assets">Catalog</
  exist within a view.</div>
 </td>
 </tr>
-<tr id="i30" class="altColor">
+<tr id="i34" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setViewQualifiedName(java.lang.String)">setViewQualifiedName</a></span>&#8203;(java.lang.String&nbsp;viewQualifiedName)</code></th>
 <td class="colLast">
@@ -570,7 +599,7 @@ extends <a href="Catalog.html" title="class in com.atlan.model.assets">Catalog</
 <ul class="blockList">
 <li class="blockList">
 <!-- ============ FIELD DETAIL =========== -->
-<section role="region">
+<section>
 <ul class="blockList">
 <li class="blockList"><a id="field.detail">
 <!--   -->
@@ -593,7 +622,7 @@ extends <a href="Catalog.html" title="class in com.atlan.model.assets">Catalog</
 </ul>
 </section>
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
-<section role="region">
+<section>
 <ul class="blockList">
 <li class="blockList"><a id="constructor.detail">
 <!--   -->
@@ -612,7 +641,7 @@ extends <a href="Catalog.html" title="class in com.atlan.model.assets">Catalog</
 </ul>
 </section>
 <!-- ============ METHOD DETAIL ========== -->
-<section role="region">
+<section>
 <ul class="blockList">
 <li class="blockList"><a id="method.detail">
 <!--   -->
@@ -744,6 +773,26 @@ extends <a href="Catalog.html" title="class in com.atlan.model.assets">Catalog</
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getViewQualifiedName()</pre>
 <div class="block">Unique name of the view in which this SQL asset exists, or null if it does not
  exist within a view. Only viewQualifiedName or tableQualifiedName should be populated.</div>
+</li>
+</ul>
+<a id="getIsProfiled()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getIsProfiled</h4>
+<pre class="methodSignature">public&nbsp;java.lang.Boolean&nbsp;getIsProfiled()</pre>
+<div class="block">Whether the asset has been profiled (true) or not (false).</div>
+</li>
+</ul>
+<a id="getLastProfiledAt()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getLastProfiledAt</h4>
+<pre class="methodSignature">public&nbsp;java.lang.Long&nbsp;getLastProfiledAt()</pre>
+<div class="block">Time (epoch) at which the asset was last profiled, in milliseconds.</div>
 </li>
 </ul>
 <a id="getDbtModels()">
@@ -892,6 +941,26 @@ extends <a href="Catalog.html" title="class in com.atlan.model.assets">Catalog</
 <pre class="methodSignature">public&nbsp;void&nbsp;setViewQualifiedName&#8203;(java.lang.String&nbsp;viewQualifiedName)</pre>
 <div class="block">Unique name of the view in which this SQL asset exists, or null if it does not
  exist within a view. Only viewQualifiedName or tableQualifiedName should be populated.</div>
+</li>
+</ul>
+<a id="setIsProfiled(java.lang.Boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setIsProfiled</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;setIsProfiled&#8203;(java.lang.Boolean&nbsp;isProfiled)</pre>
+<div class="block">Whether the asset has been profiled (true) or not (false).</div>
+</li>
+</ul>
+<a id="setLastProfiledAt(java.lang.Long)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setLastProfiledAt</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;setLastProfiledAt&#8203;(java.lang.Long&nbsp;lastProfiledAt)</pre>
+<div class="block">Time (epoch) at which the asset was last profiled, in milliseconds.</div>
 </li>
 </ul>
 <a id="setDbtModels(java.util.SortedSet)">

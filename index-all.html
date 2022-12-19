@@ -6,15 +6,16 @@
 <title>Index (atlan-java 0.0.3-SNAPSHOT API)</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="stylesheet.css" title="Style">
-<link rel="stylesheet" type="text/css" href="jquery/jquery-ui.css" title="Style">
+<link rel="stylesheet" type="text/css" href="jquery/jquery-ui.min.css" title="Style">
+<link rel="stylesheet" type="text/css" href="jquery-ui.overrides.css" title="Style">
 <script type="text/javascript" src="script.js"></script>
 <script type="text/javascript" src="jquery/jszip/dist/jszip.min.js"></script>
 <script type="text/javascript" src="jquery/jszip-utils/dist/jszip-utils.min.js"></script>
 <!--[if IE]>
 <script type="text/javascript" src="jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
 <![endif]-->
-<script type="text/javascript" src="jquery/jquery-3.5.1.js"></script>
-<script type="text/javascript" src="jquery/jquery-ui.js"></script>
+<script type="text/javascript" src="jquery/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="jquery/jquery-ui.min.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -331,6 +332,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/SalesforceReport.SalesforceReportBuilder.html#$fillValuesFrom(C)">$fillValuesFrom(C)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SalesforceReport.SalesforceReportBuilder.html" title="class in com.atlan.model.assets">SalesforceReport.SalesforceReportBuilder</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Schema.SchemaBuilder.html#$fillValuesFrom(C)">$fillValuesFrom(C)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Schema.SchemaBuilder.html" title="class in com.atlan.model.assets">Schema.SchemaBuilder</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakePipe.SnowflakePipeBuilder.html#$fillValuesFrom(C)">$fillValuesFrom(C)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakePipe.SnowflakePipeBuilder.html" title="class in com.atlan.model.assets">SnowflakePipe.SnowflakePipeBuilder</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakeStream.SnowflakeStreamBuilder.html#$fillValuesFrom(C)">$fillValuesFrom(C)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakeStream.SnowflakeStreamBuilder.html" title="class in com.atlan.model.assets">SnowflakeStream.SnowflakeStreamBuilder</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/SQL.SQLBuilder.html#$fillValuesFrom(C)">$fillValuesFrom(C)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SQL.SQLBuilder.html" title="class in com.atlan.model.assets">SQL.SQLBuilder</a></dt>
 <dd>&nbsp;</dd>
@@ -796,6 +801,14 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Add classifications to a Schema.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakePipe.html#addClassifications(java.lang.String,java.util.List)">addClassifications(String, List&lt;String&gt;)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakePipe.html" title="class in com.atlan.model.assets">SnowflakePipe</a></dt>
+<dd>
+<div class="block">Add classifications to a SnowflakePipe.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakeStream.html#addClassifications(java.lang.String,java.util.List)">addClassifications(String, List&lt;String&gt;)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakeStream.html" title="class in com.atlan.model.assets">SnowflakeStream</a></dt>
+<dd>
+<div class="block">Add classifications to a SnowflakeStream.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Table.html#addClassifications(java.lang.String,java.util.List)">addClassifications(String, List&lt;String&gt;)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Table.html" title="class in com.atlan.model.assets">Table</a></dt>
 <dd>
 <div class="block">Add classifications to a Table.</div>
@@ -925,7 +938,21 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Asset.AssetBuilder.html#adminUsers(java.util.Collection)">adminUsers(Collection&lt;? extends String&gt;)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Asset.AssetBuilder.html" title="class in com.atlan.model.assets">Asset.AssetBuilder</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/atlan/model/search/IndexSearchDSL.IndexSearchDSLBuilder.html#aggregation(co.elastic.clients.elasticsearch._types.aggregations.Aggregation)">aggregation(Aggregation)</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/IndexSearchDSL.IndexSearchDSLBuilder.html" title="class in com.atlan.model.search">IndexSearchDSL.IndexSearchDSLBuilder</a></dt>
+<dt><span class="memberNameLink"><a href="com/atlan/model/search/IndexSearchDSL.IndexSearchDSLBuilder.html#aggregation(java.lang.String,co.elastic.clients.elasticsearch._types.aggregations.Aggregation)">aggregation(String, Aggregation)</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/IndexSearchDSL.IndexSearchDSLBuilder.html" title="class in com.atlan.model.search">IndexSearchDSL.IndexSearchDSLBuilder</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/atlan/model/search/AggregationBucket.html" title="class in com.atlan.model.search"><span class="typeNameLink">AggregationBucket</span></a> - Class in <a href="com/atlan/model/search/package-summary.html">com.atlan.model.search</a></dt>
+<dd>
+<div class="block">Captures the results of a single bucket within an aggregation.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationBucket.html#%3Cinit%3E()">AggregationBucket()</a></span> - Constructor for class com.atlan.model.search.<a href="com/atlan/model/search/AggregationBucket.html" title="class in com.atlan.model.search">AggregationBucket</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/atlan/model/search/AggregationResult.html" title="class in com.atlan.model.search"><span class="typeNameLink">AggregationResult</span></a> - Class in <a href="com/atlan/model/search/package-summary.html">com.atlan.model.search</a></dt>
+<dd>
+<div class="block">Captures the results from a single aggregation.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationResult.html#%3Cinit%3E()">AggregationResult()</a></span> - Constructor for class com.atlan.model.search.<a href="com/atlan/model/search/AggregationResult.html" title="class in com.atlan.model.search">AggregationResult</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/search/IndexSearchDSL.IndexSearchDSLBuilder.html#aggregations(java.util.Map)">aggregations(Map&lt;? extends String, ? extends Aggregation&gt;)</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/IndexSearchDSL.IndexSearchDSLBuilder.html" title="class in com.atlan.model.search">IndexSearchDSL.IndexSearchDSLBuilder</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/admin/AtlanGroup.AtlanGroupBuilder.html#alias(java.lang.String)">alias(String)</a></span> - Method in class com.atlan.model.admin.<a href="com/atlan/model/admin/AtlanGroup.AtlanGroupBuilder.html" title="class in com.atlan.model.admin">AtlanGroup.AtlanGroupBuilder</a></dt>
 <dd>&nbsp;</dd>
@@ -1360,6 +1387,14 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Schema.html#appendTerms(java.lang.String,java.util.List)">appendTerms(String, List&lt;GlossaryTerm&gt;)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Schema.html" title="class in com.atlan.model.assets">Schema</a></dt>
 <dd>
 <div class="block">Link additional terms to the Schema, without replacing existing terms linked to the Schema.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakePipe.html#appendTerms(java.lang.String,java.util.List)">appendTerms(String, List&lt;GlossaryTerm&gt;)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakePipe.html" title="class in com.atlan.model.assets">SnowflakePipe</a></dt>
+<dd>
+<div class="block">Link additional terms to the SnowflakePipe, without replacing existing terms linked to the SnowflakePipe.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakeStream.html#appendTerms(java.lang.String,java.util.List)">appendTerms(String, List&lt;GlossaryTerm&gt;)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakeStream.html" title="class in com.atlan.model.assets">SnowflakeStream</a></dt>
+<dd>
+<div class="block">Link additional terms to the SnowflakeStream, without replacing existing terms linked to the SnowflakeStream.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Table.html#appendTerms(java.lang.String,java.util.List)">appendTerms(String, List&lt;GlossaryTerm&gt;)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Table.html" title="class in com.atlan.model.assets">Table</a></dt>
 <dd>
@@ -2197,6 +2232,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Schema.SchemaBuilder.html#build()">build()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Schema.SchemaBuilder.html" title="class in com.atlan.model.assets">Schema.SchemaBuilder</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakePipe.SnowflakePipeBuilder.html#build()">build()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakePipe.SnowflakePipeBuilder.html" title="class in com.atlan.model.assets">SnowflakePipe.SnowflakePipeBuilder</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakeStream.SnowflakeStreamBuilder.html#build()">build()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakeStream.SnowflakeStreamBuilder.html" title="class in com.atlan.model.assets">SnowflakeStream.SnowflakeStreamBuilder</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/SQL.SQLBuilder.html#build()">build()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SQL.SQLBuilder.html" title="class in com.atlan.model.assets">SQL.SQLBuilder</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Table.TableBuilder.html#build()">build()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Table.TableBuilder.html" title="class in com.atlan.model.assets">Table.TableBuilder</a></dt>
@@ -2492,6 +2531,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/SalesforceReport.html#builder()">builder()</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SalesforceReport.html" title="class in com.atlan.model.assets">SalesforceReport</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Schema.html#builder()">builder()</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Schema.html" title="class in com.atlan.model.assets">Schema</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakePipe.html#builder()">builder()</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakePipe.html" title="class in com.atlan.model.assets">SnowflakePipe</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakeStream.html#builder()">builder()</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakeStream.html" title="class in com.atlan.model.assets">SnowflakeStream</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Table.html#builder()">builder()</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Table.html" title="class in com.atlan.model.assets">Table</a></dt>
 <dd>&nbsp;</dd>
@@ -2895,6 +2938,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Schema.html#canEqual(java.lang.Object)">canEqual(Object)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Schema.html" title="class in com.atlan.model.assets">Schema</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakePipe.html#canEqual(java.lang.Object)">canEqual(Object)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakePipe.html" title="class in com.atlan.model.assets">SnowflakePipe</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakeStream.html#canEqual(java.lang.Object)">canEqual(Object)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakeStream.html" title="class in com.atlan.model.assets">SnowflakeStream</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/SQL.html#canEqual(java.lang.Object)">canEqual(Object)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SQL.html" title="class in com.atlan.model.assets">SQL</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Table.html#canEqual(java.lang.Object)">canEqual(Object)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Table.html" title="class in com.atlan.model.assets">Table</a></dt>
@@ -2952,6 +2999,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/atlan/model/relations/Reference.html#canEqual(java.lang.Object)">canEqual(Object)</a></span> - Method in class com.atlan.model.relations.<a href="com/atlan/model/relations/Reference.html" title="class in com.atlan.model.relations">Reference</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/relations/UniqueAttributes.html#canEqual(java.lang.Object)">canEqual(Object)</a></span> - Method in class com.atlan.model.relations.<a href="com/atlan/model/relations/UniqueAttributes.html" title="class in com.atlan.model.relations">UniqueAttributes</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationBucket.html#canEqual(java.lang.Object)">canEqual(Object)</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationBucket.html" title="class in com.atlan.model.search">AggregationBucket</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationResult.html#canEqual(java.lang.Object)">canEqual(Object)</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationResult.html" title="class in com.atlan.model.search">AggregationResult</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/search/AuditSearchRequest.html#canEqual(java.lang.Object)">canEqual(Object)</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AuditSearchRequest.html" title="class in com.atlan.model.search">AuditSearchRequest</a></dt>
 <dd>&nbsp;</dd>
@@ -3201,6 +3252,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Asset.AssetBuilder.html#clearAdminUsers()">clearAdminUsers()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Asset.AssetBuilder.html" title="class in com.atlan.model.assets">Asset.AssetBuilder</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/search/IndexSearchDSL.IndexSearchDSLBuilder.html#clearAggregations()">clearAggregations()</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/IndexSearchDSL.IndexSearchDSLBuilder.html" title="class in com.atlan.model.search">IndexSearchDSL.IndexSearchDSLBuilder</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/workflow/WorkflowMetadata.WorkflowMetadataBuilder.html#clearAnnotations()">clearAnnotations()</a></span> - Method in class com.atlan.model.workflow.<a href="com/atlan/model/workflow/WorkflowMetadata.WorkflowMetadataBuilder.html" title="class in com.atlan.model.workflow">WorkflowMetadata.WorkflowMetadataBuilder</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/GlossaryTerm.GlossaryTermBuilder.html#clearAntonyms()">clearAntonyms()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/GlossaryTerm.GlossaryTermBuilder.html" title="class in com.atlan.model.assets">GlossaryTerm.GlossaryTermBuilder</a></dt>
@@ -3268,6 +3321,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/GlossaryTerm.GlossaryTermBuilder.html#clearClassifies()">clearClassifies()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/GlossaryTerm.GlossaryTermBuilder.html" title="class in com.atlan.model.assets">GlossaryTerm.GlossaryTermBuilder</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/net/RequestOptions.RequestOptionsBuilder.html#clearClientId()">clearClientId()</a></span> - Method in class com.atlan.net.<a href="com/atlan/net/RequestOptions.RequestOptionsBuilder.html" title="class in com.atlan.net">RequestOptions.RequestOptionsBuilder</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.ColumnBuilder.html#clearColumnMaxs()">clearColumnMaxs()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.ColumnBuilder.html" title="class in com.atlan.model.assets">Column.ColumnBuilder</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.ColumnBuilder.html#clearColumnMins()">clearColumnMins()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.ColumnBuilder.html" title="class in com.atlan.model.assets">Column.ColumnBuilder</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/AbstractProcess.AbstractProcessBuilder.html#clearColumnProcesses()">clearColumnProcesses()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/AbstractProcess.AbstractProcessBuilder.html" title="class in com.atlan.model.assets">AbstractProcess.AbstractProcessBuilder</a></dt>
 <dd>&nbsp;</dd>
@@ -3547,6 +3604,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Readme.ReadmeBuilder.html#clearSeeAlso()">clearSeeAlso()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Readme.ReadmeBuilder.html" title="class in com.atlan.model.assets">Readme.ReadmeBuilder</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Schema.SchemaBuilder.html#clearSnowflakePipes()">clearSnowflakePipes()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Schema.SchemaBuilder.html" title="class in com.atlan.model.assets">Schema.SchemaBuilder</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Schema.SchemaBuilder.html#clearSnowflakeStreams()">clearSnowflakeStreams()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Schema.SchemaBuilder.html" title="class in com.atlan.model.assets">Schema.SchemaBuilder</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/search/IndexSearchDSL.IndexSearchDSLBuilder.html#clearSort()">clearSort()</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/IndexSearchDSL.IndexSearchDSLBuilder.html" title="class in com.atlan.model.search">IndexSearchDSL.IndexSearchDSLBuilder</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/GlossaryTerm.GlossaryTermBuilder.html#clearSynonyms()">clearSynonyms()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/GlossaryTerm.GlossaryTermBuilder.html" title="class in com.atlan.model.assets">GlossaryTerm.GlossaryTermBuilder</a></dt>
@@ -3663,6 +3724,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><a href="com/atlan/model/assets/Column.ColumnBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Column.ColumnBuilder</span></a>&lt;<a href="com/atlan/model/assets/Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">C</a> extends <a href="com/atlan/model/assets/Column.html" title="class in com.atlan.model.assets">Column</a>,&#8203;<a href="com/atlan/model/assets/Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a> extends <a href="com/atlan/model/assets/Column.ColumnBuilder.html" title="class in com.atlan.model.assets">Column.ColumnBuilder</a>&lt;<a href="com/atlan/model/assets/Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">C</a>,&#8203;<a href="com/atlan/model/assets/Column.ColumnBuilder.html" title="type parameter in Column.ColumnBuilder">B</a>&gt;&gt; - Class in <a href="com/atlan/model/assets/package-summary.html">com.atlan.model.assets</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.ColumnBuilder.html#columnAverage(java.lang.Double)">columnAverage(Double)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.ColumnBuilder.html" title="class in com.atlan.model.assets">Column.ColumnBuilder</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.ColumnBuilder.html#columnAverageLength(java.lang.Double)">columnAverageLength(Double)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.ColumnBuilder.html" title="class in com.atlan.model.assets">Column.ColumnBuilder</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.ColumnBuilder.html#%3Cinit%3E()">ColumnBuilder()</a></span> - Constructor for class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.ColumnBuilder.html" title="class in com.atlan.model.assets">Column.ColumnBuilder</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/MaterializedView.MaterializedViewBuilder.html#columnCount(java.lang.Long)">columnCount(Long)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/MaterializedView.MaterializedViewBuilder.html" title="class in com.atlan.model.assets">MaterializedView.MaterializedViewBuilder</a></dt>
@@ -3672,6 +3737,40 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/TablePartition.TablePartitionBuilder.html#columnCount(java.lang.Long)">columnCount(Long)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/TablePartition.TablePartitionBuilder.html" title="class in com.atlan.model.assets">TablePartition.TablePartitionBuilder</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/View.ViewBuilder.html#columnCount(java.lang.Long)">columnCount(Long)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/View.ViewBuilder.html" title="class in com.atlan.model.assets">View.ViewBuilder</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.ColumnBuilder.html#columnDistinctValuesCount(java.lang.Integer)">columnDistinctValuesCount(Integer)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.ColumnBuilder.html" title="class in com.atlan.model.assets">Column.ColumnBuilder</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.ColumnBuilder.html#columnDistinctValuesCountLong(java.lang.Long)">columnDistinctValuesCountLong(Long)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.ColumnBuilder.html" title="class in com.atlan.model.assets">Column.ColumnBuilder</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.ColumnBuilder.html#columnDuplicateValuesCount(java.lang.Integer)">columnDuplicateValuesCount(Integer)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.ColumnBuilder.html" title="class in com.atlan.model.assets">Column.ColumnBuilder</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.ColumnBuilder.html#columnDuplicateValuesCountLong(java.lang.Long)">columnDuplicateValuesCountLong(Long)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.ColumnBuilder.html" title="class in com.atlan.model.assets">Column.ColumnBuilder</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.ColumnBuilder.html#columnMax(java.lang.Double)">columnMax(Double)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.ColumnBuilder.html" title="class in com.atlan.model.assets">Column.ColumnBuilder</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.ColumnBuilder.html#columnMax(java.lang.String)">columnMax(String)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.ColumnBuilder.html" title="class in com.atlan.model.assets">Column.ColumnBuilder</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.ColumnBuilder.html#columnMaximumStringLength(java.lang.Integer)">columnMaximumStringLength(Integer)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.ColumnBuilder.html" title="class in com.atlan.model.assets">Column.ColumnBuilder</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.ColumnBuilder.html#columnMaxs(java.util.Collection)">columnMaxs(Collection&lt;? extends String&gt;)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.ColumnBuilder.html" title="class in com.atlan.model.assets">Column.ColumnBuilder</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.ColumnBuilder.html#columnMean(java.lang.Double)">columnMean(Double)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.ColumnBuilder.html" title="class in com.atlan.model.assets">Column.ColumnBuilder</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.ColumnBuilder.html#columnMedian(java.lang.Double)">columnMedian(Double)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.ColumnBuilder.html" title="class in com.atlan.model.assets">Column.ColumnBuilder</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.ColumnBuilder.html#columnMin(java.lang.Double)">columnMin(Double)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.ColumnBuilder.html" title="class in com.atlan.model.assets">Column.ColumnBuilder</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.ColumnBuilder.html#columnMin(java.lang.String)">columnMin(String)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.ColumnBuilder.html" title="class in com.atlan.model.assets">Column.ColumnBuilder</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.ColumnBuilder.html#columnMinimumStringLength(java.lang.Integer)">columnMinimumStringLength(Integer)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.ColumnBuilder.html" title="class in com.atlan.model.assets">Column.ColumnBuilder</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.ColumnBuilder.html#columnMins(java.util.Collection)">columnMins(Collection&lt;? extends String&gt;)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.ColumnBuilder.html" title="class in com.atlan.model.assets">Column.ColumnBuilder</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.ColumnBuilder.html#columnMissingValuesCount(java.lang.Integer)">columnMissingValuesCount(Integer)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.ColumnBuilder.html" title="class in com.atlan.model.assets">Column.ColumnBuilder</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.ColumnBuilder.html#columnMissingValuesCountLong(java.lang.Long)">columnMissingValuesCountLong(Long)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.ColumnBuilder.html" title="class in com.atlan.model.assets">Column.ColumnBuilder</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.ColumnBuilder.html#columnMissingValuesPercentage(java.lang.Double)">columnMissingValuesPercentage(Double)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.ColumnBuilder.html" title="class in com.atlan.model.assets">Column.ColumnBuilder</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/AbstractProcess.AbstractProcessBuilder.html#columnProcess(com.atlan.model.assets.AbstractColumnProcess)">columnProcess(AbstractColumnProcess)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/AbstractProcess.AbstractProcessBuilder.html" title="class in com.atlan.model.assets">AbstractProcess.AbstractProcessBuilder</a></dt>
 <dd>&nbsp;</dd>
@@ -3698,6 +3797,18 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/PowerBITable.PowerBITableBuilder.html#columns(java.util.Collection)">columns(Collection&lt;? extends PowerBIColumn&gt;)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/PowerBITable.PowerBITableBuilder.html" title="class in com.atlan.model.assets">PowerBITable.PowerBITableBuilder</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/enums/AssetSidebarTab.html#COLUMNS">COLUMNS</a></span> - com.atlan.model.enums.<a href="com/atlan/model/enums/AssetSidebarTab.html" title="enum in com.atlan.model.enums">AssetSidebarTab</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.ColumnBuilder.html#columnStandardDeviation(java.lang.Double)">columnStandardDeviation(Double)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.ColumnBuilder.html" title="class in com.atlan.model.assets">Column.ColumnBuilder</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.ColumnBuilder.html#columnSum(java.lang.Double)">columnSum(Double)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.ColumnBuilder.html" title="class in com.atlan.model.assets">Column.ColumnBuilder</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.ColumnBuilder.html#columnUniquenessPercentage(java.lang.Double)">columnUniquenessPercentage(Double)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.ColumnBuilder.html" title="class in com.atlan.model.assets">Column.ColumnBuilder</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.ColumnBuilder.html#columnUniqueValuesCount(java.lang.Integer)">columnUniqueValuesCount(Integer)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.ColumnBuilder.html" title="class in com.atlan.model.assets">Column.ColumnBuilder</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.ColumnBuilder.html#columnUniqueValuesCountLong(java.lang.Long)">columnUniqueValuesCountLong(Long)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.ColumnBuilder.html" title="class in com.atlan.model.assets">Column.ColumnBuilder</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.ColumnBuilder.html#columnVariance(java.lang.Double)">columnVariance(Double)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.ColumnBuilder.html" title="class in com.atlan.model.assets">Column.ColumnBuilder</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/atlan/package-summary.html">com.atlan</a> - package com.atlan</dt>
 <dd>
@@ -4528,6 +4639,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Procedure.ProcedureBuilder.html#definition(java.lang.String)">definition(String)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Procedure.ProcedureBuilder.html" title="class in com.atlan.model.assets">Procedure.ProcedureBuilder</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakePipe.SnowflakePipeBuilder.html#definition(java.lang.String)">definition(String)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakePipe.SnowflakePipeBuilder.html" title="class in com.atlan.model.assets">SnowflakePipe.SnowflakePipeBuilder</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/View.ViewBuilder.html#definition(java.lang.String)">definition(String)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/View.ViewBuilder.html" title="class in com.atlan.model.assets">View.ViewBuilder</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/admin/AtlanGroup.html#delete(java.lang.String)">delete(String)</a></span> - Static method in class com.atlan.model.admin.<a href="com/atlan/model/admin/AtlanGroup.html" title="class in com.atlan.model.admin">AtlanGroup</a></dt>
@@ -4770,8 +4883,6 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Encode the provided content for storage as a README's content.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/atlan/model/enums/AtlanConnectionCategory.html#ENRICHER">ENRICHER</a></span> - com.atlan.model.enums.<a href="com/atlan/model/enums/AtlanConnectionCategory.html" title="enum in com.atlan.model.enums">AtlanConnectionCategory</a></dt>
-<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/search/EntityAudit.EntityAuditBuilder.html#entity(java.lang.Object)">entity(Object)</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/EntityAudit.EntityAuditBuilder.html" title="class in com.atlan.model.search">EntityAudit.EntityAuditBuilder</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/atlan/model/core/Entity.html" title="class in com.atlan.model.core"><span class="typeNameLink">Entity</span></a> - Class in <a href="com/atlan/model/core/package-summary.html">com.atlan.model.core</a></dt>
@@ -5151,6 +5262,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Schema.html#equals(java.lang.Object)">equals(Object)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Schema.html" title="class in com.atlan.model.assets">Schema</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakePipe.html#equals(java.lang.Object)">equals(Object)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakePipe.html" title="class in com.atlan.model.assets">SnowflakePipe</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakeStream.html#equals(java.lang.Object)">equals(Object)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakeStream.html" title="class in com.atlan.model.assets">SnowflakeStream</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/SQL.html#equals(java.lang.Object)">equals(Object)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SQL.html" title="class in com.atlan.model.assets">SQL</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Table.html#equals(java.lang.Object)">equals(Object)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Table.html" title="class in com.atlan.model.assets">Table</a></dt>
@@ -5208,6 +5323,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/atlan/model/relations/Reference.html#equals(java.lang.Object)">equals(Object)</a></span> - Method in class com.atlan.model.relations.<a href="com/atlan/model/relations/Reference.html" title="class in com.atlan.model.relations">Reference</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/relations/UniqueAttributes.html#equals(java.lang.Object)">equals(Object)</a></span> - Method in class com.atlan.model.relations.<a href="com/atlan/model/relations/UniqueAttributes.html" title="class in com.atlan.model.relations">UniqueAttributes</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationBucket.html#equals(java.lang.Object)">equals(Object)</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationBucket.html" title="class in com.atlan.model.search">AggregationBucket</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationResult.html#equals(java.lang.Object)">equals(Object)</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationResult.html" title="class in com.atlan.model.search">AggregationResult</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/search/AuditSearchRequest.html#equals(java.lang.Object)">equals(Object)</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AuditSearchRequest.html" title="class in com.atlan.model.search">AuditSearchRequest</a></dt>
 <dd>&nbsp;</dd>
@@ -5671,13 +5790,17 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">List of users who administer the asset.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/atlan/model/search/IndexSearchDSL.html#getAggregation()">getAggregation()</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/IndexSearchDSL.html" title="class in com.atlan.model.search">IndexSearchDSL</a></dt>
-<dd>
-<div class="block">(Optional) Aggregation to apply to the query.</div>
-</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/search/AuditSearchResponse.html#getAggregations()">getAggregations()</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AuditSearchResponse.html" title="class in com.atlan.model.search">AuditSearchResponse</a></dt>
 <dd>
 <div class="block">Unused.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/search/IndexSearchDSL.html#getAggregations()">getAggregations()</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/IndexSearchDSL.html" title="class in com.atlan.model.search">IndexSearchDSL</a></dt>
+<dd>
+<div class="block">(Optional) Aggregation to apply to the query.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/search/IndexSearchResponse.html#getAggregations()">getAggregations()</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/IndexSearchResponse.html" title="class in com.atlan.model.search">IndexSearchResponse</a></dt>
+<dd>
+<div class="block">Map of results for the requested aggregations.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/admin/AtlanGroup.html#getAlias()">getAlias()</a></span> - Method in class com.atlan.model.admin.<a href="com/atlan/model/admin/AtlanGroup.html" title="class in com.atlan.model.admin">AtlanGroup</a></dt>
 <dd>
@@ -6320,6 +6443,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">S3 bucket in which the object exists.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationResult.html#getBuckets()">getBuckets()</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationResult.html" title="class in com.atlan.model.search">AggregationResult</a></dt>
+<dd>
+<div class="block">List of buckets that resulted from the aggregation.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/typedefs/EntityDef.html#getBusinessAttributeDefs()">getBusinessAttributeDefs()</a></span> - Method in class com.atlan.model.typedefs.<a href="com/atlan/model/typedefs/EntityDef.html" title="class in com.atlan.model.typedefs">EntityDef</a></dt>
 <dd>
 <div class="block">Unused.</div>
@@ -6471,6 +6598,14 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Color to use for the classification.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.html#getColumnAverage()">getColumnAverage()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.html" title="class in com.atlan.model.assets">Column</a></dt>
+<dd>
+<div class="block">TBC</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.html#getColumnAverageLength()">getColumnAverageLength()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.html" title="class in com.atlan.model.assets">Column</a></dt>
+<dd>
+<div class="block">TBC</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/MaterializedView.html#getColumnCount()">getColumnCount()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/MaterializedView.html" title="class in com.atlan.model.assets">MaterializedView</a></dt>
 <dd>
 <div class="block">Number of columns in this materialized view.</div>
@@ -6486,6 +6621,66 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/View.html#getColumnCount()">getColumnCount()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/View.html" title="class in com.atlan.model.assets">View</a></dt>
 <dd>
 <div class="block">Number of columns in this view.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.html#getColumnDistinctValuesCount()">getColumnDistinctValuesCount()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.html" title="class in com.atlan.model.assets">Column</a></dt>
+<dd>
+<div class="block">TBC</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.html#getColumnDistinctValuesCountLong()">getColumnDistinctValuesCountLong()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.html" title="class in com.atlan.model.assets">Column</a></dt>
+<dd>
+<div class="block">TBC</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.html#getColumnDuplicateValuesCount()">getColumnDuplicateValuesCount()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.html" title="class in com.atlan.model.assets">Column</a></dt>
+<dd>
+<div class="block">TBC</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.html#getColumnDuplicateValuesCountLong()">getColumnDuplicateValuesCountLong()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.html" title="class in com.atlan.model.assets">Column</a></dt>
+<dd>
+<div class="block">TBC</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.html#getColumnMax()">getColumnMax()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.html" title="class in com.atlan.model.assets">Column</a></dt>
+<dd>
+<div class="block">TBC</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.html#getColumnMaximumStringLength()">getColumnMaximumStringLength()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.html" title="class in com.atlan.model.assets">Column</a></dt>
+<dd>
+<div class="block">TBC</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.html#getColumnMaxs()">getColumnMaxs()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.html" title="class in com.atlan.model.assets">Column</a></dt>
+<dd>
+<div class="block">TBC</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.html#getColumnMean()">getColumnMean()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.html" title="class in com.atlan.model.assets">Column</a></dt>
+<dd>
+<div class="block">TBC</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.html#getColumnMedian()">getColumnMedian()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.html" title="class in com.atlan.model.assets">Column</a></dt>
+<dd>
+<div class="block">TBC</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.html#getColumnMin()">getColumnMin()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.html" title="class in com.atlan.model.assets">Column</a></dt>
+<dd>
+<div class="block">TBC</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.html#getColumnMinimumStringLength()">getColumnMinimumStringLength()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.html" title="class in com.atlan.model.assets">Column</a></dt>
+<dd>
+<div class="block">TBC</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.html#getColumnMins()">getColumnMins()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.html" title="class in com.atlan.model.assets">Column</a></dt>
+<dd>
+<div class="block">TBC</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.html#getColumnMissingValuesCount()">getColumnMissingValuesCount()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.html" title="class in com.atlan.model.assets">Column</a></dt>
+<dd>
+<div class="block">TBC</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.html#getColumnMissingValuesCountLong()">getColumnMissingValuesCountLong()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.html" title="class in com.atlan.model.assets">Column</a></dt>
+<dd>
+<div class="block">TBC</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.html#getColumnMissingValuesPercentage()">getColumnMissingValuesPercentage()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.html" title="class in com.atlan.model.assets">Column</a></dt>
+<dd>
+<div class="block">TBC</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/AbstractProcess.html#getColumnProcesses()">getColumnProcesses()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/AbstractProcess.html" title="class in com.atlan.model.assets">AbstractProcess</a></dt>
 <dd>
@@ -6514,6 +6709,30 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/View.html#getColumns()">getColumns()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/View.html" title="class in com.atlan.model.assets">View</a></dt>
 <dd>
 <div class="block">Columns that exist within this view.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.html#getColumnStandardDeviation()">getColumnStandardDeviation()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.html" title="class in com.atlan.model.assets">Column</a></dt>
+<dd>
+<div class="block">TBC</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.html#getColumnSum()">getColumnSum()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.html" title="class in com.atlan.model.assets">Column</a></dt>
+<dd>
+<div class="block">TBC</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.html#getColumnUniquenessPercentage()">getColumnUniquenessPercentage()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.html" title="class in com.atlan.model.assets">Column</a></dt>
+<dd>
+<div class="block">TBC</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.html#getColumnUniqueValuesCount()">getColumnUniqueValuesCount()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.html" title="class in com.atlan.model.assets">Column</a></dt>
+<dd>
+<div class="block">TBC</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.html#getColumnUniqueValuesCountLong()">getColumnUniqueValuesCountLong()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.html" title="class in com.atlan.model.assets">Column</a></dt>
+<dd>
+<div class="block">TBC</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.html#getColumnVariance()">getColumnVariance()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.html" title="class in com.atlan.model.assets">Column</a></dt>
+<dd>
+<div class="block">TBC</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/relations/Reference.html#getCompleteObject()">getCompleteObject()</a></span> - Method in class com.atlan.model.relations.<a href="com/atlan/model/relations/Reference.html" title="class in com.atlan.model.relations">Reference</a></dt>
 <dd>
@@ -7141,6 +7360,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">TBC</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakePipe.html#getDefinition()">getDefinition()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakePipe.html" title="class in com.atlan.model.assets">SnowflakePipe</a></dt>
+<dd>
+<div class="block">TBC</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/View.html#getDefinition()">getDefinition()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/View.html" title="class in com.atlan.model.assets">View</a></dt>
 <dd>
 <div class="block">Definition of the view (DDL).</div>
@@ -7250,6 +7473,14 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/atlan/model/relations/Reference.html#getDisplayText()">getDisplayText()</a></span> - Method in class com.atlan.model.relations.<a href="com/atlan/model/relations/Reference.html" title="class in com.atlan.model.relations">Reference</a></dt>
 <dd>
 <div class="block">Human-readable name of the entity.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationBucket.html#getDocCount()">getDocCount()</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationBucket.html" title="class in com.atlan.model.search">AggregationBucket</a></dt>
+<dd>
+<div class="block">Number of results that fit within this bucket of the aggregation.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationResult.html#getDocCountErrorUpperBound()">getDocCountErrorUpperBound()</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationResult.html" title="class in com.atlan.model.search">AggregationResult</a></dt>
+<dd>
+<div class="block">TBC</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/lineage/LineageResponse.html#getDownstreamEntities()">getDownstreamEntities()</a></span> - Method in class com.atlan.model.lineage.<a href="com/atlan/model/lineage/LineageResponse.html" title="class in com.atlan.model.lineage">LineageResponse</a></dt>
 <dd>
@@ -8098,6 +8329,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">TBC</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SQL.html#getIsProfiled()">getIsProfiled()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SQL.html" title="class in com.atlan.model.assets">SQL</a></dt>
+<dd>
+<div class="block">Whether the asset has been profiled (true) or not (false).</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/TableauDatasource.html#getIsPublished()">getIsPublished()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/TableauDatasource.html" title="class in com.atlan.model.assets">TableauDatasource</a></dt>
 <dd>
 <div class="block">TBC</div>
@@ -8121,6 +8356,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/View.html#getIsQueryPreview()">getIsQueryPreview()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/View.html" title="class in com.atlan.model.assets">View</a></dt>
 <dd>
 <div class="block">TBC</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Connection.html#getIsSampleDataPreviewEnabled()">getIsSampleDataPreviewEnabled()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Connection.html" title="class in com.atlan.model.assets">Connection</a></dt>
+<dd>
+<div class="block">Whether sample data can be previewed for this connection (true) or not (false).</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/typedefs/AttributeDefOptions.html#getIsSoftReference()">getIsSoftReference()</a></span> - Method in class com.atlan.model.typedefs.<a href="com/atlan/model/typedefs/AttributeDefOptions.html" title="class in com.atlan.model.typedefs">AttributeDefOptions</a></dt>
 <dd>
@@ -8174,6 +8413,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Unique JIRA user identifier.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationBucket.html#getKey()">getKey()</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationBucket.html" title="class in com.atlan.model.search">AggregationBucket</a></dt>
+<dd>
+<div class="block">Key of the field representing this bucket of aggregate results.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/workflow/WorkflowSearchResultDetail.html#getKind()">getKind()</a></span> - Method in class com.atlan.model.workflow.<a href="com/atlan/model/workflow/WorkflowSearchResultDetail.html" title="class in com.atlan.model.workflow">WorkflowSearchResultDetail</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/workflow/WorkflowMetadata.html#getLabels()">getLabels()</a></span> - Method in class com.atlan.model.workflow.<a href="com/atlan/model/workflow/WorkflowMetadata.html" title="class in com.atlan.model.workflow">WorkflowMetadata</a></dt>
@@ -8197,6 +8440,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/atlan/model/admin/UserMinimalResponse.html#getLastName()">getLastName()</a></span> - Method in class com.atlan.model.admin.<a href="com/atlan/model/admin/UserMinimalResponse.html" title="class in com.atlan.model.admin">UserMinimalResponse</a></dt>
 <dd>
 <div class="block">Last name (surname) of the user.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SQL.html#getLastProfiledAt()">getLastProfiledAt()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SQL.html" title="class in com.atlan.model.assets">SQL</a></dt>
+<dd>
+<div class="block">Time (epoch) at which the asset was last profiled, in milliseconds.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/core/AtlanResponseInterface.html#getLastResponse()">getLastResponse()</a></span> - Method in interface com.atlan.model.core.<a href="com/atlan/model/core/AtlanResponseInterface.html" title="interface in com.atlan.model.core">AtlanResponseInterface</a></dt>
 <dd>&nbsp;</dd>
@@ -9726,6 +9973,14 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">TBC</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakePipe.html#getSchema()">getSchema()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakePipe.html" title="class in com.atlan.model.assets">SnowflakePipe</a></dt>
+<dd>
+<div class="block">TBC</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakeStream.html#getSchema()">getSchema()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakeStream.html" title="class in com.atlan.model.assets">SnowflakeStream</a></dt>
+<dd>
+<div class="block">TBC</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Table.html#getSchema()">getSchema()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Table.html" title="class in com.atlan.model.assets">Table</a></dt>
 <dd>
 <div class="block">Schema in which this table exists.</div>
@@ -9881,6 +10136,42 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/atlan/model/admin/AtlanUser.UserAttributes.html#getSlack()">getSlack()</a></span> - Method in class com.atlan.model.admin.<a href="com/atlan/model/admin/AtlanUser.UserAttributes.html" title="class in com.atlan.model.admin">AtlanUser.UserAttributes</a></dt>
 <dd>
 <div class="block">Unique Slack member identifier.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakePipe.html#getSnowflakePipeIsAutoIngestEnabled()">getSnowflakePipeIsAutoIngestEnabled()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakePipe.html" title="class in com.atlan.model.assets">SnowflakePipe</a></dt>
+<dd>
+<div class="block">TBC</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakePipe.html#getSnowflakePipeNotificationChannelName()">getSnowflakePipeNotificationChannelName()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakePipe.html" title="class in com.atlan.model.assets">SnowflakePipe</a></dt>
+<dd>
+<div class="block">TBC</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Schema.html#getSnowflakePipes()">getSnowflakePipes()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Schema.html" title="class in com.atlan.model.assets">Schema</a></dt>
+<dd>
+<div class="block">Snowflake Pipes that are defined within this schema.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakeStream.html#getSnowflakeStreamIsStale()">getSnowflakeStreamIsStale()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakeStream.html" title="class in com.atlan.model.assets">SnowflakeStream</a></dt>
+<dd>
+<div class="block">TBC</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakeStream.html#getSnowflakeStreamMode()">getSnowflakeStreamMode()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakeStream.html" title="class in com.atlan.model.assets">SnowflakeStream</a></dt>
+<dd>
+<div class="block">TBC</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Schema.html#getSnowflakeStreams()">getSnowflakeStreams()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Schema.html" title="class in com.atlan.model.assets">Schema</a></dt>
+<dd>
+<div class="block">Snowflake Streams that are defined within this schema.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakeStream.html#getSnowflakeStreamSourceType()">getSnowflakeStreamSourceType()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakeStream.html" title="class in com.atlan.model.assets">SnowflakeStream</a></dt>
+<dd>
+<div class="block">TBC</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakeStream.html#getSnowflakeStreamStaleAfter()">getSnowflakeStreamStaleAfter()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakeStream.html" title="class in com.atlan.model.assets">SnowflakeStream</a></dt>
+<dd>
+<div class="block">TBC</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakeStream.html#getSnowflakeStreamType()">getSnowflakeStreamType()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakeStream.html" title="class in com.atlan.model.assets">SnowflakeStream</a></dt>
+<dd>
+<div class="block">TBC</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/search/IndexSearchDSL.html#getSort()">getSort()</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/IndexSearchDSL.html" title="class in com.atlan.model.search">IndexSearchDSL</a></dt>
 <dd>
@@ -10107,6 +10398,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/atlan/model/typedefs/EntityDef.html#getSubTypes()">getSubTypes()</a></span> - Method in class com.atlan.model.typedefs.<a href="com/atlan/model/typedefs/EntityDef.html" title="class in com.atlan.model.typedefs">EntityDef</a></dt>
 <dd>
 <div class="block">Subtypes of this entity type.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationResult.html#getSumOtherDocCount()">getSumOtherDocCount()</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationResult.html" title="class in com.atlan.model.search">AggregationResult</a></dt>
+<dd>
+<div class="block">TBC</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/typedefs/ClassificationDef.html#getSuperTypes()">getSuperTypes()</a></span> - Method in class com.atlan.model.typedefs.<a href="com/atlan/model/typedefs/ClassificationDef.html" title="class in com.atlan.model.typedefs">ClassificationDef</a></dt>
 <dd>
@@ -10661,6 +10956,14 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Schema.html#getTypeName()">getTypeName()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Schema.html" title="class in com.atlan.model.assets">Schema</a></dt>
 <dd>
 <div class="block">Fixed typeName for Schemas.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakePipe.html#getTypeName()">getTypeName()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakePipe.html" title="class in com.atlan.model.assets">SnowflakePipe</a></dt>
+<dd>
+<div class="block">Fixed typeName for SnowflakePipes.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakeStream.html#getTypeName()">getTypeName()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakeStream.html" title="class in com.atlan.model.assets">SnowflakeStream</a></dt>
+<dd>
+<div class="block">Fixed typeName for SnowflakeStreams.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Table.html#getTypeName()">getTypeName()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Table.html" title="class in com.atlan.model.assets">Table</a></dt>
 <dd>
@@ -11592,6 +11895,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Schema.html#hashCode()">hashCode()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Schema.html" title="class in com.atlan.model.assets">Schema</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakePipe.html#hashCode()">hashCode()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakePipe.html" title="class in com.atlan.model.assets">SnowflakePipe</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakeStream.html#hashCode()">hashCode()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakeStream.html" title="class in com.atlan.model.assets">SnowflakeStream</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/SQL.html#hashCode()">hashCode()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SQL.html" title="class in com.atlan.model.assets">SQL</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Table.html#hashCode()">hashCode()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Table.html" title="class in com.atlan.model.assets">Table</a></dt>
@@ -11649,6 +11956,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/atlan/model/relations/Reference.html#hashCode()">hashCode()</a></span> - Method in class com.atlan.model.relations.<a href="com/atlan/model/relations/Reference.html" title="class in com.atlan.model.relations">Reference</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/relations/UniqueAttributes.html#hashCode()">hashCode()</a></span> - Method in class com.atlan.model.relations.<a href="com/atlan/model/relations/UniqueAttributes.html" title="class in com.atlan.model.relations">UniqueAttributes</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationBucket.html#hashCode()">hashCode()</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationBucket.html" title="class in com.atlan.model.search">AggregationBucket</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationResult.html#hashCode()">hashCode()</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationResult.html" title="class in com.atlan.model.search">AggregationResult</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/search/AuditSearchRequest.html#hashCode()">hashCode()</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AuditSearchRequest.html" title="class in com.atlan.model.search">AuditSearchRequest</a></dt>
 <dd>&nbsp;</dd>
@@ -11901,7 +12212,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><a href="com/atlan/exception/InvalidRequestException.html" title="class in com.atlan.exception"><span class="typeNameLink">InvalidRequestException</span></a> - Exception in <a href="com/atlan/exception/package-summary.html">com.atlan.exception</a></dt>
 <dd>
 <div class="block">Error that occurs if the request being attempted is not valid for some reason, such as containing insufficient
- parameters of incorrect values for those parameters.</div>
+ parameters or incorrect values for those parameters.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/exception/InvalidRequestException.html#%3Cinit%3E(java.lang.String,java.lang.String,java.lang.String,java.lang.Integer,java.lang.Throwable)">InvalidRequestException(String, String, String, Integer, Throwable)</a></span> - Constructor for exception com.atlan.exception.<a href="com/atlan/exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></dt>
 <dd>&nbsp;</dd>
@@ -12013,6 +12324,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/AtlanQuery.AtlanQueryBuilder.html#isPrivate(java.lang.Boolean)">isPrivate(Boolean)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/AtlanQuery.AtlanQueryBuilder.html" title="class in com.atlan.model.assets">AtlanQuery.AtlanQueryBuilder</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SQL.SQLBuilder.html#isProfiled(java.lang.Boolean)">isProfiled(Boolean)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SQL.SQLBuilder.html" title="class in com.atlan.model.assets">SQL.SQLBuilder</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/TableauDatasource.TableauDatasourceBuilder.html#isPublished(java.lang.Boolean)">isPublished(Boolean)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/TableauDatasource.TableauDatasourceBuilder.html" title="class in com.atlan.model.assets">TableauDatasource.TableauDatasourceBuilder</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/SalesforceObject.SalesforceObjectBuilder.html#isQueryable(java.lang.Boolean)">isQueryable(Boolean)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SalesforceObject.SalesforceObjectBuilder.html" title="class in com.atlan.model.assets">SalesforceObject.SalesforceObjectBuilder</a></dt>
@@ -12029,6 +12342,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Gets a value indicating whether the <a href="com/atlan/util/Stopwatch.html" title="class in com.atlan.util"><code>Stopwatch</code></a> timer is running.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Connection.ConnectionBuilder.html#isSampleDataPreviewEnabled(java.lang.Boolean)">isSampleDataPreviewEnabled(Boolean)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Connection.ConnectionBuilder.html" title="class in com.atlan.model.assets">Connection.ConnectionBuilder</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/typedefs/AttributeDefOptions.AttributeDefOptionsBuilder.html#isSoftReference(java.lang.String)">isSoftReference(String)</a></span> - Method in class com.atlan.model.typedefs.<a href="com/atlan/model/typedefs/AttributeDefOptions.AttributeDefOptionsBuilder.html" title="class in com.atlan.model.typedefs">AttributeDefOptions.AttributeDefOptionsBuilder</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.ColumnBuilder.html#isSort(java.lang.Boolean)">isSort(Boolean)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.ColumnBuilder.html" title="class in com.atlan.model.assets">Column.ColumnBuilder</a></dt>
@@ -12115,6 +12430,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/atlan/model/admin/AtlanUser.AtlanUserBuilder.html#lastLoginTime(java.lang.Long)">lastLoginTime(Long)</a></span> - Method in class com.atlan.model.admin.<a href="com/atlan/model/admin/AtlanUser.AtlanUserBuilder.html" title="class in com.atlan.model.admin">AtlanUser.AtlanUserBuilder</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/admin/AtlanUser.AtlanUserBuilder.html#lastName(java.lang.String)">lastName(String)</a></span> - Method in class com.atlan.model.admin.<a href="com/atlan/model/admin/AtlanUser.AtlanUserBuilder.html" title="class in com.atlan.model.admin">AtlanUser.AtlanUserBuilder</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SQL.SQLBuilder.html#lastProfiledAt(java.lang.Long)">lastProfiledAt(Long)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SQL.SQLBuilder.html" title="class in com.atlan.model.assets">SQL.SQLBuilder</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Asset.AssetBuilder.html#lastSyncRun(java.lang.String)">lastSyncRun(String)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Asset.AssetBuilder.html" title="class in com.atlan.model.assets">Asset.AssetBuilder</a></dt>
 <dd>&nbsp;</dd>
@@ -12690,7 +13007,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">Builds the minimal object necessary to create a new crawler for dbt,
  using API-based authentication for multi-tenant cloud, with the default settings.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/atlan/model/packages/DbtCrawler.html#mtCloudAuth(java.lang.String,java.lang.String,java.util.List,java.util.List,java.util.List,java.util.Map,java.util.Map,java.lang.String)">mtCloudAuth(String, String, List&lt;String&gt;, List&lt;String&gt;, List&lt;String&gt;, Map&lt;String, List&lt;String&gt;&gt;, Map&lt;String, List&lt;String&gt;&gt;, String)</a></span> - Static method in class com.atlan.model.packages.<a href="com/atlan/model/packages/DbtCrawler.html" title="class in com.atlan.model.packages">DbtCrawler</a></dt>
+<dt><span class="memberNameLink"><a href="com/atlan/model/packages/DbtCrawler.html#mtCloudAuth(java.lang.String,java.lang.String,java.util.List,java.util.List,java.util.List,java.util.Map,java.util.Map)">mtCloudAuth(String, String, List&lt;String&gt;, List&lt;String&gt;, List&lt;String&gt;, Map&lt;String, List&lt;String&gt;&gt;, Map&lt;String, List&lt;String&gt;&gt;)</a></span> - Static method in class com.atlan.model.packages.<a href="com/atlan/model/packages/DbtCrawler.html" title="class in com.atlan.model.packages">DbtCrawler</a></dt>
 <dd>
 <div class="block">Builds the minimal object necessary to create a new crawler for dbt.</div>
 </dd>
@@ -13912,6 +14229,14 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Reference to a Schema by GUID.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakePipe.html#refByGuid(java.lang.String)">refByGuid(String)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakePipe.html" title="class in com.atlan.model.assets">SnowflakePipe</a></dt>
+<dd>
+<div class="block">Reference to a SnowflakePipe by GUID.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakeStream.html#refByGuid(java.lang.String)">refByGuid(String)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakeStream.html" title="class in com.atlan.model.assets">SnowflakeStream</a></dt>
+<dd>
+<div class="block">Reference to a SnowflakeStream by GUID.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Table.html#refByGuid(java.lang.String)">refByGuid(String)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Table.html" title="class in com.atlan.model.assets">Table</a></dt>
 <dd>
 <div class="block">Reference to a Table by GUID.</div>
@@ -14247,6 +14572,14 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Schema.html#refByQualifiedName(java.lang.String)">refByQualifiedName(String)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Schema.html" title="class in com.atlan.model.assets">Schema</a></dt>
 <dd>
 <div class="block">Reference to a Schema by qualifiedName.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakePipe.html#refByQualifiedName(java.lang.String)">refByQualifiedName(String)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakePipe.html" title="class in com.atlan.model.assets">SnowflakePipe</a></dt>
+<dd>
+<div class="block">Reference to a SnowflakePipe by qualifiedName.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakeStream.html#refByQualifiedName(java.lang.String)">refByQualifiedName(String)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakeStream.html" title="class in com.atlan.model.assets">SnowflakeStream</a></dt>
+<dd>
+<div class="block">Reference to a SnowflakeStream by qualifiedName.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Table.html#refByQualifiedName(java.lang.String)">refByQualifiedName(String)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Table.html" title="class in com.atlan.model.assets">Table</a></dt>
 <dd>
@@ -14655,6 +14988,14 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Remove the announcement from a Schema.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakePipe.html#removeAnnouncement(java.lang.String,java.lang.String)">removeAnnouncement(String, String)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakePipe.html" title="class in com.atlan.model.assets">SnowflakePipe</a></dt>
+<dd>
+<div class="block">Remove the announcement from a SnowflakePipe.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakeStream.html#removeAnnouncement(java.lang.String,java.lang.String)">removeAnnouncement(String, String)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakeStream.html" title="class in com.atlan.model.assets">SnowflakeStream</a></dt>
+<dd>
+<div class="block">Remove the announcement from a SnowflakeStream.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Table.html#removeAnnouncement(java.lang.String,java.lang.String)">removeAnnouncement(String, String)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Table.html" title="class in com.atlan.model.assets">Table</a></dt>
 <dd>
 <div class="block">Remove the announcement from a Table.</div>
@@ -14999,6 +15340,14 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Remove the certificate from a Schema.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakePipe.html#removeCertificate(java.lang.String,java.lang.String)">removeCertificate(String, String)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakePipe.html" title="class in com.atlan.model.assets">SnowflakePipe</a></dt>
+<dd>
+<div class="block">Remove the certificate from a SnowflakePipe.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakeStream.html#removeCertificate(java.lang.String,java.lang.String)">removeCertificate(String, String)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakeStream.html" title="class in com.atlan.model.assets">SnowflakeStream</a></dt>
+<dd>
+<div class="block">Remove the certificate from a SnowflakeStream.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Table.html#removeCertificate(java.lang.String,java.lang.String)">removeCertificate(String, String)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Table.html" title="class in com.atlan.model.assets">Table</a></dt>
 <dd>
 <div class="block">Remove the certificate from a Table.</div>
@@ -15334,6 +15683,14 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Schema.html#removeClassification(java.lang.String,java.lang.String)">removeClassification(String, String)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Schema.html" title="class in com.atlan.model.assets">Schema</a></dt>
 <dd>
 <div class="block">Remove a classification from a Schema.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakePipe.html#removeClassification(java.lang.String,java.lang.String)">removeClassification(String, String)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakePipe.html" title="class in com.atlan.model.assets">SnowflakePipe</a></dt>
+<dd>
+<div class="block">Remove a classification from a SnowflakePipe.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakeStream.html#removeClassification(java.lang.String,java.lang.String)">removeClassification(String, String)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakeStream.html" title="class in com.atlan.model.assets">SnowflakeStream</a></dt>
+<dd>
+<div class="block">Remove a classification from a SnowflakeStream.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Table.html#removeClassification(java.lang.String,java.lang.String)">removeClassification(String, String)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Table.html" title="class in com.atlan.model.assets">Table</a></dt>
 <dd>
@@ -15695,6 +16052,14 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Remove the system description from a Schema.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakePipe.html#removeDescription(java.lang.String,java.lang.String)">removeDescription(String, String)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakePipe.html" title="class in com.atlan.model.assets">SnowflakePipe</a></dt>
+<dd>
+<div class="block">Remove the system description from a SnowflakePipe.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakeStream.html#removeDescription(java.lang.String,java.lang.String)">removeDescription(String, String)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakeStream.html" title="class in com.atlan.model.assets">SnowflakeStream</a></dt>
+<dd>
+<div class="block">Remove the system description from a SnowflakeStream.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Table.html#removeDescription(java.lang.String,java.lang.String)">removeDescription(String, String)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Table.html" title="class in com.atlan.model.assets">Table</a></dt>
 <dd>
 <div class="block">Remove the system description from a Table.</div>
@@ -16031,6 +16396,14 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Remove the owners from a Schema.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakePipe.html#removeOwners(java.lang.String,java.lang.String)">removeOwners(String, String)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakePipe.html" title="class in com.atlan.model.assets">SnowflakePipe</a></dt>
+<dd>
+<div class="block">Remove the owners from a SnowflakePipe.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakeStream.html#removeOwners(java.lang.String,java.lang.String)">removeOwners(String, String)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakeStream.html" title="class in com.atlan.model.assets">SnowflakeStream</a></dt>
+<dd>
+<div class="block">Remove the owners from a SnowflakeStream.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Table.html#removeOwners(java.lang.String,java.lang.String)">removeOwners(String, String)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Table.html" title="class in com.atlan.model.assets">Table</a></dt>
 <dd>
 <div class="block">Remove the owners from a Table.</div>
@@ -16360,6 +16733,14 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Schema.html#removeTerms(java.lang.String,java.util.List)">removeTerms(String, List&lt;GlossaryTerm&gt;)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Schema.html" title="class in com.atlan.model.assets">Schema</a></dt>
 <dd>
 <div class="block">Remove terms from a Schema, without replacing all existing terms linked to the Schema.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakePipe.html#removeTerms(java.lang.String,java.util.List)">removeTerms(String, List&lt;GlossaryTerm&gt;)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakePipe.html" title="class in com.atlan.model.assets">SnowflakePipe</a></dt>
+<dd>
+<div class="block">Remove terms from a SnowflakePipe, without replacing all existing terms linked to the SnowflakePipe.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakeStream.html#removeTerms(java.lang.String,java.util.List)">removeTerms(String, List&lt;GlossaryTerm&gt;)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakeStream.html" title="class in com.atlan.model.assets">SnowflakeStream</a></dt>
+<dd>
+<div class="block">Remove terms from a SnowflakeStream, without replacing all existing terms linked to the SnowflakeStream.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Table.html#removeTerms(java.lang.String,java.util.List)">removeTerms(String, List&lt;GlossaryTerm&gt;)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Table.html" title="class in com.atlan.model.assets">Table</a></dt>
 <dd>
@@ -16696,6 +17077,14 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Schema.html#removeUserDescription(java.lang.String,java.lang.String)">removeUserDescription(String, String)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Schema.html" title="class in com.atlan.model.assets">Schema</a></dt>
 <dd>
 <div class="block">Remove the user's description from a Schema.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakePipe.html#removeUserDescription(java.lang.String,java.lang.String)">removeUserDescription(String, String)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakePipe.html" title="class in com.atlan.model.assets">SnowflakePipe</a></dt>
+<dd>
+<div class="block">Remove the user's description from a SnowflakePipe.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakeStream.html#removeUserDescription(java.lang.String,java.lang.String)">removeUserDescription(String, String)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakeStream.html" title="class in com.atlan.model.assets">SnowflakeStream</a></dt>
+<dd>
+<div class="block">Remove the user's description from a SnowflakeStream.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Table.html#removeUserDescription(java.lang.String,java.lang.String)">removeUserDescription(String, String)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Table.html" title="class in com.atlan.model.assets">Table</a></dt>
 <dd>
@@ -17040,6 +17429,14 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Schema.html#replaceTerms(java.lang.String,java.lang.String,java.util.List)">replaceTerms(String, String, List&lt;GlossaryTerm&gt;)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Schema.html" title="class in com.atlan.model.assets">Schema</a></dt>
 <dd>
 <div class="block">Replace the terms linked to the Schema.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakePipe.html#replaceTerms(java.lang.String,java.lang.String,java.util.List)">replaceTerms(String, String, List&lt;GlossaryTerm&gt;)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakePipe.html" title="class in com.atlan.model.assets">SnowflakePipe</a></dt>
+<dd>
+<div class="block">Replace the terms linked to the SnowflakePipe.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakeStream.html#replaceTerms(java.lang.String,java.lang.String,java.util.List)">replaceTerms(String, String, List&lt;GlossaryTerm&gt;)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakeStream.html" title="class in com.atlan.model.assets">SnowflakeStream</a></dt>
+<dd>
+<div class="block">Replace the terms linked to the SnowflakeStream.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Table.html#replaceTerms(java.lang.String,java.lang.String,java.util.List)">replaceTerms(String, String, List&lt;GlossaryTerm&gt;)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Table.html" title="class in com.atlan.model.assets">Table</a></dt>
 <dd>
@@ -17497,6 +17894,14 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Restore the archived (soft-deleted) Schema to active.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakePipe.html#restore(java.lang.String)">restore(String)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakePipe.html" title="class in com.atlan.model.assets">SnowflakePipe</a></dt>
+<dd>
+<div class="block">Restore the archived (soft-deleted) SnowflakePipe to active.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakeStream.html#restore(java.lang.String)">restore(String)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakeStream.html" title="class in com.atlan.model.assets">SnowflakeStream</a></dt>
+<dd>
+<div class="block">Restore the archived (soft-deleted) SnowflakeStream to active.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Table.html#restore(java.lang.String)">restore(String)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Table.html" title="class in com.atlan.model.assets">Table</a></dt>
 <dd>
 <div class="block">Restore the archived (soft-deleted) Table to active.</div>
@@ -17865,6 +18270,14 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Retrieves a Schema by its GUID, complete with all of its relationships.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakePipe.html#retrieveByGuid(java.lang.String)">retrieveByGuid(String)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakePipe.html" title="class in com.atlan.model.assets">SnowflakePipe</a></dt>
+<dd>
+<div class="block">Retrieves a SnowflakePipe by its GUID, complete with all of its relationships.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakeStream.html#retrieveByGuid(java.lang.String)">retrieveByGuid(String)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakeStream.html" title="class in com.atlan.model.assets">SnowflakeStream</a></dt>
+<dd>
+<div class="block">Retrieves a SnowflakeStream by its GUID, complete with all of its relationships.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Table.html#retrieveByGuid(java.lang.String)">retrieveByGuid(String)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Table.html" title="class in com.atlan.model.assets">Table</a></dt>
 <dd>
 <div class="block">Retrieves a Table by its GUID, complete with all of its relationships.</div>
@@ -18209,6 +18622,14 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Retrieves a Schema by its qualifiedName, complete with all of its relationships.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakePipe.html#retrieveByQualifiedName(java.lang.String)">retrieveByQualifiedName(String)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakePipe.html" title="class in com.atlan.model.assets">SnowflakePipe</a></dt>
+<dd>
+<div class="block">Retrieves a SnowflakePipe by its qualifiedName, complete with all of its relationships.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakeStream.html#retrieveByQualifiedName(java.lang.String)">retrieveByQualifiedName(String)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakeStream.html" title="class in com.atlan.model.assets">SnowflakeStream</a></dt>
+<dd>
+<div class="block">Retrieves a SnowflakeStream by its qualifiedName, complete with all of its relationships.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Table.html#retrieveByQualifiedName(java.lang.String)">retrieveByQualifiedName(String)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Table.html" title="class in com.atlan.model.assets">Table</a></dt>
 <dd>
 <div class="block">Retrieves a Table by its qualifiedName, complete with all of its relationships.</div>
@@ -18452,6 +18873,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/MaterializedView.MaterializedViewBuilder.html#schema(com.atlan.model.assets.Schema)">schema(Schema)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/MaterializedView.MaterializedViewBuilder.html" title="class in com.atlan.model.assets">MaterializedView.MaterializedViewBuilder</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Procedure.ProcedureBuilder.html#schema(com.atlan.model.assets.Schema)">schema(Schema)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Procedure.ProcedureBuilder.html" title="class in com.atlan.model.assets">Procedure.ProcedureBuilder</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakePipe.SnowflakePipeBuilder.html#schema(com.atlan.model.assets.Schema)">schema(Schema)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakePipe.SnowflakePipeBuilder.html" title="class in com.atlan.model.assets">SnowflakePipe.SnowflakePipeBuilder</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakeStream.SnowflakeStreamBuilder.html#schema(com.atlan.model.assets.Schema)">schema(Schema)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakeStream.SnowflakeStreamBuilder.html" title="class in com.atlan.model.assets">SnowflakeStream.SnowflakeStreamBuilder</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Table.TableBuilder.html#schema(com.atlan.model.assets.Schema)">schema(Schema)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Table.TableBuilder.html" title="class in com.atlan.model.assets">Table.TableBuilder</a></dt>
 <dd>&nbsp;</dd>
@@ -18773,6 +19198,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Schema.SchemaBuilder.html#self()">self()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Schema.SchemaBuilder.html" title="class in com.atlan.model.assets">Schema.SchemaBuilder</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakePipe.SnowflakePipeBuilder.html#self()">self()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakePipe.SnowflakePipeBuilder.html" title="class in com.atlan.model.assets">SnowflakePipe.SnowflakePipeBuilder</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakeStream.SnowflakeStreamBuilder.html#self()">self()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakeStream.SnowflakeStreamBuilder.html" title="class in com.atlan.model.assets">SnowflakeStream.SnowflakeStreamBuilder</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/SQL.SQLBuilder.html#self()">self()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SQL.SQLBuilder.html" title="class in com.atlan.model.assets">SQL.SQLBuilder</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Table.TableBuilder.html#self()">self()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Table.TableBuilder.html" title="class in com.atlan.model.assets">Table.TableBuilder</a></dt>
@@ -18991,9 +19420,13 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">List of users who administer the asset.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/atlan/model/search/IndexSearchDSL.html#setAggregation(co.elastic.clients.elasticsearch._types.aggregations.Aggregation)">setAggregation(Aggregation)</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/IndexSearchDSL.html" title="class in com.atlan.model.search">IndexSearchDSL</a></dt>
+<dt><span class="memberNameLink"><a href="com/atlan/model/search/IndexSearchDSL.html#setAggregations(java.util.Map)">setAggregations(Map&lt;String, Aggregation&gt;)</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/IndexSearchDSL.html" title="class in com.atlan.model.search">IndexSearchDSL</a></dt>
 <dd>
 <div class="block">(Optional) Aggregation to apply to the query.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/search/IndexSearchResponse.html#setAggregations(java.util.Map)">setAggregations(Map&lt;String, AggregationResult&gt;)</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/IndexSearchResponse.html" title="class in com.atlan.model.search">IndexSearchResponse</a></dt>
+<dd>
+<div class="block">Map of results for the requested aggregations.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/admin/AtlanGroup.html#setAlias(java.lang.String)">setAlias(String)</a></span> - Method in class com.atlan.model.admin.<a href="com/atlan/model/admin/AtlanGroup.html" title="class in com.atlan.model.admin">AtlanGroup</a></dt>
 <dd>
@@ -19543,6 +19976,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">S3 bucket in which the object exists.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationResult.html#setBuckets(java.util.List)">setBuckets(List&lt;AggregationBucket&gt;)</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationResult.html" title="class in com.atlan.model.search">AggregationResult</a></dt>
+<dd>
+<div class="block">List of buckets that resulted from the aggregation.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/typedefs/EntityDef.html#setBusinessAttributeDefs(java.util.Map)">setBusinessAttributeDefs(Map&lt;String, Object&gt;)</a></span> - Method in class com.atlan.model.typedefs.<a href="com/atlan/model/typedefs/EntityDef.html" title="class in com.atlan.model.typedefs">EntityDef</a></dt>
 <dd>
 <div class="block">Unused.</div>
@@ -19684,6 +20121,14 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Color to use for the classification.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.html#setColumnAverage(java.lang.Double)">setColumnAverage(Double)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.html" title="class in com.atlan.model.assets">Column</a></dt>
+<dd>
+<div class="block">TBC</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.html#setColumnAverageLength(java.lang.Double)">setColumnAverageLength(Double)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.html" title="class in com.atlan.model.assets">Column</a></dt>
+<dd>
+<div class="block">TBC</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/MaterializedView.html#setColumnCount(java.lang.Long)">setColumnCount(Long)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/MaterializedView.html" title="class in com.atlan.model.assets">MaterializedView</a></dt>
 <dd>
 <div class="block">Number of columns in this materialized view.</div>
@@ -19699,6 +20144,66 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/View.html#setColumnCount(java.lang.Long)">setColumnCount(Long)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/View.html" title="class in com.atlan.model.assets">View</a></dt>
 <dd>
 <div class="block">Number of columns in this view.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.html#setColumnDistinctValuesCount(java.lang.Integer)">setColumnDistinctValuesCount(Integer)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.html" title="class in com.atlan.model.assets">Column</a></dt>
+<dd>
+<div class="block">TBC</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.html#setColumnDistinctValuesCountLong(java.lang.Long)">setColumnDistinctValuesCountLong(Long)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.html" title="class in com.atlan.model.assets">Column</a></dt>
+<dd>
+<div class="block">TBC</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.html#setColumnDuplicateValuesCount(java.lang.Integer)">setColumnDuplicateValuesCount(Integer)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.html" title="class in com.atlan.model.assets">Column</a></dt>
+<dd>
+<div class="block">TBC</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.html#setColumnDuplicateValuesCountLong(java.lang.Long)">setColumnDuplicateValuesCountLong(Long)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.html" title="class in com.atlan.model.assets">Column</a></dt>
+<dd>
+<div class="block">TBC</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.html#setColumnMax(java.lang.Double)">setColumnMax(Double)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.html" title="class in com.atlan.model.assets">Column</a></dt>
+<dd>
+<div class="block">TBC</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.html#setColumnMaximumStringLength(java.lang.Integer)">setColumnMaximumStringLength(Integer)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.html" title="class in com.atlan.model.assets">Column</a></dt>
+<dd>
+<div class="block">TBC</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.html#setColumnMaxs(java.util.SortedSet)">setColumnMaxs(SortedSet&lt;String&gt;)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.html" title="class in com.atlan.model.assets">Column</a></dt>
+<dd>
+<div class="block">TBC</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.html#setColumnMean(java.lang.Double)">setColumnMean(Double)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.html" title="class in com.atlan.model.assets">Column</a></dt>
+<dd>
+<div class="block">TBC</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.html#setColumnMedian(java.lang.Double)">setColumnMedian(Double)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.html" title="class in com.atlan.model.assets">Column</a></dt>
+<dd>
+<div class="block">TBC</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.html#setColumnMin(java.lang.Double)">setColumnMin(Double)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.html" title="class in com.atlan.model.assets">Column</a></dt>
+<dd>
+<div class="block">TBC</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.html#setColumnMinimumStringLength(java.lang.Integer)">setColumnMinimumStringLength(Integer)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.html" title="class in com.atlan.model.assets">Column</a></dt>
+<dd>
+<div class="block">TBC</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.html#setColumnMins(java.util.SortedSet)">setColumnMins(SortedSet&lt;String&gt;)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.html" title="class in com.atlan.model.assets">Column</a></dt>
+<dd>
+<div class="block">TBC</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.html#setColumnMissingValuesCount(java.lang.Integer)">setColumnMissingValuesCount(Integer)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.html" title="class in com.atlan.model.assets">Column</a></dt>
+<dd>
+<div class="block">TBC</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.html#setColumnMissingValuesCountLong(java.lang.Long)">setColumnMissingValuesCountLong(Long)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.html" title="class in com.atlan.model.assets">Column</a></dt>
+<dd>
+<div class="block">TBC</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.html#setColumnMissingValuesPercentage(java.lang.Double)">setColumnMissingValuesPercentage(Double)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.html" title="class in com.atlan.model.assets">Column</a></dt>
+<dd>
+<div class="block">TBC</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/AbstractProcess.html#setColumnProcesses(java.util.SortedSet)">setColumnProcesses(SortedSet&lt;AbstractColumnProcess&gt;)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/AbstractProcess.html" title="class in com.atlan.model.assets">AbstractProcess</a></dt>
 <dd>
@@ -19725,6 +20230,30 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">Columns that exist within this view.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/PowerBITable.html#setColumns(java.util.SortedSet)">setColumns(SortedSet&lt;PowerBIColumn&gt;)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/PowerBITable.html" title="class in com.atlan.model.assets">PowerBITable</a></dt>
+<dd>
+<div class="block">TBC</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.html#setColumnStandardDeviation(java.lang.Double)">setColumnStandardDeviation(Double)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.html" title="class in com.atlan.model.assets">Column</a></dt>
+<dd>
+<div class="block">TBC</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.html#setColumnSum(java.lang.Double)">setColumnSum(Double)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.html" title="class in com.atlan.model.assets">Column</a></dt>
+<dd>
+<div class="block">TBC</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.html#setColumnUniquenessPercentage(java.lang.Double)">setColumnUniquenessPercentage(Double)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.html" title="class in com.atlan.model.assets">Column</a></dt>
+<dd>
+<div class="block">TBC</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.html#setColumnUniqueValuesCount(java.lang.Integer)">setColumnUniqueValuesCount(Integer)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.html" title="class in com.atlan.model.assets">Column</a></dt>
+<dd>
+<div class="block">TBC</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.html#setColumnUniqueValuesCountLong(java.lang.Long)">setColumnUniqueValuesCountLong(Long)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.html" title="class in com.atlan.model.assets">Column</a></dt>
+<dd>
+<div class="block">TBC</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.html#setColumnVariance(java.lang.Double)">setColumnVariance(Double)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.html" title="class in com.atlan.model.assets">Column</a></dt>
 <dd>
 <div class="block">TBC</div>
 </dd>
@@ -20280,6 +20809,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">TBC</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakePipe.html#setDefinition(java.lang.String)">setDefinition(String)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakePipe.html" title="class in com.atlan.model.assets">SnowflakePipe</a></dt>
+<dd>
+<div class="block">TBC</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/View.html#setDefinition(java.lang.String)">setDefinition(String)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/View.html" title="class in com.atlan.model.assets">View</a></dt>
 <dd>
 <div class="block">Definition of the view (DDL).</div>
@@ -20365,6 +20898,14 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/atlan/model/relations/Reference.html#setDisplayText(java.lang.String)">setDisplayText(String)</a></span> - Method in class com.atlan.model.relations.<a href="com/atlan/model/relations/Reference.html" title="class in com.atlan.model.relations">Reference</a></dt>
 <dd>
 <div class="block">Human-readable name of the entity.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationBucket.html#setDocCount(java.lang.Long)">setDocCount(Long)</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationBucket.html" title="class in com.atlan.model.search">AggregationBucket</a></dt>
+<dd>
+<div class="block">Number of results that fit within this bucket of the aggregation.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationResult.html#setDocCountErrorUpperBound(java.lang.Long)">setDocCountErrorUpperBound(Long)</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationResult.html" title="class in com.atlan.model.search">AggregationResult</a></dt>
+<dd>
+<div class="block">TBC</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/search/AuditSearchRequest.html#setDsl(com.atlan.model.search.IndexSearchDSL)">setDsl(IndexSearchDSL)</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AuditSearchRequest.html" title="class in com.atlan.model.search">AuditSearchRequest</a></dt>
 <dd>
@@ -21080,6 +21621,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">TBC</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SQL.html#setIsProfiled(java.lang.Boolean)">setIsProfiled(Boolean)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SQL.html" title="class in com.atlan.model.assets">SQL</a></dt>
+<dd>
+<div class="block">Whether the asset has been profiled (true) or not (false).</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/TableauDatasource.html#setIsPublished(java.lang.Boolean)">setIsPublished(Boolean)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/TableauDatasource.html" title="class in com.atlan.model.assets">TableauDatasource</a></dt>
 <dd>
 <div class="block">TBC</div>
@@ -21103,6 +21648,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/View.html#setIsQueryPreview(java.lang.Boolean)">setIsQueryPreview(Boolean)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/View.html" title="class in com.atlan.model.assets">View</a></dt>
 <dd>
 <div class="block">TBC</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Connection.html#setIsSampleDataPreviewEnabled(java.lang.Boolean)">setIsSampleDataPreviewEnabled(Boolean)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Connection.html" title="class in com.atlan.model.assets">Connection</a></dt>
+<dd>
+<div class="block">Whether sample data can be previewed for this connection (true) or not (false).</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/typedefs/AttributeDefOptions.html#setIsSoftReference(java.lang.String)">setIsSoftReference(String)</a></span> - Method in class com.atlan.model.typedefs.<a href="com/atlan/model/typedefs/AttributeDefOptions.html" title="class in com.atlan.model.typedefs">AttributeDefOptions</a></dt>
 <dd>
@@ -21156,6 +21705,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Unique JIRA user identifier.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationBucket.html#setKey(java.lang.String)">setKey(String)</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationBucket.html" title="class in com.atlan.model.search">AggregationBucket</a></dt>
+<dd>
+<div class="block">Key of the field representing this bucket of aggregate results.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/workflow/WorkflowSearchResultDetail.html#setKind(java.lang.String)">setKind(String)</a></span> - Method in class com.atlan.model.workflow.<a href="com/atlan/model/workflow/WorkflowSearchResultDetail.html" title="class in com.atlan.model.workflow">WorkflowSearchResultDetail</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/workflow/WorkflowMetadata.html#setLabels(java.util.Map)">setLabels(Map&lt;String, String&gt;)</a></span> - Method in class com.atlan.model.workflow.<a href="com/atlan/model/workflow/WorkflowMetadata.html" title="class in com.atlan.model.workflow">WorkflowMetadata</a></dt>
@@ -21179,6 +21732,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/atlan/model/admin/UserMinimalResponse.html#setLastName(java.lang.String)">setLastName(String)</a></span> - Method in class com.atlan.model.admin.<a href="com/atlan/model/admin/UserMinimalResponse.html" title="class in com.atlan.model.admin">UserMinimalResponse</a></dt>
 <dd>
 <div class="block">Last name (surname) of the user.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SQL.html#setLastProfiledAt(java.lang.Long)">setLastProfiledAt(Long)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SQL.html" title="class in com.atlan.model.assets">SQL</a></dt>
+<dd>
+<div class="block">Time (epoch) at which the asset was last profiled, in milliseconds.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/core/AtlanResponseInterface.html#setLastResponse(com.atlan.net.AtlanResponse)">setLastResponse(AtlanResponse)</a></span> - Method in interface com.atlan.model.core.<a href="com/atlan/model/core/AtlanResponseInterface.html" title="interface in com.atlan.model.core">AtlanResponseInterface</a></dt>
 <dd>&nbsp;</dd>
@@ -22611,6 +23168,14 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">TBC</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakePipe.html#setSchema(com.atlan.model.assets.Schema)">setSchema(Schema)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakePipe.html" title="class in com.atlan.model.assets">SnowflakePipe</a></dt>
+<dd>
+<div class="block">TBC</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakeStream.html#setSchema(com.atlan.model.assets.Schema)">setSchema(Schema)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakeStream.html" title="class in com.atlan.model.assets">SnowflakeStream</a></dt>
+<dd>
+<div class="block">TBC</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Table.html#setSchema(com.atlan.model.assets.Schema)">setSchema(Schema)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Table.html" title="class in com.atlan.model.assets">Table</a></dt>
 <dd>
 <div class="block">Schema in which this table exists.</div>
@@ -22746,6 +23311,42 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/atlan/model/admin/AtlanUser.UserAttributes.html#setSlack(java.util.List)">setSlack(List&lt;String&gt;)</a></span> - Method in class com.atlan.model.admin.<a href="com/atlan/model/admin/AtlanUser.UserAttributes.html" title="class in com.atlan.model.admin">AtlanUser.UserAttributes</a></dt>
 <dd>
 <div class="block">Unique Slack member identifier.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakePipe.html#setSnowflakePipeIsAutoIngestEnabled(java.lang.Boolean)">setSnowflakePipeIsAutoIngestEnabled(Boolean)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakePipe.html" title="class in com.atlan.model.assets">SnowflakePipe</a></dt>
+<dd>
+<div class="block">TBC</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakePipe.html#setSnowflakePipeNotificationChannelName(java.lang.String)">setSnowflakePipeNotificationChannelName(String)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakePipe.html" title="class in com.atlan.model.assets">SnowflakePipe</a></dt>
+<dd>
+<div class="block">TBC</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Schema.html#setSnowflakePipes(java.util.SortedSet)">setSnowflakePipes(SortedSet&lt;SnowflakePipe&gt;)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Schema.html" title="class in com.atlan.model.assets">Schema</a></dt>
+<dd>
+<div class="block">Snowflake Pipes that are defined within this schema.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakeStream.html#setSnowflakeStreamIsStale(java.lang.Boolean)">setSnowflakeStreamIsStale(Boolean)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakeStream.html" title="class in com.atlan.model.assets">SnowflakeStream</a></dt>
+<dd>
+<div class="block">TBC</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakeStream.html#setSnowflakeStreamMode(java.lang.String)">setSnowflakeStreamMode(String)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakeStream.html" title="class in com.atlan.model.assets">SnowflakeStream</a></dt>
+<dd>
+<div class="block">TBC</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Schema.html#setSnowflakeStreams(java.util.SortedSet)">setSnowflakeStreams(SortedSet&lt;SnowflakeStream&gt;)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Schema.html" title="class in com.atlan.model.assets">Schema</a></dt>
+<dd>
+<div class="block">Snowflake Streams that are defined within this schema.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakeStream.html#setSnowflakeStreamSourceType(java.lang.String)">setSnowflakeStreamSourceType(String)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakeStream.html" title="class in com.atlan.model.assets">SnowflakeStream</a></dt>
+<dd>
+<div class="block">TBC</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakeStream.html#setSnowflakeStreamStaleAfter(java.lang.Long)">setSnowflakeStreamStaleAfter(Long)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakeStream.html" title="class in com.atlan.model.assets">SnowflakeStream</a></dt>
+<dd>
+<div class="block">TBC</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakeStream.html#setSnowflakeStreamType(java.lang.String)">setSnowflakeStreamType(String)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakeStream.html" title="class in com.atlan.model.assets">SnowflakeStream</a></dt>
+<dd>
+<div class="block">TBC</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/search/IndexSearchDSL.html#setSort(java.util.List)">setSort(List&lt;SortOptions&gt;)</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/IndexSearchDSL.html" title="class in com.atlan.model.search">IndexSearchDSL</a></dt>
 <dd>
@@ -22966,6 +23567,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/atlan/model/typedefs/EntityDef.html#setSubTypes(java.util.List)">setSubTypes(List&lt;String&gt;)</a></span> - Method in class com.atlan.model.typedefs.<a href="com/atlan/model/typedefs/EntityDef.html" title="class in com.atlan.model.typedefs">EntityDef</a></dt>
 <dd>
 <div class="block">Subtypes of this entity type.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationResult.html#setSumOtherDocCount(java.lang.Long)">setSumOtherDocCount(Long)</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationResult.html" title="class in com.atlan.model.search">AggregationResult</a></dt>
+<dd>
+<div class="block">TBC</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/typedefs/ClassificationDef.html#setSuperTypes(java.util.List)">setSuperTypes(List&lt;String&gt;)</a></span> - Method in class com.atlan.model.typedefs.<a href="com/atlan/model/typedefs/ClassificationDef.html" title="class in com.atlan.model.typedefs">ClassificationDef</a></dt>
 <dd>
@@ -23493,6 +24098,14 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Fixed typeName for Schemas.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakePipe.html#setTypeName(java.lang.String)">setTypeName(String)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakePipe.html" title="class in com.atlan.model.assets">SnowflakePipe</a></dt>
+<dd>
+<div class="block">Fixed typeName for SnowflakePipes.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakeStream.html#setTypeName(java.lang.String)">setTypeName(String)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakeStream.html" title="class in com.atlan.model.assets">SnowflakeStream</a></dt>
+<dd>
+<div class="block">Fixed typeName for SnowflakeStreams.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Table.html#setTypeName(java.lang.String)">setTypeName(String)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Table.html" title="class in com.atlan.model.assets">Table</a></dt>
 <dd>
 <div class="block">Fixed typeName for Tables.</div>
@@ -23938,6 +24551,44 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><a href="com/atlan/model/packages/SnowflakeCrawler.html" title="class in com.atlan.model.packages"><span class="typeNameLink">SnowflakeCrawler</span></a> - Class in <a href="com/atlan/model/packages/package-summary.html">com.atlan.model.packages</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/packages/SnowflakeCrawler.html#%3Cinit%3E()">SnowflakeCrawler()</a></span> - Constructor for class com.atlan.model.packages.<a href="com/atlan/model/packages/SnowflakeCrawler.html" title="class in com.atlan.model.packages">SnowflakeCrawler</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Schema.SchemaBuilder.html#snowflakePipe(com.atlan.model.assets.SnowflakePipe)">snowflakePipe(SnowflakePipe)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Schema.SchemaBuilder.html" title="class in com.atlan.model.assets">Schema.SchemaBuilder</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/atlan/model/assets/SnowflakePipe.html" title="class in com.atlan.model.assets"><span class="typeNameLink">SnowflakePipe</span></a> - Class in <a href="com/atlan/model/assets/package-summary.html">com.atlan.model.assets</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakePipe.html#%3Cinit%3E(com.atlan.model.assets.SnowflakePipe.SnowflakePipeBuilder)">SnowflakePipe(SnowflakePipe.SnowflakePipeBuilder&lt;?, ?&gt;)</a></span> - Constructor for class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakePipe.html" title="class in com.atlan.model.assets">SnowflakePipe</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/atlan/model/assets/SnowflakePipe.SnowflakePipeBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">SnowflakePipe.SnowflakePipeBuilder</span></a>&lt;<a href="com/atlan/model/assets/SnowflakePipe.SnowflakePipeBuilder.html" title="type parameter in SnowflakePipe.SnowflakePipeBuilder">C</a> extends <a href="com/atlan/model/assets/SnowflakePipe.html" title="class in com.atlan.model.assets">SnowflakePipe</a>,&#8203;<a href="com/atlan/model/assets/SnowflakePipe.SnowflakePipeBuilder.html" title="type parameter in SnowflakePipe.SnowflakePipeBuilder">B</a> extends <a href="com/atlan/model/assets/SnowflakePipe.SnowflakePipeBuilder.html" title="class in com.atlan.model.assets">SnowflakePipe.SnowflakePipeBuilder</a>&lt;<a href="com/atlan/model/assets/SnowflakePipe.SnowflakePipeBuilder.html" title="type parameter in SnowflakePipe.SnowflakePipeBuilder">C</a>,&#8203;<a href="com/atlan/model/assets/SnowflakePipe.SnowflakePipeBuilder.html" title="type parameter in SnowflakePipe.SnowflakePipeBuilder">B</a>&gt;&gt; - Class in <a href="com/atlan/model/assets/package-summary.html">com.atlan.model.assets</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakePipe.SnowflakePipeBuilder.html#%3Cinit%3E()">SnowflakePipeBuilder()</a></span> - Constructor for class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakePipe.SnowflakePipeBuilder.html" title="class in com.atlan.model.assets">SnowflakePipe.SnowflakePipeBuilder</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakePipe.SnowflakePipeBuilder.html#snowflakePipeIsAutoIngestEnabled(java.lang.Boolean)">snowflakePipeIsAutoIngestEnabled(Boolean)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakePipe.SnowflakePipeBuilder.html" title="class in com.atlan.model.assets">SnowflakePipe.SnowflakePipeBuilder</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakePipe.SnowflakePipeBuilder.html#snowflakePipeNotificationChannelName(java.lang.String)">snowflakePipeNotificationChannelName(String)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakePipe.SnowflakePipeBuilder.html" title="class in com.atlan.model.assets">SnowflakePipe.SnowflakePipeBuilder</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Schema.SchemaBuilder.html#snowflakePipes(java.util.Collection)">snowflakePipes(Collection&lt;? extends SnowflakePipe&gt;)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Schema.SchemaBuilder.html" title="class in com.atlan.model.assets">Schema.SchemaBuilder</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Schema.SchemaBuilder.html#snowflakeStream(com.atlan.model.assets.SnowflakeStream)">snowflakeStream(SnowflakeStream)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Schema.SchemaBuilder.html" title="class in com.atlan.model.assets">Schema.SchemaBuilder</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/atlan/model/assets/SnowflakeStream.html" title="class in com.atlan.model.assets"><span class="typeNameLink">SnowflakeStream</span></a> - Class in <a href="com/atlan/model/assets/package-summary.html">com.atlan.model.assets</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakeStream.html#%3Cinit%3E(com.atlan.model.assets.SnowflakeStream.SnowflakeStreamBuilder)">SnowflakeStream(SnowflakeStream.SnowflakeStreamBuilder&lt;?, ?&gt;)</a></span> - Constructor for class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakeStream.html" title="class in com.atlan.model.assets">SnowflakeStream</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/atlan/model/assets/SnowflakeStream.SnowflakeStreamBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">SnowflakeStream.SnowflakeStreamBuilder</span></a>&lt;<a href="com/atlan/model/assets/SnowflakeStream.SnowflakeStreamBuilder.html" title="type parameter in SnowflakeStream.SnowflakeStreamBuilder">C</a> extends <a href="com/atlan/model/assets/SnowflakeStream.html" title="class in com.atlan.model.assets">SnowflakeStream</a>,&#8203;<a href="com/atlan/model/assets/SnowflakeStream.SnowflakeStreamBuilder.html" title="type parameter in SnowflakeStream.SnowflakeStreamBuilder">B</a> extends <a href="com/atlan/model/assets/SnowflakeStream.SnowflakeStreamBuilder.html" title="class in com.atlan.model.assets">SnowflakeStream.SnowflakeStreamBuilder</a>&lt;<a href="com/atlan/model/assets/SnowflakeStream.SnowflakeStreamBuilder.html" title="type parameter in SnowflakeStream.SnowflakeStreamBuilder">C</a>,&#8203;<a href="com/atlan/model/assets/SnowflakeStream.SnowflakeStreamBuilder.html" title="type parameter in SnowflakeStream.SnowflakeStreamBuilder">B</a>&gt;&gt; - Class in <a href="com/atlan/model/assets/package-summary.html">com.atlan.model.assets</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakeStream.SnowflakeStreamBuilder.html#%3Cinit%3E()">SnowflakeStreamBuilder()</a></span> - Constructor for class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakeStream.SnowflakeStreamBuilder.html" title="class in com.atlan.model.assets">SnowflakeStream.SnowflakeStreamBuilder</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakeStream.SnowflakeStreamBuilder.html#snowflakeStreamIsStale(java.lang.Boolean)">snowflakeStreamIsStale(Boolean)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakeStream.SnowflakeStreamBuilder.html" title="class in com.atlan.model.assets">SnowflakeStream.SnowflakeStreamBuilder</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakeStream.SnowflakeStreamBuilder.html#snowflakeStreamMode(java.lang.String)">snowflakeStreamMode(String)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakeStream.SnowflakeStreamBuilder.html" title="class in com.atlan.model.assets">SnowflakeStream.SnowflakeStreamBuilder</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/Schema.SchemaBuilder.html#snowflakeStreams(java.util.Collection)">snowflakeStreams(Collection&lt;? extends SnowflakeStream&gt;)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Schema.SchemaBuilder.html" title="class in com.atlan.model.assets">Schema.SchemaBuilder</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakeStream.SnowflakeStreamBuilder.html#snowflakeStreamSourceType(java.lang.String)">snowflakeStreamSourceType(String)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakeStream.SnowflakeStreamBuilder.html" title="class in com.atlan.model.assets">SnowflakeStream.SnowflakeStreamBuilder</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakeStream.SnowflakeStreamBuilder.html#snowflakeStreamStaleAfter(java.lang.Long)">snowflakeStreamStaleAfter(Long)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakeStream.SnowflakeStreamBuilder.html" title="class in com.atlan.model.assets">SnowflakeStream.SnowflakeStreamBuilder</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakeStream.SnowflakeStreamBuilder.html#snowflakeStreamType(java.lang.String)">snowflakeStreamType(String)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakeStream.SnowflakeStreamBuilder.html" title="class in com.atlan.model.assets">SnowflakeStream.SnowflakeStreamBuilder</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/enums/AtlanDeleteType.html#SOFT">SOFT</a></span> - com.atlan.model.enums.<a href="com/atlan/model/enums/AtlanDeleteType.html" title="enum in com.atlan.model.enums">AtlanDeleteType</a></dt>
 <dd>&nbsp;</dd>
@@ -24513,6 +25164,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Schema.html#toBuilder()">toBuilder()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Schema.html" title="class in com.atlan.model.assets">Schema</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakePipe.html#toBuilder()">toBuilder()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakePipe.html" title="class in com.atlan.model.assets">SnowflakePipe</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakeStream.html#toBuilder()">toBuilder()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakeStream.html" title="class in com.atlan.model.assets">SnowflakeStream</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Table.html#toBuilder()">toBuilder()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Table.html" title="class in com.atlan.model.assets">Table</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/TableauCalculatedField.html#toBuilder()">toBuilder()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/TableauCalculatedField.html" title="class in com.atlan.model.assets">TableauCalculatedField</a></dt>
@@ -24891,6 +25546,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Schema.SchemaBuilder.html#toString()">toString()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Schema.SchemaBuilder.html" title="class in com.atlan.model.assets">Schema.SchemaBuilder</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakePipe.SnowflakePipeBuilder.html#toString()">toString()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakePipe.SnowflakePipeBuilder.html" title="class in com.atlan.model.assets">SnowflakePipe.SnowflakePipeBuilder</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakeStream.SnowflakeStreamBuilder.html#toString()">toString()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakeStream.SnowflakeStreamBuilder.html" title="class in com.atlan.model.assets">SnowflakeStream.SnowflakeStreamBuilder</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/SQL.SQLBuilder.html#toString()">toString()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SQL.SQLBuilder.html" title="class in com.atlan.model.assets">SQL.SQLBuilder</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Table.TableBuilder.html#toString()">toString()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Table.TableBuilder.html" title="class in com.atlan.model.assets">Table.TableBuilder</a></dt>
@@ -24950,6 +25609,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/atlan/model/relations/UniqueAttributes.html#toString()">toString()</a></span> - Method in class com.atlan.model.relations.<a href="com/atlan/model/relations/UniqueAttributes.html" title="class in com.atlan.model.relations">UniqueAttributes</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/relations/UniqueAttributes.UniqueAttributesBuilder.html#toString()">toString()</a></span> - Method in class com.atlan.model.relations.<a href="com/atlan/model/relations/UniqueAttributes.UniqueAttributesBuilder.html" title="class in com.atlan.model.relations">UniqueAttributes.UniqueAttributesBuilder</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationBucket.html#toString()">toString()</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationBucket.html" title="class in com.atlan.model.search">AggregationBucket</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationResult.html#toString()">toString()</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationResult.html" title="class in com.atlan.model.search">AggregationResult</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/search/AuditSearchRequest.AuditSearchRequestBuilder.html#toString()">toString()</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AuditSearchRequest.AuditSearchRequestBuilder.html" title="class in com.atlan.model.search">AuditSearchRequest.AuditSearchRequestBuilder</a></dt>
 <dd>&nbsp;</dd>
@@ -25414,6 +26077,16 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">Builds the minimal object necessary to apply an update to a Schema, from a potentially
  more-complete Schema object.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakePipe.html#trimToRequired()">trimToRequired()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakePipe.html" title="class in com.atlan.model.assets">SnowflakePipe</a></dt>
+<dd>
+<div class="block">Builds the minimal object necessary to apply an update to a SnowflakePipe, from a potentially
+ more-complete SnowflakePipe object.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakeStream.html#trimToRequired()">trimToRequired()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakeStream.html" title="class in com.atlan.model.assets">SnowflakeStream</a></dt>
+<dd>
+<div class="block">Builds the minimal object necessary to apply an update to a SnowflakeStream, from a potentially
+ more-complete SnowflakeStream object.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Table.html#trimToRequired()">trimToRequired()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Table.html" title="class in com.atlan.model.assets">Table</a></dt>
 <dd>
 <div class="block">Builds the minimal object necessary to apply an update to a Table, from a potentially
@@ -25685,6 +26358,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Schema.html#TYPE_NAME">TYPE_NAME</a></span> - Static variable in class com.atlan.model.assets.<a href="com/atlan/model/assets/Schema.html" title="class in com.atlan.model.assets">Schema</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakePipe.html#TYPE_NAME">TYPE_NAME</a></span> - Static variable in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakePipe.html" title="class in com.atlan.model.assets">SnowflakePipe</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakeStream.html#TYPE_NAME">TYPE_NAME</a></span> - Static variable in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakeStream.html" title="class in com.atlan.model.assets">SnowflakeStream</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/SQL.html#TYPE_NAME">TYPE_NAME</a></span> - Static variable in class com.atlan.model.assets.<a href="com/atlan/model/assets/SQL.html" title="class in com.atlan.model.assets">SQL</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Table.html#TYPE_NAME">TYPE_NAME</a></span> - Static variable in class com.atlan.model.assets.<a href="com/atlan/model/assets/Table.html" title="class in com.atlan.model.assets">Table</a></dt>
@@ -25880,6 +26557,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/SalesforceReport.SalesforceReportBuilder.html#typeName(java.lang.String)">typeName(String)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SalesforceReport.SalesforceReportBuilder.html" title="class in com.atlan.model.assets">SalesforceReport.SalesforceReportBuilder</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Schema.SchemaBuilder.html#typeName(java.lang.String)">typeName(String)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Schema.SchemaBuilder.html" title="class in com.atlan.model.assets">Schema.SchemaBuilder</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakePipe.SnowflakePipeBuilder.html#typeName(java.lang.String)">typeName(String)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakePipe.SnowflakePipeBuilder.html" title="class in com.atlan.model.assets">SnowflakePipe.SnowflakePipeBuilder</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakeStream.SnowflakeStreamBuilder.html#typeName(java.lang.String)">typeName(String)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakeStream.SnowflakeStreamBuilder.html" title="class in com.atlan.model.assets">SnowflakeStream.SnowflakeStreamBuilder</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Table.TableBuilder.html#typeName(java.lang.String)">typeName(String)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Table.TableBuilder.html" title="class in com.atlan.model.assets">Table.TableBuilder</a></dt>
 <dd>&nbsp;</dd>
@@ -26241,6 +26922,14 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Update the announcement on a Schema.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakePipe.html#updateAnnouncement(java.lang.String,com.atlan.model.enums.AtlanAnnouncementType,java.lang.String,java.lang.String)">updateAnnouncement(String, AtlanAnnouncementType, String, String)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakePipe.html" title="class in com.atlan.model.assets">SnowflakePipe</a></dt>
+<dd>
+<div class="block">Update the announcement on a SnowflakePipe.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakeStream.html#updateAnnouncement(java.lang.String,com.atlan.model.enums.AtlanAnnouncementType,java.lang.String,java.lang.String)">updateAnnouncement(String, AtlanAnnouncementType, String, String)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakeStream.html" title="class in com.atlan.model.assets">SnowflakeStream</a></dt>
+<dd>
+<div class="block">Update the announcement on a SnowflakeStream.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Table.html#updateAnnouncement(java.lang.String,com.atlan.model.enums.AtlanAnnouncementType,java.lang.String,java.lang.String)">updateAnnouncement(String, AtlanAnnouncementType, String, String)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Table.html" title="class in com.atlan.model.assets">Table</a></dt>
 <dd>
 <div class="block">Update the announcement on a Table.</div>
@@ -26580,6 +27269,14 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Schema.html#updateCertificate(java.lang.String,com.atlan.model.enums.AtlanCertificateStatus,java.lang.String)">updateCertificate(String, AtlanCertificateStatus, String)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Schema.html" title="class in com.atlan.model.assets">Schema</a></dt>
 <dd>
 <div class="block">Update the certificate on a Schema.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakePipe.html#updateCertificate(java.lang.String,com.atlan.model.enums.AtlanCertificateStatus,java.lang.String)">updateCertificate(String, AtlanCertificateStatus, String)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakePipe.html" title="class in com.atlan.model.assets">SnowflakePipe</a></dt>
+<dd>
+<div class="block">Update the certificate on a SnowflakePipe.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakeStream.html#updateCertificate(java.lang.String,com.atlan.model.enums.AtlanCertificateStatus,java.lang.String)">updateCertificate(String, AtlanCertificateStatus, String)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakeStream.html" title="class in com.atlan.model.assets">SnowflakeStream</a></dt>
+<dd>
+<div class="block">Update the certificate on a SnowflakeStream.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Table.html#updateCertificate(java.lang.String,com.atlan.model.enums.AtlanCertificateStatus,java.lang.String)">updateCertificate(String, AtlanCertificateStatus, String)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Table.html" title="class in com.atlan.model.assets">Table</a></dt>
 <dd>
@@ -26960,6 +27657,14 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Schema.html#updater(java.lang.String,java.lang.String)">updater(String, String)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Schema.html" title="class in com.atlan.model.assets">Schema</a></dt>
 <dd>
 <div class="block">Builds the minimal object necessary to update a Schema.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakePipe.html#updater(java.lang.String,java.lang.String)">updater(String, String)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakePipe.html" title="class in com.atlan.model.assets">SnowflakePipe</a></dt>
+<dd>
+<div class="block">Builds the minimal object necessary to update a SnowflakePipe.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/assets/SnowflakeStream.html#updater(java.lang.String,java.lang.String)">updater(String, String)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SnowflakeStream.html" title="class in com.atlan.model.assets">SnowflakeStream</a></dt>
+<dd>
+<div class="block">Builds the minimal object necessary to update a SnowflakeStream.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Table.html#updater(java.lang.String,java.lang.String)">updater(String, String)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Table.html" title="class in com.atlan.model.assets">Table</a></dt>
 <dd>

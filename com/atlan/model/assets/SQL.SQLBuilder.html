@@ -6,15 +6,16 @@
 <title>SQL.SQLBuilder (atlan-java 0.0.3-SNAPSHOT API)</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
-<link rel="stylesheet" type="text/css" href="../../../../jquery/jquery-ui.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../jquery/jquery-ui.min.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../jquery-ui.overrides.css" title="Style">
 <script type="text/javascript" src="../../../../script.js"></script>
 <script type="text/javascript" src="../../../../jquery/jszip/dist/jszip.min.js"></script>
 <script type="text/javascript" src="../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
 <!--[if IE]>
 <script type="text/javascript" src="../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
 <![endif]-->
-<script type="text/javascript" src="../../../../jquery/jquery-3.5.1.js"></script>
-<script type="text/javascript" src="../../../../jquery/jquery-ui.js"></script>
+<script type="text/javascript" src="../../../../jquery/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="../../../../jquery/jquery-ui.min.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -26,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":6,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":6,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10};
+var data = {"i0":10,"i1":6,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":6,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -156,7 +157,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockList">
 <dl>
 <dt>Direct Known Subclasses:</dt>
-<dd><code><a href="AtlanQuery.AtlanQueryBuilder.html" title="class in com.atlan.model.assets">AtlanQuery.AtlanQueryBuilder</a></code>, <code><a href="Column.ColumnBuilder.html" title="class in com.atlan.model.assets">Column.ColumnBuilder</a></code>, <code><a href="Database.DatabaseBuilder.html" title="class in com.atlan.model.assets">Database.DatabaseBuilder</a></code>, <code><a href="MaterializedView.MaterializedViewBuilder.html" title="class in com.atlan.model.assets">MaterializedView.MaterializedViewBuilder</a></code>, <code><a href="Procedure.ProcedureBuilder.html" title="class in com.atlan.model.assets">Procedure.ProcedureBuilder</a></code>, <code><a href="Schema.SchemaBuilder.html" title="class in com.atlan.model.assets">Schema.SchemaBuilder</a></code>, <code><a href="Table.TableBuilder.html" title="class in com.atlan.model.assets">Table.TableBuilder</a></code>, <code><a href="TablePartition.TablePartitionBuilder.html" title="class in com.atlan.model.assets">TablePartition.TablePartitionBuilder</a></code>, <code><a href="View.ViewBuilder.html" title="class in com.atlan.model.assets">View.ViewBuilder</a></code></dd>
+<dd><code><a href="AtlanQuery.AtlanQueryBuilder.html" title="class in com.atlan.model.assets">AtlanQuery.AtlanQueryBuilder</a></code>, <code><a href="Column.ColumnBuilder.html" title="class in com.atlan.model.assets">Column.ColumnBuilder</a></code>, <code><a href="Database.DatabaseBuilder.html" title="class in com.atlan.model.assets">Database.DatabaseBuilder</a></code>, <code><a href="MaterializedView.MaterializedViewBuilder.html" title="class in com.atlan.model.assets">MaterializedView.MaterializedViewBuilder</a></code>, <code><a href="Procedure.ProcedureBuilder.html" title="class in com.atlan.model.assets">Procedure.ProcedureBuilder</a></code>, <code><a href="Schema.SchemaBuilder.html" title="class in com.atlan.model.assets">Schema.SchemaBuilder</a></code>, <code><a href="SnowflakePipe.SnowflakePipeBuilder.html" title="class in com.atlan.model.assets">SnowflakePipe.SnowflakePipeBuilder</a></code>, <code><a href="SnowflakeStream.SnowflakeStreamBuilder.html" title="class in com.atlan.model.assets">SnowflakeStream.SnowflakeStreamBuilder</a></code>, <code><a href="Table.TableBuilder.html" title="class in com.atlan.model.assets">Table.TableBuilder</a></code>, <code><a href="TablePartition.TablePartitionBuilder.html" title="class in com.atlan.model.assets">TablePartition.TablePartitionBuilder</a></code>, <code><a href="View.ViewBuilder.html" title="class in com.atlan.model.assets">View.ViewBuilder</a></code></dd>
 </dl>
 <dl>
 <dt>Enclosing class:</dt>
@@ -172,7 +173,7 @@ extends <a href="Catalog.CatalogBuilder.html" title="class in com.atlan.model.as
 <ul class="blockList">
 <li class="blockList">
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
-<section role="region">
+<section>
 <ul class="blockList">
 <li class="blockList"><a id="constructor.summary">
 <!--   -->
@@ -193,7 +194,7 @@ extends <a href="Catalog.CatalogBuilder.html" title="class in com.atlan.model.as
 </ul>
 </section>
 <!-- ========== METHOD SUMMARY =========== -->
-<section role="region">
+<section>
 <ul class="blockList">
 <li class="blockList"><a id="method.summary">
 <!--   -->
@@ -263,66 +264,76 @@ extends <a href="Catalog.CatalogBuilder.html" title="class in com.atlan.model.as
 </tr>
 <tr id="i11" class="rowColor">
 <td class="colFirst"><code><a href="SQL.SQLBuilder.html" title="type parameter in SQL.SQLBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#putQueryUserMap(java.lang.String,java.lang.Long)">putQueryUserMap</a></span>&#8203;(java.lang.String&nbsp;putQueryUserMapKey,
-               java.lang.Long&nbsp;putQueryUserMapValue)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isProfiled(java.lang.Boolean)">isProfiled</a></span>&#8203;(java.lang.Boolean&nbsp;isProfiled)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i12" class="altColor">
 <td class="colFirst"><code><a href="SQL.SQLBuilder.html" title="type parameter in SQL.SQLBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#queryCount(java.lang.Long)">queryCount</a></span>&#8203;(java.lang.Long&nbsp;queryCount)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#lastProfiledAt(java.lang.Long)">lastProfiledAt</a></span>&#8203;(java.lang.Long&nbsp;lastProfiledAt)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i13" class="rowColor">
 <td class="colFirst"><code><a href="SQL.SQLBuilder.html" title="type parameter in SQL.SQLBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#queryCountUpdatedAt(java.lang.Long)">queryCountUpdatedAt</a></span>&#8203;(java.lang.Long&nbsp;queryCountUpdatedAt)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#putQueryUserMap(java.lang.String,java.lang.Long)">putQueryUserMap</a></span>&#8203;(java.lang.String&nbsp;putQueryUserMapKey,
+               java.lang.Long&nbsp;putQueryUserMapValue)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i14" class="altColor">
 <td class="colFirst"><code><a href="SQL.SQLBuilder.html" title="type parameter in SQL.SQLBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#queryUserCount(java.lang.Long)">queryUserCount</a></span>&#8203;(java.lang.Long&nbsp;queryUserCount)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#queryCount(java.lang.Long)">queryCount</a></span>&#8203;(java.lang.Long&nbsp;queryCount)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i15" class="rowColor">
 <td class="colFirst"><code><a href="SQL.SQLBuilder.html" title="type parameter in SQL.SQLBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#queryUserMap(java.util.Map)">queryUserMap</a></span>&#8203;(java.util.Map&lt;? extends java.lang.String,&#8203;? extends java.lang.Long&gt;&nbsp;queryUserMap)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#queryCountUpdatedAt(java.lang.Long)">queryCountUpdatedAt</a></span>&#8203;(java.lang.Long&nbsp;queryCountUpdatedAt)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i16" class="altColor">
 <td class="colFirst"><code><a href="SQL.SQLBuilder.html" title="type parameter in SQL.SQLBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#schemaName(java.lang.String)">schemaName</a></span>&#8203;(java.lang.String&nbsp;schemaName)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#queryUserCount(java.lang.Long)">queryUserCount</a></span>&#8203;(java.lang.Long&nbsp;queryUserCount)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i17" class="rowColor">
 <td class="colFirst"><code><a href="SQL.SQLBuilder.html" title="type parameter in SQL.SQLBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#schemaQualifiedName(java.lang.String)">schemaQualifiedName</a></span>&#8203;(java.lang.String&nbsp;schemaQualifiedName)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#queryUserMap(java.util.Map)">queryUserMap</a></span>&#8203;(java.util.Map&lt;? extends java.lang.String,&#8203;? extends java.lang.Long&gt;&nbsp;queryUserMap)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i18" class="altColor">
-<td class="colFirst"><code>protected abstract <a href="SQL.SQLBuilder.html" title="type parameter in SQL.SQLBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#self()">self</a></span>()</code></th>
+<td class="colFirst"><code><a href="SQL.SQLBuilder.html" title="type parameter in SQL.SQLBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#schemaName(java.lang.String)">schemaName</a></span>&#8203;(java.lang.String&nbsp;schemaName)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i19" class="rowColor">
 <td class="colFirst"><code><a href="SQL.SQLBuilder.html" title="type parameter in SQL.SQLBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#tableName(java.lang.String)">tableName</a></span>&#8203;(java.lang.String&nbsp;tableName)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#schemaQualifiedName(java.lang.String)">schemaQualifiedName</a></span>&#8203;(java.lang.String&nbsp;schemaQualifiedName)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i20" class="altColor">
-<td class="colFirst"><code><a href="SQL.SQLBuilder.html" title="type parameter in SQL.SQLBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#tableQualifiedName(java.lang.String)">tableQualifiedName</a></span>&#8203;(java.lang.String&nbsp;tableQualifiedName)</code></th>
+<td class="colFirst"><code>protected abstract <a href="SQL.SQLBuilder.html" title="type parameter in SQL.SQLBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#self()">self</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i21" class="rowColor">
-<td class="colFirst"><code>java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
+<td class="colFirst"><code><a href="SQL.SQLBuilder.html" title="type parameter in SQL.SQLBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#tableName(java.lang.String)">tableName</a></span>&#8203;(java.lang.String&nbsp;tableName)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i22" class="altColor">
 <td class="colFirst"><code><a href="SQL.SQLBuilder.html" title="type parameter in SQL.SQLBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#viewName(java.lang.String)">viewName</a></span>&#8203;(java.lang.String&nbsp;viewName)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#tableQualifiedName(java.lang.String)">tableQualifiedName</a></span>&#8203;(java.lang.String&nbsp;tableQualifiedName)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i23" class="rowColor">
+<td class="colFirst"><code>java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i24" class="altColor">
+<td class="colFirst"><code><a href="SQL.SQLBuilder.html" title="type parameter in SQL.SQLBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#viewName(java.lang.String)">viewName</a></span>&#8203;(java.lang.String&nbsp;viewName)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i25" class="rowColor">
 <td class="colFirst"><code><a href="SQL.SQLBuilder.html" title="type parameter in SQL.SQLBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#viewQualifiedName(java.lang.String)">viewQualifiedName</a></span>&#8203;(java.lang.String&nbsp;viewQualifiedName)</code></th>
 <td class="colLast">&nbsp;</td>
@@ -373,7 +384,7 @@ extends <a href="Catalog.CatalogBuilder.html" title="class in com.atlan.model.as
 <ul class="blockList">
 <li class="blockList">
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
-<section role="region">
+<section>
 <ul class="blockList">
 <li class="blockList"><a id="constructor.detail">
 <!--   -->
@@ -392,7 +403,7 @@ extends <a href="Catalog.CatalogBuilder.html" title="class in com.atlan.model.as
 </ul>
 </section>
 <!-- ============ METHOD DETAIL ========== -->
-<section role="region">
+<section>
 <ul class="blockList">
 <li class="blockList"><a id="method.detail">
 <!--   -->
@@ -604,6 +615,32 @@ extends <a href="Catalog.CatalogBuilder.html" title="class in com.atlan.model.as
 <li class="blockList">
 <h4>viewQualifiedName</h4>
 <pre class="methodSignature">public&nbsp;<a href="SQL.SQLBuilder.html" title="type parameter in SQL.SQLBuilder">B</a>&nbsp;viewQualifiedName&#8203;(java.lang.String&nbsp;viewQualifiedName)</pre>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="isProfiled(java.lang.Boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isProfiled</h4>
+<pre class="methodSignature">public&nbsp;<a href="SQL.SQLBuilder.html" title="type parameter in SQL.SQLBuilder">B</a>&nbsp;isProfiled&#8203;(java.lang.Boolean&nbsp;isProfiled)</pre>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
+<a id="lastProfiledAt(java.lang.Long)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>lastProfiledAt</h4>
+<pre class="methodSignature">public&nbsp;<a href="SQL.SQLBuilder.html" title="type parameter in SQL.SQLBuilder">B</a>&nbsp;lastProfiledAt&#8203;(java.lang.Long&nbsp;lastProfiledAt)</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>

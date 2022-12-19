@@ -6,15 +6,16 @@
 <title>IndexSearchDSL (atlan-java 0.0.3-SNAPSHOT API)</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
-<link rel="stylesheet" type="text/css" href="../../../../jquery/jquery-ui.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../jquery/jquery-ui.min.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../jquery-ui.overrides.css" title="Style">
 <script type="text/javascript" src="../../../../script.js"></script>
 <script type="text/javascript" src="../../../../jquery/jszip/dist/jszip.min.js"></script>
 <script type="text/javascript" src="../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
 <!--[if IE]>
 <script type="text/javascript" src="../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
 <![endif]-->
-<script type="text/javascript" src="../../../../jquery/jquery-3.5.1.js"></script>
-<script type="text/javascript" src="../../../../jquery/jquery-ui.js"></script>
+<script type="text/javascript" src="../../../../jquery/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="../../../../jquery/jquery-ui.min.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -148,7 +149,7 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <ul class="blockList">
 <li class="blockList">
 <!-- ======== NESTED CLASS SUMMARY ======== -->
-<section role="region">
+<section>
 <ul class="blockList">
 <li class="blockList"><a id="nested.class.summary">
 <!--   -->
@@ -178,7 +179,7 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 </ul>
 </section>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
-<section role="region">
+<section>
 <ul class="blockList">
 <li class="blockList"><a id="constructor.summary">
 <!--   -->
@@ -201,7 +202,7 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 </ul>
 </section>
 <!-- ========== METHOD SUMMARY =========== -->
-<section role="region">
+<section>
 <ul class="blockList">
 <li class="blockList"><a id="method.summary">
 <!--   -->
@@ -230,8 +231,8 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code>co.elastic.clients.elasticsearch._types.aggregations.Aggregation</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAggregation()">getAggregation</a></span>()</code></th>
+<td class="colFirst"><code>java.util.Map&lt;java.lang.String,&#8203;co.elastic.clients.elasticsearch._types.aggregations.Aggregation&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAggregations()">getAggregations</a></span>()</code></th>
 <td class="colLast">
 <div class="block">(Optional) Aggregation to apply to the query.</div>
 </td>
@@ -278,7 +279,7 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAggregation(co.elastic.clients.elasticsearch._types.aggregations.Aggregation)">setAggregation</a></span>&#8203;(co.elastic.clients.elasticsearch._types.aggregations.Aggregation&nbsp;aggregation)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAggregations(java.util.Map)">setAggregations</a></span>&#8203;(java.util.Map&lt;java.lang.String,&#8203;co.elastic.clients.elasticsearch._types.aggregations.Aggregation&gt;&nbsp;aggregations)</code></th>
 <td class="colLast">
 <div class="block">(Optional) Aggregation to apply to the query.</div>
 </td>
@@ -348,7 +349,7 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <ul class="blockList">
 <li class="blockList">
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
-<section role="region">
+<section>
 <ul class="blockList">
 <li class="blockList"><a id="constructor.detail">
 <!--   -->
@@ -367,7 +368,7 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 </ul>
 </section>
 <!-- ============ METHOD DETAIL ========== -->
-<section role="region">
+<section>
 <ul class="blockList">
 <li class="blockList"><a id="method.detail">
 <!--   -->
@@ -412,13 +413,13 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <div class="block">When true, specify the precise number of results in the response, otherwise estimate and max-out at 10,000.</div>
 </li>
 </ul>
-<a id="getAggregation()">
+<a id="getAggregations()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>getAggregation</h4>
-<pre class="methodSignature">public&nbsp;co.elastic.clients.elasticsearch._types.aggregations.Aggregation&nbsp;getAggregation()</pre>
+<h4>getAggregations</h4>
+<pre class="methodSignature">public&nbsp;java.util.Map&lt;java.lang.String,&#8203;co.elastic.clients.elasticsearch._types.aggregations.Aggregation&gt;&nbsp;getAggregations()</pre>
 <div class="block">(Optional) Aggregation to apply to the query.</div>
 </li>
 </ul>
@@ -472,13 +473,13 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <div class="block">When true, specify the precise number of results in the response, otherwise estimate and max-out at 10,000.</div>
 </li>
 </ul>
-<a id="setAggregation(co.elastic.clients.elasticsearch._types.aggregations.Aggregation)">
+<a id="setAggregations(java.util.Map)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>setAggregation</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setAggregation&#8203;(co.elastic.clients.elasticsearch._types.aggregations.Aggregation&nbsp;aggregation)</pre>
+<h4>setAggregations</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;setAggregations&#8203;(java.util.Map&lt;java.lang.String,&#8203;co.elastic.clients.elasticsearch._types.aggregations.Aggregation&gt;&nbsp;aggregations)</pre>
 <div class="block">(Optional) Aggregation to apply to the query.</div>
 </li>
 </ul>

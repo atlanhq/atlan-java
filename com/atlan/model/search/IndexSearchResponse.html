@@ -6,15 +6,16 @@
 <title>IndexSearchResponse (atlan-java 0.0.3-SNAPSHOT API)</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
-<link rel="stylesheet" type="text/css" href="../../../../jquery/jquery-ui.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../jquery/jquery-ui.min.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../jquery-ui.overrides.css" title="Style">
 <script type="text/javascript" src="../../../../script.js"></script>
 <script type="text/javascript" src="../../../../jquery/jszip/dist/jszip.min.js"></script>
 <script type="text/javascript" src="../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
 <!--[if IE]>
 <script type="text/javascript" src="../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
 <![endif]-->
-<script type="text/javascript" src="../../../../jquery/jquery-3.5.1.js"></script>
-<script type="text/javascript" src="../../../../jquery/jquery-ui.js"></script>
+<script type="text/javascript" src="../../../../jquery/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="../../../../jquery/jquery-ui.min.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -26,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -155,7 +156,7 @@ extends <a href="../../net/ApiResource.html" title="class in com.atlan.net">ApiR
 <ul class="blockList">
 <li class="blockList">
 <!-- ======== NESTED CLASS SUMMARY ======== -->
-<section role="region">
+<section>
 <ul class="blockList">
 <li class="blockList"><a id="nested.class.summary">
 <!--   -->
@@ -179,7 +180,7 @@ extends <a href="../../net/ApiResource.html" title="class in com.atlan.net">ApiR
 </ul>
 </section>
 <!-- =========== FIELD SUMMARY =========== -->
-<section role="region">
+<section>
 <ul class="blockList">
 <li class="blockList"><a id="field.summary">
 <!--   -->
@@ -196,7 +197,7 @@ extends <a href="../../net/ApiResource.html" title="class in com.atlan.net">ApiR
 </ul>
 </section>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
-<section role="region">
+<section>
 <ul class="blockList">
 <li class="blockList"><a id="constructor.summary">
 <!--   -->
@@ -217,7 +218,7 @@ extends <a href="../../net/ApiResource.html" title="class in com.atlan.net">ApiR
 </ul>
 </section>
 <!-- ========== METHOD SUMMARY =========== -->
-<section role="region">
+<section>
 <ul class="blockList">
 <li class="blockList"><a id="method.summary">
 <!--   -->
@@ -241,74 +242,88 @@ extends <a href="../../net/ApiResource.html" title="class in com.atlan.net">ApiR
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
+<td class="colFirst"><code>java.util.Map&lt;java.lang.String,&#8203;<a href="AggregationResult.html" title="class in com.atlan.model.search">AggregationResult</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAggregations()">getAggregations</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Map of results for the requested aggregations.</div>
+</td>
+</tr>
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getApproximateCount()">getApproximateCount</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Approximate number of total results.</div>
 </td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>java.util.List&lt;<a href="../core/Entity.html" title="class in com.atlan.model.core">Entity</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getEntities()">getEntities</a></span>()</code></th>
 <td class="colLast">
 <div class="block">List of results from the search.</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="IndexSearchResponse.html" title="class in com.atlan.model.search">IndexSearchResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getNextPage()">getNextPage</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Retrieve the next page of results from this response.</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getQueryType()">getQueryType</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Type of query.</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="SearchParameters.html" title="class in com.atlan.model.search">SearchParameters</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSearchParameters()">getSearchParameters</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Parameters for the search.</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hashCode()">hashCode</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i9" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAggregations(java.util.Map)">setAggregations</a></span>&#8203;(java.util.Map&lt;java.lang.String,&#8203;<a href="AggregationResult.html" title="class in com.atlan.model.search">AggregationResult</a>&gt;&nbsp;aggregations)</code></th>
+<td class="colLast">
+<div class="block">Map of results for the requested aggregations.</div>
+</td>
+</tr>
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setApproximateCount(java.lang.Long)">setApproximateCount</a></span>&#8203;(java.lang.Long&nbsp;approximateCount)</code></th>
 <td class="colLast">
 <div class="block">Approximate number of total results.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setEntities(java.util.List)">setEntities</a></span>&#8203;(java.util.List&lt;<a href="../core/Entity.html" title="class in com.atlan.model.core">Entity</a>&gt;&nbsp;entities)</code></th>
 <td class="colLast">
 <div class="block">List of results from the search.</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setQueryType(java.lang.String)">setQueryType</a></span>&#8203;(java.lang.String&nbsp;queryType)</code></th>
 <td class="colLast">
 <div class="block">Type of query.</div>
 </td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setSearchParameters(com.atlan.model.search.SearchParameters)">setSearchParameters</a></span>&#8203;(<a href="SearchParameters.html" title="class in com.atlan.model.search">SearchParameters</a>&nbsp;searchParameters)</code></th>
 <td class="colLast">
 <div class="block">Parameters for the search.</div>
 </td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
@@ -345,7 +360,7 @@ extends <a href="../../net/ApiResource.html" title="class in com.atlan.net">ApiR
 <ul class="blockList">
 <li class="blockList">
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
-<section role="region">
+<section>
 <ul class="blockList">
 <li class="blockList"><a id="constructor.detail">
 <!--   -->
@@ -364,7 +379,7 @@ extends <a href="../../net/ApiResource.html" title="class in com.atlan.net">ApiR
 </ul>
 </section>
 <!-- ============ METHOD DETAIL ========== -->
-<section role="region">
+<section>
 <ul class="blockList">
 <li class="blockList"><a id="method.detail">
 <!--   -->
@@ -427,6 +442,16 @@ extends <a href="../../net/ApiResource.html" title="class in com.atlan.net">ApiR
 <div class="block">Approximate number of total results.</div>
 </li>
 </ul>
+<a id="getAggregations()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getAggregations</h4>
+<pre class="methodSignature">public&nbsp;java.util.Map&lt;java.lang.String,&#8203;<a href="AggregationResult.html" title="class in com.atlan.model.search">AggregationResult</a>&gt;&nbsp;getAggregations()</pre>
+<div class="block">Map of results for the requested aggregations.</div>
+</li>
+</ul>
 <a id="setQueryType(java.lang.String)">
 <!--   -->
 </a>
@@ -465,6 +490,16 @@ extends <a href="../../net/ApiResource.html" title="class in com.atlan.net">ApiR
 <h4>setApproximateCount</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;setApproximateCount&#8203;(java.lang.Long&nbsp;approximateCount)</pre>
 <div class="block">Approximate number of total results.</div>
+</li>
+</ul>
+<a id="setAggregations(java.util.Map)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>setAggregations</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;setAggregations&#8203;(java.util.Map&lt;java.lang.String,&#8203;<a href="AggregationResult.html" title="class in com.atlan.model.search">AggregationResult</a>&gt;&nbsp;aggregations)</pre>
+<div class="block">Map of results for the requested aggregations.</div>
 </li>
 </ul>
 <a id="toString()">

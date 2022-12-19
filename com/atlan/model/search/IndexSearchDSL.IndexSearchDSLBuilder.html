@@ -6,15 +6,16 @@
 <title>IndexSearchDSL.IndexSearchDSLBuilder (atlan-java 0.0.3-SNAPSHOT API)</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
-<link rel="stylesheet" type="text/css" href="../../../../jquery/jquery-ui.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../jquery/jquery-ui.min.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../jquery-ui.overrides.css" title="Style">
 <script type="text/javascript" src="../../../../script.js"></script>
 <script type="text/javascript" src="../../../../jquery/jszip/dist/jszip.min.js"></script>
 <script type="text/javascript" src="../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
 <!--[if IE]>
 <script type="text/javascript" src="../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
 <![endif]-->
-<script type="text/javascript" src="../../../../jquery/jquery-3.5.1.js"></script>
-<script type="text/javascript" src="../../../../jquery/jquery-ui.js"></script>
+<script type="text/javascript" src="../../../../jquery/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="../../../../jquery/jquery-ui.min.js"></script>
 </head>
 <body>
 <script type="text/javascript"><!--
@@ -26,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":6,"i2":10,"i3":10,"i4":10,"i5":6,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10};
+var data = {"i0":10,"i1":10,"i2":6,"i3":10,"i4":10,"i5":10,"i6":10,"i7":6,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -152,7 +153,7 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <ul class="blockList">
 <li class="blockList">
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
-<section role="region">
+<section>
 <ul class="blockList">
 <li class="blockList"><a id="constructor.summary">
 <!--   -->
@@ -173,7 +174,7 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 </ul>
 </section>
 <!-- ========== METHOD SUMMARY =========== -->
-<section role="region">
+<section>
 <ul class="blockList">
 <li class="blockList"><a id="method.summary">
 <!--   -->
@@ -188,55 +189,66 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code><a href="IndexSearchDSL.IndexSearchDSLBuilder.html" title="type parameter in IndexSearchDSL.IndexSearchDSLBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#aggregation(co.elastic.clients.elasticsearch._types.aggregations.Aggregation)">aggregation</a></span>&#8203;(co.elastic.clients.elasticsearch._types.aggregations.Aggregation&nbsp;aggregation)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#aggregation(java.lang.String,co.elastic.clients.elasticsearch._types.aggregations.Aggregation)">aggregation</a></span>&#8203;(java.lang.String&nbsp;aggregationKey,
+           co.elastic.clients.elasticsearch._types.aggregations.Aggregation&nbsp;aggregationValue)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
+<td class="colFirst"><code><a href="IndexSearchDSL.IndexSearchDSLBuilder.html" title="type parameter in IndexSearchDSL.IndexSearchDSLBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#aggregations(java.util.Map)">aggregations</a></span>&#8203;(java.util.Map&lt;? extends java.lang.String,&#8203;? extends co.elastic.clients.elasticsearch._types.aggregations.Aggregation&gt;&nbsp;aggregations)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i2" class="altColor">
 <td class="colFirst"><code>abstract <a href="IndexSearchDSL.IndexSearchDSLBuilder.html" title="type parameter in IndexSearchDSL.IndexSearchDSLBuilder">C</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#build()">build</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i2" class="altColor">
-<td class="colFirst"><code><a href="IndexSearchDSL.IndexSearchDSLBuilder.html" title="type parameter in IndexSearchDSL.IndexSearchDSLBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearSort()">clearSort</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="IndexSearchDSL.IndexSearchDSLBuilder.html" title="type parameter in IndexSearchDSL.IndexSearchDSLBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#from(java.lang.Integer)">from</a></span>&#8203;(java.lang.Integer&nbsp;from)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearAggregations()">clearAggregations</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="IndexSearchDSL.IndexSearchDSLBuilder.html" title="type parameter in IndexSearchDSL.IndexSearchDSLBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#query(co.elastic.clients.elasticsearch._types.query_dsl.Query)">query</a></span>&#8203;(co.elastic.clients.elasticsearch._types.query_dsl.Query&nbsp;query)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearSort()">clearSort</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
-<td class="colFirst"><code>protected abstract <a href="IndexSearchDSL.IndexSearchDSLBuilder.html" title="type parameter in IndexSearchDSL.IndexSearchDSLBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#self()">self</a></span>()</code></th>
+<td class="colFirst"><code><a href="IndexSearchDSL.IndexSearchDSLBuilder.html" title="type parameter in IndexSearchDSL.IndexSearchDSLBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#from(java.lang.Integer)">from</a></span>&#8203;(java.lang.Integer&nbsp;from)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code><a href="IndexSearchDSL.IndexSearchDSLBuilder.html" title="type parameter in IndexSearchDSL.IndexSearchDSLBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#size(java.lang.Integer)">size</a></span>&#8203;(java.lang.Integer&nbsp;size)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#query(co.elastic.clients.elasticsearch._types.query_dsl.Query)">query</a></span>&#8203;(co.elastic.clients.elasticsearch._types.query_dsl.Query&nbsp;query)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
-<td class="colFirst"><code><a href="IndexSearchDSL.IndexSearchDSLBuilder.html" title="type parameter in IndexSearchDSL.IndexSearchDSLBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#sort(java.util.Collection)">sort</a></span>&#8203;(java.util.Collection&lt;? extends co.elastic.clients.elasticsearch._types.SortOptions&gt;&nbsp;sort)</code></th>
+<td class="colFirst"><code>protected abstract <a href="IndexSearchDSL.IndexSearchDSLBuilder.html" title="type parameter in IndexSearchDSL.IndexSearchDSLBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#self()">self</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code><a href="IndexSearchDSL.IndexSearchDSLBuilder.html" title="type parameter in IndexSearchDSL.IndexSearchDSLBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#sortOption(co.elastic.clients.elasticsearch._types.SortOptions)">sortOption</a></span>&#8203;(co.elastic.clients.elasticsearch._types.SortOptions&nbsp;sortOption)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#size(java.lang.Integer)">size</a></span>&#8203;(java.lang.Integer&nbsp;size)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i9" class="rowColor">
+<td class="colFirst"><code><a href="IndexSearchDSL.IndexSearchDSLBuilder.html" title="type parameter in IndexSearchDSL.IndexSearchDSLBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#sort(java.util.Collection)">sort</a></span>&#8203;(java.util.Collection&lt;? extends co.elastic.clients.elasticsearch._types.SortOptions&gt;&nbsp;sort)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i10" class="altColor">
+<td class="colFirst"><code><a href="IndexSearchDSL.IndexSearchDSLBuilder.html" title="type parameter in IndexSearchDSL.IndexSearchDSLBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#sortOption(co.elastic.clients.elasticsearch._types.SortOptions)">sortOption</a></span>&#8203;(co.elastic.clients.elasticsearch._types.SortOptions&nbsp;sortOption)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code><a href="IndexSearchDSL.IndexSearchDSLBuilder.html" title="type parameter in IndexSearchDSL.IndexSearchDSLBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#trackTotalHits(java.lang.Boolean)">trackTotalHits</a></span>&#8203;(java.lang.Boolean&nbsp;trackTotalHits)</code></th>
 <td class="colLast">&nbsp;</td>
@@ -266,7 +278,7 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <ul class="blockList">
 <li class="blockList">
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
-<section role="region">
+<section>
 <ul class="blockList">
 <li class="blockList"><a id="constructor.detail">
 <!--   -->
@@ -285,7 +297,7 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 </ul>
 </section>
 <!-- ============ METHOD DETAIL ========== -->
-<section role="region">
+<section>
 <ul class="blockList">
 <li class="blockList"><a id="method.detail">
 <!--   -->
@@ -356,17 +368,32 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 </dl>
 </li>
 </ul>
-<a id="aggregation(co.elastic.clients.elasticsearch._types.aggregations.Aggregation)">
+<a id="aggregation(java.lang.String,co.elastic.clients.elasticsearch._types.aggregations.Aggregation)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>aggregation</h4>
-<pre class="methodSignature">public&nbsp;<a href="IndexSearchDSL.IndexSearchDSLBuilder.html" title="type parameter in IndexSearchDSL.IndexSearchDSLBuilder">B</a>&nbsp;aggregation&#8203;(co.elastic.clients.elasticsearch._types.aggregations.Aggregation&nbsp;aggregation)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
+<pre class="methodSignature">public&nbsp;<a href="IndexSearchDSL.IndexSearchDSLBuilder.html" title="type parameter in IndexSearchDSL.IndexSearchDSLBuilder">B</a>&nbsp;aggregation&#8203;(java.lang.String&nbsp;aggregationKey,
+                     co.elastic.clients.elasticsearch._types.aggregations.Aggregation&nbsp;aggregationValue)</pre>
+</li>
+</ul>
+<a id="aggregations(java.util.Map)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>aggregations</h4>
+<pre class="methodSignature">public&nbsp;<a href="IndexSearchDSL.IndexSearchDSLBuilder.html" title="type parameter in IndexSearchDSL.IndexSearchDSLBuilder">B</a>&nbsp;aggregations&#8203;(java.util.Map&lt;? extends java.lang.String,&#8203;? extends co.elastic.clients.elasticsearch._types.aggregations.Aggregation&gt;&nbsp;aggregations)</pre>
+</li>
+</ul>
+<a id="clearAggregations()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>clearAggregations</h4>
+<pre class="methodSignature">public&nbsp;<a href="IndexSearchDSL.IndexSearchDSLBuilder.html" title="type parameter in IndexSearchDSL.IndexSearchDSLBuilder">B</a>&nbsp;clearAggregations()</pre>
 </li>
 </ul>
 <a id="query(co.elastic.clients.elasticsearch._types.query_dsl.Query)">
