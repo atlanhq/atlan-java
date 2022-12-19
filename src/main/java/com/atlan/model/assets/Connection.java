@@ -233,9 +233,25 @@ public class Connection extends Asset {
      * more-complete Connection object.
      *
      * @return the minimal object necessary to update the Connection, as a builder
+     * @throws InvalidRequestException if any of the minimal set of required properties for Connection are not found in the initial object
      */
     @Override
-    protected ConnectionBuilder<?, ?> trimToRequired() {
+    public ConnectionBuilder<?, ?> trimToRequired() throws InvalidRequestException {
+        List<String> missing = new ArrayList<>();
+        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
+            missing.add("qualifiedName");
+        }
+        if (this.getName() == null || this.getName().length() == 0) {
+            missing.add("name");
+        }
+        if (!missing.isEmpty()) {
+            throw new InvalidRequestException(
+                    "Required field for updating Connection is missing.",
+                    String.join(",", missing),
+                    "ATLAN-JAVA-CLIENT-400-404",
+                    400,
+                    null);
+        }
         return updater(this.getQualifiedName(), this.getName());
     }
 

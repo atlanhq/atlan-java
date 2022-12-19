@@ -4,6 +4,7 @@ package com.atlan.live;
 
 import static org.testng.Assert.*;
 
+import co.elastic.clients.elasticsearch._types.aggregations.Aggregation;
 import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import com.atlan.api.EntityBulkEndpoint;
@@ -15,6 +16,7 @@ import com.atlan.model.assets.GlossaryTerm;
 import com.atlan.model.core.Entity;
 import com.atlan.model.core.EntityMutationResponse;
 import com.atlan.model.enums.*;
+import com.atlan.model.search.AggregationBucketResult;
 import com.atlan.model.search.IndexSearchDSL;
 import com.atlan.model.search.IndexSearchRequest;
 import com.atlan.model.search.IndexSearchResponse;
@@ -513,15 +515,30 @@ public class GlossaryTest extends AtlanLiveTest {
 
         Query combined = BoolQuery.of(b -> b.filter(byState, byType, byName))._toQuery();
 
+        Aggregation aggregation = Aggregation.of(a -> a.terms(t -> t.field("__typeName.keyword")));
+
         IndexSearchRequest index = IndexSearchRequest.builder()
-                .dsl(IndexSearchDSL.builder().from(0).size(100).query(combined).build())
+                .dsl(IndexSearchDSL.builder()
+                        .from(0)
+                        .size(100)
+                        .query(combined)
+                        .aggregation("type", aggregation)
+                        .build())
                 .attributes(Collections.singletonList("anchor"))
                 .relationAttributes(Collections.singletonList("certificateStatus"))
                 .build();
 
         IndexSearchResponse response = index.search();
-
         assertNotNull(response);
+        assertNotNull(response.getAggregations());
+        assertEquals(response.getAggregations().size(), 1);
+        assertTrue(response.getAggregations().get("type") instanceof AggregationBucketResult);
+        assertEquals(
+                ((AggregationBucketResult) response.getAggregations().get("type"))
+                        .getBuckets()
+                        .size(),
+                1);
+
         assertEquals(response.getApproximateCount().longValue(), 1L);
         List<Entity> entities = response.getEntities();
         assertNotNull(entities);

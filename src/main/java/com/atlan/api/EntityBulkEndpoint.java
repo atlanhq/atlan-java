@@ -5,11 +5,14 @@ package com.atlan.api;
 import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.InvalidRequestException;
+import com.atlan.model.assets.Asset;
 import com.atlan.model.core.AtlanObject;
 import com.atlan.model.core.Entity;
 import com.atlan.model.core.EntityMutationResponse;
 import com.atlan.model.enums.AtlanDeleteType;
+import com.atlan.model.enums.AtlanStatus;
 import com.atlan.net.ApiResource;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import lombok.Data;
@@ -104,6 +107,39 @@ public class EntityBulkEndpoint {
                 "ATLAN-JAVA-CLIENT-400",
                 400,
                 null);
+    }
+
+    /**
+     * Restores any entity from a soft-deleted (archived) to an active state.
+     *
+     * @param value entity to restore
+     * @return the results of the restoration (the resoted entity will be i nthe list of updated entities)
+     * @throws AtlanException on any API interaction problems
+     */
+    public static EntityMutationResponse restore(Entity value) throws AtlanException {
+        return restore(Collections.singletonList(value));
+    }
+
+    /**
+     * Restores any entities in the list provided from a soft-deleted (archived) to active state.
+     *
+     * @param values entities to restore
+     * @return the results of the restoration (any restored entities will be in the list of updated entities)
+     * @throws AtlanException on any API interaction problems
+     */
+    public static EntityMutationResponse restore(List<Entity> values) throws AtlanException {
+        String url = String.format(
+                "%s%s",
+                Atlan.getBaseUrl(),
+                String.format(
+                        "%s?replaceClassifications=false&replaceBusinessAttributes=false&overwriteBusinessAttributes=false",
+                        endpoint));
+        List<Entity> culled = new ArrayList<>();
+        for (Entity one : values) {
+            culled.add(((Asset) one).trimToRequired().status(AtlanStatus.ACTIVE).build());
+        }
+        BulkEntityRequest beq = BulkEntityRequest.builder().entities(culled).build();
+        return ApiResource.request(ApiResource.RequestMethod.POST, url, beq, EntityMutationResponse.class, null);
     }
 
     /**

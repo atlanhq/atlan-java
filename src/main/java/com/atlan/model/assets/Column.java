@@ -3,6 +3,7 @@
 package com.atlan.model.assets;
 
 import com.atlan.exception.AtlanException;
+import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.core.Entity;
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -11,6 +12,7 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
@@ -352,9 +354,25 @@ public class Column extends SQL {
      * more-complete Column object.
      *
      * @return the minimal object necessary to update the Column, as a builder
+     * @throws InvalidRequestException if any of the minimal set of required properties for Column are not found in the initial object
      */
     @Override
-    protected ColumnBuilder<?, ?> trimToRequired() {
+    public ColumnBuilder<?, ?> trimToRequired() throws InvalidRequestException {
+        List<String> missing = new ArrayList<>();
+        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
+            missing.add("qualifiedName");
+        }
+        if (this.getName() == null || this.getName().length() == 0) {
+            missing.add("name");
+        }
+        if (!missing.isEmpty()) {
+            throw new InvalidRequestException(
+                    "Required field for updating Column is missing.",
+                    String.join(",", missing),
+                    "ATLAN-JAVA-CLIENT-400-404",
+                    400,
+                    null);
+        }
         return updater(this.getQualifiedName(), this.getName());
     }
 

@@ -2,6 +2,9 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
+import com.atlan.exception.InvalidRequestException;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -42,9 +45,25 @@ public class IndistinctAsset extends Asset {
      * from a potentially more-complete asset object.
      *
      * @return the minimal object necessary to update the asset, as a builder
+     * @throws InvalidRequestException if any of the minimal set of required properties are not found in the initial object
      */
     @Override
-    protected IndistinctAssetBuilder<?, ?> trimToRequired() {
+    public IndistinctAssetBuilder<?, ?> trimToRequired() throws InvalidRequestException {
+        List<String> missing = new ArrayList<>();
+        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
+            missing.add("qualifiedName");
+        }
+        if (this.getName() == null || this.getName().length() == 0) {
+            missing.add("name");
+        }
+        if (!missing.isEmpty()) {
+            throw new InvalidRequestException(
+                    "Required field for updating Asset is missing.",
+                    String.join(",", missing),
+                    "ATLAN-JAVA-CLIENT-400-404",
+                    400,
+                    null);
+        }
         return updater(this.getQualifiedName(), this.getName());
     }
 }

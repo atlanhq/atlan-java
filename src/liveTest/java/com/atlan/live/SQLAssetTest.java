@@ -7,6 +7,7 @@ import static org.testng.Assert.*;
 import co.elastic.clients.elasticsearch._types.FieldSort;
 import co.elastic.clients.elasticsearch._types.SortOptions;
 import co.elastic.clients.elasticsearch._types.SortOrder;
+import co.elastic.clients.elasticsearch._types.aggregations.Aggregation;
 import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import com.atlan.Atlan;
@@ -445,11 +446,14 @@ public class SQLAssetTest extends AtlanLiveTest {
         SortOptions sort = SortOptions.of(
                 s -> s.field(FieldSort.of(f -> f.field("__timestamp").order(SortOrder.Asc))));
 
+        Aggregation aggregation = Aggregation.of(a -> a.terms(t -> t.field("__typeName.keyword")));
+
         IndexSearchRequest index = IndexSearchRequest.builder()
                 .dsl(IndexSearchDSL.builder()
                         .from(0)
                         .size(50)
                         .query(combined)
+                        .aggregation("type", aggregation)
                         .sortOption(sort)
                         .build())
                 .attribute("name")
@@ -467,6 +471,15 @@ public class SQLAssetTest extends AtlanLiveTest {
 
         assertEquals(response.getApproximateCount().longValue(), 12L);
         List<Entity> entities = response.getEntities();
+        assertNotNull(response.getAggregations());
+        assertEquals(response.getAggregations().size(), 1);
+        assertTrue(response.getAggregations().get("type") instanceof AggregationBucketResult);
+        assertEquals(
+                ((AggregationBucketResult) response.getAggregations().get("type"))
+                        .getBuckets()
+                        .size(),
+                7);
+
         assertNotNull(entities);
         assertEquals(entities.size(), 12);
 
