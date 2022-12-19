@@ -113,7 +113,7 @@ public class EntityBulkEndpoint {
      * Restores any entity from a soft-deleted (archived) to an active state.
      *
      * @param value entity to restore
-     * @return the results of the restoration (the resoted entity will be i nthe list of updated entities)
+     * @return the results of the restoration (the restored entity will be in the list of updated entities)
      * @throws AtlanException on any API interaction problems
      */
     public static EntityMutationResponse restore(Entity value) throws AtlanException {
