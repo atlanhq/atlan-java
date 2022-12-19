@@ -14,7 +14,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @Builder
 @EqualsAndHashCode(callSuper = false)
-public class BucketResult extends AggregationResult {
+public class AggregationBucketResult extends AggregationResult {
     private static final long serialVersionUID = 2L;
 
     /**
@@ -33,5 +33,5 @@ public class BucketResult extends AggregationResult {
     Long sumOtherDocCount;
 
     /** List of the top buckets that resulted from the aggregation. */
-    List<BucketDetails> buckets;
+    List<AggregationBucketDetails> buckets;
 }

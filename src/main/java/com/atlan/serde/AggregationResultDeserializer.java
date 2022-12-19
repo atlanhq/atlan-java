@@ -2,9 +2,9 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.serde;
 
+import com.atlan.model.search.AggregationBucketResult;
+import com.atlan.model.search.AggregationMetricResult;
 import com.atlan.model.search.AggregationResult;
-import com.atlan.model.search.BucketResult;
-import com.atlan.model.search.MetricResult;
 import com.atlan.util.JacksonUtils;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -51,10 +51,10 @@ public class AggregationResultDeserializer extends StdDeserializer<AggregationRe
         JsonNode buckets = root.get("buckets"); // exists on entities and custom metadata
         if (value != null && value.isNumber()) {
             // Delegate to metrics deserialization
-            return MetricResult.builder().value(value.asDouble()).build();
+            return AggregationMetricResult.builder().value(value.asDouble()).build();
         } else if (buckets != null) {
             // Delegate to bucket deserialization
-            return BucketResult.builder()
+            return AggregationBucketResult.builder()
                     .docCountErrorUpperBound(JacksonUtils.deserializeLong(root, "doc_count_error_upper_bound"))
                     .sumOtherDocCount(JacksonUtils.deserializeLong(root, "sum_other_doc_count"))
                     .buckets(JacksonUtils.deserializeObject(root, "buckets", new TypeReference<>() {}))

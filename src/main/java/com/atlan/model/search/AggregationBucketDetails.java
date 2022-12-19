@@ -12,7 +12,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class BucketDetails extends AtlanObject {
+public class AggregationBucketDetails extends AtlanObject {
     private static final long serialVersionUID = 2L;
 
     /**

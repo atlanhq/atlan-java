@@ -12,7 +12,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @Builder
 @EqualsAndHashCode(callSuper = false)
-public class MetricResult extends AggregationResult {
+public class AggregationMetricResult extends AggregationResult {
     private static final long serialVersionUID = 2L;
 
     /** Value of the requested metric aggregation. */
