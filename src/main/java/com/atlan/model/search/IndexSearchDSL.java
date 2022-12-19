@@ -8,6 +8,7 @@ import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import com.atlan.model.core.AtlanObject;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
+import java.util.Map;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -19,6 +20,7 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 @SuperBuilder
 @EqualsAndHashCode(callSuper = false)
+@SuppressWarnings("cast")
 public class IndexSearchDSL extends AtlanObject {
     private static final long serialVersionUID = 2L;
 
@@ -34,7 +36,8 @@ public class IndexSearchDSL extends AtlanObject {
     Boolean trackTotalHits = true;
 
     /** (Optional) Aggregation to apply to the query. */
-    Aggregation aggregation;
+    @Singular
+    Map<String, Aggregation> aggregations;
 
     /** Query to run. */
     Query query;

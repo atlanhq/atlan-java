@@ -12,7 +12,6 @@ public enum AtlanConnectionCategory implements AtlanEnum {
     SAAS("SaaS"),
     LAKE("lake"),
     QUERY_ENGINE("queryengine"),
-    ENRICHER("enricher"),
     ELT("elt"),
     DATABASE("database"),
     API("API");

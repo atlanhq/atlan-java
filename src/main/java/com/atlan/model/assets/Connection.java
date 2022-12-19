@@ -103,6 +103,10 @@ public class Connection extends Asset {
     @Attribute
     String sourceLogo;
 
+    /** Whether sample data can be previewed for this connection (true) or not (false). */
+    @Attribute
+    Boolean isSampleDataPreviewEnabled;
+
     /** TBC */
     @Attribute
     Long popularityInsightsTimeframe;

@@ -22,6 +22,8 @@ import lombok.experimental.SuperBuilder;
     @JsonSubTypes.Type(value = Column.class, name = Column.TYPE_NAME),
     @JsonSubTypes.Type(value = Schema.class, name = Schema.TYPE_NAME),
     @JsonSubTypes.Type(value = Database.class, name = Database.TYPE_NAME),
+    @JsonSubTypes.Type(value = SnowflakeStream.class, name = SnowflakeStream.TYPE_NAME),
+    @JsonSubTypes.Type(value = SnowflakePipe.class, name = SnowflakePipe.TYPE_NAME),
     @JsonSubTypes.Type(value = Procedure.class, name = Procedure.TYPE_NAME),
     @JsonSubTypes.Type(value = View.class, name = View.TYPE_NAME),
     @JsonSubTypes.Type(value = MaterializedView.class, name = MaterializedView.TYPE_NAME),
@@ -103,6 +105,14 @@ public abstract class SQL extends Catalog {
      */
     @Attribute
     String viewQualifiedName;
+
+    /** Whether the asset has been profiled (true) or not (false). */
+    @Attribute
+    Boolean isProfiled;
+
+    /** Time (epoch) at which the asset was last profiled, in milliseconds. */
+    @Attribute
+    Long lastProfiledAt;
 
     /** TBC */
     @Attribute

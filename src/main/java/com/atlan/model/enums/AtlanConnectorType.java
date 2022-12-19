@@ -31,7 +31,7 @@ public enum AtlanConnectorType implements AtlanEnum {
     ORACLE("oracle", AtlanConnectionCategory.WAREHOUSE),
     NETSUITE("netsuite", AtlanConnectionCategory.WAREHOUSE),
     MODE("mode", AtlanConnectionCategory.BI),
-    DBT("dbt", AtlanConnectionCategory.ENRICHER),
+    DBT("dbt", AtlanConnectionCategory.ELT),
     FIVETRAN("fivetran", AtlanConnectionCategory.ELT),
     VERTICA("vertica", AtlanConnectionCategory.WAREHOUSE),
     PRESET("preset", AtlanConnectionCategory.BI),

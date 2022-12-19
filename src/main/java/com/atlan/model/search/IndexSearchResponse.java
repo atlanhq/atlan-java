@@ -10,6 +10,7 @@ import com.atlan.serde.Serde;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.List;
+import java.util.Map;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -33,6 +34,9 @@ public class IndexSearchResponse extends ApiResource {
 
     /** Approximate number of total results. */
     Long approximateCount;
+
+    /** Map of results for the requested aggregations. */
+    Map<String, AggregationResult> aggregations;
 
     /**
      * Retrieve the next page of results from this response.
