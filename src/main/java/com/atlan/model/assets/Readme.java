@@ -3,9 +3,12 @@
 package com.atlan.model.assets;
 
 import com.atlan.exception.AtlanException;
+import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.core.Entity;
 import com.atlan.model.relations.UniqueAttributes;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.SortedSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -92,9 +95,25 @@ public class Readme extends Resource {
      * more-complete Readme object.
      *
      * @return the minimal object necessary to update the Readme, as a builder
+     * @throws InvalidRequestException if any of the minimal set of required properties for Readme are not found in the initial object
      */
     @Override
-    protected ReadmeBuilder<?, ?> trimToRequired() {
+    public ReadmeBuilder<?, ?> trimToRequired() throws InvalidRequestException {
+        List<String> missing = new ArrayList<>();
+        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
+            missing.add("qualifiedName");
+        }
+        if (this.getName() == null || this.getName().length() == 0) {
+            missing.add("name");
+        }
+        if (!missing.isEmpty()) {
+            throw new InvalidRequestException(
+                    "Required field for updating Readme is missing.",
+                    String.join(",", missing),
+                    "ATLAN-JAVA-CLIENT-400-404",
+                    400,
+                    null);
+        }
         return Readme.builder().qualifiedName(this.getQualifiedName()).name(this.getName());
     }
 

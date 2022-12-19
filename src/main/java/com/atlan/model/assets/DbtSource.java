@@ -3,11 +3,13 @@
 package com.atlan.model.assets;
 
 import com.atlan.exception.AtlanException;
+import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.core.Entity;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -78,9 +80,25 @@ public class DbtSource extends Dbt {
      * more-complete DbtSource object.
      *
      * @return the minimal object necessary to update the DbtSource, as a builder
+     * @throws InvalidRequestException if any of the minimal set of required properties for DbtSource are not found in the initial object
      */
     @Override
-    protected DbtSourceBuilder<?, ?> trimToRequired() {
+    public DbtSourceBuilder<?, ?> trimToRequired() throws InvalidRequestException {
+        List<String> missing = new ArrayList<>();
+        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
+            missing.add("qualifiedName");
+        }
+        if (this.getName() == null || this.getName().length() == 0) {
+            missing.add("name");
+        }
+        if (!missing.isEmpty()) {
+            throw new InvalidRequestException(
+                    "Required field for updating DbtSource is missing.",
+                    String.join(",", missing),
+                    "ATLAN-JAVA-CLIENT-400-404",
+                    400,
+                    null);
+        }
         return updater(this.getQualifiedName(), this.getName());
     }
 

@@ -398,14 +398,35 @@ public class ModelGenerator extends AtlanLiveTest {
                 .append(className)
                 .append(", as a builder");
         fs.append(System.lineSeparator());
+        fs.append("     * @throws InvalidRequestException if any of the minimal set of required properties for ")
+                .append(className)
+                .append(" are not found in the initial object");
+        fs.append(System.lineSeparator());
         fs.append("     */");
         fs.append(System.lineSeparator());
         fs.append("    @Override");
         fs.append(System.lineSeparator());
-        fs.append("    protected ").append(className).append("Builder<?, ?> trimToRequired() {");
-        fs.append(System.lineSeparator());
-        fs.append("        return updater(this.getQualifiedName(), this.getName());");
-        fs.append(System.lineSeparator());
+        fs.append("    public ")
+                .append(className)
+                .append("Builder<?, ?> trimToRequired() throws InvalidRequestException {")
+                .append(System.lineSeparator());
+        fs.append("        List<String> missing = new ArrayList<>();").append(System.lineSeparator());
+        fs.append("        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {")
+                .append(System.lineSeparator());
+        fs.append("            missing.add(\"qualifiedName\");").append(System.lineSeparator());
+        fs.append("        }").append(System.lineSeparator());
+        fs.append("        if (this.getName() == null || this.getName().length() == 0) {")
+                .append(System.lineSeparator());
+        fs.append("            missing.add(\"name\");").append(System.lineSeparator());
+        fs.append("        }").append(System.lineSeparator());
+        fs.append("        if (!missing.isEmpty()) {").append(System.lineSeparator());
+        fs.append("            throw new InvalidRequestException(\"Required field for updating ")
+                .append(className)
+                .append(" is missing.\", String.join(\",\", missing), \"ATLAN-JAVA-CLIENT-400-404\", 400, null);")
+                .append(System.lineSeparator());
+        fs.append("        }").append(System.lineSeparator());
+        fs.append("        return updater(this.getQualifiedName(), this.getName());")
+                .append(System.lineSeparator());
         fs.append("    }");
         fs.append(System.lineSeparator()).append(System.lineSeparator());
     }
@@ -1123,6 +1144,7 @@ public class ModelGenerator extends AtlanLiveTest {
         fs.append(System.lineSeparator());
         fs.append("import com.atlan.exception.AtlanException;").append(System.lineSeparator());
         fs.append("import com.atlan.exception.NotFoundException;").append(System.lineSeparator());
+        fs.append("import com.atlan.exception.InvalidRequestException;").append(System.lineSeparator());
         fs.append("import com.atlan.model.core.Entity;").append(System.lineSeparator());
         fs.append("import com.atlan.model.enums.AtlanAnnouncementType;").append(System.lineSeparator());
         fs.append("import com.atlan.model.enums.AtlanCertificateStatus;").append(System.lineSeparator());
@@ -1135,6 +1157,7 @@ public class ModelGenerator extends AtlanLiveTest {
         fs.append("import com.fasterxml.jackson.annotation.JsonProperty;").append(System.lineSeparator());
         fs.append("import java.util.Map;").append(System.lineSeparator());
         fs.append("import java.util.List;").append(System.lineSeparator());
+        fs.append("import java.util.ArrayList;").append(System.lineSeparator());
         fs.append("import java.util.SortedSet;").append(System.lineSeparator());
         fs.append("import lombok.*;").append(System.lineSeparator());
         fs.append("import lombok.experimental.SuperBuilder;").append(System.lineSeparator());

@@ -431,7 +431,7 @@ public abstract class Asset extends Entity {
      * @return a builder containing the minimal set of properties required to update this asset
      * @throws InvalidRequestException if any of the minimal set of required properties are not found in the initial object
      */
-    protected abstract AssetBuilder<?, ?> trimToRequired() throws InvalidRequestException;
+    public abstract AssetBuilder<?, ?> trimToRequired() throws InvalidRequestException;
 
     /**
      * Update the certificate on an asset.
@@ -654,8 +654,7 @@ public abstract class Asset extends Entity {
             // Already active, no need to restore
             return true;
         } else {
-            Optional<String> guidRestored =
-                    restore(existing.trimToRequired().status(AtlanStatus.ACTIVE).build());
+            Optional<String> guidRestored = restore(existing);
             return guidRestored.isPresent() && guidRestored.get().equals(existing.getGuid());
         }
     }
@@ -808,7 +807,7 @@ public abstract class Asset extends Entity {
     }
 
     private static Optional<String> restore(Asset asset) throws AtlanException {
-        EntityMutationResponse response = EntityBulkEndpoint.upsert(asset, false, false);
+        EntityMutationResponse response = EntityBulkEndpoint.restore(asset);
         if (response != null && !response.getGuidAssignments().isEmpty()) {
             return response.getGuidAssignments().values().stream().findFirst();
         }

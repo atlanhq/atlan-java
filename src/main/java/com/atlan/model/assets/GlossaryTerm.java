@@ -229,7 +229,7 @@ public class GlossaryTerm extends Asset {
      * @throws InvalidRequestException InvalidRequestException if any of the minimal set of required properties for GlossaryTerm are not found in the initial object
      */
     @Override
-    protected GlossaryTermBuilder<?, ?> trimToRequired() throws InvalidRequestException {
+    public GlossaryTermBuilder<?, ?> trimToRequired() throws InvalidRequestException {
         List<String> missing = new ArrayList<>();
         if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
             missing.add("qualifiedName");

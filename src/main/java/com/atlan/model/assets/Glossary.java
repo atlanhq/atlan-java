@@ -150,9 +150,25 @@ public class Glossary extends Asset {
      * more-complete Glossary object.
      *
      * @return the minimal object necessary to update the Glossary, as a builder
+     * @throws InvalidRequestException if any of the minimal set of required properties for Glossary are not found in the initial object
      */
     @Override
-    protected GlossaryBuilder<?, ?> trimToRequired() {
+    public GlossaryBuilder<?, ?> trimToRequired() throws InvalidRequestException {
+        List<String> missing = new ArrayList<>();
+        if (this.getGuid() == null || this.getGuid().length() == 0) {
+            missing.add("guid");
+        }
+        if (this.getName() == null || this.getName().length() == 0) {
+            missing.add("name");
+        }
+        if (!missing.isEmpty()) {
+            throw new InvalidRequestException(
+                    "Required field for updating Glossary is missing.",
+                    String.join(",", missing),
+                    "ATLAN-JAVA-CLIENT-400-404",
+                    400,
+                    null);
+        }
         return updater(this.getGuid(), this.getName());
     }
 

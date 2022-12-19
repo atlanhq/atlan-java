@@ -3,12 +3,14 @@
 package com.atlan.model.assets;
 
 import com.atlan.exception.AtlanException;
+import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.core.Entity;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -92,9 +94,25 @@ public class SnowflakeStream extends SQL {
      * more-complete SnowflakeStream object.
      *
      * @return the minimal object necessary to update the SnowflakeStream, as a builder
+     * @throws InvalidRequestException if any of the minimal set of required properties for SnowflakeStream are not found in the initial object
      */
     @Override
-    protected SnowflakeStreamBuilder<?, ?> trimToRequired() {
+    public SnowflakeStreamBuilder<?, ?> trimToRequired() throws InvalidRequestException {
+        List<String> missing = new ArrayList<>();
+        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
+            missing.add("qualifiedName");
+        }
+        if (this.getName() == null || this.getName().length() == 0) {
+            missing.add("name");
+        }
+        if (!missing.isEmpty()) {
+            throw new InvalidRequestException(
+                    "Required field for updating SnowflakeStream is missing.",
+                    String.join(",", missing),
+                    "ATLAN-JAVA-CLIENT-400-404",
+                    400,
+                    null);
+        }
         return updater(this.getQualifiedName(), this.getName());
     }
 

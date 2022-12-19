@@ -138,7 +138,7 @@ public class GlossaryCategory extends Asset {
      * @throws InvalidRequestException InvalidRequestException if any of the minimal set of required properties for GlossaryCategory are not found in the initial object
      */
     @Override
-    protected GlossaryCategoryBuilder<?, ?> trimToRequired() throws InvalidRequestException {
+    public GlossaryCategoryBuilder<?, ?> trimToRequired() throws InvalidRequestException {
         List<String> missing = new ArrayList<>();
         if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
             missing.add("qualifiedName");
