@@ -940,17 +940,37 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/search/IndexSearchDSL.IndexSearchDSLBuilder.html#aggregation(java.lang.String,co.elastic.clients.elasticsearch._types.aggregations.Aggregation)">aggregation(String, Aggregation)</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/IndexSearchDSL.IndexSearchDSLBuilder.html" title="class in com.atlan.model.search">IndexSearchDSL.IndexSearchDSLBuilder</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="com/atlan/model/search/AggregationBucket.html" title="class in com.atlan.model.search"><span class="typeNameLink">AggregationBucket</span></a> - Class in <a href="com/atlan/model/search/package-summary.html">com.atlan.model.search</a></dt>
+<dt><a href="com/atlan/model/search/AggregationBucketDetails.html" title="class in com.atlan.model.search"><span class="typeNameLink">AggregationBucketDetails</span></a> - Class in <a href="com/atlan/model/search/package-summary.html">com.atlan.model.search</a></dt>
 <dd>
 <div class="block">Captures the results of a single bucket within an aggregation.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationBucket.html#%3Cinit%3E()">AggregationBucket()</a></span> - Constructor for class com.atlan.model.search.<a href="com/atlan/model/search/AggregationBucket.html" title="class in com.atlan.model.search">AggregationBucket</a></dt>
+<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationBucketDetails.html#%3Cinit%3E()">AggregationBucketDetails()</a></span> - Constructor for class com.atlan.model.search.<a href="com/atlan/model/search/AggregationBucketDetails.html" title="class in com.atlan.model.search">AggregationBucketDetails</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/atlan/model/search/AggregationBucketResult.html" title="class in com.atlan.model.search"><span class="typeNameLink">AggregationBucketResult</span></a> - Class in <a href="com/atlan/model/search/package-summary.html">com.atlan.model.search</a></dt>
+<dd>
+<div class="block">Captures the results from a bucket aggregation.</div>
+</dd>
+<dt><a href="com/atlan/model/search/AggregationBucketResult.AggregationBucketResultBuilder.html" title="class in com.atlan.model.search"><span class="typeNameLink">AggregationBucketResult.AggregationBucketResultBuilder</span></a> - Class in <a href="com/atlan/model/search/package-summary.html">com.atlan.model.search</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/atlan/model/search/AggregationMetricResult.html" title="class in com.atlan.model.search"><span class="typeNameLink">AggregationMetricResult</span></a> - Class in <a href="com/atlan/model/search/package-summary.html">com.atlan.model.search</a></dt>
+<dd>
+<div class="block">Captures the results from a metric aggregation.</div>
+</dd>
+<dt><a href="com/atlan/model/search/AggregationMetricResult.AggregationMetricResultBuilder.html" title="class in com.atlan.model.search"><span class="typeNameLink">AggregationMetricResult.AggregationMetricResultBuilder</span></a> - Class in <a href="com/atlan/model/search/package-summary.html">com.atlan.model.search</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/atlan/model/search/AggregationResult.html" title="class in com.atlan.model.search"><span class="typeNameLink">AggregationResult</span></a> - Class in <a href="com/atlan/model/search/package-summary.html">com.atlan.model.search</a></dt>
 <dd>
-<div class="block">Captures the results from a single aggregation.</div>
+<div class="block">Base class for all aggregation results in a search.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationResult.html#%3Cinit%3E()">AggregationResult()</a></span> - Constructor for class com.atlan.model.search.<a href="com/atlan/model/search/AggregationResult.html" title="class in com.atlan.model.search">AggregationResult</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/atlan/serde/AggregationResultDeserializer.html" title="class in com.atlan.serde"><span class="typeNameLink">AggregationResultDeserializer</span></a> - Class in <a href="com/atlan/serde/package-summary.html">com.atlan.serde</a></dt>
+<dd>
+<div class="block">Deserialization of all <a href="com/atlan/model/search/AggregationResult.html" title="class in com.atlan.model.search"><code>AggregationResult</code></a> objects.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/serde/AggregationResultDeserializer.html#%3Cinit%3E()">AggregationResultDeserializer()</a></span> - Constructor for class com.atlan.serde.<a href="com/atlan/serde/AggregationResultDeserializer.html" title="class in com.atlan.serde">AggregationResultDeserializer</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/serde/AggregationResultDeserializer.html#%3Cinit%3E(java.lang.Class)">AggregationResultDeserializer(Class&lt;?&gt;)</a></span> - Constructor for class com.atlan.serde.<a href="com/atlan/serde/AggregationResultDeserializer.html" title="class in com.atlan.serde">AggregationResultDeserializer</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/search/IndexSearchDSL.IndexSearchDSLBuilder.html#aggregations(java.util.Map)">aggregations(Map&lt;? extends String, ? extends Aggregation&gt;)</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/IndexSearchDSL.IndexSearchDSLBuilder.html" title="class in com.atlan.model.search">IndexSearchDSL.IndexSearchDSLBuilder</a></dt>
 <dd>&nbsp;</dd>
@@ -1982,6 +2002,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/S3Object.S3ObjectBuilder.html#bucket(com.atlan.model.assets.S3Bucket)">bucket(S3Bucket)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/S3Object.S3ObjectBuilder.html" title="class in com.atlan.model.assets">S3Object.S3ObjectBuilder</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationBucketResult.AggregationBucketResultBuilder.html#buckets(java.util.List)">buckets(List&lt;AggregationBucketDetails&gt;)</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationBucketResult.AggregationBucketResultBuilder.html" title="class in com.atlan.model.search">AggregationBucketResult.AggregationBucketResultBuilder</a></dt>
+<dd>
+<div class="block">List of the top buckets that resulted from the aggregation.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/admin/AbstractPersonaPolicy.AbstractPersonaPolicyBuilder.html#build()">build()</a></span> - Method in class com.atlan.model.admin.<a href="com/atlan/model/admin/AbstractPersonaPolicy.AbstractPersonaPolicyBuilder.html" title="class in com.atlan.model.admin">AbstractPersonaPolicy.AbstractPersonaPolicyBuilder</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/admin/AbstractPolicy.AbstractPolicyBuilder.html#build()">build()</a></span> - Method in class com.atlan.model.admin.<a href="com/atlan/model/admin/AbstractPolicy.AbstractPolicyBuilder.html" title="class in com.atlan.model.admin">AbstractPolicy.AbstractPolicyBuilder</a></dt>
@@ -2282,6 +2306,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/relations/UniqueAttributes.UniqueAttributesBuilder.html#build()">build()</a></span> - Method in class com.atlan.model.relations.<a href="com/atlan/model/relations/UniqueAttributes.UniqueAttributesBuilder.html" title="class in com.atlan.model.relations">UniqueAttributes.UniqueAttributesBuilder</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationBucketResult.AggregationBucketResultBuilder.html#build()">build()</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationBucketResult.AggregationBucketResultBuilder.html" title="class in com.atlan.model.search">AggregationBucketResult.AggregationBucketResultBuilder</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationMetricResult.AggregationMetricResultBuilder.html#build()">build()</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationMetricResult.AggregationMetricResultBuilder.html" title="class in com.atlan.model.search">AggregationMetricResult.AggregationMetricResultBuilder</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/search/AuditSearchRequest.AuditSearchRequestBuilder.html#build()">build()</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AuditSearchRequest.AuditSearchRequestBuilder.html" title="class in com.atlan.model.search">AuditSearchRequest.AuditSearchRequestBuilder</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/search/CustomMetadataAttributesAuditDetail.CustomMetadataAttributesAuditDetailBuilder.html#build()">build()</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/CustomMetadataAttributesAuditDetail.CustomMetadataAttributesAuditDetailBuilder.html" title="class in com.atlan.model.search">CustomMetadataAttributesAuditDetail.CustomMetadataAttributesAuditDetailBuilder</a></dt>
@@ -2573,6 +2601,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/atlan/model/relations/Reference.html#builder()">builder()</a></span> - Static method in class com.atlan.model.relations.<a href="com/atlan/model/relations/Reference.html" title="class in com.atlan.model.relations">Reference</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/relations/UniqueAttributes.html#builder()">builder()</a></span> - Static method in class com.atlan.model.relations.<a href="com/atlan/model/relations/UniqueAttributes.html" title="class in com.atlan.model.relations">UniqueAttributes</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationBucketResult.html#builder()">builder()</a></span> - Static method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationBucketResult.html" title="class in com.atlan.model.search">AggregationBucketResult</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationMetricResult.html#builder()">builder()</a></span> - Static method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationMetricResult.html" title="class in com.atlan.model.search">AggregationMetricResult</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/search/AuditSearchRequest.html#builder()">builder()</a></span> - Static method in class com.atlan.model.search.<a href="com/atlan/model/search/AuditSearchRequest.html" title="class in com.atlan.model.search">AuditSearchRequest</a></dt>
 <dd>&nbsp;</dd>
@@ -3000,9 +3032,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/relations/UniqueAttributes.html#canEqual(java.lang.Object)">canEqual(Object)</a></span> - Method in class com.atlan.model.relations.<a href="com/atlan/model/relations/UniqueAttributes.html" title="class in com.atlan.model.relations">UniqueAttributes</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationBucket.html#canEqual(java.lang.Object)">canEqual(Object)</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationBucket.html" title="class in com.atlan.model.search">AggregationBucket</a></dt>
+<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationBucketDetails.html#canEqual(java.lang.Object)">canEqual(Object)</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationBucketDetails.html" title="class in com.atlan.model.search">AggregationBucketDetails</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationResult.html#canEqual(java.lang.Object)">canEqual(Object)</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationResult.html" title="class in com.atlan.model.search">AggregationResult</a></dt>
+<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationBucketResult.html#canEqual(java.lang.Object)">canEqual(Object)</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationBucketResult.html" title="class in com.atlan.model.search">AggregationBucketResult</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationMetricResult.html#canEqual(java.lang.Object)">canEqual(Object)</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationMetricResult.html" title="class in com.atlan.model.search">AggregationMetricResult</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/search/AuditSearchRequest.html#canEqual(java.lang.Object)">canEqual(Object)</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AuditSearchRequest.html" title="class in com.atlan.model.search">AuditSearchRequest</a></dt>
 <dd>&nbsp;</dd>
@@ -4715,6 +4749,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/admin/AtlanGroup.GroupAttributes.GroupAttributesBuilder.html#description(java.util.List)">description(List&lt;String&gt;)</a></span> - Method in class com.atlan.model.admin.<a href="com/atlan/model/admin/AtlanGroup.GroupAttributes.GroupAttributesBuilder.html" title="class in com.atlan.model.admin">AtlanGroup.GroupAttributes.GroupAttributesBuilder</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/serde/AggregationResultDeserializer.html#deserialize(com.fasterxml.jackson.core.JsonParser,com.fasterxml.jackson.databind.DeserializationContext)">deserialize(JsonParser, DeserializationContext)</a></span> - Method in class com.atlan.serde.<a href="com/atlan/serde/AggregationResultDeserializer.html" title="class in com.atlan.serde">AggregationResultDeserializer</a></dt>
 <dt><span class="memberNameLink"><a href="com/atlan/serde/AuditDetailDeserializer.html#deserialize(com.fasterxml.jackson.core.JsonParser,com.fasterxml.jackson.databind.DeserializationContext)">deserialize(JsonParser, DeserializationContext)</a></span> - Method in class com.atlan.serde.<a href="com/atlan/serde/AuditDetailDeserializer.html" title="class in com.atlan.serde">AuditDetailDeserializer</a></dt>
 <dt><span class="memberNameLink"><a href="com/atlan/serde/ClassificationDeserializer.html#deserialize(com.fasterxml.jackson.core.JsonParser,com.fasterxml.jackson.databind.DeserializationContext)">deserialize(JsonParser, DeserializationContext)</a></span> - Method in class com.atlan.serde.<a href="com/atlan/serde/ClassificationDeserializer.html" title="class in com.atlan.serde">ClassificationDeserializer</a></dt>
 <dt><span class="memberNameLink"><a href="com/atlan/serde/CustomMetadataAuditDeserializer.html#deserialize(com.fasterxml.jackson.core.JsonParser,com.fasterxml.jackson.databind.DeserializationContext)">deserialize(JsonParser, DeserializationContext)</a></span> - Method in class com.atlan.serde.<a href="com/atlan/serde/CustomMetadataAuditDeserializer.html" title="class in com.atlan.serde">CustomMetadataAuditDeserializer</a></dt>
@@ -4749,6 +4784,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Deserialize the provided path into a string, or null if there is no value at the path.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/atlan/serde/AggregationResultDeserializer.html#deserializeWithType(com.fasterxml.jackson.core.JsonParser,com.fasterxml.jackson.databind.DeserializationContext,com.fasterxml.jackson.databind.jsontype.TypeDeserializer)">deserializeWithType(JsonParser, DeserializationContext, TypeDeserializer)</a></span> - Method in class com.atlan.serde.<a href="com/atlan/serde/AggregationResultDeserializer.html" title="class in com.atlan.serde">AggregationResultDeserializer</a></dt>
 <dt><span class="memberNameLink"><a href="com/atlan/serde/AuditDetailDeserializer.html#deserializeWithType(com.fasterxml.jackson.core.JsonParser,com.fasterxml.jackson.databind.DeserializationContext,com.fasterxml.jackson.databind.jsontype.TypeDeserializer)">deserializeWithType(JsonParser, DeserializationContext, TypeDeserializer)</a></span> - Method in class com.atlan.serde.<a href="com/atlan/serde/AuditDetailDeserializer.html" title="class in com.atlan.serde">AuditDetailDeserializer</a></dt>
 <dt><span class="memberNameLink"><a href="com/atlan/serde/ClassificationDeserializer.html#deserializeWithType(com.fasterxml.jackson.core.JsonParser,com.fasterxml.jackson.databind.DeserializationContext,com.fasterxml.jackson.databind.jsontype.TypeDeserializer)">deserializeWithType(JsonParser, DeserializationContext, TypeDeserializer)</a></span> - Method in class com.atlan.serde.<a href="com/atlan/serde/ClassificationDeserializer.html" title="class in com.atlan.serde">ClassificationDeserializer</a></dt>
 <dt><span class="memberNameLink"><a href="com/atlan/serde/CustomMetadataAuditDeserializer.html#deserializeWithType(com.fasterxml.jackson.core.JsonParser,com.fasterxml.jackson.databind.DeserializationContext,com.fasterxml.jackson.databind.jsontype.TypeDeserializer)">deserializeWithType(JsonParser, DeserializationContext, TypeDeserializer)</a></span> - Method in class com.atlan.serde.<a href="com/atlan/serde/CustomMetadataAuditDeserializer.html" title="class in com.atlan.serde">CustomMetadataAuditDeserializer</a></dt>
@@ -4813,6 +4849,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/relations/Reference.ReferenceBuilder.html#displayText(java.lang.String)">displayText(String)</a></span> - Method in class com.atlan.model.relations.<a href="com/atlan/model/relations/Reference.ReferenceBuilder.html" title="class in com.atlan.model.relations">Reference.ReferenceBuilder</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationBucketResult.AggregationBucketResultBuilder.html#docCountErrorUpperBound(java.lang.Long)">docCountErrorUpperBound(Long)</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationBucketResult.AggregationBucketResultBuilder.html" title="class in com.atlan.model.search">AggregationBucketResult.AggregationBucketResultBuilder</a></dt>
+<dd>
+<div class="block">Maximum number of missing documents when a bucket's count is very large and
+ may exceed the shard size of Elasticsearch.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/enums/AtlanLineageDirection.html#DOWNSTREAM">DOWNSTREAM</a></span> - com.atlan.model.enums.<a href="com/atlan/model/enums/AtlanLineageDirection.html" title="enum in com.atlan.model.enums">AtlanLineageDirection</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/enums/AtlanCertificateStatus.html#DRAFT">DRAFT</a></span> - com.atlan.model.enums.<a href="com/atlan/model/enums/AtlanCertificateStatus.html" title="enum in com.atlan.model.enums">AtlanCertificateStatus</a></dt>
@@ -5324,9 +5365,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/relations/UniqueAttributes.html#equals(java.lang.Object)">equals(Object)</a></span> - Method in class com.atlan.model.relations.<a href="com/atlan/model/relations/UniqueAttributes.html" title="class in com.atlan.model.relations">UniqueAttributes</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationBucket.html#equals(java.lang.Object)">equals(Object)</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationBucket.html" title="class in com.atlan.model.search">AggregationBucket</a></dt>
+<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationBucketDetails.html#equals(java.lang.Object)">equals(Object)</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationBucketDetails.html" title="class in com.atlan.model.search">AggregationBucketDetails</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationResult.html#equals(java.lang.Object)">equals(Object)</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationResult.html" title="class in com.atlan.model.search">AggregationResult</a></dt>
+<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationBucketResult.html#equals(java.lang.Object)">equals(Object)</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationBucketResult.html" title="class in com.atlan.model.search">AggregationBucketResult</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationMetricResult.html#equals(java.lang.Object)">equals(Object)</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationMetricResult.html" title="class in com.atlan.model.search">AggregationMetricResult</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/search/AuditSearchRequest.html#equals(java.lang.Object)">equals(Object)</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AuditSearchRequest.html" title="class in com.atlan.model.search">AuditSearchRequest</a></dt>
 <dd>&nbsp;</dd>
@@ -6443,9 +6486,9 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">S3 bucket in which the object exists.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationResult.html#getBuckets()">getBuckets()</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationResult.html" title="class in com.atlan.model.search">AggregationResult</a></dt>
+<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationBucketResult.html#getBuckets()">getBuckets()</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationBucketResult.html" title="class in com.atlan.model.search">AggregationBucketResult</a></dt>
 <dd>
-<div class="block">List of buckets that resulted from the aggregation.</div>
+<div class="block">List of the top buckets that resulted from the aggregation.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/typedefs/EntityDef.html#getBusinessAttributeDefs()">getBusinessAttributeDefs()</a></span> - Method in class com.atlan.model.typedefs.<a href="com/atlan/model/typedefs/EntityDef.html" title="class in com.atlan.model.typedefs">EntityDef</a></dt>
 <dd>
@@ -7474,13 +7517,14 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Human-readable name of the entity.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationBucket.html#getDocCount()">getDocCount()</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationBucket.html" title="class in com.atlan.model.search">AggregationBucket</a></dt>
+<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationBucketDetails.html#getDocCount()">getDocCount()</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationBucketDetails.html" title="class in com.atlan.model.search">AggregationBucketDetails</a></dt>
 <dd>
 <div class="block">Number of results that fit within this bucket of the aggregation.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationResult.html#getDocCountErrorUpperBound()">getDocCountErrorUpperBound()</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationResult.html" title="class in com.atlan.model.search">AggregationResult</a></dt>
+<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationBucketResult.html#getDocCountErrorUpperBound()">getDocCountErrorUpperBound()</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationBucketResult.html" title="class in com.atlan.model.search">AggregationBucketResult</a></dt>
 <dd>
-<div class="block">TBC</div>
+<div class="block">Maximum number of missing documents when a bucket's count is very large and
+ may exceed the shard size of Elasticsearch.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/lineage/LineageResponse.html#getDownstreamEntities()">getDownstreamEntities()</a></span> - Method in class com.atlan.model.lineage.<a href="com/atlan/model/lineage/LineageResponse.html" title="class in com.atlan.model.lineage">LineageResponse</a></dt>
 <dd>
@@ -7767,9 +7811,17 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">TBC</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationBucketDetails.html#getFrom()">getFrom()</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationBucketDetails.html" title="class in com.atlan.model.search">AggregationBucketDetails</a></dt>
+<dd>
+<div class="block">Start of a range (date, geo, IP, etc), as a number or string.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/search/IndexSearchDSL.html#getFrom()">getFrom()</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/IndexSearchDSL.html" title="class in com.atlan.model.search">IndexSearchDSL</a></dt>
 <dd>
 <div class="block">Starting point for paging.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationBucketDetails.html#getFromAsString()">getFromAsString()</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationBucketDetails.html" title="class in com.atlan.model.search">AggregationBucketDetails</a></dt>
+<dd>
+<div class="block">Start of a range, as a string.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/lineage/LineageRelation.html#getFromEntityId()">getFromEntityId()</a></span> - Method in class com.atlan.model.lineage.<a href="com/atlan/model/lineage/LineageRelation.html" title="class in com.atlan.model.lineage">LineageRelation</a></dt>
 <dd>
@@ -8413,9 +8465,13 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Unique JIRA user identifier.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationBucket.html#getKey()">getKey()</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationBucket.html" title="class in com.atlan.model.search">AggregationBucket</a></dt>
+<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationBucketDetails.html#getKey()">getKey()</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationBucketDetails.html" title="class in com.atlan.model.search">AggregationBucketDetails</a></dt>
 <dd>
 <div class="block">Key of the field representing this bucket of aggregate results.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationBucketDetails.html#getKeyAsString()">getKeyAsString()</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationBucketDetails.html" title="class in com.atlan.model.search">AggregationBucketDetails</a></dt>
+<dd>
+<div class="block">Key of the field representing this bucket of aggregate results, as a string.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/workflow/WorkflowSearchResultDetail.html#getKind()">getKind()</a></span> - Method in class com.atlan.model.workflow.<a href="com/atlan/model/workflow/WorkflowSearchResultDetail.html" title="class in com.atlan.model.workflow">WorkflowSearchResultDetail</a></dt>
 <dd>&nbsp;</dd>
@@ -8583,6 +8639,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">Maximum length of a value in this column.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/SalesforceField.html#getMaxLength()">getMaxLength()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SalesforceField.html" title="class in com.atlan.model.assets">SalesforceField</a></dt>
+<dd>
+<div class="block">TBC</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationBucketDetails.html#getMaxMatchingLength()">getMaxMatchingLength()</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationBucketDetails.html" title="class in com.atlan.model.search">AggregationBucketDetails</a></dt>
 <dd>
 <div class="block">TBC</div>
 </dd>
@@ -10399,9 +10459,9 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Subtypes of this entity type.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationResult.html#getSumOtherDocCount()">getSumOtherDocCount()</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationResult.html" title="class in com.atlan.model.search">AggregationResult</a></dt>
+<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationBucketResult.html#getSumOtherDocCount()">getSumOtherDocCount()</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationBucketResult.html" title="class in com.atlan.model.search">AggregationBucketResult</a></dt>
 <dd>
-<div class="block">TBC</div>
+<div class="block">When there are many unique terms, only the top terms are returned.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/typedefs/ClassificationDef.html#getSuperTypes()">getSuperTypes()</a></span> - Method in class com.atlan.model.typedefs.<a href="com/atlan/model/typedefs/ClassificationDef.html" title="class in com.atlan.model.typedefs">ClassificationDef</a></dt>
 <dd>
@@ -10554,6 +10614,14 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/atlan/util/Stopwatch.html#getTimestamp()">getTimestamp()</a></span> - Static method in class com.atlan.util.<a href="com/atlan/util/Stopwatch.html" title="class in com.atlan.util">Stopwatch</a></dt>
 <dd>
 <div class="block">Gets the current timestamp with the highest precision available.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationBucketDetails.html#getTo()">getTo()</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationBucketDetails.html" title="class in com.atlan.model.search">AggregationBucketDetails</a></dt>
+<dd>
+<div class="block">End of a range (date, geo, IP, etc), as a number or string.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationBucketDetails.html#getToAsString()">getToAsString()</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationBucketDetails.html" title="class in com.atlan.model.search">AggregationBucketDetails</a></dt>
+<dd>
+<div class="block">End of a range, as a string.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/lineage/LineageRelation.html#getToEntityId()">getToEntityId()</a></span> - Method in class com.atlan.model.lineage.<a href="com/atlan/model/lineage/LineageRelation.html" title="class in com.atlan.model.lineage">LineageRelation</a></dt>
 <dd>
@@ -11267,6 +11335,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/enums/PurposeMetadataPolicyAction.html#getValue()">getValue()</a></span> - Method in enum com.atlan.model.enums.<a href="com/atlan/model/enums/PurposeMetadataPolicyAction.html" title="enum in com.atlan.model.enums">PurposeMetadataPolicyAction</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationMetricResult.html#getValue()">getValue()</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationMetricResult.html" title="class in com.atlan.model.search">AggregationMetricResult</a></dt>
+<dd>
+<div class="block">Value of the requested metric aggregation.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/workflow/NameValuePair.html#getValue()">getValue()</a></span> - Method in class com.atlan.model.workflow.<a href="com/atlan/model/workflow/NameValuePair.html" title="class in com.atlan.model.workflow">NameValuePair</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/typedefs/AttributeDef.html#getValuesMaxCount()">getValuesMaxCount()</a></span> - Method in class com.atlan.model.typedefs.<a href="com/atlan/model/typedefs/AttributeDef.html" title="class in com.atlan.model.typedefs">AttributeDef</a></dt>
@@ -11957,9 +12029,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/relations/UniqueAttributes.html#hashCode()">hashCode()</a></span> - Method in class com.atlan.model.relations.<a href="com/atlan/model/relations/UniqueAttributes.html" title="class in com.atlan.model.relations">UniqueAttributes</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationBucket.html#hashCode()">hashCode()</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationBucket.html" title="class in com.atlan.model.search">AggregationBucket</a></dt>
+<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationBucketDetails.html#hashCode()">hashCode()</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationBucketDetails.html" title="class in com.atlan.model.search">AggregationBucketDetails</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationResult.html#hashCode()">hashCode()</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationResult.html" title="class in com.atlan.model.search">AggregationResult</a></dt>
+<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationBucketResult.html#hashCode()">hashCode()</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationBucketResult.html" title="class in com.atlan.model.search">AggregationBucketResult</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationMetricResult.html#hashCode()">hashCode()</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationMetricResult.html" title="class in com.atlan.model.search">AggregationMetricResult</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/search/AuditSearchRequest.html#hashCode()">hashCode()</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AuditSearchRequest.html" title="class in com.atlan.model.search">AuditSearchRequest</a></dt>
 <dd>&nbsp;</dd>
@@ -17610,6 +17684,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">Stops time interval measurement, resets the elapsed time to zero, and starts measuring elapsed
  time.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/atlan/api/EntityBulkEndpoint.html#restore(com.atlan.model.core.Entity)">restore(Entity)</a></span> - Static method in class com.atlan.api.<a href="com/atlan/api/EntityBulkEndpoint.html" title="class in com.atlan.api">EntityBulkEndpoint</a></dt>
+<dd>
+<div class="block">Restores any entity from a soft-deleted (archived) to an active state.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/APIPath.html#restore(java.lang.String)">restore(String)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/APIPath.html" title="class in com.atlan.model.assets">APIPath</a></dt>
 <dd>
 <div class="block">Restore the archived (soft-deleted) APIPath to active.</div>
@@ -17957,6 +18035,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Asset.html#restore(java.lang.String,java.lang.String)">restore(String, String)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a></dt>
 <dd>
 <div class="block">Restore an archived (soft-deleted) asset to active.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/api/EntityBulkEndpoint.html#restore(java.util.List)">restore(List&lt;Entity&gt;)</a></span> - Static method in class com.atlan.api.<a href="com/atlan/api/EntityBulkEndpoint.html" title="class in com.atlan.api">EntityBulkEndpoint</a></dt>
+<dd>
+<div class="block">Restores any entities in the list provided from a soft-deleted (archived) to active state.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/core/Classification.ClassificationBuilder.html#restrictPropagationThroughLineage(java.lang.Boolean)">restrictPropagationThroughLineage(Boolean)</a></span> - Method in class com.atlan.model.core.<a href="com/atlan/model/core/Classification.ClassificationBuilder.html" title="class in com.atlan.model.core">Classification.ClassificationBuilder</a></dt>
 <dd>&nbsp;</dd>
@@ -19976,9 +20058,9 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">S3 bucket in which the object exists.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationResult.html#setBuckets(java.util.List)">setBuckets(List&lt;AggregationBucket&gt;)</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationResult.html" title="class in com.atlan.model.search">AggregationResult</a></dt>
+<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationBucketResult.html#setBuckets(java.util.List)">setBuckets(List&lt;AggregationBucketDetails&gt;)</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationBucketResult.html" title="class in com.atlan.model.search">AggregationBucketResult</a></dt>
 <dd>
-<div class="block">List of buckets that resulted from the aggregation.</div>
+<div class="block">List of the top buckets that resulted from the aggregation.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/typedefs/EntityDef.html#setBusinessAttributeDefs(java.util.Map)">setBusinessAttributeDefs(Map&lt;String, Object&gt;)</a></span> - Method in class com.atlan.model.typedefs.<a href="com/atlan/model/typedefs/EntityDef.html" title="class in com.atlan.model.typedefs">EntityDef</a></dt>
 <dd>
@@ -20899,13 +20981,14 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Human-readable name of the entity.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationBucket.html#setDocCount(java.lang.Long)">setDocCount(Long)</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationBucket.html" title="class in com.atlan.model.search">AggregationBucket</a></dt>
+<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationBucketDetails.html#setDocCount(java.lang.Long)">setDocCount(Long)</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationBucketDetails.html" title="class in com.atlan.model.search">AggregationBucketDetails</a></dt>
 <dd>
 <div class="block">Number of results that fit within this bucket of the aggregation.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationResult.html#setDocCountErrorUpperBound(java.lang.Long)">setDocCountErrorUpperBound(Long)</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationResult.html" title="class in com.atlan.model.search">AggregationResult</a></dt>
+<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationBucketResult.html#setDocCountErrorUpperBound(java.lang.Long)">setDocCountErrorUpperBound(Long)</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationBucketResult.html" title="class in com.atlan.model.search">AggregationBucketResult</a></dt>
 <dd>
-<div class="block">TBC</div>
+<div class="block">Maximum number of missing documents when a bucket's count is very large and
+ may exceed the shard size of Elasticsearch.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/search/AuditSearchRequest.html#setDsl(com.atlan.model.search.IndexSearchDSL)">setDsl(IndexSearchDSL)</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AuditSearchRequest.html" title="class in com.atlan.model.search">AuditSearchRequest</a></dt>
 <dd>
@@ -21126,6 +21209,14 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/atlan/model/search/IndexSearchDSL.html#setFrom(java.lang.Integer)">setFrom(Integer)</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/IndexSearchDSL.html" title="class in com.atlan.model.search">IndexSearchDSL</a></dt>
 <dd>
 <div class="block">Starting point for paging.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationBucketDetails.html#setFrom(java.lang.Object)">setFrom(Object)</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationBucketDetails.html" title="class in com.atlan.model.search">AggregationBucketDetails</a></dt>
+<dd>
+<div class="block">Start of a range (date, geo, IP, etc), as a number or string.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationBucketDetails.html#setFromAsString(java.lang.String)">setFromAsString(String)</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationBucketDetails.html" title="class in com.atlan.model.search">AggregationBucketDetails</a></dt>
+<dd>
+<div class="block">Start of a range, as a string.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/lineage/LineageRelation.html#setFromEntityId(java.lang.String)">setFromEntityId(String)</a></span> - Method in class com.atlan.model.lineage.<a href="com/atlan/model/lineage/LineageRelation.html" title="class in com.atlan.model.lineage">LineageRelation</a></dt>
 <dd>
@@ -21705,9 +21796,13 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Unique JIRA user identifier.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationBucket.html#setKey(java.lang.String)">setKey(String)</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationBucket.html" title="class in com.atlan.model.search">AggregationBucket</a></dt>
+<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationBucketDetails.html#setKey(java.lang.Object)">setKey(Object)</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationBucketDetails.html" title="class in com.atlan.model.search">AggregationBucketDetails</a></dt>
 <dd>
 <div class="block">Key of the field representing this bucket of aggregate results.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationBucketDetails.html#setKeyAsString(java.lang.String)">setKeyAsString(String)</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationBucketDetails.html" title="class in com.atlan.model.search">AggregationBucketDetails</a></dt>
+<dd>
+<div class="block">Key of the field representing this bucket of aggregate results, as a string.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/workflow/WorkflowSearchResultDetail.html#setKind(java.lang.String)">setKind(String)</a></span> - Method in class com.atlan.model.workflow.<a href="com/atlan/model/workflow/WorkflowSearchResultDetail.html" title="class in com.atlan.model.workflow">WorkflowSearchResultDetail</a></dt>
 <dd>&nbsp;</dd>
@@ -21865,6 +21960,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">Maximum length of a value in this column.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/SalesforceField.html#setMaxLength(java.lang.Long)">setMaxLength(Long)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SalesforceField.html" title="class in com.atlan.model.assets">SalesforceField</a></dt>
+<dd>
+<div class="block">TBC</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationBucketDetails.html#setMaxMatchingLength(java.lang.Long)">setMaxMatchingLength(Long)</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationBucketDetails.html" title="class in com.atlan.model.search">AggregationBucketDetails</a></dt>
 <dd>
 <div class="block">TBC</div>
 </dd>
@@ -23568,9 +23667,9 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Subtypes of this entity type.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationResult.html#setSumOtherDocCount(java.lang.Long)">setSumOtherDocCount(Long)</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationResult.html" title="class in com.atlan.model.search">AggregationResult</a></dt>
+<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationBucketResult.html#setSumOtherDocCount(java.lang.Long)">setSumOtherDocCount(Long)</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationBucketResult.html" title="class in com.atlan.model.search">AggregationBucketResult</a></dt>
 <dd>
-<div class="block">TBC</div>
+<div class="block">When there are many unique terms, only the top terms are returned.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/typedefs/ClassificationDef.html#setSuperTypes(java.util.List)">setSuperTypes(List&lt;String&gt;)</a></span> - Method in class com.atlan.model.typedefs.<a href="com/atlan/model/typedefs/ClassificationDef.html" title="class in com.atlan.model.typedefs">ClassificationDef</a></dt>
 <dd>
@@ -23711,6 +23810,14 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/atlan/model/admin/AtlanUser.LoginEvent.html#setTime(java.lang.Long)">setTime(Long)</a></span> - Method in class com.atlan.model.admin.<a href="com/atlan/model/admin/AtlanUser.LoginEvent.html" title="class in com.atlan.model.admin">AtlanUser.LoginEvent</a></dt>
 <dd>
 <div class="block">Time (epoch) when the login occurred, in milliseconds.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationBucketDetails.html#setTo(java.lang.Object)">setTo(Object)</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationBucketDetails.html" title="class in com.atlan.model.search">AggregationBucketDetails</a></dt>
+<dd>
+<div class="block">End of a range (date, geo, IP, etc), as a number or string.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationBucketDetails.html#setToAsString(java.lang.String)">setToAsString(String)</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationBucketDetails.html" title="class in com.atlan.model.search">AggregationBucketDetails</a></dt>
+<dd>
+<div class="block">End of a range, as a string.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/lineage/LineageRelation.html#setToEntityId(java.lang.String)">setToEntityId(String)</a></span> - Method in class com.atlan.model.lineage.<a href="com/atlan/model/lineage/LineageRelation.html" title="class in com.atlan.model.lineage">LineageRelation</a></dt>
 <dd>
@@ -24288,6 +24395,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Unused.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationMetricResult.html#setValue(java.lang.Double)">setValue(Double)</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationMetricResult.html" title="class in com.atlan.model.search">AggregationMetricResult</a></dt>
+<dd>
+<div class="block">Value of the requested metric aggregation.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/workflow/NameValuePair.html#setValue(java.lang.Object)">setValue(Object)</a></span> - Method in class com.atlan.model.workflow.<a href="com/atlan/model/workflow/NameValuePair.html" title="class in com.atlan.model.workflow">NameValuePair</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/typedefs/AttributeDef.html#setValuesMaxCount(java.lang.Long)">setValuesMaxCount(Long)</a></span> - Method in class com.atlan.model.typedefs.<a href="com/atlan/model/typedefs/AttributeDef.html" title="class in com.atlan.model.typedefs">AttributeDef</a></dt>
@@ -24762,6 +24873,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/enums/AtlanWorkflowPhase.html#SUCCESS">SUCCESS</a></span> - com.atlan.model.enums.<a href="com/atlan/model/enums/AtlanWorkflowPhase.html" title="enum in com.atlan.model.enums">AtlanWorkflowPhase</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationBucketResult.AggregationBucketResultBuilder.html#sumOtherDocCount(java.lang.Long)">sumOtherDocCount(Long)</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationBucketResult.AggregationBucketResultBuilder.html" title="class in com.atlan.model.search">AggregationBucketResult.AggregationBucketResultBuilder</a></dt>
+<dd>
+<div class="block">When there are many unique terms, only the top terms are returned.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/typedefs/ClassificationDef.ClassificationDefBuilder.html#superTypes(java.util.List)">superTypes(List&lt;String&gt;)</a></span> - Method in class com.atlan.model.typedefs.<a href="com/atlan/model/typedefs/ClassificationDef.ClassificationDefBuilder.html" title="class in com.atlan.model.typedefs">ClassificationDef.ClassificationDefBuilder</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/typedefs/EntityDef.EntityDefBuilder.html#superTypes(java.util.List)">superTypes(List&lt;String&gt;)</a></span> - Method in class com.atlan.model.typedefs.<a href="com/atlan/model/typedefs/EntityDef.EntityDefBuilder.html" title="class in com.atlan.model.typedefs">EntityDef.EntityDefBuilder</a></dt>
@@ -25610,9 +25725,15 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/relations/UniqueAttributes.UniqueAttributesBuilder.html#toString()">toString()</a></span> - Method in class com.atlan.model.relations.<a href="com/atlan/model/relations/UniqueAttributes.UniqueAttributesBuilder.html" title="class in com.atlan.model.relations">UniqueAttributes.UniqueAttributesBuilder</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationBucket.html#toString()">toString()</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationBucket.html" title="class in com.atlan.model.search">AggregationBucket</a></dt>
+<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationBucketDetails.html#toString()">toString()</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationBucketDetails.html" title="class in com.atlan.model.search">AggregationBucketDetails</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationResult.html#toString()">toString()</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationResult.html" title="class in com.atlan.model.search">AggregationResult</a></dt>
+<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationBucketResult.AggregationBucketResultBuilder.html#toString()">toString()</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationBucketResult.AggregationBucketResultBuilder.html" title="class in com.atlan.model.search">AggregationBucketResult.AggregationBucketResultBuilder</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationBucketResult.html#toString()">toString()</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationBucketResult.html" title="class in com.atlan.model.search">AggregationBucketResult</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationMetricResult.AggregationMetricResultBuilder.html#toString()">toString()</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationMetricResult.AggregationMetricResultBuilder.html" title="class in com.atlan.model.search">AggregationMetricResult.AggregationMetricResultBuilder</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationMetricResult.html#toString()">toString()</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationMetricResult.html" title="class in com.atlan.model.search">AggregationMetricResult</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/search/AuditSearchRequest.AuditSearchRequestBuilder.html#toString()">toString()</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AuditSearchRequest.AuditSearchRequestBuilder.html" title="class in com.atlan.model.search">AuditSearchRequest.AuditSearchRequestBuilder</a></dt>
 <dd>&nbsp;</dd>
@@ -25726,7 +25847,9 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
  more-complete APISpec object.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Asset.html#trimToRequired()">trimToRequired()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Reduce the asset to the minimum set of properties required to update it.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/AtlanCollection.html#trimToRequired()">trimToRequired()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/AtlanCollection.html" title="class in com.atlan.model.assets">AtlanCollection</a></dt>
 <dd>
 <div class="block">Builds the minimal object necessary to apply an update to a AtlanCollection, from a potentially
@@ -27872,6 +27995,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/GlossaryTerm.GlossaryTermBuilder.html#validValuesFor(java.util.Collection)">validValuesFor(Collection&lt;? extends GlossaryTerm&gt;)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/GlossaryTerm.GlossaryTermBuilder.html" title="class in com.atlan.model.assets">GlossaryTerm.GlossaryTermBuilder</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/search/AggregationMetricResult.AggregationMetricResultBuilder.html#value(java.lang.Double)">value(Double)</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/AggregationMetricResult.AggregationMetricResultBuilder.html" title="class in com.atlan.model.search">AggregationMetricResult.AggregationMetricResultBuilder</a></dt>
+<dd>
+<div class="block">Value of the requested metric aggregation.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/workflow/NameValuePair.NameValuePairBuilder.html#value(java.lang.Object)">value(Object)</a></span> - Method in class com.atlan.model.workflow.<a href="com/atlan/model/workflow/NameValuePair.NameValuePairBuilder.html" title="class in com.atlan.model.workflow">NameValuePair.NameValuePairBuilder</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/enums/AssetSidebarTab.html#valueOf(java.lang.String)">valueOf(String)</a></span> - Static method in enum com.atlan.model.enums.<a href="com/atlan/model/enums/AssetSidebarTab.html" title="enum in com.atlan.model.enums">AssetSidebarTab</a></dt>

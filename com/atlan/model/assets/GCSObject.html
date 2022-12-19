@@ -698,7 +698,7 @@ extends <a href="GCS.html" title="class in com.atlan.model.assets">GCS</a></pre>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i55" class="rowColor">
-<td class="colFirst"><code>protected <a href="GCSObject.GCSObjectBuilder.html" title="class in com.atlan.model.assets">GCSObject.GCSObjectBuilder</a>&lt;?,&#8203;?&gt;</code></td>
+<td class="colFirst"><code><a href="GCSObject.GCSObjectBuilder.html" title="class in com.atlan.model.assets">GCSObject.GCSObjectBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#trimToRequired()">trimToRequired</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Builds the minimal object necessary to apply an update to a GCSObject, from a potentially
@@ -921,7 +921,8 @@ extends <a href="GCS.html" title="class in com.atlan.model.assets">GCS</a></pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>trimToRequired</h4>
-<pre class="methodSignature">protected&nbsp;<a href="GCSObject.GCSObjectBuilder.html" title="class in com.atlan.model.assets">GCSObject.GCSObjectBuilder</a>&lt;?,&#8203;?&gt;&nbsp;trimToRequired()</pre>
+<pre class="methodSignature">public&nbsp;<a href="GCSObject.GCSObjectBuilder.html" title="class in com.atlan.model.assets">GCSObject.GCSObjectBuilder</a>&lt;?,&#8203;?&gt;&nbsp;trimToRequired()
+                                                     throws <a href="../../exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></pre>
 <div class="block">Builds the minimal object necessary to apply an update to a GCSObject, from a potentially
  more-complete GCSObject object.</div>
 <dl>
@@ -929,6 +930,8 @@ extends <a href="GCS.html" title="class in com.atlan.model.assets">GCS</a></pre>
 <dd><code><a href="Asset.html#trimToRequired()">trimToRequired</a></code>&nbsp;in class&nbsp;<code><a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the minimal object necessary to update the GCSObject, as a builder</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></code> - if any of the minimal set of required properties for GCSObject are not found in the initial object</dd>
 </dl>
 </li>
 </ul>

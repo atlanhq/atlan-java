@@ -588,7 +588,7 @@ extends <a href="API.html" title="class in com.atlan.model.assets">API</a></pre>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i41" class="rowColor">
-<td class="colFirst"><code>protected <a href="APISpec.APISpecBuilder.html" title="class in com.atlan.model.assets">APISpec.APISpecBuilder</a>&lt;?,&#8203;?&gt;</code></td>
+<td class="colFirst"><code><a href="APISpec.APISpecBuilder.html" title="class in com.atlan.model.assets">APISpec.APISpecBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#trimToRequired()">trimToRequired</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Builds the minimal object necessary to apply an update to a APISpec, from a potentially
@@ -804,7 +804,8 @@ extends <a href="API.html" title="class in com.atlan.model.assets">API</a></pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>trimToRequired</h4>
-<pre class="methodSignature">protected&nbsp;<a href="APISpec.APISpecBuilder.html" title="class in com.atlan.model.assets">APISpec.APISpecBuilder</a>&lt;?,&#8203;?&gt;&nbsp;trimToRequired()</pre>
+<pre class="methodSignature">public&nbsp;<a href="APISpec.APISpecBuilder.html" title="class in com.atlan.model.assets">APISpec.APISpecBuilder</a>&lt;?,&#8203;?&gt;&nbsp;trimToRequired()
+                                                 throws <a href="../../exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></pre>
 <div class="block">Builds the minimal object necessary to apply an update to a APISpec, from a potentially
  more-complete APISpec object.</div>
 <dl>
@@ -812,6 +813,8 @@ extends <a href="API.html" title="class in com.atlan.model.assets">API</a></pre>
 <dd><code><a href="Asset.html#trimToRequired()">trimToRequired</a></code>&nbsp;in class&nbsp;<code><a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the minimal object necessary to update the APISpec, as a builder</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></code> - if any of the minimal set of required properties for APISpec are not found in the initial object</dd>
 </dl>
 </li>
 </ul>

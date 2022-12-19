@@ -1557,9 +1557,11 @@ extends <a href="../core/Entity.html" title="class in com.atlan.model.core">Enti
 </td>
 </tr>
 <tr id="i184" class="altColor">
-<td class="colFirst"><code>protected abstract <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets">Asset.AssetBuilder</a>&lt;?,&#8203;?&gt;</code></td>
+<td class="colFirst"><code>abstract <a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets">Asset.AssetBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#trimToRequired()">trimToRequired</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Reduce the asset to the minimum set of properties required to update it.</div>
+</td>
 </tr>
 <tr id="i185" class="rowColor">
 <td class="colFirst"><code>protected static <a href="../core/Entity.html" title="class in com.atlan.model.core">Entity</a></code></td>
@@ -1756,7 +1758,15 @@ extends <a href="../core/Entity.html" title="class in com.atlan.model.core">Enti
 <ul class="blockList">
 <li class="blockList">
 <h4>trimToRequired</h4>
-<pre class="methodSignature">protected abstract&nbsp;<a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets">Asset.AssetBuilder</a>&lt;?,&#8203;?&gt;&nbsp;trimToRequired()</pre>
+<pre class="methodSignature">public abstract&nbsp;<a href="Asset.AssetBuilder.html" title="class in com.atlan.model.assets">Asset.AssetBuilder</a>&lt;?,&#8203;?&gt;&nbsp;trimToRequired()
+                                                      throws <a href="../../exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></pre>
+<div class="block">Reduce the asset to the minimum set of properties required to update it.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a builder containing the minimal set of properties required to update this asset</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></code> - if any of the minimal set of required properties are not found in the initial object</dd>
+</dl>
 </li>
 </ul>
 <a id="updateCertificate(com.atlan.model.assets.Asset.AssetBuilder,com.atlan.model.enums.AtlanCertificateStatus,java.lang.String)">

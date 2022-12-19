@@ -606,7 +606,7 @@ extends <a href="Looker.html" title="class in com.atlan.model.assets">Looker</a>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i42" class="altColor">
-<td class="colFirst"><code>protected <a href="LookerTile.LookerTileBuilder.html" title="class in com.atlan.model.assets">LookerTile.LookerTileBuilder</a>&lt;?,&#8203;?&gt;</code></td>
+<td class="colFirst"><code><a href="LookerTile.LookerTileBuilder.html" title="class in com.atlan.model.assets">LookerTile.LookerTileBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#trimToRequired()">trimToRequired</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Builds the minimal object necessary to apply an update to a LookerTile, from a potentially
@@ -797,7 +797,8 @@ extends <a href="Looker.html" title="class in com.atlan.model.assets">Looker</a>
 <ul class="blockList">
 <li class="blockList">
 <h4>trimToRequired</h4>
-<pre class="methodSignature">protected&nbsp;<a href="LookerTile.LookerTileBuilder.html" title="class in com.atlan.model.assets">LookerTile.LookerTileBuilder</a>&lt;?,&#8203;?&gt;&nbsp;trimToRequired()</pre>
+<pre class="methodSignature">public&nbsp;<a href="LookerTile.LookerTileBuilder.html" title="class in com.atlan.model.assets">LookerTile.LookerTileBuilder</a>&lt;?,&#8203;?&gt;&nbsp;trimToRequired()
+                                                       throws <a href="../../exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></pre>
 <div class="block">Builds the minimal object necessary to apply an update to a LookerTile, from a potentially
  more-complete LookerTile object.</div>
 <dl>
@@ -805,6 +806,8 @@ extends <a href="Looker.html" title="class in com.atlan.model.assets">Looker</a>
 <dd><code><a href="Asset.html#trimToRequired()">trimToRequired</a></code>&nbsp;in class&nbsp;<code><a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></code></dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the minimal object necessary to update the LookerTile, as a builder</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></code> - if any of the minimal set of required properties for LookerTile are not found in the initial object</dd>
 </dl>
 </li>
 </ul>
