@@ -425,7 +425,13 @@ public abstract class Asset extends Entity {
         addNullField("assignedTerms");
     }
 
-    protected abstract AssetBuilder<?, ?> trimToRequired();
+    /**
+     * Reduce the asset to the minimum set of properties required to update it.
+     *
+     * @return a builder containing the minimal set of properties required to update this asset
+     * @throws InvalidRequestException if any of the minimal set of required properties are not found in the initial object
+     */
+    protected abstract AssetBuilder<?, ?> trimToRequired() throws InvalidRequestException;
 
     /**
      * Update the certificate on an asset.

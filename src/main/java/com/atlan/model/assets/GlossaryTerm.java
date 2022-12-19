@@ -8,6 +8,7 @@ import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import co.elastic.clients.elasticsearch._types.query_dsl.TermsQuery;
 import co.elastic.clients.elasticsearch._types.query_dsl.TermsQueryField;
 import com.atlan.exception.AtlanException;
+import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.LogicException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.core.Entity;
@@ -18,10 +19,7 @@ import com.atlan.model.search.IndexSearchDSL;
 import com.atlan.model.search.IndexSearchRequest;
 import com.atlan.model.search.IndexSearchResponse;
 import com.atlan.util.QueryFactory;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.SortedSet;
+import java.util.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
@@ -228,9 +226,30 @@ public class GlossaryTerm extends Asset {
      * more-complete GlossaryTerm object.
      *
      * @return the minimal object necessary to update the GlossaryTerm, as a builder
+     * @throws InvalidRequestException InvalidRequestException if any of the minimal set of required properties for GlossaryTerm are not found in the initial object
      */
     @Override
-    protected GlossaryTermBuilder<?, ?> trimToRequired() {
+    protected GlossaryTermBuilder<?, ?> trimToRequired() throws InvalidRequestException {
+        List<String> missing = new ArrayList<>();
+        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
+            missing.add("qualifiedName");
+        }
+        if (this.getName() == null || this.getName().length() == 0) {
+            missing.add("name");
+        }
+        if (this.getAnchor() == null
+                || this.getAnchor().getGuid() == null
+                || this.getAnchor().getGuid().length() == 0) {
+            missing.add("anchor.guid");
+        }
+        if (!missing.isEmpty()) {
+            throw new InvalidRequestException(
+                    "Required field for updating GlossaryTerm is missing.",
+                    String.join(",", missing),
+                    "ATLAN-JAVA-CLIENT-400-404",
+                    400,
+                    null);
+        }
         return updater(this.getQualifiedName(), this.getName(), this.getAnchor().getGuid());
     }
 
