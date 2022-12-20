@@ -6,9 +6,9 @@ import com.atlan.Atlan;
 import com.atlan.cache.CustomMetadataCache;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.InvalidRequestException;
+import com.atlan.model.core.AssetResponse;
 import com.atlan.model.core.AtlanObject;
 import com.atlan.model.core.CustomMetadataAttributes;
-import com.atlan.model.core.EntityResponse;
 import com.atlan.net.ApiResource;
 import com.atlan.serde.Serde;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -36,7 +36,7 @@ public class EntityGuidEndpoint {
      * @return the requested entity and its details, if it exists
      * @throws AtlanException on any API interaction problems
      */
-    public static EntityResponse retrieve(String guid, boolean ignoreRelationships, boolean minExtInfo)
+    public static AssetResponse retrieve(String guid, boolean ignoreRelationships, boolean minExtInfo)
             throws AtlanException {
         String url = String.format(
                 "%s%s",
@@ -44,7 +44,7 @@ public class EntityGuidEndpoint {
                 String.format(
                         "%s%s?ignoreRelationships=%s&minExtInfo=%s",
                         endpoint, ApiResource.urlEncodeId(guid), ignoreRelationships, minExtInfo));
-        return ApiResource.request(ApiResource.RequestMethod.GET, url, "", EntityResponse.class, null);
+        return ApiResource.request(ApiResource.RequestMethod.GET, url, "", AssetResponse.class, null);
     }
 
     /**

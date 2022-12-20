@@ -5,7 +5,6 @@ package com.atlan.model.assets;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.core.Entity;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.enums.AtlanConnectorType;
@@ -162,14 +161,14 @@ public class PresetDashboard extends Preset {
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PresetDashboard does not exist or the provided GUID is not a PresetDashboard
      */
     public static PresetDashboard retrieveByGuid(String guid) throws AtlanException {
-        Entity entity = Entity.retrieveFull(guid);
-        if (entity == null) {
-            throw new NotFoundException("No entity found with GUID: " + guid, "ATLAN_JAVA_CLIENT-404-001", 404, null);
-        } else if (entity instanceof PresetDashboard) {
-            return (PresetDashboard) entity;
+        Asset asset = Asset.retrieveFull(guid);
+        if (asset == null) {
+            throw new NotFoundException("No asset found with GUID: " + guid, "ATLAN_JAVA_CLIENT-404-001", 404, null);
+        } else if (asset instanceof PresetDashboard) {
+            return (PresetDashboard) asset;
         } else {
             throw new NotFoundException(
-                    "Entity with GUID " + guid + " is not a PresetDashboard.", "ATLAN_JAVA_CLIENT-404-002", 404, null);
+                    "Asset with GUID " + guid + " is not a PresetDashboard.", "ATLAN_JAVA_CLIENT-404-002", 404, null);
         }
     }
 
@@ -181,9 +180,9 @@ public class PresetDashboard extends Preset {
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PresetDashboard does not exist
      */
     public static PresetDashboard retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        Entity entity = Entity.retrieveFull(TYPE_NAME, qualifiedName);
-        if (entity instanceof PresetDashboard) {
-            return (PresetDashboard) entity;
+        Asset asset = Asset.retrieveFull(TYPE_NAME, qualifiedName);
+        if (asset instanceof PresetDashboard) {
+            return (PresetDashboard) asset;
         } else {
             throw new NotFoundException(
                     "No PresetDashboard found with qualifiedName: " + qualifiedName,

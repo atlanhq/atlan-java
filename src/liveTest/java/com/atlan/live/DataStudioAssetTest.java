@@ -12,8 +12,7 @@ import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.assets.*;
-import com.atlan.model.core.Entity;
-import com.atlan.model.core.EntityMutationResponse;
+import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.enums.*;
 import com.atlan.model.search.AggregationBucketResult;
 import com.atlan.model.search.IndexSearchDSL;
@@ -54,8 +53,8 @@ public class DataStudioAssetTest extends AtlanLiveTest {
         DataStudioAsset toCreate = DataStudioAsset.creator(
                         REPORT_NAME, connection.getQualifiedName(), GoogleDataStudioAssetType.REPORT)
                 .build();
-        EntityMutationResponse response = toCreate.upsert();
-        Entity one = validateSingleCreate(response);
+        AssetMutationResponse response = toCreate.upsert();
+        Asset one = validateSingleCreate(response);
         assertTrue(one instanceof DataStudioAsset);
         report = (DataStudioAsset) one;
         assertNotNull(report.getGuid());
@@ -73,8 +72,8 @@ public class DataStudioAssetTest extends AtlanLiveTest {
         DataStudioAsset toCreate = DataStudioAsset.creator(
                         SOURCE_NAME, connection.getQualifiedName(), GoogleDataStudioAssetType.DATA_SOURCE)
                 .build();
-        EntityMutationResponse response = toCreate.upsert();
-        Entity one = validateSingleCreate(response);
+        AssetMutationResponse response = toCreate.upsert();
+        Asset one = validateSingleCreate(response);
         assertTrue(one instanceof DataStudioAsset);
         source = (DataStudioAsset) one;
         assertNotNull(source.getGuid());
@@ -175,11 +174,11 @@ public class DataStudioAssetTest extends AtlanLiveTest {
                 1);
 
         assertEquals(response.getApproximateCount().longValue(), 2L);
-        List<Entity> entities = response.getEntities();
+        List<Asset> entities = response.getAssets();
         assertNotNull(entities);
         assertEquals(entities.size(), 2);
 
-        Entity one = entities.get(0);
+        Asset one = entities.get(0);
         assertTrue(one instanceof DataStudioAsset);
         assertFalse(one.isComplete());
         DataStudioAsset asset = (DataStudioAsset) one;
@@ -200,12 +199,12 @@ public class DataStudioAssetTest extends AtlanLiveTest {
             groups = {"delete.source"},
             dependsOnGroups = {"update.*", "search.*"})
     void deleteSource() throws AtlanException {
-        EntityMutationResponse response = Entity.delete(source.getGuid());
+        AssetMutationResponse response = Asset.delete(source.getGuid());
         assertNotNull(response);
-        assertTrue(response.getCreatedEntities().isEmpty());
-        assertTrue(response.getUpdatedEntities().isEmpty());
-        assertEquals(response.getDeletedEntities().size(), 1);
-        Entity one = response.getDeletedEntities().get(0);
+        assertTrue(response.getCreatedAssets().isEmpty());
+        assertTrue(response.getUpdatedAssets().isEmpty());
+        assertEquals(response.getDeletedAssets().size(), 1);
+        Asset one = response.getDeletedAssets().get(0);
         assertTrue(one instanceof DataStudioAsset);
         DataStudioAsset s = (DataStudioAsset) one;
         assertEquals(s.getGuid(), source.getGuid());
@@ -239,12 +238,12 @@ public class DataStudioAssetTest extends AtlanLiveTest {
             groups = {"purge.source"},
             dependsOnGroups = {"delete.source.restore"})
     void purgeSource() throws AtlanException {
-        EntityMutationResponse response = Entity.purge(source.getGuid());
+        AssetMutationResponse response = Asset.purge(source.getGuid());
         assertNotNull(response);
-        assertTrue(response.getCreatedEntities().isEmpty());
-        assertTrue(response.getUpdatedEntities().isEmpty());
-        assertEquals(response.getDeletedEntities().size(), 1);
-        Entity one = response.getDeletedEntities().get(0);
+        assertTrue(response.getCreatedAssets().isEmpty());
+        assertTrue(response.getUpdatedAssets().isEmpty());
+        assertEquals(response.getDeletedAssets().size(), 1);
+        Asset one = response.getDeletedAssets().get(0);
         assertTrue(one instanceof DataStudioAsset);
         DataStudioAsset s = (DataStudioAsset) one;
         assertEquals(s.getGuid(), source.getGuid());

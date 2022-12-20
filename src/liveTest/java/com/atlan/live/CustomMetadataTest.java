@@ -12,9 +12,8 @@ import com.atlan.cache.CustomMetadataCache;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.admin.AtlanGroup;
 import com.atlan.model.assets.*;
+import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.core.CustomMetadataAttributes;
-import com.atlan.model.core.Entity;
-import com.atlan.model.core.EntityMutationResponse;
 import com.atlan.model.enums.AtlanCustomAttributePrimitiveType;
 import com.atlan.model.enums.AtlanTypeCategory;
 import com.atlan.model.enums.AuditActionType;
@@ -368,10 +367,10 @@ public class CustomMetadataTest extends AtlanLiveTest {
             count++;
         }
         assertEquals(response.getApproximateCount().longValue(), 1L);
-        List<Entity> entities = response.getEntities();
+        List<Asset> entities = response.getAssets();
         assertNotNull(entities);
         assertEquals(entities.size(), 1);
-        Entity one = entities.get(0);
+        Asset one = entities.get(0);
         assertTrue(one instanceof GlossaryTerm);
         assertFalse(one.isComplete());
         GlossaryTerm t = (GlossaryTerm) one;
@@ -410,10 +409,10 @@ public class CustomMetadataTest extends AtlanLiveTest {
             count++;
         }
         assertEquals(response.getApproximateCount().longValue(), 1L);
-        List<Entity> entities = response.getEntities();
+        List<Asset> entities = response.getAssets();
         assertNotNull(entities);
         assertEquals(entities.size(), 1);
-        Entity one = entities.get(0);
+        Asset one = entities.get(0);
         assertTrue(one instanceof GlossaryTerm);
         assertFalse(one.isComplete());
         GlossaryTerm t = (GlossaryTerm) one;
@@ -631,12 +630,12 @@ public class CustomMetadataTest extends AtlanLiveTest {
         GlossaryTerm toUpdate = GlossaryTerm.updater(term.getQualifiedName(), term.getName(), glossary.getGuid())
                 .customMetadata(CM_RACI, cm1)
                 .build();
-        EntityMutationResponse response = toUpdate.upsert(false, true);
+        AssetMutationResponse response = toUpdate.upsert(false, true);
         assertNotNull(response);
-        assertTrue(response.getDeletedEntities().isEmpty());
-        assertTrue(response.getCreatedEntities().isEmpty());
-        assertEquals(response.getUpdatedEntities().size(), 1);
-        Entity one = response.getUpdatedEntities().get(0);
+        assertTrue(response.getDeletedAssets().isEmpty());
+        assertTrue(response.getCreatedAssets().isEmpty());
+        assertEquals(response.getUpdatedAssets().size(), 1);
+        Asset one = response.getUpdatedAssets().get(0);
         assertTrue(one instanceof GlossaryTerm);
         GlossaryTerm t = (GlossaryTerm) one;
         assertEquals(t.getQualifiedName(), term.getQualifiedName());
@@ -657,12 +656,12 @@ public class CustomMetadataTest extends AtlanLiveTest {
         GlossaryTerm toUpdate = GlossaryTerm.updater(term.getQualifiedName(), term.getName(), glossary.getGuid())
                 .build();
         toUpdate.removeCustomMetadata();
-        EntityMutationResponse response = toUpdate.upsert(false, true);
+        AssetMutationResponse response = toUpdate.upsert(false, true);
         assertNotNull(response);
-        assertTrue(response.getDeletedEntities().isEmpty());
-        assertTrue(response.getCreatedEntities().isEmpty());
-        assertEquals(response.getUpdatedEntities().size(), 1);
-        Entity one = response.getUpdatedEntities().get(0);
+        assertTrue(response.getDeletedAssets().isEmpty());
+        assertTrue(response.getCreatedAssets().isEmpty());
+        assertEquals(response.getUpdatedAssets().size(), 1);
+        Asset one = response.getUpdatedAssets().get(0);
         assertTrue(one instanceof GlossaryTerm);
         GlossaryTerm t = (GlossaryTerm) one;
         assertEquals(t.getQualifiedName(), term.getQualifiedName());

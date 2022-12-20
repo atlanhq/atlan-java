@@ -12,8 +12,7 @@ import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.assets.*;
-import com.atlan.model.core.Entity;
-import com.atlan.model.core.EntityMutationResponse;
+import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.enums.*;
 import com.atlan.model.search.AggregationBucketResult;
 import com.atlan.model.search.IndexSearchDSL;
@@ -58,8 +57,8 @@ public class S3AssetTest extends AtlanLiveTest {
     void createBucket() throws AtlanException {
         S3Bucket toCreate = S3Bucket.creator(BUCKET_NAME, connection.getQualifiedName(), BUCKET_ARN)
                 .build();
-        EntityMutationResponse response = toCreate.upsert();
-        Entity one = validateSingleCreate(response);
+        AssetMutationResponse response = toCreate.upsert();
+        Asset one = validateSingleCreate(response);
         assertTrue(one instanceof S3Bucket);
         bucket = (S3Bucket) one;
         assertNotNull(bucket.getGuid());
@@ -78,17 +77,17 @@ public class S3AssetTest extends AtlanLiveTest {
                 .s3BucketQualifiedName(bucket.getQualifiedName())
                 .bucket(S3Bucket.refByGuid(bucket.getGuid()))
                 .build();
-        EntityMutationResponse response = toCreate.upsert();
+        AssetMutationResponse response = toCreate.upsert();
         assertNotNull(response);
-        assertTrue(response.getDeletedEntities().isEmpty());
-        assertEquals(response.getUpdatedEntities().size(), 1);
-        Entity one = response.getUpdatedEntities().get(0);
+        assertTrue(response.getDeletedAssets().isEmpty());
+        assertEquals(response.getUpdatedAssets().size(), 1);
+        Asset one = response.getUpdatedAssets().get(0);
         assertTrue(one instanceof S3Bucket);
         S3Bucket b = (S3Bucket) one;
         assertEquals(b.getGuid(), bucket.getGuid());
         assertEquals(b.getQualifiedName(), bucket.getQualifiedName());
-        assertEquals(response.getCreatedEntities().size(), 1);
-        one = response.getCreatedEntities().get(0);
+        assertEquals(response.getCreatedAssets().size(), 1);
+        one = response.getCreatedAssets().get(0);
         assertTrue(one instanceof S3Object);
         object = (S3Object) one;
         assertNotNull(object.getGuid());
@@ -195,11 +194,11 @@ public class S3AssetTest extends AtlanLiveTest {
                 2);
 
         assertEquals(response.getApproximateCount().longValue(), 2L);
-        List<Entity> entities = response.getEntities();
+        List<Asset> entities = response.getAssets();
         assertNotNull(entities);
         assertEquals(entities.size(), 2);
 
-        Entity one = entities.get(0);
+        Asset one = entities.get(0);
         assertTrue(one instanceof S3Bucket);
         assertFalse(one.isComplete());
         S3Bucket b = (S3Bucket) one;
@@ -220,12 +219,12 @@ public class S3AssetTest extends AtlanLiveTest {
             groups = {"delete.object"},
             dependsOnGroups = {"update.*", "search.*"})
     void deleteObject() throws AtlanException {
-        EntityMutationResponse response = Entity.delete(object.getGuid());
+        AssetMutationResponse response = Asset.delete(object.getGuid());
         assertNotNull(response);
-        assertTrue(response.getCreatedEntities().isEmpty());
-        assertTrue(response.getUpdatedEntities().isEmpty());
-        assertEquals(response.getDeletedEntities().size(), 1);
-        Entity one = response.getDeletedEntities().get(0);
+        assertTrue(response.getCreatedAssets().isEmpty());
+        assertTrue(response.getUpdatedAssets().isEmpty());
+        assertEquals(response.getDeletedAssets().size(), 1);
+        Asset one = response.getDeletedAssets().get(0);
         assertTrue(one instanceof S3Object);
         S3Object s = (S3Object) one;
         assertEquals(s.getGuid(), object.getGuid());
@@ -259,12 +258,12 @@ public class S3AssetTest extends AtlanLiveTest {
             groups = {"purge.object"},
             dependsOnGroups = {"delete.object.restore"})
     void purgeObject() throws AtlanException {
-        EntityMutationResponse response = Entity.purge(object.getGuid());
+        AssetMutationResponse response = Asset.purge(object.getGuid());
         assertNotNull(response);
-        assertTrue(response.getCreatedEntities().isEmpty());
-        assertTrue(response.getUpdatedEntities().isEmpty());
-        assertEquals(response.getDeletedEntities().size(), 1);
-        Entity one = response.getDeletedEntities().get(0);
+        assertTrue(response.getCreatedAssets().isEmpty());
+        assertTrue(response.getUpdatedAssets().isEmpty());
+        assertEquals(response.getDeletedAssets().size(), 1);
+        Asset one = response.getDeletedAssets().get(0);
         assertTrue(one instanceof S3Object);
         S3Object s = (S3Object) one;
         assertEquals(s.getGuid(), object.getGuid());

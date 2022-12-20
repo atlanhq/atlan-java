@@ -6,8 +6,7 @@ import static org.testng.Assert.*;
 
 import com.atlan.exception.AtlanException;
 import com.atlan.model.assets.*;
-import com.atlan.model.core.Entity;
-import com.atlan.model.core.EntityMutationResponse;
+import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.enums.AtlanStatus;
 import java.util.SortedSet;
 import org.testng.annotations.Test;
@@ -42,18 +41,18 @@ public class ResourceTest extends AtlanLiveTest {
     void addReadme() throws AtlanException {
         Readme toCreate = Readme.creator(GlossaryTerm.refByGuid(term.getGuid()), term.getName(), README_CONTENT)
                 .build();
-        EntityMutationResponse response = toCreate.upsert();
+        AssetMutationResponse response = toCreate.upsert();
         assertNotNull(response);
-        assertTrue(response.getDeletedEntities().isEmpty());
-        assertEquals(response.getCreatedEntities().size(), 1);
-        Entity one = response.getCreatedEntities().get(0);
+        assertTrue(response.getDeletedAssets().isEmpty());
+        assertEquals(response.getCreatedAssets().size(), 1);
+        Asset one = response.getCreatedAssets().get(0);
         assertTrue(one instanceof Readme);
         readme = (Readme) one;
         assertNotNull(readme.getGuid());
         assertNotNull(readme.getQualifiedName());
         assertEquals(readme.getDescription(), README_CONTENT);
-        assertEquals(response.getUpdatedEntities().size(), 1);
-        one = response.getUpdatedEntities().get(0);
+        assertEquals(response.getUpdatedAssets().size(), 1);
+        one = response.getUpdatedAssets().get(0);
         assertTrue(one instanceof GlossaryTerm);
         GlossaryTerm t = (GlossaryTerm) one;
         assertEquals(t.getGuid(), term.getGuid());
@@ -66,19 +65,19 @@ public class ResourceTest extends AtlanLiveTest {
     void addLink() throws AtlanException {
         Link toCreate = Link.creator(GlossaryTerm.refByGuid(term.getGuid()), LINK_TITLE, LINK_URL)
                 .build();
-        EntityMutationResponse response = toCreate.upsert();
+        AssetMutationResponse response = toCreate.upsert();
         assertNotNull(response);
-        assertTrue(response.getDeletedEntities().isEmpty());
-        assertEquals(response.getCreatedEntities().size(), 1);
-        Entity one = response.getCreatedEntities().get(0);
+        assertTrue(response.getDeletedAssets().isEmpty());
+        assertEquals(response.getCreatedAssets().size(), 1);
+        Asset one = response.getCreatedAssets().get(0);
         assertTrue(one instanceof Link);
         link = (Link) one;
         assertNotNull(link.getGuid());
         assertNotNull(link.getQualifiedName());
         assertEquals(link.getName(), LINK_TITLE);
         assertEquals(link.getLink(), LINK_URL);
-        assertEquals(response.getUpdatedEntities().size(), 1);
-        one = response.getUpdatedEntities().get(0);
+        assertEquals(response.getUpdatedAssets().size(), 1);
+        one = response.getUpdatedAssets().get(0);
         assertTrue(one instanceof GlossaryTerm);
         GlossaryTerm t = (GlossaryTerm) one;
         assertEquals(t.getGuid(), term.getGuid());
@@ -106,10 +105,10 @@ public class ResourceTest extends AtlanLiveTest {
             dependsOnGroups = {"read.term"},
             alwaysRun = true)
     void purgeReadme() throws AtlanException {
-        EntityMutationResponse response = Readme.purge(readme.getGuid());
+        AssetMutationResponse response = Readme.purge(readme.getGuid());
         assertNotNull(response);
-        assertEquals(response.getDeletedEntities().size(), 1);
-        Entity one = response.getDeletedEntities().get(0);
+        assertEquals(response.getDeletedAssets().size(), 1);
+        Asset one = response.getDeletedAssets().get(0);
         assertTrue(one instanceof Readme);
         Readme r = (Readme) one;
         assertEquals(r.getGuid(), readme.getGuid());
@@ -122,10 +121,10 @@ public class ResourceTest extends AtlanLiveTest {
             dependsOnGroups = {"read.term"},
             alwaysRun = true)
     void purgeLink() throws AtlanException {
-        EntityMutationResponse response = Link.purge(link.getGuid());
+        AssetMutationResponse response = Link.purge(link.getGuid());
         assertNotNull(response);
-        assertEquals(response.getDeletedEntities().size(), 1);
-        Entity one = response.getDeletedEntities().get(0);
+        assertEquals(response.getDeletedAssets().size(), 1);
+        Asset one = response.getDeletedAssets().get(0);
         assertTrue(one instanceof Link);
         Link l = (Link) one;
         assertEquals(l.getGuid(), link.getGuid());

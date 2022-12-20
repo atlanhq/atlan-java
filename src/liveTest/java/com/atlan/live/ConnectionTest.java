@@ -10,9 +10,9 @@ import com.atlan.cache.RoleCache;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.LogicException;
+import com.atlan.model.assets.Asset;
 import com.atlan.model.assets.Connection;
-import com.atlan.model.core.Entity;
-import com.atlan.model.core.EntityMutationResponse;
+import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanWorkflowPhase;
 import com.atlan.model.packages.ConnectionDelete;
@@ -48,20 +48,20 @@ public class ConnectionTest extends AtlanLiveTest {
         if (adminRoleGuid != null) {
             Connection connection = Connection.creator(prefix, type, List.of(adminRoleGuid), null, null)
                     .build();
-            EntityMutationResponse response = connection.upsert();
+            AssetMutationResponse response = connection.upsert();
             assertNotNull(response);
-            assertTrue(response.getUpdatedEntities().isEmpty());
-            assertTrue(response.getDeletedEntities().isEmpty());
-            assertEquals(response.getCreatedEntities().size(), 1);
-            Entity one = response.getCreatedEntities().get(0);
+            assertTrue(response.getUpdatedAssets().isEmpty());
+            assertTrue(response.getDeletedAssets().isEmpty());
+            assertEquals(response.getCreatedAssets().size(), 1);
+            Asset one = response.getCreatedAssets().get(0);
             assertTrue(one instanceof Connection);
             connection = (Connection) one;
             assertNotNull(connection.getGuid());
             assertNotNull(connection.getQualifiedName());
             assertEquals(connection.getName(), prefix);
-            Entity minimal;
+            Asset minimal;
             do {
-                minimal = Entity.retrieveMinimal(connection.getGuid());
+                minimal = Asset.retrieveMinimal(connection.getGuid());
             } while (minimal == null);
             return connection;
         } else {

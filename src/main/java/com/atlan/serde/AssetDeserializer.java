@@ -9,7 +9,6 @@ import com.atlan.exception.AtlanException;
 import com.atlan.model.assets.*;
 import com.atlan.model.core.Classification;
 import com.atlan.model.core.CustomMetadataAttributes;
-import com.atlan.model.core.Entity;
 import com.atlan.util.JacksonUtils;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.core.JsonParser;
@@ -24,7 +23,7 @@ import java.lang.reflect.*;
 import java.util.*;
 
 /**
- * Deserialization of all {@link Entity} objects, down through the entire inheritance hierarchy.
+ * Deserialization of all {@link Asset} objects, down through the entire inheritance hierarchy.
  * This custom deserialization is necessary to flatten some specific aspects of complexity in Atlan's payloads:
  * <ul>
  *     <li>The nested <code>attributes</code> and <code>relationshipAttributes</code> structures.</li>
@@ -33,15 +32,15 @@ import java.util.*;
  *     <li>Automatically translating the nested <code>businessAttributes</code> structure into custom metadata, including translating from Atlan's internal hashed-string representations into human-readable names.</li>
  * </ul>
  */
-public class EntityDeserializer extends StdDeserializer<Entity> {
+public class AssetDeserializer extends StdDeserializer<Asset> {
 
     private static final long serialVersionUID = 2L;
 
-    public EntityDeserializer() {
+    public AssetDeserializer() {
         this(null);
     }
 
-    public EntityDeserializer(Class<?> t) {
+    public AssetDeserializer(Class<?> t) {
         super(t);
     }
 
@@ -58,18 +57,18 @@ public class EntityDeserializer extends StdDeserializer<Entity> {
      * {@inheritDoc}
      */
     @Override
-    public Entity deserialize(JsonParser parser, DeserializationContext context) throws IOException {
+    public Asset deserialize(JsonParser parser, DeserializationContext context) throws IOException {
         return deserialize(parser.getCodec().readTree(parser));
     }
 
     /**
-     * Actually do the work of deserializing an entity.
+     * Actually do the work of deserializing an asset.
      *
      * @param root of the parsed JSON tree
-     * @return the deserialized entity
+     * @return the deserialized asset
      * @throws IOException on any issues parsing the JSON
      */
-    Entity deserialize(JsonNode root) throws IOException {
+    Asset deserialize(JsonNode root) throws IOException {
 
         JsonNode attributes = root.get("attributes");
         JsonNode relationshipGuid = root.get("relationshipGuid");
@@ -77,7 +76,7 @@ public class EntityDeserializer extends StdDeserializer<Entity> {
         JsonNode businessAttributes = root.get("businessAttributes");
         JsonNode classificationNames = root.get("classificationNames");
 
-        Entity.EntityBuilder<?, ?> builder;
+        Asset.AssetBuilder<?, ?> builder;
         String typeName = root.get("typeName").asText();
 
         // TODO: figure out how to avoid needing to maintain this switch statement
@@ -349,7 +348,7 @@ public class EntityDeserializer extends StdDeserializer<Entity> {
             }
         }
 
-        // Start by deserializing all the non-attribute properties (defined at Entity-level)
+        // Start by deserializing all the non-attribute properties (defined at Asset-level)
         builder = builder.typeName(JacksonUtils.deserializeString(root, "typeName"))
                 .guid(JacksonUtils.deserializeString(root, "guid"))
                 .displayText(JacksonUtils.deserializeString(root, "displayText"))
@@ -381,7 +380,7 @@ public class EntityDeserializer extends StdDeserializer<Entity> {
             builder = builder.pendingTasks(pendingTasks);
         }
 
-        Entity value = builder.build();
+        Asset value = builder.build();
 
         Class<?> clazz = value.getClass();
 
@@ -409,7 +408,7 @@ public class EntityDeserializer extends StdDeserializer<Entity> {
             }
         }
 
-        // Only process relationshipAttributes if this is a full entity, not a relationship
+        // Only process relationshipAttributes if this is a full asset, not a relationship
         // reference. (If it is a relationship reference, the relationshipGuid will be non-null.)
         if (relationshipGuid == null || relationshipGuid.isNull()) {
             if (relationshipAttributes != null && !relationshipAttributes.isNull()) {
@@ -445,7 +444,7 @@ public class EntityDeserializer extends StdDeserializer<Entity> {
             }
         }
 
-        // 2. For entity retrievals, they're all in a `businessAttributes` dict
+        // 2. For asset retrievals, they're all in a `businessAttributes` dict
         if (businessAttributes != null) {
             // Translate these into custom metadata structure
             try {
@@ -483,7 +482,7 @@ public class EntityDeserializer extends StdDeserializer<Entity> {
         return value;
     }
 
-    private void deserialize(Entity value, JsonNode jsonNode, Method method, String fieldName)
+    private void deserialize(Asset value, JsonNode jsonNode, Method method, String fieldName)
             throws IllegalAccessException, InvocationTargetException, NoSuchMethodException, IOException {
         if (jsonNode.isValueNode()) {
             deserializePrimitive(value, jsonNode, method, fieldName);
@@ -494,7 +493,7 @@ public class EntityDeserializer extends StdDeserializer<Entity> {
         }
     }
 
-    private void deserializeList(Entity value, ArrayNode array, Method method)
+    private void deserializeList(Asset value, ArrayNode array, Method method)
             throws IllegalAccessException, InvocationTargetException, IOException {
         Class<?> paramClass = ReflectionCache.getParameterOfMethod(method);
         List<Object> list = new ArrayList<>();
@@ -511,7 +510,7 @@ public class EntityDeserializer extends StdDeserializer<Entity> {
         }
     }
 
-    private void deserializeObject(Entity value, JsonNode jsonObject, Method method)
+    private void deserializeObject(Asset value, JsonNode jsonObject, Method method)
             throws IllegalAccessException, InvocationTargetException, IOException {
         Class<?> paramClass = ReflectionCache.getParameterOfMethod(method);
         method.invoke(value, Serde.mapper.readValue(jsonObject.toString(), paramClass));
@@ -520,7 +519,7 @@ public class EntityDeserializer extends StdDeserializer<Entity> {
     /**
      * Deserialize a value direct to an object.
      * @param element to deserialize
-     * @param method to which the deserialized value will be built into an entity
+     * @param method to which the deserialized value will be built into an asset
      * @return the deserialized object
      * @throws IOException if an array is found nested directly within another array (unsupported)
      */
@@ -537,7 +536,7 @@ public class EntityDeserializer extends StdDeserializer<Entity> {
         return null;
     }
 
-    private void deserializePrimitive(Entity value, JsonNode primitive, Method method, String fieldName)
+    private void deserializePrimitive(Asset value, JsonNode primitive, Method method, String fieldName)
             throws IllegalAccessException, InvocationTargetException, NoSuchMethodException, IOException {
         if (primitive.isTextual()) {
             Class<?> paramClass = ReflectionCache.getParameterOfMethod(method);
@@ -558,7 +557,7 @@ public class EntityDeserializer extends StdDeserializer<Entity> {
         }
     }
 
-    private void deserializeNumber(Entity value, JsonNode primitive, Method method)
+    private void deserializeNumber(Asset value, JsonNode primitive, Method method)
             throws IllegalAccessException, InvocationTargetException, IOException {
         Object number = JacksonUtils.deserializeNumber(primitive, method);
         method.invoke(value, number);

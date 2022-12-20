@@ -13,8 +13,7 @@ import com.atlan.model.assets.Asset;
 import com.atlan.model.assets.Glossary;
 import com.atlan.model.assets.GlossaryCategory;
 import com.atlan.model.assets.GlossaryTerm;
-import com.atlan.model.core.Entity;
-import com.atlan.model.core.EntityMutationResponse;
+import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.enums.*;
 import com.atlan.model.search.AggregationBucketResult;
 import com.atlan.model.search.IndexSearchDSL;
@@ -69,12 +68,12 @@ public class GlossaryTest extends AtlanLiveTest {
      */
     static Glossary createGlossary(String name) throws AtlanException {
         Glossary glossary = Glossary.creator(name).build();
-        EntityMutationResponse response = glossary.upsert();
+        AssetMutationResponse response = glossary.upsert();
         assertNotNull(response);
-        assertEquals(response.getDeletedEntities().size(), 0);
-        assertEquals(response.getUpdatedEntities().size(), 0);
-        assertEquals(response.getCreatedEntities().size(), 1);
-        Entity one = response.getCreatedEntities().get(0);
+        assertEquals(response.getDeletedAssets().size(), 0);
+        assertEquals(response.getUpdatedAssets().size(), 0);
+        assertEquals(response.getCreatedAssets().size(), 1);
+        Asset one = response.getCreatedAssets().get(0);
         assertNotNull(one);
         assertTrue(one instanceof Glossary);
         glossary = (Glossary) one;
@@ -96,7 +95,7 @@ public class GlossaryTest extends AtlanLiveTest {
      */
     static List<GlossaryCategory> createCategories(List<String> names, String glossaryId, String parentCategoryId)
             throws AtlanException {
-        List<Entity> toCreate = new ArrayList<>();
+        List<Asset> toCreate = new ArrayList<>();
         for (String name : names) {
             GlossaryCategory one;
             if (parentCategoryId == null) {
@@ -108,13 +107,13 @@ public class GlossaryTest extends AtlanLiveTest {
             }
             toCreate.add(one);
         }
-        EntityMutationResponse response = EntityBulkEndpoint.upsert(toCreate, false, false);
+        AssetMutationResponse response = EntityBulkEndpoint.upsert(toCreate, false, false);
         assertNotNull(response);
-        assertEquals(response.getDeletedEntities().size(), 0);
-        assertEquals(response.getCreatedEntities().size(), names.size());
-        List<Entity> entities = response.getCreatedEntities();
+        assertEquals(response.getDeletedAssets().size(), 0);
+        assertEquals(response.getCreatedAssets().size(), names.size());
+        List<Asset> entities = response.getCreatedAssets();
         List<GlossaryCategory> toReturn = new ArrayList<>(names.size());
-        for (Entity created : entities) {
+        for (Asset created : entities) {
             if (created instanceof GlossaryCategory) {
                 GlossaryCategory one = (GlossaryCategory) created;
                 String name = one.getName();
@@ -135,16 +134,16 @@ public class GlossaryTest extends AtlanLiveTest {
      */
     static GlossaryTerm createTerm(String name, String glossaryId) throws AtlanException {
         GlossaryTerm term = GlossaryTerm.creator(name, glossaryId, null).build();
-        EntityMutationResponse response = term.upsert();
+        AssetMutationResponse response = term.upsert();
         assertNotNull(response);
-        assertEquals(response.getDeletedEntities().size(), 0);
-        assertEquals(response.getUpdatedEntities().size(), 1);
-        Entity one = response.getUpdatedEntities().get(0);
+        assertEquals(response.getDeletedAssets().size(), 0);
+        assertEquals(response.getUpdatedAssets().size(), 1);
+        Asset one = response.getUpdatedAssets().get(0);
         assertTrue(one instanceof Glossary);
         Glossary glossary = (Glossary) one;
         assertEquals(glossary.getGuid(), glossaryId);
-        assertEquals(response.getCreatedEntities().size(), 1);
-        one = response.getCreatedEntities().get(0);
+        assertEquals(response.getCreatedAssets().size(), 1);
+        one = response.getCreatedAssets().get(0);
         assertNotNull(one);
         assertTrue(one instanceof GlossaryTerm);
         term = (GlossaryTerm) one;
@@ -163,12 +162,12 @@ public class GlossaryTest extends AtlanLiveTest {
      * @throws AtlanException on any errors purging the glossary
      */
     static Glossary deleteGlossary(String guid) throws AtlanException {
-        EntityMutationResponse response = Glossary.purge(guid);
+        AssetMutationResponse response = Glossary.purge(guid);
         assertNotNull(response);
-        assertEquals(response.getCreatedEntities().size(), 0);
-        assertEquals(response.getUpdatedEntities().size(), 0);
-        assertEquals(response.getDeletedEntities().size(), 1);
-        Entity one = response.getDeletedEntities().get(0);
+        assertEquals(response.getCreatedAssets().size(), 0);
+        assertEquals(response.getUpdatedAssets().size(), 0);
+        assertEquals(response.getDeletedAssets().size(), 1);
+        Asset one = response.getDeletedAssets().get(0);
         assertTrue(one instanceof Glossary);
         Glossary deletedGlossary = (Glossary) one;
         assertEquals(deletedGlossary.getGuid(), guid);
@@ -184,12 +183,12 @@ public class GlossaryTest extends AtlanLiveTest {
      * @throws AtlanException on any errors purging the category
      */
     static GlossaryCategory deleteCategory(String guid) throws AtlanException {
-        EntityMutationResponse response = GlossaryCategory.purge(guid);
+        AssetMutationResponse response = GlossaryCategory.purge(guid);
         assertNotNull(response);
-        assertEquals(response.getCreatedEntities().size(), 0);
-        assertEquals(response.getUpdatedEntities().size(), 0);
-        assertEquals(response.getDeletedEntities().size(), 1);
-        Entity one = response.getDeletedEntities().get(0);
+        assertEquals(response.getCreatedAssets().size(), 0);
+        assertEquals(response.getUpdatedAssets().size(), 0);
+        assertEquals(response.getDeletedAssets().size(), 1);
+        Asset one = response.getDeletedAssets().get(0);
         assertTrue(one instanceof GlossaryCategory);
         GlossaryCategory deletedCategory = (GlossaryCategory) one;
         assertEquals(deletedCategory.getGuid(), guid);
@@ -205,12 +204,12 @@ public class GlossaryTest extends AtlanLiveTest {
      * @throws AtlanException on any errors purging the term
      */
     static GlossaryTerm deleteTerm(String guid) throws AtlanException {
-        EntityMutationResponse response = GlossaryTerm.purge(guid);
+        AssetMutationResponse response = GlossaryTerm.purge(guid);
         assertNotNull(response);
-        assertEquals(response.getCreatedEntities().size(), 0);
-        assertEquals(response.getUpdatedEntities().size(), 0);
-        assertEquals(response.getDeletedEntities().size(), 1);
-        Entity one = response.getDeletedEntities().get(0);
+        assertEquals(response.getCreatedAssets().size(), 0);
+        assertEquals(response.getUpdatedAssets().size(), 0);
+        assertEquals(response.getDeletedAssets().size(), 1);
+        Asset one = response.getDeletedAssets().get(0);
         assertTrue(one instanceof GlossaryTerm);
         GlossaryTerm deletedTerm = (GlossaryTerm) one;
         assertEquals(deletedTerm.getGuid(), guid);
@@ -396,8 +395,8 @@ public class GlossaryTest extends AtlanLiveTest {
                 .announcementTitle(ANNOUNCEMENT_TITLE)
                 .announcementMessage(ANNOUNCEMENT_MESSAGE)
                 .build();
-        EntityMutationResponse response = g.upsert();
-        Entity one = validateSingleUpdate(response);
+        AssetMutationResponse response = g.upsert();
+        Asset one = validateSingleUpdate(response);
         assertTrue(one instanceof Glossary);
         g = (Glossary) one;
         assertEquals(g.getGuid(), glossary.getGuid());
@@ -425,8 +424,8 @@ public class GlossaryTest extends AtlanLiveTest {
                 .announcementTitle(ANNOUNCEMENT_TITLE)
                 .announcementMessage(ANNOUNCEMENT_MESSAGE)
                 .build();
-        EntityMutationResponse response = toUpdate.upsert();
-        Entity one = validateSingleUpdate(response);
+        AssetMutationResponse response = toUpdate.upsert();
+        Asset one = validateSingleUpdate(response);
         assertTrue(one instanceof GlossaryCategory);
         GlossaryCategory c = (GlossaryCategory) one;
         assertEquals(c.getGuid(), category.getGuid());
@@ -449,8 +448,8 @@ public class GlossaryTest extends AtlanLiveTest {
                         category.getAnchor().getGuid())
                 .build();
         toUpdate.removeAnnouncement();
-        EntityMutationResponse response = toUpdate.upsert();
-        Entity one = validateSingleUpdate(response);
+        AssetMutationResponse response = toUpdate.upsert();
+        Asset one = validateSingleUpdate(response);
         assertTrue(one instanceof GlossaryCategory);
         GlossaryCategory c = (GlossaryCategory) one;
         assertEquals(c.getGuid(), category.getGuid());
@@ -473,15 +472,15 @@ public class GlossaryTest extends AtlanLiveTest {
                 .announcementMessage(ANNOUNCEMENT_MESSAGE)
                 .category(GlossaryCategory.refByGuid(category.getGuid()))
                 .build();
-        EntityMutationResponse response = term.upsert();
+        AssetMutationResponse response = term.upsert();
         assertNotNull(response);
-        assertEquals(response.getDeletedEntities().size(), 0);
-        assertEquals(response.getCreatedEntities().size(), 0);
-        List<Entity> entities = response.getUpdatedEntities();
+        assertEquals(response.getDeletedAssets().size(), 0);
+        assertEquals(response.getCreatedAssets().size(), 0);
+        List<Asset> entities = response.getUpdatedAssets();
         assertNotNull(entities);
         assertEquals(entities.size(), 2);
 
-        Entity one = entities.get(0);
+        Asset one = entities.get(0);
         assertTrue(one instanceof GlossaryTerm);
         term = (GlossaryTerm) one;
         assertEquals(term.getGuid(), term1.getGuid());
@@ -540,10 +539,10 @@ public class GlossaryTest extends AtlanLiveTest {
                 1);
 
         assertEquals(response.getApproximateCount().longValue(), 1L);
-        List<Entity> entities = response.getEntities();
+        List<Asset> entities = response.getAssets();
         assertNotNull(entities);
         assertEquals(entities.size(), 1);
-        Entity one = entities.get(0);
+        Asset one = entities.get(0);
         assertTrue(one instanceof GlossaryTerm);
         assertFalse(one.isComplete());
         GlossaryTerm term = (GlossaryTerm) one;
@@ -559,14 +558,14 @@ public class GlossaryTest extends AtlanLiveTest {
             dependsOnGroups = {"create.*", "update.*", "read.*", "search.*"},
             alwaysRun = true)
     void deleteTerm1() throws AtlanException {
-        EntityMutationResponse response = GlossaryTerm.delete(term1.getGuid());
+        AssetMutationResponse response = GlossaryTerm.delete(term1.getGuid());
         assertNotNull(response);
-        assertEquals(response.getCreatedEntities().size(), 0);
-        assertEquals(response.getUpdatedEntities().size(), 0);
-        List<Entity> entities = response.getDeletedEntities();
+        assertEquals(response.getCreatedAssets().size(), 0);
+        assertEquals(response.getUpdatedAssets().size(), 0);
+        List<Asset> entities = response.getDeletedAssets();
         assertNotNull(entities);
         assertEquals(entities.size(), 1);
-        Entity one = entities.get(0);
+        Asset one = entities.get(0);
         assertTrue(one instanceof GlossaryTerm);
         GlossaryTerm term = (GlossaryTerm) one;
         assertEquals(term.getGuid(), term1.getGuid());
@@ -656,29 +655,29 @@ public class GlossaryTest extends AtlanLiveTest {
             dependsOnGroups = {"purge.category", "purge.term"},
             alwaysRun = true)
     void purgeHierarchy() throws AtlanException {
-        EntityMutationResponse response = EntityBulkEndpoint.delete(
+        AssetMutationResponse response = EntityBulkEndpoint.delete(
                 List.of(leaf1aaGuid, leaf1abGuid, leaf1bbGuid, leaf2aaGuid, leaf2abGuid, leaf2baGuid, leaf2bbGuid),
                 AtlanDeleteType.HARD);
         assertNotNull(response);
-        assertEquals(response.getCreatedEntities().size(), 0);
-        assertEquals(response.getUpdatedEntities().size(), 0);
-        List<Entity> entities = response.getDeletedEntities();
+        assertEquals(response.getCreatedAssets().size(), 0);
+        assertEquals(response.getUpdatedAssets().size(), 0);
+        List<Asset> entities = response.getDeletedAssets();
         assertNotNull(entities);
         assertEquals(entities.size(), 7);
 
         response = EntityBulkEndpoint.delete(List.of(mid1aGuid, mid1bGuid, mid2aGuid, mid2bGuid), AtlanDeleteType.HARD);
         assertNotNull(response);
-        assertEquals(response.getCreatedEntities().size(), 0);
-        assertEquals(response.getUpdatedEntities().size(), 0);
-        entities = response.getDeletedEntities();
+        assertEquals(response.getCreatedAssets().size(), 0);
+        assertEquals(response.getUpdatedAssets().size(), 0);
+        entities = response.getDeletedAssets();
         assertNotNull(entities);
         assertEquals(entities.size(), 4);
 
         response = EntityBulkEndpoint.delete(List.of(top1Guid, top2Guid), AtlanDeleteType.HARD);
         assertNotNull(response);
-        assertEquals(response.getCreatedEntities().size(), 0);
-        assertEquals(response.getUpdatedEntities().size(), 0);
-        entities = response.getDeletedEntities();
+        assertEquals(response.getCreatedAssets().size(), 0);
+        assertEquals(response.getUpdatedAssets().size(), 0);
+        entities = response.getDeletedAssets();
         assertNotNull(entities);
         assertEquals(entities.size(), 2);
     }

@@ -12,8 +12,7 @@ import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.assets.*;
-import com.atlan.model.core.Entity;
-import com.atlan.model.core.EntityMutationResponse;
+import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.enums.*;
 import com.atlan.model.search.AggregationBucketResult;
 import com.atlan.model.search.IndexSearchDSL;
@@ -60,8 +59,8 @@ public class PresetAssetTest extends AtlanLiveTest {
     void createWorkspace() throws AtlanException {
         PresetWorkspace toCreate = PresetWorkspace.creator(WORKSPACE_NAME, connection.getQualifiedName())
                 .build();
-        EntityMutationResponse response = toCreate.upsert();
-        Entity one = validateSingleCreate(response);
+        AssetMutationResponse response = toCreate.upsert();
+        Asset one = validateSingleCreate(response);
         assertTrue(one instanceof PresetWorkspace);
         workspace = (PresetWorkspace) one;
         assertNotNull(workspace.getGuid());
@@ -77,17 +76,17 @@ public class PresetAssetTest extends AtlanLiveTest {
     void createCollection() throws AtlanException {
         PresetDashboard toCreate = PresetDashboard.creator(COLLECTION_NAME, workspace.getQualifiedName())
                 .build();
-        EntityMutationResponse response = toCreate.upsert();
+        AssetMutationResponse response = toCreate.upsert();
         assertNotNull(response);
-        assertTrue(response.getDeletedEntities().isEmpty());
-        assertEquals(response.getUpdatedEntities().size(), 1);
-        Entity one = response.getUpdatedEntities().get(0);
+        assertTrue(response.getDeletedAssets().isEmpty());
+        assertEquals(response.getUpdatedAssets().size(), 1);
+        Asset one = response.getUpdatedAssets().get(0);
         assertTrue(one instanceof PresetWorkspace);
         PresetWorkspace w = (PresetWorkspace) one;
         assertEquals(w.getGuid(), workspace.getGuid());
         assertEquals(w.getQualifiedName(), workspace.getQualifiedName());
-        assertEquals(response.getCreatedEntities().size(), 1);
-        one = response.getCreatedEntities().get(0);
+        assertEquals(response.getCreatedAssets().size(), 1);
+        one = response.getCreatedAssets().get(0);
         assertTrue(one instanceof PresetDashboard);
         collection = (PresetDashboard) one;
         assertNotNull(collection.getGuid());
@@ -104,17 +103,17 @@ public class PresetAssetTest extends AtlanLiveTest {
     void createChart() throws AtlanException {
         PresetChart toCreate =
                 PresetChart.creator(CHART_NAME, collection.getQualifiedName()).build();
-        EntityMutationResponse response = toCreate.upsert();
+        AssetMutationResponse response = toCreate.upsert();
         assertNotNull(response);
-        assertTrue(response.getDeletedEntities().isEmpty());
-        assertEquals(response.getUpdatedEntities().size(), 1);
-        Entity one = response.getUpdatedEntities().get(0);
+        assertTrue(response.getDeletedAssets().isEmpty());
+        assertEquals(response.getUpdatedAssets().size(), 1);
+        Asset one = response.getUpdatedAssets().get(0);
         assertTrue(one instanceof PresetDashboard);
         PresetDashboard c = (PresetDashboard) one;
         assertEquals(c.getGuid(), collection.getGuid());
         assertEquals(c.getQualifiedName(), collection.getQualifiedName());
-        assertEquals(response.getCreatedEntities().size(), 1);
-        one = response.getCreatedEntities().get(0);
+        assertEquals(response.getCreatedAssets().size(), 1);
+        one = response.getCreatedAssets().get(0);
         assertTrue(one instanceof PresetChart);
         chart = (PresetChart) one;
         assertNotNull(chart.getGuid());
@@ -132,17 +131,17 @@ public class PresetAssetTest extends AtlanLiveTest {
     void createDataset() throws AtlanException {
         PresetDataset toCreate = PresetDataset.creator(DATASET_NAME, collection.getQualifiedName())
                 .build();
-        EntityMutationResponse response = toCreate.upsert();
+        AssetMutationResponse response = toCreate.upsert();
         assertNotNull(response);
-        assertTrue(response.getDeletedEntities().isEmpty());
-        assertEquals(response.getUpdatedEntities().size(), 1);
-        Entity one = response.getUpdatedEntities().get(0);
+        assertTrue(response.getDeletedAssets().isEmpty());
+        assertEquals(response.getUpdatedAssets().size(), 1);
+        Asset one = response.getUpdatedAssets().get(0);
         assertTrue(one instanceof PresetDashboard);
         PresetDashboard c = (PresetDashboard) one;
         assertEquals(c.getGuid(), collection.getGuid());
         assertEquals(c.getQualifiedName(), collection.getQualifiedName());
-        assertEquals(response.getCreatedEntities().size(), 1);
-        one = response.getCreatedEntities().get(0);
+        assertEquals(response.getCreatedAssets().size(), 1);
+        one = response.getCreatedAssets().get(0);
         assertTrue(one instanceof PresetDataset);
         dataset = (PresetDataset) one;
         assertNotNull(dataset.getGuid());
@@ -258,11 +257,11 @@ public class PresetAssetTest extends AtlanLiveTest {
                 4);
 
         assertEquals(response.getApproximateCount().longValue(), 4L);
-        List<Entity> entities = response.getEntities();
+        List<Asset> entities = response.getAssets();
         assertNotNull(entities);
         assertEquals(entities.size(), 4);
 
-        Entity one = entities.get(0);
+        Asset one = entities.get(0);
         assertTrue(one instanceof PresetWorkspace);
         assertFalse(one.isComplete());
         PresetWorkspace w = (PresetWorkspace) one;
@@ -299,12 +298,12 @@ public class PresetAssetTest extends AtlanLiveTest {
             groups = {"delete.chart"},
             dependsOnGroups = {"update.*", "search.*"})
     void deleteChart() throws AtlanException {
-        EntityMutationResponse response = Entity.delete(chart.getGuid());
+        AssetMutationResponse response = Asset.delete(chart.getGuid());
         assertNotNull(response);
-        assertTrue(response.getCreatedEntities().isEmpty());
-        assertTrue(response.getUpdatedEntities().isEmpty());
-        assertEquals(response.getDeletedEntities().size(), 1);
-        Entity one = response.getDeletedEntities().get(0);
+        assertTrue(response.getCreatedAssets().isEmpty());
+        assertTrue(response.getUpdatedAssets().isEmpty());
+        assertEquals(response.getDeletedAssets().size(), 1);
+        Asset one = response.getDeletedAssets().get(0);
         assertTrue(one instanceof PresetChart);
         PresetChart s = (PresetChart) one;
         assertEquals(s.getGuid(), chart.getGuid());
@@ -338,12 +337,12 @@ public class PresetAssetTest extends AtlanLiveTest {
             groups = {"purge.chart"},
             dependsOnGroups = {"delete.chart.restore"})
     void purgeChart() throws AtlanException {
-        EntityMutationResponse response = Entity.purge(chart.getGuid());
+        AssetMutationResponse response = Asset.purge(chart.getGuid());
         assertNotNull(response);
-        assertTrue(response.getCreatedEntities().isEmpty());
-        assertTrue(response.getUpdatedEntities().isEmpty());
-        assertEquals(response.getDeletedEntities().size(), 1);
-        Entity one = response.getDeletedEntities().get(0);
+        assertTrue(response.getCreatedAssets().isEmpty());
+        assertTrue(response.getUpdatedAssets().isEmpty());
+        assertEquals(response.getDeletedAssets().size(), 1);
+        Asset one = response.getDeletedAssets().get(0);
         assertTrue(one instanceof PresetChart);
         PresetChart s = (PresetChart) one;
         assertEquals(s.getGuid(), chart.getGuid());

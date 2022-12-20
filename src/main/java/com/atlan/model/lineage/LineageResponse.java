@@ -3,7 +3,7 @@
 package com.atlan.model.lineage;
 
 import com.atlan.exception.InvalidRequestException;
-import com.atlan.model.core.Entity;
+import com.atlan.model.assets.Asset;
 import com.atlan.model.enums.AtlanLineageDirection;
 import com.atlan.net.ApiResource;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -42,10 +42,10 @@ public class LineageResponse extends ApiResource {
      * Details of the assets that exist in the lineage graph.
      * The keys of the map are the unique identifiers (GUIDs) of each asset in lineage,
      * and their value is an object containing the requested details for each asset.
-     * Note: this will always include both process and entity details.
+     * Note: this will always include both process and asset details.
      */
     @JsonProperty("guidEntityMap")
-    Map<String, Entity> assetDetails;
+    Map<String, Asset> assetDetails;
 
     /** List of relationships describing the lineage between each asset. */
     @Getter(AccessLevel.PRIVATE)
@@ -99,29 +99,29 @@ public class LineageResponse extends ApiResource {
     }
 
     /**
-     * Retrieve GUIDs of entities that are immediately downstream from the originally-requested entity.
+     * Retrieve GUIDs of assets that are immediately downstream from the originally-requested asset.
      *
-     * @return collection of GUIDs of the downstream entities
+     * @return collection of GUIDs of the downstream assets
      * @throws InvalidRequestException if the lineage was fetched with {@code hideProcess} set to false
      */
     @JsonIgnore
-    public Set<String> getDownstreamEntityGuids() throws InvalidRequestException {
-        return getDownstreamEntityGuids(baseEntityGuid);
+    public Set<String> getDownstreamAssetGuids() throws InvalidRequestException {
+        return getDownstreamAssetGuids(baseEntityGuid);
     }
 
     /**
-     * Retrieve entities that are immediately downstream from the originally-requested entity.
+     * Retrieve assets that are immediately downstream from the originally-requested asset.
      *
-     * @return collection of the downstream entities
+     * @return collection of the downstream assets
      * @throws InvalidRequestException if the lineage was fetched with {@code hideProcess} set to false
      */
     @JsonIgnore
-    public List<Entity> getDownstreamEntities() throws InvalidRequestException {
-        return getDownstreamEntities(baseEntityGuid);
+    public List<Asset> getDownstreamAssets() throws InvalidRequestException {
+        return getDownstreamAssets(baseEntityGuid);
     }
 
     /**
-     * Retrieve GUIDs of processes that run immediately downstream from the originally-requested entity.
+     * Retrieve GUIDs of processes that run immediately downstream from the originally-requested asset.
      *
      * @return collection of GUIDs of the downstream processes
      * @throws InvalidRequestException if the lineage was fetched with {@code hideProcess} set to false
@@ -132,29 +132,29 @@ public class LineageResponse extends ApiResource {
     }
 
     /**
-     * Retrieve GUIDs of entities that are immediately upstream from the originally-requested entity.
+     * Retrieve GUIDs of assets that are immediately upstream from the originally-requested asset.
      *
-     * @return collection of GUIDs of the upstream entities
+     * @return collection of GUIDs of the upstream assets
      * @throws InvalidRequestException if the lineage was fetched with {@code hideProcess} set to false
      */
     @JsonIgnore
-    public Set<String> getUpstreamEntityGuids() throws InvalidRequestException {
-        return getUpstreamEntityGuids(baseEntityGuid);
+    public Set<String> getUpstreamAssetGuids() throws InvalidRequestException {
+        return getUpstreamAssetGuids(baseEntityGuid);
     }
 
     /**
-     * Retrieve entities that are immediately upstream from the originally-requested entity.
+     * Retrieve assets that are immediately upstream from the originally-requested asset.
      *
-     * @return collection of the upstream entities
+     * @return collection of the upstream assets
      * @throws InvalidRequestException if the lineage was fetched with {@code hideProcess} set to false
      */
     @JsonIgnore
-    public List<Entity> getUpstreamEntities() throws InvalidRequestException {
-        return getUpstreamEntities(baseEntityGuid);
+    public List<Asset> getUpstreamAssets() throws InvalidRequestException {
+        return getUpstreamAssets(baseEntityGuid);
     }
 
     /**
-     * Retrieve GUIDs of processes that run immediately upstream to produce the originally-requested entity.
+     * Retrieve GUIDs of processes that run immediately upstream to produce the originally-requested asset.
      *
      * @return collection of GUIDs of the upstream processes
      * @throws InvalidRequestException if the lineage was fetched with {@code hideProcess} set to false
@@ -165,21 +165,21 @@ public class LineageResponse extends ApiResource {
     }
 
     /**
-     * Retrieve GUIDs of entities that are immediately downstream from the specified entity.
+     * Retrieve GUIDs of assets that are immediately downstream from the specified asset.
      *
-     * @param guid unique ID (GUID) of the entity for which to fetch downstream entities
-     * @return collection of GUIDs of the downstream entities
+     * @param guid unique ID (GUID) of the asset for which to fetch downstream assets
+     * @return collection of GUIDs of the downstream assets
      * @throws InvalidRequestException if the lineage was fetched with {@code hideProcess} set to false
      */
     @JsonIgnore
-    public Set<String> getDownstreamEntityGuids(String guid) throws InvalidRequestException {
-        return getGraph().getDownstreamEntityGuids(guid);
+    public Set<String> getDownstreamAssetGuids(String guid) throws InvalidRequestException {
+        return getGraph().getDownstreamAssetGuids(guid);
     }
 
     /**
-     * Retrieve GUIDs of processes that run immediately downstream from the specified entity.
+     * Retrieve GUIDs of processes that run immediately downstream from the specified asset.
      *
-     * @param guid unique ID (GUID) of the entity for which to fetch downstream processes
+     * @param guid unique ID (GUID) of the asset for which to fetch downstream processes
      * @return collection of GUIDs of the downstream processes
      * @throws InvalidRequestException if the lineage was fetched with {@code hideProcess} set to false
      */
@@ -189,21 +189,21 @@ public class LineageResponse extends ApiResource {
     }
 
     /**
-     * Retrieve GUIDs of entities that are immediately upstream from the specified entity.
+     * Retrieve GUIDs of assets that are immediately upstream from the specified asset.
      *
-     * @param guid unique ID (GUID) of the entity for which to fetch upstream entities
-     * @return collection of GUIDs of the upstream entities
+     * @param guid unique ID (GUID) of the asset for which to fetch upstream assets
+     * @return collection of GUIDs of the upstream assets
      * @throws InvalidRequestException if the lineage was fetched with {@code hideProcess} set to false
      */
     @JsonIgnore
-    public Set<String> getUpstreamEntityGuids(String guid) throws InvalidRequestException {
-        return getGraph().getUpstreamEntityGuids(guid);
+    public Set<String> getUpstreamAssetGuids(String guid) throws InvalidRequestException {
+        return getGraph().getUpstreamAssetGuids(guid);
     }
 
     /**
-     * Retrieve GUIDs of processes that run immediately upstream to produce the specified entity.
+     * Retrieve GUIDs of processes that run immediately upstream to produce the specified asset.
      *
-     * @param guid unique ID (GUID) of the entity for which to fetch upstream processes
+     * @param guid unique ID (GUID) of the asset for which to fetch upstream processes
      * @return collection of GUIDs of the upstream processes
      * @throws InvalidRequestException if the lineage was fetched with {@code hideProcess} set to false
      */
@@ -213,18 +213,18 @@ public class LineageResponse extends ApiResource {
     }
 
     /**
-     * Retrieve entities that are immediately downstream from the specified entity.
+     * Retrieve assets that are immediately downstream from the specified asset.
      *
-     * @param guid unique ID (GUID) of the entity for which to fetch downstream entities
-     * @return collection of the downstream entities
+     * @param guid unique ID (GUID) of the asset for which to fetch downstream assets
+     * @return collection of the downstream assets
      * @throws InvalidRequestException if the lineage was fetched with {@code hideProcess} set to false
      */
     @JsonIgnore
-    public List<Entity> getDownstreamEntities(String guid) throws InvalidRequestException {
-        List<Entity> downstream = new ArrayList<>();
-        Set<String> downstreamGuids = getDownstreamEntityGuids(guid);
+    public List<Asset> getDownstreamAssets(String guid) throws InvalidRequestException {
+        List<Asset> downstream = new ArrayList<>();
+        Set<String> downstreamGuids = getDownstreamAssetGuids(guid);
         for (String downstreamGuid : downstreamGuids) {
-            Entity one = assetDetails.get(downstreamGuid);
+            Asset one = assetDetails.get(downstreamGuid);
             if (one != null) {
                 downstream.add(one);
             }
@@ -233,18 +233,18 @@ public class LineageResponse extends ApiResource {
     }
 
     /**
-     * Retrieve entities that are immediately upstream from the specified entity.
+     * Retrieve assets that are immediately upstream from the specified asset.
      *
-     * @param guid unique ID (GUID) of the entity for which to fetch upstream entities
-     * @return collection of the upstream entities
+     * @param guid unique ID (GUID) of the asset for which to fetch upstream assets
+     * @return collection of the upstream assets
      * @throws InvalidRequestException if the lineage was fetched with {@code hideProcess} set to false
      */
     @JsonIgnore
-    public List<Entity> getUpstreamEntities(String guid) throws InvalidRequestException {
-        List<Entity> upstream = new ArrayList<>();
-        Set<String> upstreamGuids = getUpstreamEntityGuids(guid);
+    public List<Asset> getUpstreamAssets(String guid) throws InvalidRequestException {
+        List<Asset> upstream = new ArrayList<>();
+        Set<String> upstreamGuids = getUpstreamAssetGuids(guid);
         for (String upstreamGuid : upstreamGuids) {
-            Entity one = assetDetails.get(upstreamGuid);
+            Asset one = assetDetails.get(upstreamGuid);
             if (one != null) {
                 upstream.add(one);
             }
@@ -253,56 +253,56 @@ public class LineageResponse extends ApiResource {
     }
 
     /**
-     * Retrieve all GUIDs of entities that are downstream from the originally-requested entity, across
+     * Retrieve all GUIDs of assets that are downstream from the originally-requested asset, across
      * multiple degrees of separation (hops), using a depth-first search traversal.
      *
-     * @return list of all downstream entity GUIDs
+     * @return list of all downstream asset GUIDs
      * @throws InvalidRequestException if the lineage was fetched with {@code hideProcess} set to false
      */
     @JsonIgnore
-    public List<String> getAllDownstreamEntityGuidsDFS() throws InvalidRequestException {
-        return getAllDownstreamEntityGuidsDFS(baseEntityGuid);
+    public List<String> getAllDownstreamAssetGuidsDFS() throws InvalidRequestException {
+        return getAllDownstreamAssetGuidsDFS(baseEntityGuid);
     }
 
     /**
-     * Retrieve all GUIDs of entities that are downstream from the specified entity, across
+     * Retrieve all GUIDs of assets that are downstream from the specified asset, across
      * multiple degrees of separation (hops), using a depth-first search traversal.
      *
-     * @param guid unique ID (GUID) of the entity for which to fetch downstream entities
-     * @return list of all downstream entity GUIDs
+     * @param guid unique ID (GUID) of the asset for which to fetch downstream assets
+     * @return list of all downstream asset GUIDs
      * @throws InvalidRequestException if the lineage was fetched with {@code hideProcess} set to false
      */
     @JsonIgnore
-    public List<String> getAllDownstreamEntityGuidsDFS(String guid) throws InvalidRequestException {
-        return getGraph().getAllDownstreamEntityGuidsDFS(guid);
+    public List<String> getAllDownstreamAssetGuidsDFS(String guid) throws InvalidRequestException {
+        return getGraph().getAllDownstreamAssetGuidsDFS(guid);
     }
 
     /**
-     * Retrieve all entities that are downstream from the originally-requested entity, across
+     * Retrieve all assets that are downstream from the originally-requested asset, across
      * multiple degrees of separation (hops), using a depth-first search traversal.
      *
-     * @return list of all downstream entities
+     * @return list of all downstream assets
      * @throws InvalidRequestException if the lineage was fetched with {@code hideProcess} set to false
      */
     @JsonIgnore
-    public List<Entity> getAllDownstreamEntitiesDFS() throws InvalidRequestException {
-        return getAllDownstreamEntitiesDFS(baseEntityGuid);
+    public List<Asset> getAllDownstreamAssetsDFS() throws InvalidRequestException {
+        return getAllDownstreamAssetsDFS(baseEntityGuid);
     }
 
     /**
-     * Retrieve all entities that are downstream from the specified entity, across
+     * Retrieve all assets that are downstream from the specified asset, across
      * multiple degrees of separation (hops), using a depth-first search traversal.
      *
-     * @param guid unique ID (GUID) of the entity for which to fetch downstream entities
-     * @return list of all downstream entities
+     * @param guid unique ID (GUID) of the asset for which to fetch downstream assets
+     * @return list of all downstream assets
      * @throws InvalidRequestException if the lineage was fetched with {@code hideProcess} set to false
      */
     @JsonIgnore
-    public List<Entity> getAllDownstreamEntitiesDFS(String guid) throws InvalidRequestException {
-        List<Entity> downstream = new ArrayList<>();
-        List<String> downstreamGuids = getAllDownstreamEntityGuidsDFS(guid);
+    public List<Asset> getAllDownstreamAssetsDFS(String guid) throws InvalidRequestException {
+        List<Asset> downstream = new ArrayList<>();
+        List<String> downstreamGuids = getAllDownstreamAssetGuidsDFS(guid);
         for (String downstreamGuid : downstreamGuids) {
-            Entity one = assetDetails.get(downstreamGuid);
+            Asset one = assetDetails.get(downstreamGuid);
             if (one != null) {
                 downstream.add(one);
             }
@@ -311,56 +311,56 @@ public class LineageResponse extends ApiResource {
     }
 
     /**
-     * Retrieve all GUIDs of entities that are upstream from the originally-requested entity, across
+     * Retrieve all GUIDs of assets that are upstream from the originally-requested asset, across
      * multiple degrees of separation (hops), using a depth-first search traversal.
      *
-     * @return list of all upstream entity GUIDs
+     * @return list of all upstream asset GUIDs
      * @throws InvalidRequestException if the lineage was fetched with {@code hideProcess} set to false
      */
     @JsonIgnore
-    public List<String> getAllUpstreamEntityGuidsDFS() throws InvalidRequestException {
-        return getAllUpstreamEntityGuidsDFS(baseEntityGuid);
+    public List<String> getAllUpstreamAssetGuidsDFS() throws InvalidRequestException {
+        return getAllUpstreamAssetGuidsDFS(baseEntityGuid);
     }
 
     /**
-     * Retrieve all GUIDs of entities that are upstream from the specified entity, across
+     * Retrieve all GUIDs of assets that are upstream from the specified asset, across
      * multiple degrees of separation (hops), using a depth-first search traversal.
      *
-     * @param guid unique ID (GUID) of the entity for which to fetch upstream entities
-     * @return list of all upstream entity GUIDs
+     * @param guid unique ID (GUID) of the asset for which to fetch upstream assets
+     * @return list of all upstream asset GUIDs
      * @throws InvalidRequestException if the lineage was fetched with {@code hideProcess} set to false
      */
     @JsonIgnore
-    public List<String> getAllUpstreamEntityGuidsDFS(String guid) throws InvalidRequestException {
-        return getGraph().getAllUpstreamEntityGuidsDFS(guid);
+    public List<String> getAllUpstreamAssetGuidsDFS(String guid) throws InvalidRequestException {
+        return getGraph().getAllUpstreamAssetGuidsDFS(guid);
     }
 
     /**
-     * Retrieve all entities that are upstream from the originally-requested entity, across
+     * Retrieve all assets that are upstream from the originally-requested asset, across
      * multiple degrees of separation (hops), using a depth-first search traversal.
      *
-     * @return list of all upstream entities
+     * @return list of all upstream assets
      * @throws InvalidRequestException if the lineage was fetched with {@code hideProcess} set to false
      */
     @JsonIgnore
-    public List<Entity> getAllUpstreamEntitiesDFS() throws InvalidRequestException {
-        return getAllUpstreamEntitiesDFS(baseEntityGuid);
+    public List<Asset> getAllUpstreamAssetsDFS() throws InvalidRequestException {
+        return getAllUpstreamAssetsDFS(baseEntityGuid);
     }
 
     /**
-     * Retrieve all entities that are upstream from the specified entity, across
+     * Retrieve all assets that are upstream from the specified asset, across
      * multiple degrees of separation (hops), using a depth-first search traversal.
      *
-     * @param guid unique ID (GUID) of the entity for which to fetch upstream entities
-     * @return list of all upstream entities
+     * @param guid unique ID (GUID) of the asset for which to fetch upstream assets
+     * @return list of all upstream assets
      * @throws InvalidRequestException if the lineage was fetched with {@code hideProcess} set to false
      */
     @JsonIgnore
-    public List<Entity> getAllUpstreamEntitiesDFS(String guid) throws InvalidRequestException {
-        List<Entity> upstream = new ArrayList<>();
-        List<String> upstreamGuids = getAllUpstreamEntityGuidsDFS(guid);
+    public List<Asset> getAllUpstreamAssetsDFS(String guid) throws InvalidRequestException {
+        List<Asset> upstream = new ArrayList<>();
+        List<String> upstreamGuids = getAllUpstreamAssetGuidsDFS(guid);
         for (String upstreamGuid : upstreamGuids) {
-            Entity one = assetDetails.get(upstreamGuid);
+            Asset one = assetDetails.get(upstreamGuid);
             if (one != null) {
                 upstream.add(one);
             }

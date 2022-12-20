@@ -2,18 +2,21 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.core;
 
+import com.atlan.model.assets.Asset;
 import com.atlan.net.ApiResource;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class EntityResponse extends ApiResource {
+public class AssetResponse extends ApiResource {
     private static final long serialVersionUID = 2L;
 
     /** Unused. */
     Object referredEntities;
 
     /** The retrieved entity. */
-    Entity entity;
+    @JsonProperty("entity")
+    Asset asset;
 }

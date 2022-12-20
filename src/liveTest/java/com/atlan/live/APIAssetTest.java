@@ -12,8 +12,7 @@ import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.assets.*;
-import com.atlan.model.core.Entity;
-import com.atlan.model.core.EntityMutationResponse;
+import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.enums.*;
 import com.atlan.model.search.AggregationBucketResult;
 import com.atlan.model.search.IndexSearchDSL;
@@ -50,8 +49,8 @@ public class APIAssetTest extends AtlanLiveTest {
     void createSpec() throws AtlanException {
         APISpec toCreate =
                 APISpec.creator(SPEC_NAME, connection.getQualifiedName()).build();
-        EntityMutationResponse response = toCreate.upsert();
-        Entity one = validateSingleCreate(response);
+        AssetMutationResponse response = toCreate.upsert();
+        Asset one = validateSingleCreate(response);
         assertTrue(one instanceof APISpec);
         spec = (APISpec) one;
         assertNotNull(spec.getGuid());
@@ -66,20 +65,20 @@ public class APIAssetTest extends AtlanLiveTest {
             dependsOnGroups = {"create.spec"})
     void createPath() throws AtlanException {
         APIPath toCreate = APIPath.creator(PATH_NAME, spec.getQualifiedName()).build();
-        EntityMutationResponse response = toCreate.upsert();
+        AssetMutationResponse response = toCreate.upsert();
         assertNotNull(response);
-        assertTrue(response.getDeletedEntities().isEmpty());
-        assertEquals(response.getUpdatedEntities().size(), 1);
+        assertTrue(response.getDeletedAssets().isEmpty());
+        assertEquals(response.getUpdatedAssets().size(), 1);
 
-        Entity one = response.getUpdatedEntities().get(0);
+        Asset one = response.getUpdatedAssets().get(0);
         assertNotNull(one);
         assertTrue(one instanceof APISpec);
         APISpec s = (APISpec) one;
         assertEquals(s.getGuid(), spec.getGuid());
         assertEquals(s.getQualifiedName(), spec.getQualifiedName());
 
-        assertEquals(response.getCreatedEntities().size(), 1);
-        one = response.getCreatedEntities().get(0);
+        assertEquals(response.getCreatedAssets().size(), 1);
+        one = response.getCreatedAssets().get(0);
         assertTrue(one instanceof APIPath);
         path = (APIPath) one;
         assertNotNull(path.getGuid());
@@ -178,11 +177,11 @@ public class APIAssetTest extends AtlanLiveTest {
                 1);
 
         assertEquals(response.getApproximateCount().longValue(), 1L);
-        List<Entity> entities = response.getEntities();
+        List<Asset> entities = response.getAssets();
         assertNotNull(entities);
         assertEquals(entities.size(), 1);
 
-        Entity one = entities.get(0);
+        Asset one = entities.get(0);
         assertTrue(one instanceof APIPath);
         assertFalse(one.isComplete());
         APIPath asset = (APIPath) one;
@@ -195,12 +194,12 @@ public class APIAssetTest extends AtlanLiveTest {
             groups = {"delete.path"},
             dependsOnGroups = {"update.*", "search.*"})
     void deletePath() throws AtlanException {
-        EntityMutationResponse response = Entity.delete(path.getGuid());
+        AssetMutationResponse response = Asset.delete(path.getGuid());
         assertNotNull(response);
-        assertTrue(response.getCreatedEntities().isEmpty());
-        assertTrue(response.getUpdatedEntities().isEmpty());
-        assertEquals(response.getDeletedEntities().size(), 1);
-        Entity one = response.getDeletedEntities().get(0);
+        assertTrue(response.getCreatedAssets().isEmpty());
+        assertTrue(response.getUpdatedAssets().isEmpty());
+        assertEquals(response.getDeletedAssets().size(), 1);
+        Asset one = response.getDeletedAssets().get(0);
         assertTrue(one instanceof APIPath);
         APIPath s = (APIPath) one;
         assertEquals(s.getGuid(), path.getGuid());
@@ -234,12 +233,12 @@ public class APIAssetTest extends AtlanLiveTest {
             groups = {"purge.path"},
             dependsOnGroups = {"delete.path.restore"})
     void purgePath() throws AtlanException {
-        EntityMutationResponse response = Entity.purge(path.getGuid());
+        AssetMutationResponse response = Asset.purge(path.getGuid());
         assertNotNull(response);
-        assertTrue(response.getCreatedEntities().isEmpty());
-        assertTrue(response.getUpdatedEntities().isEmpty());
-        assertEquals(response.getDeletedEntities().size(), 1);
-        Entity one = response.getDeletedEntities().get(0);
+        assertTrue(response.getCreatedAssets().isEmpty());
+        assertTrue(response.getUpdatedAssets().isEmpty());
+        assertEquals(response.getDeletedAssets().size(), 1);
+        Asset one = response.getDeletedAssets().get(0);
         assertTrue(one instanceof APIPath);
         APIPath s = (APIPath) one;
         assertEquals(s.getGuid(), path.getGuid());
