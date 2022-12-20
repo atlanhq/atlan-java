@@ -17,9 +17,8 @@ import com.atlan.exception.LogicException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.admin.AtlanGroup;
 import com.atlan.model.assets.*;
+import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.core.Classification;
-import com.atlan.model.core.Entity;
-import com.atlan.model.core.EntityMutationResponse;
 import com.atlan.model.enums.*;
 import com.atlan.model.search.*;
 import com.atlan.net.HttpClient;
@@ -88,8 +87,8 @@ public class SQLAssetTest extends AtlanLiveTest {
      */
     static Database createDatabase(String name, String connectionQualifiedName) throws AtlanException {
         Database database = Database.creator(name, connectionQualifiedName).build();
-        EntityMutationResponse response = database.upsert();
-        Entity one = validateSingleCreate(response);
+        AssetMutationResponse response = database.upsert();
+        Asset one = validateSingleCreate(response);
         assertTrue(one instanceof Database);
         database = (Database) one;
         assertNotNull(database.getGuid());
@@ -108,16 +107,16 @@ public class SQLAssetTest extends AtlanLiveTest {
      */
     static Schema createSchema(String name, String databaseQualifiedName) throws AtlanException {
         Schema schema = Schema.creator(name, databaseQualifiedName).build();
-        EntityMutationResponse response = schema.upsert();
+        AssetMutationResponse response = schema.upsert();
         assertNotNull(response);
-        assertTrue(response.getDeletedEntities().isEmpty());
-        assertEquals(response.getUpdatedEntities().size(), 1);
-        Entity one = response.getUpdatedEntities().get(0);
+        assertTrue(response.getDeletedAssets().isEmpty());
+        assertEquals(response.getUpdatedAssets().size(), 1);
+        Asset one = response.getUpdatedAssets().get(0);
         assertTrue(one instanceof Database);
         Database database = (Database) one;
         assertEquals(database.getQualifiedName(), databaseQualifiedName);
-        assertEquals(response.getCreatedEntities().size(), 1);
-        one = response.getCreatedEntities().get(0);
+        assertEquals(response.getCreatedAssets().size(), 1);
+        one = response.getCreatedAssets().get(0);
         assertTrue(one instanceof Schema);
         schema = (Schema) one;
         assertNotNull(schema.getGuid());
@@ -137,16 +136,16 @@ public class SQLAssetTest extends AtlanLiveTest {
      */
     static Table createTable(String name, String schemaQualifiedName) throws AtlanException {
         Table table = Table.creator(name, schemaQualifiedName).columnCount(2L).build();
-        EntityMutationResponse response = table.upsert();
+        AssetMutationResponse response = table.upsert();
         assertNotNull(response);
-        assertTrue(response.getDeletedEntities().isEmpty());
-        assertEquals(response.getUpdatedEntities().size(), 1);
-        Entity one = response.getUpdatedEntities().get(0);
+        assertTrue(response.getDeletedAssets().isEmpty());
+        assertEquals(response.getUpdatedAssets().size(), 1);
+        Asset one = response.getUpdatedAssets().get(0);
         assertTrue(one instanceof Schema);
         Schema schema = (Schema) one;
         assertEquals(schema.getQualifiedName(), schemaQualifiedName);
-        assertEquals(response.getCreatedEntities().size(), 1);
-        one = response.getCreatedEntities().get(0);
+        assertEquals(response.getCreatedAssets().size(), 1);
+        one = response.getCreatedAssets().get(0);
         assertTrue(one instanceof Table);
         table = (Table) one;
         assertNotNull(table.getGuid());
@@ -166,16 +165,16 @@ public class SQLAssetTest extends AtlanLiveTest {
      */
     static View createView(String name, String schemaQualifiedName) throws AtlanException {
         View view = View.creator(name, schemaQualifiedName).columnCount(2L).build();
-        EntityMutationResponse response = view.upsert();
+        AssetMutationResponse response = view.upsert();
         assertNotNull(response);
-        assertTrue(response.getDeletedEntities().isEmpty());
-        assertEquals(response.getUpdatedEntities().size(), 1);
-        Entity one = response.getUpdatedEntities().get(0);
+        assertTrue(response.getDeletedAssets().isEmpty());
+        assertEquals(response.getUpdatedAssets().size(), 1);
+        Asset one = response.getUpdatedAssets().get(0);
         assertTrue(one instanceof Schema);
         Schema schema = (Schema) one;
         assertEquals(schema.getQualifiedName(), schemaQualifiedName);
-        assertEquals(response.getCreatedEntities().size(), 1);
-        one = response.getCreatedEntities().get(0);
+        assertEquals(response.getCreatedAssets().size(), 1);
+        one = response.getCreatedAssets().get(0);
         assertTrue(one instanceof View);
         view = (View) one;
         assertNotNull(view.getGuid());
@@ -197,16 +196,16 @@ public class SQLAssetTest extends AtlanLiveTest {
         MaterializedView mview = MaterializedView.creator(name, schemaQualifiedName)
                 .columnCount(2L)
                 .build();
-        EntityMutationResponse response = mview.upsert();
+        AssetMutationResponse response = mview.upsert();
         assertNotNull(response);
-        assertTrue(response.getDeletedEntities().isEmpty());
-        assertEquals(response.getUpdatedEntities().size(), 1);
-        Entity one = response.getUpdatedEntities().get(0);
+        assertTrue(response.getDeletedAssets().isEmpty());
+        assertEquals(response.getUpdatedAssets().size(), 1);
+        Asset one = response.getUpdatedAssets().get(0);
         assertTrue(one instanceof Schema);
         Schema schema = (Schema) one;
         assertEquals(schema.getQualifiedName(), schemaQualifiedName);
-        assertEquals(response.getCreatedEntities().size(), 1);
-        one = response.getCreatedEntities().get(0);
+        assertEquals(response.getCreatedAssets().size(), 1);
+        one = response.getCreatedAssets().get(0);
         assertTrue(one instanceof MaterializedView);
         mview = (MaterializedView) one;
         assertNotNull(mview.getGuid());
@@ -230,16 +229,16 @@ public class SQLAssetTest extends AtlanLiveTest {
             throws AtlanException {
         Column column =
                 Column.creator(name, parentType, parentQualifiedName, order).build();
-        EntityMutationResponse response = column.upsert();
+        AssetMutationResponse response = column.upsert();
         assertNotNull(response);
-        assertTrue(response.getDeletedEntities().isEmpty());
-        assertEquals(response.getUpdatedEntities().size(), 1);
-        Entity one = response.getUpdatedEntities().get(0);
+        assertTrue(response.getDeletedAssets().isEmpty());
+        assertEquals(response.getUpdatedAssets().size(), 1);
+        Asset one = response.getUpdatedAssets().get(0);
         assertTrue(one instanceof SQL);
         SQL parent = (SQL) one;
         assertEquals(parent.getQualifiedName(), parentQualifiedName);
-        assertEquals(response.getCreatedEntities().size(), 1);
-        one = response.getCreatedEntities().get(0);
+        assertEquals(response.getCreatedAssets().size(), 1);
+        one = response.getCreatedAssets().get(0);
         assertTrue(one instanceof Column);
         column = (Column) one;
         assertNotNull(column.getGuid());
@@ -470,7 +469,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         }
 
         assertEquals(response.getApproximateCount().longValue(), 12L);
-        List<Entity> entities = response.getEntities();
+        List<Asset> entities = response.getAssets();
         assertNotNull(response.getAggregations());
         assertEquals(response.getAggregations().size(), 1);
         assertTrue(response.getAggregations().get("type") instanceof AggregationBucketResult);
@@ -483,7 +482,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertNotNull(entities);
         assertEquals(entities.size(), 12);
 
-        Entity one = entities.get(0);
+        Asset one = entities.get(0);
         assertTrue(one instanceof Connection);
         Connection c = (Connection) one;
         assertEquals(c.getGuid(), connection.getGuid());
@@ -580,8 +579,8 @@ public class SQLAssetTest extends AtlanLiveTest {
         Column toUpdate = Column.updater(column5.getQualifiedName(), COLUMN_NAME5)
                 .ownerGroup(ownerGroup.getName())
                 .build();
-        EntityMutationResponse response = toUpdate.upsert();
-        Entity one = validateSingleUpdate(response);
+        AssetMutationResponse response = toUpdate.upsert();
+        Asset one = validateSingleUpdate(response);
         assertTrue(one instanceof Column);
         Column updated = (Column) one;
         validateUpdatedColumn(updated);
@@ -652,8 +651,8 @@ public class SQLAssetTest extends AtlanLiveTest {
                 .description(DESCRIPTION)
                 .userDescription(DESCRIPTION)
                 .build();
-        EntityMutationResponse response = toUpdate.upsert();
-        Entity one = validateSingleUpdate(response);
+        AssetMutationResponse response = toUpdate.upsert();
+        Asset one = validateSingleUpdate(response);
         assertTrue(one instanceof Column);
         Column updated = (Column) one;
         validateUpdatedColumn(updated);
@@ -692,8 +691,8 @@ public class SQLAssetTest extends AtlanLiveTest {
         Column toUpdate = Column.updater(column5.getQualifiedName(), COLUMN_NAME5)
                 .classification(Classification.of(CLASSIFICATION_NAME1, column5.getGuid()))
                 .build();
-        EntityMutationResponse response = toUpdate.upsert(true, false);
-        Entity one = validateSingleUpdate(response);
+        AssetMutationResponse response = toUpdate.upsert(true, false);
+        Asset one = validateSingleUpdate(response);
         assertTrue(one instanceof Column);
         Column column = (Column) one;
         validateUpdatedColumn(column);
@@ -707,8 +706,8 @@ public class SQLAssetTest extends AtlanLiveTest {
         Column toUpdate =
                 Column.updater(column5.getQualifiedName(), COLUMN_NAME5).build();
         toUpdate.removeClassifications();
-        EntityMutationResponse response = toUpdate.upsert(true, false);
-        Entity one = validateSingleUpdate(response);
+        AssetMutationResponse response = toUpdate.upsert(true, false);
+        Asset one = validateSingleUpdate(response);
         assertTrue(one instanceof Column);
         Column column = (Column) one;
         validateUpdatedColumn(column);
@@ -792,10 +791,10 @@ public class SQLAssetTest extends AtlanLiveTest {
         }
 
         assertEquals(response.getApproximateCount().longValue(), 1L);
-        List<Entity> entities = response.getEntities();
+        List<Asset> entities = response.getAssets();
         assertNotNull(entities);
         assertEquals(entities.size(), 1);
-        Entity one = entities.get(0);
+        Asset one = entities.get(0);
         assertTrue(one instanceof Column);
         assertFalse(one.isComplete());
         Column column = (Column) one;
@@ -832,10 +831,10 @@ public class SQLAssetTest extends AtlanLiveTest {
         }
 
         assertEquals(response.getApproximateCount().longValue(), 1L);
-        List<Entity> entities = response.getEntities();
+        List<Asset> entities = response.getAssets();
         assertNotNull(entities);
         assertEquals(entities.size(), 1);
-        Entity one = entities.get(0);
+        Asset one = entities.get(0);
         assertTrue(one instanceof Column);
         Column column = (Column) one;
         validateUpdatedColumn(column);
@@ -849,8 +848,8 @@ public class SQLAssetTest extends AtlanLiveTest {
     void updateColumnRemoveClassifications() throws AtlanException {
         Column column = Column.updater(column5.getQualifiedName(), COLUMN_NAME5).build();
         column.removeClassifications();
-        EntityMutationResponse response = column.upsert(true, false);
-        Entity one = validateSingleUpdate(response);
+        AssetMutationResponse response = column.upsert(true, false);
+        Asset one = validateSingleUpdate(response);
         assertTrue(one instanceof Column);
         column = (Column) one;
         validateUpdatedColumn(column);
@@ -888,12 +887,12 @@ public class SQLAssetTest extends AtlanLiveTest {
         Column toUpdate = Column.updater(column5.getQualifiedName(), COLUMN_NAME5)
                 .assignedTerm(GlossaryTerm.refByGuid(term1.getGuid()))
                 .build();
-        EntityMutationResponse response = toUpdate.upsert();
+        AssetMutationResponse response = toUpdate.upsert();
         assertNotNull(response);
-        assertTrue(response.getCreatedEntities().isEmpty());
-        assertTrue(response.getDeletedEntities().isEmpty());
-        assertEquals(response.getUpdatedEntities().size(), 2);
-        for (Entity one : response.getUpdatedEntities()) {
+        assertTrue(response.getCreatedAssets().isEmpty());
+        assertTrue(response.getDeletedAssets().isEmpty());
+        assertEquals(response.getUpdatedAssets().size(), 2);
+        for (Asset one : response.getUpdatedAssets()) {
             if (one instanceof Column) {
                 Column column = (Column) one;
                 validateUpdatedColumn(column);
@@ -901,7 +900,7 @@ public class SQLAssetTest extends AtlanLiveTest {
                 GlossaryTerm term = (GlossaryTerm) one;
                 assertEquals(term.getGuid(), term1.getGuid());
             } else {
-                throw new LogicException("Unexpected updated entity: " + one, "ATLAN_SDK_TEST-500-001", 500);
+                throw new LogicException("Unexpected updated asset: " + one, "ATLAN_SDK_TEST-500-001", 500);
             }
         }
         Column updated = Column.retrieveByQualifiedName(column5.getQualifiedName());
@@ -916,12 +915,12 @@ public class SQLAssetTest extends AtlanLiveTest {
         Column toUpdate =
                 Column.updater(column5.getQualifiedName(), COLUMN_NAME5).build();
         toUpdate.removeAssignedTerms();
-        EntityMutationResponse response = toUpdate.upsert();
+        AssetMutationResponse response = toUpdate.upsert();
         assertNotNull(response);
-        assertTrue(response.getCreatedEntities().isEmpty());
-        assertTrue(response.getDeletedEntities().isEmpty());
-        assertEquals(response.getUpdatedEntities().size(), 2);
-        for (Entity one : response.getUpdatedEntities()) {
+        assertTrue(response.getCreatedAssets().isEmpty());
+        assertTrue(response.getDeletedAssets().isEmpty());
+        assertEquals(response.getUpdatedAssets().size(), 2);
+        for (Asset one : response.getUpdatedAssets()) {
             if (one instanceof Column) {
                 Column column = (Column) one;
                 validateUpdatedColumn(column);
@@ -929,7 +928,7 @@ public class SQLAssetTest extends AtlanLiveTest {
                 GlossaryTerm term = (GlossaryTerm) one;
                 assertEquals(term.getGuid(), term1.getGuid());
             } else {
-                throw new LogicException("Unexpected updated entity: " + one, "ATLAN_SDK_TEST-500-001", 500);
+                throw new LogicException("Unexpected updated asset: " + one, "ATLAN_SDK_TEST-500-001", 500);
             }
         }
         Column updated = Column.retrieveByQualifiedName(column5.getQualifiedName());
@@ -1023,10 +1022,10 @@ public class SQLAssetTest extends AtlanLiveTest {
         }
 
         assertEquals(response.getApproximateCount().longValue(), 1L);
-        List<Entity> entities = response.getEntities();
+        List<Asset> entities = response.getAssets();
         assertNotNull(entities);
         assertEquals(entities.size(), 1);
-        Entity one = entities.get(0);
+        Asset one = entities.get(0);
         assertTrue(one instanceof Column);
         Column column = (Column) one;
         validateUpdatedColumn(column);
@@ -1070,10 +1069,10 @@ public class SQLAssetTest extends AtlanLiveTest {
         }
 
         assertEquals(response.getApproximateCount().longValue(), 1L);
-        List<Entity> entities = response.getEntities();
+        List<Asset> entities = response.getAssets();
         assertNotNull(entities);
         assertEquals(entities.size(), 1);
-        Entity one = entities.get(0);
+        Asset one = entities.get(0);
         assertTrue(one instanceof Column);
         Column column = (Column) one;
         validateUpdatedColumn(column);
@@ -1494,12 +1493,12 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"delete.column"},
             dependsOnGroups = {"update.*", "search.*"})
     void deleteColumn() throws AtlanException {
-        EntityMutationResponse response = Entity.delete(column5.getGuid());
+        AssetMutationResponse response = Asset.delete(column5.getGuid());
         assertNotNull(response);
-        assertTrue(response.getCreatedEntities().isEmpty());
-        assertTrue(response.getUpdatedEntities().isEmpty());
-        assertEquals(response.getDeletedEntities().size(), 1);
-        Entity one = response.getDeletedEntities().get(0);
+        assertTrue(response.getCreatedAssets().isEmpty());
+        assertTrue(response.getUpdatedAssets().isEmpty());
+        assertEquals(response.getDeletedAssets().size(), 1);
+        Asset one = response.getDeletedAssets().get(0);
         assertTrue(one instanceof Column);
         Column column = (Column) one;
         validateUpdatedColumn(column);
@@ -1530,12 +1529,12 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"purge.column"},
             dependsOnGroups = {"delete.column.restore"})
     void purgeColumn() throws AtlanException {
-        EntityMutationResponse response = Entity.purge(column5.getGuid());
+        AssetMutationResponse response = Asset.purge(column5.getGuid());
         assertNotNull(response);
-        assertTrue(response.getCreatedEntities().isEmpty());
-        assertTrue(response.getUpdatedEntities().isEmpty());
-        assertEquals(response.getDeletedEntities().size(), 1);
-        Entity one = response.getDeletedEntities().get(0);
+        assertTrue(response.getCreatedAssets().isEmpty());
+        assertTrue(response.getUpdatedAssets().isEmpty());
+        assertEquals(response.getDeletedAssets().size(), 1);
+        Asset one = response.getDeletedAssets().get(0);
         assertTrue(one instanceof Column);
         Column column = (Column) one;
         validateUpdatedColumn(column);

@@ -6,11 +6,11 @@ import com.atlan.Atlan;
 import com.atlan.cache.ClassificationCache;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.InvalidRequestException;
+import com.atlan.model.assets.Asset;
+import com.atlan.model.core.AssetMutationResponse;
+import com.atlan.model.core.AssetResponse;
 import com.atlan.model.core.AtlanObject;
 import com.atlan.model.core.Classification;
-import com.atlan.model.core.Entity;
-import com.atlan.model.core.EntityMutationResponse;
-import com.atlan.model.core.EntityResponse;
 import com.atlan.net.ApiResource;
 import com.atlan.serde.Serde;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -22,7 +22,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * API endpoints for operating on a single entity, based on its unique attributes (primarily {@code qualifiedName}).
+ * API endpoints for operating on a single asset (entity), based on its unique attributes (primarily {@code qualifiedName}).
  */
 @Slf4j
 public class EntityUniqueAttributesEndpoint {
@@ -30,14 +30,14 @@ public class EntityUniqueAttributesEndpoint {
     private static final String endpoint = "/api/meta/entity/uniqueAttribute/type/";
 
     /**
-     * Retrieves any entity by its qualifiedName.
+     * Retrieves any asset by its qualifiedName.
      *
      * @param typeName type of asset to be retrieved
      * @param qualifiedName qualifiedName of the asset to be updated
      * @param ignoreRelationships whether to include relationships (false) or exclude them (true)
      * @param minExtInfo whether to minimize extra info (true) or not (false)
      */
-    public static EntityResponse retrieve(
+    public static AssetResponse retrieve(
             String typeName, String qualifiedName, boolean ignoreRelationships, boolean minExtInfo)
             throws AtlanException {
         String url = String.format(
@@ -50,7 +50,7 @@ public class EntityUniqueAttributesEndpoint {
                         ApiResource.urlEncodeId(qualifiedName),
                         ignoreRelationships,
                         minExtInfo));
-        return ApiResource.request(ApiResource.RequestMethod.GET, url, "", EntityResponse.class, null);
+        return ApiResource.request(ApiResource.RequestMethod.GET, url, "", AssetResponse.class, null);
     }
 
     /**
@@ -60,18 +60,18 @@ public class EntityUniqueAttributesEndpoint {
      *
      * @param typeName type of asset to be updated
      * @param qualifiedName qualifiedName of the asset to be updated
-     * @param value the entity containing only the attributes to be updated
+     * @param value the asset containing only the attributes to be updated
      * @return the set of changed entities
      * @throws AtlanException on any API issue
      */
-    public static EntityMutationResponse updateAttributes(String typeName, String qualifiedName, Entity value)
+    public static AssetMutationResponse updateAttributes(String typeName, String qualifiedName, Asset value)
             throws AtlanException {
         String url = String.format(
                 "%s%s",
                 Atlan.getBaseUrl(),
                 String.format("%s%s?attr:qualifiedName=%s", endpoint, typeName, ApiResource.urlEncode(qualifiedName)));
         SingleEntityRequest seq = SingleEntityRequest.builder().entity(value).build();
-        return ApiResource.request(ApiResource.RequestMethod.PUT, url, seq, EntityMutationResponse.class, null);
+        return ApiResource.request(ApiResource.RequestMethod.PUT, url, seq, AssetMutationResponse.class, null);
     }
 
     /**
@@ -98,7 +98,7 @@ public class EntityUniqueAttributesEndpoint {
      * @param qualifiedName of the asset to which to add the classifications
      * @param classificationNames human-readable names of the classifications to add to the asset
      * @param propagate whether to propagate the classification (true) or not (false)
-     * @param removePropagationsOnDelete whether to remove the propagated classifications when the classification is removed from this entity (true) or not (false)
+     * @param removePropagationsOnDelete whether to remove the propagated classifications when the classification is removed from this asset (true) or not (false)
      * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
      * @throws AtlanException on any API issues, or if any one of the classifications already exists on the asset
      */
@@ -198,13 +198,13 @@ public class EntityUniqueAttributesEndpoint {
     }
 
     /**
-     * Request class for updating a single entity.
+     * Request class for updating a single asset.
      */
     @Data
     @SuperBuilder
     @EqualsAndHashCode(callSuper = false)
     static class SingleEntityRequest extends AtlanObject {
-        /** The entity to update. */
-        Entity entity;
+        /** The asset to update. */
+        Asset entity;
     }
 }

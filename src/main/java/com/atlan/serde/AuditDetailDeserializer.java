@@ -45,7 +45,7 @@ public class AuditDetailDeserializer extends StdDeserializer<AuditDetail> {
         JsonNode attributes = root.get("attributes"); // exists on entities and custom metadata
         if (guid != null && guid.isTextual()) {
             // Delegate to entity deserialization
-            EntityDeserializer entity = new EntityDeserializer();
+            AssetDeserializer entity = new AssetDeserializer();
             return entity.deserialize(root);
         } else if (attributes != null) {
             // Delegate to the custom metadata deserialization

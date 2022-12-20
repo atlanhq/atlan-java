@@ -5,7 +5,6 @@ package com.atlan.model.assets;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.core.Entity;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.enums.AtlanConnectorType;
@@ -384,14 +383,14 @@ public class Column extends SQL {
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Column does not exist or the provided GUID is not a Column
      */
     public static Column retrieveByGuid(String guid) throws AtlanException {
-        Entity entity = Entity.retrieveFull(guid);
-        if (entity == null) {
-            throw new NotFoundException("No entity found with GUID: " + guid, "ATLAN_JAVA_CLIENT-404-001", 404, null);
-        } else if (entity instanceof Column) {
-            return (Column) entity;
+        Asset asset = Asset.retrieveFull(guid);
+        if (asset == null) {
+            throw new NotFoundException("No asset found with GUID: " + guid, "ATLAN_JAVA_CLIENT-404-001", 404, null);
+        } else if (asset instanceof Column) {
+            return (Column) asset;
         } else {
             throw new NotFoundException(
-                    "Entity with GUID " + guid + " is not a Column.", "ATLAN_JAVA_CLIENT-404-002", 404, null);
+                    "Asset with GUID " + guid + " is not a Column.", "ATLAN_JAVA_CLIENT-404-002", 404, null);
         }
     }
 
@@ -403,9 +402,9 @@ public class Column extends SQL {
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Column does not exist
      */
     public static Column retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        Entity entity = Entity.retrieveFull(TYPE_NAME, qualifiedName);
-        if (entity instanceof Column) {
-            return (Column) entity;
+        Asset asset = Asset.retrieveFull(TYPE_NAME, qualifiedName);
+        if (asset instanceof Column) {
+            return (Column) asset;
         } else {
             throw new NotFoundException(
                     "No Column found with qualifiedName: " + qualifiedName, "ATLAN_JAVA_CLIENT-404-003", 404, null);

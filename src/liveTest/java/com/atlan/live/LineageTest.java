@@ -9,8 +9,7 @@ import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.assets.*;
-import com.atlan.model.core.Entity;
-import com.atlan.model.core.EntityMutationResponse;
+import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.lineage.LineageRequest;
@@ -97,10 +96,10 @@ public class LineageTest extends AtlanLiveTest {
                         List.of(Table.refByGuid(table.getGuid())),
                         List.of(MaterializedView.refByGuid(mview.getGuid())))
                 .build();
-        EntityMutationResponse response = toCreate.upsert();
+        AssetMutationResponse response = toCreate.upsert();
         assertNotNull(response);
-        assertEquals(response.getCreatedEntities().size(), 1);
-        Entity one = response.getCreatedEntities().get(0);
+        assertEquals(response.getCreatedAssets().size(), 1);
+        Asset one = response.getCreatedAssets().get(0);
         assertTrue(one instanceof LineageProcess);
         start = (LineageProcess) one;
         assertNotNull(start.getGuid());
@@ -120,14 +119,14 @@ public class LineageTest extends AtlanLiveTest {
             assertEquals(output.getTypeName(), MaterializedView.TYPE_NAME);
             assertEquals(output.getGuid(), mview.getGuid());
         }
-        assertEquals(response.getUpdatedEntities().size(), 2);
+        assertEquals(response.getUpdatedAssets().size(), 2);
         Set<String> types =
-                response.getUpdatedEntities().stream().map(Entity::getTypeName).collect(Collectors.toSet());
+                response.getUpdatedAssets().stream().map(Asset::getTypeName).collect(Collectors.toSet());
         assertEquals(types.size(), 2);
         assertTrue(types.contains(Table.TYPE_NAME));
         assertTrue(types.contains(MaterializedView.TYPE_NAME));
         Set<String> guids =
-                response.getUpdatedEntities().stream().map(Entity::getGuid).collect(Collectors.toSet());
+                response.getUpdatedAssets().stream().map(Asset::getGuid).collect(Collectors.toSet());
         assertEquals(guids.size(), 2);
         assertTrue(guids.contains(table.getGuid()));
         assertTrue(guids.contains(mview.getGuid()));
@@ -146,10 +145,10 @@ public class LineageTest extends AtlanLiveTest {
                         List.of(MaterializedView.refByGuid(mview.getGuid())),
                         List.of(View.refByGuid(view.getGuid())))
                 .build();
-        EntityMutationResponse response = toCreate.upsert();
+        AssetMutationResponse response = toCreate.upsert();
         assertNotNull(response);
-        assertEquals(response.getCreatedEntities().size(), 1);
-        Entity one = response.getCreatedEntities().get(0);
+        assertEquals(response.getCreatedAssets().size(), 1);
+        Asset one = response.getCreatedAssets().get(0);
         assertTrue(one instanceof LineageProcess);
         end = (LineageProcess) one;
         assertNotNull(end.getGuid());
@@ -169,14 +168,14 @@ public class LineageTest extends AtlanLiveTest {
             assertEquals(output.getTypeName(), View.TYPE_NAME);
             assertEquals(output.getGuid(), view.getGuid());
         }
-        assertEquals(response.getUpdatedEntities().size(), 2);
+        assertEquals(response.getUpdatedAssets().size(), 2);
         Set<String> types =
-                response.getUpdatedEntities().stream().map(Entity::getTypeName).collect(Collectors.toSet());
+                response.getUpdatedAssets().stream().map(Asset::getTypeName).collect(Collectors.toSet());
         assertEquals(types.size(), 2);
         assertTrue(types.contains(MaterializedView.TYPE_NAME));
         assertTrue(types.contains(View.TYPE_NAME));
         Set<String> guids =
-                response.getUpdatedEntities().stream().map(Entity::getGuid).collect(Collectors.toSet());
+                response.getUpdatedAssets().stream().map(Asset::getGuid).collect(Collectors.toSet());
         assertEquals(guids.size(), 2);
         assertTrue(guids.contains(mview.getGuid()));
         assertTrue(guids.contains(view.getGuid()));
@@ -191,31 +190,31 @@ public class LineageTest extends AtlanLiveTest {
         LineageResponse response = lineage.fetch();
         assertNotNull(response);
         assertEquals(response.getBaseEntityGuid(), table.getGuid());
-        assertTrue(response.getUpstreamEntityGuids().isEmpty());
-        Set<String> downstreamGuids = response.getDownstreamEntityGuids();
+        assertTrue(response.getUpstreamAssetGuids().isEmpty());
+        Set<String> downstreamGuids = response.getDownstreamAssetGuids();
         assertNotNull(downstreamGuids);
         assertEquals(downstreamGuids.size(), 1);
         assertTrue(downstreamGuids.contains(mview.getGuid()));
-        assertEquals(response.getDownstreamEntities().size(), 1);
+        assertEquals(response.getDownstreamAssets().size(), 1);
         downstreamGuids = response.getDownstreamProcessGuids();
         assertNotNull(downstreamGuids);
         assertEquals(downstreamGuids.size(), 1);
         assertTrue(downstreamGuids.contains(start.getGuid()));
-        List<String> dfsDownstreamGuids = response.getAllDownstreamEntityGuidsDFS();
+        List<String> dfsDownstreamGuids = response.getAllDownstreamAssetGuidsDFS();
         assertEquals(dfsDownstreamGuids.size(), 3);
         assertEquals(dfsDownstreamGuids.get(0), table.getGuid());
         assertEquals(dfsDownstreamGuids.get(1), mview.getGuid());
         assertEquals(dfsDownstreamGuids.get(2), view.getGuid());
-        List<Entity> dfsDownstream = response.getAllDownstreamEntitiesDFS();
+        List<Asset> dfsDownstream = response.getAllDownstreamAssetsDFS();
         assertEquals(dfsDownstream.size(), 3);
-        Entity one = dfsDownstream.get(0);
+        Asset one = dfsDownstream.get(0);
         assertTrue(one instanceof Table);
         assertEquals(one.getGuid(), table.getGuid());
         one = dfsDownstream.get(1);
         assertEquals(one.getGuid(), mview.getGuid());
         one = dfsDownstream.get(2);
         assertEquals(one.getGuid(), view.getGuid());
-        List<String> dfsUpstreamGuids = response.getAllUpstreamEntityGuidsDFS();
+        List<String> dfsUpstreamGuids = response.getAllUpstreamAssetGuidsDFS();
         assertEquals(dfsUpstreamGuids.size(), 1);
         assertEquals(dfsUpstreamGuids.get(0), table.getGuid());
     }
@@ -229,12 +228,12 @@ public class LineageTest extends AtlanLiveTest {
         LineageResponse response = lineage.fetch();
         assertNotNull(response);
         assertEquals(response.getBaseEntityGuid(), mview.getGuid());
-        Set<String> upstreamGuids = response.getUpstreamEntityGuids();
+        Set<String> upstreamGuids = response.getUpstreamAssetGuids();
         assertNotNull(upstreamGuids);
         assertEquals(upstreamGuids.size(), 1);
         assertTrue(upstreamGuids.contains(table.getGuid()));
-        assertEquals(response.getUpstreamEntities().size(), 1);
-        Entity one = response.getUpstreamEntities().get(0);
+        assertEquals(response.getUpstreamAssets().size(), 1);
+        Asset one = response.getUpstreamAssets().get(0);
         assertNotNull(one);
         assertTrue(one instanceof Table);
         Table t = (Table) one;
@@ -243,12 +242,12 @@ public class LineageTest extends AtlanLiveTest {
         assertNotNull(upstreamGuids);
         assertEquals(upstreamGuids.size(), 1);
         assertTrue(upstreamGuids.contains(start.getGuid()));
-        Set<String> downstreamGuids = response.getDownstreamEntityGuids();
+        Set<String> downstreamGuids = response.getDownstreamAssetGuids();
         assertNotNull(downstreamGuids);
         assertEquals(downstreamGuids.size(), 1);
         assertTrue(downstreamGuids.contains(view.getGuid()));
-        assertEquals(response.getDownstreamEntities().size(), 1);
-        one = response.getDownstreamEntities().get(0);
+        assertEquals(response.getDownstreamAssets().size(), 1);
+        one = response.getDownstreamAssets().get(0);
         assertNotNull(one);
         assertTrue(one instanceof View);
         View v = (View) one;
@@ -257,11 +256,11 @@ public class LineageTest extends AtlanLiveTest {
         assertNotNull(downstreamGuids);
         assertEquals(downstreamGuids.size(), 1);
         assertTrue(downstreamGuids.contains(end.getGuid()));
-        List<String> dfsDownstreamGuids = response.getAllDownstreamEntityGuidsDFS();
+        List<String> dfsDownstreamGuids = response.getAllDownstreamAssetGuidsDFS();
         assertEquals(dfsDownstreamGuids.size(), 2);
         assertEquals(dfsDownstreamGuids.get(0), mview.getGuid());
         assertEquals(dfsDownstreamGuids.get(1), view.getGuid());
-        List<Entity> dfsDownstream = response.getAllDownstreamEntitiesDFS();
+        List<Asset> dfsDownstream = response.getAllDownstreamAssetsDFS();
         assertEquals(dfsDownstream.size(), 2);
         one = dfsDownstream.get(0);
         assertTrue(one instanceof MaterializedView);
@@ -269,11 +268,11 @@ public class LineageTest extends AtlanLiveTest {
         one = dfsDownstream.get(1);
         assertTrue(one instanceof View);
         assertEquals(one.getGuid(), view.getGuid());
-        List<String> dfsUpstreamGuids = response.getAllUpstreamEntityGuidsDFS();
+        List<String> dfsUpstreamGuids = response.getAllUpstreamAssetGuidsDFS();
         assertEquals(dfsUpstreamGuids.size(), 2);
         assertEquals(dfsUpstreamGuids.get(0), mview.getGuid());
         assertEquals(dfsUpstreamGuids.get(1), table.getGuid());
-        List<Entity> dfsUpstream = response.getAllUpstreamEntitiesDFS();
+        List<Asset> dfsUpstream = response.getAllUpstreamAssetsDFS();
         assertEquals(dfsUpstream.size(), 2);
         one = dfsUpstream.get(0);
         assertTrue(one instanceof MaterializedView);
@@ -292,30 +291,30 @@ public class LineageTest extends AtlanLiveTest {
         LineageResponse response = lineage.fetch();
         assertNotNull(response);
         assertEquals(response.getBaseEntityGuid(), view.getGuid());
-        Set<String> upstreamGuids = response.getUpstreamEntityGuids();
+        Set<String> upstreamGuids = response.getUpstreamAssetGuids();
         assertNotNull(upstreamGuids);
         assertEquals(upstreamGuids.size(), 1);
-        assertEquals(response.getUpstreamEntities().size(), 1);
+        assertEquals(response.getUpstreamAssets().size(), 1);
         assertTrue(upstreamGuids.contains(mview.getGuid()));
         upstreamGuids = response.getUpstreamProcessGuids();
         assertNotNull(upstreamGuids);
         assertEquals(upstreamGuids.size(), 1);
         assertTrue(upstreamGuids.contains(end.getGuid()));
-        assertTrue(response.getDownstreamEntityGuids().isEmpty());
-        List<String> dfsDownstreamGuids = response.getAllDownstreamEntityGuidsDFS();
+        assertTrue(response.getDownstreamAssetGuids().isEmpty());
+        List<String> dfsDownstreamGuids = response.getAllDownstreamAssetGuidsDFS();
         assertEquals(dfsDownstreamGuids.size(), 1);
         assertEquals(dfsDownstreamGuids.get(0), view.getGuid());
-        List<Entity> dfsDownstream = response.getAllDownstreamEntitiesDFS();
+        List<Asset> dfsDownstream = response.getAllDownstreamAssetsDFS();
         assertEquals(dfsDownstream.size(), 1);
-        Entity one = dfsDownstream.get(0);
+        Asset one = dfsDownstream.get(0);
         assertTrue(one instanceof View);
         assertEquals(one.getGuid(), view.getGuid());
-        List<String> dfsUpstreamGuids = response.getAllUpstreamEntityGuidsDFS();
+        List<String> dfsUpstreamGuids = response.getAllUpstreamAssetGuidsDFS();
         assertEquals(dfsUpstreamGuids.size(), 3);
         assertEquals(dfsUpstreamGuids.get(0), view.getGuid());
         assertEquals(dfsUpstreamGuids.get(1), mview.getGuid());
         assertEquals(dfsUpstreamGuids.get(2), table.getGuid());
-        List<Entity> dfsUpstream = response.getAllUpstreamEntitiesDFS();
+        List<Asset> dfsUpstream = response.getAllUpstreamAssetsDFS();
         assertEquals(dfsUpstream.size(), 3);
         one = dfsUpstream.get(0);
         assertTrue(one instanceof View);
@@ -339,7 +338,7 @@ public class LineageTest extends AtlanLiveTest {
         LineageResponse response = lineage.fetch();
         assertNotNull(response);
         assertEquals(response.getBaseEntityGuid(), table.getGuid());
-        assertThrows(InvalidRequestException.class, response::getDownstreamEntityGuids);
+        assertThrows(InvalidRequestException.class, response::getDownstreamAssetGuids);
     }
 
     @Test(
@@ -364,21 +363,21 @@ public class LineageTest extends AtlanLiveTest {
 
         assertNotNull(response);
         assertEquals(response.getApproximateCount().longValue(), 3L);
-        List<Entity> entities = response.getEntities();
-        assertNotNull(entities);
-        assertEquals(entities.size(), 3);
-        Set<String> types = entities.stream().map(Entity::getTypeName).collect(Collectors.toSet());
+        List<Asset> assets = response.getAssets();
+        assertNotNull(assets);
+        assertEquals(assets.size(), 3);
+        Set<String> types = assets.stream().map(Asset::getTypeName).collect(Collectors.toSet());
         assertEquals(types.size(), 3);
         assertTrue(types.contains(Table.TYPE_NAME));
         assertTrue(types.contains(MaterializedView.TYPE_NAME));
         assertTrue(types.contains(View.TYPE_NAME));
-        Set<String> guids = entities.stream().map(Entity::getGuid).collect(Collectors.toSet());
+        Set<String> guids = assets.stream().map(Asset::getGuid).collect(Collectors.toSet());
         assertEquals(guids.size(), 3);
         assertTrue(guids.contains(table.getGuid()));
         assertTrue(guids.contains(mview.getGuid()));
         assertTrue(guids.contains(view.getGuid()));
-        for (Entity one : entities) {
-            assertTrue(((SQL) one).getHasLineage());
+        for (Asset one : assets) {
+            assertTrue(one.getHasLineage());
         }
     }
 
@@ -386,10 +385,10 @@ public class LineageTest extends AtlanLiveTest {
             groups = {"delete.lineage"},
             dependsOnGroups = {"search.lineage"})
     void deleteLineage() throws AtlanException {
-        EntityMutationResponse response = Entity.delete(start.getGuid());
+        AssetMutationResponse response = Asset.delete(start.getGuid());
         assertNotNull(response);
-        assertEquals(response.getDeletedEntities().size(), 1);
-        Entity one = response.getDeletedEntities().get(0);
+        assertEquals(response.getDeletedAssets().size(), 1);
+        Asset one = response.getDeletedAssets().get(0);
         assertNotNull(one);
         assertTrue(one instanceof LineageProcess);
         LineageProcess process = (LineageProcess) one;
@@ -414,10 +413,10 @@ public class LineageTest extends AtlanLiveTest {
             dependsOnGroups = {"delete.lineage.restore"},
             alwaysRun = true)
     void purgeLineage() throws AtlanException {
-        EntityMutationResponse response = LineageProcess.purge(start.getGuid());
+        AssetMutationResponse response = LineageProcess.purge(start.getGuid());
         assertNotNull(response);
-        assertEquals(response.getDeletedEntities().size(), 1);
-        Entity one = response.getDeletedEntities().get(0);
+        assertEquals(response.getDeletedAssets().size(), 1);
+        Asset one = response.getDeletedAssets().get(0);
         assertNotNull(one);
         assertTrue(one instanceof LineageProcess);
         LineageProcess process = (LineageProcess) one;

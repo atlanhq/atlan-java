@@ -14,10 +14,10 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode
 public class LineageRelation {
 
-    /** Source GUID for the lineage relation (could be an entity or a process). */
+    /** Source GUID for the lineage relation (could be an asset or a process). */
     String fromEntityId;
 
-    /** Target GUID for the lineage relation (could be an entity or a process). */
+    /** Target GUID for the lineage relation (could be an asset or a process). */
     String toEntityId;
 
     /** GUID of the process that joins the entities, if {@code hideProcess} was true in the request. */

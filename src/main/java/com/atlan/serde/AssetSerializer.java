@@ -5,8 +5,8 @@ package com.atlan.serde;
 import com.atlan.cache.CustomMetadataCache;
 import com.atlan.cache.ReflectionCache;
 import com.atlan.exception.AtlanException;
+import com.atlan.model.assets.Asset;
 import com.atlan.model.core.CustomMetadataAttributes;
-import com.atlan.model.core.Entity;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.SerializerProvider;
@@ -18,7 +18,7 @@ import java.util.*;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Serialization of all {@link Entity} objects, down through the entire inheritance hierarchy.
+ * Serialization of all {@link Asset} objects, down through the entire inheritance hierarchy.
  * This custom serialization is necessary to create some specific aspects of complexity in Atlan's payloads:
  * <ul>
  *     <li>The nested <code>attributes</code> and <code>relationshipAttributes</code> structures.</li>
@@ -27,14 +27,14 @@ import lombok.extern.slf4j.Slf4j;
  * </ul>
  */
 @Slf4j
-public class EntitySerializer extends StdSerializer<Entity> {
+public class AssetSerializer extends StdSerializer<Asset> {
     private static final long serialVersionUID = 2L;
 
-    public EntitySerializer() {
+    public AssetSerializer() {
         this(null);
     }
 
-    public EntitySerializer(Class<Entity> t) {
+    public AssetSerializer(Class<Asset> t) {
         super(t);
     }
 
@@ -43,8 +43,7 @@ public class EntitySerializer extends StdSerializer<Entity> {
      */
     @Override
     public void serializeWithType(
-            Entity value, JsonGenerator gen, SerializerProvider serializers, TypeSerializer typeSer)
-            throws IOException {
+            Asset value, JsonGenerator gen, SerializerProvider serializers, TypeSerializer typeSer) throws IOException {
         serialize(value, gen, serializers);
     }
 
@@ -52,12 +51,12 @@ public class EntitySerializer extends StdSerializer<Entity> {
      * {@inheritDoc}
      */
     @Override
-    public void serialize(Entity entity, JsonGenerator gen, SerializerProvider sp)
+    public void serialize(Asset asset, JsonGenerator gen, SerializerProvider sp)
             throws IOException, JsonProcessingException {
 
-        Class<?> clazz = entity.getClass();
+        Class<?> clazz = asset.getClass();
 
-        Set<String> nullFields = entity.getNullFields();
+        Set<String> nullFields = asset.getNullFields();
 
         Map<String, Object> attributes = new LinkedHashMap<>();
         Map<String, Map<String, Object>> businessAttributes = new LinkedHashMap<>();
@@ -81,7 +80,7 @@ public class EntitySerializer extends StdSerializer<Entity> {
                     } else {
                         // Otherwise, pickup the value from the top-level
                         // attribute so that we can move that value across
-                        attrValue = ReflectionCache.getGetter(clazz, fieldName).invoke(entity);
+                        attrValue = ReflectionCache.getGetter(clazz, fieldName).invoke(asset);
                     }
                     if (attrValue != null) {
                         // Add the value we've derived above to the attribute map for nesting
@@ -90,17 +89,17 @@ public class EntitySerializer extends StdSerializer<Entity> {
                     }
                 } else if (fieldName.equals("customMetadataSets")) {
                     // Translate custom metadata to businessAttributes map
-                    Map<String, CustomMetadataAttributes> cm = entity.getCustomMetadataSets();
+                    Map<String, CustomMetadataAttributes> cm = asset.getCustomMetadataSets();
                     if (cm != null) {
                         CustomMetadataCache.getBusinessAttributesFromCustomMetadata(cm, businessAttributes);
                     }
                     // Then remove it, to exclude it from serialization
-                    entity.setCustomMetadataSets(null);
+                    asset.setCustomMetadataSets(null);
                 } else {
                     // For any other (top-level) field, we'll just write it out as-is (skipping any null
                     // values or empty lists)
                     Object attrValue =
-                            ReflectionCache.getGetter(clazz, fieldName).invoke(entity);
+                            ReflectionCache.getGetter(clazz, fieldName).invoke(asset);
                     if (attrValue != null
                             && !(attrValue instanceof Collection && ((Collection<?>) attrValue).isEmpty())) {
                         String serializeName = ReflectionCache.getSerializedName(clazz, fieldName);

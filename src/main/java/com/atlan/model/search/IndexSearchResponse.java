@@ -4,10 +4,11 @@ package com.atlan.model.search;
 
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.LogicException;
-import com.atlan.model.core.Entity;
+import com.atlan.model.assets.Asset;
 import com.atlan.net.ApiResource;
 import com.atlan.serde.Serde;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.List;
 import java.util.Map;
@@ -30,7 +31,8 @@ public class IndexSearchResponse extends ApiResource {
     SearchParameters searchParameters;
 
     /** List of results from the search. */
-    List<Entity> entities;
+    @JsonProperty("entities")
+    List<Asset> assets;
 
     /** Approximate number of total results. */
     Long approximateCount;

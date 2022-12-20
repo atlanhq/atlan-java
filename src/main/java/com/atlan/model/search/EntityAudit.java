@@ -2,8 +2,8 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.search;
 
+import com.atlan.model.assets.Asset;
 import com.atlan.model.core.AtlanObject;
-import com.atlan.model.core.Entity;
 import com.atlan.model.enums.AuditActionType;
 import java.util.Map;
 import lombok.EqualsAndHashCode;
@@ -56,7 +56,7 @@ public class EntityAudit extends AtlanObject {
     /**
      * Details of the activity.
      * In practice this will either be details about a classification (for classification-
-     * related actions) or an entity (for other actions).
+     * related actions) or an asset (for other actions).
      */
     final AuditDetail detail;
 
@@ -65,7 +65,7 @@ public class EntityAudit extends AtlanObject {
      * Note that this contains current details about the asset, not the state of the
      * asset immediately before or after the given activity.
      */
-    final Entity entityDetail;
+    final Asset entityDetail;
 
     /** Headers detailing how the action was taken, if not by a user. */
     final Map<String, String> headers;

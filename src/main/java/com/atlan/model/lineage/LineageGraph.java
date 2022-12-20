@@ -11,10 +11,10 @@ import lombok.Getter;
  */
 class LineageGraph {
 
-    /** Map from source GUID to target processes and entity GUIDs. */
+    /** Map from source GUID to target processes and asset GUIDs. */
     private final Map<String, Set<DirectedPair>> downstreamList;
 
-    /** Map from target GUID to source processes and entity GUIDs. */
+    /** Map from target GUID to source processes and asset GUIDs. */
     private final Map<String, Set<DirectedPair>> upstreamList;
 
     public LineageGraph() {
@@ -43,12 +43,12 @@ class LineageGraph {
     }
 
     /**
-     * Retrieve GUIDs of entities that are immediately downstream from the specified entity.
+     * Retrieve GUIDs of assets that are immediately downstream from the specified asset.
      *
-     * @param guid unique ID (GUID) of the entity for which to fetch downstream entities
-     * @return collection of GUIDs of the downstream entities
+     * @param guid unique ID (GUID) of the asset for which to fetch downstream assets
+     * @return collection of GUIDs of the downstream assets
      */
-    public Set<String> getDownstreamEntityGuids(String guid) {
+    public Set<String> getDownstreamAssetGuids(String guid) {
         if (downstreamList.containsKey(guid)) {
             return downstreamList.get(guid).stream()
                     .map(DirectedPair::getTargetGuid)
@@ -58,9 +58,9 @@ class LineageGraph {
     }
 
     /**
-     * Retrieve GUIDs of processes that run immediately downstream from the specified entity.
+     * Retrieve GUIDs of processes that run immediately downstream from the specified asset.
      *
-     * @param guid unique ID (GUID) of the entity for which to fetch downstream processes
+     * @param guid unique ID (GUID) of the asset for which to fetch downstream processes
      * @return collection of GUIDs of the downstream processes
      */
     public Set<String> getDownstreamProcessGuids(String guid) {
@@ -73,13 +73,13 @@ class LineageGraph {
     }
 
     /**
-     * Retrieve all GUIDs of entities that are downstream from the specified entity, across
+     * Retrieve all GUIDs of assets that are downstream from the specified asset, across
      * multiple degrees of separation (hops), using a depth-first search traversal.
      *
-     * @param guid unique ID (GUID) of the entity for which to fetch downstream entities
-     * @return list of all downstream entity GUIDs
+     * @param guid unique ID (GUID) of the asset for which to fetch downstream assets
+     * @return list of all downstream asset GUIDs
      */
-    public List<String> getAllDownstreamEntityGuidsDFS(String guid) {
+    public List<String> getAllDownstreamAssetGuidsDFS(String guid) {
         Set<String> visited = new LinkedHashSet<>();
         ArrayDeque<String> stack = new ArrayDeque<>();
         stack.push(guid);
@@ -87,7 +87,7 @@ class LineageGraph {
             String toTraverse = stack.pop();
             if (!visited.contains(toTraverse)) {
                 visited.add(toTraverse);
-                Set<String> downstreamGuids = getDownstreamEntityGuids(toTraverse);
+                Set<String> downstreamGuids = getDownstreamAssetGuids(toTraverse);
                 for (String downstream : downstreamGuids) {
                     if (!visited.contains(downstream)) {
                         stack.push(downstream);
@@ -99,12 +99,12 @@ class LineageGraph {
     }
 
     /**
-     * Retrieve GUIDs of entities that are immediately upstream from the specified entity.
+     * Retrieve GUIDs of assets that are immediately upstream from the specified asset.
      *
-     * @param guid unique ID (GUID) of the entity for which to fetch upstream entities
-     * @return collection of GUIDs of the upstream entities
+     * @param guid unique ID (GUID) of the asset for which to fetch upstream assets
+     * @return collection of GUIDs of the upstream assets
      */
-    public Set<String> getUpstreamEntityGuids(String guid) {
+    public Set<String> getUpstreamAssetGuids(String guid) {
         if (upstreamList.containsKey(guid)) {
             return upstreamList.get(guid).stream()
                     .map(DirectedPair::getTargetGuid)
@@ -114,9 +114,9 @@ class LineageGraph {
     }
 
     /**
-     * Retrieve GUIDs of processes that run immediately upstream to produce the specified entity.
+     * Retrieve GUIDs of processes that run immediately upstream to produce the specified asset.
      *
-     * @param guid unique ID (GUID) of the entity for which to fetch upstream processes
+     * @param guid unique ID (GUID) of the asset for which to fetch upstream processes
      * @return collection of GUIDs of the upstream processes
      */
     public Set<String> getUpstreamProcessGuids(String guid) {
@@ -129,13 +129,13 @@ class LineageGraph {
     }
 
     /**
-     * Retrieve all GUIDs of entities that are upstream from the specified entity, across
+     * Retrieve all GUIDs of assets that are upstream from the specified asset, across
      * multiple degrees of separation (hops), using a depth-first search traversal.
      *
-     * @param guid unique ID (GUID) of the entity for which to fetch upstream entities
-     * @return list of all upstream entity GUIDs
+     * @param guid unique ID (GUID) of the asset for which to fetch upstream assets
+     * @return list of all upstream asset GUIDs
      */
-    public List<String> getAllUpstreamEntityGuidsDFS(String guid) {
+    public List<String> getAllUpstreamAssetGuidsDFS(String guid) {
         Set<String> visited = new LinkedHashSet<>();
         ArrayDeque<String> stack = new ArrayDeque<>();
         stack.push(guid);
@@ -143,7 +143,7 @@ class LineageGraph {
             String toTraverse = stack.pop();
             if (!visited.contains(toTraverse)) {
                 visited.add(toTraverse);
-                Set<String> upstreamGuids = getUpstreamEntityGuids(toTraverse);
+                Set<String> upstreamGuids = getUpstreamAssetGuids(toTraverse);
                 for (String upstream : upstreamGuids) {
                     if (!visited.contains(upstream)) {
                         stack.push(upstream);
@@ -160,7 +160,7 @@ class LineageGraph {
         /** Process in-between. */
         String processGuid;
 
-        /** Target entity (either upstream or downstream via the process). */
+        /** Target asset (either upstream or downstream via the process). */
         String targetGuid;
 
         DirectedPair(String processGuid, String targetGuid) {

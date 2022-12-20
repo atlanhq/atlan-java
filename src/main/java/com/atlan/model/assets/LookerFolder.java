@@ -5,7 +5,6 @@ package com.atlan.model.assets;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.core.Entity;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
@@ -125,14 +124,14 @@ public class LookerFolder extends Looker {
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the LookerFolder does not exist or the provided GUID is not a LookerFolder
      */
     public static LookerFolder retrieveByGuid(String guid) throws AtlanException {
-        Entity entity = Entity.retrieveFull(guid);
-        if (entity == null) {
-            throw new NotFoundException("No entity found with GUID: " + guid, "ATLAN_JAVA_CLIENT-404-001", 404, null);
-        } else if (entity instanceof LookerFolder) {
-            return (LookerFolder) entity;
+        Asset asset = Asset.retrieveFull(guid);
+        if (asset == null) {
+            throw new NotFoundException("No asset found with GUID: " + guid, "ATLAN_JAVA_CLIENT-404-001", 404, null);
+        } else if (asset instanceof LookerFolder) {
+            return (LookerFolder) asset;
         } else {
             throw new NotFoundException(
-                    "Entity with GUID " + guid + " is not a LookerFolder.", "ATLAN_JAVA_CLIENT-404-002", 404, null);
+                    "Asset with GUID " + guid + " is not a LookerFolder.", "ATLAN_JAVA_CLIENT-404-002", 404, null);
         }
     }
 
@@ -144,9 +143,9 @@ public class LookerFolder extends Looker {
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the LookerFolder does not exist
      */
     public static LookerFolder retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        Entity entity = Entity.retrieveFull(TYPE_NAME, qualifiedName);
-        if (entity instanceof LookerFolder) {
-            return (LookerFolder) entity;
+        Asset asset = Asset.retrieveFull(TYPE_NAME, qualifiedName);
+        if (asset instanceof LookerFolder) {
+            return (LookerFolder) asset;
         } else {
             throw new NotFoundException(
                     "No LookerFolder found with qualifiedName: " + qualifiedName,

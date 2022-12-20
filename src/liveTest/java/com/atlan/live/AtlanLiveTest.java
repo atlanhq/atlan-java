@@ -5,8 +5,8 @@ package com.atlan.live;
 import static org.testng.Assert.*;
 
 import com.atlan.Atlan;
-import com.atlan.model.core.Entity;
-import com.atlan.model.core.EntityMutationResponse;
+import com.atlan.model.assets.Asset;
+import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanCertificateStatus;
 
@@ -33,30 +33,30 @@ public abstract class AtlanLiveTest {
     }
 
     /**
-     * Validate an entity update response only includes a single updated entity.
+     * Validate an asset update response only includes a single updated asset.
      *
      * @param response the update response to validate
-     * @return the single updated entity from the response
+     * @return the single updated asset from the response
      */
-    static Entity validateSingleUpdate(EntityMutationResponse response) {
+    static Asset validateSingleUpdate(AssetMutationResponse response) {
         assertNotNull(response);
-        assertTrue(response.getCreatedEntities().isEmpty());
-        assertTrue(response.getDeletedEntities().isEmpty());
-        assertEquals(response.getUpdatedEntities().size(), 1);
-        return response.getUpdatedEntities().get(0);
+        assertTrue(response.getCreatedAssets().isEmpty());
+        assertTrue(response.getDeletedAssets().isEmpty());
+        assertEquals(response.getUpdatedAssets().size(), 1);
+        return response.getUpdatedAssets().get(0);
     }
 
     /**
-     * Validate an entity creation response only includes a single created entity.
+     * Validate an asset creation response only includes a single created asset.
      *
      * @param response the create response to validate
-     * @return the single created entity from the response
+     * @return the single created asset from the response
      */
-    static Entity validateSingleCreate(EntityMutationResponse response) {
+    static Asset validateSingleCreate(AssetMutationResponse response) {
         assertNotNull(response);
-        assertTrue(response.getUpdatedEntities().isEmpty());
-        assertTrue(response.getDeletedEntities().isEmpty());
-        assertEquals(response.getCreatedEntities().size(), 1);
-        return response.getCreatedEntities().get(0);
+        assertTrue(response.getUpdatedAssets().isEmpty());
+        assertTrue(response.getDeletedAssets().isEmpty());
+        assertEquals(response.getCreatedAssets().size(), 1);
+        return response.getCreatedAssets().get(0);
     }
 }

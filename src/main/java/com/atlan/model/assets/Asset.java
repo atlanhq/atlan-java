@@ -3,17 +3,21 @@
 package com.atlan.model.assets;
 
 import com.atlan.api.EntityBulkEndpoint;
+import com.atlan.api.EntityGuidEndpoint;
 import com.atlan.api.EntityUniqueAttributesEndpoint;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.InvalidRequestException;
-import com.atlan.model.core.Entity;
-import com.atlan.model.core.EntityMutationResponse;
-import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.AtlanCertificateStatus;
-import com.atlan.model.enums.AtlanConnectorType;
-import com.atlan.model.enums.AtlanStatus;
+import com.atlan.model.core.*;
+import com.atlan.model.enums.*;
+import com.atlan.model.relations.Reference;
+import com.atlan.serde.AssetDeserializer;
+import com.atlan.serde.AssetSerializer;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -22,6 +26,13 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@JsonSerialize(using = AssetSerializer.class)
+@JsonDeserialize(using = AssetDeserializer.class)
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.EXISTING_PROPERTY,
+        property = "typeName",
+        defaultImpl = IndistinctAsset.class)
 @JsonSubTypes({
     @JsonSubTypes.Type(value = Catalog.class, name = Catalog.TYPE_NAME),
     @JsonSubTypes.Type(value = Namespace.class, name = Namespace.TYPE_NAME),
@@ -31,12 +42,81 @@ import lombok.experimental.SuperBuilder;
     @JsonSubTypes.Type(value = Cloud.class, name = Cloud.TYPE_NAME),
     @JsonSubTypes.Type(value = Connection.class, name = Connection.TYPE_NAME),
 })
-public abstract class Asset extends Entity {
+@SuppressWarnings("cast")
+public abstract class Asset extends Reference {
 
     public static final String TYPE_NAME = "Asset";
 
+    /** Internal tracking of fields that should be serialized with null values. */
+    @JsonIgnore
+    transient Set<String> nullFields;
+
+    /** Retrieve the list of fields to be serialized with null values. */
+    public Set<String> getNullFields() {
+        if (nullFields == null) {
+            return Collections.emptySet();
+        }
+        return Collections.unmodifiableSet(nullFields);
+    }
+
     /**
-     * Unique name for this entity. This is typically a concatenation of the asset's name onto its
+     * Add a field to be serialized with a null value.
+     * @param fieldName to serialize with a null value
+     */
+    public void addNullField(String fieldName) {
+        if (nullFields == null) {
+            nullFields = new LinkedHashSet<>();
+        }
+        nullFields.add(fieldName);
+    }
+
+    /** Classifications assigned to the asset. */
+    @Singular
+    Set<Classification> classifications;
+
+    /**
+     * Map of custom metadata attributes and values defined on the asset. The map is keyed by the human-readable
+     * name of the custom metadata set, and the values are a further mapping from human-readable attribute name
+     * to the value for that attribute on this asset.
+     */
+    @Singular("customMetadata")
+    Map<String, CustomMetadataAttributes> customMetadataSets;
+
+    /** Status of the asset. */
+    AtlanStatus status;
+
+    /** User or account that created the asset. */
+    final String createdBy;
+
+    /** User or account that last updated the asset. */
+    final String updatedBy;
+
+    /** Time (epoch) at which the asset was created, in milliseconds. */
+    final Long createTime;
+
+    /** Time (epoch) at which the asset was last updated, in milliseconds. */
+    final Long updateTime;
+
+    /** Details on the handler used for deletion of the asset. */
+    final String deleteHandler;
+
+    /** The names of the classifications that exist on the asset. */
+    Set<String> classificationNames;
+
+    /** Unused. */
+    Boolean isIncomplete;
+
+    /** Names of terms that have been linked to this asset. */
+    Set<String> meaningNames;
+
+    /** Details of terms that have been linked to this asset. */
+    Set<Meaning> meanings;
+
+    /** Unique identifiers (GUIDs) for any background tasks that are yet to operate on this asset. */
+    final Set<String> pendingTasks;
+
+    /**
+     * Unique name for this asset. This is typically a concatenation of the asset's name onto its
      * parent's qualifiedName.
      */
     @Attribute
@@ -391,6 +471,23 @@ public abstract class Asset extends Entity {
     @JsonProperty("meanings")
     SortedSet<GlossaryTerm> assignedTerms;
 
+    /** Remove all custom metadata from the asset, if any is set on the asset. */
+    public void removeCustomMetadata() {
+        // It is sufficient to simply exclude businessAttributes from a request in order
+        // for them to be removed, as long as the "replaceBusinessAttributes" flag is set
+        // to true (which it must be for any update to work to businessAttributes anyway)
+        customMetadataSets = null;
+    }
+
+    /** Remove the classifications from the asset, if the asset is classified with any. */
+    public void removeClassifications() {
+        // It is sufficient to simply exclude classifications from a request in order
+        // for them to be removed, as long as the "replaceClassifications" flag is set to
+        // true (which it must be for any update to work to classifications anyway)
+        classifications = null;
+        classificationNames = null;
+    }
+
     /** Remove the system description from the asset, if any is set on the asset. */
     public void removeDescription() {
         addNullField("description");
@@ -434,6 +531,183 @@ public abstract class Asset extends Entity {
     public abstract AssetBuilder<?, ?> trimToRequired() throws InvalidRequestException;
 
     /**
+     * If an asset with the same qualifiedName exists, updates the existing asset. Otherwise, creates the asset.
+     * No classifications or custom metadata will be changed if updating an existing asset, irrespective of what
+     * is included in the asset itself when the method is called.
+     *
+     * @return details of the created or updated asset
+     * @throws AtlanException on any error during the API invocation
+     */
+    public AssetMutationResponse upsert() throws AtlanException {
+        return EntityBulkEndpoint.upsert(this, false, false);
+    }
+
+    /**
+     * If no asset exists, has the same behavior as the {@link #upsert()} method.
+     * If an asset does exist, optionally overwrites any classifications and / or custom metadata.
+     *
+     * @param replaceClassifications whether to replace classifications during an update (true) or not (false)
+     * @param replaceCustomMetadata whether to replace custom metadata during an update (true) or not (false)
+     * @return details of the created or updated asset
+     * @throws AtlanException on any error during the API invocation
+     */
+    public AssetMutationResponse upsert(boolean replaceClassifications, boolean replaceCustomMetadata)
+            throws AtlanException {
+        return EntityBulkEndpoint.upsert(this, replaceClassifications, replaceCustomMetadata);
+    }
+
+    /**
+     * Retrieves an asset by its GUID, complete with all of its relationships.
+     * The type of the asset will only be determined at runtime.
+     *
+     * @param guid of the asset to retrieve
+     * @return the requested full asset, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link com.atlan.exception.NotFoundException} if the asset does not exist
+     */
+    public static Asset retrieveFull(String guid) throws AtlanException {
+        AssetResponse response = EntityGuidEndpoint.retrieve(guid, false, false);
+        Asset asset = response.getAsset();
+        if (asset != null) {
+            asset.setCompleteObject();
+        }
+        return asset;
+    }
+
+    /**
+     * Retrieves a minimal asset by its GUID, without its relationships.
+     * The type of the asset will only be determined at runtime.
+     *
+     * @param guid of the asset to retrieve
+     * @return the requested minimal asset, without its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link com.atlan.exception.NotFoundException} if the asset does not exist
+     */
+    public static Asset retrieveMinimal(String guid) throws AtlanException {
+        AssetResponse response = EntityGuidEndpoint.retrieve(guid, true, true);
+        return response.getAsset();
+    }
+
+    /**
+     * Retrieves an asset by its qualifiedName, complete with all of its relationships.
+     * The type of the asset will only be determined at runtime.
+     *
+     * @param typeName the type of the asset to retrieve
+     * @param qualifiedName the unique name of the asset to retrieve
+     * @return the requested full asset, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link com.atlan.exception.NotFoundException} if the asset does not exist
+     */
+    protected static Asset retrieveFull(String typeName, String qualifiedName) throws AtlanException {
+        AssetResponse response = EntityUniqueAttributesEndpoint.retrieve(typeName, qualifiedName, false, false);
+        Asset asset = response.getAsset();
+        if (asset != null) {
+            asset.setCompleteObject();
+        }
+        return asset;
+    }
+
+    /**
+     * Retrieves an asset by its qualifiedName, without its relationships.
+     * The type of the asset will only be determined at runtime.
+     *
+     * @param typeName the type of the asset to retrieve
+     * @param qualifiedName the unique name of the asset to retrieve
+     * @return the requested minimal asset, without its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link com.atlan.exception.NotFoundException} if the asset does not exist
+     */
+    public static Asset retrieveMinimal(String typeName, String qualifiedName) throws AtlanException {
+        AssetResponse response = EntityUniqueAttributesEndpoint.retrieve(typeName, qualifiedName, true, true);
+        return response.getAsset();
+    }
+
+    /**
+     * Soft-deletes an asset by its GUID. This operation can be reversed by updating the asset and changing
+     * its {@link #status} to {@code ACTIVE}.
+     *
+     * @param guid of the asset to soft-delete
+     * @return details of the soft-deleted asset
+     * @throws AtlanException on any error during the API invocation
+     */
+    public static AssetMutationResponse delete(String guid) throws AtlanException {
+        return EntityBulkEndpoint.delete(guid, AtlanDeleteType.SOFT);
+    }
+
+    /**
+     * Hard-deletes (purges) an asset by its GUID. This operation is irreversible. The asset to purge must
+     * currently be in an active state (soft-deleted entities cannot be purged).
+     *
+     * @param guid of the asset to hard-delete
+     * @return details of the hard-deleted asset
+     * @throws AtlanException on any error during the API invocation
+     */
+    public static AssetMutationResponse purge(String guid) throws AtlanException {
+        return EntityBulkEndpoint.delete(guid, AtlanDeleteType.HARD);
+    }
+
+    /**
+     * Update only the provided custom metadata attributes on the asset. This will leave all other custom metadata
+     * attributes, even within the same named custom metadata, unchanged.
+     *
+     * @param guid unique identifier of the asset
+     * @param cmName human-readable name of the custom metadata to update
+     * @param attributes the values of the custom metadata attributes to change
+     * @throws AtlanException on any API problems, or if the custom metadata is not defined in Atlan
+     */
+    public static void updateCustomMetadataAttributes(String guid, String cmName, CustomMetadataAttributes attributes)
+            throws AtlanException {
+        EntityGuidEndpoint.updateCustomMetadataAttributes(guid, cmName, attributes);
+    }
+
+    /**
+     * Replace specific custom metadata on the asset. This will replace everything within the named custom metadata,
+     * but will not change any of the other named custom metadata on the asset.
+     *
+     * @param guid unique identifier of the asset
+     * @param cmName human-readable name of the custom metadata to replace
+     * @param attributes the values of the attributes to replace for the custom metadata
+     * @throws AtlanException on any API problems, or if the custom metadata is not defined in Atlan
+     */
+    public static void replaceCustomMetadata(String guid, String cmName, CustomMetadataAttributes attributes)
+            throws AtlanException {
+        EntityGuidEndpoint.replaceCustomMetadata(guid, cmName, attributes);
+    }
+
+    /**
+     * Remove specific custom metadata from an asset.
+     *
+     * @param guid unique identifier of the asset
+     * @param cmName human-readable name of the custom metadata to remove
+     * @throws AtlanException on any API problems, or if the custom metadata is not defined in Atlan
+     */
+    public static void removeCustomMetadata(String guid, String cmName) throws AtlanException {
+        EntityGuidEndpoint.removeCustomMetadata(guid, cmName);
+    }
+
+    /**
+     * Add classifications to an asset.
+     *
+     * @param typeName type of the asset
+     * @param qualifiedName of the asset
+     * @param classificationNames human-readable names of the classifications to add
+     * @throws AtlanException on any API problems, or if any of the classifications already exist on the asset
+     */
+    protected static void addClassifications(String typeName, String qualifiedName, List<String> classificationNames)
+            throws AtlanException {
+        EntityUniqueAttributesEndpoint.addClassifications(typeName, qualifiedName, classificationNames);
+    }
+
+    /**
+     * Remove a classification from an asset.
+     *
+     * @param typeName type of the asset
+     * @param qualifiedName of the asset
+     * @param classificationName human-readable name of the classifications to remove
+     * @throws AtlanException on any API problems, or if any of the classification does not exist on the asset
+     */
+    protected static void removeClassification(String typeName, String qualifiedName, String classificationName)
+            throws AtlanException {
+        EntityUniqueAttributesEndpoint.removeClassification(typeName, qualifiedName, classificationName, true);
+    }
+
+    /**
      * Update the certificate on an asset.
      *
      * @param builder the builder to use for updating the certificate
@@ -442,7 +716,7 @@ public abstract class Asset extends Entity {
      * @return the result of the update, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    protected static Entity updateCertificate(
+    protected static Asset updateCertificate(
             AssetBuilder<?, ?> builder, AtlanCertificateStatus certificate, String message) throws AtlanException {
         builder = builder.certificateStatus(certificate);
         if (message != null && message.length() > 1) {
@@ -458,12 +732,12 @@ public abstract class Asset extends Entity {
      * @return the result of the removal, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    protected static Entity removeCertificate(AssetBuilder<?, ?> builder) throws AtlanException {
+    protected static Asset removeCertificate(AssetBuilder<?, ?> builder) throws AtlanException {
         Asset asset = builder.build();
         asset.removeCertificate();
-        EntityMutationResponse response = asset.upsert();
-        if (response != null && !response.getUpdatedEntities().isEmpty()) {
-            return response.getUpdatedEntities().get(0);
+        AssetMutationResponse response = asset.upsert();
+        if (response != null && !response.getUpdatedAssets().isEmpty()) {
+            return response.getUpdatedAssets().get(0);
         } else {
             return null;
         }
@@ -479,7 +753,7 @@ public abstract class Asset extends Entity {
      * @return the result of the update, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    protected static Entity updateAnnouncement(
+    protected static Asset updateAnnouncement(
             AssetBuilder<?, ?> builder, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
         builder = builder.announcementType(type);
@@ -499,12 +773,12 @@ public abstract class Asset extends Entity {
      * @return the result of the removal, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    protected static Entity removeAnnouncement(AssetBuilder<?, ?> builder) throws AtlanException {
+    protected static Asset removeAnnouncement(AssetBuilder<?, ?> builder) throws AtlanException {
         Asset asset = builder.build();
         asset.removeAnnouncement();
-        EntityMutationResponse response = asset.upsert();
-        if (response != null && !response.getUpdatedEntities().isEmpty()) {
-            return response.getUpdatedEntities().get(0);
+        AssetMutationResponse response = asset.upsert();
+        if (response != null && !response.getUpdatedAssets().isEmpty()) {
+            return response.getUpdatedAssets().get(0);
         } else {
             return null;
         }
@@ -517,12 +791,12 @@ public abstract class Asset extends Entity {
      * @return the result of the removal, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    protected static Entity removeDescription(AssetBuilder<?, ?> builder) throws AtlanException {
+    protected static Asset removeDescription(AssetBuilder<?, ?> builder) throws AtlanException {
         Asset asset = builder.build();
         asset.removeDescription();
-        EntityMutationResponse response = asset.upsert();
-        if (response != null && !response.getUpdatedEntities().isEmpty()) {
-            return response.getUpdatedEntities().get(0);
+        AssetMutationResponse response = asset.upsert();
+        if (response != null && !response.getUpdatedAssets().isEmpty()) {
+            return response.getUpdatedAssets().get(0);
         } else {
             return null;
         }
@@ -535,12 +809,12 @@ public abstract class Asset extends Entity {
      * @return the result of the removal, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    protected static Entity removeUserDescription(AssetBuilder<?, ?> builder) throws AtlanException {
+    protected static Asset removeUserDescription(AssetBuilder<?, ?> builder) throws AtlanException {
         Asset asset = builder.build();
         asset.removeUserDescription();
-        EntityMutationResponse response = asset.upsert();
-        if (response != null && !response.getUpdatedEntities().isEmpty()) {
-            return response.getUpdatedEntities().get(0);
+        AssetMutationResponse response = asset.upsert();
+        if (response != null && !response.getUpdatedAssets().isEmpty()) {
+            return response.getUpdatedAssets().get(0);
         } else {
             return null;
         }
@@ -553,21 +827,21 @@ public abstract class Asset extends Entity {
      * @return the result of the removal, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    protected static Entity removeOwners(AssetBuilder<?, ?> builder) throws AtlanException {
+    protected static Asset removeOwners(AssetBuilder<?, ?> builder) throws AtlanException {
         Asset asset = builder.build();
         asset.removeOwners();
-        EntityMutationResponse response = asset.upsert();
-        if (response != null && !response.getUpdatedEntities().isEmpty()) {
-            return response.getUpdatedEntities().get(0);
+        AssetMutationResponse response = asset.upsert();
+        if (response != null && !response.getUpdatedAssets().isEmpty()) {
+            return response.getUpdatedAssets().get(0);
         } else {
             return null;
         }
     }
 
-    private static Entity updateAttributes(Asset asset) throws AtlanException {
-        EntityMutationResponse response = EntityBulkEndpoint.upsert(asset, false, false);
-        if (response != null && !response.getUpdatedEntities().isEmpty()) {
-            return response.getUpdatedEntities().get(0);
+    private static Asset updateAttributes(Asset asset) throws AtlanException {
+        AssetMutationResponse response = EntityBulkEndpoint.upsert(asset, false, false);
+        if (response != null && !response.getUpdatedAssets().isEmpty()) {
+            return response.getUpdatedAssets().get(0);
         }
         return null;
     }
@@ -583,7 +857,7 @@ public abstract class Asset extends Entity {
      * @return the result of the update, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    protected static Entity updateCertificate(
+    protected static Asset updateCertificate(
             AssetBuilder<?, ?> builder,
             String typeName,
             String qualifiedName,
@@ -609,7 +883,7 @@ public abstract class Asset extends Entity {
      * @return the result of the update, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    protected static Entity updateAnnouncement(
+    protected static Asset updateAnnouncement(
             AssetBuilder<?, ?> builder,
             String typeName,
             String qualifiedName,
@@ -627,14 +901,14 @@ public abstract class Asset extends Entity {
         return updateAttributes(typeName, qualifiedName, builder.build());
     }
 
-    private static Entity updateAttributes(String typeName, String qualifiedName, Asset asset) throws AtlanException {
-        EntityMutationResponse response =
+    private static Asset updateAttributes(String typeName, String qualifiedName, Asset asset) throws AtlanException {
+        AssetMutationResponse response =
                 EntityUniqueAttributesEndpoint.updateAttributes(typeName, qualifiedName, asset);
-        if (response != null && !response.getPartiallyUpdatedEntities().isEmpty()) {
-            return response.getPartiallyUpdatedEntities().get(0);
+        if (response != null && !response.getPartiallyUpdatedAssets().isEmpty()) {
+            return response.getPartiallyUpdatedAssets().get(0);
         }
-        if (response != null && !response.getUpdatedEntities().isEmpty()) {
-            return response.getUpdatedEntities().get(0);
+        if (response != null && !response.getUpdatedAssets().isEmpty()) {
+            return response.getUpdatedAssets().get(0);
         }
         return null;
     }
@@ -667,7 +941,7 @@ public abstract class Asset extends Entity {
      * @return the asset that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    protected static Entity replaceTerms(AssetBuilder<?, ?> builder, List<GlossaryTerm> terms) throws AtlanException {
+    protected static Asset replaceTerms(AssetBuilder<?, ?> builder, List<GlossaryTerm> terms) throws AtlanException {
         if (terms == null || terms.isEmpty()) {
             Asset asset = builder.build();
             asset.removeAssignedTerms();
@@ -688,7 +962,7 @@ public abstract class Asset extends Entity {
      * @return the asset that was updated (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    protected static Entity appendTerms(String typeName, String qualifiedName, List<GlossaryTerm> terms)
+    protected static Asset appendTerms(String typeName, String qualifiedName, List<GlossaryTerm> terms)
             throws AtlanException {
         Asset existing = getExistingAsset(typeName, qualifiedName);
         if (terms == null) {
@@ -725,7 +999,7 @@ public abstract class Asset extends Entity {
      * @throws AtlanException on any API problems
      * @throws InvalidRequestException if any of the passed terms are not valid references by GUID to a term
      */
-    protected static Entity removeTerms(String typeName, String qualifiedName, List<GlossaryTerm> terms)
+    protected static Asset removeTerms(String typeName, String qualifiedName, List<GlossaryTerm> terms)
             throws AtlanException {
         Asset existing = getExistingAsset(typeName, qualifiedName);
         if (existing != null) {
@@ -783,16 +1057,16 @@ public abstract class Asset extends Entity {
     }
 
     private static Asset getExistingAsset(String typeName, String qualifiedName) throws AtlanException {
-        return (Asset) Entity.retrieveFull(typeName, qualifiedName);
+        return retrieveFull(typeName, qualifiedName);
     }
 
-    private static Entity updateRelationships(Asset asset) throws AtlanException {
+    private static Asset updateRelationships(Asset asset) throws AtlanException {
         String typeNameToUpdate = asset.getTypeName();
-        EntityMutationResponse response = EntityBulkEndpoint.upsert(asset, false, false);
-        if (response != null && !response.getUpdatedEntities().isEmpty()) {
-            for (Entity result : response.getUpdatedEntities()) {
+        AssetMutationResponse response = EntityBulkEndpoint.upsert(asset, false, false);
+        if (response != null && !response.getUpdatedAssets().isEmpty()) {
+            for (Asset result : response.getUpdatedAssets()) {
                 if (result.getTypeName().equals(typeNameToUpdate)) {
-                    String foundQN = ((Asset) result).getQualifiedName();
+                    String foundQN = result.getQualifiedName();
                     if (foundQN != null && foundQN.equals(asset.getQualifiedName())) {
                         // Return the first result that matches both the type that we attempted to update
                         // and the qualifiedName of the asset we attempted to update. Irrespective of
@@ -807,7 +1081,7 @@ public abstract class Asset extends Entity {
     }
 
     private static Optional<String> restore(Asset asset) throws AtlanException {
-        EntityMutationResponse response = EntityBulkEndpoint.restore(asset);
+        AssetMutationResponse response = EntityBulkEndpoint.restore(asset);
         if (response != null && !response.getGuidAssignments().isEmpty()) {
             return response.getGuidAssignments().values().stream().findFirst();
         }

@@ -13,12 +13,10 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fasterxml.jackson.databind.jsontype.TypeDeserializer;
 import java.io.IOException;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * Deserialization of all {@link AggregationResult} objects.
  */
-@Slf4j
 public class AggregationResultDeserializer extends StdDeserializer<AggregationResult> {
 
     private static final long serialVersionUID = 2L;
@@ -46,7 +44,6 @@ public class AggregationResultDeserializer extends StdDeserializer<AggregationRe
     @Override
     public AggregationResult deserialize(JsonParser parser, DeserializationContext context) throws IOException {
         JsonNode root = parser.getCodec().readTree(parser);
-        log.info("Root: {}", root);
         JsonNode value = root.get("value"); // only exists on metric results
         JsonNode buckets = root.get("buckets"); // exists on entities and custom metadata
         if (value != null && value.isNumber()) {
