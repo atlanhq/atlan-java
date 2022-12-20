@@ -457,18 +457,18 @@ public class ModelGenerator extends AtlanLiveTest {
                 .append(className)
                 .append(" retrieveByGuid(String guid) throws AtlanException {")
                 .append(System.lineSeparator());
-        fs.append("        Entity entity = Entity.retrieveFull(guid);").append(System.lineSeparator());
-        fs.append("        if (entity == null) {").append(System.lineSeparator());
+        fs.append("        Asset asset = Asset.retrieveFull(guid);").append(System.lineSeparator());
+        fs.append("        if (asset == null) {").append(System.lineSeparator());
         fs.append(
-                        "            throw new NotFoundException(\"No entity found with GUID: \" + guid, \"ATLAN_JAVA_CLIENT-404-001\", 404, null);")
+                        "            throw new NotFoundException(\"No asset found with GUID: \" + guid, \"ATLAN_JAVA_CLIENT-404-001\", 404, null);")
                 .append(System.lineSeparator());
-        fs.append("        } else if (entity instanceof ")
+        fs.append("        } else if (asset instanceof ")
                 .append(className)
                 .append(") {")
                 .append(System.lineSeparator());
-        fs.append("            return (").append(className).append(") entity;").append(System.lineSeparator());
+        fs.append("            return (").append(className).append(") asset;").append(System.lineSeparator());
         fs.append("        } else {").append(System.lineSeparator());
-        fs.append("            throw new NotFoundException(\"Entity with GUID \" + guid + \" is not a ")
+        fs.append("            throw new NotFoundException(\"Asset with GUID \" + guid + \" is not a ")
                 .append(className)
                 .append(".\", \"ATLAN_JAVA_CLIENT-404-002\", 404, null);")
                 .append(System.lineSeparator());
@@ -499,13 +499,13 @@ public class ModelGenerator extends AtlanLiveTest {
                 .append(className)
                 .append(" retrieveByQualifiedName(String qualifiedName) throws AtlanException {")
                 .append(System.lineSeparator());
-        fs.append("        Entity entity = Entity.retrieveFull(TYPE_NAME, qualifiedName);")
+        fs.append("        Asset asset = Asset.retrieveFull(TYPE_NAME, qualifiedName);")
                 .append(System.lineSeparator());
-        fs.append("        if (entity instanceof ")
+        fs.append("        if (asset instanceof ")
                 .append(className)
                 .append(") {")
                 .append(System.lineSeparator());
-        fs.append("            return (").append(className).append(") entity;").append(System.lineSeparator());
+        fs.append("            return (").append(className).append(") asset;").append(System.lineSeparator());
         fs.append("        } else {").append(System.lineSeparator());
         fs.append("            throw new NotFoundException(\"No ")
                 .append(className)
@@ -1145,7 +1145,6 @@ public class ModelGenerator extends AtlanLiveTest {
         fs.append("import com.atlan.exception.AtlanException;").append(System.lineSeparator());
         fs.append("import com.atlan.exception.NotFoundException;").append(System.lineSeparator());
         fs.append("import com.atlan.exception.InvalidRequestException;").append(System.lineSeparator());
-        fs.append("import com.atlan.model.core.Entity;").append(System.lineSeparator());
         fs.append("import com.atlan.model.enums.AtlanAnnouncementType;").append(System.lineSeparator());
         fs.append("import com.atlan.model.enums.AtlanCertificateStatus;").append(System.lineSeparator());
         fs.append("import com.atlan.model.enums.AtlanConnectorType;").append(System.lineSeparator());

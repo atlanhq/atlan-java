@@ -5,7 +5,6 @@ package com.atlan.model.assets;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.core.Entity;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
@@ -131,14 +130,14 @@ public class TableauDashboard extends Tableau {
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the TableauDashboard does not exist or the provided GUID is not a TableauDashboard
      */
     public static TableauDashboard retrieveByGuid(String guid) throws AtlanException {
-        Entity entity = Entity.retrieveFull(guid);
-        if (entity == null) {
-            throw new NotFoundException("No entity found with GUID: " + guid, "ATLAN_JAVA_CLIENT-404-001", 404, null);
-        } else if (entity instanceof TableauDashboard) {
-            return (TableauDashboard) entity;
+        Asset asset = Asset.retrieveFull(guid);
+        if (asset == null) {
+            throw new NotFoundException("No asset found with GUID: " + guid, "ATLAN_JAVA_CLIENT-404-001", 404, null);
+        } else if (asset instanceof TableauDashboard) {
+            return (TableauDashboard) asset;
         } else {
             throw new NotFoundException(
-                    "Entity with GUID " + guid + " is not a TableauDashboard.", "ATLAN_JAVA_CLIENT-404-002", 404, null);
+                    "Asset with GUID " + guid + " is not a TableauDashboard.", "ATLAN_JAVA_CLIENT-404-002", 404, null);
         }
     }
 
@@ -150,9 +149,9 @@ public class TableauDashboard extends Tableau {
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the TableauDashboard does not exist
      */
     public static TableauDashboard retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        Entity entity = Entity.retrieveFull(TYPE_NAME, qualifiedName);
-        if (entity instanceof TableauDashboard) {
-            return (TableauDashboard) entity;
+        Asset asset = Asset.retrieveFull(TYPE_NAME, qualifiedName);
+        if (asset instanceof TableauDashboard) {
+            return (TableauDashboard) asset;
         } else {
             throw new NotFoundException(
                     "No TableauDashboard found with qualifiedName: " + qualifiedName,
