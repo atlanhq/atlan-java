@@ -92,9 +92,9 @@ public class DbtCrawler extends AbstractCrawler {
                 .parameter(NameValuePair.of("api-credential-guid", "{{credentialGuid}}"));
         try {
             argsBuilder = argsBuilder.parameter(
-                    NameValuePair.of("include-filter", Serde.mapper.writeValueAsString(toInclude)));
+                    NameValuePair.of("include-filter", Serde.allInclusiveMapper.writeValueAsString(toInclude)));
             argsBuilder = argsBuilder.parameter(
-                    NameValuePair.of("exclude-filter", Serde.mapper.writeValueAsString(toExclude)));
+                    NameValuePair.of("exclude-filter", Serde.allInclusiveMapper.writeValueAsString(toExclude)));
         } catch (JsonProcessingException e) {
             throw new InvalidRequestException(
                     "Unable to translate the provided include/exclude asset filters into JSON.",
