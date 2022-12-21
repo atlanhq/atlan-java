@@ -19,6 +19,9 @@ public class WorkflowSearchResultStatus extends AtlanObject {
     Object artifactRepositoryRef;
 
     @JsonIgnore
+    String compressedNodes;
+
+    @JsonIgnore
     Object nodes;
 
     @JsonIgnore
