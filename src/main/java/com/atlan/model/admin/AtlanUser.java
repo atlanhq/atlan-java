@@ -4,6 +4,7 @@ package com.atlan.model.admin;
 
 import com.atlan.api.UsersEndpoint;
 import com.atlan.exception.AtlanException;
+import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.core.AtlanObject;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -120,8 +121,7 @@ public class AtlanUser extends AtlanObject {
      */
     public UserMinimalResponse update() throws AtlanException {
         if (this.id == null || this.id.length() == 0) {
-            throw new InvalidRequestException(
-                    "An id must be provided to update the user.", "id", "ATLAN_JAVA_CLIENT-400-402", 400, null);
+            throw new InvalidRequestException(ErrorCode.MISSING_USER_ID);
         }
         return UsersEndpoint.updateUser(this.id, this);
     }
@@ -144,12 +144,7 @@ public class AtlanUser extends AtlanObject {
      */
     public void addToGroups(List<String> groupIds) throws AtlanException {
         if (this.id == null || this.id.length() == 0) {
-            throw new InvalidRequestException(
-                    "An id must be provided to add the user into groups.",
-                    "id",
-                    "ATLAN_JAVA_CLIENT-400-403",
-                    400,
-                    null);
+            throw new InvalidRequestException(ErrorCode.MISSING_USER_ID);
         }
         UsersEndpoint.addToGroups(this.id, groupIds);
     }
@@ -162,12 +157,7 @@ public class AtlanUser extends AtlanObject {
      */
     public GroupResponse fetchGroups() throws AtlanException {
         if (this.id == null || this.id.length() == 0) {
-            throw new InvalidRequestException(
-                    "An id must be provided to retrieve a user's group membership.",
-                    "id",
-                    "ATLAN_JAVA_CLIENT-400-404",
-                    400,
-                    null);
+            throw new InvalidRequestException(ErrorCode.MISSING_USER_ID);
         }
         return UsersEndpoint.getGroups(this.id);
     }

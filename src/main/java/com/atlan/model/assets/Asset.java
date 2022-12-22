@@ -6,6 +6,7 @@ import com.atlan.api.EntityBulkEndpoint;
 import com.atlan.api.EntityGuidEndpoint;
 import com.atlan.api.EntityUniqueAttributesEndpoint;
 import com.atlan.exception.AtlanException;
+import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.core.*;
 import com.atlan.model.enums.*;
@@ -1010,12 +1011,7 @@ public abstract class Asset extends Reference {
                 if (term.isValidReferenceByGuid()) {
                     removeGuids.add(term.getGuid());
                 } else {
-                    throw new InvalidRequestException(
-                            "Term provided for removal did not specify its GUID",
-                            "terms",
-                            "ATLAN_JAVA_CLIENT-400-301",
-                            400,
-                            null);
+                    throw new InvalidRequestException(ErrorCode.MISSING_TERM_GUID);
                 }
             }
             for (GlossaryTerm term : existingTerms) {

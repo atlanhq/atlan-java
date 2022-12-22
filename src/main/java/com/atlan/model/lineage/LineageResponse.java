@@ -2,6 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.lineage;
 
+import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.assets.Asset;
 import com.atlan.model.enums.AtlanLineageDirection;
@@ -86,12 +87,7 @@ public class LineageResponse extends ApiResource {
                 if (relation.isFullLink()) {
                     graph.addRelation(relation);
                 } else {
-                    throw new InvalidRequestException(
-                            "Lineage was retrieved using hideProcess = false. We do not provide a graph view in this case.",
-                            "hideProcess",
-                            "ATLAN-JAVA-CLIENT-400-050",
-                            400,
-                            null);
+                    throw new InvalidRequestException(ErrorCode.NO_GRAPH_WITH_PROCESS);
                 }
             }
         }

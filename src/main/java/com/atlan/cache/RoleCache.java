@@ -4,6 +4,7 @@ package com.atlan.cache;
 
 import com.atlan.api.RolesEndpoint;
 import com.atlan.exception.AtlanException;
+import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.admin.AtlanRole;
@@ -59,14 +60,12 @@ public class RoleCache {
                 refreshCache();
                 roleId = mapNameToId.get(name);
                 if (roleId == null) {
-                    throw new NotFoundException(
-                            "Role with name '" + name + "' does not exist.", "ATLAN_JAVA_404_703", null);
+                    throw new NotFoundException(ErrorCode.ROLE_NOT_FOUND_BY_NAME, name);
                 }
             }
             return roleId;
         } else {
-            throw new InvalidRequestException(
-                    "No name was provided when attempting to retrieve a role.", "name", "ATLAN_JAVA_400_703", null);
+            throw new InvalidRequestException(ErrorCode.MISSING_ROLE_NAME);
         }
     }
 
@@ -86,14 +85,12 @@ public class RoleCache {
                 refreshCache();
                 roleName = mapIdToName.get(id);
                 if (roleName == null) {
-                    throw new NotFoundException(
-                            "Role with ID '" + id + "' does not exist.", "ATLAN_JAVA_404_704", null);
+                    throw new NotFoundException(ErrorCode.ROLE_NOT_FOUND_BY_ID, id);
                 }
             }
             return roleName;
         } else {
-            throw new InvalidRequestException(
-                    "No ID was provided when attempting to retrieve a role.", "id", "ATLAN_JAVA_400_704", null);
+            throw new InvalidRequestException(ErrorCode.MISSING_ROLE_ID);
         }
     }
 }

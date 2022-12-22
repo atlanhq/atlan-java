@@ -4,6 +4,7 @@ package com.atlan.api;
 
 import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
+import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.enums.AtlanTypeCategory;
 import com.atlan.model.typedefs.*;
@@ -57,11 +58,8 @@ public class TypeDefsEndpoint {
                     break;
                 default:
                     throw new InvalidRequestException(
-                            "Unable to create new type definitions of category: " + typeDef.getCategory(),
-                            "category",
-                            "ATLAN-CLIENT-400-010",
-                            400,
-                            null);
+                            ErrorCode.UNABLE_TO_CREATE_TYPEDEF_CATEGORY,
+                            typeDef.getCategory().getValue());
             }
             String url = String.format("%s%s", Atlan.getBaseUrl(), endpoint);
             return ApiResource.request(ApiResource.RequestMethod.POST, url, wrapper, TypeDefResponse.class, null);
@@ -88,13 +86,13 @@ public class TypeDefsEndpoint {
                 case CUSTOM_METADATA:
                     wrapper.setCustomMetadataDefs(List.of((CustomMetadataDef) typeDef));
                     break;
+                case ENUM:
+                    wrapper.setEnumDefs(List.of((EnumDef) typeDef));
+                    break;
                 default:
                     throw new InvalidRequestException(
-                            "Unable to update type definitions of category: " + typeDef.getCategory(),
-                            "category",
-                            "ATLAN-CLIENT-400-011",
-                            400,
-                            null);
+                            ErrorCode.UNABLE_TO_CREATE_TYPEDEF_CATEGORY,
+                            typeDef.getCategory().getValue());
             }
             String url = String.format("%s%s", Atlan.getBaseUrl(), endpoint);
             return ApiResource.request(ApiResource.RequestMethod.PUT, url, wrapper, TypeDefResponse.class, null);

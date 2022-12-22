@@ -8,6 +8,14 @@ package com.atlan.exception;
 public class NotFoundException extends AtlanException {
     private static final long serialVersionUID = 2L;
 
+    public NotFoundException(ErrorCode error, String... params) {
+        super(error, null, params);
+    }
+
+    public NotFoundException(ErrorCode error, Throwable e, String... params) {
+        super(error, e, params);
+    }
+
     public NotFoundException(String message, String code, Throwable e) {
         this(message, code, 404, e);
     }

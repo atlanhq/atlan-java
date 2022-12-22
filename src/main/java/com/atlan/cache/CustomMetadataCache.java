@@ -3,10 +3,7 @@
 package com.atlan.cache;
 
 import com.atlan.api.TypeDefsEndpoint;
-import com.atlan.exception.AtlanException;
-import com.atlan.exception.InvalidRequestException;
-import com.atlan.exception.LogicException;
-import com.atlan.exception.NotFoundException;
+import com.atlan.exception.*;
 import com.atlan.model.core.CustomMetadataAttributes;
 import com.atlan.model.enums.AtlanTypeCategory;
 import com.atlan.model.typedefs.AttributeDef;
@@ -67,10 +64,9 @@ public class CustomMetadataCache {
                             mapAttrNameToId.get(typeId).put(attributeDef.getDisplayName(), attributeDef.getName());
                     if (existingId != null) {
                         throw new LogicException(
-                                "Multiple custom attributes with exactly the same name ("
-                                        + attributeDef.getDisplayName() + ") found for: " + bmDef.getDisplayName(),
-                                "ATLAN-JAVA-CLIENT-500-100",
-                                500);
+                                ErrorCode.DUPLICATE_CUSTOM_ATTRIBUTES,
+                                attributeDef.getDisplayName(),
+                                bmDef.getDisplayName());
                     }
                 }
             }
@@ -94,17 +90,12 @@ public class CustomMetadataCache {
                 refreshCache();
                 cmId = mapNameToId.get(name);
                 if (cmId == null) {
-                    throw new NotFoundException(
-                            "Custom metadata with name '" + name + "' does not exist.", "ATLAN_JAVA_404_704", null);
+                    throw new NotFoundException(ErrorCode.CM_NOT_FOUND_BY_NAME, name);
                 }
             }
             return cmId;
         } else {
-            throw new InvalidRequestException(
-                    "No name was provided when attempting to retrieve custom metadata.",
-                    "name",
-                    "ATLAN_JAVA_400_704",
-                    null);
+            throw new InvalidRequestException(ErrorCode.MISSING_CM_NAME);
         }
     }
 
@@ -125,17 +116,12 @@ public class CustomMetadataCache {
                 refreshCache();
                 cmName = mapIdToName.get(id);
                 if (cmName == null) {
-                    throw new NotFoundException(
-                            "Custom metadata with ID '" + id + "' does not exist.", "ATLAN_JAVA_404_705", null);
+                    throw new NotFoundException(ErrorCode.CM_NOT_FOUND_BY_ID, id);
                 }
             }
             return cmName;
         } else {
-            throw new InvalidRequestException(
-                    "No ID was provided when attempting to retrieve custom metadata.",
-                    "id",
-                    "ATLAN_JAVA_400_705",
-                    null);
+            throw new InvalidRequestException(ErrorCode.MISSING_CM_ID);
         }
     }
 
@@ -289,36 +275,21 @@ public class CustomMetadataCache {
                     refreshCache();
                     subMap = mapAttrNameToId.get(setId);
                     if (subMap == null) {
-                        throw new NotFoundException(
-                                "Custom metadata '" + setId + "' does not have any attributes.",
-                                "ATLAN_JAVA_404_707",
-                                null);
+                        throw new NotFoundException(ErrorCode.CM_NO_ATTRIBUTES, setId);
                     }
                 } else {
                     return attrId;
                 }
                 attrId = subMap.get(attributeName);
                 if (attrId == null) {
-                    throw new NotFoundException(
-                            "Custom metadata property with name '" + attributeName + "' does not exist in '" + setId
-                                    + "'.",
-                            "ATLAN_JAVA_404_708",
-                            null);
+                    throw new NotFoundException(ErrorCode.CM_ATTR_NOT_FOUND_BY_NAME, attributeName, setId);
                 }
                 return attrId;
             } else {
-                throw new InvalidRequestException(
-                        "No name was provided when attempting to retrieve custom metadata property.",
-                        "attributeName",
-                        "ATLAN_JAVA_400_709",
-                        null);
+                throw new InvalidRequestException(ErrorCode.MISSING_CM_ATTR_NAME);
             }
         } else {
-            throw new InvalidRequestException(
-                    "No ID was provided when attempting to retrieve custom metadata.",
-                    "setId",
-                    "ATLAN_JAVA_400_710",
-                    null);
+            throw new InvalidRequestException(ErrorCode.MISSING_CM_ID);
         }
     }
 
@@ -345,35 +316,21 @@ public class CustomMetadataCache {
                     refreshCache();
                     subMap = mapAttrIdToName.get(setId);
                     if (subMap == null) {
-                        throw new NotFoundException(
-                                "Custom metadata '" + setId + "' does not have any attributes.",
-                                "ATLAN_JAVA_404_717",
-                                null);
+                        throw new NotFoundException(ErrorCode.CM_NO_ATTRIBUTES, setId);
                     }
                 } else {
                     return attrName;
                 }
                 attrName = subMap.get(attributeId);
                 if (attrName == null) {
-                    throw new NotFoundException(
-                            "Custom metadata property with ID '" + attributeId + "' does not exist in '" + setId + "'.",
-                            "ATLAN_JAVA_404_718",
-                            null);
+                    throw new NotFoundException(ErrorCode.CM_ATTR_NOT_FOUND_BY_ID, attributeId, setId);
                 }
                 return attrName;
             } else {
-                throw new InvalidRequestException(
-                        "No ID was provided when attempting to retrieve custom metadata property.",
-                        "attributeId",
-                        "ATLAN_JAVA_400_719",
-                        null);
+                throw new InvalidRequestException(ErrorCode.MISSING_CM_ATTR_ID);
             }
         } else {
-            throw new InvalidRequestException(
-                    "No ID was provided when attempting to retrieve custom metadata.",
-                    "setId",
-                    "ATLAN_JAVA_400_710",
-                    null);
+            throw new InvalidRequestException(ErrorCode.MISSING_CM_ID);
         }
     }
 
@@ -530,10 +487,7 @@ public class CustomMetadataCache {
                     builder.attribute(cmAttrName, primitive);
                 }
             } else {
-                throw new LogicException(
-                        "Unable to deserialize non-primitive custom metadata value: " + jsonValue,
-                        "ATLAN-CLIENT-CM-500-002",
-                        500);
+                throw new LogicException(ErrorCode.UNABLE_TO_DESERIALIZE, jsonValue.toString());
             }
         }
         return builder.build();
@@ -591,10 +545,7 @@ public class CustomMetadataCache {
                         builderMap.get(cmName).attribute(cmAttrName, primitive);
                     }
                 } else {
-                    throw new LogicException(
-                            "Unable to deserialize non-primitive custom metadata value: " + jsonValue,
-                            "ATLAN-CLIENT-CM-500-003",
-                            500);
+                    throw new LogicException(ErrorCode.UNABLE_TO_DESERIALIZE, jsonValue.toString());
                 }
             }
         }
@@ -623,16 +574,10 @@ public class CustomMetadataCache {
             } else if (jsonValue.isNull()) {
                 return null;
             } else {
-                throw new LogicException(
-                        "Unable to deserialize unrecognized primitive custom metadata value: " + jsonValue,
-                        "ATLAN-CLIENT-CM-500-001",
-                        500);
+                throw new LogicException(ErrorCode.UNABLE_TO_DESERIALIZE, jsonValue.toString());
             }
         } else {
-            throw new LogicException(
-                    "Unable to deserialize non-primitive custom metadata value:" + jsonValue,
-                    "ATLAN-CLIENT-CM-500-002",
-                    500);
+            throw new LogicException(ErrorCode.UNABLE_TO_DESERIALIZE, jsonValue.toString());
         }
     }
 }

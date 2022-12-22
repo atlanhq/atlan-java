@@ -4,6 +4,7 @@ package com.atlan.model.admin;
 
 import com.atlan.api.GroupsEndpoint;
 import com.atlan.exception.AtlanException;
+import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.core.AtlanObject;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -102,8 +103,7 @@ public class AtlanGroup extends AtlanObject {
      */
     public void update() throws AtlanException {
         if (this.id == null || this.id.length() == 0) {
-            throw new InvalidRequestException(
-                    "An id must be provided to update the group.", "id", "ATLAN_JAVA_CLIENT-400-401", 400, null);
+            throw new InvalidRequestException(ErrorCode.MISSING_GROUP_ID);
         }
         GroupsEndpoint.updateGroup(this.id, this);
     }

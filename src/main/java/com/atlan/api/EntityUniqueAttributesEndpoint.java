@@ -148,32 +148,23 @@ public class EntityUniqueAttributesEndpoint {
         // Note: here we need to directly translate to an ID because it is a path
         // parameter in the API call
         String classificationId = ClassificationCache.getIdForName(classificationName);
-        if (classificationId != null) {
-            String url = String.format(
-                    "%s%s",
-                    Atlan.getBaseUrl(),
-                    String.format(
-                            "%s%s/classification/%s?attr:qualifiedName=%s",
-                            endpoint, typeName, classificationId, ApiResource.urlEncode(qualifiedName)));
-            try {
-                ApiResource.request(ApiResource.RequestMethod.DELETE, url, "", null, null);
-            } catch (InvalidRequestException e) {
-                if (idempotent && e.getMessage().equals("ATLAS-400-00-06D")) {
-                    log.debug(
-                            "Attempted to remove classification '{}' from asset that does not have the classification, ignoring: {}",
-                            classificationName,
-                            qualifiedName);
-                } else {
-                    throw e;
-                }
+        String url = String.format(
+                "%s%s",
+                Atlan.getBaseUrl(),
+                String.format(
+                        "%s%s/classification/%s?attr:qualifiedName=%s",
+                        endpoint, typeName, classificationId, ApiResource.urlEncode(qualifiedName)));
+        try {
+            ApiResource.request(ApiResource.RequestMethod.DELETE, url, "", null, null);
+        } catch (InvalidRequestException e) {
+            if (idempotent && e.getMessage().equals("ATLAS-400-00-06D")) {
+                log.debug(
+                        "Attempted to remove classification '{}' from asset that does not have the classification, ignoring: {}",
+                        classificationName,
+                        qualifiedName);
+            } else {
+                throw e;
             }
-        } else {
-            throw new InvalidRequestException(
-                    "No classification found with the provided name: " + classificationName,
-                    "classificationName",
-                    "ATLAN-JAVA-CLIENT-400-020",
-                    400,
-                    null);
         }
     }
 

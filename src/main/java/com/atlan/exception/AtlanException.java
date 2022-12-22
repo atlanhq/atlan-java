@@ -23,6 +23,18 @@ public abstract class AtlanException extends Exception {
     private String code;
     private Integer statusCode;
 
+    protected AtlanException(ErrorCode error, Throwable e) {
+        super(error.getMessageDefinition().getErrorMessage(), e);
+        this.code = error.getMessageDefinition().getErrorId();
+        this.statusCode = error.getMessageDefinition().getHttpErrorCode();
+    }
+
+    protected AtlanException(ErrorCode error, Throwable e, String... params) {
+        super(error.getMessageDefinition().getErrorMessage(params), e);
+        this.code = error.getMessageDefinition().getErrorId();
+        this.statusCode = error.getMessageDefinition().getHttpErrorCode();
+    }
+
     protected AtlanException(String message, String code, Integer statusCode) {
         this(message, code, statusCode, null);
     }

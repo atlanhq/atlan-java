@@ -4,6 +4,7 @@ package com.atlan.model.packages;
 
 import com.atlan.cache.RoleCache;
 import com.atlan.exception.AtlanException;
+import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.admin.PackageParameter;
 import com.atlan.model.assets.Connection;
@@ -165,12 +166,7 @@ public class SnowflakeCrawler extends AbstractCrawler {
                         .build());
             }
         } catch (JsonProcessingException e) {
-            throw new InvalidRequestException(
-                    "Unable to translate the provided include/exclude asset filters into JSON.",
-                    "includeAssets/excludeAssets",
-                    "ATLAN_JAVA_CLIENT-400-600",
-                    400,
-                    e);
+            throw new InvalidRequestException(ErrorCode.UNABLE_TO_TRANSLATE_FILTERS, e);
         }
 
         String atlanName = PREFIX + "-default-snowflake-" + epoch;

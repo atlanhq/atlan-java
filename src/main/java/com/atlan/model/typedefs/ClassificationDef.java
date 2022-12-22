@@ -5,7 +5,6 @@ package com.atlan.model.typedefs;
 import com.atlan.api.TypeDefsEndpoint;
 import com.atlan.cache.ClassificationCache;
 import com.atlan.exception.AtlanException;
-import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.enums.AtlanClassificationColor;
 import com.atlan.model.enums.AtlanTypeCategory;
 import java.util.List;
@@ -81,15 +80,6 @@ public class ClassificationDef extends TypeDef {
      */
     public static void purge(String displayName) throws AtlanException {
         String internalName = ClassificationCache.getIdForName(displayName);
-        if (internalName != null) {
-            TypeDefsEndpoint.purgeTypeDef(internalName);
-        } else {
-            throw new InvalidRequestException(
-                    "Unable to find a classification with the name: " + displayName,
-                    "name",
-                    "ATLAN-CLIENT-400-011",
-                    400,
-                    null);
-        }
+        TypeDefsEndpoint.purgeTypeDef(internalName);
     }
 }

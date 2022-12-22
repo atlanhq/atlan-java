@@ -9,6 +9,10 @@ package com.atlan.exception;
 public class LogicException extends AtlanException {
     private static final long serialVersionUID = 2L;
 
+    public LogicException(ErrorCode error, String... params) {
+        super(error, null, params);
+    }
+
     public LogicException(String message, String code) {
         this(message, code, 500);
     }

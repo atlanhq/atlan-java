@@ -4,6 +4,7 @@ package com.atlan.model.packages;
 
 import com.atlan.cache.RoleCache;
 import com.atlan.exception.AtlanException;
+import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.admin.PackageParameter;
 import com.atlan.model.assets.Connection;
@@ -96,12 +97,7 @@ public class DbtCrawler extends AbstractCrawler {
             argsBuilder = argsBuilder.parameter(
                     NameValuePair.of("exclude-filter", Serde.allInclusiveMapper.writeValueAsString(toExclude)));
         } catch (JsonProcessingException e) {
-            throw new InvalidRequestException(
-                    "Unable to translate the provided include/exclude asset filters into JSON.",
-                    "includeAssets/excludeAssets",
-                    "ATLAN_JAVA_CLIENT-400-601",
-                    400,
-                    e);
+            throw new InvalidRequestException(ErrorCode.UNABLE_TO_TRANSLATE_FILTERS, e);
         }
         argsBuilder = argsBuilder
                 .parameter(NameValuePair.of("include-filter-core", "*"))
