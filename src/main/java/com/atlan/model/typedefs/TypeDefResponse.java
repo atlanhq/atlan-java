@@ -17,7 +17,7 @@ public class TypeDefResponse extends ApiResource {
     private static final long serialVersionUID = 2L;
 
     /** List of enumeration type definitions. */
-    List<TypeDef> enumDefs;
+    List<EnumDef> enumDefs;
 
     /** List of struct type definitions. */
     List<TypeDef> structDefs;

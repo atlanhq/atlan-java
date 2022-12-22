@@ -40,7 +40,7 @@ public class CustomMetadataDef extends TypeDef {
      * but probably not useful for anything!
      *
      * @param displayName the human-readable name for the custom metadata set
-     * @return the minimal request necessary to create the custom metadata typedef
+     * @return the minimal request necessary to create the custom metadata typedef, as a builder
      */
     public static CustomMetadataDefBuilder<?, ?> creator(String displayName) {
         return CustomMetadataDef.builder().name(displayName).displayName(displayName);
