@@ -1,0 +1,138 @@
+/* SPDX-License-Identifier: Apache-2.0 */
+/* Copyright 2022 Atlan Pte. Ltd. */
+package com.atlan.model.typedefs;
+
+import com.atlan.api.TypeDefsEndpoint;
+import com.atlan.exception.AtlanException;
+import com.atlan.model.core.AtlanObject;
+import com.atlan.model.enums.AtlanTypeCategory;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
+import lombok.extern.jackson.Jacksonized;
+
+/**
+ * Structural definition of an enumeration.
+ * Note that unlike other type definitions, enumerations do NOT use hashed internal string IDs. Their
+ * name is precisely the same as the name viewable in the UI.
+ */
+@Getter
+@Setter
+@Jacksonized
+@SuperBuilder(toBuilder = true)
+@EqualsAndHashCode(callSuper = true)
+public class EnumDef extends TypeDef {
+    private static final long serialVersionUID = 2L;
+
+    /** Fixed category for classification typedefs. */
+    @Getter(onMethod_ = {@Override})
+    @Setter(onMethod_ = {@Override})
+    @Builder.Default
+    AtlanTypeCategory category = AtlanTypeCategory.ENUM;
+
+    /** Individual valid values for the enumeration. */
+    @Singular
+    List<ElementDef> elementDefs;
+
+    /**
+     * Translate the element definitions in this enumeration into a simple list of strings.
+     *
+     * @return list of valid values for the enumeration
+     */
+    @JsonIgnore
+    public List<String> getValidValues() {
+        if (elementDefs != null && !elementDefs.isEmpty()) {
+            return elementDefs.stream().map(ElementDef::getValue).collect(Collectors.toList());
+        } else {
+            return Collections.emptyList();
+        }
+    }
+
+    /**
+     * Builds the minimal object necessary to create an enumeration definition.
+     *
+     * @param displayName the human-readable name for the enumeration
+     * @param values the list of valid values (as strings) for the enumeration
+     * @return the minimal request necessary to create the enumeration typedef, as a builder
+     */
+    public static EnumDefBuilder<?, ?> creator(String displayName, List<String> values) {
+        return EnumDef.builder().name(displayName).elementDefs(ElementDef.from(values));
+    }
+
+    /**
+     * Create this enumeration definition in Atlan.
+     * @return the result of the creation, or null if the creation failed
+     * @throws AtlanException on any API communication issues
+     */
+    public EnumDef create() throws AtlanException {
+        TypeDefResponse response = TypeDefsEndpoint.createTypeDef(this);
+        if (response != null && !response.getEnumDefs().isEmpty()) {
+            return response.getEnumDefs().get(0);
+        }
+        return null;
+    }
+
+    /**
+     * Hard-deletes (purges) an enumeration by its human-readable name. This operation is irreversible.
+     * If there are any existing enumeration instances, this operation will fail.
+     *
+     * @param displayName human-readable name of the enumeration
+     * @throws AtlanException on any error during the API invocation
+     */
+    public static void purge(String displayName) throws AtlanException {
+        TypeDefsEndpoint.purgeTypeDef(displayName);
+    }
+
+    /**
+     * Structure for definition of a valid value in an enumeration.
+     */
+    @Getter
+    @Setter
+    @Jacksonized
+    @SuperBuilder
+    @EqualsAndHashCode(callSuper = false)
+    public static class ElementDef extends AtlanObject {
+
+        /** Value of the element (the valid value). */
+        String value;
+
+        /** (Optional) Description of the element. */
+        String description;
+
+        /** Position of the element within the list of valid values. */
+        Integer ordinal;
+
+        /**
+         * Build a valid value definition.
+         *
+         * @param ordinal position of the valid value definition in the overall list
+         * @param value of the valid value
+         * @return the valid value definition
+         */
+        public static ElementDef of(int ordinal, String value) {
+            return ElementDef.builder().ordinal(ordinal).value(value).build();
+        }
+
+        /**
+         * Build a list of valid values from the provided list of strings.
+         *
+         * @param values to enumerate as valid values
+         * @return a list of the valid values
+         */
+        protected static List<ElementDef> from(List<String> values) {
+            if (values != null && !values.isEmpty()) {
+                List<ElementDef> elements = new ArrayList<>();
+                for (int i = 0; i < values.size(); i++) {
+                    elements.add(ElementDef.of(i, values.get(i)));
+                }
+                return Collections.unmodifiableList(elements);
+            } else {
+                return Collections.emptyList();
+            }
+        }
+    }
+}

@@ -20,6 +20,7 @@ import lombok.experimental.SuperBuilder;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "category")
 @JsonSubTypes({
     @JsonSubTypes.Type(value = ClassificationDef.class, name = "CLASSIFICATION"),
+    @JsonSubTypes.Type(value = EnumDef.class, name = "ENUM"),
     @JsonSubTypes.Type(value = CustomMetadataDef.class, name = "BUSINESS_METADATA"),
     @JsonSubTypes.Type(value = EntityDef.class, name = "ENTITY"),
 })

@@ -47,19 +47,16 @@ public class ClassificationDef extends TypeDef {
 
     /**
      * Builds the minimal object necessary to create a classification definition.
-     * To continue adding to the object, call {@link #toBuilder()} on the result and continue calling additional
-     * methods to add metadata followed by {@link ClassificationDefBuilder#build()}.
      *
      * @param displayName the human-readable name for the classification
      * @param color the color to use for the classification
-     * @return the minimal request necessary to create the classification typedef
+     * @return the minimal request necessary to create the classification typedef, as a builder
      */
-    public static ClassificationDef toCreate(String displayName, AtlanClassificationColor color) {
+    public static ClassificationDefBuilder<?, ?> creator(String displayName, AtlanClassificationColor color) {
         return ClassificationDef.builder()
                 .name(displayName)
                 .displayName(displayName)
-                .options(ClassificationOptions.of(color))
-                .build();
+                .options(ClassificationOptions.of(color));
     }
 
     /**

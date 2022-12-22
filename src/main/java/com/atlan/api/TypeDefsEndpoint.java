@@ -36,7 +36,7 @@ public class TypeDefsEndpoint {
 
     /**
      * Create a new type definition in Atlan.
-     * Note: only custom metadata and classification type definitions are currently supported.
+     * Note: only custom metadata, enumerations, and classification type definitions are currently supported.
      *
      * @param typeDef to create
      * @return the resulting type definition that was created
@@ -51,6 +51,9 @@ public class TypeDefsEndpoint {
                     break;
                 case CUSTOM_METADATA:
                     wrapper.setCustomMetadataDefs(List.of((CustomMetadataDef) typeDef));
+                    break;
+                case ENUM:
+                    wrapper.setEnumDefs(List.of((EnumDef) typeDef));
                     break;
                 default:
                     throw new InvalidRequestException(

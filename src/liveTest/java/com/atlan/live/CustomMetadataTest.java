@@ -18,10 +18,7 @@ import com.atlan.model.enums.AtlanCustomAttributePrimitiveType;
 import com.atlan.model.enums.AtlanTypeCategory;
 import com.atlan.model.enums.AuditActionType;
 import com.atlan.model.search.*;
-import com.atlan.model.typedefs.AttributeDef;
-import com.atlan.model.typedefs.AttributeDefOptions;
-import com.atlan.model.typedefs.CustomMetadataDef;
-import com.atlan.model.typedefs.CustomMetadataOptions;
+import com.atlan.model.typedefs.*;
 import com.atlan.net.HttpClient;
 import com.atlan.util.QueryFactory;
 import java.time.Instant;
@@ -61,7 +58,10 @@ public class CustomMetadataTest extends AtlanLiveTest {
 
     private static final String CM_ATTR_QUALITY_COUNT = "Count"; // integer
     private static final String CM_ATTR_QUALITY_SQL = "SQL"; // sql
-    // TODO: private static final String CM_ATTR_QUALITY_TYPE = "Type"; // options
+    private static final String CM_ATTR_QUALITY_TYPE = "Type"; // options
+    private static final String CM_ENUM_DQ_TYPE = "Data Quality Type";
+    private static final List<String> DQ_TYPE_LIST =
+            List.of("Accuracy", "Completeness", "Consistency", "Timeliness", "Validity", "Uniqueness");
 
     private static final String GROUP_NAME1 = PREFIX + "1";
     private static final String GROUP_NAME2 = PREFIX + "2";
@@ -202,10 +202,22 @@ public class CustomMetadataTest extends AtlanLiveTest {
 
     @Test(groups = {"create.cm.dq"})
     void createCustomMetadataDQ() throws AtlanException {
+        EnumDef enumDef = EnumDef.creator(CM_ENUM_DQ_TYPE, DQ_TYPE_LIST).build();
+        EnumDef resp = enumDef.create();
+        assertNotNull(resp);
+        assertEquals(resp.getCategory(), AtlanTypeCategory.ENUM);
+        assertNotNull(resp.getName());
+        assertEquals(resp.getName(), CM_ENUM_DQ_TYPE);
+        assertNotNull(resp.getGuid());
+        assertNotNull(resp.getElementDefs());
+        assertEquals(resp.getElementDefs().size(), DQ_TYPE_LIST.size());
+
         CustomMetadataDef customMetadataDef = CustomMetadataDef.creator(CM_QUALITY)
                 .attributeDef(
                         AttributeDef.of(CM_ATTR_QUALITY_COUNT, AtlanCustomAttributePrimitiveType.INTEGER, null, false))
                 .attributeDef(AttributeDef.of(CM_ATTR_QUALITY_SQL, AtlanCustomAttributePrimitiveType.SQL, null, false))
+                .attributeDef(AttributeDef.of(
+                        CM_ATTR_QUALITY_TYPE, AtlanCustomAttributePrimitiveType.OPTIONS, CM_ENUM_DQ_TYPE, false))
                 .options(CustomMetadataOptions.builder().emoji("\uD83D\uDD16").build())
                 .build();
         CustomMetadataDef response = customMetadataDef.create();
@@ -217,7 +229,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
         assertEquals(response.getDisplayName(), CM_QUALITY);
         List<AttributeDef> attributes = response.getAttributeDefs();
         assertNotNull(attributes);
-        assertEquals(attributes.size(), 2);
+        assertEquals(attributes.size(), 3);
         AttributeDef one = attributes.get(0);
         assertNotNull(one);
         assertEquals(one.getDisplayName(), CM_ATTR_QUALITY_COUNT);
@@ -235,6 +247,16 @@ public class CustomMetadataTest extends AtlanLiveTest {
         assertNotNull(one.getOptions());
         assertFalse(one.getOptions().getMultiValueSelect());
         assertEquals(one.getOptions().getCustomType(), AtlanCustomAttributePrimitiveType.SQL.getValue());
+        one = attributes.get(2);
+        assertEquals(one.getDisplayName(), CM_ATTR_QUALITY_TYPE);
+        assertNotNull(one.getName());
+        assertNotEquals(one.getName(), CM_ATTR_QUALITY_TYPE);
+        // Note: for enumerations, the typeName will be the name of the enumeration
+        assertEquals(one.getTypeName(), CM_ENUM_DQ_TYPE);
+        assertNotNull(one.getOptions());
+        assertFalse(one.getOptions().getMultiValueSelect());
+        assertEquals(one.getOptions().getPrimitiveType(), AtlanCustomAttributePrimitiveType.OPTIONS);
+        assertEquals(one.getOptions().getEnumType(), CM_ENUM_DQ_TYPE);
     }
 
     @Test(groups = {"create.term"})
@@ -301,6 +323,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
         CustomMetadataAttributes cm = CustomMetadataAttributes.builder()
                 .attribute(CM_ATTR_QUALITY_COUNT, 42)
                 .attribute(CM_ATTR_QUALITY_SQL, "SELECT * from SOMEWHERE;")
+                .attribute(CM_ATTR_QUALITY_TYPE, "Completeness")
                 .build();
         GlossaryTerm.updateCustomMetadataAttributes(term.getGuid(), CM_QUALITY, cm);
         GlossaryTerm t = GlossaryTerm.retrieveByGuid(term.getGuid());
@@ -723,6 +746,14 @@ public class CustomMetadataTest extends AtlanLiveTest {
         CustomMetadataDef.purge(CM_QUALITY);
     }
 
+    @Test(
+            groups = {"purge.cm.enum"},
+            dependsOnGroups = {"purge.cm"},
+            alwaysRun = true)
+    void purgeCustomMetadataEnums() throws AtlanException {
+        EnumDef.purge(CM_ENUM_DQ_TYPE);
+    }
+
     private void validateRACIAttributes(CustomMetadataAttributes cma) {
         assertNotNull(cma);
         validateRACIAttributes(cma.getAttributes());
@@ -762,9 +793,10 @@ public class CustomMetadataTest extends AtlanLiveTest {
 
     private void validateDQAttributes(Map<String, Object> attributes) {
         assertNotNull(attributes);
-        assertEquals(attributes.size(), 2);
+        assertEquals(attributes.size(), 3);
         assertEquals(attributes.get(CM_ATTR_QUALITY_COUNT), 42L);
         assertEquals(attributes.get(CM_ATTR_QUALITY_SQL), "SELECT * from SOMEWHERE;");
+        assertEquals(attributes.get(CM_ATTR_QUALITY_TYPE), "Completeness");
     }
 
     private AttributeDef validateRACIStructure(List<AttributeDef> list, int totalExpected) {
@@ -911,9 +943,10 @@ public class CustomMetadataTest extends AtlanLiveTest {
         cmad = (CustomMetadataAttributesAuditDetail) detail;
         assertEquals(cmad.getTypeName(), CM_QUALITY);
         attributes = cmad.getAttributes();
-        assertEquals(attributes.size(), 2);
+        assertEquals(attributes.size(), 3);
         assertNull(attributes.get(CM_ATTR_QUALITY_SQL));
         assertNull(attributes.get(CM_ATTR_QUALITY_COUNT));
+        assertNull(attributes.get(CM_ATTR_QUALITY_TYPE));
 
         one = audits.get(3);
         assertNotNull(one);

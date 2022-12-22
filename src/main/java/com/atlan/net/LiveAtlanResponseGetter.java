@@ -128,26 +128,24 @@ public class LiveAtlanResponseGetter implements AtlanResponseGetter {
 
         switch (response.code()) {
             case 400:
-                exception = new InvalidRequestException(
-                        error.getErrorMessage(), null, error.getErrorCode(), response.code(), null);
+                exception = new InvalidRequestException(error.getErrorMessage(), null, error.getErrorCode(), null);
                 break;
             case 404:
-                exception = new NotFoundException(error.getErrorMessage(), error.getErrorCode(), response.code(), null);
+                exception = new NotFoundException(error.getErrorMessage(), error.getErrorCode(), null);
                 break;
             case 401:
-                exception = new AuthenticationException(error.getErrorMessage(), error.getErrorCode(), response.code());
+                exception = new AuthenticationException(error.getErrorMessage(), error.getErrorCode());
                 break;
             case 403:
-                exception = new PermissionException(error.getErrorMessage(), error.getErrorCode(), response.code());
+                exception = new PermissionException(error.getErrorMessage(), error.getErrorCode());
                 break;
             case 409:
-                exception = new ConflictException(error.getErrorMessage(), error.getErrorCode(), response.code(), null);
+                exception = new ConflictException(error.getErrorMessage(), error.getErrorCode(), null);
                 break;
             case 429:
                 // TODO: confirm that a 429 is raised rather than needing to check the X-RateLimit-Remaining-Minute
                 //  header value of a response (if it is 0 then we are being rate-limited)
-                exception = new RateLimitException(
-                        error.getErrorMessage(), null, error.getErrorCode(), response.code(), null);
+                exception = new RateLimitException(error.getErrorMessage(), null, error.getErrorCode(), null);
                 break;
             default:
                 exception = new ApiException(error.getErrorMessage(), error.getErrorCode(), response.code(), null);

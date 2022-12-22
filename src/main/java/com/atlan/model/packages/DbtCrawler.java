@@ -18,7 +18,7 @@ import java.util.Map;
 
 public class DbtCrawler extends AbstractCrawler {
 
-    public static final String PREFIX = "default-dbt";
+    public static final String PREFIX = "atlan-dbt";
 
     /**
      * Builds the minimal object necessary to create a new crawler for dbt,
@@ -58,9 +58,6 @@ public class DbtCrawler extends AbstractCrawler {
             Map<String, List<String>> excludeAssets)
             throws InvalidRequestException {
 
-        // Note: no actual connection object created by the crawler (yet)
-        // this is only to obtain a consistent epoch and be ready for a future
-        // when there may be a connection object
         Connection connection = Connection.creator(
                         connectionName, AtlanConnectorType.DBT, adminRoles, adminGroups, adminUsers)
                 .allowQuery(true)
@@ -75,7 +72,7 @@ public class DbtCrawler extends AbstractCrawler {
         String epoch = Connection.getEpochFromQualifiedName(connection.getQualifiedName());
 
         Map<String, Object> credentialBody = new HashMap<>();
-        credentialBody.put("name", PREFIX + "-" + epoch + "-0");
+        credentialBody.put("name", "default-dbt-" + epoch + "-0");
         credentialBody.put("host", "https://cloud.getdbt.com");
         credentialBody.put("port", 443);
         credentialBody.put("authType", "token");
@@ -95,9 +92,9 @@ public class DbtCrawler extends AbstractCrawler {
                 .parameter(NameValuePair.of("api-credential-guid", "{{credentialGuid}}"));
         try {
             argsBuilder = argsBuilder.parameter(
-                    NameValuePair.of("include-filter", Serde.mapper.writeValueAsString(toInclude)));
+                    NameValuePair.of("include-filter", Serde.allInclusiveMapper.writeValueAsString(toInclude)));
             argsBuilder = argsBuilder.parameter(
-                    NameValuePair.of("exclude-filter", Serde.mapper.writeValueAsString(toExclude)));
+                    NameValuePair.of("exclude-filter", Serde.allInclusiveMapper.writeValueAsString(toExclude)));
         } catch (JsonProcessingException e) {
             throw new InvalidRequestException(
                     "Unable to translate the provided include/exclude asset filters into JSON.",
@@ -110,8 +107,8 @@ public class DbtCrawler extends AbstractCrawler {
                 .parameter(NameValuePair.of("include-filter-core", "*"))
                 .parameter(NameValuePair.of("exclude-filter-core", "*"));
 
-        String name = "atlan-dbt-" + epoch;
-        String runName = "atlan-dbt-" + PREFIX + "-" + epoch;
+        String name = PREFIX + "-" + epoch;
+        String runName = PREFIX + "-default-dbt-" + epoch;
         return Workflow.builder()
                 .metadata(WorkflowMetadata.builder()
                         .label("orchestration.atlan.com/certified", "true")
@@ -122,7 +119,7 @@ public class DbtCrawler extends AbstractCrawler {
                         .label("package.argoproj.io/installer", "argopm")
                         .label("package.argoproj.io/name", "a-t-ratlans-l-a-s-hdbt")
                         .label("package.argoproj.io/registry", "httpsc-o-l-o-ns-l-a-s-hs-l-a-s-hpackages.atlan.com")
-                        .label("orchestration.atlan.com/" + PREFIX + "-" + epoch, "true")
+                        .label("orchestration.atlan.com/default-dbt-" + epoch, "true")
                         .label("orchestration.atlan.com/atlan-ui", "true")
                         .annotation("orchestration.atlan.com/allowSchedule", "true")
                         .annotation("orchestration.atlan.com/dependentPackage", "")

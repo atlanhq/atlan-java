@@ -127,13 +127,13 @@ public class RedshiftCrawler extends AbstractCrawler {
             if (!toInclude.isEmpty()) {
                 argsBuilder = argsBuilder.parameter(NameValuePair.builder()
                         .name("include-filter")
-                        .value(Serde.mapper.writeValueAsString(toInclude))
+                        .value(Serde.allInclusiveMapper.writeValueAsString(toInclude))
                         .build());
             }
             if (!toExclude.isEmpty()) {
                 argsBuilder = argsBuilder.parameter(NameValuePair.builder()
                         .name("exclude-filter")
-                        .value(Serde.mapper.writeValueAsString(toExclude))
+                        .value(Serde.allInclusiveMapper.writeValueAsString(toExclude))
                         .build());
             }
         } catch (JsonProcessingException e) {

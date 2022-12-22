@@ -14,6 +14,10 @@ public class InvalidRequestException extends AtlanException {
 
     private final String param;
 
+    public InvalidRequestException(String message, String param, String code, Throwable e) {
+        this(message, param, code, 400, e);
+    }
+
     public InvalidRequestException(String message, String param, String code, Integer statusCode, Throwable e) {
         super(message, code, statusCode, e);
         this.param = param;

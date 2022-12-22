@@ -2,15 +2,14 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.typedefs;
 
+import com.atlan.cache.EnumCache;
+import com.atlan.exception.AtlanException;
 import com.atlan.model.core.AtlanObject;
 import com.atlan.model.enums.AtlanCustomAttributeCardinality;
 import com.atlan.model.enums.AtlanCustomAttributePrimitiveType;
 import java.util.List;
 import java.util.Map;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 
@@ -33,15 +32,19 @@ public class AttributeDef extends AtlanObject {
      * @param optionsName name of the options (enumeration) if the primitive type is an enumeration (can be null otherwise)
      * @param multiValued true if multiple values are allowed for the attribute, otherwise false
      * @return the attribute definition
+     * @throws AtlanException if there is any API error trying to construct the attribute (usually due to a non-existent enumeration)
      */
     public static AttributeDef of(
-            String displayName, AtlanCustomAttributePrimitiveType type, String optionsName, boolean multiValued) {
+            String displayName, AtlanCustomAttributePrimitiveType type, String optionsName, boolean multiValued)
+            throws AtlanException {
         AttributeDefBuilder<?, ?> builder =
                 AttributeDef.builder().name(displayName).displayName(displayName);
         String baseType;
+        boolean addEnumValues = false;
         switch (type) {
             case OPTIONS:
                 baseType = optionsName;
+                addEnumValues = true;
                 break;
             case USERS:
             case GROUPS:
@@ -60,6 +63,9 @@ public class AttributeDef extends AtlanObject {
                             .build());
         } else {
             builder = builder.typeName(baseType).options(AttributeDefOptions.of(type, optionsName));
+        }
+        if (addEnumValues) {
+            builder = builder.enumValues(EnumCache.getByName(optionsName).getValidValues());
         }
         return builder.build();
     }
@@ -130,6 +136,10 @@ public class AttributeDef extends AtlanObject {
     /** Whether the attribute is being newly created (true) or not (false). */
     @Builder.Default
     Boolean isNew = true;
+
+    /** List of values for an enumeration. */
+    @Singular
+    List<String> enumValues;
 
     /** TBC */
     final List<Constraint> constraints;
