@@ -8,6 +8,7 @@ import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import co.elastic.clients.elasticsearch._types.query_dsl.TermsQuery;
 import co.elastic.clients.elasticsearch._types.query_dsl.TermsQueryField;
 import com.atlan.exception.AtlanException;
+import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.LogicException;
 import com.atlan.exception.NotFoundException;
@@ -204,7 +205,7 @@ public class GlossaryTerm extends Asset {
     }
 
     /**
-     * Builds the minimal object necessary to update a term.
+     * Builds the minimal object necessary to update a GlossaryTerm.
      *
      * @param qualifiedName of the GlossaryTerm
      * @param name of the GlossaryTerm
@@ -225,7 +226,7 @@ public class GlossaryTerm extends Asset {
      * more-complete GlossaryTerm object.
      *
      * @return the minimal object necessary to update the GlossaryTerm, as a builder
-     * @throws InvalidRequestException InvalidRequestException if any of the minimal set of required properties for GlossaryTerm are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required properties for GlossaryTerm are not found in the initial object
      */
     @Override
     public GlossaryTermBuilder<?, ?> trimToRequired() throws InvalidRequestException {
@@ -243,11 +244,7 @@ public class GlossaryTerm extends Asset {
         }
         if (!missing.isEmpty()) {
             throw new InvalidRequestException(
-                    "Required field for updating GlossaryTerm is missing.",
-                    String.join(",", missing),
-                    "ATLAN-JAVA-CLIENT-400-404",
-                    400,
-                    null);
+                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "GlossaryTerm", String.join(",", missing));
         }
         return updater(this.getQualifiedName(), this.getName(), this.getAnchor().getGuid());
     }
@@ -313,12 +310,11 @@ public class GlossaryTerm extends Asset {
     public static GlossaryTerm retrieveByGuid(String guid) throws AtlanException {
         Asset asset = Asset.retrieveFull(guid);
         if (asset == null) {
-            throw new NotFoundException("No asset found with GUID: " + guid, "ATLAN_JAVA_CLIENT-404-001", 404, null);
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
         } else if (asset instanceof GlossaryTerm) {
             return (GlossaryTerm) asset;
         } else {
-            throw new NotFoundException(
-                    "Asset with GUID " + guid + " is not a GlossaryTerm.", "ATLAN_JAVA_CLIENT-404-002", 404, null);
+            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "GlossaryTerm");
         }
     }
 
@@ -334,11 +330,7 @@ public class GlossaryTerm extends Asset {
         if (asset instanceof GlossaryTerm) {
             return (GlossaryTerm) asset;
         } else {
-            throw new NotFoundException(
-                    "No GlossaryTerm found with qualifiedName: " + qualifiedName,
-                    "ATLAN_JAVA_CLIENT-404-003",
-                    404,
-                    null);
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "GlossaryTerm");
         }
     }
 

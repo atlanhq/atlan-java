@@ -420,9 +420,9 @@ public class ModelGenerator extends AtlanLiveTest {
         fs.append("            missing.add(\"name\");").append(System.lineSeparator());
         fs.append("        }").append(System.lineSeparator());
         fs.append("        if (!missing.isEmpty()) {").append(System.lineSeparator());
-        fs.append("            throw new InvalidRequestException(\"Required field for updating ")
+        fs.append("            throw new InvalidRequestException(ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, \"")
                 .append(className)
-                .append(" is missing.\", String.join(\",\", missing), \"ATLAN-JAVA-CLIENT-400-404\", 400, null);")
+                .append("\", String.join(\",\", missing));")
                 .append(System.lineSeparator());
         fs.append("        }").append(System.lineSeparator());
         fs.append("        return updater(this.getQualifiedName(), this.getName());")
@@ -459,8 +459,7 @@ public class ModelGenerator extends AtlanLiveTest {
                 .append(System.lineSeparator());
         fs.append("        Asset asset = Asset.retrieveFull(guid);").append(System.lineSeparator());
         fs.append("        if (asset == null) {").append(System.lineSeparator());
-        fs.append(
-                        "            throw new NotFoundException(\"No asset found with GUID: \" + guid, \"ATLAN_JAVA_CLIENT-404-001\", 404, null);")
+        fs.append("            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);")
                 .append(System.lineSeparator());
         fs.append("        } else if (asset instanceof ")
                 .append(className)
@@ -468,9 +467,9 @@ public class ModelGenerator extends AtlanLiveTest {
                 .append(System.lineSeparator());
         fs.append("            return (").append(className).append(") asset;").append(System.lineSeparator());
         fs.append("        } else {").append(System.lineSeparator());
-        fs.append("            throw new NotFoundException(\"Asset with GUID \" + guid + \" is not a ")
+        fs.append("            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, \"")
                 .append(className)
-                .append(".\", \"ATLAN_JAVA_CLIENT-404-002\", 404, null);")
+                .append("\");")
                 .append(System.lineSeparator());
         fs.append("        }").append(System.lineSeparator());
         fs.append("    }").append(System.lineSeparator());
@@ -507,9 +506,9 @@ public class ModelGenerator extends AtlanLiveTest {
                 .append(System.lineSeparator());
         fs.append("            return (").append(className).append(") asset;").append(System.lineSeparator());
         fs.append("        } else {").append(System.lineSeparator());
-        fs.append("            throw new NotFoundException(\"No ")
+        fs.append("            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, \"")
                 .append(className)
-                .append(" found with qualifiedName: \" + qualifiedName, \"ATLAN_JAVA_CLIENT-404-003\", 404, null);")
+                .append("\");")
                 .append(System.lineSeparator());
         fs.append("        }").append(System.lineSeparator());
         fs.append("    }").append(System.lineSeparator());
@@ -1142,6 +1141,7 @@ public class ModelGenerator extends AtlanLiveTest {
         fs.append("/* Copyright 2022 Atlan Pte. Ltd. */").append(System.lineSeparator());
         fs.append("package com.atlan.model.assets;").append(System.lineSeparator());
         fs.append(System.lineSeparator());
+        fs.append("import com.atlan.exception.ErrorCode;").append(System.lineSeparator());
         fs.append("import com.atlan.exception.AtlanException;").append(System.lineSeparator());
         fs.append("import com.atlan.exception.NotFoundException;").append(System.lineSeparator());
         fs.append("import com.atlan.exception.InvalidRequestException;").append(System.lineSeparator());

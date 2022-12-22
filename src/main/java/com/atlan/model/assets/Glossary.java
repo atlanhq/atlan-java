@@ -9,6 +9,7 @@ import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import co.elastic.clients.elasticsearch._types.query_dsl.TermQuery;
 import com.atlan.exception.AtlanException;
+import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.LogicException;
 import com.atlan.exception.NotFoundException;
@@ -25,7 +26,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Instance of a glossary in Atlan, with its detailed information.
+ * Instance of a Glossary in Atlan, with its detailed information.
  */
 @Getter
 @Setter
@@ -71,21 +72,21 @@ public class Glossary extends Asset {
     @Singular
     Map<String, String> additionalAttributes;
 
-    /** Terms within this glossary. */
+    /** Terms within this Glossary. */
     @Attribute
     @Singular
     SortedSet<GlossaryTerm> terms;
 
-    /** Categories within this glossary. */
+    /** Categories within this Glossary. */
     @Attribute
     @Singular
     SortedSet<GlossaryCategory> categories;
 
     /**
-     * Set up the minimal object required to reference a glossary. Only one of the following is required.
+     * Set up the minimal object required to reference a Glossary. Only one of the following is required.
      *
-     * @param glossaryGuid unique identifier of the glossary for the term
-     * @param glossaryQualifiedName unique name of the glossary
+     * @param glossaryGuid unique identifier of the Glossary for the term
+     * @param glossaryQualifiedName unique name of the Glossary
      * @return a builder that can be further extended with other metadata
      */
     static Glossary anchorLink(String glossaryGuid, String glossaryQualifiedName) {
@@ -124,21 +125,21 @@ public class Glossary extends Asset {
     }
 
     /**
-     * Builds the minimal object necessary for creating a glossary.
+     * Builds the minimal object necessary for creating a Glossary.
      *
-     * @param name of the glossary
-     * @return the minimal object necessary to create the glossary, as a builder
+     * @param name of the Glossary
+     * @return the minimal object necessary to create the Glossary, as a builder
      */
     public static GlossaryBuilder<?, ?> creator(String name) {
         return Glossary.builder().qualifiedName(name).name(name);
     }
 
     /**
-     * Builds the minimal object necessary to update a glossary.
+     * Builds the minimal object necessary to update a Glossary.
      *
-     * @param guid unique identifier of the glossary
-     * @param name of the glossary
-     * @return the minimal object necessary to update the glossary, as a builder
+     * @param guid unique identifier of the Glossary
+     * @param name of the Glossary
+     * @return the minimal object necessary to update the Glossary, as a builder
      */
     public static GlossaryBuilder<?, ?> updater(String guid, String name) {
         return Glossary.builder().guid(guid).qualifiedName(name).name(name);
@@ -162,22 +163,18 @@ public class Glossary extends Asset {
         }
         if (!missing.isEmpty()) {
             throw new InvalidRequestException(
-                    "Required field for updating Glossary is missing.",
-                    String.join(",", missing),
-                    "ATLAN-JAVA-CLIENT-400-404",
-                    400,
-                    null);
+                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "Glossary", String.join(",", missing));
         }
         return updater(this.getGuid(), this.getName());
     }
 
     /**
-     * Find a glossary by its human-readable name.
+     * Find a Glossary by its human-readable name.
      *
-     * @param name of the glossary
-     * @param attributes an optional collection of attributes to retrieve for the glossary
-     * @return the glossary, if found
-     * @throws AtlanException on any API problems, or if the glossary does not exist
+     * @param name of the Glossary
+     * @param attributes an optional collection of attributes to retrieve for the Glossary
+     * @return the Glossary, if found
+     * @throws AtlanException on any API problems, or if the Glossary does not exist
      */
     public static Glossary findByName(String name, Collection<String> attributes) throws AtlanException {
         Query byType = QueryFactory.withType(TYPE_NAME);
@@ -223,12 +220,11 @@ public class Glossary extends Asset {
     public static Glossary retrieveByGuid(String guid) throws AtlanException {
         Asset asset = Asset.retrieveFull(guid);
         if (asset == null) {
-            throw new NotFoundException("No asset found with GUID: " + guid, "ATLAN_JAVA_CLIENT-404-001", 404, null);
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
         } else if (asset instanceof Glossary) {
             return (Glossary) asset;
         } else {
-            throw new NotFoundException(
-                    "Asset with GUID " + guid + " is not a Glossary.", "ATLAN_JAVA_CLIENT-404-002", 404, null);
+            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "Glossary");
         }
     }
 
@@ -244,25 +240,24 @@ public class Glossary extends Asset {
         if (asset instanceof Glossary) {
             return (Glossary) asset;
         } else {
-            throw new NotFoundException(
-                    "No Glossary found with qualifiedName: " + qualifiedName, "ATLAN_JAVA_CLIENT-404-003", 404, null);
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "Glossary");
         }
     }
 
     /**
-     * Retrieve category hierarchy in this glossary, in a traversable form. You can traverse in either
+     * Retrieve category hierarchy in this Glossary, in a traversable form. You can traverse in either
      * depth-first ({@link CategoryHierarchy#depthFirst()}) or breadth-first ({@link CategoryHierarchy#breadthFirst()})
      * order. Both return an ordered list of {@link GlossaryCategory} objects.
      *
      * @return a traversable category hierarchy
-     * @throws AtlanException on any API problems, or if the glossary does not exist
+     * @throws AtlanException on any API problems, or if the Glossary does not exist
      */
     public CategoryHierarchy getHierarchy() throws AtlanException {
         return getHierarchy(null);
     }
 
     /**
-     * Retrieve category hierarchy in this glossary, in a traversable form. You can traverse in either
+     * Retrieve category hierarchy in this Glossary, in a traversable form. You can traverse in either
      * depth-first ({@link CategoryHierarchy#depthFirst()}) or breadth-first ({@link CategoryHierarchy#breadthFirst()})
      * order. Both return an ordered list of {@link GlossaryCategory} objects.
      * Note: by default, each category will have a minimal set of information (name, GUID, qualifiedName). If you
@@ -271,7 +266,7 @@ public class Glossary extends Asset {
      *
      * @param attributes to retrieve for each category in the hierarchy
      * @return a traversable category hierarchy
-     * @throws AtlanException on any API problems, or if the glossary does not exist
+     * @throws AtlanException on any API problems, or if the Glossary does not exist
      */
     public CategoryHierarchy getHierarchy(List<String> attributes) throws AtlanException {
         if (qualifiedName == null) {
@@ -334,7 +329,7 @@ public class Glossary extends Asset {
     }
 
     /**
-     * Utility class for traversing the category hierarchy in a glossary.
+     * Utility class for traversing the category hierarchy in a Glossary.
      */
     public static class CategoryHierarchy {
 
@@ -367,7 +362,7 @@ public class Glossary extends Asset {
         /**
          * Retrieve only the root-level categories (those with no parents).
          *
-         * @return the root-level categories of the glossary
+         * @return the root-level categories of the Glossary
          */
         public List<GlossaryCategory> getRootCategories() {
             if (rootCategories.isEmpty()) {

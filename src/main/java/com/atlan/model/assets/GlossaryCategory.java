@@ -3,6 +3,7 @@
 package com.atlan.model.assets;
 
 import com.atlan.exception.AtlanException;
+import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -16,7 +17,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 /**
- * Instance of a category in Atlan, with its detailed information.
+ * Instance of a GlossaryCategory in Atlan, with its detailed information.
  */
 @Getter
 @Setter
@@ -53,20 +54,20 @@ public class GlossaryCategory extends Asset {
     @Singular
     Map<String, String> additionalAttributes;
 
-    /** Terms organized within this category. */
+    /** Terms organized within this GlossaryCategory. */
     @Attribute
     @Singular
     SortedSet<GlossaryTerm> terms;
 
-    /** Glossary in which the category is located. */
+    /** Glossary in which the GlossaryCategory is located. */
     @Attribute
     Glossary anchor;
 
-    /** Parent category in which this category is located (or null if this is a root-level category). */
+    /** Parent GlossaryCategory in which this GlossaryCategory is located (or null if this is a root-level category). */
     @Attribute
     GlossaryCategory parentCategory;
 
-    /** Child categories organized within this category. */
+    /** Child categories organized within this GlossaryCategory. */
     @Attribute
     @Singular("childCategory")
     SortedSet<GlossaryCategory> childrenCategories;
@@ -95,13 +96,13 @@ public class GlossaryCategory extends Asset {
     }
 
     /**
-     * Builds the minimal object necessary for creating a category. At least one of glossaryGuid or
+     * Builds the minimal object necessary for creating a GlossaryCategory. At least one of glossaryGuid or
      * glossaryQualifiedName must be provided.
      *
-     * @param name of the category
-     * @param glossaryGuid unique identifier of the category's glossary
-     * @param glossaryQualifiedName unique name of the category's glossary
-     * @return the minimal object necessary to create the category, as a builder
+     * @param name of the GlossaryCategory
+     * @param glossaryGuid unique identifier of the GlossaryCategory's glossary
+     * @param glossaryQualifiedName unique name of the GlossaryCategory's glossary
+     * @return the minimal object necessary to create the GlossaryCategory, as a builder
      */
     public static GlossaryCategoryBuilder<?, ?> creator(
             String name, String glossaryGuid, String glossaryQualifiedName) {
@@ -112,13 +113,12 @@ public class GlossaryCategory extends Asset {
     }
 
     /**
-     * Builds the minimal object necessary to update a category. At least one of glossaryGuid or
-     * glossaryQualifiedName must be provided.
+     * Builds the minimal object necessary to update a GlossaryCategory.
      *
-     * @param qualifiedName of the category
-     * @param name of the category
-     * @param glossaryGuid unique identifier of the category's glossary
-     * @return the minimal object necessary to update the category, as a builder
+     * @param qualifiedName of the GlossaryCategory
+     * @param name of the GlossaryCategory
+     * @param glossaryGuid unique identifier of the GlossaryCategory's glossary
+     * @return the minimal request necessary to update the GlossaryCategory, as a builder
      */
     public static GlossaryCategoryBuilder<?, ?> updater(String qualifiedName, String name, String glossaryGuid) {
         // Turns out that updating a category requires the glossary GUID, and will not work
@@ -134,7 +134,7 @@ public class GlossaryCategory extends Asset {
      * more-complete GlossaryCategory object.
      *
      * @return the minimal object necessary to update the GlossaryCategory, as a builder
-     * @throws InvalidRequestException InvalidRequestException if any of the minimal set of required properties for GlossaryCategory are not found in the initial object
+     * @throws InvalidRequestException if any of the minimal set of required properties for GlossaryCategory are not found in the initial object
      */
     @Override
     public GlossaryCategoryBuilder<?, ?> trimToRequired() throws InvalidRequestException {
@@ -152,11 +152,7 @@ public class GlossaryCategory extends Asset {
         }
         if (!missing.isEmpty()) {
             throw new InvalidRequestException(
-                    "Required field for updating GlossaryCategory is missing.",
-                    String.join(",", missing),
-                    "ATLAN-JAVA-CLIENT-400-404",
-                    400,
-                    null);
+                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "GlossaryCategory", String.join(",", missing));
         }
         return updater(this.getQualifiedName(), this.getName(), this.getAnchor().getGuid());
     }
@@ -171,12 +167,11 @@ public class GlossaryCategory extends Asset {
     public static GlossaryCategory retrieveByGuid(String guid) throws AtlanException {
         Asset asset = Asset.retrieveFull(guid);
         if (asset == null) {
-            throw new NotFoundException("No asset found with GUID: " + guid, "ATLAN_JAVA_CLIENT-404-001", 404, null);
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
         } else if (asset instanceof GlossaryCategory) {
             return (GlossaryCategory) asset;
         } else {
-            throw new NotFoundException(
-                    "Asset with GUID " + guid + " is not a GlossaryCategory.", "ATLAN_JAVA_CLIENT-404-002", 404, null);
+            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "GlossaryCategory");
         }
     }
 
@@ -192,11 +187,7 @@ public class GlossaryCategory extends Asset {
         if (asset instanceof GlossaryCategory) {
             return (GlossaryCategory) asset;
         } else {
-            throw new NotFoundException(
-                    "No GlossaryCategory found with qualifiedName: " + qualifiedName,
-                    "ATLAN_JAVA_CLIENT-404-003",
-                    404,
-                    null);
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "GlossaryCategory");
         }
     }
 
@@ -287,7 +278,7 @@ public class GlossaryCategory extends Asset {
      * Update the announcement on a GlossaryCategory.
      *
      * @param qualifiedName of the GlossaryCategory
-     * @param name of the category
+     * @param name of the GlossaryCategory
      * @param glossaryGuid unique ID (GUID) of the GlossaryCategory's glossary
      * @param type type of announcement to set
      * @param title (optional) title of the announcement to set (or null for no title)
