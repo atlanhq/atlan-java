@@ -4,6 +4,8 @@ package com.atlan.cache;
 
 import com.atlan.api.TypeDefsEndpoint;
 import com.atlan.exception.AtlanException;
+import com.atlan.exception.InvalidRequestException;
+import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.AtlanTypeCategory;
 import com.atlan.model.typedefs.ClassificationDef;
 import com.atlan.model.typedefs.TypeDefResponse;
@@ -50,11 +52,12 @@ public class ClassificationCache {
      * @param name human-readable name of the classification
      * @return Atlan-internal ID string of the classification
      * @throws AtlanException on any API communication problem if the cache needs to be refreshed
+     * @throws NotFoundException if the classification cannot be found (does not exist) in Atlan
+     * @throws InvalidRequestException if no name was provided for the classification to retrieve
      */
     public static String getIdForName(String name) throws AtlanException {
-        String cmId = null;
-        if (name != null) {
-            cmId = mapNameToId.get(name);
+        if (name != null && name.length() > 0) {
+            String cmId = mapNameToId.get(name);
             if (cmId == null && !deletedNames.contains(name)) {
                 // If not found, refresh the cache and look again (could be stale)
                 refreshCache();
@@ -62,10 +65,18 @@ public class ClassificationCache {
                 if (cmId == null) {
                     // If it's still not found after the refresh, mark it as deleted
                     deletedNames.add(name);
+                    throw new NotFoundException(
+                            "Classification with name '" + name + "' does not exist.", "ATLAN_JAVA_404_701", null);
                 }
             }
+            return cmId;
+        } else {
+            throw new InvalidRequestException(
+                    "No name was provided when attempting to retrieve a classification.",
+                    "name",
+                    "ATLAN_JAVA_400_701",
+                    null);
         }
-        return cmId;
     }
 
     /**
@@ -74,11 +85,12 @@ public class ClassificationCache {
      * @param id Atlan-internal ID string of the classification
      * @return human-readable name of the classification
      * @throws AtlanException on any API communication problem if the cache needs to be refreshed
+     * @throws NotFoundException if the classification cannot be found (does not exist) in Atlan
+     * @throws InvalidRequestException if no ID was provided for the classification to retrieve
      */
     public static String getNameForId(String id) throws AtlanException {
-        String cmName = null;
-        if (id != null) {
-            cmName = mapIdToName.get(id);
+        if (id != null && id.length() > 0) {
+            String cmName = mapIdToName.get(id);
             if (cmName == null && !deletedIds.contains(id)) {
                 // If not found, refresh the cache and look again (could be stale)
                 refreshCache();
@@ -86,9 +98,17 @@ public class ClassificationCache {
                 if (cmName == null) {
                     // If it's still not found after the refresh, mark it as deleted
                     deletedIds.add(id);
+                    throw new NotFoundException(
+                            "Classification with ID '" + id + "' does not exist.", "ATLAN_JAVA_404_702", null);
                 }
             }
+            return cmName;
+        } else {
+            throw new InvalidRequestException(
+                    "No ID was provided when attempting to retrieve a classification.",
+                    "id",
+                    "ATLAN_JAVA_400_702",
+                    null);
         }
-        return cmName;
     }
 }

@@ -21,7 +21,8 @@ public abstract class ClassificationTest extends AtlanLiveTest {
      * @throws AtlanException on any error creating or reading-back the classification
      */
     static void createClassification(String name) throws AtlanException {
-        ClassificationDef classificationDef = ClassificationDef.toCreate(name, AtlanClassificationColor.GREEN);
+        ClassificationDef classificationDef =
+                ClassificationDef.creator(name, AtlanClassificationColor.GREEN).build();
         ClassificationDef response = classificationDef.create();
         assertNotNull(response);
         assertEquals(response.getCategory(), AtlanTypeCategory.CLASSIFICATION);
