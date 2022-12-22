@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":6,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":6,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10};
+var data = {"i0":10,"i1":10,"i2":6,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":6,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -209,105 +209,120 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="AttributeDef.AttributeDefBuilder.html" title="type parameter in AttributeDef.AttributeDefBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#constraints(java.util.List)">constraints</a></span>&#8203;(java.util.List&lt;<a href="Constraint.html" title="class in com.atlan.model.typedefs">Constraint</a>&gt;&nbsp;constraints)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearEnumValues()">clearEnumValues</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="AttributeDef.AttributeDefBuilder.html" title="type parameter in AttributeDef.AttributeDefBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#defaultValue(java.lang.String)">defaultValue</a></span>&#8203;(java.lang.String&nbsp;defaultValue)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#constraints(java.util.List)">constraints</a></span>&#8203;(java.util.List&lt;<a href="Constraint.html" title="class in com.atlan.model.typedefs">Constraint</a>&gt;&nbsp;constraints)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code><a href="AttributeDef.AttributeDefBuilder.html" title="type parameter in AttributeDef.AttributeDefBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#description(java.lang.String)">description</a></span>&#8203;(java.lang.String&nbsp;description)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#defaultValue(java.lang.String)">defaultValue</a></span>&#8203;(java.lang.String&nbsp;defaultValue)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="AttributeDef.AttributeDefBuilder.html" title="type parameter in AttributeDef.AttributeDefBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#displayName(java.lang.String)">displayName</a></span>&#8203;(java.lang.String&nbsp;displayName)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#description(java.lang.String)">description</a></span>&#8203;(java.lang.String&nbsp;description)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code><a href="AttributeDef.AttributeDefBuilder.html" title="type parameter in AttributeDef.AttributeDefBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#includeInNotification(java.lang.Boolean)">includeInNotification</a></span>&#8203;(java.lang.Boolean&nbsp;includeInNotification)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#displayName(java.lang.String)">displayName</a></span>&#8203;(java.lang.String&nbsp;displayName)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code><a href="AttributeDef.AttributeDefBuilder.html" title="type parameter in AttributeDef.AttributeDefBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#indexType(java.lang.String)">indexType</a></span>&#8203;(java.lang.String&nbsp;indexType)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#enumValue(java.lang.String)">enumValue</a></span>&#8203;(java.lang.String&nbsp;enumValue)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code><a href="AttributeDef.AttributeDefBuilder.html" title="type parameter in AttributeDef.AttributeDefBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#indexTypeESConfig(java.util.Map)">indexTypeESConfig</a></span>&#8203;(java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;indexTypeESConfig)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#enumValues(java.util.Collection)">enumValues</a></span>&#8203;(java.util.Collection&lt;? extends java.lang.String&gt;&nbsp;enumValues)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i11" class="rowColor">
 <td class="colFirst"><code><a href="AttributeDef.AttributeDefBuilder.html" title="type parameter in AttributeDef.AttributeDefBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#indexTypeESFields(java.util.Map)">indexTypeESFields</a></span>&#8203;(java.util.Map&lt;java.lang.String,&#8203;java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&gt;&nbsp;indexTypeESFields)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#includeInNotification(java.lang.Boolean)">includeInNotification</a></span>&#8203;(java.lang.Boolean&nbsp;includeInNotification)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i12" class="altColor">
 <td class="colFirst"><code><a href="AttributeDef.AttributeDefBuilder.html" title="type parameter in AttributeDef.AttributeDefBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isIndexable(java.lang.Boolean)">isIndexable</a></span>&#8203;(java.lang.Boolean&nbsp;isIndexable)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#indexType(java.lang.String)">indexType</a></span>&#8203;(java.lang.String&nbsp;indexType)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i13" class="rowColor">
 <td class="colFirst"><code><a href="AttributeDef.AttributeDefBuilder.html" title="type parameter in AttributeDef.AttributeDefBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isNew(java.lang.Boolean)">isNew</a></span>&#8203;(java.lang.Boolean&nbsp;isNew)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#indexTypeESConfig(java.util.Map)">indexTypeESConfig</a></span>&#8203;(java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;indexTypeESConfig)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i14" class="altColor">
 <td class="colFirst"><code><a href="AttributeDef.AttributeDefBuilder.html" title="type parameter in AttributeDef.AttributeDefBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isOptional(java.lang.Boolean)">isOptional</a></span>&#8203;(java.lang.Boolean&nbsp;isOptional)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#indexTypeESFields(java.util.Map)">indexTypeESFields</a></span>&#8203;(java.util.Map&lt;java.lang.String,&#8203;java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&gt;&nbsp;indexTypeESFields)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i15" class="rowColor">
 <td class="colFirst"><code><a href="AttributeDef.AttributeDefBuilder.html" title="type parameter in AttributeDef.AttributeDefBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isUnique(java.lang.Boolean)">isUnique</a></span>&#8203;(java.lang.Boolean&nbsp;isUnique)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isIndexable(java.lang.Boolean)">isIndexable</a></span>&#8203;(java.lang.Boolean&nbsp;isIndexable)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i16" class="altColor">
 <td class="colFirst"><code><a href="AttributeDef.AttributeDefBuilder.html" title="type parameter in AttributeDef.AttributeDefBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#name(java.lang.String)">name</a></span>&#8203;(java.lang.String&nbsp;name)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isNew(java.lang.Boolean)">isNew</a></span>&#8203;(java.lang.Boolean&nbsp;isNew)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i17" class="rowColor">
 <td class="colFirst"><code><a href="AttributeDef.AttributeDefBuilder.html" title="type parameter in AttributeDef.AttributeDefBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#options(com.atlan.model.typedefs.AttributeDefOptions)">options</a></span>&#8203;(<a href="AttributeDefOptions.html" title="class in com.atlan.model.typedefs">AttributeDefOptions</a>&nbsp;options)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isOptional(java.lang.Boolean)">isOptional</a></span>&#8203;(java.lang.Boolean&nbsp;isOptional)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i18" class="altColor">
 <td class="colFirst"><code><a href="AttributeDef.AttributeDefBuilder.html" title="type parameter in AttributeDef.AttributeDefBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#searchWeight(java.lang.Long)">searchWeight</a></span>&#8203;(java.lang.Long&nbsp;searchWeight)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isUnique(java.lang.Boolean)">isUnique</a></span>&#8203;(java.lang.Boolean&nbsp;isUnique)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i19" class="rowColor">
-<td class="colFirst"><code>protected abstract <a href="AttributeDef.AttributeDefBuilder.html" title="type parameter in AttributeDef.AttributeDefBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#self()">self</a></span>()</code></th>
+<td class="colFirst"><code><a href="AttributeDef.AttributeDefBuilder.html" title="type parameter in AttributeDef.AttributeDefBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#name(java.lang.String)">name</a></span>&#8203;(java.lang.String&nbsp;name)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i20" class="altColor">
 <td class="colFirst"><code><a href="AttributeDef.AttributeDefBuilder.html" title="type parameter in AttributeDef.AttributeDefBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#skipScrubbing(java.lang.Boolean)">skipScrubbing</a></span>&#8203;(java.lang.Boolean&nbsp;skipScrubbing)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#options(com.atlan.model.typedefs.AttributeDefOptions)">options</a></span>&#8203;(<a href="AttributeDefOptions.html" title="class in com.atlan.model.typedefs">AttributeDefOptions</a>&nbsp;options)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i21" class="rowColor">
-<td class="colFirst"><code>java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
+<td class="colFirst"><code><a href="AttributeDef.AttributeDefBuilder.html" title="type parameter in AttributeDef.AttributeDefBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#searchWeight(java.lang.Long)">searchWeight</a></span>&#8203;(java.lang.Long&nbsp;searchWeight)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i22" class="altColor">
-<td class="colFirst"><code><a href="AttributeDef.AttributeDefBuilder.html" title="type parameter in AttributeDef.AttributeDefBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#typeName(java.lang.String)">typeName</a></span>&#8203;(java.lang.String&nbsp;typeName)</code></th>
+<td class="colFirst"><code>protected abstract <a href="AttributeDef.AttributeDefBuilder.html" title="type parameter in AttributeDef.AttributeDefBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#self()">self</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i23" class="rowColor">
 <td class="colFirst"><code><a href="AttributeDef.AttributeDefBuilder.html" title="type parameter in AttributeDef.AttributeDefBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#valuesMaxCount(java.lang.Long)">valuesMaxCount</a></span>&#8203;(java.lang.Long&nbsp;valuesMaxCount)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#skipScrubbing(java.lang.Boolean)">skipScrubbing</a></span>&#8203;(java.lang.Boolean&nbsp;skipScrubbing)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i24" class="altColor">
+<td class="colFirst"><code>java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i25" class="rowColor">
+<td class="colFirst"><code><a href="AttributeDef.AttributeDefBuilder.html" title="type parameter in AttributeDef.AttributeDefBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#typeName(java.lang.String)">typeName</a></span>&#8203;(java.lang.String&nbsp;typeName)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i26" class="altColor">
+<td class="colFirst"><code><a href="AttributeDef.AttributeDefBuilder.html" title="type parameter in AttributeDef.AttributeDefBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#valuesMaxCount(java.lang.Long)">valuesMaxCount</a></span>&#8203;(java.lang.Long&nbsp;valuesMaxCount)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i27" class="rowColor">
 <td class="colFirst"><code><a href="AttributeDef.AttributeDefBuilder.html" title="type parameter in AttributeDef.AttributeDefBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#valuesMinCount(java.lang.Long)">valuesMinCount</a></span>&#8203;(java.lang.Long&nbsp;valuesMinCount)</code></th>
 <td class="colLast">&nbsp;</td>
@@ -615,6 +630,33 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
 </dl>
+</li>
+</ul>
+<a id="enumValue(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>enumValue</h4>
+<pre class="methodSignature">public&nbsp;<a href="AttributeDef.AttributeDefBuilder.html" title="type parameter in AttributeDef.AttributeDefBuilder">B</a>&nbsp;enumValue&#8203;(java.lang.String&nbsp;enumValue)</pre>
+</li>
+</ul>
+<a id="enumValues(java.util.Collection)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>enumValues</h4>
+<pre class="methodSignature">public&nbsp;<a href="AttributeDef.AttributeDefBuilder.html" title="type parameter in AttributeDef.AttributeDefBuilder">B</a>&nbsp;enumValues&#8203;(java.util.Collection&lt;? extends java.lang.String&gt;&nbsp;enumValues)</pre>
+</li>
+</ul>
+<a id="clearEnumValues()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>clearEnumValues</h4>
+<pre class="methodSignature">public&nbsp;<a href="AttributeDef.AttributeDefBuilder.html" title="type parameter in AttributeDef.AttributeDefBuilder">B</a>&nbsp;clearEnumValues()</pre>
 </li>
 </ul>
 <a id="constraints(java.util.List)">
