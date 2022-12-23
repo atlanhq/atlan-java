@@ -10,11 +10,7 @@ package com.atlan.exception;
 public class PermissionException extends AuthenticationException {
     private static final long serialVersionUID = 2L;
 
-    public PermissionException(String message, String code) {
-        this(message, code, 403);
-    }
-
-    public PermissionException(String message, String code, Integer statusCode) {
-        super(message, code, statusCode);
+    public PermissionException(ExceptionMessageDefinition error) {
+        super(error, 403);
     }
 }

@@ -6,7 +6,6 @@ import co.elastic.clients.elasticsearch._types.FieldValue;
 import co.elastic.clients.elasticsearch._types.query_dsl.*;
 import com.atlan.cache.ClassificationCache;
 import com.atlan.exception.AtlanException;
-import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.enums.AtlanCertificateStatus;
 import com.atlan.model.enums.AtlanStatus;
 import java.util.ArrayList;
@@ -128,14 +127,6 @@ public class QueryFactory {
         List<FieldValue> values = new ArrayList<>();
         for (String name : classificationNames) {
             String classificationId = ClassificationCache.getIdForName(name);
-            if (classificationId == null) {
-                throw new InvalidRequestException(
-                        "Unable to find classification with name: " + name,
-                        "classificationName",
-                        "ATLAN-JAVA-CLIENT-400-200",
-                        400,
-                        null);
-            }
             values.add(FieldValue.of(classificationId));
         }
         Query byDirectClassification = TermsQuery.of(

@@ -91,13 +91,7 @@ public class LiveAtlanResponseGetter implements AtlanResponseGetter {
     private static void raiseMalformedJsonError(String responseBody, int responseCode, Throwable e)
             throws ApiException {
         String details = e == null ? "none" : e.getMessage();
-        throw new ApiException(
-                String.format(
-                        "Invalid response object from API: %s. (HTTP response code was %d). Additional details: %s.",
-                        responseBody, responseCode, details),
-                null,
-                responseCode,
-                e);
+        throw new ApiException(ErrorCode.JSON_ERROR, e, responseBody, "" + responseCode, details);
     }
 
     /**
@@ -114,7 +108,10 @@ public class LiveAtlanResponseGetter implements AtlanResponseGetter {
         // so preemptively exit with an invalid request exception.
         int rc = response.code();
         if (rc == 500) {
-            throw new InvalidRequestException(response.body(), null, null, rc, null);
+            throw new InvalidRequestException(ExceptionMessageDefinition.builder()
+                    .errorMessage(response.body())
+                    .httpErrorCode(rc)
+                    .build());
         }
 
         try {
@@ -126,29 +123,37 @@ public class LiveAtlanResponseGetter implements AtlanResponseGetter {
             raiseMalformedJsonError(response.body(), response.code(), null);
         }
 
+        ExceptionMessageDefinition msg = ExceptionMessageDefinition.builder()
+                .errorMessage(error.getErrorMessage())
+                .errorId(error.getErrorCode())
+                .build();
         switch (response.code()) {
             case 400:
-                exception = new InvalidRequestException(error.getErrorMessage(), null, error.getErrorCode(), null);
+                exception = new InvalidRequestException(msg);
                 break;
             case 404:
-                exception = new NotFoundException(error.getErrorMessage(), error.getErrorCode(), null);
+                exception = new NotFoundException(msg);
                 break;
             case 401:
-                exception = new AuthenticationException(error.getErrorMessage(), error.getErrorCode());
+                exception = new AuthenticationException(msg);
                 break;
             case 403:
-                exception = new PermissionException(error.getErrorMessage(), error.getErrorCode());
+                exception = new PermissionException(msg);
                 break;
             case 409:
-                exception = new ConflictException(error.getErrorMessage(), error.getErrorCode(), null);
+                exception = new ConflictException(msg);
                 break;
             case 429:
                 // TODO: confirm that a 429 is raised rather than needing to check the X-RateLimit-Remaining-Minute
                 //  header value of a response (if it is 0 then we are being rate-limited)
-                exception = new RateLimitException(error.getErrorMessage(), null, error.getErrorCode(), null);
+                exception = new RateLimitException(msg);
                 break;
             default:
-                exception = new ApiException(error.getErrorMessage(), error.getErrorCode(), response.code(), null);
+                exception = new ApiException(ExceptionMessageDefinition.builder()
+                        .errorMessage(error.getErrorMessage())
+                        .errorId(error.getErrorCode())
+                        .httpErrorCode(response.code())
+                        .build());
                 break;
         }
 

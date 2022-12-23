@@ -9,11 +9,7 @@ package com.atlan.exception;
 public class ConflictException extends AtlanException {
     private static final long serialVersionUID = 2L;
 
-    public ConflictException(String message, String code, Throwable e) {
-        this(message, code, 409, e);
-    }
-
-    public ConflictException(String message, String code, Integer statusCode, Throwable e) {
-        super(message, code, statusCode, e);
+    public ConflictException(ExceptionMessageDefinition error) {
+        super(error, 409);
     }
 }

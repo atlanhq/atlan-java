@@ -4,6 +4,7 @@ package com.atlan.cache;
 
 import com.atlan.api.TypeDefsEndpoint;
 import com.atlan.exception.AtlanException;
+import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.AtlanTypeCategory;
@@ -55,19 +56,12 @@ public class EnumCache {
                 enumDef = cacheById.get(name);
                 if (enumDef == null) {
                     // If still not found, throw an exception indicating that outcome
-                    throw new NotFoundException(
-                            "Enumeration (options) with name '" + name + "' does not exist.",
-                            "ATLAN_JAVA_404_700",
-                            null);
+                    throw new NotFoundException(ErrorCode.ENUM_NOT_FOUND, name);
                 }
             }
             return enumDef;
         } else {
-            throw new InvalidRequestException(
-                    "No name was provided when attempting to retrieve an enumeration.",
-                    "name",
-                    "ATLAN_JAVA_400_700",
-                    null);
+            throw new InvalidRequestException(ErrorCode.MISSING_ENUM_NAME);
         }
     }
 }

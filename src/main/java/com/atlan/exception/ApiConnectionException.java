@@ -9,11 +9,11 @@ package com.atlan.exception;
 public class ApiConnectionException extends AtlanException {
     private static final long serialVersionUID = 2L;
 
-    public ApiConnectionException(String message) {
-        this(message, null);
+    public ApiConnectionException(ErrorCode error) {
+        super(error, null);
     }
 
-    public ApiConnectionException(String message, Throwable e) {
-        super(message, null, 0, e);
+    public ApiConnectionException(ErrorCode error, Throwable e, String... params) {
+        super(error, e, params);
     }
 }

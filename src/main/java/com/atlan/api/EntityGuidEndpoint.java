@@ -5,7 +5,6 @@ package com.atlan.api;
 import com.atlan.Atlan;
 import com.atlan.cache.CustomMetadataCache;
 import com.atlan.exception.AtlanException;
-import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.core.AssetResponse;
 import com.atlan.model.core.AtlanObject;
 import com.atlan.model.core.CustomMetadataAttributes;
@@ -24,8 +23,6 @@ import lombok.extern.slf4j.Slf4j;
 public class EntityGuidEndpoint {
 
     private static final String endpoint = "/api/meta/entity/guid/";
-
-    /** Retrieves any entity by its GUID. */
 
     /**
      * Retrieves any entity by its GUID.
@@ -58,25 +55,15 @@ public class EntityGuidEndpoint {
      */
     public static void updateCustomMetadataAttributes(String guid, String cmName, CustomMetadataAttributes values)
             throws AtlanException {
-        String cmId = CustomMetadataCache.getIdForName(cmName);
-        if (cmId != null) {
-            if (values != null) {
-                String url = String.format(
-                        "%s%s",
-                        Atlan.getBaseUrl(),
-                        String.format(
-                                "%s%s/businessmetadata?isOverwrite=false", endpoint, ApiResource.urlEncodeId(guid)));
-                CustomMetadataUpdateRequest cmur =
-                        new CustomMetadataUpdateRequest(cmName, values.getAttributes(), true);
-                ApiResource.request(ApiResource.RequestMethod.POST, url, cmur, null, null);
-            }
-        } else {
-            throw new InvalidRequestException(
-                    "No custom metadata found with the provided name: " + cmName,
-                    "customMetadataName",
-                    "ATLAN-JAVA-CLIENT-400-030",
-                    400,
-                    null);
+        if (values != null) {
+            // Ensure the custom metadata exists first — this will throw an exception if not
+            CustomMetadataCache.getIdForName(cmName);
+            String url = String.format(
+                    "%s%s",
+                    Atlan.getBaseUrl(),
+                    String.format("%s%s/businessmetadata?isOverwrite=false", endpoint, ApiResource.urlEncodeId(guid)));
+            CustomMetadataUpdateRequest cmur = new CustomMetadataUpdateRequest(cmName, values.getAttributes(), true);
+            ApiResource.request(ApiResource.RequestMethod.POST, url, cmur, null, null);
         }
     }
 
@@ -92,25 +79,15 @@ public class EntityGuidEndpoint {
     public static void replaceCustomMetadata(String guid, String cmName, CustomMetadataAttributes values)
             throws AtlanException {
         String cmId = CustomMetadataCache.getIdForName(cmName);
-        if (cmId != null) {
-            if (values != null) {
-                String url = String.format(
-                        "%s%s",
-                        Atlan.getBaseUrl(),
-                        String.format(
-                                "%s%s/businessmetadata/%s",
-                                endpoint, ApiResource.urlEncodeId(guid), ApiResource.urlEncodeId(cmId)));
-                CustomMetadataUpdateRequest cmur =
-                        new CustomMetadataUpdateRequest(cmName, values.getAttributes(), false);
-                ApiResource.request(ApiResource.RequestMethod.POST, url, cmur, null, null);
-            }
-        } else {
-            throw new InvalidRequestException(
-                    "No custom metadata found with the provided name: " + cmName,
-                    "customMetadataName",
-                    "ATLAN-JAVA-CLIENT-400-030",
-                    400,
-                    null);
+        if (values != null) {
+            String url = String.format(
+                    "%s%s",
+                    Atlan.getBaseUrl(),
+                    String.format(
+                            "%s%s/businessmetadata/%s",
+                            endpoint, ApiResource.urlEncodeId(guid), ApiResource.urlEncodeId(cmId)));
+            CustomMetadataUpdateRequest cmur = new CustomMetadataUpdateRequest(cmName, values.getAttributes(), false);
+            ApiResource.request(ApiResource.RequestMethod.POST, url, cmur, null, null);
         }
     }
 
@@ -122,28 +99,20 @@ public class EntityGuidEndpoint {
      * @throws AtlanException on any API issue
      */
     public static void removeCustomMetadata(String guid, String cmName) throws AtlanException {
-        String cmId = CustomMetadataCache.getIdForName(cmName);
-        if (cmId != null) {
-            Map<String, Object> map = CustomMetadataCache.getEmptyAttributes(cmName);
-            CustomMetadataAttributes cma =
-                    CustomMetadataAttributes.builder().attributes(map).build();
-            updateCustomMetadataAttributes(guid, cmName, cma);
-            // TODO: this endpoint currently does not work (500 response)
-            /* String url = String.format(
-                    "%s%s",
-                    Atlan.getBaseUrl(),
-                    String.format(
-                            "%s%s/businessmetadata/%s",
-                            endpoint, ApiResource.urlEncodeId(guid), ApiResource.urlEncodeId(cmId)));
-            ApiResource.request(ApiResource.RequestMethod.DELETE, url, "", null, null); */
-        } else {
-            throw new InvalidRequestException(
-                    "No custom metadata found with the provided name: " + cmName,
-                    "customMetadataName",
-                    "ATLAN-JAVA-CLIENT-400-030",
-                    400,
-                    null);
-        }
+        // Ensure the custom metadata exists first — this will throw an exception if not
+        CustomMetadataCache.getIdForName(cmName);
+        Map<String, Object> map = CustomMetadataCache.getEmptyAttributes(cmName);
+        CustomMetadataAttributes cma =
+                CustomMetadataAttributes.builder().attributes(map).build();
+        updateCustomMetadataAttributes(guid, cmName, cma);
+        // TODO: this endpoint currently does not work (500 response)
+        /* String url = String.format(
+                "%s%s",
+                Atlan.getBaseUrl(),
+                String.format(
+                        "%s%s/businessmetadata/%s",
+                        endpoint, ApiResource.urlEncodeId(guid), ApiResource.urlEncodeId(cmId)));
+        ApiResource.request(ApiResource.RequestMethod.DELETE, url, "", null, null); */
     }
 
     /**

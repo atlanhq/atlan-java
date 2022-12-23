@@ -2,6 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
+import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import java.util.ArrayList;
 import java.util.List;
@@ -58,11 +59,7 @@ public class IndistinctAsset extends Asset {
         }
         if (!missing.isEmpty()) {
             throw new InvalidRequestException(
-                    "Required field for updating Asset is missing.",
-                    String.join(",", missing),
-                    "ATLAN-JAVA-CLIENT-400-404",
-                    400,
-                    null);
+                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "Asset", String.join(",", missing));
         }
         return updater(this.getQualifiedName(), this.getName());
     }

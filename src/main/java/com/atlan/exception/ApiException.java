@@ -9,7 +9,11 @@ package com.atlan.exception;
 public class ApiException extends AtlanException {
     private static final long serialVersionUID = 2L;
 
-    public ApiException(String message, String code, Integer statusCode, Throwable e) {
-        super(message, code, statusCode, e);
+    public ApiException(ExceptionMessageDefinition error) {
+        super(error, error.getHttpErrorCode());
+    }
+
+    public ApiException(ErrorCode error, Throwable e, String... params) {
+        super(error, e, params);
     }
 }

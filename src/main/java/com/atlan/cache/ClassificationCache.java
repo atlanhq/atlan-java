@@ -4,6 +4,7 @@ package com.atlan.cache;
 
 import com.atlan.api.TypeDefsEndpoint;
 import com.atlan.exception.AtlanException;
+import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.AtlanTypeCategory;
@@ -65,17 +66,12 @@ public class ClassificationCache {
                 if (cmId == null) {
                     // If it's still not found after the refresh, mark it as deleted
                     deletedNames.add(name);
-                    throw new NotFoundException(
-                            "Classification with name '" + name + "' does not exist.", "ATLAN_JAVA_404_701", null);
+                    throw new NotFoundException(ErrorCode.CLASSIFICATION_NOT_FOUND_BY_NAME, name);
                 }
             }
             return cmId;
         } else {
-            throw new InvalidRequestException(
-                    "No name was provided when attempting to retrieve a classification.",
-                    "name",
-                    "ATLAN_JAVA_400_701",
-                    null);
+            throw new InvalidRequestException(ErrorCode.MISSING_CLASSIFICATION_NAME);
         }
     }
 
@@ -98,17 +94,12 @@ public class ClassificationCache {
                 if (cmName == null) {
                     // If it's still not found after the refresh, mark it as deleted
                     deletedIds.add(id);
-                    throw new NotFoundException(
-                            "Classification with ID '" + id + "' does not exist.", "ATLAN_JAVA_404_702", null);
+                    throw new NotFoundException(ErrorCode.CLASSIFICATION_NOT_FOUND_BY_ID, id);
                 }
             }
             return cmName;
         } else {
-            throw new InvalidRequestException(
-                    "No ID was provided when attempting to retrieve a classification.",
-                    "id",
-                    "ATLAN_JAVA_400_702",
-                    null);
+            throw new InvalidRequestException(ErrorCode.MISSING_CLASSIFICATION_ID);
         }
     }
 }

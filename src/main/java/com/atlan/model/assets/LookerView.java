@@ -3,6 +3,7 @@
 package com.atlan.model.assets;
 
 import com.atlan.exception.AtlanException;
+import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -94,11 +95,7 @@ public class LookerView extends Looker {
         }
         if (!missing.isEmpty()) {
             throw new InvalidRequestException(
-                    "Required field for updating LookerView is missing.",
-                    String.join(",", missing),
-                    "ATLAN-JAVA-CLIENT-400-404",
-                    400,
-                    null);
+                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "LookerView", String.join(",", missing));
         }
         return updater(this.getQualifiedName(), this.getName());
     }
@@ -113,12 +110,11 @@ public class LookerView extends Looker {
     public static LookerView retrieveByGuid(String guid) throws AtlanException {
         Asset asset = Asset.retrieveFull(guid);
         if (asset == null) {
-            throw new NotFoundException("No asset found with GUID: " + guid, "ATLAN_JAVA_CLIENT-404-001", 404, null);
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
         } else if (asset instanceof LookerView) {
             return (LookerView) asset;
         } else {
-            throw new NotFoundException(
-                    "Asset with GUID " + guid + " is not a LookerView.", "ATLAN_JAVA_CLIENT-404-002", 404, null);
+            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "LookerView");
         }
     }
 
@@ -134,8 +130,7 @@ public class LookerView extends Looker {
         if (asset instanceof LookerView) {
             return (LookerView) asset;
         } else {
-            throw new NotFoundException(
-                    "No LookerView found with qualifiedName: " + qualifiedName, "ATLAN_JAVA_CLIENT-404-003", 404, null);
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "LookerView");
         }
     }
 

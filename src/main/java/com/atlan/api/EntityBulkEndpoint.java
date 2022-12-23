@@ -4,6 +4,7 @@ package com.atlan.api;
 
 import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
+import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.assets.Asset;
 import com.atlan.model.core.AssetMutationResponse;
@@ -100,12 +101,7 @@ public class EntityBulkEndpoint {
                         ApiResource.RequestMethod.DELETE, url, "", AssetMutationResponse.class, null);
             }
         }
-        throw new InvalidRequestException(
-                "Insufficient information provided to delete assets: no GUID provided.",
-                "guid",
-                "ATLAN-JAVA-CLIENT-400",
-                400,
-                null);
+        throw new InvalidRequestException(ErrorCode.MISSING_GUID_FOR_DELETE);
     }
 
     /**

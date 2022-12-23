@@ -4,6 +4,7 @@ package com.atlan;
 
 /* Based on original code from https://github.com/stripe/stripe-java (under MIT license) */
 import com.atlan.exception.ApiConnectionException;
+import com.atlan.exception.ErrorCode;
 import java.net.PasswordAuthentication;
 import java.net.Proxy;
 import java.util.HashMap;
@@ -53,8 +54,7 @@ public abstract class Atlan {
      */
     public static String getBaseUrl() throws ApiConnectionException {
         if (apiBase == null) {
-            throw new ApiConnectionException(
-                    "No base URL is configured. You must first use Atlan.setBaseUrl() before making an API call.");
+            throw new ApiConnectionException(ErrorCode.NO_BASE_URL);
         } else {
             return apiBase;
         }

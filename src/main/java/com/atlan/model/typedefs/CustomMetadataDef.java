@@ -5,7 +5,6 @@ package com.atlan.model.typedefs;
 import com.atlan.api.TypeDefsEndpoint;
 import com.atlan.cache.CustomMetadataCache;
 import com.atlan.exception.AtlanException;
-import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.enums.AtlanTypeCategory;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -84,15 +83,6 @@ public class CustomMetadataDef extends TypeDef {
      */
     public static void purge(String displayName) throws AtlanException {
         String internalName = CustomMetadataCache.getIdForName(displayName);
-        if (internalName != null) {
-            TypeDefsEndpoint.purgeTypeDef(internalName);
-        } else {
-            throw new InvalidRequestException(
-                    "Unable to find a custom metadata definition with the name: " + displayName,
-                    "name",
-                    "ATLAN-CLIENT-400-012",
-                    400,
-                    null);
-        }
+        TypeDefsEndpoint.purgeTypeDef(internalName);
     }
 }
