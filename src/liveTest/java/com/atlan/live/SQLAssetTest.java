@@ -13,7 +13,6 @@ import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.InvalidRequestException;
-import com.atlan.exception.LogicException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.admin.AtlanGroup;
 import com.atlan.model.assets.*;
@@ -893,14 +892,13 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertTrue(response.getDeletedAssets().isEmpty());
         assertEquals(response.getUpdatedAssets().size(), 2);
         for (Asset one : response.getUpdatedAssets()) {
+            assertTrue(one instanceof Column || one instanceof GlossaryTerm);
             if (one instanceof Column) {
                 Column column = (Column) one;
                 validateUpdatedColumn(column);
-            } else if (one instanceof GlossaryTerm) {
+            } else {
                 GlossaryTerm term = (GlossaryTerm) one;
                 assertEquals(term.getGuid(), term1.getGuid());
-            } else {
-                throw new LogicException("Unexpected updated asset: " + one, "ATLAN_SDK_TEST-500-001", 500);
             }
         }
         Column updated = Column.retrieveByQualifiedName(column5.getQualifiedName());
@@ -921,14 +919,13 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertTrue(response.getDeletedAssets().isEmpty());
         assertEquals(response.getUpdatedAssets().size(), 2);
         for (Asset one : response.getUpdatedAssets()) {
+            assertTrue(one instanceof Column || one instanceof GlossaryTerm);
             if (one instanceof Column) {
                 Column column = (Column) one;
                 validateUpdatedColumn(column);
-            } else if (one instanceof GlossaryTerm) {
+            } else {
                 GlossaryTerm term = (GlossaryTerm) one;
                 assertEquals(term.getGuid(), term1.getGuid());
-            } else {
-                throw new LogicException("Unexpected updated asset: " + one, "ATLAN_SDK_TEST-500-001", 500);
             }
         }
         Column updated = Column.retrieveByQualifiedName(column5.getQualifiedName());

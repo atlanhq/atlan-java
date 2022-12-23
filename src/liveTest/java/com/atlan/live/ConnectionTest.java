@@ -9,7 +9,6 @@ import com.atlan.api.WorkflowsEndpoint;
 import com.atlan.cache.RoleCache;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.InvalidRequestException;
-import com.atlan.exception.LogicException;
 import com.atlan.model.assets.Asset;
 import com.atlan.model.assets.Connection;
 import com.atlan.model.core.AssetMutationResponse;
@@ -45,29 +44,24 @@ public class ConnectionTest extends AtlanLiveTest {
      */
     static Connection createConnection(String prefix, AtlanConnectorType type) throws AtlanException {
         String adminRoleGuid = RoleCache.getIdForName("$admin");
-        if (adminRoleGuid != null) {
-            Connection connection = Connection.creator(prefix, type, List.of(adminRoleGuid), null, null)
-                    .build();
-            AssetMutationResponse response = connection.upsert();
-            assertNotNull(response);
-            assertTrue(response.getUpdatedAssets().isEmpty());
-            assertTrue(response.getDeletedAssets().isEmpty());
-            assertEquals(response.getCreatedAssets().size(), 1);
-            Asset one = response.getCreatedAssets().get(0);
-            assertTrue(one instanceof Connection);
-            connection = (Connection) one;
-            assertNotNull(connection.getGuid());
-            assertNotNull(connection.getQualifiedName());
-            assertEquals(connection.getName(), prefix);
-            Asset minimal;
-            do {
-                minimal = Asset.retrieveMinimal(connection.getGuid());
-            } while (minimal == null);
-            return connection;
-        } else {
-            throw new LogicException(
-                    "Unable to find the $admin role in the environment.", "ATLAN_JAVA_SDK-500-002", 500);
-        }
+        Connection connection = Connection.creator(prefix, type, List.of(adminRoleGuid), null, null)
+                .build();
+        AssetMutationResponse response = connection.upsert();
+        assertNotNull(response);
+        assertTrue(response.getUpdatedAssets().isEmpty());
+        assertTrue(response.getDeletedAssets().isEmpty());
+        assertEquals(response.getCreatedAssets().size(), 1);
+        Asset one = response.getCreatedAssets().get(0);
+        assertTrue(one instanceof Connection);
+        connection = (Connection) one;
+        assertNotNull(connection.getGuid());
+        assertNotNull(connection.getQualifiedName());
+        assertEquals(connection.getName(), prefix);
+        Asset minimal;
+        do {
+            minimal = Asset.retrieveMinimal(connection.getGuid());
+        } while (minimal == null);
+        return connection;
     }
 
     /**
