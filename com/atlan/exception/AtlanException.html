@@ -178,19 +178,32 @@ extends java.lang.Exception</pre>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>protected </code></td>
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.lang.String,java.lang.String,java.lang.Integer)">AtlanException</a></span>&#8203;(java.lang.String&nbsp;message,
-              java.lang.String&nbsp;code,
-              java.lang.Integer&nbsp;statusCode)</code></th>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.atlan.exception.ErrorCode,java.lang.Throwable)">AtlanException</a></span>&#8203;(<a href="ErrorCode.html" title="enum in com.atlan.exception">ErrorCode</a>&nbsp;error,
+              java.lang.Throwable&nbsp;e)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>protected </code></td>
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.lang.String,java.lang.String,java.lang.Integer,java.lang.Throwable)">AtlanException</a></span>&#8203;(java.lang.String&nbsp;message,
-              java.lang.String&nbsp;code,
-              java.lang.Integer&nbsp;statusCode,
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.atlan.exception.ErrorCode,java.lang.Throwable,java.lang.String...)">AtlanException</a></span>&#8203;(<a href="ErrorCode.html" title="enum in com.atlan.exception">ErrorCode</a>&nbsp;error,
+              java.lang.Throwable&nbsp;e,
+              java.lang.String...&nbsp;params)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>protected </code></td>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.atlan.exception.ExceptionMessageDefinition,int)">AtlanException</a></span>&#8203;(<a href="ExceptionMessageDefinition.html" title="class in com.atlan.exception">ExceptionMessageDefinition</a>&nbsp;error,
+              int&nbsp;statusCode)</code></th>
+<td class="colLast">
+<div class="block">Only intended to be used for exceptions that we pass through the SDK.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>protected </code></td>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.atlan.exception.ExceptionMessageDefinition,int,java.lang.Throwable)">AtlanException</a></span>&#8203;(<a href="ExceptionMessageDefinition.html" title="class in com.atlan.exception">ExceptionMessageDefinition</a>&nbsp;error,
+              int&nbsp;statusCode,
               java.lang.Throwable&nbsp;e)</code></th>
 <td class="colLast">
-<div class="block">Constructs a new Atlan exception with the specified details.</div>
+<div class="block">Only intended to be used for exceptions that we pass through the SDK.</div>
 </td>
 </tr>
 </table>
@@ -281,28 +294,59 @@ extends java.lang.Exception</pre>
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a id="&lt;init&gt;(java.lang.String,java.lang.String,java.lang.Integer)">
+<a id="&lt;init&gt;(com.atlan.exception.ExceptionMessageDefinition,int)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>AtlanException</h4>
-<pre>protected&nbsp;AtlanException&#8203;(java.lang.String&nbsp;message,
-                         java.lang.String&nbsp;code,
-                         java.lang.Integer&nbsp;statusCode)</pre>
+<pre>protected&nbsp;AtlanException&#8203;(<a href="ExceptionMessageDefinition.html" title="class in com.atlan.exception">ExceptionMessageDefinition</a>&nbsp;error,
+                         int&nbsp;statusCode)</pre>
+<div class="block">Only intended to be used for exceptions that we pass through the SDK.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>error</code> - details of the error we pass through</dd>
+<dd><code>statusCode</code> - HTTP response code of the error</dd>
+</dl>
 </li>
 </ul>
-<a id="&lt;init&gt;(java.lang.String,java.lang.String,java.lang.Integer,java.lang.Throwable)">
+<a id="&lt;init&gt;(com.atlan.exception.ExceptionMessageDefinition,int,java.lang.Throwable)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>AtlanException</h4>
+<pre>protected&nbsp;AtlanException&#8203;(<a href="ExceptionMessageDefinition.html" title="class in com.atlan.exception">ExceptionMessageDefinition</a>&nbsp;error,
+                         int&nbsp;statusCode,
+                         java.lang.Throwable&nbsp;e)</pre>
+<div class="block">Only intended to be used for exceptions that we pass through the SDK.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>error</code> - details of the error we pass through</dd>
+<dd><code>statusCode</code> - HTTP response code of the error</dd>
+<dd><code>e</code> - the underlying cause of the error</dd>
+</dl>
+</li>
+</ul>
+<a id="&lt;init&gt;(com.atlan.exception.ErrorCode,java.lang.Throwable)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>AtlanException</h4>
+<pre>protected&nbsp;AtlanException&#8203;(<a href="ErrorCode.html" title="enum in com.atlan.exception">ErrorCode</a>&nbsp;error,
+                         java.lang.Throwable&nbsp;e)</pre>
+</li>
+</ul>
+<a id="&lt;init&gt;(com.atlan.exception.ErrorCode,java.lang.Throwable,java.lang.String...)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>AtlanException</h4>
-<pre>protected&nbsp;AtlanException&#8203;(java.lang.String&nbsp;message,
-                         java.lang.String&nbsp;code,
-                         java.lang.Integer&nbsp;statusCode,
-                         java.lang.Throwable&nbsp;e)</pre>
-<div class="block">Constructs a new Atlan exception with the specified details.</div>
+<pre>protected&nbsp;AtlanException&#8203;(<a href="ErrorCode.html" title="enum in com.atlan.exception">ErrorCode</a>&nbsp;error,
+                         java.lang.Throwable&nbsp;e,
+                         java.lang.String...&nbsp;params)</pre>
 </li>
 </ul>
 </li>

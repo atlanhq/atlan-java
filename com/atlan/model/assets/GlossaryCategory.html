@@ -152,7 +152,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <hr>
 <pre>public class <span class="typeNameLabel">GlossaryCategory</span>
 extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></pre>
-<div class="block">Instance of a category in Atlan, with its detailed information.</div>
+<div class="block">Instance of a GlossaryCategory in Atlan, with its detailed information.</div>
 </li>
 </ul>
 </div>
@@ -287,7 +287,7 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
        java.lang.String&nbsp;glossaryGuid,
        java.lang.String&nbsp;glossaryQualifiedName)</code></th>
 <td class="colLast">
-<div class="block">Builds the minimal object necessary for creating a category.</div>
+<div class="block">Builds the minimal object necessary for creating a GlossaryCategory.</div>
 </td>
 </tr>
 <tr id="i4" class="altColor">
@@ -306,14 +306,14 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 <td class="colFirst"><code><a href="Glossary.html" title="class in com.atlan.model.assets">Glossary</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAnchor()">getAnchor</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Glossary in which the category is located.</div>
+<div class="block">Glossary in which the GlossaryCategory is located.</div>
 </td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="GlossaryCategory.html" title="class in com.atlan.model.assets">GlossaryCategory</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getChildrenCategories()">getChildrenCategories</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Child categories organized within this category.</div>
+<div class="block">Child categories organized within this GlossaryCategory.</div>
 </td>
 </tr>
 <tr id="i8" class="altColor">
@@ -327,7 +327,7 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 <td class="colFirst"><code><a href="GlossaryCategory.html" title="class in com.atlan.model.assets">GlossaryCategory</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getParentCategory()">getParentCategory</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Parent category in which this category is located (or null if this is a root-level category).</div>
+<div class="block">Parent GlossaryCategory in which this GlossaryCategory is located (or null if this is a root-level category).</div>
 </td>
 </tr>
 <tr id="i10" class="altColor">
@@ -341,7 +341,7 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTerms()">getTerms</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Terms organized within this category.</div>
+<div class="block">Terms organized within this GlossaryCategory.</div>
 </td>
 </tr>
 <tr id="i12" class="altColor">
@@ -455,14 +455,14 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAnchor(com.atlan.model.assets.Glossary)">setAnchor</a></span>&#8203;(<a href="Glossary.html" title="class in com.atlan.model.assets">Glossary</a>&nbsp;anchor)</code></th>
 <td class="colLast">
-<div class="block">Glossary in which the category is located.</div>
+<div class="block">Glossary in which the GlossaryCategory is located.</div>
 </td>
 </tr>
 <tr id="i27" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setChildrenCategories(java.util.SortedSet)">setChildrenCategories</a></span>&#8203;(java.util.SortedSet&lt;<a href="GlossaryCategory.html" title="class in com.atlan.model.assets">GlossaryCategory</a>&gt;&nbsp;childrenCategories)</code></th>
 <td class="colLast">
-<div class="block">Child categories organized within this category.</div>
+<div class="block">Child categories organized within this GlossaryCategory.</div>
 </td>
 </tr>
 <tr id="i28" class="altColor">
@@ -476,7 +476,7 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setParentCategory(com.atlan.model.assets.GlossaryCategory)">setParentCategory</a></span>&#8203;(<a href="GlossaryCategory.html" title="class in com.atlan.model.assets">GlossaryCategory</a>&nbsp;parentCategory)</code></th>
 <td class="colLast">
-<div class="block">Parent category in which this category is located (or null if this is a root-level category).</div>
+<div class="block">Parent GlossaryCategory in which this GlossaryCategory is located (or null if this is a root-level category).</div>
 </td>
 </tr>
 <tr id="i30" class="altColor">
@@ -490,7 +490,7 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setTerms(java.util.SortedSet)">setTerms</a></span>&#8203;(java.util.SortedSet&lt;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;terms)</code></th>
 <td class="colLast">
-<div class="block">Terms organized within this category.</div>
+<div class="block">Terms organized within this GlossaryCategory.</div>
 </td>
 </tr>
 <tr id="i32" class="altColor">
@@ -542,7 +542,7 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
        java.lang.String&nbsp;name,
        java.lang.String&nbsp;glossaryGuid)</code></th>
 <td class="colLast">
-<div class="block">Builds the minimal object necessary to update a category.</div>
+<div class="block">Builds the minimal object necessary to update a GlossaryCategory.</div>
 </td>
 </tr>
 </table>
@@ -673,15 +673,15 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 <pre class="methodSignature">public static&nbsp;<a href="GlossaryCategory.GlossaryCategoryBuilder.html" title="class in com.atlan.model.assets">GlossaryCategory.GlossaryCategoryBuilder</a>&lt;?,&#8203;?&gt;&nbsp;creator&#8203;(java.lang.String&nbsp;name,
                                                                           java.lang.String&nbsp;glossaryGuid,
                                                                           java.lang.String&nbsp;glossaryQualifiedName)</pre>
-<div class="block">Builds the minimal object necessary for creating a category. At least one of glossaryGuid or
+<div class="block">Builds the minimal object necessary for creating a GlossaryCategory. At least one of glossaryGuid or
  glossaryQualifiedName must be provided.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>name</code> - of the category</dd>
-<dd><code>glossaryGuid</code> - unique identifier of the category's glossary</dd>
-<dd><code>glossaryQualifiedName</code> - unique name of the category's glossary</dd>
+<dd><code>name</code> - of the GlossaryCategory</dd>
+<dd><code>glossaryGuid</code> - unique identifier of the GlossaryCategory's glossary</dd>
+<dd><code>glossaryQualifiedName</code> - unique name of the GlossaryCategory's glossary</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the minimal object necessary to create the category, as a builder</dd>
+<dd>the minimal object necessary to create the GlossaryCategory, as a builder</dd>
 </dl>
 </li>
 </ul>
@@ -694,15 +694,14 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 <pre class="methodSignature">public static&nbsp;<a href="GlossaryCategory.GlossaryCategoryBuilder.html" title="class in com.atlan.model.assets">GlossaryCategory.GlossaryCategoryBuilder</a>&lt;?,&#8203;?&gt;&nbsp;updater&#8203;(java.lang.String&nbsp;qualifiedName,
                                                                           java.lang.String&nbsp;name,
                                                                           java.lang.String&nbsp;glossaryGuid)</pre>
-<div class="block">Builds the minimal object necessary to update a category. At least one of glossaryGuid or
- glossaryQualifiedName must be provided.</div>
+<div class="block">Builds the minimal object necessary to update a GlossaryCategory.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>qualifiedName</code> - of the category</dd>
-<dd><code>name</code> - of the category</dd>
-<dd><code>glossaryGuid</code> - unique identifier of the category's glossary</dd>
+<dd><code>qualifiedName</code> - of the GlossaryCategory</dd>
+<dd><code>name</code> - of the GlossaryCategory</dd>
+<dd><code>glossaryGuid</code> - unique identifier of the GlossaryCategory's glossary</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the minimal object necessary to update the category, as a builder</dd>
+<dd>the minimal request necessary to update the GlossaryCategory, as a builder</dd>
 </dl>
 </li>
 </ul>
@@ -722,7 +721,7 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the minimal object necessary to update the GlossaryCategory, as a builder</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></code> - InvalidRequestException if any of the minimal set of required properties for GlossaryCategory are not found in the initial object</dd>
+<dd><code><a href="../../exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></code> - if any of the minimal set of required properties for GlossaryCategory are not found in the initial object</dd>
 </dl>
 </li>
 </ul>
@@ -917,7 +916,7 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>qualifiedName</code> - of the GlossaryCategory</dd>
-<dd><code>name</code> - of the category</dd>
+<dd><code>name</code> - of the GlossaryCategory</dd>
 <dd><code>glossaryGuid</code> - unique ID (GUID) of the GlossaryCategory's glossary</dd>
 <dd><code>type</code> - type of announcement to set</dd>
 <dd><code>title</code> - (optional) title of the announcement to set (or null for no title)</dd>
@@ -1057,7 +1056,7 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 <li class="blockList">
 <h4>getTerms</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;getTerms()</pre>
-<div class="block">Terms organized within this category.</div>
+<div class="block">Terms organized within this GlossaryCategory.</div>
 </li>
 </ul>
 <a id="getAnchor()">
@@ -1067,7 +1066,7 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 <li class="blockList">
 <h4>getAnchor</h4>
 <pre class="methodSignature">public&nbsp;<a href="Glossary.html" title="class in com.atlan.model.assets">Glossary</a>&nbsp;getAnchor()</pre>
-<div class="block">Glossary in which the category is located.</div>
+<div class="block">Glossary in which the GlossaryCategory is located.</div>
 </li>
 </ul>
 <a id="getParentCategory()">
@@ -1077,7 +1076,7 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 <li class="blockList">
 <h4>getParentCategory</h4>
 <pre class="methodSignature">public&nbsp;<a href="GlossaryCategory.html" title="class in com.atlan.model.assets">GlossaryCategory</a>&nbsp;getParentCategory()</pre>
-<div class="block">Parent category in which this category is located (or null if this is a root-level category).</div>
+<div class="block">Parent GlossaryCategory in which this GlossaryCategory is located (or null if this is a root-level category).</div>
 </li>
 </ul>
 <a id="getChildrenCategories()">
@@ -1087,7 +1086,7 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 <li class="blockList">
 <h4>getChildrenCategories</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="GlossaryCategory.html" title="class in com.atlan.model.assets">GlossaryCategory</a>&gt;&nbsp;getChildrenCategories()</pre>
-<div class="block">Child categories organized within this category.</div>
+<div class="block">Child categories organized within this GlossaryCategory.</div>
 </li>
 </ul>
 <a id="setShortDescription(java.lang.String)">
@@ -1135,7 +1134,7 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 <li class="blockList">
 <h4>setTerms</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;setTerms&#8203;(java.util.SortedSet&lt;<a href="GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a>&gt;&nbsp;terms)</pre>
-<div class="block">Terms organized within this category.</div>
+<div class="block">Terms organized within this GlossaryCategory.</div>
 </li>
 </ul>
 <a id="setAnchor(com.atlan.model.assets.Glossary)">
@@ -1145,7 +1144,7 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 <li class="blockList">
 <h4>setAnchor</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;setAnchor&#8203;(<a href="Glossary.html" title="class in com.atlan.model.assets">Glossary</a>&nbsp;anchor)</pre>
-<div class="block">Glossary in which the category is located.</div>
+<div class="block">Glossary in which the GlossaryCategory is located.</div>
 </li>
 </ul>
 <a id="setParentCategory(com.atlan.model.assets.GlossaryCategory)">
@@ -1155,7 +1154,7 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 <li class="blockList">
 <h4>setParentCategory</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;setParentCategory&#8203;(<a href="GlossaryCategory.html" title="class in com.atlan.model.assets">GlossaryCategory</a>&nbsp;parentCategory)</pre>
-<div class="block">Parent category in which this category is located (or null if this is a root-level category).</div>
+<div class="block">Parent GlossaryCategory in which this GlossaryCategory is located (or null if this is a root-level category).</div>
 </li>
 </ul>
 <a id="setChildrenCategories(java.util.SortedSet)">
@@ -1165,7 +1164,7 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 <li class="blockList">
 <h4>setChildrenCategories</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;setChildrenCategories&#8203;(java.util.SortedSet&lt;<a href="GlossaryCategory.html" title="class in com.atlan.model.assets">GlossaryCategory</a>&gt;&nbsp;childrenCategories)</pre>
-<div class="block">Child categories organized within this category.</div>
+<div class="block">Child categories organized within this GlossaryCategory.</div>
 </li>
 </ul>
 <a id="equals(java.lang.Object)">

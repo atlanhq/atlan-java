@@ -171,16 +171,18 @@ extends <a href="AtlanException.html" title="class in com.atlan.exception">Atlan
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.lang.String,java.lang.String,java.lang.Integer,java.lang.Throwable)">NotFoundException</a></span>&#8203;(java.lang.String&nbsp;message,
-                 java.lang.String&nbsp;code,
-                 java.lang.Integer&nbsp;statusCode,
-                 java.lang.Throwable&nbsp;e)</code></th>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.atlan.exception.ErrorCode,java.lang.String...)">NotFoundException</a></span>&#8203;(<a href="ErrorCode.html" title="enum in com.atlan.exception">ErrorCode</a>&nbsp;error,
+                 java.lang.String...&nbsp;params)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.lang.String,java.lang.String,java.lang.Throwable)">NotFoundException</a></span>&#8203;(java.lang.String&nbsp;message,
-                 java.lang.String&nbsp;code,
-                 java.lang.Throwable&nbsp;e)</code></th>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.atlan.exception.ErrorCode,java.lang.Throwable,java.lang.String...)">NotFoundException</a></span>&#8203;(<a href="ErrorCode.html" title="enum in com.atlan.exception">ErrorCode</a>&nbsp;error,
+                 java.lang.Throwable&nbsp;e,
+                 java.lang.String...&nbsp;params)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.atlan.exception.ExceptionMessageDefinition)">NotFoundException</a></span>&#8203;(<a href="ExceptionMessageDefinition.html" title="class in com.atlan.exception">ExceptionMessageDefinition</a>&nbsp;error)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
@@ -231,27 +233,34 @@ extends <a href="AtlanException.html" title="class in com.atlan.exception">Atlan
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a id="&lt;init&gt;(java.lang.String,java.lang.String,java.lang.Throwable)">
+<a id="&lt;init&gt;(com.atlan.exception.ErrorCode,java.lang.String...)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>NotFoundException</h4>
-<pre>public&nbsp;NotFoundException&#8203;(java.lang.String&nbsp;message,
-                         java.lang.String&nbsp;code,
-                         java.lang.Throwable&nbsp;e)</pre>
+<pre>public&nbsp;NotFoundException&#8203;(<a href="ErrorCode.html" title="enum in com.atlan.exception">ErrorCode</a>&nbsp;error,
+                         java.lang.String...&nbsp;params)</pre>
 </li>
 </ul>
-<a id="&lt;init&gt;(java.lang.String,java.lang.String,java.lang.Integer,java.lang.Throwable)">
+<a id="&lt;init&gt;(com.atlan.exception.ErrorCode,java.lang.Throwable,java.lang.String...)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>NotFoundException</h4>
+<pre>public&nbsp;NotFoundException&#8203;(<a href="ErrorCode.html" title="enum in com.atlan.exception">ErrorCode</a>&nbsp;error,
+                         java.lang.Throwable&nbsp;e,
+                         java.lang.String...&nbsp;params)</pre>
+</li>
+</ul>
+<a id="&lt;init&gt;(com.atlan.exception.ExceptionMessageDefinition)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>NotFoundException</h4>
-<pre>public&nbsp;NotFoundException&#8203;(java.lang.String&nbsp;message,
-                         java.lang.String&nbsp;code,
-                         java.lang.Integer&nbsp;statusCode,
-                         java.lang.Throwable&nbsp;e)</pre>
+<pre>public&nbsp;NotFoundException&#8203;(<a href="ExceptionMessageDefinition.html" title="class in com.atlan.exception">ExceptionMessageDefinition</a>&nbsp;error)</pre>
 </li>
 </ul>
 </li>

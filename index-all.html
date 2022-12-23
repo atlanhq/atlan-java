@@ -1049,16 +1049,18 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">Error that occurs when there is an intermittent issue with the API, such as a network outage or an inability
  to connect due to an incorrect URL.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/atlan/exception/ApiConnectionException.html#%3Cinit%3E(java.lang.String)">ApiConnectionException(String)</a></span> - Constructor for exception com.atlan.exception.<a href="com/atlan/exception/ApiConnectionException.html" title="class in com.atlan.exception">ApiConnectionException</a></dt>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/ApiConnectionException.html#%3Cinit%3E(com.atlan.exception.ErrorCode)">ApiConnectionException(ErrorCode)</a></span> - Constructor for exception com.atlan.exception.<a href="com/atlan/exception/ApiConnectionException.html" title="class in com.atlan.exception">ApiConnectionException</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/atlan/exception/ApiConnectionException.html#%3Cinit%3E(java.lang.String,java.lang.Throwable)">ApiConnectionException(String, Throwable)</a></span> - Constructor for exception com.atlan.exception.<a href="com/atlan/exception/ApiConnectionException.html" title="class in com.atlan.exception">ApiConnectionException</a></dt>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/ApiConnectionException.html#%3Cinit%3E(com.atlan.exception.ErrorCode,java.lang.Throwable,java.lang.String...)">ApiConnectionException(ErrorCode, Throwable, String...)</a></span> - Constructor for exception com.atlan.exception.<a href="com/atlan/exception/ApiConnectionException.html" title="class in com.atlan.exception">ApiConnectionException</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/atlan/exception/ApiException.html" title="class in com.atlan.exception"><span class="typeNameLink">ApiException</span></a> - Exception in <a href="com/atlan/exception/package-summary.html">com.atlan.exception</a></dt>
 <dd>
 <div class="block">Error that occurs when the SDK receives a response that indicates a problem, but that the SDK currently has no
  other way of interpreting.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/atlan/exception/ApiException.html#%3Cinit%3E(java.lang.String,java.lang.String,java.lang.Integer,java.lang.Throwable)">ApiException(String, String, Integer, Throwable)</a></span> - Constructor for exception com.atlan.exception.<a href="com/atlan/exception/ApiException.html" title="class in com.atlan.exception">ApiException</a></dt>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/ApiException.html#%3Cinit%3E(com.atlan.exception.ErrorCode,java.lang.Throwable,java.lang.String...)">ApiException(ErrorCode, Throwable, String...)</a></span> - Constructor for exception com.atlan.exception.<a href="com/atlan/exception/ApiException.html" title="class in com.atlan.exception">ApiException</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/ApiException.html#%3Cinit%3E(com.atlan.exception.ExceptionMessageDefinition)">ApiException(ExceptionMessageDefinition)</a></span> - Constructor for exception com.atlan.exception.<a href="com/atlan/exception/ApiException.html" title="class in com.atlan.exception">ApiException</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/API.APIBuilder.html#apiExternalDoc(java.lang.String,java.lang.String)">apiExternalDoc(String, String)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/API.APIBuilder.html" title="class in com.atlan.model.assets">API.APIBuilder</a></dt>
 <dd>&nbsp;</dd>
@@ -1506,6 +1508,14 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Asset.html#%3Cinit%3E(com.atlan.model.assets.Asset.AssetBuilder)">Asset(Asset.AssetBuilder&lt;?, ?&gt;)</a></span> - Constructor for class com.atlan.model.assets.<a href="com/atlan/model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/ErrorCode.html#ASSET_NOT_FOUND_BY_GUID">ASSET_NOT_FOUND_BY_GUID</a></span> - com.atlan.exception.<a href="com/atlan/exception/ErrorCode.html" title="enum in com.atlan.exception">ErrorCode</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/ErrorCode.html#ASSET_NOT_FOUND_BY_NAME">ASSET_NOT_FOUND_BY_NAME</a></span> - com.atlan.exception.<a href="com/atlan/exception/ErrorCode.html" title="enum in com.atlan.exception">ErrorCode</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/ErrorCode.html#ASSET_NOT_FOUND_BY_QN">ASSET_NOT_FOUND_BY_QN</a></span> - com.atlan.exception.<a href="com/atlan/exception/ErrorCode.html" title="enum in com.atlan.exception">ErrorCode</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/ErrorCode.html#ASSET_NOT_TYPE_REQUESTED">ASSET_NOT_TYPE_REQUESTED</a></span> - com.atlan.exception.<a href="com/atlan/exception/ErrorCode.html" title="enum in com.atlan.exception">ErrorCode</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/atlan/model/assets/Asset.AssetBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Asset.AssetBuilder</span></a>&lt;<a href="com/atlan/model/assets/Asset.AssetBuilder.html" title="type parameter in Asset.AssetBuilder">C</a> extends <a href="com/atlan/model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>,&#8203;<a href="com/atlan/model/assets/Asset.AssetBuilder.html" title="type parameter in Asset.AssetBuilder">B</a> extends <a href="com/atlan/model/assets/Asset.AssetBuilder.html" title="class in com.atlan.model.assets">Asset.AssetBuilder</a>&lt;<a href="com/atlan/model/assets/Asset.AssetBuilder.html" title="type parameter in Asset.AssetBuilder">C</a>,&#8203;<a href="com/atlan/model/assets/Asset.AssetBuilder.html" title="type parameter in Asset.AssetBuilder">B</a>&gt;&gt; - Class in <a href="com/atlan/model/assets/package-summary.html">com.atlan.model.assets</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Asset.AssetBuilder.html#%3Cinit%3E()">AssetBuilder()</a></span> - Constructor for class com.atlan.model.assets.<a href="com/atlan/model/assets/Asset.AssetBuilder.html" title="class in com.atlan.model.assets">Asset.AssetBuilder</a></dt>
@@ -1682,11 +1692,17 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Base class for any error raised by interactions with Atlan's APIs.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/atlan/exception/AtlanException.html#%3Cinit%3E(java.lang.String,java.lang.String,java.lang.Integer)">AtlanException(String, String, Integer)</a></span> - Constructor for exception com.atlan.exception.<a href="com/atlan/exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></dt>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/AtlanException.html#%3Cinit%3E(com.atlan.exception.ErrorCode,java.lang.Throwable)">AtlanException(ErrorCode, Throwable)</a></span> - Constructor for exception com.atlan.exception.<a href="com/atlan/exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/atlan/exception/AtlanException.html#%3Cinit%3E(java.lang.String,java.lang.String,java.lang.Integer,java.lang.Throwable)">AtlanException(String, String, Integer, Throwable)</a></span> - Constructor for exception com.atlan.exception.<a href="com/atlan/exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></dt>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/AtlanException.html#%3Cinit%3E(com.atlan.exception.ErrorCode,java.lang.Throwable,java.lang.String...)">AtlanException(ErrorCode, Throwable, String...)</a></span> - Constructor for exception com.atlan.exception.<a href="com/atlan/exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/AtlanException.html#%3Cinit%3E(com.atlan.exception.ExceptionMessageDefinition,int)">AtlanException(ExceptionMessageDefinition, int)</a></span> - Constructor for exception com.atlan.exception.<a href="com/atlan/exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></dt>
 <dd>
-<div class="block">Constructs a new Atlan exception with the specified details.</div>
+<div class="block">Only intended to be used for exceptions that we pass through the SDK.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/AtlanException.html#%3Cinit%3E(com.atlan.exception.ExceptionMessageDefinition,int,java.lang.Throwable)">AtlanException(ExceptionMessageDefinition, int, Throwable)</a></span> - Constructor for exception com.atlan.exception.<a href="com/atlan/exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></dt>
+<dd>
+<div class="block">Only intended to be used for exceptions that we pass through the SDK.</div>
 </dd>
 <dt><a href="com/atlan/model/admin/AtlanGroup.html" title="class in com.atlan.model.admin"><span class="typeNameLink">AtlanGroup</span></a> - Class in <a href="com/atlan/model/admin/package-summary.html">com.atlan.model.admin</a></dt>
 <dd>&nbsp;</dd>
@@ -1899,9 +1915,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Error that occurs when there is a problem with the API token configured in the SDK.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/atlan/exception/AuthenticationException.html#%3Cinit%3E(java.lang.String,java.lang.String)">AuthenticationException(String, String)</a></span> - Constructor for exception com.atlan.exception.<a href="com/atlan/exception/AuthenticationException.html" title="class in com.atlan.exception">AuthenticationException</a></dt>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/AuthenticationException.html#%3Cinit%3E(com.atlan.exception.ErrorCode)">AuthenticationException(ErrorCode)</a></span> - Constructor for exception com.atlan.exception.<a href="com/atlan/exception/AuthenticationException.html" title="class in com.atlan.exception">AuthenticationException</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/atlan/exception/AuthenticationException.html#%3Cinit%3E(java.lang.String,java.lang.String,java.lang.Integer)">AuthenticationException(String, String, Integer)</a></span> - Constructor for exception com.atlan.exception.<a href="com/atlan/exception/AuthenticationException.html" title="class in com.atlan.exception">AuthenticationException</a></dt>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/AuthenticationException.html#%3Cinit%3E(com.atlan.exception.ExceptionMessageDefinition)">AuthenticationException(ExceptionMessageDefinition)</a></span> - Constructor for exception com.atlan.exception.<a href="com/atlan/exception/AuthenticationException.html" title="class in com.atlan.exception">AuthenticationException</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/AuthenticationException.html#%3Cinit%3E(com.atlan.exception.ExceptionMessageDefinition,int)">AuthenticationException(ExceptionMessageDefinition, int)</a></span> - Constructor for exception com.atlan.exception.<a href="com/atlan/exception/AuthenticationException.html" title="class in com.atlan.exception">AuthenticationException</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/typedefs/AttributeDef.AttributeDefBuilder.html#autoUpdateAttributes(java.util.Map)">autoUpdateAttributes(Map&lt;String, List&lt;String&gt;&gt;)</a></span> - Method in class com.atlan.model.typedefs.<a href="com/atlan/model/typedefs/AttributeDef.AttributeDefBuilder.html" title="class in com.atlan.model.typedefs">AttributeDef.AttributeDefBuilder</a></dt>
 <dd>&nbsp;</dd>
@@ -2036,6 +2054,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">List of the top buckets that resulted from the aggregation.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/ExceptionMessageDefinition.ExceptionMessageDefinitionBuilder.html#build()">build()</a></span> - Method in class com.atlan.exception.<a href="com/atlan/exception/ExceptionMessageDefinition.ExceptionMessageDefinitionBuilder.html" title="class in com.atlan.exception">ExceptionMessageDefinition.ExceptionMessageDefinitionBuilder</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/admin/AbstractPersonaPolicy.AbstractPersonaPolicyBuilder.html#build()">build()</a></span> - Method in class com.atlan.model.admin.<a href="com/atlan/model/admin/AbstractPersonaPolicy.AbstractPersonaPolicyBuilder.html" title="class in com.atlan.model.admin">AbstractPersonaPolicy.AbstractPersonaPolicyBuilder</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/admin/AbstractPolicy.AbstractPolicyBuilder.html#build()">build()</a></span> - Method in class com.atlan.model.admin.<a href="com/atlan/model/admin/AbstractPolicy.AbstractPolicyBuilder.html" title="class in com.atlan.model.admin">AbstractPolicy.AbstractPolicyBuilder</a></dt>
@@ -2396,6 +2416,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Constructs a <a href="com/atlan/net/RequestOptions.html" title="class in com.atlan.net"><code>RequestOptions</code></a> with the specified values.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/ExceptionMessageDefinition.html#builder()">builder()</a></span> - Static method in class com.atlan.exception.<a href="com/atlan/exception/ExceptionMessageDefinition.html" title="class in com.atlan.exception">ExceptionMessageDefinition</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/admin/AtlanGroup.html#builder()">builder()</a></span> - Static method in class com.atlan.model.admin.<a href="com/atlan/model/admin/AtlanGroup.html" title="class in com.atlan.model.admin">AtlanGroup</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/admin/AtlanGroup.GroupAttributes.html#builder()">builder()</a></span> - Static method in class com.atlan.model.admin.<a href="com/atlan/model/admin/AtlanGroup.GroupAttributes.html" title="class in com.atlan.model.admin">AtlanGroup.GroupAttributes</a></dt>
@@ -3252,6 +3274,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/enums/AuditActionType.html#CLASSIFICATION_DELETE">CLASSIFICATION_DELETE</a></span> - com.atlan.model.enums.<a href="com/atlan/model/enums/AuditActionType.html" title="enum in com.atlan.model.enums">AuditActionType</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/ErrorCode.html#CLASSIFICATION_NOT_FOUND_BY_ID">CLASSIFICATION_NOT_FOUND_BY_ID</a></span> - com.atlan.exception.<a href="com/atlan/exception/ErrorCode.html" title="enum in com.atlan.exception">ErrorCode</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/ErrorCode.html#CLASSIFICATION_NOT_FOUND_BY_NAME">CLASSIFICATION_NOT_FOUND_BY_NAME</a></span> - com.atlan.exception.<a href="com/atlan/exception/ErrorCode.html" title="enum in com.atlan.exception">ErrorCode</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/atlan/model/core/Classification.ClassificationBuilder.html" title="class in com.atlan.model.core"><span class="typeNameLink">Classification.ClassificationBuilder</span></a>&lt;<a href="com/atlan/model/core/Classification.ClassificationBuilder.html" title="type parameter in Classification.ClassificationBuilder">C</a> extends <a href="com/atlan/model/core/Classification.html" title="class in com.atlan.model.core">Classification</a>,&#8203;<a href="com/atlan/model/core/Classification.ClassificationBuilder.html" title="type parameter in Classification.ClassificationBuilder">B</a> extends <a href="com/atlan/model/core/Classification.ClassificationBuilder.html" title="class in com.atlan.model.core">Classification.ClassificationBuilder</a>&lt;<a href="com/atlan/model/core/Classification.ClassificationBuilder.html" title="type parameter in Classification.ClassificationBuilder">C</a>,&#8203;<a href="com/atlan/model/core/Classification.ClassificationBuilder.html" title="type parameter in Classification.ClassificationBuilder">B</a>&gt;&gt; - Class in <a href="com/atlan/model/core/package-summary.html">com.atlan.model.core</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/core/Classification.ClassificationBuilder.html#%3Cinit%3E()">ClassificationBuilder()</a></span> - Constructor for class com.atlan.model.core.<a href="com/atlan/model/core/Classification.ClassificationBuilder.html" title="class in com.atlan.model.core">Classification.ClassificationBuilder</a></dt>
@@ -3776,6 +3802,16 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/workflow/WorkflowTemplateRef.WorkflowTemplateRefBuilder.html#clusterScope(java.lang.Boolean)">clusterScope(Boolean)</a></span> - Method in class com.atlan.model.workflow.<a href="com/atlan/model/workflow/WorkflowTemplateRef.WorkflowTemplateRefBuilder.html" title="class in com.atlan.model.workflow">WorkflowTemplateRef.WorkflowTemplateRefBuilder</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/ErrorCode.html#CM_ATTR_NOT_FOUND_BY_ID">CM_ATTR_NOT_FOUND_BY_ID</a></span> - com.atlan.exception.<a href="com/atlan/exception/ErrorCode.html" title="enum in com.atlan.exception">ErrorCode</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/ErrorCode.html#CM_ATTR_NOT_FOUND_BY_NAME">CM_ATTR_NOT_FOUND_BY_NAME</a></span> - com.atlan.exception.<a href="com/atlan/exception/ErrorCode.html" title="enum in com.atlan.exception">ErrorCode</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/ErrorCode.html#CM_NO_ATTRIBUTES">CM_NO_ATTRIBUTES</a></span> - com.atlan.exception.<a href="com/atlan/exception/ErrorCode.html" title="enum in com.atlan.exception">ErrorCode</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/ErrorCode.html#CM_NOT_FOUND_BY_ID">CM_NOT_FOUND_BY_ID</a></span> - com.atlan.exception.<a href="com/atlan/exception/ErrorCode.html" title="enum in com.atlan.exception">ErrorCode</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/ErrorCode.html#CM_NOT_FOUND_BY_NAME">CM_NOT_FOUND_BY_NAME</a></span> - com.atlan.exception.<a href="com/atlan/exception/ErrorCode.html" title="enum in com.atlan.exception">ErrorCode</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/AbstractProcess.AbstractProcessBuilder.html#code(java.lang.String)">code(String)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/AbstractProcess.AbstractProcessBuilder.html" title="class in com.atlan.model.assets">AbstractProcess.AbstractProcessBuilder</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/AtlanQuery.AtlanQueryBuilder.html#collectionQualifiedName(java.lang.String)">collectionQualifiedName(String)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/AtlanQuery.AtlanQueryBuilder.html" title="class in com.atlan.model.assets">AtlanQuery.AtlanQueryBuilder</a></dt>
@@ -3965,15 +4001,17 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Error that occurs if the operation being attempted hits a conflict within Atlan.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/atlan/exception/ConflictException.html#%3Cinit%3E(java.lang.String,java.lang.String,java.lang.Integer,java.lang.Throwable)">ConflictException(String, String, Integer, Throwable)</a></span> - Constructor for exception com.atlan.exception.<a href="com/atlan/exception/ConflictException.html" title="class in com.atlan.exception">ConflictException</a></dt>
-<dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/atlan/exception/ConflictException.html#%3Cinit%3E(java.lang.String,java.lang.String,java.lang.Throwable)">ConflictException(String, String, Throwable)</a></span> - Constructor for exception com.atlan.exception.<a href="com/atlan/exception/ConflictException.html" title="class in com.atlan.exception">ConflictException</a></dt>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/ConflictException.html#%3Cinit%3E(com.atlan.exception.ExceptionMessageDefinition)">ConflictException(ExceptionMessageDefinition)</a></span> - Constructor for exception com.atlan.exception.<a href="com/atlan/exception/ConflictException.html" title="class in com.atlan.exception">ConflictException</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/atlan/model/assets/Connection.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Connection</span></a> - Class in <a href="com/atlan/model/assets/package-summary.html">com.atlan.model.assets</a></dt>
 <dd>
 <div class="block">Instance of a connection in Atlan, with its detailed information.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Connection.html#%3Cinit%3E(com.atlan.model.assets.Connection.ConnectionBuilder)">Connection(Connection.ConnectionBuilder&lt;?, ?&gt;)</a></span> - Constructor for class com.atlan.model.assets.<a href="com/atlan/model/assets/Connection.html" title="class in com.atlan.model.assets">Connection</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/ErrorCode.html#CONNECTION_ERROR">CONNECTION_ERROR</a></span> - com.atlan.exception.<a href="com/atlan/exception/ErrorCode.html" title="enum in com.atlan.exception">ErrorCode</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/ErrorCode.html#CONNECTION_NOT_FOUND_BY_NAME">CONNECTION_NOT_FOUND_BY_NAME</a></span> - com.atlan.exception.<a href="com/atlan/exception/ErrorCode.html" title="enum in com.atlan.exception">ErrorCode</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/atlan/model/assets/Connection.ConnectionBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Connection.ConnectionBuilder</span></a>&lt;<a href="com/atlan/model/assets/Connection.ConnectionBuilder.html" title="type parameter in Connection.ConnectionBuilder">C</a> extends <a href="com/atlan/model/assets/Connection.html" title="class in com.atlan.model.assets">Connection</a>,&#8203;<a href="com/atlan/model/assets/Connection.ConnectionBuilder.html" title="type parameter in Connection.ConnectionBuilder">B</a> extends <a href="com/atlan/model/assets/Connection.ConnectionBuilder.html" title="class in com.atlan.model.assets">Connection.ConnectionBuilder</a>&lt;<a href="com/atlan/model/assets/Connection.ConnectionBuilder.html" title="type parameter in Connection.ConnectionBuilder">C</a>,&#8203;<a href="com/atlan/model/assets/Connection.ConnectionBuilder.html" title="type parameter in Connection.ConnectionBuilder">B</a>&gt;&gt; - Class in <a href="com/atlan/model/assets/package-summary.html">com.atlan.model.assets</a></dt>
 <dd>&nbsp;</dd>
@@ -4142,7 +4180,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Glossary.html#creator(java.lang.String)">creator(String)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Glossary.html" title="class in com.atlan.model.assets">Glossary</a></dt>
 <dd>
-<div class="block">Builds the minimal object necessary for creating a glossary.</div>
+<div class="block">Builds the minimal object necessary for creating a Glossary.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/typedefs/CustomMetadataDef.html#creator(java.lang.String)">creator(String)</a></span> - Static method in class com.atlan.model.typedefs.<a href="com/atlan/model/typedefs/CustomMetadataDef.html" title="class in com.atlan.model.typedefs">CustomMetadataDef</a></dt>
 <dd>
@@ -4230,7 +4268,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/GlossaryCategory.html#creator(java.lang.String,java.lang.String,java.lang.String)">creator(String, String, String)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/GlossaryCategory.html" title="class in com.atlan.model.assets">GlossaryCategory</a></dt>
 <dd>
-<div class="block">Builds the minimal object necessary for creating a category.</div>
+<div class="block">Builds the minimal object necessary for creating a GlossaryCategory.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/GlossaryTerm.html#creator(java.lang.String,java.lang.String,java.lang.String)">creator(String, String, String)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a></dt>
 <dd>
@@ -4932,6 +4970,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/search/IndexSearchRequest.IndexSearchRequestBuilder.html#dsl(com.atlan.model.search.IndexSearchDSL)">dsl(IndexSearchDSL)</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/IndexSearchRequest.IndexSearchRequestBuilder.html" title="class in com.atlan.model.search">IndexSearchRequest.IndexSearchRequestBuilder</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/ErrorCode.html#DUPLICATE_CUSTOM_ATTRIBUTES">DUPLICATE_CUSTOM_ATTRIBUTES</a></span> - com.atlan.exception.<a href="com/atlan/exception/ErrorCode.html" title="enum in com.atlan.exception">ErrorCode</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/enums/AtlanConnectorType.html#DYNAMODB">DYNAMODB</a></span> - com.atlan.model.enums.<a href="com/atlan/model/enums/AtlanConnectorType.html" title="enum in com.atlan.model.enums">AtlanConnectorType</a></dt>
 <dd>&nbsp;</dd>
 </dl>
@@ -4987,6 +5027,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/atlan/model/typedefs/CustomMetadataOptions.CustomMetadataOptionsBuilder.html#emoji(java.lang.String)">emoji(String)</a></span> - Method in class com.atlan.model.typedefs.<a href="com/atlan/model/typedefs/CustomMetadataOptions.CustomMetadataOptionsBuilder.html" title="class in com.atlan.model.typedefs">CustomMetadataOptions.CustomMetadataOptionsBuilder</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/enums/LinkIconType.html#EMOJI">EMOJI</a></span> - com.atlan.model.enums.<a href="com/atlan/model/enums/LinkIconType.html" title="enum in com.atlan.model.enums">LinkIconType</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/ErrorCode.html#EMPTY_API_TOKEN">EMPTY_API_TOKEN</a></span> - com.atlan.exception.<a href="com/atlan/exception/ErrorCode.html" title="enum in com.atlan.exception">ErrorCode</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/serde/Removable.html#EMPTY_LIST">EMPTY_LIST</a></span> - Static variable in class com.atlan.serde.<a href="com/atlan/serde/Removable.html" title="class in com.atlan.serde">Removable</a></dt>
 <dd>
@@ -5082,6 +5124,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/util/CaseInsensitiveMap.html#entrySet()">entrySet()</a></span> - Method in class com.atlan.util.<a href="com/atlan/util/CaseInsensitiveMap.html" title="class in com.atlan.util">CaseInsensitiveMap</a></dt>
 <dt><span class="memberNameLink"><a href="com/atlan/model/enums/AtlanTypeCategory.html#ENUM">ENUM</a></span> - com.atlan.model.enums.<a href="com/atlan/model/enums/AtlanTypeCategory.html" title="enum in com.atlan.model.enums">AtlanTypeCategory</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/ErrorCode.html#ENUM_NOT_FOUND">ENUM_NOT_FOUND</a></span> - com.atlan.exception.<a href="com/atlan/exception/ErrorCode.html" title="enum in com.atlan.exception">ErrorCode</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/atlan/cache/EnumCache.html" title="class in com.atlan.cache"><span class="typeNameLink">EnumCache</span></a> - Class in <a href="com/atlan/cache/package-summary.html">com.atlan.cache</a></dt>
 <dd>
@@ -5525,11 +5569,29 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/enums/AtlanWorkflowPhase.html#ERROR">ERROR</a></span> - com.atlan.model.enums.<a href="com/atlan/model/enums/AtlanWorkflowPhase.html" title="enum in com.atlan.model.enums">AtlanWorkflowPhase</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="com/atlan/exception/ErrorCode.html" title="enum in com.atlan.exception"><span class="typeNameLink">ErrorCode</span></a> - Enum in <a href="com/atlan/exception/package-summary.html">com.atlan.exception</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/ExceptionMessageDefinition.ExceptionMessageDefinitionBuilder.html#errorId(java.lang.String)">errorId(String)</a></span> - Method in class com.atlan.exception.<a href="com/atlan/exception/ExceptionMessageDefinition.ExceptionMessageDefinitionBuilder.html" title="class in com.atlan.exception">ExceptionMessageDefinition.ExceptionMessageDefinitionBuilder</a></dt>
+<dd>
+<div class="block">Unique, language-independent code for the error.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/ExceptionMessageDefinition.ExceptionMessageDefinitionBuilder.html#errorMessage(java.lang.String)">errorMessage(String)</a></span> - Method in class com.atlan.exception.<a href="com/atlan/exception/ExceptionMessageDefinition.ExceptionMessageDefinitionBuilder.html" title="class in com.atlan.exception">ExceptionMessageDefinition.ExceptionMessageDefinitionBuilder</a></dt>
+<dd>
+<div class="block">Message for the error, with optional formatting placeholders.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/search/EntityAudit.EntityAuditBuilder.html#eventKey(java.lang.String)">eventKey(String)</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/EntityAudit.EntityAuditBuilder.html" title="class in com.atlan.model.search">EntityAudit.EntityAuditBuilder</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/GlossaryTerm.GlossaryTermBuilder.html#example(java.lang.String)">example(String)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/GlossaryTerm.GlossaryTermBuilder.html" title="class in com.atlan.model.assets">GlossaryTerm.GlossaryTermBuilder</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/GlossaryTerm.GlossaryTermBuilder.html#examples(java.util.Collection)">examples(Collection&lt;? extends String&gt;)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/GlossaryTerm.GlossaryTermBuilder.html" title="class in com.atlan.model.assets">GlossaryTerm.GlossaryTermBuilder</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/atlan/exception/ExceptionMessageDefinition.html" title="class in com.atlan.exception"><span class="typeNameLink">ExceptionMessageDefinition</span></a> - Class in <a href="com/atlan/exception/package-summary.html">com.atlan.exception</a></dt>
+<dd>
+<div class="block">Class to capture the details of individual error messages.</div>
+</dd>
+<dt><a href="com/atlan/exception/ExceptionMessageDefinition.ExceptionMessageDefinitionBuilder.html" title="class in com.atlan.exception"><span class="typeNameLink">ExceptionMessageDefinition.ExceptionMessageDefinitionBuilder</span></a> - Class in <a href="com/atlan/exception/package-summary.html">com.atlan.exception</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="com/atlan/exception/ExceptionMessageSet.html" title="interface in com.atlan.exception"><span class="typeNameLink">ExceptionMessageSet</span></a> - Interface in <a href="com/atlan/exception/package-summary.html">com.atlan.exception</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/LookerField.LookerFieldBuilder.html#explore(com.atlan.model.assets.LookerExplore)">explore(LookerExplore)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/LookerField.LookerFieldBuilder.html" title="class in com.atlan.model.assets">LookerField.LookerFieldBuilder</a></dt>
 <dd>&nbsp;</dd>
@@ -5617,7 +5679,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Glossary.html#findByName(java.lang.String,java.util.Collection)">findByName(String, Collection&lt;String&gt;)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Glossary.html" title="class in com.atlan.model.assets">Glossary</a></dt>
 <dd>
-<div class="block">Find a glossary by its human-readable name.</div>
+<div class="block">Find a Glossary by its human-readable name.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/workflow/WorkflowSearchRequest.html#findByType(java.lang.String,int)">findByType(String, int)</a></span> - Static method in class com.atlan.model.workflow.<a href="com/atlan/model/workflow/WorkflowSearchRequest.html" title="class in com.atlan.model.workflow">WorkflowSearchRequest</a></dt>
 <dd>
@@ -5667,6 +5729,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/SalesforceField.SalesforceFieldBuilder.html#formula(java.lang.String)">formula(String)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SalesforceField.SalesforceFieldBuilder.html" title="class in com.atlan.model.assets">SalesforceField.SalesforceFieldBuilder</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/TableauCalculatedField.TableauCalculatedFieldBuilder.html#formula(java.lang.String)">formula(String)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/TableauCalculatedField.TableauCalculatedFieldBuilder.html" title="class in com.atlan.model.assets">TableauCalculatedField.TableauCalculatedFieldBuilder</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/ErrorCode.html#FOUND_UNEXPECTED_ASSET_TYPE">FOUND_UNEXPECTED_ASSET_TYPE</a></span> - com.atlan.exception.<a href="com/atlan/exception/ErrorCode.html" title="enum in com.atlan.exception">ErrorCode</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/search/IndexSearchDSL.IndexSearchDSLBuilder.html#from(java.lang.Integer)">from(Integer)</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/IndexSearchDSL.IndexSearchDSLBuilder.html" title="class in com.atlan.model.search">IndexSearchDSL.IndexSearchDSLBuilder</a></dt>
 <dd>&nbsp;</dd>
@@ -6043,7 +6107,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/GlossaryCategory.html#getAnchor()">getAnchor()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/GlossaryCategory.html" title="class in com.atlan.model.assets">GlossaryCategory</a></dt>
 <dd>
-<div class="block">Glossary in which the category is located.</div>
+<div class="block">Glossary in which the GlossaryCategory is located.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/GlossaryTerm.html#getAnchor()">getAnchor()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a></dt>
 <dd>
@@ -6598,7 +6662,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Glossary.html#getCategories()">getCategories()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Glossary.html" title="class in com.atlan.model.assets">Glossary</a></dt>
 <dd>
-<div class="block">Categories within this glossary.</div>
+<div class="block">Categories within this Glossary.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/GlossaryTerm.html#getCategories()">getCategories()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a></dt>
 <dd>
@@ -6667,7 +6731,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/GlossaryCategory.html#getChildrenCategories()">getChildrenCategories()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/GlossaryCategory.html" title="class in com.atlan.model.assets">GlossaryCategory</a></dt>
 <dd>
-<div class="block">Child categories organized within this category.</div>
+<div class="block">Child categories organized within this GlossaryCategory.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Namespace.html#getChildrenFolders()">getChildrenFolders()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Namespace.html" title="class in com.atlan.model.assets">Namespace</a></dt>
 <dd>
@@ -7774,9 +7838,17 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">A short string indicating the error code reported.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/ExceptionMessageDefinition.html#getErrorId()">getErrorId()</a></span> - Method in class com.atlan.exception.<a href="com/atlan/exception/ExceptionMessageDefinition.html" title="class in com.atlan.exception">ExceptionMessageDefinition</a></dt>
+<dd>
+<div class="block">Unique, language-independent code for the error.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/core/AtlanError.html#getErrorMessage()">getErrorMessage()</a></span> - Method in class com.atlan.model.core.<a href="com/atlan/model/core/AtlanError.html" title="class in com.atlan.model.core">AtlanError</a></dt>
 <dd>
 <div class="block">A human-readable message providing more details about the error.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/ExceptionMessageDefinition.html#getErrorMessage(java.lang.String...)">getErrorMessage(String...)</a></span> - Method in class com.atlan.exception.<a href="com/atlan/exception/ExceptionMessageDefinition.html" title="class in com.atlan.exception">ExceptionMessageDefinition</a></dt>
+<dd>
+<div class="block">Retrieve the formatted, parameterized error message.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/search/EntityAudit.html#getEventKey()">getEventKey()</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/EntityAudit.html" title="class in com.atlan.model.search">EntityAudit</a></dt>
 <dd>
@@ -8191,11 +8263,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Glossary.html#getHierarchy()">getHierarchy()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Glossary.html" title="class in com.atlan.model.assets">Glossary</a></dt>
 <dd>
-<div class="block">Retrieve category hierarchy in this glossary, in a traversable form.</div>
+<div class="block">Retrieve category hierarchy in this Glossary, in a traversable form.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Glossary.html#getHierarchy(java.util.List)">getHierarchy(List&lt;String&gt;)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Glossary.html" title="class in com.atlan.model.assets">Glossary</a></dt>
 <dd>
-<div class="block">Retrieve category hierarchy in this glossary, in a traversable form.</div>
+<div class="block">Retrieve category hierarchy in this Glossary, in a traversable form.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/workflow/WorkflowSearchHits.html#getHits()">getHits()</a></span> - Method in class com.atlan.model.workflow.<a href="com/atlan/model/workflow/WorkflowSearchHits.html" title="class in com.atlan.model.workflow">WorkflowSearchHits</a></dt>
 <dd>&nbsp;</dd>
@@ -8204,6 +8276,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Connection.html#getHost()">getHost()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Connection.html" title="class in com.atlan.model.assets">Connection</a></dt>
 <dd>
 <div class="block">Host name of the connection's source.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/ExceptionMessageDefinition.html#getHttpErrorCode()">getHttpErrorCode()</a></span> - Method in class com.atlan.exception.<a href="com/atlan/exception/ExceptionMessageDefinition.html" title="class in com.atlan.exception">ExceptionMessageDefinition</a></dt>
+<dd>
+<div class="block">HTTP response code for the error.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/AtlanCollection.html#getIcon()">getIcon()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/AtlanCollection.html" title="class in com.atlan.model.assets">AtlanCollection</a></dt>
 <dd>
@@ -8787,6 +8863,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/workflow/WorkflowSearchResultStatus.html#getMessage()">getMessage()</a></span> - Method in class com.atlan.model.workflow.<a href="com/atlan/model/workflow/WorkflowSearchResultStatus.html" title="class in com.atlan.model.workflow">WorkflowSearchResultStatus</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/ErrorCode.html#getMessageDefinition()">getMessageDefinition()</a></span> - Method in enum com.atlan.exception.<a href="com/atlan/exception/ErrorCode.html" title="enum in com.atlan.exception">ErrorCode</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/ExceptionMessageSet.html#getMessageDefinition()">getMessageDefinition()</a></span> - Method in interface com.atlan.exception.<a href="com/atlan/exception/ExceptionMessageSet.html" title="interface in com.atlan.exception">ExceptionMessageSet</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/MetabaseDashboard.html#getMetabaseCollection()">getMetabaseCollection()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/MetabaseDashboard.html" title="class in com.atlan.model.assets">MetabaseDashboard</a></dt>
 <dd>
 <div class="block">TBC</div>
@@ -9242,8 +9322,6 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">TBC</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/atlan/exception/InvalidRequestException.html#getParam()">getParam()</a></span> - Method in exception com.atlan.exception.<a href="com/atlan/exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></dt>
-<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/admin/PackageParameter.html#getParameter()">getParameter()</a></span> - Method in class com.atlan.model.admin.<a href="com/atlan/model/admin/PackageParameter.html" title="class in com.atlan.model.admin">PackageParameter</a></dt>
 <dd>
 <div class="block">Name of the parameter.</div>
@@ -9274,7 +9352,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/GlossaryCategory.html#getParentCategory()">getParentCategory()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/GlossaryCategory.html" title="class in com.atlan.model.assets">GlossaryCategory</a></dt>
 <dd>
-<div class="block">Parent category in which this category is located (or null if this is a root-level category).</div>
+<div class="block">Parent GlossaryCategory in which this GlossaryCategory is located (or null if this is a root-level category).</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/TableauProject.html#getParentProject()">getParentProject()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/TableauProject.html" title="class in com.atlan.model.assets">TableauProject</a></dt>
 <dd>
@@ -10675,11 +10753,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Glossary.html#getTerms()">getTerms()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Glossary.html" title="class in com.atlan.model.assets">Glossary</a></dt>
 <dd>
-<div class="block">Terms within this glossary.</div>
+<div class="block">Terms within this Glossary.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/GlossaryCategory.html#getTerms()">getTerms()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/GlossaryCategory.html" title="class in com.atlan.model.assets">GlossaryCategory</a></dt>
 <dd>
-<div class="block">Terms organized within this category.</div>
+<div class="block">Terms organized within this GlossaryCategory.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/LookerLook.html#getTile()">getTile()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/LookerLook.html" title="class in com.atlan.model.assets">LookerLook</a></dt>
 <dd>
@@ -11325,6 +11403,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">User who carried out the activity.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/ExceptionMessageDefinition.html#getUserAction()">getUserAction()</a></span> - Method in class com.atlan.exception.<a href="com/atlan/exception/ExceptionMessageDefinition.html" title="class in com.atlan.exception">ExceptionMessageDefinition</a></dt>
+<dd>
+<div class="block">Recommended action for the user to take upon observing this error.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/admin/AtlanGroup.html#getUserCount()">getUserCount()</a></span> - Method in class com.atlan.model.admin.<a href="com/atlan/model/admin/AtlanGroup.html" title="class in com.atlan.model.admin">AtlanGroup</a></dt>
 <dd>
 <div class="block">Number of users in the group.</div>
@@ -11663,13 +11745,13 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dd>
 <dt><a href="com/atlan/model/assets/Glossary.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Glossary</span></a> - Class in <a href="com/atlan/model/assets/package-summary.html">com.atlan.model.assets</a></dt>
 <dd>
-<div class="block">Instance of a glossary in Atlan, with its detailed information.</div>
+<div class="block">Instance of a Glossary in Atlan, with its detailed information.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Glossary.html#%3Cinit%3E(com.atlan.model.assets.Glossary.GlossaryBuilder)">Glossary(Glossary.GlossaryBuilder&lt;?, ?&gt;)</a></span> - Constructor for class com.atlan.model.assets.<a href="com/atlan/model/assets/Glossary.html" title="class in com.atlan.model.assets">Glossary</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/atlan/model/assets/Glossary.CategoryHierarchy.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Glossary.CategoryHierarchy</span></a> - Class in <a href="com/atlan/model/assets/package-summary.html">com.atlan.model.assets</a></dt>
 <dd>
-<div class="block">Utility class for traversing the category hierarchy in a glossary.</div>
+<div class="block">Utility class for traversing the category hierarchy in a Glossary.</div>
 </dd>
 <dt><a href="com/atlan/model/assets/Glossary.GlossaryBuilder.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Glossary.GlossaryBuilder</span></a>&lt;<a href="com/atlan/model/assets/Glossary.GlossaryBuilder.html" title="type parameter in Glossary.GlossaryBuilder">C</a> extends <a href="com/atlan/model/assets/Glossary.html" title="class in com.atlan.model.assets">Glossary</a>,&#8203;<a href="com/atlan/model/assets/Glossary.GlossaryBuilder.html" title="type parameter in Glossary.GlossaryBuilder">B</a> extends <a href="com/atlan/model/assets/Glossary.GlossaryBuilder.html" title="class in com.atlan.model.assets">Glossary.GlossaryBuilder</a>&lt;<a href="com/atlan/model/assets/Glossary.GlossaryBuilder.html" title="type parameter in Glossary.GlossaryBuilder">C</a>,&#8203;<a href="com/atlan/model/assets/Glossary.GlossaryBuilder.html" title="type parameter in Glossary.GlossaryBuilder">B</a>&gt;&gt; - Class in <a href="com/atlan/model/assets/package-summary.html">com.atlan.model.assets</a></dt>
 <dd>&nbsp;</dd>
@@ -11677,7 +11759,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><a href="com/atlan/model/assets/GlossaryCategory.html" title="class in com.atlan.model.assets"><span class="typeNameLink">GlossaryCategory</span></a> - Class in <a href="com/atlan/model/assets/package-summary.html">com.atlan.model.assets</a></dt>
 <dd>
-<div class="block">Instance of a category in Atlan, with its detailed information.</div>
+<div class="block">Instance of a GlossaryCategory in Atlan, with its detailed information.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/GlossaryCategory.html#%3Cinit%3E(com.atlan.model.assets.GlossaryCategory.GlossaryCategoryBuilder)">GlossaryCategory(GlossaryCategory.GlossaryCategoryBuilder&lt;?, ?&gt;)</a></span> - Constructor for class com.atlan.model.assets.<a href="com/atlan/model/assets/GlossaryCategory.html" title="class in com.atlan.model.assets">GlossaryCategory</a></dt>
 <dd>&nbsp;</dd>
@@ -12260,6 +12342,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Represents the content of an HTTP request, i.e.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/ExceptionMessageDefinition.ExceptionMessageDefinitionBuilder.html#httpErrorCode(int)">httpErrorCode(int)</a></span> - Method in class com.atlan.exception.<a href="com/atlan/exception/ExceptionMessageDefinition.ExceptionMessageDefinitionBuilder.html" title="class in com.atlan.exception">ExceptionMessageDefinition.ExceptionMessageDefinitionBuilder</a></dt>
+<dd>
+<div class="block">HTTP response code for the error.</div>
+</dd>
 <dt><a href="com/atlan/net/HttpHeaders.html" title="class in com.atlan.net"><span class="typeNameLink">HttpHeaders</span></a> - Class in <a href="com/atlan/net/package-summary.html">com.atlan.net</a></dt>
 <dd>
 <div class="block">A read-only view of a set of HTTP headers.</div>
@@ -12401,14 +12487,22 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/enums/AtlanCustomAttributePrimitiveType.html#INTEGER">INTEGER</a></span> - com.atlan.model.enums.<a href="com/atlan/model/enums/AtlanCustomAttributePrimitiveType.html" title="enum in com.atlan.model.enums">AtlanCustomAttributePrimitiveType</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/ErrorCode.html#INVALID_API_TOKEN">INVALID_API_TOKEN</a></span> - com.atlan.exception.<a href="com/atlan/exception/ErrorCode.html" title="enum in com.atlan.exception">ErrorCode</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/atlan/exception/InvalidRequestException.html" title="class in com.atlan.exception"><span class="typeNameLink">InvalidRequestException</span></a> - Exception in <a href="com/atlan/exception/package-summary.html">com.atlan.exception</a></dt>
 <dd>
 <div class="block">Error that occurs if the request being attempted is not valid for some reason, such as containing insufficient
  parameters or incorrect values for those parameters.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/atlan/exception/InvalidRequestException.html#%3Cinit%3E(java.lang.String,java.lang.String,java.lang.String,java.lang.Integer,java.lang.Throwable)">InvalidRequestException(String, String, String, Integer, Throwable)</a></span> - Constructor for exception com.atlan.exception.<a href="com/atlan/exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></dt>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/InvalidRequestException.html#%3Cinit%3E(com.atlan.exception.ErrorCode)">InvalidRequestException(ErrorCode)</a></span> - Constructor for exception com.atlan.exception.<a href="com/atlan/exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/atlan/exception/InvalidRequestException.html#%3Cinit%3E(java.lang.String,java.lang.String,java.lang.String,java.lang.Throwable)">InvalidRequestException(String, String, String, Throwable)</a></span> - Constructor for exception com.atlan.exception.<a href="com/atlan/exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></dt>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/InvalidRequestException.html#%3Cinit%3E(com.atlan.exception.ErrorCode,java.lang.String...)">InvalidRequestException(ErrorCode, String...)</a></span> - Constructor for exception com.atlan.exception.<a href="com/atlan/exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/InvalidRequestException.html#%3Cinit%3E(com.atlan.exception.ErrorCode,java.lang.Throwable)">InvalidRequestException(ErrorCode, Throwable)</a></span> - Constructor for exception com.atlan.exception.<a href="com/atlan/exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/InvalidRequestException.html#%3Cinit%3E(com.atlan.exception.ExceptionMessageDefinition)">InvalidRequestException(ExceptionMessageDefinition)</a></span> - Constructor for exception com.atlan.exception.<a href="com/atlan/exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/InvalidRequestException.html#%3Cinit%3E(com.atlan.exception.ExceptionMessageDefinition,int)">InvalidRequestException(ExceptionMessageDefinition, int)</a></span> - Constructor for exception com.atlan.exception.<a href="com/atlan/exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/net/RequestOptions.InvalidRequestOptionsException.html#%3Cinit%3E(java.lang.String)">InvalidRequestOptionsException(String)</a></span> - Constructor for exception com.atlan.net.<a href="com/atlan/net/RequestOptions.InvalidRequestOptionsException.html" title="class in com.atlan.net">RequestOptions.InvalidRequestOptionsException</a></dt>
 <dd>&nbsp;</dd>
@@ -12590,6 +12684,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/admin/AtlanUser.UserAttributes.UserAttributesBuilder.html#jira(java.util.List)">jira(List&lt;String&gt;)</a></span> - Method in class com.atlan.model.admin.<a href="com/atlan/model/admin/AtlanUser.UserAttributes.UserAttributesBuilder.html" title="class in com.atlan.model.admin">AtlanUser.UserAttributes.UserAttributesBuilder</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/ErrorCode.html#JSON_ERROR">JSON_ERROR</a></span> - com.atlan.exception.<a href="com/atlan/exception/ErrorCode.html" title="enum in com.atlan.exception">ErrorCode</a></dt>
+<dd>&nbsp;</dd>
 </dl>
 <a id="I:K">
 <!--   -->
@@ -12714,13 +12810,9 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Error that occurs when an unexpected logic problem arises.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/atlan/exception/LogicException.html#%3Cinit%3E(java.lang.String,java.lang.String)">LogicException(String, String)</a></span> - Constructor for exception com.atlan.exception.<a href="com/atlan/exception/LogicException.html" title="class in com.atlan.exception">LogicException</a></dt>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/LogicException.html#%3Cinit%3E(com.atlan.exception.ErrorCode,java.lang.String...)">LogicException(ErrorCode, String...)</a></span> - Constructor for exception com.atlan.exception.<a href="com/atlan/exception/LogicException.html" title="class in com.atlan.exception">LogicException</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/atlan/exception/LogicException.html#%3Cinit%3E(java.lang.String,java.lang.String,java.lang.Integer)">LogicException(String, String, Integer)</a></span> - Constructor for exception com.atlan.exception.<a href="com/atlan/exception/LogicException.html" title="class in com.atlan.exception">LogicException</a></dt>
-<dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/atlan/exception/LogicException.html#%3Cinit%3E(java.lang.String,java.lang.String,java.lang.Integer,java.lang.Throwable)">LogicException(String, String, Integer, Throwable)</a></span> - Constructor for exception com.atlan.exception.<a href="com/atlan/exception/LogicException.html" title="class in com.atlan.exception">LogicException</a></dt>
-<dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/atlan/exception/LogicException.html#%3Cinit%3E(java.lang.String,java.lang.String,java.lang.Throwable)">LogicException(String, String, Throwable)</a></span> - Constructor for exception com.atlan.exception.<a href="com/atlan/exception/LogicException.html" title="class in com.atlan.exception">LogicException</a></dt>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/LogicException.html#%3Cinit%3E(com.atlan.exception.ErrorCode,java.lang.Throwable)">LogicException(ErrorCode, Throwable)</a></span> - Constructor for exception com.atlan.exception.<a href="com/atlan/exception/LogicException.html" title="class in com.atlan.exception">LogicException</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/admin/AtlanUser.LoginEvent.html#%3Cinit%3E(com.atlan.model.admin.AtlanUser.LoginEvent.LoginEventBuilder)">LoginEvent(AtlanUser.LoginEvent.LoginEventBuilder&lt;?, ?&gt;)</a></span> - Constructor for class com.atlan.model.admin.<a href="com/atlan/model/admin/AtlanUser.LoginEvent.html" title="class in com.atlan.model.admin">AtlanUser.LoginEvent</a></dt>
 <dd>&nbsp;</dd>
@@ -13056,6 +13148,38 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Minimum sleep time between tries to send HTTP requests after network failure.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/ErrorCode.html#MISSING_CLASSIFICATION_ID">MISSING_CLASSIFICATION_ID</a></span> - com.atlan.exception.<a href="com/atlan/exception/ErrorCode.html" title="enum in com.atlan.exception">ErrorCode</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/ErrorCode.html#MISSING_CLASSIFICATION_NAME">MISSING_CLASSIFICATION_NAME</a></span> - com.atlan.exception.<a href="com/atlan/exception/ErrorCode.html" title="enum in com.atlan.exception">ErrorCode</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/ErrorCode.html#MISSING_CM_ATTR_ID">MISSING_CM_ATTR_ID</a></span> - com.atlan.exception.<a href="com/atlan/exception/ErrorCode.html" title="enum in com.atlan.exception">ErrorCode</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/ErrorCode.html#MISSING_CM_ATTR_NAME">MISSING_CM_ATTR_NAME</a></span> - com.atlan.exception.<a href="com/atlan/exception/ErrorCode.html" title="enum in com.atlan.exception">ErrorCode</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/ErrorCode.html#MISSING_CM_ID">MISSING_CM_ID</a></span> - com.atlan.exception.<a href="com/atlan/exception/ErrorCode.html" title="enum in com.atlan.exception">ErrorCode</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/ErrorCode.html#MISSING_CM_NAME">MISSING_CM_NAME</a></span> - com.atlan.exception.<a href="com/atlan/exception/ErrorCode.html" title="enum in com.atlan.exception">ErrorCode</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/ErrorCode.html#MISSING_ENUM_NAME">MISSING_ENUM_NAME</a></span> - com.atlan.exception.<a href="com/atlan/exception/ErrorCode.html" title="enum in com.atlan.exception">ErrorCode</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/ErrorCode.html#MISSING_GROUP_ID">MISSING_GROUP_ID</a></span> - com.atlan.exception.<a href="com/atlan/exception/ErrorCode.html" title="enum in com.atlan.exception">ErrorCode</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/ErrorCode.html#MISSING_GUID_FOR_DELETE">MISSING_GUID_FOR_DELETE</a></span> - com.atlan.exception.<a href="com/atlan/exception/ErrorCode.html" title="enum in com.atlan.exception">ErrorCode</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/ErrorCode.html#MISSING_PERSONA_ID">MISSING_PERSONA_ID</a></span> - com.atlan.exception.<a href="com/atlan/exception/ErrorCode.html" title="enum in com.atlan.exception">ErrorCode</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/ErrorCode.html#MISSING_REQUIRED_QUERY_PARAM">MISSING_REQUIRED_QUERY_PARAM</a></span> - com.atlan.exception.<a href="com/atlan/exception/ErrorCode.html" title="enum in com.atlan.exception">ErrorCode</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/ErrorCode.html#MISSING_REQUIRED_UPDATE_PARAM">MISSING_REQUIRED_UPDATE_PARAM</a></span> - com.atlan.exception.<a href="com/atlan/exception/ErrorCode.html" title="enum in com.atlan.exception">ErrorCode</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/ErrorCode.html#MISSING_ROLE_ID">MISSING_ROLE_ID</a></span> - com.atlan.exception.<a href="com/atlan/exception/ErrorCode.html" title="enum in com.atlan.exception">ErrorCode</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/ErrorCode.html#MISSING_ROLE_NAME">MISSING_ROLE_NAME</a></span> - com.atlan.exception.<a href="com/atlan/exception/ErrorCode.html" title="enum in com.atlan.exception">ErrorCode</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/ErrorCode.html#MISSING_TERM_GUID">MISSING_TERM_GUID</a></span> - com.atlan.exception.<a href="com/atlan/exception/ErrorCode.html" title="enum in com.atlan.exception">ErrorCode</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/ErrorCode.html#MISSING_USER_ID">MISSING_USER_ID</a></span> - com.atlan.exception.<a href="com/atlan/exception/ErrorCode.html" title="enum in com.atlan.exception">ErrorCode</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/atlan/model/assets/Mode.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Mode</span></a> - Class in <a href="com/atlan/model/assets/package-summary.html">com.atlan.model.assets</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Mode.html#%3Cinit%3E(com.atlan.model.assets.Mode.ModeBuilder)">Mode(Mode.ModeBuilder&lt;?, ?&gt;)</a></span> - Constructor for class com.atlan.model.assets.<a href="com/atlan/model/assets/Mode.html" title="class in com.atlan.model.assets">Mode</a></dt>
@@ -13277,15 +13401,29 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/enums/AtlanConnectorType.html#NETSUITE">NETSUITE</a></span> - com.atlan.model.enums.<a href="com/atlan/model/enums/AtlanConnectorType.html" title="enum in com.atlan.model.enums">AtlanConnectorType</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/ErrorCode.html#NO_API_TOKEN">NO_API_TOKEN</a></span> - com.atlan.exception.<a href="com/atlan/exception/ErrorCode.html" title="enum in com.atlan.exception">ErrorCode</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/ErrorCode.html#NO_BASE_URL">NO_BASE_URL</a></span> - com.atlan.exception.<a href="com/atlan/exception/ErrorCode.html" title="enum in com.atlan.exception">ErrorCode</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/ErrorCode.html#NO_CATEGORIES">NO_CATEGORIES</a></span> - com.atlan.exception.<a href="com/atlan/exception/ErrorCode.html" title="enum in com.atlan.exception">ErrorCode</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/ErrorCode.html#NO_CONNECTION_ADMIN">NO_CONNECTION_ADMIN</a></span> - com.atlan.exception.<a href="com/atlan/exception/ErrorCode.html" title="enum in com.atlan.exception">ErrorCode</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/ErrorCode.html#NO_GRAPH_WITH_PROCESS">NO_GRAPH_WITH_PROCESS</a></span> - com.atlan.exception.<a href="com/atlan/exception/ErrorCode.html" title="enum in com.atlan.exception">ErrorCode</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/LookerTile.LookerTileBuilder.html#noteText(java.lang.String)">noteText(String)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/LookerTile.LookerTileBuilder.html" title="class in com.atlan.model.assets">LookerTile.LookerTileBuilder</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/atlan/exception/NotFoundException.html" title="class in com.atlan.exception"><span class="typeNameLink">NotFoundException</span></a> - Exception in <a href="com/atlan/exception/package-summary.html">com.atlan.exception</a></dt>
 <dd>
 <div class="block">Error that occurs if a requested object does not exist.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/atlan/exception/NotFoundException.html#%3Cinit%3E(java.lang.String,java.lang.String,java.lang.Integer,java.lang.Throwable)">NotFoundException(String, String, Integer, Throwable)</a></span> - Constructor for exception com.atlan.exception.<a href="com/atlan/exception/NotFoundException.html" title="class in com.atlan.exception">NotFoundException</a></dt>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/NotFoundException.html#%3Cinit%3E(com.atlan.exception.ErrorCode,java.lang.String...)">NotFoundException(ErrorCode, String...)</a></span> - Constructor for exception com.atlan.exception.<a href="com/atlan/exception/NotFoundException.html" title="class in com.atlan.exception">NotFoundException</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/atlan/exception/NotFoundException.html#%3Cinit%3E(java.lang.String,java.lang.String,java.lang.Throwable)">NotFoundException(String, String, Throwable)</a></span> - Constructor for exception com.atlan.exception.<a href="com/atlan/exception/NotFoundException.html" title="class in com.atlan.exception">NotFoundException</a></dt>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/NotFoundException.html#%3Cinit%3E(com.atlan.exception.ErrorCode,java.lang.Throwable,java.lang.String...)">NotFoundException(ErrorCode, Throwable, String...)</a></span> - Constructor for exception com.atlan.exception.<a href="com/atlan/exception/NotFoundException.html" title="class in com.atlan.exception">NotFoundException</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/NotFoundException.html#%3Cinit%3E(com.atlan.exception.ExceptionMessageDefinition)">NotFoundException(ExceptionMessageDefinition)</a></span> - Constructor for exception com.atlan.exception.<a href="com/atlan/exception/NotFoundException.html" title="class in com.atlan.exception">NotFoundException</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/ErrorCode.html#NOTHING_TO_ENCODE">NOTHING_TO_ENCODE</a></span> - com.atlan.exception.<a href="com/atlan/exception/ErrorCode.html" title="enum in com.atlan.exception">ErrorCode</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/serde/Removable.html#NULL">NULL</a></span> - Static variable in class com.atlan.serde.<a href="com/atlan/serde/Removable.html" title="class in com.atlan.serde">Removable</a></dt>
 <dd>
@@ -13510,9 +13648,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">Error that occurs if the API token configured for the SDK does not have permission to access or carry out the
  requested operation on a given object.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/atlan/exception/PermissionException.html#%3Cinit%3E(java.lang.String,java.lang.String)">PermissionException(String, String)</a></span> - Constructor for exception com.atlan.exception.<a href="com/atlan/exception/PermissionException.html" title="class in com.atlan.exception">PermissionException</a></dt>
-<dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/atlan/exception/PermissionException.html#%3Cinit%3E(java.lang.String,java.lang.String,java.lang.Integer)">PermissionException(String, String, Integer)</a></span> - Constructor for exception com.atlan.exception.<a href="com/atlan/exception/PermissionException.html" title="class in com.atlan.exception">PermissionException</a></dt>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/PermissionException.html#%3Cinit%3E(com.atlan.exception.ExceptionMessageDefinition)">PermissionException(ExceptionMessageDefinition)</a></span> - Constructor for exception com.atlan.exception.<a href="com/atlan/exception/PermissionException.html" title="class in com.atlan.exception">PermissionException</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/atlan/model/admin/Persona.html" title="class in com.atlan.model.admin"><span class="typeNameLink">Persona</span></a> - Class in <a href="com/atlan/model/admin/package-summary.html">com.atlan.model.admin</a></dt>
 <dd>&nbsp;</dd>
@@ -14109,9 +14245,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Error that occurs when no further requests are being accepted from the IP address on which the SDK is running.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/atlan/exception/RateLimitException.html#%3Cinit%3E(java.lang.String,java.lang.String,java.lang.String,java.lang.Integer,java.lang.Throwable)">RateLimitException(String, String, String, Integer, Throwable)</a></span> - Constructor for exception com.atlan.exception.<a href="com/atlan/exception/RateLimitException.html" title="class in com.atlan.exception">RateLimitException</a></dt>
-<dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/atlan/exception/RateLimitException.html#%3Cinit%3E(java.lang.String,java.lang.String,java.lang.String,java.lang.Throwable)">RateLimitException(String, String, String, Throwable)</a></span> - Constructor for exception com.atlan.exception.<a href="com/atlan/exception/RateLimitException.html" title="class in com.atlan.exception">RateLimitException</a></dt>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/RateLimitException.html#%3Cinit%3E(com.atlan.exception.ExceptionMessageDefinition)">RateLimitException(ExceptionMessageDefinition)</a></span> - Constructor for exception com.atlan.exception.<a href="com/atlan/exception/RateLimitException.html" title="class in com.atlan.exception">RateLimitException</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/AtlanQuery.AtlanQueryBuilder.html#rawQuery(java.lang.String)">rawQuery(String)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/AtlanQuery.AtlanQueryBuilder.html" title="class in com.atlan.model.assets">AtlanQuery.AtlanQueryBuilder</a></dt>
 <dd>&nbsp;</dd>
@@ -15271,10 +15405,6 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/GlossaryTerm.html#removeAnnouncement(java.lang.String,java.lang.String,java.lang.String)">removeAnnouncement(String, String, String)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a></dt>
 <dd>
 <div class="block">Remove the announcement from a GlossaryTerm.</div>
-</dd>
-<dt><span class="memberNameLink"><a href="com/atlan/model/assets/GlossaryTerm.html#removeAssignedEntities()">removeAssignedEntities()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a></dt>
-<dd>
-<div class="block">Remove the linked assets from the term, if any are set on the term.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Asset.html#removeAssignedTerms()">removeAssignedTerms()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a></dt>
 <dd>
@@ -18928,6 +19058,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/TableauCalculatedField.TableauCalculatedFieldBuilder.html#role(java.lang.String)">role(String)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/TableauCalculatedField.TableauCalculatedFieldBuilder.html" title="class in com.atlan.model.assets">TableauCalculatedField.TableauCalculatedFieldBuilder</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/ErrorCode.html#ROLE_NOT_FOUND_BY_ID">ROLE_NOT_FOUND_BY_ID</a></span> - com.atlan.exception.<a href="com/atlan/exception/ErrorCode.html" title="enum in com.atlan.exception">ErrorCode</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/ErrorCode.html#ROLE_NOT_FOUND_BY_NAME">ROLE_NOT_FOUND_BY_NAME</a></span> - com.atlan.exception.<a href="com/atlan/exception/ErrorCode.html" title="enum in com.atlan.exception">ErrorCode</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="com/atlan/cache/RoleCache.html" title="class in com.atlan.cache"><span class="typeNameLink">RoleCache</span></a> - Class in <a href="com/atlan/cache/package-summary.html">com.atlan.cache</a></dt>
 <dd>
 <div class="block">Lazily-loaded cache for translating Atlan-internal roles into their various IDs.</div>
@@ -19706,7 +19840,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/GlossaryCategory.html#setAnchor(com.atlan.model.assets.Glossary)">setAnchor(Glossary)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/GlossaryCategory.html" title="class in com.atlan.model.assets">GlossaryCategory</a></dt>
 <dd>
-<div class="block">Glossary in which the category is located.</div>
+<div class="block">Glossary in which the GlossaryCategory is located.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/GlossaryTerm.html#setAnchor(com.atlan.model.assets.Glossary)">setAnchor(Glossary)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a></dt>
 <dd>
@@ -20228,7 +20362,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Glossary.html#setCategories(java.util.SortedSet)">setCategories(SortedSet&lt;GlossaryCategory&gt;)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Glossary.html" title="class in com.atlan.model.assets">Glossary</a></dt>
 <dd>
-<div class="block">Categories within this glossary.</div>
+<div class="block">Categories within this Glossary.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/GlossaryTerm.html#setCategories(java.util.SortedSet)">setCategories(SortedSet&lt;GlossaryCategory&gt;)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a></dt>
 <dd>
@@ -20295,7 +20429,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/GlossaryCategory.html#setChildrenCategories(java.util.SortedSet)">setChildrenCategories(SortedSet&lt;GlossaryCategory&gt;)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/GlossaryCategory.html" title="class in com.atlan.model.assets">GlossaryCategory</a></dt>
 <dd>
-<div class="block">Child categories organized within this category.</div>
+<div class="block">Child categories organized within this GlossaryCategory.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/lineage/LineageResponse.html#setChildrenCounts(java.lang.Object)">setChildrenCounts(Object)</a></span> - Method in class com.atlan.model.lineage.<a href="com/atlan/model/lineage/LineageResponse.html" title="class in com.atlan.model.lineage">LineageResponse</a></dt>
 <dd>
@@ -22610,7 +22744,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/GlossaryCategory.html#setParentCategory(com.atlan.model.assets.GlossaryCategory)">setParentCategory(GlossaryCategory)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/GlossaryCategory.html" title="class in com.atlan.model.assets">GlossaryCategory</a></dt>
 <dd>
-<div class="block">Parent category in which this category is located (or null if this is a root-level category).</div>
+<div class="block">Parent GlossaryCategory in which this GlossaryCategory is located (or null if this is a root-level category).</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/TableauProject.html#setParentProject(com.atlan.model.assets.TableauProject)">setParentProject(TableauProject)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/TableauProject.html" title="class in com.atlan.model.assets">TableauProject</a></dt>
 <dd>
@@ -23933,11 +24067,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Glossary.html#setTerms(java.util.SortedSet)">setTerms(SortedSet&lt;GlossaryTerm&gt;)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Glossary.html" title="class in com.atlan.model.assets">Glossary</a></dt>
 <dd>
-<div class="block">Terms within this glossary.</div>
+<div class="block">Terms within this Glossary.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/GlossaryCategory.html#setTerms(java.util.SortedSet)">setTerms(SortedSet&lt;GlossaryTerm&gt;)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/GlossaryCategory.html" title="class in com.atlan.model.assets">GlossaryCategory</a></dt>
 <dd>
-<div class="block">Terms organized within this category.</div>
+<div class="block">Terms organized within this GlossaryCategory.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/LookerLook.html#setTile(com.atlan.model.assets.LookerTile)">setTile(LookerTile)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/LookerLook.html" title="class in com.atlan.model.assets">LookerLook</a></dt>
 <dd>
@@ -25553,6 +25687,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/TableauWorksheet.TableauWorksheetBuilder.html#topLevelProjectQualifiedName(java.lang.String)">topLevelProjectQualifiedName(String)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/TableauWorksheet.TableauWorksheetBuilder.html" title="class in com.atlan.model.assets">TableauWorksheet.TableauWorksheetBuilder</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/ExceptionMessageDefinition.ExceptionMessageDefinitionBuilder.html#toString()">toString()</a></span> - Method in class com.atlan.exception.<a href="com/atlan/exception/ExceptionMessageDefinition.ExceptionMessageDefinitionBuilder.html" title="class in com.atlan.exception">ExceptionMessageDefinition.ExceptionMessageDefinitionBuilder</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/admin/AbstractPersonaPolicy.AbstractPersonaPolicyBuilder.html#toString()">toString()</a></span> - Method in class com.atlan.model.admin.<a href="com/atlan/model/admin/AbstractPersonaPolicy.AbstractPersonaPolicyBuilder.html" title="class in com.atlan.model.admin">AbstractPersonaPolicy.AbstractPersonaPolicyBuilder</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/admin/AbstractPolicy.AbstractPolicyBuilder.html#toString()">toString()</a></span> - Method in class com.atlan.model.admin.<a href="com/atlan/model/admin/AbstractPolicy.AbstractPolicyBuilder.html" title="class in com.atlan.model.admin">AbstractPolicy.AbstractPolicyBuilder</a></dt>
@@ -26901,6 +27037,16 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dl>
 <dt><span class="memberNameLink"><a href="com/atlan/model/workflow/WorkflowMetadata.WorkflowMetadataBuilder.html#uid(java.lang.String)">uid(String)</a></span> - Method in class com.atlan.model.workflow.<a href="com/atlan/model/workflow/WorkflowMetadata.WorkflowMetadataBuilder.html" title="class in com.atlan.model.workflow">WorkflowMetadata.WorkflowMetadataBuilder</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/ErrorCode.html#UNABLE_TO_CREATE_TYPEDEF_CATEGORY">UNABLE_TO_CREATE_TYPEDEF_CATEGORY</a></span> - com.atlan.exception.<a href="com/atlan/exception/ErrorCode.html" title="enum in com.atlan.exception">ErrorCode</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/ErrorCode.html#UNABLE_TO_DESERIALIZE">UNABLE_TO_DESERIALIZE</a></span> - com.atlan.exception.<a href="com/atlan/exception/ErrorCode.html" title="enum in com.atlan.exception">ErrorCode</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/ErrorCode.html#UNABLE_TO_PARSE_ORIGINAL_QUERY">UNABLE_TO_PARSE_ORIGINAL_QUERY</a></span> - com.atlan.exception.<a href="com/atlan/exception/ErrorCode.html" title="enum in com.atlan.exception">ErrorCode</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/ErrorCode.html#UNABLE_TO_TRANSLATE_FILTERS">UNABLE_TO_TRANSLATE_FILTERS</a></span> - com.atlan.exception.<a href="com/atlan/exception/ErrorCode.html" title="enum in com.atlan.exception">ErrorCode</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/ErrorCode.html#UNABLE_TO_UPDATE_TYPEDEF_CATEGORY">UNABLE_TO_UPDATE_TYPEDEF_CATEGORY</a></span> - com.atlan.exception.<a href="com/atlan/exception/ErrorCode.html" title="enum in com.atlan.exception">ErrorCode</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/relations/Reference.ReferenceBuilder.html#uniqueAttributes(com.atlan.model.relations.UniqueAttributes)">uniqueAttributes(UniqueAttributes)</a></span> - Method in class com.atlan.model.relations.<a href="com/atlan/model/relations/Reference.ReferenceBuilder.html" title="class in com.atlan.model.relations">Reference.ReferenceBuilder</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="com/atlan/model/relations/UniqueAttributes.html" title="class in com.atlan.model.relations"><span class="typeNameLink">UniqueAttributes</span></a> - Class in <a href="com/atlan/model/relations/package-summary.html">com.atlan.model.relations</a></dt>
@@ -27753,7 +27899,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Glossary.html#updater(java.lang.String,java.lang.String)">updater(String, String)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Glossary.html" title="class in com.atlan.model.assets">Glossary</a></dt>
 <dd>
-<div class="block">Builds the minimal object necessary to update a glossary.</div>
+<div class="block">Builds the minimal object necessary to update a Glossary.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/IndistinctAsset.html#updater(java.lang.String,java.lang.String)">updater(String, String)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/IndistinctAsset.html" title="class in com.atlan.model.assets">IndistinctAsset</a></dt>
 <dd>
@@ -28013,11 +28159,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/GlossaryCategory.html#updater(java.lang.String,java.lang.String,java.lang.String)">updater(String, String, String)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/GlossaryCategory.html" title="class in com.atlan.model.assets">GlossaryCategory</a></dt>
 <dd>
-<div class="block">Builds the minimal object necessary to update a category.</div>
+<div class="block">Builds the minimal object necessary to update a GlossaryCategory.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/GlossaryTerm.html#updater(java.lang.String,java.lang.String,java.lang.String)">updater(String, String, String)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/GlossaryTerm.html" title="class in com.atlan.model.assets">GlossaryTerm</a></dt>
 <dd>
-<div class="block">Builds the minimal object necessary to update a term.</div>
+<div class="block">Builds the minimal object necessary to update a GlossaryTerm.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Asset.AssetBuilder.html#updateTime(java.lang.Long)">updateTime(Long)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Asset.AssetBuilder.html" title="class in com.atlan.model.assets">Asset.AssetBuilder</a></dt>
 <dd>&nbsp;</dd>
@@ -28101,6 +28247,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/search/EntityAudit.EntityAuditBuilder.html#user(java.lang.String)">user(String)</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/EntityAudit.EntityAuditBuilder.html" title="class in com.atlan.model.search">EntityAudit.EntityAuditBuilder</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/ExceptionMessageDefinition.ExceptionMessageDefinitionBuilder.html#userAction(java.lang.String)">userAction(String)</a></span> - Method in class com.atlan.exception.<a href="com/atlan/exception/ExceptionMessageDefinition.ExceptionMessageDefinitionBuilder.html" title="class in com.atlan.exception">ExceptionMessageDefinition.ExceptionMessageDefinitionBuilder</a></dt>
+<dd>
+<div class="block">Recommended action for the user to take upon observing this error.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/admin/AtlanUser.UserAttributes.html#%3Cinit%3E(com.atlan.model.admin.AtlanUser.UserAttributes.UserAttributesBuilder)">UserAttributes(AtlanUser.UserAttributes.UserAttributesBuilder&lt;?, ?&gt;)</a></span> - Constructor for class com.atlan.model.admin.<a href="com/atlan/model/admin/AtlanUser.UserAttributes.html" title="class in com.atlan.model.admin">AtlanUser.UserAttributes</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/admin/AtlanUser.UserAttributes.UserAttributesBuilder.html#%3Cinit%3E()">UserAttributesBuilder()</a></span> - Constructor for class com.atlan.model.admin.<a href="com/atlan/model/admin/AtlanUser.UserAttributes.UserAttributesBuilder.html" title="class in com.atlan.model.admin">AtlanUser.UserAttributes.UserAttributesBuilder</a></dt>
@@ -28173,6 +28323,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/typedefs/EnumDef.ElementDef.ElementDefBuilder.html#value(java.lang.String)">value(String)</a></span> - Method in class com.atlan.model.typedefs.<a href="com/atlan/model/typedefs/EnumDef.ElementDef.ElementDefBuilder.html" title="class in com.atlan.model.typedefs">EnumDef.ElementDef.ElementDefBuilder</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/ErrorCode.html#valueOf(java.lang.String)">valueOf(String)</a></span> - Static method in enum com.atlan.exception.<a href="com/atlan/exception/ErrorCode.html" title="enum in com.atlan.exception">ErrorCode</a></dt>
+<dd>
+<div class="block">Returns the enum constant of this type with the specified name.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/enums/AssetSidebarTab.html#valueOf(java.lang.String)">valueOf(String)</a></span> - Static method in enum com.atlan.model.enums.<a href="com/atlan/model/enums/AssetSidebarTab.html" title="enum in com.atlan.model.enums">AssetSidebarTab</a></dt>
 <dd>
 <div class="block">Returns the enum constant of this type with the specified name.</div>
@@ -28276,6 +28430,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/atlan/serde/Removable.TYPE.html#valueOf(java.lang.String)">valueOf(String)</a></span> - Static method in enum com.atlan.serde.<a href="com/atlan/serde/Removable.TYPE.html" title="enum in com.atlan.serde">Removable.TYPE</a></dt>
 <dd>
 <div class="block">Returns the enum constant of this type with the specified name.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/ErrorCode.html#values()">values()</a></span> - Static method in enum com.atlan.exception.<a href="com/atlan/exception/ErrorCode.html" title="enum in com.atlan.exception">ErrorCode</a></dt>
+<dd>
+<div class="block">Returns an array containing the constants of this enum type, in
+the order they are declared.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/enums/AssetSidebarTab.html#values()">values()</a></span> - Static method in enum com.atlan.model.enums.<a href="com/atlan/model/enums/AssetSidebarTab.html" title="enum in com.atlan.model.enums">AssetSidebarTab</a></dt>
 <dd>
