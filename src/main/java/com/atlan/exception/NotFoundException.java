@@ -16,11 +16,7 @@ public class NotFoundException extends AtlanException {
         super(error, e, params);
     }
 
-    public NotFoundException(String message, String code, Throwable e) {
-        this(message, code, 404, e);
-    }
-
-    public NotFoundException(String message, String code, Integer statusCode, Throwable e) {
-        super(message, code, statusCode, e);
+    public NotFoundException(ExceptionMessageDefinition error) {
+        super(error, 404);
     }
 }

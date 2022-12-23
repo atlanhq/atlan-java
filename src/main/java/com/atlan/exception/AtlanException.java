@@ -20,8 +20,33 @@ public abstract class AtlanException extends Exception {
     @Setter
     transient AtlanError atlanError;
 
-    private String code;
-    private Integer statusCode;
+    private final String code;
+    private final Integer statusCode;
+
+    /**
+     * Only intended to be used for exceptions that we pass through the SDK.
+     *
+     * @param error details of the error we pass through
+     * @param statusCode HTTP response code of the error
+     */
+    protected AtlanException(ExceptionMessageDefinition error, int statusCode) {
+        super(error.getErrorMessage());
+        this.code = error.getErrorId();
+        this.statusCode = statusCode;
+    }
+
+    /**
+     * Only intended to be used for exceptions that we pass through the SDK.
+     *
+     * @param error details of the error we pass through
+     * @param statusCode HTTP response code of the error
+     * @param e the underlying cause of the error
+     */
+    protected AtlanException(ExceptionMessageDefinition error, int statusCode, Throwable e) {
+        super(error.getErrorMessage(), e);
+        this.code = error.getErrorId();
+        this.statusCode = statusCode;
+    }
 
     protected AtlanException(ErrorCode error, Throwable e) {
         super(error.getMessageDefinition().getErrorMessage(), e);
@@ -33,17 +58,6 @@ public abstract class AtlanException extends Exception {
         super(error.getMessageDefinition().getErrorMessage(params), e);
         this.code = error.getMessageDefinition().getErrorId();
         this.statusCode = error.getMessageDefinition().getHttpErrorCode();
-    }
-
-    protected AtlanException(String message, String code, Integer statusCode) {
-        this(message, code, statusCode, null);
-    }
-
-    /** Constructs a new Atlan exception with the specified details. */
-    protected AtlanException(String message, String code, Integer statusCode, Throwable e) {
-        super(message, e);
-        this.code = code;
-        this.statusCode = statusCode;
     }
 
     /**

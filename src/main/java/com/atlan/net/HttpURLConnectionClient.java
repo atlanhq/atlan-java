@@ -5,6 +5,7 @@ package com.atlan.net;
 /* Based on original code from https://github.com/stripe/stripe-java (under MIT license) */
 import com.atlan.Atlan;
 import com.atlan.exception.ApiConnectionException;
+import com.atlan.exception.ErrorCode;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -48,14 +49,7 @@ public class HttpURLConnectionClient extends HttpClient {
             return new AtlanResponseStream(responseCode, headers, responseStream);
 
         } catch (IOException e) {
-            throw new ApiConnectionException(
-                    String.format(
-                            "IOException during API request to Atlan (%s): %s "
-                                    + "Please check your internet connection and try again. If this problem persists,"
-                                    + "you should check Atlan's availability via a browser,"
-                                    + " or let us know at support@atlan.com.",
-                            Atlan.getBaseUrlSafe(), e.getMessage()),
-                    e);
+            throw new ApiConnectionException(ErrorCode.CONNECTION_ERROR, e, Atlan.getBaseUrlSafe());
         }
     }
 
@@ -72,14 +66,7 @@ public class HttpURLConnectionClient extends HttpClient {
         try {
             return responseStream.unstream();
         } catch (IOException e) {
-            throw new ApiConnectionException(
-                    String.format(
-                            "IOException during API request to Atlan (%s): %s "
-                                    + "Please check your internet connection and try again. If this problem persists,"
-                                    + "you should check Atlan's availability via a browser,"
-                                    + " or let us know at support@atlan.com.",
-                            Atlan.getBaseUrlSafe(), e.getMessage()),
-                    e);
+            throw new ApiConnectionException(ErrorCode.CONNECTION_ERROR, e, Atlan.getBaseUrlSafe());
         }
     }
 

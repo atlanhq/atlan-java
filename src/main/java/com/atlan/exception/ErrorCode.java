@@ -3,6 +3,19 @@
 package com.atlan.exception;
 
 public enum ErrorCode implements ExceptionMessageSet {
+    CONNECTION_ERROR(
+            -1,
+            "ATLAN-JAVA--1-001",
+            "IOException occurred during API request to Atlan: {0}.",
+            "Please check your internet connection and try again. If this problem persists,"
+                    + "you should check Atlan's availability via a browser,"
+                    + " or let us know at support@atlan.com."),
+    NO_BASE_URL(
+            -1,
+            "ATLAN-JAVA--1-002",
+            "No base URL is configured in the SDK.",
+            "You must first use Atlan.setBaseUrl() before making an API call."),
+
     MISSING_GROUP_ID(
             400,
             "ATLAN-JAVA-400-001",
@@ -93,6 +106,53 @@ public enum ErrorCode implements ExceptionMessageSet {
             "ATLAN-JAVA-400-018",
             "One or more required parameters to update {0} are missing: {1}.",
             "You must provide all of the parameters listed to update assets of this type."),
+    JSON_ERROR(
+            400,
+            "ATLAN-JAVA-400-019",
+            "Invalid response object from API: {0}. (HTTP response code was {1}). Additional details: {2}.",
+            "Atlan was unable to produce a valid response to your request. Please verify your request is valid."),
+    NOTHING_TO_ENCODE(
+            400,
+            "ATLAN-JAVA-400-020",
+            "Invalid null ID found for url path formatting.",
+            "Verify the string ID argument to the API method is what you expect. It could be either the string ID itself is null or the relevant field in your Atlan object is null."),
+    MISSING_REQUIRED_QUERY_PARAM(
+            400,
+            "ATLAN-JAVA-400-021",
+            "One or more required parameters to query {0} are missing: {1}.",
+            "You must provide all of the parameters listed to query assets of this type."),
+    NO_CONNECTION_ADMIN(
+            400,
+            "ATLAN-JAVA-400-022",
+            "No admin provided for the connection.",
+            "You must specify at least one connection admin through adminRoles, adminGroups, or adminUsers to create a new connection. Without at least one admin, the connection will be inaccessible to all."),
+    MISSING_PERSONA_ID(
+            400,
+            "ATLAN-JAVA-400-023",
+            "No ID was provided when attempting to update the persona.",
+            "You must provide an ID when attempting to update a persona."),
+
+    NO_API_TOKEN(
+            401,
+            "ATLAN-JAVA-401-001",
+            "No API token provided.",
+            "Set your API token using `Atlan.setApiToken(\"<API-TOKEN>\");`. You can generate API tokens from the Atlan Admin Center. See "
+                    + "https://ask.atlan.com/hc/en-us/articles/8312649180049 for details or contact support at "
+                    + "https://ask.atlan.com/hc/en-us/requests/new if you have any questions."),
+    EMPTY_API_TOKEN(
+            401,
+            "ATLAN-JAVA-401-002",
+            "Your API token is invalid, as it is an empty string.",
+            "You can double-check your API token from the Atlan Admin Center. See "
+                    + "https://ask.atlan.com/hc/en-us/articles/8312649180049 for details or contact support at "
+                    + "https://ask.atlan.com/hc/en-us/requests/new if you have any questions."),
+    INVALID_API_TOKEN(
+            401,
+            "ATLAN-JAVA-401-003",
+            "Your API token is invalid, as it contains whitespace.",
+            "You can double-check your API token from the Atlan Admin Center. See "
+                    + "https://ask.atlan.com/hc/en-us/articles/8312649180049 for details or contact support at "
+                    + "https://ask.atlan.com/hc/en-us/requests/new if you have any questions."),
 
     ASSET_NOT_FOUND_BY_GUID(
             404,
@@ -159,18 +219,42 @@ public enum ErrorCode implements ExceptionMessageSet {
             "ATLAN-JAVA-404-013",
             "Enumeration with name '{0}' does not exist.",
             "Verify the enumeration name provided is a valid enumeration name. This should be the human-readable name of the enumeration."),
+    ASSET_NOT_FOUND_BY_NAME(
+            404,
+            "ATLAN-JAVA-404-014",
+            "The {0} asset could not be found by name: {1}.",
+            "Verify the requested asset type and name exist in your Atlan environment."),
+    NO_CATEGORIES(
+            404,
+            "ATLAN-JAVA-404-015",
+            "Unable to find any categories in glossary with GUID {0} and qualifiedName {1}.",
+            "Verify the requested glossary contains categories."),
+    CONNECTION_NOT_FOUND_BY_NAME(
+            404,
+            "ATLAN-JAVA-404-016",
+            "Unable to find a connection with the name '{0}' of type: {1}.",
+            "Verify the requested connection exists in your Atlan environment."),
 
     DUPLICATE_CUSTOM_ATTRIBUTES(
             500,
             "ATLAN-JAVA-500-001",
             "Multiple custom attributes with exactly the same name ({0}) were found for: {1}.",
-            "Please raise an issue on the Java SDK GitHub repository providing context in which this error occurred."),
-    UNABLE_TO_DESERIALIZE(
+            ErrorCode.RAISE_GITHUB_ISSUE),
+    UNABLE_TO_DESERIALIZE(500, "ATLAN-JAVA-500-002", "Unable to deserialize value: [0]", ErrorCode.RAISE_GITHUB_ISSUE),
+    UNABLE_TO_PARSE_ORIGINAL_QUERY(
             500,
-            "ATLAN-JAVA-500-002",
-            "Unable to deserialize value: [0]",
-            "Please raise an issue on the Java SDK GitHub repository providing context in which this error occurred."),
+            "ATLAN-JAVA-500-003",
+            "Unable to parse original query from the response.",
+            ErrorCode.RAISE_GITHUB_ISSUE),
+    FOUND_UNEXPECTED_ASSET_TYPE(
+            500,
+            "ATLAN-JAVA-500-004",
+            "Found an asset type that does not match what was requested: {0}.",
+            ErrorCode.RAISE_GITHUB_ISSUE),
     ;
+
+    private static final String RAISE_GITHUB_ISSUE =
+            "Please raise an issue on the Java SDK GitHub repository providing context in which this error occurred.";
 
     private final ExceptionMessageDefinition messageDefinition;
 

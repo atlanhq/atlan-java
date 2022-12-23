@@ -197,12 +197,7 @@ public class Connection extends Asset {
         if (adminFound) {
             return builder;
         } else {
-            throw new InvalidRequestException(
-                    "No admin provided for the connection, will not attempt to create one.",
-                    "adminRoles,adminGroups,adminUsers",
-                    "ATLAN-CLIENT-CONNECTION-400-001",
-                    400,
-                    null);
+            throw new InvalidRequestException(ErrorCode.NO_CONNECTION_ADMIN);
         }
     }
 
@@ -301,11 +296,7 @@ public class Connection extends Asset {
             }
         }
         if (connections.isEmpty()) {
-            throw new NotFoundException(
-                    "Unable to find a connection with the name '" + name + "' of type: " + type.getValue(),
-                    "ATLAN-JAVA-CLIENT-404-095",
-                    404,
-                    null);
+            throw new NotFoundException(ErrorCode.CONNECTION_NOT_FOUND_BY_NAME, name, type.getValue());
         } else {
             return connections;
         }

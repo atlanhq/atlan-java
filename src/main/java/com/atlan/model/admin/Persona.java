@@ -4,6 +4,7 @@ package com.atlan.model.admin;
 
 import com.atlan.api.PersonasEndpoint;
 import com.atlan.exception.AtlanException;
+import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.core.AtlanObject;
 import com.atlan.model.enums.AssetSidebarTab;
@@ -137,8 +138,7 @@ public class Persona extends AtlanObject {
      */
     public void update() throws AtlanException {
         if (this.id == null || this.id.length() == 0) {
-            throw new InvalidRequestException(
-                    "An id must be provided to update the persona.", "id", "ATLAN_JAVA_CLIENT-400-501", 400, null);
+            throw new InvalidRequestException(ErrorCode.MISSING_PERSONA_ID);
         }
         PersonasEndpoint.updatePersona(this.id, this);
     }
@@ -152,12 +152,7 @@ public class Persona extends AtlanObject {
      */
     public AbstractPolicy addPolicy(AbstractPolicy policy) throws AtlanException {
         if (this.id == null || this.id.length() == 0) {
-            throw new InvalidRequestException(
-                    "An id must be provided to add policies to the persona.",
-                    "id",
-                    "ATLAN_JAVA_CLIENT-400-502",
-                    400,
-                    null);
+            throw new InvalidRequestException(ErrorCode.MISSING_PERSONA_ID);
         }
         return PersonasEndpoint.addPolicyToPersona(this.id, policy);
     }

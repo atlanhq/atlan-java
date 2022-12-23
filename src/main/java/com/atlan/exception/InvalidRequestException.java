@@ -12,6 +12,14 @@ import lombok.Getter;
 public class InvalidRequestException extends AtlanException {
     private static final long serialVersionUID = 2L;
 
+    public InvalidRequestException(ExceptionMessageDefinition error) {
+        super(error, 400);
+    }
+
+    protected InvalidRequestException(ExceptionMessageDefinition error, int statusCode) {
+        super(error, statusCode);
+    }
+
     public InvalidRequestException(ErrorCode error, String... params) {
         super(error, null, params);
     }
@@ -22,13 +30,5 @@ public class InvalidRequestException extends AtlanException {
 
     public InvalidRequestException(ErrorCode error, Throwable e) {
         super(error, e);
-    }
-
-    public InvalidRequestException(String message, String param, String code, Throwable e) {
-        this(message, param, code, 400, e);
-    }
-
-    public InvalidRequestException(String message, String param, String code, Integer statusCode, Throwable e) {
-        super(message, code, statusCode, e);
     }
 }

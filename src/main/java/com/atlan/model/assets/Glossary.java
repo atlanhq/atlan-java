@@ -199,15 +199,11 @@ public class Glossary extends Asset {
                 if (first instanceof Glossary) {
                     return (Glossary) first;
                 } else {
-                    throw new LogicException(
-                            "Found a non-glossary result when searching for only glossaries.",
-                            "ATLAN-JAVA-CLIENT-500-090",
-                            500);
+                    throw new LogicException(ErrorCode.FOUND_UNEXPECTED_ASSET_TYPE);
                 }
             }
         }
-        throw new NotFoundException(
-                "Unable to find a glossary with the name: " + name, "ATLAN-JAVA-CLIENT-404-090", 404, null);
+        throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_NAME, Glossary.TYPE_NAME, name);
     }
 
     /**
@@ -271,11 +267,7 @@ public class Glossary extends Asset {
     public CategoryHierarchy getHierarchy(List<String> attributes) throws AtlanException {
         if (qualifiedName == null) {
             throw new InvalidRequestException(
-                    "Insufficient glossary to query against: no qualifiedName.",
-                    "qualifiedName",
-                    "ATLAN-JAVA-CLIENT-400-091",
-                    400,
-                    null);
+                    ErrorCode.MISSING_REQUIRED_QUERY_PARAM, Glossary.TYPE_NAME, "qualifiedName");
         }
         Query byType = QueryFactory.withType(GlossaryCategory.TYPE_NAME);
         Query byGlossaryQN = TermQuery.of(t -> t.field("__glossary").value(getQualifiedName()))
@@ -310,10 +302,7 @@ public class Glossary extends Asset {
                             topCategories.add(category.getGuid());
                         }
                     } else {
-                        throw new LogicException(
-                                "Found a non-category result when searching for only categories.",
-                                "ATLAN-JAVA-CLIENT-500-091",
-                                500);
+                        throw new LogicException(ErrorCode.FOUND_UNEXPECTED_ASSET_TYPE, GlossaryCategory.TYPE_NAME);
                     }
                 }
                 response = response.getNextPage();
@@ -321,11 +310,7 @@ public class Glossary extends Asset {
             }
             return new CategoryHierarchy(topCategories, categoryMap);
         }
-        throw new NotFoundException(
-                "Unable to find any categories in glossary: " + getGuid() + "/" + getQualifiedName(),
-                "ATLAN-JAVA-CLIENT-404-091",
-                404,
-                null);
+        throw new NotFoundException(ErrorCode.NO_CATEGORIES, getGuid(), getQualifiedName());
     }
 
     /**

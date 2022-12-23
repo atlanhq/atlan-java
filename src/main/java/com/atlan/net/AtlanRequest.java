@@ -7,6 +7,7 @@ import com.atlan.Atlan;
 import com.atlan.exception.ApiConnectionException;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.AuthenticationException;
+import com.atlan.exception.ErrorCode;
 import com.atlan.util.StringUtils;
 import java.io.IOException;
 import java.net.URL;
@@ -71,14 +72,7 @@ public class AtlanRequest {
             this.content = (body == null || body.length() == 0) ? null : HttpContent.buildJSONEncodedContent(body);
             this.headers = buildHeaders(method, this.options);
         } catch (IOException e) {
-            throw new ApiConnectionException(
-                    String.format(
-                            "IOException during API request to Atlan (%s): %s "
-                                    + "Please check your internet connection and try again. If this problem persists,"
-                                    + "you should check Atlan's availability via a browser,"
-                                    + " or let us know at support@atlan.com.",
-                            Atlan.getBaseUrlSafe(), e.getMessage()),
-                    e);
+            throw new ApiConnectionException(ErrorCode.CONNECTION_ERROR, e, Atlan.getBaseUrlSafe());
         }
     }
 
@@ -112,29 +106,11 @@ public class AtlanRequest {
         // Authorization
         String apiKey = options.getApiKey();
         if (apiKey == null) {
-            throw new AuthenticationException(
-                    "No API token provided. Set your API token using `Atlan.setApiToken(\"<API-TOKEN>\");`. You can "
-                            + "generate API tokens from the Atlan Admin Center. See "
-                            + "https://ask.atlan.com/hc/en-us/articles/8312649180049 for details or contact support at "
-                            + "https://ask.atlan.com/hc/en-us/requests/new if you have any questions.",
-                    null,
-                    0);
+            throw new AuthenticationException(ErrorCode.NO_API_TOKEN);
         } else if (apiKey.isEmpty()) {
-            throw new AuthenticationException(
-                    "Your API token is invalid, as it is an empty string. You can double-check your API token "
-                            + "from the Atlan Admin Center. See "
-                            + "https://ask.atlan.com/hc/en-us/articles/8312649180049 for details or contact support at "
-                            + "https://ask.atlan.com/hc/en-us/requests/new if you have any questions.",
-                    null,
-                    0);
+            throw new AuthenticationException(ErrorCode.EMPTY_API_TOKEN);
         } else if (StringUtils.containsWhitespace(apiKey)) {
-            throw new AuthenticationException(
-                    "Your API token is invalid, as it contains whitespace. You can double-check your API token "
-                            + "from the Atlan Admin Center. See "
-                            + "https://ask.atlan.com/hc/en-us/articles/8312649180049 for details or contact support at "
-                            + "https://ask.atlan.com/hc/en-us/requests/new if you have any questions.",
-                    null,
-                    0);
+            throw new AuthenticationException(ErrorCode.INVALID_API_TOKEN);
         }
         headerMap.put("Authorization", Arrays.asList(String.format("Bearer %s", apiKey)));
 

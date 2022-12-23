@@ -3,6 +3,7 @@
 package com.atlan.model.search;
 
 import com.atlan.exception.AtlanException;
+import com.atlan.exception.ErrorCode;
 import com.atlan.exception.LogicException;
 import com.atlan.model.assets.Asset;
 import com.atlan.net.ApiResource;
@@ -52,8 +53,7 @@ public class IndexSearchResponse extends ApiResource {
         try {
             dsl = Serde.mapper.readValue(searchParameters.getQuery(), IndexSearchDSL.class);
         } catch (JsonProcessingException e) {
-            throw new LogicException(
-                    "Unable to parse original query from the response.", "ATLAN-JAVA-CLIENT-500-040", 500, e);
+            throw new LogicException(ErrorCode.UNABLE_TO_PARSE_ORIGINAL_QUERY, e);
         }
         int from = dsl.getFrom() == null ? 0 : dsl.getFrom();
         int page = dsl.getSize() == null ? 10 : dsl.getSize();

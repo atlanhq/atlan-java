@@ -183,11 +183,6 @@ public class GlossaryTerm extends Asset {
                 .build();
     }
 
-    /** Remove the linked assets from the term, if any are set on the term. */
-    public void removeAssignedEntities() {
-        addNullField("assignedEntities");
-    }
-
     /**
      * Builds the minimal object necessary for creating a term. At least one of glossaryGuid or
      * glossaryQualifiedName must be provided.
@@ -289,15 +284,11 @@ public class GlossaryTerm extends Asset {
                 if (first instanceof GlossaryTerm) {
                     return (GlossaryTerm) first;
                 } else {
-                    throw new LogicException(
-                            "Found a non-glossary term result when searching for only glossary terms.",
-                            "ATLAN-JAVA-CLIENT-500-091",
-                            500);
+                    throw new LogicException(ErrorCode.FOUND_UNEXPECTED_ASSET_TYPE, GlossaryTerm.TYPE_NAME);
                 }
             }
         }
-        throw new NotFoundException(
-                "Unable to find a glossary term with the name: " + name, "ATLAN-JAVA-CLIENT-404-091", 404, null);
+        throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_NAME, GlossaryTerm.TYPE_NAME, name);
     }
 
     /**

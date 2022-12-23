@@ -5,6 +5,7 @@ package com.atlan.net;
 /* Based on original code from https://github.com/stripe/stripe-java (under MIT license) */
 import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
+import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.core.AtlanObject;
 import com.atlan.model.core.AtlanResponseInterface;
@@ -97,16 +98,8 @@ public abstract class ApiResource extends AtlanObject implements AtlanResponseIn
     /** URL-encode a string ID in url path formatting. */
     public static String urlEncodeId(String id) throws InvalidRequestException {
         if (id == null) {
-            throw new InvalidRequestException(
-                    "Invalid null ID found for url path formatting. This can be because your string ID "
-                            + "argument to the API method is null, or the relevant field in your Atlan object "
-                            + "instance is null. ",
-                    null,
-                    null,
-                    0,
-                    null);
+            throw new InvalidRequestException(ErrorCode.NOTHING_TO_ENCODE);
         }
-
         return urlEncode(id);
     }
 
