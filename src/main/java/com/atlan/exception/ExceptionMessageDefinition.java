@@ -32,6 +32,11 @@ public class ExceptionMessageDefinition {
      * @return the formatted error message
      */
     public String getErrorMessage(String... params) {
-        return MessageFormat.format(errorMessage, (Object) params);
+        if (params != null) {
+            MessageFormat mf = new MessageFormat(errorMessage);
+            return mf.format(params);
+        } else {
+            return errorMessage;
+        }
     }
 }

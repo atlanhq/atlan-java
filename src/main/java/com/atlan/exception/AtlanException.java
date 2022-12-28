@@ -68,11 +68,11 @@ public abstract class AtlanException extends Exception {
      */
     @Override
     public String getMessage() {
-        String additionalInfo = "";
         if (code != null) {
-            additionalInfo += "; code: " + code;
+            return code + " " + super.getMessage();
+        } else {
+            return super.getMessage();
         }
-        return super.getMessage() + additionalInfo;
     }
 
     /**
