@@ -22,6 +22,19 @@ public class WorkflowResponse extends ApiResource {
 
     /**
      * Monitor the status of the workflow's run, blocking until it has completed.
+     * Note that this variation of the method will not log any activity, but will simply block
+     * until the workflow completes.
+     *
+     * @return the status at completion, or null if the workflow was not even run
+     * @throws AtlanException on any errors running the workflow
+     * @throws InterruptedException on any interruption of the busy wait loop
+     */
+    public AtlanWorkflowPhase monitorStatus() throws AtlanException, InterruptedException {
+        return monitorStatus(null);
+    }
+
+    /**
+     * Monitor the status of the workflow's run, blocking until it has completed.
      *
      * @param log through which to log status information (INFO-level)
      * @return the status at completion, or null if the workflow was not even run
@@ -39,7 +52,9 @@ public class WorkflowResponse extends ApiResource {
                 if (runDetails != null) {
                     status = runDetails.getStatus();
                 }
-                log.info("Workflow status: {}", status);
+                if (log != null) {
+                    log.info("Workflow status: {}", status);
+                }
                 // Fix a value here so that we go to the high-end of the wait duration,
                 // but still apply a jitter each time
                 Thread.sleep(HttpClient.waitTime(5).toMillis());
@@ -48,7 +63,9 @@ public class WorkflowResponse extends ApiResource {
                     && status != AtlanWorkflowPhase.FAILED);
             return status;
         } else {
-            log.info("... skipping workflow monitoring — nothing to monitor.");
+            if (log != null) {
+                log.info("... skipping workflow monitoring — nothing to monitor.");
+            }
             return null;
         }
     }
