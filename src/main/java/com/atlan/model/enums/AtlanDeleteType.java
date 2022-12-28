@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 
 public enum AtlanDeleteType implements AtlanEnum {
+    PURGE("PURGE"),
     HARD("HARD"),
     SOFT("SOFT"),
     DEFAULT("DEFAULT");

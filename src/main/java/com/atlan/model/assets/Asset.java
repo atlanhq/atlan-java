@@ -632,15 +632,14 @@ public abstract class Asset extends Reference {
     }
 
     /**
-     * Hard-deletes (purges) an asset by its GUID. This operation is irreversible. The asset to purge must
-     * currently be in an active state (soft-deleted entities cannot be purged).
+     * Hard-deletes (purges) an asset by its GUID. This operation is irreversible.
      *
      * @param guid of the asset to hard-delete
      * @return details of the hard-deleted asset
      * @throws AtlanException on any error during the API invocation
      */
     public static AssetMutationResponse purge(String guid) throws AtlanException {
-        return EntityBulkEndpoint.delete(guid, AtlanDeleteType.HARD);
+        return EntityBulkEndpoint.delete(guid, AtlanDeleteType.PURGE);
     }
 
     /**
