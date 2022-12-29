@@ -26,8 +26,6 @@ public class AttributeCSVGenerator extends AbstractGenerator {
 
     private static final String DOCS_DIRECTORY = "src" + File.separator + "main" + File.separator + "resources";
 
-    private static final String[] HEADER = {"Type Name", "Type Description", "Attribute Name", "Attribute Description"};
-
     public static void main(String[] args) {
         AttributeCSVGenerator generator = new AttributeCSVGenerator();
         cacheModels();
@@ -49,7 +47,7 @@ public class AttributeCSVGenerator extends AbstractGenerator {
     private void generateAttributeCSV() {
         try (CSVPrinter printer = new CSVPrinter(
                 Files.newBufferedWriter(Paths.get(DOCS_DIRECTORY + File.separator + "attributes.csv"), UTF_8),
-                CSVFormat.DEFAULT.builder().setHeader(HEADER).build())) {
+                CSVFormat.DEFAULT.builder().setHeader(CSV_HEADER).build())) {
             Set<String> typeNames = typeDefCache.keySet();
             List<String> sortedTypeNames = typeNames.stream().sorted().collect(Collectors.toList());
             for (String typeName : sortedTypeNames) {

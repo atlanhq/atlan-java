@@ -45,14 +45,7 @@ public class ModelGenerator extends AbstractGenerator {
     // We'll continue to manage these directly, as they contain a lot of non-generated complexity
     // (or would be completely unused due to polymorphism flattening)
     private static final Set<String> SKIP_GENERATING = Set.of(
-            "Referenceable",
-            "Asset",
-            "Catalog",
-            "DataStudio",
-            "AtlasServer",
-            "DataSet",
-            "Infrastructure",
-            "ProcessExecution");
+            "Referenceable", "Catalog", "DataStudio", "AtlasServer", "DataSet", "Infrastructure", "ProcessExecution");
 
     // Provide a name that Lombok can use for the singularization of these multivalued attributes
     private static final Map<String, String> SINGULAR_MAPPINGS = Map.ofEntries(
@@ -75,6 +68,7 @@ public class ModelGenerator extends AbstractGenerator {
     public static void main(String[] args) {
         ModelGenerator generator = new ModelGenerator();
         cacheModels();
+        cacheDescriptions();
         generator.generateModels();
         generator.generateTests();
         generator.generateDeserializationStub();
@@ -803,10 +797,10 @@ public class ModelGenerator extends AbstractGenerator {
 
             String classToExtend = getClassToExtend(superType);
 
-            addHeader(fs);
+            addHeader(fs, typeName);
             addOpening(fs, typeName, abstractName, classToExtend, subTypes);
 
-            addAttributes(fs, typeDetails.getAttributeDefs());
+            addAttributes(fs, typeName, typeDetails.getAttributeDefs());
             addRelationships(fs, typeName, typeDetails.getRelationshipAttributeDefs());
 
             addClosing(fs);
@@ -822,7 +816,7 @@ public class ModelGenerator extends AbstractGenerator {
         try (BufferedWriter fs =
                 new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filename), StandardCharsets.UTF_8))) {
 
-            addHeader(fs);
+            addHeader(fs, typeName);
             addOpening(fs, typeName, className, abstractName, null);
 
             refByGuid(fs, className);
@@ -862,10 +856,10 @@ public class ModelGenerator extends AbstractGenerator {
 
             String classToExtend = getClassToExtend(superType);
 
-            addHeader(fs);
+            addHeader(fs, typeName);
             boolean isAbstract = addOpening(fs, typeName, className, classToExtend, subTypes);
 
-            addAttributes(fs, typeDetails.getAttributeDefs());
+            addAttributes(fs, typeName, typeDetails.getAttributeDefs());
             addRelationships(fs, typeName, typeDetails.getRelationshipAttributeDefs());
 
             if (!isAbstract) {
@@ -906,7 +900,7 @@ public class ModelGenerator extends AbstractGenerator {
         fs.append(System.lineSeparator());
     }
 
-    private void addAttributes(BufferedWriter fs, List<AttributeDef> attrs) throws IOException {
+    private void addAttributes(BufferedWriter fs, String typeName, List<AttributeDef> attrs) throws IOException {
         for (AttributeDef attribute : attrs) {
             String name = attribute.getName();
             String type = attribute.getTypeName();
@@ -914,7 +908,9 @@ public class ModelGenerator extends AbstractGenerator {
             if (mappedType == null) {
                 log.warn("Unmapped type '{}' — skipping attribute: {}", type, name);
             } else if (!mappedType.equals("__internal")) {
-                fs.append("    /** TBC */");
+                fs.append("    /** ")
+                        .append(getAttributeDescription(typeName, name))
+                        .append(" */");
                 fs.append(System.lineSeparator());
                 fs.append("    @Attribute");
                 fs.append(System.lineSeparator());
@@ -941,7 +937,9 @@ public class ModelGenerator extends AbstractGenerator {
                 String type = attribute.getTypeName();
                 if (!type.equals("__internal")) {
                     AtlanCustomAttributeCardinality cardinality = attribute.getCardinality();
-                    fs.append("    /** TBC */");
+                    fs.append("    /** ")
+                            .append(getAttributeDescription(typeName, name))
+                            .append(" */");
                     fs.append(System.lineSeparator());
                     fs.append("    @Attribute");
                     fs.append(System.lineSeparator());
@@ -971,7 +969,7 @@ public class ModelGenerator extends AbstractGenerator {
         return NAME_MAPPINGS.getOrDefault(type, type);
     }
 
-    private void addHeader(BufferedWriter fs) throws IOException {
+    private void addHeader(BufferedWriter fs, String typeName) throws IOException {
         fs.append("/* SPDX-License-Identifier: Apache-2.0 */").append(System.lineSeparator());
         fs.append("/* Copyright 2022 Atlan Pte. Ltd. */").append(System.lineSeparator());
         fs.append("package com.atlan.model.assets;").append(System.lineSeparator());
@@ -996,6 +994,9 @@ public class ModelGenerator extends AbstractGenerator {
         fs.append("import lombok.*;").append(System.lineSeparator());
         fs.append("import lombok.experimental.SuperBuilder;").append(System.lineSeparator());
         fs.append(System.lineSeparator());
+        fs.append("/**").append(System.lineSeparator());
+        fs.append(" * ").append(getTypeDescription(typeName)).append(System.lineSeparator());
+        fs.append(" */").append(System.lineSeparator());
         fs.append("@Getter").append(System.lineSeparator());
         fs.append("@Setter").append(System.lineSeparator());
         fs.append("@SuperBuilder(toBuilder = true)").append(System.lineSeparator());
