@@ -157,11 +157,11 @@ public abstract class Asset extends Reference {
     @Attribute
     String certificateStatusMessage;
 
-    /** Name of the user who last updated the `certificateStatus`. */
+    /** Name of the user who last updated the certification of the asset. */
     @Attribute
     String certificateUpdatedBy;
 
-    /** Time (epoch) at which the `certificateStatus` was last updated, in milliseconds. */
+    /** Time (epoch) at which the certification was last updated, in milliseconds. */
     @Attribute
     Long certificateUpdatedAt;
 
@@ -179,7 +179,7 @@ public abstract class Asset extends Reference {
     @Attribute
     Long announcementUpdatedAt;
 
-    /** User who last updated the announcement. */
+    /** Name of the user who last updated the announcement. */
     @Attribute
     String announcementUpdatedBy;
 
@@ -284,21 +284,99 @@ public abstract class Asset extends Reference {
     @Attribute
     String lastSyncRun;
 
-    /** Who created the asset. */
+    /** Who created the asset, in the source system. */
     @Attribute
     String sourceCreatedBy;
 
-    /** Time (epoch) at which the asset was created, in milliseconds. */
+    /** Time (epoch) at which the asset was created in the source system, in milliseconds. */
     @Attribute
     Long sourceCreatedAt;
 
-    /** Time (epoch) at which the asset was last updated, in milliseconds. */
+    /** Time (epoch) at which the asset was last updated in the source system, in milliseconds. */
     @Attribute
     Long sourceUpdatedAt;
 
-    /** Who last updated the asset. */
+    /** Who last updated the asset in the source system. */
     @Attribute
     String sourceUpdatedBy;
+
+    /** Total count of all read operations at source. */
+    @Attribute
+    Long sourceReadCount;
+
+    /** Total number of unique users that read data from asset. */
+    @Attribute
+    Long sourceReadUserCount;
+
+    /** Timestamp of most recent read operation. */
+    @Attribute
+    Long sourceLastReadAt;
+
+    /** Timestamp of last operation that inserted, updated, or deleted rows. */
+    @Attribute
+    Long lastRowChangedAt;
+
+    /** Total cost of all operations at source. */
+    @Attribute
+    Double sourceTotalCost;
+
+    /** The unit of measure for sourceTotalCost. */
+    @Attribute
+    SourceCostUnitType sourceCostUnit;
+
+    /** List of usernames of the most recent users who read the asset. */
+    @Singular
+    @Attribute
+    @JsonProperty("sourceReadRecentUserList")
+    SortedSet<String> sourceReadRecentUsers;
+
+    /** List of usernames with extra insights for the most recent users who read the asset. */
+    @Singular
+    @Attribute
+    @JsonProperty("sourceReadRecentUserRecordList")
+    SortedSet<PopularityInsights> sourceReadRecentUserRecords;
+
+    /** List of usernames of the users who read the asset the most. */
+    @Singular
+    @Attribute
+    @JsonProperty("sourceReadTopUserList")
+    SortedSet<String> sourceReadTopUsers;
+
+    /** List of usernames with extra insights for the users who read the asset the most. */
+    @Singular
+    @Attribute
+    @JsonProperty("sourceReadTopUserRecordList")
+    SortedSet<PopularityInsights> sourceReadTopUserRecords;
+
+    /** List of the most popular queries that accessed this asset. */
+    @Singular
+    @Attribute
+    @JsonProperty("sourceReadPopularQueryRecordList")
+    SortedSet<PopularityInsights> sourceReadPopularQueryRecords;
+
+    /** List of the most expensive queries that accessed this asset. */
+    @Singular
+    @Attribute
+    @JsonProperty("sourceReadExpensiveQueryRecordList")
+    SortedSet<PopularityInsights> sourceReadExpensiveQueryRecords;
+
+    /** List of the slowest queries that accessed this asset. */
+    @Singular
+    @Attribute
+    @JsonProperty("sourceReadSlowQueryRecordList")
+    SortedSet<PopularityInsights> sourceReadSlowQueryRecords;
+
+    /** List of most expensive warehouse names. */
+    @Singular
+    @Attribute
+    @JsonProperty("sourceQueryComputeCostList")
+    SortedSet<String> sourceQueryComputeCosts;
+
+    /** List of most expensive warehouses with extra insights. */
+    @Singular
+    @Attribute
+    @JsonProperty("sourceQueryComputeCostRecordList")
+    SortedSet<PopularityInsights> sourceQueryComputeCostRecords;
 
     /** TBC */
     @Attribute
@@ -456,6 +534,10 @@ public abstract class Asset extends Reference {
     /** TBC */
     @Attribute
     String assetDbtSemanticLayerProxyUrl;
+
+    /** TBC */
+    @Attribute
+    String sampleDataUrl;
 
     /** Resources that are linked to this asset. */
     @Singular
