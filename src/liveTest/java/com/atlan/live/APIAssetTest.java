@@ -243,7 +243,7 @@ public class APIAssetTest extends AtlanLiveTest {
         APIPath s = (APIPath) one;
         assertEquals(s.getGuid(), path.getGuid());
         assertEquals(s.getQualifiedName(), path.getQualifiedName());
-        assertEquals(s.getDeleteHandler(), "HARD");
+        assertEquals(s.getDeleteHandler(), "PURGE");
         assertEquals(s.getStatus(), AtlanStatus.DELETED);
     }
 

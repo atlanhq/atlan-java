@@ -544,6 +544,11 @@ public abstract class Asset extends Reference {
     @Attribute
     SortedSet<Link> links;
 
+    /** TBC */
+    @Singular
+    @Attribute
+    SortedSet<Metric> metrics;
+
     /** Readme that is linked to this asset. */
     @Attribute
     Readme readme;

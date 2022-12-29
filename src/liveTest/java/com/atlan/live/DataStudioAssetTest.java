@@ -248,7 +248,7 @@ public class DataStudioAssetTest extends AtlanLiveTest {
         DataStudioAsset s = (DataStudioAsset) one;
         assertEquals(s.getGuid(), source.getGuid());
         assertEquals(s.getQualifiedName(), source.getQualifiedName());
-        assertEquals(s.getDeleteHandler(), "HARD");
+        assertEquals(s.getDeleteHandler(), "PURGE");
         assertEquals(s.getStatus(), AtlanStatus.DELETED);
     }
 

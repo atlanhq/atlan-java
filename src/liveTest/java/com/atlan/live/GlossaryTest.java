@@ -613,7 +613,7 @@ public class GlossaryTest extends AtlanLiveTest {
         assertEquals(term.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
         assertEquals(term.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
         assertEquals(term.getStatus(), AtlanStatus.DELETED);
-        assertEquals(term.getDeleteHandler(), "HARD");
+        assertEquals(term.getDeleteHandler(), "PURGE");
     }
 
     @Test(
@@ -630,7 +630,7 @@ public class GlossaryTest extends AtlanLiveTest {
         assertNull(term.getAnnouncementTitle());
         assertNull(term.getAnnouncementMessage());
         assertEquals(term.getStatus(), AtlanStatus.DELETED);
-        assertEquals(term.getDeleteHandler(), "HARD");
+        assertEquals(term.getDeleteHandler(), "PURGE");
     }
 
     @Test(
@@ -647,7 +647,7 @@ public class GlossaryTest extends AtlanLiveTest {
         assertNull(c.getAnnouncementTitle());
         assertNull(c.getAnnouncementMessage());
         assertEquals(c.getStatus(), AtlanStatus.DELETED);
-        assertEquals(c.getDeleteHandler(), "HARD");
+        assertEquals(c.getDeleteHandler(), "PURGE");
     }
 
     @Test(
@@ -696,6 +696,6 @@ public class GlossaryTest extends AtlanLiveTest {
         assertEquals(g.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
         assertEquals(g.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
         assertEquals(g.getStatus(), AtlanStatus.DELETED);
-        assertEquals(g.getDeleteHandler(), "HARD");
+        assertEquals(g.getDeleteHandler(), "PURGE");
     }
 }
