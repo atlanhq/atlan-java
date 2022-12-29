@@ -4,7 +4,6 @@ package com.atlan.api;
 
 import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
-import com.atlan.model.assets.Asset;
 import com.atlan.model.core.AtlanObject;
 import com.atlan.model.workflow.*;
 import com.atlan.net.ApiResource;
@@ -12,8 +11,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
-
-import java.util.List;
 
 /**
  * API endpoints for operating on Atlan's workflows.
@@ -48,9 +45,9 @@ public class WorkflowsEndpoint {
     public static WorkflowRunResponse run(WorkflowSearchResultDetail workflow) throws AtlanException {
         String url = String.format("%s%s", Atlan.getBaseUrl(), workflows_endpoint_run_existing);
         ReRunRequest request = ReRunRequest.builder()
-            .namespace(workflow.getMetadata().getNamespace())
-            .resourceName(workflow.getMetadata().getName())
-            .build();
+                .namespace(workflow.getMetadata().getNamespace())
+                .resourceName(workflow.getMetadata().getName())
+                .build();
         return ApiResource.request(ApiResource.RequestMethod.POST, url, request, WorkflowRunResponse.class, null);
     }
 

@@ -127,10 +127,14 @@ public class LookerCrawler extends AbstractCrawler {
         try {
             argsBuilder = WorkflowTaskArguments.builder()
                     .parameter(NameValuePair.of("credential-guid", "{{credentialGuid}}"))
-                    .parameter(NameValuePair.of("include-folders", Serde.allInclusiveMapper.writeValueAsString(toIncludeFolders)))
-                    .parameter(NameValuePair.of("exclude-folders", Serde.allInclusiveMapper.writeValueAsString(toExcludeFolders)))
-                    .parameter(NameValuePair.of("include-projects", Serde.allInclusiveMapper.writeValueAsString(toIncludeProjects)))
-                    .parameter(NameValuePair.of("exclude-projects", Serde.allInclusiveMapper.writeValueAsString(toExcludeProjects)))
+                    .parameter(NameValuePair.of(
+                            "include-folders", Serde.allInclusiveMapper.writeValueAsString(toIncludeFolders)))
+                    .parameter(NameValuePair.of(
+                            "exclude-folders", Serde.allInclusiveMapper.writeValueAsString(toExcludeFolders)))
+                    .parameter(NameValuePair.of(
+                            "include-projects", Serde.allInclusiveMapper.writeValueAsString(toIncludeProjects)))
+                    .parameter(NameValuePair.of(
+                            "exclude-projects", Serde.allInclusiveMapper.writeValueAsString(toExcludeProjects)))
                     .parameter(NameValuePair.of("connection", connection.toJson()))
                     .parameter(NameValuePair.of("use-field-level-lineage", "" + fieldLevelLineage))
                     .parameter(NameValuePair.of("extraction-method", "direct"));

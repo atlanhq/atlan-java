@@ -60,8 +60,8 @@ public class WorkflowResponse extends ApiResource {
                     log.info("Workflow status: {}", status);
                 }
             } while (status != AtlanWorkflowPhase.SUCCESS
-                && status != AtlanWorkflowPhase.ERROR
-                && status != AtlanWorkflowPhase.FAILED);
+                    && status != AtlanWorkflowPhase.ERROR
+                    && status != AtlanWorkflowPhase.FAILED);
             return status;
         } else {
             if (log != null) {
