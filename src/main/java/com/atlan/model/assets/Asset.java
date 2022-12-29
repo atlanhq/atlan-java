@@ -23,6 +23,9 @@ import java.util.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+/**
+ * Base class for all assets.
+ */
 @Getter
 @Setter
 @SuperBuilder(toBuilder = true)
@@ -36,12 +39,14 @@ import lombok.experimental.SuperBuilder;
         defaultImpl = IndistinctAsset.class)
 @JsonSubTypes({
     @JsonSubTypes.Type(value = Catalog.class, name = Catalog.TYPE_NAME),
-    @JsonSubTypes.Type(value = Namespace.class, name = Namespace.TYPE_NAME),
     @JsonSubTypes.Type(value = Glossary.class, name = Glossary.TYPE_NAME),
-    @JsonSubTypes.Type(value = GlossaryCategory.class, name = GlossaryCategory.TYPE_NAME),
     @JsonSubTypes.Type(value = GlossaryTerm.class, name = GlossaryTerm.TYPE_NAME),
     @JsonSubTypes.Type(value = Cloud.class, name = Cloud.TYPE_NAME),
     @JsonSubTypes.Type(value = Connection.class, name = Connection.TYPE_NAME),
+    @JsonSubTypes.Type(value = LineageProcess.class, name = LineageProcess.TYPE_NAME),
+    @JsonSubTypes.Type(value = GlossaryCategory.class, name = GlossaryCategory.TYPE_NAME),
+    @JsonSubTypes.Type(value = Badge.class, name = Badge.TYPE_NAME),
+    @JsonSubTypes.Type(value = Namespace.class, name = Namespace.TYPE_NAME),
 })
 @SuppressWarnings("cast")
 public abstract class Asset extends Reference {
@@ -135,10 +140,7 @@ public abstract class Asset extends Reference {
     @Attribute
     String description;
 
-    /**
-     * Description of the asset, as provided by a user. If present, this will be used for the
-     * description in user interfaces. If not present, the description will be used.
-     */
+    /** Description of the asset, as provided by a user. If present, this will be used for the description in user interfaces. If not present, the description will be used. */
     @Attribute
     String userDescription;
 
@@ -150,10 +152,7 @@ public abstract class Asset extends Reference {
     @Attribute
     AtlanCertificateStatus certificateStatus;
 
-    /**
-     * Human-readable descriptive message that can optionally be submitted when the
-     * `certificateStatus` is changed.
-     */
+    /** Human-readable descriptive message that can optionally be submitted when the certificateStatus is changed. */
     @Attribute
     String certificateStatusMessage;
 
@@ -165,15 +164,17 @@ public abstract class Asset extends Reference {
     @Attribute
     Long certificateUpdatedAt;
 
-    /**
-     * Brief title for the announcement on this asset. Required when `announcementType` is specified.
-     */
+    /** Brief title for the announcement on this asset. Required when announcementType is specified. */
     @Attribute
     String announcementTitle;
 
     /** Detailed message to include in the announcement on this asset. */
     @Attribute
     String announcementMessage;
+
+    /** Type of announcement on the asset. */
+    @Attribute
+    AtlanAnnouncementType announcementType;
 
     /** Time (epoch) at which the announcement was last updated, in milliseconds. */
     @Attribute
@@ -183,43 +184,34 @@ public abstract class Asset extends Reference {
     @Attribute
     String announcementUpdatedBy;
 
-    /** Type of announcement on the asset. */
-    @Attribute
-    AtlanAnnouncementType announcementType;
-
     /** List of users who own the asset. */
-    @Singular
     @Attribute
+    @Singular
     SortedSet<String> ownerUsers;
 
     /** List of groups who own the asset. */
-    @Singular
     @Attribute
+    @Singular
     SortedSet<String> ownerGroups;
 
     /** List of users who administer the asset. (This is only used for Connection assets.) */
-    @Singular
     @Attribute
+    @Singular
     SortedSet<String> adminUsers;
 
     /** List of groups who administer the asset. (This is only used for Connection assets.) */
-    @Singular
     @Attribute
+    @Singular
     SortedSet<String> adminGroups;
 
-    /** List of roles who administer the asset. (This is only used for Connection assets.) */
-    @Singular
+    /** TBC */
     @Attribute
-    SortedSet<String> adminRoles;
-
-    /** Unused. */
     @Singular
-    @Attribute
     SortedSet<String> viewerUsers;
 
-    /** Unused. */
-    @Singular
+    /** TBC */
     @Attribute
+    @Singular
     SortedSet<String> viewerGroups;
 
     /** Type of the connector through which this asset is accessible. */
@@ -227,7 +219,7 @@ public abstract class Asset extends Reference {
     @JsonProperty("connectorName")
     AtlanConnectorType connectorType;
 
-    /** Unused. */
+    /** TBC */
     @Attribute
     String connectionName;
 
@@ -240,29 +232,45 @@ public abstract class Asset extends Reference {
     @JsonProperty("__hasLineage")
     Boolean hasLineage;
 
-    /** Unused. */
+    /** TBC */
     @Attribute
     Boolean isDiscoverable;
 
-    /** Unused. */
+    /** TBC */
     @Attribute
     Boolean isEditable;
 
-    /** Unused. */
+    /** TBC */
     @Attribute
-    Object subType;
+    String subType;
 
-    /** Unused. */
+    /** TBC */
     @Attribute
     Double viewScore;
 
-    /** Unused. */
+    /** TBC */
     @Attribute
     Double popularityScore;
 
-    /** Unused. */
+    /** TBC */
     @Attribute
     String sourceOwners;
+
+    /** Who created the asset, in the source system. */
+    @Attribute
+    String sourceCreatedBy;
+
+    /** Time (epoch) at which the asset was created in the source system, in milliseconds. */
+    @Attribute
+    Long sourceCreatedAt;
+
+    /** Time (epoch) at which the asset was last updated in the source system, in milliseconds. */
+    @Attribute
+    Long sourceUpdatedAt;
+
+    /** Who last updated the asset in the source system. */
+    @Attribute
+    String sourceUpdatedBy;
 
     /** URL to the resource within the source application. */
     @Attribute
@@ -284,21 +292,10 @@ public abstract class Asset extends Reference {
     @Attribute
     String lastSyncRun;
 
-    /** Who created the asset, in the source system. */
+    /** List of roles who administer the asset. (This is only used for Connection assets.) */
     @Attribute
-    String sourceCreatedBy;
-
-    /** Time (epoch) at which the asset was created in the source system, in milliseconds. */
-    @Attribute
-    Long sourceCreatedAt;
-
-    /** Time (epoch) at which the asset was last updated in the source system, in milliseconds. */
-    @Attribute
-    Long sourceUpdatedAt;
-
-    /** Who last updated the asset in the source system. */
-    @Attribute
-    String sourceUpdatedBy;
+    @Singular
+    SortedSet<String> adminRoles;
 
     /** Total count of all read operations at source. */
     @Attribute
@@ -320,62 +317,58 @@ public abstract class Asset extends Reference {
     @Attribute
     Double sourceTotalCost;
 
-    /** The unit of measure for sourceTotalCost. */
-    @Attribute
-    SourceCostUnitType sourceCostUnit;
-
     /** List of usernames of the most recent users who read the asset. */
-    @Singular
     @Attribute
     @JsonProperty("sourceReadRecentUserList")
+    @Singular
     SortedSet<String> sourceReadRecentUsers;
 
     /** List of usernames with extra insights for the most recent users who read the asset. */
-    @Singular
     @Attribute
     @JsonProperty("sourceReadRecentUserRecordList")
+    @Singular
     SortedSet<PopularityInsights> sourceReadRecentUserRecords;
 
     /** List of usernames of the users who read the asset the most. */
-    @Singular
     @Attribute
     @JsonProperty("sourceReadTopUserList")
+    @Singular
     SortedSet<String> sourceReadTopUsers;
 
     /** List of usernames with extra insights for the users who read the asset the most. */
-    @Singular
     @Attribute
     @JsonProperty("sourceReadTopUserRecordList")
+    @Singular
     SortedSet<PopularityInsights> sourceReadTopUserRecords;
 
     /** List of the most popular queries that accessed this asset. */
-    @Singular
     @Attribute
     @JsonProperty("sourceReadPopularQueryRecordList")
+    @Singular
     SortedSet<PopularityInsights> sourceReadPopularQueryRecords;
 
     /** List of the most expensive queries that accessed this asset. */
-    @Singular
     @Attribute
     @JsonProperty("sourceReadExpensiveQueryRecordList")
+    @Singular
     SortedSet<PopularityInsights> sourceReadExpensiveQueryRecords;
 
     /** List of the slowest queries that accessed this asset. */
-    @Singular
     @Attribute
     @JsonProperty("sourceReadSlowQueryRecordList")
+    @Singular
     SortedSet<PopularityInsights> sourceReadSlowQueryRecords;
 
     /** List of most expensive warehouse names. */
-    @Singular
     @Attribute
     @JsonProperty("sourceQueryComputeCostList")
+    @Singular
     SortedSet<String> sourceQueryComputeCosts;
 
     /** List of most expensive warehouses with extra insights. */
-    @Singular
     @Attribute
     @JsonProperty("sourceQueryComputeCostRecordList")
+    @Singular
     SortedSet<PopularityInsights> sourceQueryComputeCostRecords;
 
     /** TBC */
@@ -527,8 +520,8 @@ public abstract class Asset extends Reference {
     String assetDbtEnvironmentDbtVersion;
 
     /** TBC */
-    @Singular
     @Attribute
+    @Singular
     SortedSet<String> assetDbtTags;
 
     /** TBC */
@@ -540,16 +533,16 @@ public abstract class Asset extends Reference {
     String sampleDataUrl;
 
     /** Resources that are linked to this asset. */
-    @Singular
     @Attribute
+    @Singular
     SortedSet<Link> links;
 
     /** TBC */
-    @Singular
     @Attribute
+    @Singular
     SortedSet<Metric> metrics;
 
-    /** Readme that is linked to this asset. */
+    /** README that is linked to this asset. */
     @Attribute
     Readme readme;
 
