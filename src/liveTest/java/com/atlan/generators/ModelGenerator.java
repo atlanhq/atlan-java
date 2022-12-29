@@ -2,19 +2,14 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.generators;
 
-import com.atlan.Atlan;
-import com.atlan.api.TypeDefsEndpoint;
-import com.atlan.live.AtlanLiveTest;
 import com.atlan.model.enums.*;
 import com.atlan.model.typedefs.AttributeDef;
 import com.atlan.model.typedefs.EntityDef;
 import com.atlan.model.typedefs.RelationshipAttributeDef;
-import com.atlan.model.typedefs.TypeDefResponse;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -27,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
  * code itself.
  */
 @Slf4j
-public class ModelGenerator extends AtlanLiveTest {
+public class ModelGenerator extends AbstractGenerator {
 
     private static final String MODEL_DIRECTORY = ""
             + "src" + File.separator
@@ -59,51 +54,6 @@ public class ModelGenerator extends AtlanLiveTest {
             "Infrastructure",
             "ProcessExecution");
 
-    // We'll use our own class names for these types, as the existing type names are either overly
-    // verbose, too easily conflicting with native Java classes, or have a level of inheritance that is
-    // unnecessary
-    private static final Map<String, String> NAME_MAPPINGS = Map.of(
-            "Referenceable", "Asset",
-            "Process", "LineageProcess",
-            "Collection", "AtlanCollection",
-            "Query", "AtlanQuery",
-            "AtlasGlossary", "Glossary",
-            "AtlasGlossaryCategory", "GlossaryCategory",
-            "AtlasGlossaryTerm", "GlossaryTerm",
-            "MaterialisedView", "MaterializedView");
-
-    // Map attribute types to native Java types
-    private static final Map<String, String> TYPE_MAPPINGS = Map.ofEntries(
-            Map.entry("string", "String"),
-            Map.entry("boolean", "Boolean"),
-            Map.entry("int", "Integer"),
-            Map.entry("long", "Long"),
-            Map.entry("date", "Long"),
-            Map.entry("float", "Double"),
-            Map.entry("array<string>", "SortedSet<String>"),
-            Map.entry("map<string,string>", "Map<String, String>"),
-            Map.entry("map<string,long>", "Map<String, Long>"),
-            Map.entry("array<map<string,string>>", "List<Map<String, String>>"),
-            Map.entry("icon_type", "LinkIconType"),
-            Map.entry("google_datastudio_asset_type", "GoogleDataStudioAssetType"),
-            Map.entry("array<AwsTag>", "List<AWSTag>"),
-            Map.entry("powerbi_endorsement", "PowerBIEndorsementType"),
-            Map.entry("array<GoogleLabel>", "List<GoogleLabel>"),
-            Map.entry("array<GoogleTag>", "List<GoogleTag>"),
-            Map.entry("array<DbtMetricFilter>", "List<DbtMetricFilter>"),
-            Map.entry("array<BadgeCondition>", "List<BadgeCondition>"));
-
-    // Map types that use polymorphism to only a single supertype
-    private static final Map<String, String> INHERITANCE_OVERRIDES = Map.ofEntries(
-            Map.entry("S3", "AWS"),
-            Map.entry("DataStudioAsset", "Google"),
-            Map.entry("DbtColumnProcess", "ColumnProcess"),
-            Map.entry("DbtProcess", "Process"),
-            Map.entry("DbtMetric", "Metric"),
-            Map.entry("AWS", "Catalog"),
-            Map.entry("Google", "Catalog"),
-            Map.entry("GCS", "Google"));
-
     // Provide a name that Lombok can use for the singularization of these multivalued attributes
     private static final Map<String, String> SINGULAR_MAPPINGS = Map.ofEntries(
             Map.entry("seeAlso", "seeAlsoOne"),
@@ -120,57 +70,17 @@ public class ModelGenerator extends AtlanLiveTest {
             Map.entry("presetChartFormData", "putPresetChartFormData"),
             Map.entry("resourceMetadata", "putResourceMetadata"));
 
-    // Rename these attributes for consistency (handled via JsonProperty serde)
-    private static final Map<String, String> ATTRIBUTE_RENAMING = Map.ofEntries(
-            Map.entry("viewsCount", "viewCount"),
-            Map.entry("materialisedView", "materializedView"),
-            Map.entry("materialisedViews", "materializedViews"),
-            Map.entry("atlanSchema", "schema"));
-
-    // Go ahead and create these types as non-abstract types, despite having
-    // subtypes
-    private static final Map<String, String> CREATE_NON_ABSTRACT = Map.ofEntries(
-            Map.entry("LineageProcess", "AbstractProcess"), Map.entry("ColumnProcess", "AbstractColumnProcess"));
-
-    private final Map<String, EntityDef> typeDefCache;
-    private final Map<String, Set<String>> relationshipsForType;
-    private final Map<String, String> subTypeToSuperType;
-    private final SortedSet<String> concreteModels;
-    private final SortedSet<String> typesWithMaps;
+    private static final SortedSet<String> concreteModels = new TreeSet<>();
 
     public static void main(String[] args) {
-
         ModelGenerator generator = new ModelGenerator();
-        try {
-            if (Atlan.getApiToken().equals("") || Atlan.getBaseUrl().equals("")) {
-                System.out.println("Inadequate parameters provided.");
-                printUsage();
-                System.exit(1);
-            }
-            TypeDefResponse response = TypeDefsEndpoint.getTypeDefs(AtlanTypeCategory.ENTITY);
-            List<EntityDef> entityDefs = response.getEntityDefs();
-            generator.generateModels(entityDefs);
-            generator.generateTests(entityDefs);
-            generator.generateDeserializationStub();
-        } catch (Exception e) {
-            log.error("Unexpected exception trying to retrieve typedefs.", e);
-            System.exit(1);
-        }
+        cacheModels();
+        generator.generateModels();
+        generator.generateTests();
+        generator.generateDeserializationStub();
     }
 
-    private static void printUsage() {
-        System.out.println("You must configure the credentials using Atlan.setApiToken() and Atlan.setBaseUrl().");
-    }
-
-    private ModelGenerator() {
-        typeDefCache = new HashMap<>();
-        relationshipsForType = new HashMap<>();
-        subTypeToSuperType = new HashMap<>();
-        concreteModels = new TreeSet<>();
-        typesWithMaps = new TreeSet<>();
-    }
-
-    private void generateModels(List<EntityDef> entityDefs) {
+    private void generateModels() {
         // First ensure the target directory has been created / exists
         File dir = new File(MODEL_DIRECTORY);
         if (!dir.exists()) {
@@ -179,20 +89,16 @@ public class ModelGenerator extends AtlanLiveTest {
                 log.error("Unable to create target directory: {}", MODEL_DIRECTORY);
             }
         }
-
-        cacheTypesWithMaps(entityDefs);
-        cacheRelationshipsForInheritance(entityDefs);
-        for (EntityDef entityDef : entityDefs) {
-            String name = entityDef.getName();
-            typeDefCache.put(name, entityDef);
+        for (Map.Entry<String, EntityDef> entry : typeDefCache.entrySet()) {
+            String name = entry.getKey();
             if (!SKIP_GENERATING.contains(name) && !name.startsWith("__")) {
                 log.info("Creating model for: {}", name);
-                createModelForType(entityDef);
+                createModelForType(entry.getValue());
             }
         }
     }
 
-    private void generateTests(List<EntityDef> entityDefs) {
+    private void generateTests() {
         // First ensure the target directory has been created / exists
         File dir = new File(TEST_DIRECTORY);
         if (!dir.exists()) {
@@ -202,8 +108,9 @@ public class ModelGenerator extends AtlanLiveTest {
             }
         }
 
-        for (EntityDef entityDef : entityDefs) {
-            String name = entityDef.getName();
+        for (Map.Entry<String, EntityDef> entry : typeDefCache.entrySet()) {
+            String name = entry.getKey();
+            EntityDef entityDef = entry.getValue();
             List<String> subTypes = entityDef.getSubTypes();
             if (!SKIP_GENERATING.contains(name) && !name.startsWith("__")) {
                 if (subTypes == null || subTypes.isEmpty() || CREATE_NON_ABSTRACT.containsKey(name)) {
@@ -224,76 +131,6 @@ public class ModelGenerator extends AtlanLiveTest {
         System.out.println("                default:");
         System.out.println("                    builder = IndistinctAsset.builder();");
         System.out.println("                    break;");
-    }
-
-    private Set<String> getAllInheritedRelationships(String superTypeName) {
-        // Retrieve all relationship attributes from the supertype (and up) for the received type
-        if (superTypeName.equals("")) {
-            return new HashSet<>();
-        } else {
-            Set<String> relations = new HashSet<>(relationshipsForType.get(superTypeName));
-            relations.addAll(getAllInheritedRelationships(subTypeToSuperType.get(superTypeName)));
-            return relations;
-        }
-    }
-
-    private void cacheTypesWithMaps(List<EntityDef> entityDefs) {
-        for (EntityDef entityDef : entityDefs) {
-            for (AttributeDef attr : entityDef.getAttributeDefs()) {
-                String attrType = attr.getTypeName();
-                if (attrType.contains("map<")) {
-                    typesWithMaps.add(entityDef.getName());
-                }
-            }
-        }
-    }
-
-    private void cacheRelationshipsForInheritance(List<EntityDef> entityDefs) {
-        // Populate 'relationshipsForType' map so that we don't repeat inherited attributes in subtypes
-        // (this seems to only be a risk for relationship attributes)
-        if (!entityDefs.isEmpty()) {
-            List<EntityDef> leftOvers = new ArrayList<>();
-            for (EntityDef entityDef : entityDefs) {
-                String typeName = entityDef.getName();
-                List<String> superTypes = entityDef.getSuperTypes();
-                List<RelationshipAttributeDef> relationships = entityDef.getRelationshipAttributeDefs();
-                if (superTypes == null || superTypes.isEmpty()) {
-                    subTypeToSuperType.put(typeName, "");
-                    relationshipsForType.put(
-                            typeName,
-                            relationships.stream()
-                                    .map(RelationshipAttributeDef::getName)
-                                    .collect(Collectors.toSet()));
-                } else {
-                    String singleSuperType = getSingleTypeToExtend(typeName, superTypes);
-                    if (relationshipsForType.containsKey(singleSuperType)) {
-                        subTypeToSuperType.put(typeName, singleSuperType);
-                        Set<String> inheritedRelationships = getAllInheritedRelationships(singleSuperType);
-                        Set<String> uniqueRelationships = relationships.stream()
-                                .map(RelationshipAttributeDef::getName)
-                                .collect(Collectors.toSet());
-                        uniqueRelationships.removeAll(inheritedRelationships);
-                        relationshipsForType.put(typeName, uniqueRelationships);
-                    } else {
-                        leftOvers.add(entityDef);
-                    }
-                }
-            }
-            cacheRelationshipsForInheritance(leftOvers);
-        }
-    }
-
-    private String getSingleTypeToExtend(String name, List<String> superTypes) {
-        if (INHERITANCE_OVERRIDES.containsKey(name)) {
-            return INHERITANCE_OVERRIDES.get(name);
-        } else if (superTypes == null || superTypes.isEmpty()) {
-            return "AtlanObject";
-        } else if (superTypes.size() == 1) {
-            return superTypes.get(0);
-        } else {
-            log.warn("Multiple superTypes detected — returning only the first: {}", superTypes);
-            return superTypes.get(0);
-        }
     }
 
     private void refByGuid(BufferedWriter fs, String className) throws IOException {
@@ -318,7 +155,6 @@ public class ModelGenerator extends AtlanLiveTest {
         fs.append(System.lineSeparator());
         fs.append("    }");
         fs.append(System.lineSeparator()).append(System.lineSeparator());
-        ;
     }
 
     private void refByQualifiedName(BufferedWriter fs, String className) throws IOException {
@@ -351,7 +187,6 @@ public class ModelGenerator extends AtlanLiveTest {
         fs.append(System.lineSeparator());
         fs.append("    }");
         fs.append(System.lineSeparator()).append(System.lineSeparator());
-        ;
     }
 
     private void updater(BufferedWriter fs, String className) throws IOException {
