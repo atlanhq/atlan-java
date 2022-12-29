@@ -17,7 +17,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 /**
- * Instance of a Google Data Studio asset in Atlan, with its detailed information.
+ * Instance of a Google Data Studio asset in Atlan.
  */
 @Getter
 @Setter

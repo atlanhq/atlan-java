@@ -15,6 +15,9 @@ import java.util.SortedSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+/**
+ * Instance of a Metabase question in Atlan.
+ */
 @Getter
 @Setter
 @SuperBuilder(toBuilder = true)

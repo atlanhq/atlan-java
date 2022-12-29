@@ -14,6 +14,9 @@ import java.util.List;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+/**
+ * Instance of a folder within a query collection in Atlan.
+ */
 @Getter
 @Setter
 @SuperBuilder(toBuilder = true)

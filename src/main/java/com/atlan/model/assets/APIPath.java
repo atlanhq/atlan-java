@@ -18,6 +18,9 @@ import java.util.SortedSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+/**
+ * Instance of an API path that could contain one or more endpoints in Atlan.
+ */
 @Getter
 @Setter
 @SuperBuilder(toBuilder = true)

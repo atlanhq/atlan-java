@@ -15,6 +15,9 @@ import java.util.SortedSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+/**
+ * Instance of a Salesforce dashboard in Atlan.
+ */
 @Getter
 @Setter
 @SuperBuilder(toBuilder = true)
@@ -30,15 +33,15 @@ public class SalesforceDashboard extends Salesforce {
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** sourceId is the Id of the dashboard entity on salesforce */
     @Attribute
     String sourceId;
 
-    /** TBC */
+    /** dashboardType is the type of dashboard in salesforce */
     @Attribute
     String dashboardType;
 
-    /** TBC */
+    /** reportCount is the number of reports linked to the dashboard entity on salesforce */
     @Attribute
     Long reportCount;
 

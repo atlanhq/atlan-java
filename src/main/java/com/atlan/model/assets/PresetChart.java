@@ -18,7 +18,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 /**
- * Instance of a Preset chart in Atlan, with its detailed information.
+ * Instance of a Preset chart in Atlan.
  */
 @Getter
 @Setter

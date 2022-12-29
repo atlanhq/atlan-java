@@ -7,6 +7,9 @@ import java.util.Map;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+/**
+ * Base class for API assets.
+ */
 @Getter
 @Setter
 @SuperBuilder(toBuilder = true)

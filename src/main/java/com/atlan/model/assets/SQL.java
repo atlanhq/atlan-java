@@ -9,7 +9,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 /**
- * Detailed information about SQL-related assets.
+ * Base class for SQL assets.
  */
 @Getter
 @Setter
@@ -50,59 +50,35 @@ public abstract class SQL extends Catalog {
     @Attribute
     Long queryCountUpdatedAt;
 
-    /**
-     * Name of the database in which this SQL asset exists, or null if it does not
-     * exist within a database.
-     */
+    /** Simple name of the database in which this SQL asset exists, or empty if it does not exist within a database. */
     @Attribute
     String databaseName;
 
-    /**
-     * Unique name of the database in which this SQL asset exists, or null if it does not
-     * exist within a database.
-     */
+    /** Unique name of the database in which this SQL asset exists, or empty if it does not exist within a database. */
     @Attribute
     String databaseQualifiedName;
 
-    /**
-     * Name of the schema in which this SQL asset exists, or null if it does not
-     * exist within a schema.
-     */
+    /** Simple name of the schema in which this SQL asset exists, or empty if it does not exist within a schema. */
     @Attribute
     String schemaName;
 
-    /**
-     * Unique name of the schema in which this SQL asset exists, or null if it does not
-     * exist within a schema.
-     */
+    /** Unique name of the schema in which this SQL asset exists, or empty if it does not exist within a schema. */
     @Attribute
     String schemaQualifiedName;
 
-    /**
-     * Name of the table in which this SQL asset exists, or null if it does not
-     * exist within a table. Only tableName or viewName should be populated.
-     */
+    /** Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table. */
     @Attribute
     String tableName;
 
-    /**
-     * Unique name of the table in which this SQL asset exists, or null if it does not
-     * exist within a table. Only tableQualifiedName or viewQualifiedName should be populated.
-     */
+    /** Unique name of the table in which this SQL asset exists, or empty if it does not exist within a table. */
     @Attribute
     String tableQualifiedName;
 
-    /**
-     * Name of the view in which this SQL asset exists, or null if it does not
-     * exist within a view. Only viewName or tableName should be populated.
-     */
+    /** Simple name of the view in which this SQL asset exists, or empty if it does not exist within a view. */
     @Attribute
     String viewName;
 
-    /**
-     * Unique name of the view in which this SQL asset exists, or null if it does not
-     * exist within a view. Only viewQualifiedName or tableQualifiedName should be populated.
-     */
+    /** Unique name of the view in which this SQL asset exists, or empty if it does not exist within a view. */
     @Attribute
     String viewQualifiedName;
 

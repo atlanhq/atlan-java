@@ -7,6 +7,9 @@ import java.util.List;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+/**
+ * Base class for AWS assets.
+ */
 @Getter
 @Setter
 @SuperBuilder(toBuilder = true)
@@ -18,10 +21,7 @@ public abstract class AWS extends Catalog {
 
     public static final String TYPE_NAME = "AWS";
 
-    /**
-     * Amazon Resource Name (ARN) for this asset. This uniquely identifies
-     * the asset in AWS, and thus must be unique across all AWS asset instances.
-     */
+    /** Amazon Resource Name (ARN) for this asset. This uniquely identifies the asset in AWS, and thus must be unique across all AWS asset instances. */
     @Attribute
     String awsArn;
 
@@ -54,7 +54,7 @@ public abstract class AWS extends Catalog {
     String awsOwnerId;
 
     /** List of tags that have been applied to the asset in AWS. */
-    @Singular
     @Attribute
+    @Singular
     List<AWSTag> awsTags;
 }

@@ -8,7 +8,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 /**
- * Detailed information about Google-related assets.
+ * Base class for Google assets.
  */
 @Getter
 @Setter
@@ -47,12 +47,12 @@ public abstract class Google extends Catalog {
     String googleLocationType;
 
     /** List of labels that have been applied to the asset in Google. */
-    @Singular
     @Attribute
+    @Singular
     List<GoogleLabel> googleLabels;
 
     /** List of tags that have been applied to the asset in Google. */
-    @Singular
     @Attribute
+    @Singular
     List<GoogleTag> googleTags;
 }

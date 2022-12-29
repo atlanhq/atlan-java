@@ -15,6 +15,9 @@ import java.util.SortedSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+/**
+ * Instance of a Salesforce field in Atlan.
+ */
 @Getter
 @Setter
 @SuperBuilder(toBuilder = true)
@@ -30,7 +33,7 @@ public class SalesforceField extends Salesforce {
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** data type of the field */
     @Attribute
     String dataType;
 
@@ -70,7 +73,7 @@ public class SalesforceField extends Salesforce {
     @Attribute
     Boolean isNullable;
 
-    /** TBC */
+    /** Total number of digits allowed */
     @Attribute
     Integer precision;
 
@@ -82,12 +85,12 @@ public class SalesforceField extends Salesforce {
     @Attribute
     Boolean isUnique;
 
-    /** TBC */
+    /** picklistValues is a list of values from which a user can pick from while adding a record */
     @Attribute
     @Singular
     SortedSet<String> picklistValues;
 
-    /** TBC */
+    /** isPolymorphicForeignKey captures whether the field references to record of multiple objects */
     @Attribute
     Boolean isPolymorphicForeignKey;
 

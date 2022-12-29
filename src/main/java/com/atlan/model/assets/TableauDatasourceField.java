@@ -16,6 +16,9 @@ import java.util.SortedSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+/**
+ * Instance of a Tableau datasource field in Atlan.
+ */
 @Getter
 @Setter
 @SuperBuilder(toBuilder = true)

@@ -15,6 +15,9 @@ import java.util.SortedSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+/**
+ * Instance of a Salesforce organization in Atlan.
+ */
 @Getter
 @Setter
 @SuperBuilder(toBuilder = true)
@@ -30,7 +33,7 @@ public class SalesforceOrganization extends Salesforce {
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** sourceId is the Id of the organization entity on salesforce */
     @Attribute
     String sourceId;
 

@@ -15,6 +15,9 @@ import java.util.SortedSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+/**
+ * Instance of a Looker model in Atlan.
+ */
 @Getter
 @Setter
 @SuperBuilder(toBuilder = true)

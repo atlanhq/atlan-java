@@ -16,6 +16,9 @@ import java.util.SortedSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+/**
+ * Instance of a Salesforce report in Atlan.
+ */
 @Getter
 @Setter
 @SuperBuilder(toBuilder = true)
@@ -32,16 +35,16 @@ public class SalesforceReport extends Salesforce {
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** sourceId is the Id of the report entity on salesforce */
     @Attribute
     String sourceId;
 
-    /** TBC */
+    /** reportType is the type of report in salesforce */
     @Attribute
     @Singular("putReportType")
     Map<String, String> reportType;
 
-    /** TBC */
+    /** detailColumns is a list of column names on the report */
     @Attribute
     @Singular
     SortedSet<String> detailColumns;

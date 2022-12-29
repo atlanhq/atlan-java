@@ -16,7 +16,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 /**
- * Instance of an S3 object in Atlan, with its detailed information.
+ * Instance of an S3 object in Atlan.
  */
 @Getter
 @Setter
@@ -33,11 +33,7 @@ public class S3Object extends S3 {
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /**
-     * Time (epoch) at which the object was last updated,
-     * in milliseconds, or when it was created if it has never
-     * been modified.
-     */
+    /** Time (epoch) at which the object was last updated, in milliseconds, or when it was created if it has never been modified. */
     @Attribute
     Long s3ObjectLastModifiedTime;
 
@@ -45,7 +41,7 @@ public class S3Object extends S3 {
     @Attribute
     String s3BucketName;
 
-    /** Qualified name of the bucket in which the object exists. */
+    /** qualifiedName of the bucket in which the object exists. */
     @Attribute
     String s3BucketQualifiedName;
 
@@ -57,11 +53,7 @@ public class S3Object extends S3 {
     @Attribute
     String s3ObjectStorageClass;
 
-    /**
-     * Unique identity of the object in an S3 bucket. This is usually
-     * the concatenation of any prefix (folder) in the S3 bucket with
-     * the name of the object (file) itself.
-     */
+    /** Unique identity of the object in an S3 bucket. This is usually the concatenation of any prefix (folder) in the S3 bucket with the name of the object (file) itself. */
     @Attribute
     String s3ObjectKey;
 
@@ -73,10 +65,7 @@ public class S3Object extends S3 {
     @Attribute
     String s3ObjectContentDisposition;
 
-    /**
-     * Version of the object. This is only applicable when versioning is
-     * enabled on the bucket in which the object exists.
-     */
+    /** Version of the object. This is only applicable when versioning is enabled on the bucket in which the object exists. */
     @Attribute
     String s3ObjectVersionId;
 

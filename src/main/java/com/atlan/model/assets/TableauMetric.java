@@ -15,6 +15,9 @@ import java.util.Map;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+/**
+ * Instance of a Tableau metric in Atlan.
+ */
 @Getter
 @Setter
 @SuperBuilder(toBuilder = true)

@@ -17,7 +17,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 /**
- * Instance of a GlossaryCategory in Atlan, with its detailed information.
+ * Instance of a category in Atlan.
  */
 @Getter
 @Setter
@@ -29,23 +29,17 @@ public class GlossaryCategory extends Asset {
 
     public static final String TYPE_NAME = "AtlasGlossaryCategory";
 
-    /** Fixed typeName for GlossaryCategories. */
+    /** Fixed typeName for GlossaryCategorys. */
     @Getter(onMethod_ = {@Override})
     @Setter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /**
-     * Unused.
-     * @see #description
-     */
+    /** Unused. */
     @Attribute
     String shortDescription;
 
-    /**
-     * Unused.
-     * @see #description
-     */
+    /** Unused. */
     @Attribute
     String longDescription;
 
@@ -54,20 +48,20 @@ public class GlossaryCategory extends Asset {
     @Singular
     Map<String, String> additionalAttributes;
 
-    /** Terms organized within this GlossaryCategory. */
+    /** Terms organized within this category. */
     @Attribute
     @Singular
     SortedSet<GlossaryTerm> terms;
 
-    /** Glossary in which the GlossaryCategory is located. */
+    /** Glossary in which this category is contained. */
     @Attribute
     Glossary anchor;
 
-    /** Parent GlossaryCategory in which this GlossaryCategory is located (or null if this is a root-level category). */
+    /** Parent category in which this category is located (or empty if this is a root-level category). */
     @Attribute
     GlossaryCategory parentCategory;
 
-    /** Child categories organized within this GlossaryCategory. */
+    /** Child categories organized within this category. */
     @Attribute
     @Singular("childCategory")
     SortedSet<GlossaryCategory> childrenCategories;

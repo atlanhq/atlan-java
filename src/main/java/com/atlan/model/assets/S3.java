@@ -7,7 +7,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 /**
- * Detailed information about S3-related assets in Atlan.
+ * Base class for S3 assets.
  */
 @Getter
 @Setter
@@ -21,10 +21,7 @@ public abstract class S3 extends AWS {
 
     public static final String TYPE_NAME = "S3";
 
-    /**
-     * Entity tag for the asset. An entity tag is a hash of the object and represents
-     * changes to the contents of an object only, not its metadata.
-     */
+    /** Entity tag for the asset. An entity tag is a hash of the object and represents changes to the contents of an object only, not its metadata. */
     @Attribute
     String s3ETag;
 

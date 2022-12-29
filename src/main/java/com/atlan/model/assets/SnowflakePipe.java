@@ -15,6 +15,9 @@ import java.util.List;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+/**
+ * Instance of a Snowflake Pipe in Atlan.
+ */
 @Getter
 @Setter
 @SuperBuilder(toBuilder = true)
