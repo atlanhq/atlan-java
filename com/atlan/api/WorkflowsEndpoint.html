@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":9,"i2":9,"i3":9};
+var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -190,13 +190,20 @@ extends java.lang.Object</pre>
 </td>
 </tr>
 <tr id="i2" class="altColor">
+<td class="colFirst"><code>static <a href="../model/workflow/WorkflowRunResponse.html" title="class in com.atlan.model.workflow">WorkflowRunResponse</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#run(com.atlan.model.workflow.WorkflowSearchResultDetail)">run</a></span>&#8203;(<a href="../model/workflow/WorkflowSearchResultDetail.html" title="class in com.atlan.model.workflow">WorkflowSearchResultDetail</a>&nbsp;workflow)</code></th>
+<td class="colLast">
+<div class="block">Run the provided pre-existing workflow.</div>
+</td>
+</tr>
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>static <a href="../model/workflow/WorkflowSearchResponse.html" title="class in com.atlan.model.workflow">WorkflowSearchResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#search(com.atlan.model.workflow.WorkflowSearchRequest)">search</a></span>&#8203;(<a href="../model/workflow/WorkflowSearchRequest.html" title="class in com.atlan.model.workflow">WorkflowSearchRequest</a>&nbsp;request)</code></th>
 <td class="colLast">
 <div class="block">Search for workflows that meet the provided criteria.</div>
 </td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>static <a href="../model/workflow/WorkflowSearchResponse.html" title="class in com.atlan.model.workflow">WorkflowSearchResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#searchRuns(com.atlan.model.workflow.WorkflowSearchRequest)">searchRuns</a></span>&#8203;(<a href="../model/workflow/WorkflowSearchRequest.html" title="class in com.atlan.model.workflow">WorkflowSearchRequest</a>&nbsp;request)</code></th>
 <td class="colLast">
@@ -258,6 +265,25 @@ extends java.lang.Object</pre>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>workflow</code> - details of the workflow to run</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>details of the workflow run</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication issue</dd>
+</dl>
+</li>
+</ul>
+<a id="run(com.atlan.model.workflow.WorkflowSearchResultDetail)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>run</h4>
+<pre class="methodSignature">public static&nbsp;<a href="../model/workflow/WorkflowRunResponse.html" title="class in com.atlan.model.workflow">WorkflowRunResponse</a>&nbsp;run&#8203;(<a href="../model/workflow/WorkflowSearchResultDetail.html" title="class in com.atlan.model.workflow">WorkflowSearchResultDetail</a>&nbsp;workflow)
+                               throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Run the provided pre-existing workflow.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>workflow</code> - details of the pre-existing workflow to re-run</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>details of the workflow run</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
