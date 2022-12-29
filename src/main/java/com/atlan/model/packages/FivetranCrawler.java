@@ -68,7 +68,7 @@ public class FivetranCrawler extends AbstractCrawler {
         String epoch = Connection.getEpochFromQualifiedName(connection.getQualifiedName());
 
         Map<String, Object> credentialBody = new HashMap<>();
-        credentialBody.put("name", PREFIX + "-" + epoch + "-0");
+        credentialBody.put("name", "default-fivetran-" + epoch + "-0");
         credentialBody.put("host", "https://api.fivetran.com");
         credentialBody.put("port", 443);
         credentialBody.put("authType", "api");
@@ -78,14 +78,8 @@ public class FivetranCrawler extends AbstractCrawler {
         credentialBody.put("connectorConfigName", "atlan-connectors-fivetran");
 
         WorkflowTaskArguments.WorkflowTaskArgumentsBuilder<?, ?> argsBuilder = WorkflowTaskArguments.builder()
-                .parameter(NameValuePair.builder()
-                        .name("connection")
-                        .value(connection.toJson())
-                        .build())
-                .parameter(NameValuePair.builder()
-                        .name("credential-guid")
-                        .value("{{credentialGuid}}")
-                        .build());
+                .parameter(NameValuePair.of("connection", connection.toJson()))
+                .parameter(NameValuePair.of("credential-guid", "{{credentialGuid}}"));
 
         String runName = PREFIX + "-" + epoch;
         String atlanName = PREFIX + "-default-fivetran-" + epoch;
