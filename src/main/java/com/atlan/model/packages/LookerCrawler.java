@@ -126,38 +126,14 @@ public class LookerCrawler extends AbstractCrawler {
         WorkflowTaskArguments.WorkflowTaskArgumentsBuilder<?, ?> argsBuilder;
         try {
             argsBuilder = WorkflowTaskArguments.builder()
-                    .parameter(NameValuePair.builder()
-                            .name("credential-guid")
-                            .value("{{credentialGuid}}")
-                            .build())
-                    .parameter(NameValuePair.builder()
-                            .name("connection")
-                            .value(connection.toJson())
-                            .build())
-                    .parameter(NameValuePair.builder()
-                            .name("include-folders")
-                            .value(Serde.allInclusiveMapper.writeValueAsString(toIncludeFolders))
-                            .build())
-                    .parameter(NameValuePair.builder()
-                            .name("exclude-folders")
-                            .value(Serde.allInclusiveMapper.writeValueAsString(toExcludeFolders))
-                            .build())
-                    .parameter(NameValuePair.builder()
-                            .name("include-projects")
-                            .value(Serde.allInclusiveMapper.writeValueAsString(toIncludeProjects))
-                            .build())
-                    .parameter(NameValuePair.builder()
-                            .name("exclude-projects")
-                            .value(Serde.allInclusiveMapper.writeValueAsString(toExcludeProjects))
-                            .build())
-                    .parameter(NameValuePair.builder()
-                            .name("use-field-level-lineage")
-                            .value("" + fieldLevelLineage)
-                            .build())
-                    .parameter(NameValuePair.builder()
-                            .name("extraction-method")
-                            .value("direct")
-                            .build());
+                    .parameter(NameValuePair.of("credential-guid", "{{credentialGuid}}"))
+                    .parameter(NameValuePair.of("include-folders", Serde.allInclusiveMapper.writeValueAsString(toIncludeFolders)))
+                    .parameter(NameValuePair.of("exclude-folders", Serde.allInclusiveMapper.writeValueAsString(toExcludeFolders)))
+                    .parameter(NameValuePair.of("include-projects", Serde.allInclusiveMapper.writeValueAsString(toIncludeProjects)))
+                    .parameter(NameValuePair.of("exclude-projects", Serde.allInclusiveMapper.writeValueAsString(toExcludeProjects)))
+                    .parameter(NameValuePair.of("connection", connection.toJson()))
+                    .parameter(NameValuePair.of("use-field-level-lineage", "" + fieldLevelLineage))
+                    .parameter(NameValuePair.of("extraction-method", "direct"));
         } catch (JsonProcessingException e) {
             throw new InvalidRequestException(ErrorCode.UNABLE_TO_TRANSLATE_FILTERS, e);
         }
@@ -191,6 +167,7 @@ public class LookerCrawler extends AbstractCrawler {
                                 "orchestration.atlan.com/marketplaceLink",
                                 "https://packages.atlan.com/-/web/detail/@atlan/looker")
                         .annotation("orchestration.atlan.com/name", "Looker Assets")
+                        .annotation("orchestration.atlan.com/usecase", "crawling,auto-classifications")
                         .annotation("package.argoproj.io/author", "Atlan")
                         .annotation(
                                 "package.argoproj.io/description",
