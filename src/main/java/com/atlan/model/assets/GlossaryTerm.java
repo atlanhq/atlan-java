@@ -25,7 +25,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Instance of a term in Atlan, with its detailed information.
+ * Instance of a term in Atlan.
  */
 @Getter
 @Setter
@@ -44,17 +44,11 @@ public class GlossaryTerm extends Asset {
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /**
-     * Unused.
-     * @see #description
-     */
+    /** Unused. */
     @Attribute
     String shortDescription;
 
-    /**
-     * Unused.
-     * @see #description
-     */
+    /** Unused. */
     @Attribute
     String longDescription;
 
@@ -76,66 +70,61 @@ public class GlossaryTerm extends Asset {
     @Singular
     Map<String, String> additionalAttributes;
 
-    /** Unused. */
+    /** TBC (Other direction is translatedTerms.) */
     @Attribute
     @Singular
     SortedSet<GlossaryTerm> translationTerms;
 
-    /** Unused. */
+    /** TBC (Other direction is validValues.) */
     @Attribute
     @Singular("validValueFor")
     SortedSet<GlossaryTerm> validValuesFor;
 
-    /** Glossary terms that have the same, or a very similar meaning in the same language. */
+    /** Terms that have the same (or a very similar) meaning in the same language. */
     @Attribute
     @Singular
     SortedSet<GlossaryTerm> synonyms;
 
-    /** Unused. */
+    /** TBC */
     @Attribute
     @Singular("replacedByTerm")
     SortedSet<GlossaryTerm> replacedBy;
 
-    /** Unused. */
+    /** TBC (Other direction is validValuesFor.) */
     @Attribute
     @Singular
     SortedSet<GlossaryTerm> validValues;
 
-    /** Unused. */
+    /** TBC */
     @Attribute
     @Singular
     SortedSet<GlossaryTerm> replacementTerms;
 
-    /** Linked glossary terms that may also be of interest. */
+    /** Linked terms that may also be of interest. */
     @Attribute
     @Singular("seeAlsoOne")
     SortedSet<GlossaryTerm> seeAlso;
 
-    /** Unused. */
+    /** TBC (Other direction is translationTerms.) */
     @Attribute
     @Singular
     SortedSet<GlossaryTerm> translatedTerms;
 
-    /** Unused. */
+    /** TBC (Other direction is classifies.) */
     @Attribute
     @Singular("isATerm")
     SortedSet<GlossaryTerm> isA;
 
-    /** Glossary in which the term is located. */
+    /** Glossary in which this term is contained. */
     @Attribute
     Glossary anchor;
 
-    /** Glossary terms that have the opposite (or near opposite) meaning in the same language. */
+    /** Terms that have the opposite (or near opposite) meaning in the same language. */
     @Attribute
     @Singular
     SortedSet<GlossaryTerm> antonyms;
 
-    /**
-     * Assets that are attached to this term.
-     * Note: this should ONLY be used to view such relationships, never to set such relationships.
-     * Only set such relationships in the other direction.
-     * @see Asset#assignedTerms
-     */
+    /** Assets that are attached to this term. Note: this should ONLY be used to view such relationships, never to set such relationships. Only set such relationships in the other direction. */
     @Attribute
     @Singular
     SortedSet<Asset> assignedEntities;
@@ -145,17 +134,17 @@ public class GlossaryTerm extends Asset {
     @Singular
     SortedSet<GlossaryCategory> categories;
 
-    /** Unused. */
+    /** TBC (Other direction is isA.) */
     @Attribute
     @Singular
     SortedSet<GlossaryTerm> classifies;
 
-    /** Unused. */
+    /** Other terms that are less common or less preferred than this term. (Other direction is preferredTerms.) */
     @Attribute
     @Singular
     SortedSet<GlossaryTerm> preferredToTerms;
 
-    /** Unused. */
+    /** Preferred terms to use instead of this term. (Other direction is preferredToTerms.) */
     @Attribute
     @Singular
     SortedSet<GlossaryTerm> preferredTerms;

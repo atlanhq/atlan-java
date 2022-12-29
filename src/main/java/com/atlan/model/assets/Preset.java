@@ -7,7 +7,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 /**
- * Detailed information about Preset-related assets.
+ * Base class for Preset assets.
  */
 @Getter
 @Setter

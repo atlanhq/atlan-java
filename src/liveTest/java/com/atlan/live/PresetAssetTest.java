@@ -347,7 +347,7 @@ public class PresetAssetTest extends AtlanLiveTest {
         PresetChart s = (PresetChart) one;
         assertEquals(s.getGuid(), chart.getGuid());
         assertEquals(s.getQualifiedName(), chart.getQualifiedName());
-        assertEquals(s.getDeleteHandler(), "HARD");
+        assertEquals(s.getDeleteHandler(), "PURGE");
         assertEquals(s.getStatus(), AtlanStatus.DELETED);
     }
 

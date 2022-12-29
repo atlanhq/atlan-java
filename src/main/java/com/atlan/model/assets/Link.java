@@ -15,7 +15,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 /**
- * Instance of a Link in Atlan, with its detailed information.
+ * Instance of a link in Atlan.
  */
 @Getter
 @Setter

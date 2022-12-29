@@ -15,6 +15,9 @@ import java.util.List;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+/**
+ * Instance of a README template in Atlan.
+ */
 @Getter
 @Setter
 @SuperBuilder(toBuilder = true)

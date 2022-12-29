@@ -14,6 +14,9 @@ import java.util.List;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+/**
+ * Instance of a column within a dbt model in Atlan.
+ */
 @Getter
 @Setter
 @SuperBuilder(toBuilder = true)

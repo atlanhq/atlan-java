@@ -14,7 +14,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 /**
- * Instance of a README in Atlan, with its detailed information.
+ * Instance of a README in Atlan.
  */
 @Getter
 @Setter

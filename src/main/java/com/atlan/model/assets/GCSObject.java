@@ -16,6 +16,9 @@ import java.util.List;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+/**
+ * Instance of a Google Cloud Storage object in Atlan.
+ */
 @Getter
 @Setter
 @SuperBuilder(toBuilder = true)

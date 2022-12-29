@@ -19,6 +19,9 @@ import java.util.SortedSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+/**
+ * Instance of a column in Atlan.
+ */
 @Getter
 @Setter
 @SuperBuilder(toBuilder = true)
@@ -35,7 +38,7 @@ public class Column extends SQL {
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Type of the column. */
+    /** Data type of values in the column. */
     @Attribute
     String dataType;
 
@@ -43,7 +46,7 @@ public class Column extends SQL {
     @Attribute
     String subDataType;
 
-    /** Order in which the column appears in the table (starting at 1). */
+    /** Order (position) in which the column appears in the table (starting at 1). */
     @Attribute
     Integer order;
 
@@ -91,7 +94,7 @@ public class Column extends SQL {
     @Attribute
     Long pinnedAt;
 
-    /** Total number of digits allowed when the {@link #dataType} is numeric. */
+    /** Total number of digits allowed when the dataType is numeric. */
     @Attribute
     Integer precision;
 
@@ -210,7 +213,7 @@ public class Column extends SQL {
     @Attribute
     Double columnVariance;
 
-    /** Materialized view in which this column exists, or null if the column exists in a table or view. */
+    /** Materialized view in which this column exists, or empty if the column instead exists in a table or view. */
     @Attribute
     @JsonProperty("materialisedView")
     MaterializedView materializedView;
@@ -230,7 +233,7 @@ public class Column extends SQL {
     @Singular
     SortedSet<DbtMetric> dbtMetrics;
 
-    /** View in which this column exists, or null if the column exists in a table or materialized view. */
+    /** View in which this column exists, or empty if the column instead exists in a table or materialized view. */
     @Attribute
     View view;
 
@@ -248,7 +251,7 @@ public class Column extends SQL {
     @Singular
     SortedSet<DbtModelColumn> dbtModelColumns;
 
-    /** Table in which this column exists, or null if the column exists in a view. */
+    /** Table in which this column exists, or empty if the column instead exists in a view or materialized view. */
     @Attribute
     Table table;
 

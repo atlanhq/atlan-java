@@ -19,7 +19,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 /**
- * Instance of a schema in Atlan, with its detailed information.
+ * Instance of a database schema in Atlan.
  */
 @Getter
 @Setter
@@ -70,7 +70,7 @@ public class Schema extends SQL {
     @Singular
     SortedSet<SnowflakeStream> snowflakeStreams;
 
-    /** Procedures that are defined within this schema. */
+    /** Stored procedures (routines) that are defined within this schema. */
     @Attribute
     @Singular
     SortedSet<Procedure> procedures;

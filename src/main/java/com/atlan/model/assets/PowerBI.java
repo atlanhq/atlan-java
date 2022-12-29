@@ -7,6 +7,9 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+/**
+ * Base class for Power BI assets.
+ */
 @Getter
 @Setter
 @SuperBuilder(toBuilder = true)

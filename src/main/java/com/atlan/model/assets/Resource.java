@@ -8,7 +8,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 /**
- * Detailed information about resource-related assets.
+ * Base class for resources.
  */
 @Getter
 @Setter

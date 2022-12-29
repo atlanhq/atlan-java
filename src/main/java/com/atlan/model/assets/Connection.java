@@ -24,7 +24,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 /**
- * Instance of a connection in Atlan, with its detailed information.
+ * Instance of a connection in Atlan.
  */
 @Getter
 @Setter
@@ -107,11 +107,11 @@ public class Connection extends Asset {
     @Attribute
     Boolean isSampleDataPreviewEnabled;
 
-    /** TBC */
+    /** Number of days over which popularity is calculated, for example 30 days. */
     @Attribute
     Long popularityInsightsTimeframe;
 
-    /** TBC */
+    /** Whether the connection has popularity insights (true) or not (false). */
     @Attribute
     Boolean hasPopularityInsights;
 

@@ -16,6 +16,9 @@ import java.util.SortedSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+/**
+ * Instance of an API specification in Atlan.
+ */
 @Getter
 @Setter
 @SuperBuilder(toBuilder = true)

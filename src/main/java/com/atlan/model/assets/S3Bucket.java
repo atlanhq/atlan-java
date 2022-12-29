@@ -17,7 +17,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 /**
- * Instance of an S3 bucket in Atlan, with its detailed information.
+ * Instance of an S3 bucket in Atlan.
  */
 @Getter
 @Setter

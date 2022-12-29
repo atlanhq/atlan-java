@@ -20,7 +20,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 /**
- * Instance of a table in Atlan, with its detailed information.
+ * Instance of a database table in Atlan.
  */
 @Getter
 @Setter

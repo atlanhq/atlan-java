@@ -1535,7 +1535,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertTrue(one instanceof Column);
         Column column = (Column) one;
         validateUpdatedColumn(column);
-        assertEquals(column.getDeleteHandler(), "HARD");
+        assertEquals(column.getDeleteHandler(), "PURGE");
         assertEquals(column.getStatus(), AtlanStatus.DELETED);
     }
 

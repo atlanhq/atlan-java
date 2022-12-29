@@ -41,7 +41,7 @@ public abstract class AbstractProcess extends Asset {
     @Attribute
     String sql;
 
-    /** TBC. */
+    /** TBC */
     @Attribute
     String ast;
 

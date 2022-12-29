@@ -17,7 +17,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 /**
- * Instance of a Preset dataset in Atlan, with its detailed information.
+ * Instance of a Preset dataset in Atlan.
  */
 @Getter
 @Setter

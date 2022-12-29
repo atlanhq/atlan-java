@@ -15,6 +15,9 @@ import java.util.SortedSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+/**
+ * Instance of a Salesforce object in Atlan.
+ */
 @Getter
 @Setter
 @SuperBuilder(toBuilder = true)
@@ -30,7 +33,7 @@ public class SalesforceObject extends Salesforce {
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** isCustom captures whether the object is a custom object or not */
     @Attribute
     Boolean isCustom;
 
@@ -42,7 +45,7 @@ public class SalesforceObject extends Salesforce {
     @Attribute
     Boolean isQueryable;
 
-    /** TBC */
+    /** fieldCount is the number of fields in the object entity */
     @Attribute
     Long fieldCount;
 

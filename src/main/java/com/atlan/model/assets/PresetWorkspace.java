@@ -17,7 +17,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 /**
- * Instance of a Preset workspace in Atlan, with its detailed information.
+ * Instance of a Preset workspace in Atlan.
  */
 @Getter
 @Setter

@@ -268,7 +268,7 @@ public class S3AssetTest extends AtlanLiveTest {
         S3Object s = (S3Object) one;
         assertEquals(s.getGuid(), object.getGuid());
         assertEquals(s.getQualifiedName(), object.getQualifiedName());
-        assertEquals(s.getDeleteHandler(), "HARD");
+        assertEquals(s.getDeleteHandler(), "PURGE");
         assertEquals(s.getStatus(), AtlanStatus.DELETED);
     }
 

@@ -6,6 +6,9 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+/**
+ * Instance of a column-level lineage process in Atlan.
+ */
 @Getter
 @Setter
 @SuperBuilder(toBuilder = true)

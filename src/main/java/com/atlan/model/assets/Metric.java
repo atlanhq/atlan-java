@@ -7,6 +7,9 @@ import java.util.SortedSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+/**
+ * Base class for metrics assets.
+ */
 @Getter
 @Setter
 @SuperBuilder(toBuilder = true)

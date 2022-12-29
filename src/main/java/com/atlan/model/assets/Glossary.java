@@ -26,7 +26,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Instance of a Glossary in Atlan, with its detailed information.
+ * Instance of a glossary in Atlan.
  */
 @Getter
 @Setter
@@ -39,23 +39,17 @@ public class Glossary extends Asset {
 
     public static final String TYPE_NAME = "AtlasGlossary";
 
-    /** Fixed typeName for Glossaries. */
+    /** Fixed typeName for Glossarys. */
     @Getter(onMethod_ = {@Override})
     @Setter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /**
-     * Unused.
-     * @see #description
-     */
+    /** Unused. */
     @Attribute
     String shortDescription;
 
-    /**
-     * Unused.
-     * @see #description
-     */
+    /** Unused. */
     @Attribute
     String longDescription;
 
@@ -72,12 +66,12 @@ public class Glossary extends Asset {
     @Singular
     Map<String, String> additionalAttributes;
 
-    /** Terms within this Glossary. */
+    /** Terms contained within this glossary. */
     @Attribute
     @Singular
     SortedSet<GlossaryTerm> terms;
 
-    /** Categories within this Glossary. */
+    /** Categories contained within this glossary. */
     @Attribute
     @Singular
     SortedSet<GlossaryCategory> categories;

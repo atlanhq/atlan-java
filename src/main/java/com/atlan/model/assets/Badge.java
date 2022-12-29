@@ -14,6 +14,9 @@ import java.util.List;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+/**
+ * Instance of a badge in Atlan.
+ */
 @Getter
 @Setter
 @SuperBuilder(toBuilder = true)
