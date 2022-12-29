@@ -70,6 +70,41 @@ public class WorkflowSearchRequest extends IndexSearchDSL {
     }
 
     /**
+     * Find a specific run of a given workflow.
+     *
+     * @param workflowRunName name of the specific workflow run to find
+     * @return the singular result giving the specific run of the workflow
+     */
+    public static WorkflowSearchResult findRunByName(String workflowRunName) throws AtlanException {
+        SortOptions sort = SortOptions.of(s -> s.field(FieldSort.of(f -> f.field("metadata.creationTimestamp")
+                .order(SortOrder.Desc)
+                .nested(NestedSortValue.of(v -> v.path("metadata"))))));
+
+        Query term = TermQuery.of(t -> t.field("metadata.name.keyword").value(workflowRunName))
+                ._toQuery();
+
+        Query nested = NestedQuery.of(n -> n.path("metadata").query(term))._toQuery();
+
+        Query query = BoolQuery.of(b -> b.filter(nested))._toQuery();
+
+        WorkflowSearchRequest request = WorkflowSearchRequest.builder()
+                .from(0)
+                .size(10)
+                .sortOption(sort)
+                .query(query)
+                .build();
+
+        WorkflowSearchResponse response = WorkflowsEndpoint.searchRuns(request);
+        if (response != null) {
+            List<WorkflowSearchResult> results = response.getHits().getHits();
+            if (results != null && !results.isEmpty()) {
+                return results.get(0);
+            }
+        }
+        return null;
+    }
+
+    /**
      * Find workflows based on their type (prefix).
      *
      * @param prefix of the workflow, from a package class (for example {@link com.atlan.model.packages.ConnectionDelete#PREFIX}

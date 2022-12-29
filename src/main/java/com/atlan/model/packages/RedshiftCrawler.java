@@ -38,7 +38,7 @@ public class RedshiftCrawler extends AbstractCrawler {
         return basicAuth(
                 connectionName,
                 hostname,
-                443,
+                5439,
                 username,
                 password,
                 database,

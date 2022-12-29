@@ -68,7 +68,7 @@ public class ReflectionCache {
      * Build up a map of all the methods that exist in the class (and its superclasses),
      * whose name starts with a certain prefix.
      *
-     * @param map of all setter methods
+     * @param map of all getter/setter methods
      * @param b starting class
      * @param prefix each method must start with
      */

@@ -264,7 +264,8 @@ public class Connection extends Asset {
      * @param type of the connection
      * @param attributes an optional collection of attributes to retrieve for the connection
      * @return all connections with that name and type, if found
-     * @throws AtlanException on any API problems, or if the connection does not exist
+     * @throws AtlanException on any API problems
+     * @throws NotFoundException if the connection does not exist
      */
     public static List<Connection> findByName(String name, AtlanConnectorType type, Collection<String> attributes)
             throws AtlanException {

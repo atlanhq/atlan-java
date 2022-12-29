@@ -172,52 +172,52 @@ public enum ErrorCode implements ExceptionMessageSet {
     ROLE_NOT_FOUND_BY_NAME(
             404,
             "ATLAN-JAVA-404-004",
-            "Role with name '{0}' does not exist.",
+            "Role with name {0} does not exist.",
             "Verify the role name provided is a valid role name."),
     ROLE_NOT_FOUND_BY_ID(
             404,
             "ATLAN-JAVA-404-005",
-            "Role with GUID '{0}' does not exist.",
+            "Role with GUID {0} does not exist.",
             "Verify the role GUID provided is a valid role GUID."),
     CLASSIFICATION_NOT_FOUND_BY_NAME(
             404,
             "ATLAN-JAVA-404-006",
-            "Classification with name '{0}' does not exist.",
+            "Classification with name {0} does not exist.",
             "Verify the classification name provided is a valid classification name. This should be the human-readable name of the classification."),
     CLASSIFICATION_NOT_FOUND_BY_ID(
             404,
             "ATLAN-JAVA-404-007",
-            "Classification with ID '{0}' does not exist.",
+            "Classification with ID {0} does not exist.",
             "Verify the classification ID provided is a valid classification ID. This should be the Atlan-internal hashed string representation."),
     CM_NOT_FOUND_BY_NAME(
             404,
             "ATLAN-JAVA-404-008",
-            "Custom metadata with name '{0}' does not exist.",
+            "Custom metadata with name {0} does not exist.",
             "Verify the custom metadata name provided is a valid custom metadata name. This should be the human-readable name of the custom metadata."),
     CM_NOT_FOUND_BY_ID(
             404,
             "ATLAN-JAVA-404-009",
-            "Custom metadata with ID '{0}' does not exist.",
+            "Custom metadata with ID {0} does not exist.",
             "Verify the custom metadata ID provided is a valid custom metadata ID. This should be the Atlan-internal hashed string representation."),
     CM_NO_ATTRIBUTES(
             404,
             "ATLAN-JAVA-404-010",
-            "Custom metadata with ID '{0}' does not have any attributes.",
+            "Custom metadata with ID {0} does not have any attributes.",
             "Verify the custom metadata ID you are accessing has attributes defined before attempting to retrieve one of them."),
     CM_ATTR_NOT_FOUND_BY_NAME(
             404,
             "ATLAN-JAVA-404-011",
-            "Custom metadata property with name '{0}' does not exist in custom metadata '{1}'.",
+            "Custom metadata property with name {0} does not exist in custom metadata {1}.",
             "Verify the custom metadata ID you are accessing has the attribute you are looking for defined. The name of the attribute should be the human-readable name."),
     CM_ATTR_NOT_FOUND_BY_ID(
             404,
             "ATLAN-JAVA-404-012",
-            "Custom metadata property with ID '{0}' does not exist in custom metadata '{1}'.",
+            "Custom metadata property with ID {0} does not exist in custom metadata {1}.",
             "Verify the custom metadata ID you are accessing has the attribute you are looking for defined. The ID of the attribute should be the Atlan-internal hashed string representation."),
     ENUM_NOT_FOUND(
             404,
             "ATLAN-JAVA-404-013",
-            "Enumeration with name '{0}' does not exist.",
+            "Enumeration with name {0} does not exist.",
             "Verify the enumeration name provided is a valid enumeration name. This should be the human-readable name of the enumeration."),
     ASSET_NOT_FOUND_BY_NAME(
             404,
@@ -232,7 +232,7 @@ public enum ErrorCode implements ExceptionMessageSet {
     CONNECTION_NOT_FOUND_BY_NAME(
             404,
             "ATLAN-JAVA-404-016",
-            "Unable to find a connection with the name '{0}' of type: {1}.",
+            "Unable to find a connection with the name {0} of type: {1}.",
             "Verify the requested connection exists in your Atlan environment."),
 
     DUPLICATE_CUSTOM_ATTRIBUTES(
