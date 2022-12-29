@@ -2,6 +2,8 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.workflow;
 
+import com.atlan.api.WorkflowsEndpoint;
+import com.atlan.exception.AtlanException;
 import com.atlan.model.core.AtlanObject;
 import com.atlan.model.enums.AtlanWorkflowPhase;
 import java.util.List;
@@ -28,6 +30,19 @@ public class WorkflowSearchResult extends AtlanObject {
             if (status != null) {
                 return status.getPhase();
             }
+        }
+        return null;
+    }
+
+    /**
+     * Re-run this workflow.
+     *
+     * @return details of the workflow run
+     * @throws AtlanException on any API communication issue
+     */
+    public WorkflowRunResponse rerun() throws AtlanException {
+        if (_source != null) {
+            return WorkflowsEndpoint.run(_source);
         }
         return null;
     }

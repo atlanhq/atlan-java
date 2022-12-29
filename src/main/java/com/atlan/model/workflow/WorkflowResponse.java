@@ -43,24 +43,25 @@ public class WorkflowResponse extends ApiResource {
      */
     public AtlanWorkflowPhase monitorStatus(Logger log) throws AtlanException, InterruptedException {
         if (getMetadata() != null && getMetadata().getName() != null) {
-            // If the workflow name is null, it wasn't run (idempotent skip)
-            // ... so we can also skip searching for its status
-            String workflowName = getMetadata().getName();
+            String name = getMetadata().getName();
             AtlanWorkflowPhase status = null;
             do {
-                final WorkflowSearchResult runDetails = WorkflowSearchRequest.findLatestRun(workflowName);
+                // Fix a value here so that we go to the high-end of the wait duration,
+                // but still apply a jitter each time
+                // (Moved to the start of the loop to give a brief startup delay to avoid
+                //  any false-positives on retrieving the latest run and picking up a previous
+                //  run.)
+                Thread.sleep(HttpClient.waitTime(5).toMillis());
+                final WorkflowSearchResult runDetails = getRunDetails(name);
                 if (runDetails != null) {
                     status = runDetails.getStatus();
                 }
                 if (log != null) {
                     log.info("Workflow status: {}", status);
                 }
-                // Fix a value here so that we go to the high-end of the wait duration,
-                // but still apply a jitter each time
-                Thread.sleep(HttpClient.waitTime(5).toMillis());
             } while (status != AtlanWorkflowPhase.SUCCESS
-                    && status != AtlanWorkflowPhase.ERROR
-                    && status != AtlanWorkflowPhase.FAILED);
+                && status != AtlanWorkflowPhase.ERROR
+                && status != AtlanWorkflowPhase.FAILED);
             return status;
         } else {
             if (log != null) {
@@ -68,5 +69,16 @@ public class WorkflowResponse extends ApiResource {
             }
             return null;
         }
+    }
+
+    /**
+     * Retrieve the workflow run details.
+     *
+     * @param name of the workflow template
+     * @return the details of the workflow run
+     * @throws AtlanException on any API errors searching for the workflow run
+     */
+    protected WorkflowSearchResult getRunDetails(String name) throws AtlanException {
+        return WorkflowSearchRequest.findLatestRun(name);
     }
 }
