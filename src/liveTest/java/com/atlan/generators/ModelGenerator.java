@@ -83,7 +83,7 @@ public class ModelGenerator extends AbstractGenerator {
                 log.error("Unable to create target directory: {}", MODEL_DIRECTORY);
             }
         }
-        for (Map.Entry<String, EntityDef> entry : typeDefCache.entrySet()) {
+        for (Map.Entry<String, EntityDef> entry : entityDefCache.entrySet()) {
             String name = entry.getKey();
             if (!SKIP_GENERATING.contains(name) && !name.startsWith("__")) {
                 log.info("Creating model for: {}", name);
@@ -102,7 +102,7 @@ public class ModelGenerator extends AbstractGenerator {
             }
         }
 
-        for (Map.Entry<String, EntityDef> entry : typeDefCache.entrySet()) {
+        for (Map.Entry<String, EntityDef> entry : entityDefCache.entrySet()) {
             String name = entry.getKey();
             EntityDef entityDef = entry.getValue();
             List<String> subTypes = entityDef.getSubTypes();
@@ -1276,7 +1276,7 @@ public class ModelGenerator extends AbstractGenerator {
             List<String> superTypes = typeDetails.getSuperTypes();
             if (superTypes != null && !superTypes.isEmpty()) {
                 String singleSuperType = getSingleTypeToExtend(typeName, superTypes);
-                addTestAttributes(fs, typeDefCache.get(singleSuperType));
+                addTestAttributes(fs, entityDefCache.get(singleSuperType));
             }
             List<AttributeDef> attributes = typeDetails.getAttributeDefs();
             for (AttributeDef attribute : attributes) {

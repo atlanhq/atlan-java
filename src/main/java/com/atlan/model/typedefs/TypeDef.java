@@ -23,6 +23,8 @@ import lombok.experimental.SuperBuilder;
     @JsonSubTypes.Type(value = EnumDef.class, name = "ENUM"),
     @JsonSubTypes.Type(value = CustomMetadataDef.class, name = "BUSINESS_METADATA"),
     @JsonSubTypes.Type(value = EntityDef.class, name = "ENTITY"),
+    @JsonSubTypes.Type(value = RelationshipDef.class, name = "RELATIONSHIP"),
+    @JsonSubTypes.Type(value = StructDef.class, name = "STRUCT"),
 })
 public abstract class TypeDef extends AtlanObject {
     private static final long serialVersionUID = 2L;
