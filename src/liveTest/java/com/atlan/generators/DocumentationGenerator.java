@@ -13,11 +13,10 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
+import lombok.Builder;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -25,6 +24,17 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public class DocumentationGenerator extends AbstractGenerator {
+
+    enum RelationshipCardinality {
+        MANY_TO_MANY,
+        ONE_TO_MANY,
+        ONE_TO_ZERO_OR_ONE,
+        MANY_TO_ONE,
+        ZERO_OR_ONE_TO_ONE,
+        ZERO_OR_ONE_TO_ZERO_OR_ONE,
+        ZERO_OR_ONE_TO_MANY,
+        MANY_TO_ZERO_OR_ONE,
+    }
 
     private static final String DOCS_DIRECTORY = "src" + File.separator + "main" + File.separator + "resources" + File.separator + "markdown";
 
@@ -38,15 +48,26 @@ public class DocumentationGenerator extends AbstractGenerator {
         Map.entry("long", ":material-numeric:{ title=\"long\" }")
     );
 
-    private static final Map<String, String> relationshipCardinality = Map.ofEntries(
-        Map.entry("many-to-many", ":material-relation-many-to-many:{ title=\"many-to-many\" }"),
-        Map.entry("one-to-many", ":material-relation-one-to-many:{ title=\"one-to-many\" }"),
-        Map.entry("one-to-zero-or-one", ":material-relation-one-to-zero-or-one:{ title=\"one-to-zero-or-one\" }"),
-        Map.entry("many-to-one", ":material-relation-many-to-one:{ title=\"many-to-one\" }"),
-        Map.entry("zero-or-one-to-one", ":material-relation-zero-or-one-to-one:{ title=\"zero-or-one-to-one\" }"),
-        Map.entry("zero-or-one-to-zero-or-one", ":material-relation-zero-or-one-to-zero-or-one:{ title=\"zero-or-one-to-zero-or-one\" }"),
-        Map.entry("zero-or-one-to-many", ":material-relation-zero-or-one-to-many:{ title=\"zero-or-one-to-many\" }"),
-        Map.entry("many-to-zero-or-one", ":material-relation-many-to-zero-or-one:{ title=\"many-to-zero-or-one\" }")
+    private static final Map<RelationshipCardinality, String> cardinalityIcons = Map.ofEntries(
+        Map.entry(RelationshipCardinality.MANY_TO_MANY, ":material-relation-many-to-many:{ title=\"many-to-many\" }"),
+        Map.entry(RelationshipCardinality.ONE_TO_MANY, ":material-relation-one-to-many:{ title=\"one-to-many\" }"),
+        Map.entry(RelationshipCardinality.ONE_TO_ZERO_OR_ONE, ":material-relation-one-to-zero-or-one:{ title=\"one-to-zero-or-one\" }"),
+        Map.entry(RelationshipCardinality.MANY_TO_ONE, ":material-relation-many-to-one:{ title=\"many-to-one\" }"),
+        Map.entry(RelationshipCardinality.ZERO_OR_ONE_TO_ONE, ":material-relation-zero-or-one-to-one:{ title=\"zero-or-one-to-one\" }"),
+        Map.entry(RelationshipCardinality.ZERO_OR_ONE_TO_ZERO_OR_ONE, ":material-relation-zero-or-one-to-zero-or-one:{ title=\"zero-or-one-to-zero-or-one\" }"),
+        Map.entry(RelationshipCardinality.ZERO_OR_ONE_TO_MANY, ":material-relation-zero-or-one-to-many:{ title=\"zero-or-one-to-many\" }"),
+        Map.entry(RelationshipCardinality.MANY_TO_ZERO_OR_ONE, ":material-relation-many-to-zero-or-one:{ title=\"many-to-zero-or-one\" }")
+    );
+
+    private static final Map<RelationshipCardinality, String> cardinalityQualifiers = Map.ofEntries(
+        Map.entry(RelationshipCardinality.MANY_TO_MANY, " \"*\" --> \"*\" "),
+        Map.entry(RelationshipCardinality.ONE_TO_MANY, " \"1\" --> \"*\" "),
+        Map.entry(RelationshipCardinality.ONE_TO_ZERO_OR_ONE, " \"1\" --> \"0..1\" "),
+        Map.entry(RelationshipCardinality.MANY_TO_ONE, " \"*\" --> \"1\" "),
+        Map.entry(RelationshipCardinality.ZERO_OR_ONE_TO_ONE, " \"0..1\" --> \"1\" "),
+        Map.entry(RelationshipCardinality.ZERO_OR_ONE_TO_ZERO_OR_ONE, " \"0..1\" --> \"0..1\" "),
+        Map.entry(RelationshipCardinality.ZERO_OR_ONE_TO_MANY, " \"0..1\" --> \"*\" "),
+        Map.entry(RelationshipCardinality.MANY_TO_ZERO_OR_ONE, " \"*\" --> \"0..1\" ")
     );
 
     public static void main(String[] args) {
@@ -70,7 +91,9 @@ public class DocumentationGenerator extends AbstractGenerator {
 
     private void generateTypeFiles() {
         for (String typeName : entityDefCache.keySet()) {
-            generateTypeFile(typeName);
+            if (!typeName.startsWith("__")) {
+                generateTypeFile(typeName);
+            }
         }
     }
 
@@ -113,7 +136,7 @@ public class DocumentationGenerator extends AbstractGenerator {
     private void writeSuperTypes(BufferedWriter out, List<String> superTypes, String indent, Set<String> written) throws IOException {
         if (superTypes != null && !superTypes.isEmpty()) {
             for (String superTypeName : superTypes) {
-                if (!written.contains(superTypeName)) {
+                if (!written.contains(superTypeName) && !superTypeName.startsWith("__")) {
                     EntityDef parent = entityDefCache.get(superTypeName);
                     writeSuperTypes(out, parent.getSuperTypes(), indent, written);
                     writeModelClass(out, superTypeName, indent, true);
@@ -126,7 +149,7 @@ public class DocumentationGenerator extends AbstractGenerator {
     private void writeInheritanceModel(BufferedWriter out, String typeName, List<String> superTypes, String indent, Set<String> written) throws IOException {
         if (superTypes != null && !superTypes.isEmpty()) {
             for (String superTypeName : superTypes) {
-                if (!written.contains(superTypeName + "|" + typeName)) {
+                if (!superTypeName.startsWith("__") && !written.contains(superTypeName + "|" + typeName)) {
                     EntityDef parent = entityDefCache.get(superTypeName);
                     writeInheritanceModel(out, superTypeName, parent.getSuperTypes(), indent, written);
                     out.write(indent + "    " + superTypeName + " <|-- " + typeName + " : extends\n");
@@ -152,9 +175,11 @@ public class DocumentationGenerator extends AbstractGenerator {
         out.write("## Attributes\n\n");
         Map<String, List<AttributeDef>> inherited = getAllInheritedAttributes(typeName);
         for (String superTypeName : inherited.keySet()) {
-            List<AttributeDef> inheritedAttrs = inherited.get(superTypeName);
-            for (AttributeDef inheritedAttrDef : inheritedAttrs) {
-                writeAttribute(out, superTypeName, inheritedAttrDef, true);
+            if (!superTypeName.startsWith("__")) {
+                List<AttributeDef> inheritedAttrs = inherited.get(superTypeName);
+                for (AttributeDef inheritedAttrDef : inheritedAttrs) {
+                    writeAttribute(out, superTypeName, inheritedAttrDef, true);
+                }
             }
         }
         EntityDef entityDef = entityDefCache.get(typeName);
@@ -163,46 +188,34 @@ public class DocumentationGenerator extends AbstractGenerator {
             writeAttribute(out, typeName, attributeDef, false);
         }
         out.write("## Relationships\n\n");
-        out.write("??? model \"Visualization\"\n\n");
-        // TODO: generate an expandable visualization that shows the classes, attribute names
-        //  used for each relationship, and cardinalities (+ links on the classes)
-        /*
-        ??? model "Visualization"
-            ```mermaid
-            classDiagram
-                direction LR
-                GCSBucket "*" --> "*" AtlasGlossaryTerm : meanings
-                GCSBucket "*" --> "*" Link : links
-                GCSBucket "*" --> "*" Metric : metrics
-                GCSBucket "0..1" --> "0..1" Readme : readme
-                GCSBucket "*" --> "*" Process : inputToProcesses
-                GCSBucket "*" --> "*" Process : outputFromProcesses
-                GCSBucket "1" --> "*" GCSObject : gcsObjects
-                link GCSBucket "../gcsbucket"
-                link AtlasGlossaryTerm "../atlasglossaryterm"
-            ```
-         */
+        Map<String, RelationshipDetails> relationshipMap = new LinkedHashMap<>();
         // Relationship attributes appear at each level of the hierarchy, so we'll take
         // advantage of the linked map (insertion-ordered) response and block out any
         // that we've already output (from top of inheritance hierarchy downwards)
         // to avoid duplication
-        Set<String> relationshipsWritten = new HashSet<>();
         Map<String, List<RelationshipAttributeDef>> inheritedRelationships = getAllInheritedRelationshipAttributes(typeName);
-        for (String superTypeName : inheritedRelationships.keySet()) {
-            List<RelationshipAttributeDef> inheritedAttrs = inheritedRelationships.get(superTypeName);
+        for (Map.Entry<String, List<RelationshipAttributeDef>> entry : inheritedRelationships.entrySet()) {
+            String superTypeName = entry.getKey();
+            List<RelationshipAttributeDef> inheritedAttrs = entry.getValue();
             for (RelationshipAttributeDef inheritedAttrDef : inheritedAttrs) {
-                if (!relationshipsWritten.contains(inheritedAttrDef.getName())) {
-                    writeRelationshipAttribute(out, superTypeName, inheritedAttrDef, true);
-                    relationshipsWritten.add(inheritedAttrDef.getName());
+                String attributeName = inheritedAttrDef.getName();
+                if (!attributeName.startsWith("__") && !relationshipMap.containsKey(attributeName)) {
+                    relationshipMap.put(attributeName, getRelationshipDetails(superTypeName, inheritedAttrDef, true));
                 }
             }
         }
         List<RelationshipAttributeDef> relationships = entityDef.getRelationshipAttributeDefs();
         for (RelationshipAttributeDef relationshipAttributeDef : relationships) {
-            if (!relationshipsWritten.contains(relationshipAttributeDef.getName())) {
-                writeRelationshipAttribute(out, typeName, relationshipAttributeDef, false);
-                relationshipsWritten.add(relationshipAttributeDef.getName());
+            String attributeName = relationshipAttributeDef.getName();
+            if (!attributeName.startsWith("__") && !relationshipMap.containsKey(attributeName)) {
+                relationshipMap.put(attributeName, getRelationshipDetails(typeName, relationshipAttributeDef, false));
             }
+        }
+
+        writeRelationshipDiagram(out, typeName, relationshipMap);
+        for (Map.Entry<String, RelationshipDetails> entry : relationshipMap.entrySet()) {
+            RelationshipDetails details = entry.getValue();
+            writeRelationshipAttribute(out, details);
         }
     }
 
@@ -266,16 +279,18 @@ public class DocumentationGenerator extends AbstractGenerator {
         return icon;
     }
 
-    private void writeRelationshipAttribute(BufferedWriter out, String typeName, RelationshipAttributeDef attributeDef, boolean inherited) throws IOException {
-        String attrName = attributeDef.getName();
-        String description = getAttributeDescription(typeName, attrName);
-        out.write(getRelationshipCardinality(attributeDef));
+    private void writeRelationshipAttribute(BufferedWriter out, RelationshipDetails details) throws IOException {
+        String attrName = details.getAttributeName();
+        String fromTypeName = details.getFromTypeName();
+        String description = getAttributeDescription(fromTypeName, attrName);
+        boolean inherited = details.getInherited();
+        out.write(getRelationshipCardinalityIcon(details.getCardinality()));
         if (inherited) {
             out.write(" ***`" + attrName + "`***");
         } else {
             out.write(" **`" + attrName + "`**");
         }
-        String relatedType = getRelatedType(attributeDef);
+        String relatedType = details.getRelatedToType();
         if (relatedType != null) {
             out.write(" ([" + relatedType + "](../" + relatedType.toLowerCase() + "))\n");
         } else {
@@ -284,27 +299,61 @@ public class DocumentationGenerator extends AbstractGenerator {
         out.write(":   " + description + "\n\n");
     }
 
-    private String getRelationshipCardinality(RelationshipAttributeDef attributeDef) {
+    private String getRelationshipCardinalityIcon(RelationshipCardinality cardinality) {
+        String icon = cardinalityIcons.getOrDefault(cardinality, null);
+        if (icon == null) {
+            log.error("Unable to find any icon for cardinality: {}", cardinality);
+        }
+        return icon == null ? "" : icon;
+    }
+
+    private void writeRelationshipDiagram(BufferedWriter out, String typeName, Map<String, RelationshipDetails> relationshipMap) throws IOException {
+        out.write("??? model \"Visualization\"\n\n");
+        out.write("    ```mermaid\n");
+        out.write("    classDiagram\n");
+        out.write("        direction LR\n");
+        Set<String> typesToLink = new LinkedHashSet<>();
+        for (Map.Entry<String, RelationshipDetails> entry : relationshipMap.entrySet()) {
+            String attributeName = entry.getKey();
+            RelationshipDetails details = entry.getValue();
+            String relatedType = details.getRelatedToType();
+            typesToLink.add(relatedType);
+            String cardinalityQualifier = cardinalityQualifiers.getOrDefault(details.getCardinality(), " --> ");
+            out.write("        " + typeName + cardinalityQualifier + relatedType + " : " + attributeName + "\n");
+        }
+        for (String relatedType : typesToLink) {
+            out.write("        link " + relatedType + " \"../" + relatedType.toLowerCase() + "\"\n");
+        }
+        out.write("    ```\n\n");
+    }
+
+    private RelationshipDetails getRelationshipDetails(String fromTypeName, RelationshipAttributeDef attributeDef, boolean inherited) {
         String attributeName = attributeDef.getName();
         String relationshipName = attributeDef.getRelationshipTypeName();
         RelationshipDef relationshipDef = relationshipDefCache.get(relationshipName);
         RelationshipCategory category = relationshipDef.getRelationshipCategory();
+
         RelationshipEndDef one = relationshipDef.getEndDef1();
         RelationshipEndDef two = relationshipDef.getEndDef2();
+
         AtlanCustomAttributeCardinality from = null;
         AtlanCustomAttributeCardinality to = null;
         boolean end1 = false;
+        String relatedType = null;
         if (one.getName().equals(attributeName)) {
+            relatedType = two.getType();
             to = one.getCardinality();
             from = two.getCardinality();
             end1 = true;
         } else if (two.getName().equals(attributeName)) {
+            relatedType = one.getType();
             to = two.getCardinality();
             from = one.getCardinality();
         } else {
             log.error("Unable to find a matching attribute ({}) in the relationship for: {}", attributeName, relationshipDef);
         }
-        String cardinality = "";
+
+        RelationshipCardinality cardinality = null;
         switch(category) {
             case COMPOSITION:
                 // A composition relationship is the only one that has strong ownership dictates
@@ -316,10 +365,10 @@ public class DocumentationGenerator extends AbstractGenerator {
                     }
                     switch (to) {
                         case SET:
-                            cardinality = relationshipCardinality.get("one-to-many");
+                            cardinality = RelationshipCardinality.ONE_TO_MANY;
                             break;
                         case SINGLE:
-                            cardinality = relationshipCardinality.get("one-to-zero-or-one");
+                            cardinality = RelationshipCardinality.ONE_TO_ZERO_OR_ONE;
                             break;
                         default:
                             log.error("Unknown cardinality! {}", to);
@@ -331,10 +380,10 @@ public class DocumentationGenerator extends AbstractGenerator {
                     }
                     switch (to) {
                         case SET:
-                            cardinality = relationshipCardinality.get("many-to-one");
+                            cardinality = RelationshipCardinality.MANY_TO_ONE;
                             break;
                         case SINGLE:
-                            cardinality = relationshipCardinality.get("zero-or-one-to-one");
+                            cardinality = RelationshipCardinality.ZERO_OR_ONE_TO_ONE;
                             break;
                         default:
                             log.error("Unknown cardinality! {}", to);
@@ -346,15 +395,15 @@ public class DocumentationGenerator extends AbstractGenerator {
             case ASSOCIATION:
                 if (from == AtlanCustomAttributeCardinality.SINGLE) {
                     if (to == AtlanCustomAttributeCardinality.SINGLE) {
-                        cardinality = relationshipCardinality.get("zero-or-one-to-zero-or-one");
+                        cardinality = RelationshipCardinality.ZERO_OR_ONE_TO_ZERO_OR_ONE;
                     } else {
-                        cardinality = relationshipCardinality.get("zero-or-one-to-many");
+                        cardinality = RelationshipCardinality.ZERO_OR_ONE_TO_MANY;
                     }
                 } else {
                     if (to == AtlanCustomAttributeCardinality.SINGLE) {
-                        cardinality = relationshipCardinality.get("many-to-zero-or-one");
+                        cardinality = RelationshipCardinality.MANY_TO_ZERO_OR_ONE;
                     } else {
-                        cardinality = relationshipCardinality.get("many-to-many");
+                        cardinality = RelationshipCardinality.MANY_TO_MANY;
                     }
                 }
                 break;
@@ -362,24 +411,14 @@ public class DocumentationGenerator extends AbstractGenerator {
                 log.error("Unknown relationship category! {}", category);
                 break;
         }
-        return cardinality;
-    }
 
-    private String getRelatedType(RelationshipAttributeDef attributeDef) {
-        String attributeName = attributeDef.getName();
-        String relationshipName = attributeDef.getRelationshipTypeName();
-        RelationshipDef relationshipDef = relationshipDefCache.get(relationshipName);
-        RelationshipEndDef one = relationshipDef.getEndDef1();
-        RelationshipEndDef two = relationshipDef.getEndDef2();
-        String relatedType = null;
-        if (one.getName().equals(attributeName)) {
-            relatedType = two.getType();
-        } else if (two.getName().equals(attributeName)) {
-            relatedType = one.getType();
-        } else {
-            log.error("Unable to find a matching attribute ({}) in the relationship for: {}", attributeName, relationshipDef);
-        }
-        return relatedType;
+        return RelationshipDetails.builder()
+            .fromTypeName(fromTypeName)
+            .attributeName(attributeName)
+            .relatedToType(relatedType)
+            .cardinality(cardinality)
+            .inherited(inherited)
+            .build();
     }
 
     private void writeSubtypes(BufferedWriter out, String typeName) throws IOException {
@@ -399,5 +438,16 @@ public class DocumentationGenerator extends AbstractGenerator {
 
     private String getEmbeddedType(String attrType) {
         return attrType.substring(attrType.indexOf("<") + 1, attrType.indexOf(">"));
+    }
+
+    @Data
+    @Builder
+    static class RelationshipDetails {
+        String fromTypeName;
+        String attributeName;
+        String relatedToType;
+        RelationshipCardinality cardinality;
+        @Builder.Default
+        boolean inherited = false;
     }
 }
