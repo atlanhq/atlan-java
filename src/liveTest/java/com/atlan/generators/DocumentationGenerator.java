@@ -95,20 +95,56 @@ public class DocumentationGenerator extends AbstractGenerator {
                 generateTypeFile(typeName);
             }
         }
+        for (Map.Entry<String, TypeDef> entry : typeDefCache.entrySet()) {
+            String typeName = entry.getKey();
+            TypeDef typeDef = entry.getValue();
+            if (typeDef instanceof StructDef) {
+                generateStructFile(typeName, (StructDef) typeDef);
+            } else if (typeDef instanceof EnumDef) {
+                generateEnumFile(typeName, (EnumDef) typeDef);
+            }
+        }
     }
 
     private void generateTypeFile(String typeName) {
         try (BufferedWriter out = Files.newBufferedWriter(Paths.get(DOCS_DIRECTORY + File.separator + typeName.toLowerCase() + ".md"), UTF_8)) {
             writeHeader(out, typeName);
-            writeModelDiagram(out, typeName);
+            EntityDef entityDef = entityDefCache.get(typeName);
+            writeModelDiagram(out, typeName, entityDef);
             // TODO: Figure out stylesheets for highlighting the type currently being viewed,
             //  then just use the single diagram with both ancestors + direct subtypes.
             //  see: https://mermaid.js.org/syntax/classDiagram.html#styling
-            writeSubtypes(out, typeName);
-            writeAttributes(out, typeName);
+            writeSubtypes(out, typeName, entityDef);
+            writeAttributes(out, typeName, entityDef);
         } catch (IOException e) {
             log.error("Unable to generate Markdown for type: {}", typeName, e);
         }
+    }
+
+    private void generateStructFile(String typeName, StructDef structDef) {
+        try (BufferedWriter out = Files.newBufferedWriter(Paths.get(DOCS_DIRECTORY + File.separator + typeName.toLowerCase() + ".md"), UTF_8)) {
+            writeHeader(out, typeName);
+            writeAttributes(out, typeName, structDef);
+        } catch (IOException e) {
+            log.error("Unable to generate Markdown for type: {}", typeName, e);
+        }
+    }
+
+    private void generateEnumFile(String typeName, EnumDef enumDef) {
+        try (BufferedWriter out = Files.newBufferedWriter(Paths.get(DOCS_DIRECTORY + File.separator + typeName.toLowerCase() + ".md"), UTF_8)) {
+            writeHeader(out, typeName);
+            writeValidValues(out, enumDef);
+        } catch (IOException e) {
+            log.error("Unable to generate Markdown for type: {}", typeName, e);
+        }
+    }
+
+    private void writeValidValues(BufferedWriter out, EnumDef enumDef) throws IOException {
+        out.write("## Valid values\n\n");
+        for (String value : enumDef.getValidValues()) {
+            out.write("- `" + value + "`\n");
+        }
+        out.write("\n");
     }
 
     private void writeHeader(BufferedWriter out, String typeName) throws IOException {
@@ -116,17 +152,16 @@ public class DocumentationGenerator extends AbstractGenerator {
         out.write(getTypeDescription(typeName) + "\n\n");
     }
 
-    private void writeModelDiagram(BufferedWriter out, String typeName) throws IOException {
+    private void writeModelDiagram(BufferedWriter out, String typeName, EntityDef entityDef) throws IOException {
         out.write("## Model\n\n");
         out.write("```mermaid\n");
-        writeMainModelDiagram(out, typeName, "");
+        writeMainModelDiagram(out, typeName, entityDef, "");
         out.write("```\n\n");
     }
 
-    private void writeMainModelDiagram(BufferedWriter out, String typeName, String indent) throws IOException {
+    private void writeMainModelDiagram(BufferedWriter out, String typeName, EntityDef entityDef, String indent) throws IOException {
         out.write(indent + "classDiagram\n");
         out.write(indent + "    direction LR\n");
-        EntityDef entityDef = entityDefCache.get(typeName);
         List<String> supers = entityDef.getSuperTypes();
         writeSuperTypes(out, supers, indent, new HashSet<>());
         writeModelClass(out, typeName, indent, !entityDef.getSubTypes().isEmpty());
@@ -171,9 +206,9 @@ public class DocumentationGenerator extends AbstractGenerator {
         out.write(indent + "    link " + typeName + " \"../" + typeName.toLowerCase() + "\"\n");
     }
 
-    private void writeAttributes(BufferedWriter out, String typeName) throws IOException {
+    private void writeAttributes(BufferedWriter out, String typeName, TypeDef typeDef) throws IOException {
         out.write("## Attributes\n\n");
-        Map<String, List<AttributeDef>> inherited = getAllInheritedAttributes(typeName);
+        Map<String, List<AttributeDef>> inherited = getAllInheritedAttributes(typeDef);
         for (String superTypeName : inherited.keySet()) {
             if (!superTypeName.startsWith("__")) {
                 List<AttributeDef> inheritedAttrs = inherited.get(superTypeName);
@@ -182,40 +217,41 @@ public class DocumentationGenerator extends AbstractGenerator {
                 }
             }
         }
-        EntityDef entityDef = entityDefCache.get(typeName);
-        List<AttributeDef> attributes = entityDef.getAttributeDefs();
+        List<AttributeDef> attributes = typeDef.getAttributeDefs();
         for (AttributeDef attributeDef : attributes) {
             writeAttribute(out, typeName, attributeDef, false);
         }
-        out.write("## Relationships\n\n");
-        Map<String, RelationshipDetails> relationshipMap = new LinkedHashMap<>();
-        // Relationship attributes appear at each level of the hierarchy, so we'll take
-        // advantage of the linked map (insertion-ordered) response and block out any
-        // that we've already output (from top of inheritance hierarchy downwards)
-        // to avoid duplication
-        Map<String, List<RelationshipAttributeDef>> inheritedRelationships = getAllInheritedRelationshipAttributes(typeName);
-        for (Map.Entry<String, List<RelationshipAttributeDef>> entry : inheritedRelationships.entrySet()) {
-            String superTypeName = entry.getKey();
-            List<RelationshipAttributeDef> inheritedAttrs = entry.getValue();
-            for (RelationshipAttributeDef inheritedAttrDef : inheritedAttrs) {
-                String attributeName = inheritedAttrDef.getName();
-                if (!attributeName.startsWith("__") && !relationshipMap.containsKey(attributeName)) {
-                    relationshipMap.put(attributeName, getRelationshipDetails(superTypeName, inheritedAttrDef, true));
+        if (typeDef instanceof EntityDef) {
+            EntityDef entityDef = (EntityDef) typeDef;
+            out.write("## Relationships\n\n");
+            Map<String, RelationshipDetails> relationshipMap = new LinkedHashMap<>();
+            // Relationship attributes appear at each level of the hierarchy, so we'll take
+            // advantage of the linked map (insertion-ordered) response and block out any
+            // that we've already output (from top of inheritance hierarchy downwards)
+            // to avoid duplication
+            Map<String, List<RelationshipAttributeDef>> inheritedRelationships = getAllInheritedRelationshipAttributes(entityDef);
+            for (Map.Entry<String, List<RelationshipAttributeDef>> entry : inheritedRelationships.entrySet()) {
+                String superTypeName = entry.getKey();
+                List<RelationshipAttributeDef> inheritedAttrs = entry.getValue();
+                for (RelationshipAttributeDef inheritedAttrDef : inheritedAttrs) {
+                    String attributeName = inheritedAttrDef.getName();
+                    if (!attributeName.startsWith("__") && !relationshipMap.containsKey(attributeName)) {
+                        relationshipMap.put(attributeName, getRelationshipDetails(superTypeName, inheritedAttrDef, true));
+                    }
                 }
             }
-        }
-        List<RelationshipAttributeDef> relationships = entityDef.getRelationshipAttributeDefs();
-        for (RelationshipAttributeDef relationshipAttributeDef : relationships) {
-            String attributeName = relationshipAttributeDef.getName();
-            if (!attributeName.startsWith("__") && !relationshipMap.containsKey(attributeName)) {
-                relationshipMap.put(attributeName, getRelationshipDetails(typeName, relationshipAttributeDef, false));
+            List<RelationshipAttributeDef> relationships = entityDef.getRelationshipAttributeDefs();
+            for (RelationshipAttributeDef relationshipAttributeDef : relationships) {
+                String attributeName = relationshipAttributeDef.getName();
+                if (!attributeName.startsWith("__") && !relationshipMap.containsKey(attributeName)) {
+                    relationshipMap.put(attributeName, getRelationshipDetails(typeName, relationshipAttributeDef, false));
+                }
             }
-        }
-
-        writeRelationshipDiagram(out, typeName, relationshipMap);
-        for (Map.Entry<String, RelationshipDetails> entry : relationshipMap.entrySet()) {
-            RelationshipDetails details = entry.getValue();
-            writeRelationshipAttribute(out, details);
+            writeRelationshipDiagram(out, typeName, relationshipMap);
+            for (Map.Entry<String, RelationshipDetails> entry : relationshipMap.entrySet()) {
+                RelationshipDetails details = entry.getValue();
+                writeRelationshipAttribute(out, details);
+            }
         }
     }
 
@@ -244,6 +280,7 @@ public class DocumentationGenerator extends AbstractGenerator {
             TypeDef typeDef = typeDefCache.getOrDefault(embeddedType, null);
             if (typeDef instanceof EnumDef) {
                 embeddedIcon = ":material-format-list-group:{ title=\"enumeration\" }";
+                referencedType = typeDef.getName();
             } else if (typeDef instanceof StructDef) {
                 embeddedIcon = ":material-code-json:{ title=\"struct\" }";
                 referencedType = typeDef.getName();
@@ -263,7 +300,7 @@ public class DocumentationGenerator extends AbstractGenerator {
             out.write(" **`" + attrName + "`**");
         }
         if (referencedType != null) {
-            out.write(" (" + referencedType + ")\n");
+            addRelatedTypeLink(out, referencedType);
         } else {
             out.write("\n");
         }
@@ -292,7 +329,7 @@ public class DocumentationGenerator extends AbstractGenerator {
         }
         String relatedType = details.getRelatedToType();
         if (relatedType != null) {
-            out.write(" ([" + relatedType + "](../" + relatedType.toLowerCase() + "))\n");
+            addRelatedTypeLink(out, relatedType);
         } else {
             out.write("\n");
         }
@@ -421,13 +458,12 @@ public class DocumentationGenerator extends AbstractGenerator {
             .build();
     }
 
-    private void writeSubtypes(BufferedWriter out, String typeName) throws IOException {
-        EntityDef entityDef = entityDefCache.get(typeName);
+    private void writeSubtypes(BufferedWriter out, String typeName, EntityDef entityDef) throws IOException {
         List<String> subTypes = entityDef.getSubTypes();
         if (subTypes != null && !subTypes.isEmpty()) {
             out.write("??? model \"Including direct subtypes\"\n");
             out.write("    ```mermaid\n");
-            writeMainModelDiagram(out, typeName, "    ");
+            writeMainModelDiagram(out, typeName, entityDef, "    ");
             for (String subTypeName : subTypes) {
                 writeModelClass(out, subTypeName, "    ", !entityDefCache.get(subTypeName).getSubTypes().isEmpty());
                 out.write("    " + typeName + " <|-- " + subTypeName + " : extends\n");
@@ -438,6 +474,10 @@ public class DocumentationGenerator extends AbstractGenerator {
 
     private String getEmbeddedType(String attrType) {
         return attrType.substring(attrType.indexOf("<") + 1, attrType.indexOf(">"));
+    }
+
+    private void addRelatedTypeLink(BufferedWriter out, String relatedType) throws IOException {
+        out.write(" ([" + relatedType + "](../" + relatedType.toLowerCase() + "))\n");
     }
 
     @Data

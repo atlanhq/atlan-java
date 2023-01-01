@@ -198,22 +198,26 @@ public abstract class AbstractGenerator extends AtlanLiveTest {
      * Retrieve a list of all attribute definitions that are inherited by this type from all
      * of its supertypes (and their supertypes).
      *
-     * @param typeName name of the type for which to obtain all inherited attributes
+     * @param typeDef type definition from which to retrieve the inherited attributes
      * @return a map of the list of inherited attributes, keyed by the name of the type that owns each set of attributes
      */
-    protected static Map<String, List<AttributeDef>> getAllInheritedAttributes(String typeName) {
-        EntityDef entityDef = entityDefCache.get(typeName);
-        List<String> superTypes = entityDef.getSuperTypes();
-        if (superTypes == null || superTypes.isEmpty()) {
-            return new LinkedHashMap<>();
-        } else {
-            Map<String, List<AttributeDef>> allInherited = new LinkedHashMap<>();
-            for (String superTypeName : superTypes) {
-                EntityDef superTypeDef = entityDefCache.get(superTypeName);
-                allInherited.putAll(getAllInheritedAttributes(superTypeName));
-                allInherited.put(superTypeName, superTypeDef.getAttributeDefs());
+    protected static Map<String, List<AttributeDef>> getAllInheritedAttributes(TypeDef typeDef) {
+        if (typeDef instanceof EntityDef) {
+            EntityDef entityDef = (EntityDef) typeDef;
+            List<String> superTypes = entityDef.getSuperTypes();
+            if (superTypes == null || superTypes.isEmpty()) {
+                return new LinkedHashMap<>();
+            } else {
+                Map<String, List<AttributeDef>> allInherited = new LinkedHashMap<>();
+                for (String superTypeName : superTypes) {
+                    EntityDef superTypeDef = entityDefCache.get(superTypeName);
+                    allInherited.putAll(getAllInheritedAttributes(superTypeDef));
+                    allInherited.put(superTypeName, superTypeDef.getAttributeDefs());
+                }
+                return allInherited;
             }
-            return allInherited;
+        } else {
+            return Collections.emptyMap();
         }
     }
 
@@ -221,11 +225,10 @@ public abstract class AbstractGenerator extends AtlanLiveTest {
      * Retrieve a list of all relationship attribute definitions that are inherited by this type from all
      * of its supertypes (and their supertypes).
      *
-     * @param typeName name of the type for which to obtain all inherited relationship attributes
+     * @param entityDef entity type definition from which to retrieve the inherited relationship attributes
      * @return a map of the list of inherited relationship attributes, keyed by the name of the type that owns each set of relationship attributes
      */
-    protected static Map<String, List<RelationshipAttributeDef>> getAllInheritedRelationshipAttributes(String typeName) {
-        EntityDef entityDef = entityDefCache.get(typeName);
+    protected static Map<String, List<RelationshipAttributeDef>> getAllInheritedRelationshipAttributes(EntityDef entityDef) {
         List<String> superTypes = entityDef.getSuperTypes();
         if (superTypes == null || superTypes.isEmpty()) {
             return new LinkedHashMap<>();
@@ -233,7 +236,7 @@ public abstract class AbstractGenerator extends AtlanLiveTest {
             Map<String, List<RelationshipAttributeDef>> allInherited = new LinkedHashMap<>();
             for (String superTypeName : superTypes) {
                 EntityDef superTypeDef = entityDefCache.get(superTypeName);
-                allInherited.putAll(getAllInheritedRelationshipAttributes(superTypeName));
+                allInherited.putAll(getAllInheritedRelationshipAttributes(superTypeDef));
                 allInherited.put(superTypeName, superTypeDef.getRelationshipAttributeDefs());
             }
             return allInherited;
