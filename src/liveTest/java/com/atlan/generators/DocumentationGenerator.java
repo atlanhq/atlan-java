@@ -51,12 +51,12 @@ public class DocumentationGenerator extends AbstractGenerator {
     private static final Map<RelationshipCardinality, String> cardinalityIcons = Map.ofEntries(
         Map.entry(RelationshipCardinality.MANY_TO_MANY, ":material-relation-many-to-many:{ title=\"many-to-many\" }"),
         Map.entry(RelationshipCardinality.ONE_TO_MANY, ":material-relation-one-to-many:{ title=\"one-to-many\" }"),
-        Map.entry(RelationshipCardinality.ONE_TO_ZERO_OR_ONE, ":material-relation-one-to-zero-or-one:{ title=\"one-to-zero-or-one\" }"),
+        Map.entry(RelationshipCardinality.ONE_TO_ZERO_OR_ONE, ":material-relation-one-to-one:{ title=\"one-to-one\" }"),
         Map.entry(RelationshipCardinality.MANY_TO_ONE, ":material-relation-many-to-one:{ title=\"many-to-one\" }"),
-        Map.entry(RelationshipCardinality.ZERO_OR_ONE_TO_ONE, ":material-relation-zero-or-one-to-one:{ title=\"zero-or-one-to-one\" }"),
-        Map.entry(RelationshipCardinality.ZERO_OR_ONE_TO_ZERO_OR_ONE, ":material-relation-zero-or-one-to-zero-or-one:{ title=\"zero-or-one-to-zero-or-one\" }"),
-        Map.entry(RelationshipCardinality.ZERO_OR_ONE_TO_MANY, ":material-relation-zero-or-one-to-many:{ title=\"zero-or-one-to-many\" }"),
-        Map.entry(RelationshipCardinality.MANY_TO_ZERO_OR_ONE, ":material-relation-many-to-zero-or-one:{ title=\"many-to-zero-or-one\" }")
+        Map.entry(RelationshipCardinality.ZERO_OR_ONE_TO_ONE, ":material-relation-one-to-one:{ title=\"one-to-one\" }"),
+        Map.entry(RelationshipCardinality.ZERO_OR_ONE_TO_ZERO_OR_ONE, ":material-relation-one-to-one:{ title=\"one-to-one\" }"),
+        Map.entry(RelationshipCardinality.ZERO_OR_ONE_TO_MANY, ":material-relation-one-to-many:{ title=\"one-to-many\" }"),
+        Map.entry(RelationshipCardinality.MANY_TO_ZERO_OR_ONE, ":material-relation-many-to-one:{ title=\"many-to-one\" }")
     );
 
     private static final Map<RelationshipCardinality, String> cardinalityQualifiers = Map.ofEntries(
@@ -247,7 +247,7 @@ public class DocumentationGenerator extends AbstractGenerator {
                     relationshipMap.put(attributeName, getRelationshipDetails(typeName, relationshipAttributeDef, false));
                 }
             }
-            writeRelationshipDiagram(out, typeName, relationshipMap);
+            //writeRelationshipDiagram(out, typeName, relationshipMap);
             for (Map.Entry<String, RelationshipDetails> entry : relationshipMap.entrySet()) {
                 RelationshipDetails details = entry.getValue();
                 writeRelationshipAttribute(out, details);
@@ -327,13 +327,8 @@ public class DocumentationGenerator extends AbstractGenerator {
         } else {
             out.write(" **`" + attrName + "`**");
         }
-        String relatedType = details.getRelatedToType();
-        if (relatedType != null) {
-            addRelatedTypeLink(out, relatedType);
-        } else {
-            out.write("\n");
-        }
-        out.write(":   " + description + "\n\n");
+        out.write("\n:   " + description + "\n\n");
+        writeRelationshipDiagram(out, details);
     }
 
     private String getRelationshipCardinalityIcon(RelationshipCardinality cardinality) {
@@ -344,23 +339,16 @@ public class DocumentationGenerator extends AbstractGenerator {
         return icon == null ? "" : icon;
     }
 
-    private void writeRelationshipDiagram(BufferedWriter out, String typeName, Map<String, RelationshipDetails> relationshipMap) throws IOException {
-        out.write("??? model \"Visualization\"\n\n");
+    private void writeRelationshipDiagram(BufferedWriter out, RelationshipDetails details) throws IOException {
         out.write("    ```mermaid\n");
         out.write("    classDiagram\n");
         out.write("        direction LR\n");
-        Set<String> typesToLink = new LinkedHashSet<>();
-        for (Map.Entry<String, RelationshipDetails> entry : relationshipMap.entrySet()) {
-            String attributeName = entry.getKey();
-            RelationshipDetails details = entry.getValue();
-            String relatedType = details.getRelatedToType();
-            typesToLink.add(relatedType);
-            String cardinalityQualifier = cardinalityQualifiers.getOrDefault(details.getCardinality(), " --> ");
-            out.write("        " + typeName + cardinalityQualifier + relatedType + " : " + attributeName + "\n");
-        }
-        for (String relatedType : typesToLink) {
-            out.write("        link " + relatedType + " \"../" + relatedType.toLowerCase() + "\"\n");
-        }
+        String fromType = details.getFromTypeName();
+        String relatedType = details.getRelatedToType();
+        writeModelClass(out, fromType, "    ", !entityDefCache.get(fromType).getSubTypes().isEmpty());
+        writeModelClass(out, relatedType, "    ", !entityDefCache.get(relatedType).getSubTypes().isEmpty());
+        String cardinalityQualifier = cardinalityQualifiers.getOrDefault(details.getCardinality(), " --> ");
+        out.write("        " + details.getFromTypeName() + cardinalityQualifier + relatedType + " : " + details.getAttributeName() + "\n");
         out.write("    ```\n\n");
     }
 
