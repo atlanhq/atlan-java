@@ -906,8 +906,11 @@ public class ModelGenerator extends AbstractGenerator {
             String type = attribute.getTypeName();
             String mappedType = TYPE_MAPPINGS.getOrDefault(type, null);
             if (mappedType == null) {
-                log.warn("Unmapped type '{}' — skipping attribute: {}", type, name);
-            } else if (!mappedType.equals("__internal")) {
+                // Failing that, attempt a renamed type (structs, enums) or just
+                // default to the same name (not renamed, but a struct or enum)
+                mappedType = NAME_MAPPINGS.getOrDefault(type, type);
+            }
+            if (!mappedType.equals("__internal")) {
                 fs.append("    /** ")
                         .append(getAttributeDescription(typeName, name))
                         .append(" */");
@@ -1282,10 +1285,13 @@ public class ModelGenerator extends AbstractGenerator {
             for (AttributeDef attribute : attributes) {
                 String name = attribute.getName();
                 String type = attribute.getTypeName();
+                // Prefer a direct type mapping first...
                 String mappedType = TYPE_MAPPINGS.getOrDefault(type, null);
                 if (mappedType == null) {
-                    log.warn("Unmapped type '{}' — skipping attribute: {}", type, name);
-                } else if (!mappedType.equals("__internal")) {
+                    // Failing that, attempt a renamed type (structs, enums)...
+                    mappedType = NAME_MAPPINGS.getOrDefault(type, type);
+                }
+                if (!mappedType.equals("__internal")) {
                     if (ATTRIBUTE_RENAMING.containsKey(name)) {
                         name = ATTRIBUTE_RENAMING.get(name);
                     }
