@@ -9,7 +9,6 @@ import com.atlan.api.TypeDefsEndpoint;
 import com.atlan.live.AtlanLiveTest;
 import com.atlan.model.enums.AtlanTypeCategory;
 import com.atlan.model.typedefs.*;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -38,15 +37,21 @@ public abstract class AbstractGenerator extends AtlanLiveTest {
     // We'll use our own class names for these types, as the existing type names are either overly
     // verbose, too easily conflicting with native Java classes, or have a level of inheritance that is
     // unnecessary
-    protected static final Map<String, String> NAME_MAPPINGS = Map.of(
-            "Referenceable", "Asset",
-            "Process", "LineageProcess",
-            "Collection", "AtlanCollection",
-            "Query", "AtlanQuery",
-            "AtlasGlossary", "Glossary",
-            "AtlasGlossaryCategory", "GlossaryCategory",
-            "AtlasGlossaryTerm", "GlossaryTerm",
-            "MaterialisedView", "MaterializedView");
+    protected static final Map<String, String> NAME_MAPPINGS = Map.ofEntries(
+            Map.entry("Referenceable", "Asset"),
+            Map.entry("Process", "LineageProcess"),
+            Map.entry("Collection", "AtlanCollection"),
+            Map.entry("Query", "AtlanQuery"),
+            Map.entry("AtlasGlossary", "Glossary"),
+            Map.entry("AtlasGlossaryCategory", "GlossaryCategory"),
+            Map.entry("AtlasGlossaryTerm", "GlossaryTerm"),
+            Map.entry("MaterialisedView", "MaterializedView"),
+            Map.entry("certificate_status", "AtlanCertificateStatus"),
+            Map.entry("AwsTag", "AWSTag"),
+            Map.entry("AwsCloudWatchMetric", "AWSCloudWatchMetric"),
+            Map.entry("google_datastudio_asset_type", "GoogleDataStudioAssetType"),
+            Map.entry("icon_type", "LinkIconType"),
+            Map.entry("powerbi_endorsement", "PowerBIEndorsementType"));
 
     // Map attribute types to native Java types
     protected static final Map<String, String> TYPE_MAPPINGS = Map.ofEntries(
@@ -60,10 +65,7 @@ public abstract class AbstractGenerator extends AtlanLiveTest {
             Map.entry("map<string,string>", "Map<String, String>"),
             Map.entry("map<string,long>", "Map<String, Long>"),
             Map.entry("array<map<string,string>>", "List<Map<String, String>>"),
-            Map.entry("icon_type", "LinkIconType"),
-            Map.entry("google_datastudio_asset_type", "GoogleDataStudioAssetType"),
             Map.entry("array<AwsTag>", "List<AWSTag>"),
-            Map.entry("powerbi_endorsement", "PowerBIEndorsementType"),
             Map.entry("array<GoogleLabel>", "List<GoogleLabel>"),
             Map.entry("array<GoogleTag>", "List<GoogleTag>"),
             Map.entry("array<DbtMetricFilter>", "List<DbtMetricFilter>"),
@@ -228,7 +230,8 @@ public abstract class AbstractGenerator extends AtlanLiveTest {
      * @param entityDef entity type definition from which to retrieve the inherited relationship attributes
      * @return a map of the list of inherited relationship attributes, keyed by the name of the type that owns each set of relationship attributes
      */
-    protected static Map<String, List<RelationshipAttributeDef>> getAllInheritedRelationshipAttributes(EntityDef entityDef) {
+    protected static Map<String, List<RelationshipAttributeDef>> getAllInheritedRelationshipAttributes(
+            EntityDef entityDef) {
         List<String> superTypes = entityDef.getSuperTypes();
         if (superTypes == null || superTypes.isEmpty()) {
             return new LinkedHashMap<>();
