@@ -7,14 +7,13 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import com.atlan.model.enums.AtlanCustomAttributeCardinality;
 import com.atlan.model.enums.RelationshipCategory;
 import com.atlan.model.typedefs.*;
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
-
+import java.util.stream.Collectors;
 import lombok.Builder;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -36,39 +35,74 @@ public class DocumentationGenerator extends AbstractGenerator {
         MANY_TO_ZERO_OR_ONE,
     }
 
-    private static final String DOCS_DIRECTORY = "src" + File.separator + "main" + File.separator + "resources" + File.separator + "markdown";
+    enum IndexType {
+        KEYWORD,
+        TEXT,
+        RANK_FEATURE,
+        DATE,
+        BOOLEAN,
+        FLOAT,
+    }
+
+    enum Rename {
+        NONE,
+        JAVA,
+        PYTHON
+    }
+
+    private static final String DOCS_DIRECTORY =
+            "src" + File.separator + "main" + File.separator + "resources" + File.separator + "markdown";
 
     private static final Map<String, String> typeToIcon = Map.ofEntries(
-        Map.entry("string", ":material-text:{ title=\"string\" }"),
-        Map.entry("date", ":material-calendar-clock:{ title=\"date\" }"),
-        Map.entry("boolean", ":material-toggle-switch:{ title=\"boolean\" }"),
-        Map.entry("float", ":material-decimal:{ title=\"float\" }"),
-        Map.entry("double", ":material-decimal:{ title=\"double\" }"),
-        Map.entry("int", ":material-numeric:{ title=\"int\" }"),
-        Map.entry("long", ":material-numeric:{ title=\"long\" }")
-    );
+            Map.entry("string", ":material-text:{ title=\"string\" }"),
+            Map.entry("date", ":material-calendar-clock:{ title=\"date\" }"),
+            Map.entry("boolean", ":material-toggle-switch:{ title=\"boolean\" }"),
+            Map.entry("float", ":material-decimal:{ title=\"float\" }"),
+            Map.entry("double", ":material-decimal:{ title=\"double\" }"),
+            Map.entry("int", ":material-numeric:{ title=\"int\" }"),
+            Map.entry("long", ":material-numeric:{ title=\"long\" }"));
 
     private static final Map<RelationshipCardinality, String> cardinalityIcons = Map.ofEntries(
-        Map.entry(RelationshipCardinality.MANY_TO_MANY, ":material-relation-many-to-many:{ title=\"many-to-many\" }"),
-        Map.entry(RelationshipCardinality.ONE_TO_MANY, ":material-relation-one-to-many:{ title=\"one-to-many\" }"),
-        Map.entry(RelationshipCardinality.ONE_TO_ZERO_OR_ONE, ":material-relation-one-to-one:{ title=\"one-to-one\" }"),
-        Map.entry(RelationshipCardinality.MANY_TO_ONE, ":material-relation-many-to-one:{ title=\"many-to-one\" }"),
-        Map.entry(RelationshipCardinality.ZERO_OR_ONE_TO_ONE, ":material-relation-one-to-one:{ title=\"one-to-one\" }"),
-        Map.entry(RelationshipCardinality.ZERO_OR_ONE_TO_ZERO_OR_ONE, ":material-relation-one-to-one:{ title=\"one-to-one\" }"),
-        Map.entry(RelationshipCardinality.ZERO_OR_ONE_TO_MANY, ":material-relation-one-to-many:{ title=\"one-to-many\" }"),
-        Map.entry(RelationshipCardinality.MANY_TO_ZERO_OR_ONE, ":material-relation-many-to-one:{ title=\"many-to-one\" }")
-    );
+            Map.entry(
+                    RelationshipCardinality.MANY_TO_MANY, ":material-relation-many-to-many:{ title=\"many-to-many\" }"),
+            Map.entry(RelationshipCardinality.ONE_TO_MANY, ":material-relation-one-to-many:{ title=\"one-to-many\" }"),
+            Map.entry(
+                    RelationshipCardinality.ONE_TO_ZERO_OR_ONE,
+                    ":material-relation-one-to-one:{ title=\"one-to-one\" }"),
+            Map.entry(RelationshipCardinality.MANY_TO_ONE, ":material-relation-many-to-one:{ title=\"many-to-one\" }"),
+            Map.entry(
+                    RelationshipCardinality.ZERO_OR_ONE_TO_ONE,
+                    ":material-relation-one-to-one:{ title=\"one-to-one\" }"),
+            Map.entry(
+                    RelationshipCardinality.ZERO_OR_ONE_TO_ZERO_OR_ONE,
+                    ":material-relation-one-to-one:{ title=\"one-to-one\" }"),
+            Map.entry(
+                    RelationshipCardinality.ZERO_OR_ONE_TO_MANY,
+                    ":material-relation-one-to-many:{ title=\"one-to-many\" }"),
+            Map.entry(
+                    RelationshipCardinality.MANY_TO_ZERO_OR_ONE,
+                    ":material-relation-many-to-one:{ title=\"many-to-one\" }"));
 
     private static final Map<RelationshipCardinality, String> cardinalityQualifiers = Map.ofEntries(
-        Map.entry(RelationshipCardinality.MANY_TO_MANY, " \"*\" --> \"*\" "),
-        Map.entry(RelationshipCardinality.ONE_TO_MANY, " \"1\" --> \"*\" "),
-        Map.entry(RelationshipCardinality.ONE_TO_ZERO_OR_ONE, " \"1\" --> \"0..1\" "),
-        Map.entry(RelationshipCardinality.MANY_TO_ONE, " \"*\" --> \"1\" "),
-        Map.entry(RelationshipCardinality.ZERO_OR_ONE_TO_ONE, " \"0..1\" --> \"1\" "),
-        Map.entry(RelationshipCardinality.ZERO_OR_ONE_TO_ZERO_OR_ONE, " \"0..1\" --> \"0..1\" "),
-        Map.entry(RelationshipCardinality.ZERO_OR_ONE_TO_MANY, " \"0..1\" --> \"*\" "),
-        Map.entry(RelationshipCardinality.MANY_TO_ZERO_OR_ONE, " \"*\" --> \"0..1\" ")
-    );
+            Map.entry(RelationshipCardinality.MANY_TO_MANY, " \"*\" --> \"*\" "),
+            Map.entry(RelationshipCardinality.ONE_TO_MANY, " \"1\" --> \"*\" "),
+            Map.entry(RelationshipCardinality.ONE_TO_ZERO_OR_ONE, " \"1\" --> \"0..1\" "),
+            Map.entry(RelationshipCardinality.MANY_TO_ONE, " \"*\" --> \"1\" "),
+            Map.entry(RelationshipCardinality.ZERO_OR_ONE_TO_ONE, " \"0..1\" --> \"1\" "),
+            Map.entry(RelationshipCardinality.ZERO_OR_ONE_TO_ZERO_OR_ONE, " \"0..1\" --> \"0..1\" "),
+            Map.entry(RelationshipCardinality.ZERO_OR_ONE_TO_MANY, " \"0..1\" --> \"*\" "),
+            Map.entry(RelationshipCardinality.MANY_TO_ZERO_OR_ONE, " \"*\" --> \"0..1\" "));
+
+    private static final Map<IndexType, String> indexIcons = Map.ofEntries(
+            Map.entry(IndexType.KEYWORD, "[:material-tag:{ title=\"keyword\" }](../../../search/attributes/#keyword)"),
+            Map.entry(IndexType.TEXT, "[:material-tag-text:{ title=\"text\" }](../../../search/attributes/#text)"),
+            Map.entry(
+                    IndexType.DATE, "[:material-calendar-clock:{ title=\"date\" }](../../../search/attributes/#date)"),
+            Map.entry(
+                    IndexType.BOOLEAN,
+                    "[:material-toggle-switch:{ title=\"boolean\" }](../../../search/attributes/#boolean)"),
+            Map.entry(IndexType.FLOAT, "[:material-numeric:{ title=\"float\" }](../../../search/attributes/#float)"),
+            Map.entry(IndexType.RANK_FEATURE, "[:material-sort:{ title=\"rank\" }](../../../search/attributes/#)"));
 
     public static void main(String[] args) {
         DocumentationGenerator generator = new DocumentationGenerator();
@@ -107,31 +141,32 @@ public class DocumentationGenerator extends AbstractGenerator {
     }
 
     private void generateTypeFile(String typeName) {
-        try (BufferedWriter out = Files.newBufferedWriter(Paths.get(DOCS_DIRECTORY + File.separator + typeName.toLowerCase() + ".md"), UTF_8)) {
+        try (BufferedWriter out = Files.newBufferedWriter(
+                Paths.get(DOCS_DIRECTORY + File.separator + typeName.toLowerCase() + ".md"), UTF_8)) {
             writeHeader(out, typeName);
             EntityDef entityDef = entityDefCache.get(typeName);
-            writeModelDiagram(out, typeName, entityDef);
-            // TODO: Figure out stylesheets for highlighting the type currently being viewed,
-            //  then just use the single diagram with both ancestors + direct subtypes.
-            //  see: https://mermaid.js.org/syntax/classDiagram.html#styling
-            writeSubtypes(out, typeName, entityDef);
-            writeAttributes(out, typeName, entityDef);
+            writeModelSection(out, typeName, entityDef);
+            writeCorePropertiesSection(out);
+            writeAttributesSection(out, typeName, entityDef);
+            writeRelationshipsSection(out, typeName, entityDef);
         } catch (IOException e) {
             log.error("Unable to generate Markdown for type: {}", typeName, e);
         }
     }
 
     private void generateStructFile(String typeName, StructDef structDef) {
-        try (BufferedWriter out = Files.newBufferedWriter(Paths.get(DOCS_DIRECTORY + File.separator + typeName.toLowerCase() + ".md"), UTF_8)) {
+        try (BufferedWriter out = Files.newBufferedWriter(
+                Paths.get(DOCS_DIRECTORY + File.separator + typeName.toLowerCase() + ".md"), UTF_8)) {
             writeHeader(out, typeName);
-            writeAttributes(out, typeName, structDef);
+            writeAttributesSection(out, typeName, structDef);
         } catch (IOException e) {
             log.error("Unable to generate Markdown for type: {}", typeName, e);
         }
     }
 
     private void generateEnumFile(String typeName, EnumDef enumDef) {
-        try (BufferedWriter out = Files.newBufferedWriter(Paths.get(DOCS_DIRECTORY + File.separator + typeName.toLowerCase() + ".md"), UTF_8)) {
+        try (BufferedWriter out = Files.newBufferedWriter(
+                Paths.get(DOCS_DIRECTORY + File.separator + typeName.toLowerCase() + ".md"), UTF_8)) {
             writeHeader(out, typeName);
             writeValidValues(out, enumDef);
         } catch (IOException e) {
@@ -150,52 +185,112 @@ public class DocumentationGenerator extends AbstractGenerator {
     private void writeHeader(BufferedWriter out, String typeName) throws IOException {
         out.write("\n# " + typeName + "\n\n");
         out.write(getTypeDescription(typeName) + "\n\n");
+        String className = NAME_MAPPINGS.getOrDefault(typeName, typeName);
+        if (!className.equals(typeName)) {
+            out.write("!!! warning \"Renamed in SDK\"\n");
+            out.write("    In the :fontawesome-brands-java: Java SDK, this type is instead named `" + className
+                    + "` for simplicity and consistency.\n\n");
+        }
     }
 
-    private void writeModelDiagram(BufferedWriter out, String typeName, EntityDef entityDef) throws IOException {
+    private void writeModelSection(BufferedWriter out, String typeName, EntityDef entityDef) throws IOException {
         out.write("## Model\n\n");
-        out.write("```mermaid\n");
-        writeMainModelDiagram(out, typeName, entityDef, "");
-        out.write("```\n\n");
+        out.write(
+                "Following is the inheritance structure for `" + typeName
+                        + "`. The type structure may be simplified in some of the SDKs, but for search purposes you could still use any of the super types shown in the JSON view.\n\n");
+        out.write("=== \":fontawesome-brands-java: Java\"\n\n");
+        out.write("    ```mermaid\n");
+        writeMainModelDiagram(out, typeName, entityDef, "    ", Rename.JAVA);
+        out.write("    ```\n\n");
+        writeSubtypesDiagram(out, typeName, entityDef, Rename.JAVA);
+        out.write("=== \":material-language-python: Python\"\n\n");
+        out.write("    ```mermaid\n");
+        writeMainModelDiagram(out, typeName, entityDef, "    ", Rename.PYTHON);
+        out.write("    ```\n\n");
+        writeSubtypesDiagram(out, typeName, entityDef, Rename.PYTHON);
+        out.write("=== \":material-code-json: JSON\"\n\n");
+        out.write("    ```mermaid\n");
+        writeMainModelDiagram(out, typeName, entityDef, "    ", Rename.NONE);
+        out.write("    ```\n\n");
+        writeSubtypesDiagram(out, typeName, entityDef, Rename.NONE);
     }
 
-    private void writeMainModelDiagram(BufferedWriter out, String typeName, EntityDef entityDef, String indent) throws IOException {
+    private void writeMainModelDiagram(
+            BufferedWriter out, String typeName, EntityDef entityDef, String indent, Rename rename) throws IOException {
+        // TODO: Figure out stylesheets for highlighting the type currently being viewed,
+        //  then just use the single diagram with both ancestors + direct subtypes.
+        //  see: https://mermaid.js.org/syntax/classDiagram.html#styling
         out.write(indent + "classDiagram\n");
         out.write(indent + "    direction LR\n");
         List<String> supers = entityDef.getSuperTypes();
-        writeSuperTypes(out, supers, indent, new HashSet<>());
-        writeModelClass(out, typeName, indent, !entityDef.getSubTypes().isEmpty());
-        writeInheritanceModel(out, typeName, supers, indent, new HashSet<>());
+        writeModelClass(out, typeName, indent, rename, !entityDef.getSubTypes().isEmpty());
+        writeInheritanceModel(out, typeName, supers, indent, rename, new HashSet<>());
     }
 
-    private void writeSuperTypes(BufferedWriter out, List<String> superTypes, String indent, Set<String> written) throws IOException {
+    private void writeInheritanceModel(
+            BufferedWriter out,
+            String typeName,
+            List<String> superTypes,
+            String indent,
+            Rename rename,
+            Set<String> written)
+            throws IOException {
         if (superTypes != null && !superTypes.isEmpty()) {
-            for (String superTypeName : superTypes) {
-                if (!written.contains(superTypeName) && !superTypeName.startsWith("__")) {
-                    EntityDef parent = entityDefCache.get(superTypeName);
-                    writeSuperTypes(out, parent.getSuperTypes(), indent, written);
-                    writeModelClass(out, superTypeName, indent, true);
-                    written.add(superTypeName);
+            if (rename == Rename.JAVA) {
+                // For Java since there is no polymorphic inheritance, only show the singular
+                // inheritance used by the SDK
+                String singleExtend = getSingleTypeToExtend(typeName, superTypes);
+                _writeInheritanceModel(out, typeName, singleExtend, indent, rename, written);
+            } else {
+                // For any other type, show the full inheritance structure
+                for (String superTypeName : superTypes) {
+                    if (!superTypeName.startsWith("__") && !written.contains(superTypeName + "|" + typeName)) {
+                        _writeInheritanceModel(out, typeName, superTypeName, indent, rename, written);
+                    }
                 }
             }
         }
     }
 
-    private void writeInheritanceModel(BufferedWriter out, String typeName, List<String> superTypes, String indent, Set<String> written) throws IOException {
-        if (superTypes != null && !superTypes.isEmpty()) {
-            for (String superTypeName : superTypes) {
-                if (!superTypeName.startsWith("__") && !written.contains(superTypeName + "|" + typeName)) {
-                    EntityDef parent = entityDefCache.get(superTypeName);
-                    writeInheritanceModel(out, superTypeName, parent.getSuperTypes(), indent, written);
-                    out.write(indent + "    " + superTypeName + " <|-- " + typeName + " : extends\n");
-                    written.add(superTypeName + "|" + typeName);
-                }
-            }
+    private void _writeInheritanceModel(
+            BufferedWriter out,
+            String typeName,
+            String superTypeName,
+            String indent,
+            Rename rename,
+            Set<String> written)
+            throws IOException {
+        EntityDef parent = entityDefCache.get(superTypeName);
+        writeInheritanceModel(out, superTypeName, parent.getSuperTypes(), indent, rename, written);
+        String renamedSuper = superTypeName;
+        String renamedActual = typeName;
+        if (rename == Rename.JAVA) {
+            renamedSuper = NAME_MAPPINGS.getOrDefault(superTypeName, superTypeName);
+            renamedActual = NAME_MAPPINGS.getOrDefault(typeName, typeName);
         }
+        if (!renamedSuper.equals(renamedActual)) {
+            // Exclude cases where a flattening in the SDK would cause a self-referencing
+            // inheritance relationship (in particular Asset <|-- Asset : extends)
+            if (!written.contains(superTypeName)) {
+                writeModelClass(out, superTypeName, indent, rename, true);
+            }
+            if (!written.contains(typeName)) {
+                EntityDef thisLevel = entityDefCache.get(typeName);
+                writeModelClass(
+                        out, typeName, indent, rename, !thisLevel.getSubTypes().isEmpty());
+            }
+            out.write(indent + "    " + renamedSuper + " <|-- " + renamedActual + " : extends\n");
+        }
+        written.add(superTypeName + "|" + typeName);
     }
 
-    private void writeModelClass(BufferedWriter out, String typeName, String indent, boolean superType) throws IOException {
-        out.write(indent + "    class " + typeName);
+    private void writeModelClass(BufferedWriter out, String typeName, String indent, Rename rename, boolean superType)
+            throws IOException {
+        String renamedActual = typeName;
+        if (rename == Rename.JAVA) {
+            renamedActual = NAME_MAPPINGS.getOrDefault(typeName, typeName);
+        }
+        out.write(indent + "    class " + renamedActual);
         if (!superType) {
             out.write("\n");
         } else {
@@ -203,65 +298,344 @@ public class DocumentationGenerator extends AbstractGenerator {
             out.write(indent + "        <<abstract>>\n");
             out.write(indent + "    }\n");
         }
-        out.write(indent + "    link " + typeName + " \"../" + typeName.toLowerCase() + "\"\n");
+        out.write(indent + "    link " + renamedActual + " \"../" + typeName.toLowerCase() + "\"\n");
     }
 
-    private void writeAttributes(BufferedWriter out, String typeName, TypeDef typeDef) throws IOException {
+    private void writeCorePropertiesSection(BufferedWriter out) throws IOException {
+        out.write("## Core properties\n\n");
+        out.write(
+                "These properties are core to all assets in Atlan. As part of the raw API payloads, these are at the top-level of the object.\n\n");
+        out.write("=== \":fontawesome-brands-java: Java\"\n\n");
+        Map<String, IndexType> typeNameIndexes = Map.of(
+                "[`__typeName.keyword`](../../../search/attributes/common/#__typename)",
+                IndexType.KEYWORD,
+                "[`__typeName`](../../../search/attributes/common/#__typename)",
+                IndexType.TEXT,
+                "[`__superTypeNames.keyword`](../../../search/attributes/common/#__supertypenames)",
+                IndexType.KEYWORD,
+                "[`__superTypeNames`](../../../search/attributes/common/#__supertypenames)",
+                IndexType.TEXT);
+        Map<String, IndexType> guidIndexes =
+                Map.of("[`__guid`](../../../search/attributes/common/#__guid)", IndexType.KEYWORD);
+        Map<String, IndexType> customMetadataIndexes = Map.of(
+                "[Finding assets by custom metadata](../../../sdks/common-examples/finding/have-custom-metadata)",
+                IndexType.KEYWORD);
+        Map<String, IndexType> statusIndexes =
+                Map.of("[`__state`](../../../search/attributes/common/#__state)", IndexType.KEYWORD);
+        Map<String, IndexType> createdByIndexes =
+                Map.of("[`__createdBy`](../../../search/attributes/common/#__createdby)", IndexType.KEYWORD);
+        Map<String, IndexType> updatedByIndexes =
+                Map.of("[`__modifiedBy`](../../../search/attributes/common/#__modifiedby)", IndexType.KEYWORD);
+        Map<String, IndexType> createTimeIndexes =
+                Map.of("[`__timestamp`](../../../search/attributes/common/#__timestamp)", IndexType.DATE);
+        Map<String, IndexType> updateTimeIndexes = Map.of(
+                "[`__modificationTimestamp`](../../../search/attributes/common/#__modificationtimestamp)",
+                IndexType.DATE);
+        Map<String, IndexType> classificationNameIndexes = Map.of(
+                "[`__traitNames`](../../../search/attributes/common/#__traitnames)", IndexType.KEYWORD,
+                "[`__propagatedTraitNames`](../../../search/attributes/common/#__propagatedtraitnames)",
+                        IndexType.KEYWORD,
+                "[`__classificationsText`](../../../search/attributes/common/#__classificationstext)", IndexType.TEXT);
+        Map<String, IndexType> meaningNamesIndexes = Map.of(
+                "[`__meanings`](../../../search/attributes/common/#__meanings)", IndexType.KEYWORD,
+                "[`__meaningsText`](../../../search/attributes/common/#__meaningstext)", IndexType.TEXT);
+        writeProperty(out, "typeName", "Type of this asset.", ":material-text:{ title=\"string\" }", typeNameIndexes);
+        writeProperty(
+                out,
+                "guid",
+                "Globally-unique identifier for this asset.",
+                ":material-text:{ title=\"string\" }",
+                guidIndexes);
+        writeProperty(
+                out,
+                "classifications",
+                "Classifications assigned to the asset.",
+                ":material-code-brackets:{ title=\"array of\" } :material-code-json:{ title=\"struct\" }",
+                null);
+        writeProperty(
+                out,
+                "customMetadataSets",
+                "Map of custom metadata attributes and values defined on the asset. The map is keyed by the human-readable name of the custom metadata set, and the values are a further mapping from human-readable attribute name to the value for that attribute on this asset.",
+                ":material-code-braces:{ title=\"map of\" } :material-text:{ title=\"string\" } :material-code-json:{ title=\"struct\" }",
+                customMetadataIndexes);
+        writeProperty(
+                out,
+                "status",
+                "Status of the asset.",
+                ":material-format-list-group:{ title=\"enumeration\" }",
+                statusIndexes);
+        writeProperty(
+                out,
+                "createdBy",
+                "User or account that created the asset.",
+                ":material-text:{ title=\"string\" }",
+                createdByIndexes);
+        writeProperty(
+                out,
+                "updatedBy",
+                "User or account that last updated the asset.",
+                ":material-text:{ title=\"string\" }",
+                updatedByIndexes);
+        writeProperty(
+                out,
+                "createTime",
+                "Time (epoch) at which the asset was created, in milliseconds.",
+                ":material-calendar-clock:{ title=\"date\" }",
+                createTimeIndexes);
+        writeProperty(
+                out,
+                "updateTime",
+                "Time (epoch) at which the asset was last updated, in milliseconds.",
+                ":material-calendar-clock:{ title=\"date\" }",
+                updateTimeIndexes);
+        writeProperty(
+                out,
+                "deleteHandler",
+                "Details on the handler used for deletion of the asset.",
+                ":material-text:{ title=\"string\" }",
+                null);
+        writeProperty(
+                out,
+                "classificationNames",
+                "Human-readable names of the classifications that exist on the asset.",
+                ":material-code-brackets:{ title=\"array of\" } :material-text:{ title=\"string\" }",
+                classificationNameIndexes);
+        writeProperty(out, "isIncomplete", "Unused.", ":material-toggle-switch:{ title=\"boolean\" }", null);
+        writeProperty(
+                out,
+                "meaningNames",
+                "Human-readable names of terms that have been linked to this asset.",
+                ":material-code-brackets:{ title=\"array of\" } :material-text:{ title=\"string\" }",
+                meaningNamesIndexes);
+        writeProperty(
+                out,
+                "meanings",
+                "Details of terms that have been linked to this asset.",
+                ":material-code-brackets:{ title=\"array of\" } :material-code-json:{ title=\"struct\" }",
+                null);
+        writeProperty(
+                out,
+                "pendingTasks",
+                "Unique identifiers (GUIDs) for any background tasks that are yet to operate on this asset.",
+                ":material-code-brackets:{ title=\"array of\" } :material-text:{ title=\"string\" }",
+                null);
+        out.write("=== \":material-language-python: Python\"\n\n");
+        out.write("    !!! construction \"Coming soon\"\n\n");
+        out.write("=== \":material-code-json: JSON\"\n\n");
+        writeProperty(out, "typeName", "Type of this asset.", ":material-text:{ title=\"string\" }", typeNameIndexes);
+        writeProperty(
+                out,
+                "guid",
+                "Globally-unique identifier for this asset.",
+                ":material-text:{ title=\"string\" }",
+                guidIndexes);
+        writeProperty(
+                out,
+                "classifications",
+                "Classifications assigned to the asset.",
+                ":material-code-brackets:{ title=\"array of\" } :material-code-json:{ title=\"struct\" }",
+                null);
+        writeProperty(
+                out,
+                "businessAttributes",
+                "Map of custom metadata attributes and values defined on the asset. The map is keyed by the Atlan-internal hashed string name of the custom metadata set, and the values are a further mapping from Atlan-internal hashed string attribute name to the value for that attribute on this asset.",
+                ":material-code-braces:{ title=\"map of\" } :material-text:{ title=\"string\" } :material-code-braces:{ title=\"map of\" } :material-text:{ title=\"string\" } :material-text:{ title=\"string\" }",
+                customMetadataIndexes);
+        writeProperty(
+                out,
+                "status",
+                "Status of the asset.",
+                ":material-format-list-group:{ title=\"enumeration\" }",
+                statusIndexes);
+        writeProperty(
+                out,
+                "createdBy",
+                "User or account that created the asset.",
+                ":material-text:{ title=\"string\" }",
+                createdByIndexes);
+        writeProperty(
+                out,
+                "updatedBy",
+                "User or account that last updated the asset.",
+                ":material-text:{ title=\"string\" }",
+                updatedByIndexes);
+        writeProperty(
+                out,
+                "createTime",
+                "Time (epoch) at which the asset was created, in milliseconds.",
+                ":material-calendar-clock:{ title=\"date\" }",
+                createTimeIndexes);
+        writeProperty(
+                out,
+                "updateTime",
+                "Time (epoch) at which the asset was last updated, in milliseconds.",
+                ":material-calendar-clock:{ title=\"date\" }",
+                updateTimeIndexes);
+        writeProperty(
+                out,
+                "deleteHandler",
+                "Details on the handler used for deletion of the asset.",
+                ":material-text:{ title=\"string\" }",
+                null);
+        writeProperty(
+                out,
+                "classificationNames",
+                "Atlan-internal hashed string names of the classifications that exist on the asset.",
+                ":material-code-brackets:{ title=\"array of\" } :material-text:{ title=\"string\" }",
+                classificationNameIndexes);
+        writeProperty(out, "isIncomplete", "Unused.", ":material-toggle-switch:{ title=\"boolean\" }", null);
+        writeProperty(
+                out,
+                "meaningNames",
+                "Human-readable names of terms that have been linked to this asset.",
+                ":material-code-brackets:{ title=\"array of\" } :material-text:{ title=\"string\" }",
+                meaningNamesIndexes);
+        writeProperty(
+                out,
+                "meanings",
+                "Details of terms that have been linked to this asset.",
+                ":material-code-brackets:{ title=\"array of\" } :material-code-json:{ title=\"struct\" }",
+                null);
+        writeProperty(
+                out,
+                "pendingTasks",
+                "Unique identifiers (GUIDs) for any background tasks that are yet to operate on this asset.",
+                ":material-code-brackets:{ title=\"array of\" } :material-text:{ title=\"string\" }",
+                null);
+    }
+
+    private void writeAttributesSection(BufferedWriter out, String typeName, TypeDef typeDef) throws IOException {
         out.write("## Attributes\n\n");
+        out.write(
+                "These further specify the details of an instance of `" + typeName
+                        + "`. As part of the raw API payloads, these appear inside an embedded `attributes` object in the payload.\n\n");
+        out.write("### Inherited attributes\n\n");
+        out.write("=== \":fontawesome-brands-java: Java\"\n\n");
+        writeInheritedAttributes(out, typeDef, Rename.JAVA);
+        out.write("=== \":material-language-python: Python\"\n\n");
+        writeInheritedAttributes(out, typeDef, Rename.PYTHON);
+        out.write("=== \":material-code-json: JSON\"\n\n");
+        writeInheritedAttributes(out, typeDef, Rename.NONE);
+        out.write("### Type-specific attributes\n\n");
+        out.write("=== \":fontawesome-brands-java: Java\"\n\n");
+        writeAttributes(out, typeName, typeDef, Rename.JAVA);
+        out.write("=== \":material-language-python: Python\"\n\n");
+        writeAttributes(out, typeName, typeDef, Rename.PYTHON);
+        out.write("=== \":material-code-json: JSON\"\n\n");
+        writeAttributes(out, typeName, typeDef, Rename.NONE);
+    }
+
+    private void writeRelationshipsSection(BufferedWriter out, String typeName, EntityDef entityDef)
+            throws IOException {
+        out.write("## Relationships\n\n");
+        out.write(
+                "These further specify the details of any relationships between instances of `" + typeName
+                        + "` and other objects. As part of the raw API payloads, these can appear inside either an embedded `attributes` object or an embedded `relationshipAttributes` object in the payload.\n\n");
+        out.write("### Inherited relationships\n\n");
+        out.write("=== \":fontawesome-brands-java: Java\"\n\n");
+        writeInheritedRelationships(out, entityDef, Rename.JAVA);
+        out.write("=== \":material-language-python: Python\"\n\n");
+        writeInheritedRelationships(out, entityDef, Rename.PYTHON);
+        out.write("=== \":material-code-json: JSON\"\n\n");
+        writeInheritedRelationships(out, entityDef, Rename.NONE);
+        out.write("### Type-specific relationships\n\n");
+        out.write("=== \":fontawesome-brands-java: Java\"\n\n");
+        writeRelationships(out, typeName, entityDef, Rename.JAVA);
+        out.write("=== \":material-language-python: Python\"\n\n");
+        writeRelationships(out, typeName, entityDef, Rename.PYTHON);
+        out.write("=== \":material-code-json: JSON\"\n\n");
+        writeRelationships(out, typeName, entityDef, Rename.NONE);
+    }
+
+    private void writeInheritedAttributes(BufferedWriter out, TypeDef typeDef, Rename rename) throws IOException {
         Map<String, List<AttributeDef>> inherited = getAllInheritedAttributes(typeDef);
         for (String superTypeName : inherited.keySet()) {
             if (!superTypeName.startsWith("__")) {
                 List<AttributeDef> inheritedAttrs = inherited.get(superTypeName);
                 for (AttributeDef inheritedAttrDef : inheritedAttrs) {
-                    writeAttribute(out, superTypeName, inheritedAttrDef, true);
+                    writeAttribute(out, superTypeName, inheritedAttrDef, true, rename);
                 }
-            }
-        }
-        List<AttributeDef> attributes = typeDef.getAttributeDefs();
-        for (AttributeDef attributeDef : attributes) {
-            writeAttribute(out, typeName, attributeDef, false);
-        }
-        if (typeDef instanceof EntityDef) {
-            EntityDef entityDef = (EntityDef) typeDef;
-            out.write("## Relationships\n\n");
-            Map<String, RelationshipDetails> relationshipMap = new LinkedHashMap<>();
-            // Relationship attributes appear at each level of the hierarchy, so we'll take
-            // advantage of the linked map (insertion-ordered) response and block out any
-            // that we've already output (from top of inheritance hierarchy downwards)
-            // to avoid duplication
-            Map<String, List<RelationshipAttributeDef>> inheritedRelationships = getAllInheritedRelationshipAttributes(entityDef);
-            for (Map.Entry<String, List<RelationshipAttributeDef>> entry : inheritedRelationships.entrySet()) {
-                String superTypeName = entry.getKey();
-                List<RelationshipAttributeDef> inheritedAttrs = entry.getValue();
-                for (RelationshipAttributeDef inheritedAttrDef : inheritedAttrs) {
-                    String attributeName = inheritedAttrDef.getName();
-                    if (!attributeName.startsWith("__") && !relationshipMap.containsKey(attributeName)) {
-                        relationshipMap.put(attributeName, getRelationshipDetails(superTypeName, inheritedAttrDef, true));
-                    }
-                }
-            }
-            List<RelationshipAttributeDef> relationships = entityDef.getRelationshipAttributeDefs();
-            for (RelationshipAttributeDef relationshipAttributeDef : relationships) {
-                String attributeName = relationshipAttributeDef.getName();
-                if (!attributeName.startsWith("__") && !relationshipMap.containsKey(attributeName)) {
-                    relationshipMap.put(attributeName, getRelationshipDetails(typeName, relationshipAttributeDef, false));
-                }
-            }
-            //writeRelationshipDiagram(out, typeName, relationshipMap);
-            for (Map.Entry<String, RelationshipDetails> entry : relationshipMap.entrySet()) {
-                RelationshipDetails details = entry.getValue();
-                writeRelationshipAttribute(out, details);
             }
         }
     }
 
-    private void writeAttribute(BufferedWriter out, String typeName, AttributeDef attributeDef, boolean inherited) throws IOException {
+    private void writeAttributes(BufferedWriter out, String typeName, TypeDef typeDef, Rename rename)
+            throws IOException {
+        List<AttributeDef> attributes = typeDef.getAttributeDefs();
+        for (AttributeDef attributeDef : attributes) {
+            writeAttribute(out, typeName, attributeDef, false, rename);
+        }
+    }
+
+    private void writeInheritedRelationships(BufferedWriter out, EntityDef entityDef, Rename rename)
+            throws IOException {
+        Map<String, RelationshipDetails> relationshipMap = new LinkedHashMap<>();
+        // Relationship attributes appear at each level of the hierarchy, so we'll take
+        // advantage of the linked map (insertion-ordered) response and block out any
+        // that we've already output (from top of inheritance hierarchy downwards)
+        // to avoid duplication
+        Map<String, List<RelationshipAttributeDef>> inheritedRelationships =
+                getAllInheritedRelationshipAttributes(entityDef);
+        for (Map.Entry<String, List<RelationshipAttributeDef>> entry : inheritedRelationships.entrySet()) {
+            String superTypeName = entry.getKey();
+            List<RelationshipAttributeDef> inheritedAttrs = entry.getValue();
+            for (RelationshipAttributeDef inheritedAttrDef : inheritedAttrs) {
+                String attributeName = inheritedAttrDef.getName();
+                if (!attributeName.startsWith("__") && !relationshipMap.containsKey(attributeName)) {
+                    relationshipMap.put(attributeName, getRelationshipDetails(superTypeName, inheritedAttrDef, true));
+                }
+            }
+        }
+        for (Map.Entry<String, RelationshipDetails> entry : relationshipMap.entrySet()) {
+            RelationshipDetails details = entry.getValue();
+            writeRelationshipAttribute(out, details, rename);
+        }
+    }
+
+    private void writeRelationships(BufferedWriter out, String typeName, EntityDef entityDef, Rename rename)
+            throws IOException {
+        Map<String, RelationshipDetails> relationshipMap = new LinkedHashMap<>();
+        // Relationship attributes appear at each level of the hierarchy, so we'll take
+        // advantage of the linked map (insertion-ordered) response and block out any
+        // that we've already output (from top of inheritance hierarchy downwards)
+        // to avoid duplication
+        Map<String, List<RelationshipAttributeDef>> inheritedRelationships =
+                getAllInheritedRelationshipAttributes(entityDef);
+        for (Map.Entry<String, List<RelationshipAttributeDef>> entry : inheritedRelationships.entrySet()) {
+            String superTypeName = entry.getKey();
+            List<RelationshipAttributeDef> inheritedAttrs = entry.getValue();
+            for (RelationshipAttributeDef inheritedAttrDef : inheritedAttrs) {
+                String attributeName = inheritedAttrDef.getName();
+                if (!attributeName.startsWith("__") && !relationshipMap.containsKey(attributeName)) {
+                    relationshipMap.put(attributeName, getRelationshipDetails(superTypeName, inheritedAttrDef, true));
+                }
+            }
+        }
+        Map<String, RelationshipDetails> directRelationships = new LinkedHashMap<>();
+        List<RelationshipAttributeDef> relationships = entityDef.getRelationshipAttributeDefs();
+        for (RelationshipAttributeDef relationshipAttributeDef : relationships) {
+            String attributeName = relationshipAttributeDef.getName();
+            if (!attributeName.startsWith("__") && !relationshipMap.containsKey(attributeName)) {
+                directRelationships.put(
+                        attributeName, getRelationshipDetails(typeName, relationshipAttributeDef, false));
+            }
+        }
+        for (Map.Entry<String, RelationshipDetails> entry : directRelationships.entrySet()) {
+            RelationshipDetails details = entry.getValue();
+            writeRelationshipAttribute(out, details, rename);
+        }
+    }
+
+    private void writeAttribute(
+            BufferedWriter out, String typeName, AttributeDef attributeDef, boolean inherited, Rename rename)
+            throws IOException {
 
         String attrType = attributeDef.getTypeName();
         String attrName = attributeDef.getName();
         String description = getAttributeDescription(typeName, attrName);
+        Map<String, IndexType> searchIndex = getSearchFieldsForAttribute(attributeDef);
 
-        String icon = "";
+        String icon = "    ";
         String referencedType = null;
         String embeddedType = attrType;
         if (attrType.startsWith("array<")) {
@@ -289,22 +663,135 @@ public class DocumentationGenerator extends AbstractGenerator {
         if (embeddedIcon != null) {
             icon += embeddedIcon;
         }
-        if (icon.length() == 0) {
+        if (icon.length() == 4) {
             log.warn("Unable to find any icon for type: {}", embeddedType);
         }
 
+        String attrRename = attrName;
+        if (rename == Rename.JAVA) {
+            attrRename = ATTRIBUTE_RENAMING.getOrDefault(attrName, attrName);
+        }
+        out.write("    <div class=\"grid\" markdown>\n\n");
         out.write(icon);
         if (inherited) {
-            out.write(" ***`" + attrName + "`***");
+            out.write(" ***`" + attrRename + "`***");
         } else {
-            out.write(" **`" + attrName + "`**");
+            out.write(" **`" + attrRename + "`**");
         }
         if (referencedType != null) {
-            addRelatedTypeLink(out, referencedType);
-        } else {
+            addRelatedTypeLink(out, referencedType, rename);
+        }
+        out.write("\n    :   " + description + "\n\n");
+        writeSearchTable(out, searchIndex, true);
+        out.write("    </div>\n\n");
+    }
+
+    private void writeProperty(
+            BufferedWriter out, String name, String description, String icon, Map<String, IndexType> indexes)
+            throws IOException {
+        out.write("    <div class=\"grid\" markdown>\n\n");
+        out.write("    " + icon + " **`" + name + "`**\n");
+        out.write("    :    " + description + "\n\n");
+        writeSearchTable(out, indexes, false);
+        out.write("    </div>\n\n");
+    }
+
+    private void writeSearchTable(BufferedWriter out, Map<String, IndexType> indexes, boolean monospaceFields)
+            throws IOException {
+        if (indexes != null && !indexes.isEmpty()) {
+            out.write("    | :material-magnify:{ title=\"Search field type\" } | Search field name |\n");
+            out.write("    |---:|:---|\n");
+            List<String> alphaNames = indexes.keySet().stream().sorted().collect(Collectors.toList());
+            for (String fieldName : alphaNames) {
+                IndexType type = indexes.get(fieldName);
+                if (monospaceFields) {
+                    out.write("    | " + getIndexIcon(type) + " | `" + fieldName + "` |\n");
+                } else {
+                    out.write("    | " + getIndexIcon(type) + " | " + fieldName + " |\n");
+                }
+            }
             out.write("\n");
         }
-        out.write(":   " + description + "\n\n");
+    }
+
+    private Map<String, IndexType> getSearchFieldsForAttribute(AttributeDef attributeDef) {
+        String attrName = attributeDef.getName();
+        Map<String, IndexType> map = new LinkedHashMap<>();
+        // Default index
+        Map<String, String> config = attributeDef.getIndexTypeESConfig();
+        if (config != null && config.containsKey("analyzer")) {
+            String analyzer = config.get("analyzer");
+            if (analyzer.equals("atlan_text_analyzer")) {
+                map.put(attrName, IndexType.TEXT);
+            } else {
+                log.warn("Unknown analyzer on attribute {}: {}", attributeDef.getName(), analyzer);
+            }
+        } else {
+            map.put(attrName, getDefaultIndexForType(attributeDef.getTypeName()));
+        }
+        // Additional indexes
+        Map<String, Map<String, String>> fields = attributeDef.getIndexTypeESFields();
+        if (fields != null) {
+            for (Map.Entry<String, Map<String, String>> entry : fields.entrySet()) {
+                String fieldName = attrName + "." + entry.getKey();
+                Map<String, String> indexDetails = entry.getValue();
+                if (indexDetails != null && indexDetails.containsKey("type")) {
+                    String indexType = indexDetails.get("type");
+                    switch (indexType) {
+                        case "keyword":
+                            map.put(fieldName, IndexType.KEYWORD);
+                            break;
+                        case "text":
+                            map.put(fieldName, IndexType.TEXT);
+                            break;
+                        case "rank_feature":
+                            map.put(fieldName, IndexType.RANK_FEATURE);
+                            break;
+                        default:
+                            log.warn(
+                                    "Unknown index type on attribute {}, field {}: {}",
+                                    attributeDef.getName(),
+                                    fieldName,
+                                    indexType);
+                            break;
+                    }
+                } else {
+                    map.put(fieldName, getDefaultIndexForType(attributeDef.getTypeName()));
+                }
+            }
+        }
+        return map;
+    }
+
+    private IndexType getDefaultIndexForType(String typeName) {
+        String baseType = typeName;
+        if (typeName.startsWith("array<")) {
+            if (typeName.startsWith("array<map<")) {
+                baseType = getEmbeddedType(typeName.substring("array<".length(), typeName.length() - 1));
+            } else {
+                baseType = getEmbeddedType(typeName);
+            }
+        }
+        IndexType toUse;
+        switch (baseType) {
+            case "date":
+                toUse = IndexType.DATE;
+                break;
+            case "float":
+            case "double":
+            case "int":
+            case "long":
+                toUse = IndexType.FLOAT;
+                break;
+            case "boolean":
+                toUse = IndexType.BOOLEAN;
+                break;
+            case "string":
+            default:
+                toUse = IndexType.KEYWORD;
+                break;
+        }
+        return toUse;
     }
 
     private String getMapIcon(String attrType) {
@@ -316,19 +803,35 @@ public class DocumentationGenerator extends AbstractGenerator {
         return icon;
     }
 
-    private void writeRelationshipAttribute(BufferedWriter out, RelationshipDetails details) throws IOException {
+    private String getIndexIcon(IndexType indexType) {
+        String icon = indexIcons.getOrDefault(indexType, null);
+        if (icon == null) {
+            log.warn("Unable to find an icon for index type: {}", indexType);
+        }
+        return icon;
+    }
+
+    private void writeRelationshipAttribute(BufferedWriter out, RelationshipDetails details, Rename rename)
+            throws IOException {
         String attrName = details.getAttributeName();
         String fromTypeName = details.getFromTypeName();
         String description = getAttributeDescription(fromTypeName, attrName);
         boolean inherited = details.getInherited();
+        out.write("    <div class=\"grid\" markdown>\n\n");
+        out.write("    ");
         out.write(getRelationshipCardinalityIcon(details.getCardinality()));
-        if (inherited) {
-            out.write(" ***`" + attrName + "`***");
-        } else {
-            out.write(" **`" + attrName + "`**");
+        String attrRename = attrName;
+        if (rename == Rename.JAVA) {
+            attrRename = ATTRIBUTE_RENAMING.getOrDefault(attrName, attrName);
         }
-        out.write("\n:   " + description + "\n\n");
-        writeRelationshipDiagram(out, details);
+        if (inherited) {
+            out.write(" ***`" + attrRename + "`***");
+        } else {
+            out.write(" **`" + attrRename + "`**");
+        }
+        out.write("\n    :   " + description + "\n\n");
+        writeRelationshipDiagram(out, details, rename);
+        out.write("    </div>\n\n");
     }
 
     private String getRelationshipCardinalityIcon(RelationshipCardinality cardinality) {
@@ -339,20 +842,41 @@ public class DocumentationGenerator extends AbstractGenerator {
         return icon == null ? "" : icon;
     }
 
-    private void writeRelationshipDiagram(BufferedWriter out, RelationshipDetails details) throws IOException {
+    private void writeRelationshipDiagram(BufferedWriter out, RelationshipDetails details, Rename rename)
+            throws IOException {
         out.write("    ```mermaid\n");
         out.write("    classDiagram\n");
         out.write("        direction LR\n");
+        String attrName = details.getAttributeName();
         String fromType = details.getFromTypeName();
         String relatedType = details.getRelatedToType();
-        writeModelClass(out, fromType, "    ", !entityDefCache.get(fromType).getSubTypes().isEmpty());
-        writeModelClass(out, relatedType, "    ", !entityDefCache.get(relatedType).getSubTypes().isEmpty());
+        writeModelClass(
+                out,
+                fromType,
+                "    ",
+                rename,
+                !entityDefCache.get(fromType).getSubTypes().isEmpty());
+        writeModelClass(
+                out,
+                relatedType,
+                "    ",
+                rename,
+                !entityDefCache.get(relatedType).getSubTypes().isEmpty());
         String cardinalityQualifier = cardinalityQualifiers.getOrDefault(details.getCardinality(), " --> ");
-        out.write("        " + details.getFromTypeName() + cardinalityQualifier + relatedType + " : " + details.getAttributeName() + "\n");
+        String renamedAttr = attrName;
+        String renamedFrom = fromType;
+        String renamedRelated = relatedType;
+        if (rename == Rename.JAVA) {
+            renamedAttr = ATTRIBUTE_RENAMING.getOrDefault(attrName, attrName);
+            renamedFrom = NAME_MAPPINGS.getOrDefault(fromType, fromType);
+            renamedRelated = NAME_MAPPINGS.getOrDefault(relatedType, relatedType);
+        }
+        out.write("        " + renamedFrom + cardinalityQualifier + renamedRelated + " : " + renamedAttr + "\n");
         out.write("    ```\n\n");
     }
 
-    private RelationshipDetails getRelationshipDetails(String fromTypeName, RelationshipAttributeDef attributeDef, boolean inherited) {
+    private RelationshipDetails getRelationshipDetails(
+            String fromTypeName, RelationshipAttributeDef attributeDef, boolean inherited) {
         String attributeName = attributeDef.getName();
         String relationshipName = attributeDef.getRelationshipTypeName();
         RelationshipDef relationshipDef = relationshipDefCache.get(relationshipName);
@@ -375,11 +899,14 @@ public class DocumentationGenerator extends AbstractGenerator {
             to = two.getCardinality();
             from = one.getCardinality();
         } else {
-            log.error("Unable to find a matching attribute ({}) in the relationship for: {}", attributeName, relationshipDef);
+            log.error(
+                    "Unable to find a matching attribute ({}) in the relationship for: {}",
+                    attributeName,
+                    relationshipDef);
         }
 
         RelationshipCardinality cardinality = null;
-        switch(category) {
+        switch (category) {
             case COMPOSITION:
                 // A composition relationship is the only one that has strong ownership dictates
                 // and would thus give a mandatory singular cardinality to one end of the relationship
@@ -438,25 +965,37 @@ public class DocumentationGenerator extends AbstractGenerator {
         }
 
         return RelationshipDetails.builder()
-            .fromTypeName(fromTypeName)
-            .attributeName(attributeName)
-            .relatedToType(relatedType)
-            .cardinality(cardinality)
-            .inherited(inherited)
-            .build();
+                .fromTypeName(fromTypeName)
+                .attributeName(attributeName)
+                .relatedToType(relatedType)
+                .cardinality(cardinality)
+                .inherited(inherited)
+                .build();
     }
 
-    private void writeSubtypes(BufferedWriter out, String typeName, EntityDef entityDef) throws IOException {
+    private void writeSubtypesDiagram(BufferedWriter out, String typeName, EntityDef entityDef, Rename rename)
+            throws IOException {
         List<String> subTypes = entityDef.getSubTypes();
         if (subTypes != null && !subTypes.isEmpty()) {
-            out.write("??? model \"Including direct subtypes\"\n");
-            out.write("    ```mermaid\n");
-            writeMainModelDiagram(out, typeName, entityDef, "    ");
+            out.write("    ??? model \"Including direct subtypes\"\n");
+            out.write("        ```mermaid\n");
+            writeMainModelDiagram(out, typeName, entityDef, "        ", rename);
             for (String subTypeName : subTypes) {
-                writeModelClass(out, subTypeName, "    ", !entityDefCache.get(subTypeName).getSubTypes().isEmpty());
-                out.write("    " + typeName + " <|-- " + subTypeName + " : extends\n");
+                writeModelClass(
+                        out,
+                        subTypeName,
+                        "        ",
+                        rename,
+                        !entityDefCache.get(subTypeName).getSubTypes().isEmpty());
+                String renamedActual = typeName;
+                String renamedSub = subTypeName;
+                if (rename == Rename.JAVA) {
+                    renamedActual = NAME_MAPPINGS.getOrDefault(typeName, typeName);
+                    renamedSub = NAME_MAPPINGS.getOrDefault(subTypeName, subTypeName);
+                }
+                out.write("        " + renamedActual + " <|-- " + renamedSub + " : extends\n");
             }
-            out.write("    ```\n\n");
+            out.write("        ```\n\n");
         }
     }
 
@@ -464,8 +1003,12 @@ public class DocumentationGenerator extends AbstractGenerator {
         return attrType.substring(attrType.indexOf("<") + 1, attrType.indexOf(">"));
     }
 
-    private void addRelatedTypeLink(BufferedWriter out, String relatedType) throws IOException {
-        out.write(" ([" + relatedType + "](../" + relatedType.toLowerCase() + "))\n");
+    private void addRelatedTypeLink(BufferedWriter out, String relatedType, Rename rename) throws IOException {
+        String renamedType = relatedType;
+        if (rename == Rename.JAVA) {
+            renamedType = NAME_MAPPINGS.getOrDefault(relatedType, relatedType);
+        }
+        out.write(" ([" + renamedType + "](../" + relatedType.toLowerCase() + "))");
     }
 
     @Data
@@ -475,6 +1018,7 @@ public class DocumentationGenerator extends AbstractGenerator {
         String attributeName;
         String relatedToType;
         RelationshipCardinality cardinality;
+
         @Builder.Default
         boolean inherited = false;
     }
