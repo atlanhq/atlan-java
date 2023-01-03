@@ -3,11 +3,6 @@
 package com.atlan.model.typedefs;
 
 import com.atlan.model.enums.AtlanTypeCategory;
-import com.atlan.model.enums.PropagateTags;
-import com.atlan.model.enums.RelationshipCategory;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.util.List;
-import java.util.Map;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
