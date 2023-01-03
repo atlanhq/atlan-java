@@ -33,19 +33,19 @@ public class SalesforceDashboard extends Salesforce {
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** sourceId is the Id of the dashboard entity on salesforce */
+    /** ID of the dashboard in Salesforce. */
     @Attribute
     String sourceId;
 
-    /** dashboardType is the type of dashboard in salesforce */
+    /** Type of dashboard in Salesforce. */
     @Attribute
     String dashboardType;
 
-    /** reportCount is the number of reports linked to the dashboard entity on salesforce */
+    /** Number of reports linked to the dashboard in Salesforce. */
     @Attribute
     Long reportCount;
 
-    /** TBC */
+    /** Reports linked to the dashboard in Salesforce. */
     @Attribute
     @Singular
     SortedSet<SalesforceReport> reports;

@@ -33,7 +33,7 @@ public class SalesforceOrganization extends Salesforce {
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** sourceId is the Id of the organization entity on salesforce */
+    /** ID of the organization in Salesforce. */
     @Attribute
     String sourceId;
 

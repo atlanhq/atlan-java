@@ -106,7 +106,7 @@ public class Column extends SQL {
     @Attribute
     Boolean isNullable;
 
-    /** TBC */
+    /** Number of digits allowed to the right of the decimal point. */
     @Attribute
     Double numericScale;
 
@@ -126,6 +126,10 @@ public class Column extends SQL {
     /** TBC */
     @Attribute
     Long columnDistinctValuesCountLong;
+
+    /** TBC */
+    @Attribute
+    Histogram columnHistogram;
 
     /** TBC */
     @Attribute
@@ -212,6 +216,11 @@ public class Column extends SQL {
     /** TBC */
     @Attribute
     Double columnVariance;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    List<ColumnValueFrequencyMap> columnTopValues;
 
     /** Materialized view in which this column exists, or empty if the column instead exists in a table or view. */
     @Attribute

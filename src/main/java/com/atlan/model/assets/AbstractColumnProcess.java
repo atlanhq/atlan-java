@@ -21,7 +21,7 @@ public abstract class AbstractColumnProcess extends AbstractProcess {
 
     public static final String TYPE_NAME = "ColumnProcess";
 
-    /** TBC */
+    /** Parent process that contains this column-level process. */
     @Attribute
     LineageProcess process;
 }

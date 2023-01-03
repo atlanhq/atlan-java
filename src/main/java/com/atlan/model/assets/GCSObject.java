@@ -34,15 +34,15 @@ public class GCSObject extends GCS {
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Human-readable name of the bucket in which this object exists. */
     @Attribute
     String gcsBucketName;
 
-    /** TBC */
+    /** qualifiedName of the bucket in which this object exists. */
     @Attribute
     String gcsBucketQualifiedName;
 
-    /** TBC */
+    /** Object size in bytes. */
     @Attribute
     Long gcsObjectSize;
 
@@ -74,7 +74,7 @@ public class GCSObject extends GCS {
     @Attribute
     Long gcsObjectDataLastModifiedTime;
 
-    /** TBC */
+    /** Type of content in the object. */
     @Attribute
     String gcsObjectContentType;
 
@@ -82,7 +82,7 @@ public class GCSObject extends GCS {
     @Attribute
     String gcsObjectContentEncoding;
 
-    /** TBC */
+    /** Information about how the object's content should be presented. */
     @Attribute
     String gcsObjectContentDisposition;
 
@@ -94,7 +94,7 @@ public class GCSObject extends GCS {
     @Attribute
     Long gcsObjectRetentionExpirationDate;
 
-    /** TBC */
+    /** GCS bucket in which the object exists. */
     @Attribute
     GCSBucket gcsBucket;
 

@@ -33,11 +33,11 @@ public class AtlanCollection extends Namespace {
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Image used to represent this collection. */
     @Attribute
     String icon;
 
-    /** TBC */
+    /** Type of image used to represent the collection (for example, an emoji). */
     @Attribute
     LinkIconType iconType;
 

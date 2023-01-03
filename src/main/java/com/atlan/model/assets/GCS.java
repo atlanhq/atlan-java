@@ -29,7 +29,7 @@ public abstract class GCS extends Google {
     @Attribute
     String gcsEncryptionType;
 
-    /** TBC */
+    /** Entity tag for the asset. An entity tag is a hash of the object and represents changes to the contents of an object only, not its metadata. */
     @Attribute
     String gcsETag;
 

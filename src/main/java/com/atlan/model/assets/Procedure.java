@@ -33,11 +33,11 @@ public class Procedure extends SQL {
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Logic of the procedure. */
     @Attribute
     String definition;
 
-    /** TBC */
+    /** Schema in which the procedure is contained. */
     @Attribute
     @JsonProperty("atlanSchema")
     Schema schema;
