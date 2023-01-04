@@ -32,7 +32,7 @@ public abstract class AbstractGenerator extends AtlanLiveTest {
     protected static final String[] CSV_HEADER = {CSV_TYPE_NAME, CSV_TYPE_DESC, CSV_ATTR_NAME, CSV_ATTR_DESC};
 
     private static final String DESCRIPTIONS_FILE =
-            "" + "src" + File.separator + "liveTest" + File.separator + "resources" + File.separator + "attributes.csv";
+            "" + "src" + File.separator + "main" + File.separator + "resources" + File.separator + "attributes.csv";
 
     // We'll use our own class names for these types, as the existing type names are either overly
     // verbose, too easily conflicting with native Java classes, or have a level of inheritance that is
