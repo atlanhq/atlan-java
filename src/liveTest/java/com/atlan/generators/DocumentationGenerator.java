@@ -51,7 +51,7 @@ public class DocumentationGenerator extends AbstractGenerator {
     }
 
     private static final String DOCS_DIRECTORY =
-            "src" + File.separator + "main" + File.separator + "resources"  + File.separator + "markdown";
+            "src" + File.separator + "main" + File.separator + "resources" + File.separator + "markdown";
 
     private static final Map<String, String> typeToIcon = Map.ofEntries(
             Map.entry("string", ":material-text:{ title=\"string\" }"),
@@ -102,7 +102,9 @@ public class DocumentationGenerator extends AbstractGenerator {
                     IndexType.BOOLEAN,
                     "[:material-toggle-switch:{ title=\"boolean\" }](../../../search/attributes/#boolean)"),
             Map.entry(IndexType.FLOAT, "[:material-numeric:{ title=\"float\" }](../../../search/attributes/#float)"),
-            Map.entry(IndexType.RANK_FEATURE, "[:material-sort:{ title=\"rank\" }](../../../search/attributes/#rank-feature)"));
+            Map.entry(
+                    IndexType.RANK_FEATURE,
+                    "[:material-sort:{ title=\"rank\" }](../../../search/attributes/#rank-feature)"));
 
     public static void main(String[] args) {
         DocumentationGenerator generator = new DocumentationGenerator();
