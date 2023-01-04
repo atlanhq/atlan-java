@@ -35,16 +35,16 @@ public class SalesforceReport extends Salesforce {
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** sourceId is the Id of the report entity on salesforce */
+    /** ID of the report in Salesforce. */
     @Attribute
     String sourceId;
 
-    /** reportType is the type of report in salesforce */
+    /** Type of report in Salesforce. */
     @Attribute
     @Singular("putReportType")
     Map<String, String> reportType;
 
-    /** detailColumns is a list of column names on the report */
+    /** List of column names on the report. */
     @Attribute
     @Singular
     SortedSet<String> detailColumns;

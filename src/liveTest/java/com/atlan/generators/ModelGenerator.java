@@ -83,7 +83,7 @@ public class ModelGenerator extends AbstractGenerator {
                 log.error("Unable to create target directory: {}", MODEL_DIRECTORY);
             }
         }
-        for (Map.Entry<String, EntityDef> entry : typeDefCache.entrySet()) {
+        for (Map.Entry<String, EntityDef> entry : entityDefCache.entrySet()) {
             String name = entry.getKey();
             if (!SKIP_GENERATING.contains(name) && !name.startsWith("__")) {
                 log.info("Creating model for: {}", name);
@@ -102,7 +102,7 @@ public class ModelGenerator extends AbstractGenerator {
             }
         }
 
-        for (Map.Entry<String, EntityDef> entry : typeDefCache.entrySet()) {
+        for (Map.Entry<String, EntityDef> entry : entityDefCache.entrySet()) {
             String name = entry.getKey();
             EntityDef entityDef = entry.getValue();
             List<String> subTypes = entityDef.getSubTypes();
@@ -906,8 +906,11 @@ public class ModelGenerator extends AbstractGenerator {
             String type = attribute.getTypeName();
             String mappedType = TYPE_MAPPINGS.getOrDefault(type, null);
             if (mappedType == null) {
-                log.warn("Unmapped type '{}' — skipping attribute: {}", type, name);
-            } else if (!mappedType.equals("__internal")) {
+                // Failing that, attempt a renamed type (structs, enums) or just
+                // default to the same name (not renamed, but a struct or enum)
+                mappedType = NAME_MAPPINGS.getOrDefault(type, type);
+            }
+            if (!mappedType.equals("__internal")) {
                 fs.append("    /** ")
                         .append(getAttributeDescription(typeName, name))
                         .append(" */");
@@ -1276,16 +1279,19 @@ public class ModelGenerator extends AbstractGenerator {
             List<String> superTypes = typeDetails.getSuperTypes();
             if (superTypes != null && !superTypes.isEmpty()) {
                 String singleSuperType = getSingleTypeToExtend(typeName, superTypes);
-                addTestAttributes(fs, typeDefCache.get(singleSuperType));
+                addTestAttributes(fs, entityDefCache.get(singleSuperType));
             }
             List<AttributeDef> attributes = typeDetails.getAttributeDefs();
             for (AttributeDef attribute : attributes) {
                 String name = attribute.getName();
                 String type = attribute.getTypeName();
+                // Prefer a direct type mapping first...
                 String mappedType = TYPE_MAPPINGS.getOrDefault(type, null);
                 if (mappedType == null) {
-                    log.warn("Unmapped type '{}' — skipping attribute: {}", type, name);
-                } else if (!mappedType.equals("__internal")) {
+                    // Failing that, attempt a renamed type (structs, enums)...
+                    mappedType = NAME_MAPPINGS.getOrDefault(type, type);
+                }
+                if (!mappedType.equals("__internal")) {
                     if (ATTRIBUTE_RENAMING.containsKey(name)) {
                         name = ATTRIBUTE_RENAMING.get(name);
                     }

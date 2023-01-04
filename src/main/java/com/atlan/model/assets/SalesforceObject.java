@@ -33,7 +33,7 @@ public class SalesforceObject extends Salesforce {
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** isCustom captures whether the object is a custom object or not */
+    /** Whether the object is a custom object (true) or not (false). */
     @Attribute
     Boolean isCustom;
 
@@ -45,7 +45,7 @@ public class SalesforceObject extends Salesforce {
     @Attribute
     Boolean isQueryable;
 
-    /** fieldCount is the number of fields in the object entity */
+    /** Number of fields in the object. */
     @Attribute
     Long fieldCount;
 

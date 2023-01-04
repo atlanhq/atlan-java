@@ -48,7 +48,7 @@ public class AttributeCSVGenerator extends AbstractGenerator {
         try (CSVPrinter printer = new CSVPrinter(
                 Files.newBufferedWriter(Paths.get(DOCS_DIRECTORY + File.separator + "attributes.csv"), UTF_8),
                 CSVFormat.DEFAULT.builder().setHeader(CSV_HEADER).build())) {
-            Set<String> typeNames = typeDefCache.keySet();
+            Set<String> typeNames = entityDefCache.keySet();
             List<String> sortedTypeNames = typeNames.stream().sorted().collect(Collectors.toList());
             for (String typeName : sortedTypeNames) {
                 addModelToCSV(printer, typeName);
@@ -60,7 +60,7 @@ public class AttributeCSVGenerator extends AbstractGenerator {
     }
 
     private void addModelToCSV(CSVPrinter printer, String typeName) throws IOException {
-        EntityDef entityDef = typeDefCache.get(typeName);
+        EntityDef entityDef = entityDefCache.get(typeName);
         String description = entityDef.getDescription();
         // Add all the plain attributes first
         for (AttributeDef attribute : entityDef.getAttributeDefs()) {

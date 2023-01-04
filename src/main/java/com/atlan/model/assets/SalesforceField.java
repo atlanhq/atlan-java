@@ -33,7 +33,7 @@ public class SalesforceField extends Salesforce {
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** data type of the field */
+    /** Data type of values in the field. */
     @Attribute
     String dataType;
 
@@ -73,11 +73,11 @@ public class SalesforceField extends Salesforce {
     @Attribute
     Boolean isNullable;
 
-    /** Total number of digits allowed */
+    /** Total number of digits allowed. */
     @Attribute
     Integer precision;
 
-    /** TBC */
+    /** Number of digits allowed to the right of the decimal point. */
     @Attribute
     Double numericScale;
 
@@ -85,12 +85,12 @@ public class SalesforceField extends Salesforce {
     @Attribute
     Boolean isUnique;
 
-    /** picklistValues is a list of values from which a user can pick from while adding a record */
+    /** List of values from which a user can pick while adding a record. */
     @Attribute
     @Singular
     SortedSet<String> picklistValues;
 
-    /** isPolymorphicForeignKey captures whether the field references to record of multiple objects */
+    /** Whether the field references a record of multiple objects (true) or not (false). */
     @Attribute
     Boolean isPolymorphicForeignKey;
 

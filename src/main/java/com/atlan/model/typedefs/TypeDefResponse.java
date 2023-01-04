@@ -20,7 +20,7 @@ public class TypeDefResponse extends ApiResource {
     List<EnumDef> enumDefs;
 
     /** List of struct type definitions. */
-    List<TypeDef> structDefs;
+    List<StructDef> structDefs;
 
     /** List of classification type definitions. */
     List<ClassificationDef> classificationDefs;
@@ -29,7 +29,7 @@ public class TypeDefResponse extends ApiResource {
     List<EntityDef> entityDefs;
 
     /** List of relationship type definitions. */
-    List<TypeDef> relationshipDefs;
+    List<RelationshipDef> relationshipDefs;
 
     /** List of custom metadata type definitions. */
     @JsonProperty("businessMetadataDefs")

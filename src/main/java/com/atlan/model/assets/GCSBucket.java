@@ -62,7 +62,7 @@ public class GCSBucket extends GCS {
     @Attribute
     String gcsBucketRetentionPolicy;
 
-    /** TBC */
+    /** GCS objects within this bucket. */
     @Attribute
     @Singular
     SortedSet<GCSObject> gcsObjects;

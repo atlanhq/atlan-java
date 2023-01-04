@@ -36,11 +36,11 @@ public class Folder extends Namespace {
     @Attribute
     String parentQualifiedName;
 
-    /** TBC */
+    /** qualifiedName of the collection in which this folder exists. */
     @Attribute
     String collectionQualifiedName;
 
-    /** TBC */
+    /** Namespace in which this folder exists. */
     @Attribute
     Namespace parent;
 

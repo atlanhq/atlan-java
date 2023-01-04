@@ -8,10 +8,7 @@ import com.atlan.Atlan;
 import com.atlan.api.TypeDefsEndpoint;
 import com.atlan.live.AtlanLiveTest;
 import com.atlan.model.enums.AtlanTypeCategory;
-import com.atlan.model.typedefs.AttributeDef;
-import com.atlan.model.typedefs.EntityDef;
-import com.atlan.model.typedefs.RelationshipAttributeDef;
-import com.atlan.model.typedefs.TypeDefResponse;
+import com.atlan.model.typedefs.*;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -35,20 +32,26 @@ public abstract class AbstractGenerator extends AtlanLiveTest {
     protected static final String[] CSV_HEADER = {CSV_TYPE_NAME, CSV_TYPE_DESC, CSV_ATTR_NAME, CSV_ATTR_DESC};
 
     private static final String DESCRIPTIONS_FILE =
-            "" + "src" + File.separator + "liveTest" + File.separator + "resources" + File.separator + "attributes.csv";
+            "" + "src" + File.separator + "main" + File.separator + "resources" + File.separator + "attributes.csv";
 
     // We'll use our own class names for these types, as the existing type names are either overly
     // verbose, too easily conflicting with native Java classes, or have a level of inheritance that is
     // unnecessary
-    protected static final Map<String, String> NAME_MAPPINGS = Map.of(
-            "Referenceable", "Asset",
-            "Process", "LineageProcess",
-            "Collection", "AtlanCollection",
-            "Query", "AtlanQuery",
-            "AtlasGlossary", "Glossary",
-            "AtlasGlossaryCategory", "GlossaryCategory",
-            "AtlasGlossaryTerm", "GlossaryTerm",
-            "MaterialisedView", "MaterializedView");
+    protected static final Map<String, String> NAME_MAPPINGS = Map.ofEntries(
+            Map.entry("Referenceable", "Asset"),
+            Map.entry("Process", "LineageProcess"),
+            Map.entry("Collection", "AtlanCollection"),
+            Map.entry("Query", "AtlanQuery"),
+            Map.entry("AtlasGlossary", "Glossary"),
+            Map.entry("AtlasGlossaryCategory", "GlossaryCategory"),
+            Map.entry("AtlasGlossaryTerm", "GlossaryTerm"),
+            Map.entry("MaterialisedView", "MaterializedView"),
+            Map.entry("certificate_status", "AtlanCertificateStatus"),
+            Map.entry("AwsTag", "AWSTag"),
+            Map.entry("AwsCloudWatchMetric", "AWSCloudWatchMetric"),
+            Map.entry("google_datastudio_asset_type", "GoogleDataStudioAssetType"),
+            Map.entry("icon_type", "LinkIconType"),
+            Map.entry("powerbi_endorsement", "PowerBIEndorsementType"));
 
     // Map attribute types to native Java types
     protected static final Map<String, String> TYPE_MAPPINGS = Map.ofEntries(
@@ -62,10 +65,7 @@ public abstract class AbstractGenerator extends AtlanLiveTest {
             Map.entry("map<string,string>", "Map<String, String>"),
             Map.entry("map<string,long>", "Map<String, Long>"),
             Map.entry("array<map<string,string>>", "List<Map<String, String>>"),
-            Map.entry("icon_type", "LinkIconType"),
-            Map.entry("google_datastudio_asset_type", "GoogleDataStudioAssetType"),
             Map.entry("array<AwsTag>", "List<AWSTag>"),
-            Map.entry("powerbi_endorsement", "PowerBIEndorsementType"),
             Map.entry("array<GoogleLabel>", "List<GoogleLabel>"),
             Map.entry("array<GoogleTag>", "List<GoogleTag>"),
             Map.entry("array<DbtMetricFilter>", "List<DbtMetricFilter>"),
@@ -107,7 +107,9 @@ public abstract class AbstractGenerator extends AtlanLiveTest {
     protected static final Map<String, String> CREATE_NON_ABSTRACT = Map.ofEntries(
             Map.entry("LineageProcess", "AbstractProcess"), Map.entry("ColumnProcess", "AbstractColumnProcess"));
 
-    protected static final Map<String, EntityDef> typeDefCache = new ConcurrentHashMap<>();
+    protected static final Map<String, EntityDef> entityDefCache = new ConcurrentHashMap<>();
+    protected static final Map<String, RelationshipDef> relationshipDefCache = new ConcurrentHashMap<>();
+    protected static final Map<String, TypeDef> typeDefCache = new ConcurrentHashMap<>();
     protected static final Map<String, Set<String>> relationshipsForType = new ConcurrentHashMap<>();
     protected static final SortedSet<String> typesWithMaps = new TreeSet<>();
     private static final Map<String, String> subTypeToSuperType = new ConcurrentHashMap<>();
@@ -120,16 +122,22 @@ public abstract class AbstractGenerator extends AtlanLiveTest {
 
     /** Cache all type definition information we can find from Atlan itself. */
     protected static void cacheModels() {
-        if (typeDefCache.isEmpty()) {
+        if (entityDefCache.isEmpty()) {
             try {
                 if (Atlan.getApiToken().equals("") || Atlan.getBaseUrl().equals("")) {
                     System.out.println("Inadequate parameters provided.");
                     printUsage();
                     System.exit(1);
                 }
-                TypeDefResponse response = TypeDefsEndpoint.getTypeDefs(AtlanTypeCategory.ENTITY);
-                List<EntityDef> entityDefs = response.getEntityDefs();
-                cacheTypeDefs(entityDefs);
+                TypeDefResponse entities = TypeDefsEndpoint.getTypeDefs(AtlanTypeCategory.ENTITY);
+                TypeDefResponse relationships = TypeDefsEndpoint.getTypeDefs(AtlanTypeCategory.RELATIONSHIP);
+                TypeDefResponse enums = TypeDefsEndpoint.getTypeDefs(AtlanTypeCategory.ENUM);
+                TypeDefResponse structs = TypeDefsEndpoint.getTypeDefs(AtlanTypeCategory.STRUCT);
+                List<EntityDef> entityDefs = entities.getEntityDefs();
+                cacheEntityDefs(entityDefs);
+                cacheRelationshipDefs(relationships.getRelationshipDefs());
+                cacheOtherTypeDefs(enums.getEnumDefs());
+                cacheOtherTypeDefs(structs.getStructDefs());
                 cacheTypesWithMaps(entityDefs);
                 cacheRelationshipsForInheritance(entityDefs);
             } catch (Exception e) {
@@ -188,14 +196,78 @@ public abstract class AbstractGenerator extends AtlanLiveTest {
         return typeNameToDescription.getOrDefault(typeName, "TBC");
     }
 
+    /**
+     * Retrieve a list of all attribute definitions that are inherited by this type from all
+     * of its supertypes (and their supertypes).
+     *
+     * @param typeDef type definition from which to retrieve the inherited attributes
+     * @return a map of the list of inherited attributes, keyed by the name of the type that owns each set of attributes
+     */
+    protected static Map<String, List<AttributeDef>> getAllInheritedAttributes(TypeDef typeDef) {
+        if (typeDef instanceof EntityDef) {
+            EntityDef entityDef = (EntityDef) typeDef;
+            List<String> superTypes = entityDef.getSuperTypes();
+            if (superTypes == null || superTypes.isEmpty()) {
+                return new LinkedHashMap<>();
+            } else {
+                Map<String, List<AttributeDef>> allInherited = new LinkedHashMap<>();
+                for (String superTypeName : superTypes) {
+                    EntityDef superTypeDef = entityDefCache.get(superTypeName);
+                    allInherited.putAll(getAllInheritedAttributes(superTypeDef));
+                    allInherited.put(superTypeName, superTypeDef.getAttributeDefs());
+                }
+                return allInherited;
+            }
+        } else {
+            return Collections.emptyMap();
+        }
+    }
+
+    /**
+     * Retrieve a list of all relationship attribute definitions that are inherited by this type from all
+     * of its supertypes (and their supertypes).
+     *
+     * @param entityDef entity type definition from which to retrieve the inherited relationship attributes
+     * @return a map of the list of inherited relationship attributes, keyed by the name of the type that owns each set of relationship attributes
+     */
+    protected static Map<String, List<RelationshipAttributeDef>> getAllInheritedRelationshipAttributes(
+            EntityDef entityDef) {
+        List<String> superTypes = entityDef.getSuperTypes();
+        if (superTypes == null || superTypes.isEmpty()) {
+            return new LinkedHashMap<>();
+        } else {
+            Map<String, List<RelationshipAttributeDef>> allInherited = new LinkedHashMap<>();
+            for (String superTypeName : superTypes) {
+                EntityDef superTypeDef = entityDefCache.get(superTypeName);
+                allInherited.putAll(getAllInheritedRelationshipAttributes(superTypeDef));
+                allInherited.put(superTypeName, superTypeDef.getRelationshipAttributeDefs());
+            }
+            return allInherited;
+        }
+    }
+
     private static String getAttrQualifiedName(String typeName, String attrName) {
         return typeName + "|" + attrName;
     }
 
-    private static void cacheTypeDefs(List<EntityDef> entityDefs) {
+    private static void cacheEntityDefs(List<EntityDef> entityDefs) {
         for (EntityDef entityDef : entityDefs) {
             String name = entityDef.getName();
-            typeDefCache.put(name, entityDef);
+            entityDefCache.put(name, entityDef);
+        }
+    }
+
+    private static void cacheRelationshipDefs(List<RelationshipDef> relationshipDefs) {
+        for (RelationshipDef relationshipDef : relationshipDefs) {
+            String name = relationshipDef.getName();
+            relationshipDefCache.put(name, relationshipDef);
+        }
+    }
+
+    private static <T extends TypeDef> void cacheOtherTypeDefs(List<T> typeDefs) {
+        for (TypeDef typeDef : typeDefs) {
+            String name = typeDef.getName();
+            typeDefCache.put(name, typeDef);
         }
     }
 
