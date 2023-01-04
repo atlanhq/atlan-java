@@ -102,7 +102,7 @@ public class DocumentationGenerator extends AbstractGenerator {
                     IndexType.BOOLEAN,
                     "[:material-toggle-switch:{ title=\"boolean\" }](../../../search/attributes/#boolean)"),
             Map.entry(IndexType.FLOAT, "[:material-numeric:{ title=\"float\" }](../../../search/attributes/#float)"),
-            Map.entry(IndexType.RANK_FEATURE, "[:material-sort:{ title=\"rank\" }](../../../search/attributes/#)"));
+            Map.entry(IndexType.RANK_FEATURE, "[:material-sort:{ title=\"rank\" }](../../../search/attributes/#rank-feature)"));
 
     public static void main(String[] args) {
         DocumentationGenerator generator = new DocumentationGenerator();
