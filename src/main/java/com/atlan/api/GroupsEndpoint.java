@@ -7,6 +7,7 @@ import com.atlan.exception.AtlanException;
 import com.atlan.model.admin.AtlanGroup;
 import com.atlan.model.admin.CreateGroupResponse;
 import com.atlan.model.admin.GroupResponse;
+import com.atlan.model.admin.UserResponse;
 import com.atlan.model.core.AtlanObject;
 import com.atlan.net.ApiResource;
 import java.util.List;
@@ -126,6 +127,32 @@ public class GroupsEndpoint {
     }
 
     /**
+     * Retrieves the members (users) of a group.
+     *
+     * @param id unique identifier (GUID) of the group from which to retrieve members
+     * @return list of users that are members of the group
+     * @throws AtlanException on any API communication issue
+     */
+    public static UserResponse getGroupMembers(String id) throws AtlanException {
+        String url = String.format("%s%s/%s/members", Atlan.getBaseUrl(), endpoint, id);
+        return ApiResource.request(ApiResource.RequestMethod.GET, url, "", UserResponse.class, null);
+    }
+
+    /**
+     * Remove one or more users from a group.
+     *
+     * @param id unique identifier (GUID) of the group from which to remove users
+     * @param userIds unique identifiers (GUIDs) of the users to remove from the group
+     * @throws AtlanException on any API communication issue
+     */
+    public static void removeUsersFromGroup(String id, List<String> userIds) throws AtlanException {
+        String url = String.format("%s%s/%s/members/remove", Atlan.getBaseUrl(), endpoint, id);
+        RemoveFromGroupRequest rfgr =
+                RemoveFromGroupRequest.builder().users(userIds).build();
+        ApiResource.request(ApiResource.RequestMethod.POST, url, rfgr, null, null);
+    }
+
+    /**
      * Delete a group.
      *
      * @param id unique identifier (GUID) of the group to delete
@@ -144,6 +171,16 @@ public class GroupsEndpoint {
     @EqualsAndHashCode(callSuper = false)
     static final class CreateGroupRequest extends AtlanObject {
         AtlanGroup group;
+        List<String> users;
+    }
+
+    /**
+     * Request class for removing users from a group.
+     */
+    @Data
+    @SuperBuilder
+    @EqualsAndHashCode(callSuper = false)
+    static final class RemoveFromGroupRequest extends AtlanObject {
         List<String> users;
     }
 }

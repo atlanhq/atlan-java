@@ -181,6 +181,12 @@ public class AdminTest extends AtlanLiveTest {
         AtlanUser user = AtlanUser.updater(user1.getId()).build();
         user.addToGroups(List.of(group1.getId()));
         user.changeRole(RoleCache.getIdForName("$member"));
+        GroupResponse response = user.fetchGroups();
+        assertNotNull(response);
+        assertNotNull(response.getRecords());
+        assertEquals(response.getRecords().size(), 1);
+        AtlanGroup one = response.getRecords().get(0);
+        assertEquals(one.getId(), group1.getId());
         // TODO: these won't work before we have a verified user
         /*
             UpdateUserResponse response = user.activate();
@@ -219,6 +225,29 @@ public class AdminTest extends AtlanLiveTest {
         assertEquals(one.getId(), group1.getId());
         assertEquals(one.getAttributes().getDescription(), List.of("Now with a description!"));
         assertEquals(one.getUserCount().longValue(), 1L);
+    }
+
+    @Test(
+            groups = {"update.users.2"},
+            dependsOnGroups = {"read.groups.2", "read.users.2"})
+    void removeUserFromGroup() throws AtlanException {
+        List<AtlanGroup> groups = AtlanGroup.retrieveByName(GROUP_NAME1);
+        assertNotNull(groups);
+        AtlanGroup group = groups.get(0);
+        group.removeUsers(List.of(user1.getId()));
+        UserResponse response = group.fetchUsers();
+        assertNotNull(response);
+        assertTrue(response.getRecords() == null || response.getRecords().isEmpty());
+    }
+
+    @Test(
+            groups = {"read.users.3"},
+            dependsOnGroups = {"update.users.2"})
+    void retrieveUsers3() throws AtlanException {
+        AtlanUser user = AtlanUser.retrieveByUsername(user1.getUsername());
+        GroupResponse response = user.fetchGroups();
+        assertNotNull(response);
+        assertTrue(response.getRecords() == null || response.getRecords().isEmpty());
     }
 
     @Test(

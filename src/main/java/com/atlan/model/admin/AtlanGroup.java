@@ -151,6 +151,32 @@ public class AtlanGroup extends AtlanObject {
         }
     }
 
+    /**
+     * Remove one or more users from this group.
+     *
+     * @param userIds unique identifiers (GUIDs) of the users to remove from the group
+     * @throws AtlanException on any API communication issue
+     */
+    public void removeUsers(List<String> userIds) throws AtlanException {
+        if (this.id == null || this.id.length() == 0) {
+            throw new InvalidRequestException(ErrorCode.MISSING_GROUP_ID);
+        }
+        GroupsEndpoint.removeUsersFromGroup(this.id, userIds);
+    }
+
+    /**
+     * Fetch the users that belong to this group.
+     *
+     * @return details of the users that belong to this group
+     * @throws AtlanException on any API communication issue
+     */
+    public UserResponse fetchUsers() throws AtlanException {
+        if (this.id == null || this.id.length() == 0) {
+            throw new InvalidRequestException(ErrorCode.MISSING_GROUP_ID);
+        }
+        return GroupsEndpoint.getGroupMembers(this.id);
+    }
+
     @Getter
     @Setter
     @Jacksonized
