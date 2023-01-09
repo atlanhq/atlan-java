@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9};
+var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -205,13 +205,20 @@ extends java.lang.Object</pre>
 </td>
 </tr>
 <tr id="i4" class="altColor">
+<td class="colFirst"><code>static <a href="../model/admin/UserResponse.html" title="class in com.atlan.model.admin">UserResponse</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getGroupMembers(java.lang.String)">getGroupMembers</a></span>&#8203;(java.lang.String&nbsp;id)</code></th>
+<td class="colLast">
+<div class="block">Retrieves the members (users) of a group.</div>
+</td>
+</tr>
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>static <a href="../model/admin/GroupResponse.html" title="class in com.atlan.model.admin">GroupResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getGroups(java.lang.String)">getGroups</a></span>&#8203;(java.lang.String&nbsp;filter)</code></th>
 <td class="colLast">
 <div class="block">Retrieves a list of the groups defined in Atlan.</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>static <a href="../model/admin/GroupResponse.html" title="class in com.atlan.model.admin">GroupResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getGroups(java.lang.String,java.lang.String,boolean,int,int)">getGroups</a></span>&#8203;(java.lang.String&nbsp;filter,
          java.lang.String&nbsp;sort,
@@ -222,7 +229,15 @@ extends java.lang.Object</pre>
 <div class="block">Retrieves a list of the groups defined in Atlan.</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i7" class="rowColor">
+<td class="colFirst"><code>static void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeUsersFromGroup(java.lang.String,java.util.List)">removeUsersFromGroup</a></span>&#8203;(java.lang.String&nbsp;id,
+                    java.util.List&lt;java.lang.String&gt;&nbsp;userIds)</code></th>
+<td class="colLast">
+<div class="block">Remove one or more users from a group.</div>
+</td>
+</tr>
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>static void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateGroup(java.lang.String,com.atlan.model.admin.AtlanGroup)">updateGroup</a></span>&#8203;(java.lang.String&nbsp;id,
            <a href="../model/admin/AtlanGroup.html" title="class in com.atlan.model.admin">AtlanGroup</a>&nbsp;group)</code></th>
@@ -390,6 +405,44 @@ extends java.lang.Object</pre>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>id</code> - unique identifier (GUID) of the group to update</dd>
 <dd><code>group</code> - the details to update on the group</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication issue</dd>
+</dl>
+</li>
+</ul>
+<a id="getGroupMembers(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getGroupMembers</h4>
+<pre class="methodSignature">public static&nbsp;<a href="../model/admin/UserResponse.html" title="class in com.atlan.model.admin">UserResponse</a>&nbsp;getGroupMembers&#8203;(java.lang.String&nbsp;id)
+                                    throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Retrieves the members (users) of a group.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>id</code> - unique identifier (GUID) of the group from which to retrieve members</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>list of users that are members of the group</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication issue</dd>
+</dl>
+</li>
+</ul>
+<a id="removeUsersFromGroup(java.lang.String,java.util.List)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>removeUsersFromGroup</h4>
+<pre class="methodSignature">public static&nbsp;void&nbsp;removeUsersFromGroup&#8203;(java.lang.String&nbsp;id,
+                                        java.util.List&lt;java.lang.String&gt;&nbsp;userIds)
+                                 throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Remove one or more users from a group.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>id</code> - unique identifier (GUID) of the group from which to remove users</dd>
+<dd><code>userIds</code> - unique identifiers (GUIDs) of the users to remove from the group</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication issue</dd>
 </dl>
