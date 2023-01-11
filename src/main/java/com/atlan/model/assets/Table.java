@@ -250,8 +250,7 @@ public class Table extends SQL {
      * @throws AtlanException on any API problems
      */
     public static Table removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (Table)
-                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+        return (Table) Asset.removeDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -263,8 +262,7 @@ public class Table extends SQL {
      * @throws AtlanException on any API problems
      */
     public static Table removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (Table) Asset.removeUserDescription(
-                builder().qualifiedName(qualifiedName).name(name));
+        return (Table) Asset.removeUserDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -276,7 +274,7 @@ public class Table extends SQL {
      * @throws AtlanException on any API problems
      */
     public static Table removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (Table) Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+        return (Table) Asset.removeOwners(updater(qualifiedName, name));
     }
 
     /**
@@ -302,8 +300,7 @@ public class Table extends SQL {
      * @throws AtlanException on any API problems
      */
     public static Table removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (Table)
-                Asset.removeCertificate(builder().qualifiedName(qualifiedName).name(name));
+        return (Table) Asset.removeCertificate(updater(qualifiedName, name));
     }
 
     /**
@@ -330,8 +327,7 @@ public class Table extends SQL {
      * @throws AtlanException on any API problems
      */
     public static Table removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (Table)
-                Asset.removeAnnouncement(builder().qualifiedName(qualifiedName).name(name));
+        return (Table) Asset.removeAnnouncement(updater(qualifiedName, name));
     }
 
     /**

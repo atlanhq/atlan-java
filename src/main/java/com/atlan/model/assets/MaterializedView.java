@@ -232,8 +232,7 @@ public class MaterializedView extends SQL {
      * @throws AtlanException on any API problems
      */
     public static MaterializedView removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (MaterializedView)
-                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+        return (MaterializedView) Asset.removeDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -245,8 +244,7 @@ public class MaterializedView extends SQL {
      * @throws AtlanException on any API problems
      */
     public static MaterializedView removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (MaterializedView) Asset.removeUserDescription(
-                builder().qualifiedName(qualifiedName).name(name));
+        return (MaterializedView) Asset.removeUserDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -258,8 +256,7 @@ public class MaterializedView extends SQL {
      * @throws AtlanException on any API problems
      */
     public static MaterializedView removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (MaterializedView)
-                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+        return (MaterializedView) Asset.removeOwners(updater(qualifiedName, name));
     }
 
     /**
@@ -285,8 +282,7 @@ public class MaterializedView extends SQL {
      * @throws AtlanException on any API problems
      */
     public static MaterializedView removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (MaterializedView)
-                Asset.removeCertificate(builder().qualifiedName(qualifiedName).name(name));
+        return (MaterializedView) Asset.removeCertificate(updater(qualifiedName, name));
     }
 
     /**
@@ -313,8 +309,7 @@ public class MaterializedView extends SQL {
      * @throws AtlanException on any API problems
      */
     public static MaterializedView removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (MaterializedView)
-                Asset.removeAnnouncement(builder().qualifiedName(qualifiedName).name(name));
+        return (MaterializedView) Asset.removeAnnouncement(updater(qualifiedName, name));
     }
 
     /**

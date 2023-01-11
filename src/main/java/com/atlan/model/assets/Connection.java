@@ -354,8 +354,7 @@ public class Connection extends Asset {
      * @throws AtlanException on any API problems
      */
     public static Connection removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (Connection)
-                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+        return (Connection) Asset.removeDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -367,8 +366,7 @@ public class Connection extends Asset {
      * @throws AtlanException on any API problems
      */
     public static Connection removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (Connection) Asset.removeUserDescription(
-                builder().qualifiedName(qualifiedName).name(name));
+        return (Connection) Asset.removeUserDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -380,8 +378,7 @@ public class Connection extends Asset {
      * @throws AtlanException on any API problems
      */
     public static Connection removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (Connection)
-                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+        return (Connection) Asset.removeOwners(updater(qualifiedName, name));
     }
 
     /**
@@ -407,8 +404,7 @@ public class Connection extends Asset {
      * @throws AtlanException on any API problems
      */
     public static Connection removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (Connection)
-                Asset.removeCertificate(builder().qualifiedName(qualifiedName).name(name));
+        return (Connection) Asset.removeCertificate(updater(qualifiedName, name));
     }
 
     /**
@@ -435,8 +431,7 @@ public class Connection extends Asset {
      * @throws AtlanException on any API problems
      */
     public static Connection removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (Connection)
-                Asset.removeAnnouncement(builder().qualifiedName(qualifiedName).name(name));
+        return (Connection) Asset.removeAnnouncement(updater(qualifiedName, name));
     }
 
     /**

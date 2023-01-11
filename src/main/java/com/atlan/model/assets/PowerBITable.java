@@ -178,8 +178,7 @@ public class PowerBITable extends PowerBI {
      * @throws AtlanException on any API problems
      */
     public static PowerBITable removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (PowerBITable)
-                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+        return (PowerBITable) Asset.removeDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -191,8 +190,7 @@ public class PowerBITable extends PowerBI {
      * @throws AtlanException on any API problems
      */
     public static PowerBITable removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (PowerBITable) Asset.removeUserDescription(
-                builder().qualifiedName(qualifiedName).name(name));
+        return (PowerBITable) Asset.removeUserDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -204,8 +202,7 @@ public class PowerBITable extends PowerBI {
      * @throws AtlanException on any API problems
      */
     public static PowerBITable removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (PowerBITable)
-                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+        return (PowerBITable) Asset.removeOwners(updater(qualifiedName, name));
     }
 
     /**
@@ -231,8 +228,7 @@ public class PowerBITable extends PowerBI {
      * @throws AtlanException on any API problems
      */
     public static PowerBITable removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (PowerBITable)
-                Asset.removeCertificate(builder().qualifiedName(qualifiedName).name(name));
+        return (PowerBITable) Asset.removeCertificate(updater(qualifiedName, name));
     }
 
     /**
@@ -259,8 +255,7 @@ public class PowerBITable extends PowerBI {
      * @throws AtlanException on any API problems
      */
     public static PowerBITable removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (PowerBITable)
-                Asset.removeAnnouncement(builder().qualifiedName(qualifiedName).name(name));
+        return (PowerBITable) Asset.removeAnnouncement(updater(qualifiedName, name));
     }
 
     /**

@@ -163,8 +163,7 @@ public class LookerProject extends Looker {
      * @throws AtlanException on any API problems
      */
     public static LookerProject removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (LookerProject)
-                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+        return (LookerProject) Asset.removeDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -176,8 +175,7 @@ public class LookerProject extends Looker {
      * @throws AtlanException on any API problems
      */
     public static LookerProject removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (LookerProject) Asset.removeUserDescription(
-                builder().qualifiedName(qualifiedName).name(name));
+        return (LookerProject) Asset.removeUserDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -189,8 +187,7 @@ public class LookerProject extends Looker {
      * @throws AtlanException on any API problems
      */
     public static LookerProject removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (LookerProject)
-                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+        return (LookerProject) Asset.removeOwners(updater(qualifiedName, name));
     }
 
     /**
@@ -216,8 +213,7 @@ public class LookerProject extends Looker {
      * @throws AtlanException on any API problems
      */
     public static LookerProject removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (LookerProject)
-                Asset.removeCertificate(builder().qualifiedName(qualifiedName).name(name));
+        return (LookerProject) Asset.removeCertificate(updater(qualifiedName, name));
     }
 
     /**
@@ -244,8 +240,7 @@ public class LookerProject extends Looker {
      * @throws AtlanException on any API problems
      */
     public static LookerProject removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (LookerProject)
-                Asset.removeAnnouncement(builder().qualifiedName(qualifiedName).name(name));
+        return (LookerProject) Asset.removeAnnouncement(updater(qualifiedName, name));
     }
 
     /**

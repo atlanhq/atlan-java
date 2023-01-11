@@ -180,8 +180,7 @@ public class PresetChart extends Preset {
      * @throws AtlanException on any API problems
      */
     public static PresetChart removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (PresetChart)
-                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+        return (PresetChart) Asset.removeDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -193,8 +192,7 @@ public class PresetChart extends Preset {
      * @throws AtlanException on any API problems
      */
     public static PresetChart removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (PresetChart) Asset.removeUserDescription(
-                builder().qualifiedName(qualifiedName).name(name));
+        return (PresetChart) Asset.removeUserDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -206,8 +204,7 @@ public class PresetChart extends Preset {
      * @throws AtlanException on any API problems
      */
     public static PresetChart removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (PresetChart)
-                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+        return (PresetChart) Asset.removeOwners(updater(qualifiedName, name));
     }
 
     /**
@@ -233,8 +230,7 @@ public class PresetChart extends Preset {
      * @throws AtlanException on any API problems
      */
     public static PresetChart removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (PresetChart)
-                Asset.removeCertificate(builder().qualifiedName(qualifiedName).name(name));
+        return (PresetChart) Asset.removeCertificate(updater(qualifiedName, name));
     }
 
     /**
@@ -261,8 +257,7 @@ public class PresetChart extends Preset {
      * @throws AtlanException on any API problems
      */
     public static PresetChart removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (PresetChart)
-                Asset.removeAnnouncement(builder().qualifiedName(qualifiedName).name(name));
+        return (PresetChart) Asset.removeAnnouncement(updater(qualifiedName, name));
     }
 
     /**

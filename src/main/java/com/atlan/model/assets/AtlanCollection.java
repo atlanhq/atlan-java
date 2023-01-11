@@ -150,8 +150,7 @@ public class AtlanCollection extends Namespace {
      * @throws AtlanException on any API problems
      */
     public static AtlanCollection removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (AtlanCollection)
-                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+        return (AtlanCollection) Asset.removeDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -163,8 +162,7 @@ public class AtlanCollection extends Namespace {
      * @throws AtlanException on any API problems
      */
     public static AtlanCollection removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (AtlanCollection) Asset.removeUserDescription(
-                builder().qualifiedName(qualifiedName).name(name));
+        return (AtlanCollection) Asset.removeUserDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -176,8 +174,7 @@ public class AtlanCollection extends Namespace {
      * @throws AtlanException on any API problems
      */
     public static AtlanCollection removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (AtlanCollection)
-                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+        return (AtlanCollection) Asset.removeOwners(updater(qualifiedName, name));
     }
 
     /**
@@ -203,8 +200,7 @@ public class AtlanCollection extends Namespace {
      * @throws AtlanException on any API problems
      */
     public static AtlanCollection removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (AtlanCollection)
-                Asset.removeCertificate(builder().qualifiedName(qualifiedName).name(name));
+        return (AtlanCollection) Asset.removeCertificate(updater(qualifiedName, name));
     }
 
     /**
@@ -231,8 +227,7 @@ public class AtlanCollection extends Namespace {
      * @throws AtlanException on any API problems
      */
     public static AtlanCollection removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (AtlanCollection)
-                Asset.removeAnnouncement(builder().qualifiedName(qualifiedName).name(name));
+        return (AtlanCollection) Asset.removeAnnouncement(updater(qualifiedName, name));
     }
 
     /**

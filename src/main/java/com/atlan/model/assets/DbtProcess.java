@@ -157,8 +157,7 @@ public class DbtProcess extends AbstractProcess {
      * @throws AtlanException on any API problems
      */
     public static DbtProcess removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (DbtProcess)
-                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+        return (DbtProcess) Asset.removeDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -170,8 +169,7 @@ public class DbtProcess extends AbstractProcess {
      * @throws AtlanException on any API problems
      */
     public static DbtProcess removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (DbtProcess) Asset.removeUserDescription(
-                builder().qualifiedName(qualifiedName).name(name));
+        return (DbtProcess) Asset.removeUserDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -183,8 +181,7 @@ public class DbtProcess extends AbstractProcess {
      * @throws AtlanException on any API problems
      */
     public static DbtProcess removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (DbtProcess)
-                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+        return (DbtProcess) Asset.removeOwners(updater(qualifiedName, name));
     }
 
     /**
@@ -210,8 +207,7 @@ public class DbtProcess extends AbstractProcess {
      * @throws AtlanException on any API problems
      */
     public static DbtProcess removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (DbtProcess)
-                Asset.removeCertificate(builder().qualifiedName(qualifiedName).name(name));
+        return (DbtProcess) Asset.removeCertificate(updater(qualifiedName, name));
     }
 
     /**
@@ -238,8 +234,7 @@ public class DbtProcess extends AbstractProcess {
      * @throws AtlanException on any API problems
      */
     public static DbtProcess removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (DbtProcess)
-                Asset.removeAnnouncement(builder().qualifiedName(qualifiedName).name(name));
+        return (DbtProcess) Asset.removeAnnouncement(updater(qualifiedName, name));
     }
 
     /**

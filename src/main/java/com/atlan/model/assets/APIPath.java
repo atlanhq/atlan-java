@@ -195,8 +195,7 @@ public class APIPath extends API {
      * @throws AtlanException on any API problems
      */
     public static APIPath removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (APIPath)
-                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+        return (APIPath) Asset.removeDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -208,8 +207,7 @@ public class APIPath extends API {
      * @throws AtlanException on any API problems
      */
     public static APIPath removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (APIPath) Asset.removeUserDescription(
-                builder().qualifiedName(qualifiedName).name(name));
+        return (APIPath) Asset.removeUserDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -221,8 +219,7 @@ public class APIPath extends API {
      * @throws AtlanException on any API problems
      */
     public static APIPath removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (APIPath)
-                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+        return (APIPath) Asset.removeOwners(updater(qualifiedName, name));
     }
 
     /**
@@ -248,8 +245,7 @@ public class APIPath extends API {
      * @throws AtlanException on any API problems
      */
     public static APIPath removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (APIPath)
-                Asset.removeCertificate(builder().qualifiedName(qualifiedName).name(name));
+        return (APIPath) Asset.removeCertificate(updater(qualifiedName, name));
     }
 
     /**
@@ -276,8 +272,7 @@ public class APIPath extends API {
      * @throws AtlanException on any API problems
      */
     public static APIPath removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (APIPath)
-                Asset.removeAnnouncement(builder().qualifiedName(qualifiedName).name(name));
+        return (APIPath) Asset.removeAnnouncement(updater(qualifiedName, name));
     }
 
     /**

@@ -169,8 +169,7 @@ public class MetabaseCollection extends Metabase {
      * @throws AtlanException on any API problems
      */
     public static MetabaseCollection removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (MetabaseCollection)
-                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+        return (MetabaseCollection) Asset.removeDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -182,8 +181,7 @@ public class MetabaseCollection extends Metabase {
      * @throws AtlanException on any API problems
      */
     public static MetabaseCollection removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (MetabaseCollection) Asset.removeUserDescription(
-                builder().qualifiedName(qualifiedName).name(name));
+        return (MetabaseCollection) Asset.removeUserDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -195,8 +193,7 @@ public class MetabaseCollection extends Metabase {
      * @throws AtlanException on any API problems
      */
     public static MetabaseCollection removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (MetabaseCollection)
-                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+        return (MetabaseCollection) Asset.removeOwners(updater(qualifiedName, name));
     }
 
     /**
@@ -222,8 +219,7 @@ public class MetabaseCollection extends Metabase {
      * @throws AtlanException on any API problems
      */
     public static MetabaseCollection removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (MetabaseCollection)
-                Asset.removeCertificate(builder().qualifiedName(qualifiedName).name(name));
+        return (MetabaseCollection) Asset.removeCertificate(updater(qualifiedName, name));
     }
 
     /**
@@ -250,8 +246,7 @@ public class MetabaseCollection extends Metabase {
      * @throws AtlanException on any API problems
      */
     public static MetabaseCollection removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (MetabaseCollection)
-                Asset.removeAnnouncement(builder().qualifiedName(qualifiedName).name(name));
+        return (MetabaseCollection) Asset.removeAnnouncement(updater(qualifiedName, name));
     }
 
     /**

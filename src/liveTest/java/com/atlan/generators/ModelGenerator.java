@@ -401,7 +401,7 @@ public class ModelGenerator extends AbstractGenerator {
         fs.append(System.lineSeparator());
         fs.append("        return (").append(className).append(")");
         fs.append(System.lineSeparator());
-        fs.append("                Asset.removeCertificate(builder().qualifiedName(qualifiedName).name(name));");
+        fs.append("                Asset.removeCertificate(updater(qualifiedName, name));");
         fs.append(System.lineSeparator());
         fs.append("    }");
         fs.append(System.lineSeparator()).append(System.lineSeparator());
@@ -466,7 +466,7 @@ public class ModelGenerator extends AbstractGenerator {
         fs.append(System.lineSeparator());
         fs.append("        return (").append(className).append(")");
         fs.append(System.lineSeparator());
-        fs.append("                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));");
+        fs.append("                Asset.removeDescription(updater(qualifiedName, name));");
         fs.append(System.lineSeparator());
         fs.append("    }");
         fs.append(System.lineSeparator()).append(System.lineSeparator());
@@ -497,7 +497,7 @@ public class ModelGenerator extends AbstractGenerator {
         fs.append(System.lineSeparator());
         fs.append("        return (").append(className).append(")");
         fs.append(System.lineSeparator());
-        fs.append("                Asset.removeUserDescription(builder().qualifiedName(qualifiedName).name(name));");
+        fs.append("                Asset.removeUserDescription(updater(qualifiedName, name));");
         fs.append(System.lineSeparator());
         fs.append("    }");
         fs.append(System.lineSeparator()).append(System.lineSeparator());
@@ -526,7 +526,7 @@ public class ModelGenerator extends AbstractGenerator {
         fs.append(System.lineSeparator());
         fs.append("        return (").append(className).append(")");
         fs.append(System.lineSeparator());
-        fs.append("                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));");
+        fs.append("                Asset.removeOwners(updater(qualifiedName, name));");
         fs.append(System.lineSeparator());
         fs.append("    }");
         fs.append(System.lineSeparator()).append(System.lineSeparator());
@@ -555,7 +555,7 @@ public class ModelGenerator extends AbstractGenerator {
         fs.append(System.lineSeparator());
         fs.append("        return (").append(className).append(")");
         fs.append(System.lineSeparator());
-        fs.append("                Asset.removeAnnouncement(builder().qualifiedName(qualifiedName).name(name));");
+        fs.append("                Asset.removeAnnouncement(updater(qualifiedName, name));");
         fs.append(System.lineSeparator());
         fs.append("    }");
         fs.append(System.lineSeparator()).append(System.lineSeparator());

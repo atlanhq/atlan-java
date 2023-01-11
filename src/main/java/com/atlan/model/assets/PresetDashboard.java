@@ -202,8 +202,7 @@ public class PresetDashboard extends Preset {
      * @throws AtlanException on any API problems
      */
     public static PresetDashboard removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (PresetDashboard)
-                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+        return (PresetDashboard) Asset.removeDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -215,8 +214,7 @@ public class PresetDashboard extends Preset {
      * @throws AtlanException on any API problems
      */
     public static PresetDashboard removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (PresetDashboard) Asset.removeUserDescription(
-                builder().qualifiedName(qualifiedName).name(name));
+        return (PresetDashboard) Asset.removeUserDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -228,8 +226,7 @@ public class PresetDashboard extends Preset {
      * @throws AtlanException on any API problems
      */
     public static PresetDashboard removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (PresetDashboard)
-                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+        return (PresetDashboard) Asset.removeOwners(updater(qualifiedName, name));
     }
 
     /**
@@ -255,8 +252,7 @@ public class PresetDashboard extends Preset {
      * @throws AtlanException on any API problems
      */
     public static PresetDashboard removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (PresetDashboard)
-                Asset.removeCertificate(builder().qualifiedName(qualifiedName).name(name));
+        return (PresetDashboard) Asset.removeCertificate(updater(qualifiedName, name));
     }
 
     /**
@@ -283,8 +279,7 @@ public class PresetDashboard extends Preset {
      * @throws AtlanException on any API problems
      */
     public static PresetDashboard removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (PresetDashboard)
-                Asset.removeAnnouncement(builder().qualifiedName(qualifiedName).name(name));
+        return (PresetDashboard) Asset.removeAnnouncement(updater(qualifiedName, name));
     }
 
     /**

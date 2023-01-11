@@ -199,8 +199,7 @@ public class S3Object extends S3 {
      * @throws AtlanException on any API problems
      */
     public static S3Object removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (S3Object)
-                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+        return (S3Object) Asset.removeDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -212,8 +211,7 @@ public class S3Object extends S3 {
      * @throws AtlanException on any API problems
      */
     public static S3Object removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (S3Object) Asset.removeUserDescription(
-                builder().qualifiedName(qualifiedName).name(name));
+        return (S3Object) Asset.removeUserDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -225,8 +223,7 @@ public class S3Object extends S3 {
      * @throws AtlanException on any API problems
      */
     public static S3Object removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (S3Object)
-                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+        return (S3Object) Asset.removeOwners(updater(qualifiedName, name));
     }
 
     /**
@@ -252,8 +249,7 @@ public class S3Object extends S3 {
      * @throws AtlanException on any API problems
      */
     public static S3Object removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (S3Object)
-                Asset.removeCertificate(builder().qualifiedName(qualifiedName).name(name));
+        return (S3Object) Asset.removeCertificate(updater(qualifiedName, name));
     }
 
     /**
@@ -280,8 +276,7 @@ public class S3Object extends S3 {
      * @throws AtlanException on any API problems
      */
     public static S3Object removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (S3Object)
-                Asset.removeAnnouncement(builder().qualifiedName(qualifiedName).name(name));
+        return (S3Object) Asset.removeAnnouncement(updater(qualifiedName, name));
     }
 
     /**

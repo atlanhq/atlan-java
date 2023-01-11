@@ -185,8 +185,7 @@ public class LookerDashboard extends Looker {
      * @throws AtlanException on any API problems
      */
     public static LookerDashboard removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (LookerDashboard)
-                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+        return (LookerDashboard) Asset.removeDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -198,8 +197,7 @@ public class LookerDashboard extends Looker {
      * @throws AtlanException on any API problems
      */
     public static LookerDashboard removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (LookerDashboard) Asset.removeUserDescription(
-                builder().qualifiedName(qualifiedName).name(name));
+        return (LookerDashboard) Asset.removeUserDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -211,8 +209,7 @@ public class LookerDashboard extends Looker {
      * @throws AtlanException on any API problems
      */
     public static LookerDashboard removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (LookerDashboard)
-                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+        return (LookerDashboard) Asset.removeOwners(updater(qualifiedName, name));
     }
 
     /**
@@ -238,8 +235,7 @@ public class LookerDashboard extends Looker {
      * @throws AtlanException on any API problems
      */
     public static LookerDashboard removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (LookerDashboard)
-                Asset.removeCertificate(builder().qualifiedName(qualifiedName).name(name));
+        return (LookerDashboard) Asset.removeCertificate(updater(qualifiedName, name));
     }
 
     /**
@@ -266,8 +262,7 @@ public class LookerDashboard extends Looker {
      * @throws AtlanException on any API problems
      */
     public static LookerDashboard removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (LookerDashboard)
-                Asset.removeAnnouncement(builder().qualifiedName(qualifiedName).name(name));
+        return (LookerDashboard) Asset.removeAnnouncement(updater(qualifiedName, name));
     }
 
     /**

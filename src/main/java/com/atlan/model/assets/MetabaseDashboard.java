@@ -156,8 +156,7 @@ public class MetabaseDashboard extends Metabase {
      * @throws AtlanException on any API problems
      */
     public static MetabaseDashboard removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (MetabaseDashboard)
-                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+        return (MetabaseDashboard) Asset.removeDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -169,8 +168,7 @@ public class MetabaseDashboard extends Metabase {
      * @throws AtlanException on any API problems
      */
     public static MetabaseDashboard removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (MetabaseDashboard) Asset.removeUserDescription(
-                builder().qualifiedName(qualifiedName).name(name));
+        return (MetabaseDashboard) Asset.removeUserDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -182,8 +180,7 @@ public class MetabaseDashboard extends Metabase {
      * @throws AtlanException on any API problems
      */
     public static MetabaseDashboard removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (MetabaseDashboard)
-                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+        return (MetabaseDashboard) Asset.removeOwners(updater(qualifiedName, name));
     }
 
     /**
@@ -209,8 +206,7 @@ public class MetabaseDashboard extends Metabase {
      * @throws AtlanException on any API problems
      */
     public static MetabaseDashboard removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (MetabaseDashboard)
-                Asset.removeCertificate(builder().qualifiedName(qualifiedName).name(name));
+        return (MetabaseDashboard) Asset.removeCertificate(updater(qualifiedName, name));
     }
 
     /**
@@ -237,8 +233,7 @@ public class MetabaseDashboard extends Metabase {
      * @throws AtlanException on any API problems
      */
     public static MetabaseDashboard removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (MetabaseDashboard)
-                Asset.removeAnnouncement(builder().qualifiedName(qualifiedName).name(name));
+        return (MetabaseDashboard) Asset.removeAnnouncement(updater(qualifiedName, name));
     }
 
     /**

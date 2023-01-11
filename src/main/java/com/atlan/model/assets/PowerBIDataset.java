@@ -180,8 +180,7 @@ public class PowerBIDataset extends PowerBI {
      * @throws AtlanException on any API problems
      */
     public static PowerBIDataset removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (PowerBIDataset)
-                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+        return (PowerBIDataset) Asset.removeDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -193,8 +192,7 @@ public class PowerBIDataset extends PowerBI {
      * @throws AtlanException on any API problems
      */
     public static PowerBIDataset removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (PowerBIDataset) Asset.removeUserDescription(
-                builder().qualifiedName(qualifiedName).name(name));
+        return (PowerBIDataset) Asset.removeUserDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -206,8 +204,7 @@ public class PowerBIDataset extends PowerBI {
      * @throws AtlanException on any API problems
      */
     public static PowerBIDataset removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (PowerBIDataset)
-                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+        return (PowerBIDataset) Asset.removeOwners(updater(qualifiedName, name));
     }
 
     /**
@@ -233,8 +230,7 @@ public class PowerBIDataset extends PowerBI {
      * @throws AtlanException on any API problems
      */
     public static PowerBIDataset removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (PowerBIDataset)
-                Asset.removeCertificate(builder().qualifiedName(qualifiedName).name(name));
+        return (PowerBIDataset) Asset.removeCertificate(updater(qualifiedName, name));
     }
 
     /**
@@ -261,8 +257,7 @@ public class PowerBIDataset extends PowerBI {
      * @throws AtlanException on any API problems
      */
     public static PowerBIDataset removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (PowerBIDataset)
-                Asset.removeAnnouncement(builder().qualifiedName(qualifiedName).name(name));
+        return (PowerBIDataset) Asset.removeAnnouncement(updater(qualifiedName, name));
     }
 
     /**

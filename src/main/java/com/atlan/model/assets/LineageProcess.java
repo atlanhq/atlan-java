@@ -171,8 +171,7 @@ public class LineageProcess extends AbstractProcess {
      * @throws AtlanException on any API problems
      */
     public static LineageProcess removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (LineageProcess)
-                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+        return (LineageProcess) Asset.removeDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -184,8 +183,7 @@ public class LineageProcess extends AbstractProcess {
      * @throws AtlanException on any API problems
      */
     public static LineageProcess removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (LineageProcess) Asset.removeUserDescription(
-                builder().qualifiedName(qualifiedName).name(name));
+        return (LineageProcess) Asset.removeUserDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -197,8 +195,7 @@ public class LineageProcess extends AbstractProcess {
      * @throws AtlanException on any API problems
      */
     public static LineageProcess removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (LineageProcess)
-                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+        return (LineageProcess) Asset.removeOwners(updater(qualifiedName, name));
     }
 
     /**
@@ -224,8 +221,7 @@ public class LineageProcess extends AbstractProcess {
      * @throws AtlanException on any API problems
      */
     public static LineageProcess removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (LineageProcess)
-                Asset.removeCertificate(builder().qualifiedName(qualifiedName).name(name));
+        return (LineageProcess) Asset.removeCertificate(updater(qualifiedName, name));
     }
 
     /**
@@ -252,8 +248,7 @@ public class LineageProcess extends AbstractProcess {
      * @throws AtlanException on any API problems
      */
     public static LineageProcess removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (LineageProcess)
-                Asset.removeAnnouncement(builder().qualifiedName(qualifiedName).name(name));
+        return (LineageProcess) Asset.removeAnnouncement(updater(qualifiedName, name));
     }
 
     /**

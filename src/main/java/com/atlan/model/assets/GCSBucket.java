@@ -191,8 +191,7 @@ public class GCSBucket extends GCS {
      * @throws AtlanException on any API problems
      */
     public static GCSBucket removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (GCSBucket)
-                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+        return (GCSBucket) Asset.removeDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -204,8 +203,7 @@ public class GCSBucket extends GCS {
      * @throws AtlanException on any API problems
      */
     public static GCSBucket removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (GCSBucket) Asset.removeUserDescription(
-                builder().qualifiedName(qualifiedName).name(name));
+        return (GCSBucket) Asset.removeUserDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -217,8 +215,7 @@ public class GCSBucket extends GCS {
      * @throws AtlanException on any API problems
      */
     public static GCSBucket removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (GCSBucket)
-                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+        return (GCSBucket) Asset.removeOwners(updater(qualifiedName, name));
     }
 
     /**
@@ -244,8 +241,7 @@ public class GCSBucket extends GCS {
      * @throws AtlanException on any API problems
      */
     public static GCSBucket removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (GCSBucket)
-                Asset.removeCertificate(builder().qualifiedName(qualifiedName).name(name));
+        return (GCSBucket) Asset.removeCertificate(updater(qualifiedName, name));
     }
 
     /**
@@ -272,8 +268,7 @@ public class GCSBucket extends GCS {
      * @throws AtlanException on any API problems
      */
     public static GCSBucket removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (GCSBucket)
-                Asset.removeAnnouncement(builder().qualifiedName(qualifiedName).name(name));
+        return (GCSBucket) Asset.removeAnnouncement(updater(qualifiedName, name));
     }
 
     /**

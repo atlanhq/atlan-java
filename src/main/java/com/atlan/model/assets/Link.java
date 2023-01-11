@@ -180,8 +180,7 @@ public class Link extends Resource {
      * @throws AtlanException on any API problems
      */
     public static Link removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (Link)
-                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+        return (Link) Asset.removeDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -193,7 +192,6 @@ public class Link extends Resource {
      * @throws AtlanException on any API problems
      */
     public static Link removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (Link) Asset.removeUserDescription(
-                builder().qualifiedName(qualifiedName).name(name));
+        return (Link) Asset.removeUserDescription(updater(qualifiedName, name));
     }
 }

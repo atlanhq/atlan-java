@@ -202,8 +202,7 @@ public class AtlanQuery extends SQL {
      * @throws AtlanException on any API problems
      */
     public static AtlanQuery removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (AtlanQuery)
-                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+        return (AtlanQuery) Asset.removeDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -215,8 +214,7 @@ public class AtlanQuery extends SQL {
      * @throws AtlanException on any API problems
      */
     public static AtlanQuery removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (AtlanQuery) Asset.removeUserDescription(
-                builder().qualifiedName(qualifiedName).name(name));
+        return (AtlanQuery) Asset.removeUserDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -228,8 +226,7 @@ public class AtlanQuery extends SQL {
      * @throws AtlanException on any API problems
      */
     public static AtlanQuery removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (AtlanQuery)
-                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+        return (AtlanQuery) Asset.removeOwners(updater(qualifiedName, name));
     }
 
     /**
@@ -255,8 +252,7 @@ public class AtlanQuery extends SQL {
      * @throws AtlanException on any API problems
      */
     public static AtlanQuery removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (AtlanQuery)
-                Asset.removeCertificate(builder().qualifiedName(qualifiedName).name(name));
+        return (AtlanQuery) Asset.removeCertificate(updater(qualifiedName, name));
     }
 
     /**
@@ -283,8 +279,7 @@ public class AtlanQuery extends SQL {
      * @throws AtlanException on any API problems
      */
     public static AtlanQuery removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (AtlanQuery)
-                Asset.removeAnnouncement(builder().qualifiedName(qualifiedName).name(name));
+        return (AtlanQuery) Asset.removeAnnouncement(updater(qualifiedName, name));
     }
 
     /**

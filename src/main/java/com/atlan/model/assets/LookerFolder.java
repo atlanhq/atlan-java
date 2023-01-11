@@ -169,8 +169,7 @@ public class LookerFolder extends Looker {
      * @throws AtlanException on any API problems
      */
     public static LookerFolder removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (LookerFolder)
-                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+        return (LookerFolder) Asset.removeDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -182,8 +181,7 @@ public class LookerFolder extends Looker {
      * @throws AtlanException on any API problems
      */
     public static LookerFolder removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (LookerFolder) Asset.removeUserDescription(
-                builder().qualifiedName(qualifiedName).name(name));
+        return (LookerFolder) Asset.removeUserDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -195,8 +193,7 @@ public class LookerFolder extends Looker {
      * @throws AtlanException on any API problems
      */
     public static LookerFolder removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (LookerFolder)
-                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+        return (LookerFolder) Asset.removeOwners(updater(qualifiedName, name));
     }
 
     /**
@@ -222,8 +219,7 @@ public class LookerFolder extends Looker {
      * @throws AtlanException on any API problems
      */
     public static LookerFolder removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (LookerFolder)
-                Asset.removeCertificate(builder().qualifiedName(qualifiedName).name(name));
+        return (LookerFolder) Asset.removeCertificate(updater(qualifiedName, name));
     }
 
     /**
@@ -250,8 +246,7 @@ public class LookerFolder extends Looker {
      * @throws AtlanException on any API problems
      */
     public static LookerFolder removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (LookerFolder)
-                Asset.removeAnnouncement(builder().qualifiedName(qualifiedName).name(name));
+        return (LookerFolder) Asset.removeAnnouncement(updater(qualifiedName, name));
     }
 
     /**

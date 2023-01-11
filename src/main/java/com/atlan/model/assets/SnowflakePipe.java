@@ -160,8 +160,7 @@ public class SnowflakePipe extends SQL {
      * @throws AtlanException on any API problems
      */
     public static SnowflakePipe removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (SnowflakePipe)
-                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+        return (SnowflakePipe) Asset.removeDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -173,8 +172,7 @@ public class SnowflakePipe extends SQL {
      * @throws AtlanException on any API problems
      */
     public static SnowflakePipe removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (SnowflakePipe) Asset.removeUserDescription(
-                builder().qualifiedName(qualifiedName).name(name));
+        return (SnowflakePipe) Asset.removeUserDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -186,8 +184,7 @@ public class SnowflakePipe extends SQL {
      * @throws AtlanException on any API problems
      */
     public static SnowflakePipe removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (SnowflakePipe)
-                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+        return (SnowflakePipe) Asset.removeOwners(updater(qualifiedName, name));
     }
 
     /**
@@ -213,8 +210,7 @@ public class SnowflakePipe extends SQL {
      * @throws AtlanException on any API problems
      */
     public static SnowflakePipe removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (SnowflakePipe)
-                Asset.removeCertificate(builder().qualifiedName(qualifiedName).name(name));
+        return (SnowflakePipe) Asset.removeCertificate(updater(qualifiedName, name));
     }
 
     /**
@@ -241,8 +237,7 @@ public class SnowflakePipe extends SQL {
      * @throws AtlanException on any API problems
      */
     public static SnowflakePipe removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (SnowflakePipe)
-                Asset.removeAnnouncement(builder().qualifiedName(qualifiedName).name(name));
+        return (SnowflakePipe) Asset.removeAnnouncement(updater(qualifiedName, name));
     }
 
     /**

@@ -185,8 +185,7 @@ public class TableauWorksheet extends Tableau {
      * @throws AtlanException on any API problems
      */
     public static TableauWorksheet removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (TableauWorksheet)
-                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+        return (TableauWorksheet) Asset.removeDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -198,8 +197,7 @@ public class TableauWorksheet extends Tableau {
      * @throws AtlanException on any API problems
      */
     public static TableauWorksheet removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (TableauWorksheet) Asset.removeUserDescription(
-                builder().qualifiedName(qualifiedName).name(name));
+        return (TableauWorksheet) Asset.removeUserDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -211,8 +209,7 @@ public class TableauWorksheet extends Tableau {
      * @throws AtlanException on any API problems
      */
     public static TableauWorksheet removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (TableauWorksheet)
-                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+        return (TableauWorksheet) Asset.removeOwners(updater(qualifiedName, name));
     }
 
     /**
@@ -238,8 +235,7 @@ public class TableauWorksheet extends Tableau {
      * @throws AtlanException on any API problems
      */
     public static TableauWorksheet removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (TableauWorksheet)
-                Asset.removeCertificate(builder().qualifiedName(qualifiedName).name(name));
+        return (TableauWorksheet) Asset.removeCertificate(updater(qualifiedName, name));
     }
 
     /**
@@ -266,8 +262,7 @@ public class TableauWorksheet extends Tableau {
      * @throws AtlanException on any API problems
      */
     public static TableauWorksheet removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (TableauWorksheet)
-                Asset.removeAnnouncement(builder().qualifiedName(qualifiedName).name(name));
+        return (TableauWorksheet) Asset.removeAnnouncement(updater(qualifiedName, name));
     }
 
     /**

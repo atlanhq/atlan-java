@@ -162,8 +162,7 @@ public class DbtModelColumn extends Dbt {
      * @throws AtlanException on any API problems
      */
     public static DbtModelColumn removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (DbtModelColumn)
-                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+        return (DbtModelColumn) Asset.removeDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -175,8 +174,7 @@ public class DbtModelColumn extends Dbt {
      * @throws AtlanException on any API problems
      */
     public static DbtModelColumn removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (DbtModelColumn) Asset.removeUserDescription(
-                builder().qualifiedName(qualifiedName).name(name));
+        return (DbtModelColumn) Asset.removeUserDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -188,8 +186,7 @@ public class DbtModelColumn extends Dbt {
      * @throws AtlanException on any API problems
      */
     public static DbtModelColumn removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (DbtModelColumn)
-                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+        return (DbtModelColumn) Asset.removeOwners(updater(qualifiedName, name));
     }
 
     /**
@@ -215,8 +212,7 @@ public class DbtModelColumn extends Dbt {
      * @throws AtlanException on any API problems
      */
     public static DbtModelColumn removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (DbtModelColumn)
-                Asset.removeCertificate(builder().qualifiedName(qualifiedName).name(name));
+        return (DbtModelColumn) Asset.removeCertificate(updater(qualifiedName, name));
     }
 
     /**
@@ -243,8 +239,7 @@ public class DbtModelColumn extends Dbt {
      * @throws AtlanException on any API problems
      */
     public static DbtModelColumn removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (DbtModelColumn)
-                Asset.removeAnnouncement(builder().qualifiedName(qualifiedName).name(name));
+        return (DbtModelColumn) Asset.removeAnnouncement(updater(qualifiedName, name));
     }
 
     /**

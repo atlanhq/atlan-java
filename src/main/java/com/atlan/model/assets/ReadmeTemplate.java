@@ -150,8 +150,7 @@ public class ReadmeTemplate extends Resource {
      * @throws AtlanException on any API problems
      */
     public static ReadmeTemplate removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (ReadmeTemplate)
-                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+        return (ReadmeTemplate) Asset.removeDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -163,8 +162,7 @@ public class ReadmeTemplate extends Resource {
      * @throws AtlanException on any API problems
      */
     public static ReadmeTemplate removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (ReadmeTemplate) Asset.removeUserDescription(
-                builder().qualifiedName(qualifiedName).name(name));
+        return (ReadmeTemplate) Asset.removeUserDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -176,8 +174,7 @@ public class ReadmeTemplate extends Resource {
      * @throws AtlanException on any API problems
      */
     public static ReadmeTemplate removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (ReadmeTemplate)
-                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+        return (ReadmeTemplate) Asset.removeOwners(updater(qualifiedName, name));
     }
 
     /**
@@ -203,8 +200,7 @@ public class ReadmeTemplate extends Resource {
      * @throws AtlanException on any API problems
      */
     public static ReadmeTemplate removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (ReadmeTemplate)
-                Asset.removeCertificate(builder().qualifiedName(qualifiedName).name(name));
+        return (ReadmeTemplate) Asset.removeCertificate(updater(qualifiedName, name));
     }
 
     /**
@@ -231,8 +227,7 @@ public class ReadmeTemplate extends Resource {
      * @throws AtlanException on any API problems
      */
     public static ReadmeTemplate removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (ReadmeTemplate)
-                Asset.removeAnnouncement(builder().qualifiedName(qualifiedName).name(name));
+        return (ReadmeTemplate) Asset.removeAnnouncement(updater(qualifiedName, name));
     }
 
     /**

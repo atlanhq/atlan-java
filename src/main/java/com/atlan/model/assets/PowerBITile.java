@@ -162,8 +162,7 @@ public class PowerBITile extends PowerBI {
      * @throws AtlanException on any API problems
      */
     public static PowerBITile removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (PowerBITile)
-                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+        return (PowerBITile) Asset.removeDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -175,8 +174,7 @@ public class PowerBITile extends PowerBI {
      * @throws AtlanException on any API problems
      */
     public static PowerBITile removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (PowerBITile) Asset.removeUserDescription(
-                builder().qualifiedName(qualifiedName).name(name));
+        return (PowerBITile) Asset.removeUserDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -188,8 +186,7 @@ public class PowerBITile extends PowerBI {
      * @throws AtlanException on any API problems
      */
     public static PowerBITile removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (PowerBITile)
-                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+        return (PowerBITile) Asset.removeOwners(updater(qualifiedName, name));
     }
 
     /**
@@ -215,8 +212,7 @@ public class PowerBITile extends PowerBI {
      * @throws AtlanException on any API problems
      */
     public static PowerBITile removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (PowerBITile)
-                Asset.removeCertificate(builder().qualifiedName(qualifiedName).name(name));
+        return (PowerBITile) Asset.removeCertificate(updater(qualifiedName, name));
     }
 
     /**
@@ -243,8 +239,7 @@ public class PowerBITile extends PowerBI {
      * @throws AtlanException on any API problems
      */
     public static PowerBITile removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (PowerBITile)
-                Asset.removeAnnouncement(builder().qualifiedName(qualifiedName).name(name));
+        return (PowerBITile) Asset.removeAnnouncement(updater(qualifiedName, name));
     }
 
     /**

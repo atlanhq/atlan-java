@@ -176,8 +176,7 @@ public class DataStudioAsset extends Google {
      * @throws AtlanException on any API problems
      */
     public static DataStudioAsset removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (DataStudioAsset)
-                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+        return (DataStudioAsset) Asset.removeDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -189,8 +188,7 @@ public class DataStudioAsset extends Google {
      * @throws AtlanException on any API problems
      */
     public static DataStudioAsset removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (DataStudioAsset) Asset.removeUserDescription(
-                builder().qualifiedName(qualifiedName).name(name));
+        return (DataStudioAsset) Asset.removeUserDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -202,8 +200,7 @@ public class DataStudioAsset extends Google {
      * @throws AtlanException on any API problems
      */
     public static DataStudioAsset removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (DataStudioAsset)
-                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+        return (DataStudioAsset) Asset.removeOwners(updater(qualifiedName, name));
     }
 
     /**
@@ -229,8 +226,7 @@ public class DataStudioAsset extends Google {
      * @throws AtlanException on any API problems
      */
     public static DataStudioAsset removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (DataStudioAsset)
-                Asset.removeCertificate(builder().qualifiedName(qualifiedName).name(name));
+        return (DataStudioAsset) Asset.removeCertificate(updater(qualifiedName, name));
     }
 
     /**
@@ -257,8 +253,7 @@ public class DataStudioAsset extends Google {
      * @throws AtlanException on any API problems
      */
     public static DataStudioAsset removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (DataStudioAsset)
-                Asset.removeAnnouncement(builder().qualifiedName(qualifiedName).name(name));
+        return (DataStudioAsset) Asset.removeAnnouncement(updater(qualifiedName, name));
     }
 
     /**

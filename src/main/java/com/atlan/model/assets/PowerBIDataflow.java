@@ -160,8 +160,7 @@ public class PowerBIDataflow extends PowerBI {
      * @throws AtlanException on any API problems
      */
     public static PowerBIDataflow removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (PowerBIDataflow)
-                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+        return (PowerBIDataflow) Asset.removeDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -173,8 +172,7 @@ public class PowerBIDataflow extends PowerBI {
      * @throws AtlanException on any API problems
      */
     public static PowerBIDataflow removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (PowerBIDataflow) Asset.removeUserDescription(
-                builder().qualifiedName(qualifiedName).name(name));
+        return (PowerBIDataflow) Asset.removeUserDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -186,8 +184,7 @@ public class PowerBIDataflow extends PowerBI {
      * @throws AtlanException on any API problems
      */
     public static PowerBIDataflow removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (PowerBIDataflow)
-                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+        return (PowerBIDataflow) Asset.removeOwners(updater(qualifiedName, name));
     }
 
     /**
@@ -213,8 +210,7 @@ public class PowerBIDataflow extends PowerBI {
      * @throws AtlanException on any API problems
      */
     public static PowerBIDataflow removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (PowerBIDataflow)
-                Asset.removeCertificate(builder().qualifiedName(qualifiedName).name(name));
+        return (PowerBIDataflow) Asset.removeCertificate(updater(qualifiedName, name));
     }
 
     /**
@@ -241,8 +237,7 @@ public class PowerBIDataflow extends PowerBI {
      * @throws AtlanException on any API problems
      */
     public static PowerBIDataflow removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (PowerBIDataflow)
-                Asset.removeAnnouncement(builder().qualifiedName(qualifiedName).name(name));
+        return (PowerBIDataflow) Asset.removeAnnouncement(updater(qualifiedName, name));
     }
 
     /**

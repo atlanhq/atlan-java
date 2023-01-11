@@ -142,8 +142,7 @@ public class BIProcess extends AbstractProcess {
      * @throws AtlanException on any API problems
      */
     public static BIProcess removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (BIProcess)
-                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+        return (BIProcess) Asset.removeDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -155,8 +154,7 @@ public class BIProcess extends AbstractProcess {
      * @throws AtlanException on any API problems
      */
     public static BIProcess removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (BIProcess) Asset.removeUserDescription(
-                builder().qualifiedName(qualifiedName).name(name));
+        return (BIProcess) Asset.removeUserDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -168,8 +166,7 @@ public class BIProcess extends AbstractProcess {
      * @throws AtlanException on any API problems
      */
     public static BIProcess removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (BIProcess)
-                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+        return (BIProcess) Asset.removeOwners(updater(qualifiedName, name));
     }
 
     /**
@@ -195,8 +192,7 @@ public class BIProcess extends AbstractProcess {
      * @throws AtlanException on any API problems
      */
     public static BIProcess removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (BIProcess)
-                Asset.removeCertificate(builder().qualifiedName(qualifiedName).name(name));
+        return (BIProcess) Asset.removeCertificate(updater(qualifiedName, name));
     }
 
     /**
@@ -223,8 +219,7 @@ public class BIProcess extends AbstractProcess {
      * @throws AtlanException on any API problems
      */
     public static BIProcess removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (BIProcess)
-                Asset.removeAnnouncement(builder().qualifiedName(qualifiedName).name(name));
+        return (BIProcess) Asset.removeAnnouncement(updater(qualifiedName, name));
     }
 
     /**

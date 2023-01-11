@@ -175,8 +175,7 @@ public class TableauDashboard extends Tableau {
      * @throws AtlanException on any API problems
      */
     public static TableauDashboard removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (TableauDashboard)
-                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+        return (TableauDashboard) Asset.removeDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -188,8 +187,7 @@ public class TableauDashboard extends Tableau {
      * @throws AtlanException on any API problems
      */
     public static TableauDashboard removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (TableauDashboard) Asset.removeUserDescription(
-                builder().qualifiedName(qualifiedName).name(name));
+        return (TableauDashboard) Asset.removeUserDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -201,8 +199,7 @@ public class TableauDashboard extends Tableau {
      * @throws AtlanException on any API problems
      */
     public static TableauDashboard removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (TableauDashboard)
-                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+        return (TableauDashboard) Asset.removeOwners(updater(qualifiedName, name));
     }
 
     /**
@@ -228,8 +225,7 @@ public class TableauDashboard extends Tableau {
      * @throws AtlanException on any API problems
      */
     public static TableauDashboard removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (TableauDashboard)
-                Asset.removeCertificate(builder().qualifiedName(qualifiedName).name(name));
+        return (TableauDashboard) Asset.removeCertificate(updater(qualifiedName, name));
     }
 
     /**
@@ -256,8 +252,7 @@ public class TableauDashboard extends Tableau {
      * @throws AtlanException on any API problems
      */
     public static TableauDashboard removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (TableauDashboard)
-                Asset.removeAnnouncement(builder().qualifiedName(qualifiedName).name(name));
+        return (TableauDashboard) Asset.removeAnnouncement(updater(qualifiedName, name));
     }
 
     /**

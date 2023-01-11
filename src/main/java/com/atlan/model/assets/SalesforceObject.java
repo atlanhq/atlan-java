@@ -173,8 +173,7 @@ public class SalesforceObject extends Salesforce {
      * @throws AtlanException on any API problems
      */
     public static SalesforceObject removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (SalesforceObject)
-                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+        return (SalesforceObject) Asset.removeDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -186,8 +185,7 @@ public class SalesforceObject extends Salesforce {
      * @throws AtlanException on any API problems
      */
     public static SalesforceObject removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (SalesforceObject) Asset.removeUserDescription(
-                builder().qualifiedName(qualifiedName).name(name));
+        return (SalesforceObject) Asset.removeUserDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -199,8 +197,7 @@ public class SalesforceObject extends Salesforce {
      * @throws AtlanException on any API problems
      */
     public static SalesforceObject removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (SalesforceObject)
-                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+        return (SalesforceObject) Asset.removeOwners(updater(qualifiedName, name));
     }
 
     /**
@@ -226,8 +223,7 @@ public class SalesforceObject extends Salesforce {
      * @throws AtlanException on any API problems
      */
     public static SalesforceObject removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (SalesforceObject)
-                Asset.removeCertificate(builder().qualifiedName(qualifiedName).name(name));
+        return (SalesforceObject) Asset.removeCertificate(updater(qualifiedName, name));
     }
 
     /**
@@ -254,8 +250,7 @@ public class SalesforceObject extends Salesforce {
      * @throws AtlanException on any API problems
      */
     public static SalesforceObject removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (SalesforceObject)
-                Asset.removeAnnouncement(builder().qualifiedName(qualifiedName).name(name));
+        return (SalesforceObject) Asset.removeAnnouncement(updater(qualifiedName, name));
     }
 
     /**

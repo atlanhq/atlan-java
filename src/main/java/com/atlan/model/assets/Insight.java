@@ -142,8 +142,7 @@ public class Insight extends Catalog {
      * @throws AtlanException on any API problems
      */
     public static Insight removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (Insight)
-                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+        return (Insight) Asset.removeDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -155,8 +154,7 @@ public class Insight extends Catalog {
      * @throws AtlanException on any API problems
      */
     public static Insight removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (Insight) Asset.removeUserDescription(
-                builder().qualifiedName(qualifiedName).name(name));
+        return (Insight) Asset.removeUserDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -168,8 +166,7 @@ public class Insight extends Catalog {
      * @throws AtlanException on any API problems
      */
     public static Insight removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (Insight)
-                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+        return (Insight) Asset.removeOwners(updater(qualifiedName, name));
     }
 
     /**
@@ -195,8 +192,7 @@ public class Insight extends Catalog {
      * @throws AtlanException on any API problems
      */
     public static Insight removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (Insight)
-                Asset.removeCertificate(builder().qualifiedName(qualifiedName).name(name));
+        return (Insight) Asset.removeCertificate(updater(qualifiedName, name));
     }
 
     /**
@@ -223,8 +219,7 @@ public class Insight extends Catalog {
      * @throws AtlanException on any API problems
      */
     public static Insight removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (Insight)
-                Asset.removeAnnouncement(builder().qualifiedName(qualifiedName).name(name));
+        return (Insight) Asset.removeAnnouncement(updater(qualifiedName, name));
     }
 
     /**

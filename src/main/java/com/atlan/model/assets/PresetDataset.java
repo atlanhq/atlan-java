@@ -181,8 +181,7 @@ public class PresetDataset extends Preset {
      * @throws AtlanException on any API problems
      */
     public static PresetDataset removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (PresetDataset)
-                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+        return (PresetDataset) Asset.removeDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -194,8 +193,7 @@ public class PresetDataset extends Preset {
      * @throws AtlanException on any API problems
      */
     public static PresetDataset removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (PresetDataset) Asset.removeUserDescription(
-                builder().qualifiedName(qualifiedName).name(name));
+        return (PresetDataset) Asset.removeUserDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -207,8 +205,7 @@ public class PresetDataset extends Preset {
      * @throws AtlanException on any API problems
      */
     public static PresetDataset removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (PresetDataset)
-                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+        return (PresetDataset) Asset.removeOwners(updater(qualifiedName, name));
     }
 
     /**
@@ -234,8 +231,7 @@ public class PresetDataset extends Preset {
      * @throws AtlanException on any API problems
      */
     public static PresetDataset removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (PresetDataset)
-                Asset.removeCertificate(builder().qualifiedName(qualifiedName).name(name));
+        return (PresetDataset) Asset.removeCertificate(updater(qualifiedName, name));
     }
 
     /**
@@ -262,8 +258,7 @@ public class PresetDataset extends Preset {
      * @throws AtlanException on any API problems
      */
     public static PresetDataset removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (PresetDataset)
-                Asset.removeAnnouncement(builder().qualifiedName(qualifiedName).name(name));
+        return (PresetDataset) Asset.removeAnnouncement(updater(qualifiedName, name));
     }
 
     /**

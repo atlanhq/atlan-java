@@ -169,8 +169,7 @@ public class Database extends SQL {
      * @throws AtlanException on any API problems
      */
     public static Database removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (Database)
-                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+        return (Database) Asset.removeDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -182,8 +181,7 @@ public class Database extends SQL {
      * @throws AtlanException on any API problems
      */
     public static Database removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (Database) Asset.removeUserDescription(
-                builder().qualifiedName(qualifiedName).name(name));
+        return (Database) Asset.removeUserDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -195,8 +193,7 @@ public class Database extends SQL {
      * @throws AtlanException on any API problems
      */
     public static Database removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (Database)
-                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+        return (Database) Asset.removeOwners(updater(qualifiedName, name));
     }
 
     /**
@@ -222,8 +219,7 @@ public class Database extends SQL {
      * @throws AtlanException on any API problems
      */
     public static Database removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (Database)
-                Asset.removeCertificate(builder().qualifiedName(qualifiedName).name(name));
+        return (Database) Asset.removeCertificate(updater(qualifiedName, name));
     }
 
     /**
@@ -250,8 +246,7 @@ public class Database extends SQL {
      * @throws AtlanException on any API problems
      */
     public static Database removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (Database)
-                Asset.removeAnnouncement(builder().qualifiedName(qualifiedName).name(name));
+        return (Database) Asset.removeAnnouncement(updater(qualifiedName, name));
     }
 
     /**

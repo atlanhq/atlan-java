@@ -152,8 +152,7 @@ public class Procedure extends SQL {
      * @throws AtlanException on any API problems
      */
     public static Procedure removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (Procedure)
-                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+        return (Procedure) Asset.removeDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -165,8 +164,7 @@ public class Procedure extends SQL {
      * @throws AtlanException on any API problems
      */
     public static Procedure removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (Procedure) Asset.removeUserDescription(
-                builder().qualifiedName(qualifiedName).name(name));
+        return (Procedure) Asset.removeUserDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -178,8 +176,7 @@ public class Procedure extends SQL {
      * @throws AtlanException on any API problems
      */
     public static Procedure removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (Procedure)
-                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+        return (Procedure) Asset.removeOwners(updater(qualifiedName, name));
     }
 
     /**
@@ -205,8 +202,7 @@ public class Procedure extends SQL {
      * @throws AtlanException on any API problems
      */
     public static Procedure removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (Procedure)
-                Asset.removeCertificate(builder().qualifiedName(qualifiedName).name(name));
+        return (Procedure) Asset.removeCertificate(updater(qualifiedName, name));
     }
 
     /**
@@ -233,8 +229,7 @@ public class Procedure extends SQL {
      * @throws AtlanException on any API problems
      */
     public static Procedure removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (Procedure)
-                Asset.removeAnnouncement(builder().qualifiedName(qualifiedName).name(name));
+        return (Procedure) Asset.removeAnnouncement(updater(qualifiedName, name));
     }
 
     /**

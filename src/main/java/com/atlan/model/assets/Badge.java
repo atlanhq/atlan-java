@@ -151,8 +151,7 @@ public class Badge extends Asset {
      * @throws AtlanException on any API problems
      */
     public static Badge removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (Badge)
-                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+        return (Badge) Asset.removeDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -164,8 +163,7 @@ public class Badge extends Asset {
      * @throws AtlanException on any API problems
      */
     public static Badge removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (Badge) Asset.removeUserDescription(
-                builder().qualifiedName(qualifiedName).name(name));
+        return (Badge) Asset.removeUserDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -177,7 +175,7 @@ public class Badge extends Asset {
      * @throws AtlanException on any API problems
      */
     public static Badge removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (Badge) Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+        return (Badge) Asset.removeOwners(updater(qualifiedName, name));
     }
 
     /**
@@ -203,8 +201,7 @@ public class Badge extends Asset {
      * @throws AtlanException on any API problems
      */
     public static Badge removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (Badge)
-                Asset.removeCertificate(builder().qualifiedName(qualifiedName).name(name));
+        return (Badge) Asset.removeCertificate(updater(qualifiedName, name));
     }
 
     /**
@@ -231,8 +228,7 @@ public class Badge extends Asset {
      * @throws AtlanException on any API problems
      */
     public static Badge removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (Badge)
-                Asset.removeAnnouncement(builder().qualifiedName(qualifiedName).name(name));
+        return (Badge) Asset.removeAnnouncement(updater(qualifiedName, name));
     }
 
     /**

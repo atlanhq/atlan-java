@@ -170,8 +170,7 @@ public class LookerModel extends Looker {
      * @throws AtlanException on any API problems
      */
     public static LookerModel removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (LookerModel)
-                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+        return (LookerModel) Asset.removeDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -183,8 +182,7 @@ public class LookerModel extends Looker {
      * @throws AtlanException on any API problems
      */
     public static LookerModel removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (LookerModel) Asset.removeUserDescription(
-                builder().qualifiedName(qualifiedName).name(name));
+        return (LookerModel) Asset.removeUserDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -196,8 +194,7 @@ public class LookerModel extends Looker {
      * @throws AtlanException on any API problems
      */
     public static LookerModel removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (LookerModel)
-                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+        return (LookerModel) Asset.removeOwners(updater(qualifiedName, name));
     }
 
     /**
@@ -223,8 +220,7 @@ public class LookerModel extends Looker {
      * @throws AtlanException on any API problems
      */
     public static LookerModel removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (LookerModel)
-                Asset.removeCertificate(builder().qualifiedName(qualifiedName).name(name));
+        return (LookerModel) Asset.removeCertificate(updater(qualifiedName, name));
     }
 
     /**
@@ -251,8 +247,7 @@ public class LookerModel extends Looker {
      * @throws AtlanException on any API problems
      */
     public static LookerModel removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (LookerModel)
-                Asset.removeAnnouncement(builder().qualifiedName(qualifiedName).name(name));
+        return (LookerModel) Asset.removeAnnouncement(updater(qualifiedName, name));
     }
 
     /**

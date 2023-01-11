@@ -168,8 +168,7 @@ public class SnowflakeStream extends SQL {
      * @throws AtlanException on any API problems
      */
     public static SnowflakeStream removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (SnowflakeStream)
-                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+        return (SnowflakeStream) Asset.removeDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -181,8 +180,7 @@ public class SnowflakeStream extends SQL {
      * @throws AtlanException on any API problems
      */
     public static SnowflakeStream removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (SnowflakeStream) Asset.removeUserDescription(
-                builder().qualifiedName(qualifiedName).name(name));
+        return (SnowflakeStream) Asset.removeUserDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -194,8 +192,7 @@ public class SnowflakeStream extends SQL {
      * @throws AtlanException on any API problems
      */
     public static SnowflakeStream removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (SnowflakeStream)
-                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+        return (SnowflakeStream) Asset.removeOwners(updater(qualifiedName, name));
     }
 
     /**
@@ -221,8 +218,7 @@ public class SnowflakeStream extends SQL {
      * @throws AtlanException on any API problems
      */
     public static SnowflakeStream removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (SnowflakeStream)
-                Asset.removeCertificate(builder().qualifiedName(qualifiedName).name(name));
+        return (SnowflakeStream) Asset.removeCertificate(updater(qualifiedName, name));
     }
 
     /**
@@ -249,8 +245,7 @@ public class SnowflakeStream extends SQL {
      * @throws AtlanException on any API problems
      */
     public static SnowflakeStream removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (SnowflakeStream)
-                Asset.removeAnnouncement(builder().qualifiedName(qualifiedName).name(name));
+        return (SnowflakeStream) Asset.removeAnnouncement(updater(qualifiedName, name));
     }
 
     /**

@@ -198,8 +198,7 @@ public class LookerLook extends Looker {
      * @throws AtlanException on any API problems
      */
     public static LookerLook removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (LookerLook)
-                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+        return (LookerLook) Asset.removeDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -211,8 +210,7 @@ public class LookerLook extends Looker {
      * @throws AtlanException on any API problems
      */
     public static LookerLook removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (LookerLook) Asset.removeUserDescription(
-                builder().qualifiedName(qualifiedName).name(name));
+        return (LookerLook) Asset.removeUserDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -224,8 +222,7 @@ public class LookerLook extends Looker {
      * @throws AtlanException on any API problems
      */
     public static LookerLook removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (LookerLook)
-                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+        return (LookerLook) Asset.removeOwners(updater(qualifiedName, name));
     }
 
     /**
@@ -251,8 +248,7 @@ public class LookerLook extends Looker {
      * @throws AtlanException on any API problems
      */
     public static LookerLook removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (LookerLook)
-                Asset.removeCertificate(builder().qualifiedName(qualifiedName).name(name));
+        return (LookerLook) Asset.removeCertificate(updater(qualifiedName, name));
     }
 
     /**
@@ -279,8 +275,7 @@ public class LookerLook extends Looker {
      * @throws AtlanException on any API problems
      */
     public static LookerLook removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (LookerLook)
-                Asset.removeAnnouncement(builder().qualifiedName(qualifiedName).name(name));
+        return (LookerLook) Asset.removeAnnouncement(updater(qualifiedName, name));
     }
 
     /**

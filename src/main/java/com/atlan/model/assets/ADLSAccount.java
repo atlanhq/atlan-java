@@ -112,31 +112,13 @@ public class ADLSAccount extends ADLS {
      * Builds the minimal object necessary to create a ADLSAccount.
      *
      * @param name of the ADLSAccount
-     * @param secondaryLocation the secondary location of the account
-     * @param resourceGroup resource group of the account
-     * @param subscription subscription of the account
-     * @param performance performance tier of the account
-     * @param replication type of replication used on the account
      * @param connectionQualifiedName unique name of the connection through which the ADLSAccount is accessible
      * @return the minimal object necessary to create the ADLSAccount, as a builder
      */
-    public static ADLSAccountBuilder<?, ?> creator(
-            String name,
-            String secondaryLocation,
-            String resourceGroup,
-            String subscription,
-            ADLSPerformance performance,
-            ADLSReplicationType replication,
-            String connectionQualifiedName) {
+    public static ADLSAccountBuilder<?, ?> creator(String name, String connectionQualifiedName) {
         return ADLSAccount.builder()
                 .qualifiedName(connectionQualifiedName + "/" + name)
                 .name(name)
-                .adlsAccountName(name)
-                .adlsAccountSecondaryLocation(secondaryLocation)
-                .adlsAccountResourceGroup(resourceGroup)
-                .adlsAccountSubscription(subscription)
-                .adlsAccountPerformance(performance)
-                .adlsAccountReplication(replication)
                 .connectionQualifiedName(connectionQualifiedName)
                 .connectorType(AtlanConnectorType.ADLS);
     }
@@ -146,15 +128,10 @@ public class ADLSAccount extends ADLS {
      *
      * @param qualifiedName of the ADLSAccount
      * @param name of the ADLSAccount
-     * @param secondaryLocation the secondary location of the container
      * @return the minimal request necessary to update the ADLSAccount, as a builder
      */
-    public static ADLSAccountBuilder<?, ?> updater(String qualifiedName, String name, String secondaryLocation) {
-        return ADLSAccount.builder()
-                .qualifiedName(qualifiedName)
-                .name(name)
-                .adlsAccountSecondaryLocation(secondaryLocation)
-                .adlsAccountName(name);
+    public static ADLSAccountBuilder<?, ?> updater(String qualifiedName, String name) {
+        return ADLSAccount.builder().qualifiedName(qualifiedName).name(name);
     }
 
     /**
@@ -173,15 +150,11 @@ public class ADLSAccount extends ADLS {
         if (this.getName() == null || this.getName().length() == 0) {
             missing.add("name");
         }
-        if (this.getAdlsAccountSecondaryLocation() == null
-                || this.getAdlsAccountSecondaryLocation().length() == 0) {
-            missing.add("adlsAccountSecondaryLocation");
-        }
         if (!missing.isEmpty()) {
             throw new InvalidRequestException(
                     ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "ADLSAccount", String.join(",", missing));
         }
-        return updater(this.getQualifiedName(), this.getName(), this.getAdlsAccountSecondaryLocation());
+        return updater(this.getQualifiedName(), this.getName());
     }
 
     /**
@@ -234,13 +207,11 @@ public class ADLSAccount extends ADLS {
      *
      * @param qualifiedName of the ADLSAccount
      * @param name of the ADLSAccount
-     * @param secondaryLocation the secondary location of the container
      * @return the updated ADLSAccount, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static ADLSAccount removeDescription(String qualifiedName, String name, String secondaryLocation)
-            throws AtlanException {
-        return (ADLSAccount) Asset.removeDescription(updater(qualifiedName, name, secondaryLocation));
+    public static ADLSAccount removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (ADLSAccount) Asset.removeDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -248,13 +219,11 @@ public class ADLSAccount extends ADLS {
      *
      * @param qualifiedName of the ADLSAccount
      * @param name of the ADLSAccount
-     * @param secondaryLocation the secondary location of the container
      * @return the updated ADLSAccount, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static ADLSAccount removeUserDescription(String qualifiedName, String name, String secondaryLocation)
-            throws AtlanException {
-        return (ADLSAccount) Asset.removeUserDescription(updater(qualifiedName, name, secondaryLocation));
+    public static ADLSAccount removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (ADLSAccount) Asset.removeUserDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -262,13 +231,11 @@ public class ADLSAccount extends ADLS {
      *
      * @param qualifiedName of the ADLSAccount
      * @param name of the ADLSAccount
-     * @param secondaryLocation the secondary location of the container
      * @return the updated ADLSAccount, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static ADLSAccount removeOwners(String qualifiedName, String name, String secondaryLocation)
-            throws AtlanException {
-        return (ADLSAccount) Asset.removeOwners(updater(qualifiedName, name, secondaryLocation));
+    public static ADLSAccount removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (ADLSAccount) Asset.removeOwners(updater(qualifiedName, name));
     }
 
     /**
@@ -290,13 +257,11 @@ public class ADLSAccount extends ADLS {
      *
      * @param qualifiedName of the ADLSAccount
      * @param name of the ADLSAccount
-     * @param secondaryLocation the secondary location of the container
      * @return the updated ADLSAccount, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static ADLSAccount removeCertificate(String qualifiedName, String name, String secondaryLocation)
-            throws AtlanException {
-        return (ADLSAccount) Asset.removeCertificate(updater(qualifiedName, name, secondaryLocation));
+    public static ADLSAccount removeCertificate(String qualifiedName, String name) throws AtlanException {
+        return (ADLSAccount) Asset.removeCertificate(updater(qualifiedName, name));
     }
 
     /**
@@ -319,13 +284,11 @@ public class ADLSAccount extends ADLS {
      *
      * @param qualifiedName of the ADLSAccount
      * @param name of the ADLSAccount
-     * @param secondaryLocation the secondary location of the container
      * @return the updated ADLSAccount, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static ADLSAccount removeAnnouncement(String qualifiedName, String name, String secondaryLocation)
-            throws AtlanException {
-        return (ADLSAccount) Asset.removeAnnouncement(updater(qualifiedName, name, secondaryLocation));
+    public static ADLSAccount removeAnnouncement(String qualifiedName, String name) throws AtlanException {
+        return (ADLSAccount) Asset.removeAnnouncement(updater(qualifiedName, name));
     }
 
     /**
@@ -356,15 +319,13 @@ public class ADLSAccount extends ADLS {
      *
      * @param qualifiedName for the ADLSAccount
      * @param name human-readable name of the ADLSAccount
-     * @param secondaryLocation the secondary location of the container
      * @param terms the list of terms to replace on the ADLSAccount, or null to remove all terms from the ADLSAccount
      * @return the ADLSAccount that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static ADLSAccount replaceTerms(
-            String qualifiedName, String name, String secondaryLocation, List<GlossaryTerm> terms)
+    public static ADLSAccount replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
             throws AtlanException {
-        return (ADLSAccount) Asset.replaceTerms(updater(qualifiedName, name, secondaryLocation), terms);
+        return (ADLSAccount) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
 
     /**
