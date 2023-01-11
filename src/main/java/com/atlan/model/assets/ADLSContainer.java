@@ -8,6 +8,7 @@ import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.*;
 import com.atlan.model.relations.UniqueAttributes;
+import com.atlan.util.StringUtils;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
@@ -93,14 +94,40 @@ public class ADLSContainer extends ADLS {
     }
 
     /**
+     * Builds the minimal object necessary to create a ADLSContainer.
+     *
+     * @param name of the ADLSContainer
+     * @param secondaryLocation the secondary location of the container
+     * @param accountQualifiedName unique name of the account through which the ADLSContainer is accessible
+     * @return the minimal object necessary to create the ADLSContainer, as a builder
+     */
+    public static ADLSContainerBuilder<?, ?> creator(
+            String name, String secondaryLocation, String accountQualifiedName) {
+        String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(accountQualifiedName);
+        return ADLSContainer.builder()
+                .qualifiedName(accountQualifiedName + "/" + name)
+                .name(name)
+                .adlsContainerName(name)
+                .adlsAccountSecondaryLocation(secondaryLocation)
+                .adlsAccount(ADLSAccount.refByQualifiedName(accountQualifiedName))
+                .connectionQualifiedName(connectionQualifiedName)
+                .connectorType(AtlanConnectorType.ADLS);
+    }
+
+    /**
      * Builds the minimal object necessary to update a ADLSContainer.
      *
      * @param qualifiedName of the ADLSContainer
      * @param name of the ADLSContainer
+     * @param secondaryLocation the secondary location of the container
      * @return the minimal request necessary to update the ADLSContainer, as a builder
      */
-    public static ADLSContainerBuilder<?, ?> updater(String qualifiedName, String name) {
-        return ADLSContainer.builder().qualifiedName(qualifiedName).name(name);
+    public static ADLSContainerBuilder<?, ?> updater(String qualifiedName, String name, String secondaryLocation) {
+        return ADLSContainer.builder()
+                .qualifiedName(qualifiedName)
+                .name(name)
+                .adlsAccountSecondaryLocation(secondaryLocation)
+                .adlsContainerName(name);
     }
 
     /**
@@ -119,11 +146,15 @@ public class ADLSContainer extends ADLS {
         if (this.getName() == null || this.getName().length() == 0) {
             missing.add("name");
         }
+        if (this.getAdlsAccountSecondaryLocation() == null
+                || this.getAdlsAccountSecondaryLocation().length() == 0) {
+            missing.add("adlsAccountSecondaryLocation");
+        }
         if (!missing.isEmpty()) {
             throw new InvalidRequestException(
                     ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "ADLSContainer", String.join(",", missing));
         }
-        return updater(this.getQualifiedName(), this.getName());
+        return updater(this.getQualifiedName(), this.getName(), this.getAdlsAccountSecondaryLocation());
     }
 
     /**
@@ -229,12 +260,13 @@ public class ADLSContainer extends ADLS {
      *
      * @param qualifiedName of the ADLSContainer
      * @param name of the ADLSContainer
+     * @param secondaryLocation the secondary location of the container
      * @return the updated ADLSContainer, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static ADLSContainer removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (ADLSContainer)
-                Asset.removeCertificate(builder().qualifiedName(qualifiedName).name(name));
+    public static ADLSContainer removeCertificate(String qualifiedName, String name, String secondaryLocation)
+            throws AtlanException {
+        return (ADLSContainer) Asset.removeCertificate(updater(qualifiedName, name, secondaryLocation));
     }
 
     /**
@@ -257,12 +289,13 @@ public class ADLSContainer extends ADLS {
      *
      * @param qualifiedName of the ADLSContainer
      * @param name of the ADLSContainer
+     * @param secondaryLocation the secondary location of the container
      * @return the updated ADLSContainer, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static ADLSContainer removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (ADLSContainer)
-                Asset.removeAnnouncement(builder().qualifiedName(qualifiedName).name(name));
+    public static ADLSContainer removeAnnouncement(String qualifiedName, String name, String secondaryLocation)
+            throws AtlanException {
+        return (ADLSContainer) Asset.removeAnnouncement(updater(qualifiedName, name, secondaryLocation));
     }
 
     /**
@@ -293,13 +326,15 @@ public class ADLSContainer extends ADLS {
      *
      * @param qualifiedName for the ADLSContainer
      * @param name human-readable name of the ADLSContainer
+     * @param secondaryLocation the secondary location of the container
      * @param terms the list of terms to replace on the ADLSContainer, or null to remove all terms from the ADLSContainer
      * @return the ADLSContainer that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static ADLSContainer replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static ADLSContainer replaceTerms(
+            String qualifiedName, String name, String secondaryLocation, List<GlossaryTerm> terms)
             throws AtlanException {
-        return (ADLSContainer) Asset.replaceTerms(updater(qualifiedName, name), terms);
+        return (ADLSContainer) Asset.replaceTerms(updater(qualifiedName, name, secondaryLocation), terms);
     }
 
     /**
