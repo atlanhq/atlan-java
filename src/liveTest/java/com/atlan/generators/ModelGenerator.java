@@ -61,7 +61,8 @@ public class ModelGenerator extends AbstractGenerator {
             Map.entry("projectHierarchy", "addProjectHierarchy"),
             Map.entry("certifier", "putCertifier"),
             Map.entry("presetChartFormData", "putPresetChartFormData"),
-            Map.entry("resourceMetadata", "putResourceMetadata"));
+            Map.entry("resourceMetadata", "putResourceMetadata"),
+            Map.entry("adlsObjectMetadata", "putAdlsObjectMetadata"));
 
     private static final SortedSet<String> concreteModels = new TreeSet<>();
 
@@ -981,12 +982,7 @@ public class ModelGenerator extends AbstractGenerator {
         fs.append("import com.atlan.exception.AtlanException;").append(System.lineSeparator());
         fs.append("import com.atlan.exception.NotFoundException;").append(System.lineSeparator());
         fs.append("import com.atlan.exception.InvalidRequestException;").append(System.lineSeparator());
-        fs.append("import com.atlan.model.enums.AtlanAnnouncementType;").append(System.lineSeparator());
-        fs.append("import com.atlan.model.enums.AtlanCertificateStatus;").append(System.lineSeparator());
-        fs.append("import com.atlan.model.enums.AtlanConnectorType;").append(System.lineSeparator());
-        fs.append("import com.atlan.model.enums.GoogleDataStudioAssetType;").append(System.lineSeparator());
-        fs.append("import com.atlan.model.enums.LinkIconType;").append(System.lineSeparator());
-        fs.append("import com.atlan.model.enums.PowerBIEndorsementType;").append(System.lineSeparator());
+        fs.append("import com.atlan.model.enums.*;").append(System.lineSeparator());
         fs.append("import com.atlan.model.relations.UniqueAttributes;").append(System.lineSeparator());
         fs.append("import com.fasterxml.jackson.annotation.JsonSubTypes;").append(System.lineSeparator());
         fs.append("import com.fasterxml.jackson.annotation.JsonProperty;").append(System.lineSeparator());
