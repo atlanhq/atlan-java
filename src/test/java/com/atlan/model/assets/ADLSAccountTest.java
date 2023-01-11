@@ -109,7 +109,7 @@ public class ADLSAccountTest {
             .azureResourceId("azureResourceId")
             .azureLocation("azureLocation")
             .adlsAccountSecondaryLocation("adlsAccountSecondaryLocation")
-            .azureTags(Table.refByGuid("cb62c219-b602-4a6d-9ba5-ad166fe4478a"))
+            .azureTag(AzureTag.of("key", "value"))
             .inputToProcesses(Set.of(
                     LineageProcess.refByGuid("8e72802d-6d5f-453a-85af-a53b98841339"),
                     LineageProcess.refByGuid("49e76e94-0fa3-4d39-b2d3-5a113c18f410")))
@@ -117,17 +117,17 @@ public class ADLSAccountTest {
                     LineageProcess.refByGuid("c28ba110-e995-4c04-b6aa-5c90a90edd48"),
                     LineageProcess.refByGuid("eb0240fb-4298-4bd5-9604-94d9c2f88db4")))
             .adlsETag("adlsETag")
-            .adlsEncryptionType(Table.refByGuid("f4cdbd12-95b0-4a1d-bbb2-f6c38e1164f9"))
+            .adlsEncryptionType(ADLSEncryptionTypes.STORAGE)
             .adlsAccountName("adlsAccountName")
             .adlsAccountResourceGroup("adlsAccountResourceGroup")
             .adlsAccountSubscription("adlsAccountSubscription")
-            .adlsAccountPerformance(Table.refByGuid("01936ba3-78eb-4fa1-a59f-f1b4fc220df5"))
-            .adlsAccountReplication(Table.refByGuid("d01e7583-efa6-4f6a-824e-0f7b22b291d1"))
-            .adlsAccountKind(Table.refByGuid("b217b71b-bb5f-4b26-81ed-ff1ebb352447"))
-            .adlsPrimaryDiskState(Table.refByGuid("d64cab55-d180-42f9-82bb-ecfde674bff3"))
+            .adlsAccountPerformance(ADLSPerformance.PREMIUM)
+            .adlsAccountReplication(ADLSReplicationType.READ_ACCESS_GEO_REDUNDANT)
+            .adlsAccountKind(ADLSStorageKind.FILE)
+            .adlsPrimaryDiskState(ADLSAccountStatus.AVAILABLE)
             .adlsAccountCreationTime(3547019824354036828L)
-            .adlsAccountProvisionState(Table.refByGuid("b49c59b3-91b9-4bf1-a0c0-15d6fb6405c1"))
-            .adlsAccountAccessTier(Table.refByGuid("163d8fdb-300b-4639-bece-1ba236ba22c5"))
+            .adlsAccountProvisionState(ADLSProvisionState.SUCCEEDED)
+            .adlsAccountAccessTier(ADLSAccessTier.HOT)
             .adlsContainers(Set.of(
                     ADLSContainer.refByGuid("e2e39e0c-20b6-4952-8df5-07f31c8b1b6b"),
                     ADLSContainer.refByGuid("b0fc447a-d351-46f2-881f-9f375586435d")))

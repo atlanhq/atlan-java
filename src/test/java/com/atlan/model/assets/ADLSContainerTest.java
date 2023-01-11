@@ -109,7 +109,7 @@ public class ADLSContainerTest {
             .azureResourceId("azureResourceId")
             .azureLocation("azureLocation")
             .adlsAccountSecondaryLocation("adlsAccountSecondaryLocation")
-            .azureTags(Table.refByGuid("9e57513b-fbcb-4464-9a24-07229c01449f"))
+            .azureTag(AzureTag.of("key", "value"))
             .inputToProcesses(Set.of(
                     LineageProcess.refByGuid("8d3e0c2c-de11-4d31-ba6b-f98066c4e11e"),
                     LineageProcess.refByGuid("d1a09abd-739c-4cee-806b-9cc8abdf0668")))
@@ -119,8 +119,8 @@ public class ADLSContainerTest {
             .adlsContainerName("adlsContainerName")
             .adlsContainerUrl("adlsContainerUrl")
             .adlsContainerLastModifiedTime(8690434353178190950L)
-            .adlsContainerLeaseState(Table.refByGuid("973589be-78f6-423f-b884-dbeca76d3312"))
-            .adlsContainerLeaseStatus(Table.refByGuid("ecde8d30-6db2-4671-9fbf-c1af9b95246a"))
+            .adlsContainerLeaseState(ADLSLeaseState.AVAILABLE)
+            .adlsContainerLeaseStatus(ADLSLeaseStatus.UNLOCKED)
             .adlsContainerEncryptionScope("adlsContainerEncryptionScope")
             .adlsContainerVersionLevelImmutabilitySupport(false)
             .adlsObjects(Set.of(
