@@ -2,6 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
+import com.atlan.model.enums.*;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import java.util.Map;
 import java.util.SortedSet;

@@ -18,7 +18,7 @@ import lombok.experimental.SuperBuilder;
 @JsonSubTypes({
     @JsonSubTypes.Type(value = ADLS.class, name = ADLS.TYPE_NAME),
 })
-public abstract class Azure extends Cloud {
+public abstract class Azure extends Catalog {
 
     public static final String TYPE_NAME = "Azure";
 

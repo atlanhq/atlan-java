@@ -4,7 +4,6 @@ package com.atlan.model.assets;
 
 import com.atlan.model.enums.*;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
-import java.util.SortedSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -23,14 +22,4 @@ import lombok.experimental.SuperBuilder;
 public abstract class ADLS extends Azure {
 
     public static final String TYPE_NAME = "ADLS";
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<LineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<LineageProcess> outputFromProcesses;
 }
