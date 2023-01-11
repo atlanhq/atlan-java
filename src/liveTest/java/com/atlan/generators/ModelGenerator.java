@@ -1325,6 +1325,11 @@ public class ModelGenerator extends AbstractGenerator {
                         case "AWSTag":
                             fs.append("AWSTag.of(").append("\"key\", \"value\"").append(")");
                             break;
+                        case "AzureTag":
+                            fs.append("AzureTag.of(")
+                                    .append("\"key\", \"value\"")
+                                    .append(")");
+                            break;
                         case "SortedSet<String>":
                             fs.append("Set.of(\"one\", \"two\", \"three\")");
                             break;
