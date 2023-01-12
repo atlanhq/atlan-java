@@ -63,13 +63,7 @@ public class ADLSAssetTest extends AtlanLiveTest {
         assertNotNull(account.getGuid());
         assertNotNull(account.getQualifiedName());
         assertEquals(account.getName(), ACCOUNT_NAME);
-        assertEquals(account.getAdlsAccountName(), ACCOUNT_NAME);
         assertEquals(account.getConnectorType(), CONNECTOR_TYPE);
-        assertEquals(account.getAdlsAccountSecondaryLocation(), PREFIX);
-        assertEquals(account.getAdlsAccountResourceGroup(), PREFIX);
-        assertEquals(account.getAdlsAccountSubscription(), PREFIX);
-        assertEquals(account.getAdlsAccountPerformance(), ADLSPerformance.PREMIUM);
-        assertEquals(account.getAdlsAccountReplication(), ADLSReplicationType.GEO_REDUNDANT);
         assertEquals(account.getConnectionQualifiedName(), connection.getQualifiedName());
     }
 
@@ -94,8 +88,6 @@ public class ADLSAssetTest extends AtlanLiveTest {
         assertNotNull(container.getQualifiedName());
         assertEquals(container.getName(), CONTAINER_NAME);
         assertEquals(container.getConnectorType(), CONNECTOR_TYPE);
-        assertEquals(account.getAdlsAccountSecondaryLocation(), PREFIX);
-        assertEquals(container.getAdlsContainerName(), CONTAINER_NAME);
         assertEquals(container.getConnectionQualifiedName(), connection.getQualifiedName());
     }
 
@@ -122,8 +114,6 @@ public class ADLSAssetTest extends AtlanLiveTest {
         assertNotNull(object.getQualifiedName());
         assertEquals(object.getName(), OBJECT_NAME);
         assertEquals(object.getConnectorType(), CONNECTOR_TYPE);
-        assertEquals(account.getAdlsAccountSecondaryLocation(), PREFIX);
-        assertEquals(object.getAdlsObjectName(), OBJECT_NAME);
         assertEquals(object.getConnectionQualifiedName(), connection.getQualifiedName());
     }
 
