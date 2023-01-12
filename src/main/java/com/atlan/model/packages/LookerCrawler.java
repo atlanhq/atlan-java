@@ -123,9 +123,9 @@ public class LookerCrawler extends AbstractCrawler {
         Map<String, Map<String, String>> toIncludeProjects = buildFlatFilter(includeProjects);
         Map<String, Map<String, String>> toExcludeProjects = buildFlatFilter(excludeProjects);
 
-        WorkflowTaskArguments.WorkflowTaskArgumentsBuilder<?, ?> argsBuilder;
+        WorkflowParameters.WorkflowParametersBuilder<?, ?> argsBuilder;
         try {
-            argsBuilder = WorkflowTaskArguments.builder()
+            argsBuilder = WorkflowParameters.builder()
                     .parameter(NameValuePair.of("credential-guid", "{{credentialGuid}}"))
                     .parameter(NameValuePair.of(
                             "include-folders", Serde.allInclusiveMapper.writeValueAsString(toIncludeFolders)))

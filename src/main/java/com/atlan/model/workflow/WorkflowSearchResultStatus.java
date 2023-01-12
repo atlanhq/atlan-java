@@ -30,7 +30,9 @@ public class WorkflowSearchResultStatus extends AtlanObject {
     @JsonIgnore
     Object storedWorkflowTemplateSpec;
 
+    Long estimatedDuration;
     AtlanWorkflowPhase phase;
+    WorkflowParameters outputs;
     String startedAt;
     String finishedAt;
     String message;

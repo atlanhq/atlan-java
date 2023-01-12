@@ -33,7 +33,7 @@ public class SnowflakeMiner extends AbstractMiner {
 
         String epoch = getEpoch();
 
-        WorkflowTaskArguments.WorkflowTaskArgumentsBuilder<?, ?> argsBuilder = WorkflowTaskArguments.builder()
+        WorkflowParameters.WorkflowParametersBuilder<?, ?> argsBuilder = WorkflowParameters.builder()
                 .parameter(NameValuePair.of("connection-qualified-name", connectionName))
                 .parameter(NameValuePair.of("extraction-method", "query_history"))
                 .parameter(NameValuePair.of("miner-start-time-epoch", "" + startEpoch))

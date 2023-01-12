@@ -16,7 +16,7 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
-public class WorkflowTaskArguments extends AtlanObject {
+public class WorkflowParameters extends AtlanObject {
     private static final long serialVersionUID = 2L;
 
     @Singular
