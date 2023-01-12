@@ -6,9 +6,7 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.AtlanCertificateStatus;
-import com.atlan.model.enums.AtlanConnectorType;
+import com.atlan.model.enums.*;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.StringUtils;
 import java.util.ArrayList;
@@ -182,8 +180,7 @@ public class PresetChart extends Preset {
      * @throws AtlanException on any API problems
      */
     public static PresetChart removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (PresetChart)
-                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+        return (PresetChart) Asset.removeDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -195,8 +192,7 @@ public class PresetChart extends Preset {
      * @throws AtlanException on any API problems
      */
     public static PresetChart removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (PresetChart) Asset.removeUserDescription(
-                builder().qualifiedName(qualifiedName).name(name));
+        return (PresetChart) Asset.removeUserDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -208,8 +204,7 @@ public class PresetChart extends Preset {
      * @throws AtlanException on any API problems
      */
     public static PresetChart removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (PresetChart)
-                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+        return (PresetChart) Asset.removeOwners(updater(qualifiedName, name));
     }
 
     /**
@@ -235,8 +230,7 @@ public class PresetChart extends Preset {
      * @throws AtlanException on any API problems
      */
     public static PresetChart removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (PresetChart)
-                Asset.removeCertificate(builder().qualifiedName(qualifiedName).name(name));
+        return (PresetChart) Asset.removeCertificate(updater(qualifiedName, name));
     }
 
     /**
@@ -263,8 +257,7 @@ public class PresetChart extends Preset {
      * @throws AtlanException on any API problems
      */
     public static PresetChart removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (PresetChart)
-                Asset.removeAnnouncement(builder().qualifiedName(qualifiedName).name(name));
+        return (PresetChart) Asset.removeAnnouncement(updater(qualifiedName, name));
     }
 
     /**

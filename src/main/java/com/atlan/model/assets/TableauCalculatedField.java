@@ -6,8 +6,7 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.AtlanCertificateStatus;
+import com.atlan.model.enums.*;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
@@ -201,8 +200,7 @@ public class TableauCalculatedField extends Tableau {
      * @throws AtlanException on any API problems
      */
     public static TableauCalculatedField removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (TableauCalculatedField)
-                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+        return (TableauCalculatedField) Asset.removeDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -215,8 +213,7 @@ public class TableauCalculatedField extends Tableau {
      */
     public static TableauCalculatedField removeUserDescription(String qualifiedName, String name)
             throws AtlanException {
-        return (TableauCalculatedField) Asset.removeUserDescription(
-                builder().qualifiedName(qualifiedName).name(name));
+        return (TableauCalculatedField) Asset.removeUserDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -228,8 +225,7 @@ public class TableauCalculatedField extends Tableau {
      * @throws AtlanException on any API problems
      */
     public static TableauCalculatedField removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (TableauCalculatedField)
-                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+        return (TableauCalculatedField) Asset.removeOwners(updater(qualifiedName, name));
     }
 
     /**
@@ -256,8 +252,7 @@ public class TableauCalculatedField extends Tableau {
      * @throws AtlanException on any API problems
      */
     public static TableauCalculatedField removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (TableauCalculatedField)
-                Asset.removeCertificate(builder().qualifiedName(qualifiedName).name(name));
+        return (TableauCalculatedField) Asset.removeCertificate(updater(qualifiedName, name));
     }
 
     /**
@@ -285,8 +280,7 @@ public class TableauCalculatedField extends Tableau {
      * @throws AtlanException on any API problems
      */
     public static TableauCalculatedField removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (TableauCalculatedField)
-                Asset.removeAnnouncement(builder().qualifiedName(qualifiedName).name(name));
+        return (TableauCalculatedField) Asset.removeAnnouncement(updater(qualifiedName, name));
     }
 
     /**

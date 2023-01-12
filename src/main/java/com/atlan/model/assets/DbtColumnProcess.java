@@ -6,8 +6,7 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.AtlanCertificateStatus;
+import com.atlan.model.enums.*;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
@@ -158,8 +157,7 @@ public class DbtColumnProcess extends AbstractColumnProcess {
      * @throws AtlanException on any API problems
      */
     public static DbtColumnProcess removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (DbtColumnProcess)
-                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+        return (DbtColumnProcess) Asset.removeDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -171,8 +169,7 @@ public class DbtColumnProcess extends AbstractColumnProcess {
      * @throws AtlanException on any API problems
      */
     public static DbtColumnProcess removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (DbtColumnProcess) Asset.removeUserDescription(
-                builder().qualifiedName(qualifiedName).name(name));
+        return (DbtColumnProcess) Asset.removeUserDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -184,8 +181,7 @@ public class DbtColumnProcess extends AbstractColumnProcess {
      * @throws AtlanException on any API problems
      */
     public static DbtColumnProcess removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (DbtColumnProcess)
-                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+        return (DbtColumnProcess) Asset.removeOwners(updater(qualifiedName, name));
     }
 
     /**
@@ -211,8 +207,7 @@ public class DbtColumnProcess extends AbstractColumnProcess {
      * @throws AtlanException on any API problems
      */
     public static DbtColumnProcess removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (DbtColumnProcess)
-                Asset.removeCertificate(builder().qualifiedName(qualifiedName).name(name));
+        return (DbtColumnProcess) Asset.removeCertificate(updater(qualifiedName, name));
     }
 
     /**
@@ -239,8 +234,7 @@ public class DbtColumnProcess extends AbstractColumnProcess {
      * @throws AtlanException on any API problems
      */
     public static DbtColumnProcess removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (DbtColumnProcess)
-                Asset.removeAnnouncement(builder().qualifiedName(qualifiedName).name(name));
+        return (DbtColumnProcess) Asset.removeAnnouncement(updater(qualifiedName, name));
     }
 
     /**

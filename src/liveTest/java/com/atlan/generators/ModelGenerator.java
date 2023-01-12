@@ -61,7 +61,8 @@ public class ModelGenerator extends AbstractGenerator {
             Map.entry("projectHierarchy", "addProjectHierarchy"),
             Map.entry("certifier", "putCertifier"),
             Map.entry("presetChartFormData", "putPresetChartFormData"),
-            Map.entry("resourceMetadata", "putResourceMetadata"));
+            Map.entry("resourceMetadata", "putResourceMetadata"),
+            Map.entry("adlsObjectMetadata", "putAdlsObjectMetadata"));
 
     private static final SortedSet<String> concreteModels = new TreeSet<>();
 
@@ -400,7 +401,7 @@ public class ModelGenerator extends AbstractGenerator {
         fs.append(System.lineSeparator());
         fs.append("        return (").append(className).append(")");
         fs.append(System.lineSeparator());
-        fs.append("                Asset.removeCertificate(builder().qualifiedName(qualifiedName).name(name));");
+        fs.append("                Asset.removeCertificate(updater(qualifiedName, name));");
         fs.append(System.lineSeparator());
         fs.append("    }");
         fs.append(System.lineSeparator()).append(System.lineSeparator());
@@ -465,7 +466,7 @@ public class ModelGenerator extends AbstractGenerator {
         fs.append(System.lineSeparator());
         fs.append("        return (").append(className).append(")");
         fs.append(System.lineSeparator());
-        fs.append("                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));");
+        fs.append("                Asset.removeDescription(updater(qualifiedName, name));");
         fs.append(System.lineSeparator());
         fs.append("    }");
         fs.append(System.lineSeparator()).append(System.lineSeparator());
@@ -496,7 +497,7 @@ public class ModelGenerator extends AbstractGenerator {
         fs.append(System.lineSeparator());
         fs.append("        return (").append(className).append(")");
         fs.append(System.lineSeparator());
-        fs.append("                Asset.removeUserDescription(builder().qualifiedName(qualifiedName).name(name));");
+        fs.append("                Asset.removeUserDescription(updater(qualifiedName, name));");
         fs.append(System.lineSeparator());
         fs.append("    }");
         fs.append(System.lineSeparator()).append(System.lineSeparator());
@@ -525,7 +526,7 @@ public class ModelGenerator extends AbstractGenerator {
         fs.append(System.lineSeparator());
         fs.append("        return (").append(className).append(")");
         fs.append(System.lineSeparator());
-        fs.append("                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));");
+        fs.append("                Asset.removeOwners(updater(qualifiedName, name));");
         fs.append(System.lineSeparator());
         fs.append("    }");
         fs.append(System.lineSeparator()).append(System.lineSeparator());
@@ -554,7 +555,7 @@ public class ModelGenerator extends AbstractGenerator {
         fs.append(System.lineSeparator());
         fs.append("        return (").append(className).append(")");
         fs.append(System.lineSeparator());
-        fs.append("                Asset.removeAnnouncement(builder().qualifiedName(qualifiedName).name(name));");
+        fs.append("                Asset.removeAnnouncement(updater(qualifiedName, name));");
         fs.append(System.lineSeparator());
         fs.append("    }");
         fs.append(System.lineSeparator()).append(System.lineSeparator());
@@ -981,12 +982,7 @@ public class ModelGenerator extends AbstractGenerator {
         fs.append("import com.atlan.exception.AtlanException;").append(System.lineSeparator());
         fs.append("import com.atlan.exception.NotFoundException;").append(System.lineSeparator());
         fs.append("import com.atlan.exception.InvalidRequestException;").append(System.lineSeparator());
-        fs.append("import com.atlan.model.enums.AtlanAnnouncementType;").append(System.lineSeparator());
-        fs.append("import com.atlan.model.enums.AtlanCertificateStatus;").append(System.lineSeparator());
-        fs.append("import com.atlan.model.enums.AtlanConnectorType;").append(System.lineSeparator());
-        fs.append("import com.atlan.model.enums.GoogleDataStudioAssetType;").append(System.lineSeparator());
-        fs.append("import com.atlan.model.enums.LinkIconType;").append(System.lineSeparator());
-        fs.append("import com.atlan.model.enums.PowerBIEndorsementType;").append(System.lineSeparator());
+        fs.append("import com.atlan.model.enums.*;").append(System.lineSeparator());
         fs.append("import com.atlan.model.relations.UniqueAttributes;").append(System.lineSeparator());
         fs.append("import com.fasterxml.jackson.annotation.JsonSubTypes;").append(System.lineSeparator());
         fs.append("import com.fasterxml.jackson.annotation.JsonProperty;").append(System.lineSeparator());
@@ -1324,6 +1320,11 @@ public class ModelGenerator extends AbstractGenerator {
                             break;
                         case "AWSTag":
                             fs.append("AWSTag.of(").append("\"key\", \"value\"").append(")");
+                            break;
+                        case "AzureTag":
+                            fs.append("AzureTag.of(")
+                                    .append("\"key\", \"value\"")
+                                    .append(")");
                             break;
                         case "SortedSet<String>":
                             fs.append("Set.of(\"one\", \"two\", \"three\")");

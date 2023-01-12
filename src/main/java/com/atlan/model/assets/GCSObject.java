@@ -6,9 +6,7 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.AtlanCertificateStatus;
-import com.atlan.model.enums.AtlanConnectorType;
+import com.atlan.model.enums.*;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.StringUtils;
 import java.util.ArrayList;
@@ -229,8 +227,7 @@ public class GCSObject extends GCS {
      * @throws AtlanException on any API problems
      */
     public static GCSObject removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (GCSObject)
-                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+        return (GCSObject) Asset.removeDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -242,8 +239,7 @@ public class GCSObject extends GCS {
      * @throws AtlanException on any API problems
      */
     public static GCSObject removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (GCSObject) Asset.removeUserDescription(
-                builder().qualifiedName(qualifiedName).name(name));
+        return (GCSObject) Asset.removeUserDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -255,8 +251,7 @@ public class GCSObject extends GCS {
      * @throws AtlanException on any API problems
      */
     public static GCSObject removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (GCSObject)
-                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+        return (GCSObject) Asset.removeOwners(updater(qualifiedName, name));
     }
 
     /**
@@ -282,8 +277,7 @@ public class GCSObject extends GCS {
      * @throws AtlanException on any API problems
      */
     public static GCSObject removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (GCSObject)
-                Asset.removeCertificate(builder().qualifiedName(qualifiedName).name(name));
+        return (GCSObject) Asset.removeCertificate(updater(qualifiedName, name));
     }
 
     /**
@@ -310,8 +304,7 @@ public class GCSObject extends GCS {
      * @throws AtlanException on any API problems
      */
     public static GCSObject removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (GCSObject)
-                Asset.removeAnnouncement(builder().qualifiedName(qualifiedName).name(name));
+        return (GCSObject) Asset.removeAnnouncement(updater(qualifiedName, name));
     }
 
     /**

@@ -6,8 +6,7 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.AtlanCertificateStatus;
+import com.atlan.model.enums.*;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
@@ -161,8 +160,7 @@ public class ModeCollection extends Mode {
      * @throws AtlanException on any API problems
      */
     public static ModeCollection removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (ModeCollection)
-                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+        return (ModeCollection) Asset.removeDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -174,8 +172,7 @@ public class ModeCollection extends Mode {
      * @throws AtlanException on any API problems
      */
     public static ModeCollection removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (ModeCollection) Asset.removeUserDescription(
-                builder().qualifiedName(qualifiedName).name(name));
+        return (ModeCollection) Asset.removeUserDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -187,8 +184,7 @@ public class ModeCollection extends Mode {
      * @throws AtlanException on any API problems
      */
     public static ModeCollection removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (ModeCollection)
-                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+        return (ModeCollection) Asset.removeOwners(updater(qualifiedName, name));
     }
 
     /**
@@ -214,8 +210,7 @@ public class ModeCollection extends Mode {
      * @throws AtlanException on any API problems
      */
     public static ModeCollection removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (ModeCollection)
-                Asset.removeCertificate(builder().qualifiedName(qualifiedName).name(name));
+        return (ModeCollection) Asset.removeCertificate(updater(qualifiedName, name));
     }
 
     /**
@@ -242,8 +237,7 @@ public class ModeCollection extends Mode {
      * @throws AtlanException on any API problems
      */
     public static ModeCollection removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (ModeCollection)
-                Asset.removeAnnouncement(builder().qualifiedName(qualifiedName).name(name));
+        return (ModeCollection) Asset.removeAnnouncement(updater(qualifiedName, name));
     }
 
     /**

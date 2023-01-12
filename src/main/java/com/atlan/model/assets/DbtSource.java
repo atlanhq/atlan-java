@@ -6,8 +6,7 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.AtlanCertificateStatus;
+import com.atlan.model.enums.*;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
@@ -155,8 +154,7 @@ public class DbtSource extends Dbt {
      * @throws AtlanException on any API problems
      */
     public static DbtSource removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (DbtSource)
-                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+        return (DbtSource) Asset.removeDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -168,8 +166,7 @@ public class DbtSource extends Dbt {
      * @throws AtlanException on any API problems
      */
     public static DbtSource removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (DbtSource) Asset.removeUserDescription(
-                builder().qualifiedName(qualifiedName).name(name));
+        return (DbtSource) Asset.removeUserDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -181,8 +178,7 @@ public class DbtSource extends Dbt {
      * @throws AtlanException on any API problems
      */
     public static DbtSource removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (DbtSource)
-                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+        return (DbtSource) Asset.removeOwners(updater(qualifiedName, name));
     }
 
     /**
@@ -208,8 +204,7 @@ public class DbtSource extends Dbt {
      * @throws AtlanException on any API problems
      */
     public static DbtSource removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (DbtSource)
-                Asset.removeCertificate(builder().qualifiedName(qualifiedName).name(name));
+        return (DbtSource) Asset.removeCertificate(updater(qualifiedName, name));
     }
 
     /**
@@ -236,8 +231,7 @@ public class DbtSource extends Dbt {
      * @throws AtlanException on any API problems
      */
     public static DbtSource removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (DbtSource)
-                Asset.removeAnnouncement(builder().qualifiedName(qualifiedName).name(name));
+        return (DbtSource) Asset.removeAnnouncement(updater(qualifiedName, name));
     }
 
     /**

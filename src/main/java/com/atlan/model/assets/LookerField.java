@@ -6,8 +6,7 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.AtlanCertificateStatus;
+import com.atlan.model.enums.*;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
@@ -187,8 +186,7 @@ public class LookerField extends Looker {
      * @throws AtlanException on any API problems
      */
     public static LookerField removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (LookerField)
-                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+        return (LookerField) Asset.removeDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -200,8 +198,7 @@ public class LookerField extends Looker {
      * @throws AtlanException on any API problems
      */
     public static LookerField removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (LookerField) Asset.removeUserDescription(
-                builder().qualifiedName(qualifiedName).name(name));
+        return (LookerField) Asset.removeUserDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -213,8 +210,7 @@ public class LookerField extends Looker {
      * @throws AtlanException on any API problems
      */
     public static LookerField removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (LookerField)
-                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+        return (LookerField) Asset.removeOwners(updater(qualifiedName, name));
     }
 
     /**
@@ -240,8 +236,7 @@ public class LookerField extends Looker {
      * @throws AtlanException on any API problems
      */
     public static LookerField removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (LookerField)
-                Asset.removeCertificate(builder().qualifiedName(qualifiedName).name(name));
+        return (LookerField) Asset.removeCertificate(updater(qualifiedName, name));
     }
 
     /**
@@ -268,8 +263,7 @@ public class LookerField extends Looker {
      * @throws AtlanException on any API problems
      */
     public static LookerField removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (LookerField)
-                Asset.removeAnnouncement(builder().qualifiedName(qualifiedName).name(name));
+        return (LookerField) Asset.removeAnnouncement(updater(qualifiedName, name));
     }
 
     /**

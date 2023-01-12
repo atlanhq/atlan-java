@@ -6,9 +6,7 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.AtlanCertificateStatus;
-import com.atlan.model.enums.AtlanConnectorType;
+import com.atlan.model.enums.*;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.StringUtils;
 import java.util.ArrayList;
@@ -204,8 +202,7 @@ public class PresetDashboard extends Preset {
      * @throws AtlanException on any API problems
      */
     public static PresetDashboard removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (PresetDashboard)
-                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+        return (PresetDashboard) Asset.removeDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -217,8 +214,7 @@ public class PresetDashboard extends Preset {
      * @throws AtlanException on any API problems
      */
     public static PresetDashboard removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (PresetDashboard) Asset.removeUserDescription(
-                builder().qualifiedName(qualifiedName).name(name));
+        return (PresetDashboard) Asset.removeUserDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -230,8 +226,7 @@ public class PresetDashboard extends Preset {
      * @throws AtlanException on any API problems
      */
     public static PresetDashboard removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (PresetDashboard)
-                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+        return (PresetDashboard) Asset.removeOwners(updater(qualifiedName, name));
     }
 
     /**
@@ -257,8 +252,7 @@ public class PresetDashboard extends Preset {
      * @throws AtlanException on any API problems
      */
     public static PresetDashboard removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (PresetDashboard)
-                Asset.removeCertificate(builder().qualifiedName(qualifiedName).name(name));
+        return (PresetDashboard) Asset.removeCertificate(updater(qualifiedName, name));
     }
 
     /**
@@ -285,8 +279,7 @@ public class PresetDashboard extends Preset {
      * @throws AtlanException on any API problems
      */
     public static PresetDashboard removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (PresetDashboard)
-                Asset.removeAnnouncement(builder().qualifiedName(qualifiedName).name(name));
+        return (PresetDashboard) Asset.removeAnnouncement(updater(qualifiedName, name));
     }
 
     /**

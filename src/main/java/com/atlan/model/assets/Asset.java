@@ -317,6 +317,10 @@ public abstract class Asset extends Reference {
     @Attribute
     Double sourceTotalCost;
 
+    /** The unit of measure for sourceTotalCost. */
+    @Attribute
+    SourceCostUnitType sourceCostUnit;
+
     /** List of usernames of the most recent users who read the asset. */
     @Attribute
     @JsonProperty("sourceReadRecentUserList")

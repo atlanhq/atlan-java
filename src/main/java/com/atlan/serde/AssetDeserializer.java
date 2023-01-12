@@ -84,6 +84,15 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
             builder = IndistinctAsset.builder();
         } else {
             switch (typeName) {
+                case ADLSAccount.TYPE_NAME:
+                    builder = ADLSAccount.builder();
+                    break;
+                case ADLSContainer.TYPE_NAME:
+                    builder = ADLSContainer.builder();
+                    break;
+                case ADLSObject.TYPE_NAME:
+                    builder = ADLSObject.builder();
+                    break;
                 case APIPath.TYPE_NAME:
                     builder = APIPath.builder();
                     break;

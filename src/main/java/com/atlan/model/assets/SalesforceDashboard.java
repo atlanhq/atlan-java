@@ -6,8 +6,7 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.AtlanCertificateStatus;
+import com.atlan.model.enums.*;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
@@ -165,8 +164,7 @@ public class SalesforceDashboard extends Salesforce {
      * @throws AtlanException on any API problems
      */
     public static SalesforceDashboard removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (SalesforceDashboard)
-                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+        return (SalesforceDashboard) Asset.removeDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -178,8 +176,7 @@ public class SalesforceDashboard extends Salesforce {
      * @throws AtlanException on any API problems
      */
     public static SalesforceDashboard removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (SalesforceDashboard) Asset.removeUserDescription(
-                builder().qualifiedName(qualifiedName).name(name));
+        return (SalesforceDashboard) Asset.removeUserDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -191,8 +188,7 @@ public class SalesforceDashboard extends Salesforce {
      * @throws AtlanException on any API problems
      */
     public static SalesforceDashboard removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (SalesforceDashboard)
-                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+        return (SalesforceDashboard) Asset.removeOwners(updater(qualifiedName, name));
     }
 
     /**
@@ -218,8 +214,7 @@ public class SalesforceDashboard extends Salesforce {
      * @throws AtlanException on any API problems
      */
     public static SalesforceDashboard removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (SalesforceDashboard)
-                Asset.removeCertificate(builder().qualifiedName(qualifiedName).name(name));
+        return (SalesforceDashboard) Asset.removeCertificate(updater(qualifiedName, name));
     }
 
     /**
@@ -247,8 +242,7 @@ public class SalesforceDashboard extends Salesforce {
      * @throws AtlanException on any API problems
      */
     public static SalesforceDashboard removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (SalesforceDashboard)
-                Asset.removeAnnouncement(builder().qualifiedName(qualifiedName).name(name));
+        return (SalesforceDashboard) Asset.removeAnnouncement(updater(qualifiedName, name));
     }
 
     /**

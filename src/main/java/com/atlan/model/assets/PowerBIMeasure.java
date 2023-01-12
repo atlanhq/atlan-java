@@ -6,8 +6,7 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.AtlanCertificateStatus;
+import com.atlan.model.enums.*;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
@@ -163,8 +162,7 @@ public class PowerBIMeasure extends PowerBI {
      * @throws AtlanException on any API problems
      */
     public static PowerBIMeasure removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (PowerBIMeasure)
-                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+        return (PowerBIMeasure) Asset.removeDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -176,8 +174,7 @@ public class PowerBIMeasure extends PowerBI {
      * @throws AtlanException on any API problems
      */
     public static PowerBIMeasure removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (PowerBIMeasure) Asset.removeUserDescription(
-                builder().qualifiedName(qualifiedName).name(name));
+        return (PowerBIMeasure) Asset.removeUserDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -189,8 +186,7 @@ public class PowerBIMeasure extends PowerBI {
      * @throws AtlanException on any API problems
      */
     public static PowerBIMeasure removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (PowerBIMeasure)
-                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+        return (PowerBIMeasure) Asset.removeOwners(updater(qualifiedName, name));
     }
 
     /**
@@ -216,8 +212,7 @@ public class PowerBIMeasure extends PowerBI {
      * @throws AtlanException on any API problems
      */
     public static PowerBIMeasure removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (PowerBIMeasure)
-                Asset.removeCertificate(builder().qualifiedName(qualifiedName).name(name));
+        return (PowerBIMeasure) Asset.removeCertificate(updater(qualifiedName, name));
     }
 
     /**
@@ -244,8 +239,7 @@ public class PowerBIMeasure extends PowerBI {
      * @throws AtlanException on any API problems
      */
     public static PowerBIMeasure removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (PowerBIMeasure)
-                Asset.removeAnnouncement(builder().qualifiedName(qualifiedName).name(name));
+        return (PowerBIMeasure) Asset.removeAnnouncement(updater(qualifiedName, name));
     }
 
     /**

@@ -6,8 +6,7 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.AtlanCertificateStatus;
+import com.atlan.model.enums.*;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
@@ -181,8 +180,7 @@ public class TableauFlow extends Tableau {
      * @throws AtlanException on any API problems
      */
     public static TableauFlow removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (TableauFlow)
-                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+        return (TableauFlow) Asset.removeDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -194,8 +192,7 @@ public class TableauFlow extends Tableau {
      * @throws AtlanException on any API problems
      */
     public static TableauFlow removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (TableauFlow) Asset.removeUserDescription(
-                builder().qualifiedName(qualifiedName).name(name));
+        return (TableauFlow) Asset.removeUserDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -207,8 +204,7 @@ public class TableauFlow extends Tableau {
      * @throws AtlanException on any API problems
      */
     public static TableauFlow removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (TableauFlow)
-                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+        return (TableauFlow) Asset.removeOwners(updater(qualifiedName, name));
     }
 
     /**
@@ -234,8 +230,7 @@ public class TableauFlow extends Tableau {
      * @throws AtlanException on any API problems
      */
     public static TableauFlow removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (TableauFlow)
-                Asset.removeCertificate(builder().qualifiedName(qualifiedName).name(name));
+        return (TableauFlow) Asset.removeCertificate(updater(qualifiedName, name));
     }
 
     /**
@@ -262,8 +257,7 @@ public class TableauFlow extends Tableau {
      * @throws AtlanException on any API problems
      */
     public static TableauFlow removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (TableauFlow)
-                Asset.removeAnnouncement(builder().qualifiedName(qualifiedName).name(name));
+        return (TableauFlow) Asset.removeAnnouncement(updater(qualifiedName, name));
     }
 
     /**

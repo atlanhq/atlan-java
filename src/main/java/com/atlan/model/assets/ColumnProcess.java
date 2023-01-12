@@ -6,9 +6,7 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.AtlanCertificateStatus;
-import com.atlan.model.enums.AtlanConnectorType;
+import com.atlan.model.enums.*;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
@@ -170,8 +168,7 @@ public class ColumnProcess extends AbstractColumnProcess {
      * @throws AtlanException on any API problems
      */
     public static ColumnProcess removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (ColumnProcess)
-                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+        return (ColumnProcess) Asset.removeDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -183,8 +180,7 @@ public class ColumnProcess extends AbstractColumnProcess {
      * @throws AtlanException on any API problems
      */
     public static ColumnProcess removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (ColumnProcess) Asset.removeUserDescription(
-                builder().qualifiedName(qualifiedName).name(name));
+        return (ColumnProcess) Asset.removeUserDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -196,8 +192,7 @@ public class ColumnProcess extends AbstractColumnProcess {
      * @throws AtlanException on any API problems
      */
     public static ColumnProcess removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (ColumnProcess)
-                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+        return (ColumnProcess) Asset.removeOwners(updater(qualifiedName, name));
     }
 
     /**
@@ -223,8 +218,7 @@ public class ColumnProcess extends AbstractColumnProcess {
      * @throws AtlanException on any API problems
      */
     public static ColumnProcess removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (ColumnProcess)
-                Asset.removeCertificate(builder().qualifiedName(qualifiedName).name(name));
+        return (ColumnProcess) Asset.removeCertificate(updater(qualifiedName, name));
     }
 
     /**
@@ -251,8 +245,7 @@ public class ColumnProcess extends AbstractColumnProcess {
      * @throws AtlanException on any API problems
      */
     public static ColumnProcess removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (ColumnProcess)
-                Asset.removeAnnouncement(builder().qualifiedName(qualifiedName).name(name));
+        return (ColumnProcess) Asset.removeAnnouncement(updater(qualifiedName, name));
     }
 
     /**

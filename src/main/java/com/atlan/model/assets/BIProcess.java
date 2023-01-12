@@ -6,8 +6,7 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.AtlanCertificateStatus;
+import com.atlan.model.enums.*;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
@@ -143,8 +142,7 @@ public class BIProcess extends AbstractProcess {
      * @throws AtlanException on any API problems
      */
     public static BIProcess removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (BIProcess)
-                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+        return (BIProcess) Asset.removeDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -156,8 +154,7 @@ public class BIProcess extends AbstractProcess {
      * @throws AtlanException on any API problems
      */
     public static BIProcess removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (BIProcess) Asset.removeUserDescription(
-                builder().qualifiedName(qualifiedName).name(name));
+        return (BIProcess) Asset.removeUserDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -169,8 +166,7 @@ public class BIProcess extends AbstractProcess {
      * @throws AtlanException on any API problems
      */
     public static BIProcess removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (BIProcess)
-                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+        return (BIProcess) Asset.removeOwners(updater(qualifiedName, name));
     }
 
     /**
@@ -196,8 +192,7 @@ public class BIProcess extends AbstractProcess {
      * @throws AtlanException on any API problems
      */
     public static BIProcess removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (BIProcess)
-                Asset.removeCertificate(builder().qualifiedName(qualifiedName).name(name));
+        return (BIProcess) Asset.removeCertificate(updater(qualifiedName, name));
     }
 
     /**
@@ -224,8 +219,7 @@ public class BIProcess extends AbstractProcess {
      * @throws AtlanException on any API problems
      */
     public static BIProcess removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (BIProcess)
-                Asset.removeAnnouncement(builder().qualifiedName(qualifiedName).name(name));
+        return (BIProcess) Asset.removeAnnouncement(updater(qualifiedName, name));
     }
 
     /**

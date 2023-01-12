@@ -6,8 +6,7 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.AtlanCertificateStatus;
+import com.atlan.model.enums.*;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
@@ -183,8 +182,7 @@ public class LookerTile extends Looker {
      * @throws AtlanException on any API problems
      */
     public static LookerTile removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (LookerTile)
-                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+        return (LookerTile) Asset.removeDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -196,8 +194,7 @@ public class LookerTile extends Looker {
      * @throws AtlanException on any API problems
      */
     public static LookerTile removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (LookerTile) Asset.removeUserDescription(
-                builder().qualifiedName(qualifiedName).name(name));
+        return (LookerTile) Asset.removeUserDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -209,8 +206,7 @@ public class LookerTile extends Looker {
      * @throws AtlanException on any API problems
      */
     public static LookerTile removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (LookerTile)
-                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+        return (LookerTile) Asset.removeOwners(updater(qualifiedName, name));
     }
 
     /**
@@ -236,8 +232,7 @@ public class LookerTile extends Looker {
      * @throws AtlanException on any API problems
      */
     public static LookerTile removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (LookerTile)
-                Asset.removeCertificate(builder().qualifiedName(qualifiedName).name(name));
+        return (LookerTile) Asset.removeCertificate(updater(qualifiedName, name));
     }
 
     /**
@@ -264,8 +259,7 @@ public class LookerTile extends Looker {
      * @throws AtlanException on any API problems
      */
     public static LookerTile removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (LookerTile)
-                Asset.removeAnnouncement(builder().qualifiedName(qualifiedName).name(name));
+        return (LookerTile) Asset.removeAnnouncement(updater(qualifiedName, name));
     }
 
     /**

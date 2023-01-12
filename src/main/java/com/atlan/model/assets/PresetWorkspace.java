@@ -6,9 +6,7 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.AtlanCertificateStatus;
-import com.atlan.model.enums.AtlanConnectorType;
+import com.atlan.model.enums.*;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
@@ -212,8 +210,7 @@ public class PresetWorkspace extends Preset {
      * @throws AtlanException on any API problems
      */
     public static PresetWorkspace removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (PresetWorkspace)
-                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+        return (PresetWorkspace) Asset.removeDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -225,8 +222,7 @@ public class PresetWorkspace extends Preset {
      * @throws AtlanException on any API problems
      */
     public static PresetWorkspace removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (PresetWorkspace) Asset.removeUserDescription(
-                builder().qualifiedName(qualifiedName).name(name));
+        return (PresetWorkspace) Asset.removeUserDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -238,8 +234,7 @@ public class PresetWorkspace extends Preset {
      * @throws AtlanException on any API problems
      */
     public static PresetWorkspace removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (PresetWorkspace)
-                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+        return (PresetWorkspace) Asset.removeOwners(updater(qualifiedName, name));
     }
 
     /**
@@ -265,8 +260,7 @@ public class PresetWorkspace extends Preset {
      * @throws AtlanException on any API problems
      */
     public static PresetWorkspace removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (PresetWorkspace)
-                Asset.removeCertificate(builder().qualifiedName(qualifiedName).name(name));
+        return (PresetWorkspace) Asset.removeCertificate(updater(qualifiedName, name));
     }
 
     /**
@@ -293,8 +287,7 @@ public class PresetWorkspace extends Preset {
      * @throws AtlanException on any API problems
      */
     public static PresetWorkspace removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (PresetWorkspace)
-                Asset.removeAnnouncement(builder().qualifiedName(qualifiedName).name(name));
+        return (PresetWorkspace) Asset.removeAnnouncement(updater(qualifiedName, name));
     }
 
     /**

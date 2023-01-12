@@ -6,10 +6,7 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.AtlanCertificateStatus;
-import com.atlan.model.enums.AtlanConnectorType;
-import com.atlan.model.enums.GoogleDataStudioAssetType;
+import com.atlan.model.enums.*;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
@@ -179,8 +176,7 @@ public class DataStudioAsset extends Google {
      * @throws AtlanException on any API problems
      */
     public static DataStudioAsset removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (DataStudioAsset)
-                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+        return (DataStudioAsset) Asset.removeDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -192,8 +188,7 @@ public class DataStudioAsset extends Google {
      * @throws AtlanException on any API problems
      */
     public static DataStudioAsset removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (DataStudioAsset) Asset.removeUserDescription(
-                builder().qualifiedName(qualifiedName).name(name));
+        return (DataStudioAsset) Asset.removeUserDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -205,8 +200,7 @@ public class DataStudioAsset extends Google {
      * @throws AtlanException on any API problems
      */
     public static DataStudioAsset removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (DataStudioAsset)
-                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+        return (DataStudioAsset) Asset.removeOwners(updater(qualifiedName, name));
     }
 
     /**
@@ -232,8 +226,7 @@ public class DataStudioAsset extends Google {
      * @throws AtlanException on any API problems
      */
     public static DataStudioAsset removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (DataStudioAsset)
-                Asset.removeCertificate(builder().qualifiedName(qualifiedName).name(name));
+        return (DataStudioAsset) Asset.removeCertificate(updater(qualifiedName, name));
     }
 
     /**
@@ -260,8 +253,7 @@ public class DataStudioAsset extends Google {
      * @throws AtlanException on any API problems
      */
     public static DataStudioAsset removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (DataStudioAsset)
-                Asset.removeAnnouncement(builder().qualifiedName(qualifiedName).name(name));
+        return (DataStudioAsset) Asset.removeAnnouncement(updater(qualifiedName, name));
     }
 
     /**

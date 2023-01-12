@@ -6,6 +6,7 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
+import com.atlan.model.enums.*;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
@@ -187,8 +188,7 @@ public class Readme extends Resource {
      * @throws AtlanException on any API problems
      */
     public static Readme removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (Readme)
-                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+        return (Readme) Asset.removeDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -200,7 +200,6 @@ public class Readme extends Resource {
      * @throws AtlanException on any API problems
      */
     public static Readme removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (Readme) Asset.removeUserDescription(
-                builder().qualifiedName(qualifiedName).name(name));
+        return (Readme) Asset.removeUserDescription(updater(qualifiedName, name));
     }
 }

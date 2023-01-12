@@ -6,9 +6,7 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.AtlanCertificateStatus;
-import com.atlan.model.enums.AtlanConnectorType;
+import com.atlan.model.enums.*;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -223,8 +221,7 @@ public class View extends SQL {
      * @throws AtlanException on any API problems
      */
     public static View removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (View)
-                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+        return (View) Asset.removeDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -236,8 +233,7 @@ public class View extends SQL {
      * @throws AtlanException on any API problems
      */
     public static View removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (View) Asset.removeUserDescription(
-                builder().qualifiedName(qualifiedName).name(name));
+        return (View) Asset.removeUserDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -249,7 +245,7 @@ public class View extends SQL {
      * @throws AtlanException on any API problems
      */
     public static View removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (View) Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+        return (View) Asset.removeOwners(updater(qualifiedName, name));
     }
 
     /**
@@ -275,8 +271,7 @@ public class View extends SQL {
      * @throws AtlanException on any API problems
      */
     public static View removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (View)
-                Asset.removeCertificate(builder().qualifiedName(qualifiedName).name(name));
+        return (View) Asset.removeCertificate(updater(qualifiedName, name));
     }
 
     /**
@@ -303,8 +298,7 @@ public class View extends SQL {
      * @throws AtlanException on any API problems
      */
     public static View removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (View)
-                Asset.removeAnnouncement(builder().qualifiedName(qualifiedName).name(name));
+        return (View) Asset.removeAnnouncement(updater(qualifiedName, name));
     }
 
     /**

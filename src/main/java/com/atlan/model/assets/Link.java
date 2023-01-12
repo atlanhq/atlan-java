@@ -6,7 +6,7 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.enums.LinkIconType;
+import com.atlan.model.enums.*;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
@@ -180,8 +180,7 @@ public class Link extends Resource {
      * @throws AtlanException on any API problems
      */
     public static Link removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (Link)
-                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+        return (Link) Asset.removeDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -193,7 +192,6 @@ public class Link extends Resource {
      * @throws AtlanException on any API problems
      */
     public static Link removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (Link) Asset.removeUserDescription(
-                builder().qualifiedName(qualifiedName).name(name));
+        return (Link) Asset.removeUserDescription(updater(qualifiedName, name));
     }
 }

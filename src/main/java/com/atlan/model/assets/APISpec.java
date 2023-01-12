@@ -6,9 +6,7 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.AtlanCertificateStatus;
-import com.atlan.model.enums.AtlanConnectorType;
+import com.atlan.model.enums.*;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
@@ -197,8 +195,7 @@ public class APISpec extends API {
      * @throws AtlanException on any API problems
      */
     public static APISpec removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (APISpec)
-                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+        return (APISpec) Asset.removeDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -210,8 +207,7 @@ public class APISpec extends API {
      * @throws AtlanException on any API problems
      */
     public static APISpec removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (APISpec) Asset.removeUserDescription(
-                builder().qualifiedName(qualifiedName).name(name));
+        return (APISpec) Asset.removeUserDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -223,8 +219,7 @@ public class APISpec extends API {
      * @throws AtlanException on any API problems
      */
     public static APISpec removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (APISpec)
-                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+        return (APISpec) Asset.removeOwners(updater(qualifiedName, name));
     }
 
     /**
@@ -250,8 +245,7 @@ public class APISpec extends API {
      * @throws AtlanException on any API problems
      */
     public static APISpec removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (APISpec)
-                Asset.removeCertificate(builder().qualifiedName(qualifiedName).name(name));
+        return (APISpec) Asset.removeCertificate(updater(qualifiedName, name));
     }
 
     /**
@@ -278,8 +272,7 @@ public class APISpec extends API {
      * @throws AtlanException on any API problems
      */
     public static APISpec removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (APISpec)
-                Asset.removeAnnouncement(builder().qualifiedName(qualifiedName).name(name));
+        return (APISpec) Asset.removeAnnouncement(updater(qualifiedName, name));
     }
 
     /**

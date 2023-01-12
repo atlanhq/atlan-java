@@ -6,9 +6,7 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.AtlanCertificateStatus;
-import com.atlan.model.enums.AtlanConnectorType;
+import com.atlan.model.enums.*;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.StringUtils;
 import java.util.ArrayList;
@@ -197,8 +195,7 @@ public class APIPath extends API {
      * @throws AtlanException on any API problems
      */
     public static APIPath removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (APIPath)
-                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+        return (APIPath) Asset.removeDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -210,8 +207,7 @@ public class APIPath extends API {
      * @throws AtlanException on any API problems
      */
     public static APIPath removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (APIPath) Asset.removeUserDescription(
-                builder().qualifiedName(qualifiedName).name(name));
+        return (APIPath) Asset.removeUserDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -223,8 +219,7 @@ public class APIPath extends API {
      * @throws AtlanException on any API problems
      */
     public static APIPath removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (APIPath)
-                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+        return (APIPath) Asset.removeOwners(updater(qualifiedName, name));
     }
 
     /**
@@ -250,8 +245,7 @@ public class APIPath extends API {
      * @throws AtlanException on any API problems
      */
     public static APIPath removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (APIPath)
-                Asset.removeCertificate(builder().qualifiedName(qualifiedName).name(name));
+        return (APIPath) Asset.removeCertificate(updater(qualifiedName, name));
     }
 
     /**
@@ -278,8 +272,7 @@ public class APIPath extends API {
      * @throws AtlanException on any API problems
      */
     public static APIPath removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (APIPath)
-                Asset.removeAnnouncement(builder().qualifiedName(qualifiedName).name(name));
+        return (APIPath) Asset.removeAnnouncement(updater(qualifiedName, name));
     }
 
     /**

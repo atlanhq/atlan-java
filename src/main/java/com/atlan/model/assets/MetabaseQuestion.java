@@ -6,8 +6,7 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.AtlanCertificateStatus;
+import com.atlan.model.enums.*;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
@@ -165,8 +164,7 @@ public class MetabaseQuestion extends Metabase {
      * @throws AtlanException on any API problems
      */
     public static MetabaseQuestion removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (MetabaseQuestion)
-                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+        return (MetabaseQuestion) Asset.removeDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -178,8 +176,7 @@ public class MetabaseQuestion extends Metabase {
      * @throws AtlanException on any API problems
      */
     public static MetabaseQuestion removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (MetabaseQuestion) Asset.removeUserDescription(
-                builder().qualifiedName(qualifiedName).name(name));
+        return (MetabaseQuestion) Asset.removeUserDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -191,8 +188,7 @@ public class MetabaseQuestion extends Metabase {
      * @throws AtlanException on any API problems
      */
     public static MetabaseQuestion removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (MetabaseQuestion)
-                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+        return (MetabaseQuestion) Asset.removeOwners(updater(qualifiedName, name));
     }
 
     /**
@@ -218,8 +214,7 @@ public class MetabaseQuestion extends Metabase {
      * @throws AtlanException on any API problems
      */
     public static MetabaseQuestion removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (MetabaseQuestion)
-                Asset.removeCertificate(builder().qualifiedName(qualifiedName).name(name));
+        return (MetabaseQuestion) Asset.removeCertificate(updater(qualifiedName, name));
     }
 
     /**
@@ -246,8 +241,7 @@ public class MetabaseQuestion extends Metabase {
      * @throws AtlanException on any API problems
      */
     public static MetabaseQuestion removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (MetabaseQuestion)
-                Asset.removeAnnouncement(builder().qualifiedName(qualifiedName).name(name));
+        return (MetabaseQuestion) Asset.removeAnnouncement(updater(qualifiedName, name));
     }
 
     /**

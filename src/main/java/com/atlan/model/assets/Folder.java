@@ -6,8 +6,7 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.AtlanCertificateStatus;
+import com.atlan.model.enums.*;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
@@ -155,8 +154,7 @@ public class Folder extends Namespace {
      * @throws AtlanException on any API problems
      */
     public static Folder removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (Folder)
-                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+        return (Folder) Asset.removeDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -168,8 +166,7 @@ public class Folder extends Namespace {
      * @throws AtlanException on any API problems
      */
     public static Folder removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (Folder) Asset.removeUserDescription(
-                builder().qualifiedName(qualifiedName).name(name));
+        return (Folder) Asset.removeUserDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -181,8 +178,7 @@ public class Folder extends Namespace {
      * @throws AtlanException on any API problems
      */
     public static Folder removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (Folder)
-                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+        return (Folder) Asset.removeOwners(updater(qualifiedName, name));
     }
 
     /**
@@ -208,8 +204,7 @@ public class Folder extends Namespace {
      * @throws AtlanException on any API problems
      */
     public static Folder removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (Folder)
-                Asset.removeCertificate(builder().qualifiedName(qualifiedName).name(name));
+        return (Folder) Asset.removeCertificate(updater(qualifiedName, name));
     }
 
     /**
@@ -236,8 +231,7 @@ public class Folder extends Namespace {
      * @throws AtlanException on any API problems
      */
     public static Folder removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (Folder)
-                Asset.removeAnnouncement(builder().qualifiedName(qualifiedName).name(name));
+        return (Folder) Asset.removeAnnouncement(updater(qualifiedName, name));
     }
 
     /**

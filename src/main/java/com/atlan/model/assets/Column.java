@@ -6,9 +6,7 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.AtlanCertificateStatus;
-import com.atlan.model.enums.AtlanConnectorType;
+import com.atlan.model.enums.*;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -438,8 +436,7 @@ public class Column extends SQL {
      * @throws AtlanException on any API problems
      */
     public static Column removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (Column)
-                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+        return (Column) Asset.removeDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -451,8 +448,7 @@ public class Column extends SQL {
      * @throws AtlanException on any API problems
      */
     public static Column removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (Column) Asset.removeUserDescription(
-                builder().qualifiedName(qualifiedName).name(name));
+        return (Column) Asset.removeUserDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -464,8 +460,7 @@ public class Column extends SQL {
      * @throws AtlanException on any API problems
      */
     public static Column removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (Column)
-                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+        return (Column) Asset.removeOwners(updater(qualifiedName, name));
     }
 
     /**
@@ -491,8 +486,7 @@ public class Column extends SQL {
      * @throws AtlanException on any API problems
      */
     public static Column removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (Column)
-                Asset.removeCertificate(builder().qualifiedName(qualifiedName).name(name));
+        return (Column) Asset.removeCertificate(updater(qualifiedName, name));
     }
 
     /**
@@ -519,8 +513,7 @@ public class Column extends SQL {
      * @throws AtlanException on any API problems
      */
     public static Column removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (Column)
-                Asset.removeAnnouncement(builder().qualifiedName(qualifiedName).name(name));
+        return (Column) Asset.removeAnnouncement(updater(qualifiedName, name));
     }
 
     /**

@@ -6,8 +6,7 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.AtlanCertificateStatus;
+import com.atlan.model.enums.*;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
@@ -191,8 +190,7 @@ public class TableauProject extends Tableau {
      * @throws AtlanException on any API problems
      */
     public static TableauProject removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (TableauProject)
-                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+        return (TableauProject) Asset.removeDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -204,8 +202,7 @@ public class TableauProject extends Tableau {
      * @throws AtlanException on any API problems
      */
     public static TableauProject removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (TableauProject) Asset.removeUserDescription(
-                builder().qualifiedName(qualifiedName).name(name));
+        return (TableauProject) Asset.removeUserDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -217,8 +214,7 @@ public class TableauProject extends Tableau {
      * @throws AtlanException on any API problems
      */
     public static TableauProject removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (TableauProject)
-                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+        return (TableauProject) Asset.removeOwners(updater(qualifiedName, name));
     }
 
     /**
@@ -244,8 +240,7 @@ public class TableauProject extends Tableau {
      * @throws AtlanException on any API problems
      */
     public static TableauProject removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (TableauProject)
-                Asset.removeCertificate(builder().qualifiedName(qualifiedName).name(name));
+        return (TableauProject) Asset.removeCertificate(updater(qualifiedName, name));
     }
 
     /**
@@ -272,8 +267,7 @@ public class TableauProject extends Tableau {
      * @throws AtlanException on any API problems
      */
     public static TableauProject removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (TableauProject)
-                Asset.removeAnnouncement(builder().qualifiedName(qualifiedName).name(name));
+        return (TableauProject) Asset.removeAnnouncement(updater(qualifiedName, name));
     }
 
     /**
