@@ -14,7 +14,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 /**
- * TBC
+ * Instance of a Sigma dataset column in Atlan.
  */
 @Getter
 @Setter
@@ -31,15 +31,15 @@ public class SigmaDatasetColumn extends Sigma {
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Unique name of the dataset that contains this column. */
     @Attribute
     String sigmaDatasetQualifiedName;
 
-    /** TBC */
+    /** Human-readable name of the dataset that contains this column. */
     @Attribute
     String sigmaDatasetName;
 
-    /** TBC */
+    /** Dataset that contains this column. */
     @Attribute
     SigmaDataset sigmaDataset;
 

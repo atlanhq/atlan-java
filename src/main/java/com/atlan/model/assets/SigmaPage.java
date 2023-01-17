@@ -15,7 +15,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 /**
- * TBC
+ * Instance of a Sigma page in Atlan.
  */
 @Getter
 @Setter
@@ -32,16 +32,16 @@ public class SigmaPage extends Sigma {
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Number of data elements that exist within this page. */
     @Attribute
     Long sigmaDataElementCount;
 
-    /** TBC */
+    /** Data elements within this page. */
     @Attribute
     @Singular
     SortedSet<SigmaDataElement> sigmaDataElements;
 
-    /** TBC */
+    /** Workbook that contains this page. */
     @Attribute
     SigmaWorkbook sigmaWorkbook;
 

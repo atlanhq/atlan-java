@@ -8,7 +8,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 /**
- * TBC
+ * Base class for Sigma assets.
  */
 @Getter
 @Setter

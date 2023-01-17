@@ -15,7 +15,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 /**
- * TBC
+ * Instance of a Sigma data element in Atlan.
  */
 @Getter
 @Setter
@@ -40,15 +40,15 @@ public class SigmaDataElement extends Sigma {
     @Attribute
     String sigmaDataElementType;
 
-    /** TBC */
+    /** Number of data element fields within this data element. */
     @Attribute
     Long sigmaDataElementFieldCount;
 
-    /** TBC */
+    /** Page that contains this data element. */
     @Attribute
     SigmaPage sigmaPage;
 
-    /** TBC */
+    /** Data element fields within this data element. */
     @Attribute
     @Singular
     SortedSet<SigmaDataElementField> sigmaDataElementFields;
