@@ -85,7 +85,7 @@ public class DbtCrawler extends AbstractCrawler {
         Map<String, Map<String, Map<String, String>>> toInclude = buildDbtCloudFilter(includeAssets);
         Map<String, Map<String, Map<String, String>>> toExclude = buildDbtCloudFilter(excludeAssets);
 
-        WorkflowTaskArguments.WorkflowTaskArgumentsBuilder<?, ?> argsBuilder = WorkflowTaskArguments.builder()
+        WorkflowParameters.WorkflowParametersBuilder<?, ?> argsBuilder = WorkflowParameters.builder()
                 .parameter(NameValuePair.of("connection", connection.toJson()))
                 .parameter(NameValuePair.of("extraction-method", "api"))
                 .parameter(NameValuePair.of("deployment-type", "multi"))

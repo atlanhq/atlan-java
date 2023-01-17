@@ -119,7 +119,7 @@ public class PostgreSQLCrawler extends AbstractCrawler {
         Map<String, List<String>> toInclude = buildHierarchicalFilter(includeAssets);
         Map<String, List<String>> toExclude = buildHierarchicalFilter(excludeAssets);
 
-        WorkflowTaskArguments.WorkflowTaskArgumentsBuilder<?, ?> argsBuilder = WorkflowTaskArguments.builder()
+        WorkflowParameters.WorkflowParametersBuilder<?, ?> argsBuilder = WorkflowParameters.builder()
                 .parameter(NameValuePair.builder()
                         .name("credential-guid")
                         .value("{{credentialGuid}}")

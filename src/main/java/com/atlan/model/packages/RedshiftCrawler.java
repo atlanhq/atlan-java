@@ -119,7 +119,7 @@ public class RedshiftCrawler extends AbstractCrawler {
         Map<String, List<String>> toInclude = buildHierarchicalFilter(includeAssets);
         Map<String, List<String>> toExclude = buildHierarchicalFilter(excludeAssets);
 
-        WorkflowTaskArguments.WorkflowTaskArgumentsBuilder<?, ?> argsBuilder = WorkflowTaskArguments.builder()
+        WorkflowParameters.WorkflowParametersBuilder<?, ?> argsBuilder = WorkflowParameters.builder()
                 .parameter(NameValuePair.of("credentials-fetch-strategy", "credential_guid"))
                 .parameter(NameValuePair.of("credential-guid", "{{credentialGuid}}"))
                 .parameter(NameValuePair.of("control-config-strategy", "default"))

@@ -66,7 +66,7 @@ public class ConnectionDelete {
                                 .dag(WorkflowDAG.builder()
                                         .task(WorkflowTask.builder()
                                                 .name("run")
-                                                .arguments(WorkflowTaskArguments.builder()
+                                                .arguments(WorkflowParameters.builder()
                                                         .parameter(NameValuePair.builder()
                                                                 .name("connection-qualified-name")
                                                                 .value(qualifiedName)

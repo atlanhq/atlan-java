@@ -77,7 +77,7 @@ public class FivetranCrawler extends AbstractCrawler {
         credentialBody.put("extra", Collections.emptyMap());
         credentialBody.put("connectorConfigName", "atlan-connectors-fivetran");
 
-        WorkflowTaskArguments.WorkflowTaskArgumentsBuilder<?, ?> argsBuilder = WorkflowTaskArguments.builder()
+        WorkflowParameters.WorkflowParametersBuilder<?, ?> argsBuilder = WorkflowParameters.builder()
                 .parameter(NameValuePair.of("connection", connection.toJson()))
                 .parameter(NameValuePair.of("credential-guid", "{{credentialGuid}}"));
 

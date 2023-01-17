@@ -306,6 +306,24 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
                 case Schema.TYPE_NAME:
                     builder = Schema.builder();
                     break;
+                case SigmaDataElement.TYPE_NAME:
+                    builder = SigmaDataElement.builder();
+                    break;
+                case SigmaDataElementField.TYPE_NAME:
+                    builder = SigmaDataElementField.builder();
+                    break;
+                case SigmaDataset.TYPE_NAME:
+                    builder = SigmaDataset.builder();
+                    break;
+                case SigmaDatasetColumn.TYPE_NAME:
+                    builder = SigmaDatasetColumn.builder();
+                    break;
+                case SigmaPage.TYPE_NAME:
+                    builder = SigmaPage.builder();
+                    break;
+                case SigmaWorkbook.TYPE_NAME:
+                    builder = SigmaWorkbook.builder();
+                    break;
                 case SnowflakePipe.TYPE_NAME:
                     builder = SnowflakePipe.builder();
                     break;

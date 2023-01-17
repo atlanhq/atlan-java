@@ -18,6 +18,6 @@ public class WorkflowTask extends AtlanObject {
     private static final long serialVersionUID = 2L;
 
     String name;
-    WorkflowTaskArguments arguments;
+    WorkflowParameters arguments;
     WorkflowTemplateRef templateRef;
 }
