@@ -2,18 +2,20 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
-import com.atlan.exception.AtlanException;
-import com.atlan.exception.ErrorCode;
-import com.atlan.exception.InvalidRequestException;
-import com.atlan.exception.NotFoundException;
+import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
+import co.elastic.clients.elasticsearch._types.query_dsl.Query;
+import co.elastic.clients.elasticsearch._types.query_dsl.TermQuery;
+import com.atlan.exception.*;
 import com.atlan.model.enums.*;
 import com.atlan.model.relations.UniqueAttributes;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.SortedSet;
+import com.atlan.model.search.IndexSearchDSL;
+import com.atlan.model.search.IndexSearchRequest;
+import com.atlan.model.search.IndexSearchResponse;
+import com.atlan.util.QueryFactory;
+import java.util.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Instance of a category in Atlan.
@@ -22,6 +24,7 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@Slf4j
 @SuppressWarnings("cast")
 public class GlossaryCategory extends Asset {
     private static final long serialVersionUID = 2L;
@@ -148,6 +151,69 @@ public class GlossaryCategory extends Asset {
                     ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "GlossaryCategory", String.join(",", missing));
         }
         return updater(this.getQualifiedName(), this.getName(), this.getAnchor().getGuid());
+    }
+
+    /**
+     * Find a GlossaryCategory by its human-readable name. Note that this operation must run two
+     * separate queries to first resolve the qualifiedName of the glossary, so will be somewhat slower.
+     * If you already have the qualifiedName of the glossary, use findByNameFast instead.
+     *
+     * @param name of the GlossaryCategory
+     * @param glossaryName name of the Glossary in which the category exists
+     * @param attributes an optional collection of attributes to retrieve for the GlossaryCategory
+     * @return the GlossaryCategory, if found
+     * @throws AtlanException on any API problems, or if the GlossaryCategory does not exist
+     */
+    public static GlossaryCategory findByName(String name, String glossaryName, Collection<String> attributes)
+            throws AtlanException {
+        Glossary glossary = Glossary.findByName(glossaryName, null);
+        return findByNameFast(name, glossary.getQualifiedName(), attributes);
+    }
+
+    /**
+     * Find a GlossaryCategory by its human-readable name.
+     *
+     * @param name of the GlossaryCategory
+     * @param glossaryQualifiedName qualifiedName of the Glossary in which the category exists
+     * @param attributes an optional collection of attributes to retrieve for the GlossaryCategory
+     * @return the GlossaryCategory, if found
+     * @throws AtlanException on any API problems, or if the GlossaryCategory does not exist
+     */
+    public static GlossaryCategory findByNameFast(
+            String name, String glossaryQualifiedName, Collection<String> attributes) throws AtlanException {
+        Query byType = QueryFactory.withType(TYPE_NAME);
+        Query byName = QueryFactory.withExactName(name);
+        Query byGlossary = TermQuery.of(t -> t.field("__glossary").value(glossaryQualifiedName))
+                ._toQuery();
+        Query active = QueryFactory.active();
+        Query filter =
+                BoolQuery.of(b -> b.filter(byType, byName, byGlossary, active))._toQuery();
+        IndexSearchRequest.IndexSearchRequestBuilder<?, ?> builder = IndexSearchRequest.builder()
+                .dsl(IndexSearchDSL.builder().from(0).size(2).query(filter).build());
+        if (attributes != null && !attributes.isEmpty()) {
+            builder.attributes(attributes);
+        }
+        IndexSearchRequest request = builder.build();
+        IndexSearchResponse response = request.search();
+        if (response != null) {
+            long count = response.getApproximateCount();
+            if (count > 1) {
+                log.warn(
+                        "Multiple categories found with the name '{}' in glossary '{}', returning only the first.",
+                        name,
+                        glossaryQualifiedName);
+            }
+            List<Asset> results = response.getAssets();
+            if (results != null && !results.isEmpty()) {
+                Asset first = results.get(0);
+                if (first instanceof GlossaryCategory) {
+                    return (GlossaryCategory) first;
+                } else {
+                    throw new LogicException(ErrorCode.FOUND_UNEXPECTED_ASSET_TYPE);
+                }
+            }
+        }
+        throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_NAME, TYPE_NAME, name);
     }
 
     /**

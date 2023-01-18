@@ -2,11 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
-import co.elastic.clients.elasticsearch._types.FieldValue;
-import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
-import co.elastic.clients.elasticsearch._types.query_dsl.Query;
-import co.elastic.clients.elasticsearch._types.query_dsl.TermsQuery;
-import co.elastic.clients.elasticsearch._types.query_dsl.TermsQueryField;
+import co.elastic.clients.elasticsearch._types.query_dsl.*;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
@@ -233,20 +229,36 @@ public class GlossaryTerm extends Asset {
     }
 
     /**
-     * Find a glossary term by its human-readable name.
+     * Find a GlossaryTerm by its human-readable name. Note that this operation must run two
+     * separate queries to first resolve the qualifiedName of the glossary, so will be somewhat slower.
+     * If you already have the qualifiedName of the glossary, use findByNameFast instead.
      *
-     * @param name of the glossary term
-     * @param glossaryQualifiedName qualifiedName of the glossary in which to look for the term
-     * @param attributes an optional collection of attributes to retrieve for the glossary term
-     * @return the glossary term, if found
-     * @throws AtlanException on any API problems, or if the glossary term does not exist
+     * @param name of the GlossaryTerm
+     * @param glossaryName human-readable name of the Glossary in which the category exists
+     * @param attributes an optional collection of attributes to retrieve for the GlossaryTerm
+     * @return the GlossaryTerm, if found
+     * @throws AtlanException on any API problems, or if the GlossaryTerm does not exist
      */
-    public static GlossaryTerm findByName(String name, String glossaryQualifiedName, Collection<String> attributes)
+    public static GlossaryTerm findByName(String name, String glossaryName, Collection<String> attributes)
+            throws AtlanException {
+        Glossary glossary = Glossary.findByName(glossaryName, null);
+        return findByNameFast(name, glossary.getQualifiedName(), attributes);
+    }
+
+    /**
+     * Find a GlossaryTerm by its human-readable name.
+     *
+     * @param name of the GlossaryTerm
+     * @param glossaryQualifiedName qualifiedName of the Glossary in which the category exists
+     * @param attributes an optional collection of attributes to retrieve for the GlossaryTerm
+     * @return the GlossaryTerm, if found
+     * @throws AtlanException on any API problems, or if the GlossaryTerm does not exist
+     */
+    public static GlossaryTerm findByNameFast(String name, String glossaryQualifiedName, Collection<String> attributes)
             throws AtlanException {
         Query byType = QueryFactory.withType(TYPE_NAME);
         Query byName = QueryFactory.withExactName(name);
-        Query byGlossary = TermsQuery.of(t -> t.field("__glossary")
-                        .terms(TermsQueryField.of(f -> f.value(List.of(FieldValue.of(glossaryQualifiedName))))))
+        Query byGlossary = TermQuery.of(t -> t.field("__glossary").value(glossaryQualifiedName))
                 ._toQuery();
         Query active = QueryFactory.active();
         Query filter =
@@ -262,7 +274,7 @@ public class GlossaryTerm extends Asset {
             long count = response.getApproximateCount();
             if (count > 1) {
                 log.warn(
-                        "Multiple glossary terms found with the name '{}' in glossary '{}', returning only the first.",
+                        "Multiple terms found with the name '{}' in glossary '{}', returning only the first.",
                         name,
                         glossaryQualifiedName);
             }
@@ -272,11 +284,11 @@ public class GlossaryTerm extends Asset {
                 if (first instanceof GlossaryTerm) {
                     return (GlossaryTerm) first;
                 } else {
-                    throw new LogicException(ErrorCode.FOUND_UNEXPECTED_ASSET_TYPE, GlossaryTerm.TYPE_NAME);
+                    throw new LogicException(ErrorCode.FOUND_UNEXPECTED_ASSET_TYPE);
                 }
             }
         }
-        throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_NAME, GlossaryTerm.TYPE_NAME, name);
+        throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_NAME, TYPE_NAME, name);
     }
 
     /**
