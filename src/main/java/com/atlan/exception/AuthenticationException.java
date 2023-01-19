@@ -16,6 +16,10 @@ public class AuthenticationException extends AtlanException {
         super(error, statusCode);
     }
 
+    public AuthenticationException(ErrorCode error, String... params) {
+        super(error, null, params);
+    }
+
     public AuthenticationException(ErrorCode error) {
         super(error, null);
     }
