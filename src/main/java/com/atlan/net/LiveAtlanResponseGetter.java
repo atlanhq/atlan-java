@@ -125,27 +125,34 @@ public class LiveAtlanResponseGetter implements AtlanResponseGetter {
 
         switch (response.code()) {
             case 400:
-                exception = new InvalidRequestException(ErrorCode.INVALID_REQUEST_PASSTHROUGH, error.getErrorCode(), error.getErrorMessage());
+                exception = new InvalidRequestException(
+                        ErrorCode.INVALID_REQUEST_PASSTHROUGH, error.getErrorCode(), error.getErrorMessage());
                 break;
             case 404:
-                exception = new NotFoundException(ErrorCode.NOT_FOUND_PASSTHROUGH, error.getErrorCode(), error.getErrorMessage());
+                exception = new NotFoundException(
+                        ErrorCode.NOT_FOUND_PASSTHROUGH, error.getErrorCode(), error.getErrorMessage());
                 break;
             case 401:
-                exception = new AuthenticationException(ErrorCode.AUTHENTICATION_PASSTHROUGH, error.getErrorCode(), error.getErrorMessage());
+                exception = new AuthenticationException(
+                        ErrorCode.AUTHENTICATION_PASSTHROUGH, error.getErrorCode(), error.getErrorMessage());
                 break;
             case 403:
-                exception = new PermissionException(ErrorCode.PERMISSION_PASSTHROUGH, error.getErrorCode(), error.getErrorMessage());
+                exception = new PermissionException(
+                        ErrorCode.PERMISSION_PASSTHROUGH, error.getErrorCode(), error.getErrorMessage());
                 break;
             case 409:
-                exception = new ConflictException(ErrorCode.CONFLICT_PASSTHROUGH, error.getErrorCode(), error.getErrorMessage());
+                exception = new ConflictException(
+                        ErrorCode.CONFLICT_PASSTHROUGH, error.getErrorCode(), error.getErrorMessage());
                 break;
             case 429:
                 // TODO: confirm that a 429 is raised rather than needing to check the X-RateLimit-Remaining-Minute
                 //  header value of a response (if it is 0 then we are being rate-limited)
-                exception = new RateLimitException(ErrorCode.RATE_LIMIT_PASSTHROUGH, error.getErrorCode(), error.getErrorMessage());
+                exception = new RateLimitException(
+                        ErrorCode.RATE_LIMIT_PASSTHROUGH, error.getErrorCode(), error.getErrorMessage());
                 break;
             default:
-                exception = new ApiException(ErrorCode.ERROR_PASSTHROUGH, null, error.getErrorCode(), error.getErrorMessage());
+                exception = new ApiException(
+                        ErrorCode.ERROR_PASSTHROUGH, null, error.getErrorCode(), error.getErrorMessage());
                 break;
         }
 

@@ -17,10 +17,10 @@ public enum ErrorCode implements ExceptionMessageSet {
             "You must first use Atlan.setBaseUrl() before making an API call."),
 
     INVALID_REQUEST_PASSTHROUGH(
-        400,
-        "ATLAN-JAVA-400-000",
-        "Server responded with {0}: {1}",
-        "Check the details of the server's message to correct your request."),
+            400,
+            "ATLAN-JAVA-400-000",
+            "Server responded with {0}: {1}",
+            "Check the details of the server's message to correct your request."),
     MISSING_GROUP_ID(
             400,
             "ATLAN-JAVA-400-001",
@@ -138,10 +138,10 @@ public enum ErrorCode implements ExceptionMessageSet {
             "You must provide an ID when attempting to update a persona."),
 
     AUTHENTICATION_PASSTHROUGH(
-        401,
-        "ATLAN-JAVA-401-000",
-        "Server responded with {0}: {1}",
-        "Check the details of the server's message to correct your request."),
+            401,
+            "ATLAN-JAVA-401-000",
+            "Server responded with {0}: {1}",
+            "Check the details of the server's message to correct your request."),
     NO_API_TOKEN(
             401,
             "ATLAN-JAVA-401-001",
@@ -165,16 +165,16 @@ public enum ErrorCode implements ExceptionMessageSet {
                     + "https://ask.atlan.com/hc/en-us/requests/new if you have any questions."),
 
     PERMISSION_PASSTHROUGH(
-        403,
-        "ATLAN-JAVA-403-000",
-        "Server responded with {0}: {1}",
-        "Check the details of the server's message to correct your request."),
+            403,
+            "ATLAN-JAVA-403-000",
+            "Server responded with {0}: {1}",
+            "Check the details of the server's message to correct your request."),
 
     NOT_FOUND_PASSTHROUGH(
-        404,
-        "ATLAN-JAVA-404-000",
-        "Server responded with {0}: {1}",
-        "Check the details of the server's message to correct your request."),
+            404,
+            "ATLAN-JAVA-404-000",
+            "Server responded with {0}: {1}",
+            "Check the details of the server's message to correct your request."),
 
     ASSET_NOT_FOUND_BY_GUID(
             404,
@@ -258,22 +258,22 @@ public enum ErrorCode implements ExceptionMessageSet {
             "Verify the requested connection exists in your Atlan environment."),
 
     CONFLICT_PASSTHROUGH(
-        409,
-        "ATLAN-JAVA-409-000",
-        "Server responded with {0}: {1}",
-        "Check the details of the server's message to correct your request."),
+            409,
+            "ATLAN-JAVA-409-000",
+            "Server responded with {0}: {1}",
+            "Check the details of the server's message to correct your request."),
 
     RATE_LIMIT_PASSTHROUGH(
-        429,
-        "ATLAN-JAVA-429-000",
-        "Server responded with {0}: {1}",
-        "Check the details of the server's message to correct your request."),
+            429,
+            "ATLAN-JAVA-429-000",
+            "Server responded with {0}: {1}",
+            "Check the details of the server's message to correct your request."),
 
     ERROR_PASSTHROUGH(
-        500,
-        "ATLAN-JAVA-500-000",
-        "Server responded with {0}: {1}",
-        "Check the details of the server's message to correct your request."),
+            500,
+            "ATLAN-JAVA-500-000",
+            "Server responded with {0}: {1}",
+            "Check the details of the server's message to correct your request."),
 
     DUPLICATE_CUSTOM_ATTRIBUTES(
             500,
