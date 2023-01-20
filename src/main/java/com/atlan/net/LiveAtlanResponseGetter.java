@@ -123,37 +123,36 @@ public class LiveAtlanResponseGetter implements AtlanResponseGetter {
             raiseMalformedJsonError(response.body(), response.code(), null);
         }
 
-        ExceptionMessageDefinition msg = ExceptionMessageDefinition.builder()
-                .errorMessage(error.getErrorMessage())
-                .errorId(error.getErrorCode())
-                .build();
         switch (response.code()) {
             case 400:
-                exception = new InvalidRequestException(msg);
+                exception = new InvalidRequestException(
+                        ErrorCode.INVALID_REQUEST_PASSTHROUGH, error.getErrorCode(), error.getErrorMessage());
                 break;
             case 404:
-                exception = new NotFoundException(msg);
+                exception = new NotFoundException(
+                        ErrorCode.NOT_FOUND_PASSTHROUGH, error.getErrorCode(), error.getErrorMessage());
                 break;
             case 401:
-                exception = new AuthenticationException(msg);
+                exception = new AuthenticationException(
+                        ErrorCode.AUTHENTICATION_PASSTHROUGH, error.getErrorCode(), error.getErrorMessage());
                 break;
             case 403:
-                exception = new PermissionException(msg);
+                exception = new PermissionException(
+                        ErrorCode.PERMISSION_PASSTHROUGH, error.getErrorCode(), error.getErrorMessage());
                 break;
             case 409:
-                exception = new ConflictException(msg);
+                exception = new ConflictException(
+                        ErrorCode.CONFLICT_PASSTHROUGH, error.getErrorCode(), error.getErrorMessage());
                 break;
             case 429:
                 // TODO: confirm that a 429 is raised rather than needing to check the X-RateLimit-Remaining-Minute
                 //  header value of a response (if it is 0 then we are being rate-limited)
-                exception = new RateLimitException(msg);
+                exception = new RateLimitException(
+                        ErrorCode.RATE_LIMIT_PASSTHROUGH, error.getErrorCode(), error.getErrorMessage());
                 break;
             default:
-                exception = new ApiException(ExceptionMessageDefinition.builder()
-                        .errorMessage(error.getErrorMessage())
-                        .errorId(error.getErrorCode())
-                        .httpErrorCode(response.code())
-                        .build());
+                exception = new ApiException(
+                        ErrorCode.ERROR_PASSTHROUGH, null, error.getErrorCode(), error.getErrorMessage());
                 break;
         }
 

@@ -196,7 +196,7 @@ public class Glossary extends Asset {
                 }
             }
         }
-        throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_NAME, Glossary.TYPE_NAME, name);
+        throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_NAME, TYPE_NAME, name);
     }
 
     /**

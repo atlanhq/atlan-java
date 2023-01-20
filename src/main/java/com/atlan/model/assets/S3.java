@@ -37,7 +37,7 @@ public abstract class S3 extends AWS {
      * @param awsArn unique ARN for the S3 artifact
      * @return a unique name for the S3 artifact
      */
-    protected static String generateQualifiedName(String connectionQualifiedName, String awsArn) {
+    public static String generateQualifiedName(String connectionQualifiedName, String awsArn) {
         return connectionQualifiedName + "/" + awsArn;
     }
 }

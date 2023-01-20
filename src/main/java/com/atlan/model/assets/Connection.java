@@ -176,7 +176,7 @@ public class Connection extends Asset {
         boolean adminFound = false;
         ConnectionBuilder<?, ?> builder = Connection.builder()
                 .name(name)
-                .qualifiedName(generateQualifiedName(connectorType))
+                .qualifiedName(generateQualifiedName(connectorType.getValue()))
                 .category(connectorType.getCategory())
                 .connectorType(connectorType);
         if (adminRoles != null && !adminRoles.isEmpty()) {
@@ -201,12 +201,12 @@ public class Connection extends Asset {
     /**
      * Generate a unique connection name.
      *
-     * @param connectorType type of the connection's connector
+     * @param connectorType the name of the type of the connection's connector
      * @return a unique name for the connection
      */
-    private static String generateQualifiedName(AtlanConnectorType connectorType) {
+    private static String generateQualifiedName(String connectorType) {
         long now = System.currentTimeMillis() / 1000;
-        return "default/" + connectorType.getValue() + "/" + now;
+        return "default/" + connectorType + "/" + now;
     }
 
     /**

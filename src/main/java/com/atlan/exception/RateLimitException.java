@@ -10,6 +10,10 @@ package com.atlan.exception;
 public class RateLimitException extends InvalidRequestException {
     private static final long serialVersionUID = 2L;
 
+    public RateLimitException(ErrorCode error, String... params) {
+        super(error, params);
+    }
+
     public RateLimitException(ExceptionMessageDefinition error) {
         super(error, 429);
     }
