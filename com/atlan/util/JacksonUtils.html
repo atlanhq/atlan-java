@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9};
+var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9,"i9":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -235,6 +235,24 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>static void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#serializeLong(com.fasterxml.jackson.core.JsonGenerator,java.lang.String,java.lang.Long)">serializeLong</a></span>&#8203;(com.fasterxml.jackson.core.JsonGenerator&nbsp;gen,
+             java.lang.String&nbsp;name,
+             java.lang.Long&nbsp;value)</code></th>
+<td class="colLast">
+<div class="block">Serialize the provided field into a long, or leave it out if there is no value.</div>
+</td>
+</tr>
+<tr id="i8" class="altColor">
+<td class="colFirst"><code>static void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#serializeObject(com.fasterxml.jackson.core.JsonGenerator,java.lang.String,java.lang.Object)">serializeObject</a></span>&#8203;(com.fasterxml.jackson.core.JsonGenerator&nbsp;gen,
+               java.lang.String&nbsp;name,
+               java.lang.Object&nbsp;value)</code></th>
+<td class="colLast">
+<div class="block">Serialize the provided field into an object, or leave it out if there is no value.</div>
+</td>
+</tr>
+<tr id="i9" class="rowColor">
+<td class="colFirst"><code>static void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#serializeString(com.fasterxml.jackson.core.JsonGenerator,java.lang.String,java.lang.String)">serializeString</a></span>&#8203;(com.fasterxml.jackson.core.JsonGenerator&nbsp;gen,
                java.lang.String&nbsp;name,
                java.lang.String&nbsp;value)</code></th>
@@ -384,6 +402,27 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
+<a id="serializeLong(com.fasterxml.jackson.core.JsonGenerator,java.lang.String,java.lang.Long)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>serializeLong</h4>
+<pre class="methodSignature">public static&nbsp;void&nbsp;serializeLong&#8203;(com.fasterxml.jackson.core.JsonGenerator&nbsp;gen,
+                                 java.lang.String&nbsp;name,
+                                 java.lang.Long&nbsp;value)
+                          throws java.io.IOException</pre>
+<div class="block">Serialize the provided field into a long, or leave it out if there is no value.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>gen</code> - generator through which to serialize</dd>
+<dd><code>name</code> - of the field</dd>
+<dd><code>value</code> - for the field</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code>java.io.IOException</code> - on any issues writing to the generator</dd>
+</dl>
+</li>
+</ul>
 <a id="deserializeBoolean(com.fasterxml.jackson.databind.JsonNode,java.lang.String)">
 <!--   -->
 </a>
@@ -426,7 +465,7 @@ extends java.lang.Object</pre>
 <a id="deserializeObject(com.fasterxml.jackson.databind.JsonNode,java.lang.String,com.fasterxml.jackson.core.type.TypeReference)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>deserializeObject</h4>
 <pre class="methodSignature">public static&nbsp;&lt;T&gt;&nbsp;T&nbsp;deserializeObject&#8203;(com.fasterxml.jackson.databind.JsonNode&nbsp;node,
@@ -445,6 +484,27 @@ extends java.lang.Object</pre>
 <dd>the object value, or null</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code>com.fasterxml.jackson.core.JsonProcessingException</code> - on any problems parsing the expected value</dd>
+</dl>
+</li>
+</ul>
+<a id="serializeObject(com.fasterxml.jackson.core.JsonGenerator,java.lang.String,java.lang.Object)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>serializeObject</h4>
+<pre class="methodSignature">public static&nbsp;void&nbsp;serializeObject&#8203;(com.fasterxml.jackson.core.JsonGenerator&nbsp;gen,
+                                   java.lang.String&nbsp;name,
+                                   java.lang.Object&nbsp;value)
+                            throws java.io.IOException</pre>
+<div class="block">Serialize the provided field into an object, or leave it out if there is no value.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>gen</code> - generator through which to serialize</dd>
+<dd><code>name</code> - of the field</dd>
+<dd><code>value</code> - for the field</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code>java.io.IOException</code> - on any issues writing to the generator</dd>
 </dl>
 </li>
 </ul>
