@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":6,"i3":10,"i4":6,"i5":10,"i6":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":6,"i4":10,"i5":10,"i6":6,"i7":10,"i8":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -200,30 +200,40 @@ extends <a href="AbstractPurposePolicy.AbstractPurposePolicyBuilder.html" title=
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="PurposeDataPolicy.PurposeDataPolicyBuilder.html" title="type parameter in PurposeDataPolicy.PurposeDataPolicyBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#actions(java.util.SortedSet)">actions</a></span>&#8203;(java.util.SortedSet&lt;<a href="../enums/DataPolicyAction.html" title="enum in com.atlan.model.enums">DataPolicyAction</a>&gt;&nbsp;actions)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#action(com.atlan.model.enums.DataPolicyAction)">action</a></span>&#8203;(<a href="../enums/DataPolicyAction.html" title="enum in com.atlan.model.enums">DataPolicyAction</a>&nbsp;action)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
+<td class="colFirst"><code><a href="PurposeDataPolicy.PurposeDataPolicyBuilder.html" title="type parameter in PurposeDataPolicy.PurposeDataPolicyBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#actions(java.util.Collection)">actions</a></span>&#8203;(java.util.Collection&lt;? extends <a href="../enums/DataPolicyAction.html" title="enum in com.atlan.model.enums">DataPolicyAction</a>&gt;&nbsp;actions)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>abstract <a href="PurposeDataPolicy.PurposeDataPolicyBuilder.html" title="type parameter in PurposeDataPolicy.PurposeDataPolicyBuilder">C</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#build()">build</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i4" class="altColor">
+<td class="colFirst"><code><a href="PurposeDataPolicy.PurposeDataPolicyBuilder.html" title="type parameter in PurposeDataPolicy.PurposeDataPolicyBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearActions()">clearActions</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="PurposeDataPolicy.PurposeDataPolicyBuilder.html" title="type parameter in PurposeDataPolicy.PurposeDataPolicyBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#mask(com.atlan.model.enums.MaskingType)">mask</a></span>&#8203;(<a href="../enums/MaskingType.html" title="enum in com.atlan.model.enums">MaskingType</a>&nbsp;mask)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>protected abstract <a href="PurposeDataPolicy.PurposeDataPolicyBuilder.html" title="type parameter in PurposeDataPolicy.PurposeDataPolicyBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#self()">self</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code><a href="PurposeDataPolicy.PurposeDataPolicyBuilder.html" title="type parameter in PurposeDataPolicy.PurposeDataPolicyBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#type(com.atlan.model.enums.DataPolicyType)">type</a></span>&#8203;(<a href="../enums/DataPolicyType.html" title="enum in com.atlan.model.enums">DataPolicyType</a>&nbsp;type)</code></th>
 <td class="colLast">&nbsp;</td>
@@ -326,17 +336,31 @@ extends <a href="AbstractPurposePolicy.AbstractPurposePolicyBuilder.html" title=
 </dl>
 </li>
 </ul>
-<a id="actions(java.util.SortedSet)">
+<a id="action(com.atlan.model.enums.DataPolicyAction)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>action</h4>
+<pre class="methodSignature">public&nbsp;<a href="PurposeDataPolicy.PurposeDataPolicyBuilder.html" title="type parameter in PurposeDataPolicy.PurposeDataPolicyBuilder">B</a>&nbsp;action&#8203;(<a href="../enums/DataPolicyAction.html" title="enum in com.atlan.model.enums">DataPolicyAction</a>&nbsp;action)</pre>
+</li>
+</ul>
+<a id="actions(java.util.Collection)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>actions</h4>
-<pre class="methodSignature">public&nbsp;<a href="PurposeDataPolicy.PurposeDataPolicyBuilder.html" title="type parameter in PurposeDataPolicy.PurposeDataPolicyBuilder">B</a>&nbsp;actions&#8203;(java.util.SortedSet&lt;<a href="../enums/DataPolicyAction.html" title="enum in com.atlan.model.enums">DataPolicyAction</a>&gt;&nbsp;actions)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
+<pre class="methodSignature">public&nbsp;<a href="PurposeDataPolicy.PurposeDataPolicyBuilder.html" title="type parameter in PurposeDataPolicy.PurposeDataPolicyBuilder">B</a>&nbsp;actions&#8203;(java.util.Collection&lt;? extends <a href="../enums/DataPolicyAction.html" title="enum in com.atlan.model.enums">DataPolicyAction</a>&gt;&nbsp;actions)</pre>
+</li>
+</ul>
+<a id="clearActions()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>clearActions</h4>
+<pre class="methodSignature">public&nbsp;<a href="PurposeDataPolicy.PurposeDataPolicyBuilder.html" title="type parameter in PurposeDataPolicy.PurposeDataPolicyBuilder">B</a>&nbsp;clearActions()</pre>
 </li>
 </ul>
 <a id="type(com.atlan.model.enums.DataPolicyType)">
