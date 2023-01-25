@@ -4,10 +4,7 @@ package com.atlan.model.admin;
 
 import com.atlan.model.enums.PurposeMetadataPolicyAction;
 import java.util.SortedSet;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 
@@ -20,6 +17,7 @@ public class PurposeMetadataPolicy extends AbstractPurposePolicy {
     private static final long serialVersionUID = 2L;
 
     /** All the actions included in the policy. */
+    @Singular
     SortedSet<PurposeMetadataPolicyAction> actions;
 
     /** Fixed value. */
