@@ -136,6 +136,16 @@ public enum ErrorCode implements ExceptionMessageSet {
             "ATLAN-JAVA-400-023",
             "No ID was provided when attempting to update the persona.",
             "You must provide an ID when attempting to update a persona."),
+    MISSING_PURPOSE_ID(
+            400,
+            "ATLAN-JAVA-400-024",
+            "No ID was provided when attempting to update the purpose.",
+            "You must provide an ID when attempting to update a purpose."),
+    NO_CLASSIFICATION_FOR_PURPOSE(
+            400,
+            "ATLAN-JAVA-400-025",
+            "No classifications provided for the purpose.",
+            "You must specify at least one classification to create a new purpose."),
 
     AUTHENTICATION_PASSTHROUGH(
             401,

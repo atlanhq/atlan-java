@@ -14,6 +14,9 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 public abstract class AbstractPurposePolicy extends AbstractPolicy {
 
+    /** Whether this policy applies to all users (true) or not (false). */
+    Boolean allUsers;
+
     /** All groups' names to whom the policy will apply. */
     SortedSet<String> groups;
 
