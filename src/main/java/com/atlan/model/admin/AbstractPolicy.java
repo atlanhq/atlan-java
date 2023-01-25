@@ -38,6 +38,12 @@ public abstract class AbstractPolicy extends AtlanObject implements Comparable<A
     /** Username of the user who created this policy. */
     final String createdBy;
 
+    /** Time (epoch) at which this policy was updated, in milliseconds. */
+    final Long updatedAt;
+
+    /** Username of the user who updated this policy. */
+    final String updatedBy;
+
     /**
      * {@inheritDoc}
      */

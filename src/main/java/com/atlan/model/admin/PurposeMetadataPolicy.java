@@ -4,6 +4,7 @@ package com.atlan.model.admin;
 
 import com.atlan.model.enums.PurposeMetadataPolicyAction;
 import java.util.SortedSet;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,5 +23,6 @@ public class PurposeMetadataPolicy extends AbstractPurposePolicy {
     SortedSet<PurposeMetadataPolicyAction> actions;
 
     /** Fixed value. */
-    final String type = "meta";
+    @Builder.Default
+    String type = "metadata";
 }

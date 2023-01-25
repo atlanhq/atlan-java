@@ -24,26 +24,26 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 
 /**
- * API endpoints for interacting with Atlan's personas.
+ * API endpoints for interacting with Atlan's purposes.
  */
-public class PersonasEndpoint {
+public class PurposesEndpoint {
 
-    private static final String endpoint = "/api/service/personas";
+    private static final String endpoint = "/api/service/purposes";
 
     // TODO: eventually provide a rich RQL object for the filter
 
     /**
-     * Retrieves a list of the personas defined in Atlan.
+     * Retrieves a list of the purposes defined in Atlan.
      *
-     * @param filter which personas to retrieve
+     * @param filter which purposes to retrieve
      * @param sort property by which to sort the results
      * @param count whether to return the total number of records (true) or not (false)
      * @param offset starting point for results to return, for paging
      * @param limit maximum number of results to be returned
-     * @return a list of personas that match the provided criteria
+     * @return a list of purposes that match the provided criteria
      * @throws AtlanException on any API communication issue
      */
-    public static PersonaResponse getPersonas(String filter, String sort, boolean count, int offset, int limit)
+    public static PurposeResponse getPurposes(String filter, String sort, boolean count, int offset, int limit)
             throws AtlanException {
         if (filter == null) {
             filter = "";
@@ -60,92 +60,92 @@ public class PersonasEndpoint {
                 count,
                 offset,
                 limit);
-        return ApiResource.request(ApiResource.RequestMethod.GET, url, "", PersonaResponse.class, null);
+        return ApiResource.request(ApiResource.RequestMethod.GET, url, "", PurposeResponse.class, null);
     }
 
     /**
-     * Retrieves a list of the personas defined in Atlan.
+     * Retrieves a list of the purposes defined in Atlan.
      *
-     * @param filter which personas to retrieve
-     * @return a list of personas that match the provided criteria
+     * @param filter which purposes to retrieve
+     * @return a list of purposes that match the provided criteria
      * @throws AtlanException on any API communication issue
      */
-    public static PersonaResponse getPersonas(String filter) throws AtlanException {
+    public static PurposeResponse getPurposes(String filter) throws AtlanException {
         if (filter == null) {
             filter = "";
         }
         String url = String.format("%s%s?filter=%s", Atlan.getBaseUrl(), endpoint, ApiResource.urlEncode(filter));
-        return ApiResource.request(ApiResource.RequestMethod.GET, url, "", PersonaResponse.class, null);
+        return ApiResource.request(ApiResource.RequestMethod.GET, url, "", PurposeResponse.class, null);
     }
 
     /**
-     * Retrieve all personas defined in Atlan.
+     * Retrieve all purposes defined in Atlan.
      *
-     * @return a list of all the personas in Atlan
+     * @return a list of all the purposes in Atlan
      * @throws AtlanException on any API communication issue
      */
-    public static PersonaResponse getAllPersonas() throws AtlanException {
+    public static PurposeResponse getAllPurposes() throws AtlanException {
         String url = String.format("%s%s", Atlan.getBaseUrl(), endpoint);
-        return ApiResource.request(ApiResource.RequestMethod.GET, url, "", PersonaResponse.class, null);
+        return ApiResource.request(ApiResource.RequestMethod.GET, url, "", PurposeResponse.class, null);
     }
 
     /**
-     * Create a new persona.
+     * Create a new purpose.
      *
-     * @param persona the details of the new persona
-     * @return details of the created persona and user/group associations
+     * @param purpose the details of the new purpose
+     * @return details of the created purpose and user/group associations
      * @throws AtlanException on any API communication issue
      */
-    public static Persona createPersona(Persona persona) throws AtlanException {
+    public static Purpose createPurpose(Purpose purpose) throws AtlanException {
         String url = String.format("%s%s", Atlan.getBaseUrl(), endpoint);
-        WrappedPersona wrapped =
-                ApiResource.request(ApiResource.RequestMethod.POST, url, persona, WrappedPersona.class, null);
+        WrappedPurpose wrapped =
+                ApiResource.request(ApiResource.RequestMethod.POST, url, purpose, WrappedPurpose.class, null);
         if (wrapped != null) {
-            return wrapped.getPersona();
+            return wrapped.getPurpose();
         } else {
             return null;
         }
     }
 
     /**
-     * Update a persona.
+     * Update a purpose.
      *
-     * @param id unique identifier (GUID) of the persona to update
-     * @param persona the details to update on the persona
+     * @param id unique identifier (GUID) of the purpose to update
+     * @param purpose the details to update on the purpose
      * @throws AtlanException on any API communication issue
      */
-    public static void updatePersona(String id, Persona persona) throws AtlanException {
+    public static void updatePurpose(String id, Purpose purpose) throws AtlanException {
         String url = String.format("%s%s/%s", Atlan.getBaseUrl(), endpoint, id);
-        ApiResource.request(ApiResource.RequestMethod.POST, url, persona, null, null);
+        ApiResource.request(ApiResource.RequestMethod.POST, url, purpose, null, null);
     }
 
     /**
-     * Delete a persona.
+     * Delete a purpose.
      *
-     * @param id unique identifier (GUID) of the persona to delete
+     * @param id unique identifier (GUID) of the purpose to delete
      * @throws AtlanException on any API communication issue
      */
-    public static void deletePersona(String id) throws AtlanException {
+    public static void deletePurpose(String id) throws AtlanException {
         String url = String.format("%s%s/%s", Atlan.getBaseUrl(), endpoint, id);
         ApiResource.request(ApiResource.RequestMethod.DELETE, url, "", null, null);
     }
 
     /**
-     * Add the provided policy to the persona with the specified ID.
+     * Add the provided policy to the purpose with the specified ID.
      *
-     * @param id unique identifier (GUID) of the persona to add the policy to
-     * @param policy the policy to add to the persona
+     * @param id unique identifier (GUID) of the purpose to add the policy to
+     * @param policy the policy to add to the purpose
      * @return the policy that was added
      * @throws AtlanException on any API communication issue
      */
-    public static AbstractPolicy addPolicyToPersona(String id, AbstractPolicy policy) throws AtlanException {
+    public static AbstractPolicy addPolicyToPurpose(String id, AbstractPolicy policy) throws AtlanException {
         String url = String.format("%s%s/%s/policies", Atlan.getBaseUrl(), endpoint, id);
         PolicyRequest.PolicyRequestBuilder<?, ?> pr = PolicyRequest.builder().policy(policy);
         if (policy instanceof GlossaryPolicy) {
             pr = pr.type("glossaryPolicy");
-        } else if (policy instanceof PersonaDataPolicy) {
+        } else if (policy instanceof PurposeDataPolicy) {
             pr = pr.type("dataPolicy");
-        } else if (policy instanceof PersonaMetadataPolicy) {
+        } else if (policy instanceof PurposeMetadataPolicy) {
             pr = pr.type("metadataPolicy");
         }
         WrappedPolicy wrapped =
@@ -169,28 +169,28 @@ public class PersonasEndpoint {
     }
 
     /**
-     * Necessary for having a persona object that extends ApiResource for API interactions.
+     * Necessary for having a purpose object that extends ApiResource for API interactions.
      */
     @Data
-    @JsonSerialize(using = WrappedPersonaSerializer.class)
-    @JsonDeserialize(using = WrappedPersonaDeserializer.class)
+    @JsonSerialize(using = WrappedPurposeSerializer.class)
+    @JsonDeserialize(using = WrappedPurposeDeserializer.class)
     @EqualsAndHashCode(callSuper = false)
-    private static final class WrappedPersona extends ApiResource {
-        Persona persona;
+    private static final class WrappedPurpose extends ApiResource {
+        Purpose purpose;
 
-        public WrappedPersona(Persona persona) {
-            this.persona = persona;
+        public WrappedPurpose(Purpose purpose) {
+            this.purpose = purpose;
         }
     }
 
-    private static class WrappedPersonaDeserializer extends StdDeserializer<WrappedPersona> {
+    private static class WrappedPurposeDeserializer extends StdDeserializer<WrappedPurpose> {
         private static final long serialVersionUID = 2L;
 
-        public WrappedPersonaDeserializer() {
+        public WrappedPurposeDeserializer() {
             this(null);
         }
 
-        public WrappedPersonaDeserializer(Class<?> t) {
+        public WrappedPurposeDeserializer(Class<?> t) {
             super(t);
         }
 
@@ -198,20 +198,20 @@ public class PersonasEndpoint {
          * {@inheritDoc}
          */
         @Override
-        public WrappedPersona deserialize(JsonParser parser, DeserializationContext context) throws IOException {
-            Persona persona = parser.getCodec().readValue(parser, new TypeReference<>() {});
-            return new WrappedPersona(persona);
+        public WrappedPurpose deserialize(JsonParser parser, DeserializationContext context) throws IOException {
+            Purpose purpose = parser.getCodec().readValue(parser, new TypeReference<>() {});
+            return new WrappedPurpose(purpose);
         }
     }
 
-    private static class WrappedPersonaSerializer extends StdSerializer<WrappedPersona> {
+    private static class WrappedPurposeSerializer extends StdSerializer<WrappedPurpose> {
         private static final long serialVersionUID = 2L;
 
-        public WrappedPersonaSerializer() {
+        public WrappedPurposeSerializer() {
             this(null);
         }
 
-        public WrappedPersonaSerializer(Class<WrappedPersona> t) {
+        public WrappedPurposeSerializer(Class<WrappedPurpose> t) {
             super(t);
         }
 
@@ -219,10 +219,10 @@ public class PersonasEndpoint {
          * {@inheritDoc}
          */
         @Override
-        public void serialize(WrappedPersona wrappedPersona, JsonGenerator gen, SerializerProvider sp)
+        public void serialize(WrappedPurpose wrappedPurpose, JsonGenerator gen, SerializerProvider sp)
                 throws IOException, JsonProcessingException {
-            Persona persona = wrappedPersona.getPersona();
-            Serde.mapper.writeValue(gen, persona);
+            Purpose purpose = wrappedPurpose.getPurpose();
+            Serde.mapper.writeValue(gen, purpose);
         }
     }
 }
