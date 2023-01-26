@@ -133,25 +133,22 @@ public class PurposesEndpoint {
     /**
      * Add the provided policy to the purpose with the specified ID.
      *
-     * @param id unique identifier (GUID) of the purpose to add the policy to
+     * @param purpose the full purpose to which to add the policy
      * @param policy the policy to add to the purpose
      * @return the policy that was added
      * @throws AtlanException on any API communication issue
      */
-    public static AbstractPolicy addPolicyToPurpose(String id, AbstractPolicy policy) throws AtlanException {
-        String url = String.format("%s%s/%s/policies", Atlan.getBaseUrl(), endpoint, id);
-        PolicyRequest.PolicyRequestBuilder<?, ?> pr = PolicyRequest.builder().policy(policy);
-        if (policy instanceof GlossaryPolicy) {
-            pr = pr.type("glossaryPolicy");
-        } else if (policy instanceof PurposeDataPolicy) {
-            pr = pr.type("dataPolicy");
+    public static Purpose addPolicyToPurpose(Purpose purpose, AbstractPolicy policy) throws AtlanException {
+        String url = String.format("%s%s/%s", Atlan.getBaseUrl(), endpoint, purpose.getId());
+        Purpose.PurposeBuilder<?, ?> builder = purpose.toBuilder();
+        if (policy instanceof PurposeDataPolicy) {
+            builder.dataPolicy((PurposeDataPolicy) policy);
         } else if (policy instanceof PurposeMetadataPolicy) {
-            pr = pr.type("metadataPolicy");
+            builder.metadataPolicy((PurposeMetadataPolicy) policy);
         }
-        WrappedPolicy wrapped =
-                ApiResource.request(ApiResource.RequestMethod.POST, url, pr.build(), WrappedPolicy.class, null);
+        WrappedPurpose wrapped = ApiResource.request(ApiResource.RequestMethod.POST, url, builder.build(), WrappedPurpose.class, null);
         if (wrapped != null) {
-            return wrapped.getPolicy();
+            return wrapped.getPurpose();
         } else {
             return null;
         }
