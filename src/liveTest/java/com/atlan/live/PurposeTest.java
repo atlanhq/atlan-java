@@ -44,8 +44,8 @@ public class PurposeTest extends AtlanLiveTest {
     void createPurposes() {
         try {
             Purpose purpose = Purpose.creator(PURPOSE_NAME, List.of(CLS_NAME))
-                .description("Example purpose for testing purposes.")
-                .build();
+                    .description("Example purpose for testing purposes.")
+                    .build();
             Purpose result = purpose.create();
             assertNotNull(result);
             purposeGuid = result.getId();

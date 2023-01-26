@@ -146,7 +146,8 @@ public class PurposesEndpoint {
         } else if (policy instanceof PurposeMetadataPolicy) {
             builder.metadataPolicy((PurposeMetadataPolicy) policy);
         }
-        WrappedPurpose wrapped = ApiResource.request(ApiResource.RequestMethod.POST, url, builder.build(), WrappedPurpose.class, null);
+        WrappedPurpose wrapped =
+                ApiResource.request(ApiResource.RequestMethod.POST, url, builder.build(), WrappedPurpose.class, null);
         if (wrapped != null) {
             return wrapped.getPurpose();
         } else {
