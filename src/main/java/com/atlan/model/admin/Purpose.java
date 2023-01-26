@@ -136,33 +136,19 @@ public class Purpose extends AtlanObject {
 
     /**
      * Send this purpose to Atlan to update the purpose in Atlan.
+     * Note that for purposes, this same method is used to add policies to a purpose.
      *
+     * @return the updated purpose
      * @throws AtlanException on any error during API invocation
      */
-    public void update() throws AtlanException {
-        if (this.id == null || this.id.length() == 0) {
-            throw new InvalidRequestException(ErrorCode.MISSING_PURPOSE_ID);
-        }
-        PurposesEndpoint.updatePurpose(this.id, this);
-    }
-
-    /**
-     * Add the provided policy to this purpose in Atlan.
-     * Note that the purpose needs to be a complete purpose object, not just a simple
-     * stub with an ID.
-     *
-     * @param policy to add
-     * @return the full purpose with all of its policies
-     * @throws AtlanException on any error during API invocation
-     */
-    public Purpose addPolicy(AbstractPolicy policy) throws AtlanException {
+    public Purpose update() throws AtlanException {
         if (this.id == null || this.id.length() == 0) {
             throw new InvalidRequestException(ErrorCode.MISSING_PURPOSE_ID);
         }
         if (this.tags == null || this.tags.isEmpty()) {
             throw new InvalidRequestException(ErrorCode.NO_CLASSIFICATION_FOR_PURPOSE);
         }
-        return PurposesEndpoint.addPolicyToPurpose(this, policy);
+        return PurposesEndpoint.updatePurpose(this);
     }
 
     /**
