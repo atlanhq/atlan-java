@@ -110,13 +110,19 @@ public class PurposesEndpoint {
     /**
      * Update a purpose.
      *
-     * @param id unique identifier (GUID) of the purpose to update
-     * @param purpose the details to update on the purpose
+     * @param purpose the details of the purpose to update (which must include its ID)
+     * @return the updated purpose
      * @throws AtlanException on any API communication issue
      */
-    public static void updatePurpose(String id, Purpose purpose) throws AtlanException {
-        String url = String.format("%s%s/%s", Atlan.getBaseUrl(), endpoint, id);
-        ApiResource.request(ApiResource.RequestMethod.POST, url, purpose, null, null);
+    public static Purpose updatePurpose(Purpose purpose) throws AtlanException {
+        String url = String.format("%s%s/%s", Atlan.getBaseUrl(), endpoint, purpose.getId());
+        WrappedPurpose wrapped =
+                ApiResource.request(ApiResource.RequestMethod.POST, url, purpose, WrappedPurpose.class, null);
+        if (wrapped != null) {
+            return wrapped.getPurpose();
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -128,31 +134,6 @@ public class PurposesEndpoint {
     public static void deletePurpose(String id) throws AtlanException {
         String url = String.format("%s%s/%s", Atlan.getBaseUrl(), endpoint, id);
         ApiResource.request(ApiResource.RequestMethod.DELETE, url, "", null, null);
-    }
-
-    /**
-     * Add the provided policy to the purpose with the specified ID.
-     *
-     * @param purpose the full purpose to which to add the policy
-     * @param policy the policy to add to the purpose
-     * @return the policy that was added
-     * @throws AtlanException on any API communication issue
-     */
-    public static Purpose addPolicyToPurpose(Purpose purpose, AbstractPolicy policy) throws AtlanException {
-        String url = String.format("%s%s/%s", Atlan.getBaseUrl(), endpoint, purpose.getId());
-        Purpose.PurposeBuilder<?, ?> builder = purpose.toBuilder();
-        if (policy instanceof PurposeDataPolicy) {
-            builder.dataPolicy((PurposeDataPolicy) policy);
-        } else if (policy instanceof PurposeMetadataPolicy) {
-            builder.metadataPolicy((PurposeMetadataPolicy) policy);
-        }
-        WrappedPurpose wrapped =
-                ApiResource.request(ApiResource.RequestMethod.POST, url, builder.build(), WrappedPurpose.class, null);
-        if (wrapped != null) {
-            return wrapped.getPurpose();
-        } else {
-            return null;
-        }
     }
 
     /** Request class for adding a policy. */

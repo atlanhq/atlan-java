@@ -4,6 +4,7 @@ package com.atlan.model.admin;
 
 import com.atlan.model.enums.DataPolicyAction;
 import com.atlan.model.enums.DataPolicyType;
+import java.util.Collection;
 import java.util.SortedSet;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -29,4 +30,28 @@ public class PersonaDataPolicy extends AbstractPersonaPolicy {
 
     /** Fixed value (cannot apply masking on persona data policies). */
     final DataPolicyType type = null;
+
+    /**
+     * Builds the minimal object necessary to create a data policy for a persona.
+     *
+     * @param name short description of the policy
+     * @param connectionId unique identifier (GUID) of the connection whose assets will be controlled by this policy
+     * @param assetPrefixes the qualifiedName prefixes for all assets to include in this policy
+     * @param actions the collection of actions the policy allows or denies
+     * @param allow whether to allow the actions provided (true) or explicitly deny them (false)
+     * @return the minimal request necessary to create the data policy for a persona, as a builder
+     */
+    public static PersonaDataPolicyBuilder<?, ?> creator(
+            String name,
+            String connectionId,
+            Collection<String> assetPrefixes,
+            Collection<DataPolicyAction> actions,
+            boolean allow) {
+        return PersonaDataPolicy.builder()
+                .name(name)
+                .connectionId(connectionId)
+                .assets(assetPrefixes)
+                .actions(actions)
+                .allow(allow);
+    }
 }

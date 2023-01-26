@@ -146,6 +146,11 @@ public enum ErrorCode implements ExceptionMessageSet {
             "ATLAN-JAVA-400-025",
             "No classifications provided for the purpose.",
             "You must specify at least one classification to create a new purpose."),
+    NO_USERS_FOR_POLICY(
+            400,
+            "ATLAN-JAVA-400-026",
+            "No user or group specified for the policy.",
+            "You must specify at least one user, group or allUsers to whom the policy in a purpose will be applied."),
 
     AUTHENTICATION_PASSTHROUGH(
             401,
