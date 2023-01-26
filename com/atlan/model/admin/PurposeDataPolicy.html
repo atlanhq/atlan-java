@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10};
+var data = {"i0":9,"i1":10,"i2":9,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -250,58 +250,71 @@ extends <a href="AbstractPurposePolicy.html" title="class in com.atlan.model.adm
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
+<td class="colFirst"><code>static <a href="PurposeDataPolicy.PurposeDataPolicyBuilder.html" title="class in com.atlan.model.admin">PurposeDataPolicy.PurposeDataPolicyBuilder</a>&lt;?,&#8203;?&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#creator(java.lang.String,java.util.Collection,java.util.Collection,boolean,java.util.Collection,com.atlan.model.enums.DataPolicyType,boolean)">creator</a></span>&#8203;(java.lang.String&nbsp;name,
+       java.util.Collection&lt;java.lang.String&gt;&nbsp;users,
+       java.util.Collection&lt;java.lang.String&gt;&nbsp;groups,
+       boolean&nbsp;allUsers,
+       java.util.Collection&lt;<a href="../enums/DataPolicyAction.html" title="enum in com.atlan.model.enums">DataPolicyAction</a>&gt;&nbsp;actions,
+       <a href="../enums/DataPolicyType.html" title="enum in com.atlan.model.enums">DataPolicyType</a>&nbsp;type,
+       boolean&nbsp;allow)</code></th>
+<td class="colLast">
+<div class="block">Builds the minimal object necessary to create a data policy for a purpose.</div>
+</td>
+</tr>
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#equals(java.lang.Object)">equals</a></span>&#8203;(java.lang.Object&nbsp;o)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>java.util.SortedSet&lt;<a href="../enums/DataPolicyAction.html" title="enum in com.atlan.model.enums">DataPolicyAction</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getActions()">getActions</a></span>()</code></th>
 <td class="colLast">
 <div class="block">All the actions included in the policy.</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="../enums/MaskingType.html" title="enum in com.atlan.model.enums">MaskingType</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMask()">getMask</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Type of masking to apply, if <a href="#type"><code>type</code></a> is <code>masking</code>.</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code><a href="../enums/DataPolicyType.html" title="enum in com.atlan.model.enums">DataPolicyType</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getType()">getType</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Type of data policy.</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hashCode()">hashCode</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setActions(java.util.SortedSet)">setActions</a></span>&#8203;(java.util.SortedSet&lt;<a href="../enums/DataPolicyAction.html" title="enum in com.atlan.model.enums">DataPolicyAction</a>&gt;&nbsp;actions)</code></th>
 <td class="colLast">
 <div class="block">All the actions included in the policy.</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setMask(com.atlan.model.enums.MaskingType)">setMask</a></span>&#8203;(<a href="../enums/MaskingType.html" title="enum in com.atlan.model.enums">MaskingType</a>&nbsp;mask)</code></th>
 <td class="colLast">
 <div class="block">Type of masking to apply, if <a href="#type"><code>type</code></a> is <code>masking</code>.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setType(com.atlan.model.enums.DataPolicyType)">setType</a></span>&#8203;(<a href="../enums/DataPolicyType.html" title="enum in com.atlan.model.enums">DataPolicyType</a>&nbsp;type)</code></th>
 <td class="colLast">
 <div class="block">Type of data policy.</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code><a href="PurposeDataPolicy.PurposeDataPolicyBuilder.html" title="class in com.atlan.model.admin">PurposeDataPolicy.PurposeDataPolicyBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toBuilder()">toBuilder</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
@@ -370,6 +383,36 @@ extends <a href="AbstractPurposePolicy.html" title="class in com.atlan.model.adm
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a id="creator(java.lang.String,java.util.Collection,java.util.Collection,boolean,java.util.Collection,com.atlan.model.enums.DataPolicyType,boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>creator</h4>
+<pre class="methodSignature">public static&nbsp;<a href="PurposeDataPolicy.PurposeDataPolicyBuilder.html" title="class in com.atlan.model.admin">PurposeDataPolicy.PurposeDataPolicyBuilder</a>&lt;?,&#8203;?&gt;&nbsp;creator&#8203;(java.lang.String&nbsp;name,
+                                                                            java.util.Collection&lt;java.lang.String&gt;&nbsp;users,
+                                                                            java.util.Collection&lt;java.lang.String&gt;&nbsp;groups,
+                                                                            boolean&nbsp;allUsers,
+                                                                            java.util.Collection&lt;<a href="../enums/DataPolicyAction.html" title="enum in com.atlan.model.enums">DataPolicyAction</a>&gt;&nbsp;actions,
+                                                                            <a href="../enums/DataPolicyType.html" title="enum in com.atlan.model.enums">DataPolicyType</a>&nbsp;type,
+                                                                            boolean&nbsp;allow)
+                                                                     throws <a href="../../exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></pre>
+<div class="block">Builds the minimal object necessary to create a data policy for a purpose.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>name</code> - short description of the policy</dd>
+<dd><code>users</code> - collection of users whose access is controlled by the policy</dd>
+<dd><code>groups</code> - collection of groups whose access is controlled by the policy</dd>
+<dd><code>allUsers</code> - whether to apply this policy to all users (overriding previous parameters) (true) or only some users (false)</dd>
+<dd><code>actions</code> - the collection of actions the policy allows or denies</dd>
+<dd><code>allow</code> - whether to allow the actions provided (true) or explicitly deny them (false)</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the minimal request necessary to create the data policy for a purpose, as a builder</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></code> - if at least one user or group is not specified, and allUsers is false</dd>
+</dl>
+</li>
+</ul>
 <a id="builder()">
 <!--   -->
 </a>

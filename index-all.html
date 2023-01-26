@@ -972,17 +972,9 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Add the provided policy to this persona in Atlan.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/atlan/model/admin/Purpose.html#addPolicy(com.atlan.model.admin.AbstractPolicy)">addPolicy(AbstractPolicy)</a></span> - Method in class com.atlan.model.admin.<a href="com/atlan/model/admin/Purpose.html" title="class in com.atlan.model.admin">Purpose</a></dt>
-<dd>
-<div class="block">Add the provided policy to this purpose in Atlan.</div>
-</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/api/PersonasEndpoint.html#addPolicyToPersona(java.lang.String,com.atlan.model.admin.AbstractPolicy)">addPolicyToPersona(String, AbstractPolicy)</a></span> - Static method in class com.atlan.api.<a href="com/atlan/api/PersonasEndpoint.html" title="class in com.atlan.api">PersonasEndpoint</a></dt>
 <dd>
 <div class="block">Add the provided policy to the persona with the specified ID.</div>
-</dd>
-<dt><span class="memberNameLink"><a href="com/atlan/api/PurposesEndpoint.html#addPolicyToPurpose(com.atlan.model.admin.Purpose,com.atlan.model.admin.AbstractPolicy)">addPolicyToPurpose(Purpose, AbstractPolicy)</a></span> - Static method in class com.atlan.api.<a href="com/atlan/api/PurposesEndpoint.html" title="class in com.atlan.api">PurposesEndpoint</a></dt>
-<dd>
-<div class="block">Add the provided policy to the purpose with the specified ID.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/TableauCalculatedField.TableauCalculatedFieldBuilder.html#addProjectHierarchy(java.util.Map)">addProjectHierarchy(Map&lt;String, String&gt;)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/TableauCalculatedField.TableauCalculatedFieldBuilder.html" title="class in com.atlan.model.assets">TableauCalculatedField.TableauCalculatedFieldBuilder</a></dt>
 <dd>&nbsp;</dd>
@@ -4095,6 +4087,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Google.GoogleBuilder.html#clearGoogleTags()">clearGoogleTags()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Google.GoogleBuilder.html" title="class in com.atlan.model.assets">Google.GoogleBuilder</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/admin/AbstractPurposePolicy.AbstractPurposePolicyBuilder.html#clearGroups()">clearGroups()</a></span> - Method in class com.atlan.model.admin.<a href="com/atlan/model/admin/AbstractPurposePolicy.AbstractPurposePolicyBuilder.html" title="class in com.atlan.model.admin">AbstractPurposePolicy.AbstractPurposePolicyBuilder</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/admin/Persona.PersonaBuilder.html#clearGroups()">clearGroups()</a></span> - Method in class com.atlan.model.admin.<a href="com/atlan/model/admin/Persona.PersonaBuilder.html" title="class in com.atlan.model.admin">Persona.PersonaBuilder</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/net/RequestOptions.RequestOptionsBuilder.html#clearIdempotencyKey()">clearIdempotencyKey()</a></span> - Method in class com.atlan.net.<a href="com/atlan/net/RequestOptions.RequestOptionsBuilder.html" title="class in com.atlan.net">RequestOptions.RequestOptionsBuilder</a></dt>
@@ -4342,6 +4336,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/TableauDatasource.TableauDatasourceBuilder.html#clearUpstreamTables()">clearUpstreamTables()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/TableauDatasource.TableauDatasourceBuilder.html" title="class in com.atlan.model.assets">TableauDatasource.TableauDatasourceBuilder</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/TableauDatasourceField.TableauDatasourceFieldBuilder.html#clearUpstreamTables()">clearUpstreamTables()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/TableauDatasourceField.TableauDatasourceFieldBuilder.html" title="class in com.atlan.model.assets">TableauDatasourceField.TableauDatasourceFieldBuilder</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/admin/AbstractPurposePolicy.AbstractPurposePolicyBuilder.html#clearUsers()">clearUsers()</a></span> - Method in class com.atlan.model.admin.<a href="com/atlan/model/admin/AbstractPurposePolicy.AbstractPurposePolicyBuilder.html" title="class in com.atlan.model.admin">AbstractPurposePolicy.AbstractPurposePolicyBuilder</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/admin/Persona.PersonaBuilder.html#clearUsers()">clearUsers()</a></span> - Method in class com.atlan.model.admin.<a href="com/atlan/model/admin/Persona.PersonaBuilder.html" title="class in com.atlan.model.admin">Persona.PersonaBuilder</a></dt>
 <dd>&nbsp;</dd>
@@ -4933,6 +4929,22 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/Column.html#creator(java.lang.String,java.lang.String,java.lang.String,int)">creator(String, String, String, int)</a></span> - Static method in class com.atlan.model.assets.<a href="com/atlan/model/assets/Column.html" title="class in com.atlan.model.assets">Column</a></dt>
 <dd>
 <div class="block">Builds the minimal object necessary to create a column.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/admin/PersonaDataPolicy.html#creator(java.lang.String,java.lang.String,java.util.Collection,java.util.Collection,boolean)">creator(String, String, Collection&lt;String&gt;, Collection&lt;DataPolicyAction&gt;, boolean)</a></span> - Static method in class com.atlan.model.admin.<a href="com/atlan/model/admin/PersonaDataPolicy.html" title="class in com.atlan.model.admin">PersonaDataPolicy</a></dt>
+<dd>
+<div class="block">Builds the minimal object necessary to create a data policy for a persona.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/admin/PersonaMetadataPolicy.html#creator(java.lang.String,java.lang.String,java.util.Collection,java.util.Collection,boolean)">creator(String, String, Collection&lt;String&gt;, Collection&lt;PersonaMetadataPolicyAction&gt;, boolean)</a></span> - Static method in class com.atlan.model.admin.<a href="com/atlan/model/admin/PersonaMetadataPolicy.html" title="class in com.atlan.model.admin">PersonaMetadataPolicy</a></dt>
+<dd>
+<div class="block">Builds the minimal object necessary to create a metadata policy for a persona.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/admin/PurposeDataPolicy.html#creator(java.lang.String,java.util.Collection,java.util.Collection,boolean,java.util.Collection,com.atlan.model.enums.DataPolicyType,boolean)">creator(String, Collection&lt;String&gt;, Collection&lt;String&gt;, boolean, Collection&lt;DataPolicyAction&gt;, DataPolicyType, boolean)</a></span> - Static method in class com.atlan.model.admin.<a href="com/atlan/model/admin/PurposeDataPolicy.html" title="class in com.atlan.model.admin">PurposeDataPolicy</a></dt>
+<dd>
+<div class="block">Builds the minimal object necessary to create a data policy for a purpose.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/admin/PurposeMetadataPolicy.html#creator(java.lang.String,java.util.Collection,java.util.Collection,boolean,java.util.Collection,boolean)">creator(String, Collection&lt;String&gt;, Collection&lt;String&gt;, boolean, Collection&lt;PurposeMetadataPolicyAction&gt;, boolean)</a></span> - Static method in class com.atlan.model.admin.<a href="com/atlan/model/admin/PurposeMetadataPolicy.html" title="class in com.atlan.model.admin">PurposeMetadataPolicy</a></dt>
+<dd>
+<div class="block">Builds the minimal object necessary to create a metadata policy for a purpose.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/admin/Purpose.html#creator(java.lang.String,java.util.List)">creator(String, List&lt;String&gt;)</a></span> - Static method in class com.atlan.model.admin.<a href="com/atlan/model/admin/Purpose.html" title="class in com.atlan.model.admin">Purpose</a></dt>
 <dd>
@@ -7841,6 +7853,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Code that ran within the process.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/core/AtlanError.html#getCode()">getCode()</a></span> - Method in class com.atlan.model.core.<a href="com/atlan/model/core/AtlanError.html" title="class in com.atlan.model.core">AtlanError</a></dt>
+<dd>
+<div class="block">A numeric error code.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/AtlanQuery.html#getCollectionQualifiedName()">getCollectionQualifiedName()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/AtlanQuery.html" title="class in com.atlan.model.assets">AtlanQuery</a></dt>
 <dd>
 <div class="block">TBC</div>
@@ -8940,6 +8956,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Retrieve the epoch component of the connection name from its qualifiedName.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/core/AtlanError.html#getError()">getError()</a></span> - Method in class com.atlan.model.core.<a href="com/atlan/model/core/AtlanError.html" title="class in com.atlan.model.core">AtlanError</a></dt>
+<dd>
+<div class="block">A human-readable suggestion on resolving the error.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/core/AtlanError.html#getErrorCode()">getErrorCode()</a></span> - Method in class com.atlan.model.core.<a href="com/atlan/model/core/AtlanError.html" title="class in com.atlan.model.core">AtlanError</a></dt>
 <dd>
 <div class="block">A short string indicating the error code reported.</div>
@@ -9499,6 +9519,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">TBC</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/core/AtlanError.html#getInfo()">getInfo()</a></span> - Method in class com.atlan.model.core.<a href="com/atlan/model/core/AtlanError.html" title="class in com.atlan.model.core">AtlanError</a></dt>
+<dd>
+<div class="block">TBC</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/SalesforceField.html#getInlineHelpText()">getInlineHelpText()</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SalesforceField.html" title="class in com.atlan.model.assets">SalesforceField</a></dt>
 <dd>
 <div class="block">TBC</div>
@@ -10002,6 +10026,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Returns a description of the exception, including the HTTP status code and request ID (if
  applicable).</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/core/AtlanError.html#getMessage()">getMessage()</a></span> - Method in class com.atlan.model.core.<a href="com/atlan/model/core/AtlanError.html" title="class in com.atlan.model.core">AtlanError</a></dt>
+<dd>
+<div class="block">A human-readable message providing more details about the error.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/workflow/WorkflowSearchResultStatus.html#getMessage()">getMessage()</a></span> - Method in class com.atlan.model.workflow.<a href="com/atlan/model/workflow/WorkflowSearchResultStatus.html" title="class in com.atlan.model.workflow">WorkflowSearchResultStatus</a></dt>
 <dd>&nbsp;</dd>
@@ -11320,6 +11348,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/net/RequestMetrics.html#getRequestDurationUpstreamMs()">getRequestDurationUpstreamMs()</a></span> - Method in class com.atlan.net.<a href="com/atlan/net/RequestMetrics.html" title="class in com.atlan.net">RequestMetrics</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/core/AtlanError.html#getRequestId()">getRequestId()</a></span> - Method in class com.atlan.model.core.<a href="com/atlan/model/core/AtlanError.html" title="class in com.atlan.model.core">AtlanError</a></dt>
+<dd>
+<div class="block">TBC</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/admin/UserMinimalResponse.html#getRequiredActions()">getRequiredActions()</a></span> - Method in class com.atlan.model.admin.<a href="com/atlan/model/admin/UserMinimalResponse.html" title="class in com.atlan.model.admin">UserMinimalResponse</a></dt>
 <dd>
 <div class="block">TBC</div>
@@ -13357,6 +13389,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/enums/AtlanClassificationColor.html#GREEN">GREEN</a></span> - com.atlan.model.enums.<a href="com/atlan/model/enums/AtlanClassificationColor.html" title="enum in com.atlan.model.enums">AtlanClassificationColor</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/admin/AbstractPurposePolicy.AbstractPurposePolicyBuilder.html#group(java.lang.String)">group(String)</a></span> - Method in class com.atlan.model.admin.<a href="com/atlan/model/admin/AbstractPurposePolicy.AbstractPurposePolicyBuilder.html" title="class in com.atlan.model.admin">AbstractPurposePolicy.AbstractPurposePolicyBuilder</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/admin/Persona.PersonaBuilder.html#group(java.lang.String)">group(String)</a></span> - Method in class com.atlan.model.admin.<a href="com/atlan/model/admin/Persona.PersonaBuilder.html" title="class in com.atlan.model.admin">Persona.PersonaBuilder</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/admin/AtlanGroup.GroupAttributes.html#%3Cinit%3E(com.atlan.model.admin.AtlanGroup.GroupAttributes.GroupAttributesBuilder)">GroupAttributes(AtlanGroup.GroupAttributes.GroupAttributesBuilder&lt;?, ?&gt;)</a></span> - Constructor for class com.atlan.model.admin.<a href="com/atlan/model/admin/AtlanGroup.GroupAttributes.html" title="class in com.atlan.model.admin">AtlanGroup.GroupAttributes</a></dt>
@@ -13369,9 +13403,9 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/admin/GroupResponse.html#%3Cinit%3E()">GroupResponse()</a></span> - Constructor for class com.atlan.model.admin.<a href="com/atlan/model/admin/GroupResponse.html" title="class in com.atlan.model.admin">GroupResponse</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/atlan/model/admin/Persona.PersonaBuilder.html#groups(java.util.Collection)">groups(Collection&lt;? extends String&gt;)</a></span> - Method in class com.atlan.model.admin.<a href="com/atlan/model/admin/Persona.PersonaBuilder.html" title="class in com.atlan.model.admin">Persona.PersonaBuilder</a></dt>
+<dt><span class="memberNameLink"><a href="com/atlan/model/admin/AbstractPurposePolicy.AbstractPurposePolicyBuilder.html#groups(java.util.Collection)">groups(Collection&lt;? extends String&gt;)</a></span> - Method in class com.atlan.model.admin.<a href="com/atlan/model/admin/AbstractPurposePolicy.AbstractPurposePolicyBuilder.html" title="class in com.atlan.model.admin">AbstractPurposePolicy.AbstractPurposePolicyBuilder</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/atlan/model/admin/AbstractPurposePolicy.AbstractPurposePolicyBuilder.html#groups(java.util.SortedSet)">groups(SortedSet&lt;String&gt;)</a></span> - Method in class com.atlan.model.admin.<a href="com/atlan/model/admin/AbstractPurposePolicy.AbstractPurposePolicyBuilder.html" title="class in com.atlan.model.admin">AbstractPurposePolicy.AbstractPurposePolicyBuilder</a></dt>
+<dt><span class="memberNameLink"><a href="com/atlan/model/admin/Persona.PersonaBuilder.html#groups(java.util.Collection)">groups(Collection&lt;? extends String&gt;)</a></span> - Method in class com.atlan.model.admin.<a href="com/atlan/model/admin/Persona.PersonaBuilder.html" title="class in com.atlan.model.admin">Persona.PersonaBuilder</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/enums/AtlanCustomAttributePrimitiveType.html#GROUPS">GROUPS</a></span> - com.atlan.model.enums.<a href="com/atlan/model/enums/AtlanCustomAttributePrimitiveType.html" title="enum in com.atlan.model.enums">AtlanCustomAttributePrimitiveType</a></dt>
 <dd>&nbsp;</dd>
@@ -15069,6 +15103,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/atlan/exception/ErrorCode.html#NO_CONNECTION_ADMIN">NO_CONNECTION_ADMIN</a></span> - com.atlan.exception.<a href="com/atlan/exception/ErrorCode.html" title="enum in com.atlan.exception">ErrorCode</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/exception/ErrorCode.html#NO_GRAPH_WITH_PROCESS">NO_GRAPH_WITH_PROCESS</a></span> - com.atlan.exception.<a href="com/atlan/exception/ErrorCode.html" title="enum in com.atlan.exception">ErrorCode</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/exception/ErrorCode.html#NO_USERS_FOR_POLICY">NO_USERS_FOR_POLICY</a></span> - com.atlan.exception.<a href="com/atlan/exception/ErrorCode.html" title="enum in com.atlan.exception">ErrorCode</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/enums/PropagateTags.html#NONE">NONE</a></span> - com.atlan.model.enums.<a href="com/atlan/model/enums/PropagateTags.html" title="enum in com.atlan.model.enums">PropagateTags</a></dt>
 <dd>&nbsp;</dd>
@@ -23118,6 +23154,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/workflow/WorkflowTemplateRef.html#setClusterScope(java.lang.Boolean)">setClusterScope(Boolean)</a></span> - Method in class com.atlan.model.workflow.<a href="com/atlan/model/workflow/WorkflowTemplateRef.html" title="class in com.atlan.model.workflow">WorkflowTemplateRef</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/core/AtlanError.html#setCode(java.lang.Long)">setCode(Long)</a></span> - Method in class com.atlan.model.core.<a href="com/atlan/model/core/AtlanError.html" title="class in com.atlan.model.core">AtlanError</a></dt>
+<dd>
+<div class="block">A numeric error code.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/AbstractProcess.html#setCode(java.lang.String)">setCode(String)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/AbstractProcess.html" title="class in com.atlan.model.assets">AbstractProcess</a></dt>
 <dd>
 <div class="block">Code that ran within the process.</div>
@@ -24059,6 +24099,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">List of values for an enumeration.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/core/AtlanError.html#setError(java.lang.String)">setError(String)</a></span> - Method in class com.atlan.model.core.<a href="com/atlan/model/core/AtlanError.html" title="class in com.atlan.model.core">AtlanError</a></dt>
+<dd>
+<div class="block">A human-readable suggestion on resolving the error.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/core/AtlanError.html#setErrorCode(java.lang.String)">setErrorCode(String)</a></span> - Method in class com.atlan.model.core.<a href="com/atlan/model/core/AtlanError.html" title="class in com.atlan.model.core">AtlanError</a></dt>
 <dd>
 <div class="block">A short string indicating the error code reported.</div>
@@ -24522,6 +24566,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/atlan/model/typedefs/AttributeDef.html#setIncludeInNotification(java.lang.Boolean)">setIncludeInNotification(Boolean)</a></span> - Method in class com.atlan.model.typedefs.<a href="com/atlan/model/typedefs/AttributeDef.html" title="class in com.atlan.model.typedefs">AttributeDef</a></dt>
 <dd>
 <div class="block">Whether changes to this attribute's value generate an event (true) or not (false).</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/core/AtlanError.html#setInfo(java.lang.String)">setInfo(String)</a></span> - Method in class com.atlan.model.core.<a href="com/atlan/model/core/AtlanError.html" title="class in com.atlan.model.core">AtlanError</a></dt>
+<dd>
+<div class="block">TBC</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/SalesforceField.html#setInlineHelpText(java.lang.String)">setInlineHelpText(String)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/SalesforceField.html" title="class in com.atlan.model.assets">SalesforceField</a></dt>
 <dd>
@@ -25005,6 +25053,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/LookerTile.html#setMergeResultId(java.lang.String)">setMergeResultId(String)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/LookerTile.html" title="class in com.atlan.model.assets">LookerTile</a></dt>
 <dd>
 <div class="block">TBC</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/core/AtlanError.html#setMessage(java.lang.String)">setMessage(String)</a></span> - Method in class com.atlan.model.core.<a href="com/atlan/model/core/AtlanError.html" title="class in com.atlan.model.core">AtlanError</a></dt>
+<dd>
+<div class="block">A human-readable message providing more details about the error.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/workflow/WorkflowSearchResultStatus.html#setMessage(java.lang.String)">setMessage(String)</a></span> - Method in class com.atlan.model.workflow.<a href="com/atlan/model/workflow/WorkflowSearchResultStatus.html" title="class in com.atlan.model.workflow">WorkflowSearchResultStatus</a></dt>
 <dd>&nbsp;</dd>
@@ -26242,6 +26294,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">Type of report in Salesforce.</div>
 </dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/admin/AtlanUser.AdminEvent.html#setRepresentation(java.lang.String)">setRepresentation(String)</a></span> - Method in class com.atlan.model.admin.<a href="com/atlan/model/admin/AtlanUser.AdminEvent.html" title="class in com.atlan.model.admin">AtlanUser.AdminEvent</a></dt>
+<dd>
+<div class="block">TBC</div>
+</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/core/AtlanError.html#setRequestId(java.lang.String)">setRequestId(String)</a></span> - Method in class com.atlan.model.core.<a href="com/atlan/model/core/AtlanError.html" title="class in com.atlan.model.core">AtlanError</a></dt>
 <dd>
 <div class="block">TBC</div>
 </dd>
@@ -31325,7 +31381,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Update a persona.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="com/atlan/api/PurposesEndpoint.html#updatePurpose(java.lang.String,com.atlan.model.admin.Purpose)">updatePurpose(String, Purpose)</a></span> - Static method in class com.atlan.api.<a href="com/atlan/api/PurposesEndpoint.html" title="class in com.atlan.api">PurposesEndpoint</a></dt>
+<dt><span class="memberNameLink"><a href="com/atlan/api/PurposesEndpoint.html#updatePurpose(com.atlan.model.admin.Purpose)">updatePurpose(Purpose)</a></span> - Static method in class com.atlan.api.<a href="com/atlan/api/PurposesEndpoint.html" title="class in com.atlan.api">PurposesEndpoint</a></dt>
 <dd>
 <div class="block">Update a purpose.</div>
 </dd>
@@ -31807,6 +31863,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/assets/GlossaryTerm.GlossaryTermBuilder.html#usage(java.lang.String)">usage(String)</a></span> - Method in class com.atlan.model.assets.<a href="com/atlan/model/assets/GlossaryTerm.GlossaryTermBuilder.html" title="class in com.atlan.model.assets">GlossaryTerm.GlossaryTermBuilder</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="com/atlan/model/admin/AbstractPurposePolicy.AbstractPurposePolicyBuilder.html#user(java.lang.String)">user(String)</a></span> - Method in class com.atlan.model.admin.<a href="com/atlan/model/admin/AbstractPurposePolicy.AbstractPurposePolicyBuilder.html" title="class in com.atlan.model.admin">AbstractPurposePolicy.AbstractPurposePolicyBuilder</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/admin/Persona.PersonaBuilder.html#user(java.lang.String)">user(String)</a></span> - Method in class com.atlan.model.admin.<a href="com/atlan/model/admin/Persona.PersonaBuilder.html" title="class in com.atlan.model.admin">Persona.PersonaBuilder</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/search/EntityAudit.EntityAuditBuilder.html#user(java.lang.String)">user(String)</a></span> - Method in class com.atlan.model.search.<a href="com/atlan/model/search/EntityAudit.EntityAuditBuilder.html" title="class in com.atlan.model.search">EntityAudit.EntityAuditBuilder</a></dt>
@@ -31845,9 +31903,9 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/admin/UserResponse.html#%3Cinit%3E()">UserResponse()</a></span> - Constructor for class com.atlan.model.admin.<a href="com/atlan/model/admin/UserResponse.html" title="class in com.atlan.model.admin">UserResponse</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/atlan/model/admin/Persona.PersonaBuilder.html#users(java.util.Collection)">users(Collection&lt;? extends String&gt;)</a></span> - Method in class com.atlan.model.admin.<a href="com/atlan/model/admin/Persona.PersonaBuilder.html" title="class in com.atlan.model.admin">Persona.PersonaBuilder</a></dt>
+<dt><span class="memberNameLink"><a href="com/atlan/model/admin/AbstractPurposePolicy.AbstractPurposePolicyBuilder.html#users(java.util.Collection)">users(Collection&lt;? extends String&gt;)</a></span> - Method in class com.atlan.model.admin.<a href="com/atlan/model/admin/AbstractPurposePolicy.AbstractPurposePolicyBuilder.html" title="class in com.atlan.model.admin">AbstractPurposePolicy.AbstractPurposePolicyBuilder</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="com/atlan/model/admin/AbstractPurposePolicy.AbstractPurposePolicyBuilder.html#users(java.util.SortedSet)">users(SortedSet&lt;String&gt;)</a></span> - Method in class com.atlan.model.admin.<a href="com/atlan/model/admin/AbstractPurposePolicy.AbstractPurposePolicyBuilder.html" title="class in com.atlan.model.admin">AbstractPurposePolicy.AbstractPurposePolicyBuilder</a></dt>
+<dt><span class="memberNameLink"><a href="com/atlan/model/admin/Persona.PersonaBuilder.html#users(java.util.Collection)">users(Collection&lt;? extends String&gt;)</a></span> - Method in class com.atlan.model.admin.<a href="com/atlan/model/admin/Persona.PersonaBuilder.html" title="class in com.atlan.model.admin">Persona.PersonaBuilder</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="com/atlan/model/enums/AtlanCustomAttributePrimitiveType.html#USERS">USERS</a></span> - com.atlan.model.enums.<a href="com/atlan/model/enums/AtlanCustomAttributePrimitiveType.html" title="enum in com.atlan.model.enums">AtlanCustomAttributePrimitiveType</a></dt>
 <dd>&nbsp;</dd>
