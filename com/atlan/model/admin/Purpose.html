@@ -222,7 +222,7 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code><a href="AbstractPolicy.html" title="class in com.atlan.model.admin">AbstractPolicy</a></code></td>
+<td class="colFirst"><code><a href="Purpose.html" title="class in com.atlan.model.admin">Purpose</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addPolicy(com.atlan.model.admin.AbstractPolicy)">addPolicy</a></span>&#8203;(<a href="AbstractPolicy.html" title="class in com.atlan.model.admin">AbstractPolicy</a>&nbsp;policy)</code></th>
 <td class="colLast">
 <div class="block">Add the provided policy to this purpose in Atlan.</div>
@@ -650,14 +650,16 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <ul class="blockList">
 <li class="blockList">
 <h4>addPolicy</h4>
-<pre class="methodSignature">public&nbsp;<a href="AbstractPolicy.html" title="class in com.atlan.model.admin">AbstractPolicy</a>&nbsp;addPolicy&#8203;(<a href="AbstractPolicy.html" title="class in com.atlan.model.admin">AbstractPolicy</a>&nbsp;policy)
-                         throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
-<div class="block">Add the provided policy to this purpose in Atlan.</div>
+<pre class="methodSignature">public&nbsp;<a href="Purpose.html" title="class in com.atlan.model.admin">Purpose</a>&nbsp;addPolicy&#8203;(<a href="AbstractPolicy.html" title="class in com.atlan.model.admin">AbstractPolicy</a>&nbsp;policy)
+                  throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Add the provided policy to this purpose in Atlan.
+ Note that the purpose needs to be a complete purpose object, not just a simple
+ stub with an ID.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>policy</code> - to add</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the policy that was added</dd>
+<dd>the full purpose with all of its policies</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any error during API invocation</dd>
 </dl>

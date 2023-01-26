@@ -176,8 +176,8 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>static <a href="../model/admin/AbstractPolicy.html" title="class in com.atlan.model.admin">AbstractPolicy</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addPolicyToPurpose(java.lang.String,com.atlan.model.admin.AbstractPolicy)">addPolicyToPurpose</a></span>&#8203;(java.lang.String&nbsp;id,
+<td class="colFirst"><code>static <a href="../model/admin/Purpose.html" title="class in com.atlan.model.admin">Purpose</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addPolicyToPurpose(com.atlan.model.admin.Purpose,com.atlan.model.admin.AbstractPolicy)">addPolicyToPurpose</a></span>&#8203;(<a href="../model/admin/Purpose.html" title="class in com.atlan.model.admin">Purpose</a>&nbsp;purpose,
                   <a href="../model/admin/AbstractPolicy.html" title="class in com.atlan.model.admin">AbstractPolicy</a>&nbsp;policy)</code></th>
 <td class="colLast">
 <div class="block">Add the provided policy to the purpose with the specified ID.</div>
@@ -391,19 +391,19 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a id="addPolicyToPurpose(java.lang.String,com.atlan.model.admin.AbstractPolicy)">
+<a id="addPolicyToPurpose(com.atlan.model.admin.Purpose,com.atlan.model.admin.AbstractPolicy)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>addPolicyToPurpose</h4>
-<pre class="methodSignature">public static&nbsp;<a href="../model/admin/AbstractPolicy.html" title="class in com.atlan.model.admin">AbstractPolicy</a>&nbsp;addPolicyToPurpose&#8203;(java.lang.String&nbsp;id,
-                                                <a href="../model/admin/AbstractPolicy.html" title="class in com.atlan.model.admin">AbstractPolicy</a>&nbsp;policy)
-                                         throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<pre class="methodSignature">public static&nbsp;<a href="../model/admin/Purpose.html" title="class in com.atlan.model.admin">Purpose</a>&nbsp;addPolicyToPurpose&#8203;(<a href="../model/admin/Purpose.html" title="class in com.atlan.model.admin">Purpose</a>&nbsp;purpose,
+                                         <a href="../model/admin/AbstractPolicy.html" title="class in com.atlan.model.admin">AbstractPolicy</a>&nbsp;policy)
+                                  throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
 <div class="block">Add the provided policy to the purpose with the specified ID.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>id</code> - unique identifier (GUID) of the purpose to add the policy to</dd>
+<dd><code>purpose</code> - the full purpose to which to add the policy</dd>
 <dd><code>policy</code> - the policy to add to the purpose</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the policy that was added</dd>
