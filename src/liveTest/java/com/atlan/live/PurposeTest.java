@@ -43,7 +43,9 @@ public class PurposeTest extends AtlanLiveTest {
             dependsOnGroups = {"create.classification"})
     void createPurposes() {
         try {
-            Purpose purpose = Purpose.creator(PURPOSE_NAME, List.of(CLS_NAME)).build();
+            Purpose purpose = Purpose.creator(PURPOSE_NAME, List.of(CLS_NAME))
+                    .description("Example purpose for testing purposes.")
+                    .build();
             Purpose result = purpose.create();
             assertNotNull(result);
             purposeGuid = result.getId();
