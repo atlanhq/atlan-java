@@ -99,8 +99,9 @@ public class PurposeTest extends AtlanLiveTest {
                                 null,
                                 true,
                                 Set.of(DataPolicyAction.SELECT),
-                                DataPolicyType.ACCESS,
+                                DataPolicyType.MASKING,
                                 true)
+                        .mask(MaskingType.HASH)
                         .build())
                 .build();
         Purpose result = purpose.update();
