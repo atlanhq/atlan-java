@@ -362,7 +362,12 @@ extends <a href="AbstractPolicy.html" title="class in com.atlan.model.admin">Abs
 <li class="blockList">
 <h4>getGroups</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;java.lang.String&gt;&nbsp;getGroups()</pre>
-<div class="block">All groups' names to whom the policy will apply.</div>
+<div class="block">All groups' names to whom the policy will apply.
+ Note that these are the internal names of the groups, typically in all lowercase and without spaces.</div>
+<dl>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="AtlanGroup.html#name"><code>AtlanGroup.name</code></a></dd>
+</dl>
 </li>
 </ul>
 <a id="getUsers()">
@@ -373,6 +378,10 @@ extends <a href="AbstractPolicy.html" title="class in com.atlan.model.admin">Abs
 <h4>getUsers</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;java.lang.String&gt;&nbsp;getUsers()</pre>
 <div class="block">All users' names to whom the policy will apply.</div>
+<dl>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="AtlanUser.html#username"><code>AtlanUser.username</code></a></dd>
+</dl>
 </li>
 </ul>
 <a id="setAllUsers(java.lang.Boolean)">
@@ -392,7 +401,12 @@ extends <a href="AbstractPolicy.html" title="class in com.atlan.model.admin">Abs
 <li class="blockList">
 <h4>setGroups</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;setGroups&#8203;(java.util.SortedSet&lt;java.lang.String&gt;&nbsp;groups)</pre>
-<div class="block">All groups' names to whom the policy will apply.</div>
+<div class="block">All groups' names to whom the policy will apply.
+ Note that these are the internal names of the groups, typically in all lowercase and without spaces.</div>
+<dl>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="AtlanGroup.html#name"><code>AtlanGroup.name</code></a></dd>
+</dl>
 </li>
 </ul>
 <a id="setUsers(java.util.SortedSet)">
@@ -403,6 +417,10 @@ extends <a href="AbstractPolicy.html" title="class in com.atlan.model.admin">Abs
 <h4>setUsers</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;setUsers&#8203;(java.util.SortedSet&lt;java.lang.String&gt;&nbsp;users)</pre>
 <div class="block">All users' names to whom the policy will apply.</div>
+<dl>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="AtlanUser.html#username"><code>AtlanUser.username</code></a></dd>
+</dl>
 </li>
 </ul>
 <a id="equals(java.lang.Object)">
