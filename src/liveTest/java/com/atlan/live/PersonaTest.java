@@ -7,6 +7,7 @@ import static org.testng.Assert.*;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.admin.*;
 import com.atlan.model.assets.Connection;
+import com.atlan.model.assets.Glossary;
 import com.atlan.model.enums.*;
 import java.util.List;
 import java.util.Set;
@@ -22,14 +23,21 @@ public class PersonaTest extends AtlanLiveTest {
     private static final String PERSONA_NAME = PREFIX;
     private static final String CONNECTION_NAME = "java-sdk-" + PREFIX;
     private static final AtlanConnectorType CONNECTOR_TYPE = AtlanConnectorType.GCS;
+    private static final String GLOSSARY_NAME = PREFIX;
 
     private static String personaGuid = null;
 
     private static Connection connection = null;
+    private static Glossary glossary = null;
 
     @Test(groups = {"create.connection"})
     void createConnection() throws AtlanException {
         connection = ConnectionTest.createConnection(CONNECTION_NAME, CONNECTOR_TYPE);
+    }
+
+    @Test(groups = {"create.glossary"})
+    void createGlossary() throws AtlanException {
+        glossary = GlossaryTest.createGlossary(GLOSSARY_NAME);
     }
 
     @Test(groups = {"create.personas"})
@@ -73,7 +81,7 @@ public class PersonaTest extends AtlanLiveTest {
 
     @Test(
             groups = {"update.personas.policy"},
-            dependsOnGroups = {"update.personas", "create.connection"})
+            dependsOnGroups = {"update.personas", "create.connection", "create.glossary"})
     void addPoliciesToPersona() throws AtlanException {
         Persona persona = Persona.retrieveByName(PERSONA_NAME);
         PersonaMetadataPolicy metadata = PersonaMetadataPolicy.creator(
@@ -94,6 +102,14 @@ public class PersonaTest extends AtlanLiveTest {
                 .build();
         policy = persona.addPolicy(data);
         assertTrue(policy instanceof PersonaDataPolicy);
+        GlossaryPolicy glossaryPolicy = GlossaryPolicy.creator(
+                        "All glossaries",
+                        Set.of(glossary.getQualifiedName()),
+                        Set.of(GlossaryPolicyAction.CREATE, GlossaryPolicyAction.UPDATE),
+                        true)
+                .build();
+        policy = persona.addPolicy(glossaryPolicy);
+        assertTrue(policy instanceof GlossaryPolicy);
     }
 
     @Test(
@@ -121,6 +137,14 @@ public class PersonaTest extends AtlanLiveTest {
             alwaysRun = true)
     void purgePersonas() throws AtlanException {
         Persona.delete(personaGuid);
+    }
+
+    @Test(
+            groups = {"purge.glossary"},
+            dependsOnGroups = {"create.*", "read.*", "update.*", "purge.personas"},
+            alwaysRun = true)
+    void purgeGlossary() throws AtlanException {
+        Glossary.purge(glossary.getGuid());
     }
 
     @Test(
