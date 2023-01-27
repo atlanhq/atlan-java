@@ -3,6 +3,7 @@
 package com.atlan.model.admin;
 
 import com.atlan.model.enums.GlossaryPolicyAction;
+import java.util.Collection;
 import java.util.SortedSet;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -26,4 +27,25 @@ public class GlossaryPolicy extends AbstractPolicy {
     /** All the actions included in the policy. */
     @Singular
     SortedSet<GlossaryPolicyAction> actions;
+
+    /**
+     * Builds the minimal object necessary to create a glossary policy for a persona.
+     *
+     * @param name short description of the policy
+     * @param glossaryQualifiedNames the qualifiedNames of all glossaries this policy will control
+     * @param actions the collection of actions the policy allows or denies
+     * @param allow whether to allow the actions provided (true) or explicitly deny them (false)
+     * @return the minimal request necessary to create the glossary policy for a persona, as a builder
+     */
+    public static GlossaryPolicyBuilder<?, ?> creator(
+            String name,
+            Collection<String> glossaryQualifiedNames,
+            Collection<GlossaryPolicyAction> actions,
+            boolean allow) {
+        return GlossaryPolicy.builder()
+                .name(name)
+                .glossaryQualifiedNames(glossaryQualifiedNames)
+                .actions(actions)
+                .allow(allow);
+    }
 }
