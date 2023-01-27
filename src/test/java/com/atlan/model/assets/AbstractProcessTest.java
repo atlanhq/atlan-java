@@ -12,7 +12,7 @@ public class AbstractProcessTest {
 
     @Test
     void generateQualifiedName() {
-        final String qn1_hash = "643892f7e1e3af8e141b0f75070a4321";
+        final String qn1_hash = "four/643892f7e1e3af8e141b0f75070a4321";
         String qn1 = AbstractProcess.generateQualifiedName(
                 "one",
                 AtlanConnectorType.S3,
@@ -47,7 +47,7 @@ public class AbstractProcessTest {
 
     @Test
     void generateQualifiedNameColumnLevel() {
-        final String qn1_hash = "6c58211472c0fda1e4fcfb6b73a2785e";
+        final String qn1_hash = "four/6c58211472c0fda1e4fcfb6b73a2785e";
         String qn1 = AbstractProcess.generateQualifiedName(
                 "one",
                 AtlanConnectorType.S3,
