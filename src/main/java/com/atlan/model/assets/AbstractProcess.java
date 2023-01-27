@@ -88,7 +88,8 @@ public abstract class AbstractProcess extends Asset {
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
             md.update(sb.toString().getBytes(StandardCharsets.UTF_8));
-            return String.format("%032x", new BigInteger(1, md.digest()));
+            String hashed = String.format("%032x", new BigInteger(1, md.digest()));
+            return connectionQualifiedName + "/" + hashed;
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(
                     "Unable to generate the qualifiedName for the process: MD5 algorithm does not exist on your platform!");
