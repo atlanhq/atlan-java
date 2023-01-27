@@ -19,12 +19,19 @@ public abstract class AbstractPurposePolicy extends AbstractPolicy {
     /** Whether this policy applies to all users (true) or not (false). */
     Boolean allUsers;
 
-    /** All groups' names to whom the policy will apply. */
+    /**
+     * All groups' names to whom the policy will apply.
+     * Note that these are the internal names of the groups, typically in all lowercase and without spaces.
+     * @see AtlanGroup#name
+     */
     @Singular
     @JsonInclude(JsonInclude.Include.ALWAYS)
     SortedSet<String> groups;
 
-    /** All users' names to whom the policy will apply. */
+    /**
+     * All users' names to whom the policy will apply.
+     * @see AtlanUser#username
+     */
     @Singular
     @JsonInclude(JsonInclude.Include.ALWAYS)
     SortedSet<String> users;
