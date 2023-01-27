@@ -38,8 +38,8 @@ public class PurposeDataPolicy extends AbstractPurposePolicy {
      * Builds the minimal object necessary to create a data policy for a purpose.
      *
      * @param name short description of the policy
-     * @param users collection of users whose access is controlled by the policy
-     * @param groups collection of groups whose access is controlled by the policy
+     * @param users collection of usernames whose access is controlled by the policy
+     * @param groups collection of group names whose access is controlled by the policy
      * @param allUsers whether to apply this policy to all users (overriding previous parameters) (true) or only some users (false)
      * @param actions the collection of actions the policy allows or denies
      * @param allow whether to allow the actions provided (true) or explicitly deny them (false)
