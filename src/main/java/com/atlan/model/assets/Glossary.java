@@ -5,9 +5,7 @@ package com.atlan.model.assets;
 import co.elastic.clients.elasticsearch._types.FieldSort;
 import co.elastic.clients.elasticsearch._types.SortOptions;
 import co.elastic.clients.elasticsearch._types.SortOrder;
-import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
-import co.elastic.clients.elasticsearch._types.query_dsl.TermQuery;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
@@ -170,10 +168,12 @@ public class Glossary extends Asset {
      * @throws AtlanException on any API problems, or if the Glossary does not exist
      */
     public static Glossary findByName(String name, Collection<String> attributes) throws AtlanException {
-        Query byType = QueryFactory.withType(TYPE_NAME);
-        Query byName = QueryFactory.withExactName(name);
-        Query active = QueryFactory.active();
-        Query filter = BoolQuery.of(b -> b.filter(byType, byName, active))._toQuery();
+        Query filter = QueryFactory.CompoundQuery.builder()
+                .must(QueryFactory.beActive())
+                .must(QueryFactory.beA(TYPE_NAME))
+                .must(QueryFactory.haveExactName(name))
+                .build()
+                ._toQuery();
         IndexSearchRequest.IndexSearchRequestBuilder<?, ?> builder = IndexSearchRequest.builder()
                 .dsl(IndexSearchDSL.builder().from(0).size(2).query(filter).build());
         if (attributes != null && !attributes.isEmpty()) {
@@ -262,11 +262,12 @@ public class Glossary extends Asset {
             throw new InvalidRequestException(
                     ErrorCode.MISSING_REQUIRED_QUERY_PARAM, Glossary.TYPE_NAME, "qualifiedName");
         }
-        Query byType = QueryFactory.withType(GlossaryCategory.TYPE_NAME);
-        Query byGlossaryQN = TermQuery.of(t -> t.field("__glossary").value(getQualifiedName()))
+        Query filter = QueryFactory.CompoundQuery.builder()
+                .must(QueryFactory.beActive())
+                .must(QueryFactory.beA(GlossaryCategory.TYPE_NAME))
+                .must(QueryFactory.have("__glossary").eq(getQualifiedName()))
+                .build()
                 ._toQuery();
-        Query active = QueryFactory.active();
-        Query filter = BoolQuery.of(b -> b.filter(byType, byGlossaryQN, active))._toQuery();
         IndexSearchRequest.IndexSearchRequestBuilder<?, ?> builder = IndexSearchRequest.builder()
                 .dsl(IndexSearchDSL.builder()
                         .from(0)
