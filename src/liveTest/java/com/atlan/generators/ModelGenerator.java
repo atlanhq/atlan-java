@@ -10,6 +10,8 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
+import lombok.Builder;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -32,6 +34,15 @@ public class ModelGenerator extends AbstractGenerator {
             + "atlan" + File.separator
             + "model" + File.separator
             + "assets";
+
+    private static final String ENUMS_DIRECTORY = ""
+            + "src" + File.separator
+            + "main" + File.separator
+            + "java" + File.separator
+            + "com" + File.separator
+            + "atlan" + File.separator
+            + "model" + File.separator
+            + "enums";
 
     private static final String TEST_DIRECTORY = ""
             + "src" + File.separator
@@ -64,7 +75,77 @@ public class ModelGenerator extends AbstractGenerator {
             Map.entry("resourceMetadata", "putResourceMetadata"),
             Map.entry("adlsObjectMetadata", "putAdlsObjectMetadata"));
 
+    private static final SortedSet<SearchableField> COMMON_KEYWORDS = createCommonKeywords();
+    private static final SortedSet<SearchableField> COMMON_TEXT = createCommonText();
+    private static final SortedSet<SearchableField> COMMON_NUMERICS = createCommonNumerics();
+
+    private static SortedSet<SearchableField> createCommonKeywords() {
+        SortedSet<SearchableField> set = new TreeSet<>();
+        set.add(SearchableField.of("guid", "__guid", "Globally unique identifier (GUID) of any object in Atlan."));
+        set.add(SearchableField.of("createdBy", "__createdBy", "Atlan user who created this sasset."));
+        set.add(SearchableField.of("modifiedBy", "__modifiedBy", "Atlan user who last updated the sasset."));
+        set.add(SearchableField.of("state", "__state", "Asset status in Atlan (active vs deleted)."));
+        set.add(
+                SearchableField.of(
+                        "traitNames",
+                        "__traitNames",
+                        "All directly-assigned classifications that exist on an asset, searchable by the internal hashed-string ID of the classification."));
+        set.add(
+                SearchableField.of(
+                        "propagatedTraitNames",
+                        "__propagatedTraitNames",
+                        "All propagated classifications that exist on an asset, searchable by the internal hashed-string ID of the classification."));
+        set.add(SearchableField.of(
+                "meanings", "__meanings", "All terms attached to an asset, searchable by the term's qualifiedName."));
+        set.add(SearchableField.of(
+                "typeName", "__typeName.keyword", "Type of the asset. For example Table, Column, and so on."));
+        set.add(SearchableField.of("superTypeNames", "__superTypeNames.keyword", "All super types of an asset."));
+        set.add(SearchableField.of(
+                "qualifiedName", "qualifiedName", "Unique fully-qualified name of the asset in Atlan."));
+        set.add(SearchableField.of(
+                "glossary",
+                "__glossary",
+                "Glossary in which the asset is contained, searchable by the qualifiedName of the glossary."));
+        return set;
+    }
+
+    private static SortedSet<SearchableField> createCommonText() {
+        SortedSet<SearchableField> set = new TreeSet<>();
+        set.add(
+                SearchableField.of(
+                        "classificationsText",
+                        "__classificationsText",
+                        "All classifications that exist on an asset, whether directly assigned or propagated, searchable by the internal hashed-string ID of the classification."));
+        set.add(SearchableField.of(
+                "meaningsText",
+                "__meaningsText",
+                "All terms attached to an asset, as a single comma-separated string."));
+        set.add(SearchableField.of(
+                "typeName", "__typeName", "Type of the asset. For example Table, Column, and so on."));
+        set.add(SearchableField.of("superTypeNames", "__superTypeNames", "All super types of an asset."));
+        set.add(SearchableField.of(
+                "qualifiedName", "qualifiedName.text", "Unique fully-qualified name of the asset in Atlan."));
+        return set;
+    }
+
+    private static SortedSet<SearchableField> createCommonNumerics() {
+        SortedSet<SearchableField> set = new TreeSet<>();
+        set.add(SearchableField.of("timestamp", "__timestamp", "Time (in milliseconds) when the asset was created."));
+        set.add(SearchableField.of(
+                "modificationTimestamp",
+                "__modificationTimestamp",
+                "Time (in milliseconds) when the asset was last updated."));
+        return set;
+    }
+
     private static final SortedSet<String> concreteModels = new TreeSet<>();
+
+    private static final SortedSet<SearchableField> searchableNumerics = new TreeSet<>();
+    private static final SortedSet<SearchableField> searchableKeywords = new TreeSet<>();
+    private static final SortedSet<SearchableField> searchableText = new TreeSet<>();
+    private static final SortedSet<SearchableField> searchableStemmed = new TreeSet<>();
+    private static final SortedSet<SearchableField> searchableBooleans = new TreeSet<>();
+    private static final SortedSet<SearchableField> searchableRanks = new TreeSet<>();
 
     public static void main(String[] args) {
         ModelGenerator generator = new ModelGenerator();
@@ -73,6 +154,7 @@ public class ModelGenerator extends AbstractGenerator {
         generator.generateModels();
         generator.generateTests();
         generator.generateDeserializationStub();
+        generator.generateEnums();
     }
 
     private void generateModels() {
@@ -126,6 +208,78 @@ public class ModelGenerator extends AbstractGenerator {
         System.out.println("                default:");
         System.out.println("                    builder = IndistinctAsset.builder();");
         System.out.println("                    break;");
+    }
+
+    private void generateEnums() {
+        File dir = new File(ENUMS_DIRECTORY);
+        if (!dir.exists()) {
+            log.info("Creating directory: " + ENUMS_DIRECTORY);
+            if (!dir.mkdirs()) {
+                log.error("Unable to create target directory: {}", ENUMS_DIRECTORY);
+            }
+        }
+        searchableKeywords.addAll(COMMON_KEYWORDS);
+        searchableText.addAll(COMMON_TEXT);
+        searchableNumerics.addAll(COMMON_NUMERICS);
+        generateEnum("NumericFields", searchableNumerics);
+        generateEnum("KeywordFields", searchableKeywords);
+        generateEnum("TextFields", searchableText);
+        generateEnum("StemmedFields", searchableStemmed);
+        generateEnum("BooleanFields", searchableBooleans);
+        generateEnum("RankFields", searchableRanks);
+    }
+
+    private void generateEnum(String enumName, Set<SearchableField> fieldMap) {
+        String filename = ENUMS_DIRECTORY + File.separator + enumName + ".java";
+        try (BufferedWriter fs =
+                new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filename), StandardCharsets.UTF_8))) {
+
+            fs.append("package com.atlan.model.enums;")
+                    .append(System.lineSeparator())
+                    .append(System.lineSeparator());
+            fs.append("import lombok.Getter;").append(System.lineSeparator()).append(System.lineSeparator());
+            fs.append("public enum ")
+                    .append(enumName)
+                    .append(" implements AtlanSearchableField {")
+                    .append(System.lineSeparator());
+
+            for (SearchableField field : fieldMap) {
+                String enumId = getEnumFromAttrName(field.getAttrName());
+                fs.append("    /** ")
+                        .append(field.getDescription())
+                        .append(" */")
+                        .append(System.lineSeparator());
+                fs.append("    ")
+                        .append(enumId)
+                        .append("(\"")
+                        .append(field.getFieldName())
+                        .append("\"),")
+                        .append(System.lineSeparator());
+            }
+            fs.append("    ;").append(System.lineSeparator());
+
+            fs.append("    @Getter(onMethod_ = {@Override})").append(System.lineSeparator());
+            fs.append("    private final String indexedFieldName;")
+                    .append(System.lineSeparator())
+                    .append(System.lineSeparator());
+            fs.append("    ")
+                    .append(enumName)
+                    .append("(String indexedFieldName) {")
+                    .append(System.lineSeparator());
+            fs.append("        this.indexedFieldName = indexedFieldName;").append(System.lineSeparator());
+            fs.append("    }").append(System.lineSeparator());
+            fs.append("}").append(System.lineSeparator());
+
+        } catch (IOException e) {
+            log.error("Unable to open file output: {}", filename, e);
+        }
+    }
+
+    private String getEnumFromAttrName(String attrName) {
+        return attrName.replaceAll("_", "")
+                .replaceAll("([A-Z]+)([A-Z][a-z])", "$1_$2")
+                .replaceAll("([a-z])([A-Z])", "$1_$2")
+                .toUpperCase();
     }
 
     private void refByGuid(BufferedWriter fs, String className) throws IOException {
@@ -929,6 +1083,7 @@ public class ModelGenerator extends AbstractGenerator {
                 fs.append("    ").append(mappedType).append(" ").append(name).append(";");
                 fs.append(System.lineSeparator()).append(System.lineSeparator());
             }
+            cacheSearchFields(typeName, name, getSearchFieldsForAttribute(attribute));
         }
     }
 
@@ -964,6 +1119,44 @@ public class ModelGenerator extends AbstractGenerator {
                     fs.append("    ").append(javaType).append(" ").append(name).append(";");
                     fs.append(System.lineSeparator()).append(System.lineSeparator());
                 }
+            }
+        }
+    }
+
+    private void cacheSearchFields(String typeName, String attrName, Map<String, IndexType> searchFields) {
+        for (Map.Entry<String, IndexType> entry : searchFields.entrySet()) {
+            String fieldName = entry.getKey();
+            IndexType type = entry.getValue();
+            String description = getAttributeDescription(typeName, attrName);
+            SearchableField field = SearchableField.builder()
+                    .attrName(attrName)
+                    .fieldName(fieldName)
+                    .description(description)
+                    .build();
+            switch (type) {
+                case KEYWORD:
+                    searchableKeywords.add(field);
+                    break;
+                case TEXT:
+                    if (fieldName.endsWith(".stemmed")) {
+                        searchableStemmed.add(field);
+                    } else {
+                        searchableText.add(field);
+                    }
+                    break;
+                case DATE:
+                case FLOAT:
+                    searchableNumerics.add(field);
+                    break;
+                case BOOLEAN:
+                    searchableBooleans.add(field);
+                    break;
+                case RANK_FEATURE:
+                    searchableRanks.add(field);
+                    break;
+                default:
+                    log.error("Unhandled search index type: {}", type);
+                    break;
             }
         }
     }
@@ -1455,5 +1648,35 @@ public class ModelGenerator extends AbstractGenerator {
                 .append(System.lineSeparator());
         fs.append("    }").append(System.lineSeparator());
         fs.append(System.lineSeparator());
+    }
+
+    @Builder
+    @Getter
+    private static final class SearchableField implements Comparable<SearchableField> {
+
+        private static final Comparator<String> stringComparator = Comparator.nullsFirst(String::compareTo);
+        private static final Comparator<SearchableField> comparator = Comparator.comparing(
+                        SearchableField::getAttrName, stringComparator)
+                .thenComparing(SearchableField::getFieldName, stringComparator);
+
+        private String attrName;
+        private String fieldName;
+        private String description;
+
+        public static SearchableField of(String attrName, String fieldName, String description) {
+            return SearchableField.builder()
+                    .attrName(attrName)
+                    .fieldName(fieldName)
+                    .description(description)
+                    .build();
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public int compareTo(SearchableField o) {
+            return comparator.compare(this, o);
+        }
     }
 }
