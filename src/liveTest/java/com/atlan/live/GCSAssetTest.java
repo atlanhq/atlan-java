@@ -2,13 +2,13 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.live;
 
+import static com.atlan.util.QueryFactory.*;
 import static org.testng.Assert.*;
 
 import co.elastic.clients.elasticsearch._types.FieldSort;
 import co.elastic.clients.elasticsearch._types.SortOptions;
 import co.elastic.clients.elasticsearch._types.SortOrder;
 import co.elastic.clients.elasticsearch._types.aggregations.Aggregation;
-import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.assets.*;
@@ -18,7 +18,6 @@ import com.atlan.model.search.AggregationBucketResult;
 import com.atlan.model.search.IndexSearchDSL;
 import com.atlan.model.search.IndexSearchRequest;
 import com.atlan.model.search.IndexSearchResponse;
-import com.atlan.util.QueryFactory;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -152,10 +151,12 @@ public class GCSAssetTest extends AtlanLiveTest {
             groups = {"search.assets"},
             dependsOnGroups = {"update.bucket.again"})
     void searchAssets() throws AtlanException {
-        Query byState = QueryFactory.active();
-        Query byType = QueryFactory.withSuperType(GCS.TYPE_NAME);
-        Query byQN = QueryFactory.whereQualifiedNameStartsWith(connection.getQualifiedName());
-        Query combined = BoolQuery.of(b -> b.filter(byState, byType, byQN))._toQuery();
+        Query combined = CompoundQuery.builder()
+                .must(beActive())
+                .must(haveSuperType(GCS.TYPE_NAME))
+                .must(have(KeywordFields.QUALIFIED_NAME).startingWith(connection.getQualifiedName()))
+                .build()
+                ._toQuery();
 
         SortOptions sort = SortOptions.of(
                 s -> s.field(FieldSort.of(f -> f.field("__timestamp").order(SortOrder.Asc))));

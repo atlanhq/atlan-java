@@ -2,11 +2,10 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.live;
 
+import static com.atlan.util.QueryFactory.*;
 import static org.testng.Assert.*;
 
-import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
-import co.elastic.clients.elasticsearch._types.query_dsl.TermQuery;
 import com.atlan.Atlan;
 import com.atlan.cache.CustomMetadataCache;
 import com.atlan.exception.AtlanException;
@@ -20,7 +19,6 @@ import com.atlan.model.enums.AuditActionType;
 import com.atlan.model.search.*;
 import com.atlan.model.typedefs.*;
 import com.atlan.net.HttpClient;
-import com.atlan.util.QueryFactory;
 import java.time.Instant;
 import java.util.*;
 import lombok.extern.slf4j.Slf4j;
@@ -367,11 +365,12 @@ public class CustomMetadataTest extends AtlanLiveTest {
             dependsOnGroups = {"update.term.update.ipr"})
     void searchByAnyAccountable() throws AtlanException, InterruptedException {
 
-        String attributeId = CustomMetadataCache.getAttrIdForName(CM_RACI, CM_ATTR_RACI_ACCOUNTABLE);
-        Query byCM = QueryFactory.withAnyValueFor(attributeId);
-        Query byState = QueryFactory.active();
-        Query byType = QueryFactory.withType(GlossaryTerm.TYPE_NAME);
-        Query combined = BoolQuery.of(b -> b.filter(byState, byType, byCM))._toQuery();
+        Query combined = CompoundQuery.builder()
+                .must(beActive())
+                .must(beOfType(GlossaryTerm.TYPE_NAME))
+                .must(haveCM(CM_RACI, CM_ATTR_RACI_ACCOUNTABLE).present())
+                .build()
+                ._toQuery();
 
         IndexSearchRequest index = IndexSearchRequest.builder()
                 .dsl(IndexSearchDSL.builder().query(combined).build())
@@ -409,11 +408,12 @@ public class CustomMetadataTest extends AtlanLiveTest {
             dependsOnGroups = {"update.term.update.ipr"})
     void searchBySpecificAccountable() throws AtlanException, InterruptedException {
 
-        String attributeId = CustomMetadataCache.getAttrIdForName(CM_RACI, CM_ATTR_RACI_ACCOUNTABLE);
-        Query byCM = TermQuery.of(t -> t.field(attributeId).value(FIXED_USER))._toQuery();
-        Query byState = QueryFactory.active();
-        Query byType = QueryFactory.withType(GlossaryTerm.TYPE_NAME);
-        Query combined = BoolQuery.of(b -> b.filter(byState, byType, byCM))._toQuery();
+        Query combined = CompoundQuery.builder()
+                .must(beActive())
+                .must(beOfType(GlossaryTerm.TYPE_NAME))
+                .must(haveCM(CM_RACI, CM_ATTR_RACI_ACCOUNTABLE).eq(FIXED_USER))
+                .build()
+                ._toQuery();
 
         IndexSearchRequest index = IndexSearchRequest.builder()
                 .dsl(IndexSearchDSL.builder().query(combined).build())

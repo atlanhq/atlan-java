@@ -181,9 +181,9 @@ public class GlossaryCategory extends Asset {
             String name, String glossaryQualifiedName, Collection<String> attributes) throws AtlanException {
         Query filter = QueryFactory.CompoundQuery.builder()
                 .must(QueryFactory.beActive())
-                .must(QueryFactory.beA(TYPE_NAME))
-                .must(QueryFactory.haveExactName(name))
-                .must(QueryFactory.have("__glossary").eq(glossaryQualifiedName))
+                .must(QueryFactory.beOfType(TYPE_NAME))
+                .must(QueryFactory.have(KeywordFields.NAME).eq(name))
+                .must(QueryFactory.have(KeywordFields.GLOSSARY).eq(glossaryQualifiedName))
                 .build()
                 ._toQuery();
         IndexSearchRequest.IndexSearchRequestBuilder<?, ?> builder = IndexSearchRequest.builder()

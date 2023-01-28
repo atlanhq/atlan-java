@@ -266,9 +266,9 @@ public class Connection extends Asset {
             throws AtlanException {
         Query filter = QueryFactory.CompoundQuery.builder()
                 .must(QueryFactory.beActive())
-                .must(QueryFactory.beA(TYPE_NAME))
-                .must(QueryFactory.haveExactName(name))
-                .must(QueryFactory.have("connectorName").eq(type.getValue()))
+                .must(QueryFactory.beOfType(TYPE_NAME))
+                .must(QueryFactory.have(KeywordFields.NAME).eq(name))
+                .must(QueryFactory.have(KeywordFields.CONNECTOR_TYPE).eq(type.getValue()))
                 .build()
                 ._toQuery();
         IndexSearchRequest.IndexSearchRequestBuilder<?, ?> builder = IndexSearchRequest.builder()

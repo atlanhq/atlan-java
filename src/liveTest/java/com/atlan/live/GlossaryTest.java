@@ -2,10 +2,10 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.live;
 
+import static com.atlan.util.QueryFactory.*;
 import static org.testng.Assert.*;
 
 import co.elastic.clients.elasticsearch._types.aggregations.Aggregation;
-import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import com.atlan.api.EntityBulkEndpoint;
 import com.atlan.exception.AtlanException;
@@ -19,7 +19,6 @@ import com.atlan.model.search.AggregationBucketResult;
 import com.atlan.model.search.IndexSearchDSL;
 import com.atlan.model.search.IndexSearchRequest;
 import com.atlan.model.search.IndexSearchResponse;
-import com.atlan.util.QueryFactory;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -507,12 +506,12 @@ public class GlossaryTest extends AtlanLiveTest {
             groups = {"search.term"},
             dependsOnGroups = {"update.term"})
     void searchTerms() throws AtlanException {
-
-        Query byState = QueryFactory.active();
-        Query byType = QueryFactory.withType(GlossaryTerm.TYPE_NAME);
-        Query byName = QueryFactory.withExactName(TERM_NAME1);
-
-        Query combined = BoolQuery.of(b -> b.filter(byState, byType, byName))._toQuery();
+        Query combined = CompoundQuery.builder()
+                .must(beActive())
+                .must(beOfType(GlossaryTerm.TYPE_NAME))
+                .must(have(KeywordFields.NAME).eq(TERM_NAME1))
+                .build()
+                ._toQuery();
 
         Aggregation aggregation = Aggregation.of(a -> a.terms(t -> t.field("__typeName.keyword")));
 

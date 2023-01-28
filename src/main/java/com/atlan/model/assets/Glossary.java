@@ -170,8 +170,8 @@ public class Glossary extends Asset {
     public static Glossary findByName(String name, Collection<String> attributes) throws AtlanException {
         Query filter = QueryFactory.CompoundQuery.builder()
                 .must(QueryFactory.beActive())
-                .must(QueryFactory.beA(TYPE_NAME))
-                .must(QueryFactory.haveExactName(name))
+                .must(QueryFactory.beOfType(TYPE_NAME))
+                .must(QueryFactory.have(KeywordFields.NAME).eq(name))
                 .build()
                 ._toQuery();
         IndexSearchRequest.IndexSearchRequestBuilder<?, ?> builder = IndexSearchRequest.builder()
@@ -264,8 +264,8 @@ public class Glossary extends Asset {
         }
         Query filter = QueryFactory.CompoundQuery.builder()
                 .must(QueryFactory.beActive())
-                .must(QueryFactory.beA(GlossaryCategory.TYPE_NAME))
-                .must(QueryFactory.have("__glossary").eq(getQualifiedName()))
+                .must(QueryFactory.beOfType(GlossaryCategory.TYPE_NAME))
+                .must(QueryFactory.have(KeywordFields.GLOSSARY).eq(getQualifiedName()))
                 .build()
                 ._toQuery();
         IndexSearchRequest.IndexSearchRequestBuilder<?, ?> builder = IndexSearchRequest.builder()
