@@ -5,10 +5,7 @@ package com.atlan.live;
 import static com.atlan.util.QueryFactory.*;
 import static org.testng.Assert.*;
 
-import co.elastic.clients.elasticsearch._types.FieldSort;
-import co.elastic.clients.elasticsearch._types.SortOptions;
 import co.elastic.clients.elasticsearch._types.SortOrder;
-import co.elastic.clients.elasticsearch._types.aggregations.Aggregation;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
@@ -441,18 +438,13 @@ public class SQLAssetTest extends AtlanLiveTest {
                 .build()
                 ._toQuery();
 
-        SortOptions sort = SortOptions.of(
-                s -> s.field(FieldSort.of(f -> f.field("__timestamp").order(SortOrder.Asc))));
-
-        Aggregation aggregation = Aggregation.of(a -> a.terms(t -> t.field("__typeName.keyword")));
-
         IndexSearchRequest index = IndexSearchRequest.builder()
                 .dsl(IndexSearchDSL.builder()
                         .from(0)
                         .size(50)
                         .query(combined)
-                        .aggregation("type", aggregation)
-                        .sortOption(sort)
+                        .aggregation("type", Aggregate.bucketBy(KeywordFields.TYPE_NAME))
+                        .sortOption(Sort.by(NumericFields.TIMESTAMP, SortOrder.Asc))
                         .build())
                 .attribute("name")
                 .build();

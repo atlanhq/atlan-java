@@ -5,7 +5,6 @@ package com.atlan.live;
 import static com.atlan.util.QueryFactory.*;
 import static org.testng.Assert.*;
 
-import co.elastic.clients.elasticsearch._types.aggregations.Aggregation;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import com.atlan.api.EntityBulkEndpoint;
 import com.atlan.exception.AtlanException;
@@ -513,14 +512,12 @@ public class GlossaryTest extends AtlanLiveTest {
                 .build()
                 ._toQuery();
 
-        Aggregation aggregation = Aggregation.of(a -> a.terms(t -> t.field("__typeName.keyword")));
-
         IndexSearchRequest index = IndexSearchRequest.builder()
                 .dsl(IndexSearchDSL.builder()
                         .from(0)
                         .size(100)
                         .query(combined)
-                        .aggregation("type", aggregation)
+                        .aggregation("type", Aggregate.bucketBy(KeywordFields.TYPE_NAME))
                         .build())
                 .attributes(Collections.singletonList("anchor"))
                 .relationAttributes(Collections.singletonList("certificateStatus"))
