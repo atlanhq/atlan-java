@@ -2,9 +2,9 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.live;
 
+import static com.atlan.util.QueryFactory.*;
 import static org.testng.Assert.*;
 
-import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.InvalidRequestException;
@@ -12,12 +12,12 @@ import com.atlan.model.assets.*;
 import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
+import com.atlan.model.enums.KeywordFields;
 import com.atlan.model.lineage.LineageRequest;
 import com.atlan.model.lineage.LineageResponse;
 import com.atlan.model.search.IndexSearchDSL;
 import com.atlan.model.search.IndexSearchRequest;
 import com.atlan.model.search.IndexSearchResponse;
-import com.atlan.util.QueryFactory;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -345,13 +345,13 @@ public class LineageTest extends AtlanLiveTest {
             groups = {"search.lineage"},
             dependsOnGroups = {"read.lineage.*"})
     void searchByLineage() throws AtlanException {
-
-        Query byLineage = QueryFactory.withLineage();
-        Query byState = QueryFactory.active();
-        Query byType = QueryFactory.withSuperType(SQL.TYPE_NAME);
-        Query byQN = QueryFactory.whereQualifiedNameStartsWith(connection.getQualifiedName());
-        Query combined =
-                BoolQuery.of(b -> b.filter(byState, byType, byLineage, byQN))._toQuery();
+        Query combined = CompoundQuery.builder()
+                .must(beActive())
+                .must(haveLineage())
+                .must(haveSuperType(SQL.TYPE_NAME))
+                .must(have(KeywordFields.QUALIFIED_NAME).startingWith(connection.getQualifiedName()))
+                .build()
+                ._toQuery();
 
         IndexSearchRequest index = IndexSearchRequest.builder()
                 .dsl(IndexSearchDSL.builder().query(combined).build())

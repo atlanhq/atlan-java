@@ -2,7 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
-import co.elastic.clients.elasticsearch._types.query_dsl.*;
+import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
@@ -256,13 +256,13 @@ public class GlossaryTerm extends Asset {
      */
     public static GlossaryTerm findByNameFast(String name, String glossaryQualifiedName, Collection<String> attributes)
             throws AtlanException {
-        Query byType = QueryFactory.withType(TYPE_NAME);
-        Query byName = QueryFactory.withExactName(name);
-        Query byGlossary = TermQuery.of(t -> t.field("__glossary").value(glossaryQualifiedName))
+        Query filter = QueryFactory.CompoundQuery.builder()
+                .must(QueryFactory.beActive())
+                .must(QueryFactory.beOfType(TYPE_NAME))
+                .must(QueryFactory.have(KeywordFields.NAME).eq(name))
+                .must(QueryFactory.have(KeywordFields.GLOSSARY).eq(glossaryQualifiedName))
+                .build()
                 ._toQuery();
-        Query active = QueryFactory.active();
-        Query filter =
-                BoolQuery.of(b -> b.filter(byType, byName, byGlossary, active))._toQuery();
         IndexSearchRequest.IndexSearchRequestBuilder<?, ?> builder = IndexSearchRequest.builder()
                 .dsl(IndexSearchDSL.builder().from(0).size(2).query(filter).build());
         if (attributes != null && !attributes.isEmpty()) {

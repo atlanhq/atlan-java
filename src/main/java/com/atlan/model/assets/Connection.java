@@ -2,9 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
-import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
-import co.elastic.clients.elasticsearch._types.query_dsl.TermQuery;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
@@ -266,12 +264,12 @@ public class Connection extends Asset {
      */
     public static List<Connection> findByName(String name, AtlanConnectorType type, Collection<String> attributes)
             throws AtlanException {
-        Query byType = QueryFactory.withType(TYPE_NAME);
-        Query byName = QueryFactory.withExactName(name);
-        Query active = QueryFactory.active();
-        Query byConnectorType = TermQuery.of(t -> t.field("connectorName").value(type.getValue()))
-                ._toQuery();
-        Query filter = BoolQuery.of(b -> b.filter(byType, byName, active, byConnectorType))
+        Query filter = QueryFactory.CompoundQuery.builder()
+                .must(QueryFactory.beActive())
+                .must(QueryFactory.beOfType(TYPE_NAME))
+                .must(QueryFactory.have(KeywordFields.NAME).eq(name))
+                .must(QueryFactory.have(KeywordFields.CONNECTOR_TYPE).eq(type.getValue()))
+                .build()
                 ._toQuery();
         IndexSearchRequest.IndexSearchRequestBuilder<?, ?> builder = IndexSearchRequest.builder()
                 .dsl(IndexSearchDSL.builder().query(filter).build());

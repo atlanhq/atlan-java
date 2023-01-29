@@ -2,13 +2,10 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.live;
 
+import static com.atlan.util.QueryFactory.*;
 import static org.testng.Assert.*;
 
-import co.elastic.clients.elasticsearch._types.FieldSort;
-import co.elastic.clients.elasticsearch._types.SortOptions;
 import co.elastic.clients.elasticsearch._types.SortOrder;
-import co.elastic.clients.elasticsearch._types.aggregations.Aggregation;
-import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
@@ -21,7 +18,6 @@ import com.atlan.model.core.Classification;
 import com.atlan.model.enums.*;
 import com.atlan.model.search.*;
 import com.atlan.net.HttpClient;
-import com.atlan.util.QueryFactory;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -436,23 +432,19 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"search.byParentQN"},
             dependsOnGroups = {"create.*"})
     void searchByParentQN() throws AtlanException, InterruptedException {
-
-        Query byState = QueryFactory.active();
-        Query byParentQN = QueryFactory.whereQualifiedNameStartsWith(connection.getQualifiedName());
-        Query combined = BoolQuery.of(b -> b.filter(byState, byParentQN))._toQuery();
-
-        SortOptions sort = SortOptions.of(
-                s -> s.field(FieldSort.of(f -> f.field("__timestamp").order(SortOrder.Asc))));
-
-        Aggregation aggregation = Aggregation.of(a -> a.terms(t -> t.field("__typeName.keyword")));
+        Query combined = CompoundQuery.builder()
+                .must(beActive())
+                .must(have(KeywordFields.QUALIFIED_NAME).startingWith(connection.getQualifiedName()))
+                .build()
+                ._toQuery();
 
         IndexSearchRequest index = IndexSearchRequest.builder()
                 .dsl(IndexSearchDSL.builder()
                         .from(0)
                         .size(50)
                         .query(combined)
-                        .aggregation("type", aggregation)
-                        .sortOption(sort)
+                        .aggregation("type", Aggregate.bucketBy(KeywordFields.TYPE_NAME))
+                        .sortOption(Sort.by(NumericFields.TIMESTAMP, SortOrder.Asc))
                         .build())
                 .attribute("name")
                 .build();
@@ -765,12 +757,12 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"search.byClassification"},
             dependsOnGroups = {"update.column.addClassifications.again"})
     void searchByAnyClassification() throws AtlanException, InterruptedException {
-
-        Query byClassification = QueryFactory.withAnyValueFor("__traitNames");
-        Query byState = QueryFactory.active();
-        Query byType = QueryFactory.withType(Column.TYPE_NAME);
-        Query byQN = QueryFactory.whereQualifiedNameStartsWith(connection.getQualifiedName());
-        Query combined = BoolQuery.of(b -> b.filter(byState, byType, byClassification, byQN))
+        Query combined = CompoundQuery.builder()
+                .must(beActive())
+                .must(beOfType(Column.TYPE_NAME))
+                .must(have(KeywordFields.QUALIFIED_NAME).startingWith(connection.getQualifiedName()))
+                .must(beDirectlyClassified())
+                .build()
                 ._toQuery();
 
         IndexSearchRequest index = IndexSearchRequest.builder()
@@ -806,13 +798,12 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"search.byClassification"},
             dependsOnGroups = {"update.column.addClassifications.again"})
     void searchBySpecificClassification() throws AtlanException, InterruptedException {
-
-        Query byClassification =
-                QueryFactory.withAtLeastOneClassification(List.of(CLASSIFICATION_NAME1, CLASSIFICATION_NAME2));
-        Query byState = QueryFactory.active();
-        Query byType = QueryFactory.withType(Column.TYPE_NAME);
-        Query combined =
-                BoolQuery.of(b -> b.filter(byState, byType, byClassification))._toQuery();
+        Query combined = CompoundQuery.builder()
+                .must(beActive())
+                .must(beOfType(Column.TYPE_NAME))
+                .must(beClassifiedByAtLeastOneOf(List.of(CLASSIFICATION_NAME1, CLASSIFICATION_NAME2)))
+                .build()
+                ._toQuery();
 
         IndexSearchRequest index = IndexSearchRequest.builder()
                 .dsl(IndexSearchDSL.builder().query(combined).build())
@@ -992,12 +983,12 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"search.byTerm"},
             dependsOnGroups = {"update.column.replaceTerms"})
     void searchByAnyTerm() throws AtlanException, InterruptedException {
-
-        Query byTermAssignment = QueryFactory.withAnyValueFor("__meanings");
-        Query byState = QueryFactory.active();
-        Query byType = QueryFactory.withType(Column.TYPE_NAME);
-        Query byQN = QueryFactory.whereQualifiedNameStartsWith(connection.getQualifiedName());
-        Query combined = BoolQuery.of(b -> b.filter(byState, byType, byTermAssignment, byQN))
+        Query combined = CompoundQuery.builder()
+                .must(beActive())
+                .must(beOfType(Column.TYPE_NAME))
+                .must(beAssignedATerm())
+                .must(have(KeywordFields.QUALIFIED_NAME).startingWith(connection.getQualifiedName()))
+                .build()
                 ._toQuery();
 
         IndexSearchRequest index = IndexSearchRequest.builder()
@@ -1039,13 +1030,12 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"search.byTerm"},
             dependsOnGroups = {"update.column.replaceTerms"})
     void searchBySpecificTerm() throws AtlanException, InterruptedException {
-
-        Query byTermAssignment =
-                QueryFactory.withAtLeastOneTerm(List.of(term1.getQualifiedName(), term2.getQualifiedName()));
-        Query byState = QueryFactory.active();
-        Query byType = QueryFactory.withType(Column.TYPE_NAME);
-        Query combined =
-                BoolQuery.of(b -> b.filter(byState, byType, byTermAssignment))._toQuery();
+        Query combined = CompoundQuery.builder()
+                .must(beActive())
+                .must(beOfType(Column.TYPE_NAME))
+                .must(beDefinedByAtLeastOneOf(List.of(term1.getQualifiedName(), term2.getQualifiedName())))
+                .build()
+                ._toQuery();
 
         IndexSearchRequest index = IndexSearchRequest.builder()
                 .dsl(IndexSearchDSL.builder().query(combined).build())

@@ -35,15 +35,6 @@ public class DocumentationGenerator extends AbstractGenerator {
         MANY_TO_ZERO_OR_ONE,
     }
 
-    enum IndexType {
-        KEYWORD,
-        TEXT,
-        RANK_FEATURE,
-        DATE,
-        BOOLEAN,
-        FLOAT,
-    }
-
     enum Rename {
         NONE,
         JAVA,
@@ -716,86 +707,6 @@ public class DocumentationGenerator extends AbstractGenerator {
         }
     }
 
-    private Map<String, IndexType> getSearchFieldsForAttribute(AttributeDef attributeDef) {
-        String attrName = attributeDef.getName();
-        Map<String, IndexType> map = new LinkedHashMap<>();
-        // Default index
-        Map<String, String> config = attributeDef.getIndexTypeESConfig();
-        if (config != null && config.containsKey("analyzer")) {
-            String analyzer = config.get("analyzer");
-            if (analyzer.equals("atlan_text_analyzer")) {
-                map.put(attrName, IndexType.TEXT);
-            } else {
-                log.warn("Unknown analyzer on attribute {}: {}", attributeDef.getName(), analyzer);
-            }
-        } else {
-            map.put(attrName, getDefaultIndexForType(attributeDef.getTypeName()));
-        }
-        // Additional indexes
-        Map<String, Map<String, String>> fields = attributeDef.getIndexTypeESFields();
-        if (fields != null) {
-            for (Map.Entry<String, Map<String, String>> entry : fields.entrySet()) {
-                String fieldName = attrName + "." + entry.getKey();
-                Map<String, String> indexDetails = entry.getValue();
-                if (indexDetails != null && indexDetails.containsKey("type")) {
-                    String indexType = indexDetails.get("type");
-                    switch (indexType) {
-                        case "keyword":
-                            map.put(fieldName, IndexType.KEYWORD);
-                            break;
-                        case "text":
-                            map.put(fieldName, IndexType.TEXT);
-                            break;
-                        case "rank_feature":
-                            map.put(fieldName, IndexType.RANK_FEATURE);
-                            break;
-                        default:
-                            log.warn(
-                                    "Unknown index type on attribute {}, field {}: {}",
-                                    attributeDef.getName(),
-                                    fieldName,
-                                    indexType);
-                            break;
-                    }
-                } else {
-                    map.put(fieldName, getDefaultIndexForType(attributeDef.getTypeName()));
-                }
-            }
-        }
-        return map;
-    }
-
-    private IndexType getDefaultIndexForType(String typeName) {
-        String baseType = typeName;
-        if (typeName.startsWith("array<")) {
-            if (typeName.startsWith("array<map<")) {
-                baseType = getEmbeddedType(typeName.substring("array<".length(), typeName.length() - 1));
-            } else {
-                baseType = getEmbeddedType(typeName);
-            }
-        }
-        IndexType toUse;
-        switch (baseType) {
-            case "date":
-                toUse = IndexType.DATE;
-                break;
-            case "float":
-            case "double":
-            case "int":
-            case "long":
-                toUse = IndexType.FLOAT;
-                break;
-            case "boolean":
-                toUse = IndexType.BOOLEAN;
-                break;
-            case "string":
-            default:
-                toUse = IndexType.KEYWORD;
-                break;
-        }
-        return toUse;
-    }
-
     private String getMapIcon(String attrType) {
         String embeddedType = getEmbeddedType(attrType);
         String icon = ":material-code-braces:{ title=\"map of\" } ";
@@ -999,10 +910,6 @@ public class DocumentationGenerator extends AbstractGenerator {
             }
             out.write("        ```\n\n");
         }
-    }
-
-    private String getEmbeddedType(String attrType) {
-        return attrType.substring(attrType.indexOf("<") + 1, attrType.indexOf(">"));
     }
 
     private void addRelatedTypeLink(BufferedWriter out, String relatedType, Rename rename) throws IOException {

@@ -2,13 +2,10 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.live;
 
+import static com.atlan.util.QueryFactory.*;
 import static org.testng.Assert.*;
 
-import co.elastic.clients.elasticsearch._types.FieldSort;
-import co.elastic.clients.elasticsearch._types.SortOptions;
 import co.elastic.clients.elasticsearch._types.SortOrder;
-import co.elastic.clients.elasticsearch._types.aggregations.Aggregation;
-import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.assets.*;
@@ -18,7 +15,6 @@ import com.atlan.model.search.AggregationBucketResult;
 import com.atlan.model.search.IndexSearchDSL;
 import com.atlan.model.search.IndexSearchRequest;
 import com.atlan.model.search.IndexSearchResponse;
-import com.atlan.util.QueryFactory;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -223,23 +219,20 @@ public class PresetAssetTest extends AtlanLiveTest {
             groups = {"search.assets"},
             dependsOnGroups = {"update.collection.again"})
     void searchAssets() throws AtlanException {
-        Query byState = QueryFactory.active();
-        Query byType = QueryFactory.withSuperType(Preset.TYPE_NAME);
-        Query byQN = QueryFactory.whereQualifiedNameStartsWith(connection.getQualifiedName());
-        Query combined = BoolQuery.of(b -> b.filter(byState, byType, byQN))._toQuery();
-
-        SortOptions sort = SortOptions.of(
-                s -> s.field(FieldSort.of(f -> f.field("__timestamp").order(SortOrder.Asc))));
-
-        Aggregation aggregation = Aggregation.of(a -> a.terms(t -> t.field("__typeName.keyword")));
+        Query combined = CompoundQuery.builder()
+                .must(beActive())
+                .must(haveSuperType(Preset.TYPE_NAME))
+                .must(have(KeywordFields.QUALIFIED_NAME).startingWith(connection.getQualifiedName()))
+                .build()
+                ._toQuery();
 
         IndexSearchRequest index = IndexSearchRequest.builder()
                 .dsl(IndexSearchDSL.builder()
                         .from(0)
                         .size(10)
                         .query(combined)
-                        .aggregation("type", aggregation)
-                        .sortOption(sort)
+                        .aggregation("type", Aggregate.bucketBy(KeywordFields.TYPE_NAME))
+                        .sortOption(Sort.by(NumericFields.TIMESTAMP, SortOrder.Asc))
                         .build())
                 .attribute("name")
                 .attribute("connectionQualifiedName")

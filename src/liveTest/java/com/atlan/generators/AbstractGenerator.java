@@ -24,6 +24,15 @@ import org.apache.commons.csv.CSVRecord;
 @Slf4j
 public abstract class AbstractGenerator extends AtlanLiveTest {
 
+    enum IndexType {
+        KEYWORD,
+        TEXT,
+        RANK_FEATURE,
+        DATE,
+        BOOLEAN,
+        FLOAT,
+    }
+
     protected static final String CSV_TYPE_NAME = "Type Name";
     protected static final String CSV_TYPE_DESC = "Type Description";
     protected static final String CSV_ATTR_NAME = "Attribute Name";
@@ -248,6 +257,109 @@ public abstract class AbstractGenerator extends AtlanLiveTest {
             }
             return allInherited;
         }
+    }
+
+    /**
+     * Retrieve a mapping from field name to type of index for the provided attribute's searchable fields.
+     *
+     * @param attributeDef attribute definition from which to retrieve the searchable fields
+     * @return a map of the searchable field names to their index type for the attribute
+     */
+    protected static Map<String, IndexType> getSearchFieldsForAttribute(AttributeDef attributeDef) {
+        String attrName = attributeDef.getName();
+        Map<String, IndexType> map = new LinkedHashMap<>();
+        // Default index
+        Map<String, String> config = attributeDef.getIndexTypeESConfig();
+        if (config != null && config.containsKey("analyzer")) {
+            String analyzer = config.get("analyzer");
+            if (analyzer.equals("atlan_text_analyzer")) {
+                map.put(attrName, IndexType.TEXT);
+            } else {
+                log.warn("Unknown analyzer on attribute {}: {}", attributeDef.getName(), analyzer);
+            }
+        } else {
+            map.put(attrName, getDefaultIndexForType(attributeDef.getTypeName()));
+        }
+        // Additional indexes
+        Map<String, Map<String, String>> fields = attributeDef.getIndexTypeESFields();
+        if (fields != null) {
+            for (Map.Entry<String, Map<String, String>> entry : fields.entrySet()) {
+                String fieldName = attrName + "." + entry.getKey();
+                Map<String, String> indexDetails = entry.getValue();
+                if (indexDetails != null && indexDetails.containsKey("type")) {
+                    String indexType = indexDetails.get("type");
+                    switch (indexType) {
+                        case "keyword":
+                            map.put(fieldName, IndexType.KEYWORD);
+                            break;
+                        case "text":
+                            map.put(fieldName, IndexType.TEXT);
+                            break;
+                        case "rank_feature":
+                            map.put(fieldName, IndexType.RANK_FEATURE);
+                            break;
+                        default:
+                            log.warn(
+                                    "Unknown index type on attribute {}, field {}: {}",
+                                    attributeDef.getName(),
+                                    fieldName,
+                                    indexType);
+                            break;
+                    }
+                } else {
+                    map.put(fieldName, getDefaultIndexForType(attributeDef.getTypeName()));
+                }
+            }
+        }
+        return map;
+    }
+
+    /**
+     * Lookup the default index for the provided attribute data type.
+     *
+     * @param typeName data type of the attribute
+     * @return the default index for that data type
+     */
+    protected static IndexType getDefaultIndexForType(String typeName) {
+        String baseType = typeName;
+        if (typeName.startsWith("array<")) {
+            if (typeName.startsWith("array<map<")) {
+                baseType = getEmbeddedType(typeName.substring("array<".length(), typeName.length() - 1));
+            } else {
+                baseType = getEmbeddedType(typeName);
+            }
+        }
+        IndexType toUse;
+        switch (baseType) {
+            case "date":
+                toUse = IndexType.DATE;
+                break;
+            case "float":
+            case "double":
+            case "int":
+            case "long":
+                toUse = IndexType.FLOAT;
+                break;
+            case "boolean":
+                toUse = IndexType.BOOLEAN;
+                break;
+            case "string":
+            default:
+                toUse = IndexType.KEYWORD;
+                break;
+        }
+        return toUse;
+    }
+
+    /**
+     * Determine the primitive type of the attribute when it's values are contained in an
+     * array or map.
+     *
+     * @param attrType data type of the attribute
+     * @return the primitive contained type of the attribute's values
+     */
+    protected static String getEmbeddedType(String attrType) {
+        return attrType.substring(attrType.indexOf("<") + 1, attrType.indexOf(">"));
     }
 
     private static String getAttrQualifiedName(String typeName, String attrName) {
