@@ -325,55 +325,55 @@ public abstract class Asset extends Reference {
     @Attribute
     @JsonProperty("sourceReadRecentUserList")
     @Singular
-    SortedSet<String> sourceReadRecentUsers;
+    List<String> sourceReadRecentUsers;
 
     /** List of usernames with extra insights for the most recent users who read the asset. */
     @Attribute
     @JsonProperty("sourceReadRecentUserRecordList")
     @Singular
-    SortedSet<PopularityInsights> sourceReadRecentUserRecords;
+    List<PopularityInsights> sourceReadRecentUserRecords;
 
     /** List of usernames of the users who read the asset the most. */
     @Attribute
     @JsonProperty("sourceReadTopUserList")
     @Singular
-    SortedSet<String> sourceReadTopUsers;
+    List<String> sourceReadTopUsers;
 
     /** List of usernames with extra insights for the users who read the asset the most. */
     @Attribute
     @JsonProperty("sourceReadTopUserRecordList")
     @Singular
-    SortedSet<PopularityInsights> sourceReadTopUserRecords;
+    List<PopularityInsights> sourceReadTopUserRecords;
 
     /** List of the most popular queries that accessed this asset. */
     @Attribute
     @JsonProperty("sourceReadPopularQueryRecordList")
     @Singular
-    SortedSet<PopularityInsights> sourceReadPopularQueryRecords;
+    List<PopularityInsights> sourceReadPopularQueryRecords;
 
     /** List of the most expensive queries that accessed this asset. */
     @Attribute
     @JsonProperty("sourceReadExpensiveQueryRecordList")
     @Singular
-    SortedSet<PopularityInsights> sourceReadExpensiveQueryRecords;
+    List<PopularityInsights> sourceReadExpensiveQueryRecords;
 
     /** List of the slowest queries that accessed this asset. */
     @Attribute
     @JsonProperty("sourceReadSlowQueryRecordList")
     @Singular
-    SortedSet<PopularityInsights> sourceReadSlowQueryRecords;
+    List<PopularityInsights> sourceReadSlowQueryRecords;
 
     /** List of most expensive warehouse names. */
     @Attribute
     @JsonProperty("sourceQueryComputeCostList")
     @Singular
-    SortedSet<String> sourceQueryComputeCosts;
+    List<String> sourceQueryComputeCosts;
 
     /** List of most expensive warehouses with extra insights. */
     @Attribute
     @JsonProperty("sourceQueryComputeCostRecordList")
     @Singular
-    SortedSet<PopularityInsights> sourceQueryComputeCostRecords;
+    List<PopularityInsights> sourceQueryComputeCostRecords;
 
     /** TBC */
     @Attribute
