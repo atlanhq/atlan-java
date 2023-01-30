@@ -122,6 +122,33 @@ public class JacksonUtils {
     }
 
     /**
+     * Deserialize the provided path into a double, or null if there is no value at the path.
+     *
+     * @param node from which to pull the value
+     * @param path at which to find the value
+     * @return the double value, or null
+     */
+    public static Double deserializeDouble(JsonNode node, String path) {
+        JsonNode value = node.get(path);
+        return value == null || value.isNull() ? null : value.asDouble();
+    }
+
+    /**
+     * Serialize the provided field into a double, or leave it out if there is no value.
+     *
+     * @param gen generator through which to serialize
+     * @param name of the field
+     * @param value for the field
+     * @throws IOException on any issues writing to the generator
+     */
+    public static void serializeDouble(JsonGenerator gen, String name, Double value) throws IOException {
+        if (value != null) {
+            gen.writeFieldName(name);
+            gen.writeNumber(value);
+        }
+    }
+
+    /**
      * Deserialize the provided path into a boolean, or null if there is no value at the path.
      *
      * @param node from which to pull the value
