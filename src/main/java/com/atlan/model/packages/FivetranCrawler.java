@@ -43,6 +43,8 @@ public class FivetranCrawler extends AbstractCrawler {
      * @param adminUsers the names of the users that can administer this connection
      * @return the minimal workflow necessary to crawl Fivetran
      * @throws InvalidRequestException if there is no administrator specified for the connection, or the provided filters cannot be serialized to JSON
+     * @throws com.atlan.exception.NotFoundException if the specified administrator does not exist
+     * @throws AtlanException on any other error, such as an inability to retrieve the users, groups or roles in Atlan
      */
     public static Workflow directApiAuth(
             String connectionName,
@@ -51,7 +53,7 @@ public class FivetranCrawler extends AbstractCrawler {
             List<String> adminRoles,
             List<String> adminGroups,
             List<String> adminUsers)
-            throws InvalidRequestException {
+            throws AtlanException {
 
         Connection connection = Connection.creator(
                         connectionName, AtlanConnectorType.FIVETRAN, adminRoles, adminGroups, adminUsers)

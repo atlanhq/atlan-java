@@ -63,6 +63,8 @@ public class TableauCrawler extends AbstractCrawler {
      * @param excludeProjects the GUIDs of projects to exclude when crawling (when null: none)
      * @return the minimal workflow necessary to crawl Tableau
      * @throws InvalidRequestException if there is no administrator specified for the connection, or the provided filters cannot be serialized to JSON
+     * @throws com.atlan.exception.NotFoundException if the specified administrator does not exist
+     * @throws AtlanException on any other error, such as an inability to retrieve the users, groups or roles in Atlan
      */
     public static Workflow basicAuth(
             String connectionName,
@@ -76,7 +78,7 @@ public class TableauCrawler extends AbstractCrawler {
             List<String> adminUsers,
             List<String> includeProjects,
             List<String> excludeProjects)
-            throws InvalidRequestException {
+            throws AtlanException {
 
         Connection connection = Connection.creator(
                         connectionName, AtlanConnectorType.TABLEAU, adminRoles, adminGroups, adminUsers)

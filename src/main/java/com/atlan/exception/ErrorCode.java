@@ -151,6 +151,26 @@ public enum ErrorCode implements ExceptionMessageSet {
             "ATLAN-JAVA-400-026",
             "No user or group specified for the policy.",
             "You must specify at least one user, group or allUsers to whom the policy in a purpose will be applied."),
+    MISSING_GROUP_NAME(
+            400,
+            "ATLAN-JAVA-400-027",
+            "No name was provided when attempting to retrieve a group.",
+            "You must provide a name of a group when attempting to retrieve one."),
+    MISSING_USER_NAME(
+            400,
+            "ATLAN-JAVA-400-028",
+            "No name was provided when attempting to retrieve a user.",
+            "You must provide a name of a user when attempting to retrieve one."),
+    MISSING_USER_EMAIL(
+            400,
+            "ATLAN-JAVA-400-029",
+            "No email address was provided when attempting to retrieve a user.",
+            "You must provide an email address of a user when attempting to retrieve one."),
+    MISSING_GROUP_ALIAS(
+            400,
+            "ATLAN-JAVA-400-030",
+            "No alias was provided when attempting to retrieve or update the group.",
+            "You must provide an alias when attempting to retrieve or update a group."),
 
     AUTHENTICATION_PASSTHROUGH(
             401,
@@ -271,6 +291,36 @@ public enum ErrorCode implements ExceptionMessageSet {
             "ATLAN-JAVA-404-016",
             "Unable to find a connection with the name {0} of type: {1}.",
             "Verify the requested connection exists in your Atlan environment."),
+    GROUP_NOT_FOUND_BY_NAME(
+            404,
+            "ATLAN-JAVA-404-017",
+            "Group with name {0} does not exist.",
+            "Verify the group name provided is a valid group name."),
+    GROUP_NOT_FOUND_BY_ID(
+            404,
+            "ATLAN-JAVA-404-018",
+            "Group with GUID {0} does not exist.",
+            "Verify the role GUID provided is a valid group GUID."),
+    USER_NOT_FOUND_BY_NAME(
+            404,
+            "ATLAN-JAVA-404-019",
+            "User with username {0} does not exist.",
+            "Verify the username provided is a valid username."),
+    USER_NOT_FOUND_BY_ID(
+            404,
+            "ATLAN-JAVA-404-020",
+            "User with GUID {0} does not exist.",
+            "Verify the user GUID provided is a valid user GUID."),
+    USER_NOT_FOUND_BY_EMAIL(
+            404,
+            "ATLAN-JAVA-404-021",
+            "User with email {0} does not exist.",
+            "Verify the user email provided is a valid user email address."),
+    GROUP_NOT_FOUND_BY_ALIAS(
+            404,
+            "ATLAN-JAVA-404-022",
+            "Group with alias {0} does not exist.",
+            "Verify the group alias provided is a valid group alias."),
 
     CONFLICT_PASSTHROUGH(
             409,
