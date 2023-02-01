@@ -8,6 +8,7 @@ import com.atlan.exception.AtlanException;
 import com.atlan.model.admin.*;
 import com.atlan.model.core.AtlanObject;
 import com.atlan.net.ApiResource;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -75,9 +76,25 @@ public class UsersEndpoint {
      * @return a list of all the users in Atlan
      * @throws AtlanException on any API communication issue
      */
-    public static UserResponse getAllUsers() throws AtlanException {
-        String url = String.format("%s%s", Atlan.getBaseUrl(), endpoint);
-        return ApiResource.request(ApiResource.RequestMethod.GET, url, "", UserResponse.class, null);
+    public static List<AtlanUser> getAllUsers() throws AtlanException {
+        List<AtlanUser> users = new ArrayList<>();
+        String unlimitedUrl = String.format("%s%s?sort=username", Atlan.getBaseUrl(), endpoint);
+        int limit = 100;
+        int offset = 0;
+        String url = String.format("%s&limit=%s&offset=%s", unlimitedUrl, limit, offset);
+        UserResponse response = ApiResource.request(ApiResource.RequestMethod.GET, url, "", UserResponse.class, null);
+        while (response != null) {
+            List<AtlanUser> page = response.getRecords();
+            if (page != null) {
+                users.addAll(page);
+                offset += limit;
+                url = String.format("%s&limit=%s&offset=%s", unlimitedUrl, limit, offset);
+                response = ApiResource.request(ApiResource.RequestMethod.GET, url, "", UserResponse.class, null);
+            } else {
+                response = null;
+            }
+        }
+        return users;
     }
 
     /**

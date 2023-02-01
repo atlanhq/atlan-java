@@ -8,7 +8,6 @@ import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.core.AtlanObject;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.SortedSet;
@@ -168,12 +167,7 @@ public class AtlanUser extends AtlanObject {
      * @throws AtlanException on any error during API invocation
      */
     public static List<AtlanUser> retrieveAll() throws AtlanException {
-        UserResponse response = UsersEndpoint.getAllUsers();
-        if (response != null && response.getRecords() != null) {
-            return response.getRecords();
-        } else {
-            return Collections.emptyList();
-        }
+        return UsersEndpoint.getAllUsers();
     }
 
     /**

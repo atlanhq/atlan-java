@@ -8,7 +8,6 @@ import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.core.AtlanObject;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.util.Collections;
 import java.util.List;
 import java.util.SortedSet;
 import lombok.*;
@@ -124,12 +123,7 @@ public class AtlanGroup extends AtlanObject {
      * @throws AtlanException on any error during API invocation
      */
     public static List<AtlanGroup> retrieveAll() throws AtlanException {
-        GroupResponse response = GroupsEndpoint.getAllGroups();
-        if (response != null && response.getRecords() != null) {
-            return response.getRecords();
-        } else {
-            return Collections.emptyList();
-        }
+        return GroupsEndpoint.getAllGroups();
     }
 
     /**
