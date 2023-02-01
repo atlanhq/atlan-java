@@ -78,6 +78,8 @@ public class SnowflakeCrawler extends AbstractCrawler {
      *                      database to exclude.
      * @return the minimal workflow necessary to crawl Snowflake
      * @throws InvalidRequestException if there is no administrator specified for the connection, or the provided filters cannot be serialized to JSON
+     * @throws com.atlan.exception.NotFoundException if the specified administrator does not exist
+     * @throws AtlanException on any other error, such as an inability to retrieve the users, groups or roles in Atlan
      */
     public static Workflow infoSchemaBasicAuth(
             String connectionName,
@@ -95,7 +97,7 @@ public class SnowflakeCrawler extends AbstractCrawler {
             long rowLimit,
             Map<String, List<String>> includeAssets,
             Map<String, List<String>> excludeAssets)
-            throws InvalidRequestException {
+            throws AtlanException {
 
         Connection connection = Connection.creator(
                         connectionName, AtlanConnectorType.SNOWFLAKE, adminRoles, adminGroups, adminUsers)

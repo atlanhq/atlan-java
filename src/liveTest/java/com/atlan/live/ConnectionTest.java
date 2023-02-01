@@ -9,6 +9,7 @@ import com.atlan.api.WorkflowsEndpoint;
 import com.atlan.cache.RoleCache;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.InvalidRequestException;
+import com.atlan.exception.NotFoundException;
 import com.atlan.model.assets.Asset;
 import com.atlan.model.assets.Connection;
 import com.atlan.model.core.AssetMutationResponse;
@@ -102,5 +103,26 @@ public class ConnectionTest extends AtlanLiveTest {
         assertThrows(
                 InvalidRequestException.class,
                 () -> Connection.creator(PREFIX, AtlanConnectorType.POSTGRES, null, null, null));
+    }
+
+    @Test(groups = {"invalid.connection.roles"})
+    void invalidConnectionAdminRole() {
+        assertThrows(
+                NotFoundException.class,
+                () -> Connection.creator(PREFIX, AtlanConnectorType.SAPHANA, List.of("abc123"), null, null));
+    }
+
+    @Test(groups = {"invalid.connection.groups"})
+    void invalidConnectionAdminGroup() {
+        assertThrows(
+                NotFoundException.class,
+                () -> Connection.creator(PREFIX, AtlanConnectorType.SAPHANA, null, List.of("NONEXISTENT"), null));
+    }
+
+    @Test(groups = {"invalid.connection.users"})
+    void invalidConnectionAdminUser() {
+        assertThrows(
+                NotFoundException.class,
+                () -> Connection.creator(PREFIX, AtlanConnectorType.SAPHANA, null, null, List.of("NONEXISTENT")));
     }
 }

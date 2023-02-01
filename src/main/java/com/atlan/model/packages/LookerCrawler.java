@@ -69,6 +69,8 @@ public class LookerCrawler extends AbstractCrawler {
      * @param excludeProjects the names of projects to exclude when crawling (when null: none)
      * @return the minimal workflow necessary to crawl Looker
      * @throws InvalidRequestException if there is no administrator specified for the connection, or the provided filters cannot be serialized to JSON
+     * @throws com.atlan.exception.NotFoundException if the specified administrator does not exist
+     * @throws AtlanException on any other error, such as an inability to retrieve the users, groups or roles in Atlan
      */
     public static Workflow directResourceOwner(
             String connectionName,
@@ -85,7 +87,7 @@ public class LookerCrawler extends AbstractCrawler {
             List<String> includeProjects,
             List<String> excludeFolders,
             List<String> excludeProjects)
-            throws InvalidRequestException {
+            throws AtlanException {
 
         boolean fieldLevelLineage = privateKey != null && !privateKey.equals("");
 

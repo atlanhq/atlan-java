@@ -4,12 +4,10 @@ package com.atlan.api;
 
 import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
-import com.atlan.model.admin.AtlanGroup;
-import com.atlan.model.admin.CreateGroupResponse;
-import com.atlan.model.admin.GroupResponse;
-import com.atlan.model.admin.UserResponse;
+import com.atlan.model.admin.*;
 import com.atlan.model.core.AtlanObject;
 import com.atlan.net.ApiResource;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -76,9 +74,25 @@ public class GroupsEndpoint {
      * @return a list of all the groups in Atlan
      * @throws AtlanException on any API communication issue
      */
-    public static GroupResponse getAllGroups() throws AtlanException {
-        String url = String.format("%s%s", Atlan.getBaseUrl(), endpoint);
-        return ApiResource.request(ApiResource.RequestMethod.GET, url, "", GroupResponse.class, null);
+    public static List<AtlanGroup> getAllGroups() throws AtlanException {
+        List<AtlanGroup> groups = new ArrayList<>();
+        String unlimitedUrl = String.format("%s%s?sort=createdAt", Atlan.getBaseUrl(), endpoint);
+        int limit = 100;
+        int offset = 0;
+        String url = String.format("%s&limit=%s&offset=%s", unlimitedUrl, limit, offset);
+        GroupResponse response = ApiResource.request(ApiResource.RequestMethod.GET, url, "", GroupResponse.class, null);
+        while (response != null) {
+            List<AtlanGroup> page = response.getRecords();
+            if (page != null) {
+                groups.addAll(page);
+                offset += limit;
+                url = String.format("%s&limit=%s&offset=%s", unlimitedUrl, limit, offset);
+                response = ApiResource.request(ApiResource.RequestMethod.GET, url, "", GroupResponse.class, null);
+            } else {
+                response = null;
+            }
+        }
+        return groups;
     }
 
     /**

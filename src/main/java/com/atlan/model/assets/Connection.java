@@ -3,6 +3,9 @@
 package com.atlan.model.assets;
 
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
+import com.atlan.cache.GroupCache;
+import com.atlan.cache.RoleCache;
+import com.atlan.cache.UserCache;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
@@ -162,7 +165,9 @@ public class Connection extends Asset {
      * @param adminGroups the names of the groups that can administer this connection
      * @param adminUsers the names of the users that can administer this connection
      * @return the minimal object necessary to create the connection, as a builder
-     * @throws InvalidRequestException if no admin has been defined for the connection
+     * @throws InvalidRequestException if no admin has been defined for the connection, or an invalid admin has been defined
+     * @throws NotFoundException if a non-existent admin has been defined for the connection
+     * @throws AtlanException on any other error related to the request, such as an inability to retrieve the existing admins in the system
      */
     public static ConnectionBuilder<?, ?> creator(
             String name,
@@ -170,7 +175,7 @@ public class Connection extends Asset {
             List<String> adminRoles,
             List<String> adminGroups,
             List<String> adminUsers)
-            throws InvalidRequestException {
+            throws AtlanException {
         boolean adminFound = false;
         ConnectionBuilder<?, ?> builder = Connection.builder()
                 .name(name)
@@ -178,14 +183,23 @@ public class Connection extends Asset {
                 .category(connectorType.getCategory())
                 .connectorType(connectorType);
         if (adminRoles != null && !adminRoles.isEmpty()) {
+            for (String roleId : adminRoles) {
+                RoleCache.getNameForId(roleId);
+            }
             adminFound = true;
             builder = builder.adminRoles(adminRoles);
         }
         if (adminGroups != null && !adminGroups.isEmpty()) {
+            for (String groupAlias : adminGroups) {
+                GroupCache.getIdForAlias(groupAlias);
+            }
             adminFound = true;
             builder = builder.adminGroups(adminGroups);
         }
         if (adminUsers != null && !adminUsers.isEmpty()) {
+            for (String userName : adminUsers) {
+                UserCache.getIdForName(userName);
+            }
             adminFound = true;
             builder = builder.adminUsers(adminUsers);
         }
