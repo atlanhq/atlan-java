@@ -3,6 +3,8 @@
 package com.atlan.model.admin;
 
 import com.atlan.api.PurposesEndpoint;
+import com.atlan.cache.GroupCache;
+import com.atlan.cache.UserCache;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
@@ -16,6 +18,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 import java.util.SortedSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -131,6 +134,7 @@ public class Purpose extends AtlanObject {
      * @throws AtlanException on any error during API invocation
      */
     public Purpose create() throws AtlanException {
+        validatePolicySubjects();
         return PurposesEndpoint.createPurpose(this);
     }
 
@@ -148,6 +152,8 @@ public class Purpose extends AtlanObject {
         if (this.tags == null || this.tags.isEmpty()) {
             throw new InvalidRequestException(ErrorCode.NO_CLASSIFICATION_FOR_PURPOSE);
         }
+        validatePolicySubjects();
+        // TODO: validate policies refer to users / groups that exist
         return PurposesEndpoint.updatePurpose(this);
     }
 
@@ -188,6 +194,54 @@ public class Purpose extends AtlanObject {
             return response.getRecords().get(0);
         } else {
             return null;
+        }
+    }
+
+    /**
+     * Validate all users and groups specified in any of the policies on this purpose exist.
+     *
+     * @throws AtlanException if any user or group specified does not exist or cannot be confirmed
+     */
+    private void validatePolicySubjects() throws AtlanException {
+        if (metadataPolicies != null && !metadataPolicies.isEmpty()) {
+            for (PurposeMetadataPolicy policy : metadataPolicies) {
+                validateUsers(policy.getUsers());
+                validateGroups(policy.getGroups());
+            }
+        }
+        if (dataPolicies != null && !dataPolicies.isEmpty()) {
+            for (PurposeDataPolicy policy : dataPolicies) {
+                validateUsers(policy.getUsers());
+                validateGroups(policy.getGroups());
+            }
+        }
+    }
+
+    /**
+     * Validate the users set on a policy exist in Atlan.
+     *
+     * @param users the set of user IDs in the policy
+     * @throws AtlanException if any user specified does not exist or cannot be confirmed
+     */
+    private static void validateUsers(Set<String> users) throws AtlanException {
+        if (users != null && !users.isEmpty()) {
+            for (String userId : users) {
+                UserCache.getNameForId(userId);
+            }
+        }
+    }
+
+    /**
+     * Validate the groups set on a policy exist in Atlan.
+     *
+     * @param groups the set of group IDs in the policy
+     * @throws AtlanException if any group specified does not exist or cannot be confirmed
+     */
+    private static void validateGroups(Set<String> groups) throws AtlanException {
+        if (groups != null && !groups.isEmpty()) {
+            for (String groupId : groups) {
+                GroupCache.getNameForId(groupId);
+            }
         }
     }
 
