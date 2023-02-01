@@ -348,7 +348,7 @@ extends <a href="AbstractCrawler.html" title="class in com.atlan.model.packages"
                                  long&nbsp;rowLimit,
                                  java.util.Map&lt;java.lang.String,&#8203;java.util.List&lt;java.lang.String&gt;&gt;&nbsp;includeAssets,
                                  java.util.Map&lt;java.lang.String,&#8203;java.util.List&lt;java.lang.String&gt;&gt;&nbsp;excludeAssets)
-                          throws <a href="../../exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></pre>
+                          throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
 <div class="block">Builds the minimal object necessary to create a new crawler for Redshift.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -374,6 +374,8 @@ extends <a href="AbstractCrawler.html" title="class in com.atlan.model.packages"
 <dd>the minimal workflow necessary to crawl Redshift</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></code> - if there is no administrator specified for the connection, or the provided filters cannot be serialized to JSON</dd>
+<dd><code><a href="../../exception/NotFoundException.html" title="class in com.atlan.exception">NotFoundException</a></code> - if the specified administrator does not exist</dd>
+<dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any other error, such as an inability to retrieve the users, groups or roles in Atlan</dd>
 </dl>
 </li>
 </ul>
