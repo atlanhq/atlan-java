@@ -10,6 +10,7 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
+import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.enums.*;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.IndexSearchDSL;
@@ -208,6 +209,70 @@ public class Connection extends Asset {
         } else {
             throw new InvalidRequestException(ErrorCode.NO_CONNECTION_ADMIN);
         }
+    }
+
+    /**
+     * If an asset with the same qualifiedName exists, updates the existing asset. Otherwise, creates the asset.
+     * No classifications or custom metadata will be changed if updating an existing asset, irrespective of what
+     * is included in the asset itself when the method is called.
+     *
+     * @return details of the created or updated asset
+     * @throws AtlanException on any error during the API invocation
+     * @throws NotFoundException if any of the provided connection admins do not actually exist
+     */
+    @Override
+    public AssetMutationResponse upsert() throws AtlanException {
+        // Validate the provided connection admins prior to attempting to create
+        // (the cache retrievals will throw errors directly if there are any)
+        if (adminRoles != null && !adminRoles.isEmpty()) {
+            for (String roleId : adminRoles) {
+                RoleCache.getNameForId(roleId);
+            }
+        }
+        if (adminGroups != null && !adminGroups.isEmpty()) {
+            for (String groupAlias : adminGroups) {
+                GroupCache.getIdForAlias(groupAlias);
+            }
+        }
+        if (adminUsers != null && !adminUsers.isEmpty()) {
+            for (String userName : adminUsers) {
+                UserCache.getIdForName(userName);
+            }
+        }
+        return super.upsert();
+    }
+
+    /**
+     * If no asset exists, has the same behavior as the {@link #upsert()} method.
+     * If an asset does exist, optionally overwrites any classifications and / or custom metadata.
+     *
+     * @param replaceClassifications whether to replace classifications during an update (true) or not (false)
+     * @param replaceCustomMetadata whether to replace custom metadata during an update (true) or not (false)
+     * @return details of the created or updated asset
+     * @throws AtlanException on any error during the API invocation
+     * @throws NotFoundException if any of the provided connection admins do not actually exist
+     */
+    @Override
+    public AssetMutationResponse upsert(boolean replaceClassifications, boolean replaceCustomMetadata)
+            throws AtlanException {
+        // Validate the provided connection admins prior to attempting to create
+        // (the cache retrievals will throw errors directly if there are any)
+        if (adminRoles != null && !adminRoles.isEmpty()) {
+            for (String roleId : adminRoles) {
+                RoleCache.getNameForId(roleId);
+            }
+        }
+        if (adminGroups != null && !adminGroups.isEmpty()) {
+            for (String groupAlias : adminGroups) {
+                GroupCache.getIdForAlias(groupAlias);
+            }
+        }
+        if (adminUsers != null && !adminUsers.isEmpty()) {
+            for (String userName : adminUsers) {
+                UserCache.getIdForName(userName);
+            }
+        }
+        return super.upsert(replaceClassifications, replaceCustomMetadata);
     }
 
     /**
