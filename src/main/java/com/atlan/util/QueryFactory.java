@@ -15,10 +15,9 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.enums.*;
-import java.util.*;
-
 import com.atlan.model.search.AggregationMetricResult;
 import com.atlan.model.search.AggregationResult;
+import java.util.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Singular;
