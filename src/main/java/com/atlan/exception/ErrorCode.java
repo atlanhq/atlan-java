@@ -171,6 +171,11 @@ public enum ErrorCode implements ExceptionMessageSet {
             "ATLAN-JAVA-400-030",
             "No alias was provided when attempting to retrieve or update the group.",
             "You must provide an alias when attempting to retrieve or update a group."),
+    NOT_AGGREGATION_METRIC(
+            400,
+            "ATLAN-JAVA-400-031",
+            "Requested extracting a metric from a non-metric aggregation result.",
+            "You must provide an aggregation result that is a metric aggregation to extract a numeric metric."),
 
     AUTHENTICATION_PASSTHROUGH(
             401,

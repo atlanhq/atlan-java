@@ -12,7 +12,11 @@ import co.elastic.clients.json.JsonData;
 import com.atlan.cache.ClassificationCache;
 import com.atlan.cache.CustomMetadataCache;
 import com.atlan.exception.AtlanException;
+import com.atlan.exception.ErrorCode;
+import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.enums.*;
+import com.atlan.model.search.AggregationMetricResult;
+import com.atlan.model.search.AggregationResult;
 import java.util.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -479,6 +483,21 @@ public class QueryFactory {
          */
         public static Aggregation bucketBy(AtlanSearchableField field) {
             return Aggregation.of(a -> a.terms(t -> t.field(field.getIndexedFieldName())));
+        }
+    }
+
+    /**
+     * Retrieve the numeric value from the provided aggregation result.
+     *
+     * @param result the aggregation result from which to retrieve the numeric metric
+     * @return the numeric result for the aggregation
+     * @throws InvalidRequestException if the provided aggregation result is not a metric
+     */
+    public static double getAggregationMetric(AggregationResult result) throws InvalidRequestException {
+        if (result instanceof AggregationMetricResult) {
+            return ((AggregationMetricResult) result).getValue();
+        } else {
+            throw new InvalidRequestException(ErrorCode.NOT_AGGREGATION_METRIC);
         }
     }
 
