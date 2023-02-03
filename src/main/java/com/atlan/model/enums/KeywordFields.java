@@ -10,9 +10,13 @@ public enum KeywordFields implements AtlanSearchableField {
     /** Unused. */
     ADDITIONAL_ATTRIBUTES("additionalAttributes"),
     /** TBC */
+    ADDITIONAL_INFO("additionalInfo"),
+    /** TBC */
     ADLS_ACCOUNT_ACCESS_TIER("adlsAccountAccessTier"),
     /** TBC */
     ADLS_ACCOUNT_KIND("adlsAccountKind"),
+    /** TBC */
+    ADLS_ACCOUNT_NAME("adlsAccountName.keyword"),
     /** TBC */
     ADLS_ACCOUNT_PERFORMANCE("adlsAccountPerformance"),
     /** TBC */
@@ -31,6 +35,8 @@ public enum KeywordFields implements AtlanSearchableField {
     ADLS_CONTAINER_LEASE_STATE("adlsContainerLeaseState"),
     /** TBC */
     ADLS_CONTAINER_LEASE_STATUS("adlsContainerLeaseStatus"),
+    /** TBC */
+    ADLS_CONTAINER_NAME("adlsContainerName.keyword"),
     /** TBC */
     ADLS_CONTAINER_URL("adlsContainerUrl.keyword"),
     /** Entity tag for the asset. An entity tag is a hash of the object and represents changes to the contents of an object only, not its metadata. */
@@ -51,6 +57,8 @@ public enum KeywordFields implements AtlanSearchableField {
     ADLS_OBJECT_LEASE_STATUS("adlsObjectLeaseStatus"),
     /** TBC */
     ADLS_OBJECT_METADATA("adlsObjectMetadata"),
+    /** TBC */
+    ADLS_OBJECT_NAME("adlsObjectName.keyword"),
     /** TBC */
     ADLS_OBJECT_TYPE("adlsObjectType"),
     /** TBC */
@@ -160,8 +168,6 @@ public enum KeywordFields implements AtlanSearchableField {
     /** TBC */
     ASSET_DBT_SEMANTIC_LAYER_PROXY_URL("assetDbtSemanticLayerProxyUrl"),
     /** TBC */
-    ASSET_DBT_SOURCE_FRESHNESS_CRITERIA("assetDbtSourceFreshnessCriteria"),
-    /** TBC */
     ASSET_DBT_TAGS("assetDbtTags"),
     /** TBC */
     ASSET_DBT_UNIQUE_ID("assetDbtUniqueId.keyword"),
@@ -209,9 +215,11 @@ public enum KeywordFields implements AtlanSearchableField {
     CERTIFIER("certifier"),
     /** TBC */
     CERTIFIER_DISPLAY_NAME("certifierDisplayName"),
+    /** TBC */
+    CLIENT_ID("clientId"),
     /** Code that ran within the process. */
     CODE("code"),
-    /** TBC */
+    /** qualifiedName of the collection in which this folder exists. */
     COLLECTION_QUALIFIED_NAME("collectionQualifiedName"),
     /** TBC */
     COLUMN_HISTOGRAM("columnHistogram"),
@@ -233,7 +241,7 @@ public enum KeywordFields implements AtlanSearchableField {
     CONNECTOR_ICON("connectorIcon"),
     /** TBC */
     CONNECTOR_IMAGE("connectorImage"),
-    /** TBC */
+    /** Type of the connector through which this asset is accessible. */
     CONNECTOR_TYPE("connectorName"),
     /** TBC */
     CONSTRAINT("constraint"),
@@ -253,7 +261,7 @@ public enum KeywordFields implements AtlanSearchableField {
     DATA_STUDIO_ASSET_TITLE("dataStudioAssetTitle.keyword"),
     /** Type of Google Data Studio asset. */
     DATA_STUDIO_ASSET_TYPE("dataStudioAssetType"),
-    /** Data type of values in the field. */
+    /** Data type of values in the column. */
     DATA_TYPE("dataType"),
     /** Simple name of the database in which this SQL asset exists, or empty if it does not exist within a database. */
     DATABASE_NAME("databaseName.keyword"),
@@ -335,7 +343,7 @@ public enum KeywordFields implements AtlanSearchableField {
     DEFAULT_VALUE("defaultValue"),
     /** TBC */
     DEFAULT_VALUE_FORMULA("defaultValueFormula"),
-    /** Definition of the materialized view (DDL). */
+    /** Definition of the view (DDL). */
     DEFINITION("definition"),
     /** Description of the asset, as crawled from a source. */
     DESCRIPTION("description.keyword"),
@@ -357,6 +365,8 @@ public enum KeywordFields implements AtlanSearchableField {
     FOLDER_NAME("folderName"),
     /** TBC */
     FORMULA("formula"),
+    /** TBC */
+    FULL_NAME("fullName"),
     /** TBC */
     FULLY_QUALIFIED_NAME("fullyQualifiedName"),
     /** TBC */
@@ -409,9 +419,9 @@ public enum KeywordFields implements AtlanSearchableField {
     GUID("__guid"),
     /** Host name of the connection's source. */
     HOST("host"),
-    /** Icon for the link. */
+    /** TBC */
     ICON("icon"),
-    /** Type of icon for the link. */
+    /** TBC */
     ICON_TYPE("iconType"),
     /** TBC */
     INPUT_FIELDS("inputFields"),
@@ -494,6 +504,10 @@ public enum KeywordFields implements AtlanSearchableField {
     /** TBC */
     OBJECT_QUALIFIED_NAME("objectQualifiedName"),
     /** TBC */
+    OPERATION("operation"),
+    /** TBC */
+    OPERATION_PARAMS("operationParams"),
+    /** TBC */
     ORGANIZATION_QUALIFIED_NAME("organizationQualifiedName"),
     /** TBC */
     OUTPUT_FIELDS("outputFields"),
@@ -503,8 +517,12 @@ public enum KeywordFields implements AtlanSearchableField {
     OUTPUTS("outputs"),
     /** List of groups who own the asset. */
     OWNER_GROUPS("ownerGroups"),
+    /** TBC */
+    OWNER_NAME("ownerName"),
     /** List of users who own the asset. */
     OWNER_USERS("ownerUsers"),
+    /** TBC */
+    PARAMS("params"),
     /** TBC */
     PARENT_QUALIFIED_NAME("parentQualifiedName"),
     /** TBC */
@@ -515,8 +533,6 @@ public enum KeywordFields implements AtlanSearchableField {
     PICKLIST_VALUES("picklistValues"),
     /** TBC */
     PINNED_BY("pinnedBy"),
-    /** TBC */
-    POLICY_STRATEGY("policyStrategy"),
     /** TBC */
     POWER_BI_COLUMN_DATA_CATEGORY("powerBIColumnDataCategory"),
     /** TBC */
@@ -565,7 +581,7 @@ public enum KeywordFields implements AtlanSearchableField {
     PROJECT_QUALIFIED_NAME("projectQualifiedName"),
     /** All propagated classifications that exist on an asset, searchable by the internal hashed-string ID of the classification. */
     PROPAGATED_TRAIT_NAMES("__propagatedTraitNames"),
-    /** Unique fully-qualified name of the asset in Atlan. */
+    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. */
     QUALIFIED_NAME("qualifiedName"),
     /** TBC */
     QUERY_CONFIG("queryConfig"),
@@ -581,12 +597,20 @@ public enum KeywordFields implements AtlanSearchableField {
     REFRESH_METHOD("refreshMethod"),
     /** TBC */
     REFRESH_MODE("refreshMode"),
+    /** Unused. */
+    REPLICATED_FROM("replicatedFrom"),
+    /** Unused. */
+    REPLICATED_TO("replicatedTo"),
     /** TBC */
     REPORT_QUALIFIED_NAME("reportQualifiedName"),
     /** Type of report in Salesforce. */
     REPORT_TYPE("reportType"),
     /** TBC */
     RESOURCE_METADATA("resourceMetadata"),
+    /** TBC */
+    RESULT("result"),
+    /** TBC */
+    RESULT_SUMMARY("resultSummary"),
     /** TBC */
     ROLE("role"),
     /** Name of the bucket in which the object exists. */
@@ -609,10 +633,16 @@ public enum KeywordFields implements AtlanSearchableField {
     S3OBJECT_VERSION_ID("s3ObjectVersionId"),
     /** TBC */
     SAMPLE_DATA_URL("sampleDataUrl"),
+    /** TBC */
+    SAVED_SEARCHES("savedSearches"),
     /** Simple name of the schema in which this SQL asset exists, or empty if it does not exist within a schema. */
     SCHEMA_NAME("schemaName.keyword"),
     /** Unique name of the schema in which this SQL asset exists, or empty if it does not exist within a schema. */
     SCHEMA_QUALIFIED_NAME("schemaQualifiedName"),
+    /** TBC */
+    SEARCH_PARAMETERS("searchParameters"),
+    /** TBC */
+    SEARCH_TYPE("searchType"),
     /** Unused. */
     SHORT_DESCRIPTION("shortDescription"),
     /** TBC */
@@ -659,30 +689,32 @@ public enum KeywordFields implements AtlanSearchableField {
     SOURCE_DEFINITION_SCHEMA("sourceDefinitionSchema"),
     /** URL to create an embed for a resource (for example, an image of a dashboard) within Atlan. */
     SOURCE_EMBED_URL("sourceEmbedURL"),
-    /** ID of the report in Salesforce. */
+    /** ID of the organization in Salesforce. */
     SOURCE_ID("sourceId"),
     /** TBC */
     SOURCE_LOGO("sourceLogo"),
     /** TBC */
     SOURCE_OWNERS("sourceOwners"),
-    /** TBC */
-    SOURCE_QUERY_COMPUTE_COST_RECORDS("sourceQueryComputeCostRecordList"),
-    /** TBC */
+    /** List of most expensive warehouse names. */
     SOURCE_QUERY_COMPUTE_COSTS("sourceQueryComputeCostList"),
-    /** TBC */
+    /** List of most expensive warehouses with extra insights. */
+    SOURCE_QUERY_COMPUTE_COST_RECORDS("sourceQueryComputeCostRecordList"),
+    /** List of the most expensive queries that accessed this asset. */
     SOURCE_READ_EXPENSIVE_QUERY_RECORDS("sourceReadExpensiveQueryRecordList"),
-    /** TBC */
+    /** List of the most popular queries that accessed this asset. */
     SOURCE_READ_POPULAR_QUERY_RECORDS("sourceReadPopularQueryRecordList"),
-    /** TBC */
-    SOURCE_READ_RECENT_USER_RECORDS("sourceReadRecentUserRecordList"),
-    /** TBC */
+    /** List of usernames of the most recent users who read the asset. */
     SOURCE_READ_RECENT_USERS("sourceReadRecentUserList"),
-    /** TBC */
+    /** List of usernames with extra insights for the most recent users who read the asset. */
+    SOURCE_READ_RECENT_USER_RECORDS("sourceReadRecentUserRecordList"),
+    /** List of the slowest queries that accessed this asset. */
     SOURCE_READ_SLOW_QUERY_RECORDS("sourceReadSlowQueryRecordList"),
-    /** TBC */
+    /** List of usernames of the users who read the asset the most. */
+    SOURCE_READ_TOP_USERS("sourceReadTopUserList"),
+    /** List of usernames with extra insights for the users who read the asset the most. */
     SOURCE_READ_TOP_USER_RECORDS("sourceReadTopUserRecordList"),
     /** TBC */
-    SOURCE_READ_TOP_USERS("sourceReadTopUserList"),
+    SOURCE_SERVER_NAME("sourceServerName"),
     /** URL to the resource within the source application. */
     SOURCE_URL("sourceURL"),
     /** Who last updated the asset in the source system. */
@@ -721,6 +753,8 @@ public enum KeywordFields implements AtlanSearchableField {
     TABLEAU_DATASOURCE_FIELD_FORMULA("tableauDatasourceFieldFormula"),
     /** TBC */
     TABLEAU_DATASOURCE_FIELD_ROLE("tableauDatasourceFieldRole"),
+    /** TBC */
+    TARGET_SERVER_NAME("targetServerName"),
     /** Name of the Atlan workspace in which the asset exists. */
     TENANT_ID("tenantId"),
     /** TBC */
@@ -732,6 +766,10 @@ public enum KeywordFields implements AtlanSearchableField {
     /** Type of the asset. For example Table, Column, and so on. */
     TYPE_NAME("__typeName.keyword"),
     /** TBC */
+    UI_PARAMETERS("uiParameters"),
+    /** TBC */
+    UNIQUE_NAME("uniqueName"),
+    /** TBC */
     UPSTREAM_COLUMNS("upstreamColumns"),
     /** TBC */
     UPSTREAM_DATASOURCES("upstreamDatasources"),
@@ -739,16 +777,18 @@ public enum KeywordFields implements AtlanSearchableField {
     UPSTREAM_FIELDS("upstreamFields"),
     /** TBC */
     UPSTREAM_TABLES("upstreamTables"),
+    /** TBC */
+    URLS("urls"),
     /** Unused. */
     USAGE("usage"),
     /** Description of the asset, as provided by a user. If present, this will be used for the description in user interfaces. If not present, the description will be used. */
     USER_DESCRIPTION("userDescription.keyword"),
     /** TBC */
+    USER_NAME("userName"),
+    /** TBC */
     VALIDATIONS("validations"),
     /** TBC */
     VARIABLES_SCHEMA_BASE64("variablesSchemaBase64"),
-    /** TBC */
-    VIEW_NAME_LOOKER("viewName"),
     /** Simple name of the view in which this SQL asset exists, or empty if it does not exist within a view. */
     VIEW_NAME("viewName.keyword"),
     /** Unique name of the view in which this SQL asset exists, or empty if it does not exist within a view. */

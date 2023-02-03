@@ -17,6 +17,8 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
+import lombok.Builder;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
@@ -120,11 +122,83 @@ public abstract class AbstractGenerator extends AtlanLiveTest {
     protected static final Map<String, String> CREATE_NON_ABSTRACT = Map.ofEntries(
             Map.entry("LineageProcess", "AbstractProcess"), Map.entry("ColumnProcess", "AbstractColumnProcess"));
 
+    private static SortedMap<String, SearchableField> createCommonKeywords() {
+        SortedMap<String, SearchableField> map = new TreeMap<>();
+        map.put("guid", SearchableField.of("__guid", "Globally unique identifier (GUID) of any object in Atlan."));
+        map.put("createdBy", SearchableField.of("__createdBy", "Atlan user who created this sasset."));
+        map.put("modifiedBy", SearchableField.of("__modifiedBy", "Atlan user who last updated the sasset."));
+        map.put("state", SearchableField.of("__state", "Asset status in Atlan (active vs deleted)."));
+        map.put(
+                "traitNames",
+                SearchableField.of(
+                        "__traitNames",
+                        "All directly-assigned classifications that exist on an asset, searchable by the internal hashed-string ID of the classification."));
+        map.put(
+                "propagatedTraitNames",
+                SearchableField.of(
+                        "__propagatedTraitNames",
+                        "All propagated classifications that exist on an asset, searchable by the internal hashed-string ID of the classification."));
+        map.put(
+                "meanings",
+                SearchableField.of(
+                        "__meanings", "All terms attached to an asset, searchable by the term's qualifiedName."));
+        map.put(
+                "typeName",
+                SearchableField.of("__typeName.keyword", "Type of the asset. For example Table, Column, and so on."));
+        map.put("superTypeNames", SearchableField.of("__superTypeNames.keyword", "All super types of an asset."));
+        map.put(
+                "qualifiedName",
+                SearchableField.of("qualifiedName", "Unique fully-qualified name of the asset in Atlan."));
+        map.put(
+                "glossary",
+                SearchableField.of(
+                        "__glossary",
+                        "Glossary in which the asset is contained, searchable by the qualifiedName of the glossary."));
+        return map;
+    }
+
+    private static SortedMap<String, SearchableField> createCommonText() {
+        SortedMap<String, SearchableField> map = new TreeMap<>();
+        map.put(
+                "classificationsText",
+                SearchableField.of(
+                        "__classificationsText",
+                        "All classifications that exist on an asset, whether directly assigned or propagated, searchable by the internal hashed-string ID of the classification."));
+        map.put(
+                "meaningsText",
+                SearchableField.of(
+                        "__meaningsText", "All terms attached to an asset, as a single comma-separated string."));
+        map.put(
+                "typeName",
+                SearchableField.of("__typeName", "Type of the asset. For example Table, Column, and so on."));
+        map.put("superTypeNames", SearchableField.of("__superTypeNames", "All super types of an asset."));
+        map.put(
+                "qualifiedName",
+                SearchableField.of("qualifiedName.text", "Unique fully-qualified name of the asset in Atlan."));
+        return map;
+    }
+
+    private static SortedMap<String, SearchableField> createCommonNumerics() {
+        SortedMap<String, SearchableField> map = new TreeMap<>();
+        map.put("timestamp", SearchableField.of("__timestamp", "Time (in milliseconds) when the asset was created."));
+        map.put(
+                "modificationTimestamp",
+                SearchableField.of(
+                        "__modificationTimestamp", "Time (in milliseconds) when the asset was last updated."));
+        return map;
+    }
+
     protected static final Map<String, EntityDef> entityDefCache = new ConcurrentHashMap<>();
     protected static final Map<String, RelationshipDef> relationshipDefCache = new ConcurrentHashMap<>();
     protected static final Map<String, TypeDef> typeDefCache = new ConcurrentHashMap<>();
     protected static final Map<String, Set<String>> relationshipsForType = new ConcurrentHashMap<>();
     protected static final SortedSet<String> typesWithMaps = new TreeSet<>();
+    protected static final SortedMap<String, SearchableField> searchableNumerics = new TreeMap<>();
+    protected static final SortedMap<String, SearchableField> searchableKeywords = new TreeMap<>();
+    protected static final SortedMap<String, SearchableField> searchableText = new TreeMap<>();
+    protected static final SortedMap<String, SearchableField> searchableStemmed = new TreeMap<>();
+    protected static final SortedMap<String, SearchableField> searchableBooleans = new TreeMap<>();
+    protected static final SortedMap<String, SearchableField> searchableRanks = new TreeMap<>();
     private static final Map<String, String> subTypeToSuperType = new ConcurrentHashMap<>();
     private static final Map<String, String> qualifiedAttrToDescription = new ConcurrentHashMap<>();
     private static final Map<String, String> typeNameToDescription = new ConcurrentHashMap<>();
@@ -147,6 +221,9 @@ public abstract class AbstractGenerator extends AtlanLiveTest {
                 TypeDefResponse enums = TypeDefsEndpoint.getTypeDefs(AtlanTypeCategory.ENUM);
                 TypeDefResponse structs = TypeDefsEndpoint.getTypeDefs(AtlanTypeCategory.STRUCT);
                 List<EntityDef> entityDefs = entities.getEntityDefs();
+                searchableKeywords.putAll(createCommonKeywords());
+                searchableText.putAll(createCommonText());
+                searchableNumerics.putAll(createCommonNumerics());
                 cacheEntityDefs(entityDefs);
                 cacheRelationshipDefs(relationships.getRelationshipDefs());
                 cacheOtherTypeDefs(enums.getEnumDefs());
@@ -400,11 +477,14 @@ public abstract class AbstractGenerator extends AtlanLiveTest {
 
     private static void cacheTypesWithMaps(List<EntityDef> entityDefs) {
         for (EntityDef entityDef : entityDefs) {
+            String typeName = entityDef.getName();
             for (AttributeDef attr : entityDef.getAttributeDefs()) {
                 String attrType = attr.getTypeName();
+                String name = attr.getName();
                 if (attrType.contains("map<")) {
                     typesWithMaps.add(entityDef.getName());
                 }
+                cacheSearchFields(typeName, name, getSearchFieldsForAttribute(attr));
             }
         }
     }
@@ -444,6 +524,47 @@ public abstract class AbstractGenerator extends AtlanLiveTest {
         }
     }
 
+    private static void cacheSearchFields(String typeName, String attrName, Map<String, IndexType> searchFields) {
+        for (Map.Entry<String, IndexType> entry : searchFields.entrySet()) {
+            String fieldName = entry.getKey();
+            IndexType type = entry.getValue();
+            String description = getAttributeDescription(typeName, attrName);
+            SearchableField field = SearchableField.builder()
+                    .fieldName(fieldName)
+                    .description(description)
+                    .build();
+            SearchableField conflict = null;
+            switch (type) {
+                case KEYWORD:
+                    conflict = searchableKeywords.put(attrName, field);
+                    break;
+                case TEXT:
+                    if (fieldName.endsWith(".stemmed")) {
+                        conflict = searchableStemmed.put(attrName, field);
+                    } else {
+                        conflict = searchableText.put(attrName, field);
+                    }
+                    break;
+                case DATE:
+                case FLOAT:
+                    conflict = searchableNumerics.put(attrName, field);
+                    break;
+                case BOOLEAN:
+                    conflict = searchableBooleans.put(attrName, field);
+                    break;
+                case RANK_FEATURE:
+                    conflict = searchableRanks.put(attrName, field);
+                    break;
+                default:
+                    log.error("Unhandled search index type: {}", type);
+                    break;
+            }
+            if (conflict != null) {
+                log.error("Conflicting attribute name ({}) in an index: {}", attrName, conflict);
+            }
+        }
+    }
+
     /**
      * Retrieve the name of the singular type that we should extend for inheritance.
      *
@@ -461,6 +582,45 @@ public abstract class AbstractGenerator extends AtlanLiveTest {
         } else {
             log.warn("Multiple superTypes detected — returning only the first: {}", superTypes);
             return superTypes.get(0);
+        }
+    }
+
+    protected static String getEnumFromAttrName(String attrName) {
+        return attrName.replaceAll("_", "")
+                .replaceAll("([A-Z]+)([A-Z][a-z])", "$1_$2")
+                .replaceAll("([a-z])([A-Z])", "$1_$2")
+                .toUpperCase();
+    }
+
+    @Builder
+    @Getter
+    protected static final class SearchableField implements Comparable<SearchableField> {
+
+        private static final Comparator<String> stringComparator = Comparator.nullsFirst(String::compareTo);
+        private static final Comparator<SearchableField> comparator =
+                Comparator.comparing(SearchableField::getFieldName, stringComparator);
+
+        private String fieldName;
+        private String description;
+
+        public static SearchableField of(String fieldName, String description) {
+            return SearchableField.builder()
+                    .fieldName(fieldName)
+                    .description(description)
+                    .build();
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public int compareTo(SearchableField o) {
+            return comparator.compare(this, o);
+        }
+
+        @Override
+        public String toString() {
+            return "{ \"field\": \"" + fieldName + "\", \"description\": \"" + description + "\"}";
         }
     }
 }
