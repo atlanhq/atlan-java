@@ -99,8 +99,8 @@ public class DocumentationGenerator extends AbstractGenerator {
 
     public static void main(String[] args) {
         DocumentationGenerator generator = new DocumentationGenerator();
-        cacheModels();
         cacheDescriptions();
+        cacheModels();
         generator.createDirectoryIdempotent();
         generator.generateTypeFiles();
     }

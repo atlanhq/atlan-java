@@ -77,8 +77,8 @@ public class ModelGenerator extends AbstractGenerator {
 
     public static void main(String[] args) {
         ModelGenerator generator = new ModelGenerator();
-        cacheModels();
         cacheDescriptions();
+        cacheModels();
         generator.generateModels();
         generator.generateTests();
         generator.generateDeserializationStub();
@@ -171,6 +171,9 @@ public class ModelGenerator extends AbstractGenerator {
             for (Map.Entry<String, SearchableField> entry : fieldMap.entrySet()) {
                 String attrName = entry.getKey();
                 SearchableField field = entry.getValue();
+                if (ATTRIBUTE_RENAMING.containsKey(attrName)) {
+                    attrName = ATTRIBUTE_RENAMING.get(attrName);
+                }
                 String enumId = getEnumFromAttrName(attrName);
                 fs.append("    /** ")
                         .append(field.getDescription())
