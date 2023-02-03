@@ -57,7 +57,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
     private static final String CM_ATTR_QUALITY_COUNT = "Count"; // integer
     private static final String CM_ATTR_QUALITY_SQL = "SQL"; // sql
     private static final String CM_ATTR_QUALITY_TYPE = "Type"; // options
-    private static final String CM_ENUM_DQ_TYPE = "Data Quality Type";
+    private static final String CM_ENUM_DQ_TYPE = "DataQualityType";
     private static final List<String> DQ_TYPE_LIST =
             List.of("Accuracy", "Completeness", "Consistency", "Timeliness", "Validity", "Uniqueness");
 
