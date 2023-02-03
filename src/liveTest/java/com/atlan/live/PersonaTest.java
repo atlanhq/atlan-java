@@ -114,7 +114,7 @@ public class PersonaTest extends AtlanLiveTest {
 
     @Test(
             groups = {"read.personas.2"},
-            dependsOnGroups = {"update.personas"})
+            dependsOnGroups = {"update.personas.*"})
     void retrievePersonas2() throws AtlanException {
         Persona one = Persona.retrieveByName(PERSONA_NAME);
         assertNotNull(one);
@@ -129,6 +129,7 @@ public class PersonaTest extends AtlanLiveTest {
         assertTrue(denied.contains(AssetSidebarTab.QUERIES));
         assertEquals(one.getMetadataPolicies().size(), 1);
         assertEquals(one.getDataPolicies().size(), 1);
+        assertEquals(one.getGlossaryPolicies().size(), 1);
     }
 
     @Test(

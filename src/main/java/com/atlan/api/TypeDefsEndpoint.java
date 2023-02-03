@@ -10,6 +10,7 @@ import com.atlan.model.enums.AtlanTypeCategory;
 import com.atlan.model.typedefs.*;
 import com.atlan.model.typedefs.TypeDefResponse;
 import com.atlan.net.ApiResource;
+import com.atlan.util.StringUtils;
 import java.util.List;
 
 /**
@@ -108,8 +109,10 @@ public class TypeDefsEndpoint {
      * @throws AtlanException on any API communication issue
      */
     public static void purgeTypeDef(String internalName) throws AtlanException {
-        String url =
-                String.format("%s%s", Atlan.getBaseUrl(), String.format("%s/name/%s", endpoint_singular, internalName));
+        String url = String.format(
+                "%s%s",
+                Atlan.getBaseUrl(),
+                String.format("%s/name/%s", endpoint_singular, StringUtils.encodeContent(internalName)));
         ApiResource.request(ApiResource.RequestMethod.DELETE, url, "", null, null);
     }
 }
