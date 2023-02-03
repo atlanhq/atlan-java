@@ -261,7 +261,7 @@ implements <a href="AtlanSearchableField.html" title="interface in com.atlan.mod
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#HAS_LINEAGE">HAS_LINEAGE</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Indicates whether this asset has lineage (true) or not.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -351,7 +351,7 @@ implements <a href="AtlanSearchableField.html" title="interface in com.atlan.mod
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#IS_NULLABLE">IS_NULLABLE</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">When true, the values in this column can be null.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -435,7 +435,7 @@ implements <a href="AtlanSearchableField.html" title="interface in com.atlan.mod
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#IS_TEMPORARY">IS_TEMPORARY</a></span></code></th>
 <td class="colLast">
-<div class="block">Whether this materialized view is temporary (true) or not (false).</div>
+<div class="block">Whether this view is temporary (true) or not (false).</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -609,6 +609,16 @@ the order they are declared.</div>
 <!--   -->
 </a>
 <h3>Enum Constant Detail</h3>
+<a id="HAS_LINEAGE">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>HAS_LINEAGE</h4>
+<pre>public static final&nbsp;<a href="BooleanFields.html" title="enum in com.atlan.model.enums">BooleanFields</a> HAS_LINEAGE</pre>
+<div class="block">Indicates whether this asset has lineage (true) or not.</div>
+</li>
+</ul>
 <a id="ADLS_CONTAINER_VERSION_LEVEL_IMMUTABILITY_SUPPORT">
 <!--   -->
 </a>
@@ -769,16 +779,6 @@ the order they are declared.</div>
 <div class="block">TBC</div>
 </li>
 </ul>
-<a id="HAS_LINEAGE">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>HAS_LINEAGE</h4>
-<pre>public static final&nbsp;<a href="BooleanFields.html" title="enum in com.atlan.model.enums">BooleanFields</a> HAS_LINEAGE</pre>
-<div class="block">TBC</div>
-</li>
-</ul>
 <a id="HAS_POPULARITY_INSIGHTS">
 <!--   -->
 </a>
@@ -926,7 +926,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>IS_NULLABLE</h4>
 <pre>public static final&nbsp;<a href="BooleanFields.html" title="enum in com.atlan.model.enums">BooleanFields</a> IS_NULLABLE</pre>
-<div class="block">TBC</div>
+<div class="block">When true, the values in this column can be null.</div>
 </li>
 </ul>
 <a id="IS_PARTITION">
@@ -1066,7 +1066,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>IS_TEMPORARY</h4>
 <pre>public static final&nbsp;<a href="BooleanFields.html" title="enum in com.atlan.model.enums">BooleanFields</a> IS_TEMPORARY</pre>
-<div class="block">Whether this materialized view is temporary (true) or not (false).</div>
+<div class="block">Whether this view is temporary (true) or not (false).</div>
 </li>
 </ul>
 <a id="IS_TOP_LEVEL_PROJECT">
