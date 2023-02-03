@@ -300,38 +300,39 @@ public class DocumentationGenerator extends AbstractGenerator {
                 "These properties are core to all assets in Atlan. As part of the raw API payloads, these are at the top-level of the object.\n\n");
         out.write("=== \":fontawesome-brands-java: Java\"\n\n");
         Map<String, IndexType> typeNameIndexes = Map.of(
-                "[`__typeName.keyword`](../../../search/attributes/common/#__typename)",
+                "[`KeywordFields.TYPE_NAME`](../../../search/attributes/common/#__typename)",
                 IndexType.KEYWORD,
-                "[`__typeName`](../../../search/attributes/common/#__typename)",
+                "[`TextFields.TYPE_NAME`](../../../search/attributes/common/#__typename)",
                 IndexType.TEXT,
-                "[`__superTypeNames.keyword`](../../../search/attributes/common/#__supertypenames)",
+                "[`KeywordFields.SUPER_TYPE_NAMES`](../../../search/attributes/common/#__supertypenames)",
                 IndexType.KEYWORD,
-                "[`__superTypeNames`](../../../search/attributes/common/#__supertypenames)",
+                "[`TextFields.SUPER_TYPE_NAME`](../../../search/attributes/common/#__supertypenames)",
                 IndexType.TEXT);
         Map<String, IndexType> guidIndexes =
-                Map.of("[`__guid`](../../../search/attributes/common/#__guid)", IndexType.KEYWORD);
+                Map.of("[`KeywordFields.GUID`](../../../search/attributes/common/#__guid)", IndexType.KEYWORD);
         Map<String, IndexType> customMetadataIndexes = Map.of(
                 "[Finding assets by custom metadata](../../../sdks/common-examples/finding/have-custom-metadata)",
                 IndexType.KEYWORD);
         Map<String, IndexType> statusIndexes =
-                Map.of("[`__state`](../../../search/attributes/common/#__state)", IndexType.KEYWORD);
-        Map<String, IndexType> createdByIndexes =
-                Map.of("[`__createdBy`](../../../search/attributes/common/#__createdby)", IndexType.KEYWORD);
-        Map<String, IndexType> updatedByIndexes =
-                Map.of("[`__modifiedBy`](../../../search/attributes/common/#__modifiedby)", IndexType.KEYWORD);
+                Map.of("[`KeywordFields.STATE`](../../../search/attributes/common/#__state)", IndexType.KEYWORD);
+        Map<String, IndexType> createdByIndexes = Map.of(
+                "[`KeywordFields.CREATED_BY`](../../../search/attributes/common/#__createdby)", IndexType.KEYWORD);
+        Map<String, IndexType> updatedByIndexes = Map.of(
+                "[`KeywordFields.MODIFIED_BY`](../../../search/attributes/common/#__modifiedby)", IndexType.KEYWORD);
         Map<String, IndexType> createTimeIndexes =
-                Map.of("[`__timestamp`](../../../search/attributes/common/#__timestamp)", IndexType.DATE);
+                Map.of("[`NumericFields.TIMESTAMP`](../../../search/attributes/common/#__timestamp)", IndexType.DATE);
         Map<String, IndexType> updateTimeIndexes = Map.of(
-                "[`__modificationTimestamp`](../../../search/attributes/common/#__modificationtimestamp)",
+                "[`NumericFields.MODIFICATION_TIMESTAMP`](../../../search/attributes/common/#__modificationtimestamp)",
                 IndexType.DATE);
         Map<String, IndexType> classificationNameIndexes = Map.of(
-                "[`__traitNames`](../../../search/attributes/common/#__traitnames)", IndexType.KEYWORD,
-                "[`__propagatedTraitNames`](../../../search/attributes/common/#__propagatedtraitnames)",
+                "[`KeywordFields.TRAIT_NAMES`](../../../search/attributes/common/#__traitnames)", IndexType.KEYWORD,
+                "[`KeywordFields.PROPAGATED_TRAIT_NAMES`](../../../search/attributes/common/#__propagatedtraitnames)",
                         IndexType.KEYWORD,
-                "[`__classificationsText`](../../../search/attributes/common/#__classificationstext)", IndexType.TEXT);
+                "[`TextFields.CLASSIFICATIONS_TEXT`](../../../search/attributes/common/#__classificationstext)",
+                        IndexType.TEXT);
         Map<String, IndexType> meaningNamesIndexes = Map.of(
-                "[`__meanings`](../../../search/attributes/common/#__meanings)", IndexType.KEYWORD,
-                "[`__meaningsText`](../../../search/attributes/common/#__meaningstext)", IndexType.TEXT);
+                "[`KeywordFields.MEANINGS`](../../../search/attributes/common/#__meanings)", IndexType.KEYWORD,
+                "[`TextFields.MEANINGS_TEXT`](../../../search/attributes/common/#__meaningstext)", IndexType.TEXT);
         writeProperty(out, "typeName", "Type of this asset.", ":material-text:{ title=\"string\" }", typeNameIndexes);
         writeProperty(
                 out,
@@ -415,6 +416,37 @@ public class DocumentationGenerator extends AbstractGenerator {
         out.write("=== \":material-language-python: Python\"\n\n");
         out.write("    !!! construction \"Coming soon\"\n\n");
         out.write("=== \":material-code-json: JSON\"\n\n");
+        typeNameIndexes = Map.of(
+                "[`__typeName.keyword`](../../../search/attributes/common/#__typename)",
+                IndexType.KEYWORD,
+                "[`__typeName`](../../../search/attributes/common/#__typename)",
+                IndexType.TEXT,
+                "[`__superTypeNames.keyword`](../../../search/attributes/common/#__supertypenames)",
+                IndexType.KEYWORD,
+                "[`__superTypeNames`](../../../search/attributes/common/#__supertypenames)",
+                IndexType.TEXT);
+        guidIndexes = Map.of("[`__guid`](../../../search/attributes/common/#__guid)", IndexType.KEYWORD);
+        customMetadataIndexes = Map.of(
+                "[Finding assets by custom metadata](../../../sdks/common-examples/finding/have-custom-metadata)",
+                IndexType.KEYWORD);
+        statusIndexes = Map.of("[`__state`](../../../search/attributes/common/#__state)", IndexType.KEYWORD);
+        createdByIndexes = Map.of("[`__createdBy`](../../../search/attributes/common/#__createdby)", IndexType.KEYWORD);
+        updatedByIndexes =
+                Map.of("[`__modifiedBy`](../../../search/attributes/common/#__modifiedby)", IndexType.KEYWORD);
+        createTimeIndexes = Map.of("[`__timestamp`](../../../search/attributes/common/#__timestamp)", IndexType.DATE);
+        updateTimeIndexes = Map.of(
+                "[`__modificationTimestamp`](../../../search/attributes/common/#__modificationtimestamp)",
+                IndexType.DATE);
+        classificationNameIndexes = Map.of(
+                "[`__traitNames`](../../../search/attributes/common/#__traitnames)",
+                IndexType.KEYWORD,
+                "[`__propagatedTraitNames`](../../../search/attributes/common/#__propagatedtraitnames)",
+                IndexType.KEYWORD,
+                "[`__classificationsText`](../../../search/attributes/common/#__classificationstext)",
+                IndexType.TEXT);
+        meaningNamesIndexes = Map.of(
+                "[`__meanings`](../../../search/attributes/common/#__meanings)", IndexType.KEYWORD,
+                "[`__meaningsText`](../../../search/attributes/common/#__meaningstext)", IndexType.TEXT);
         writeProperty(out, "typeName", "Type of this asset.", ":material-text:{ title=\"string\" }", typeNameIndexes);
         writeProperty(
                 out,
@@ -675,7 +707,7 @@ public class DocumentationGenerator extends AbstractGenerator {
             addRelatedTypeLink(out, referencedType, rename);
         }
         out.write("\n    :   " + description + "\n\n");
-        writeSearchTable(out, searchIndex, true);
+        writeSearchTable(out, attrName, searchIndex, rename, true);
         out.write("    </div>\n\n");
     }
 
@@ -685,11 +717,12 @@ public class DocumentationGenerator extends AbstractGenerator {
         out.write("    <div class=\"grid\" markdown>\n\n");
         out.write("    " + icon + " **`" + name + "`**\n");
         out.write("    :    " + description + "\n\n");
-        writeSearchTable(out, indexes, false);
+        writeSearchTable(out, name, indexes, Rename.NONE, false);
         out.write("    </div>\n\n");
     }
 
-    private void writeSearchTable(BufferedWriter out, Map<String, IndexType> indexes, boolean monospaceFields)
+    private void writeSearchTable(
+            BufferedWriter out, String attrName, Map<String, IndexType> indexes, Rename rename, boolean monospaceFields)
             throws IOException {
         if (indexes != null && !indexes.isEmpty()) {
             out.write("    | :material-magnify:{ title=\"Search field type\" } | Search field name |\n");
@@ -697,10 +730,37 @@ public class DocumentationGenerator extends AbstractGenerator {
             List<String> alphaNames = indexes.keySet().stream().sorted().collect(Collectors.toList());
             for (String fieldName : alphaNames) {
                 IndexType type = indexes.get(fieldName);
+                String renamed = fieldName;
+                if (rename == Rename.JAVA) {
+                    String enumId = getEnumFromAttrName(attrName);
+                    switch (type) {
+                        case BOOLEAN:
+                            renamed = "BooleanFields." + enumId;
+                            break;
+                        case FLOAT:
+                        case DATE:
+                            renamed = "NumericFields." + enumId;
+                            break;
+                        case TEXT:
+                            if (fieldName.endsWith(".stemmed")) {
+                                renamed = "StemmedFields." + enumId;
+                            } else {
+                                renamed = "TextFields." + enumId;
+                            }
+                            break;
+                        case RANK_FEATURE:
+                            renamed = "RankFields." + enumId;
+                            break;
+                        case KEYWORD:
+                        default:
+                            renamed = "KeywordFields." + enumId;
+                            break;
+                    }
+                }
                 if (monospaceFields) {
-                    out.write("    | " + getIndexIcon(type) + " | `" + fieldName + "` |\n");
+                    out.write("    | " + getIndexIcon(type) + " | `" + renamed + "` |\n");
                 } else {
-                    out.write("    | " + getIndexIcon(type) + " | " + fieldName + " |\n");
+                    out.write("    | " + getIndexIcon(type) + " | " + renamed + " |\n");
                 }
             }
             out.write("\n");
