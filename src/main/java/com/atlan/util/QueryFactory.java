@@ -360,6 +360,19 @@ public class QueryFactory {
         public Query present() {
             return ExistsQuery.of(t -> t.field(field.getIndexedFieldName()))._toQuery();
         }
+
+        /**
+         * Returns a query that will textually match the provided value against the field. This
+         * analyzes the provided value according to the same analysis carried out on the field
+         * (for example, tokenization, stemming, and so on).
+         *
+         * @param value the string value to match against
+         * @return a query that will only match assets whose analyzed value for the field matches the value provided (which will also be analyzed)
+         */
+        public Query match(String value) {
+            return MatchQuery.of(m -> m.field(field.getIndexedFieldName()).query(value))
+                    ._toQuery();
+        }
     }
 
     /** Class to compose compound queries combining various conditions. */
