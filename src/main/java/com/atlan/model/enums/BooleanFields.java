@@ -5,6 +5,8 @@ package com.atlan.model.enums;
 import lombok.Getter;
 
 public enum BooleanFields implements AtlanSearchableField {
+    /** Indicates whether this asset has lineage (true) or not. */
+    HAS_LINEAGE("__hasLineage"),
     /** TBC */
     ADLS_CONTAINER_VERSION_LEVEL_IMMUTABILITY_SUPPORT("adlsContainerVersionLevelImmutabilitySupport"),
     /** TBC */
@@ -37,8 +39,6 @@ public enum BooleanFields implements AtlanSearchableField {
     GCS_REQUESTER_PAYS("gcsRequesterPays"),
     /** TBC */
     HAS_EXTRACTS("hasExtracts"),
-    /** TBC */
-    HAS_LINEAGE("__hasLineage"),
     /** Whether the connection has popularity insights (true) or not (false). */
     HAS_POPULARITY_INSIGHTS("hasPopularityInsights"),
     /** TBC */
@@ -67,7 +67,7 @@ public enum BooleanFields implements AtlanSearchableField {
     IS_INDEXED("isIndexed"),
     /** TBC */
     IS_MERGABLE("isMergable"),
-    /** TBC */
+    /** When true, the values in this column can be null. */
     IS_NULLABLE("isNullable"),
     /** TBC */
     IS_PARTITION("isPartition"),
@@ -95,7 +95,7 @@ public enum BooleanFields implements AtlanSearchableField {
     IS_SORT("isSort"),
     /** TBC */
     IS_SQL_SNIPPET("isSqlSnippet"),
-    /** Whether this materialized view is temporary (true) or not (false). */
+    /** Whether this view is temporary (true) or not (false). */
     IS_TEMPORARY("isTemporary"),
     /** TBC */
     IS_TOP_LEVEL_PROJECT("isTopLevelProject"),

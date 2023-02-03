@@ -6,9 +6,13 @@ import lombok.Getter;
 
 public enum TextFields implements AtlanSearchableField {
     /** TBC */
+    ADLS_ACCOUNT_NAME("adlsAccountName"),
+    /** TBC */
     ADLS_ACCOUNT_RESOURCE_GROUP("adlsAccountResourceGroup"),
     /** TBC */
     ADLS_ACCOUNT_SUBSCRIPTION("adlsAccountSubscription"),
+    /** TBC */
+    ADLS_CONTAINER_NAME("adlsContainerName"),
     /** TBC */
     ADLS_CONTAINER_URL("adlsContainerUrl"),
     /** TBC */
@@ -17,6 +21,8 @@ public enum TextFields implements AtlanSearchableField {
     ADLS_OBJECT_CONTENT_LANGUAGE("adlsObjectContentLanguage"),
     /** TBC */
     ADLS_OBJECT_CONTENT_TYPE("adlsObjectContentType"),
+    /** TBC */
+    ADLS_OBJECT_NAME("adlsObjectName"),
     /** TBC */
     ADLS_OBJECT_URL("adlsObjectUrl"),
     /** TBC */
@@ -77,7 +83,7 @@ public enum TextFields implements AtlanSearchableField {
     CERTIFICATE_STATUS("certificateStatus.text"),
     /** All classifications that exist on an asset, whether directly assigned or propagated, searchable by the internal hashed-string ID of the classification. */
     CLASSIFICATIONS_TEXT("__classificationsText"),
-    /** TBC */
+    /** qualifiedName of the collection in which this folder exists. */
     COLLECTION_QUALIFIED_NAME("collectionQualifiedName.text"),
     /** TBC */
     CONNECTION_NAME("connectionName.text"),
@@ -85,7 +91,7 @@ public enum TextFields implements AtlanSearchableField {
     CONNECTION_QUALIFIED_NAME("connectionQualifiedName.text"),
     /** Title for the asset. */
     DATA_STUDIO_ASSET_TITLE("dataStudioAssetTitle"),
-    /** Data type of values in the field. */
+    /** Data type of values in the column. */
     DATA_TYPE("dataType.text"),
     /** Simple name of the database in which this SQL asset exists, or empty if it does not exist within a database. */
     DATABASE_NAME("databaseName"),
@@ -138,7 +144,7 @@ public enum TextFields implements AtlanSearchableField {
     /** Name of the project in which the asset exists. */
     GOOGLE_PROJECT_NAME("googleProjectName.text"),
     /** TBC */
-    INLINE_HELP_TEXT("inlineHelpText"),
+    INLINE_HELP_TEXT("inlineHelpText.text"),
     /** TBC */
     LOOKER_EXPLORE_QUALIFIED_NAME("lookerExploreQualifiedName.text"),
     /** TBC */
@@ -203,7 +209,7 @@ public enum TextFields implements AtlanSearchableField {
     PRESET_WORKSPACE_QUALIFIED_NAME("presetWorkspaceQualifiedName.text"),
     /** Region of the workspace. */
     PRESET_WORKSPACE_REGION("presetWorkspaceRegion.text"),
-    /** Unique fully-qualified name of the asset in Atlan. */
+    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. */
     QUALIFIED_NAME("qualifiedName.text"),
     /** Name of the bucket in which the object exists. */
     S3BUCKET_NAME("s3BucketName.text"),
