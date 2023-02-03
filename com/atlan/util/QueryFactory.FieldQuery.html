@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -250,13 +250,20 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i11" class="rowColor">
 <td class="colFirst"><code>co.elastic.clients.elasticsearch._types.query_dsl.Query</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#match(java.lang.String)">match</a></span>&#8203;(java.lang.String&nbsp;value)</code></th>
+<td class="colLast">
+<div class="block">Returns a query that will textually match the provided value against the field.</div>
+</td>
+</tr>
+<tr id="i12" class="altColor">
+<td class="colFirst"><code>co.elastic.clients.elasticsearch._types.query_dsl.Query</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#present()">present</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Returns a query that will only match assets that have some non-null, non-empty value
  (no matter what actual value) for the field.</div>
 </td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>co.elastic.clients.elasticsearch._types.query_dsl.Query</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#startingWith(java.lang.String)">startingWith</a></span>&#8203;(java.lang.String&nbsp;value)</code></th>
 <td class="colLast">
@@ -264,7 +271,7 @@ extends java.lang.Object</pre>
  the provided value.</div>
 </td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>co.elastic.clients.elasticsearch._types.query_dsl.Query</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#startingWith(java.lang.String,boolean)">startingWith</a></span>&#8203;(java.lang.String&nbsp;value,
             boolean&nbsp;caseInsensitive)</code></th>
@@ -551,7 +558,7 @@ extends java.lang.Object</pre>
 <a id="present()">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>present</h4>
 <pre class="methodSignature">public&nbsp;co.elastic.clients.elasticsearch._types.query_dsl.Query&nbsp;present()</pre>
@@ -561,6 +568,24 @@ extends java.lang.Object</pre>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>a query that will only match assets that have some non-null, non-empty value
          (no matter what actual value) for the field</dd>
+</dl>
+</li>
+</ul>
+<a id="match(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>match</h4>
+<pre class="methodSignature">public&nbsp;co.elastic.clients.elasticsearch._types.query_dsl.Query&nbsp;match&#8203;(java.lang.String&nbsp;value)</pre>
+<div class="block">Returns a query that will textually match the provided value against the field. This
+ analyzes the provided value according to the same analysis carried out on the field
+ (for example, tokenization, stemming, and so on).</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>value</code> - the string value to match against</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a query that will only match assets whose analyzed value for the field matches the value provided (which will also be analyzed)</dd>
 </dl>
 </li>
 </ul>
