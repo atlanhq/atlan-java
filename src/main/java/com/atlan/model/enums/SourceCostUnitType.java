@@ -6,7 +6,9 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 
 public enum SourceCostUnitType implements AtlanEnum {
-    CREDITS("Credits");
+    CREDITS("Credits"),
+    BYTES("bytes"),
+    SLOTS("slot-ms");
 
     @JsonValue
     @Getter(onMethod_ = {@Override})
