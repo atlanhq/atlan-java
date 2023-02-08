@@ -118,7 +118,6 @@ public class ADLSAccountTest {
                     LineageProcess.refByGuid("eb0240fb-4298-4bd5-9604-94d9c2f88db4")))
             .adlsETag("adlsETag")
             .adlsEncryptionType(ADLSEncryptionTypes.STORAGE)
-            .adlsAccountName("adlsAccountName")
             .adlsAccountResourceGroup("adlsAccountResourceGroup")
             .adlsAccountSubscription("adlsAccountSubscription")
             .adlsAccountPerformance(ADLSPerformance.PREMIUM)
