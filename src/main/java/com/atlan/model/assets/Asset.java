@@ -534,6 +534,10 @@ public abstract class Asset extends Reference {
 
     /** TBC */
     @Attribute
+    String assetDbtSourceFreshnessCriteria;
+
+    /** TBC */
+    @Attribute
     String sampleDataUrl;
 
     /** Resources that are linked to this asset. */

@@ -116,7 +116,6 @@ public class ADLSContainerTest {
             .outputFromProcesses(Set.of(
                     LineageProcess.refByGuid("59ac2904-7975-4711-ba90-1b28ec39043b"),
                     LineageProcess.refByGuid("a64a931e-d7ad-459e-87a4-f863d0412bcf")))
-            .adlsContainerName("adlsContainerName")
             .adlsContainerUrl("adlsContainerUrl")
             .adlsContainerLastModifiedTime(8690434353178190950L)
             .adlsContainerLeaseState(ADLSLeaseState.AVAILABLE)

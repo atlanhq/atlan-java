@@ -16,8 +16,6 @@ public enum KeywordFields implements AtlanSearchableField {
     /** TBC */
     ADLS_ACCOUNT_KIND("adlsAccountKind"),
     /** TBC */
-    ADLS_ACCOUNT_NAME("adlsAccountName.keyword"),
-    /** TBC */
     ADLS_ACCOUNT_PERFORMANCE("adlsAccountPerformance"),
     /** TBC */
     ADLS_ACCOUNT_PROVISION_STATE("adlsAccountProvisionState"),
@@ -35,8 +33,6 @@ public enum KeywordFields implements AtlanSearchableField {
     ADLS_CONTAINER_LEASE_STATE("adlsContainerLeaseState"),
     /** TBC */
     ADLS_CONTAINER_LEASE_STATUS("adlsContainerLeaseStatus"),
-    /** TBC */
-    ADLS_CONTAINER_NAME("adlsContainerName.keyword"),
     /** TBC */
     ADLS_CONTAINER_URL("adlsContainerUrl.keyword"),
     /** Entity tag for the asset. An entity tag is a hash of the object and represents changes to the contents of an object only, not its metadata. */
@@ -57,8 +53,6 @@ public enum KeywordFields implements AtlanSearchableField {
     ADLS_OBJECT_LEASE_STATUS("adlsObjectLeaseStatus"),
     /** TBC */
     ADLS_OBJECT_METADATA("adlsObjectMetadata"),
-    /** TBC */
-    ADLS_OBJECT_NAME("adlsObjectName.keyword"),
     /** TBC */
     ADLS_OBJECT_TYPE("adlsObjectType"),
     /** TBC */
@@ -167,6 +161,8 @@ public enum KeywordFields implements AtlanSearchableField {
     ASSET_DBT_PROJECT_NAME("assetDbtProjectName.keyword"),
     /** TBC */
     ASSET_DBT_SEMANTIC_LAYER_PROXY_URL("assetDbtSemanticLayerProxyUrl"),
+    /** TBC */
+    ASSET_DBT_SOURCE_FRESHNESS_CRITERIA("assetDbtSourceFreshnessCriteria"),
     /** TBC */
     ASSET_DBT_TAGS("assetDbtTags"),
     /** TBC */
@@ -533,6 +529,8 @@ public enum KeywordFields implements AtlanSearchableField {
     PICKLIST_VALUES("picklistValues"),
     /** TBC */
     PINNED_BY("pinnedBy"),
+    /** TBC */
+    POLICY_STRATEGY("policyStrategy"),
     /** TBC */
     POWER_BI_COLUMN_DATA_CATEGORY("powerBIColumnDataCategory"),
     /** TBC */

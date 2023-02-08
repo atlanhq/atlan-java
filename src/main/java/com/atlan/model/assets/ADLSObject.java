@@ -36,10 +36,6 @@ public class ADLSObject extends ADLS {
 
     /** TBC */
     @Attribute
-    String adlsObjectName;
-
-    /** TBC */
-    @Attribute
     String adlsObjectUrl;
 
     /** TBC */

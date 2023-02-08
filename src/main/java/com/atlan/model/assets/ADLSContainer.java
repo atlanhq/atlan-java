@@ -35,10 +35,6 @@ public class ADLSContainer extends ADLS {
 
     /** TBC */
     @Attribute
-    String adlsContainerName;
-
-    /** TBC */
-    @Attribute
     String adlsContainerUrl;
 
     /** TBC */
