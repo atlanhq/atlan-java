@@ -42,10 +42,6 @@ public class ADLSAccount extends ADLS {
 
     /** TBC */
     @Attribute
-    String adlsAccountName;
-
-    /** TBC */
-    @Attribute
     String adlsAccountResourceGroup;
 
     /** TBC */
