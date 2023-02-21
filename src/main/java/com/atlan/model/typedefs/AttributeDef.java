@@ -93,6 +93,9 @@ public class AttributeDef extends AtlanObject {
     /** Specifies an (optional) default value for the attribute. */
     String defaultValue;
 
+    /** Indicates whether the attribute has a default value of being empty (true) or not (false). */
+    Boolean isDefaultValueNull;
+
     /** Indicates whether the attribute is mandatory (false) or optional (true). */
     @Builder.Default
     Boolean isOptional = true;
