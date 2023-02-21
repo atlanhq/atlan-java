@@ -44,6 +44,10 @@ public class ClassificationDef extends TypeDef {
     /** Unused. */
     List<String> subTypes;
 
+    /** TBC */
+    @Builder.Default
+    Boolean skipDisplayNameUniquenessCheck = false;
+
     /**
      * Builds the minimal object necessary to create a classification definition.
      *

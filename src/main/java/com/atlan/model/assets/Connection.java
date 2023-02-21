@@ -126,6 +126,16 @@ public class Connection extends Asset {
     /**
      * Determine the connector type from the provided qualifiedName.
      *
+     * @param qualifiedName of the connection
+     * @return the connector type, or null if the qualifiedName is not for a connected asset
+     */
+    public static AtlanConnectorType getConnectorTypeFromQualifiedName(String qualifiedName) {
+        return getConnectorTypeFromQualifiedName(qualifiedName.split("/"));
+    }
+
+    /**
+     * Determine the connector type from the provided qualifiedName.
+     *
      * @param tokens of the qualifiedName, from which to determine the connector type
      * @return the connector type, or null if the qualifiedName is not for a connected asset
      */
