@@ -90,11 +90,11 @@ public class LineageTest extends AtlanLiveTest {
         final String processName = TABLE_NAME + " >> " + MVIEW_NAME;
         LineageProcess toCreate = LineageProcess.creator(
                         processName,
-                        CONNECTOR_TYPE,
-                        CONNECTION_NAME,
                         connection.getQualifiedName(),
+                        null,
                         List.of(Table.refByGuid(table.getGuid())),
-                        List.of(MaterializedView.refByGuid(mview.getGuid())))
+                        List.of(MaterializedView.refByGuid(mview.getGuid())),
+                        null)
                 .build();
         AssetMutationResponse response = toCreate.upsert();
         assertNotNull(response);
@@ -139,11 +139,11 @@ public class LineageTest extends AtlanLiveTest {
         final String processName = MVIEW_NAME + " >> " + VIEW_NAME;
         LineageProcess toCreate = LineageProcess.creator(
                         processName,
-                        CONNECTOR_TYPE,
-                        CONNECTION_NAME,
                         connection.getQualifiedName(),
+                        null,
                         List.of(MaterializedView.refByGuid(mview.getGuid())),
-                        List.of(View.refByGuid(view.getGuid())))
+                        List.of(View.refByGuid(view.getGuid())),
+                        null)
                 .build();
         AssetMutationResponse response = toCreate.upsert();
         assertNotNull(response);

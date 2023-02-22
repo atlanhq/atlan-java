@@ -8,6 +8,7 @@ import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.*;
 import com.atlan.model.relations.UniqueAttributes;
+import com.atlan.util.StringUtils;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.*;
@@ -58,24 +59,28 @@ public class ColumnProcess extends AbstractColumnProcess {
      * Builds the minimal object necessary to create a column-level process.
      *
      * @param name of the column-level process
-     * @param connectorType type of the connector (software / system) that ran the process
-     * @param connectionName name of the specific instance of that software / system that ran the process
      * @param connectionQualifiedName unique name of the specific instance of that software / system that ran the process
+     * @param id (optional) unique ID of this process within the software / system that ran it (if not provided, it will be generated)
      * @param inputs columns of data the process reads from
      * @param outputs columns of data the process writes to
+     * @param parent (optional) parent process in which this column-level process ran
      * @return the minimal object necessary to create the column-level process, as a builder
      */
     public static ColumnProcessBuilder<?, ?> creator(
             String name,
-            AtlanConnectorType connectorType,
-            String connectionName,
             String connectionQualifiedName,
+            String id,
             List<Catalog> inputs,
-            List<Catalog> outputs) {
+            List<Catalog> outputs,
+            LineageProcess parent) {
+        AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
+        String connectionName = StringUtils.getNameFromQualifiedName(connectionQualifiedName);
         return ColumnProcess.builder()
-                .qualifiedName(generateQualifiedName(
-                        name, connectorType, connectionName, connectionQualifiedName, inputs, outputs, null))
+                .qualifiedName(generateQualifiedName(name, connectionQualifiedName, id, inputs, outputs, parent))
                 .name(name)
+                .connectorType(connectorType)
+                .connectionName(connectionName)
+                .connectionQualifiedName(connectionQualifiedName)
                 .inputs(inputs)
                 .outputs(outputs);
     }

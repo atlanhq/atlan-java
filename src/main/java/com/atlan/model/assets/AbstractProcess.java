@@ -2,7 +2,6 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
-import com.atlan.model.enums.*;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
@@ -62,37 +61,44 @@ public abstract class AbstractProcess extends Asset {
 
     /**
      * Generate a unique qualifiedName for a process.
+     *
      * @param name of the process
-     * @param connectorType type of the connector (software / system) that ran the process
-     * @param connectionName name of the specific instance of that software / system that ran the process
-     * @param connectionQualifiedName unique name of the specific instance of that software / system that ran the process
+     * @param connectionQualifiedName unique name of the specific instance of the software / system that ran the process
+     * @param id (optional) unique ID of this process within the software / system that ran it (if not provided, it will be generated)
      * @param inputs sources of data the process reads from
      * @param outputs targets of data the process writes to
+     * @param parent (optional) parent process in which this sub-process ran
      * @return unique name for the process
      */
     public static String generateQualifiedName(
             String name,
-            AtlanConnectorType connectorType,
-            String connectionName,
             String connectionQualifiedName,
+            String id,
             List<Catalog> inputs,
             List<Catalog> outputs,
             LineageProcess parent) {
-        StringBuilder sb = new StringBuilder();
-        sb.append(name).append(connectorType.getValue()).append(connectionName).append(connectionQualifiedName);
-        if (parent != null) {
-            appendRelationship(sb, parent);
-        }
-        appendRelationships(sb, inputs);
-        appendRelationships(sb, outputs);
-        try {
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            md.update(sb.toString().getBytes(StandardCharsets.UTF_8));
-            String hashed = String.format("%032x", new BigInteger(1, md.digest()));
-            return connectionQualifiedName + "/" + hashed;
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(
-                    "Unable to generate the qualifiedName for the process: MD5 algorithm does not exist on your platform!");
+        // If an ID was provided, use that as the unique name for the process
+        if (id != null && id.length() > 0) {
+            return connectionQualifiedName + "/" + id;
+        } else {
+            // Otherwise, hash all the relationships to arrive at a consistent
+            // generated qualifiedName
+            StringBuilder sb = new StringBuilder();
+            sb.append(name).append(connectionQualifiedName);
+            if (parent != null) {
+                appendRelationship(sb, parent);
+            }
+            appendRelationships(sb, inputs);
+            appendRelationships(sb, outputs);
+            try {
+                MessageDigest md = MessageDigest.getInstance("MD5");
+                md.update(sb.toString().getBytes(StandardCharsets.UTF_8));
+                String hashed = String.format("%032x", new BigInteger(1, md.digest()));
+                return connectionQualifiedName + "/" + hashed;
+            } catch (NoSuchAlgorithmException e) {
+                throw new RuntimeException(
+                        "Unable to generate the qualifiedName for the process: MD5 algorithm does not exist on your platform!");
+            }
         }
     }
 
