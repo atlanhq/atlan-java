@@ -315,12 +315,12 @@ extends <a href="AbstractColumnProcess.html" title="class in com.atlan.model.ass
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>static <a href="ColumnProcess.ColumnProcessBuilder.html" title="class in com.atlan.model.assets">ColumnProcess.ColumnProcessBuilder</a>&lt;?,&#8203;?&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#creator(java.lang.String,com.atlan.model.enums.AtlanConnectorType,java.lang.String,java.lang.String,java.util.List,java.util.List)">creator</a></span>&#8203;(java.lang.String&nbsp;name,
-       <a href="../enums/AtlanConnectorType.html" title="enum in com.atlan.model.enums">AtlanConnectorType</a>&nbsp;connectorType,
-       java.lang.String&nbsp;connectionName,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#creator(java.lang.String,java.lang.String,java.lang.String,java.util.List,java.util.List,com.atlan.model.assets.LineageProcess)">creator</a></span>&#8203;(java.lang.String&nbsp;name,
        java.lang.String&nbsp;connectionQualifiedName,
+       java.lang.String&nbsp;id,
        java.util.List&lt;<a href="Catalog.html" title="class in com.atlan.model.assets">Catalog</a>&gt;&nbsp;inputs,
-       java.util.List&lt;<a href="Catalog.html" title="class in com.atlan.model.assets">Catalog</a>&gt;&nbsp;outputs)</code></th>
+       java.util.List&lt;<a href="Catalog.html" title="class in com.atlan.model.assets">Catalog</a>&gt;&nbsp;outputs,
+       <a href="LineageProcess.html" title="class in com.atlan.model.assets">LineageProcess</a>&nbsp;parent)</code></th>
 <td class="colLast">
 <div class="block">Builds the minimal object necessary to create a column-level process.</div>
 </td>
@@ -502,7 +502,7 @@ extends <a href="AbstractColumnProcess.html" title="class in com.atlan.model.ass
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;com.atlan.model.assets.<a href="AbstractProcess.html" title="class in com.atlan.model.assets">AbstractProcess</a></h3>
-<code><a href="AbstractProcess.html#generateQualifiedName(java.lang.String,com.atlan.model.enums.AtlanConnectorType,java.lang.String,java.lang.String,java.util.List,java.util.List,com.atlan.model.assets.LineageProcess)">generateQualifiedName</a>, <a href="AbstractProcess.html#getAst()">getAst</a>, <a href="AbstractProcess.html#getCode()">getCode</a>, <a href="AbstractProcess.html#getColumnProcesses()">getColumnProcesses</a>, <a href="AbstractProcess.html#getInputs()">getInputs</a>, <a href="AbstractProcess.html#getOutputs()">getOutputs</a>, <a href="AbstractProcess.html#getSql()">getSql</a>, <a href="AbstractProcess.html#setAst(java.lang.String)">setAst</a>, <a href="AbstractProcess.html#setCode(java.lang.String)">setCode</a>, <a href="AbstractProcess.html#setColumnProcesses(java.util.SortedSet)">setColumnProcesses</a>, <a href="AbstractProcess.html#setInputs(java.util.SortedSet)">setInputs</a>, <a href="AbstractProcess.html#setOutputs(java.util.SortedSet)">setOutputs</a>, <a href="AbstractProcess.html#setSql(java.lang.String)">setSql</a></code></li>
+<code><a href="AbstractProcess.html#generateQualifiedName(java.lang.String,java.lang.String,java.lang.String,java.util.List,java.util.List,com.atlan.model.assets.LineageProcess)">generateQualifiedName</a>, <a href="AbstractProcess.html#getAst()">getAst</a>, <a href="AbstractProcess.html#getCode()">getCode</a>, <a href="AbstractProcess.html#getColumnProcesses()">getColumnProcesses</a>, <a href="AbstractProcess.html#getInputs()">getInputs</a>, <a href="AbstractProcess.html#getOutputs()">getOutputs</a>, <a href="AbstractProcess.html#getSql()">getSql</a>, <a href="AbstractProcess.html#setAst(java.lang.String)">setAst</a>, <a href="AbstractProcess.html#setCode(java.lang.String)">setCode</a>, <a href="AbstractProcess.html#setColumnProcesses(java.util.SortedSet)">setColumnProcesses</a>, <a href="AbstractProcess.html#setInputs(java.util.SortedSet)">setInputs</a>, <a href="AbstractProcess.html#setOutputs(java.util.SortedSet)">setOutputs</a>, <a href="AbstractProcess.html#setSql(java.lang.String)">setSql</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.com.atlan.model.assets.Asset">
@@ -622,27 +622,27 @@ extends <a href="AbstractColumnProcess.html" title="class in com.atlan.model.ass
 </dl>
 </li>
 </ul>
-<a id="creator(java.lang.String,com.atlan.model.enums.AtlanConnectorType,java.lang.String,java.lang.String,java.util.List,java.util.List)">
+<a id="creator(java.lang.String,java.lang.String,java.lang.String,java.util.List,java.util.List,com.atlan.model.assets.LineageProcess)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>creator</h4>
 <pre class="methodSignature">public static&nbsp;<a href="ColumnProcess.ColumnProcessBuilder.html" title="class in com.atlan.model.assets">ColumnProcess.ColumnProcessBuilder</a>&lt;?,&#8203;?&gt;&nbsp;creator&#8203;(java.lang.String&nbsp;name,
-                                                                    <a href="../enums/AtlanConnectorType.html" title="enum in com.atlan.model.enums">AtlanConnectorType</a>&nbsp;connectorType,
-                                                                    java.lang.String&nbsp;connectionName,
                                                                     java.lang.String&nbsp;connectionQualifiedName,
+                                                                    java.lang.String&nbsp;id,
                                                                     java.util.List&lt;<a href="Catalog.html" title="class in com.atlan.model.assets">Catalog</a>&gt;&nbsp;inputs,
-                                                                    java.util.List&lt;<a href="Catalog.html" title="class in com.atlan.model.assets">Catalog</a>&gt;&nbsp;outputs)</pre>
+                                                                    java.util.List&lt;<a href="Catalog.html" title="class in com.atlan.model.assets">Catalog</a>&gt;&nbsp;outputs,
+                                                                    <a href="LineageProcess.html" title="class in com.atlan.model.assets">LineageProcess</a>&nbsp;parent)</pre>
 <div class="block">Builds the minimal object necessary to create a column-level process.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>name</code> - of the column-level process</dd>
-<dd><code>connectorType</code> - type of the connector (software / system) that ran the process</dd>
-<dd><code>connectionName</code> - name of the specific instance of that software / system that ran the process</dd>
 <dd><code>connectionQualifiedName</code> - unique name of the specific instance of that software / system that ran the process</dd>
+<dd><code>id</code> - (optional) unique ID of this process within the software / system that ran it (if not provided, it will be generated)</dd>
 <dd><code>inputs</code> - columns of data the process reads from</dd>
 <dd><code>outputs</code> - columns of data the process writes to</dd>
+<dd><code>parent</code> - (optional) parent process in which this column-level process ran</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the minimal object necessary to create the column-level process, as a builder</dd>
 </dl>

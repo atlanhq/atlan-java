@@ -285,10 +285,9 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#generateQualifiedName(java.lang.String,com.atlan.model.enums.AtlanConnectorType,java.lang.String,java.lang.String,java.util.List,java.util.List,com.atlan.model.assets.LineageProcess)">generateQualifiedName</a></span>&#8203;(java.lang.String&nbsp;name,
-                     <a href="../enums/AtlanConnectorType.html" title="enum in com.atlan.model.enums">AtlanConnectorType</a>&nbsp;connectorType,
-                     java.lang.String&nbsp;connectionName,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#generateQualifiedName(java.lang.String,java.lang.String,java.lang.String,java.util.List,java.util.List,com.atlan.model.assets.LineageProcess)">generateQualifiedName</a></span>&#8203;(java.lang.String&nbsp;name,
                      java.lang.String&nbsp;connectionQualifiedName,
+                     java.lang.String&nbsp;id,
                      java.util.List&lt;<a href="Catalog.html" title="class in com.atlan.model.assets">Catalog</a>&gt;&nbsp;inputs,
                      java.util.List&lt;<a href="Catalog.html" title="class in com.atlan.model.assets">Catalog</a>&gt;&nbsp;outputs,
                      <a href="LineageProcess.html" title="class in com.atlan.model.assets">LineageProcess</a>&nbsp;parent)</code></th>
@@ -472,16 +471,15 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a id="generateQualifiedName(java.lang.String,com.atlan.model.enums.AtlanConnectorType,java.lang.String,java.lang.String,java.util.List,java.util.List,com.atlan.model.assets.LineageProcess)">
+<a id="generateQualifiedName(java.lang.String,java.lang.String,java.lang.String,java.util.List,java.util.List,com.atlan.model.assets.LineageProcess)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>generateQualifiedName</h4>
 <pre class="methodSignature">public static&nbsp;java.lang.String&nbsp;generateQualifiedName&#8203;(java.lang.String&nbsp;name,
-                                                     <a href="../enums/AtlanConnectorType.html" title="enum in com.atlan.model.enums">AtlanConnectorType</a>&nbsp;connectorType,
-                                                     java.lang.String&nbsp;connectionName,
                                                      java.lang.String&nbsp;connectionQualifiedName,
+                                                     java.lang.String&nbsp;id,
                                                      java.util.List&lt;<a href="Catalog.html" title="class in com.atlan.model.assets">Catalog</a>&gt;&nbsp;inputs,
                                                      java.util.List&lt;<a href="Catalog.html" title="class in com.atlan.model.assets">Catalog</a>&gt;&nbsp;outputs,
                                                      <a href="LineageProcess.html" title="class in com.atlan.model.assets">LineageProcess</a>&nbsp;parent)</pre>
@@ -489,11 +487,11 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>name</code> - of the process</dd>
-<dd><code>connectorType</code> - type of the connector (software / system) that ran the process</dd>
-<dd><code>connectionName</code> - name of the specific instance of that software / system that ran the process</dd>
-<dd><code>connectionQualifiedName</code> - unique name of the specific instance of that software / system that ran the process</dd>
+<dd><code>connectionQualifiedName</code> - unique name of the specific instance of the software / system that ran the process</dd>
+<dd><code>id</code> - (optional) unique ID of this process within the software / system that ran it (if not provided, it will be generated)</dd>
 <dd><code>inputs</code> - sources of data the process reads from</dd>
 <dd><code>outputs</code> - targets of data the process writes to</dd>
+<dd><code>parent</code> - (optional) parent process in which this sub-process ran</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>unique name for the process</dd>
 </dl>
