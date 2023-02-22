@@ -4,8 +4,6 @@ package com.atlan.model.assets;
 
 import static org.testng.Assert.*;
 
-import java.util.Collections;
-import java.util.List;
 import org.testng.annotations.Test;
 
 public class CatalogTest {
