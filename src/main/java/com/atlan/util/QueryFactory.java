@@ -503,12 +503,14 @@ public class QueryFactory {
      * Retrieve the numeric value from the provided aggregation result.
      *
      * @param result the aggregation result from which to retrieve the numeric metric
-     * @return the numeric result for the aggregation
+     * @return the numeric result for the aggregation, or 0.0 in case the aggregation is empty
      * @throws InvalidRequestException if the provided aggregation result is not a metric
      */
     public static double getAggregationMetric(AggregationResult result) throws InvalidRequestException {
         if (result instanceof AggregationMetricResult) {
             return ((AggregationMetricResult) result).getValue();
+        } else if (result == null) {
+            return 0.0;
         } else {
             throw new InvalidRequestException(ErrorCode.NOT_AGGREGATION_METRIC);
         }
