@@ -564,7 +564,7 @@ extends java.lang.Object</pre>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>result</code> - the aggregation result from which to retrieve the numeric metric</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the numeric result for the aggregation</dd>
+<dd>the numeric result for the aggregation, or 0.0 in case the aggregation is empty</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></code> - if the provided aggregation result is not a metric</dd>
 </dl>
