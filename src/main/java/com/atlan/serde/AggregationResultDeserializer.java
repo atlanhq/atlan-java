@@ -46,7 +46,10 @@ public class AggregationResultDeserializer extends StdDeserializer<AggregationRe
         JsonNode root = parser.getCodec().readTree(parser);
         JsonNode value = root.get("value"); // only exists on metric results
         JsonNode buckets = root.get("buckets"); // exists on entities and custom metadata
-        if (value != null && value.isNumber()) {
+        if ((root.has("value") && value == null) || (root.has("buckets") && buckets == null)) {
+            // If the JSON has explicit null values, return those as explicit nulls rather than errors
+            return null;
+        } else if (value != null && value.isNumber()) {
             // Delegate to metrics deserialization
             return AggregationMetricResult.builder().value(value.asDouble()).build();
         } else if (buckets != null) {
