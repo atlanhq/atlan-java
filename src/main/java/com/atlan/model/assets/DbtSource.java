@@ -8,8 +8,10 @@ import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.*;
 import com.atlan.model.relations.UniqueAttributes;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.SortedSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -41,7 +43,13 @@ public class DbtSource extends Dbt {
 
     /** TBC */
     @Attribute
-    SQL sqlAsset;
+    @Singular
+    SortedSet<SQL> sqlAssets;
+
+    /** TBC */
+    @Attribute
+    @JsonProperty("sqlAsset")
+    SQL primarySqlAsset;
 
     /**
      * Reference to a DbtSource by GUID.

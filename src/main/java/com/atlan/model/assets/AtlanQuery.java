@@ -79,12 +79,12 @@ public class AtlanQuery extends SQL {
     /** TBC */
     @Attribute
     @Singular
-    SortedSet<Table> tables;
+    SortedSet<Column> columns;
 
     /** TBC */
     @Attribute
     @Singular
-    SortedSet<Column> columns;
+    SortedSet<Table> tables;
 
     /** TBC */
     @Attribute

@@ -132,6 +132,7 @@ public class DbtSourceTest {
             .dbtSemanticLayerProxyUrl("dbtSemanticLayerProxyUrl")
             .dbtState("dbtState")
             .dbtFreshnessCriteria("dbtFreshnessCriteria")
+            .primarySqlAsset(Table.refByGuid("3a7108c3-1fa1-4234-b6a4-1d3ee55d5dac"))
             .sqlAsset(Table.refByGuid("3a7108c3-1fa1-4234-b6a4-1d3ee55d5dac"))
             .build();
     private static DbtSource frodo;
