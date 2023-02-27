@@ -7,6 +7,7 @@ import com.atlan.exception.AtlanException;
 import com.atlan.model.core.AtlanObject;
 import com.atlan.model.enums.AtlanCustomAttributeCardinality;
 import com.atlan.model.enums.AtlanCustomAttributePrimitiveType;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import java.util.List;
 import java.util.Map;
 import lombok.*;
@@ -37,8 +38,7 @@ public class AttributeDef extends AtlanObject {
     public static AttributeDef of(
             String displayName, AtlanCustomAttributePrimitiveType type, String optionsName, boolean multiValued)
             throws AtlanException {
-        AttributeDefBuilder<?, ?> builder =
-                AttributeDef.builder().name(displayName).displayName(displayName);
+        AttributeDefBuilder<?, ?> builder = AttributeDef.builder().displayName(displayName);
         String baseType;
         boolean addEnumValues = false;
         switch (type) {
@@ -71,13 +71,17 @@ public class AttributeDef extends AtlanObject {
     }
 
     /** Internal hashed-string name for the attribute. */
-    String name;
+    @Builder.Default
+    @JsonInclude(JsonInclude.Include.ALWAYS)
+    String name = "";
 
     /** Human-readable name of the attribute. */
     String displayName;
 
     /** Explanation of the attribute. */
-    String description;
+    @Builder.Default
+    @JsonInclude(JsonInclude.Include.ALWAYS)
+    String description = "";
 
     /**
      * Type of the attribute.

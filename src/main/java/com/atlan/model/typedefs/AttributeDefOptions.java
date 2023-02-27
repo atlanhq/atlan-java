@@ -108,7 +108,13 @@ public class AttributeDefOptions extends AtlanObject {
             GCSBucket.TYPE_NAME,
             GCSObject.TYPE_NAME,
             APISpec.TYPE_NAME,
-            APIPath.TYPE_NAME);
+            APIPath.TYPE_NAME,
+            SigmaPage.TYPE_NAME,
+            SigmaDataset.TYPE_NAME,
+            SigmaDataElement.TYPE_NAME,
+            SigmaWorkbook.TYPE_NAME,
+            SigmaDataElementField.TYPE_NAME,
+            SigmaDatasetColumn.TYPE_NAME);
 
     /**
      * Instantiate a new set of attribute options from the provided parameters.
@@ -177,7 +183,8 @@ public class AttributeDefOptions extends AtlanObject {
     AtlanCustomAttributePrimitiveType primitiveType;
 
     /** Whether the attribute is an enumeration (true) or not (false). */
-    Boolean isEnum;
+    @Builder.Default
+    Boolean isEnum = false;
 
     /** Name of the enumeration (options), when the attribute is an enumeration. */
     String enumType;
@@ -186,8 +193,7 @@ public class AttributeDefOptions extends AtlanObject {
     String customType;
 
     /** Whether the attribute has been deleted (true) or is still active (false). */
-    @Builder.Default
-    Boolean isArchived = false;
+    Boolean isArchived;
 
     /** When the attribute was deleted. */
     Long archivedAt;

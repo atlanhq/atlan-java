@@ -81,7 +81,10 @@ public class CustomMetadataTest extends AtlanLiveTest {
                         AttributeDef.of(CM_ATTR_IPR_MANDATORY, AtlanCustomAttributePrimitiveType.BOOLEAN, null, false))
                 .attributeDef(AttributeDef.of(CM_ATTR_IPR_DATE, AtlanCustomAttributePrimitiveType.DATE, null, false))
                 .attributeDef(AttributeDef.of(CM_ATTR_IPR_URL, AtlanCustomAttributePrimitiveType.URL, null, false))
-                .options(CustomMetadataOptions.builder().emoji("⚖️").build())
+                .options(CustomMetadataOptions.builder()
+                        .logoType("emoji")
+                        .emoji("⚖️")
+                        .build())
                 .build();
         CustomMetadataDef response = customMetadataDef.create();
         assertNotNull(response);
@@ -144,7 +147,10 @@ public class CustomMetadataTest extends AtlanLiveTest {
                         AttributeDef.of(CM_ATTR_RACI_INFORMED, AtlanCustomAttributePrimitiveType.GROUPS, null, true))
                 .attributeDef(
                         AttributeDef.of(CM_ATTR_RACI_EXTRA, AtlanCustomAttributePrimitiveType.STRING, null, false))
-                .options(CustomMetadataOptions.builder().emoji("\uD83D\uDC6A").build())
+                .options(CustomMetadataOptions.builder()
+                        .logoType("emoji")
+                        .emoji("\uD83D\uDC6A")
+                        .build())
                 .build();
         CustomMetadataDef response = customMetadataDef.create();
         assertNotNull(response);
@@ -216,7 +222,10 @@ public class CustomMetadataTest extends AtlanLiveTest {
                 .attributeDef(AttributeDef.of(CM_ATTR_QUALITY_SQL, AtlanCustomAttributePrimitiveType.SQL, null, false))
                 .attributeDef(AttributeDef.of(
                         CM_ATTR_QUALITY_TYPE, AtlanCustomAttributePrimitiveType.OPTIONS, CM_ENUM_DQ_TYPE, false))
-                .options(CustomMetadataOptions.builder().emoji("\uD83D\uDD16").build())
+                .options(CustomMetadataOptions.builder()
+                        .logoType("emoji")
+                        .emoji("\uD83D\uDD16")
+                        .build())
                 .build();
         CustomMetadataDef response = customMetadataDef.create();
         assertNotNull(response);

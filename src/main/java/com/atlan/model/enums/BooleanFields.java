@@ -123,6 +123,16 @@ public enum BooleanFields implements AtlanSearchableField {
     PRESET_WORKSPACE_IS_IN_MAINTENANCE_MODE("presetWorkspaceIsInMaintenanceMode"),
     /** Whether public collections are allowed in the workspace (true) or not (false). */
     PRESET_WORKSPACE_PUBLIC_DASHBOARDS_ALLOWED("presetWorkspacePublicDashboardsAllowed"),
+    /** TBC */
+    QLIK_HAS_SECTION_ACCESS("qlikHasSectionAccess"),
+    /** TBC */
+    QLIK_IS_DIRECT_QUERY_MODE("qlikIsDirectQueryMode"),
+    /** TBC */
+    QLIK_IS_ENCRYPTED("qlikIsEncrypted"),
+    /** TBC */
+    QLIK_IS_PUBLISHED("qlikIsPublished"),
+    /** TBC */
+    QLIK_SHEET_IS_APPROVED("qlikSheetIsApproved"),
     /** Whether versioning is enabled for the bucket. */
     S3BUCKET_VERSIONING_ENABLED("s3BucketVersioningEnabled"),
     /** TBC */

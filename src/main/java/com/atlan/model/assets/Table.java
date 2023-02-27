@@ -98,11 +98,6 @@ public class Table extends SQL {
     @Singular
     SortedSet<TablePartition> partitions;
 
-    /** Schema in which this table exists. */
-    @Attribute
-    @JsonProperty("atlanSchema")
-    Schema schema;
-
     /** Columns that exist within this table. */
     @Attribute
     @Singular
@@ -112,6 +107,11 @@ public class Table extends SQL {
     @Attribute
     @Singular
     SortedSet<AtlanQuery> queries;
+
+    /** Schema in which this table exists. */
+    @Attribute
+    @JsonProperty("atlanSchema")
+    Schema schema;
 
     /**
      * Reference to a Table by GUID.

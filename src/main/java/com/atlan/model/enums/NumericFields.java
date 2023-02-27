@@ -198,6 +198,8 @@ public enum NumericFields implements AtlanSearchableField {
     /** ID of the Preset asset's workspace. */
     PRESET_WORKSPACE_ID("presetWorkspaceId"),
     /** TBC */
+    QLIK_APP_STATIC_BYTE_SIZE("qlikAppStaticByteSize"),
+    /** TBC */
     QUERY_COUNT("queryCount"),
     /** Time (epoch) at which the query count was last updated, in milliseconds. */
     QUERY_COUNT_UPDATED_AT("queryCountUpdatedAt"),

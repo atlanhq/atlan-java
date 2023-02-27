@@ -203,6 +203,20 @@ public enum TextFields implements AtlanSearchableField {
     PRESET_WORKSPACE_QUALIFIED_NAME("presetWorkspaceQualifiedName.text"),
     /** Region of the workspace. */
     PRESET_WORKSPACE_REGION("presetWorkspaceRegion.text"),
+    /** TBC */
+    QLIK_APP_QUALIFIED_NAME("qlikAppQualifiedName.text"),
+    /** TBC */
+    QLIK_CHART_FOOTNOTE("qlikChartFootnote"),
+    /** TBC */
+    QLIK_CHART_SUBTITLE("qlikChartSubtitle"),
+    /** TBC */
+    QLIK_DATASET_TECHNICAL_NAME("qlikDatasetTechnicalName"),
+    /** TBC */
+    QLIK_DATASET_URI("qlikDatasetUri.text"),
+    /** TBC */
+    QLIK_QRI("qlikQRI.text"),
+    /** TBC */
+    QLIK_SPACE_QUALIFIED_NAME("qlikSpaceQualifiedName.text"),
     /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. */
     QUALIFIED_NAME("qualifiedName.text"),
     /** Name of the bucket in which the object exists. */

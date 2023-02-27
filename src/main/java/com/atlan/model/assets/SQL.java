@@ -100,4 +100,9 @@ public abstract class SQL extends Catalog {
     @Attribute
     @Singular
     SortedSet<DbtSource> dbtSources;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<DbtSource> sqlDBTSources;
 }

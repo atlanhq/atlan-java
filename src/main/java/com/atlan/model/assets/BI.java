@@ -20,6 +20,7 @@ import lombok.experimental.SuperBuilder;
     @JsonSubTypes.Type(value = Preset.class, name = Preset.TYPE_NAME),
     @JsonSubTypes.Type(value = Sigma.class, name = Sigma.TYPE_NAME),
     @JsonSubTypes.Type(value = Mode.class, name = Mode.TYPE_NAME),
+    @JsonSubTypes.Type(value = Qlik.class, name = Qlik.TYPE_NAME),
     @JsonSubTypes.Type(value = Tableau.class, name = Tableau.TYPE_NAME),
     @JsonSubTypes.Type(value = Looker.class, name = Looker.TYPE_NAME),
 })

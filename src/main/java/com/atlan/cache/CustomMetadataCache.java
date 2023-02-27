@@ -57,7 +57,8 @@ public class CustomMetadataCache {
                 String attrId = attributeDef.getName();
                 String attrName = attributeDef.getDisplayName();
                 mapAttrIdToName.get(typeId).put(attrId, attrName);
-                if (attributeDef.getOptions().getIsArchived()) {
+                Boolean isArchived = attributeDef.getOptions().getIsArchived();
+                if (isArchived != null && isArchived) {
                     archivedAttrIds.put(attrId, attrName);
                 } else {
                     String existingId =

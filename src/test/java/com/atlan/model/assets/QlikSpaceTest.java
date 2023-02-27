@@ -10,9 +10,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.*;
 import org.testng.annotations.Test;
 
-public class DbtSourceTest {
+public class QlikSpaceTest {
 
-    private static final DbtSource full = DbtSource.builder()
+    private static final QlikSpace full = QlikSpace.builder()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -107,35 +107,28 @@ public class DbtSourceTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("d0fbae70-adb7-42bf-aa7f-d545ea69c73a"),
-                    LineageProcess.refByGuid("f5cdf9fd-6025-41b9-8853-fcd4c302e7eb")))
+                    LineageProcess.refByGuid("96671e0f-797b-412b-9ede-c2e35277949c"),
+                    LineageProcess.refByGuid("f2a4125c-c9ca-45dc-b0ff-b33d049d940a")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("7a664fa1-b1ea-40ec-bf93-020f612dc5c9"),
-                    LineageProcess.refByGuid("a3e569eb-1f5b-418a-9dc6-b9676cb21460")))
-            .dbtAlias("dbtAlias")
-            .dbtMeta("dbtMeta")
-            .dbtUniqueId("dbtUniqueId")
-            .dbtAccountName("dbtAccountName")
-            .dbtProjectName("dbtProjectName")
-            .dbtPackageName("dbtPackageName")
-            .dbtJobName("dbtJobName")
-            .dbtJobSchedule("dbtJobSchedule")
-            .dbtJobStatus("dbtJobStatus")
-            .dbtJobScheduleCronHumanized("dbtJobScheduleCronHumanized")
-            .dbtJobLastRun(5492603544869549720L)
-            .dbtJobNextRun(-9022360906040166962L)
-            .dbtJobNextRunHumanized("dbtJobNextRunHumanized")
-            .dbtEnvironmentName("dbtEnvironmentName")
-            .dbtEnvironmentDbtVersion("dbtEnvironmentDbtVersion")
-            .dbtTags(Set.of("one", "two", "three"))
-            .dbtConnectionContext("dbtConnectionContext")
-            .dbtSemanticLayerProxyUrl("dbtSemanticLayerProxyUrl")
-            .dbtState("dbtState")
-            .dbtFreshnessCriteria("dbtFreshnessCriteria")
-            .primarySqlAsset(Table.refByGuid("3a7108c3-1fa1-4234-b6a4-1d3ee55d5dac"))
-            .sqlAsset(Table.refByGuid("3a7108c3-1fa1-4234-b6a4-1d3ee55d5dac"))
+                    LineageProcess.refByGuid("86e50784-0c00-449d-8249-4ac51f1a3d90"),
+                    LineageProcess.refByGuid("8f90fc83-c497-4f3d-b3ce-0fce1029a04c")))
+            .qlikId("qlikId")
+            .qlikQRI("qlikQRI")
+            .qlikSpaceId("qlikSpaceId")
+            .qlikSpaceQualifiedName("qlikSpaceQualifiedName")
+            .qlikAppId("qlikAppId")
+            .qlikAppQualifiedName("qlikAppQualifiedName")
+            .qlikOwnerId("qlikOwnerId")
+            .qlikIsPublished(false)
+            .qlikSpaceType("qlikSpaceType")
+            .qlikDatasets(Set.of(
+                    QlikDataset.refByGuid("927928a7-47c9-4401-9def-fd6725c843e4"),
+                    QlikDataset.refByGuid("11d205cd-5b3f-41a2-8a62-c0a5e43a331b")))
+            .qlikApps(Set.of(
+                    QlikApp.refByGuid("fcf74941-3744-49be-b9ce-12a6847b1c3a"),
+                    QlikApp.refByGuid("5c229bfa-40f0-4b37-8ff8-3f0c2de70d46")))
             .build();
-    private static DbtSource frodo;
+    private static QlikSpace frodo;
     private static String serialized;
 
     @Test(groups = {"builderEquivalency"})
@@ -157,7 +150,7 @@ public class DbtSourceTest {
             dependsOnGroups = {"serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
-        frodo = Serde.mapper.readValue(serialized, DbtSource.class);
+        frodo = Serde.mapper.readValue(serialized, QlikSpace.class);
         assertNotNull(frodo);
     }
 

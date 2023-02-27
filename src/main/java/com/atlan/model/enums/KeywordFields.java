@@ -579,6 +579,36 @@ public enum KeywordFields implements AtlanSearchableField {
     PROJECT_QUALIFIED_NAME("projectQualifiedName"),
     /** All propagated classifications that exist on an asset, searchable by the internal hashed-string ID of the classification. */
     PROPAGATED_TRAIT_NAMES("__propagatedTraitNames"),
+    /** TBC */
+    QLIK_APP_ID("qlikAppId"),
+    /** TBC */
+    QLIK_APP_QUALIFIED_NAME("qlikAppQualifiedName"),
+    /** TBC */
+    QLIK_CHART_ORIENTATION("qlikChartOrientation"),
+    /** TBC */
+    QLIK_CHART_TYPE("qlikChartType"),
+    /** TBC */
+    QLIK_DATASET_SUBTYPE("qlikDatasetSubtype"),
+    /** TBC */
+    QLIK_DATASET_TECHNICAL_NAME("qlikDatasetTechnicalName.keyword"),
+    /** TBC */
+    QLIK_DATASET_TYPE("qlikDatasetType"),
+    /** TBC */
+    QLIK_DATASET_URI("qlikDatasetUri"),
+    /** TBC */
+    QLIK_ID("qlikId"),
+    /** TBC */
+    QLIK_ORIGIN_APP_ID("qlikOriginAppId"),
+    /** TBC */
+    QLIK_OWNER_ID("qlikOwnerId"),
+    /** TBC */
+    QLIK_QRI("qlikQRI"),
+    /** TBC */
+    QLIK_SPACE_ID("qlikSpaceId"),
+    /** TBC */
+    QLIK_SPACE_QUALIFIED_NAME("qlikSpaceQualifiedName"),
+    /** TBC */
+    QLIK_SPACE_TYPE("qlikSpaceType"),
     /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. */
     QUALIFIED_NAME("qualifiedName"),
     /** TBC */
