@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":6,"i2":10,"i3":10,"i4":6,"i5":10,"i6":10,"i7":10};
+var data = {"i0":10,"i1":6,"i2":10,"i3":10,"i4":10,"i5":10,"i6":6,"i7":10,"i8":10,"i9":10,"i10":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -215,30 +215,45 @@ extends <a href="Dbt.DbtBuilder.html" title="class in com.atlan.model.assets">Db
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="DbtSource.DbtSourceBuilder.html" title="type parameter in DbtSource.DbtSourceBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#dbtFreshnessCriteria(java.lang.String)">dbtFreshnessCriteria</a></span>&#8203;(java.lang.String&nbsp;dbtFreshnessCriteria)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearSqlAssets()">clearSqlAssets</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="DbtSource.DbtSourceBuilder.html" title="type parameter in DbtSource.DbtSourceBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#dbtState(java.lang.String)">dbtState</a></span>&#8203;(java.lang.String&nbsp;dbtState)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#dbtFreshnessCriteria(java.lang.String)">dbtFreshnessCriteria</a></span>&#8203;(java.lang.String&nbsp;dbtFreshnessCriteria)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code>protected abstract <a href="DbtSource.DbtSourceBuilder.html" title="type parameter in DbtSource.DbtSourceBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#self()">self</a></span>()</code></th>
+<td class="colFirst"><code><a href="DbtSource.DbtSourceBuilder.html" title="type parameter in DbtSource.DbtSourceBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#dbtState(java.lang.String)">dbtState</a></span>&#8203;(java.lang.String&nbsp;dbtState)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="DbtSource.DbtSourceBuilder.html" title="type parameter in DbtSource.DbtSourceBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#sqlAsset(com.atlan.model.assets.SQL)">sqlAsset</a></span>&#8203;(<a href="SQL.html" title="class in com.atlan.model.assets">SQL</a>&nbsp;sqlAsset)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#primarySqlAsset(com.atlan.model.assets.SQL)">primarySqlAsset</a></span>&#8203;(<a href="SQL.html" title="class in com.atlan.model.assets">SQL</a>&nbsp;primarySqlAsset)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
+<td class="colFirst"><code>protected abstract <a href="DbtSource.DbtSourceBuilder.html" title="type parameter in DbtSource.DbtSourceBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#self()">self</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i7" class="rowColor">
+<td class="colFirst"><code><a href="DbtSource.DbtSourceBuilder.html" title="type parameter in DbtSource.DbtSourceBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#sqlAsset(com.atlan.model.assets.SQL)">sqlAsset</a></span>&#8203;(<a href="SQL.html" title="class in com.atlan.model.assets">SQL</a>&nbsp;sqlAsset)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i8" class="altColor">
+<td class="colFirst"><code><a href="DbtSource.DbtSourceBuilder.html" title="type parameter in DbtSource.DbtSourceBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#sqlAssets(java.util.Collection)">sqlAssets</a></span>&#8203;(java.util.Collection&lt;? extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a>&gt;&nbsp;sqlAssets)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code><a href="DbtSource.DbtSourceBuilder.html" title="type parameter in DbtSource.DbtSourceBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#typeName(java.lang.String)">typeName</a></span>&#8203;(java.lang.String&nbsp;typeName)</code></th>
 <td class="colLast">&nbsp;</td>
@@ -403,6 +418,33 @@ extends <a href="Dbt.DbtBuilder.html" title="class in com.atlan.model.assets">Db
 <li class="blockList">
 <h4>sqlAsset</h4>
 <pre class="methodSignature">public&nbsp;<a href="DbtSource.DbtSourceBuilder.html" title="type parameter in DbtSource.DbtSourceBuilder">B</a>&nbsp;sqlAsset&#8203;(<a href="SQL.html" title="class in com.atlan.model.assets">SQL</a>&nbsp;sqlAsset)</pre>
+</li>
+</ul>
+<a id="sqlAssets(java.util.Collection)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>sqlAssets</h4>
+<pre class="methodSignature">public&nbsp;<a href="DbtSource.DbtSourceBuilder.html" title="type parameter in DbtSource.DbtSourceBuilder">B</a>&nbsp;sqlAssets&#8203;(java.util.Collection&lt;? extends <a href="SQL.html" title="class in com.atlan.model.assets">SQL</a>&gt;&nbsp;sqlAssets)</pre>
+</li>
+</ul>
+<a id="clearSqlAssets()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>clearSqlAssets</h4>
+<pre class="methodSignature">public&nbsp;<a href="DbtSource.DbtSourceBuilder.html" title="type parameter in DbtSource.DbtSourceBuilder">B</a>&nbsp;clearSqlAssets()</pre>
+</li>
+</ul>
+<a id="primarySqlAsset(com.atlan.model.assets.SQL)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>primarySqlAsset</h4>
+<pre class="methodSignature">public&nbsp;<a href="DbtSource.DbtSourceBuilder.html" title="type parameter in DbtSource.DbtSourceBuilder">B</a>&nbsp;primarySqlAsset&#8203;(<a href="SQL.html" title="class in com.atlan.model.assets">SQL</a>&nbsp;primarySqlAsset)</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
