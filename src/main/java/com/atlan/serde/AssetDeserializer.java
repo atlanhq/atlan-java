@@ -276,6 +276,21 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
                 case Procedure.TYPE_NAME:
                     builder = Procedure.builder();
                     break;
+                case QlikApp.TYPE_NAME:
+                    builder = QlikApp.builder();
+                    break;
+                case QlikChart.TYPE_NAME:
+                    builder = QlikChart.builder();
+                    break;
+                case QlikDataset.TYPE_NAME:
+                    builder = QlikDataset.builder();
+                    break;
+                case QlikSheet.TYPE_NAME:
+                    builder = QlikSheet.builder();
+                    break;
+                case QlikSpace.TYPE_NAME:
+                    builder = QlikSpace.builder();
+                    break;
                 case Readme.TYPE_NAME:
                     builder = Readme.builder();
                     break;
