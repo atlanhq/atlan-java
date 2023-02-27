@@ -115,7 +115,9 @@ public abstract class AbstractGenerator extends AtlanLiveTest {
             Map.entry("sourceReadPopularQueryRecordList", "sourceReadPopularQueryRecords"),
             Map.entry("sourceReadExpensiveQueryRecordList", "sourceReadExpensiveQueryRecords"),
             Map.entry("sourceReadSlowQueryRecordList", "sourceReadSlowQueryRecords"),
-            Map.entry("sourceQueryComputeCostRecordList", "sourceQueryComputeCostRecords"));
+            Map.entry("sourceQueryComputeCostRecordList", "sourceQueryComputeCostRecords"),
+            Map.entry("meanings", "assignedTerms"),
+            Map.entry("sqlAsset", "primarySqlAsset"));
 
     // Go ahead and create these types as non-abstract types, despite having
     // subtypes
