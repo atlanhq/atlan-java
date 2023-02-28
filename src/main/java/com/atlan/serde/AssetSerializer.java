@@ -7,6 +7,7 @@ import com.atlan.cache.ReflectionCache;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.assets.Asset;
 import com.atlan.model.core.CustomMetadataAttributes;
+import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.SerializerProvider;
@@ -115,6 +116,12 @@ public class AssetSerializer extends StdSerializer<Asset> {
         }
 
         if (!attributes.isEmpty()) {
+            // Special cases to wrap-up:
+            // Encode the Readme's description after serialization
+            if (asset.getTypeName() != null && asset.getTypeName().equals("Readme")) {
+                String unencoded = (String) attributes.get("description");
+                attributes.put("description", StringUtils.encodeContent(unencoded));
+            }
             sp.defaultSerializeField("attributes", attributes, gen);
         }
         if (!businessAttributes.isEmpty()) {

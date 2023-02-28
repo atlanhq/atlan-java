@@ -24,7 +24,7 @@ public class ReadmeTest {
             .qualifiedName("qualifiedName")
             .name("name")
             .displayName("displayName")
-            .description("description")
+            .description("<h1>description</h1><p>&lt;with some extra stuff&gt;</p>")
             .userDescription("userDescription")
             .tenantId("tenantId")
             .certificateStatus(AtlanCertificateStatus.VERIFIED)
