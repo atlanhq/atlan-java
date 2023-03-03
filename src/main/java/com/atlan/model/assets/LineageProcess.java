@@ -8,7 +8,6 @@ import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.*;
 import com.atlan.model.relations.UniqueAttributes;
-import com.atlan.util.StringUtils;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.*;
@@ -74,12 +73,10 @@ public class LineageProcess extends AbstractProcess {
             List<Catalog> outputs,
             LineageProcess parent) {
         AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
-        String connectionName = StringUtils.getNameFromQualifiedName(connectionQualifiedName);
         return LineageProcess.builder()
                 .qualifiedName(generateQualifiedName(name, connectionQualifiedName, id, inputs, outputs, parent))
                 .name(name)
                 .connectorType(connectorType)
-                .connectionName(connectionName)
                 .connectionQualifiedName(connectionQualifiedName)
                 .inputs(inputs)
                 .outputs(outputs);
