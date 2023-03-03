@@ -7,6 +7,7 @@ import com.atlan.exception.AtlanException;
 import com.atlan.model.core.AtlanObject;
 import com.atlan.model.enums.AtlanCustomAttributeCardinality;
 import com.atlan.model.enums.AtlanCustomAttributePrimitiveType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import java.util.List;
 import java.util.Map;
@@ -159,4 +160,13 @@ public class AttributeDef extends AtlanObject {
 
     /** TBC */
     final Map<String, List<String>> autoUpdateAttributes;
+
+    /**
+     * Whether this attribute is archived (true) or active (false).
+     * @return boolean
+     */
+    @JsonIgnore
+    public boolean isArchived() {
+        return options != null && options.getIsArchived() != null && options.getIsArchived();
+    }
 }
