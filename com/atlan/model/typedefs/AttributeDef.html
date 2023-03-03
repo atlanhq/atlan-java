@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":9,"i28":10,"i29":10,"i30":10,"i31":10,"i32":10,"i33":10,"i34":10,"i35":10,"i36":10,"i37":10,"i38":10,"i39":10,"i40":10,"i41":10,"i42":10,"i43":10,"i44":10};
+var data = {"i0":9,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":9,"i29":10,"i30":10,"i31":10,"i32":10,"i33":10,"i34":10,"i35":10,"i36":10,"i37":10,"i38":10,"i39":10,"i40":10,"i41":10,"i42":10,"i43":10,"i44":10,"i45":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -398,6 +398,13 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i27" class="rowColor">
+<td class="colFirst"><code>boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isArchived()">isArchived</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Whether this attribute is archived (true) or active (false).</div>
+</td>
+</tr>
+<tr id="i28" class="altColor">
 <td class="colFirst"><code>static <a href="AttributeDef.html" title="class in com.atlan.model.typedefs">AttributeDef</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#of(java.lang.String,com.atlan.model.enums.AtlanCustomAttributePrimitiveType,java.lang.String,boolean)">of</a></span>&#8203;(java.lang.String&nbsp;displayName,
   <a href="../enums/AtlanCustomAttributePrimitiveType.html" title="enum in com.atlan.model.enums">AtlanCustomAttributePrimitiveType</a>&nbsp;type,
@@ -407,119 +414,119 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <div class="block">Instantiate an attribute definition from the provided parameters.</div>
 </td>
 </tr>
-<tr id="i28" class="altColor">
+<tr id="i29" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setCardinality(com.atlan.model.enums.AtlanCustomAttributeCardinality)">setCardinality</a></span>&#8203;(<a href="../enums/AtlanCustomAttributeCardinality.html" title="enum in com.atlan.model.enums">AtlanCustomAttributeCardinality</a>&nbsp;cardinality)</code></th>
 <td class="colLast">
 <div class="block">Specifies whether the attribute is single or multivalued.</div>
 </td>
 </tr>
-<tr id="i29" class="rowColor">
+<tr id="i30" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setDefaultValue(java.lang.String)">setDefaultValue</a></span>&#8203;(java.lang.String&nbsp;defaultValue)</code></th>
 <td class="colLast">
 <div class="block">Specifies an (optional) default value for the attribute.</div>
 </td>
 </tr>
-<tr id="i30" class="altColor">
+<tr id="i31" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setDescription(java.lang.String)">setDescription</a></span>&#8203;(java.lang.String&nbsp;description)</code></th>
 <td class="colLast">
 <div class="block">Explanation of the attribute.</div>
 </td>
 </tr>
-<tr id="i31" class="rowColor">
+<tr id="i32" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setDisplayName(java.lang.String)">setDisplayName</a></span>&#8203;(java.lang.String&nbsp;displayName)</code></th>
 <td class="colLast">
 <div class="block">Human-readable name of the attribute.</div>
 </td>
 </tr>
-<tr id="i32" class="altColor">
+<tr id="i33" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setEnumValues(java.util.List)">setEnumValues</a></span>&#8203;(java.util.List&lt;java.lang.String&gt;&nbsp;enumValues)</code></th>
 <td class="colLast">
 <div class="block">List of values for an enumeration.</div>
 </td>
 </tr>
-<tr id="i33" class="rowColor">
+<tr id="i34" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setIncludeInNotification(java.lang.Boolean)">setIncludeInNotification</a></span>&#8203;(java.lang.Boolean&nbsp;includeInNotification)</code></th>
 <td class="colLast">
 <div class="block">Whether changes to this attribute's value generate an event (true) or not (false).</div>
 </td>
 </tr>
-<tr id="i34" class="altColor">
+<tr id="i35" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setIsDefaultValueNull(java.lang.Boolean)">setIsDefaultValueNull</a></span>&#8203;(java.lang.Boolean&nbsp;isDefaultValueNull)</code></th>
 <td class="colLast">
 <div class="block">Indicates whether the attribute has a default value of being empty (true) or not (false).</div>
 </td>
 </tr>
-<tr id="i35" class="rowColor">
+<tr id="i36" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setIsIndexable(java.lang.Boolean)">setIsIndexable</a></span>&#8203;(java.lang.Boolean&nbsp;isIndexable)</code></th>
 <td class="colLast">
 <div class="block">Specifies whether the attribute can be searched (true) or not (false).</div>
 </td>
 </tr>
-<tr id="i36" class="altColor">
+<tr id="i37" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setIsNew(java.lang.Boolean)">setIsNew</a></span>&#8203;(java.lang.Boolean&nbsp;isNew)</code></th>
 <td class="colLast">
 <div class="block">Whether the attribute is being newly created (true) or not (false).</div>
 </td>
 </tr>
-<tr id="i37" class="rowColor">
+<tr id="i38" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setIsOptional(java.lang.Boolean)">setIsOptional</a></span>&#8203;(java.lang.Boolean&nbsp;isOptional)</code></th>
 <td class="colLast">
 <div class="block">Indicates whether the attribute is mandatory (false) or optional (true).</div>
 </td>
 </tr>
-<tr id="i38" class="altColor">
+<tr id="i39" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setIsUnique(java.lang.Boolean)">setIsUnique</a></span>&#8203;(java.lang.Boolean&nbsp;isUnique)</code></th>
 <td class="colLast">
 <div class="block">Specifies whether the attribute must have unique values (true) or not (false).</div>
 </td>
 </tr>
-<tr id="i39" class="rowColor">
+<tr id="i40" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setName(java.lang.String)">setName</a></span>&#8203;(java.lang.String&nbsp;name)</code></th>
 <td class="colLast">
 <div class="block">Internal hashed-string name for the attribute.</div>
 </td>
 </tr>
-<tr id="i40" class="altColor">
+<tr id="i41" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setOptions(com.atlan.model.typedefs.AttributeDefOptions)">setOptions</a></span>&#8203;(<a href="AttributeDefOptions.html" title="class in com.atlan.model.typedefs">AttributeDefOptions</a>&nbsp;options)</code></th>
 <td class="colLast">
 <div class="block">Options for the attribute.</div>
 </td>
 </tr>
-<tr id="i41" class="rowColor">
+<tr id="i42" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setTypeName(java.lang.String)">setTypeName</a></span>&#8203;(java.lang.String&nbsp;typeName)</code></th>
 <td class="colLast">
 <div class="block">Type of the attribute.</div>
 </td>
 </tr>
-<tr id="i42" class="altColor">
+<tr id="i43" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setValuesMaxCount(java.lang.Long)">setValuesMaxCount</a></span>&#8203;(java.lang.Long&nbsp;valuesMaxCount)</code></th>
 <td class="colLast">
 <div class="block">Specifies the maximum number of values the attribute can have.</div>
 </td>
 </tr>
-<tr id="i43" class="rowColor">
+<tr id="i44" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setValuesMinCount(java.lang.Long)">setValuesMinCount</a></span>&#8203;(java.lang.Long&nbsp;valuesMinCount)</code></th>
 <td class="colLast">
 <div class="block">Specifies the minimum number of values the attribute can have.</div>
 </td>
 </tr>
-<tr id="i44" class="altColor">
+<tr id="i45" class="rowColor">
 <td class="colFirst"><code><a href="AttributeDef.AttributeDefBuilder.html" title="class in com.atlan.model.typedefs">AttributeDef.AttributeDefBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toBuilder()">toBuilder</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
@@ -596,6 +603,20 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <dd>the attribute definition</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - if there is any API error trying to construct the attribute (usually due to a non-existent enumeration)</dd>
+</dl>
+</li>
+</ul>
+<a id="isArchived()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isArchived</h4>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;isArchived()</pre>
+<div class="block">Whether this attribute is archived (true) or active (false).</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>boolean</dd>
 </dl>
 </li>
 </ul>
