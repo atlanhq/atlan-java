@@ -122,7 +122,7 @@ public class QueryFactory {
      * @return a query that will only match assets that have at least one term assigned
      */
     public static Query beAssignedATerm() {
-        return have(KeywordFields.MEANINGS).present();
+        return have(KeywordFields.ASSIGNED_TERMS).present();
     }
 
     /**
@@ -132,7 +132,7 @@ public class QueryFactory {
      * @return a query that will only match assets that have at least one of the terms assigned
      */
     public static Query beDefinedByAtLeastOneOf(Collection<String> termQualifiedNames) {
-        return have(KeywordFields.MEANINGS).beOneOf(termQualifiedNames);
+        return have(KeywordFields.ASSIGNED_TERMS).beOneOf(termQualifiedNames);
     }
 
     /**

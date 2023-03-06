@@ -20,6 +20,8 @@ public enum KeywordFields implements AtlanSearchableField {
     /** TBC */
     ADLS_ACCOUNT_PROVISION_STATE("adlsAccountProvisionState"),
     /** TBC */
+    ADLS_ACCOUNT_QUALIFIED_NAME("adlsAccountQualifiedName"),
+    /** TBC */
     ADLS_ACCOUNT_REPLICATION("adlsAccountReplication"),
     /** TBC */
     ADLS_ACCOUNT_RESOURCE_GROUP("adlsAccountResourceGroup.keyword"),
@@ -33,6 +35,8 @@ public enum KeywordFields implements AtlanSearchableField {
     ADLS_CONTAINER_LEASE_STATE("adlsContainerLeaseState"),
     /** TBC */
     ADLS_CONTAINER_LEASE_STATUS("adlsContainerLeaseStatus"),
+    /** TBC */
+    ADLS_CONTAINER_QUALIFIED_NAME("adlsContainerQualifiedName"),
     /** TBC */
     ADLS_CONTAINER_URL("adlsContainerUrl.keyword"),
     /** Entity tag for the asset. An entity tag is a hash of the object and represents changes to the contents of an object only, not its metadata. */
@@ -217,11 +221,11 @@ public enum KeywordFields implements AtlanSearchableField {
     CODE("code"),
     /** qualifiedName of the collection in which this folder exists. */
     COLLECTION_QUALIFIED_NAME("collectionQualifiedName"),
-    /** TBC */
+    /** List of values in a histogram that represents the contents of the column. */
     COLUMN_HISTOGRAM("columnHistogram"),
-    /** TBC */
+    /** List of the greatest values in a column. */
     COLUMN_MAXS("columnMaxs"),
-    /** TBC */
+    /** List of the least values in a column. */
     COLUMN_MINS("columnMins"),
     /** TBC */
     COLUMN_TOP_VALUES("columnTopValues"),
@@ -442,7 +446,7 @@ public enum KeywordFields implements AtlanSearchableField {
     /** TBC */
     LOOKML_LINK_ID("lookmlLinkId"),
     /** All terms attached to an asset, searchable by the term's qualifiedName. */
-    MEANINGS("__meanings"),
+    ASSIGNED_TERMS("__meanings"),
     /** TBC */
     MERGE_RESULT_ID("mergeResultId"),
     /** TBC */

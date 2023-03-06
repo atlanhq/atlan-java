@@ -40,14 +40,6 @@ public class ADLSObject extends ADLS {
 
     /** TBC */
     @Attribute
-    Long adlsObjectCreationTime;
-
-    /** TBC */
-    @Attribute
-    Long adlsObjectLastModifiedTime;
-
-    /** TBC */
-    @Attribute
     String adlsObjectVersionId;
 
     /** TBC */
@@ -106,6 +98,10 @@ public class ADLSObject extends ADLS {
     @Attribute
     @Singular("putAdlsObjectMetadata")
     Map<String, String> adlsObjectMetadata;
+
+    /** TBC */
+    @Attribute
+    String adlsContainerQualifiedName;
 
     /** Container this object exists within. */
     @Attribute

@@ -66,10 +66,6 @@ public class ADLSAccount extends ADLS {
 
     /** TBC */
     @Attribute
-    Long adlsAccountCreationTime;
-
-    /** TBC */
-    @Attribute
     ADLSProvisionState adlsAccountProvisionState;
 
     /** TBC */

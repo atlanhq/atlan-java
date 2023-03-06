@@ -6,9 +6,13 @@ import lombok.Getter;
 
 public enum TextFields implements AtlanSearchableField {
     /** TBC */
+    ADLS_ACCOUNT_QUALIFIED_NAME("adlsAccountQualifiedName.text"),
+    /** TBC */
     ADLS_ACCOUNT_RESOURCE_GROUP("adlsAccountResourceGroup"),
     /** TBC */
     ADLS_ACCOUNT_SUBSCRIPTION("adlsAccountSubscription"),
+    /** TBC */
+    ADLS_CONTAINER_QUALIFIED_NAME("adlsContainerQualifiedName.text"),
     /** TBC */
     ADLS_CONTAINER_URL("adlsContainerUrl"),
     /** TBC */

@@ -149,7 +149,7 @@ public class DbtModelTest {
             .dbtModelColumns(Set.of(
                     DbtModelColumn.refByGuid("c4a8caac-33c8-4e60-b54d-bd1c2649c27a"),
                     DbtModelColumn.refByGuid("c3744b50-51dd-40a4-a200-e74da1f5f14e")))
-            .sqlAsset(Table.refByGuid("779cce78-3d9a-479a-9efe-b61b4b95c5ef"))
+            .primarySqlAsset(Table.refByGuid("779cce78-3d9a-479a-9efe-b61b4b95c5ef"))
             .build();
     private static DbtModel frodo;
     private static String serialized;
