@@ -6,15 +6,9 @@ import lombok.Getter;
 
 public enum NumericFields implements AtlanSearchableField {
     /** TBC */
-    ADLS_ACCOUNT_CREATION_TIME("adlsAccountCreationTime"),
-    /** TBC */
-    ADLS_CONTAINER_LAST_MODIFIED_TIME("adlsContainerLastModifiedTime"),
-    /** TBC */
     ADLS_OBJECT_ACCESS_TIER_LAST_MODIFIED_TIME("adlsObjectAccessTierLastModifiedTime"),
     /** TBC */
-    ADLS_OBJECT_CREATION_TIME("adlsObjectCreationTime"),
-    /** TBC */
-    ADLS_OBJECT_LAST_MODIFIED_TIME("adlsObjectLastModifiedTime"),
+    ADLS_OBJECT_COUNT("adlsObjectCount"),
     /** TBC */
     ADLS_OBJECT_SIZE("adlsObjectSize"),
     /** Time (epoch) at which the announcement was last updated, in milliseconds. */
@@ -35,47 +29,47 @@ public enum NumericFields implements AtlanSearchableField {
     CERTIFICATE_UPDATED_AT("certificateUpdatedAt"),
     /** TBC */
     COLUMN_AVERAGE("columnAverage"),
-    /** TBC */
+    /** Average length of values in a string column. */
     COLUMN_AVERAGE_LENGTH("columnAverageLength"),
     /** Number of columns in this view. */
     COLUMN_COUNT("columnCount"),
-    /** TBC */
+    /** Number of rows that contain distinct values. */
     COLUMN_DISTINCT_VALUES_COUNT("columnDistinctValuesCount"),
     /** TBC */
     COLUMN_DISTINCT_VALUES_COUNT_LONG("columnDistinctValuesCountLong"),
-    /** TBC */
+    /** Number of rows that contain duplicate values. */
     COLUMN_DUPLICATE_VALUES_COUNT("columnDuplicateValuesCount"),
     /** TBC */
     COLUMN_DUPLICATE_VALUES_COUNT_LONG("columnDuplicateValuesCountLong"),
-    /** TBC */
+    /** Greatest value in a numeric column. */
     COLUMN_MAX("columnMax"),
-    /** TBC */
+    /** Length of the longest value in a string column. */
     COLUMN_MAXIMUM_STRING_LENGTH("columnMaximumStringLength"),
-    /** TBC */
+    /** Arithmetic mean of the values in a numeric column. */
     COLUMN_MEAN("columnMean"),
-    /** TBC */
+    /** Calculated median of the values in a numeric column. */
     COLUMN_MEDIAN("columnMedian"),
-    /** TBC */
+    /** Least value in a numeric column. */
     COLUMN_MIN("columnMin"),
-    /** TBC */
+    /** Length of the shortest value in a string column. */
     COLUMN_MINIMUM_STRING_LENGTH("columnMinimumStringLength"),
-    /** TBC */
+    /** Number of rows in a column that do not contain content. */
     COLUMN_MISSING_VALUES_COUNT("columnMissingValuesCount"),
     /** TBC */
     COLUMN_MISSING_VALUES_COUNT_LONG("columnMissingValuesCountLong"),
-    /** TBC */
+    /** Percentage of rows in a column that do not contain content. */
     COLUMN_MISSING_VALUES_PERCENTAGE("columnMissingValuesPercentage"),
-    /** TBC */
+    /** Calculated standard deviation of the values in a numeric column. */
     COLUMN_STANDARD_DEVIATION("columnStandardDeviation"),
-    /** TBC */
+    /** Calculated sum of the values in a numeric column. */
     COLUMN_SUM("columnSum"),
-    /** TBC */
+    /** Number of rows in which a value in this column appears only once. */
     COLUMN_UNIQUE_VALUES_COUNT("columnUniqueValuesCount"),
     /** TBC */
     COLUMN_UNIQUE_VALUES_COUNT_LONG("columnUniqueValuesCountLong"),
-    /** TBC */
+    /** Ratio indicating how unique data in the column is: 0 indicates that all values are the same, 100 indicates that all values in the column are unique. */
     COLUMN_UNIQUENESS_PERCENTAGE("columnUniquenessPercentage"),
-    /** TBC */
+    /** Calculated variance of the values in a numeric column. */
     COLUMN_VARIANCE("columnVariance"),
     /** TBC */
     DASHBOARD_COUNT("dashboardCount"),

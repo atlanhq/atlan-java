@@ -117,7 +117,7 @@ public class Column extends SQL {
     @Singular
     Map<String, String> validations;
 
-    /** TBC */
+    /** Number of rows that contain distinct values. */
     @Attribute
     Integer columnDistinctValuesCount;
 
@@ -125,35 +125,35 @@ public class Column extends SQL {
     @Attribute
     Long columnDistinctValuesCountLong;
 
-    /** TBC */
+    /** List of values in a histogram that represents the contents of the column. */
     @Attribute
     Histogram columnHistogram;
 
-    /** TBC */
+    /** Greatest value in a numeric column. */
     @Attribute
     Double columnMax;
 
-    /** TBC */
+    /** Least value in a numeric column. */
     @Attribute
     Double columnMin;
 
-    /** TBC */
+    /** Arithmetic mean of the values in a numeric column. */
     @Attribute
     Double columnMean;
 
-    /** TBC */
+    /** Calculated sum of the values in a numeric column. */
     @Attribute
     Double columnSum;
 
-    /** TBC */
+    /** Calculated median of the values in a numeric column. */
     @Attribute
     Double columnMedian;
 
-    /** TBC */
+    /** Calculated standard deviation of the values in a numeric column. */
     @Attribute
     Double columnStandardDeviation;
 
-    /** TBC */
+    /** Number of rows in which a value in this column appears only once. */
     @Attribute
     Integer columnUniqueValuesCount;
 
@@ -165,11 +165,11 @@ public class Column extends SQL {
     @Attribute
     Double columnAverage;
 
-    /** TBC */
+    /** Average length of values in a string column. */
     @Attribute
     Double columnAverageLength;
 
-    /** TBC */
+    /** Number of rows that contain duplicate values. */
     @Attribute
     Integer columnDuplicateValuesCount;
 
@@ -177,25 +177,25 @@ public class Column extends SQL {
     @Attribute
     Long columnDuplicateValuesCountLong;
 
-    /** TBC */
+    /** Length of the longest value in a string column. */
     @Attribute
     Integer columnMaximumStringLength;
 
-    /** TBC */
+    /** List of the greatest values in a column. */
     @Attribute
     @Singular
     SortedSet<String> columnMaxs;
 
-    /** TBC */
+    /** Length of the shortest value in a string column. */
     @Attribute
     Integer columnMinimumStringLength;
 
-    /** TBC */
+    /** List of the least values in a column. */
     @Attribute
     @Singular
     SortedSet<String> columnMins;
 
-    /** TBC */
+    /** Number of rows in a column that do not contain content. */
     @Attribute
     Integer columnMissingValuesCount;
 
@@ -203,15 +203,15 @@ public class Column extends SQL {
     @Attribute
     Long columnMissingValuesCountLong;
 
-    /** TBC */
+    /** Percentage of rows in a column that do not contain content. */
     @Attribute
     Double columnMissingValuesPercentage;
 
-    /** TBC */
+    /** Ratio indicating how unique data in the column is: 0 indicates that all values are the same, 100 indicates that all values in the column are unique. */
     @Attribute
     Double columnUniquenessPercentage;
 
-    /** TBC */
+    /** Calculated variance of the values in a numeric column. */
     @Attribute
     Double columnVariance;
 
