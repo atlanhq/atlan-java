@@ -117,8 +117,6 @@ public class ADLSObjectTest {
                     LineageProcess.refByGuid("59b3617c-a3a4-41ce-8ed6-91c8bc653e6e"),
                     LineageProcess.refByGuid("25cd62c7-8120-4c6d-a1f0-d45c75efbe46")))
             .adlsObjectUrl("adlsObjectUrl")
-            .adlsObjectCreationTime(-1312082568702260409L)
-            .adlsObjectLastModifiedTime(-8595234611958779974L)
             .adlsObjectVersionId("adlsObjectVersionId")
             .adlsObjectType(ADLSObjectType.APPEND_BLOB)
             .adlsObjectSize(-4522292454635227782L)

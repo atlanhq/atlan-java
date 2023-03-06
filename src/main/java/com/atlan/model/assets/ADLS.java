@@ -22,4 +22,8 @@ import lombok.experimental.SuperBuilder;
 public abstract class ADLS extends Azure {
 
     public static final String TYPE_NAME = "ADLS";
+
+    /** TBC */
+    @Attribute
+    String adlsAccountQualifiedName;
 }

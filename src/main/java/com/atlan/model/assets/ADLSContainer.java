@@ -39,10 +39,6 @@ public class ADLSContainer extends ADLS {
 
     /** TBC */
     @Attribute
-    Long adlsContainerLastModifiedTime;
-
-    /** TBC */
-    @Attribute
     ADLSLeaseState adlsContainerLeaseState;
 
     /** TBC */
@@ -56,6 +52,10 @@ public class ADLSContainer extends ADLS {
     /** TBC */
     @Attribute
     Boolean adlsContainerVersionLevelImmutabilitySupport;
+
+    /** TBC */
+    @Attribute
+    Integer adlsObjectCount;
 
     /** Objects that exist within this container. */
     @Attribute

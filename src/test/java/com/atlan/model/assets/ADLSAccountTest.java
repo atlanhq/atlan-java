@@ -124,7 +124,6 @@ public class ADLSAccountTest {
             .adlsAccountReplication(ADLSReplicationType.READ_ACCESS_GEO_REDUNDANT)
             .adlsAccountKind(ADLSStorageKind.FILE)
             .adlsPrimaryDiskState(ADLSAccountStatus.AVAILABLE)
-            .adlsAccountCreationTime(3547019824354036828L)
             .adlsAccountProvisionState(ADLSProvisionState.SUCCEEDED)
             .adlsAccountAccessTier(ADLSAccessTier.HOT)
             .adlsContainers(Set.of(
