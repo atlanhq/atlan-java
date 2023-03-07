@@ -19,7 +19,6 @@ import com.atlan.model.enums.AuditActionType;
 import com.atlan.model.search.*;
 import com.atlan.model.typedefs.*;
 import com.atlan.net.HttpClient;
-import java.time.Instant;
 import java.util.*;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.Test;
@@ -509,13 +508,8 @@ public class CustomMetadataTest extends AtlanLiveTest {
         List<AttributeDef> updatedAttrs = new ArrayList<>();
         for (AttributeDef existingAttr : existingAttrs) {
             if (existingAttr.getDisplayName().equals(CM_ATTR_RACI_EXTRA)) {
-                AttributeDefOptions options = existingAttr.getOptions();
-                removalEpoch = Instant.now().toEpochMilli();
-                options.setIsArchived(true);
-                options.setArchivedBy("test-automation");
-                options.setArchivedAt(removalEpoch);
-                existingAttr.setOptions(options);
-                existingAttr.setDisplayName(existingAttr.getDisplayName() + "-archived-" + removalEpoch);
+                existingAttr.archive("test-automation");
+                removalEpoch = existingAttr.getOptions().getArchivedAt();
             }
             updatedAttrs.add(existingAttr);
         }

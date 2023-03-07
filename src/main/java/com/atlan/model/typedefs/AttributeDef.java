@@ -9,6 +9,7 @@ import com.atlan.model.enums.AtlanCustomAttributeCardinality;
 import com.atlan.model.enums.AtlanCustomAttributePrimitiveType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import java.time.Instant;
 import java.util.List;
 import java.util.Map;
 import lombok.*;
@@ -168,5 +169,23 @@ public class AttributeDef extends AtlanObject {
     @JsonIgnore
     public boolean isArchived() {
         return options != null && options.getIsArchived() != null && options.getIsArchived();
+    }
+
+    /**
+     * Mark this attribute definition as archived. Note that this will only do so if
+     * the attribute is already defined (i.e. has some options). Otherwise this operation does
+     * nothing to the attribute definition.
+     * @param by name of the user who is archiving the attribute definition
+     */
+    public void archive(String by) {
+        long removalEpoch = Instant.now().toEpochMilli();
+        AttributeDefOptions options = getOptions();
+        if (options != null) {
+            options.setIsArchived(true);
+            options.setArchivedBy(by);
+            options.setArchivedAt(removalEpoch);
+            setOptions(options);
+            setDisplayName(getDisplayName() + "-archived-" + removalEpoch);
+        }
     }
 }
