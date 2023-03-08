@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":9,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10};
+var data = {"i0":9,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":9,"i11":9,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -288,25 +288,34 @@ implements <a href="../search/AuditDetail.html" title="interface in com.atlan.mo
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code>static <a href="Classification.html" title="class in com.atlan.model.core">Classification</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#of(java.lang.String,java.lang.String)">of</a></span>&#8203;(java.lang.String&nbsp;classificationName,
-  java.lang.String&nbsp;entityGuid)</code></th>
-<td class="colLast">&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#of(java.lang.String)">of</a></span>&#8203;(java.lang.String&nbsp;classificationName)</code></th>
+<td class="colLast">
+<div class="block">Construct a classification assignment for an entity that is being created or updated.</div>
+</td>
 </tr>
 <tr id="i11" class="rowColor">
+<td class="colFirst"><code>static <a href="Classification.html" title="class in com.atlan.model.core">Classification</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#of(java.lang.String,java.lang.String)">of</a></span>&#8203;(java.lang.String&nbsp;classificationName,
+  java.lang.String&nbsp;entityGuid)</code></th>
+<td class="colLast">
+<div class="block">Construct a classification assignment for a specific entity.</div>
+</td>
+</tr>
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setEntityGuid(java.lang.String)">setEntityGuid</a></span>&#8203;(java.lang.String&nbsp;entityGuid)</code></th>
 <td class="colLast">
 <div class="block">Unique identifier of the entity to which this classification is attached.</div>
 </td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setEntityStatus(com.atlan.model.enums.AtlanStatus)">setEntityStatus</a></span>&#8203;(<a href="../enums/AtlanStatus.html" title="enum in com.atlan.model.enums">AtlanStatus</a>&nbsp;entityStatus)</code></th>
 <td class="colLast">
 <div class="block">Status of the entity.</div>
 </td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setPropagate(java.lang.Boolean)">setPropagate</a></span>&#8203;(java.lang.Boolean&nbsp;propagate)</code></th>
 <td class="colLast">
@@ -314,7 +323,7 @@ implements <a href="../search/AuditDetail.html" title="interface in com.atlan.mo
  classification is attached.</div>
 </td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setRemovePropagationsOnEntityDelete(java.lang.Boolean)">setRemovePropagationsOnEntityDelete</a></span>&#8203;(java.lang.Boolean&nbsp;removePropagationsOnEntityDelete)</code></th>
 <td class="colLast">
@@ -322,7 +331,7 @@ implements <a href="../search/AuditDetail.html" title="interface in com.atlan.mo
  the classification is removed from this entity.</div>
 </td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setRestrictPropagationThroughLineage(java.lang.Boolean)">setRestrictPropagationThroughLineage</a></span>&#8203;(java.lang.Boolean&nbsp;restrictPropagationThroughLineage)</code></th>
 <td class="colLast">
@@ -330,7 +339,7 @@ implements <a href="../search/AuditDetail.html" title="interface in com.atlan.mo
  propagate through lineage (false).</div>
 </td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setTypeName(java.lang.String)">setTypeName</a></span>&#8203;(java.lang.String&nbsp;typeName)</code></th>
 <td class="colLast">
@@ -396,6 +405,22 @@ implements <a href="../search/AuditDetail.html" title="interface in com.atlan.mo
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a id="of(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>of</h4>
+<pre class="methodSignature">public static&nbsp;<a href="Classification.html" title="class in com.atlan.model.core">Classification</a>&nbsp;of&#8203;(java.lang.String&nbsp;classificationName)</pre>
+<div class="block">Construct a classification assignment for an entity that is being created or updated.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>classificationName</code> - human-readable name of the classification</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a classification assignment with default settings for propagation</dd>
+</dl>
+</li>
+</ul>
 <a id="of(java.lang.String,java.lang.String)">
 <!--   -->
 </a>
@@ -404,6 +429,14 @@ implements <a href="../search/AuditDetail.html" title="interface in com.atlan.mo
 <h4>of</h4>
 <pre class="methodSignature">public static&nbsp;<a href="Classification.html" title="class in com.atlan.model.core">Classification</a>&nbsp;of&#8203;(java.lang.String&nbsp;classificationName,
                                 java.lang.String&nbsp;entityGuid)</pre>
+<div class="block">Construct a classification assignment for a specific entity.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>classificationName</code> - human-readable name of the classification</dd>
+<dd><code>entityGuid</code> - unique identifier (GUID) of the entity to which the classification is to be assigned</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a classification assignment with default settings for propagation and a specific entity assignment</dd>
+</dl>
 </li>
 </ul>
 <a id="builder()">
