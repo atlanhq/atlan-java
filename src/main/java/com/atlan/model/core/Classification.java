@@ -21,6 +21,28 @@ import lombok.experimental.SuperBuilder;
 @JsonSerialize(using = ClassificationSerializer.class)
 public class Classification extends AtlanObject implements AuditDetail {
 
+    /**
+     * Construct a classification assignment for an entity that is being created or updated.
+     *
+     * @param classificationName human-readable name of the classification
+     * @return a classification assignment with default settings for propagation
+     */
+    public static Classification of(String classificationName) {
+        return Classification.builder()
+                .typeName(classificationName)
+                .propagate(true)
+                .removePropagationsOnEntityDelete(true)
+                .restrictPropagationThroughLineage(false)
+                .build();
+    }
+
+    /**
+     * Construct a classification assignment for a specific entity.
+     *
+     * @param classificationName human-readable name of the classification
+     * @param entityGuid unique identifier (GUID) of the entity to which the classification is to be assigned
+     * @return a classification assignment with default settings for propagation and a specific entity assignment
+     */
     public static Classification of(String classificationName, String entityGuid) {
         return Classification.builder()
                 .typeName(classificationName)
