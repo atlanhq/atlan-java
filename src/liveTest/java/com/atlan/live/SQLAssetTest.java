@@ -587,7 +587,6 @@ public class SQLAssetTest extends AtlanLiveTest {
     void updateColumnOwnersX() throws AtlanException {
         Column cleared = Column.removeOwners(column5.getQualifiedName(), COLUMN_NAME5);
         validateUpdatedColumn(cleared);
-        log.info("Groups: {}", cleared.getOwnerGroups());
         assertTrue(cleared.getOwnerGroups() == null || cleared.getOwnerGroups().isEmpty());
     }
 
