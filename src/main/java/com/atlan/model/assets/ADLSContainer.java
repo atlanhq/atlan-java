@@ -102,6 +102,7 @@ public class ADLSContainer extends ADLS {
                 .qualifiedName(accountQualifiedName + "/" + name)
                 .name(name)
                 .adlsAccount(ADLSAccount.refByQualifiedName(accountQualifiedName))
+                .adlsAccountQualifiedName(accountQualifiedName)
                 .connectionQualifiedName(connectionQualifiedName)
                 .connectorType(AtlanConnectorType.ADLS);
     }

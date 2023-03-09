@@ -68,10 +68,7 @@ public class S3AssetTest extends AtlanLiveTest {
             groups = {"create.object"},
             dependsOnGroups = {"create.bucket"})
     void createObject() throws AtlanException {
-        S3Object toCreate = S3Object.creator(OBJECT_NAME, connection.getQualifiedName(), OBJECT_ARN)
-                .s3BucketName(BUCKET_NAME)
-                .s3BucketQualifiedName(bucket.getQualifiedName())
-                .bucket(S3Bucket.refByGuid(bucket.getGuid()))
+        S3Object toCreate = S3Object.creator(OBJECT_NAME, bucket.getQualifiedName(), BUCKET_NAME, OBJECT_ARN)
                 .build();
         AssetMutationResponse response = toCreate.upsert();
         assertNotNull(response);

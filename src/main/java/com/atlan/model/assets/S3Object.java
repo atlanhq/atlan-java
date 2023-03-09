@@ -8,6 +8,7 @@ import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.*;
 import com.atlan.model.relations.UniqueAttributes;
+import com.atlan.util.StringUtils;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.*;
@@ -98,17 +99,23 @@ public class S3Object extends S3 {
      * Builds the minimal object necessary to create an S3 object.
      *
      * @param name of the S3 object
-     * @param connectionQualifiedName unique name of the connection through which the object is accessible
+     * @param bucketQualifiedName unique name of the S3 bucket in which the object exists
+     * @param bucketName simple human-readable name of the S3 bucket in which the object exists
      * @param awsArn unique ARN of the object
      * @return the minimal object necessary to create the S3 object, as a builder
      */
-    public static S3ObjectBuilder<?, ?> creator(String name, String connectionQualifiedName, String awsArn) {
+    public static S3ObjectBuilder<?, ?> creator(
+            String name, String bucketQualifiedName, String bucketName, String awsArn) {
+        String connectionQualifiedName = StringUtils.getConnectionQualifiedName(bucketQualifiedName);
         return S3Object.builder()
                 .qualifiedName(generateQualifiedName(connectionQualifiedName, awsArn))
                 .name(name)
                 .connectionQualifiedName(connectionQualifiedName)
                 .connectorType(AtlanConnectorType.S3)
-                .awsArn(awsArn);
+                .awsArn(awsArn)
+                .s3BucketQualifiedName(bucketQualifiedName)
+                .s3BucketName(bucketName)
+                .bucket(S3Bucket.refByQualifiedName(bucketQualifiedName));
     }
 
     /**
