@@ -35,9 +35,7 @@ public class Persona extends AtlanObject {
     String displayName;
 
     /** Description of the persona. */
-    @Builder.Default
-    @JsonInclude(JsonInclude.Include.ALWAYS)
-    String description = "";
+    String description;
 
     /** Unique identifiers (GUIDs) of groups that are associated with the persona. */
     @Singular
@@ -59,12 +57,10 @@ public class Persona extends AtlanObject {
 
     /** Set of metadata policies defined for this persona. */
     @Singular
-    @JsonInclude(JsonInclude.Include.ALWAYS)
     SortedSet<PersonaMetadataPolicy> metadataPolicies;
 
     /** Set of data policies defined for this persona. */
     @Singular
-    @JsonInclude(JsonInclude.Include.ALWAYS)
     SortedSet<PersonaDataPolicy> dataPolicies;
 
     /** Set of glossary policies defined for this persona. */
@@ -112,17 +108,7 @@ public class Persona extends AtlanObject {
      * @return the minimal request necessary to update the persona, as a builder
      */
     public static PersonaBuilder<?, ?> creator(String name) {
-        return Persona.builder().name(name).displayName(name);
-    }
-
-    /**
-     * Builds the minimal object necessary to update a persona.
-     *
-     * @param id unique identifier (GUID) of the persona
-     * @return the minimal request necessary to update the persona, as a builder
-     */
-    public static PersonaBuilder<?, ?> updater(String id, String name) {
-        return Persona.builder().id(id).name(name);
+        return Persona.builder().name(name).displayName(name).description("");
     }
 
     /**

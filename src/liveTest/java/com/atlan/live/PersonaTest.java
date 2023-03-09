@@ -66,7 +66,7 @@ public class PersonaTest extends AtlanLiveTest {
             groups = {"update.personas"},
             dependsOnGroups = {"create.personas"})
     void updatePersonas() throws AtlanException {
-        Persona persona = Persona.updater(personaGuid, PERSONA_NAME)
+        Persona persona = Persona.retrieveByName(PERSONA_NAME).toBuilder()
                 .description("Now with a description!")
                 .attributes(Persona.PersonaAttributes.builder()
                         .preferences(Persona.PersonaPreferences.builder()
