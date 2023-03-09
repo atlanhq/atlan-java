@@ -35,7 +35,9 @@ public class Persona extends AtlanObject {
     String displayName;
 
     /** Description of the persona. */
-    String description;
+    @Builder.Default
+    @JsonInclude(JsonInclude.Include.ALWAYS)
+    String description = "";
 
     /** Unique identifiers (GUIDs) of groups that are associated with the persona. */
     @Singular
@@ -57,10 +59,12 @@ public class Persona extends AtlanObject {
 
     /** Set of metadata policies defined for this persona. */
     @Singular
+    @JsonInclude(JsonInclude.Include.ALWAYS)
     SortedSet<PersonaMetadataPolicy> metadataPolicies;
 
     /** Set of data policies defined for this persona. */
     @Singular
+    @JsonInclude(JsonInclude.Include.ALWAYS)
     SortedSet<PersonaDataPolicy> dataPolicies;
 
     /** Set of glossary policies defined for this persona. */
