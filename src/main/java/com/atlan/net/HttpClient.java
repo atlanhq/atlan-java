@@ -212,13 +212,13 @@ public abstract class HttpClient {
                 && (exception.getCause() != null)
                 && (exception.getCause() instanceof ConnectException
                         || exception.getCause() instanceof SocketTimeoutException)) {
-            log.info(" ... network issue, will retry.");
+            log.debug(" ... network issue, will retry.");
             return true;
         }
 
         // Retry on permission failure (since these are granted asynchronously)
         if (response != null && response.code() == 403) {
-            log.info(" ... no permission for the operation (yet), will retry.");
+            log.debug(" ... no permission for the operation (yet), will retry.");
             return true;
         }
 
