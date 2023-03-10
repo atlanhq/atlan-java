@@ -70,6 +70,7 @@ public class ClassificationDef extends TypeDef {
     public ClassificationDef create() throws AtlanException {
         TypeDefResponse response = TypeDefsEndpoint.createTypeDef(this);
         if (response != null && !response.getClassificationDefs().isEmpty()) {
+            ClassificationCache.refreshCache();
             return response.getClassificationDefs().get(0);
         }
         return null;
@@ -85,5 +86,6 @@ public class ClassificationDef extends TypeDef {
     public static void purge(String displayName) throws AtlanException {
         String internalName = ClassificationCache.getIdForName(displayName);
         TypeDefsEndpoint.purgeTypeDef(internalName);
+        ClassificationCache.refreshCache();
     }
 }

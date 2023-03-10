@@ -53,6 +53,7 @@ public class CustomMetadataDef extends TypeDef {
     public CustomMetadataDef create() throws AtlanException {
         TypeDefResponse response = TypeDefsEndpoint.createTypeDef(this);
         if (response != null && !response.getCustomMetadataDefs().isEmpty()) {
+            CustomMetadataCache.refreshCache();
             return response.getCustomMetadataDefs().get(0);
         }
         return null;
@@ -84,5 +85,6 @@ public class CustomMetadataDef extends TypeDef {
     public static void purge(String displayName) throws AtlanException {
         String internalName = CustomMetadataCache.getIdForName(displayName);
         TypeDefsEndpoint.purgeTypeDef(internalName);
+        CustomMetadataCache.refreshCache();
     }
 }
