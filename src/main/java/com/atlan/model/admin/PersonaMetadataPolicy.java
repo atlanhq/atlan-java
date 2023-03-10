@@ -42,6 +42,7 @@ public class PersonaMetadataPolicy extends AbstractPersonaPolicy {
             boolean allow) {
         return PersonaMetadataPolicy.builder()
                 .name(name)
+                .description("")
                 .connectionId(connectionId)
                 .assets(assetPrefixes)
                 .actions(actions)
