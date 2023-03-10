@@ -30,8 +30,8 @@ public class S3AssetTest extends AtlanLiveTest {
 
     private static final String PREFIX = "S3AssetTest";
 
-    private static final AtlanConnectorType CONNECTOR_TYPE = AtlanConnectorType.S3;
-    private static final String CONNECTION_NAME = "java-sdk-" + PREFIX;
+    public static final AtlanConnectorType CONNECTOR_TYPE = AtlanConnectorType.S3;
+    public static final String CONNECTION_NAME = "java-sdk-" + PREFIX;
 
     private static final String BUCKET_NAME = "mybucket";
     private static final String BUCKET_ARN = "arn:aws:s3:::mybucket";

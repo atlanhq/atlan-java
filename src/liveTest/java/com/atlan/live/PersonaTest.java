@@ -21,8 +21,8 @@ public class PersonaTest extends AtlanLiveTest {
     private static final String PREFIX = "PersonaTest";
 
     private static final String PERSONA_NAME = PREFIX;
-    private static final String CONNECTION_NAME = "java-sdk-" + PREFIX;
-    private static final AtlanConnectorType CONNECTOR_TYPE = AtlanConnectorType.GCS;
+    public static final String CONNECTION_NAME = "java-sdk-" + PREFIX;
+    public static final AtlanConnectorType CONNECTOR_TYPE = AtlanConnectorType.GCS;
     private static final String GLOSSARY_NAME = PREFIX;
 
     private static String personaGuid = null;
