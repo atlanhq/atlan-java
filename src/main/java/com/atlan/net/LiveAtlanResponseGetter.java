@@ -108,10 +108,8 @@ public class LiveAtlanResponseGetter implements AtlanResponseGetter {
         // so preemptively exit with a generic ApiException pass-through.
         int rc = response.code();
         if (rc == 500) {
-            throw new ApiException(ErrorCode.ERROR_PASSTHROUGH,
-                null,
-                "" + rc,
-                response.body() == null ? "" : response.body());
+            throw new ApiException(
+                    ErrorCode.ERROR_PASSTHROUGH, null, "" + rc, response.body() == null ? "" : response.body());
         }
 
         try {
