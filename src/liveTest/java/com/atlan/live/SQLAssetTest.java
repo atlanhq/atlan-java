@@ -679,7 +679,7 @@ public class SQLAssetTest extends AtlanLiveTest {
             dependsOnGroups = {"create.classifications", "update.column.userDescription.x"})
     void updateClassification() throws AtlanException {
         Column toUpdate = Column.updater(column5.getQualifiedName(), COLUMN_NAME5)
-                .classification(Classification.of(CLASSIFICATION_NAME1, column5.getGuid()))
+                .classification(Classification.of(CLASSIFICATION_NAME1))
                 .build();
         AssetMutationResponse response = toUpdate.upsert(true, false);
         Asset one = validateSingleUpdate(response);
