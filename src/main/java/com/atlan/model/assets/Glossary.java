@@ -446,14 +446,15 @@ public class Glossary extends Asset {
      * Update the certificate on a Glossary.
      *
      * @param qualifiedName of the Glossary
+     * @param name of the Glossary
      * @param certificate to use
      * @param message (optional) message, or null if no message
      * @return the updated Glossary, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static Glossary updateCertificate(String qualifiedName, AtlanCertificateStatus certificate, String message)
+    public static Glossary updateCertificate(String qualifiedName, String name, AtlanCertificateStatus certificate, String message)
             throws AtlanException {
-        return (Glossary) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
+        return (Glossary) Asset.updateCertificate(builder().name(name), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -473,6 +474,7 @@ public class Glossary extends Asset {
      * Update the announcement on a Glossary.
      *
      * @param qualifiedName of the Glossary
+     * @param name of the Glossary
      * @param type type of announcement to set
      * @param title (optional) title of the announcement to set (or null for no title)
      * @param message (optional) message of the announcement to set (or null for no message)
@@ -480,8 +482,8 @@ public class Glossary extends Asset {
      * @throws AtlanException on any API problems
      */
     public static Glossary updateAnnouncement(
-            String qualifiedName, AtlanAnnouncementType type, String title, String message) throws AtlanException {
-        return (Glossary) Asset.updateAnnouncement(builder(), TYPE_NAME, qualifiedName, type, title, message);
+            String qualifiedName, String name, AtlanAnnouncementType type, String title, String message) throws AtlanException {
+        return (Glossary) Asset.updateAnnouncement(builder().name(name), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
