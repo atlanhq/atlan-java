@@ -537,7 +537,8 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 </tr>
 <tr id="i38" class="altColor">
 <td class="colFirst"><code>static <a href="Glossary.html" title="class in com.atlan.model.assets">Glossary</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateAnnouncement(java.lang.String,com.atlan.model.enums.AtlanAnnouncementType,java.lang.String,java.lang.String)">updateAnnouncement</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateAnnouncement(java.lang.String,java.lang.String,com.atlan.model.enums.AtlanAnnouncementType,java.lang.String,java.lang.String)">updateAnnouncement</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
+                  java.lang.String&nbsp;name,
                   <a href="../enums/AtlanAnnouncementType.html" title="enum in com.atlan.model.enums">AtlanAnnouncementType</a>&nbsp;type,
                   java.lang.String&nbsp;title,
                   java.lang.String&nbsp;message)</code></th>
@@ -547,7 +548,8 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 </tr>
 <tr id="i39" class="rowColor">
 <td class="colFirst"><code>static <a href="Glossary.html" title="class in com.atlan.model.assets">Glossary</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateCertificate(java.lang.String,com.atlan.model.enums.AtlanCertificateStatus,java.lang.String)">updateCertificate</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateCertificate(java.lang.String,java.lang.String,com.atlan.model.enums.AtlanCertificateStatus,java.lang.String)">updateCertificate</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
+                 java.lang.String&nbsp;name,
                  <a href="../enums/AtlanCertificateStatus.html" title="enum in com.atlan.model.enums">AtlanCertificateStatus</a>&nbsp;certificate,
                  java.lang.String&nbsp;message)</code></th>
 <td class="colLast">
@@ -919,13 +921,14 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 </dl>
 </li>
 </ul>
-<a id="updateCertificate(java.lang.String,com.atlan.model.enums.AtlanCertificateStatus,java.lang.String)">
+<a id="updateCertificate(java.lang.String,java.lang.String,com.atlan.model.enums.AtlanCertificateStatus,java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>updateCertificate</h4>
 <pre class="methodSignature">public static&nbsp;<a href="Glossary.html" title="class in com.atlan.model.assets">Glossary</a>&nbsp;updateCertificate&#8203;(java.lang.String&nbsp;qualifiedName,
+                                         java.lang.String&nbsp;name,
                                          <a href="../enums/AtlanCertificateStatus.html" title="enum in com.atlan.model.enums">AtlanCertificateStatus</a>&nbsp;certificate,
                                          java.lang.String&nbsp;message)
                                   throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
@@ -933,6 +936,7 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>qualifiedName</code> - of the Glossary</dd>
+<dd><code>name</code> - of the Glossary</dd>
 <dd><code>certificate</code> - to use</dd>
 <dd><code>message</code> - (optional) message, or null if no message</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -963,13 +967,14 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 </dl>
 </li>
 </ul>
-<a id="updateAnnouncement(java.lang.String,com.atlan.model.enums.AtlanAnnouncementType,java.lang.String,java.lang.String)">
+<a id="updateAnnouncement(java.lang.String,java.lang.String,com.atlan.model.enums.AtlanAnnouncementType,java.lang.String,java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>updateAnnouncement</h4>
 <pre class="methodSignature">public static&nbsp;<a href="Glossary.html" title="class in com.atlan.model.assets">Glossary</a>&nbsp;updateAnnouncement&#8203;(java.lang.String&nbsp;qualifiedName,
+                                          java.lang.String&nbsp;name,
                                           <a href="../enums/AtlanAnnouncementType.html" title="enum in com.atlan.model.enums">AtlanAnnouncementType</a>&nbsp;type,
                                           java.lang.String&nbsp;title,
                                           java.lang.String&nbsp;message)
@@ -978,6 +983,7 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>qualifiedName</code> - of the Glossary</dd>
+<dd><code>name</code> - of the Glossary</dd>
 <dd><code>type</code> - type of announcement to set</dd>
 <dd><code>title</code> - (optional) title of the announcement to set (or null for no title)</dd>
 <dd><code>message</code> - (optional) message of the announcement to set (or null for no message)</dd>

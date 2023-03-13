@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":10,"i2":10,"i3":9,"i4":9,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":9,"i26":9,"i27":10,"i28":10,"i29":10,"i30":10,"i31":10,"i32":10,"i33":10,"i34":10,"i35":10,"i36":10,"i37":10,"i38":10,"i39":10,"i40":10,"i41":10,"i42":9};
+var data = {"i0":9,"i1":10,"i2":10,"i3":9,"i4":9,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":9,"i26":9,"i27":10,"i28":10,"i29":10,"i30":10,"i31":10,"i32":10,"i33":10,"i34":10,"i35":10,"i36":10,"i37":10,"i38":10,"i39":10,"i40":10,"i41":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -502,15 +502,6 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <div class="block">Send this purpose to Atlan to update the purpose in Atlan.</div>
 </td>
 </tr>
-<tr id="i42" class="altColor">
-<td class="colFirst"><code>static <a href="Purpose.PurposeBuilder.html" title="class in com.atlan.model.admin">Purpose.PurposeBuilder</a>&lt;?,&#8203;?&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updater(java.lang.String,java.lang.String,java.util.List)">updater</a></span>&#8203;(java.lang.String&nbsp;id,
-       java.lang.String&nbsp;name,
-       java.util.List&lt;java.lang.String&gt;&nbsp;classifications)</code></th>
-<td class="colLast">
-<div class="block">Builds the minimal object necessary to update a purpose.</div>
-</td>
-</tr>
 </table>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.com.atlan.model.core.AtlanObject">
@@ -574,29 +565,6 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>name</code> - of the purpose, as it should appear in the UI</dd>
-<dd><code>classifications</code> - list of human-readable classification names to include in the purpose (must be at least one)</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>the minimal request necessary to update the purpose, as a builder</dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></code> - if no classifications have been provided for the purpose</dd>
-</dl>
-</li>
-</ul>
-<a id="updater(java.lang.String,java.lang.String,java.util.List)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>updater</h4>
-<pre class="methodSignature">public static&nbsp;<a href="Purpose.PurposeBuilder.html" title="class in com.atlan.model.admin">Purpose.PurposeBuilder</a>&lt;?,&#8203;?&gt;&nbsp;updater&#8203;(java.lang.String&nbsp;id,
-                                                        java.lang.String&nbsp;name,
-                                                        java.util.List&lt;java.lang.String&gt;&nbsp;classifications)
-                                                 throws <a href="../../exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></pre>
-<div class="block">Builds the minimal object necessary to update a purpose.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>id</code> - unique identifier (GUID) of the purpose</dd>
-<dd><code>name</code> - of the purpose</dd>
 <dd><code>classifications</code> - list of human-readable classification names to include in the purpose (must be at least one)</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the minimal request necessary to update the purpose, as a builder</dd>
