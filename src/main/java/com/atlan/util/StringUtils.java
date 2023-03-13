@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
  */
 public final class StringUtils {
     private static final Pattern whitespacePattern = Pattern.compile("\\s");
-    private static final Pattern connectionQNPrefix = Pattern.compile("(default/[a-z0-9]+/[0-9]{10})/.*");
+    private static final Pattern connectionQNPrefix = Pattern.compile("(default/[a-z0-9-]+/[0-9]{10})/.*");
 
     /**
      * Checks whether a string contains any whitespace characters or not.

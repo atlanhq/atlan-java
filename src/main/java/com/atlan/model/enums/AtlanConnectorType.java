@@ -40,7 +40,14 @@ public enum AtlanConnectorType implements AtlanEnum {
     GCS("gcs", AtlanConnectionCategory.OBJECT_STORE),
     HIVE("hive", AtlanConnectionCategory.WAREHOUSE),
     SAPHANA("sap-hana", AtlanConnectionCategory.WAREHOUSE),
-    ADLS("adls", AtlanConnectionCategory.OBJECT_STORE);
+    ADLS("adls", AtlanConnectionCategory.OBJECT_STORE),
+    SIGMA("sigma", AtlanConnectionCategory.BI),
+    SYNAPSE("synapse", AtlanConnectionCategory.WAREHOUSE),
+    AIRFLOW("airflow", AtlanConnectionCategory.ELT),
+    OPENLINEAGE("openlineage", AtlanConnectionCategory.ELT),
+    DATAFLOW("dataflow", AtlanConnectionCategory.ELT),
+    QLIKSENSE("qlik-sense", AtlanConnectionCategory.BI),
+    ;
 
     @JsonValue
     @Getter(onMethod_ = {@Override})
