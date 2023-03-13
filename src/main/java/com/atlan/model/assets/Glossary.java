@@ -452,7 +452,8 @@ public class Glossary extends Asset {
      * @return the updated Glossary, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static Glossary updateCertificate(String qualifiedName, String name, AtlanCertificateStatus certificate, String message)
+    public static Glossary updateCertificate(
+            String qualifiedName, String name, AtlanCertificateStatus certificate, String message)
             throws AtlanException {
         return (Glossary) Asset.updateCertificate(builder().name(name), TYPE_NAME, qualifiedName, certificate, message);
     }
@@ -482,8 +483,10 @@ public class Glossary extends Asset {
      * @throws AtlanException on any API problems
      */
     public static Glossary updateAnnouncement(
-            String qualifiedName, String name, AtlanAnnouncementType type, String title, String message) throws AtlanException {
-        return (Glossary) Asset.updateAnnouncement(builder().name(name), TYPE_NAME, qualifiedName, type, title, message);
+            String qualifiedName, String name, AtlanAnnouncementType type, String title, String message)
+            throws AtlanException {
+        return (Glossary)
+                Asset.updateAnnouncement(builder().name(name), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**

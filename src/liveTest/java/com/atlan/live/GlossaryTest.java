@@ -401,7 +401,8 @@ public class GlossaryTest extends AtlanLiveTest {
         assertEquals(g.getAnnouncementType(), ANNOUNCEMENT_TYPE);
         assertEquals(g.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
         assertEquals(g.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
-        g = Glossary.updateCertificate(glossary.getQualifiedName(), GLOSSARY_NAME, CERTIFICATE_STATUS, CERTIFICATE_MESSAGE);
+        g = Glossary.updateCertificate(
+                glossary.getQualifiedName(), GLOSSARY_NAME, CERTIFICATE_STATUS, CERTIFICATE_MESSAGE);
         assertEquals(g.getCertificateStatus(), CERTIFICATE_STATUS);
         assertEquals(g.getCertificateStatusMessage(), CERTIFICATE_MESSAGE);
     }
@@ -429,7 +430,12 @@ public class GlossaryTest extends AtlanLiveTest {
         assertEquals(c.getAnnouncementType(), ANNOUNCEMENT_TYPE);
         assertEquals(c.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
         assertEquals(c.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
-        c = GlossaryCategory.updateCertificate(category.getQualifiedName(), category.getName(), glossary.getGuid(), CERTIFICATE_STATUS, CERTIFICATE_MESSAGE);
+        c = GlossaryCategory.updateCertificate(
+                category.getQualifiedName(),
+                category.getName(),
+                glossary.getGuid(),
+                CERTIFICATE_STATUS,
+                CERTIFICATE_MESSAGE);
         assertEquals(c.getCertificateStatus(), CERTIFICATE_STATUS);
         assertEquals(c.getCertificateStatusMessage(), CERTIFICATE_MESSAGE);
     }
