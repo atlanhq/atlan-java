@@ -30,8 +30,8 @@ public class ADLSAssetTest extends AtlanLiveTest {
 
     private static final String PREFIX = "ADLSAssetTest";
 
-    private static final AtlanConnectorType CONNECTOR_TYPE = AtlanConnectorType.ADLS;
-    private static final String CONNECTION_NAME = "java-sdk-" + PREFIX;
+    public static final AtlanConnectorType CONNECTOR_TYPE = AtlanConnectorType.ADLS;
+    public static final String CONNECTION_NAME = "java-sdk-" + PREFIX;
     private static final String ACCOUNT_NAME = PREFIX + "-account";
     private static final String CONTAINER_NAME = PREFIX + "-container";
     private static final String OBJECT_NAME = PREFIX + "-object.csv";

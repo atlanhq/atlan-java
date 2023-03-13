@@ -27,7 +27,7 @@ public class ClassificationCache {
     private static Set<String> deletedIds = ConcurrentHashMap.newKeySet();
     private static Set<String> deletedNames = ConcurrentHashMap.newKeySet();
 
-    private static synchronized void refreshCache() throws AtlanException {
+    public static synchronized void refreshCache() throws AtlanException {
         log.debug("Refreshing cache of classifications...");
         TypeDefResponse response = TypeDefsEndpoint.getTypeDefs(AtlanTypeCategory.CLASSIFICATION);
         List<ClassificationDef> classifications;

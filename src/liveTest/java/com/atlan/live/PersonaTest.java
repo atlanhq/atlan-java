@@ -21,8 +21,8 @@ public class PersonaTest extends AtlanLiveTest {
     private static final String PREFIX = "PersonaTest";
 
     private static final String PERSONA_NAME = PREFIX;
-    private static final String CONNECTION_NAME = "java-sdk-" + PREFIX;
-    private static final AtlanConnectorType CONNECTOR_TYPE = AtlanConnectorType.GCS;
+    public static final String CONNECTION_NAME = "java-sdk-" + PREFIX;
+    public static final AtlanConnectorType CONNECTOR_TYPE = AtlanConnectorType.GCS;
     private static final String GLOSSARY_NAME = PREFIX;
 
     private static String personaGuid = null;
@@ -66,7 +66,7 @@ public class PersonaTest extends AtlanLiveTest {
             groups = {"update.personas"},
             dependsOnGroups = {"create.personas"})
     void updatePersonas() throws AtlanException {
-        Persona persona = Persona.updater(personaGuid, PERSONA_NAME)
+        Persona persona = Persona.retrieveByName(PERSONA_NAME).toBuilder()
                 .description("Now with a description!")
                 .attributes(Persona.PersonaAttributes.builder()
                         .preferences(Persona.PersonaPreferences.builder()

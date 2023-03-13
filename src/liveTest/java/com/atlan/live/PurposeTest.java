@@ -72,7 +72,9 @@ public class PurposeTest extends AtlanLiveTest {
             groups = {"update.purposes"},
             dependsOnGroups = {"create.purposes"})
     void updatePurposes() throws AtlanException {
-        Purpose purpose = Purpose.updater(purposeGuid, PURPOSE_NAME, List.of(CLS_NAME))
+        Purpose purpose = Purpose.retrieveByName(PURPOSE_NAME);
+        assertNotNull(purpose);
+        purpose = purpose.toBuilder()
                 .description("Now with a description!")
                 .attributes(Purpose.PurposeAttributes.builder()
                         .preferences(Purpose.PurposePreferences.builder()

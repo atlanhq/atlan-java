@@ -387,8 +387,6 @@ public class GlossaryTest extends AtlanLiveTest {
             dependsOnGroups = {"read.glossary"})
     void updateGlossary() throws AtlanException {
         Glossary g = Glossary.updater(glossary.getGuid(), GLOSSARY_NAME)
-                .certificateStatus(CERTIFICATE_STATUS)
-                .certificateStatusMessage(CERTIFICATE_MESSAGE)
                 .announcementType(ANNOUNCEMENT_TYPE)
                 .announcementTitle(ANNOUNCEMENT_TITLE)
                 .announcementMessage(ANNOUNCEMENT_MESSAGE)
@@ -400,11 +398,13 @@ public class GlossaryTest extends AtlanLiveTest {
         assertEquals(g.getGuid(), glossary.getGuid());
         assertEquals(g.getQualifiedName(), glossary.getQualifiedName());
         assertEquals(g.getName(), glossary.getName());
-        assertEquals(g.getCertificateStatus(), CERTIFICATE_STATUS);
-        assertEquals(g.getCertificateStatusMessage(), CERTIFICATE_MESSAGE);
         assertEquals(g.getAnnouncementType(), ANNOUNCEMENT_TYPE);
         assertEquals(g.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
         assertEquals(g.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
+        g = Glossary.updateCertificate(
+                glossary.getQualifiedName(), GLOSSARY_NAME, CERTIFICATE_STATUS, CERTIFICATE_MESSAGE);
+        assertEquals(g.getCertificateStatus(), CERTIFICATE_STATUS);
+        assertEquals(g.getCertificateStatusMessage(), CERTIFICATE_MESSAGE);
     }
 
     @Test(
@@ -416,8 +416,6 @@ public class GlossaryTest extends AtlanLiveTest {
                         category.getQualifiedName(),
                         category.getName(),
                         category.getAnchor().getGuid())
-                .certificateStatus(CERTIFICATE_STATUS)
-                .certificateStatusMessage(CERTIFICATE_MESSAGE)
                 .announcementType(ANNOUNCEMENT_TYPE)
                 .announcementTitle(ANNOUNCEMENT_TITLE)
                 .announcementMessage(ANNOUNCEMENT_MESSAGE)
@@ -429,11 +427,17 @@ public class GlossaryTest extends AtlanLiveTest {
         assertEquals(c.getGuid(), category.getGuid());
         assertEquals(c.getQualifiedName(), category.getQualifiedName());
         assertEquals(c.getName(), category.getName());
-        assertEquals(c.getCertificateStatus(), CERTIFICATE_STATUS);
-        assertEquals(c.getCertificateStatusMessage(), CERTIFICATE_MESSAGE);
         assertEquals(c.getAnnouncementType(), ANNOUNCEMENT_TYPE);
         assertEquals(c.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
         assertEquals(c.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
+        c = GlossaryCategory.updateCertificate(
+                category.getQualifiedName(),
+                category.getName(),
+                glossary.getGuid(),
+                CERTIFICATE_STATUS,
+                CERTIFICATE_MESSAGE);
+        assertEquals(c.getCertificateStatus(), CERTIFICATE_STATUS);
+        assertEquals(c.getCertificateStatusMessage(), CERTIFICATE_MESSAGE);
     }
 
     @Test(

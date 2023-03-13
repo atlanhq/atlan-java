@@ -58,6 +58,7 @@ public class PurposeDataPolicy extends AbstractPurposePolicy {
         boolean userSpecified = false;
         PurposeDataPolicyBuilder<?, ?> builder = PurposeDataPolicy.builder()
                 .name(name)
+                .description("")
                 .actions(actions)
                 .type(type)
                 .allow(allow);

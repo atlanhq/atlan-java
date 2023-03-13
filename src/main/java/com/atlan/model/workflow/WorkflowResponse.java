@@ -57,15 +57,18 @@ public class WorkflowResponse extends ApiResource {
                     status = runDetails.getStatus();
                 }
                 if (log != null) {
-                    log.info("Workflow status: {}", status);
+                    log.debug("Workflow status: {}", status);
                 }
             } while (status != AtlanWorkflowPhase.SUCCESS
                     && status != AtlanWorkflowPhase.ERROR
                     && status != AtlanWorkflowPhase.FAILED);
+            if (log != null) {
+                log.info("Workflow completion status: {}", status);
+            }
             return status;
         } else {
             if (log != null) {
-                log.info("... skipping workflow monitoring — nothing to monitor.");
+                log.info("Skipping workflow monitoring — nothing to monitor.");
             }
             return null;
         }

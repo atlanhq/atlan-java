@@ -16,10 +16,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
-import java.util.SortedSet;
+import java.util.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
@@ -107,24 +104,12 @@ public class Purpose extends AtlanObject {
         if (classifications == null || classifications.isEmpty()) {
             throw new InvalidRequestException(ErrorCode.NO_CLASSIFICATION_FOR_PURPOSE);
         }
-        return Purpose.builder().name(name).displayName(name).tags(classifications);
-    }
-
-    /**
-     * Builds the minimal object necessary to update a purpose.
-     *
-     * @param id unique identifier (GUID) of the purpose
-     * @param name of the purpose
-     * @param classifications list of human-readable classification names to include in the purpose (must be at least one)
-     * @return the minimal request necessary to update the purpose, as a builder
-     * @throws InvalidRequestException if no classifications have been provided for the purpose
-     */
-    public static PurposeBuilder<?, ?> updater(String id, String name, List<String> classifications)
-            throws InvalidRequestException {
-        if (classifications == null || classifications.isEmpty()) {
-            throw new InvalidRequestException(ErrorCode.NO_CLASSIFICATION_FOR_PURPOSE);
-        }
-        return Purpose.builder().id(id).name(name).tags(classifications);
+        return Purpose.builder()
+                .id(UUID.randomUUID().toString())
+                .name(name)
+                .displayName(name)
+                .description("")
+                .tags(classifications);
     }
 
     /**

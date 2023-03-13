@@ -25,8 +25,8 @@ public class APIAssetTest extends AtlanLiveTest {
 
     private static final String PREFIX = "APIAssetTest";
 
-    private static final AtlanConnectorType CONNECTOR_TYPE = AtlanConnectorType.API;
-    private static final String CONNECTION_NAME = "java-sdk-" + PREFIX;
+    public static final AtlanConnectorType CONNECTOR_TYPE = AtlanConnectorType.API;
+    public static final String CONNECTION_NAME = "java-sdk-" + PREFIX;
     private static final String SPEC_NAME = PREFIX + "-spec";
     private static final String PATH_NAME = "/api/" + PREFIX;
 

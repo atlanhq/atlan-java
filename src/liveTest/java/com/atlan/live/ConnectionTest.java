@@ -74,7 +74,7 @@ public class ConnectionTest extends AtlanLiveTest {
      * @throws AtlanException on any errors deleting the connection
      * @throws InterruptedException if the busy-wait loop for monitoring is interuppted
      */
-    static void deleteConnection(String qualifiedName, Logger log) throws AtlanException, InterruptedException {
+    public static void deleteConnection(String qualifiedName, Logger log) throws AtlanException, InterruptedException {
         try {
             Workflow deleteWorkflow = ConnectionDelete.creator(qualifiedName, true);
             WorkflowResponse response = deleteWorkflow.run();

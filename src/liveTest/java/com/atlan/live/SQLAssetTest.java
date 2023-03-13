@@ -35,8 +35,8 @@ public class SQLAssetTest extends AtlanLiveTest {
 
     private static final String PREFIX = "SQLAssetTest";
 
-    private static final AtlanConnectorType CONNECTOR_TYPE = AtlanConnectorType.SAPHANA;
-    private static final String CONNECTION_NAME = "java-sdk-" + PREFIX;
+    public static final AtlanConnectorType CONNECTOR_TYPE = AtlanConnectorType.SAPHANA;
+    public static final String CONNECTION_NAME = "java-sdk-" + PREFIX;
 
     public static final String DATABASE_NAME = PREFIX + "_db";
     public static final String SCHEMA_NAME = PREFIX + "_schema";
@@ -587,7 +587,6 @@ public class SQLAssetTest extends AtlanLiveTest {
     void updateColumnOwnersX() throws AtlanException {
         Column cleared = Column.removeOwners(column5.getQualifiedName(), COLUMN_NAME5);
         validateUpdatedColumn(cleared);
-        log.info("Groups: {}", cleared.getOwnerGroups());
         assertTrue(cleared.getOwnerGroups() == null || cleared.getOwnerGroups().isEmpty());
     }
 
@@ -680,7 +679,7 @@ public class SQLAssetTest extends AtlanLiveTest {
             dependsOnGroups = {"create.classifications", "update.column.userDescription.x"})
     void updateClassification() throws AtlanException {
         Column toUpdate = Column.updater(column5.getQualifiedName(), COLUMN_NAME5)
-                .classification(Classification.of(CLASSIFICATION_NAME1, column5.getGuid()))
+                .classification(Classification.of(CLASSIFICATION_NAME1))
                 .build();
         AssetMutationResponse response = toUpdate.upsert(true, false);
         Asset one = validateSingleUpdate(response);

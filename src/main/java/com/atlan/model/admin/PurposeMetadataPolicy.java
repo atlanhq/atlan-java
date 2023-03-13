@@ -48,8 +48,11 @@ public class PurposeMetadataPolicy extends AbstractPurposePolicy {
             boolean allow)
             throws InvalidRequestException {
         boolean userSpecified = false;
-        PurposeMetadataPolicyBuilder<?, ?> builder =
-                PurposeMetadataPolicy.builder().name(name).actions(actions).allow(allow);
+        PurposeMetadataPolicyBuilder<?, ?> builder = PurposeMetadataPolicy.builder()
+                .name(name)
+                .description("")
+                .actions(actions)
+                .allow(allow);
         if (allUsers) {
             userSpecified = true;
             builder = builder.allUsers(true);

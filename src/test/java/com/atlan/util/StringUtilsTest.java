@@ -9,6 +9,9 @@ import org.testng.annotations.Test;
 
 public class StringUtilsTest {
 
+    final String qualifiedName1 = "default/s3/1234567890/aws:arn::somewhere/something/many/more/slashes.csv";
+    final String qualifiedName2 = "default/sap-hana/1234567890/DATABASE/SCHEMA/table/column";
+
     @Test
     void containsWhitespace() {
         assertTrue(StringUtils.containsWhitespace("this is a test"));
@@ -33,6 +36,17 @@ public class StringUtilsTest {
         String t2 = "setQualifiedName";
         assertEquals(StringUtils.getFieldNameFromMethodName(t1), "classifications");
         assertEquals(StringUtils.getFieldNameFromMethodName(t2), "qualifiedName");
+    }
+
+    @Test
+    void getConnectionQualifiedName() {
+        String t1 = "default/s3/1234567890";
+        String invalid = "default/mongo/someName/and/then/more";
+        assertEquals(StringUtils.getConnectionQualifiedName(qualifiedName1), t1);
+        assertNull(StringUtils.getConnectionQualifiedName(invalid));
+        assertNull(StringUtils.getConnectionQualifiedName(t1));
+        String t2 = "default/sap-hana/1234567890";
+        assertEquals(StringUtils.getConnectionQualifiedName(qualifiedName2), t2);
     }
 
     @Test

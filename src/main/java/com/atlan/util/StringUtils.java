@@ -9,13 +9,15 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
  * Utilities for working with strings.
  */
 public final class StringUtils {
-    private static Pattern whitespacePattern = Pattern.compile("\\s");
+    private static final Pattern whitespacePattern = Pattern.compile("\\s");
+    private static final Pattern connectionQNPrefix = Pattern.compile("(default/[a-z0-9-]+/[0-9]{10})/.*");
 
     /**
      * Checks whether a string contains any whitespace characters or not.
@@ -81,6 +83,23 @@ public final class StringUtils {
      */
     public static String decodeContent(String encoded) {
         return encoded == null ? null : URLDecoder.decode(encoded.replace("%20", "+"), StandardCharsets.UTF_8);
+    }
+
+    /**
+     * Retrieve the connection's qualifiedName from the provided asset qualifiedName.
+     * Note that this will also return null if the qualifiedName provided is for a connection (only) already!
+     *
+     * @param qualifiedName of the asset, from which to retrieve the connection's qualifiedName
+     * @return the qualifiedName of the connection, or null if none can be determined
+     */
+    public static String getConnectionQualifiedName(String qualifiedName) {
+        if (qualifiedName != null) {
+            Matcher m = connectionQNPrefix.matcher(qualifiedName);
+            if (m.find() && m.groupCount() > 0) {
+                return m.group(1);
+            }
+        }
+        return null;
     }
 
     /**

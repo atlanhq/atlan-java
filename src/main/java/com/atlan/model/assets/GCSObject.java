@@ -127,7 +127,7 @@ public class GCSObject extends GCS {
      * @return the minimal object necessary to create the GCSObject, as a builder
      */
     public static GCSObjectBuilder<?, ?> creator(String name, String bucketQualifiedName) {
-        String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(bucketQualifiedName);
+        String connectionQualifiedName = StringUtils.getConnectionQualifiedName(bucketQualifiedName);
         String bucketName = StringUtils.getNameFromQualifiedName(bucketQualifiedName);
         return GCSObject.builder()
                 .qualifiedName(bucketQualifiedName + "/" + name)

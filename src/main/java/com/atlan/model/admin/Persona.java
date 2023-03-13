@@ -108,17 +108,7 @@ public class Persona extends AtlanObject {
      * @return the minimal request necessary to update the persona, as a builder
      */
     public static PersonaBuilder<?, ?> creator(String name) {
-        return Persona.builder().name(name).displayName(name);
-    }
-
-    /**
-     * Builds the minimal object necessary to update a persona.
-     *
-     * @param id unique identifier (GUID) of the persona
-     * @return the minimal request necessary to update the persona, as a builder
-     */
-    public static PersonaBuilder<?, ?> updater(String id, String name) {
-        return Persona.builder().id(id).name(name);
+        return Persona.builder().name(name).displayName(name).description("");
     }
 
     /**
