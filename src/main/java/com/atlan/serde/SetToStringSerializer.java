@@ -26,6 +26,17 @@ public class SetToStringSerializer extends StdSerializer<Set<String>> {
     @Override
     public void serialize(Set<String> value, JsonGenerator gen, SerializerProvider arg2)
             throws IOException, JsonProcessingException {
-        gen.writeString(Serde.mapper.writeValueAsString(value));
+        gen.writeString(serialize(value));
+    }
+
+    /**
+     * Serialize the provided set of values into a single string.
+     *
+     * @param value set of values to serialize into a string
+     * @return a string representing the entire set of values
+     * @throws IOException on any errors during parsing
+     */
+    public static String serialize(Set<String> value) throws IOException {
+        return Serde.mapper.writeValueAsString(value);
     }
 }

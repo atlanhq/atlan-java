@@ -25,6 +25,17 @@ public class StringToSetDeserializer extends StdDeserializer<Set<String>> {
 
     @Override
     public Set<String> deserialize(JsonParser jsonparser, DeserializationContext context) throws IOException {
-        return Serde.mapper.readValue(jsonparser.getText(), new TypeReference<>() {});
+        return deserialize(jsonparser.getText());
+    }
+
+    /**
+     * Deserialize the provided string value into a set.
+     *
+     * @param value to deserialize
+     * @return a set, as if the provided value were an actual set rather than a string
+     * @throws IOException on any errors during parsing
+     */
+    public static Set<String> deserialize(String value) throws IOException {
+        return Serde.mapper.readValue(value, new TypeReference<>() {});
     }
 }

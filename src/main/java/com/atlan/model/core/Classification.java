@@ -60,7 +60,7 @@ public class Classification extends AtlanObject implements AuditDetail {
 
     /**
      * Name of the classification. Note that this is the static-hashed unique name of the
-     * classification, not hte human-readable displayName.
+     * classification, not the human-readable displayName.
      */
     String typeName;
 

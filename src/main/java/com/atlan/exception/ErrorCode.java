@@ -176,6 +176,16 @@ public enum ErrorCode implements ExceptionMessageSet {
             "ATLAN-JAVA-400-031",
             "Requested extracting a metric from a non-metric aggregation result.",
             "You must provide an aggregation result that is a metric aggregation to extract a numeric metric."),
+    MISSING_TOKEN_ID(
+            400,
+            "ATLAN-JAVA-400-032",
+            "No ID was provided when attempting to update the API token.",
+            "You must provide an ID when attempting to update an API token."),
+    MISSING_TOKEN_NAME(
+            400,
+            "ATLAN-JAVA-400-033",
+            "No displayName was provided when attempting to update the API token.",
+            "You must provide a displayName for the API token when attempting to update it."),
 
     AUTHENTICATION_PASSTHROUGH(
             401,
