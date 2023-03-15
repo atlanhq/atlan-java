@@ -26,6 +26,12 @@ public class SearchParameters extends AtlanObject {
     /** TBC */
     Boolean suppressLogs;
 
+    /** Whether the term relationships for assets are excluded from the results (true) or not (false). */
+    Boolean excludeMeanings;
+
+    /** Whether the classifications of assets are excluded from the results (true) or not (false). */
+    Boolean excludeClassifications;
+
     /** TBC */
     Boolean allowDeletedRelations;
 
