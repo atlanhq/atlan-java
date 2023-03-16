@@ -8,6 +8,7 @@ import com.atlan.model.enums.AtlanRequestStatus;
 import com.atlan.model.enums.AtlanRequestType;
 import com.atlan.serde.AtlanRequestDeserializer;
 import com.atlan.serde.AtlanRequestSerializer;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.SortedSet;
@@ -73,9 +74,11 @@ public class AtlanRequest extends AtlanObject {
     String destinationValueType;
 
     /** Unused. */
+    @JsonIgnore
     Object destinationValueArray;
 
     /** Unused. */
+    @JsonIgnore
     Object destinationValueObject;
 
     /** Type of asset the change was requested against. */
@@ -85,9 +88,11 @@ public class AtlanRequest extends AtlanObject {
     AtlanRequestType requestType;
 
     /** Unused. */
+    @JsonIgnore
     Object confidenceScore;
 
     /** Unused. */
+    @JsonIgnore
     Object botRunId;
 
     /** User who approved the request. */
@@ -103,6 +108,7 @@ public class AtlanRequest extends AtlanObject {
     String message;
 
     /** Unused. */
+    @JsonIgnore
     Object requestsBatch;
 
     /** Type of approval required — currently only `single` is supported. */
@@ -110,15 +116,18 @@ public class AtlanRequest extends AtlanObject {
     String approvalType = "single";
 
     /** Unused. */
+    @JsonIgnore
     Object assignedApprovers;
 
     /** Details about the requested classification, if any. */
     AtlanRequestPayload payload;
 
     /** Unused. */
+    @JsonIgnore
     Object accessStartDate;
 
     /** Unused. */
+    @JsonIgnore
     Object accessEndDate;
 
     /** TBC */
@@ -155,6 +164,7 @@ public class AtlanRequest extends AtlanObject {
     SortedSet<String> requestDenyRoles;
 
     /** TBC */
+    @JsonIgnore
     Object sourceEntity;
 
     /** Limited details about the asset this request was made against. */

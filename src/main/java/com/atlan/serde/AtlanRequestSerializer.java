@@ -113,6 +113,7 @@ public class AtlanRequestSerializer extends StdSerializer<AtlanRequest> {
         JacksonUtils.serializeString(gen, "destinationValueAction", request.getDestinationValueAction());
         JacksonUtils.serializeObject(gen, "requestApproverUsers", request.getRequestApproverUsers());
         JacksonUtils.serializeObject(gen, "requestApproverGroups", request.getRequestApproverGroups());
+        JacksonUtils.serializeObject(gen, "requestApproverRoles", request.getRequestApproverRoles());
         JacksonUtils.serializeObject(gen, "requestDenyUsers", request.getRequestDenyUsers());
         JacksonUtils.serializeObject(gen, "requestDenyGroups", request.getRequestDenyGroups());
         JacksonUtils.serializeObject(gen, "requestDenyRoles", request.getRequestDenyRoles());

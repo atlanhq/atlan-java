@@ -151,7 +151,8 @@ public class ApiToken extends AtlanObject {
     @JsonSerialize(using = ApiTokenAttributesSerializer.class)
     @JsonDeserialize(using = ApiTokenAttributesDeserializer.class)
     @Builder(toBuilder = true)
-    public static final class ApiTokenAttributes {
+    @EqualsAndHashCode(callSuper = true)
+    public static final class ApiTokenAttributes extends AtlanObject {
 
         /** Time, in seconds, from createdAt after which the token will expire. */
         @JsonProperty("access.token.lifespan")

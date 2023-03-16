@@ -135,6 +135,8 @@ public class AtlanRequestDeserializer extends StdDeserializer<AtlanRequest> {
                             JacksonUtils.deserializeObject(root, "requestApproverUsers", new TypeReference<>() {}))
                     .requestApproverGroups(
                             JacksonUtils.deserializeObject(root, "requestApproverGroups", new TypeReference<>() {}))
+                    .requestApproverRoles(
+                            JacksonUtils.deserializeObject(root, "requestApproverRoles", new TypeReference<>() {}))
                     .requestDenyUsers(
                             JacksonUtils.deserializeObject(root, "requestDenyUsers", new TypeReference<>() {}))
                     .requestDenyGroups(
