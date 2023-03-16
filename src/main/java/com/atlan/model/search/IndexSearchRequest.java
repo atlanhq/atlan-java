@@ -6,6 +6,7 @@ import com.atlan.api.IndexSearchEndpoint;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.core.AtlanObject;
 import java.util.List;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Singular;
@@ -30,6 +31,22 @@ public class IndexSearchRequest extends AtlanObject {
     /** Attributes to include on each related entity of each result document. */
     @Singular
     List<String> relationAttributes;
+
+    /** TBC */
+    @Builder.Default
+    Boolean suppressLogs = true;
+
+    /** TBC */
+    @Builder.Default
+    Boolean showSearchScore = false;
+
+    /** Whether to include term relationships for assets (false) or not (true). */
+    @Builder.Default
+    Boolean excludeMeanings = false;
+
+    /** Whether to include classifications for assets (false) or not (true). */
+    @Builder.Default
+    Boolean excludeClassifications = false;
 
     /** Run the search. */
     public IndexSearchResponse search() throws AtlanException {
