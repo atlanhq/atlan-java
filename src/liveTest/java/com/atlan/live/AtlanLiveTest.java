@@ -38,7 +38,7 @@ public abstract class AtlanLiveTest {
      * @param response the update response to validate
      * @return the single updated asset from the response
      */
-    static Asset validateSingleUpdate(AssetMutationResponse response) {
+    protected static Asset validateSingleUpdate(AssetMutationResponse response) {
         assertNotNull(response);
         assertTrue(response.getCreatedAssets().isEmpty());
         assertTrue(response.getDeletedAssets().isEmpty());
@@ -52,7 +52,7 @@ public abstract class AtlanLiveTest {
      * @param response the create response to validate
      * @return the single created asset from the response
      */
-    static Asset validateSingleCreate(AssetMutationResponse response) {
+    protected static Asset validateSingleCreate(AssetMutationResponse response) {
         assertNotNull(response);
         assertTrue(response.getUpdatedAssets().isEmpty());
         assertTrue(response.getDeletedAssets().isEmpty());
