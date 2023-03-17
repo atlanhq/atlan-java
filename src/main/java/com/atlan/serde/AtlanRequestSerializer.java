@@ -5,11 +5,9 @@ package com.atlan.serde;
 import com.atlan.cache.ClassificationCache;
 import com.atlan.cache.CustomMetadataCache;
 import com.atlan.exception.AtlanException;
-import com.atlan.model.admin.AtlanRequest;
-import com.atlan.model.admin.AtlanRequestPayload;
-import com.atlan.model.admin.ClassificationPayload;
-import com.atlan.model.admin.CustomMetadataPayload;
-import com.atlan.model.enums.AtlanRequestType;
+import com.atlan.exception.NotFoundException;
+import com.atlan.model.admin.*;
+import com.atlan.model.assets.Asset;
 import com.atlan.util.JacksonUtils;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -29,6 +27,7 @@ import java.util.Map;
  */
 public class AtlanRequestSerializer extends StdSerializer<AtlanRequest> {
     private static final long serialVersionUID = 2L;
+    public static final String DELETED = "(DELETED)";
 
     public AtlanRequestSerializer() {
         this(null);
@@ -55,32 +54,35 @@ public class AtlanRequestSerializer extends StdSerializer<AtlanRequest> {
     public void serialize(AtlanRequest request, JsonGenerator gen, SerializerProvider sp)
             throws IOException, JsonProcessingException {
 
-        AtlanRequestType requestType = request.getRequestType();
         String destinationAttribute = request.getDestinationAttribute();
-        AtlanRequestPayload untranslatedPayload = request.getPayload();
         Object translatedPayload = null;
 
-        if (untranslatedPayload instanceof ClassificationPayload) {
-            ClassificationPayload cls = (ClassificationPayload) untranslatedPayload;
+        if (request instanceof ClassificationRequest) {
+            ClassificationPayload cls = ((ClassificationRequest) request).getPayload();
             String clsName = cls.getTypeName();
+            String clsId;
             try {
-                String clsId = ClassificationCache.getIdForName(clsName);
-                translatedPayload = cls.toBuilder().typeName(clsId).build();
+                clsId = ClassificationCache.getIdForName(clsName);
+            } catch (NotFoundException e) {
+                clsId = DELETED;
             } catch (AtlanException e) {
-                throw new IOException("Unable to find classification with name: " + clsName, e);
+                throw new IOException("Unable to translate classification with name: " + clsName, e);
             }
-        } else if (untranslatedPayload instanceof CustomMetadataPayload) {
-            CustomMetadataPayload cm = (CustomMetadataPayload) untranslatedPayload;
+            translatedPayload = cls.toBuilder().typeName(clsId).build();
+        } else if (request instanceof CustomMetadataRequest) {
+            CustomMetadataPayload cm = ((CustomMetadataRequest) request).getPayload();
             String cmName = destinationAttribute;
+            Map<String, Object> attrValues = new HashMap<>();
             try {
                 destinationAttribute = CustomMetadataCache.getIdForName(cmName);
-                Map<String, Object> attrValues = new HashMap<>();
                 CustomMetadataCache.getAttributesFromCustomMetadata(
                         destinationAttribute, cmName, cm.getAttributes(), attrValues);
-                translatedPayload = attrValues;
+            } catch (NotFoundException e) {
+                destinationAttribute = DELETED;
             } catch (AtlanException e) {
                 throw new IOException("Unable to find custom metadata with name: " + cmName, e);
             }
+            translatedPayload = attrValues;
         }
 
         gen.writeStartObject();
@@ -102,7 +104,7 @@ public class AtlanRequestSerializer extends StdSerializer<AtlanRequest> {
         JacksonUtils.serializeString(gen, "destinationValue", request.getDestinationValue());
         JacksonUtils.serializeString(gen, "destinationValueType", request.getDestinationValueType());
         JacksonUtils.serializeString(gen, "entityType", request.getEntityType());
-        JacksonUtils.serializeObject(gen, "requestType", requestType);
+        JacksonUtils.serializeObject(gen, "requestType", request.getRequestType());
         JacksonUtils.serializeString(gen, "approvedBy", request.getApprovedBy());
         JacksonUtils.serializeString(gen, "rejectedBy", request.getRejectedBy());
         JacksonUtils.serializeObject(gen, "status", request.getStatus());
@@ -117,8 +119,16 @@ public class AtlanRequestSerializer extends StdSerializer<AtlanRequest> {
         JacksonUtils.serializeObject(gen, "requestDenyUsers", request.getRequestDenyUsers());
         JacksonUtils.serializeObject(gen, "requestDenyGroups", request.getRequestDenyGroups());
         JacksonUtils.serializeObject(gen, "requestDenyRoles", request.getRequestDenyRoles());
-        JacksonUtils.serializeObject(gen, "destinationEntity", request.getDestinationEntity());
         JacksonUtils.serializeObject(gen, "payload", translatedPayload);
+
+        Asset destinationAsset = request.getDestinationEntity();
+        if (destinationAsset != null) {
+            // Remove typeName when serializing any asset back
+            JacksonUtils.serializeObject(
+                    gen,
+                    "destinationEntity",
+                    destinationAsset.toBuilder().typeName(null).build());
+        }
 
         /* Unused.
         Object destinationValueArray;
