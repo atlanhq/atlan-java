@@ -293,21 +293,21 @@ public class RequestsTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"purge.glossary"},
+            groups = {"purge.connection"},
             dependsOnGroups = {"create.*", "read.*", "update.*"},
+            alwaysRun = true)
+    void purgeConnection() throws AtlanException, InterruptedException {
+        ConnectionTest.deleteConnection(connection.getQualifiedName(), log);
+    }
+
+    @Test(
+            groups = {"purge.glossary"},
+            dependsOnGroups = {"create.*", "read.*", "update.*", "purge.connection"},
             alwaysRun = true)
     void purgeGlossary() throws AtlanException {
         Atlan.setApiToken(originalToken);
         GlossaryTest.deleteTerm(term.getGuid());
         GlossaryTest.deleteGlossary(glossary.getGuid());
-    }
-
-    @Test(
-            groups = {"purge.connection"},
-            dependsOnGroups = {"create.*", "read.*", "update.*", "purge.glossary"},
-            alwaysRun = true)
-    void purgeConnection() throws AtlanException, InterruptedException {
-        ConnectionTest.deleteConnection(connection.getQualifiedName(), log);
     }
 
     @Test(
