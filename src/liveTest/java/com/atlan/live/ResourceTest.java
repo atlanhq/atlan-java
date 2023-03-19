@@ -14,7 +14,6 @@ import org.testng.annotations.Test;
 /**
  * Tests all aspects of linked resources (links and READMEs).
  */
-@Test(groups = {"resources"})
 public class ResourceTest extends AtlanLiveTest {
 
     private static final String PREFIX = "ResourceTest";
@@ -29,15 +28,15 @@ public class ResourceTest extends AtlanLiveTest {
     private static Link link = null;
     private static Readme readme = null;
 
-    @Test(groups = {"create.term"})
+    @Test(groups = {"resources.create.term"})
     void createTerm() throws AtlanException {
         glossary = GlossaryTest.createGlossary(PREFIX);
         term = GlossaryTest.createTerm(PREFIX, glossary.getGuid());
     }
 
     @Test(
-            groups = {"create.readme"},
-            dependsOnGroups = {"create.term"})
+            groups = {"resources.create.readme"},
+            dependsOnGroups = {"resources.create.term"})
     void addReadme() throws AtlanException {
         Readme toCreate = Readme.creator(GlossaryTerm.refByGuid(term.getGuid()), term.getName(), README_CONTENT)
                 .build();
@@ -60,8 +59,8 @@ public class ResourceTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"create.link"},
-            dependsOnGroups = {"create.term"})
+            groups = {"resources.create.link"},
+            dependsOnGroups = {"resources.create.term"})
     void addLink() throws AtlanException {
         Link toCreate = Link.creator(GlossaryTerm.refByGuid(term.getGuid()), LINK_TITLE, LINK_URL)
                 .build();
@@ -85,8 +84,8 @@ public class ResourceTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"read.term"},
-            dependsOnGroups = {"create.*"})
+            groups = {"resources.read.term"},
+            dependsOnGroups = {"resources.create.*"})
     void retrieveTerm() throws AtlanException {
         GlossaryTerm t = GlossaryTerm.retrieveByQualifiedName(term.getQualifiedName());
         assertNotNull(t);
@@ -101,8 +100,8 @@ public class ResourceTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"purge.readme"},
-            dependsOnGroups = {"read.term"},
+            groups = {"resources.purge.readme"},
+            dependsOnGroups = {"resources.read.term"},
             alwaysRun = true)
     void purgeReadme() throws AtlanException {
         AssetMutationResponse response = Readme.purge(readme.getGuid());
@@ -117,8 +116,8 @@ public class ResourceTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"purge.link"},
-            dependsOnGroups = {"read.term"},
+            groups = {"resources.purge.link"},
+            dependsOnGroups = {"resources.read.term"},
             alwaysRun = true)
     void purgeLink() throws AtlanException {
         AssetMutationResponse response = Link.purge(link.getGuid());
@@ -133,8 +132,13 @@ public class ResourceTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"purge.term"},
-            dependsOnGroups = {"create.*", "read.*", "purge.readme", "purge.link"},
+            groups = {"resources.purge.term"},
+            dependsOnGroups = {
+                "resources.create.*",
+                "resources.read.*",
+                "resources.purge.readme",
+                "resources.purge.link"
+            },
             alwaysRun = true)
     void purgeTerm() throws AtlanException {
         GlossaryTest.deleteTerm(term.getGuid());

@@ -11,7 +11,6 @@ import lombok.experimental.SuperBuilder;
  * Base class for Power BI assets.
  */
 @Getter
-@Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @JsonSubTypes({

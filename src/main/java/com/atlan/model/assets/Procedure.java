@@ -18,7 +18,6 @@ import lombok.experimental.SuperBuilder;
  * Instance of a stored procedure (routine) in Atlan.
  */
 @Getter
-@Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 public class Procedure extends SQL {
@@ -28,7 +27,6 @@ public class Procedure extends SQL {
 
     /** Fixed typeName for Procedures. */
     @Getter(onMethod_ = {@Override})
-    @Setter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
 

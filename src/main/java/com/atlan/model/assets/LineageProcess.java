@@ -17,7 +17,6 @@ import lombok.experimental.SuperBuilder;
  * Instance of a lineage process in Atlan.
  */
 @Getter
-@Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 public class LineageProcess extends AbstractProcess {
@@ -27,7 +26,6 @@ public class LineageProcess extends AbstractProcess {
 
     /** Fixed typeName for LineageProcesss. */
     @Getter(onMethod_ = {@Override})
-    @Setter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
 

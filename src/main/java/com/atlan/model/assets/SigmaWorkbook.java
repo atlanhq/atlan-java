@@ -18,7 +18,6 @@ import lombok.experimental.SuperBuilder;
  * Instance of a Sigma workbook in Atlan.
  */
 @Getter
-@Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 public class SigmaWorkbook extends Sigma {
@@ -28,7 +27,6 @@ public class SigmaWorkbook extends Sigma {
 
     /** Fixed typeName for SigmaWorkbooks. */
     @Getter(onMethod_ = {@Override})
-    @Setter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
 

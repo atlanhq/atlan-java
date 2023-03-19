@@ -21,7 +21,6 @@ import lombok.experimental.SuperBuilder;
  * Instance of a database view in Atlan.
  */
 @Getter
-@Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @SuppressWarnings("cast")
@@ -32,7 +31,6 @@ public class View extends SQL {
 
     /** Fixed typeName for Views. */
     @Getter(onMethod_ = {@Override})
-    @Setter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
 

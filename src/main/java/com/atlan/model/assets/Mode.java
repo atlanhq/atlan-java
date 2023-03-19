@@ -11,7 +11,6 @@ import lombok.experimental.SuperBuilder;
  * Base class for Mode assets.
  */
 @Getter
-@Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @JsonSubTypes({

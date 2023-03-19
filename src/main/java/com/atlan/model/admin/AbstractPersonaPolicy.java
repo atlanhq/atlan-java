@@ -5,12 +5,10 @@ package com.atlan.model.admin;
 import java.util.SortedSet;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.Singular;
 import lombok.experimental.SuperBuilder;
 
 @Getter
-@Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 public abstract class AbstractPersonaPolicy extends AbstractPolicy {

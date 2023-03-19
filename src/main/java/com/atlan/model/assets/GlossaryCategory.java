@@ -19,7 +19,6 @@ import lombok.extern.slf4j.Slf4j;
  * Instance of a category in Atlan.
  */
 @Getter
-@Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
@@ -31,7 +30,6 @@ public class GlossaryCategory extends Asset {
 
     /** Fixed typeName for GlossaryCategorys. */
     @Getter(onMethod_ = {@Override})
-    @Setter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
 
@@ -64,6 +62,7 @@ public class GlossaryCategory extends Asset {
     /** Child categories organized within this category. */
     @Attribute
     @Singular("childCategory")
+    @Setter(AccessLevel.PACKAGE)
     SortedSet<GlossaryCategory> childrenCategories;
 
     /**

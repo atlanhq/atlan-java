@@ -19,7 +19,6 @@ import lombok.experimental.SuperBuilder;
  * Instance of a dbt model in Atlan.
  */
 @Getter
-@Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 public class DbtModel extends Dbt {
@@ -29,7 +28,6 @@ public class DbtModel extends Dbt {
 
     /** Fixed typeName for DbtModels. */
     @Getter(onMethod_ = {@Override})
-    @Setter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
 

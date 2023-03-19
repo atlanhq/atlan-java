@@ -12,7 +12,6 @@ import lombok.experimental.SuperBuilder;
  * TBC
  */
 @Getter
-@Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @JsonSubTypes({

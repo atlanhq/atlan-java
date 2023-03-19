@@ -4,9 +4,9 @@ package com.atlan.model.admin;
 
 import java.util.Map;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 
-@Data
+@Getter
 @Builder
 public class PackageParameter {
 

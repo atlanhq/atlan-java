@@ -5,7 +5,6 @@ package com.atlan.model.typedefs;
 import com.atlan.model.enums.AtlanCustomAttributeCardinality;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 
@@ -13,7 +12,6 @@ import lombok.extern.jackson.Jacksonized;
  * Defines the characteristics of the structure of one end of a relationship.
  */
 @Getter
-@Setter
 @Jacksonized
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = false)

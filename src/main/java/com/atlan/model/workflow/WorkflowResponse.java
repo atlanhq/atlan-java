@@ -7,11 +7,11 @@ import com.atlan.model.enums.AtlanWorkflowPhase;
 import com.atlan.net.ApiResource;
 import com.atlan.net.HttpClient;
 import java.util.List;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import org.slf4j.Logger;
 
-@Data
+@Getter
 @EqualsAndHashCode(callSuper = false)
 public class WorkflowResponse extends ApiResource {
     private static final long serialVersionUID = 2L;

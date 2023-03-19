@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.Set;
 import org.testng.annotations.Test;
 
-@Test(groups = {"purpose"})
 public class PurposeTest extends AtlanLiveTest {
 
     private static final String PREFIX = "PurposeTest";
@@ -24,14 +23,14 @@ public class PurposeTest extends AtlanLiveTest {
 
     public static String purposeGuid = null;
 
-    @Test(groups = {"invalid.purpose"})
+    @Test(groups = {"purpose.invalid.purpose"})
     void createInvalidPurpose() {
         assertThrows(
                 InvalidRequestException.class,
                 () -> Purpose.creator(PURPOSE_NAME, null).build().create());
     }
 
-    @Test(groups = {"create.classification"})
+    @Test(groups = {"purpose.create.classification"})
     void createClassification() throws AtlanException {
         ClassificationDef cls = ClassificationDef.creator(CLS_NAME, AtlanClassificationColor.GREEN)
                 .build();
@@ -40,8 +39,8 @@ public class PurposeTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"create.purposes"},
-            dependsOnGroups = {"create.classification"})
+            groups = {"purpose.create.purposes"},
+            dependsOnGroups = {"purpose.create.classification"})
     void createPurposes() throws AtlanException {
         Purpose purpose = Purpose.creator(PURPOSE_NAME, List.of(CLS_NAME))
                 .description("Example purpose for testing purposes.")
@@ -54,8 +53,8 @@ public class PurposeTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"read.purposes.1"},
-            dependsOnGroups = {"create.purposes"})
+            groups = {"purpose.read.purposes.1"},
+            dependsOnGroups = {"purpose.create.purposes"})
     void retrievePurposes1() throws AtlanException {
         List<Purpose> purposes = Purpose.retrieveAll();
         assertNotNull(purposes);
@@ -69,8 +68,8 @@ public class PurposeTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"update.purposes"},
-            dependsOnGroups = {"create.purposes"})
+            groups = {"purpose.update.purposes"},
+            dependsOnGroups = {"purpose.create.purposes"})
     void updatePurposes() throws AtlanException {
         Purpose purpose = Purpose.retrieveByName(PURPOSE_NAME);
         assertNotNull(purpose);
@@ -88,8 +87,8 @@ public class PurposeTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"update.purposes.policy"},
-            dependsOnGroups = {"update.purposes"})
+            groups = {"purpose.update.purposes.policy"},
+            dependsOnGroups = {"purpose.update.purposes"})
     void addPoliciesToPurpose() throws AtlanException {
         Purpose purpose = Purpose.retrieveByName(PURPOSE_NAME).toBuilder()
                 .metadataPolicy(PurposeMetadataPolicy.creator(
@@ -115,8 +114,8 @@ public class PurposeTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"read.purposes.2"},
-            dependsOnGroups = {"update.purposes.policy"})
+            groups = {"purpose.read.purposes.2"},
+            dependsOnGroups = {"purpose.update.purposes.policy"})
     void retrievePurposes2() throws AtlanException {
         Purpose one = Purpose.retrieveByName(PURPOSE_NAME);
         assertNotNull(one);
@@ -134,16 +133,16 @@ public class PurposeTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"purge.purposes"},
-            dependsOnGroups = {"create.*", "update.*", "read.*"},
+            groups = {"purpose.purge.purposes"},
+            dependsOnGroups = {"purpose.create.*", "purpose.update.*", "purpose.read.*"},
             alwaysRun = true)
     void purgePurposes() throws AtlanException {
         Purpose.delete(purposeGuid);
     }
 
     @Test(
-            groups = {"purge.classifications"},
-            dependsOnGroups = {"create.*", "update.*", "read.*", "purge.purposes"},
+            groups = {"purpose.purge.classifications"},
+            dependsOnGroups = {"purpose.create.*", "purpose.update.*", "purpose.read.*", "purpose.purge.purposes"},
             alwaysRun = true)
     void purgeClassifications() throws AtlanException {
         ClassificationDef.purge(CLS_NAME);

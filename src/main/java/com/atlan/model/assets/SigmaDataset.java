@@ -18,7 +18,6 @@ import lombok.experimental.SuperBuilder;
  * Instance of a Sigma dataset in Atlan.
  */
 @Getter
-@Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 public class SigmaDataset extends Sigma {
@@ -28,7 +27,6 @@ public class SigmaDataset extends Sigma {
 
     /** Fixed typeName for SigmaDatasets. */
     @Getter(onMethod_ = {@Override})
-    @Setter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
 

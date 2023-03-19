@@ -25,9 +25,7 @@ import com.fasterxml.jackson.databind.jsontype.TypeDeserializer;
 import com.fasterxml.jackson.databind.jsontype.TypeSerializer;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import java.io.IOException;
-import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
@@ -131,7 +129,12 @@ public class ApiToken extends AtlanObject {
         Set<String> personas = null;
         if (attributes != null) {
             description = attributes.getDescription();
-            personas = attributes.getPersonas();
+            if (attributes.getPersonas() != null) {
+                personas = new HashSet<>();
+                for (ApiTokenPersona persona : attributes.getPersonas()) {
+                    personas.add(persona.getId());
+                }
+            }
         }
         return ApiTokensEndpoint.update(this.id, this.displayName, description, personas);
     }
@@ -147,7 +150,6 @@ public class ApiToken extends AtlanObject {
     }
 
     @Getter
-    @Setter
     @JsonSerialize(using = ApiTokenAttributesSerializer.class)
     @JsonDeserialize(using = ApiTokenAttributesDeserializer.class)
     @Builder(toBuilder = true)
@@ -176,9 +178,9 @@ public class ApiToken extends AtlanObject {
         /** Human-readable name provided when creating the token. */
         String displayName;
 
-        /** Unique identifiers (GUIDs) of personas associated with the API token. */
+        /** Personas associated with the API token. */
         @Singular
-        SortedSet<String> personas;
+        SortedSet<ApiTokenPersona> personas;
 
         /** Possible future placeholder for purposes association with the token. */
         @JsonIgnore
@@ -187,6 +189,33 @@ public class ApiToken extends AtlanObject {
         /** Detailed permissions given to the API token. */
         @Singular
         SortedSet<String> workspacePermissions;
+    }
+
+    @Getter
+    @Jacksonized
+    @Builder(toBuilder = true)
+    @EqualsAndHashCode(callSuper = true)
+    public static final class ApiTokenPersona extends AtlanObject implements Comparable<ApiTokenPersona> {
+
+        private static final Comparator<String> stringComparator = Comparator.nullsFirst(String::compareTo);
+        private static final Comparator<ApiTokenPersona> personaComparator = Comparator.comparing(
+                        ApiTokenPersona::getId, stringComparator)
+                .thenComparing(ApiTokenPersona::getPersona, stringComparator);
+
+        /** Unique identifier (GUID) of the linked persona. */
+        String id;
+        /** Unique name of the linked persona. */
+        String persona;
+
+        public static ApiTokenPersona of(String id, String persona) {
+            return ApiTokenPersona.builder().id(id).persona(persona).build();
+        }
+
+        /** {@inheritDoc} */
+        @Override
+        public int compareTo(ApiTokenPersona o) {
+            return personaComparator.compare(this, o);
+        }
     }
 
     /**
@@ -264,10 +293,11 @@ public class ApiToken extends AtlanObject {
         public ApiTokenAttributes deserialize(JsonParser parser, DeserializationContext context) throws IOException {
             JsonNode root = parser.getCodec().readTree(parser);
 
-            Set<String> personas = new TreeSet<>();
+            Set<ApiTokenPersona> personas = new TreeSet<>();
             JsonNode personasJson = root.get("personas");
             if (personasJson.isTextual()) {
-                personas = StringToSetDeserializer.deserialize(personasJson.asText());
+                // TODO: Convert the string into an actual array, then proceed with an attempt to deserialize
+                personas = Collections.emptySet();
             } else if (personasJson.isArray()) {
                 personas = JacksonUtils.deserializeObject(root, "personas", new TypeReference<>() {});
             }

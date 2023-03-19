@@ -18,7 +18,6 @@ import lombok.experimental.SuperBuilder;
  * Instance of a database in Atlan.
  */
 @Getter
-@Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 public class Database extends SQL {
@@ -28,7 +27,6 @@ public class Database extends SQL {
 
     /** Fixed typeName for Databases. */
     @Getter(onMethod_ = {@Override})
-    @Setter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
 

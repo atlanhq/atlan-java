@@ -19,7 +19,6 @@ import lombok.experimental.SuperBuilder;
  * Instance of a Preset chart in Atlan.
  */
 @Getter
-@Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @SuppressWarnings("cast")
@@ -30,7 +29,6 @@ public class PresetChart extends Preset {
 
     /** Fixed typeName for PresetCharts. */
     @Getter(onMethod_ = {@Override})
-    @Setter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
 

@@ -17,7 +17,6 @@ import lombok.experimental.SuperBuilder;
  * TBC
  */
 @Getter
-@Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 public class BIProcess extends AbstractProcess {
@@ -27,7 +26,6 @@ public class BIProcess extends AbstractProcess {
 
     /** Fixed typeName for BIProcesss. */
     @Getter(onMethod_ = {@Override})
-    @Setter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
 

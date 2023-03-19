@@ -9,12 +9,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.lang.reflect.*;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * Lazily-loaded cache for Java reflection-based operations across the Atlan data model.
  */
-@Slf4j
 public class ReflectionCache {
 
     private static final Map<String, Map<String, Field>> fieldMap = new ConcurrentHashMap<>();
@@ -79,7 +77,9 @@ public class ReflectionCache {
         }
         for (Method method : b.getDeclaredMethods()) {
             String name = method.getName();
-            if (name.startsWith(prefix)) {
+            if (prefix == null) {
+                map.put(name, method);
+            } else if (name.startsWith(prefix)) {
                 map.put(StringUtils.getFieldNameFromMethodName(name), method);
             }
         }
@@ -91,7 +91,7 @@ public class ReflectionCache {
      *
      * @param b starting class
      */
-    public static void addClass(Class<?> b) {
+    private static void addClass(Class<?> b) {
         String className = b.getCanonicalName();
         if (!fieldMap.containsKey(className)) {
             // Initialize all of these maps up-front, as some may not be used
@@ -110,15 +110,20 @@ public class ReflectionCache {
             getAllFields(map, b, b);
             fieldMap.put(className, Collections.unmodifiableMap(map));
         }
-        if (!getterMap.containsKey(className)) {
-            HashMap<String, Method> map = new HashMap<>();
-            getMethods(map, b, "get");
-            getterMap.put(className, Collections.unmodifiableMap(map));
-        }
-        if (!setterMap.containsKey(className)) {
-            HashMap<String, Method> map = new HashMap<>();
-            getMethods(map, b, "set");
-            setterMap.put(className, Collections.unmodifiableMap(map));
+        if (className.endsWith("BuilderImpl")) {
+            // TODO: Need to put builder methods into the setter map, not the root class
+            //  itself (as the root class itself will be immutable)
+            if (!setterMap.containsKey(className)) {
+                HashMap<String, Method> map = new HashMap<>();
+                getMethods(map, b, null);
+                setterMap.put(className, Collections.unmodifiableMap(map));
+            }
+        } else {
+            if (!getterMap.containsKey(className)) {
+                HashMap<String, Method> map = new HashMap<>();
+                getMethods(map, b, "get");
+                getterMap.put(className, Collections.unmodifiableMap(map));
+            }
         }
     }
 
@@ -257,6 +262,16 @@ public class ReflectionCache {
             // We need to see if the embedded type is another wrapper, as there are
             // cases where we have List<Map<String, String>>
             parameterType = ((ParameterizedType) parameterType).getRawType();
+        } else if (parameterType instanceof WildcardType) {
+            // We also need to see if the embedded type is a bounded generic, such
+            // as <? extends AbstractProcess>, and if so to retrieve the upper bound
+            WildcardType genericType = (WildcardType) parameterType;
+            parameterType = genericType.getUpperBounds()[0];
+            if (parameterType instanceof ParameterizedType) {
+                // And the upper bound could actually itself be a wrapper, so check if
+                // we need to unpack that
+                parameterType = ((ParameterizedType) parameterType).getRawType();
+            }
         }
         return (Class<?>) parameterType;
     }

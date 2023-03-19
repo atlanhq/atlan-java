@@ -19,7 +19,6 @@ import lombok.experimental.SuperBuilder;
  * Instance of a dbt source asset in Atlan.
  */
 @Getter
-@Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 public class DbtSource extends Dbt {
@@ -29,7 +28,6 @@ public class DbtSource extends Dbt {
 
     /** Fixed typeName for DbtSources. */
     @Getter(onMethod_ = {@Override})
-    @Setter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
 

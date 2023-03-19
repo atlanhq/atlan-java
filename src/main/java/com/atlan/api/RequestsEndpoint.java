@@ -21,8 +21,8 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import java.io.IOException;
 import java.util.List;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
 /**
  * API endpoints for interacting with Atlan's requests.
@@ -217,7 +217,7 @@ public class RequestsEndpoint {
     /**
      * Necessary for wrapping requests into an object that extends ApiResource for API interactions.
      */
-    @Data
+    @Getter
     @EqualsAndHashCode(callSuper = false)
     private static final class BulkRequest extends ApiResource {
         List<AtlanRequest> requests;
@@ -230,7 +230,7 @@ public class RequestsEndpoint {
     /**
      * Necessary for wrapping approval and rejection requests into an object that extends ApiResource for API interactions.
      */
-    @Data
+    @Getter
     @EqualsAndHashCode(callSuper = false)
     private static final class AtlanRequestAction extends ApiResource {
         /** Action to take on the request. */
@@ -249,7 +249,7 @@ public class RequestsEndpoint {
     /**
      * Necessary for handling responses that are single requests.
      */
-    @Data
+    @Getter
     @JsonSerialize(using = WrappedRequestSerializer.class)
     @JsonDeserialize(using = WrappedRequestDeserializer.class)
     @EqualsAndHashCode(callSuper = false)
@@ -310,7 +310,7 @@ public class RequestsEndpoint {
     /**
      * Necessary for handling responses that are plain strings rather than JSON.
      */
-    @Data
+    @Getter
     @JsonSerialize(using = WrappedStringSerializer.class)
     @JsonDeserialize(using = WrappedStringDeserializer.class)
     @EqualsAndHashCode(callSuper = false)

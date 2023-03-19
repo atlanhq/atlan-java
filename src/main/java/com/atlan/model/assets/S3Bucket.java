@@ -18,7 +18,6 @@ import lombok.experimental.SuperBuilder;
  * Instance of an S3 bucket in Atlan.
  */
 @Getter
-@Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 public class S3Bucket extends S3 {
@@ -28,7 +27,6 @@ public class S3Bucket extends S3 {
 
     /** Fixed typeName for S3Buckets. */
     @Getter(onMethod_ = {@Override})
-    @Setter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
 

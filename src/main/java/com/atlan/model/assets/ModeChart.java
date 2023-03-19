@@ -17,7 +17,6 @@ import lombok.experimental.SuperBuilder;
  * Instance of a Mode chart in Atlan.
  */
 @Getter
-@Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 public class ModeChart extends Mode {
@@ -27,7 +26,6 @@ public class ModeChart extends Mode {
 
     /** Fixed typeName for ModeCharts. */
     @Getter(onMethod_ = {@Override})
-    @Setter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
 

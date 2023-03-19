@@ -45,17 +45,17 @@ public class TypeDefsEndpoint {
      * @throws AtlanException on any API communication issue
      */
     public static TypeDefResponse createTypeDef(TypeDef typeDef) throws AtlanException {
-        TypeDefResponse wrapper = new TypeDefResponse();
+        TypeDefResponse.TypeDefResponseBuilder builder = TypeDefResponse.builder();
         if (typeDef != null) {
             switch (typeDef.getCategory()) {
                 case CLASSIFICATION:
-                    wrapper.setClassificationDefs(List.of((ClassificationDef) typeDef));
+                    builder.classificationDefs(List.of((ClassificationDef) typeDef));
                     break;
                 case CUSTOM_METADATA:
-                    wrapper.setCustomMetadataDefs(List.of((CustomMetadataDef) typeDef));
+                    builder.customMetadataDefs(List.of((CustomMetadataDef) typeDef));
                     break;
                 case ENUM:
-                    wrapper.setEnumDefs(List.of((EnumDef) typeDef));
+                    builder.enumDefs(List.of((EnumDef) typeDef));
                     break;
                 default:
                     throw new InvalidRequestException(
@@ -63,10 +63,11 @@ public class TypeDefsEndpoint {
                             typeDef.getCategory().getValue());
             }
             String url = String.format("%s%s", Atlan.getBaseUrl(), endpoint);
-            return ApiResource.request(ApiResource.RequestMethod.POST, url, wrapper, TypeDefResponse.class, null);
+            return ApiResource.request(
+                    ApiResource.RequestMethod.POST, url, builder.build(), TypeDefResponse.class, null);
         }
         // If there was no typedef provided, just return an empty response (noop)
-        return wrapper;
+        return builder.build();
     }
 
     /**
@@ -78,17 +79,17 @@ public class TypeDefsEndpoint {
      * @throws AtlanException on any API communication issue
      */
     public static TypeDefResponse updateTypeDef(TypeDef typeDef) throws AtlanException {
-        TypeDefResponse wrapper = new TypeDefResponse();
+        TypeDefResponse.TypeDefResponseBuilder builder = TypeDefResponse.builder();
         if (typeDef != null) {
             switch (typeDef.getCategory()) {
                 case CLASSIFICATION:
-                    wrapper.setClassificationDefs(List.of((ClassificationDef) typeDef));
+                    builder.classificationDefs(List.of((ClassificationDef) typeDef));
                     break;
                 case CUSTOM_METADATA:
-                    wrapper.setCustomMetadataDefs(List.of((CustomMetadataDef) typeDef));
+                    builder.customMetadataDefs(List.of((CustomMetadataDef) typeDef));
                     break;
                 case ENUM:
-                    wrapper.setEnumDefs(List.of((EnumDef) typeDef));
+                    builder.enumDefs(List.of((EnumDef) typeDef));
                     break;
                 default:
                     throw new InvalidRequestException(
@@ -96,10 +97,11 @@ public class TypeDefsEndpoint {
                             typeDef.getCategory().getValue());
             }
             String url = String.format("%s%s", Atlan.getBaseUrl(), endpoint);
-            return ApiResource.request(ApiResource.RequestMethod.PUT, url, wrapper, TypeDefResponse.class, null);
+            return ApiResource.request(
+                    ApiResource.RequestMethod.PUT, url, builder.build(), TypeDefResponse.class, null);
         }
         // If there was no typedef provided, just return an empty response (noop)
-        return wrapper;
+        return builder.build();
     }
 
     /**

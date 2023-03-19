@@ -16,7 +16,6 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 
 @Getter
-@Setter
 @Jacksonized
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
@@ -252,7 +251,6 @@ public class AtlanUser extends AtlanObject {
     }
 
     @Getter
-    @Setter
     @Jacksonized
     @SuperBuilder(toBuilder = true)
     @EqualsAndHashCode(callSuper = true)
@@ -282,7 +280,6 @@ public class AtlanUser extends AtlanObject {
     }
 
     @Getter
-    @Setter
     @Jacksonized
     @SuperBuilder(toBuilder = true)
     @EqualsAndHashCode(callSuper = true)
@@ -319,7 +316,6 @@ public class AtlanUser extends AtlanObject {
      * Personas associated with a user.
      */
     @Getter
-    @Setter
     @Jacksonized
     @SuperBuilder(toBuilder = true)
     @EqualsAndHashCode(callSuper = true)
@@ -349,7 +345,6 @@ public class AtlanUser extends AtlanObject {
     }
 
     @Getter
-    @Setter
     @Jacksonized
     @SuperBuilder(toBuilder = true)
     @EqualsAndHashCode(callSuper = true)
@@ -379,7 +374,6 @@ public class AtlanUser extends AtlanObject {
     }
 
     @Getter
-    @Setter
     @Jacksonized
     @SuperBuilder(toBuilder = true)
     @EqualsAndHashCode(callSuper = true)

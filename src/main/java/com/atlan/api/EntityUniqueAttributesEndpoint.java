@@ -16,8 +16,8 @@ import com.atlan.serde.Serde;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.ArrayList;
 import java.util.List;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
@@ -191,7 +191,7 @@ public class EntityUniqueAttributesEndpoint {
     /**
      * Request class for updating a single asset.
      */
-    @Data
+    @Getter
     @SuperBuilder
     @EqualsAndHashCode(callSuper = false)
     static class SingleEntityRequest extends AtlanObject {

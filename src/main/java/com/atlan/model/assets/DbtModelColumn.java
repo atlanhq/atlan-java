@@ -17,7 +17,6 @@ import lombok.experimental.SuperBuilder;
  * Instance of a column within a dbt model in Atlan.
  */
 @Getter
-@Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 public class DbtModelColumn extends Dbt {
@@ -27,7 +26,6 @@ public class DbtModelColumn extends Dbt {
 
     /** Fixed typeName for DbtModelColumns. */
     @Getter(onMethod_ = {@Override})
-    @Setter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
 

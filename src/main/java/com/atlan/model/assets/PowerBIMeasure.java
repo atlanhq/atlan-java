@@ -17,7 +17,6 @@ import lombok.experimental.SuperBuilder;
  * Instance of a Power BI measure in Atlan.
  */
 @Getter
-@Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 public class PowerBIMeasure extends PowerBI {
@@ -27,7 +26,6 @@ public class PowerBIMeasure extends PowerBI {
 
     /** Fixed typeName for PowerBIMeasures. */
     @Getter(onMethod_ = {@Override})
-    @Setter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
 

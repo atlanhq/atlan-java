@@ -18,7 +18,6 @@ import lombok.experimental.SuperBuilder;
  * Instance of a Tableau site in Atlan.
  */
 @Getter
-@Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 public class TableauSite extends Tableau {
@@ -28,7 +27,6 @@ public class TableauSite extends Tableau {
 
     /** Fixed typeName for TableauSites. */
     @Getter(onMethod_ = {@Override})
-    @Setter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
 

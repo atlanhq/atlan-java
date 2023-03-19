@@ -18,7 +18,6 @@ import lombok.experimental.SuperBuilder;
  * Instance of a column-level lineage process in Atlan.
  */
 @Getter
-@Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 public class ColumnProcess extends AbstractColumnProcess {
@@ -28,7 +27,6 @@ public class ColumnProcess extends AbstractColumnProcess {
 
     /** Fixed typeName for ColumnProcesss. */
     @Getter(onMethod_ = {@Override})
-    @Setter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
 

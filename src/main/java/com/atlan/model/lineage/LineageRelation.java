@@ -3,14 +3,18 @@
 package com.atlan.model.lineage;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.extern.jackson.Jacksonized;
 
 /**
  * Captures the relationships in lineage. The specific form of those relationships will vary
  * depending on whether lineage was requested with {@code hideProcess} enabled or disabled.
  */
-@Data
+@Getter
+@Jacksonized
+@Builder
 @EqualsAndHashCode
 public class LineageRelation {
 

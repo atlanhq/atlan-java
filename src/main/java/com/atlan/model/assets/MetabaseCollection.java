@@ -18,7 +18,6 @@ import lombok.experimental.SuperBuilder;
  * Instance of a Metabase collection in Atlan.
  */
 @Getter
-@Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 public class MetabaseCollection extends Metabase {
@@ -28,7 +27,6 @@ public class MetabaseCollection extends Metabase {
 
     /** Fixed typeName for MetabaseCollections. */
     @Getter(onMethod_ = {@Override})
-    @Setter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
 

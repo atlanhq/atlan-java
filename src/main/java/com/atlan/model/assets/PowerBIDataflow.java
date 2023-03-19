@@ -18,7 +18,6 @@ import lombok.experimental.SuperBuilder;
  * Instance of a Power BI dataflow in Atlan.
  */
 @Getter
-@Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 public class PowerBIDataflow extends PowerBI {
@@ -28,7 +27,6 @@ public class PowerBIDataflow extends PowerBI {
 
     /** Fixed typeName for PowerBIDataflows. */
     @Getter(onMethod_ = {@Override})
-    @Setter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
 

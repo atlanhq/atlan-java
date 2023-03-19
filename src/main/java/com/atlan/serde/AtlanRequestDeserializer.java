@@ -129,7 +129,7 @@ public class AtlanRequestDeserializer extends StdDeserializer<AtlanRequest> {
                     // Inject typeName into the destinationEntity so that we can deserialize it
                     // appropriately
                     ((ObjectNode) destinationEntity).set("typeName", entityType);
-                    builder = builder.destinationEntity(
+                    builder.destinationEntity(
                             Serde.mapper.readValue(destinationEntity.toString(), new TypeReference<>() {}));
                 }
                 return builder.id(JacksonUtils.deserializeString(root, "id"))

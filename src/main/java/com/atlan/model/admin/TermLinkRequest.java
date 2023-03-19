@@ -6,11 +6,9 @@ import java.util.UUID;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 @Getter
-@Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 public class TermLinkRequest extends AtlanRequest {
@@ -20,13 +18,11 @@ public class TermLinkRequest extends AtlanRequest {
 
     /** Fixed requestType for term assignments. */
     @Getter(onMethod_ = {@Override})
-    @Setter(onMethod_ = {@Override})
     @Builder.Default
     String requestType = REQUEST_TYPE;
 
     /** Fixed sourceType for term assignments. */
     @Getter(onMethod_ = {@Override})
-    @Setter(onMethod_ = {@Override})
     @Builder.Default
     String sourceType = SOURCE_TYPE;
 

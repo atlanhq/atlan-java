@@ -12,7 +12,6 @@ import lombok.experimental.SuperBuilder;
  * Base class for dbt assets.
  */
 @Getter
-@Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @JsonSubTypes({

@@ -11,7 +11,6 @@ import java.util.List;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 
@@ -19,7 +18,6 @@ import lombok.extern.jackson.Jacksonized;
  * Structural definition of a classification.
  */
 @Getter
-@Setter
 @Jacksonized
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
@@ -28,7 +26,6 @@ public class ClassificationDef extends TypeDef {
 
     /** Fixed category for classification typedefs. */
     @Getter(onMethod_ = {@Override})
-    @Setter(onMethod_ = {@Override})
     @Builder.Default
     AtlanTypeCategory category = AtlanTypeCategory.CLASSIFICATION;
 

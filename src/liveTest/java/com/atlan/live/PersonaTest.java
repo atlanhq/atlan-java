@@ -14,7 +14,6 @@ import java.util.Set;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.Test;
 
-@Test(groups = {"persona"})
 @Slf4j
 public class PersonaTest extends AtlanLiveTest {
 
@@ -30,17 +29,17 @@ public class PersonaTest extends AtlanLiveTest {
     private static Connection connection = null;
     private static Glossary glossary = null;
 
-    @Test(groups = {"create.connection"})
+    @Test(groups = {"persona.create.connection"})
     void createConnection() throws AtlanException {
         connection = ConnectionTest.createConnection(CONNECTION_NAME, CONNECTOR_TYPE);
     }
 
-    @Test(groups = {"create.glossary"})
+    @Test(groups = {"persona.create.glossary"})
     void createGlossary() throws AtlanException {
         glossary = GlossaryTest.createGlossary(GLOSSARY_NAME);
     }
 
-    @Test(groups = {"create.personas"})
+    @Test(groups = {"persona.create.personas"})
     void createPersonas() throws AtlanException {
         Persona persona = Persona.creator(PERSONA_NAME).build();
         Persona result = persona.create();
@@ -51,8 +50,8 @@ public class PersonaTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"read.personas.1"},
-            dependsOnGroups = {"create.personas"})
+            groups = {"persona.read.personas.1"},
+            dependsOnGroups = {"persona.create.personas"})
     void retrievePersonas1() throws AtlanException {
         List<Persona> personas = Persona.retrieveAll();
         assertNotNull(personas);
@@ -63,8 +62,8 @@ public class PersonaTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"update.personas"},
-            dependsOnGroups = {"create.personas"})
+            groups = {"persona.update.personas"},
+            dependsOnGroups = {"persona.create.personas"})
     void updatePersonas() throws AtlanException {
         Persona persona = Persona.retrieveByName(PERSONA_NAME).toBuilder()
                 .description("Now with a description!")
@@ -80,8 +79,8 @@ public class PersonaTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"update.personas.policy"},
-            dependsOnGroups = {"update.personas", "create.connection", "create.glossary"})
+            groups = {"persona.update.personas.policy"},
+            dependsOnGroups = {"persona.update.personas", "persona.create.connection", "persona.create.glossary"})
     void addPoliciesToPersona() throws AtlanException {
         Persona persona = Persona.retrieveByName(PERSONA_NAME);
         PersonaMetadataPolicy metadata = PersonaMetadataPolicy.creator(
@@ -113,8 +112,8 @@ public class PersonaTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"read.personas.2"},
-            dependsOnGroups = {"update.personas.*"})
+            groups = {"persona.read.personas.2"},
+            dependsOnGroups = {"persona.update.personas.*"})
     void retrievePersonas2() throws AtlanException {
         Persona one = Persona.retrieveByName(PERSONA_NAME);
         assertNotNull(one);
@@ -133,24 +132,24 @@ public class PersonaTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"purge.personas"},
-            dependsOnGroups = {"create.*", "update.*", "read.*"},
+            groups = {"persona.purge.personas"},
+            dependsOnGroups = {"persona.create.*", "persona.update.*", "persona.read.*"},
             alwaysRun = true)
     void purgePersonas() throws AtlanException {
         Persona.delete(personaGuid);
     }
 
     @Test(
-            groups = {"purge.glossary"},
-            dependsOnGroups = {"create.*", "read.*", "update.*", "purge.personas"},
+            groups = {"persona.purge.glossary"},
+            dependsOnGroups = {"persona.create.*", "persona.read.*", "persona.update.*", "persona.purge.personas"},
             alwaysRun = true)
     void purgeGlossary() throws AtlanException {
         Glossary.purge(glossary.getGuid());
     }
 
     @Test(
-            groups = {"purge.connection"},
-            dependsOnGroups = {"create.*", "read.*", "update.*", "purge.personas"},
+            groups = {"persona.purge.connection"},
+            dependsOnGroups = {"persona.create.*", "persona.read.*", "persona.update.*", "persona.purge.personas"},
             alwaysRun = true)
     void purgeConnection() throws AtlanException, InterruptedException {
         ConnectionTest.deleteConnection(connection.getQualifiedName(), log);

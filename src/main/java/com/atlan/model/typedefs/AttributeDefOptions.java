@@ -15,7 +15,6 @@ import java.util.Set;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 
@@ -23,7 +22,6 @@ import lombok.extern.jackson.Jacksonized;
  * Options that can be set on each attribute within a type definition.
  */
 @Getter
-@Setter
 @Jacksonized
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = false)
@@ -129,10 +127,10 @@ public class AttributeDefOptions extends AtlanObject {
             case GROUPS:
             case URL:
             case SQL:
-                builder = builder.customType(type.getValue());
+                builder.customType(type.getValue());
                 break;
             case OPTIONS:
-                builder = builder.isEnum(true).enumType(optionsName);
+                builder.isEnum(true).enumType(optionsName);
                 break;
             default:
                 // do nothing

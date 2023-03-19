@@ -6,11 +6,9 @@ import java.util.UUID;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 @Getter
-@Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 public class AttributeRequest extends AtlanRequest {
@@ -20,13 +18,11 @@ public class AttributeRequest extends AtlanRequest {
 
     /** Fixed requestType for attributes. */
     @Getter(onMethod_ = {@Override})
-    @Setter(onMethod_ = {@Override})
     @Builder.Default
     String requestType = REQUEST_TYPE;
 
     /** Fixed sourceType for attributes. */
     @Getter(onMethod_ = {@Override})
-    @Setter(onMethod_ = {@Override})
     @Builder.Default
     String sourceType = SOURCE_TYPE;
 

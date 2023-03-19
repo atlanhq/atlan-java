@@ -18,7 +18,6 @@ import lombok.experimental.SuperBuilder;
  * Instance of a Preset workspace in Atlan.
  */
 @Getter
-@Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 public class PresetWorkspace extends Preset {
@@ -28,7 +27,6 @@ public class PresetWorkspace extends Preset {
 
     /** Fixed typeName for PresetWorkspaces. */
     @Getter(onMethod_ = {@Override})
-    @Setter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
 

@@ -20,7 +20,6 @@ import lombok.experimental.SuperBuilder;
  * Instance of an API path that could contain one or more endpoints in Atlan.
  */
 @Getter
-@Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @SuppressWarnings("cast")
@@ -31,7 +30,6 @@ public class APIPath extends API {
 
     /** Fixed typeName for APIPaths. */
     @Getter(onMethod_ = {@Override})
-    @Setter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
 

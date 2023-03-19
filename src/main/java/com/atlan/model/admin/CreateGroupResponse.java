@@ -14,7 +14,9 @@ import lombok.extern.jackson.Jacksonized;
  * Specialized response for creating a group, as the details included are different
  * from those when updating or retrieving a group.
  */
-@Data
+@Getter
+@Jacksonized
+@Builder(toBuilder = true)
 @EqualsAndHashCode(callSuper = false)
 public class CreateGroupResponse extends ApiResource {
     private static final long serialVersionUID = 2L;
@@ -27,7 +29,6 @@ public class CreateGroupResponse extends ApiResource {
 
     /** Status of the user being added to the group during its creation. */
     @Getter
-    @Setter
     @Jacksonized
     @SuperBuilder(toBuilder = true)
     @EqualsAndHashCode(callSuper = true)

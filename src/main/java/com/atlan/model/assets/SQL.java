@@ -13,7 +13,6 @@ import lombok.experimental.SuperBuilder;
  * Base class for SQL assets.
  */
 @Getter
-@Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @JsonSubTypes({

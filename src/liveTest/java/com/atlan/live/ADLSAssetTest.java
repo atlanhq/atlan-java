@@ -24,7 +24,6 @@ import org.testng.annotations.Test;
 /**
  * Tests all aspects of Azure Data Lake Storage assets.
  */
-@Test(groups = {"adls"})
 @Slf4j
 public class ADLSAssetTest extends AtlanLiveTest {
 
@@ -41,14 +40,14 @@ public class ADLSAssetTest extends AtlanLiveTest {
     private static ADLSContainer container = null;
     private static ADLSObject object = null;
 
-    @Test(groups = {"create.connection"})
+    @Test(groups = {"adls.create.connection"})
     void createConnection() throws AtlanException {
         connection = ConnectionTest.createConnection(CONNECTION_NAME, CONNECTOR_TYPE);
     }
 
     @Test(
-            groups = {"create.account"},
-            dependsOnGroups = {"create.connection"})
+            groups = {"adls.create.account"},
+            dependsOnGroups = {"adls.create.connection"})
     void createAccount() throws AtlanException {
         ADLSAccount adlsAccount =
                 ADLSAccount.creator(ACCOUNT_NAME, connection.getQualifiedName()).build();
@@ -64,8 +63,8 @@ public class ADLSAssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"create.container"},
-            dependsOnGroups = {"create.account"})
+            groups = {"adls.create.container"},
+            dependsOnGroups = {"adls.create.account"})
     void createContainer() throws AtlanException {
         ADLSContainer adlsContainer = ADLSContainer.creator(CONTAINER_NAME, account.getQualifiedName())
                 .build();
@@ -88,8 +87,8 @@ public class ADLSAssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"create.object"},
-            dependsOnGroups = {"create.container"})
+            groups = {"adls.create.object"},
+            dependsOnGroups = {"adls.create.container"})
     void createObject() throws AtlanException {
         ADLSObject adlsObject =
                 ADLSObject.creator(OBJECT_NAME, container.getQualifiedName()).build();
@@ -114,8 +113,8 @@ public class ADLSAssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"update.container"},
-            dependsOnGroups = {"create.container"})
+            groups = {"adls.update.container"},
+            dependsOnGroups = {"adls.create.container"})
     void updateContainer() throws AtlanException {
         ADLSContainer updated =
                 ADLSContainer.updateCertificate(container.getQualifiedName(), CERTIFICATE_STATUS, CERTIFICATE_MESSAGE);
@@ -130,8 +129,8 @@ public class ADLSAssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"read.container"},
-            dependsOnGroups = {"create.object", "update.container"})
+            groups = {"adls.read.container"},
+            dependsOnGroups = {"adls.create.object", "adls.update.container"})
     void retrieveContainer() throws AtlanException {
         ADLSContainer b = ADLSContainer.retrieveByGuid(container.getGuid());
         assertNotNull(b);
@@ -153,8 +152,8 @@ public class ADLSAssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"update.container.again"},
-            dependsOnGroups = {"read.container"})
+            groups = {"adls.update.container.again"},
+            dependsOnGroups = {"adls.read.container"})
     void updateContainerAgain() throws AtlanException {
         ADLSContainer updated = ADLSContainer.removeCertificate(container.getQualifiedName(), CONTAINER_NAME);
         assertNotNull(updated);
@@ -171,8 +170,8 @@ public class ADLSAssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"search.assets"},
-            dependsOnGroups = {"update.container.again"})
+            groups = {"adls.search.assets"},
+            dependsOnGroups = {"adls.update.container.again"})
     void searchAssets() throws AtlanException {
         Query combined = CompoundQuery.builder()
                 .must(beActive())
@@ -235,8 +234,8 @@ public class ADLSAssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"delete.object"},
-            dependsOnGroups = {"update.*", "search.*"})
+            groups = {"adls.delete.object"},
+            dependsOnGroups = {"adls.update.*", "adls.search.*"})
     void deleteObject() throws AtlanException {
         AssetMutationResponse response = Asset.delete(object.getGuid());
         assertNotNull(response);
@@ -253,8 +252,8 @@ public class ADLSAssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"delete.object.read"},
-            dependsOnGroups = {"delete.object"})
+            groups = {"adls.delete.object.read"},
+            dependsOnGroups = {"adls.delete.object"})
     void readDeletedObject() throws AtlanException {
         ADLSObject deleted = ADLSObject.retrieveByGuid(object.getGuid());
         assertEquals(deleted.getGuid(), object.getGuid());
@@ -263,8 +262,8 @@ public class ADLSAssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"delete.object.restore"},
-            dependsOnGroups = {"delete.object.read"})
+            groups = {"adls.delete.object.restore"},
+            dependsOnGroups = {"adls.delete.object.read"})
     void restoreObject() throws AtlanException {
         assertTrue(ADLSObject.restore(object.getQualifiedName()));
         ADLSObject restored = ADLSObject.retrieveByQualifiedName(object.getQualifiedName());
@@ -274,8 +273,8 @@ public class ADLSAssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"purge.object"},
-            dependsOnGroups = {"delete.object.restore"})
+            groups = {"adls.purge.object"},
+            dependsOnGroups = {"adls.delete.object.restore"})
     void purgeObject() throws AtlanException {
         AssetMutationResponse response = Asset.purge(object.getGuid());
         assertNotNull(response);
@@ -292,8 +291,8 @@ public class ADLSAssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"purge.connection"},
-            dependsOnGroups = {"create.*", "read.*", "search.*", "update.*", "purge.object"},
+            groups = {"adls.purge.connection"},
+            dependsOnGroups = {"adls.create.*", "adls.read.*", "adls.search.*", "adls.update.*", "adls.purge.object"},
             alwaysRun = true)
     void purgeConnection() throws AtlanException, InterruptedException {
         ConnectionTest.deleteConnection(connection.getQualifiedName(), log);

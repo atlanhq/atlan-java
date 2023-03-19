@@ -11,13 +11,11 @@ import java.util.Collection;
 import java.util.SortedSet;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.Singular;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 
 @Getter
-@Setter
 @Jacksonized
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
@@ -64,15 +62,15 @@ public class PurposeDataPolicy extends AbstractPurposePolicy {
                 .allow(allow);
         if (allUsers) {
             userSpecified = true;
-            builder = builder.allUsers(true);
+            builder.allUsers(true);
         } else {
             if (users != null && !users.isEmpty()) {
                 userSpecified = true;
-                builder = builder.users(users);
+                builder.users(users);
             }
             if (groups != null && !groups.isEmpty()) {
                 userSpecified = true;
-                builder = builder.groups(groups);
+                builder.groups(groups);
             }
         }
         if (userSpecified) {

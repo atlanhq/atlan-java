@@ -10,8 +10,8 @@ import com.atlan.model.core.AtlanObject;
 import com.atlan.net.ApiResource;
 import java.util.ArrayList;
 import java.util.List;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.Singular;
 import lombok.experimental.SuperBuilder;
 
@@ -213,7 +213,7 @@ public class UsersEndpoint {
     }
 
     /** Request class for creating a user. */
-    @Data
+    @Getter
     @SuperBuilder
     @EqualsAndHashCode(callSuper = false)
     static final class CreateUserRequest extends AtlanObject {
@@ -222,14 +222,14 @@ public class UsersEndpoint {
     }
 
     /** Request class for changing a user's role. */
-    @Data
+    @Getter
     @SuperBuilder
     @EqualsAndHashCode(callSuper = false)
     static final class ChangeRoleRequest extends AtlanObject {
         String roleId;
     }
 
-    @Data
+    @Getter
     @SuperBuilder
     @EqualsAndHashCode(callSuper = false)
     private static final class CreateUser extends AtlanObject {
@@ -239,7 +239,7 @@ public class UsersEndpoint {
     }
 
     /** Request class for adding a user to one or more groups. */
-    @Data
+    @Getter
     @SuperBuilder
     @EqualsAndHashCode(callSuper = false)
     static final class AddToGroupsRequest extends AtlanObject {

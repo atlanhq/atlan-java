@@ -17,7 +17,6 @@ import lombok.experimental.SuperBuilder;
  * Instance of a Sigma data element field in Atlan.
  */
 @Getter
-@Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 public class SigmaDataElementField extends Sigma {
@@ -27,7 +26,6 @@ public class SigmaDataElementField extends Sigma {
 
     /** Fixed typeName for SigmaDataElementFields. */
     @Getter(onMethod_ = {@Override})
-    @Setter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
 

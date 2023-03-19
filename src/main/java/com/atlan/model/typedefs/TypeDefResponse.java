@@ -5,13 +5,17 @@ package com.atlan.model.typedefs;
 import com.atlan.net.ApiResource;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
-import lombok.Data;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.extern.jackson.Jacksonized;
 
 /**
  * Wrapper used for both requests and responses for type definitions.
  */
-@Data
+@Getter
+@Jacksonized
+@Builder
 @EqualsAndHashCode(callSuper = false)
 public class TypeDefResponse extends ApiResource {
     private static final long serialVersionUID = 2L;

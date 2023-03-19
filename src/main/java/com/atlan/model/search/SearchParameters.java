@@ -4,13 +4,13 @@ package com.atlan.model.search;
 
 import com.atlan.model.core.AtlanObject;
 import java.util.List;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
 /**
  * Set of search parameters that are returned as part of the response of a search against Atlan.
  */
-@Data
+@Getter
 @EqualsAndHashCode(callSuper = false)
 public class SearchParameters extends AtlanObject {
 

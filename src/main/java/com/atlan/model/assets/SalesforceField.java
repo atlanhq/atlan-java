@@ -18,7 +18,6 @@ import lombok.experimental.SuperBuilder;
  * Instance of a Salesforce field in Atlan.
  */
 @Getter
-@Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 public class SalesforceField extends Salesforce {
@@ -28,7 +27,6 @@ public class SalesforceField extends Salesforce {
 
     /** Fixed typeName for SalesforceFields. */
     @Getter(onMethod_ = {@Override})
-    @Setter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
 

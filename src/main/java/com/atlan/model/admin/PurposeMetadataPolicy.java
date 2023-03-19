@@ -12,7 +12,6 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 
 @Getter
-@Setter
 @Jacksonized
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
@@ -55,15 +54,15 @@ public class PurposeMetadataPolicy extends AbstractPurposePolicy {
                 .allow(allow);
         if (allUsers) {
             userSpecified = true;
-            builder = builder.allUsers(true);
+            builder.allUsers(true);
         } else {
             if (users != null && !users.isEmpty()) {
                 userSpecified = true;
-                builder = builder.users(users);
+                builder.users(users);
             }
             if (groups != null && !groups.isEmpty()) {
                 userSpecified = true;
-                builder = builder.groups(groups);
+                builder.groups(groups);
             }
         }
         if (userSpecified) {

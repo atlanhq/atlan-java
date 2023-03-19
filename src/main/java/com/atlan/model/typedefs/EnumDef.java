@@ -21,7 +21,6 @@ import lombok.extern.jackson.Jacksonized;
  * name is precisely the same as the name viewable in the UI.
  */
 @Getter
-@Setter
 @Jacksonized
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
@@ -30,7 +29,6 @@ public class EnumDef extends TypeDef {
 
     /** Fixed category for classification typedefs. */
     @Getter(onMethod_ = {@Override})
-    @Setter(onMethod_ = {@Override})
     @Builder.Default
     AtlanTypeCategory category = AtlanTypeCategory.ENUM;
 
@@ -91,7 +89,6 @@ public class EnumDef extends TypeDef {
      * Structure for definition of a valid value in an enumeration.
      */
     @Getter
-    @Setter
     @Jacksonized
     @SuperBuilder
     @EqualsAndHashCode(callSuper = false)

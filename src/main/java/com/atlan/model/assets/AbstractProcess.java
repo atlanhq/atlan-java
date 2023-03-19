@@ -19,7 +19,6 @@ import lombok.experimental.SuperBuilder;
  * @see ColumnProcess for column-level processes
  */
 @Getter
-@Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @JsonSubTypes({

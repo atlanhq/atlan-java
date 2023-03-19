@@ -17,7 +17,6 @@ import lombok.experimental.SuperBuilder;
  * Instance of a Power BI tile in Atlan.
  */
 @Getter
-@Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 public class PowerBITile extends PowerBI {
@@ -27,7 +26,6 @@ public class PowerBITile extends PowerBI {
 
     /** Fixed typeName for PowerBITiles. */
     @Getter(onMethod_ = {@Override})
-    @Setter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
 

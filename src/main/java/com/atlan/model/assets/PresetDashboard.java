@@ -19,7 +19,6 @@ import lombok.experimental.SuperBuilder;
  * Instance of a Preset collection in Atlan.
  */
 @Getter
-@Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 public class PresetDashboard extends Preset {
@@ -29,7 +28,6 @@ public class PresetDashboard extends Preset {
 
     /** Fixed typeName for PresetDashboards. */
     @Getter(onMethod_ = {@Override})
-    @Setter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
 

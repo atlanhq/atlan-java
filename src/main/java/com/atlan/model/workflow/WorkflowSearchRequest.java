@@ -11,12 +11,12 @@ import com.atlan.api.WorkflowsEndpoint;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.search.IndexSearchDSL;
 import java.util.List;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 
-@Data
+@Getter
 @Jacksonized
 @SuperBuilder
 @EqualsAndHashCode(callSuper = true)

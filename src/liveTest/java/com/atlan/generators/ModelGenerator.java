@@ -1074,7 +1074,6 @@ public class ModelGenerator extends AbstractGenerator {
         fs.append(" * ").append(getTypeDescription(typeName)).append(System.lineSeparator());
         fs.append(" */").append(System.lineSeparator());
         fs.append("@Getter").append(System.lineSeparator());
-        fs.append("@Setter").append(System.lineSeparator());
         fs.append("@SuperBuilder(toBuilder = true)").append(System.lineSeparator());
         fs.append("@EqualsAndHashCode(callSuper = true)").append(System.lineSeparator());
     }
@@ -1128,7 +1127,6 @@ public class ModelGenerator extends AbstractGenerator {
                     .append("s. */")
                     .append(System.lineSeparator());
             fs.append("    @Getter(onMethod_ = {@Override})").append(System.lineSeparator());
-            fs.append("    @Setter(onMethod_ = {@Override})").append(System.lineSeparator());
             fs.append("    @Builder.Default").append(System.lineSeparator());
             fs.append("    String typeName = TYPE_NAME;").append(System.lineSeparator());
             fs.append(System.lineSeparator());

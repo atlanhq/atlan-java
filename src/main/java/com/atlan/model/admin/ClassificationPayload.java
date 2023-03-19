@@ -4,13 +4,13 @@ package com.atlan.model.admin;
 
 import java.util.List;
 import lombok.Builder;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
 /**
  * Captures the details of a classification in a request.
  */
-@Data
+@Getter
 @Builder(toBuilder = true)
 @EqualsAndHashCode(callSuper = false)
 public class ClassificationPayload extends AtlanRequestPayload {

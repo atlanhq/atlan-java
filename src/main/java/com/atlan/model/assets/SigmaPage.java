@@ -18,7 +18,6 @@ import lombok.experimental.SuperBuilder;
  * Instance of a Sigma page in Atlan.
  */
 @Getter
-@Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 public class SigmaPage extends Sigma {
@@ -28,7 +27,6 @@ public class SigmaPage extends Sigma {
 
     /** Fixed typeName for SigmaPages. */
     @Getter(onMethod_ = {@Override})
-    @Setter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
 

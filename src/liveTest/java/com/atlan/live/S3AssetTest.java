@@ -24,7 +24,6 @@ import org.testng.annotations.Test;
 /**
  * Tests all aspects of S3 assets.
  */
-@Test(groups = {"s3"})
 @Slf4j
 public class S3AssetTest extends AtlanLiveTest {
 
@@ -42,14 +41,14 @@ public class S3AssetTest extends AtlanLiveTest {
     private static S3Bucket bucket = null;
     private static S3Object object = null;
 
-    @Test(groups = {"create.connection"})
+    @Test(groups = {"s3.create.connection"})
     void createConnection() throws AtlanException {
         connection = ConnectionTest.createConnection(CONNECTION_NAME, CONNECTOR_TYPE);
     }
 
     @Test(
-            groups = {"create.bucket"},
-            dependsOnGroups = {"create.connection"})
+            groups = {"s3.create.bucket"},
+            dependsOnGroups = {"s3.create.connection"})
     void createBucket() throws AtlanException {
         S3Bucket toCreate = S3Bucket.creator(BUCKET_NAME, connection.getQualifiedName(), BUCKET_ARN)
                 .build();
@@ -65,8 +64,8 @@ public class S3AssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"create.object"},
-            dependsOnGroups = {"create.bucket"})
+            groups = {"s3.create.object"},
+            dependsOnGroups = {"s3.create.bucket"})
     void createObject() throws AtlanException {
         S3Object toCreate = S3Object.creator(OBJECT_NAME, bucket.getQualifiedName(), BUCKET_NAME, OBJECT_ARN)
                 .build();
@@ -93,8 +92,8 @@ public class S3AssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"update.bucket"},
-            dependsOnGroups = {"create.bucket"})
+            groups = {"s3.update.bucket"},
+            dependsOnGroups = {"s3.create.bucket"})
     void updateBucket() throws AtlanException {
         S3Bucket updated =
                 S3Bucket.updateCertificate(bucket.getQualifiedName(), CERTIFICATE_STATUS, CERTIFICATE_MESSAGE);
@@ -110,8 +109,8 @@ public class S3AssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"read.bucket"},
-            dependsOnGroups = {"create.object", "update.bucket"})
+            groups = {"s3.read.bucket"},
+            dependsOnGroups = {"s3.create.object", "s3.update.bucket"})
     void retrieveBucket() throws AtlanException {
         S3Bucket b = S3Bucket.retrieveByGuid(bucket.getGuid());
         assertNotNull(b);
@@ -132,8 +131,8 @@ public class S3AssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"update.bucket.again"},
-            dependsOnGroups = {"read.bucket"})
+            groups = {"s3.update.bucket.again"},
+            dependsOnGroups = {"s3.read.bucket"})
     void updateS3BucketAgain() throws AtlanException {
         S3Bucket updated = S3Bucket.removeCertificate(bucket.getQualifiedName(), BUCKET_NAME);
         assertNotNull(updated);
@@ -150,8 +149,8 @@ public class S3AssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"search.assets"},
-            dependsOnGroups = {"update.bucket.again"})
+            groups = {"s3.search.assets"},
+            dependsOnGroups = {"s3.update.bucket.again"})
     void searchAssets() throws AtlanException {
         Query combined = CompoundQuery.builder()
                 .must(beActive())
@@ -206,8 +205,8 @@ public class S3AssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"delete.object"},
-            dependsOnGroups = {"update.*", "search.*"})
+            groups = {"s3.delete.object"},
+            dependsOnGroups = {"s3.update.*", "s3.search.*"})
     void deleteObject() throws AtlanException {
         AssetMutationResponse response = Asset.delete(object.getGuid());
         assertNotNull(response);
@@ -224,8 +223,8 @@ public class S3AssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"delete.object.read"},
-            dependsOnGroups = {"delete.object"})
+            groups = {"s3.delete.object.read"},
+            dependsOnGroups = {"s3.delete.object"})
     void readDeletedObject() throws AtlanException {
         S3Object deleted = S3Object.retrieveByGuid(object.getGuid());
         assertEquals(deleted.getGuid(), object.getGuid());
@@ -234,8 +233,8 @@ public class S3AssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"delete.object.restore"},
-            dependsOnGroups = {"delete.object.read"})
+            groups = {"s3.delete.object.restore"},
+            dependsOnGroups = {"s3.delete.object.read"})
     void restoreObject() throws AtlanException {
         assertTrue(S3Object.restore(object.getQualifiedName()));
         S3Object restored = S3Object.retrieveByQualifiedName(object.getQualifiedName());
@@ -245,8 +244,8 @@ public class S3AssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"purge.object"},
-            dependsOnGroups = {"delete.object.restore"})
+            groups = {"s3.purge.object"},
+            dependsOnGroups = {"s3.delete.object.restore"})
     void purgeObject() throws AtlanException {
         AssetMutationResponse response = Asset.purge(object.getGuid());
         assertNotNull(response);
@@ -263,8 +262,8 @@ public class S3AssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"purge.connection"},
-            dependsOnGroups = {"create.*", "read.*", "search.*", "update.*", "purge.object"},
+            groups = {"s3.purge.connection"},
+            dependsOnGroups = {"s3.create.*", "s3.read.*", "s3.search.*", "s3.update.*", "s3.purge.object"},
             alwaysRun = true)
     void purgeConnection() throws AtlanException, InterruptedException {
         ConnectionTest.deleteConnection(connection.getQualifiedName(), log);

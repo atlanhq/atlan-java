@@ -18,7 +18,6 @@ import lombok.experimental.SuperBuilder;
  * Instance of a Mode report in Atlan.
  */
 @Getter
-@Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 public class ModeReport extends Mode {
@@ -28,7 +27,6 @@ public class ModeReport extends Mode {
 
     /** Fixed typeName for ModeReports. */
     @Getter(onMethod_ = {@Override})
-    @Setter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
 
