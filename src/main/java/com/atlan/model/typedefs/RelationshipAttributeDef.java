@@ -4,7 +4,6 @@ package com.atlan.model.typedefs;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 
@@ -12,7 +11,6 @@ import lombok.extern.jackson.Jacksonized;
  * Defines the structure of a single relationship attribute for a type definition in Atlan.
  */
 @Getter
-@Setter
 @Jacksonized
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = false)

@@ -4,13 +4,13 @@ package com.atlan.model.admin;
 
 import com.atlan.model.core.CustomMetadataAttributes;
 import lombok.Builder;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
 /**
  * Captures the details of custom metadata in a request.
  */
-@Data
+@Getter
 @Builder(toBuilder = true)
 @EqualsAndHashCode(callSuper = false)
 public class CustomMetadataPayload extends AtlanRequestPayload {

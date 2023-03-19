@@ -22,8 +22,8 @@ import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Set;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
 /**
  * API endpoints for managing Atlan's API tokens.
@@ -120,7 +120,7 @@ public class ApiTokensEndpoint {
     /**
      * Necessary for wrapping a request for a new API token into an object that extends ApiResource for API interactions.
      */
-    @Data
+    @Getter
     @EqualsAndHashCode(callSuper = false)
     private static final class ApiTokenRequest extends ApiResource {
         /** Human-readable name provided when creating the token. */
@@ -156,7 +156,7 @@ public class ApiTokensEndpoint {
     /**
      * Necessary for handling responses that are plain ApiTokens without any wrapping.
      */
-    @Data
+    @Getter
     @JsonSerialize(using = WrappedApiTokenSerializer.class)
     @JsonDeserialize(using = WrappedApiTokenDeserializer.class)
     @EqualsAndHashCode(callSuper = false)

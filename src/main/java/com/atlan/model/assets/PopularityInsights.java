@@ -14,7 +14,7 @@ import lombok.experimental.SuperBuilder;
 /**
  * Detailed information about an asset's usage or popularity.
  */
-@Data
+@Getter
 @SuperBuilder
 @EqualsAndHashCode(callSuper = false)
 @JsonDeserialize(using = PopularityInsightsDeserializer.class)

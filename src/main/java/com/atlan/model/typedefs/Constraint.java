@@ -4,12 +4,12 @@ package com.atlan.model.typedefs;
 
 import com.atlan.model.core.AtlanObject;
 import java.util.Map;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 
-@Data
+@Getter
 @Jacksonized
 @SuperBuilder
 @EqualsAndHashCode(callSuper = true)

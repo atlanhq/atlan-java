@@ -20,7 +20,6 @@ import lombok.extern.jackson.Jacksonized;
  * Defines the structure of a single attribute for a type definition in Atlan.
  */
 @Getter
-@Setter
 @Jacksonized
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = false)
@@ -59,15 +58,15 @@ public class AttributeDef extends AtlanObject {
                 break;
         }
         if (multiValued) {
-            builder = builder.typeName("array<" + baseType + ">")
+            builder.typeName("array<" + baseType + ">")
                     .options(AttributeDefOptions.of(type, optionsName).toBuilder()
                             .multiValueSelect(true)
                             .build());
         } else {
-            builder = builder.typeName(baseType).options(AttributeDefOptions.of(type, optionsName));
+            builder.typeName(baseType).options(AttributeDefOptions.of(type, optionsName));
         }
         if (addEnumValues) {
-            builder = builder.enumValues(EnumCache.getByName(optionsName).getValidValues());
+            builder.enumValues(EnumCache.getByName(optionsName).getValidValues());
         }
         return builder.build();
     }
@@ -171,21 +170,28 @@ public class AttributeDef extends AtlanObject {
         return options != null && options.getIsArchived() != null && options.getIsArchived();
     }
 
-    /**
-     * Mark this attribute definition as archived. Note that this will only do so if
-     * the attribute is already defined (i.e. has some options). Otherwise this operation does
-     * nothing to the attribute definition.
-     * @param by name of the user who is archiving the attribute definition
-     */
-    public void archive(String by) {
-        long removalEpoch = Instant.now().toEpochMilli();
-        AttributeDefOptions options = getOptions();
-        if (options != null) {
-            options.setIsArchived(true);
-            options.setArchivedBy(by);
-            options.setArchivedAt(removalEpoch);
-            setOptions(options);
-            setDisplayName(getDisplayName() + "-archived-" + removalEpoch);
+    public abstract static class AttributeDefBuilder<
+                    C extends AttributeDef, B extends AttributeDef.AttributeDefBuilder<C, B>>
+            extends AtlanObject.AtlanObjectBuilder<C, B> {
+
+        /**
+         * Mark this attribute definition as archived. Note that this will only do so if
+         * the attribute is already defined (i.e. has some options). Otherwise, this operation does
+         * nothing to the attribute definition.
+         *
+         * @param by name of the user who is archiving the attribute definition
+         */
+        public B archive(String by) {
+            if (options != null) {
+                long removalEpoch = Instant.now().toEpochMilli();
+                options = options.toBuilder()
+                        .isArchived(true)
+                        .archivedBy(by)
+                        .archivedAt(removalEpoch)
+                        .build();
+                displayName = displayName + "-archived-" + removalEpoch;
+            }
+            return self();
         }
     }
 }

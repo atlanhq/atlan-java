@@ -7,7 +7,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 
-@Data
+@Getter
 @Jacksonized
 @SuperBuilder
 @EqualsAndHashCode(callSuper = true)

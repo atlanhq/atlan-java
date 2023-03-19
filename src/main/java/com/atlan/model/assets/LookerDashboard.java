@@ -18,7 +18,6 @@ import lombok.experimental.SuperBuilder;
  * Instance of a Looker dashboard in Atlan.
  */
 @Getter
-@Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 public class LookerDashboard extends Looker {
@@ -28,7 +27,6 @@ public class LookerDashboard extends Looker {
 
     /** Fixed typeName for LookerDashboards. */
     @Getter(onMethod_ = {@Override})
-    @Setter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
 

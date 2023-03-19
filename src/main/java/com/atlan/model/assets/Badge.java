@@ -17,7 +17,6 @@ import lombok.experimental.SuperBuilder;
  * Instance of a badge in Atlan.
  */
 @Getter
-@Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 public class Badge extends Asset {
@@ -27,7 +26,6 @@ public class Badge extends Asset {
 
     /** Fixed typeName for Badges. */
     @Getter(onMethod_ = {@Override})
-    @Setter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
 

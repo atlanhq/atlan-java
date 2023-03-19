@@ -13,7 +13,6 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 
 @Getter
-@Setter
 @Jacksonized
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = false)
@@ -63,7 +62,6 @@ public class Reference extends AtlanObject implements Comparable<Reference>, Aud
 
     /** Internal tracking of whether this represents a complete view of an object, or not. */
     @JsonIgnore
-    @Setter(AccessLevel.NONE)
     @Builder.Default
     transient boolean completeObject = false;
 
@@ -150,9 +148,7 @@ public class Reference extends AtlanObject implements Comparable<Reference>, Aud
      */
     UniqueAttributes uniqueAttributes;
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public int compareTo(Reference o) {
         return referenceComparator.compare(this, o);

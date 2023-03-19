@@ -18,7 +18,6 @@ import lombok.experimental.SuperBuilder;
  * Instance of a Salesforce dashboard in Atlan.
  */
 @Getter
-@Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 public class SalesforceDashboard extends Salesforce {
@@ -28,7 +27,6 @@ public class SalesforceDashboard extends Salesforce {
 
     /** Fixed typeName for SalesforceDashboards. */
     @Getter(onMethod_ = {@Override})
-    @Setter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
 

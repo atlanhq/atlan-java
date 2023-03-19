@@ -7,13 +7,13 @@ import com.atlan.serde.WrappedPolicyDeserializer;
 import com.atlan.serde.WrappedPolicySerializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
 /**
  * Necessary for having a policy object that extends ApiResource for API interactions.
  */
-@Data
+@Getter
 @JsonSerialize(using = WrappedPolicySerializer.class)
 @JsonDeserialize(using = WrappedPolicyDeserializer.class)
 @EqualsAndHashCode(callSuper = false)

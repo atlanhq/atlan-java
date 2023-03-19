@@ -19,7 +19,6 @@ import lombok.experimental.SuperBuilder;
  * Instance of an Azure Data Lake Storage (ADLS) blob / object in Atlan.
  */
 @Getter
-@Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @SuppressWarnings("cast")
@@ -30,7 +29,6 @@ public class ADLSObject extends ADLS {
 
     /** Fixed typeName for ADLSObjects. */
     @Getter(onMethod_ = {@Override})
-    @Setter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
 

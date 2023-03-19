@@ -19,8 +19,8 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import java.io.IOException;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.experimental.SuperBuilder;
 
 /**
@@ -137,7 +137,7 @@ public class PurposesEndpoint {
     }
 
     /** Request class for adding a policy. */
-    @Data
+    @Getter
     @SuperBuilder
     @EqualsAndHashCode(callSuper = false)
     static class PolicyRequest extends AtlanObject {
@@ -150,7 +150,7 @@ public class PurposesEndpoint {
     /**
      * Necessary for having a purpose object that extends ApiResource for API interactions.
      */
-    @Data
+    @Getter
     @JsonSerialize(using = WrappedPurposeSerializer.class)
     @JsonDeserialize(using = WrappedPurposeDeserializer.class)
     @EqualsAndHashCode(callSuper = false)

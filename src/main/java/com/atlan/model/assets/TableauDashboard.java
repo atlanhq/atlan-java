@@ -19,7 +19,6 @@ import lombok.experimental.SuperBuilder;
  * Instance of a Tableau dashboard in Atlan.
  */
 @Getter
-@Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @SuppressWarnings("cast")
@@ -30,7 +29,6 @@ public class TableauDashboard extends Tableau {
 
     /** Fixed typeName for TableauDashboards. */
     @Getter(onMethod_ = {@Override})
-    @Setter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
 

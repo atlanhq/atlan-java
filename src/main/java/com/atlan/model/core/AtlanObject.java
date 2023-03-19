@@ -20,8 +20,7 @@ public abstract class AtlanObject {
 
     @Override
     public String toString() {
-        return String.format(
-                "<%s@%s> JSON: %s", this.getClass().getName(), System.identityHashCode(this), this.toJson());
+        return String.format("<%s#%s> JSON: %s", this.getClass().getName(), this.hashCode(), this.toJson());
     }
 
     public String toJson() {

@@ -15,8 +15,8 @@ import com.atlan.net.ApiResource;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.experimental.SuperBuilder;
 
 /**
@@ -140,7 +140,7 @@ public class EntityBulkEndpoint {
     /**
      * Request class for updating many assets together (in bulk).
      */
-    @Data
+    @Getter
     @SuperBuilder
     @EqualsAndHashCode(callSuper = false)
     static class BulkEntityRequest extends AtlanObject {

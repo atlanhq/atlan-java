@@ -22,7 +22,6 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 
 @Getter
-@Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = false)
 @JsonDeserialize(using = PurposeDeserializer.class)
@@ -231,7 +230,6 @@ public class Purpose extends AtlanObject {
     }
 
     @Getter
-    @Setter
     @Jacksonized
     @SuperBuilder(toBuilder = true)
     @EqualsAndHashCode(callSuper = true)
@@ -243,7 +241,6 @@ public class Purpose extends AtlanObject {
     }
 
     @Getter
-    @Setter
     @Jacksonized
     @SuperBuilder(toBuilder = true)
     @EqualsAndHashCode(callSuper = true)

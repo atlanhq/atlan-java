@@ -27,7 +27,6 @@ import lombok.experimental.SuperBuilder;
  * Base class for all assets.
  */
 @Getter
-@Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @JsonSerialize(using = AssetSerializer.class)
@@ -55,25 +54,16 @@ public abstract class Asset extends Reference {
 
     /** Internal tracking of fields that should be serialized with null values. */
     @JsonIgnore
+    @Singular
     transient Set<String> nullFields;
 
     /** Retrieve the list of fields to be serialized with null values. */
+    @JsonIgnore
     public Set<String> getNullFields() {
         if (nullFields == null) {
             return Collections.emptySet();
         }
         return Collections.unmodifiableSet(nullFields);
-    }
-
-    /**
-     * Add a field to be serialized with a null value.
-     * @param fieldName to serialize with a null value
-     */
-    public void addNullField(String fieldName) {
-        if (nullFields == null) {
-            nullFields = new LinkedHashSet<>();
-        }
-        nullFields.add(fieldName);
     }
 
     /** Classifications assigned to the asset. */
@@ -106,7 +96,14 @@ public abstract class Asset extends Reference {
     /** Details on the handler used for deletion of the asset. */
     final String deleteHandler;
 
-    /** The names of the classifications that exist on the asset. */
+    /**
+     * The names of the classifications that exist on the asset. This is not always returned, even by
+     * full retrieval operations. It is better to depend on the detailed values in the classifications
+     * property.
+     * @see #classifications
+     */
+    @Deprecated
+    @Singular
     Set<String> classificationNames;
 
     /** Unused. */
@@ -560,57 +557,6 @@ public abstract class Asset extends Reference {
     @JsonProperty("meanings")
     SortedSet<GlossaryTerm> assignedTerms;
 
-    /** Remove all custom metadata from the asset, if any is set on the asset. */
-    public void removeCustomMetadata() {
-        // It is sufficient to simply exclude businessAttributes from a request in order
-        // for them to be removed, as long as the "replaceBusinessAttributes" flag is set
-        // to true (which it must be for any update to work to businessAttributes anyway)
-        customMetadataSets = null;
-    }
-
-    /** Remove the classifications from the asset, if the asset is classified with any. */
-    public void removeClassifications() {
-        // It is sufficient to simply exclude classifications from a request in order
-        // for them to be removed, as long as the "replaceClassifications" flag is set to
-        // true (which it must be for any update to work to classifications anyway)
-        classifications = null;
-        classificationNames = null;
-    }
-
-    /** Remove the system description from the asset, if any is set on the asset. */
-    public void removeDescription() {
-        addNullField("description");
-    }
-
-    /** Remove the user's description from the asset, if any is set on the asset. */
-    public void removeUserDescription() {
-        addNullField("userDescription");
-    }
-
-    /** Remove the owners from the asset, if any are set on the asset. */
-    public void removeOwners() {
-        addNullField("ownerUsers");
-        addNullField("ownerGroups");
-    }
-
-    /** Remove the certificate from the asset, if any is set on the asset. */
-    public void removeCertificate() {
-        addNullField("certificateStatus");
-        addNullField("certificateStatusMessage");
-    }
-
-    /** Remove the announcement from the asset, if any is set on the asset. */
-    public void removeAnnouncement() {
-        addNullField("announcementType");
-        addNullField("announcementTitle");
-        addNullField("announcementMessage");
-    }
-
-    /** Remove the linked terms from the asset, if any are set on the asset. */
-    public void removeAssignedTerms() {
-        addNullField("assignedTerms");
-    }
-
     /**
      * Reduce the asset to the minimum set of properties required to update it.
      *
@@ -806,9 +752,9 @@ public abstract class Asset extends Reference {
      */
     protected static Asset updateCertificate(
             AssetBuilder<?, ?> builder, AtlanCertificateStatus certificate, String message) throws AtlanException {
-        builder = builder.certificateStatus(certificate);
+        builder.certificateStatus(certificate);
         if (message != null && message.length() > 1) {
-            builder = builder.certificateStatusMessage(message);
+            builder.certificateStatusMessage(message);
         }
         return updateAttributes(builder.build());
     }
@@ -821,8 +767,7 @@ public abstract class Asset extends Reference {
      * @throws AtlanException on any API problems
      */
     protected static Asset removeCertificate(AssetBuilder<?, ?> builder) throws AtlanException {
-        Asset asset = builder.build();
-        asset.removeCertificate();
+        Asset asset = builder.removeCertificate().build();
         AssetMutationResponse response = asset.upsert();
         if (response != null && !response.getUpdatedAssets().isEmpty()) {
             return response.getUpdatedAssets().get(0);
@@ -844,12 +789,12 @@ public abstract class Asset extends Reference {
     protected static Asset updateAnnouncement(
             AssetBuilder<?, ?> builder, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
-        builder = builder.announcementType(type);
+        builder.announcementType(type);
         if (title != null && title.length() > 1) {
-            builder = builder.announcementTitle(title);
+            builder.announcementTitle(title);
         }
         if (message != null && message.length() > 1) {
-            builder = builder.announcementMessage(message);
+            builder.announcementMessage(message);
         }
         return updateAttributes(builder.build());
     }
@@ -862,8 +807,7 @@ public abstract class Asset extends Reference {
      * @throws AtlanException on any API problems
      */
     protected static Asset removeAnnouncement(AssetBuilder<?, ?> builder) throws AtlanException {
-        Asset asset = builder.build();
-        asset.removeAnnouncement();
+        Asset asset = builder.removeAnnouncement().build();
         AssetMutationResponse response = asset.upsert();
         if (response != null && !response.getUpdatedAssets().isEmpty()) {
             return response.getUpdatedAssets().get(0);
@@ -880,8 +824,7 @@ public abstract class Asset extends Reference {
      * @throws AtlanException on any API problems
      */
     protected static Asset removeDescription(AssetBuilder<?, ?> builder) throws AtlanException {
-        Asset asset = builder.build();
-        asset.removeDescription();
+        Asset asset = builder.removeDescription().build();
         AssetMutationResponse response = asset.upsert();
         if (response != null && !response.getUpdatedAssets().isEmpty()) {
             return response.getUpdatedAssets().get(0);
@@ -898,8 +841,7 @@ public abstract class Asset extends Reference {
      * @throws AtlanException on any API problems
      */
     protected static Asset removeUserDescription(AssetBuilder<?, ?> builder) throws AtlanException {
-        Asset asset = builder.build();
-        asset.removeUserDescription();
+        Asset asset = builder.removeUserDescription().build();
         AssetMutationResponse response = asset.upsert();
         if (response != null && !response.getUpdatedAssets().isEmpty()) {
             return response.getUpdatedAssets().get(0);
@@ -916,8 +858,7 @@ public abstract class Asset extends Reference {
      * @throws AtlanException on any API problems
      */
     protected static Asset removeOwners(AssetBuilder<?, ?> builder) throws AtlanException {
-        Asset asset = builder.build();
-        asset.removeOwners();
+        Asset asset = builder.removeOwners().build();
         AssetMutationResponse response = asset.upsert();
         if (response != null && !response.getUpdatedAssets().isEmpty()) {
             return response.getUpdatedAssets().get(0);
@@ -952,9 +893,9 @@ public abstract class Asset extends Reference {
             AtlanCertificateStatus certificate,
             String message)
             throws AtlanException {
-        builder = builder.qualifiedName(qualifiedName).certificateStatus(certificate);
+        builder.qualifiedName(qualifiedName).certificateStatus(certificate);
         if (message != null && message.length() > 1) {
-            builder = builder.certificateStatusMessage(message);
+            builder.certificateStatusMessage(message);
         }
         return updateAttributes(typeName, qualifiedName, builder.build());
     }
@@ -979,12 +920,12 @@ public abstract class Asset extends Reference {
             String title,
             String message)
             throws AtlanException {
-        builder = builder.qualifiedName(qualifiedName).announcementType(type);
+        builder.qualifiedName(qualifiedName).announcementType(type);
         if (title != null && title.length() > 1) {
-            builder = builder.announcementTitle(title);
+            builder.announcementTitle(title);
         }
         if (message != null && message.length() > 1) {
-            builder = builder.announcementMessage(message);
+            builder.announcementMessage(message);
         }
         return updateAttributes(typeName, qualifiedName, builder.build());
     }
@@ -1031,8 +972,7 @@ public abstract class Asset extends Reference {
      */
     protected static Asset replaceTerms(AssetBuilder<?, ?> builder, List<GlossaryTerm> terms) throws AtlanException {
         if (terms == null || terms.isEmpty()) {
-            Asset asset = builder.build();
-            asset.removeAssignedTerms();
+            Asset asset = builder.removeAssignedTerms().build();
             return updateRelationships(asset);
         } else {
             return updateRelationships(builder.assignedTerms(getTermRefs(terms)).build());
@@ -1112,8 +1052,7 @@ public abstract class Asset extends Reference {
             Asset update;
             if (replacementTerms.isEmpty()) {
                 // If there are no terms left after the removal, we need to do the same as removing all terms
-                update = minimal.build();
-                update.removeAssignedTerms();
+                update = minimal.removeAssignedTerms().build();
             } else {
                 // Otherwise we should do the update with the difference
                 update = minimal.assignedTerms(getTermRefs(replacementTerms)).build();
@@ -1169,5 +1108,67 @@ public abstract class Asset extends Reference {
             return response.getGuidAssignments().values().stream().findFirst();
         }
         return Optional.empty();
+    }
+
+    public abstract static class AssetBuilder<C extends Asset, B extends Asset.AssetBuilder<C, B>>
+            extends Reference.ReferenceBuilder<C, B> {
+        /** Remove the announcement from the asset, if any is set on the asset. */
+        public B removeAnnouncement() {
+            nullField("announcementType");
+            nullField("announcementTitle");
+            nullField("announcementMessage");
+            return self();
+        }
+
+        /** Remove all custom metadata from the asset, if any is set on the asset. */
+        public B removeCustomMetadata() {
+            // It is sufficient to simply exclude businessAttributes from a request in order
+            // for them to be removed, as long as the "replaceBusinessAttributes" flag is set
+            // to true (which it must be for any update to work to businessAttributes anyway)
+            clearCustomMetadataSets();
+            return self();
+        }
+
+        /** Remove the classifications from the asset, if the asset is classified with any. */
+        public B removeClassifications() {
+            // It is sufficient to simply exclude classifications from a request in order
+            // for them to be removed, as long as the "replaceClassifications" flag is set to
+            // true (which it must be for any update to work to classifications anyway)
+            clearClassifications();
+            clearClassificationNames();
+            return self();
+        }
+
+        /** Remove the system description from the asset, if any is set on the asset. */
+        public B removeDescription() {
+            nullField("description");
+            return self();
+        }
+
+        /** Remove the user's description from the asset, if any is set on the asset. */
+        public B removeUserDescription() {
+            nullField("userDescription");
+            return self();
+        }
+
+        /** Remove the owners from the asset, if any are set on the asset. */
+        public B removeOwners() {
+            nullField("ownerUsers");
+            nullField("ownerGroups");
+            return self();
+        }
+
+        /** Remove the certificate from the asset, if any is set on the asset. */
+        public B removeCertificate() {
+            nullField("certificateStatus");
+            nullField("certificateStatusMessage");
+            return self();
+        }
+
+        /** Remove the linked terms from the asset, if any are set on the asset. */
+        public B removeAssignedTerms() {
+            nullField("assignedTerms");
+            return self();
+        }
     }
 }

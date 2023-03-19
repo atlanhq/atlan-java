@@ -11,16 +11,16 @@ import com.atlan.api.AuditSearchEndpoint;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.core.AtlanObject;
 import java.util.List;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.Singular;
 import lombok.experimental.SuperBuilder;
 
 /**
  * Class from which to configure and run a search against Atlan's activity log.
  */
-@Data
-@SuperBuilder
+@Getter
+@SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 public class AuditSearchRequest extends AtlanObject {
     private static final long serialVersionUID = 2L;

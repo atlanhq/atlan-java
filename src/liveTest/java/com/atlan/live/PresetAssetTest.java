@@ -24,7 +24,6 @@ import org.testng.annotations.Test;
 /**
  * Tests all aspects of Preset assets.
  */
-@Test(groups = {"preset"})
 @Slf4j
 public class PresetAssetTest extends AtlanLiveTest {
 
@@ -44,14 +43,14 @@ public class PresetAssetTest extends AtlanLiveTest {
     private static PresetChart chart = null;
     private static PresetDataset dataset = null;
 
-    @Test(groups = {"create.connection"})
+    @Test(groups = {"preset.create.connection"})
     void createConnection() throws AtlanException {
         connection = ConnectionTest.createConnection(CONNECTION_NAME, CONNECTOR_TYPE);
     }
 
     @Test(
-            groups = {"create.workspace"},
-            dependsOnGroups = {"create.connection"})
+            groups = {"preset.create.workspace"},
+            dependsOnGroups = {"preset.create.connection"})
     void createWorkspace() throws AtlanException {
         PresetWorkspace toCreate = PresetWorkspace.creator(WORKSPACE_NAME, connection.getQualifiedName())
                 .build();
@@ -67,8 +66,8 @@ public class PresetAssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"create.collection"},
-            dependsOnGroups = {"create.workspace"})
+            groups = {"preset.create.collection"},
+            dependsOnGroups = {"preset.create.workspace"})
     void createCollection() throws AtlanException {
         PresetDashboard toCreate = PresetDashboard.creator(COLLECTION_NAME, workspace.getQualifiedName())
                 .build();
@@ -94,8 +93,8 @@ public class PresetAssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"create.chart"},
-            dependsOnGroups = {"create.collection"})
+            groups = {"preset.create.chart"},
+            dependsOnGroups = {"preset.create.collection"})
     void createChart() throws AtlanException {
         PresetChart toCreate =
                 PresetChart.creator(CHART_NAME, collection.getQualifiedName()).build();
@@ -122,8 +121,8 @@ public class PresetAssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"create.dataset"},
-            dependsOnGroups = {"create.collection"})
+            groups = {"preset.create.dataset"},
+            dependsOnGroups = {"preset.create.collection"})
     void createDataset() throws AtlanException {
         PresetDataset toCreate = PresetDataset.creator(DATASET_NAME, collection.getQualifiedName())
                 .build();
@@ -150,8 +149,8 @@ public class PresetAssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"update.collection"},
-            dependsOnGroups = {"create.collection"})
+            groups = {"preset.update.collection"},
+            dependsOnGroups = {"preset.create.collection"})
     void updateCollection() throws AtlanException {
         PresetDashboard updated = PresetDashboard.updateCertificate(
                 collection.getQualifiedName(), CERTIFICATE_STATUS, CERTIFICATE_MESSAGE);
@@ -167,8 +166,8 @@ public class PresetAssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"read.collection"},
-            dependsOnGroups = {"create.*", "update.collection"})
+            groups = {"preset.read.collection"},
+            dependsOnGroups = {"preset.create.*", "preset.update.collection"})
     void retrieveCollection() throws AtlanException {
         PresetDashboard c = PresetDashboard.retrieveByGuid(collection.getGuid());
         assertNotNull(c);
@@ -198,8 +197,8 @@ public class PresetAssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"update.collection.again"},
-            dependsOnGroups = {"read.collection"})
+            groups = {"preset.update.collection.again"},
+            dependsOnGroups = {"preset.read.collection"})
     void updateCollectionAgain() throws AtlanException {
         PresetDashboard updated = PresetDashboard.removeCertificate(collection.getQualifiedName(), COLLECTION_NAME);
         assertNotNull(updated);
@@ -216,8 +215,8 @@ public class PresetAssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"search.assets"},
-            dependsOnGroups = {"update.collection.again"})
+            groups = {"preset.search.assets"},
+            dependsOnGroups = {"preset.update.collection.again"})
     void searchAssets() throws AtlanException {
         Query combined = CompoundQuery.builder()
                 .must(beActive())
@@ -288,8 +287,8 @@ public class PresetAssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"delete.chart"},
-            dependsOnGroups = {"update.*", "search.*"})
+            groups = {"preset.delete.chart"},
+            dependsOnGroups = {"preset.update.*", "preset.search.*"})
     void deleteChart() throws AtlanException {
         AssetMutationResponse response = Asset.delete(chart.getGuid());
         assertNotNull(response);
@@ -306,8 +305,8 @@ public class PresetAssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"delete.chart.read"},
-            dependsOnGroups = {"delete.chart"})
+            groups = {"preset.delete.chart.read"},
+            dependsOnGroups = {"preset.delete.chart"})
     void readDeletedChart() throws AtlanException {
         PresetChart deleted = PresetChart.retrieveByGuid(chart.getGuid());
         assertEquals(deleted.getGuid(), chart.getGuid());
@@ -316,8 +315,8 @@ public class PresetAssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"delete.chart.restore"},
-            dependsOnGroups = {"delete.chart.read"})
+            groups = {"preset.delete.chart.restore"},
+            dependsOnGroups = {"preset.delete.chart.read"})
     void restoreChart() throws AtlanException {
         assertTrue(PresetChart.restore(chart.getQualifiedName()));
         PresetChart restored = PresetChart.retrieveByQualifiedName(chart.getQualifiedName());
@@ -327,8 +326,8 @@ public class PresetAssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"purge.chart"},
-            dependsOnGroups = {"delete.chart.restore"})
+            groups = {"preset.purge.chart"},
+            dependsOnGroups = {"preset.delete.chart.restore"})
     void purgeChart() throws AtlanException {
         AssetMutationResponse response = Asset.purge(chart.getGuid());
         assertNotNull(response);
@@ -345,8 +344,14 @@ public class PresetAssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"purge.connection"},
-            dependsOnGroups = {"create.*", "read.*", "search.*", "update.*", "purge.chart"},
+            groups = {"preset.purge.connection"},
+            dependsOnGroups = {
+                "preset.create.*",
+                "preset.read.*",
+                "preset.search.*",
+                "preset.update.*",
+                "preset.purge.chart"
+            },
             alwaysRun = true)
     void purgeConnection() throws AtlanException, InterruptedException {
         ConnectionTest.deleteConnection(connection.getQualifiedName(), log);

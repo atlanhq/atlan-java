@@ -18,7 +18,6 @@ import lombok.experimental.SuperBuilder;
  * TBC
  */
 @Getter
-@Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 public class QlikApp extends Qlik {
@@ -28,7 +27,6 @@ public class QlikApp extends Qlik {
 
     /** Fixed typeName for QlikApps. */
     @Getter(onMethod_ = {@Override})
-    @Setter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
 

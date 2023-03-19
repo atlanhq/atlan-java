@@ -6,10 +6,10 @@ import com.atlan.net.ApiResource;
 import com.atlan.serde.SessionResponseDeserializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.List;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
-@Data
+@Getter
 @JsonDeserialize(using = SessionResponseDeserializer.class)
 @EqualsAndHashCode(callSuper = false)
 public class SessionResponse extends ApiResource {

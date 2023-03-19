@@ -18,7 +18,6 @@ import lombok.experimental.SuperBuilder;
  * Instance of a Google Cloud Storage bucket in Atlan.
  */
 @Getter
-@Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 public class GCSBucket extends GCS {
@@ -28,7 +27,6 @@ public class GCSBucket extends GCS {
 
     /** Fixed typeName for GCSBuckets. */
     @Getter(onMethod_ = {@Override})
-    @Setter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
 

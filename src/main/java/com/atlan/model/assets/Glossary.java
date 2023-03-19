@@ -26,7 +26,6 @@ import lombok.extern.slf4j.Slf4j;
  * Instance of a glossary in Atlan.
  */
 @Getter
-@Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
@@ -38,7 +37,6 @@ public class Glossary extends Asset {
 
     /** Fixed typeName for Glossarys. */
     @Getter(onMethod_ = {@Override})
-    @Setter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
 
@@ -278,7 +276,7 @@ public class Glossary extends Asset {
                         .build())
                 .attribute("parentCategory");
         if (attributes != null) {
-            builder = builder.attributes(attributes);
+            builder.attributes(attributes);
         }
         IndexSearchRequest request = builder.build();
         IndexSearchResponse response = request.search();

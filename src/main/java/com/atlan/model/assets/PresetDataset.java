@@ -18,7 +18,6 @@ import lombok.experimental.SuperBuilder;
  * Instance of a Preset dataset in Atlan.
  */
 @Getter
-@Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 public class PresetDataset extends Preset {
@@ -28,7 +27,6 @@ public class PresetDataset extends Preset {
 
     /** Fixed typeName for PresetDatasets. */
     @Getter(onMethod_ = {@Override})
-    @Setter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
 

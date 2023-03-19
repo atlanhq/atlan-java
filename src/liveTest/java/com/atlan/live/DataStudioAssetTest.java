@@ -22,7 +22,6 @@ import org.testng.annotations.Test;
 /**
  * Tests all aspects of Google Data Studio assets.
  */
-@Test(groups = {"gds"})
 @Slf4j
 public class DataStudioAssetTest extends AtlanLiveTest {
 
@@ -37,14 +36,14 @@ public class DataStudioAssetTest extends AtlanLiveTest {
     private static DataStudioAsset report = null;
     private static DataStudioAsset source = null;
 
-    @Test(groups = {"create.connection"})
+    @Test(groups = {"gds.create.connection"})
     void createConnection() throws AtlanException {
         connection = ConnectionTest.createConnection(CONNECTION_NAME, CONNECTOR_TYPE);
     }
 
     @Test(
-            groups = {"create.report"},
-            dependsOnGroups = {"create.connection"})
+            groups = {"gds.create.report"},
+            dependsOnGroups = {"gds.create.connection"})
     void createReport() throws AtlanException {
         DataStudioAsset toCreate = DataStudioAsset.creator(
                         REPORT_NAME, connection.getQualifiedName(), GoogleDataStudioAssetType.REPORT)
@@ -62,8 +61,8 @@ public class DataStudioAssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"create.source"},
-            dependsOnGroups = {"create.report"})
+            groups = {"gds.create.source"},
+            dependsOnGroups = {"gds.create.report"})
     void createSource() throws AtlanException {
         DataStudioAsset toCreate = DataStudioAsset.creator(
                         SOURCE_NAME, connection.getQualifiedName(), GoogleDataStudioAssetType.DATA_SOURCE)
@@ -81,8 +80,8 @@ public class DataStudioAssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"update.report"},
-            dependsOnGroups = {"create.report"})
+            groups = {"gds.update.report"},
+            dependsOnGroups = {"gds.create.report"})
     void updateReport() throws AtlanException {
         DataStudioAsset updated =
                 DataStudioAsset.updateCertificate(report.getQualifiedName(), CERTIFICATE_STATUS, CERTIFICATE_MESSAGE);
@@ -98,8 +97,8 @@ public class DataStudioAssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"read.report"},
-            dependsOnGroups = {"update.report"})
+            groups = {"gds.read.report"},
+            dependsOnGroups = {"gds.update.report"})
     void retrieveReport() throws AtlanException {
         DataStudioAsset r = DataStudioAsset.retrieveByGuid(report.getGuid());
         assertNotNull(r);
@@ -115,8 +114,8 @@ public class DataStudioAssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"update.report.again"},
-            dependsOnGroups = {"read.report"})
+            groups = {"gds.update.report.again"},
+            dependsOnGroups = {"gds.read.report"})
     void updateReportAgain() throws AtlanException {
         DataStudioAsset updated = DataStudioAsset.removeCertificate(report.getQualifiedName(), REPORT_NAME);
         assertNotNull(updated);
@@ -133,8 +132,8 @@ public class DataStudioAssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"search.assets"},
-            dependsOnGroups = {"update.report.again"})
+            groups = {"gds.search.assets"},
+            dependsOnGroups = {"gds.update.report.again"})
     void searchAssets() throws AtlanException {
         Query combined = CompoundQuery.builder()
                 .must(beActive())
@@ -189,8 +188,8 @@ public class DataStudioAssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"delete.source"},
-            dependsOnGroups = {"update.*", "search.*"})
+            groups = {"gds.delete.source"},
+            dependsOnGroups = {"gds.update.*", "gds.search.*"})
     void deleteSource() throws AtlanException {
         AssetMutationResponse response = Asset.delete(source.getGuid());
         assertNotNull(response);
@@ -207,8 +206,8 @@ public class DataStudioAssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"delete.source.read"},
-            dependsOnGroups = {"delete.source"})
+            groups = {"gds.delete.source.read"},
+            dependsOnGroups = {"gds.delete.source"})
     void readDeletedSource() throws AtlanException {
         DataStudioAsset deleted = DataStudioAsset.retrieveByGuid(source.getGuid());
         assertEquals(deleted.getGuid(), source.getGuid());
@@ -217,8 +216,8 @@ public class DataStudioAssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"delete.source.restore"},
-            dependsOnGroups = {"delete.source.read"})
+            groups = {"gds.delete.source.restore"},
+            dependsOnGroups = {"gds.delete.source.read"})
     void restoreSource() throws AtlanException {
         assertTrue(DataStudioAsset.restore(source.getQualifiedName()));
         DataStudioAsset restored = DataStudioAsset.retrieveByQualifiedName(source.getQualifiedName());
@@ -228,8 +227,8 @@ public class DataStudioAssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"purge.source"},
-            dependsOnGroups = {"delete.source.restore"})
+            groups = {"gds.purge.source"},
+            dependsOnGroups = {"gds.delete.source.restore"})
     void purgeSource() throws AtlanException {
         AssetMutationResponse response = Asset.purge(source.getGuid());
         assertNotNull(response);
@@ -246,8 +245,8 @@ public class DataStudioAssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"purge.connection"},
-            dependsOnGroups = {"create.*", "read.*", "search.*", "update.*", "purge.source"},
+            groups = {"gds.purge.connection"},
+            dependsOnGroups = {"gds.create.*", "gds.read.*", "gds.search.*", "gds.update.*", "gds.purge.source"},
             alwaysRun = true)
     void purgeConnection() throws AtlanException, InterruptedException {
         ConnectionTest.deleteConnection(connection.getQualifiedName(), log);

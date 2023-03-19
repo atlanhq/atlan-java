@@ -5,13 +5,13 @@ package com.atlan.model.search;
 import com.atlan.net.ApiResource;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
 /**
  * Captures the response from a search against Atlan's activity log.
  */
-@Data
+@Getter
 @EqualsAndHashCode(callSuper = false)
 public class AuditSearchResponse extends ApiResource {
     private static final long serialVersionUID = 2L;

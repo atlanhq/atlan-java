@@ -19,7 +19,6 @@ import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.Test;
 
-@Test(groups = {"api-asset"})
 @Slf4j
 public class APIAssetTest extends AtlanLiveTest {
 
@@ -34,14 +33,14 @@ public class APIAssetTest extends AtlanLiveTest {
     private static APISpec spec = null;
     private static APIPath path = null;
 
-    @Test(groups = {"create.connection"})
+    @Test(groups = {"api.create.connection"})
     void createConnection() throws AtlanException {
         connection = ConnectionTest.createConnection(CONNECTION_NAME, CONNECTOR_TYPE);
     }
 
     @Test(
-            groups = {"create.spec"},
-            dependsOnGroups = {"create.connection"})
+            groups = {"api.create.spec"},
+            dependsOnGroups = {"api.create.connection"})
     void createSpec() throws AtlanException {
         APISpec toCreate =
                 APISpec.creator(SPEC_NAME, connection.getQualifiedName()).build();
@@ -57,8 +56,8 @@ public class APIAssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"create.path"},
-            dependsOnGroups = {"create.spec"})
+            groups = {"api.create.path"},
+            dependsOnGroups = {"api.create.spec"})
     void createPath() throws AtlanException {
         APIPath toCreate = APIPath.creator(PATH_NAME, spec.getQualifiedName()).build();
         AssetMutationResponse response = toCreate.upsert();
@@ -85,8 +84,8 @@ public class APIAssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"update.spec"},
-            dependsOnGroups = {"create.spec"})
+            groups = {"api.update.spec"},
+            dependsOnGroups = {"api.create.spec"})
     void updateSpec() throws AtlanException {
         APISpec updated = APISpec.updateCertificate(spec.getQualifiedName(), CERTIFICATE_STATUS, CERTIFICATE_MESSAGE);
         assertNotNull(updated);
@@ -101,8 +100,8 @@ public class APIAssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"read.spec"},
-            dependsOnGroups = {"create.path", "update.spec"})
+            groups = {"api.read.spec"},
+            dependsOnGroups = {"api.create.path", "api.update.spec"})
     void retrieveSpec() throws AtlanException {
         APISpec s = APISpec.retrieveByGuid(spec.getGuid());
         assertNotNull(s);
@@ -118,8 +117,8 @@ public class APIAssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"update.spec.again"},
-            dependsOnGroups = {"read.spec"})
+            groups = {"api.update.spec.again"},
+            dependsOnGroups = {"api.read.spec"})
     void updateSpecAgain() throws AtlanException {
         APISpec updated = APISpec.removeCertificate(spec.getQualifiedName(), SPEC_NAME);
         assertNotNull(updated);
@@ -136,8 +135,8 @@ public class APIAssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"search.assets"},
-            dependsOnGroups = {"update.spec.again"})
+            groups = {"api.search.assets"},
+            dependsOnGroups = {"api.update.spec.again"})
     void searchAssets() throws AtlanException {
         Query combined = CompoundQuery.builder()
                 .must(beActive())
@@ -184,8 +183,8 @@ public class APIAssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"delete.path"},
-            dependsOnGroups = {"update.*", "search.*"})
+            groups = {"api.delete.path"},
+            dependsOnGroups = {"api.update.*", "api.search.*"})
     void deletePath() throws AtlanException {
         AssetMutationResponse response = Asset.delete(path.getGuid());
         assertNotNull(response);
@@ -202,8 +201,8 @@ public class APIAssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"delete.path.read"},
-            dependsOnGroups = {"delete.path"})
+            groups = {"api.delete.path.read"},
+            dependsOnGroups = {"api.delete.path"})
     void readDeletedPath() throws AtlanException {
         APIPath deleted = APIPath.retrieveByGuid(path.getGuid());
         assertEquals(deleted.getGuid(), path.getGuid());
@@ -212,8 +211,8 @@ public class APIAssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"delete.path.restore"},
-            dependsOnGroups = {"delete.path.read"})
+            groups = {"api.delete.path.restore"},
+            dependsOnGroups = {"api.delete.path.read"})
     void restorePath() throws AtlanException {
         assertTrue(APIPath.restore(path.getQualifiedName()));
         APIPath restored = APIPath.retrieveByQualifiedName(path.getQualifiedName());
@@ -223,8 +222,8 @@ public class APIAssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"purge.path"},
-            dependsOnGroups = {"delete.path.restore"})
+            groups = {"api.purge.path"},
+            dependsOnGroups = {"api.delete.path.restore"})
     void purgePath() throws AtlanException {
         AssetMutationResponse response = Asset.purge(path.getGuid());
         assertNotNull(response);
@@ -241,8 +240,8 @@ public class APIAssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"purge.connection"},
-            dependsOnGroups = {"create.*", "read.*", "search.*", "update.*", "purge.path"},
+            groups = {"api.purge.connection"},
+            dependsOnGroups = {"api.create.*", "api.read.*", "api.search.*", "api.update.*", "api.purge.path"},
             alwaysRun = true)
     void purgeConnection() throws AtlanException, InterruptedException {
         ConnectionTest.deleteConnection(connection.getQualifiedName(), log);

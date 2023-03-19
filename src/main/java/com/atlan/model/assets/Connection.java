@@ -26,7 +26,6 @@ import lombok.experimental.SuperBuilder;
  * Instance of a connection in Atlan.
  */
 @Getter
-@Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @SuppressWarnings("cast")
@@ -37,7 +36,6 @@ public class Connection extends Asset {
 
     /** Fixed typeName for Connections. */
     @Getter(onMethod_ = {@Override})
-    @Setter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
 
@@ -202,21 +200,21 @@ public class Connection extends Asset {
                 RoleCache.getNameForId(roleId);
             }
             adminFound = true;
-            builder = builder.adminRoles(adminRoles);
+            builder.adminRoles(adminRoles);
         }
         if (adminGroups != null && !adminGroups.isEmpty()) {
             for (String groupAlias : adminGroups) {
                 GroupCache.getIdForAlias(groupAlias);
             }
             adminFound = true;
-            builder = builder.adminGroups(adminGroups);
+            builder.adminGroups(adminGroups);
         }
         if (adminUsers != null && !adminUsers.isEmpty()) {
             for (String userName : adminUsers) {
                 UserCache.getIdForName(userName);
             }
             adminFound = true;
-            builder = builder.adminUsers(adminUsers);
+            builder.adminUsers(adminUsers);
         }
         if (adminFound) {
             return builder;

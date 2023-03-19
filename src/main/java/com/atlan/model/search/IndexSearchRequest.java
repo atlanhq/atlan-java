@@ -6,17 +6,14 @@ import com.atlan.api.IndexSearchEndpoint;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.core.AtlanObject;
 import java.util.List;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.Singular;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 /**
  * Class from which to configure and run a search against Atlan.
  */
-@Data
-@SuperBuilder
+@Getter
+@SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 public class IndexSearchRequest extends AtlanObject {
     private static final long serialVersionUID = 2L;

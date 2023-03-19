@@ -5,10 +5,10 @@ package com.atlan.model.core;
 import com.atlan.model.assets.Asset;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
-@Data
+@Getter
 @EqualsAndHashCode(callSuper = false)
 public class MutatedAssets extends AtlanObject {
     private static final long serialVersionUID = 2L;

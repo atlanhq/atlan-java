@@ -24,7 +24,6 @@ import org.testng.annotations.Test;
 /**
  * Tests all aspects of Google Cloud Storage assets.
  */
-@Test(groups = {"gcs"})
 @Slf4j
 public class GCSAssetTest extends AtlanLiveTest {
 
@@ -39,14 +38,14 @@ public class GCSAssetTest extends AtlanLiveTest {
     private static GCSBucket bucket = null;
     private static GCSObject object = null;
 
-    @Test(groups = {"create.connection"})
+    @Test(groups = {"gcs.create.connection"})
     void createConnection() throws AtlanException {
         connection = ConnectionTest.createConnection(CONNECTION_NAME, CONNECTOR_TYPE);
     }
 
     @Test(
-            groups = {"create.bucket"},
-            dependsOnGroups = {"create.connection"})
+            groups = {"gcs.create.bucket"},
+            dependsOnGroups = {"gcs.create.connection"})
     void createBucket() throws AtlanException {
         GCSBucket gcsBucket =
                 GCSBucket.creator(BUCKET_NAME, connection.getQualifiedName()).build();
@@ -61,8 +60,8 @@ public class GCSAssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"create.object"},
-            dependsOnGroups = {"create.bucket"})
+            groups = {"gcs.create.object"},
+            dependsOnGroups = {"gcs.create.bucket"})
     void createObject() throws AtlanException {
         GCSObject gcsObject =
                 GCSObject.creator(OBJECT_NAME, bucket.getQualifiedName()).build();
@@ -88,8 +87,8 @@ public class GCSAssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"update.bucket"},
-            dependsOnGroups = {"create.bucket"})
+            groups = {"gcs.update.bucket"},
+            dependsOnGroups = {"gcs.create.bucket"})
     void updateBucket() throws AtlanException {
         GCSBucket updated =
                 GCSBucket.updateCertificate(bucket.getQualifiedName(), CERTIFICATE_STATUS, CERTIFICATE_MESSAGE);
@@ -104,8 +103,8 @@ public class GCSAssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"read.bucket"},
-            dependsOnGroups = {"create.object", "update.bucket"})
+            groups = {"gcs.read.bucket"},
+            dependsOnGroups = {"gcs.create.object", "gcs.update.bucket"})
     void retrieveBucket() throws AtlanException {
         GCSBucket b = GCSBucket.retrieveByGuid(bucket.getGuid());
         assertNotNull(b);
@@ -127,8 +126,8 @@ public class GCSAssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"update.bucket.again"},
-            dependsOnGroups = {"read.bucket"})
+            groups = {"gcs.update.bucket.again"},
+            dependsOnGroups = {"gcs.read.bucket"})
     void updateBucketAgain() throws AtlanException {
         GCSBucket updated = GCSBucket.removeCertificate(bucket.getQualifiedName(), BUCKET_NAME);
         assertNotNull(updated);
@@ -145,8 +144,8 @@ public class GCSAssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"search.assets"},
-            dependsOnGroups = {"update.bucket.again"})
+            groups = {"gcs.search.assets"},
+            dependsOnGroups = {"gcs.update.bucket.again"})
     void searchAssets() throws AtlanException {
         Query combined = CompoundQuery.builder()
                 .must(beActive())
@@ -201,8 +200,8 @@ public class GCSAssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"delete.object"},
-            dependsOnGroups = {"update.*", "search.*"})
+            groups = {"gcs.delete.object"},
+            dependsOnGroups = {"gcs.update.*", "gcs.search.*"})
     void deleteObject() throws AtlanException {
         AssetMutationResponse response = Asset.delete(object.getGuid());
         assertNotNull(response);
@@ -219,8 +218,8 @@ public class GCSAssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"delete.object.read"},
-            dependsOnGroups = {"delete.object"})
+            groups = {"gcs.delete.object.read"},
+            dependsOnGroups = {"gcs.delete.object"})
     void readDeletedObject() throws AtlanException {
         GCSObject deleted = GCSObject.retrieveByGuid(object.getGuid());
         assertEquals(deleted.getGuid(), object.getGuid());
@@ -229,8 +228,8 @@ public class GCSAssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"delete.object.restore"},
-            dependsOnGroups = {"delete.object.read"})
+            groups = {"gcs.delete.object.restore"},
+            dependsOnGroups = {"gcs.delete.object.read"})
     void restoreObject() throws AtlanException {
         assertTrue(GCSObject.restore(object.getQualifiedName()));
         GCSObject restored = GCSObject.retrieveByQualifiedName(object.getQualifiedName());
@@ -240,8 +239,8 @@ public class GCSAssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"purge.object"},
-            dependsOnGroups = {"delete.object.restore"})
+            groups = {"gcs.purge.object"},
+            dependsOnGroups = {"gcs.delete.object.restore"})
     void purgeObject() throws AtlanException {
         AssetMutationResponse response = Asset.purge(object.getGuid());
         assertNotNull(response);
@@ -258,8 +257,8 @@ public class GCSAssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"purge.connection"},
-            dependsOnGroups = {"create.*", "read.*", "search.*", "update.*", "purge.object"},
+            groups = {"gcs.purge.connection"},
+            dependsOnGroups = {"gcs.create.*", "gcs.read.*", "gcs.search.*", "gcs.update.*", "gcs.purge.object"},
             alwaysRun = true)
     void purgeConnection() throws AtlanException, InterruptedException {
         ConnectionTest.deleteConnection(connection.getQualifiedName(), log);

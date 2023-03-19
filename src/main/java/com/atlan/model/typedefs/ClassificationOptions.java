@@ -6,7 +6,6 @@ import com.atlan.model.core.AtlanObject;
 import com.atlan.model.enums.AtlanClassificationColor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 
@@ -14,7 +13,6 @@ import lombok.extern.jackson.Jacksonized;
  * Options that can be defined for a classification.
  */
 @Getter
-@Setter
 @Jacksonized
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = false)

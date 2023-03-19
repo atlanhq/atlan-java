@@ -18,7 +18,6 @@ import lombok.experimental.SuperBuilder;
  * Instance of a Power BI dashboard in Atlan.
  */
 @Getter
-@Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 public class PowerBIDashboard extends PowerBI {
@@ -28,7 +27,6 @@ public class PowerBIDashboard extends PowerBI {
 
     /** Fixed typeName for PowerBIDashboards. */
     @Getter(onMethod_ = {@Override})
-    @Setter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
 

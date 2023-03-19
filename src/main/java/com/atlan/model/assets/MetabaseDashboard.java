@@ -18,7 +18,6 @@ import lombok.experimental.SuperBuilder;
  * Instance of a Metabase dashboard in Atlan.
  */
 @Getter
-@Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 public class MetabaseDashboard extends Metabase {
@@ -28,7 +27,6 @@ public class MetabaseDashboard extends Metabase {
 
     /** Fixed typeName for MetabaseDashboards. */
     @Getter(onMethod_ = {@Override})
-    @Setter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
 

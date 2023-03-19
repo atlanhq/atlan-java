@@ -9,7 +9,6 @@ import com.atlan.model.enums.AtlanTypeCategory;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 
@@ -17,7 +16,6 @@ import lombok.extern.jackson.Jacksonized;
  * Structural definition of custom metadata.
  */
 @Getter
-@Setter
 @Jacksonized
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
@@ -26,7 +24,6 @@ public class CustomMetadataDef extends TypeDef {
 
     /** Fixed category for custom metadata typedefs. */
     @Getter(onMethod_ = {@Override})
-    @Setter(onMethod_ = {@Override})
     @Builder.Default
     AtlanTypeCategory category = AtlanTypeCategory.CUSTOM_METADATA;
 

@@ -18,7 +18,6 @@ import lombok.experimental.SuperBuilder;
  * Instance of a query in Atlan.
  */
 @Getter
-@Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 public class AtlanQuery extends SQL {
@@ -28,7 +27,6 @@ public class AtlanQuery extends SQL {
 
     /** Fixed typeName for AtlanQuerys. */
     @Getter(onMethod_ = {@Override})
-    @Setter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
 

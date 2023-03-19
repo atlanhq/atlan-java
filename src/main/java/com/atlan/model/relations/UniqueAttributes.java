@@ -3,12 +3,12 @@
 package com.atlan.model.relations;
 
 import com.atlan.model.core.AtlanObject;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 
-@Data
+@Getter
 @Jacksonized
 @SuperBuilder
 @EqualsAndHashCode(callSuper = false)

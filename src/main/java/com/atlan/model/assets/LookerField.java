@@ -17,7 +17,6 @@ import lombok.experimental.SuperBuilder;
  * Instance of a Looker field in Atlan.
  */
 @Getter
-@Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 public class LookerField extends Looker {
@@ -27,7 +26,6 @@ public class LookerField extends Looker {
 
     /** Fixed typeName for LookerFields. */
     @Getter(onMethod_ = {@Override})
-    @Setter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
 

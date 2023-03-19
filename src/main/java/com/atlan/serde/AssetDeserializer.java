@@ -68,6 +68,7 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
      * @return the deserialized asset
      * @throws IOException on any issues parsing the JSON
      */
+    @SuppressWarnings("deprecation") // Suppress deprecation notice on use of classificationNames builder
     Asset deserialize(JsonNode root) throws IOException {
 
         JsonNode attributes = root.get("attributes");
@@ -77,12 +78,14 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
         JsonNode classificationNames = root.get("classificationNames");
 
         Asset.AssetBuilder<?, ?> builder;
-        String typeName = root.get("typeName").asText();
+        JsonNode typeNameJson = root.get("typeName");
+        String typeName = null;
 
         // TODO: figure out how to avoid needing to maintain this switch statement
-        if (typeName == null) {
+        if (typeNameJson == null || typeNameJson.isNull()) {
             builder = IndistinctAsset.builder();
         } else {
+            typeName = root.get("typeName").asText();
             switch (typeName) {
                 case ADLSAccount.TYPE_NAME:
                     builder = ADLSAccount.builder();
@@ -391,7 +394,7 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
         }
 
         // Start by deserializing all the non-attribute properties (defined at Asset-level)
-        builder = builder.typeName(JacksonUtils.deserializeString(root, "typeName"))
+        builder.typeName(JacksonUtils.deserializeString(root, "typeName"))
                 .guid(JacksonUtils.deserializeString(root, "guid"))
                 .displayText(JacksonUtils.deserializeString(root, "displayText"))
                 // Include reference attributes, for related entities
@@ -411,44 +414,25 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
         Set<Classification> classifications =
                 JacksonUtils.deserializeObject(root, "classifications", new TypeReference<>() {});
         if (classifications != null) {
-            builder = builder.classifications(classifications);
+            builder.classifications(classifications);
         }
         Set<String> meaningNames = JacksonUtils.deserializeObject(root, "meaningNames", new TypeReference<>() {});
         if (meaningNames != null) {
-            builder = builder.meaningNames(meaningNames);
+            builder.meaningNames(meaningNames);
         }
         Set<String> pendingTasks = JacksonUtils.deserializeObject(root, "pendingTasks", new TypeReference<>() {});
         if (pendingTasks != null) {
-            builder = builder.pendingTasks(pendingTasks);
+            builder.pendingTasks(pendingTasks);
         }
 
-        Asset value = builder.build();
-
-        Class<?> clazz = value.getClass();
+        Class<?> rootClazz = builder.build().getClass();
+        Class<?> clazz = builder.getClass();
 
         Map<String, JsonNode> leftOverAttributes = new HashMap<>();
-
-        if (attributes != null && !attributes.isNull()) {
-            Iterator<String> itr = attributes.fieldNames();
-            while (itr.hasNext()) {
-                String attrKey = itr.next();
-                String deserializeName = ReflectionCache.getDeserializedName(clazz, attrKey);
-                Method method = ReflectionCache.getSetter(clazz, deserializeName);
-                if (method != null) {
-                    try {
-                        deserialize(value, attributes.get(attrKey), method, deserializeName);
-                    } catch (NoSuchMethodException e) {
-                        throw new IOException("Missing fromValue method for enum.", e);
-                    } catch (IllegalAccessException | InvocationTargetException e) {
-                        throw new IOException("Failed to deserialize through reflection.", e);
-                    }
-                } else {
-                    // If the setter was not found, still retain it for later processing
-                    // (this is where custom attributes will end up for search results)
-                    leftOverAttributes.put(attrKey, attributes.get(attrKey));
-                }
-            }
-        }
+        // If the same attribute appears in both 'attributes' and 'relationshipAttributes'
+        // then retain the 'relationshipAttributes' (more information) and skip the 'attributes'
+        // copy of the same
+        Set<String> processedAttributes = new HashSet<>();
 
         // Only process relationshipAttributes if this is a full asset, not a relationship
         // reference. (If it is a relationship reference, the relationshipGuid will be non-null.)
@@ -457,16 +441,43 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
                 Iterator<String> itr = relationshipAttributes.fieldNames();
                 while (itr.hasNext()) {
                     String relnKey = itr.next();
-                    String deserializeName = ReflectionCache.getDeserializedName(clazz, relnKey);
+                    String deserializeName = ReflectionCache.getDeserializedName(rootClazz, relnKey);
                     Method method = ReflectionCache.getSetter(clazz, deserializeName);
                     if (method != null) {
                         try {
-                            deserialize(value, relationshipAttributes.get(relnKey), method, deserializeName);
+                            deserialize(builder, relationshipAttributes.get(relnKey), method, deserializeName);
+                            processedAttributes.add(deserializeName);
                         } catch (NoSuchMethodException e) {
                             throw new IOException("Missing fromValue method for enum.", e);
                         } catch (IllegalAccessException | InvocationTargetException e) {
                             throw new IOException("Failed to deserialize through reflection.", e);
                         }
+                    }
+                }
+            }
+        }
+
+        if (attributes != null && !attributes.isNull()) {
+            Iterator<String> itr = attributes.fieldNames();
+            while (itr.hasNext()) {
+                String attrKey = itr.next();
+                String deserializeName = ReflectionCache.getDeserializedName(rootClazz, attrKey);
+                // Only proceed with deserializing the 'attributes' copy of an attribute if
+                // it was not already deserialized as a more complete relationship (above)
+                if (!processedAttributes.contains(deserializeName)) {
+                    Method method = ReflectionCache.getSetter(clazz, deserializeName);
+                    if (method != null) {
+                        try {
+                            deserialize(builder, attributes.get(attrKey), method, deserializeName);
+                        } catch (NoSuchMethodException e) {
+                            throw new IOException("Missing fromValue method for enum.", e);
+                        } catch (IllegalAccessException | InvocationTargetException e) {
+                            throw new IOException("Failed to deserialize through reflection.", e);
+                        }
+                    } else {
+                        // If the setter was not found, still retain it for later processing
+                        // (this is where custom attributes will end up for search results)
+                        leftOverAttributes.put(attrKey, attributes.get(attrKey));
                     }
                 }
             }
@@ -514,28 +525,31 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
         // Special cases to wrap-up:
         // Decode the Readme's description after deserialization
         if (typeName != null && typeName.equals("Readme")) {
-            Readme readme = (Readme) value;
-            readme.setDescription(StringUtils.decodeContent(readme.getDescription()));
+            builder.description(StringUtils.decodeContent(builder.build().getDescription()));
         }
 
-        value.setCustomMetadataSets(cm);
-        value.setClassificationNames(clsNames);
+        if (cm != null) {
+            builder.customMetadataSets(cm);
+        }
+        if (clsNames != null) {
+            builder.classificationNames(clsNames);
+        }
 
-        return value;
+        return builder.build();
     }
 
-    private void deserialize(Asset value, JsonNode jsonNode, Method method, String fieldName)
+    private void deserialize(Asset.AssetBuilder<?, ?> builder, JsonNode jsonNode, Method method, String fieldName)
             throws IllegalAccessException, InvocationTargetException, NoSuchMethodException, IOException {
         if (jsonNode.isValueNode()) {
-            deserializePrimitive(value, jsonNode, method, fieldName);
+            deserializePrimitive(builder, jsonNode, method, fieldName);
         } else if (jsonNode.isArray()) {
-            deserializeList(value, (ArrayNode) jsonNode, method);
+            deserializeList(builder, (ArrayNode) jsonNode, method);
         } else if (jsonNode.isObject()) {
-            deserializeObject(value, jsonNode, method);
+            deserializeObject(builder, jsonNode, method);
         }
     }
 
-    private void deserializeList(Asset value, ArrayNode array, Method method)
+    private void deserializeList(Asset.AssetBuilder<?, ?> builder, ArrayNode array, Method method)
             throws IllegalAccessException, InvocationTargetException, IOException {
         Class<?> paramClass = ReflectionCache.getParameterOfMethod(method);
         List<Object> list = new ArrayList<>();
@@ -543,19 +557,19 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
             Object deserialized = deserializeElement(element, method);
             list.add(deserialized);
         }
-        if (paramClass == List.class) {
-            method.invoke(value, list);
+        if (paramClass == Collection.class || paramClass == List.class) {
+            method.invoke(builder, list);
         } else if (paramClass == Set.class || paramClass == SortedSet.class) {
-            method.invoke(value, new TreeSet<>(list));
+            method.invoke(builder, new TreeSet<>(list));
         } else {
             throw new IOException("Unable to deserialize JSON list to Java class: " + paramClass.getCanonicalName());
         }
     }
 
-    private void deserializeObject(Asset value, JsonNode jsonObject, Method method)
+    private void deserializeObject(Asset.AssetBuilder<?, ?> builder, JsonNode jsonObject, Method method)
             throws IllegalAccessException, InvocationTargetException, IOException {
         Class<?> paramClass = ReflectionCache.getParameterOfMethod(method);
-        method.invoke(value, Serde.mapper.readValue(jsonObject.toString(), paramClass));
+        method.invoke(builder, Serde.mapper.readValue(jsonObject.toString(), paramClass));
     }
 
     /**
@@ -578,30 +592,31 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
         return null;
     }
 
-    private void deserializePrimitive(Asset value, JsonNode primitive, Method method, String fieldName)
+    private void deserializePrimitive(
+            Asset.AssetBuilder<?, ?> builder, JsonNode primitive, Method method, String fieldName)
             throws IllegalAccessException, InvocationTargetException, NoSuchMethodException, IOException {
         if (primitive.isTextual()) {
             Class<?> paramClass = ReflectionCache.getParameterOfMethod(method);
             if (paramClass.isEnum()) {
                 Method fromValue = paramClass.getMethod("fromValue", String.class);
-                method.invoke(value, fromValue.invoke(null, primitive.asText()));
+                method.invoke(builder, fromValue.invoke(null, primitive.asText()));
             } else {
-                method.invoke(value, primitive.asText());
+                method.invoke(builder, primitive.asText());
             }
         } else if (primitive.isBoolean()) {
-            method.invoke(value, primitive.asBoolean());
+            method.invoke(builder, primitive.asBoolean());
         } else if (primitive.isNumber()) {
-            deserializeNumber(value, primitive, method);
+            deserializeNumber(builder, primitive, method);
         } else if (primitive.isNull()) {
             // Explicitly deserialize null values to a representation
             // that we can identify on the object — necessary for audit entries
-            value.addNullField(fieldName);
+            builder.nullField(fieldName);
         }
     }
 
-    private void deserializeNumber(Asset value, JsonNode primitive, Method method)
+    private void deserializeNumber(Asset.AssetBuilder<?, ?> builder, JsonNode primitive, Method method)
             throws IllegalAccessException, InvocationTargetException, IOException {
         Object number = JacksonUtils.deserializeNumber(primitive, method);
-        method.invoke(value, number);
+        method.invoke(builder, number);
     }
 }

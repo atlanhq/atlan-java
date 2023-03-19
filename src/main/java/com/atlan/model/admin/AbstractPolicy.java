@@ -6,11 +6,9 @@ import com.atlan.model.core.AtlanObject;
 import java.util.Comparator;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 @Getter
-@Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 public abstract class AbstractPolicy extends AtlanObject implements Comparable<AbstractPolicy> {

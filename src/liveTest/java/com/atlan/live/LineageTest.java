@@ -27,7 +27,6 @@ import org.testng.annotations.Test;
 /**
  * Tests all aspects of lineage.
  */
-@Test(groups = {"lineage"})
 @Slf4j
 public class LineageTest extends AtlanLiveTest {
 
@@ -61,7 +60,7 @@ public class LineageTest extends AtlanLiveTest {
     private static LineageProcess start = null;
     private static LineageProcess end = null;
 
-    @Test(groups = {"create.connection"})
+    @Test(groups = {"lineage.create.connection"})
     void createConnection() throws AtlanException {
         connection = ConnectionTest.createConnection(CONNECTION_NAME, CONNECTOR_TYPE);
         Database database = SQLAssetTest.createDatabase(DATABASE_NAME, connection.getQualifiedName());
@@ -84,8 +83,8 @@ public class LineageTest extends AtlanLiveTest {
     // TODO: classification propagation through term-asset-child-lineage
 
     @Test(
-            groups = {"create.lineage.start"},
-            dependsOnGroups = {"create.connection"})
+            groups = {"lineage.create.lineage.start"},
+            dependsOnGroups = {"lineage.create.connection"})
     void createLineageStart() throws AtlanException {
         final String processName = TABLE_NAME + " >> " + MVIEW_NAME;
         LineageProcess toCreate = LineageProcess.creator(
@@ -133,8 +132,8 @@ public class LineageTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"create.lineage.end"},
-            dependsOnGroups = {"create.lineage.start"})
+            groups = {"lineage.create.lineage.end"},
+            dependsOnGroups = {"lineage.create.lineage.start"})
     void createLineageEnd() throws AtlanException {
         final String processName = MVIEW_NAME + " >> " + VIEW_NAME;
         LineageProcess toCreate = LineageProcess.creator(
@@ -182,8 +181,8 @@ public class LineageTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"read.lineage"},
-            dependsOnGroups = {"create.lineage.*"})
+            groups = {"lineage.read.lineage"},
+            dependsOnGroups = {"lineage.create.lineage.*"})
     void fetchLineageStart() throws AtlanException {
         LineageRequest lineage =
                 LineageRequest.builder().guid(table.getGuid()).hideProcess(true).build();
@@ -220,8 +219,8 @@ public class LineageTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"read.lineage"},
-            dependsOnGroups = {"create.lineage.*"})
+            groups = {"lineage.read.lineage"},
+            dependsOnGroups = {"lineage.create.lineage.*"})
     void fetchLineageMiddle() throws AtlanException {
         LineageRequest lineage =
                 LineageRequest.builder().guid(mview.getGuid()).hideProcess(true).build();
@@ -283,8 +282,8 @@ public class LineageTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"read.lineage.end"},
-            dependsOnGroups = {"create.lineage.*"})
+            groups = {"lineage.read.lineage.end"},
+            dependsOnGroups = {"lineage.create.lineage.*"})
     void fetchLineageEnd() throws AtlanException {
         LineageRequest lineage =
                 LineageRequest.builder().guid(view.getGuid()).hideProcess(true).build();
@@ -328,8 +327,8 @@ public class LineageTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"read.lineage.invalid"},
-            dependsOnGroups = {"create.lineage.*"})
+            groups = {"lineage.read.lineage.invalid"},
+            dependsOnGroups = {"lineage.create.lineage.*"})
     void fetchLineageInvalid() throws AtlanException {
         LineageRequest lineage = LineageRequest.builder()
                 .guid(table.getGuid())
@@ -342,8 +341,8 @@ public class LineageTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"search.lineage"},
-            dependsOnGroups = {"read.lineage.*"})
+            groups = {"lineage.search.lineage"},
+            dependsOnGroups = {"lineage.read.lineage.*"})
     void searchByLineage() throws AtlanException {
         Query combined = CompoundQuery.builder()
                 .must(beActive())
@@ -382,8 +381,8 @@ public class LineageTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"delete.lineage"},
-            dependsOnGroups = {"search.lineage"})
+            groups = {"lineage.delete.lineage"},
+            dependsOnGroups = {"lineage.search.lineage"})
     void deleteLineage() throws AtlanException {
         AssetMutationResponse response = Asset.delete(start.getGuid());
         assertNotNull(response);
@@ -398,8 +397,8 @@ public class LineageTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"delete.lineage.restore"},
-            dependsOnGroups = {"delete.lineage"})
+            groups = {"lineage.delete.lineage.restore"},
+            dependsOnGroups = {"lineage.delete.lineage"})
     void restoreLineage() throws AtlanException {
         assertTrue(LineageProcess.restore(start.getQualifiedName()));
         LineageProcess restored = LineageProcess.retrieveByGuid(start.getGuid());
@@ -409,8 +408,8 @@ public class LineageTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"purge.lineage"},
-            dependsOnGroups = {"delete.lineage.restore"},
+            groups = {"lineage.purge.lineage"},
+            dependsOnGroups = {"lineage.delete.lineage.restore"},
             alwaysRun = true)
     void purgeLineage() throws AtlanException {
         AssetMutationResponse response = LineageProcess.purge(start.getGuid());
@@ -426,8 +425,8 @@ public class LineageTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"purge.connection"},
-            dependsOnGroups = {"create.*", "read.*", "search.*", "purge.lineage"},
+            groups = {"lineage.purge.connection"},
+            dependsOnGroups = {"lineage.create.*", "lineage.read.*", "lineage.search.*", "lineage.purge.lineage"},
             alwaysRun = true)
     void purgeConnection() throws AtlanException, InterruptedException {
         ConnectionTest.deleteConnection(connection.getQualifiedName(), log);

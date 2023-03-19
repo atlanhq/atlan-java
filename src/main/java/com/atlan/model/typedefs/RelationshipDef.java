@@ -11,7 +11,6 @@ import java.util.Map;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 
@@ -19,7 +18,6 @@ import lombok.extern.jackson.Jacksonized;
  * Structural definition of an entity.
  */
 @Getter
-@Setter
 @Jacksonized
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
@@ -28,7 +26,6 @@ public class RelationshipDef extends TypeDef {
 
     /** Fixed category for entity typedefs. */
     @Getter(onMethod_ = {@Override})
-    @Setter(onMethod_ = {@Override})
     @Builder.Default
     AtlanTypeCategory category = AtlanTypeCategory.RELATIONSHIP;
 

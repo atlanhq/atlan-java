@@ -28,7 +28,6 @@ import org.testng.annotations.Test;
 /**
  * Tests all aspects of glossaries and related assets (categories and terms).
  */
-@Test(groups = {"glossary"})
 public class GlossaryTest extends AtlanLiveTest {
 
     private static final String PREFIX = "GlossaryTest";
@@ -215,14 +214,14 @@ public class GlossaryTest extends AtlanLiveTest {
         return deletedTerm;
     }
 
-    @Test(groups = {"create.glossary"})
+    @Test(groups = {"glossary.create.glossary"})
     void createGlossary() throws AtlanException {
         glossary = createGlossary(GLOSSARY_NAME);
     }
 
     @Test(
-            groups = {"create.hierarchy"},
-            dependsOnGroups = {"create.glossary"})
+            groups = {"glossary.create.hierarchy"},
+            dependsOnGroups = {"glossary.create.glossary"})
     void createHierarchy() throws AtlanException {
 
         List<String> topNames = List.of("top1" + PREFIX, "top2" + PREFIX);
@@ -276,8 +275,8 @@ public class GlossaryTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"read.hierarchy"},
-            dependsOnGroups = {"create.hierarchy"})
+            groups = {"glossary.read.hierarchy"},
+            dependsOnGroups = {"glossary.create.hierarchy"})
     void traverseHierarchy() throws AtlanException {
         Glossary glossary = Glossary.findByName(GLOSSARY_NAME, null);
         assertNotNull(glossary);
@@ -328,24 +327,24 @@ public class GlossaryTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"create.term"},
-            dependsOnGroups = {"create.glossary"})
+            groups = {"glossary.create.term"},
+            dependsOnGroups = {"glossary.create.glossary"})
     void createTerm1() throws AtlanException {
         term1 = createTerm(TERM_NAME1, glossary.getGuid());
         assertEquals(term1.getName(), TERM_NAME1);
     }
 
     @Test(
-            groups = {"create.term"},
-            dependsOnGroups = {"create.glossary"})
+            groups = {"glossary.create.term"},
+            dependsOnGroups = {"glossary.create.glossary"})
     void createTerm2() throws AtlanException {
         term2 = createTerm(TERM_NAME2, glossary.getGuid());
         assertEquals(term2.getName(), TERM_NAME2);
     }
 
     @Test(
-            groups = {"read.glossary"},
-            dependsOnGroups = {"create.glossary", "create.hierarchy", "create.term"})
+            groups = {"glossary.read.glossary"},
+            dependsOnGroups = {"glossary.create.glossary", "glossary.create.hierarchy", "glossary.create.term"})
     void readGlossary() throws AtlanException {
         Glossary g = Glossary.retrieveByGuid(glossary.getGuid());
         assertNotNull(g);
@@ -369,8 +368,8 @@ public class GlossaryTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"read.term"},
-            dependsOnGroups = {"create.term"})
+            groups = {"glossary.read.term"},
+            dependsOnGroups = {"glossary.create.term"})
     void readTerm() throws AtlanException {
         GlossaryTerm term = GlossaryTerm.retrieveByGuid(term1.getGuid());
         assertNotNull(term);
@@ -383,8 +382,8 @@ public class GlossaryTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"update.glossary"},
-            dependsOnGroups = {"read.glossary"})
+            groups = {"glossary.update.glossary"},
+            dependsOnGroups = {"glossary.read.glossary"})
     void updateGlossary() throws AtlanException {
         Glossary g = Glossary.updater(glossary.getGuid(), GLOSSARY_NAME)
                 .announcementType(ANNOUNCEMENT_TYPE)
@@ -408,8 +407,8 @@ public class GlossaryTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"update.category"},
-            dependsOnGroups = {"create.hierarchy"})
+            groups = {"glossary.update.category"},
+            dependsOnGroups = {"glossary.create.hierarchy"})
     void updateCategory() throws AtlanException {
         category = GlossaryCategory.retrieveByGuid(leaf1baGuid);
         GlossaryCategory toUpdate = GlossaryCategory.updater(
@@ -441,15 +440,15 @@ public class GlossaryTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"update.category.attributes"},
-            dependsOnGroups = {"update.category"})
+            groups = {"glossary.update.category.attributes"},
+            dependsOnGroups = {"glossary.update.category"})
     void removeCategoryAttributes() throws AtlanException {
         GlossaryCategory toUpdate = GlossaryCategory.updater(
                         category.getQualifiedName(),
                         category.getName(),
                         category.getAnchor().getGuid())
+                .removeAnnouncement()
                 .build();
-        toUpdate.removeAnnouncement();
         AssetMutationResponse response = toUpdate.upsert();
         Asset one = validateSingleUpdate(response);
         assertTrue(one instanceof GlossaryCategory);
@@ -465,8 +464,8 @@ public class GlossaryTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"update.term"},
-            dependsOnGroups = {"create.term", "create.hierarchy"})
+            groups = {"glossary.update.term"},
+            dependsOnGroups = {"glossary.create.term", "glossary.create.hierarchy"})
     void updateTerm() throws AtlanException {
         GlossaryTerm term = GlossaryTerm.updater(term1.getQualifiedName(), term1.getName(), glossary.getGuid())
                 .announcementType(ANNOUNCEMENT_TYPE)
@@ -506,8 +505,8 @@ public class GlossaryTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"search.term"},
-            dependsOnGroups = {"update.term"})
+            groups = {"glossary.search.term"},
+            dependsOnGroups = {"glossary.update.term"})
     void searchTerms() throws AtlanException {
         Query combined = CompoundQuery.builder()
                 .must(beActive())
@@ -554,8 +553,8 @@ public class GlossaryTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"delete.term"},
-            dependsOnGroups = {"create.*", "update.*", "read.*", "search.*"},
+            groups = {"glossary.delete.term"},
+            dependsOnGroups = {"glossary.create.*", "glossary.update.*", "glossary.read.*", "glossary.search.*"},
             alwaysRun = true)
     void deleteTerm1() throws AtlanException {
         AssetMutationResponse response = GlossaryTerm.delete(term1.getGuid());
@@ -581,8 +580,8 @@ public class GlossaryTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = "restore.term",
-            dependsOnGroups = {"delete.term"},
+            groups = {"glossary.restore.term"},
+            dependsOnGroups = {"glossary.delete.term"},
             alwaysRun = true)
     void restoreTerm1() throws AtlanException {
         assertTrue(GlossaryTerm.restore(term1.getQualifiedName()));
@@ -600,8 +599,8 @@ public class GlossaryTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"purge.term"},
-            dependsOnGroups = {"restore.term"},
+            groups = {"glossary.purge.term"},
+            dependsOnGroups = {"glossary.restore.term"},
             alwaysRun = true)
     void purgeTerm1() throws AtlanException {
         GlossaryTerm term = deleteTerm(term1.getGuid());
@@ -617,8 +616,8 @@ public class GlossaryTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"purge.term"},
-            dependsOnGroups = {"restore.term"},
+            groups = {"glossary.purge.term"},
+            dependsOnGroups = {"glossary.restore.term"},
             alwaysRun = true)
     void purgeTerm2() throws AtlanException {
         GlossaryTerm term = deleteTerm(term2.getGuid());
@@ -634,8 +633,8 @@ public class GlossaryTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"purge.category"},
-            dependsOnGroups = {"purge.term"},
+            groups = {"glossary.purge.category"},
+            dependsOnGroups = {"glossary.purge.term"},
             alwaysRun = true)
     void purgeCategory() throws AtlanException {
         GlossaryCategory c = deleteCategory(category.getGuid());
@@ -651,8 +650,8 @@ public class GlossaryTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"purge.hierarchy"},
-            dependsOnGroups = {"purge.category", "purge.term"},
+            groups = {"glossary.purge.hierarchy"},
+            dependsOnGroups = {"glossary.purge.category", "glossary.purge.term"},
             alwaysRun = true)
     void purgeHierarchy() throws AtlanException {
         AssetMutationResponse response = EntityBulkEndpoint.delete(
@@ -684,8 +683,8 @@ public class GlossaryTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"purge.glossary"},
-            dependsOnGroups = {"purge.category", "purge.hierarchy"},
+            groups = {"glossary.purge.glossary"},
+            dependsOnGroups = {"glossary.purge.category", "glossary.purge.hierarchy"},
             alwaysRun = true)
     void purgeGlossary() throws AtlanException {
         Glossary g = deleteGlossary(glossary.getGuid());

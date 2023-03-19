@@ -17,7 +17,6 @@ import lombok.experimental.SuperBuilder;
  * Instance of a Looker look in Atlan.
  */
 @Getter
-@Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 public class LookerLook extends Looker {
@@ -27,7 +26,6 @@ public class LookerLook extends Looker {
 
     /** Fixed typeName for LookerLooks. */
     @Getter(onMethod_ = {@Override})
-    @Setter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
 

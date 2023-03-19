@@ -13,14 +13,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.List;
 import java.util.Map;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
 /**
  * Captures the response from a search against Atlan. Also provides the ability to iteratively
  * page through results, without needing to track or re-run the original query using {@link #getNextPage()}.
  */
-@Data
+@Getter
 @EqualsAndHashCode(callSuper = false)
 public class IndexSearchResponse extends ApiResource {
     private static final long serialVersionUID = 2L;
@@ -57,7 +57,7 @@ public class IndexSearchResponse extends ApiResource {
         }
         int from = dsl.getFrom() == null ? 0 : dsl.getFrom();
         int page = dsl.getSize() == null ? 10 : dsl.getSize();
-        dsl.setFrom(from + page);
+        dsl = dsl.toBuilder().from(from + page).build();
 
         IndexSearchRequest.IndexSearchRequestBuilder<?, ?> next =
                 IndexSearchRequest.builder().dsl(dsl);

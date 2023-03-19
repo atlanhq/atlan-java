@@ -20,7 +20,6 @@ import lombok.experimental.SuperBuilder;
  * Instance of a database schema in Atlan.
  */
 @Getter
-@Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 public class Schema extends SQL {
@@ -30,7 +29,6 @@ public class Schema extends SQL {
 
     /** Fixed typeName for Schemas. */
     @Getter(onMethod_ = {@Override})
-    @Setter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
 

@@ -18,7 +18,6 @@ import lombok.experimental.SuperBuilder;
  * Instance of a Mode query in Atlan.
  */
 @Getter
-@Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 public class ModeQuery extends Mode {
@@ -28,7 +27,6 @@ public class ModeQuery extends Mode {
 
     /** Fixed typeName for ModeQuerys. */
     @Getter(onMethod_ = {@Override})
-    @Setter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
 

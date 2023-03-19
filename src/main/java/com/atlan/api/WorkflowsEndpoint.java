@@ -8,8 +8,8 @@ import com.atlan.model.core.AtlanObject;
 import com.atlan.model.workflow.*;
 import com.atlan.net.ApiResource;
 import lombok.Builder;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.experimental.SuperBuilder;
 
 /**
@@ -90,7 +90,7 @@ public class WorkflowsEndpoint {
     /**
      * Request class for re-running a pre-existing workflow.
      */
-    @Data
+    @Getter
     @SuperBuilder
     @EqualsAndHashCode(callSuper = false)
     static class ReRunRequest extends AtlanObject {

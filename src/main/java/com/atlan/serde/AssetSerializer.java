@@ -16,7 +16,6 @@ import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * Serialization of all {@link Asset} objects, down through the entire inheritance hierarchy.
@@ -27,7 +26,6 @@ import lombok.extern.slf4j.Slf4j;
  *     <li>Automatically translating custom metadata into the nested <code>businessAttributes</code> structure, including translating human-readable names into Atlan's internal hashed-string representations.</li>
  * </ul>
  */
-@Slf4j
 public class AssetSerializer extends StdSerializer<Asset> {
     private static final long serialVersionUID = 2L;
 
@@ -84,9 +82,14 @@ public class AssetSerializer extends StdSerializer<Asset> {
                         attrValue = ReflectionCache.getGetter(clazz, fieldName).invoke(asset);
                     }
                     if (attrValue != null) {
-                        // Add the value we've derived above to the attribute map for nesting
-                        String serializeName = ReflectionCache.getSerializedName(clazz, fieldName);
-                        attributes.put(serializeName, attrValue);
+                        // Ignore null values and empty collections
+                        boolean skip = (attrValue instanceof Collection && ((Collection<?>) attrValue).isEmpty())
+                                || (attrValue instanceof Map && ((Map<?, ?>) attrValue).isEmpty());
+                        if (!skip) {
+                            // Add the value we've derived above to the attribute map for nesting
+                            String serializeName = ReflectionCache.getSerializedName(clazz, fieldName);
+                            attributes.put(serializeName, attrValue);
+                        }
                     }
                 } else if (fieldName.equals("customMetadataSets")) {
                     // Translate custom metadata to businessAttributes map
@@ -94,8 +97,6 @@ public class AssetSerializer extends StdSerializer<Asset> {
                     if (cm != null) {
                         CustomMetadataCache.getBusinessAttributesFromCustomMetadata(cm, businessAttributes);
                     }
-                    // Then remove it, to exclude it from serialization
-                    asset.setCustomMetadataSets(null);
                 } else {
                     // For any other (top-level) field, we'll just write it out as-is (skipping any null
                     // values or empty lists)

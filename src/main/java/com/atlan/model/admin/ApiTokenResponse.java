@@ -4,10 +4,10 @@ package com.atlan.model.admin;
 
 import com.atlan.net.ApiResource;
 import java.util.List;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
-@Data
+@Getter
 @EqualsAndHashCode(callSuper = false)
 public class ApiTokenResponse extends ApiResource {
     private static final long serialVersionUID = 2L;

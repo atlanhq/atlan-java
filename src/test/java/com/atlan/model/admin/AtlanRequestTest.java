@@ -4,7 +4,6 @@ package com.atlan.model.admin;
 
 import static org.testng.Assert.*;
 
-import com.atlan.model.assets.Glossary;
 import com.atlan.model.assets.GlossaryTerm;
 import com.atlan.model.enums.*;
 import com.atlan.serde.Serde;
@@ -13,7 +12,7 @@ import org.testng.annotations.Test;
 
 public class AtlanRequestTest {
 
-    private static final AtlanRequest full = AtlanRequest.builder()
+    private static final AtlanRequest full = AttributeRequest.builder()
             .id("id")
             .version("version")
             .isActive(true)
@@ -21,7 +20,6 @@ public class AtlanRequestTest {
             .updatedAt(123456789L)
             .createdBy("createdBy")
             .tenantId("tenantId")
-            .sourceType("sourceType")
             .sourceGuid("sourceGuid")
             .sourceQualifiedName("sourceQualifiedName")
             .sourceAttribute("sourceAttribute")
@@ -32,8 +30,7 @@ public class AtlanRequestTest {
             .destinationValueType("destinationValueType")
             // .destinationValueArray()
             // .destinationValueObject()
-            .entityType("entityType")
-            .requestType(AtlanRequestType.ATTRIBUTE)
+            .entityType(GlossaryTerm.TYPE_NAME)
             // .confidenceScore()
             // .botRunId()
             .approvedBy("approvedBy")
@@ -66,18 +63,19 @@ public class AtlanRequestTest {
                     .name("name")
                     .guid("guid")
                     .displayName("displayName")
-                    .anchor(Glossary.refByGuid("123-456-789"))
                     .build())
             .build();
 
     private static AtlanRequest frodo;
     private static String serialized;
+    private static final int HASH = full.hashCode();
 
     @Test(groups = {"serialize"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
         assertNotNull(serialized);
+        assertEquals(full.hashCode(), HASH, "Object is mutated by serialization.");
     }
 
     @Test(

@@ -161,6 +161,7 @@ public class GlossaryTermTest {
             .build();
     private static GlossaryTerm frodo;
     private static String serialized;
+    private static final int HASH = full.hashCode();
 
     @Test(groups = {"builderEquivalency"})
     void builderEquivalency() {
@@ -174,6 +175,7 @@ public class GlossaryTermTest {
         assertNotNull(full);
         serialized = full.toJson();
         assertNotNull(serialized);
+        assertEquals(full.hashCode(), HASH, "Object is mutated by serialization.");
     }
 
     @Test(

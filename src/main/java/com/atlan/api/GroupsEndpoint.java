@@ -9,8 +9,8 @@ import com.atlan.model.core.AtlanObject;
 import com.atlan.net.ApiResource;
 import java.util.ArrayList;
 import java.util.List;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.experimental.SuperBuilder;
 
 /**
@@ -180,7 +180,7 @@ public class GroupsEndpoint {
     /**
      * Request class for creating a group.
      */
-    @Data
+    @Getter
     @SuperBuilder
     @EqualsAndHashCode(callSuper = false)
     static final class CreateGroupRequest extends AtlanObject {
@@ -191,7 +191,7 @@ public class GroupsEndpoint {
     /**
      * Request class for removing users from a group.
      */
-    @Data
+    @Getter
     @SuperBuilder
     @EqualsAndHashCode(callSuper = false)
     static final class RemoveFromGroupRequest extends AtlanObject {

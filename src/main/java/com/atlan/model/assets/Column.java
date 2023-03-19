@@ -21,7 +21,6 @@ import lombok.experimental.SuperBuilder;
  * Instance of a column in Atlan.
  */
 @Getter
-@Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @SuppressWarnings("cast")
@@ -32,7 +31,6 @@ public class Column extends SQL {
 
     /** Fixed typeName for Columns. */
     @Getter(onMethod_ = {@Override})
-    @Setter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
 
@@ -183,7 +181,6 @@ public class Column extends SQL {
 
     /** List of the greatest values in a column. */
     @Attribute
-    @Singular
     SortedSet<String> columnMaxs;
 
     /** Length of the shortest value in a string column. */
@@ -192,7 +189,6 @@ public class Column extends SQL {
 
     /** List of the least values in a column. */
     @Attribute
-    @Singular
     SortedSet<String> columnMins;
 
     /** Number of rows in a column that do not contain content. */
@@ -330,17 +326,17 @@ public class Column extends SQL {
                 .order(order);
         switch (parentType) {
             case Table.TYPE_NAME:
-                builder = builder.tableName(parentName)
+                builder.tableName(parentName)
                         .tableQualifiedName(parentQualifiedName)
                         .table(Table.refByQualifiedName(parentQualifiedName));
                 break;
             case View.TYPE_NAME:
-                builder = builder.viewName(parentName)
+                builder.viewName(parentName)
                         .viewQualifiedName(parentQualifiedName)
                         .view(View.refByQualifiedName(parentQualifiedName));
                 break;
             case MaterializedView.TYPE_NAME:
-                builder = builder.viewName(parentName)
+                builder.viewName(parentName)
                         .viewQualifiedName(parentQualifiedName)
                         .materializedView(MaterializedView.refByQualifiedName(parentQualifiedName));
                 break;

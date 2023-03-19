@@ -17,7 +17,6 @@ import lombok.experimental.SuperBuilder;
  * Instance of a Google Data Studio asset in Atlan.
  */
 @Getter
-@Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 public class DataStudioAsset extends Google {
@@ -27,7 +26,6 @@ public class DataStudioAsset extends Google {
 
     /** Fixed typeName for DataStudioAssets. */
     @Getter(onMethod_ = {@Override})
-    @Setter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
 

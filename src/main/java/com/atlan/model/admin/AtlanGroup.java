@@ -15,7 +15,6 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 
 @Getter
-@Setter
 @Jacksonized
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
@@ -51,6 +50,14 @@ public class AtlanGroup extends AtlanObject {
 
     /** Number of users in the group. */
     Long userCount;
+
+    /** Whether this group is a default (auto-assigned to new users) (true), or not (false). */
+    @JsonIgnore
+    public boolean isDefault() {
+        return attributes != null
+                && attributes.getIsDefault() != null
+                && attributes.getIsDefault().contains("true");
+    }
 
     /**
      * Builds the minimal object necessary to create a group.
@@ -172,7 +179,6 @@ public class AtlanGroup extends AtlanObject {
     }
 
     @Getter
-    @Setter
     @Jacksonized
     @SuperBuilder(toBuilder = true)
     @EqualsAndHashCode(callSuper = true)

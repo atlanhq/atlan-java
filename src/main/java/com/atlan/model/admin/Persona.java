@@ -18,7 +18,6 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 
 @Getter
-@Setter
 @Jacksonized
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
@@ -188,7 +187,6 @@ public class Persona extends AtlanObject {
     }
 
     @Getter
-    @Setter
     @Jacksonized
     @SuperBuilder(toBuilder = true)
     @EqualsAndHashCode(callSuper = true)
@@ -200,7 +198,6 @@ public class Persona extends AtlanObject {
     }
 
     @Getter
-    @Setter
     @Jacksonized
     @SuperBuilder(toBuilder = true)
     @EqualsAndHashCode(callSuper = true)

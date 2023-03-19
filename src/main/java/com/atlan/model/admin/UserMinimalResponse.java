@@ -4,13 +4,13 @@ package com.atlan.model.admin;
 
 import com.atlan.net.ApiResource;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
 /**
  * Specialized response for minimalist user details, as returned by some operations.
  */
-@Data
+@Getter
 @EqualsAndHashCode(callSuper = false)
 public class UserMinimalResponse extends ApiResource {
     private static final long serialVersionUID = 2L;

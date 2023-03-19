@@ -10,7 +10,7 @@ import lombok.extern.jackson.Jacksonized;
 /**
  * Detailed information about a Google label.
  */
-@Data
+@Getter
 @Jacksonized
 @SuperBuilder
 @EqualsAndHashCode(callSuper = true)

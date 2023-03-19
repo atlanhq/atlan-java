@@ -11,9 +11,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.*;
 import lombok.*;
+import lombok.extern.jackson.Jacksonized;
 
 @Getter
-@Setter
+@Jacksonized
+@Builder
 @EqualsAndHashCode(callSuper = false)
 public class LineageResponse extends ApiResource {
     private static final long serialVersionUID = 2L;
@@ -70,7 +72,7 @@ public class LineageResponse extends ApiResource {
 
     /** Traversable graph representation of the lineage results. */
     @JsonIgnore
-    private transient LineageGraph graph = null;
+    private transient LineageGraph graph;
 
     /**
      * Retrieve the graph representation of the lineage.

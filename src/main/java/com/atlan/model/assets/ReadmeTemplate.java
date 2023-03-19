@@ -17,7 +17,6 @@ import lombok.experimental.SuperBuilder;
  * Instance of a README template in Atlan.
  */
 @Getter
-@Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 public class ReadmeTemplate extends Resource {
@@ -27,7 +26,6 @@ public class ReadmeTemplate extends Resource {
 
     /** Fixed typeName for ReadmeTemplates. */
     @Getter(onMethod_ = {@Override})
-    @Setter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
 

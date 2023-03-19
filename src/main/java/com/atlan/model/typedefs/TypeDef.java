@@ -14,7 +14,6 @@ import lombok.experimental.SuperBuilder;
  * Base class for all type definitions (typedefs) in Atlan.
  */
 @Getter
-@Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = false)
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "category")

@@ -3,10 +3,10 @@
 package com.atlan.model.workflow;
 
 import com.atlan.exception.AtlanException;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
-@Data
+@Getter
 @EqualsAndHashCode(callSuper = false)
 public class WorkflowRunResponse extends WorkflowResponse {
     private static final long serialVersionUID = 2L;

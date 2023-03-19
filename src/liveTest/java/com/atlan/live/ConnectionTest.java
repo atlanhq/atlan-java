@@ -43,7 +43,7 @@ public class ConnectionTest extends AtlanLiveTest {
      * @return the connection that was created
      * @throws AtlanException on any error creating or reading-back the connection
      */
-    static Connection createConnection(String prefix, AtlanConnectorType type) throws AtlanException {
+    public static Connection createConnection(String prefix, AtlanConnectorType type) throws AtlanException {
         String adminRoleGuid = RoleCache.getIdForName("$admin");
         Connection connection = Connection.creator(prefix, type, List.of(adminRoleGuid), null, null)
                 .build();

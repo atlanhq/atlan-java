@@ -11,7 +11,6 @@ import lombok.experimental.SuperBuilder;
  * Detailed information about Catalog-related assets. Only types that inherit from Catalog can participate in lineage.
  */
 @Getter
-@Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @JsonSubTypes({

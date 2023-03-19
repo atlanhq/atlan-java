@@ -23,7 +23,6 @@ import lombok.extern.slf4j.Slf4j;
  * Instance of a term in Atlan.
  */
 @Getter
-@Setter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
@@ -35,7 +34,6 @@ public class GlossaryTerm extends Asset {
 
     /** Fixed typeName for GlossaryTerms. */
     @Getter(onMethod_ = {@Override})
-    @Setter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
 
