@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9,"i9":9,"i10":9};
+var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9,"i9":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -176,20 +176,13 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>static void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addClass(java.lang.Class)">addClass</a></span>&#8203;(java.lang.Class&lt;?&gt;&nbsp;b)</code></th>
-<td class="colLast">
-<div class="block">Build up the reflection caches for the specified class, if it is not already present.</div>
-</td>
-</tr>
-<tr id="i1" class="rowColor">
 <td class="colFirst"><code>static java.lang.Class&lt;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getClassOfParameterizedType(java.lang.reflect.Type)">getClassOfParameterizedType</a></span>&#8203;(java.lang.reflect.Type&nbsp;parameterizedType)</code></th>
 <td class="colLast">
 <div class="block">Retrieve the class (type) within the parameterized type provided.</div>
 </td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i1" class="rowColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDeserializedName(java.lang.Class,java.lang.String)">getDeserializedName</a></span>&#8203;(java.lang.Class&lt;?&gt;&nbsp;b,
                    java.lang.String&nbsp;fieldName)</code></th>
@@ -197,14 +190,14 @@ extends java.lang.Object</pre>
 <div class="block">Retrieve the name that should be used for this field for deserialization purposes.</div>
 </td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i2" class="altColor">
 <td class="colFirst"><code>static java.util.Set&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getFieldNames(java.lang.Class)">getFieldNames</a></span>&#8203;(java.lang.Class&lt;?&gt;&nbsp;b)</code></th>
 <td class="colLast">
 <div class="block">Retrieve all the field names for the provided asset type's class.</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>static java.lang.Class&lt;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getFieldType(java.lang.Class,java.lang.String)">getFieldType</a></span>&#8203;(java.lang.Class&lt;?&gt;&nbsp;b,
             java.lang.String&nbsp;fieldName)</code></th>
@@ -212,7 +205,7 @@ extends java.lang.Object</pre>
 <div class="block">Retrieve the type of the specified field.</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>static java.lang.reflect.Method</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getGetter(java.lang.Class,java.lang.String)">getGetter</a></span>&#8203;(java.lang.Class&lt;?&gt;&nbsp;b,
          java.lang.String&nbsp;fieldName)</code></th>
@@ -220,21 +213,21 @@ extends java.lang.Object</pre>
 <div class="block">Retrieve the getter method for the specified field.</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>static java.lang.reflect.Type</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getParameterizedTypeOfMethod(java.lang.reflect.Method)">getParameterizedTypeOfMethod</a></span>&#8203;(java.lang.reflect.Method&nbsp;method)</code></th>
 <td class="colLast">
 <div class="block">Retrieve the parameterized class (type) of the first parameter of the provided method.</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>static java.lang.Class&lt;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getParameterOfMethod(java.lang.reflect.Method)">getParameterOfMethod</a></span>&#8203;(java.lang.reflect.Method&nbsp;method)</code></th>
 <td class="colLast">
 <div class="block">Retrieve the class (type) of the first parameter of the provided method.</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSerializedName(java.lang.Class,java.lang.String)">getSerializedName</a></span>&#8203;(java.lang.Class&lt;?&gt;&nbsp;b,
                  java.lang.String&nbsp;fieldName)</code></th>
@@ -242,7 +235,7 @@ extends java.lang.Object</pre>
 <div class="block">Retrieve the name that should be used for this field for serialization purposes.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>static java.lang.reflect.Method</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSetter(java.lang.Class,java.lang.String)">getSetter</a></span>&#8203;(java.lang.Class&lt;?&gt;&nbsp;b,
          java.lang.String&nbsp;fieldName)</code></th>
@@ -250,7 +243,7 @@ extends java.lang.Object</pre>
 <div class="block">Retrieve the setter method for the specified field.</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>static boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isAttribute(java.lang.Class,java.lang.String)">isAttribute</a></span>&#8203;(java.lang.Class&lt;?&gt;&nbsp;b,
            java.lang.String&nbsp;fieldName)</code></th>
@@ -301,21 +294,6 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a id="addClass(java.lang.Class)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>addClass</h4>
-<pre class="methodSignature">public static&nbsp;void&nbsp;addClass&#8203;(java.lang.Class&lt;?&gt;&nbsp;b)</pre>
-<div class="block">Build up the reflection caches for the specified class, if it is not already present.
- (If it is already present this will do nothing.)</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>b</code> - starting class</dd>
-</dl>
-</li>
-</ul>
 <a id="getFieldNames(java.lang.Class)">
 <!--   -->
 </a>

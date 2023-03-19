@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10};
+var data = {"i0":9,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -278,50 +278,8 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i10" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAggregations(java.util.Map)">setAggregations</a></span>&#8203;(java.util.Map&lt;java.lang.String,&#8203;co.elastic.clients.elasticsearch._types.aggregations.Aggregation&gt;&nbsp;aggregations)</code></th>
-<td class="colLast">
-<div class="block">(Optional) Aggregation to apply to the query.</div>
-</td>
-</tr>
-<tr id="i11" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setFrom(java.lang.Integer)">setFrom</a></span>&#8203;(java.lang.Integer&nbsp;from)</code></th>
-<td class="colLast">
-<div class="block">Starting point for paging.</div>
-</td>
-</tr>
-<tr id="i12" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setQuery(co.elastic.clients.elasticsearch._types.query_dsl.Query)">setQuery</a></span>&#8203;(co.elastic.clients.elasticsearch._types.query_dsl.Query&nbsp;query)</code></th>
-<td class="colLast">
-<div class="block">Query to run.</div>
-</td>
-</tr>
-<tr id="i13" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setSize(java.lang.Integer)">setSize</a></span>&#8203;(java.lang.Integer&nbsp;size)</code></th>
-<td class="colLast">
-<div class="block">Number of results to return per page.</div>
-</td>
-</tr>
-<tr id="i14" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setSort(java.util.List)">setSort</a></span>&#8203;(java.util.List&lt;co.elastic.clients.elasticsearch._types.SortOptions&gt;&nbsp;sort)</code></th>
-<td class="colLast">
-<div class="block">(Optional) Properties by which to sort the results.</div>
-</td>
-</tr>
-<tr id="i15" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setTrackTotalHits(java.lang.Boolean)">setTrackTotalHits</a></span>&#8203;(java.lang.Boolean&nbsp;trackTotalHits)</code></th>
-<td class="colLast">
-<div class="block">When true, specify the precise number of results in the response, otherwise estimate and max-out at 10,000.</div>
-</td>
-</tr>
-<tr id="i16" class="altColor">
-<td class="colFirst"><code>java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
+<td class="colFirst"><code><a href="IndexSearchDSL.IndexSearchDSLBuilder.html" title="class in com.atlan.model.search">IndexSearchDSL.IndexSearchDSLBuilder</a>&lt;?,&#8203;?&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toBuilder()">toBuilder</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
@@ -330,7 +288,7 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;com.atlan.model.core.<a href="../core/AtlanObject.html" title="class in com.atlan.model.core">AtlanObject</a></h3>
-<code><a href="../core/AtlanObject.html#toJson()">toJson</a></code></li>
+<code><a href="../core/AtlanObject.html#toJson()">toJson</a>, <a href="../core/AtlanObject.html#toString()">toString</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
@@ -381,6 +339,15 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <li class="blockList">
 <h4>builder</h4>
 <pre class="methodSignature">public static&nbsp;<a href="IndexSearchDSL.IndexSearchDSLBuilder.html" title="class in com.atlan.model.search">IndexSearchDSL.IndexSearchDSLBuilder</a>&lt;?,&#8203;?&gt;&nbsp;builder()</pre>
+</li>
+</ul>
+<a id="toBuilder()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>toBuilder</h4>
+<pre class="methodSignature">public&nbsp;<a href="IndexSearchDSL.IndexSearchDSLBuilder.html" title="class in com.atlan.model.search">IndexSearchDSL.IndexSearchDSLBuilder</a>&lt;?,&#8203;?&gt;&nbsp;toBuilder()</pre>
 </li>
 </ul>
 <a id="getFrom()">
@@ -441,79 +408,6 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <h4>getSort</h4>
 <pre class="methodSignature">public&nbsp;java.util.List&lt;co.elastic.clients.elasticsearch._types.SortOptions&gt;&nbsp;getSort()</pre>
 <div class="block">(Optional) Properties by which to sort the results.</div>
-</li>
-</ul>
-<a id="setFrom(java.lang.Integer)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setFrom</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setFrom&#8203;(java.lang.Integer&nbsp;from)</pre>
-<div class="block">Starting point for paging.</div>
-</li>
-</ul>
-<a id="setSize(java.lang.Integer)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setSize</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setSize&#8203;(java.lang.Integer&nbsp;size)</pre>
-<div class="block">Number of results to return per page.</div>
-</li>
-</ul>
-<a id="setTrackTotalHits(java.lang.Boolean)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setTrackTotalHits</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setTrackTotalHits&#8203;(java.lang.Boolean&nbsp;trackTotalHits)</pre>
-<div class="block">When true, specify the precise number of results in the response, otherwise estimate and max-out at 10,000.</div>
-</li>
-</ul>
-<a id="setAggregations(java.util.Map)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setAggregations</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setAggregations&#8203;(java.util.Map&lt;java.lang.String,&#8203;co.elastic.clients.elasticsearch._types.aggregations.Aggregation&gt;&nbsp;aggregations)</pre>
-<div class="block">(Optional) Aggregation to apply to the query.</div>
-</li>
-</ul>
-<a id="setQuery(co.elastic.clients.elasticsearch._types.query_dsl.Query)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setQuery</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setQuery&#8203;(co.elastic.clients.elasticsearch._types.query_dsl.Query&nbsp;query)</pre>
-<div class="block">Query to run.</div>
-</li>
-</ul>
-<a id="setSort(java.util.List)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setSort</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setSort&#8203;(java.util.List&lt;co.elastic.clients.elasticsearch._types.SortOptions&gt;&nbsp;sort)</pre>
-<div class="block">(Optional) Properties by which to sort the results.</div>
-</li>
-</ul>
-<a id="toString()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>toString</h4>
-<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;toString()</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="../core/AtlanObject.html#toString()">toString</a></code>&nbsp;in class&nbsp;<code><a href="../core/AtlanObject.html" title="class in com.atlan.model.core">AtlanObject</a></code></dd>
-</dl>
 </li>
 </ul>
 <a id="equals(java.lang.Object)">

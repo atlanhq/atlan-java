@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":6,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":10,"i32":10,"i33":10,"i34":10,"i35":10,"i36":10,"i37":10,"i38":10,"i39":10,"i40":10,"i41":10,"i42":10,"i43":10,"i44":10,"i45":10,"i46":10,"i47":10,"i48":6,"i49":10,"i50":10,"i51":10,"i52":10,"i53":10,"i54":10,"i55":10,"i56":10,"i57":10,"i58":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":6,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":10,"i32":10,"i33":10,"i34":10,"i35":10,"i36":10,"i37":10,"i38":10,"i39":10,"i40":10,"i41":10,"i42":10,"i43":10,"i44":10,"i45":10,"i46":10,"i47":6,"i48":10,"i49":10,"i50":10,"i51":10,"i52":10,"i53":10,"i54":10,"i55":10,"i56":10,"i57":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -135,6 +135,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="description">
 <ul class="blockList">
 <li class="blockList">
+<dl>
+<dt>Direct Known Subclasses:</dt>
+<dd><code><a href="AttributeRequest.AttributeRequestBuilder.html" title="class in com.atlan.model.admin">AttributeRequest.AttributeRequestBuilder</a></code>, <code><a href="ClassificationRequest.ClassificationRequestBuilder.html" title="class in com.atlan.model.admin">ClassificationRequest.ClassificationRequestBuilder</a></code>, <code><a href="CustomMetadataRequest.CustomMetadataRequestBuilder.html" title="class in com.atlan.model.admin">CustomMetadataRequest.CustomMetadataRequestBuilder</a></code>, <code><a href="TermLinkRequest.TermLinkRequestBuilder.html" title="class in com.atlan.model.admin">TermLinkRequest.TermLinkRequestBuilder</a></code></dd>
+</dl>
 <dl>
 <dt>Enclosing class:</dt>
 <dd><a href="AtlanRequest.html" title="class in com.atlan.model.admin">AtlanRequest</a></dd>
@@ -345,135 +349,130 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 </tr>
 <tr id="i32" class="altColor">
 <td class="colFirst"><code><a href="AtlanRequest.AtlanRequestBuilder.html" title="type parameter in AtlanRequest.AtlanRequestBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#payload(com.atlan.model.admin.AtlanRequestPayload)">payload</a></span>&#8203;(<a href="AtlanRequestPayload.html" title="class in com.atlan.model.admin">AtlanRequestPayload</a>&nbsp;payload)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#rejectedBy(java.lang.String)">rejectedBy</a></span>&#8203;(java.lang.String&nbsp;rejectedBy)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i33" class="rowColor">
 <td class="colFirst"><code><a href="AtlanRequest.AtlanRequestBuilder.html" title="type parameter in AtlanRequest.AtlanRequestBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#rejectedBy(java.lang.String)">rejectedBy</a></span>&#8203;(java.lang.String&nbsp;rejectedBy)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#requestApproverGroup(java.lang.String)">requestApproverGroup</a></span>&#8203;(java.lang.String&nbsp;requestApproverGroup)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i34" class="altColor">
 <td class="colFirst"><code><a href="AtlanRequest.AtlanRequestBuilder.html" title="type parameter in AtlanRequest.AtlanRequestBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#requestApproverGroup(java.lang.String)">requestApproverGroup</a></span>&#8203;(java.lang.String&nbsp;requestApproverGroup)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#requestApproverGroups(java.util.Collection)">requestApproverGroups</a></span>&#8203;(java.util.Collection&lt;? extends java.lang.String&gt;&nbsp;requestApproverGroups)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i35" class="rowColor">
 <td class="colFirst"><code><a href="AtlanRequest.AtlanRequestBuilder.html" title="type parameter in AtlanRequest.AtlanRequestBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#requestApproverGroups(java.util.Collection)">requestApproverGroups</a></span>&#8203;(java.util.Collection&lt;? extends java.lang.String&gt;&nbsp;requestApproverGroups)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#requestApproverRole(java.lang.String)">requestApproverRole</a></span>&#8203;(java.lang.String&nbsp;requestApproverRole)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i36" class="altColor">
 <td class="colFirst"><code><a href="AtlanRequest.AtlanRequestBuilder.html" title="type parameter in AtlanRequest.AtlanRequestBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#requestApproverRole(java.lang.String)">requestApproverRole</a></span>&#8203;(java.lang.String&nbsp;requestApproverRole)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#requestApproverRoles(java.util.Collection)">requestApproverRoles</a></span>&#8203;(java.util.Collection&lt;? extends java.lang.String&gt;&nbsp;requestApproverRoles)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i37" class="rowColor">
 <td class="colFirst"><code><a href="AtlanRequest.AtlanRequestBuilder.html" title="type parameter in AtlanRequest.AtlanRequestBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#requestApproverRoles(java.util.Collection)">requestApproverRoles</a></span>&#8203;(java.util.Collection&lt;? extends java.lang.String&gt;&nbsp;requestApproverRoles)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#requestApproverUser(java.lang.String)">requestApproverUser</a></span>&#8203;(java.lang.String&nbsp;requestApproverUser)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i38" class="altColor">
 <td class="colFirst"><code><a href="AtlanRequest.AtlanRequestBuilder.html" title="type parameter in AtlanRequest.AtlanRequestBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#requestApproverUser(java.lang.String)">requestApproverUser</a></span>&#8203;(java.lang.String&nbsp;requestApproverUser)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#requestApproverUsers(java.util.Collection)">requestApproverUsers</a></span>&#8203;(java.util.Collection&lt;? extends java.lang.String&gt;&nbsp;requestApproverUsers)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i39" class="rowColor">
 <td class="colFirst"><code><a href="AtlanRequest.AtlanRequestBuilder.html" title="type parameter in AtlanRequest.AtlanRequestBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#requestApproverUsers(java.util.Collection)">requestApproverUsers</a></span>&#8203;(java.util.Collection&lt;? extends java.lang.String&gt;&nbsp;requestApproverUsers)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#requestDenyGroup(java.lang.String)">requestDenyGroup</a></span>&#8203;(java.lang.String&nbsp;requestDenyGroup)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i40" class="altColor">
 <td class="colFirst"><code><a href="AtlanRequest.AtlanRequestBuilder.html" title="type parameter in AtlanRequest.AtlanRequestBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#requestDenyGroup(java.lang.String)">requestDenyGroup</a></span>&#8203;(java.lang.String&nbsp;requestDenyGroup)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#requestDenyGroups(java.util.Collection)">requestDenyGroups</a></span>&#8203;(java.util.Collection&lt;? extends java.lang.String&gt;&nbsp;requestDenyGroups)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i41" class="rowColor">
 <td class="colFirst"><code><a href="AtlanRequest.AtlanRequestBuilder.html" title="type parameter in AtlanRequest.AtlanRequestBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#requestDenyGroups(java.util.Collection)">requestDenyGroups</a></span>&#8203;(java.util.Collection&lt;? extends java.lang.String&gt;&nbsp;requestDenyGroups)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#requestDenyRole(java.lang.String)">requestDenyRole</a></span>&#8203;(java.lang.String&nbsp;requestDenyRole)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i42" class="altColor">
 <td class="colFirst"><code><a href="AtlanRequest.AtlanRequestBuilder.html" title="type parameter in AtlanRequest.AtlanRequestBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#requestDenyRole(java.lang.String)">requestDenyRole</a></span>&#8203;(java.lang.String&nbsp;requestDenyRole)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#requestDenyRoles(java.util.Collection)">requestDenyRoles</a></span>&#8203;(java.util.Collection&lt;? extends java.lang.String&gt;&nbsp;requestDenyRoles)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i43" class="rowColor">
 <td class="colFirst"><code><a href="AtlanRequest.AtlanRequestBuilder.html" title="type parameter in AtlanRequest.AtlanRequestBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#requestDenyRoles(java.util.Collection)">requestDenyRoles</a></span>&#8203;(java.util.Collection&lt;? extends java.lang.String&gt;&nbsp;requestDenyRoles)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#requestDenyUser(java.lang.String)">requestDenyUser</a></span>&#8203;(java.lang.String&nbsp;requestDenyUser)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i44" class="altColor">
 <td class="colFirst"><code><a href="AtlanRequest.AtlanRequestBuilder.html" title="type parameter in AtlanRequest.AtlanRequestBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#requestDenyUser(java.lang.String)">requestDenyUser</a></span>&#8203;(java.lang.String&nbsp;requestDenyUser)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#requestDenyUsers(java.util.Collection)">requestDenyUsers</a></span>&#8203;(java.util.Collection&lt;? extends java.lang.String&gt;&nbsp;requestDenyUsers)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i45" class="rowColor">
 <td class="colFirst"><code><a href="AtlanRequest.AtlanRequestBuilder.html" title="type parameter in AtlanRequest.AtlanRequestBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#requestDenyUsers(java.util.Collection)">requestDenyUsers</a></span>&#8203;(java.util.Collection&lt;? extends java.lang.String&gt;&nbsp;requestDenyUsers)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#requestsBatch(java.lang.Object)">requestsBatch</a></span>&#8203;(java.lang.Object&nbsp;requestsBatch)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i46" class="altColor">
 <td class="colFirst"><code><a href="AtlanRequest.AtlanRequestBuilder.html" title="type parameter in AtlanRequest.AtlanRequestBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#requestsBatch(java.lang.Object)">requestsBatch</a></span>&#8203;(java.lang.Object&nbsp;requestsBatch)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#requestType(java.lang.String)">requestType</a></span>&#8203;(java.lang.String&nbsp;requestType)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i47" class="rowColor">
-<td class="colFirst"><code><a href="AtlanRequest.AtlanRequestBuilder.html" title="type parameter in AtlanRequest.AtlanRequestBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#requestType(com.atlan.model.enums.AtlanRequestType)">requestType</a></span>&#8203;(<a href="../enums/AtlanRequestType.html" title="enum in com.atlan.model.enums">AtlanRequestType</a>&nbsp;requestType)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i48" class="altColor">
 <td class="colFirst"><code>protected abstract <a href="AtlanRequest.AtlanRequestBuilder.html" title="type parameter in AtlanRequest.AtlanRequestBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#self()">self</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i49" class="rowColor">
+<tr id="i48" class="altColor">
 <td class="colFirst"><code><a href="AtlanRequest.AtlanRequestBuilder.html" title="type parameter in AtlanRequest.AtlanRequestBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#sourceAttribute(java.lang.String)">sourceAttribute</a></span>&#8203;(java.lang.String&nbsp;sourceAttribute)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i50" class="altColor">
+<tr id="i49" class="rowColor">
 <td class="colFirst"><code><a href="AtlanRequest.AtlanRequestBuilder.html" title="type parameter in AtlanRequest.AtlanRequestBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#sourceEntity(java.lang.Object)">sourceEntity</a></span>&#8203;(java.lang.Object&nbsp;sourceEntity)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i51" class="rowColor">
+<tr id="i50" class="altColor">
 <td class="colFirst"><code><a href="AtlanRequest.AtlanRequestBuilder.html" title="type parameter in AtlanRequest.AtlanRequestBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#sourceGuid(java.lang.String)">sourceGuid</a></span>&#8203;(java.lang.String&nbsp;sourceGuid)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i52" class="altColor">
+<tr id="i51" class="rowColor">
 <td class="colFirst"><code><a href="AtlanRequest.AtlanRequestBuilder.html" title="type parameter in AtlanRequest.AtlanRequestBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#sourceQualifiedName(java.lang.String)">sourceQualifiedName</a></span>&#8203;(java.lang.String&nbsp;sourceQualifiedName)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i53" class="rowColor">
+<tr id="i52" class="altColor">
 <td class="colFirst"><code><a href="AtlanRequest.AtlanRequestBuilder.html" title="type parameter in AtlanRequest.AtlanRequestBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#sourceType(java.lang.String)">sourceType</a></span>&#8203;(java.lang.String&nbsp;sourceType)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i54" class="altColor">
+<tr id="i53" class="rowColor">
 <td class="colFirst"><code><a href="AtlanRequest.AtlanRequestBuilder.html" title="type parameter in AtlanRequest.AtlanRequestBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#status(com.atlan.model.enums.AtlanRequestStatus)">status</a></span>&#8203;(<a href="../enums/AtlanRequestStatus.html" title="enum in com.atlan.model.enums">AtlanRequestStatus</a>&nbsp;status)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i55" class="rowColor">
+<tr id="i54" class="altColor">
 <td class="colFirst"><code><a href="AtlanRequest.AtlanRequestBuilder.html" title="type parameter in AtlanRequest.AtlanRequestBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#tenantId(java.lang.String)">tenantId</a></span>&#8203;(java.lang.String&nbsp;tenantId)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i56" class="altColor">
+<tr id="i55" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i57" class="rowColor">
+<tr id="i56" class="altColor">
 <td class="colFirst"><code><a href="AtlanRequest.AtlanRequestBuilder.html" title="type parameter in AtlanRequest.AtlanRequestBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updatedAt(java.lang.Long)">updatedAt</a></span>&#8203;(java.lang.Long&nbsp;updatedAt)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i58" class="altColor">
+<tr id="i57" class="rowColor">
 <td class="colFirst"><code><a href="AtlanRequest.AtlanRequestBuilder.html" title="type parameter in AtlanRequest.AtlanRequestBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#version(java.lang.String)">version</a></span>&#8203;(java.lang.String&nbsp;version)</code></th>
 <td class="colLast">&nbsp;</td>
@@ -809,13 +808,13 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 </dl>
 </li>
 </ul>
-<a id="requestType(com.atlan.model.enums.AtlanRequestType)">
+<a id="requestType(java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>requestType</h4>
-<pre class="methodSignature">public&nbsp;<a href="AtlanRequest.AtlanRequestBuilder.html" title="type parameter in AtlanRequest.AtlanRequestBuilder">B</a>&nbsp;requestType&#8203;(<a href="../enums/AtlanRequestType.html" title="enum in com.atlan.model.enums">AtlanRequestType</a>&nbsp;requestType)</pre>
+<pre class="methodSignature">public&nbsp;<a href="AtlanRequest.AtlanRequestBuilder.html" title="type parameter in AtlanRequest.AtlanRequestBuilder">B</a>&nbsp;requestType&#8203;(java.lang.String&nbsp;requestType)</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
@@ -933,19 +932,6 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <li class="blockList">
 <h4>assignedApprovers</h4>
 <pre class="methodSignature">public&nbsp;<a href="AtlanRequest.AtlanRequestBuilder.html" title="type parameter in AtlanRequest.AtlanRequestBuilder">B</a>&nbsp;assignedApprovers&#8203;(java.lang.Object&nbsp;assignedApprovers)</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd><code>this</code>.</dd>
-</dl>
-</li>
-</ul>
-<a id="payload(com.atlan.model.admin.AtlanRequestPayload)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>payload</h4>
-<pre class="methodSignature">public&nbsp;<a href="AtlanRequest.AtlanRequestBuilder.html" title="type parameter in AtlanRequest.AtlanRequestBuilder">B</a>&nbsp;payload&#8203;(<a href="AtlanRequestPayload.html" title="class in com.atlan.model.admin">AtlanRequestPayload</a>&nbsp;payload)</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>

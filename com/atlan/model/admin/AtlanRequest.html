@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":10,"i32":10,"i33":10,"i34":10,"i35":10,"i36":10,"i37":10,"i38":10,"i39":10,"i40":10,"i41":10,"i42":10,"i43":10,"i44":10,"i45":10,"i46":10,"i47":10,"i48":10,"i49":10,"i50":10,"i51":10,"i52":10,"i53":10,"i54":10,"i55":10,"i56":10,"i57":10,"i58":10,"i59":10,"i60":10,"i61":10,"i62":10,"i63":10,"i64":10,"i65":10,"i66":10,"i67":10,"i68":10,"i69":10,"i70":10,"i71":10,"i72":10,"i73":10,"i74":10,"i75":10,"i76":10,"i77":10,"i78":10,"i79":10,"i80":10,"i81":10,"i82":10,"i83":10,"i84":10,"i85":10,"i86":10,"i87":10,"i88":10};
+var data = {"i0":9,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":10,"i32":10,"i33":10,"i34":10,"i35":10,"i36":10,"i37":10,"i38":10,"i39":10,"i40":10,"i41":10,"i42":10,"i43":10,"i44":10,"i45":10,"i46":10,"i47":9,"i48":9,"i49":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -135,8 +135,12 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="description">
 <ul class="blockList">
 <li class="blockList">
+<dl>
+<dt>Direct Known Subclasses:</dt>
+<dd><code><a href="AttributeRequest.html" title="class in com.atlan.model.admin">AttributeRequest</a></code>, <code><a href="ClassificationRequest.html" title="class in com.atlan.model.admin">ClassificationRequest</a></code>, <code><a href="CustomMetadataRequest.html" title="class in com.atlan.model.admin">CustomMetadataRequest</a></code>, <code><a href="TermLinkRequest.html" title="class in com.atlan.model.admin">TermLinkRequest</a></code></dd>
+</dl>
 <hr>
-<pre>public class <span class="typeNameLabel">AtlanRequest</span>
+<pre>public abstract class <span class="typeNameLabel">AtlanRequest</span>
 extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core">AtlanObject</a></pre>
 </li>
 </ul>
@@ -212,9 +216,12 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>static <a href="AtlanRequest.AtlanRequestBuilder.html" title="class in com.atlan.model.admin">AtlanRequest.AtlanRequestBuilder</a>&lt;?,&#8203;?&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#builder()">builder</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colFirst"><code>static boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#approve(java.lang.String,java.lang.String)">approve</a></span>&#8203;(java.lang.String&nbsp;guid,
+       java.lang.String&nbsp;message)</code></th>
+<td class="colLast">
+<div class="block">Approve the specified request in Atlan.</div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>protected boolean</code></td>
@@ -222,183 +229,183 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#create()">create</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Create the request in Atlan that is represented by this object.</div>
+</td>
+</tr>
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#equals(java.lang.Object)">equals</a></span>&#8203;(java.lang.Object&nbsp;o)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>java.lang.Object</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAccessEndDate()">getAccessEndDate</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Unused.</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>java.lang.Object</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAccessStartDate()">getAccessStartDate</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Unused.</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getApprovalType()">getApprovalType</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Type of approval required — currently only `single` is supported.</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getApprovedBy()">getApprovedBy</a></span>()</code></th>
 <td class="colLast">
 <div class="block">User who approved the request.</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>java.lang.Object</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAssignedApprovers()">getAssignedApprovers</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Unused.</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>java.lang.Object</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getBotRunId()">getBotRunId</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Unused.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>java.lang.Object</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getConfidenceScore()">getConfidenceScore</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Unused.</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCreatedAt()">getCreatedAt</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Date and time at which the request was created.</div>
 </td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCreatedBy()">getCreatedBy</a></span>()</code></th>
 <td class="colLast">
 <div class="block">User who created the request.</div>
 </td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDestinationAttribute()">getDestinationAttribute</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Attribute the request was made against.</div>
 </td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code><a href="../assets/Asset.html" title="class in com.atlan.model.assets">Asset</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDestinationEntity()">getDestinationEntity</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Limited details about the asset this request was made against.</div>
 </td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDestinationGuid()">getDestinationGuid</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Unique identifier (GUID) of the asset this request was made against.</div>
 </td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDestinationQualifiedName()">getDestinationQualifiedName</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Unique name of the asset this request was made against.</div>
 </td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDestinationValue()">getDestinationValue</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Requested value for the attribute.</div>
 </td>
 </tr>
-<tr id="i17" class="rowColor">
+<tr id="i18" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDestinationValueAction()">getDestinationValueAction</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Semantic to use when applying the destination value, for example `append`.</div>
 </td>
 </tr>
-<tr id="i18" class="altColor">
+<tr id="i19" class="rowColor">
 <td class="colFirst"><code>java.lang.Object</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDestinationValueArray()">getDestinationValueArray</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Unused.</div>
 </td>
 </tr>
-<tr id="i19" class="rowColor">
+<tr id="i20" class="altColor">
 <td class="colFirst"><code>java.lang.Object</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDestinationValueObject()">getDestinationValueObject</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Unused.</div>
 </td>
 </tr>
-<tr id="i20" class="altColor">
+<tr id="i21" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDestinationValueType()">getDestinationValueType</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Type of the destination attribute value, for example `array`.</div>
 </td>
 </tr>
-<tr id="i21" class="rowColor">
+<tr id="i22" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getEntityType()">getEntityType</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Type of asset the change was requested against.</div>
 </td>
 </tr>
-<tr id="i22" class="altColor">
+<tr id="i23" class="rowColor">
 <td class="colFirst"><code>java.lang.Long</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getHash()">getHash</a></span>()</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i23" class="rowColor">
+<tr id="i24" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getId()">getId</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Unique identifier for the request (GUID).</div>
 </td>
 </tr>
-<tr id="i24" class="altColor">
+<tr id="i25" class="rowColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIsActive()">getIsActive</a></span>()</code></th>
 <td class="colLast">
 <div class="block">If true, the request is still open.</div>
 </td>
 </tr>
-<tr id="i25" class="rowColor">
+<tr id="i26" class="altColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIsDuplicate()">getIsDuplicate</a></span>()</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i26" class="altColor">
+<tr id="i27" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMessage()">getMessage</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Comment recorded with the approval or rejection of the request.</div>
-</td>
-</tr>
-<tr id="i27" class="rowColor">
-<td class="colFirst"><code><a href="AtlanRequestPayload.html" title="class in com.atlan.model.admin">AtlanRequestPayload</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPayload()">getPayload</a></span>()</code></th>
-<td class="colLast">
-<div class="block">Details about the requested classification, if any.</div>
 </td>
 </tr>
 <tr id="i28" class="altColor">
@@ -458,7 +465,7 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 </td>
 </tr>
 <tr id="i36" class="altColor">
-<td class="colFirst"><code><a href="../enums/AtlanRequestType.html" title="enum in com.atlan.model.enums">AtlanRequestType</a></code></td>
+<td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRequestType()">getRequestType</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Type of change the request is for.</div>
@@ -533,296 +540,26 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i47" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAccessEndDate(java.lang.Object)">setAccessEndDate</a></span>&#8203;(java.lang.Object&nbsp;accessEndDate)</code></th>
+<td class="colFirst"><code>static <a href="AtlanRequestResponse.html" title="class in com.atlan.model.admin">AtlanRequestResponse</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#list()">list</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Unused.</div>
+<div class="block">Retrieve the list of requests defined in Atlan as you would via the Admin UI.</div>
 </td>
 </tr>
 <tr id="i48" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAccessStartDate(java.lang.Object)">setAccessStartDate</a></span>&#8203;(java.lang.Object&nbsp;accessStartDate)</code></th>
+<td class="colFirst"><code>static boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#reject(java.lang.String,java.lang.String)">reject</a></span>&#8203;(java.lang.String&nbsp;guid,
+      java.lang.String&nbsp;message)</code></th>
 <td class="colLast">
-<div class="block">Unused.</div>
+<div class="block">Reject the specified request in Atlan.</div>
 </td>
 </tr>
 <tr id="i49" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setApprovalType(java.lang.String)">setApprovalType</a></span>&#8203;(java.lang.String&nbsp;approvalType)</code></th>
+<td class="colFirst"><code>static <a href="AtlanRequest.html" title="class in com.atlan.model.admin">AtlanRequest</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#retrieveByGuid(java.lang.String)">retrieveByGuid</a></span>&#8203;(java.lang.String&nbsp;guid)</code></th>
 <td class="colLast">
-<div class="block">Type of approval required — currently only `single` is supported.</div>
+<div class="block">Fetch a single request by its unique identifier (GUID).</div>
 </td>
-</tr>
-<tr id="i50" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setApprovedBy(java.lang.String)">setApprovedBy</a></span>&#8203;(java.lang.String&nbsp;approvedBy)</code></th>
-<td class="colLast">
-<div class="block">User who approved the request.</div>
-</td>
-</tr>
-<tr id="i51" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAssignedApprovers(java.lang.Object)">setAssignedApprovers</a></span>&#8203;(java.lang.Object&nbsp;assignedApprovers)</code></th>
-<td class="colLast">
-<div class="block">Unused.</div>
-</td>
-</tr>
-<tr id="i52" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setBotRunId(java.lang.Object)">setBotRunId</a></span>&#8203;(java.lang.Object&nbsp;botRunId)</code></th>
-<td class="colLast">
-<div class="block">Unused.</div>
-</td>
-</tr>
-<tr id="i53" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setConfidenceScore(java.lang.Object)">setConfidenceScore</a></span>&#8203;(java.lang.Object&nbsp;confidenceScore)</code></th>
-<td class="colLast">
-<div class="block">Unused.</div>
-</td>
-</tr>
-<tr id="i54" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setCreatedBy(java.lang.String)">setCreatedBy</a></span>&#8203;(java.lang.String&nbsp;createdBy)</code></th>
-<td class="colLast">
-<div class="block">User who created the request.</div>
-</td>
-</tr>
-<tr id="i55" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setDestinationAttribute(java.lang.String)">setDestinationAttribute</a></span>&#8203;(java.lang.String&nbsp;destinationAttribute)</code></th>
-<td class="colLast">
-<div class="block">Attribute the request was made against.</div>
-</td>
-</tr>
-<tr id="i56" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setDestinationEntity(com.atlan.model.assets.Asset)">setDestinationEntity</a></span>&#8203;(<a href="../assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;destinationEntity)</code></th>
-<td class="colLast">
-<div class="block">Limited details about the asset this request was made against.</div>
-</td>
-</tr>
-<tr id="i57" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setDestinationGuid(java.lang.String)">setDestinationGuid</a></span>&#8203;(java.lang.String&nbsp;destinationGuid)</code></th>
-<td class="colLast">
-<div class="block">Unique identifier (GUID) of the asset this request was made against.</div>
-</td>
-</tr>
-<tr id="i58" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setDestinationQualifiedName(java.lang.String)">setDestinationQualifiedName</a></span>&#8203;(java.lang.String&nbsp;destinationQualifiedName)</code></th>
-<td class="colLast">
-<div class="block">Unique name of the asset this request was made against.</div>
-</td>
-</tr>
-<tr id="i59" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setDestinationValue(java.lang.String)">setDestinationValue</a></span>&#8203;(java.lang.String&nbsp;destinationValue)</code></th>
-<td class="colLast">
-<div class="block">Requested value for the attribute.</div>
-</td>
-</tr>
-<tr id="i60" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setDestinationValueAction(java.lang.String)">setDestinationValueAction</a></span>&#8203;(java.lang.String&nbsp;destinationValueAction)</code></th>
-<td class="colLast">
-<div class="block">Semantic to use when applying the destination value, for example `append`.</div>
-</td>
-</tr>
-<tr id="i61" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setDestinationValueArray(java.lang.Object)">setDestinationValueArray</a></span>&#8203;(java.lang.Object&nbsp;destinationValueArray)</code></th>
-<td class="colLast">
-<div class="block">Unused.</div>
-</td>
-</tr>
-<tr id="i62" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setDestinationValueObject(java.lang.Object)">setDestinationValueObject</a></span>&#8203;(java.lang.Object&nbsp;destinationValueObject)</code></th>
-<td class="colLast">
-<div class="block">Unused.</div>
-</td>
-</tr>
-<tr id="i63" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setDestinationValueType(java.lang.String)">setDestinationValueType</a></span>&#8203;(java.lang.String&nbsp;destinationValueType)</code></th>
-<td class="colLast">
-<div class="block">Type of the destination attribute value, for example `array`.</div>
-</td>
-</tr>
-<tr id="i64" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setEntityType(java.lang.String)">setEntityType</a></span>&#8203;(java.lang.String&nbsp;entityType)</code></th>
-<td class="colLast">
-<div class="block">Type of asset the change was requested against.</div>
-</td>
-</tr>
-<tr id="i65" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setHash(java.lang.Long)">setHash</a></span>&#8203;(java.lang.Long&nbsp;hash)</code></th>
-<td class="colLast">
-<div class="block">TBC</div>
-</td>
-</tr>
-<tr id="i66" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setId(java.lang.String)">setId</a></span>&#8203;(java.lang.String&nbsp;id)</code></th>
-<td class="colLast">
-<div class="block">Unique identifier for the request (GUID).</div>
-</td>
-</tr>
-<tr id="i67" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setIsActive(java.lang.Boolean)">setIsActive</a></span>&#8203;(java.lang.Boolean&nbsp;isActive)</code></th>
-<td class="colLast">
-<div class="block">If true, the request is still open.</div>
-</td>
-</tr>
-<tr id="i68" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setIsDuplicate(java.lang.Boolean)">setIsDuplicate</a></span>&#8203;(java.lang.Boolean&nbsp;isDuplicate)</code></th>
-<td class="colLast">
-<div class="block">TBC</div>
-</td>
-</tr>
-<tr id="i69" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setMessage(java.lang.String)">setMessage</a></span>&#8203;(java.lang.String&nbsp;message)</code></th>
-<td class="colLast">
-<div class="block">Comment recorded with the approval or rejection of the request.</div>
-</td>
-</tr>
-<tr id="i70" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setPayload(com.atlan.model.admin.AtlanRequestPayload)">setPayload</a></span>&#8203;(<a href="AtlanRequestPayload.html" title="class in com.atlan.model.admin">AtlanRequestPayload</a>&nbsp;payload)</code></th>
-<td class="colLast">
-<div class="block">Details about the requested classification, if any.</div>
-</td>
-</tr>
-<tr id="i71" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setRejectedBy(java.lang.String)">setRejectedBy</a></span>&#8203;(java.lang.String&nbsp;rejectedBy)</code></th>
-<td class="colLast">
-<div class="block">User who rejected the request.</div>
-</td>
-</tr>
-<tr id="i72" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setRequestApproverGroups(java.util.SortedSet)">setRequestApproverGroups</a></span>&#8203;(java.util.SortedSet&lt;java.lang.String&gt;&nbsp;requestApproverGroups)</code></th>
-<td class="colLast">
-<div class="block">TBC</div>
-</td>
-</tr>
-<tr id="i73" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setRequestApproverRoles(java.util.SortedSet)">setRequestApproverRoles</a></span>&#8203;(java.util.SortedSet&lt;java.lang.String&gt;&nbsp;requestApproverRoles)</code></th>
-<td class="colLast">
-<div class="block">Names of roles (in Keycloak) that can approve this request.</div>
-</td>
-</tr>
-<tr id="i74" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setRequestApproverUsers(java.util.SortedSet)">setRequestApproverUsers</a></span>&#8203;(java.util.SortedSet&lt;java.lang.String&gt;&nbsp;requestApproverUsers)</code></th>
-<td class="colLast">
-<div class="block">Names of users (in Keycloak) that can approve this request.</div>
-</td>
-</tr>
-<tr id="i75" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setRequestDenyGroups(java.util.SortedSet)">setRequestDenyGroups</a></span>&#8203;(java.util.SortedSet&lt;java.lang.String&gt;&nbsp;requestDenyGroups)</code></th>
-<td class="colLast">
-<div class="block">TBC</div>
-</td>
-</tr>
-<tr id="i76" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setRequestDenyRoles(java.util.SortedSet)">setRequestDenyRoles</a></span>&#8203;(java.util.SortedSet&lt;java.lang.String&gt;&nbsp;requestDenyRoles)</code></th>
-<td class="colLast">
-<div class="block">Unique identifiers (GUIDs) of the roles that can deny this request.</div>
-</td>
-</tr>
-<tr id="i77" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setRequestDenyUsers(java.util.SortedSet)">setRequestDenyUsers</a></span>&#8203;(java.util.SortedSet&lt;java.lang.String&gt;&nbsp;requestDenyUsers)</code></th>
-<td class="colLast">
-<div class="block">Names of users (in Keycloak) that can deny this request.</div>
-</td>
-</tr>
-<tr id="i78" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setRequestsBatch(java.lang.Object)">setRequestsBatch</a></span>&#8203;(java.lang.Object&nbsp;requestsBatch)</code></th>
-<td class="colLast">
-<div class="block">Unused.</div>
-</td>
-</tr>
-<tr id="i79" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setRequestType(com.atlan.model.enums.AtlanRequestType)">setRequestType</a></span>&#8203;(<a href="../enums/AtlanRequestType.html" title="enum in com.atlan.model.enums">AtlanRequestType</a>&nbsp;requestType)</code></th>
-<td class="colLast">
-<div class="block">Type of change the request is for.</div>
-</td>
-</tr>
-<tr id="i80" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setSourceAttribute(java.lang.String)">setSourceAttribute</a></span>&#8203;(java.lang.String&nbsp;sourceAttribute)</code></th>
-<td class="colLast">
-<div class="block">TBC</div>
-</td>
-</tr>
-<tr id="i81" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setSourceEntity(java.lang.Object)">setSourceEntity</a></span>&#8203;(java.lang.Object&nbsp;sourceEntity)</code></th>
-<td class="colLast">
-<div class="block">TBC</div>
-</td>
-</tr>
-<tr id="i82" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setSourceGuid(java.lang.String)">setSourceGuid</a></span>&#8203;(java.lang.String&nbsp;sourceGuid)</code></th>
-<td class="colLast">
-<div class="block">Unique identifier (GUID) of the asset being related through this request, for example the term's GUID for a TERM_LINK.</div>
-</td>
-</tr>
-<tr id="i83" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setSourceQualifiedName(java.lang.String)">setSourceQualifiedName</a></span>&#8203;(java.lang.String&nbsp;sourceQualifiedName)</code></th>
-<td class="colLast">
-<div class="block">Unique name of the asset being related through this request, for example the term's qualifiedName for a TERM_LINK.</div>
-</td>
-</tr>
-<tr id="i84" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setSourceType(java.lang.String)">setSourceType</a></span>&#8203;(java.lang.String&nbsp;sourceType)</code></th>
-<td class="colLast">
-<div class="block">Should be `static` for an ATTRIBUTE or CUSTOM_METADATA requestType, and `atlas` for other request types.</div>
-</td>
-</tr>
-<tr id="i85" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setStatus(com.atlan.model.enums.AtlanRequestStatus)">setStatus</a></span>&#8203;(<a href="../enums/AtlanRequestStatus.html" title="enum in com.atlan.model.enums">AtlanRequestStatus</a>&nbsp;status)</code></th>
-<td class="colLast">
-<div class="block">Status of the request.</div>
-</td>
-</tr>
-<tr id="i86" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setTenantId(java.lang.String)">setTenantId</a></span>&#8203;(java.lang.String&nbsp;tenantId)</code></th>
-<td class="colLast">
-<div class="block">Name of the tenant for the request (usually `default`).</div>
-</td>
-</tr>
-<tr id="i87" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setVersion(java.lang.String)">setVersion</a></span>&#8203;(java.lang.String&nbsp;version)</code></th>
-<td class="colLast">
-<div class="block">Unique version name for the request.</div>
-</td>
-</tr>
-<tr id="i88" class="altColor">
-<td class="colFirst"><code><a href="AtlanRequest.AtlanRequestBuilder.html" title="class in com.atlan.model.admin">AtlanRequest.AtlanRequestBuilder</a>&lt;?,&#8203;?&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toBuilder()">toBuilder</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -874,22 +611,97 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a id="builder()">
+<a id="create()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>builder</h4>
-<pre class="methodSignature">public static&nbsp;<a href="AtlanRequest.AtlanRequestBuilder.html" title="class in com.atlan.model.admin">AtlanRequest.AtlanRequestBuilder</a>&lt;?,&#8203;?&gt;&nbsp;builder()</pre>
+<h4>create</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;create()
+            throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Create the request in Atlan that is represented by this object.</div>
+<dl>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API interaction issues</dd>
+</dl>
 </li>
 </ul>
-<a id="toBuilder()">
+<a id="list()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>toBuilder</h4>
-<pre class="methodSignature">public&nbsp;<a href="AtlanRequest.AtlanRequestBuilder.html" title="class in com.atlan.model.admin">AtlanRequest.AtlanRequestBuilder</a>&lt;?,&#8203;?&gt;&nbsp;toBuilder()</pre>
+<h4>list</h4>
+<pre class="methodSignature">public static&nbsp;<a href="AtlanRequestResponse.html" title="class in com.atlan.model.admin">AtlanRequestResponse</a>&nbsp;list()
+                                 throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Retrieve the list of requests defined in Atlan as you would via the Admin UI.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a list of all the requests in Atlan</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication issue</dd>
+</dl>
+</li>
+</ul>
+<a id="retrieveByGuid(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>retrieveByGuid</h4>
+<pre class="methodSignature">public static&nbsp;<a href="AtlanRequest.html" title="class in com.atlan.model.admin">AtlanRequest</a>&nbsp;retrieveByGuid&#8203;(java.lang.String&nbsp;guid)
+                                   throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Fetch a single request by its unique identifier (GUID).</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>guid</code> - unique identifier (GUID) of the request to fetch.</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the single request, or null if none was found</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication issue</dd>
+</dl>
+</li>
+</ul>
+<a id="approve(java.lang.String,java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>approve</h4>
+<pre class="methodSignature">public static&nbsp;boolean&nbsp;approve&#8203;(java.lang.String&nbsp;guid,
+                              java.lang.String&nbsp;message)
+                       throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Approve the specified request in Atlan.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>guid</code> - unique identifier (GUID) of the request to approve</dd>
+<dd><code>message</code> - (optional) message to include with the approval</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>true if the approval succeeded, otherwise false</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API interaction issues</dd>
+</dl>
+</li>
+</ul>
+<a id="reject(java.lang.String,java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>reject</h4>
+<pre class="methodSignature">public static&nbsp;boolean&nbsp;reject&#8203;(java.lang.String&nbsp;guid,
+                             java.lang.String&nbsp;message)
+                      throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Reject the specified request in Atlan.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>guid</code> - unique identifier (GUID) of the request to reject</dd>
+<dd><code>message</code> - (optional) message to include with the rejection</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>true if the rejection succeeded, otherwise false</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API interaction issues</dd>
+</dl>
 </li>
 </ul>
 <a id="getId()">
@@ -1088,7 +900,7 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <ul class="blockList">
 <li class="blockList">
 <h4>getRequestType</h4>
-<pre class="methodSignature">public&nbsp;<a href="../enums/AtlanRequestType.html" title="enum in com.atlan.model.enums">AtlanRequestType</a>&nbsp;getRequestType()</pre>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getRequestType()</pre>
 <div class="block">Type of change the request is for.</div>
 </li>
 </ul>
@@ -1180,16 +992,6 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <h4>getAssignedApprovers</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Object&nbsp;getAssignedApprovers()</pre>
 <div class="block">Unused.</div>
-</li>
-</ul>
-<a id="getPayload()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getPayload</h4>
-<pre class="methodSignature">public&nbsp;<a href="AtlanRequestPayload.html" title="class in com.atlan.model.admin">AtlanRequestPayload</a>&nbsp;getPayload()</pre>
-<div class="block">Details about the requested classification, if any.</div>
 </li>
 </ul>
 <a id="getAccessStartDate()">
@@ -1319,416 +1121,6 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <li class="blockList">
 <h4>getDestinationEntity</h4>
 <pre class="methodSignature">public&nbsp;<a href="../assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;getDestinationEntity()</pre>
-<div class="block">Limited details about the asset this request was made against.</div>
-</li>
-</ul>
-<a id="setId(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setId</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setId&#8203;(java.lang.String&nbsp;id)</pre>
-<div class="block">Unique identifier for the request (GUID).</div>
-</li>
-</ul>
-<a id="setVersion(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setVersion</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setVersion&#8203;(java.lang.String&nbsp;version)</pre>
-<div class="block">Unique version name for the request.</div>
-</li>
-</ul>
-<a id="setIsActive(java.lang.Boolean)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setIsActive</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setIsActive&#8203;(java.lang.Boolean&nbsp;isActive)</pre>
-<div class="block">If true, the request is still open.</div>
-</li>
-</ul>
-<a id="setCreatedBy(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setCreatedBy</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setCreatedBy&#8203;(java.lang.String&nbsp;createdBy)</pre>
-<div class="block">User who created the request.</div>
-</li>
-</ul>
-<a id="setTenantId(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setTenantId</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setTenantId&#8203;(java.lang.String&nbsp;tenantId)</pre>
-<div class="block">Name of the tenant for the request (usually `default`).</div>
-</li>
-</ul>
-<a id="setSourceType(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setSourceType</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setSourceType&#8203;(java.lang.String&nbsp;sourceType)</pre>
-<div class="block">Should be `static` for an ATTRIBUTE or CUSTOM_METADATA requestType, and `atlas` for other request types.</div>
-</li>
-</ul>
-<a id="setSourceGuid(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setSourceGuid</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setSourceGuid&#8203;(java.lang.String&nbsp;sourceGuid)</pre>
-<div class="block">Unique identifier (GUID) of the asset being related through this request, for example the term's GUID for a TERM_LINK.</div>
-</li>
-</ul>
-<a id="setSourceQualifiedName(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setSourceQualifiedName</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setSourceQualifiedName&#8203;(java.lang.String&nbsp;sourceQualifiedName)</pre>
-<div class="block">Unique name of the asset being related through this request, for example the term's qualifiedName for a TERM_LINK.</div>
-</li>
-</ul>
-<a id="setSourceAttribute(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setSourceAttribute</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setSourceAttribute&#8203;(java.lang.String&nbsp;sourceAttribute)</pre>
-<div class="block">TBC</div>
-</li>
-</ul>
-<a id="setDestinationGuid(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setDestinationGuid</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setDestinationGuid&#8203;(java.lang.String&nbsp;destinationGuid)</pre>
-<div class="block">Unique identifier (GUID) of the asset this request was made against.</div>
-</li>
-</ul>
-<a id="setDestinationQualifiedName(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setDestinationQualifiedName</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setDestinationQualifiedName&#8203;(java.lang.String&nbsp;destinationQualifiedName)</pre>
-<div class="block">Unique name of the asset this request was made against.</div>
-</li>
-</ul>
-<a id="setDestinationAttribute(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setDestinationAttribute</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setDestinationAttribute&#8203;(java.lang.String&nbsp;destinationAttribute)</pre>
-<div class="block">Attribute the request was made against.</div>
-</li>
-</ul>
-<a id="setDestinationValue(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setDestinationValue</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setDestinationValue&#8203;(java.lang.String&nbsp;destinationValue)</pre>
-<div class="block">Requested value for the attribute.</div>
-</li>
-</ul>
-<a id="setDestinationValueType(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setDestinationValueType</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setDestinationValueType&#8203;(java.lang.String&nbsp;destinationValueType)</pre>
-<div class="block">Type of the destination attribute value, for example `array`.</div>
-</li>
-</ul>
-<a id="setDestinationValueArray(java.lang.Object)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setDestinationValueArray</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setDestinationValueArray&#8203;(java.lang.Object&nbsp;destinationValueArray)</pre>
-<div class="block">Unused.</div>
-</li>
-</ul>
-<a id="setDestinationValueObject(java.lang.Object)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setDestinationValueObject</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setDestinationValueObject&#8203;(java.lang.Object&nbsp;destinationValueObject)</pre>
-<div class="block">Unused.</div>
-</li>
-</ul>
-<a id="setEntityType(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setEntityType</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setEntityType&#8203;(java.lang.String&nbsp;entityType)</pre>
-<div class="block">Type of asset the change was requested against.</div>
-</li>
-</ul>
-<a id="setRequestType(com.atlan.model.enums.AtlanRequestType)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setRequestType</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setRequestType&#8203;(<a href="../enums/AtlanRequestType.html" title="enum in com.atlan.model.enums">AtlanRequestType</a>&nbsp;requestType)</pre>
-<div class="block">Type of change the request is for.</div>
-</li>
-</ul>
-<a id="setConfidenceScore(java.lang.Object)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setConfidenceScore</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setConfidenceScore&#8203;(java.lang.Object&nbsp;confidenceScore)</pre>
-<div class="block">Unused.</div>
-</li>
-</ul>
-<a id="setBotRunId(java.lang.Object)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setBotRunId</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setBotRunId&#8203;(java.lang.Object&nbsp;botRunId)</pre>
-<div class="block">Unused.</div>
-</li>
-</ul>
-<a id="setApprovedBy(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setApprovedBy</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setApprovedBy&#8203;(java.lang.String&nbsp;approvedBy)</pre>
-<div class="block">User who approved the request.</div>
-</li>
-</ul>
-<a id="setRejectedBy(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setRejectedBy</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setRejectedBy&#8203;(java.lang.String&nbsp;rejectedBy)</pre>
-<div class="block">User who rejected the request.</div>
-</li>
-</ul>
-<a id="setStatus(com.atlan.model.enums.AtlanRequestStatus)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setStatus</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setStatus&#8203;(<a href="../enums/AtlanRequestStatus.html" title="enum in com.atlan.model.enums">AtlanRequestStatus</a>&nbsp;status)</pre>
-<div class="block">Status of the request.</div>
-</li>
-</ul>
-<a id="setMessage(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setMessage</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setMessage&#8203;(java.lang.String&nbsp;message)</pre>
-<div class="block">Comment recorded with the approval or rejection of the request.</div>
-</li>
-</ul>
-<a id="setRequestsBatch(java.lang.Object)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setRequestsBatch</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setRequestsBatch&#8203;(java.lang.Object&nbsp;requestsBatch)</pre>
-<div class="block">Unused.</div>
-</li>
-</ul>
-<a id="setApprovalType(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setApprovalType</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setApprovalType&#8203;(java.lang.String&nbsp;approvalType)</pre>
-<div class="block">Type of approval required — currently only `single` is supported.</div>
-</li>
-</ul>
-<a id="setAssignedApprovers(java.lang.Object)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setAssignedApprovers</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setAssignedApprovers&#8203;(java.lang.Object&nbsp;assignedApprovers)</pre>
-<div class="block">Unused.</div>
-</li>
-</ul>
-<a id="setPayload(com.atlan.model.admin.AtlanRequestPayload)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setPayload</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setPayload&#8203;(<a href="AtlanRequestPayload.html" title="class in com.atlan.model.admin">AtlanRequestPayload</a>&nbsp;payload)</pre>
-<div class="block">Details about the requested classification, if any.</div>
-</li>
-</ul>
-<a id="setAccessStartDate(java.lang.Object)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setAccessStartDate</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setAccessStartDate&#8203;(java.lang.Object&nbsp;accessStartDate)</pre>
-<div class="block">Unused.</div>
-</li>
-</ul>
-<a id="setAccessEndDate(java.lang.Object)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setAccessEndDate</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setAccessEndDate&#8203;(java.lang.Object&nbsp;accessEndDate)</pre>
-<div class="block">Unused.</div>
-</li>
-</ul>
-<a id="setHash(java.lang.Long)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setHash</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setHash&#8203;(java.lang.Long&nbsp;hash)</pre>
-<div class="block">TBC</div>
-</li>
-</ul>
-<a id="setIsDuplicate(java.lang.Boolean)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setIsDuplicate</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setIsDuplicate&#8203;(java.lang.Boolean&nbsp;isDuplicate)</pre>
-<div class="block">TBC</div>
-</li>
-</ul>
-<a id="setDestinationValueAction(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setDestinationValueAction</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setDestinationValueAction&#8203;(java.lang.String&nbsp;destinationValueAction)</pre>
-<div class="block">Semantic to use when applying the destination value, for example `append`.</div>
-</li>
-</ul>
-<a id="setRequestApproverUsers(java.util.SortedSet)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setRequestApproverUsers</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setRequestApproverUsers&#8203;(java.util.SortedSet&lt;java.lang.String&gt;&nbsp;requestApproverUsers)</pre>
-<div class="block">Names of users (in Keycloak) that can approve this request.</div>
-</li>
-</ul>
-<a id="setRequestApproverGroups(java.util.SortedSet)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setRequestApproverGroups</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setRequestApproverGroups&#8203;(java.util.SortedSet&lt;java.lang.String&gt;&nbsp;requestApproverGroups)</pre>
-<div class="block">TBC</div>
-</li>
-</ul>
-<a id="setRequestApproverRoles(java.util.SortedSet)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setRequestApproverRoles</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setRequestApproverRoles&#8203;(java.util.SortedSet&lt;java.lang.String&gt;&nbsp;requestApproverRoles)</pre>
-<div class="block">Names of roles (in Keycloak) that can approve this request.</div>
-</li>
-</ul>
-<a id="setRequestDenyUsers(java.util.SortedSet)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setRequestDenyUsers</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setRequestDenyUsers&#8203;(java.util.SortedSet&lt;java.lang.String&gt;&nbsp;requestDenyUsers)</pre>
-<div class="block">Names of users (in Keycloak) that can deny this request.</div>
-</li>
-</ul>
-<a id="setRequestDenyGroups(java.util.SortedSet)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setRequestDenyGroups</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setRequestDenyGroups&#8203;(java.util.SortedSet&lt;java.lang.String&gt;&nbsp;requestDenyGroups)</pre>
-<div class="block">TBC</div>
-</li>
-</ul>
-<a id="setRequestDenyRoles(java.util.SortedSet)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setRequestDenyRoles</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setRequestDenyRoles&#8203;(java.util.SortedSet&lt;java.lang.String&gt;&nbsp;requestDenyRoles)</pre>
-<div class="block">Unique identifiers (GUIDs) of the roles that can deny this request.</div>
-</li>
-</ul>
-<a id="setSourceEntity(java.lang.Object)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setSourceEntity</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setSourceEntity&#8203;(java.lang.Object&nbsp;sourceEntity)</pre>
-<div class="block">TBC</div>
-</li>
-</ul>
-<a id="setDestinationEntity(com.atlan.model.assets.Asset)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setDestinationEntity</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setDestinationEntity&#8203;(<a href="../assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;destinationEntity)</pre>
 <div class="block">Limited details about the asset this request was made against.</div>
 </li>
 </ul>

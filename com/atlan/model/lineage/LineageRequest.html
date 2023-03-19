@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10};
+var data = {"i0":9,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -288,55 +288,6 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i12" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAllowDeletedProcess(java.lang.Boolean)">setAllowDeletedProcess</a></span>&#8203;(java.lang.Boolean&nbsp;allowDeletedProcess)</code></th>
-<td class="colLast">
-<div class="block">When true, will include deleted processes if <a href="#hideProcess"><code>hideProcess</code></a> is set to false.</div>
-</td>
-</tr>
-<tr id="i13" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAttributes(java.util.List)">setAttributes</a></span>&#8203;(java.util.List&lt;java.lang.String&gt;&nbsp;attributes)</code></th>
-<td class="colLast">
-<div class="block">List of attributes to be returned for each asset.</div>
-</td>
-</tr>
-<tr id="i14" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setDepth(java.lang.Integer)">setDepth</a></span>&#8203;(java.lang.Integer&nbsp;depth)</code></th>
-<td class="colLast">
-<div class="block">Number of degrees of separation (hops) across which lineage should be fetched.</div>
-</td>
-</tr>
-<tr id="i15" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setDirection(com.atlan.model.enums.AtlanLineageDirection)">setDirection</a></span>&#8203;(<a href="../enums/AtlanLineageDirection.html" title="enum in com.atlan.model.enums">AtlanLineageDirection</a>&nbsp;direction)</code></th>
-<td class="colLast">
-<div class="block">Indicates whether to fetch upstream lineage only, downstream lineage only, or both.</div>
-</td>
-</tr>
-<tr id="i16" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setEntityFilters(com.atlan.model.lineage.EntityFilter)">setEntityFilters</a></span>&#8203;(<a href="EntityFilter.html" title="class in com.atlan.model.lineage">EntityFilter</a>&nbsp;entityFilters)</code></th>
-<td class="colLast">
-<div class="block">Filters to apply on entities.</div>
-</td>
-</tr>
-<tr id="i17" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setGuid(java.lang.String)">setGuid</a></span>&#8203;(java.lang.String&nbsp;guid)</code></th>
-<td class="colLast">
-<div class="block">Unique identifier of the asset for which to retrieve lineage.</div>
-</td>
-</tr>
-<tr id="i18" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setHideProcess(java.lang.Boolean)">setHideProcess</a></span>&#8203;(java.lang.Boolean&nbsp;hideProcess)</code></th>
-<td class="colLast">
-<div class="block">When true, will only return non-process relations in the lineage.</div>
-</td>
-</tr>
-<tr id="i19" class="rowColor">
 <td class="colFirst"><code><a href="LineageRequest.LineageRequestBuilder.html" title="class in com.atlan.model.lineage">LineageRequest.LineageRequestBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toBuilder()">toBuilder</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
@@ -503,88 +454,6 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <li class="blockList">
 <h4>getAttributes</h4>
 <pre class="methodSignature">public&nbsp;java.util.List&lt;java.lang.String&gt;&nbsp;getAttributes()</pre>
-<div class="block">List of attributes to be returned for each asset.</div>
-</li>
-</ul>
-<a id="setGuid(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setGuid</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setGuid&#8203;(java.lang.String&nbsp;guid)</pre>
-<div class="block">Unique identifier of the asset for which to retrieve lineage.</div>
-</li>
-</ul>
-<a id="setDepth(java.lang.Integer)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setDepth</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setDepth&#8203;(java.lang.Integer&nbsp;depth)</pre>
-<div class="block">Number of degrees of separation (hops) across which lineage should be fetched.
- A depth of <code>1</code> will fetch the immediate upstream and/or downstream assets,
- while <code>2</code> will also fetch the immediate upstream and/or downstream assets
- of those assets, and so on. A value of <code>0</code> will fetch <em>all</em> upstream
- and/or downstream assets.
- (BEWARE! This could take a long time and result in a very large response payload.)</div>
-</li>
-</ul>
-<a id="setDirection(com.atlan.model.enums.AtlanLineageDirection)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setDirection</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setDirection&#8203;(<a href="../enums/AtlanLineageDirection.html" title="enum in com.atlan.model.enums">AtlanLineageDirection</a>&nbsp;direction)</pre>
-<div class="block">Indicates whether to fetch upstream lineage only, downstream lineage only, or both.</div>
-</li>
-</ul>
-<a id="setHideProcess(java.lang.Boolean)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setHideProcess</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setHideProcess&#8203;(java.lang.Boolean&nbsp;hideProcess)</pre>
-<div class="block">When true, will only return non-process relations in the lineage. When false, will return the
- process and non-process relations in lineage. Note: currently processing a graph representation
- of lineage relies on this being set to <code>true</code>. You will need to parse your own graph
- from the lineage response if you decide to set this to <code>false</code>.</div>
-</li>
-</ul>
-<a id="setAllowDeletedProcess(java.lang.Boolean)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setAllowDeletedProcess</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setAllowDeletedProcess&#8203;(java.lang.Boolean&nbsp;allowDeletedProcess)</pre>
-<div class="block">When true, will include deleted processes if <a href="#hideProcess"><code>hideProcess</code></a> is set to false. Otherwise,
- will not return deleted processes.</div>
-</li>
-</ul>
-<a id="setEntityFilters(com.atlan.model.lineage.EntityFilter)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setEntityFilters</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setEntityFilters&#8203;(<a href="EntityFilter.html" title="class in com.atlan.model.lineage">EntityFilter</a>&nbsp;entityFilters)</pre>
-<div class="block">Filters to apply on entities.
- Note that if the values in the properties of <code>entityFilters</code> are not valid, then the
- filter will not be applied and you will receive all values in the response. If your filter
- seems to be ignored, check that it is valid (if it is invalid it WILL be ignored).</div>
-</li>
-</ul>
-<a id="setAttributes(java.util.List)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setAttributes</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setAttributes&#8203;(java.util.List&lt;java.lang.String&gt;&nbsp;attributes)</pre>
 <div class="block">List of attributes to be returned for each asset.</div>
 </li>
 </ul>

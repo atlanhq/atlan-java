@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -268,74 +268,13 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hashCode()">hashCode</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i11" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setDocCount(java.lang.Long)">setDocCount</a></span>&#8203;(java.lang.Long&nbsp;docCount)</code></th>
-<td class="colLast">
-<div class="block">Number of results that fit within this bucket of the aggregation.</div>
-</td>
-</tr>
-<tr id="i12" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setFrom(java.lang.Object)">setFrom</a></span>&#8203;(java.lang.Object&nbsp;from)</code></th>
-<td class="colLast">
-<div class="block">Start of a range (date, geo, IP, etc), as a number or string.</div>
-</td>
-</tr>
-<tr id="i13" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setFromAsString(java.lang.String)">setFromAsString</a></span>&#8203;(java.lang.String&nbsp;fromAsString)</code></th>
-<td class="colLast">
-<div class="block">Start of a range, as a string.</div>
-</td>
-</tr>
-<tr id="i14" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setKey(java.lang.Object)">setKey</a></span>&#8203;(java.lang.Object&nbsp;key)</code></th>
-<td class="colLast">
-<div class="block">Key of the field representing this bucket of aggregate results.</div>
-</td>
-</tr>
-<tr id="i15" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setKeyAsString(java.lang.String)">setKeyAsString</a></span>&#8203;(java.lang.String&nbsp;keyAsString)</code></th>
-<td class="colLast">
-<div class="block">Key of the field representing this bucket of aggregate results, as a string.</div>
-</td>
-</tr>
-<tr id="i16" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setMaxMatchingLength(java.lang.Long)">setMaxMatchingLength</a></span>&#8203;(java.lang.Long&nbsp;maxMatchingLength)</code></th>
-<td class="colLast">
-<div class="block">TBC</div>
-</td>
-</tr>
-<tr id="i17" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setTo(java.lang.Object)">setTo</a></span>&#8203;(java.lang.Object&nbsp;to)</code></th>
-<td class="colLast">
-<div class="block">End of a range (date, geo, IP, etc), as a number or string.</div>
-</td>
-</tr>
-<tr id="i18" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setToAsString(java.lang.String)">setToAsString</a></span>&#8203;(java.lang.String&nbsp;toAsString)</code></th>
-<td class="colLast">
-<div class="block">End of a range, as a string.</div>
-</td>
-</tr>
-<tr id="i19" class="rowColor">
-<td class="colFirst"><code>java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
 </table>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.com.atlan.model.core.AtlanObject">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;com.atlan.model.core.<a href="../core/AtlanObject.html" title="class in com.atlan.model.core">AtlanObject</a></h3>
-<code><a href="../core/AtlanObject.html#toJson()">toJson</a></code></li>
+<code><a href="../core/AtlanObject.html#toJson()">toJson</a>, <a href="../core/AtlanObject.html#toString()">toString</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
@@ -460,102 +399,6 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <h4>getFromAsString</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getFromAsString()</pre>
 <div class="block">Start of a range, as a string.</div>
-</li>
-</ul>
-<a id="setKeyAsString(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setKeyAsString</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setKeyAsString&#8203;(java.lang.String&nbsp;keyAsString)</pre>
-<div class="block">Key of the field representing this bucket of aggregate results, as a string.
- For example, when the key is a date (numeric) this will be something like "2015-01-01".</div>
-</li>
-</ul>
-<a id="setKey(java.lang.Object)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setKey</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setKey&#8203;(java.lang.Object&nbsp;key)</pre>
-<div class="block">Key of the field representing this bucket of aggregate results.
- This could be a string, a number (in the case of dates), or an array
- (in the case of multi-term aggregations).</div>
-</li>
-</ul>
-<a id="setDocCount(java.lang.Long)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setDocCount</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setDocCount&#8203;(java.lang.Long&nbsp;docCount)</pre>
-<div class="block">Number of results that fit within this bucket of the aggregation.</div>
-</li>
-</ul>
-<a id="setMaxMatchingLength(java.lang.Long)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setMaxMatchingLength</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setMaxMatchingLength&#8203;(java.lang.Long&nbsp;maxMatchingLength)</pre>
-<div class="block">TBC</div>
-</li>
-</ul>
-<a id="setTo(java.lang.Object)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setTo</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setTo&#8203;(java.lang.Object&nbsp;to)</pre>
-<div class="block">End of a range (date, geo, IP, etc), as a number or string.</div>
-</li>
-</ul>
-<a id="setToAsString(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setToAsString</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setToAsString&#8203;(java.lang.String&nbsp;toAsString)</pre>
-<div class="block">End of a range, as a string.</div>
-</li>
-</ul>
-<a id="setFrom(java.lang.Object)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setFrom</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setFrom&#8203;(java.lang.Object&nbsp;from)</pre>
-<div class="block">Start of a range (date, geo, IP, etc), as a number or string.</div>
-</li>
-</ul>
-<a id="setFromAsString(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setFromAsString</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setFromAsString&#8203;(java.lang.String&nbsp;fromAsString)</pre>
-<div class="block">Start of a range, as a string.</div>
-</li>
-</ul>
-<a id="toString()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>toString</h4>
-<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;toString()</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="../core/AtlanObject.html#toString()">toString</a></code>&nbsp;in class&nbsp;<code><a href="../core/AtlanObject.html" title="class in com.atlan.model.core">AtlanObject</a></code></dd>
-</dl>
 </li>
 </ul>
 <a id="equals(java.lang.Object)">

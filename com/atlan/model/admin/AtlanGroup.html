@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":10,"i2":10,"i3":9,"i4":9,"i5":10,"i6":10,"i7":9,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":9,"i20":9,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":10,"i32":9};
+var data = {"i0":9,"i1":10,"i2":10,"i3":9,"i4":9,"i5":10,"i6":10,"i7":9,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":9,"i21":9,"i22":10,"i23":10,"i24":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -335,102 +335,46 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i18" class="altColor">
+<td class="colFirst"><code>boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isDefault()">isDefault</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Whether this group is a default (auto-assigned to new users) (true), or not (false).</div>
+</td>
+</tr>
+<tr id="i19" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeUsers(java.util.List)">removeUsers</a></span>&#8203;(java.util.List&lt;java.lang.String&gt;&nbsp;userIds)</code></th>
 <td class="colLast">
 <div class="block">Remove one or more users from this group.</div>
 </td>
 </tr>
-<tr id="i19" class="rowColor">
+<tr id="i20" class="altColor">
 <td class="colFirst"><code>static java.util.List&lt;<a href="AtlanGroup.html" title="class in com.atlan.model.admin">AtlanGroup</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#retrieveAll()">retrieveAll</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Retrieves all groups currently defined in Atlan.</div>
 </td>
 </tr>
-<tr id="i20" class="altColor">
+<tr id="i21" class="rowColor">
 <td class="colFirst"><code>static java.util.List&lt;<a href="AtlanGroup.html" title="class in com.atlan.model.admin">AtlanGroup</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#retrieveByName(java.lang.String)">retrieveByName</a></span>&#8203;(java.lang.String&nbsp;alias)</code></th>
 <td class="colLast">
 <div class="block">Retrieves all groups with a name that contains the provided string.</div>
 </td>
 </tr>
-<tr id="i21" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAlias(java.lang.String)">setAlias</a></span>&#8203;(java.lang.String&nbsp;alias)</code></th>
-<td class="colLast">
-<div class="block">Name of the group as it appears in the UI.</div>
-</td>
-</tr>
 <tr id="i22" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAttributes(com.atlan.model.admin.AtlanGroup.GroupAttributes)">setAttributes</a></span>&#8203;(<a href="AtlanGroup.GroupAttributes.html" title="class in com.atlan.model.admin">AtlanGroup.GroupAttributes</a>&nbsp;attributes)</code></th>
-<td class="colLast">
-<div class="block">Detailed attributes of the group.</div>
-</td>
-</tr>
-<tr id="i23" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setDecentralizedRoles(java.lang.String)">setDecentralizedRoles</a></span>&#8203;(java.lang.String&nbsp;decentralizedRoles)</code></th>
-<td class="colLast">
-<div class="block">TBC</div>
-</td>
-</tr>
-<tr id="i24" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setId(java.lang.String)">setId</a></span>&#8203;(java.lang.String&nbsp;id)</code></th>
-<td class="colLast">
-<div class="block">Unique identifier for the group (GUID).</div>
-</td>
-</tr>
-<tr id="i25" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setName(java.lang.String)">setName</a></span>&#8203;(java.lang.String&nbsp;name)</code></th>
-<td class="colLast">
-<div class="block">Unique (internal) name for the group.</div>
-</td>
-</tr>
-<tr id="i26" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setPath(java.lang.String)">setPath</a></span>&#8203;(java.lang.String&nbsp;path)</code></th>
-<td class="colLast">
-<div class="block">TBC</div>
-</td>
-</tr>
-<tr id="i27" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setPersonas(java.util.SortedSet)">setPersonas</a></span>&#8203;(java.util.SortedSet&lt;java.lang.String&gt;&nbsp;personas)</code></th>
-<td class="colLast">
-<div class="block">Personas the group is associated with.</div>
-</td>
-</tr>
-<tr id="i28" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setPurposes(java.util.SortedSet)">setPurposes</a></span>&#8203;(java.util.SortedSet&lt;java.lang.String&gt;&nbsp;purposes)</code></th>
-<td class="colLast">
-<div class="block">Purposes the group is associated with.</div>
-</td>
-</tr>
-<tr id="i29" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setUserCount(java.lang.Long)">setUserCount</a></span>&#8203;(java.lang.Long&nbsp;userCount)</code></th>
-<td class="colLast">
-<div class="block">Number of users in the group.</div>
-</td>
-</tr>
-<tr id="i30" class="altColor">
 <td class="colFirst"><code><a href="AtlanGroup.AtlanGroupBuilder.html" title="class in com.atlan.model.admin">AtlanGroup.AtlanGroupBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toBuilder()">toBuilder</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i31" class="rowColor">
+<tr id="i23" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#update()">update</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Send this group to Atlan to update the group in Atlan.</div>
 </td>
 </tr>
-<tr id="i32" class="altColor">
+<tr id="i24" class="altColor">
 <td class="colFirst"><code>static <a href="AtlanGroup.AtlanGroupBuilder.html" title="class in com.atlan.model.admin">AtlanGroup.AtlanGroupBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updater(java.lang.String,java.lang.String)">updater</a></span>&#8203;(java.lang.String&nbsp;id,
        java.lang.String&nbsp;path)</code></th>
@@ -488,6 +432,16 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a id="isDefault()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>isDefault</h4>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;isDefault()</pre>
+<div class="block">Whether this group is a default (auto-assigned to new users) (true), or not (false).</div>
+</li>
+</ul>
 <a id="creator(java.lang.String)">
 <!--   -->
 </a>
@@ -765,96 +719,6 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <li class="blockList">
 <h4>getUserCount</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Long&nbsp;getUserCount()</pre>
-<div class="block">Number of users in the group.</div>
-</li>
-</ul>
-<a id="setAlias(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setAlias</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setAlias&#8203;(java.lang.String&nbsp;alias)</pre>
-<div class="block">Name of the group as it appears in the UI.</div>
-</li>
-</ul>
-<a id="setAttributes(com.atlan.model.admin.AtlanGroup.GroupAttributes)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setAttributes</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setAttributes&#8203;(<a href="AtlanGroup.GroupAttributes.html" title="class in com.atlan.model.admin">AtlanGroup.GroupAttributes</a>&nbsp;attributes)</pre>
-<div class="block">Detailed attributes of the group.</div>
-</li>
-</ul>
-<a id="setDecentralizedRoles(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setDecentralizedRoles</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setDecentralizedRoles&#8203;(java.lang.String&nbsp;decentralizedRoles)</pre>
-<div class="block">TBC</div>
-</li>
-</ul>
-<a id="setId(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setId</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setId&#8203;(java.lang.String&nbsp;id)</pre>
-<div class="block">Unique identifier for the group (GUID).</div>
-</li>
-</ul>
-<a id="setName(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setName</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setName&#8203;(java.lang.String&nbsp;name)</pre>
-<div class="block">Unique (internal) name for the group.</div>
-</li>
-</ul>
-<a id="setPath(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setPath</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setPath&#8203;(java.lang.String&nbsp;path)</pre>
-<div class="block">TBC</div>
-</li>
-</ul>
-<a id="setPersonas(java.util.SortedSet)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setPersonas</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setPersonas&#8203;(java.util.SortedSet&lt;java.lang.String&gt;&nbsp;personas)</pre>
-<div class="block">Personas the group is associated with.</div>
-</li>
-</ul>
-<a id="setPurposes(java.util.SortedSet)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setPurposes</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setPurposes&#8203;(java.util.SortedSet&lt;java.lang.String&gt;&nbsp;purposes)</pre>
-<div class="block">Purposes the group is associated with.</div>
-</li>
-</ul>
-<a id="setUserCount(java.lang.Long)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setUserCount</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setUserCount&#8203;(java.lang.Long&nbsp;userCount)</pre>
 <div class="block">Number of users in the group.</div>
 </li>
 </ul>

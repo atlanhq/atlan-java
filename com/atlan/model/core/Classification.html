@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":9,"i11":9,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10};
+var data = {"i0":9,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":9,"i11":9,"i12":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -302,49 +302,9 @@ implements <a href="../search/AuditDetail.html" title="interface in com.atlan.mo
 </td>
 </tr>
 <tr id="i12" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setEntityGuid(java.lang.String)">setEntityGuid</a></span>&#8203;(java.lang.String&nbsp;entityGuid)</code></th>
-<td class="colLast">
-<div class="block">Unique identifier of the entity to which this classification is attached.</div>
-</td>
-</tr>
-<tr id="i13" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setEntityStatus(com.atlan.model.enums.AtlanStatus)">setEntityStatus</a></span>&#8203;(<a href="../enums/AtlanStatus.html" title="enum in com.atlan.model.enums">AtlanStatus</a>&nbsp;entityStatus)</code></th>
-<td class="colLast">
-<div class="block">Status of the entity.</div>
-</td>
-</tr>
-<tr id="i14" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setPropagate(java.lang.Boolean)">setPropagate</a></span>&#8203;(java.lang.Boolean&nbsp;propagate)</code></th>
-<td class="colLast">
-<div class="block">Whether to propagate this classification to other entities related to the entity to which the
- classification is attached.</div>
-</td>
-</tr>
-<tr id="i15" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setRemovePropagationsOnEntityDelete(java.lang.Boolean)">setRemovePropagationsOnEntityDelete</a></span>&#8203;(java.lang.Boolean&nbsp;removePropagationsOnEntityDelete)</code></th>
-<td class="colLast">
-<div class="block">Whether to remove this classification from other entities to which it has been propagated when
- the classification is removed from this entity.</div>
-</td>
-</tr>
-<tr id="i16" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setRestrictPropagationThroughLineage(java.lang.Boolean)">setRestrictPropagationThroughLineage</a></span>&#8203;(java.lang.Boolean&nbsp;restrictPropagationThroughLineage)</code></th>
-<td class="colLast">
-<div class="block">Whether to prevent this classification from propagating through lineage (true) or allow it to
- propagate through lineage (false).</div>
-</td>
-</tr>
-<tr id="i17" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setTypeName(java.lang.String)">setTypeName</a></span>&#8203;(java.lang.String&nbsp;typeName)</code></th>
-<td class="colLast">
-<div class="block">Name of the classification.</div>
-</td>
+<td class="colFirst"><code><a href="Classification.ClassificationBuilder.html" title="class in com.atlan.model.core">Classification.ClassificationBuilder</a>&lt;?,&#8203;?&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toBuilder()">toBuilder</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -448,6 +408,15 @@ implements <a href="../search/AuditDetail.html" title="interface in com.atlan.mo
 <pre class="methodSignature">public static&nbsp;<a href="Classification.ClassificationBuilder.html" title="class in com.atlan.model.core">Classification.ClassificationBuilder</a>&lt;?,&#8203;?&gt;&nbsp;builder()</pre>
 </li>
 </ul>
+<a id="toBuilder()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>toBuilder</h4>
+<pre class="methodSignature">public&nbsp;<a href="Classification.ClassificationBuilder.html" title="class in com.atlan.model.core">Classification.ClassificationBuilder</a>&lt;?,&#8203;?&gt;&nbsp;toBuilder()</pre>
+</li>
+</ul>
 <a id="getTypeName()">
 <!--   -->
 </a>
@@ -512,70 +481,6 @@ implements <a href="../search/AuditDetail.html" title="interface in com.atlan.mo
 <li class="blockList">
 <h4>getRestrictPropagationThroughLineage</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Boolean&nbsp;getRestrictPropagationThroughLineage()</pre>
-<div class="block">Whether to prevent this classification from propagating through lineage (true) or allow it to
- propagate through lineage (false).</div>
-</li>
-</ul>
-<a id="setTypeName(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setTypeName</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setTypeName&#8203;(java.lang.String&nbsp;typeName)</pre>
-<div class="block">Name of the classification. Note that this is the static-hashed unique name of the
- classification, not the human-readable displayName.</div>
-</li>
-</ul>
-<a id="setEntityGuid(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setEntityGuid</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setEntityGuid&#8203;(java.lang.String&nbsp;entityGuid)</pre>
-<div class="block">Unique identifier of the entity to which this classification is attached.</div>
-</li>
-</ul>
-<a id="setEntityStatus(com.atlan.model.enums.AtlanStatus)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setEntityStatus</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setEntityStatus&#8203;(<a href="../enums/AtlanStatus.html" title="enum in com.atlan.model.enums">AtlanStatus</a>&nbsp;entityStatus)</pre>
-<div class="block">Status of the entity.</div>
-</li>
-</ul>
-<a id="setPropagate(java.lang.Boolean)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setPropagate</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setPropagate&#8203;(java.lang.Boolean&nbsp;propagate)</pre>
-<div class="block">Whether to propagate this classification to other entities related to the entity to which the
- classification is attached.</div>
-</li>
-</ul>
-<a id="setRemovePropagationsOnEntityDelete(java.lang.Boolean)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setRemovePropagationsOnEntityDelete</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setRemovePropagationsOnEntityDelete&#8203;(java.lang.Boolean&nbsp;removePropagationsOnEntityDelete)</pre>
-<div class="block">Whether to remove this classification from other entities to which it has been propagated when
- the classification is removed from this entity.</div>
-</li>
-</ul>
-<a id="setRestrictPropagationThroughLineage(java.lang.Boolean)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setRestrictPropagationThroughLineage</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setRestrictPropagationThroughLineage&#8203;(java.lang.Boolean&nbsp;restrictPropagationThroughLineage)</pre>
 <div class="block">Whether to prevent this classification from propagating through lineage (true) or allow it to
  propagate through lineage (false).</div>
 </li>

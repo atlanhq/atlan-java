@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10};
+var data = {"i0":9,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":9,"i9":9,"i10":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -243,41 +243,24 @@ extends <a href="AtlanRequestPayload.html" title="class in com.atlan.model.admin
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i8" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setPropagate(java.lang.Boolean)">setPropagate</a></span>&#8203;(java.lang.Boolean&nbsp;propagate)</code></th>
+<td class="colFirst"><code>static <a href="ClassificationPayload.html" title="class in com.atlan.model.admin">ClassificationPayload</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#of(java.lang.String)">of</a></span>&#8203;(java.lang.String&nbsp;classificationName)</code></th>
 <td class="colLast">
-<div class="block">Whether the classification should propagate.</div>
+<div class="block">Create a classification payload with the specified classification and defaults for propagation.</div>
 </td>
 </tr>
 <tr id="i9" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setRemovePropagationsOnEntityDelete(java.lang.Boolean)">setRemovePropagationsOnEntityDelete</a></span>&#8203;(java.lang.Boolean&nbsp;removePropagationsOnEntityDelete)</code></th>
+<td class="colFirst"><code>static <a href="ClassificationPayload.html" title="class in com.atlan.model.admin">ClassificationPayload</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#of(java.lang.String,boolean,boolean)">of</a></span>&#8203;(java.lang.String&nbsp;classificationName,
+  boolean&nbsp;propagate,
+  boolean&nbsp;removePropagationsOnDelete)</code></th>
 <td class="colLast">
-<div class="block">Whether removing the classification should also remove its propagations.</div>
+<div class="block">Create a classification payload with the specified details.</div>
 </td>
 </tr>
 <tr id="i10" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setTypeName(java.lang.String)">setTypeName</a></span>&#8203;(java.lang.String&nbsp;typeName)</code></th>
-<td class="colLast">
-<div class="block">Name of the classification.</div>
-</td>
-</tr>
-<tr id="i11" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setValidityPeriods(java.util.List)">setValidityPeriods</a></span>&#8203;(java.util.List&lt;java.lang.Object&gt;&nbsp;validityPeriods)</code></th>
-<td class="colLast">
-<div class="block">Unused.</div>
-</td>
-</tr>
-<tr id="i12" class="altColor">
 <td class="colFirst"><code><a href="ClassificationPayload.ClassificationPayloadBuilder.html" title="class in com.atlan.model.admin">ClassificationPayload.ClassificationPayloadBuilder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toBuilder()">toBuilder</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i13" class="rowColor">
-<td class="colFirst"><code>java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
@@ -286,7 +269,7 @@ extends <a href="AtlanRequestPayload.html" title="class in com.atlan.model.admin
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;com.atlan.model.core.<a href="../core/AtlanObject.html" title="class in com.atlan.model.core">AtlanObject</a></h3>
-<code><a href="../core/AtlanObject.html#toJson()">toJson</a></code></li>
+<code><a href="../core/AtlanObject.html#toJson()">toJson</a>, <a href="../core/AtlanObject.html#toString()">toString</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
@@ -311,6 +294,42 @@ extends <a href="AtlanRequestPayload.html" title="class in com.atlan.model.admin
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a id="of(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>of</h4>
+<pre class="methodSignature">public static&nbsp;<a href="ClassificationPayload.html" title="class in com.atlan.model.admin">ClassificationPayload</a>&nbsp;of&#8203;(java.lang.String&nbsp;classificationName)</pre>
+<div class="block">Create a classification payload with the specified classification and defaults for propagation.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>classificationName</code> - human-readable name of the classification</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the classification payload with defaults for propagation</dd>
+</dl>
+</li>
+</ul>
+<a id="of(java.lang.String,boolean,boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>of</h4>
+<pre class="methodSignature">public static&nbsp;<a href="ClassificationPayload.html" title="class in com.atlan.model.admin">ClassificationPayload</a>&nbsp;of&#8203;(java.lang.String&nbsp;classificationName,
+                                       boolean&nbsp;propagate,
+                                       boolean&nbsp;removePropagationsOnDelete)</pre>
+<div class="block">Create a classification payload with the specified details.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>classificationName</code> - human-readable name of the classification</dd>
+<dd><code>propagate</code> - whether the classification should propagate (true) or not (false)</dd>
+<dd><code>removePropagationsOnDelete</code> - whether the propagated classifications should be cascaded (true) or not (false)</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the classification payload with the specified propagation settings</dd>
+</dl>
+</li>
+</ul>
 <a id="builder()">
 <!--   -->
 </a>
@@ -367,59 +386,6 @@ extends <a href="AtlanRequestPayload.html" title="class in com.atlan.model.admin
 <h4>getValidityPeriods</h4>
 <pre class="methodSignature">public&nbsp;java.util.List&lt;java.lang.Object&gt;&nbsp;getValidityPeriods()</pre>
 <div class="block">Unused.</div>
-</li>
-</ul>
-<a id="setTypeName(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setTypeName</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setTypeName&#8203;(java.lang.String&nbsp;typeName)</pre>
-<div class="block">Name of the classification.</div>
-</li>
-</ul>
-<a id="setPropagate(java.lang.Boolean)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setPropagate</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setPropagate&#8203;(java.lang.Boolean&nbsp;propagate)</pre>
-<div class="block">Whether the classification should propagate.</div>
-</li>
-</ul>
-<a id="setRemovePropagationsOnEntityDelete(java.lang.Boolean)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setRemovePropagationsOnEntityDelete</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setRemovePropagationsOnEntityDelete&#8203;(java.lang.Boolean&nbsp;removePropagationsOnEntityDelete)</pre>
-<div class="block">Whether removing the classification should also remove its propagations.</div>
-</li>
-</ul>
-<a id="setValidityPeriods(java.util.List)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setValidityPeriods</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setValidityPeriods&#8203;(java.util.List&lt;java.lang.Object&gt;&nbsp;validityPeriods)</pre>
-<div class="block">Unused.</div>
-</li>
-</ul>
-<a id="toString()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>toString</h4>
-<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;toString()</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="../core/AtlanObject.html#toString()">toString</a></code>&nbsp;in class&nbsp;<code><a href="../core/AtlanObject.html" title="class in com.atlan.model.core">AtlanObject</a></code></dd>
-</dl>
 </li>
 </ul>
 <a id="equals(java.lang.Object)">

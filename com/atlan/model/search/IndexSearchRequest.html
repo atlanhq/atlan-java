@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10};
+var data = {"i0":9,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -289,57 +289,8 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 </td>
 </tr>
 <tr id="i12" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAttributes(java.util.List)">setAttributes</a></span>&#8203;(java.util.List&lt;java.lang.String&gt;&nbsp;attributes)</code></th>
-<td class="colLast">
-<div class="block">Attributes to include on each result document.</div>
-</td>
-</tr>
-<tr id="i13" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setDsl(com.atlan.model.search.IndexSearchDSL)">setDsl</a></span>&#8203;(<a href="IndexSearchDSL.html" title="class in com.atlan.model.search">IndexSearchDSL</a>&nbsp;dsl)</code></th>
-<td class="colLast">
-<div class="block">Parameters for the search itself.</div>
-</td>
-</tr>
-<tr id="i14" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setExcludeClassifications(java.lang.Boolean)">setExcludeClassifications</a></span>&#8203;(java.lang.Boolean&nbsp;excludeClassifications)</code></th>
-<td class="colLast">
-<div class="block">Whether to include classifications for assets (false) or not (true).</div>
-</td>
-</tr>
-<tr id="i15" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setExcludeMeanings(java.lang.Boolean)">setExcludeMeanings</a></span>&#8203;(java.lang.Boolean&nbsp;excludeMeanings)</code></th>
-<td class="colLast">
-<div class="block">Whether to include term relationships for assets (false) or not (true).</div>
-</td>
-</tr>
-<tr id="i16" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setRelationAttributes(java.util.List)">setRelationAttributes</a></span>&#8203;(java.util.List&lt;java.lang.String&gt;&nbsp;relationAttributes)</code></th>
-<td class="colLast">
-<div class="block">Attributes to include on each related entity of each result document.</div>
-</td>
-</tr>
-<tr id="i17" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setShowSearchScore(java.lang.Boolean)">setShowSearchScore</a></span>&#8203;(java.lang.Boolean&nbsp;showSearchScore)</code></th>
-<td class="colLast">
-<div class="block">TBC</div>
-</td>
-</tr>
-<tr id="i18" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setSuppressLogs(java.lang.Boolean)">setSuppressLogs</a></span>&#8203;(java.lang.Boolean&nbsp;suppressLogs)</code></th>
-<td class="colLast">
-<div class="block">TBC</div>
-</td>
-</tr>
-<tr id="i19" class="rowColor">
-<td class="colFirst"><code>java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
+<td class="colFirst"><code><a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="class in com.atlan.model.search">IndexSearchRequest.IndexSearchRequestBuilder</a>&lt;?,&#8203;?&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toBuilder()">toBuilder</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
@@ -348,7 +299,7 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;com.atlan.model.core.<a href="../core/AtlanObject.html" title="class in com.atlan.model.core">AtlanObject</a></h3>
-<code><a href="../core/AtlanObject.html#toJson()">toJson</a></code></li>
+<code><a href="../core/AtlanObject.html#toJson()">toJson</a>, <a href="../core/AtlanObject.html#toString()">toString</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
@@ -414,6 +365,15 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <li class="blockList">
 <h4>builder</h4>
 <pre class="methodSignature">public static&nbsp;<a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="class in com.atlan.model.search">IndexSearchRequest.IndexSearchRequestBuilder</a>&lt;?,&#8203;?&gt;&nbsp;builder()</pre>
+</li>
+</ul>
+<a id="toBuilder()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>toBuilder</h4>
+<pre class="methodSignature">public&nbsp;<a href="IndexSearchRequest.IndexSearchRequestBuilder.html" title="class in com.atlan.model.search">IndexSearchRequest.IndexSearchRequestBuilder</a>&lt;?,&#8203;?&gt;&nbsp;toBuilder()</pre>
 </li>
 </ul>
 <a id="getDsl()">
@@ -484,89 +444,6 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <h4>getExcludeClassifications</h4>
 <pre class="methodSignature">public&nbsp;java.lang.Boolean&nbsp;getExcludeClassifications()</pre>
 <div class="block">Whether to include classifications for assets (false) or not (true).</div>
-</li>
-</ul>
-<a id="setDsl(com.atlan.model.search.IndexSearchDSL)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setDsl</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setDsl&#8203;(<a href="IndexSearchDSL.html" title="class in com.atlan.model.search">IndexSearchDSL</a>&nbsp;dsl)</pre>
-<div class="block">Parameters for the search itself.</div>
-</li>
-</ul>
-<a id="setAttributes(java.util.List)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setAttributes</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setAttributes&#8203;(java.util.List&lt;java.lang.String&gt;&nbsp;attributes)</pre>
-<div class="block">Attributes to include on each result document.</div>
-</li>
-</ul>
-<a id="setRelationAttributes(java.util.List)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setRelationAttributes</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setRelationAttributes&#8203;(java.util.List&lt;java.lang.String&gt;&nbsp;relationAttributes)</pre>
-<div class="block">Attributes to include on each related entity of each result document.</div>
-</li>
-</ul>
-<a id="setSuppressLogs(java.lang.Boolean)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setSuppressLogs</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setSuppressLogs&#8203;(java.lang.Boolean&nbsp;suppressLogs)</pre>
-<div class="block">TBC</div>
-</li>
-</ul>
-<a id="setShowSearchScore(java.lang.Boolean)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setShowSearchScore</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setShowSearchScore&#8203;(java.lang.Boolean&nbsp;showSearchScore)</pre>
-<div class="block">TBC</div>
-</li>
-</ul>
-<a id="setExcludeMeanings(java.lang.Boolean)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setExcludeMeanings</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setExcludeMeanings&#8203;(java.lang.Boolean&nbsp;excludeMeanings)</pre>
-<div class="block">Whether to include term relationships for assets (false) or not (true).</div>
-</li>
-</ul>
-<a id="setExcludeClassifications(java.lang.Boolean)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setExcludeClassifications</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setExcludeClassifications&#8203;(java.lang.Boolean&nbsp;excludeClassifications)</pre>
-<div class="block">Whether to include classifications for assets (false) or not (true).</div>
-</li>
-</ul>
-<a id="toString()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>toString</h4>
-<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;toString()</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="../core/AtlanObject.html#toString()">toString</a></code>&nbsp;in class&nbsp;<code><a href="../core/AtlanObject.html" title="class in com.atlan.model.core">AtlanObject</a></code></dd>
-</dl>
 </li>
 </ul>
 <a id="equals(java.lang.Object)">

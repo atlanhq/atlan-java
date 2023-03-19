@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -268,74 +268,13 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hashCode()">hashCode</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i11" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAllowDeletedRelations(java.lang.Boolean)">setAllowDeletedRelations</a></span>&#8203;(java.lang.Boolean&nbsp;allowDeletedRelations)</code></th>
-<td class="colLast">
-<div class="block">TBC</div>
-</td>
-</tr>
-<tr id="i12" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAttributes(java.util.List)">setAttributes</a></span>&#8203;(java.util.List&lt;java.lang.String&gt;&nbsp;attributes)</code></th>
-<td class="colLast">
-<div class="block">List of attributes that were requested in the search.</div>
-</td>
-</tr>
-<tr id="i13" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setExcludeClassifications(java.lang.Boolean)">setExcludeClassifications</a></span>&#8203;(java.lang.Boolean&nbsp;excludeClassifications)</code></th>
-<td class="colLast">
-<div class="block">Whether the classifications of assets are excluded from the results (true) or not (false).</div>
-</td>
-</tr>
-<tr id="i14" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setExcludeMeanings(java.lang.Boolean)">setExcludeMeanings</a></span>&#8203;(java.lang.Boolean&nbsp;excludeMeanings)</code></th>
-<td class="colLast">
-<div class="block">Whether the term relationships for assets are excluded from the results (true) or not (false).</div>
-</td>
-</tr>
-<tr id="i15" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setQuery(java.lang.String)">setQuery</a></span>&#8203;(java.lang.String&nbsp;query)</code></th>
-<td class="colLast">
-<div class="block">Query that was run to produce these search results.</div>
-</td>
-</tr>
-<tr id="i16" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setRelationAttributes(java.util.List)">setRelationAttributes</a></span>&#8203;(java.util.List&lt;java.lang.String&gt;&nbsp;relationAttributes)</code></th>
-<td class="colLast">
-<div class="block">List of attributes that were requested to be included on each relationship found in the search.</div>
-</td>
-</tr>
-<tr id="i17" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setShowSearchScore(java.lang.Boolean)">setShowSearchScore</a></span>&#8203;(java.lang.Boolean&nbsp;showSearchScore)</code></th>
-<td class="colLast">
-<div class="block">Whether to show the score associated with a result (true) or not (false).</div>
-</td>
-</tr>
-<tr id="i18" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setSuppressLogs(java.lang.Boolean)">setSuppressLogs</a></span>&#8203;(java.lang.Boolean&nbsp;suppressLogs)</code></th>
-<td class="colLast">
-<div class="block">TBC</div>
-</td>
-</tr>
-<tr id="i19" class="rowColor">
-<td class="colFirst"><code>java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
 </table>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.com.atlan.model.core.AtlanObject">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;com.atlan.model.core.<a href="../core/AtlanObject.html" title="class in com.atlan.model.core">AtlanObject</a></h3>
-<code><a href="../core/AtlanObject.html#toJson()">toJson</a></code></li>
+<code><a href="../core/AtlanObject.html#toJson()">toJson</a>, <a href="../core/AtlanObject.html#toString()">toString</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
@@ -459,101 +398,6 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <div class="block">Query that was run to produce these search results.
  Note that this is in string form, rather than a JSON object, but is equivalent content
  to <a href="IndexSearchDSL.html" title="class in com.atlan.model.search"><code>IndexSearchDSL</code></a>.</div>
-</li>
-</ul>
-<a id="setAttributes(java.util.List)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setAttributes</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setAttributes&#8203;(java.util.List&lt;java.lang.String&gt;&nbsp;attributes)</pre>
-<div class="block">List of attributes that were requested in the search.</div>
-</li>
-</ul>
-<a id="setRelationAttributes(java.util.List)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setRelationAttributes</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setRelationAttributes&#8203;(java.util.List&lt;java.lang.String&gt;&nbsp;relationAttributes)</pre>
-<div class="block">List of attributes that were requested to be included on each relationship found in the search.</div>
-</li>
-</ul>
-<a id="setShowSearchScore(java.lang.Boolean)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setShowSearchScore</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setShowSearchScore&#8203;(java.lang.Boolean&nbsp;showSearchScore)</pre>
-<div class="block">Whether to show the score associated with a result (true) or not (false).</div>
-</li>
-</ul>
-<a id="setSuppressLogs(java.lang.Boolean)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setSuppressLogs</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setSuppressLogs&#8203;(java.lang.Boolean&nbsp;suppressLogs)</pre>
-<div class="block">TBC</div>
-</li>
-</ul>
-<a id="setExcludeMeanings(java.lang.Boolean)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setExcludeMeanings</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setExcludeMeanings&#8203;(java.lang.Boolean&nbsp;excludeMeanings)</pre>
-<div class="block">Whether the term relationships for assets are excluded from the results (true) or not (false).</div>
-</li>
-</ul>
-<a id="setExcludeClassifications(java.lang.Boolean)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setExcludeClassifications</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setExcludeClassifications&#8203;(java.lang.Boolean&nbsp;excludeClassifications)</pre>
-<div class="block">Whether the classifications of assets are excluded from the results (true) or not (false).</div>
-</li>
-</ul>
-<a id="setAllowDeletedRelations(java.lang.Boolean)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setAllowDeletedRelations</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setAllowDeletedRelations&#8203;(java.lang.Boolean&nbsp;allowDeletedRelations)</pre>
-<div class="block">TBC</div>
-</li>
-</ul>
-<a id="setQuery(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setQuery</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setQuery&#8203;(java.lang.String&nbsp;query)</pre>
-<div class="block">Query that was run to produce these search results.
- Note that this is in string form, rather than a JSON object, but is equivalent content
- to <a href="IndexSearchDSL.html" title="class in com.atlan.model.search"><code>IndexSearchDSL</code></a>.</div>
-</li>
-</ul>
-<a id="toString()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>toString</h4>
-<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;toString()</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="../core/AtlanObject.html#toString()">toString</a></code>&nbsp;in class&nbsp;<code><a href="../core/AtlanObject.html" title="class in com.atlan.model.core">AtlanObject</a></code></dd>
-</dl>
 </li>
 </ul>
 <a id="equals(java.lang.Object)">

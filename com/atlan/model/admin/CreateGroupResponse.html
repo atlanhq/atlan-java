@@ -27,8 +27,8 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10};
-var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
+var data = {"i0":9,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10};
+var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -90,13 +90,13 @@ loadScripts(document, 'script');</script>
 <li>Summary:&nbsp;</li>
 <li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
 <li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
-<li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
-<li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
@@ -171,6 +171,11 @@ extends <a href="../../net/ApiResource.html" title="class in com.atlan.net">ApiR
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static class&nbsp;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="CreateGroupResponse.CreateGroupResponseBuilder.html" title="class in com.atlan.model.admin">CreateGroupResponse.CreateGroupResponseBuilder</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static class&nbsp;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="CreateGroupResponse.UserStatus.html" title="class in com.atlan.model.admin">CreateGroupResponse.UserStatus</a></span></code></th>
 <td class="colLast">
 <div class="block">Status of the user being added to the group during its creation.</div>
@@ -211,27 +216,6 @@ extends <a href="../../net/ApiResource.html" title="class in com.atlan.net">ApiR
 </li>
 </ul>
 </section>
-<!-- ======== CONSTRUCTOR SUMMARY ======== -->
-<section>
-<ul class="blockList">
-<li class="blockList"><a id="constructor.summary">
-<!--   -->
-</a>
-<h3>Constructor Summary</h3>
-<table class="memberSummary">
-<caption><span>Constructors</span><span class="tabEnd">&nbsp;</span></caption>
-<tr>
-<th class="colFirst" scope="col">Constructor</th>
-<th class="colLast" scope="col">Description</th>
-</tr>
-<tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E()">CreateGroupResponse</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-</table>
-</li>
-</ul>
-</section>
 <!-- ========== METHOD SUMMARY =========== -->
 <section>
 <ul class="blockList">
@@ -240,58 +224,49 @@ extends <a href="../../net/ApiResource.html" title="class in com.atlan.net">ApiR
 </a>
 <h3>Method Summary</h3>
 <table class="memberSummary">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colSecond" scope="col">Method</th>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
+<td class="colFirst"><code>static <a href="CreateGroupResponse.CreateGroupResponseBuilder.html" title="class in com.atlan.model.admin">CreateGroupResponse.CreateGroupResponseBuilder</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#builder()">builder</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i1" class="rowColor">
 <td class="colFirst"><code>protected boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#canEqual(java.lang.Object)">canEqual</a></span>&#8203;(java.lang.Object&nbsp;other)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i1" class="rowColor">
+<tr id="i2" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#equals(java.lang.Object)">equals</a></span>&#8203;(java.lang.Object&nbsp;o)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getGroup()">getGroup</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Unique identifier (GUID) of the group within Atlan.</div>
 </td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>java.util.Map&lt;java.lang.String,&#8203;<a href="CreateGroupResponse.UserStatus.html" title="class in com.atlan.model.admin">CreateGroupResponse.UserStatus</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getUsers()">getUsers</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Map of user association statuses, keyed by unique identifier (GUID) of the user.</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hashCode()">hashCode</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i5" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setGroup(java.lang.String)">setGroup</a></span>&#8203;(java.lang.String&nbsp;group)</code></th>
-<td class="colLast">
-<div class="block">Unique identifier (GUID) of the group within Atlan.</div>
-</td>
-</tr>
 <tr id="i6" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setUsers(java.util.Map)">setUsers</a></span>&#8203;(java.util.Map&lt;java.lang.String,&#8203;<a href="CreateGroupResponse.UserStatus.html" title="class in com.atlan.model.admin">CreateGroupResponse.UserStatus</a>&gt;&nbsp;users)</code></th>
-<td class="colLast">
-<div class="block">Map of user association statuses, keyed by unique identifier (GUID) of the user.</div>
-</td>
-</tr>
-<tr id="i7" class="rowColor">
-<td class="colFirst"><code>java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
+<td class="colFirst"><code><a href="CreateGroupResponse.CreateGroupResponseBuilder.html" title="class in com.atlan.model.admin">CreateGroupResponse.CreateGroupResponseBuilder</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toBuilder()">toBuilder</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
@@ -307,7 +282,7 @@ extends <a href="../../net/ApiResource.html" title="class in com.atlan.net">ApiR
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;com.atlan.model.core.<a href="../core/AtlanObject.html" title="class in com.atlan.model.core">AtlanObject</a></h3>
-<code><a href="../core/AtlanObject.html#toJson()">toJson</a></code></li>
+<code><a href="../core/AtlanObject.html#toJson()">toJson</a>, <a href="../core/AtlanObject.html#toString()">toString</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
@@ -325,25 +300,6 @@ extends <a href="../../net/ApiResource.html" title="class in com.atlan.net">ApiR
 <div class="details">
 <ul class="blockList">
 <li class="blockList">
-<!-- ========= CONSTRUCTOR DETAIL ======== -->
-<section>
-<ul class="blockList">
-<li class="blockList"><a id="constructor.detail">
-<!--   -->
-</a>
-<h3>Constructor Detail</h3>
-<a id="&lt;init&gt;()">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>CreateGroupResponse</h4>
-<pre>public&nbsp;CreateGroupResponse()</pre>
-</li>
-</ul>
-</li>
-</ul>
-</section>
 <!-- ============ METHOD DETAIL ========== -->
 <section>
 <ul class="blockList">
@@ -351,6 +307,24 @@ extends <a href="../../net/ApiResource.html" title="class in com.atlan.net">ApiR
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a id="builder()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>builder</h4>
+<pre class="methodSignature">public static&nbsp;<a href="CreateGroupResponse.CreateGroupResponseBuilder.html" title="class in com.atlan.model.admin">CreateGroupResponse.CreateGroupResponseBuilder</a>&nbsp;builder()</pre>
+</li>
+</ul>
+<a id="toBuilder()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>toBuilder</h4>
+<pre class="methodSignature">public&nbsp;<a href="CreateGroupResponse.CreateGroupResponseBuilder.html" title="class in com.atlan.model.admin">CreateGroupResponse.CreateGroupResponseBuilder</a>&nbsp;toBuilder()</pre>
+</li>
+</ul>
 <a id="getGroup()">
 <!--   -->
 </a>
@@ -369,39 +343,6 @@ extends <a href="../../net/ApiResource.html" title="class in com.atlan.net">ApiR
 <h4>getUsers</h4>
 <pre class="methodSignature">public&nbsp;java.util.Map&lt;java.lang.String,&#8203;<a href="CreateGroupResponse.UserStatus.html" title="class in com.atlan.model.admin">CreateGroupResponse.UserStatus</a>&gt;&nbsp;getUsers()</pre>
 <div class="block">Map of user association statuses, keyed by unique identifier (GUID) of the user.</div>
-</li>
-</ul>
-<a id="setGroup(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setGroup</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setGroup&#8203;(java.lang.String&nbsp;group)</pre>
-<div class="block">Unique identifier (GUID) of the group within Atlan.</div>
-</li>
-</ul>
-<a id="setUsers(java.util.Map)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setUsers</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setUsers&#8203;(java.util.Map&lt;java.lang.String,&#8203;<a href="CreateGroupResponse.UserStatus.html" title="class in com.atlan.model.admin">CreateGroupResponse.UserStatus</a>&gt;&nbsp;users)</pre>
-<div class="block">Map of user association statuses, keyed by unique identifier (GUID) of the user.</div>
-</li>
-</ul>
-<a id="toString()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>toString</h4>
-<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;toString()</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="../core/AtlanObject.html#toString()">toString</a></code>&nbsp;in class&nbsp;<code><a href="../core/AtlanObject.html" title="class in com.atlan.model.core">AtlanObject</a></code></dd>
-</dl>
 </li>
 </ul>
 <a id="equals(java.lang.Object)">
@@ -496,13 +437,13 @@ extends <a href="../../net/ApiResource.html" title="class in com.atlan.net">ApiR
 <li>Summary:&nbsp;</li>
 <li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
 <li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
-<li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
-<li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>

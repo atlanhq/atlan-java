@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10};
+var data = {"i0":9,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -236,40 +236,13 @@ extends <a href="AggregationResult.html" title="class in com.atlan.model.search"
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hashCode()">hashCode</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i7" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setBuckets(java.util.List)">setBuckets</a></span>&#8203;(java.util.List&lt;<a href="AggregationBucketDetails.html" title="class in com.atlan.model.search">AggregationBucketDetails</a>&gt;&nbsp;buckets)</code></th>
-<td class="colLast">
-<div class="block">List of the top buckets that resulted from the aggregation.</div>
-</td>
-</tr>
-<tr id="i8" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setDocCountErrorUpperBound(java.lang.Long)">setDocCountErrorUpperBound</a></span>&#8203;(java.lang.Long&nbsp;docCountErrorUpperBound)</code></th>
-<td class="colLast">
-<div class="block">Maximum number of missing documents when a bucket's count is very large and
- may exceed the shard size of Elasticsearch.</div>
-</td>
-</tr>
-<tr id="i9" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setSumOtherDocCount(java.lang.Long)">setSumOtherDocCount</a></span>&#8203;(java.lang.Long&nbsp;sumOtherDocCount)</code></th>
-<td class="colLast">
-<div class="block">When there are many unique terms, only the top terms are returned.</div>
-</td>
-</tr>
-<tr id="i10" class="altColor">
-<td class="colFirst"><code>java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
 </table>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.com.atlan.model.core.AtlanObject">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;com.atlan.model.core.<a href="../core/AtlanObject.html" title="class in com.atlan.model.core">AtlanObject</a></h3>
-<code><a href="../core/AtlanObject.html#toJson()">toJson</a></code></li>
+<code><a href="../core/AtlanObject.html#toJson()">toJson</a>, <a href="../core/AtlanObject.html#toString()">toString</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
@@ -334,52 +307,6 @@ extends <a href="AggregationResult.html" title="class in com.atlan.model.search"
 <h4>getBuckets</h4>
 <pre class="methodSignature">public&nbsp;java.util.List&lt;<a href="AggregationBucketDetails.html" title="class in com.atlan.model.search">AggregationBucketDetails</a>&gt;&nbsp;getBuckets()</pre>
 <div class="block">List of the top buckets that resulted from the aggregation.</div>
-</li>
-</ul>
-<a id="setDocCountErrorUpperBound(java.lang.Long)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setDocCountErrorUpperBound</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setDocCountErrorUpperBound&#8203;(java.lang.Long&nbsp;docCountErrorUpperBound)</pre>
-<div class="block">Maximum number of missing documents when a bucket's count is very large and
- may exceed the shard size of Elasticsearch. The larger this number, the more approximate
- the values of the counts in the buckets.</div>
-</li>
-</ul>
-<a id="setSumOtherDocCount(java.lang.Long)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setSumOtherDocCount</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setSumOtherDocCount&#8203;(java.lang.Long&nbsp;sumOtherDocCount)</pre>
-<div class="block">When there are many unique terms, only the top terms are returned. This gives the sum
- of all document counts across all buckets that are NOT part of the response.</div>
-</li>
-</ul>
-<a id="setBuckets(java.util.List)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setBuckets</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setBuckets&#8203;(java.util.List&lt;<a href="AggregationBucketDetails.html" title="class in com.atlan.model.search">AggregationBucketDetails</a>&gt;&nbsp;buckets)</pre>
-<div class="block">List of the top buckets that resulted from the aggregation.</div>
-</li>
-</ul>
-<a id="toString()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>toString</h4>
-<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;toString()</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="../core/AtlanObject.html#toString()">toString</a></code>&nbsp;in class&nbsp;<code><a href="../core/AtlanObject.html" title="class in com.atlan.model.core">AtlanObject</a></code></dd>
-</dl>
 </li>
 </ul>
 <a id="equals(java.lang.Object)">

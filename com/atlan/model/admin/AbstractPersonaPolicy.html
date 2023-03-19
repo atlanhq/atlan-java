@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -260,27 +260,13 @@ extends <a href="AbstractPolicy.html" title="class in com.atlan.model.admin">Abs
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hashCode()">hashCode</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i5" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAssets(java.util.SortedSet)">setAssets</a></span>&#8203;(java.util.SortedSet&lt;java.lang.String&gt;&nbsp;assets)</code></th>
-<td class="colLast">
-<div class="block">All assets' qualifiedNames to include in the policy.</div>
-</td>
-</tr>
-<tr id="i6" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setConnectionId(java.lang.String)">setConnectionId</a></span>&#8203;(java.lang.String&nbsp;connectionId)</code></th>
-<td class="colLast">
-<div class="block">Unique identifier (GUID) of the connection to which this policy applies.</div>
-</td>
-</tr>
 </table>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.com.atlan.model.admin.AbstractPolicy">
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;com.atlan.model.admin.<a href="AbstractPolicy.html" title="class in com.atlan.model.admin">AbstractPolicy</a></h3>
-<code><a href="AbstractPolicy.html#compareTo(com.atlan.model.admin.AbstractPolicy)">compareTo</a>, <a href="AbstractPolicy.html#getAllow()">getAllow</a>, <a href="AbstractPolicy.html#getCreatedAt()">getCreatedAt</a>, <a href="AbstractPolicy.html#getCreatedBy()">getCreatedBy</a>, <a href="AbstractPolicy.html#getDescription()">getDescription</a>, <a href="AbstractPolicy.html#getId()">getId</a>, <a href="AbstractPolicy.html#getName()">getName</a>, <a href="AbstractPolicy.html#getUpdatedAt()">getUpdatedAt</a>, <a href="AbstractPolicy.html#getUpdatedBy()">getUpdatedBy</a>, <a href="AbstractPolicy.html#setAllow(java.lang.Boolean)">setAllow</a>, <a href="AbstractPolicy.html#setDescription(java.lang.String)">setDescription</a>, <a href="AbstractPolicy.html#setName(java.lang.String)">setName</a></code></li>
+<code><a href="AbstractPolicy.html#compareTo(com.atlan.model.admin.AbstractPolicy)">compareTo</a>, <a href="AbstractPolicy.html#getAllow()">getAllow</a>, <a href="AbstractPolicy.html#getCreatedAt()">getCreatedAt</a>, <a href="AbstractPolicy.html#getCreatedBy()">getCreatedBy</a>, <a href="AbstractPolicy.html#getDescription()">getDescription</a>, <a href="AbstractPolicy.html#getId()">getId</a>, <a href="AbstractPolicy.html#getName()">getName</a>, <a href="AbstractPolicy.html#getUpdatedAt()">getUpdatedAt</a>, <a href="AbstractPolicy.html#getUpdatedBy()">getUpdatedBy</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.com.atlan.model.core.AtlanObject">
@@ -348,29 +334,6 @@ extends <a href="AbstractPolicy.html" title="class in com.atlan.model.admin">Abs
 <li class="blockList">
 <h4>getAssets</h4>
 <pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;java.lang.String&gt;&nbsp;getAssets()</pre>
-<div class="block">All assets' qualifiedNames to include in the policy.
- These act as prefixes, so any assets within these will also be included in the
- policy. (For example, if you give the qualifiedName of a schema, all tables and
- columns in that schema are also included in the policy.)</div>
-</li>
-</ul>
-<a id="setConnectionId(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setConnectionId</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setConnectionId&#8203;(java.lang.String&nbsp;connectionId)</pre>
-<div class="block">Unique identifier (GUID) of the connection to which this policy applies.</div>
-</li>
-</ul>
-<a id="setAssets(java.util.SortedSet)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setAssets</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setAssets&#8203;(java.util.SortedSet&lt;java.lang.String&gt;&nbsp;assets)</pre>
 <div class="block">All assets' qualifiedNames to include in the policy.
  These act as prefixes, so any assets within these will also be included in the
  policy. (For example, if you give the qualifiedName of a schema, all tables and
