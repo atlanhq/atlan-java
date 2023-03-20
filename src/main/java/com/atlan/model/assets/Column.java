@@ -316,7 +316,7 @@ public class Column extends SQL {
         String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(databaseQualifiedName);
         ColumnBuilder<?, ?> builder = Column.builder()
                 .name(name)
-                .qualifiedName(parentQualifiedName + "/" + name)
+                .qualifiedName(generateQualifiedName(name, parentQualifiedName))
                 .connectorType(connectorType)
                 .schemaName(schemaName)
                 .schemaQualifiedName(schemaQualifiedName)
@@ -342,6 +342,17 @@ public class Column extends SQL {
                 break;
         }
         return builder;
+    }
+
+    /**
+     * Generate a unique column name.
+     *
+     * @param name of the column
+     * @param parentQualifiedName unique name of the container in which this column exists
+     * @return a unique name for the column
+     */
+    public static String generateQualifiedName(String name, String parentQualifiedName) {
+        return parentQualifiedName + "/" + name;
     }
 
     /**

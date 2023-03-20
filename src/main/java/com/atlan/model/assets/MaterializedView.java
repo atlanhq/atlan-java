@@ -132,7 +132,7 @@ public class MaterializedView extends SQL {
         String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(databaseQualifiedName);
         return MaterializedView.builder()
                 .name(name)
-                .qualifiedName(schemaQualifiedName + "/" + name)
+                .qualifiedName(generateQualifiedName(name, schemaQualifiedName))
                 .connectorType(connectorType)
                 .schemaName(schemaName)
                 .schemaQualifiedName(schemaQualifiedName)
@@ -140,6 +140,17 @@ public class MaterializedView extends SQL {
                 .databaseName(databaseName)
                 .databaseQualifiedName(databaseQualifiedName)
                 .connectionQualifiedName(connectionQualifiedName);
+    }
+
+    /**
+     * Generate a unique materialized view name.
+     *
+     * @param name of the materialized view
+     * @param schemaQualifiedName unique name of the schema in which this materialized view exists
+     * @return a unique name for the materialized view
+     */
+    public static String generateQualifiedName(String name, String schemaQualifiedName) {
+        return schemaQualifiedName + "/" + name;
     }
 
     /**

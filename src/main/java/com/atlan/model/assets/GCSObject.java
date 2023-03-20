@@ -128,13 +128,24 @@ public class GCSObject extends GCS {
         String connectionQualifiedName = StringUtils.getConnectionQualifiedName(bucketQualifiedName);
         String bucketName = StringUtils.getNameFromQualifiedName(bucketQualifiedName);
         return GCSObject.builder()
-                .qualifiedName(bucketQualifiedName + "/" + name)
+                .qualifiedName(generateQualifiedName(name, bucketQualifiedName))
                 .name(name)
                 .connectionQualifiedName(connectionQualifiedName)
                 .connectorType(AtlanConnectorType.GCS)
                 .gcsBucketName(bucketName)
                 .gcsBucketQualifiedName(bucketQualifiedName)
                 .gcsBucket(GCSBucket.refByQualifiedName(bucketQualifiedName));
+    }
+
+    /**
+     * Generate a unique GCSObject name.
+     *
+     * @param name of the GCSObject
+     * @param bucketQualifiedName unique name of the bucket in which the GCSObject is contained
+     * @return a unique name for the GCSObject
+     */
+    public static String generateQualifiedName(String name, String bucketQualifiedName) {
+        return bucketQualifiedName + "/" + name;
     }
 
     /**

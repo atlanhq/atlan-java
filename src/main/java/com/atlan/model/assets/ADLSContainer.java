@@ -97,12 +97,23 @@ public class ADLSContainer extends ADLS {
     public static ADLSContainerBuilder<?, ?> creator(String name, String accountQualifiedName) {
         String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(accountQualifiedName);
         return ADLSContainer.builder()
-                .qualifiedName(accountQualifiedName + "/" + name)
+                .qualifiedName(generateQualifiedName(name, accountQualifiedName))
                 .name(name)
                 .adlsAccount(ADLSAccount.refByQualifiedName(accountQualifiedName))
                 .adlsAccountQualifiedName(accountQualifiedName)
                 .connectionQualifiedName(connectionQualifiedName)
                 .connectorType(AtlanConnectorType.ADLS);
+    }
+
+    /**
+     * Generate a unique ADLSContainer name.
+     *
+     * @param name of the ADLSContainer
+     * @param accountQualifiedName unique name of the account through which the ADLSContainer is accessible
+     * @return a unique name for the ADLSContainer
+     */
+    public static String generateQualifiedName(String name, String accountQualifiedName) {
+        return accountQualifiedName + "/" + name;
     }
 
     /**

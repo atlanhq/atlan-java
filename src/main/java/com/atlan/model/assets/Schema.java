@@ -113,12 +113,23 @@ public class Schema extends SQL {
         String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(databaseQualifiedName);
         return Schema.builder()
                 .name(name)
-                .qualifiedName(databaseQualifiedName + "/" + name)
+                .qualifiedName(generateQualifiedName(name, databaseQualifiedName))
                 .connectorType(connectorType)
                 .databaseName(databaseName)
                 .databaseQualifiedName(databaseQualifiedName)
                 .database(Database.refByQualifiedName(databaseQualifiedName))
                 .connectionQualifiedName(connectionQualifiedName);
+    }
+
+    /**
+     * Generate a unique schema name.
+     *
+     * @param name of the schema
+     * @param databaseQualifiedName unique name of the database in which this schema exists
+     * @return a unique name for the schema
+     */
+    public static String generateQualifiedName(String name, String databaseQualifiedName) {
+        return databaseQualifiedName + "/" + name;
     }
 
     /**

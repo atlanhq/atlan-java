@@ -139,12 +139,23 @@ public class ADLSObject extends ADLS {
         String accountQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(containerQualifiedName);
         String connectionQualifiedName = StringUtils.getConnectionQualifiedName(containerQualifiedName);
         return ADLSObject.builder()
-                .qualifiedName(containerQualifiedName + "/" + name)
+                .qualifiedName(generateQualifiedName(name, containerQualifiedName))
                 .name(name)
                 .adlsContainer(ADLSContainer.refByQualifiedName(containerQualifiedName))
                 .adlsAccountQualifiedName(accountQualifiedName)
                 .connectionQualifiedName(connectionQualifiedName)
                 .connectorType(AtlanConnectorType.ADLS);
+    }
+
+    /**
+     * Generate a unique ADLSObject name.
+     *
+     * @param name of the ADLSObject
+     * @param containerQualifiedName unique name of the container through which the ADLSObject is accessible
+     * @return a unique name for the ADLSObject
+     */
+    public static String generateQualifiedName(String name, String containerQualifiedName) {
+        return containerQualifiedName + "/" + name;
     }
 
     /**
