@@ -95,10 +95,21 @@ public class GCSBucket extends GCS {
      */
     public static GCSBucketBuilder<?, ?> creator(String name, String connectionQualifiedName) {
         return GCSBucket.builder()
-                .qualifiedName(connectionQualifiedName + "/" + name)
+                .qualifiedName(generateQualifiedName(name, connectionQualifiedName))
                 .name(name)
                 .connectionQualifiedName(connectionQualifiedName)
                 .connectorType(AtlanConnectorType.GCS);
+    }
+
+    /**
+     * Generate a unique GCSBucket name.
+     *
+     * @param name of the GCSBucket
+     * @param connectionQualifiedName unique name of the connection through which the GCSBucket is accessible
+     * @return a unique name for the GCSBucket
+     */
+    public static String generateQualifiedName(String name, String connectionQualifiedName) {
+        return connectionQualifiedName + "/" + name;
     }
 
     /**

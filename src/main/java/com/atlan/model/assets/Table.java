@@ -150,7 +150,7 @@ public class Table extends SQL {
         String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(databaseQualifiedName);
         return Table.builder()
                 .name(name)
-                .qualifiedName(schemaQualifiedName + "/" + name)
+                .qualifiedName(generateQualifiedName(name, schemaQualifiedName))
                 .connectorType(connectorType)
                 .schemaName(schemaName)
                 .schemaQualifiedName(schemaQualifiedName)
@@ -169,6 +169,17 @@ public class Table extends SQL {
      */
     public static TableBuilder<?, ?> updater(String qualifiedName, String name) {
         return Table.builder().qualifiedName(qualifiedName).name(name);
+    }
+
+    /**
+     * Generate a unique table name.
+     *
+     * @param name of the table
+     * @param schemaQualifiedName unique name of the schema in which this table exists
+     * @return a unique name for the table
+     */
+    public static String generateQualifiedName(String name, String schemaQualifiedName) {
+        return schemaQualifiedName + "/" + name;
     }
 
     /**

@@ -74,9 +74,20 @@ public class Database extends SQL {
                 Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName.split("/"));
         return Database.builder()
                 .name(name)
-                .qualifiedName(connectionQualifiedName + "/" + name)
+                .qualifiedName(generateQualifiedName(name, connectionQualifiedName))
                 .connectorType(connectorType)
                 .connectionQualifiedName(connectionQualifiedName);
+    }
+
+    /**
+     * Generate a unique database name.
+     *
+     * @param name of the database
+     * @param connectionQualifiedName unique name of the specific instance of the software / system that hosts the database
+     * @return a unique name for the database
+     */
+    public static String generateQualifiedName(String name, String connectionQualifiedName) {
+        return connectionQualifiedName + "/" + name;
     }
 
     /**

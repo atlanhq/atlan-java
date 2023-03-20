@@ -107,10 +107,21 @@ public class ADLSAccount extends ADLS {
      */
     public static ADLSAccountBuilder<?, ?> creator(String name, String connectionQualifiedName) {
         return ADLSAccount.builder()
-                .qualifiedName(connectionQualifiedName + "/" + name)
+                .qualifiedName(generateQualifiedName(name, connectionQualifiedName))
                 .name(name)
                 .connectionQualifiedName(connectionQualifiedName)
                 .connectorType(AtlanConnectorType.ADLS);
+    }
+
+    /**
+     * Generate a unique ADLSAccount name.
+     *
+     * @param name of the ADLSAccount
+     * @param connectionQualifiedName unique name of the connection through which the ADLSAccount is accessible
+     * @return a unique name for the ADLSAccount
+     */
+    public static String generateQualifiedName(String name, String connectionQualifiedName) {
+        return connectionQualifiedName + "/" + name;
     }
 
     /**

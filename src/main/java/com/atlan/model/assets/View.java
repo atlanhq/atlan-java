@@ -121,7 +121,7 @@ public class View extends SQL {
         String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(databaseQualifiedName);
         return View.builder()
                 .name(name)
-                .qualifiedName(schemaQualifiedName + "/" + name)
+                .qualifiedName(generateQualifiedName(name, schemaQualifiedName))
                 .connectorType(connectorType)
                 .schemaName(schemaName)
                 .schemaQualifiedName(schemaQualifiedName)
@@ -129,6 +129,17 @@ public class View extends SQL {
                 .databaseName(databaseName)
                 .databaseQualifiedName(databaseQualifiedName)
                 .connectionQualifiedName(connectionQualifiedName);
+    }
+
+    /**
+     * Generate a unique view name.
+     *
+     * @param name of the view
+     * @param schemaQualifiedName unique name of the schema in which this view exists
+     * @return a unique name for the view
+     */
+    public static String generateQualifiedName(String name, String schemaQualifiedName) {
+        return schemaQualifiedName + "/" + name;
     }
 
     /**
