@@ -45,7 +45,11 @@ public abstract class Atlan {
 
     /** Set the base URL for your tenant of Atlan. */
     public static void setBaseUrl(final String baseURL) {
-        apiBase = baseURL;
+        if (baseURL != null && baseURL.endsWith("/")) {
+            apiBase = baseURL.substring(0, baseURL.lastIndexOf("/"));
+        } else {
+            apiBase = baseURL;
+        }
     }
 
     /**
