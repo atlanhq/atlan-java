@@ -19,7 +19,10 @@ jobs:
       - name: Check formatting
         run: ./gradlew spotlessCheck
       - name: Build artifacts
-        run: ./gradlew assemble
+        run: ./gradlew assemble shadowJar
+        env:
+          GH_USERNAME: ${{ secrets.GH_USERNAME }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
   publish-docs:
     runs-on: ubuntu-latest
     name: "JavaDocs"
@@ -55,7 +58,38 @@ jobs:
         run: |
           ./gradlew publish -Dorg.gradle.project.NEXUS_USERNAME=$NEXUS_USERNAME -Dorg.gradle.project.NEXUS_PASSWORD=$NEXUS_PASSWORD -Dorg.gradle.project.signing.gnupg.keyName=$GPG_SIGNING_KEYID -Dorg.gradle.project.signing.gnupg.passphrase=$GPG_SIGNING_PASSPHRASE
         env:
+          GH_USERNAME: ${{ secrets.GH_USERNAME }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
           NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
           NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
           GPG_SIGNING_KEYID: ${{ secrets.GPG_SIGNING_KEYID }}
           GPG_SIGNING_PASSPHRASE: ${{ secrets.GPG_SIGNING_PASSPHRASE }}
+  publish-images:
+    needs: merge-build
+    runs-on: ubuntu-latest
+    name: "Containers"
+    steps:
+      - uses: docker/setup-buildx-action@v2
+      - name: Log in to container registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Set version
+        run: |
+          echo "VERSION=$(./gradlew properties --no-daemon --console=plain -q | grep '^version:' | awk '{printf $2}')" >> $GITHUB_ENV
+      - name: Create assembly area
+        run: |
+          mkdir -p ./containers/numaflow/assembly
+      - name: Copy Java SDK to assembly
+        run: |
+          cp build/libs/atlan-java-${{ env.VERSION }}-jar-with-dependencies.jar containers/numaflow/assembly/.
+      - name: Build and publish container image
+        if: ${{ github.ref == 'refs/heads/main'}}
+        uses: docker/build-push-action@v4
+        with:
+          push: true
+          tags: ghcr.io/atlanhq/atlan-java-numaflow:${{ env.VERSION }}, ghcr.io/atlanhq/atlan-java-numaflow:latest
+          context: ./containers/numaflow
+          platforms: linux/amd64
