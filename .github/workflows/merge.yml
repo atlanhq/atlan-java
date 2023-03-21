@@ -23,6 +23,10 @@ jobs:
         env:
           GH_USERNAME: ${{ github.actor }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/upload-artifact@v3
+        with:
+          name: jar-with-dependencies
+          path: build/libs/atlan-java-*-jar-with-dependencies.jar
   publish-docs:
     runs-on: ubuntu-latest
     name: "JavaDocs"
@@ -79,21 +83,18 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Set version
-        id: get_version
-        run: |
-          echo "version=$(./gradlew properties --no-daemon --console=plain -q | grep '^version:' | awk '{printf $2}')" >> $GITHUB_OUTPUT
       - name: Create assembly area
         run: |
           mkdir -p ./containers/numaflow/assembly
-      - name: Copy Java SDK to assembly
-        run: |
-          cp build/libs/atlan-java-${{ steps.get_version.outputs.version }}-jar-with-dependencies.jar containers/numaflow/assembly/.
+      - uses: actions/download-artifact@v3
+        with:
+          name: jar-with-dependencies
+          path: ./containers/numaflow/assembly
       - name: Build and publish container image
         if: ${{ github.ref == 'refs/heads/main'}}
         uses: docker/build-push-action@v4
         with:
           push: true
-          tags: ghcr.io/atlanhq/atlan-java-numaflow:${{ steps.get_version.outputs.version }}, ghcr.io/atlanhq/atlan-java-numaflow:latest
+          tags: ghcr.io/atlanhq/atlan-java-numaflow:${{ needs.merge-build.outputs.version }}, ghcr.io/atlanhq/atlan-java-numaflow:latest
           context: ./containers/numaflow
           platforms: linux/amd64
