@@ -2,8 +2,6 @@
 buildscript {
     repositories {
         mavenCentral()
-        //Add only for SNAPSHOT versions
-        //maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
     }
     dependencies {
         classpath "io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.30.0"
@@ -71,21 +69,15 @@ tasks.withType(JavaCompile) {
     }
 }
 
-tasks.register('uberJar', Jar) {
-    archiveClassifier = 'jar-with-dependencies'
-    from sourceSets.main.output
-    dependsOn configurations.runtimeClasspath
-    from {
-        configurations.runtimeClasspath.findAll { it.name.endsWith('jar')}.collect{ zipTree(it) }
-    }
-    duplicatesStrategy = org.gradle.api.file.DuplicatesStrategy.INCLUDE
-}
-
 compileJava {
     options.compilerArgs << "-Werror"
 }
 
-configurations.all {
+configurations {
+    numaflow {
+        canBeResolved = true
+        canBeConsumed = false
+    }
 }
 
 repositories {
@@ -105,8 +97,8 @@ dependencies {
     api group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.14.1"
     api group: "org.slf4j", name: "slf4j-api", version: "1.7.32"
     api group: "co.elastic.clients", name: "elasticsearch-java", version: "8.5.1"
-    api group: "io.numaproj.numaflow", name: "numaflow-java", version: "+"
-    api "io.netty:netty-transport-native-epoll:4.1.79.Final:linux-x86_64"
+    numaflow group: "io.numaproj.numaflow", name: "numaflow-java", version: "+"
+    numaflow "io.netty:netty-transport-native-epoll:4.1.79.Final:linux-x86_64"
     testImplementation group: 'org.testng', name: 'testng', version: '7.4.0'
     testImplementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.11'
     testRuntimeOnly group: 'org.testng', name: 'testng', version: '7.4.0'
@@ -198,6 +190,7 @@ spotless {
 
 shadowJar {
     archiveClassifier = 'jar-with-dependencies'
+    configurations = [project.configurations.runtimeClasspath,project.configurations.numaflow]
 }
 
 jacocoTestReport {
