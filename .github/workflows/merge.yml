@@ -21,8 +21,8 @@ jobs:
       - name: Build artifacts
         run: ./gradlew assemble shadowJar
         env:
-          GH_USERNAME: ${{ secrets.GH_USERNAME }}
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GH_USERNAME: ${{ github.actor }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   publish-docs:
     runs-on: ubuntu-latest
     name: "JavaDocs"
@@ -36,6 +36,8 @@ jobs:
         run: |
           ./gradlew gitPublishPush --stacktrace --info
         env:
+          GH_USERNAME: ${{ github.actor }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GRGIT_USER: ${{ github.actor }}
           GRGIT_PASS: ${{ secrets.GITHUB_TOKEN }}
   publish-snapshot:
@@ -58,8 +60,8 @@ jobs:
         run: |
           ./gradlew publish -Dorg.gradle.project.NEXUS_USERNAME=$NEXUS_USERNAME -Dorg.gradle.project.NEXUS_PASSWORD=$NEXUS_PASSWORD -Dorg.gradle.project.signing.gnupg.keyName=$GPG_SIGNING_KEYID -Dorg.gradle.project.signing.gnupg.passphrase=$GPG_SIGNING_PASSPHRASE
         env:
-          GH_USERNAME: ${{ secrets.GH_USERNAME }}
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GH_USERNAME: ${{ github.actor }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
           NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
           GPG_SIGNING_KEYID: ${{ secrets.GPG_SIGNING_KEYID }}
@@ -77,19 +79,20 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Set version
+        id: get_version
         run: |
-          echo "VERSION=$(./gradlew properties --no-daemon --console=plain -q | grep '^version:' | awk '{printf $2}')" >> $GITHUB_ENV
+          echo "version=$(./gradlew properties --no-daemon --console=plain -q | grep '^version:' | awk '{printf $2}')" >> $GITHUB_OUTPUT
       - name: Create assembly area
         run: |
           mkdir -p ./containers/numaflow/assembly
       - name: Copy Java SDK to assembly
         run: |
-          cp build/libs/atlan-java-${{ env.VERSION }}-jar-with-dependencies.jar containers/numaflow/assembly/.
+          cp build/libs/atlan-java-${{ steps.get_version.outputs.version }}-jar-with-dependencies.jar containers/numaflow/assembly/.
       - name: Build and publish container image
         if: ${{ github.ref == 'refs/heads/main'}}
         uses: docker/build-push-action@v4
         with:
           push: true
-          tags: ghcr.io/atlanhq/atlan-java-numaflow:${{ env.VERSION }}, ghcr.io/atlanhq/atlan-java-numaflow:latest
+          tags: ghcr.io/atlanhq/atlan-java-numaflow:${{ steps.get_version.outputs.version }}, ghcr.io/atlanhq/atlan-java-numaflow:latest
           context: ./containers/numaflow
           platforms: linux/amd64
