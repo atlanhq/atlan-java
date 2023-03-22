@@ -138,7 +138,6 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <hr>
 <pre>public class <span class="typeNameLabel">AtlanEvent</span>
 extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core">AtlanObject</a></pre>
-<div class="block">Base class for all assets.</div>
 </li>
 </ul>
 </div>
@@ -229,69 +228,69 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAccount()">getAccount</a></span>()</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMsgCompressionKind()">getMsgCompressionKind</a></span>()</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code><a href="EventDetail.html" title="class in com.atlan.model.events">EventDetail</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDetail()">getDetail</a></span>()</code></th>
-<td class="colLast">
-<div class="block">Details of the event.</div>
-</td>
-</tr>
-<tr id="i5" class="rowColor">
-<td class="colFirst"><code><a href="../enums/AtlanEventType.html" title="enum in com.atlan.model.enums">AtlanEventType</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDetailType()">getDetailType</a></span>()</code></th>
-<td class="colLast">
-<div class="block">Type of the event.</div>
-</td>
-</tr>
-<tr id="i6" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getId()">getId</a></span>()</code></th>
-<td class="colLast">
-<div class="block">Unique identifier (GUID) of the event.</div>
-</td>
-</tr>
-<tr id="i7" class="rowColor">
-<td class="colFirst"><code><a href="AtlanEventPayload.html" title="class in com.atlan.model.events">AtlanEventPayload</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPayload()">getPayload</a></span>()</code></th>
-<td class="colLast">
-<div class="block">Retrieve the detailed payload from the event.</div>
-</td>
-</tr>
-<tr id="i8" class="altColor">
-<td class="colFirst"><code>java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRegion()">getRegion</a></span>()</code></th>
-<td class="colLast">
-<div class="block">AWS region on which the event was created.</div>
-</td>
-</tr>
-<tr id="i9" class="rowColor">
-<td class="colFirst"><code>java.util.List&lt;java.lang.Object&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getResources()">getResources</a></span>()</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMsgCreatedBy()">getMsgCreatedBy</a></span>()</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i5" class="rowColor">
+<td class="colFirst"><code>java.lang.Long</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMsgCreationTime()">getMsgCreationTime</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Timestamp (epoch) for when the event was created, in milliseconds.</div>
+</td>
+</tr>
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMsgSourceIP()">getMsgSourceIP</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Originating IP address for the event.</div>
+</td>
+</tr>
+<tr id="i7" class="rowColor">
+<td class="colFirst"><code>java.lang.Long</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMsgSplitCount()">getMsgSplitCount</a></span>()</code></th>
+<td class="colLast">
+<div class="block">TBC</div>
+</td>
+</tr>
+<tr id="i8" class="altColor">
+<td class="colFirst"><code>java.lang.Long</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMsgSplitIdx()">getMsgSplitIdx</a></span>()</code></th>
+<td class="colLast">
+<div class="block">TBC</div>
+</td>
+</tr>
+<tr id="i9" class="rowColor">
+<td class="colFirst"><code><a href="AtlanEventPayload.html" title="class in com.atlan.model.events">AtlanEventPayload</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPayload()">getPayload</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Detailed contents (payload) of the event.</div>
+</td>
+</tr>
+<tr id="i10" class="altColor">
+<td class="colFirst"><code>java.lang.Object</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSource()">getSource</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Source of the event.</div>
+<div class="block">TBC</div>
 </td>
 </tr>
 <tr id="i11" class="rowColor">
-<td class="colFirst"><code>java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTime()">getTime</a></span>()</code></th>
+<td class="colFirst"><code>java.lang.Boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSpooled()">getSpooled</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Time at which the event was created.</div>
+<div class="block">TBC</div>
 </td>
 </tr>
 <tr id="i12" class="altColor">
-<td class="colFirst"><code>java.lang.String</code></td>
+<td class="colFirst"><code>java.lang.Object</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getVersion()">getVersion</a></span>()</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
@@ -357,20 +356,6 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a id="getPayload()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getPayload</h4>
-<pre class="methodSignature">public&nbsp;<a href="AtlanEventPayload.html" title="class in com.atlan.model.events">AtlanEventPayload</a>&nbsp;getPayload()</pre>
-<div class="block">Retrieve the detailed payload from the event.</div>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>the detailed message (payload) contained in the event.</dd>
-</dl>
-</li>
-</ul>
 <a id="builder()">
 <!--   -->
 </a>
@@ -389,94 +374,104 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <pre class="methodSignature">public&nbsp;<a href="AtlanEvent.AtlanEventBuilder.html" title="class in com.atlan.model.events">AtlanEvent.AtlanEventBuilder</a>&lt;?,&#8203;?&gt;&nbsp;toBuilder()</pre>
 </li>
 </ul>
-<a id="getVersion()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getVersion</h4>
-<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getVersion()</pre>
-<div class="block">TBC</div>
-</li>
-</ul>
-<a id="getId()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getId</h4>
-<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getId()</pre>
-<div class="block">Unique identifier (GUID) of the event.</div>
-</li>
-</ul>
-<a id="getDetailType()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getDetailType</h4>
-<pre class="methodSignature">public&nbsp;<a href="../enums/AtlanEventType.html" title="enum in com.atlan.model.enums">AtlanEventType</a>&nbsp;getDetailType()</pre>
-<div class="block">Type of the event.</div>
-</li>
-</ul>
 <a id="getSource()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getSource</h4>
-<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getSource()</pre>
-<div class="block">Source of the event.</div>
-</li>
-</ul>
-<a id="getAccount()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getAccount</h4>
-<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getAccount()</pre>
+<pre class="methodSignature">public&nbsp;java.lang.Object&nbsp;getSource()</pre>
 <div class="block">TBC</div>
 </li>
 </ul>
-<a id="getTime()">
+<a id="getVersion()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>getTime</h4>
-<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getTime()</pre>
-<div class="block">Time at which the event was created.</div>
-</li>
-</ul>
-<a id="getRegion()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getRegion</h4>
-<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getRegion()</pre>
-<div class="block">AWS region on which the event was created.</div>
-</li>
-</ul>
-<a id="getResources()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getResources</h4>
-<pre class="methodSignature">public&nbsp;java.util.List&lt;java.lang.Object&gt;&nbsp;getResources()</pre>
+<h4>getVersion</h4>
+<pre class="methodSignature">public&nbsp;java.lang.Object&nbsp;getVersion()</pre>
 <div class="block">TBC</div>
 </li>
 </ul>
-<a id="getDetail()">
+<a id="getMsgCompressionKind()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>getDetail</h4>
-<pre class="methodSignature">public&nbsp;<a href="EventDetail.html" title="class in com.atlan.model.events">EventDetail</a>&nbsp;getDetail()</pre>
-<div class="block">Details of the event.</div>
+<h4>getMsgCompressionKind</h4>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getMsgCompressionKind()</pre>
+<div class="block">TBC</div>
+</li>
+</ul>
+<a id="getMsgSplitIdx()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getMsgSplitIdx</h4>
+<pre class="methodSignature">public&nbsp;java.lang.Long&nbsp;getMsgSplitIdx()</pre>
+<div class="block">TBC</div>
+</li>
+</ul>
+<a id="getMsgSplitCount()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getMsgSplitCount</h4>
+<pre class="methodSignature">public&nbsp;java.lang.Long&nbsp;getMsgSplitCount()</pre>
+<div class="block">TBC</div>
+</li>
+</ul>
+<a id="getMsgSourceIP()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getMsgSourceIP</h4>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getMsgSourceIP()</pre>
+<div class="block">Originating IP address for the event.</div>
+</li>
+</ul>
+<a id="getMsgCreatedBy()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getMsgCreatedBy</h4>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getMsgCreatedBy()</pre>
+<div class="block">TBC</div>
+</li>
+</ul>
+<a id="getMsgCreationTime()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getMsgCreationTime</h4>
+<pre class="methodSignature">public&nbsp;java.lang.Long&nbsp;getMsgCreationTime()</pre>
+<div class="block">Timestamp (epoch) for when the event was created, in milliseconds.</div>
+</li>
+</ul>
+<a id="getSpooled()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getSpooled</h4>
+<pre class="methodSignature">public&nbsp;java.lang.Boolean&nbsp;getSpooled()</pre>
+<div class="block">TBC</div>
+</li>
+</ul>
+<a id="getPayload()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getPayload</h4>
+<pre class="methodSignature">public&nbsp;<a href="AtlanEventPayload.html" title="class in com.atlan.model.events">AtlanEventPayload</a>&nbsp;getPayload()</pre>
+<div class="block">Detailed contents (payload) of the event.</div>
 </li>
 </ul>
 <a id="equals(java.lang.Object)">
