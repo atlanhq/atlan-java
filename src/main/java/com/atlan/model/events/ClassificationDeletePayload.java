@@ -2,9 +2,7 @@
 /* Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.events;
 
-import com.atlan.model.assets.Asset;
 import com.atlan.model.core.Classification;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Set;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -30,15 +28,6 @@ public class ClassificationDeletePayload extends AtlanEventPayload {
     @Getter(onMethod_ = {@Override})
     @Builder.Default
     String operationType = TYPE_NAME;
-
-    /**
-     * Details of the asset that was updated.
-     * Note that the details of the removed classification will not be present in this object, but
-     * only in the mutatedDetails.
-     * @see #mutatedDetails
-     */
-    @JsonProperty("entity")
-    Asset asset;
 
     /** Classifications that were removed from the asset by this event. */
     Set<Classification> mutatedDetails;

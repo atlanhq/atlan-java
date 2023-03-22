@@ -2,11 +2,9 @@
 /* Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.events;
 
-import com.atlan.model.assets.Asset;
 import com.atlan.model.core.CustomMetadataAttributes;
 import com.atlan.serde.CustomMetadataMapDeserializer;
 import com.atlan.serde.CustomMetadataMapSerializer;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.Map;
@@ -34,15 +32,6 @@ public class CustomMetadataUpdatePayload extends AtlanEventPayload {
     @Getter(onMethod_ = {@Override})
     @Builder.Default
     String operationType = TYPE_NAME;
-
-    /**
-     * Details of the asset that was updated.
-     * Note that the details of the custom metadata are NOT included in this object,
-     * but only in the mutatedDetails.
-     * @see #mutatedDetails
-     */
-    @JsonProperty("entity")
-    Asset asset;
 
     /**
      * Map of custom metadata attributes and values defined on the asset. The map is keyed by the human-readable

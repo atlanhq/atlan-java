@@ -2,8 +2,6 @@
 /* Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.events;
 
-import com.atlan.model.assets.Asset;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -28,8 +26,4 @@ public class AssetDeletePayload extends AtlanEventPayload {
     @Getter(onMethod_ = {@Override})
     @Builder.Default
     String operationType = TYPE_NAME;
-
-    /** Details of the asset that was deleted. */
-    @JsonProperty("entity")
-    Asset asset;
 }

@@ -2,7 +2,9 @@
 /* Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.events;
 
+import com.atlan.model.assets.Asset;
 import com.atlan.model.core.AtlanObject;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.EqualsAndHashCode;
@@ -30,4 +32,12 @@ public abstract class AtlanEventPayload extends AtlanObject {
 
     /** Time (epoch) the event was triggered in the source system, in milliseconds. */
     Long eventTime;
+
+    /**
+     * Details of the asset that was impacted by the event.
+     * Note that the details some operations (like custom metadata changes) are NOT included in this object,
+     * but only in the associated mutatedDetails.
+     */
+    @JsonProperty("entity")
+    Asset asset;
 }
