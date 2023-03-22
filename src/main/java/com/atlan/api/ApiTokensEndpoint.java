@@ -2,7 +2,6 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.api;
 
-import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.admin.ApiToken;
 import com.atlan.model.admin.ApiTokenResponse;
@@ -28,9 +27,9 @@ import lombok.Getter;
 /**
  * API endpoints for managing Atlan's API tokens.
  */
-public class ApiTokensEndpoint {
+public class ApiTokensEndpoint extends HeraclesEndpoint {
 
-    private static final String endpoint = "/api/service/apikeys";
+    private static final String endpoint = "/apikeys";
 
     /**
      * Retrieves a list of the 100 most recently created tokens defined in Atlan.
@@ -53,7 +52,7 @@ public class ApiTokensEndpoint {
      * @throws AtlanException on any API communication issue
      */
     public static ApiTokenResponse getTokens(String filter, String sort, int offset, int limit) throws AtlanException {
-        String url = String.format("%s%s?limit=%s&offset=%s", Atlan.getBaseUrl(), endpoint, limit, offset);
+        String url = String.format("%s%s?limit=%s&offset=%s", getBaseUrl(), endpoint, limit, offset);
         if (sort != null) {
             url = String.format("%s&sort=%s", url, sort);
         }
@@ -75,7 +74,7 @@ public class ApiTokensEndpoint {
      */
     public static ApiToken create(String displayName, String description, Set<String> personas, Long validitySeconds)
             throws AtlanException {
-        String url = String.format("%s%s", Atlan.getBaseUrl(), endpoint);
+        String url = String.format("%s%s", getBaseUrl(), endpoint);
         ApiTokenRequest atr = new ApiTokenRequest(displayName, description, personas, validitySeconds);
         WrappedApiToken response =
                 ApiResource.request(ApiResource.RequestMethod.POST, url, atr, WrappedApiToken.class, null);
@@ -96,7 +95,7 @@ public class ApiTokensEndpoint {
      */
     public static ApiToken update(String guid, String displayName, String description, Set<String> personas)
             throws AtlanException {
-        String url = String.format("%s%s/%s", Atlan.getBaseUrl(), endpoint, guid);
+        String url = String.format("%s%s/%s", getBaseUrl(), endpoint, guid);
         ApiTokenRequest atr = new ApiTokenRequest(displayName, description, personas, null);
         WrappedApiToken response =
                 ApiResource.request(ApiResource.RequestMethod.POST, url, atr, WrappedApiToken.class, null);
@@ -113,7 +112,7 @@ public class ApiTokensEndpoint {
      * @throws AtlanException on any API communication issue
      */
     public static void delete(String guid) throws AtlanException {
-        String url = String.format("%s%s/%s", Atlan.getBaseUrl(), endpoint, guid);
+        String url = String.format("%s%s/%s", getBaseUrl(), endpoint, guid);
         ApiResource.request(ApiResource.RequestMethod.DELETE, url, "", null, null);
     }
 

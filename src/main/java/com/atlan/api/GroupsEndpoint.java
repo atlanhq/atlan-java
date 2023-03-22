@@ -2,7 +2,6 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.api;
 
-import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.admin.*;
 import com.atlan.model.core.AtlanObject;
@@ -16,9 +15,9 @@ import lombok.experimental.SuperBuilder;
 /**
  * API endpoints for interacting with Atlan's groups.
  */
-public class GroupsEndpoint {
+public class GroupsEndpoint extends HeraclesEndpoint {
 
-    private static final String endpoint = "/api/service/groups";
+    private static final String endpoint = "/groups";
 
     // TODO: eventually provide a rich RQL object for the filter
 
@@ -43,7 +42,7 @@ public class GroupsEndpoint {
         }
         String url = String.format(
                 "%s%s?filter=%s&sort=%s&count=%s&offset=%s&limit=%s",
-                Atlan.getBaseUrl(),
+                getBaseUrl(),
                 endpoint,
                 ApiResource.urlEncode(filter),
                 ApiResource.urlEncode(sort),
@@ -64,7 +63,7 @@ public class GroupsEndpoint {
         if (filter == null) {
             filter = "";
         }
-        String url = String.format("%s%s?filter=%s", Atlan.getBaseUrl(), endpoint, ApiResource.urlEncode(filter));
+        String url = String.format("%s%s?filter=%s", getBaseUrl(), endpoint, ApiResource.urlEncode(filter));
         return ApiResource.request(ApiResource.RequestMethod.GET, url, "", GroupResponse.class, null);
     }
 
@@ -76,7 +75,7 @@ public class GroupsEndpoint {
      */
     public static List<AtlanGroup> getAllGroups() throws AtlanException {
         List<AtlanGroup> groups = new ArrayList<>();
-        String unlimitedUrl = String.format("%s%s?sort=createdAt", Atlan.getBaseUrl(), endpoint);
+        String unlimitedUrl = String.format("%s%s?sort=createdAt", getBaseUrl(), endpoint);
         int limit = 100;
         int offset = 0;
         String url = String.format("%s&limit=%s&offset=%s", unlimitedUrl, limit, offset);
@@ -119,7 +118,7 @@ public class GroupsEndpoint {
      * @throws AtlanException on any API communication issue
      */
     public static CreateGroupResponse createGroup(AtlanGroup group, List<String> userIds) throws AtlanException {
-        String url = String.format("%s%s", Atlan.getBaseUrl(), endpoint);
+        String url = String.format("%s%s", getBaseUrl(), endpoint);
         CreateGroupRequest.CreateGroupRequestBuilder<?, ?> cgr =
                 CreateGroupRequest.builder().group(group);
         if (userIds != null && !userIds.isEmpty()) {
@@ -136,7 +135,7 @@ public class GroupsEndpoint {
      * @throws AtlanException on any API communication issue
      */
     public static void updateGroup(String id, AtlanGroup group) throws AtlanException {
-        String url = String.format("%s%s/%s", Atlan.getBaseUrl(), endpoint, id);
+        String url = String.format("%s%s/%s", getBaseUrl(), endpoint, id);
         ApiResource.request(ApiResource.RequestMethod.POST, url, group, null, null);
     }
 
@@ -148,7 +147,7 @@ public class GroupsEndpoint {
      * @throws AtlanException on any API communication issue
      */
     public static UserResponse getGroupMembers(String id) throws AtlanException {
-        String url = String.format("%s%s/%s/members", Atlan.getBaseUrl(), endpoint, id);
+        String url = String.format("%s%s/%s/members", getBaseUrl(), endpoint, id);
         return ApiResource.request(ApiResource.RequestMethod.GET, url, "", UserResponse.class, null);
     }
 
@@ -160,7 +159,7 @@ public class GroupsEndpoint {
      * @throws AtlanException on any API communication issue
      */
     public static void removeUsersFromGroup(String id, List<String> userIds) throws AtlanException {
-        String url = String.format("%s%s/%s/members/remove", Atlan.getBaseUrl(), endpoint, id);
+        String url = String.format("%s%s/%s/members/remove", getBaseUrl(), endpoint, id);
         RemoveFromGroupRequest rfgr =
                 RemoveFromGroupRequest.builder().users(userIds).build();
         ApiResource.request(ApiResource.RequestMethod.POST, url, rfgr, null, null);
@@ -173,7 +172,7 @@ public class GroupsEndpoint {
      * @throws AtlanException on any API communication issue
      */
     public static void deleteGroup(String id) throws AtlanException {
-        String url = String.format("%s%s/%s/delete", Atlan.getBaseUrl(), endpoint, id);
+        String url = String.format("%s%s/%s/delete", getBaseUrl(), endpoint, id);
         ApiResource.request(ApiResource.RequestMethod.POST, url, "", null, null);
     }
 

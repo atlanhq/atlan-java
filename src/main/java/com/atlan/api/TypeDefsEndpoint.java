@@ -2,7 +2,6 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.api;
 
-import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
@@ -16,10 +15,10 @@ import java.util.List;
 /**
  * API endpoints for operating on Atlan's type definitions (in simple terms the underlying metadata model).
  */
-public class TypeDefsEndpoint {
+public class TypeDefsEndpoint extends AtlasEndpoint {
 
-    private static final String endpoint = "/api/meta/types/typedefs";
-    private static final String endpoint_singular = "/api/meta/types/typedef";
+    private static final String endpoint = "/types/typedefs";
+    private static final String endpoint_singular = "/types/typedef";
 
     /**
      * Retrieves a list of the type definitions in Atlan.
@@ -31,7 +30,7 @@ public class TypeDefsEndpoint {
     public static TypeDefResponse getTypeDefs(AtlanTypeCategory category) throws AtlanException {
         String url = String.format(
                 "%s%s",
-                Atlan.getBaseUrl(),
+                getBaseUrl(),
                 String.format("%s?type=%s", endpoint, category.getValue().toLowerCase()));
         return ApiResource.request(ApiResource.RequestMethod.GET, url, "", TypeDefResponse.class, null);
     }
@@ -62,7 +61,7 @@ public class TypeDefsEndpoint {
                             ErrorCode.UNABLE_TO_CREATE_TYPEDEF_CATEGORY,
                             typeDef.getCategory().getValue());
             }
-            String url = String.format("%s%s", Atlan.getBaseUrl(), endpoint);
+            String url = String.format("%s%s", getBaseUrl(), endpoint);
             return ApiResource.request(
                     ApiResource.RequestMethod.POST, url, builder.build(), TypeDefResponse.class, null);
         }
@@ -96,7 +95,7 @@ public class TypeDefsEndpoint {
                             ErrorCode.UNABLE_TO_CREATE_TYPEDEF_CATEGORY,
                             typeDef.getCategory().getValue());
             }
-            String url = String.format("%s%s", Atlan.getBaseUrl(), endpoint);
+            String url = String.format("%s%s", getBaseUrl(), endpoint);
             return ApiResource.request(
                     ApiResource.RequestMethod.PUT, url, builder.build(), TypeDefResponse.class, null);
         }
@@ -113,8 +112,7 @@ public class TypeDefsEndpoint {
     public static void purgeTypeDef(String internalName) throws AtlanException {
         String url = String.format(
                 "%s%s",
-                Atlan.getBaseUrl(),
-                String.format("%s/name/%s", endpoint_singular, StringUtils.encodeContent(internalName)));
+                getBaseUrl(), String.format("%s/name/%s", endpoint_singular, StringUtils.encodeContent(internalName)));
         ApiResource.request(ApiResource.RequestMethod.DELETE, url, "", null, null);
     }
 }

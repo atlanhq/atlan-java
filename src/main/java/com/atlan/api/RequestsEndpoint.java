@@ -2,7 +2,6 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.api;
 
-import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.admin.*;
 import com.atlan.model.enums.AtlanRequestStatus;
@@ -27,9 +26,9 @@ import lombok.Getter;
 /**
  * API endpoints for interacting with Atlan's requests.
  */
-public class RequestsEndpoint {
+public class RequestsEndpoint extends HeraclesEndpoint {
 
-    private static final String endpoint = "/api/service/requests";
+    private static final String endpoint = "/requests";
     private static final int defaultLimit = 40;
 
     // TODO: eventually provide a rich RQL object for the filter
@@ -42,7 +41,7 @@ public class RequestsEndpoint {
      * @throws AtlanException on any API communication issue
      */
     public static AtlanRequest getRequestByGuid(String guid) throws AtlanException {
-        String url = String.format("%s%s/%s", Atlan.getBaseUrl(), endpoint, guid);
+        String url = String.format("%s%s/%s", getBaseUrl(), endpoint, guid);
         WrappedRequest result = ApiResource.request(ApiResource.RequestMethod.GET, url, "", WrappedRequest.class, null);
         if (result != null) {
             return result.getRequest();
@@ -70,12 +69,7 @@ public class RequestsEndpoint {
         }
         String url = String.format(
                 "%s%s?limit=%s&offset=%s&sort=%s&filter=%s",
-                Atlan.getBaseUrl(),
-                endpoint,
-                limit,
-                offset,
-                ApiResource.urlEncode(sort),
-                ApiResource.urlEncode(filter));
+                getBaseUrl(), endpoint, limit, offset, ApiResource.urlEncode(sort), ApiResource.urlEncode(filter));
         return ApiResource.request(ApiResource.RequestMethod.GET, url, "", AtlanRequestResponse.class, null);
     }
 
@@ -124,12 +118,7 @@ public class RequestsEndpoint {
         }
         String url = String.format(
                 "%s%s/actionable?limit=%s&offset=%s&sort=%s&filter=%s",
-                Atlan.getBaseUrl(),
-                endpoint,
-                limit,
-                offset,
-                ApiResource.urlEncode(sort),
-                ApiResource.urlEncode(filter));
+                getBaseUrl(), endpoint, limit, offset, ApiResource.urlEncode(sort), ApiResource.urlEncode(filter));
         return ApiResource.request(ApiResource.RequestMethod.GET, url, "", AtlanRequestResponse.class, null);
     }
 
@@ -173,7 +162,7 @@ public class RequestsEndpoint {
      * @throws AtlanException on any API communication issue
      */
     public static void createRequests(List<AtlanRequest> requests) throws AtlanException {
-        String url = String.format("%s%s/bulk", Atlan.getBaseUrl(), endpoint);
+        String url = String.format("%s%s/bulk", getBaseUrl(), endpoint);
         BulkRequest br = new BulkRequest(requests);
         ApiResource.request(ApiResource.RequestMethod.POST, url, br, null, null);
     }
@@ -203,7 +192,7 @@ public class RequestsEndpoint {
     }
 
     private static boolean actionRequest(String guid, AtlanRequestStatus action, String message) throws AtlanException {
-        String url = String.format("%s%s/%s/action", Atlan.getBaseUrl(), endpoint, guid);
+        String url = String.format("%s%s/%s/action", getBaseUrl(), endpoint, guid);
         if (message == null) {
             message = "";
         }

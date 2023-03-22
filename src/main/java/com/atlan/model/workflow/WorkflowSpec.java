@@ -21,4 +21,5 @@ public class WorkflowSpec extends AtlanObject {
     String entrypoint;
     final Object arguments;
     final Map<String, String> workflowTemplateRef;
+    final Object workflowMetadata;
 }
