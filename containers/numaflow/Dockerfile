@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-# Copyright $YEAR Atlan Pte. Ltd.
+# Copyright 2023 Atlan Pte. Ltd.
 FROM eclipse-temurin:17 as jre-build
 
 RUN $JAVA_HOME/bin/jlink \
@@ -9,6 +9,9 @@ RUN $JAVA_HOME/bin/jlink \
 		--no-header-files \
 		--compress=2 \
 		--output /javaruntime
+
+RUN wget -O /dumb-init https://github.com/Yelp/dumb-init/releases/download/v1.2.5/dumb-init_1.2.5_x86_64 \
+        && chmod +x /dumb-init
 
 COPY assembly /opt/jars
 
@@ -24,5 +27,6 @@ ENV PATH "${JAVA_HOME}/bin:${PATH}"
 ENV CLASSPATH "/opt/jars/*:/opt/app/*"
 COPY --from=jre-build /javaruntime $JAVA_HOME
 COPY --from=jre-build /opt/jars /opt/jars
+COPY --from=jre-build /dumb-init /dumb-init
 
-ENTRYPOINT ["java"]
+ENTRYPOINT ["/dumb-init", "--", "java"]
