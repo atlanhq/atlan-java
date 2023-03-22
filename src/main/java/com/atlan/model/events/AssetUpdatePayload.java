@@ -3,7 +3,6 @@
 package com.atlan.model.events;
 
 import com.atlan.model.assets.Asset;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -28,10 +27,6 @@ public class AssetUpdatePayload extends AtlanEventPayload {
     @Getter(onMethod_ = {@Override})
     @Builder.Default
     String operationType = TYPE_NAME;
-
-    /** Details of the asset that was updated. */
-    @JsonProperty("entity")
-    Asset asset;
 
     /** Details of what was updated on the asset. */
     Asset mutatedDetails;
