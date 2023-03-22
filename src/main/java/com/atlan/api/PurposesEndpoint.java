@@ -2,7 +2,6 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.api;
 
-import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.admin.*;
 import com.atlan.model.core.AtlanObject;
@@ -26,9 +25,9 @@ import lombok.experimental.SuperBuilder;
 /**
  * API endpoints for interacting with Atlan's purposes.
  */
-public class PurposesEndpoint {
+public class PurposesEndpoint extends HeraclesEndpoint {
 
-    private static final String endpoint = "/api/service/purposes";
+    private static final String endpoint = "/purposes";
 
     // TODO: eventually provide a rich RQL object for the filter
 
@@ -53,7 +52,7 @@ public class PurposesEndpoint {
         }
         String url = String.format(
                 "%s%s?filter=%s&sort=%s&count=%s&offset=%s&limit=%s",
-                Atlan.getBaseUrl(),
+                getBaseUrl(),
                 endpoint,
                 ApiResource.urlEncode(filter),
                 ApiResource.urlEncode(sort),
@@ -74,7 +73,7 @@ public class PurposesEndpoint {
         if (filter == null) {
             filter = "";
         }
-        String url = String.format("%s%s?filter=%s", Atlan.getBaseUrl(), endpoint, ApiResource.urlEncode(filter));
+        String url = String.format("%s%s?filter=%s", getBaseUrl(), endpoint, ApiResource.urlEncode(filter));
         return ApiResource.request(ApiResource.RequestMethod.GET, url, "", PurposeResponse.class, null);
     }
 
@@ -85,7 +84,7 @@ public class PurposesEndpoint {
      * @throws AtlanException on any API communication issue
      */
     public static PurposeResponse getAllPurposes() throws AtlanException {
-        String url = String.format("%s%s", Atlan.getBaseUrl(), endpoint);
+        String url = String.format("%s%s", getBaseUrl(), endpoint);
         return ApiResource.request(ApiResource.RequestMethod.GET, url, "", PurposeResponse.class, null);
     }
 
@@ -97,7 +96,7 @@ public class PurposesEndpoint {
      * @throws AtlanException on any API communication issue
      */
     public static Purpose createPurpose(Purpose purpose) throws AtlanException {
-        String url = String.format("%s%s", Atlan.getBaseUrl(), endpoint);
+        String url = String.format("%s%s", getBaseUrl(), endpoint);
         WrappedPurpose wrapped =
                 ApiResource.request(ApiResource.RequestMethod.POST, url, purpose, WrappedPurpose.class, null);
         if (wrapped != null) {
@@ -115,7 +114,7 @@ public class PurposesEndpoint {
      * @throws AtlanException on any API communication issue
      */
     public static Purpose updatePurpose(Purpose purpose) throws AtlanException {
-        String url = String.format("%s%s/%s", Atlan.getBaseUrl(), endpoint, purpose.getId());
+        String url = String.format("%s%s/%s", getBaseUrl(), endpoint, purpose.getId());
         WrappedPurpose wrapped =
                 ApiResource.request(ApiResource.RequestMethod.POST, url, purpose, WrappedPurpose.class, null);
         if (wrapped != null) {
@@ -132,7 +131,7 @@ public class PurposesEndpoint {
      * @throws AtlanException on any API communication issue
      */
     public static void deletePurpose(String id) throws AtlanException {
-        String url = String.format("%s%s/%s", Atlan.getBaseUrl(), endpoint, id);
+        String url = String.format("%s%s/%s", getBaseUrl(), endpoint, id);
         ApiResource.request(ApiResource.RequestMethod.DELETE, url, "", null, null);
     }
 

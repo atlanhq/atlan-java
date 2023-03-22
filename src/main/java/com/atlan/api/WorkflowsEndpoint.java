@@ -2,7 +2,6 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.api;
 
-import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.core.AtlanObject;
 import com.atlan.model.workflow.*;
@@ -15,12 +14,12 @@ import lombok.experimental.SuperBuilder;
 /**
  * API endpoints for operating on Atlan's workflows.
  */
-public class WorkflowsEndpoint {
+public class WorkflowsEndpoint extends HeraclesEndpoint {
 
-    private static final String workflows_endpoint = "/api/service/workflows";
+    private static final String workflows_endpoint = "/workflows";
     private static final String workflows_endpoint_run_existing = workflows_endpoint + "/submit";
     private static final String workflows_search_endpoint = workflows_endpoint + "/indexsearch";
-    private static final String runs_endpoint = "/api/service/runs";
+    private static final String runs_endpoint = "/runs";
     private static final String runs_search_endpoint = runs_endpoint + "/indexsearch";
 
     /**
@@ -31,7 +30,7 @@ public class WorkflowsEndpoint {
      * @throws AtlanException on any API communication issue
      */
     public static WorkflowResponse run(Workflow workflow) throws AtlanException {
-        String url = String.format("%s%s", Atlan.getBaseUrl(), String.format("%s?submit=true", workflows_endpoint));
+        String url = String.format("%s%s", getBaseUrl(), String.format("%s?submit=true", workflows_endpoint));
         return ApiResource.request(ApiResource.RequestMethod.POST, url, workflow, WorkflowResponse.class, null);
     }
 
@@ -43,7 +42,7 @@ public class WorkflowsEndpoint {
      * @throws AtlanException on any API communication issue
      */
     public static WorkflowRunResponse run(WorkflowSearchResultDetail workflow) throws AtlanException {
-        String url = String.format("%s%s", Atlan.getBaseUrl(), workflows_endpoint_run_existing);
+        String url = String.format("%s%s", getBaseUrl(), workflows_endpoint_run_existing);
         ReRunRequest request = ReRunRequest.builder()
                 .namespace(workflow.getMetadata().getNamespace())
                 .resourceName(workflow.getMetadata().getName())
@@ -58,8 +57,8 @@ public class WorkflowsEndpoint {
      * @throws AtlanException on any API communication issue
      */
     public static void archive(String workflowName) throws AtlanException {
-        String url = String.format(
-                "%s%s", Atlan.getBaseUrl(), String.format("%s/%s/archive", workflows_endpoint, workflowName));
+        String url =
+                String.format("%s%s", getBaseUrl(), String.format("%s/%s/archive", workflows_endpoint, workflowName));
         ApiResource.request(ApiResource.RequestMethod.POST, url, "", null, null);
     }
 
@@ -71,7 +70,7 @@ public class WorkflowsEndpoint {
      * @throws AtlanException on any API communication issue
      */
     public static WorkflowSearchResponse searchRuns(WorkflowSearchRequest request) throws AtlanException {
-        String url = String.format("%s%s", Atlan.getBaseUrl(), runs_search_endpoint);
+        String url = String.format("%s%s", getBaseUrl(), runs_search_endpoint);
         return ApiResource.request(ApiResource.RequestMethod.POST, url, request, WorkflowSearchResponse.class, null);
     }
 
@@ -83,7 +82,7 @@ public class WorkflowsEndpoint {
      * @throws AtlanException on any API communication issue
      */
     public static WorkflowSearchResponse search(WorkflowSearchRequest request) throws AtlanException {
-        String url = String.format("%s%s", Atlan.getBaseUrl(), workflows_search_endpoint);
+        String url = String.format("%s%s", getBaseUrl(), workflows_search_endpoint);
         return ApiResource.request(ApiResource.RequestMethod.POST, url, request, WorkflowSearchResponse.class, null);
     }
 

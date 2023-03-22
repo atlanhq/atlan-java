@@ -2,7 +2,6 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.api;
 
-import com.atlan.Atlan;
 import com.atlan.cache.CustomMetadataCache;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.core.AssetResponse;
@@ -20,9 +19,9 @@ import lombok.extern.slf4j.Slf4j;
  * API endpoints for operating on a single entity, based on its unique ID (GUID).
  */
 @Slf4j
-public class EntityGuidEndpoint {
+public class EntityGuidEndpoint extends AtlasEndpoint {
 
-    private static final String endpoint = "/api/meta/entity/guid/";
+    private static final String endpoint = "/entity/guid/";
 
     /**
      * Retrieves any entity by its GUID.
@@ -37,7 +36,7 @@ public class EntityGuidEndpoint {
             throws AtlanException {
         String url = String.format(
                 "%s%s",
-                Atlan.getBaseUrl(),
+                getBaseUrl(),
                 String.format(
                         "%s%s?ignoreRelationships=%s&minExtInfo=%s",
                         endpoint, ApiResource.urlEncodeId(guid), ignoreRelationships, minExtInfo));
@@ -60,7 +59,7 @@ public class EntityGuidEndpoint {
             CustomMetadataCache.getIdForName(cmName);
             String url = String.format(
                     "%s%s",
-                    Atlan.getBaseUrl(),
+                    getBaseUrl(),
                     String.format("%s%s/businessmetadata?isOverwrite=false", endpoint, ApiResource.urlEncodeId(guid)));
             CustomMetadataUpdateRequest cmur = new CustomMetadataUpdateRequest(cmName, values.getAttributes(), true);
             ApiResource.request(ApiResource.RequestMethod.POST, url, cmur, null, null);
@@ -82,7 +81,7 @@ public class EntityGuidEndpoint {
         if (values != null) {
             String url = String.format(
                     "%s%s",
-                    Atlan.getBaseUrl(),
+                    getBaseUrl(),
                     String.format(
                             "%s%s/businessmetadata/%s",
                             endpoint, ApiResource.urlEncodeId(guid), ApiResource.urlEncodeId(cmId)));
@@ -108,7 +107,7 @@ public class EntityGuidEndpoint {
         // TODO: this endpoint currently does not work (500 response)
         /* String url = String.format(
                 "%s%s",
-                Atlan.getBaseUrl(),
+                getBaseUrl(),
                 String.format(
                         "%s%s/businessmetadata/%s",
                         endpoint, ApiResource.urlEncodeId(guid), ApiResource.urlEncodeId(cmId)));

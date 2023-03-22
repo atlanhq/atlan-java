@@ -2,7 +2,6 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.api;
 
-import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.admin.RoleResponse;
 import com.atlan.net.ApiResource;
@@ -10,9 +9,9 @@ import com.atlan.net.ApiResource;
 /**
  * API endpoints for interacting with Atlan's roles.
  */
-public class RolesEndpoint {
+public class RolesEndpoint extends HeraclesEndpoint {
 
-    private static final String endpoint = "/api/service/roles";
+    private static final String endpoint = "/roles";
 
     // TODO: eventually provide a rich RQL object for the filter
 
@@ -37,7 +36,7 @@ public class RolesEndpoint {
         }
         String url = String.format(
                 "%s%s?filter=%s&sort=%s&count=%s&offset=%s&limit=%s",
-                Atlan.getBaseUrl(),
+                getBaseUrl(),
                 endpoint,
                 ApiResource.urlEncode(filter),
                 ApiResource.urlEncode(sort),
@@ -58,7 +57,7 @@ public class RolesEndpoint {
         if (filter == null) {
             filter = "";
         }
-        String url = String.format("%s%s?filter=%s", Atlan.getBaseUrl(), endpoint, ApiResource.urlEncode(filter));
+        String url = String.format("%s%s?filter=%s", getBaseUrl(), endpoint, ApiResource.urlEncode(filter));
         return ApiResource.request(ApiResource.RequestMethod.GET, url, "", RoleResponse.class, null);
     }
 
@@ -69,7 +68,7 @@ public class RolesEndpoint {
      * @throws AtlanException on any API communication issue
      */
     public static RoleResponse getAllRoles() throws AtlanException {
-        String url = String.format("%s%s", Atlan.getBaseUrl(), endpoint);
+        String url = String.format("%s%s", getBaseUrl(), endpoint);
         return ApiResource.request(ApiResource.RequestMethod.GET, url, "", RoleResponse.class, null);
     }
 }

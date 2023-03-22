@@ -2,7 +2,6 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.api;
 
-import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
@@ -22,9 +21,9 @@ import lombok.experimental.SuperBuilder;
 /**
  * API endpoints for operating on multiple assets (entities) at the same time (in bulk).
  */
-public class EntityBulkEndpoint {
+public class EntityBulkEndpoint extends AtlasEndpoint {
 
-    private static final String endpoint = "/api/meta/entity/bulk";
+    private static final String endpoint = "/entity/bulk";
 
     /**
      * Creates any asset, optionally overwriting an existing entity's classifications and / or
@@ -55,7 +54,7 @@ public class EntityBulkEndpoint {
             List<Asset> values, boolean replaceClassifications, boolean replaceCustomMetadata) throws AtlanException {
         String url = String.format(
                 "%s%s",
-                Atlan.getBaseUrl(),
+                getBaseUrl(),
                 String.format(
                         "%s?replaceClassifications=%s&replaceBusinessAttributes=%s&overwriteBusinessAttributes=%s",
                         endpoint, replaceClassifications, replaceCustomMetadata, replaceCustomMetadata));
@@ -95,8 +94,7 @@ public class EntityBulkEndpoint {
                 // Remove the final comma
                 guidList.setLength(guidList.length() - 1);
                 String url = String.format(
-                        "%s%s",
-                        Atlan.getBaseUrl(), String.format("%s?%s&deleteType=%s", endpoint, guidList, deleteType));
+                        "%s%s", getBaseUrl(), String.format("%s?%s&deleteType=%s", endpoint, guidList, deleteType));
                 return ApiResource.request(
                         ApiResource.RequestMethod.DELETE, url, "", AssetMutationResponse.class, null);
             }
@@ -125,7 +123,7 @@ public class EntityBulkEndpoint {
     public static AssetMutationResponse restore(List<Asset> values) throws AtlanException {
         String url = String.format(
                 "%s%s",
-                Atlan.getBaseUrl(),
+                getBaseUrl(),
                 String.format(
                         "%s?replaceClassifications=false&replaceBusinessAttributes=false&overwriteBusinessAttributes=false",
                         endpoint));

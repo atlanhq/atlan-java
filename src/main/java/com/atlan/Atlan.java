@@ -38,6 +38,7 @@ public abstract class Atlan {
 
     private static volatile String apiToken = null;
     private static volatile String apiBase = null;
+    private static volatile boolean internalAccess = false;
     private static volatile Proxy connectionProxy = null;
     private static volatile PasswordAuthentication proxyCredential = null;
 
@@ -45,10 +46,16 @@ public abstract class Atlan {
 
     /** Set the base URL for your tenant of Atlan. */
     public static void setBaseUrl(final String baseURL) {
-        if (baseURL != null && baseURL.endsWith("/")) {
-            apiBase = baseURL.substring(0, baseURL.lastIndexOf("/"));
+        if (baseURL != null) {
+            if (baseURL.equals("INTERNAL")) {
+                internalAccess = true;
+            } else if (baseURL.endsWith("/")) {
+                apiBase = baseURL.substring(0, baseURL.lastIndexOf("/"));
+            } else {
+                apiBase = baseURL;
+            }
         } else {
-            apiBase = baseURL;
+            apiBase = null;
         }
     }
 
@@ -62,6 +69,14 @@ public abstract class Atlan {
         } else {
             return apiBase;
         }
+    }
+
+    /**
+     * Indicates whether the SDK is configured for cluster-internal access (true) or external access (false).
+     * @return boolean indicating whether the SDK is configured for cluster-internal access (true) or not (false)
+     */
+    public static boolean isInternal() {
+        return internalAccess;
     }
 
     /** Retrieve the base URL for your tenant of Atlan. */

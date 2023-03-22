@@ -2,7 +2,6 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.api;
 
-import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.admin.*;
 import com.atlan.model.core.AtlanObject;
@@ -26,9 +25,9 @@ import lombok.experimental.SuperBuilder;
 /**
  * API endpoints for interacting with Atlan's personas.
  */
-public class PersonasEndpoint {
+public class PersonasEndpoint extends HeraclesEndpoint {
 
-    private static final String endpoint = "/api/service/personas";
+    private static final String endpoint = "/personas";
 
     // TODO: eventually provide a rich RQL object for the filter
 
@@ -53,7 +52,7 @@ public class PersonasEndpoint {
         }
         String url = String.format(
                 "%s%s?filter=%s&sort=%s&count=%s&offset=%s&limit=%s",
-                Atlan.getBaseUrl(),
+                getBaseUrl(),
                 endpoint,
                 ApiResource.urlEncode(filter),
                 ApiResource.urlEncode(sort),
@@ -74,7 +73,7 @@ public class PersonasEndpoint {
         if (filter == null) {
             filter = "";
         }
-        String url = String.format("%s%s?filter=%s", Atlan.getBaseUrl(), endpoint, ApiResource.urlEncode(filter));
+        String url = String.format("%s%s?filter=%s", getBaseUrl(), endpoint, ApiResource.urlEncode(filter));
         return ApiResource.request(ApiResource.RequestMethod.GET, url, "", PersonaResponse.class, null);
     }
 
@@ -85,7 +84,7 @@ public class PersonasEndpoint {
      * @throws AtlanException on any API communication issue
      */
     public static PersonaResponse getAllPersonas() throws AtlanException {
-        String url = String.format("%s%s", Atlan.getBaseUrl(), endpoint);
+        String url = String.format("%s%s", getBaseUrl(), endpoint);
         return ApiResource.request(ApiResource.RequestMethod.GET, url, "", PersonaResponse.class, null);
     }
 
@@ -97,7 +96,7 @@ public class PersonasEndpoint {
      * @throws AtlanException on any API communication issue
      */
     public static Persona createPersona(Persona persona) throws AtlanException {
-        String url = String.format("%s%s", Atlan.getBaseUrl(), endpoint);
+        String url = String.format("%s%s", getBaseUrl(), endpoint);
         WrappedPersona wrapped =
                 ApiResource.request(ApiResource.RequestMethod.POST, url, persona, WrappedPersona.class, null);
         if (wrapped != null) {
@@ -115,7 +114,7 @@ public class PersonasEndpoint {
      * @throws AtlanException on any API communication issue
      */
     public static void updatePersona(String id, Persona persona) throws AtlanException {
-        String url = String.format("%s%s/%s", Atlan.getBaseUrl(), endpoint, id);
+        String url = String.format("%s%s/%s", getBaseUrl(), endpoint, id);
         ApiResource.request(ApiResource.RequestMethod.POST, url, persona, null, null);
     }
 
@@ -126,7 +125,7 @@ public class PersonasEndpoint {
      * @throws AtlanException on any API communication issue
      */
     public static void deletePersona(String id) throws AtlanException {
-        String url = String.format("%s%s/%s", Atlan.getBaseUrl(), endpoint, id);
+        String url = String.format("%s%s/%s", getBaseUrl(), endpoint, id);
         ApiResource.request(ApiResource.RequestMethod.DELETE, url, "", null, null);
     }
 
@@ -139,7 +138,7 @@ public class PersonasEndpoint {
      * @throws AtlanException on any API communication issue
      */
     public static AbstractPolicy addPolicyToPersona(String id, AbstractPolicy policy) throws AtlanException {
-        String url = String.format("%s%s/%s/policies", Atlan.getBaseUrl(), endpoint, id);
+        String url = String.format("%s%s/%s/policies", getBaseUrl(), endpoint, id);
         PolicyRequest.PolicyRequestBuilder<?, ?> pr = PolicyRequest.builder().policy(policy);
         if (policy instanceof GlossaryPolicy) {
             pr = pr.type("glossaryPolicy");

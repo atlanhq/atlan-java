@@ -2,7 +2,6 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.api;
 
-import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.search.IndexSearchRequest;
 import com.atlan.model.search.IndexSearchResponse;
@@ -11,9 +10,9 @@ import com.atlan.net.ApiResource;
 /**
  * API endpoints for searching against Atlan's Elasticsearch index for all entities.
  */
-public class IndexSearchEndpoint {
+public class IndexSearchEndpoint extends AtlasEndpoint {
 
-    private static final String endpoint = "/api/meta/search/indexsearch";
+    private static final String endpoint = "/search/indexsearch";
 
     /**
      * Run the requested search.
@@ -23,7 +22,7 @@ public class IndexSearchEndpoint {
      * @throws AtlanException on any API interaction problems
      */
     public static IndexSearchResponse search(IndexSearchRequest request) throws AtlanException {
-        String url = String.format("%s%s", Atlan.getBaseUrl(), endpoint);
+        String url = String.format("%s%s", getBaseUrl(), endpoint);
         return ApiResource.request(ApiResource.RequestMethod.POST, url, request, IndexSearchResponse.class, null);
     }
 }

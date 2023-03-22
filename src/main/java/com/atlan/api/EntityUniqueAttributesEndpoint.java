@@ -2,7 +2,6 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.api;
 
-import com.atlan.Atlan;
 import com.atlan.cache.ClassificationCache;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.InvalidRequestException;
@@ -25,9 +24,9 @@ import lombok.extern.slf4j.Slf4j;
  * API endpoints for operating on a single asset (entity), based on its unique attributes (primarily {@code qualifiedName}).
  */
 @Slf4j
-public class EntityUniqueAttributesEndpoint {
+public class EntityUniqueAttributesEndpoint extends AtlasEndpoint {
 
-    private static final String endpoint = "/api/meta/entity/uniqueAttribute/type/";
+    private static final String endpoint = "/entity/uniqueAttribute/type/";
 
     /**
      * Retrieves any asset by its qualifiedName.
@@ -42,7 +41,7 @@ public class EntityUniqueAttributesEndpoint {
             throws AtlanException {
         String url = String.format(
                 "%s%s",
-                Atlan.getBaseUrl(),
+                getBaseUrl(),
                 String.format(
                         "%s%s?attr:qualifiedName=%s&ignoreRelationships=%s&minExtInfo=%s",
                         endpoint,
@@ -68,7 +67,7 @@ public class EntityUniqueAttributesEndpoint {
             throws AtlanException {
         String url = String.format(
                 "%s%s",
-                Atlan.getBaseUrl(),
+                getBaseUrl(),
                 String.format("%s%s?attr:qualifiedName=%s", endpoint, typeName, ApiResource.urlEncode(qualifiedName)));
         SingleEntityRequest seq = SingleEntityRequest.builder().entity(value).build();
         return ApiResource.request(ApiResource.RequestMethod.PUT, url, seq, AssetMutationResponse.class, null);
@@ -123,7 +122,7 @@ public class EntityUniqueAttributesEndpoint {
         }
         String url = String.format(
                 "%s%s",
-                Atlan.getBaseUrl(),
+                getBaseUrl(),
                 String.format(
                         "%s%s/classifications?attr:qualifiedName=%s",
                         endpoint, typeName, ApiResource.urlEncode(qualifiedName)));
@@ -150,7 +149,7 @@ public class EntityUniqueAttributesEndpoint {
         String classificationId = ClassificationCache.getIdForName(classificationName);
         String url = String.format(
                 "%s%s",
-                Atlan.getBaseUrl(),
+                getBaseUrl(),
                 String.format(
                         "%s%s/classification/%s?attr:qualifiedName=%s",
                         endpoint, typeName, classificationId, ApiResource.urlEncode(qualifiedName)));
