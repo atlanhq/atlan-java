@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10};
+var data = {"i0":9,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":9,"i8":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -231,27 +231,45 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getBadgeConditionColorhex()">getBadgeConditionColorhex</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC.</div>
+<div class="block">Color (in RGB hex, with a # prefix) to use when custom metadata attribute's content matches the value through the comparison operator.</div>
 </td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code>java.lang.String</code></td>
+<td class="colFirst"><code><a href="../enums/BadgeComparisonOperator.html" title="enum in com.atlan.model.enums">BadgeComparisonOperator</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getBadgeConditionOperator()">getBadgeConditionOperator</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC.</div>
+<div class="block">Comparison operator to use when comparing a custom metadata attribute's value.</div>
 </td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getBadgeConditionValue()">getBadgeConditionValue</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC.</div>
+<div class="block">Value against which to compare the custom metadata attribute's content.</div>
 </td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hashCode()">hashCode</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i7" class="rowColor">
+<td class="colFirst"><code>static <a href="BadgeCondition.html" title="class in com.atlan.model.assets">BadgeCondition</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#of(com.atlan.model.enums.BadgeComparisonOperator,java.lang.String,com.atlan.model.enums.BadgeConditionColor)">of</a></span>&#8203;(<a href="../enums/BadgeComparisonOperator.html" title="enum in com.atlan.model.enums">BadgeComparisonOperator</a>&nbsp;operator,
+  java.lang.String&nbsp;value,
+  <a href="../enums/BadgeConditionColor.html" title="enum in com.atlan.model.enums">BadgeConditionColor</a>&nbsp;color)</code></th>
+<td class="colLast">
+<div class="block">Build a new condition for a badge.</div>
+</td>
+</tr>
+<tr id="i8" class="altColor">
+<td class="colFirst"><code>static <a href="BadgeCondition.html" title="class in com.atlan.model.assets">BadgeCondition</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#of(com.atlan.model.enums.BadgeComparisonOperator,java.lang.String,java.lang.String)">of</a></span>&#8203;(<a href="../enums/BadgeComparisonOperator.html" title="enum in com.atlan.model.enums">BadgeComparisonOperator</a>&nbsp;operator,
+  java.lang.String&nbsp;value,
+  java.lang.String&nbsp;colorHex)</code></th>
+<td class="colLast">
+<div class="block">Build a new condition for a badge.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -303,6 +321,46 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a id="of(com.atlan.model.enums.BadgeComparisonOperator,java.lang.String,java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>of</h4>
+<pre class="methodSignature">public static&nbsp;<a href="BadgeCondition.html" title="class in com.atlan.model.assets">BadgeCondition</a>&nbsp;of&#8203;(<a href="../enums/BadgeComparisonOperator.html" title="enum in com.atlan.model.enums">BadgeComparisonOperator</a>&nbsp;operator,
+                                java.lang.String&nbsp;value,
+                                java.lang.String&nbsp;colorHex)</pre>
+<div class="block">Build a new condition for a badge.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>operator</code> - the comparison operator for the condition</dd>
+<dd><code>value</code> - the value to match against the comparison operator</dd>
+<dd><code>colorHex</code> - the color to use when a value matches</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the badge condition with these criteria</dd>
+</dl>
+</li>
+</ul>
+<a id="of(com.atlan.model.enums.BadgeComparisonOperator,java.lang.String,com.atlan.model.enums.BadgeConditionColor)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>of</h4>
+<pre class="methodSignature">public static&nbsp;<a href="BadgeCondition.html" title="class in com.atlan.model.assets">BadgeCondition</a>&nbsp;of&#8203;(<a href="../enums/BadgeComparisonOperator.html" title="enum in com.atlan.model.enums">BadgeComparisonOperator</a>&nbsp;operator,
+                                java.lang.String&nbsp;value,
+                                <a href="../enums/BadgeConditionColor.html" title="enum in com.atlan.model.enums">BadgeConditionColor</a>&nbsp;color)</pre>
+<div class="block">Build a new condition for a badge.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>operator</code> - the comparison operator for the condition</dd>
+<dd><code>value</code> - the value to match against the comparison operator</dd>
+<dd><code>color</code> - the color to use when a value matches (from the standard colors available in the UI)</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the badge condition with these criteria</dd>
+</dl>
+</li>
+</ul>
 <a id="builder()">
 <!--   -->
 </a>
@@ -318,8 +376,8 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <ul class="blockList">
 <li class="blockList">
 <h4>getBadgeConditionOperator</h4>
-<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getBadgeConditionOperator()</pre>
-<div class="block">TBC.</div>
+<pre class="methodSignature">public&nbsp;<a href="../enums/BadgeComparisonOperator.html" title="enum in com.atlan.model.enums">BadgeComparisonOperator</a>&nbsp;getBadgeConditionOperator()</pre>
+<div class="block">Comparison operator to use when comparing a custom metadata attribute's value.</div>
 </li>
 </ul>
 <a id="getBadgeConditionValue()">
@@ -329,7 +387,7 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <li class="blockList">
 <h4>getBadgeConditionValue</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getBadgeConditionValue()</pre>
-<div class="block">TBC.</div>
+<div class="block">Value against which to compare the custom metadata attribute's content.</div>
 </li>
 </ul>
 <a id="getBadgeConditionColorhex()">
@@ -339,7 +397,7 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <li class="blockList">
 <h4>getBadgeConditionColorhex</h4>
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getBadgeConditionColorhex()</pre>
-<div class="block">TBC.</div>
+<div class="block">Color (in RGB hex, with a # prefix) to use when custom metadata attribute's content matches the value through the comparison operator.</div>
 </li>
 </ul>
 <a id="equals(java.lang.Object)">
