@@ -2,12 +2,14 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
+import com.atlan.cache.CustomMetadataCache;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.*;
 import com.atlan.model.relations.UniqueAttributes;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.*;
@@ -28,6 +30,12 @@ public class Badge extends Asset {
     @Getter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
+
+    /** Default empty string for description. */
+    @Getter(onMethod_ = {@Override})
+    @JsonInclude(JsonInclude.Include.ALWAYS)
+    @Builder.Default
+    String userDescription = "";
 
     /** TBC */
     @Attribute
@@ -59,6 +67,38 @@ public class Badge extends Asset {
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
+    }
+
+    /**
+     * Builds the minimal object necessary to create a Badge.
+     *
+     * @param name of the Badge
+     * @param cmName human-readable name of the custom metadata for which to create the badge
+     * @param cmAttribute human-readable name of the custom metadata attribute for which to create the badge
+     * @return the minimal request necessary to update the Badge, as a builder
+     * @throws AtlanException if the specified custom metadata for the badge cannot be found
+     */
+    public static BadgeBuilder<?, ?> creator(String name, String cmName, String cmAttribute) throws AtlanException {
+        String cmId = CustomMetadataCache.getIdForName(cmName);
+        String cmAttrId = CustomMetadataCache.getAttrIdForName(cmName, cmAttribute);
+        return Badge.builder()
+                .qualifiedName(generateQualifiedName(cmName, cmAttribute))
+                .name(name)
+                .badgeMetadataAttribute(cmId + "." + cmAttrId);
+    }
+
+    /**
+     * Generate a unique name for this badge.
+     *
+     * @param cmName human-readable name of the custom metadata for which to create the badge
+     * @param cmAttribute human-readable name of the custom metadata attribute for which to create the badge
+     * @return the unique qualifiedName of the badge
+     * @throws AtlanException if the specified custom metadata cannot be found
+     */
+    public static String generateQualifiedName(String cmName, String cmAttribute) throws AtlanException {
+        String cmId = CustomMetadataCache.getIdForName(cmName);
+        String cmAttrId = CustomMetadataCache.getAttrIdForName(cmName, cmAttribute);
+        return "badges/global/" + cmId + "." + cmAttrId;
     }
 
     /**

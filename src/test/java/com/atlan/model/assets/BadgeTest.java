@@ -107,7 +107,7 @@ public class BadgeTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .badgeCondition(BadgeCondition.builder()
-                    .badgeConditionOperator("badgeConditionOperator")
+                    .badgeConditionOperator(BadgeComparisonOperator.EQ)
                     .badgeConditionValue("badgeConditionValue")
                     .badgeConditionColorhex("badgeConditionColorhex")
                     .build())
