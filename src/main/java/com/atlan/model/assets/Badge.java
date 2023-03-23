@@ -9,6 +9,7 @@ import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.*;
 import com.atlan.model.relations.UniqueAttributes;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.*;
@@ -29,6 +30,12 @@ public class Badge extends Asset {
     @Getter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
+
+    /** Default empty string for description. */
+    @Getter(onMethod_ = {@Override})
+    @JsonInclude(JsonInclude.Include.ALWAYS)
+    @Builder.Default
+    String userDescription = "";
 
     /** TBC */
     @Attribute
