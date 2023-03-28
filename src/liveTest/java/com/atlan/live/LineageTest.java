@@ -30,10 +30,10 @@ import org.testng.annotations.Test;
 @Slf4j
 public class LineageTest extends AtlanLiveTest {
 
-    private static final String PREFIX = "LineageTest";
+    private static final String PREFIX = AtlanLiveTest.PREFIX + "Lineage";
 
     public static final AtlanConnectorType CONNECTOR_TYPE = AtlanConnectorType.VERTICA;
-    public static final String CONNECTION_NAME = "java-sdk-" + PREFIX;
+    public static final String CONNECTION_NAME = PREFIX;
     private static final String DATABASE_NAME = PREFIX + "_db";
     private static final String SCHEMA_NAME = PREFIX + "_schema";
     private static final String TABLE_NAME = PREFIX + "_tbl";

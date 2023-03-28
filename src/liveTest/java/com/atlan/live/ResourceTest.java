@@ -16,7 +16,7 @@ import org.testng.annotations.Test;
  */
 public class ResourceTest extends AtlanLiveTest {
 
-    private static final String PREFIX = "ResourceTest";
+    private static final String PREFIX = AtlanLiveTest.PREFIX + "Resource";
 
     private static final String LINK_TITLE = PREFIX;
     private static final String LINK_URL = "https://www.atlan.com";

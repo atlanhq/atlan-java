@@ -25,10 +25,10 @@ import org.testng.annotations.Test;
 @Slf4j
 public class DataStudioAssetTest extends AtlanLiveTest {
 
-    private static final String PREFIX = "DataStudioAssetTest";
+    private static final String PREFIX = AtlanLiveTest.PREFIX + "DataStudio";
 
     public static final AtlanConnectorType CONNECTOR_TYPE = AtlanConnectorType.DATASTUDIO;
-    public static final String CONNECTION_NAME = "java-sdk-" + PREFIX;
+    public static final String CONNECTION_NAME = PREFIX;
     private static final String REPORT_NAME = PREFIX + "-report";
     private static final String SOURCE_NAME = PREFIX + "-source";
 

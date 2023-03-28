@@ -31,7 +31,7 @@ import org.testng.annotations.Test;
 @Slf4j
 public class ConnectionTest extends AtlanLiveTest {
 
-    private static final String PREFIX = "ConnectionTest";
+    private static final String PREFIX = AtlanLiveTest.PREFIX + "Connection";
 
     private static AtomicInteger retryCount = new AtomicInteger(0);
 

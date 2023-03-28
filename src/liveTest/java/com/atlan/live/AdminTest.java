@@ -20,9 +20,14 @@ import org.testng.annotations.Test;
  */
 public class AdminTest extends AtlanLiveTest {
 
-    private static final String PREFIX = "AdminTest";
+    private static final String PREFIX = AtlanLiveTest.PREFIX + "Admin";
     private static final String GROUP_NAME1 = PREFIX + "1";
     private static final String GROUP_NAME2 = PREFIX + "2";
+
+    private static final String EMAIL_DOMAIN = "@example.com";
+    private static final String USER_EMAIL1 = GROUP_NAME1 + EMAIL_DOMAIN;
+    private static final String USER_EMAIL2 = GROUP_NAME2 + EMAIL_DOMAIN;
+    private static final String USER_EMAIL3 = PREFIX + "3" + EMAIL_DOMAIN;
 
     private static AtlanGroup group1 = null;
     private static AtlanGroup group2 = null;
@@ -122,10 +127,10 @@ public class AdminTest extends AtlanLiveTest {
 
     @Test(groups = {"admin.create.users"})
     void createUsers() throws AtlanException {
-        AtlanUser user = AtlanUser.creator("guest@example.com", "$guest").build();
+        AtlanUser user = AtlanUser.creator(USER_EMAIL1, "$guest").build();
         user.create();
-        AtlanUser user2 = AtlanUser.creator("user2@example.com", "$guest").build();
-        AtlanUser user3 = AtlanUser.creator("user3@example.com", "$guest").build();
+        AtlanUser user2 = AtlanUser.creator(USER_EMAIL2, "$guest").build();
+        AtlanUser user3 = AtlanUser.creator(USER_EMAIL3, "$guest").build();
         UsersEndpoint.createUsers(List.of(user2, user3));
     }
 
@@ -136,7 +141,7 @@ public class AdminTest extends AtlanLiveTest {
         List<AtlanUser> users = AtlanUser.retrieveAll();
         assertNotNull(users);
         assertTrue(users.size() >= 2);
-        users = AtlanUser.retrieveByEmail("guest@example.com");
+        users = AtlanUser.retrieveByEmail(USER_EMAIL1);
         assertNotNull(users);
         assertEquals(users.size(), 1);
         user1 = users.get(0);
@@ -144,16 +149,16 @@ public class AdminTest extends AtlanLiveTest {
         assertNotNull(user1.getId());
         assertNull(user1.getAttributes().getDesignation());
         assertEquals(user1.getGroupCount().longValue(), defaultGroupCount);
-        users = AtlanUser.retrieveByEmail("@example.com");
+        users = AtlanUser.retrieveByEmail(EMAIL_DOMAIN);
         assertNotNull(users);
         assertEquals(users.size(), 3);
         Set<String> ids = users.stream().map(AtlanUser::getId).collect(Collectors.toSet());
         assertEquals(ids.size(), 3);
         for (AtlanUser user : users) {
-            if (user.getEmail().equals("user2@example.com")) {
+            if (user.getEmail().equals(USER_EMAIL2.toLowerCase())) {
                 user2 = user;
                 assertNotNull(user2.getId());
-            } else if (user.getEmail().equals("user3@example.com")) {
+            } else if (user.getEmail().equals(USER_EMAIL3.toLowerCase())) {
                 user3 = user;
                 assertNotNull(user3.getId());
             }
@@ -209,7 +214,7 @@ public class AdminTest extends AtlanLiveTest {
             groups = {"admin.read.users.2"},
             dependsOnGroups = {"admin.update.users"})
     void retrieveUsers2() throws AtlanException {
-        List<AtlanUser> users = AtlanUser.retrieveByEmail("guest@example.com");
+        List<AtlanUser> users = AtlanUser.retrieveByEmail(USER_EMAIL1);
         assertNotNull(users);
         assertEquals(users.size(), 1);
         AtlanUser one = users.get(0);
