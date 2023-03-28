@@ -23,7 +23,7 @@ import org.testng.annotations.Test;
 @Slf4j
 public class RequestsTest extends AtlanLiveTest {
 
-    private static final String PREFIX = "RequestsTest";
+    private static final String PREFIX = AtlanLiveTest.PREFIX + "Requests";
     private static final String API_TOKEN_NAME = PREFIX;
     private static final String GLOSSARY_NAME = PREFIX;
     private static final AtlanConnectorType CONNECTOR_TYPE = AtlanConnectorType.AIRFLOW;

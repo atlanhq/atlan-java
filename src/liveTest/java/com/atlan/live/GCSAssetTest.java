@@ -27,10 +27,10 @@ import org.testng.annotations.Test;
 @Slf4j
 public class GCSAssetTest extends AtlanLiveTest {
 
-    private static final String PREFIX = "GCSAssetTest";
+    private static final String PREFIX = AtlanLiveTest.PREFIX + "GCS";
 
     public static final AtlanConnectorType CONNECTOR_TYPE = AtlanConnectorType.GCS;
-    public static final String CONNECTION_NAME = "java-sdk-" + PREFIX;
+    public static final String CONNECTION_NAME = PREFIX;
     private static final String BUCKET_NAME = PREFIX + "-bucket";
     private static final String OBJECT_NAME = PREFIX + "-object.csv";
 

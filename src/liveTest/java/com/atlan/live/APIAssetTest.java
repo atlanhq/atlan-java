@@ -22,10 +22,10 @@ import org.testng.annotations.Test;
 @Slf4j
 public class APIAssetTest extends AtlanLiveTest {
 
-    private static final String PREFIX = "APIAssetTest";
+    private static final String PREFIX = AtlanLiveTest.PREFIX + "API";
 
     public static final AtlanConnectorType CONNECTOR_TYPE = AtlanConnectorType.API;
-    public static final String CONNECTION_NAME = "java-sdk-" + PREFIX;
+    public static final String CONNECTION_NAME = PREFIX;
     private static final String SPEC_NAME = PREFIX + "-spec";
     private static final String PATH_NAME = "/api/" + PREFIX;
 

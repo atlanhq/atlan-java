@@ -27,10 +27,10 @@ import org.testng.annotations.Test;
 @Slf4j
 public class PresetAssetTest extends AtlanLiveTest {
 
-    private static final String PREFIX = "PresetAssetTest";
+    private static final String PREFIX = AtlanLiveTest.PREFIX + "Preset";
 
     private static final AtlanConnectorType CONNECTOR_TYPE = AtlanConnectorType.PRESET;
-    private static final String CONNECTION_NAME = "java-sdk-" + PREFIX;
+    private static final String CONNECTION_NAME = PREFIX;
 
     private static final String WORKSPACE_NAME = PREFIX + "-ws";
     private static final String COLLECTION_NAME = PREFIX + "-coll";

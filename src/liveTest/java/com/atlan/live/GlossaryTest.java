@@ -30,7 +30,7 @@ import org.testng.annotations.Test;
  */
 public class GlossaryTest extends AtlanLiveTest {
 
-    private static final String PREFIX = "GlossaryTest";
+    private static final String PREFIX = AtlanLiveTest.PREFIX + "Glossary";
 
     private static final String GLOSSARY_NAME = PREFIX + " Traversable";
     private static final String TERM_NAME1 = PREFIX + " Term1";

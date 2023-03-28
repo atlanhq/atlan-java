@@ -15,6 +15,8 @@ import com.atlan.model.enums.AtlanCertificateStatus;
  */
 public abstract class AtlanLiveTest {
 
+    protected static final String PREFIX = "jsdk-";
+
     private static final String TESTING_STRING = "Automated testing of the Java SDK.";
 
     public static final AtlanCertificateStatus CERTIFICATE_STATUS = AtlanCertificateStatus.VERIFIED;

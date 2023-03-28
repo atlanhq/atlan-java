@@ -15,7 +15,7 @@ import org.testng.annotations.Test;
 
 public class PurposeTest extends AtlanLiveTest {
 
-    private static final String PREFIX = "PurposeTest";
+    private static final String PREFIX = AtlanLiveTest.PREFIX + "Purpose";
 
     public static final String PURPOSE_NAME = PREFIX;
 
