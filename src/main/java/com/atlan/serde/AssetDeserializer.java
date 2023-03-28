@@ -168,6 +168,12 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
                 case Insight.TYPE_NAME:
                     builder = Insight.builder();
                     break;
+                case KafkaConsumerGroup.TYPE_NAME:
+                    builder = KafkaConsumerGroup.builder();
+                    break;
+                case KafkaTopic.TYPE_NAME:
+                    builder = KafkaTopic.builder();
+                    break;
                 case LineageProcess.TYPE_NAME:
                     builder = LineageProcess.builder();
                     break;
@@ -293,6 +299,27 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
                     break;
                 case QlikSpace.TYPE_NAME:
                     builder = QlikSpace.builder();
+                    break;
+                case QuickSightAnalysis.TYPE_NAME:
+                    builder = QuickSightAnalysis.builder();
+                    break;
+                case QuickSightAnalysisVisual.TYPE_NAME:
+                    builder = QuickSightAnalysisVisual.builder();
+                    break;
+                case QuickSightDashboard.TYPE_NAME:
+                    builder = QuickSightDashboard.builder();
+                    break;
+                case QuickSightDashboardVisual.TYPE_NAME:
+                    builder = QuickSightDashboardVisual.builder();
+                    break;
+                case QuickSightDataset.TYPE_NAME:
+                    builder = QuickSightDataset.builder();
+                    break;
+                case QuickSightDatasetField.TYPE_NAME:
+                    builder = QuickSightDatasetField.builder();
+                    break;
+                case QuickSightFolder.TYPE_NAME:
+                    builder = QuickSightFolder.builder();
                     break;
                 case Readme.TYPE_NAME:
                     builder = Readme.builder();

@@ -258,6 +258,11 @@ public class Column extends SQL {
     @Attribute
     Table table;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<DbtModelColumn> columnDbtModelColumns;
+
     /**
      * Retrieve the parent of this column, irrespective of its type.
      * @return the reference to this column's parent

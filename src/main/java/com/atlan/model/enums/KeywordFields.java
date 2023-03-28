@@ -427,6 +427,16 @@ public enum KeywordFields implements AtlanSearchableField {
     INPUT_FIELDS("inputFields"),
     /** Assets that are inputs to this process. */
     INPUTS("inputs"),
+    /** TBC */
+    KAFKA_CONSUMER_GROUP_TOPIC_CONSUMPTION_PROPERTIES("kafkaConsumerGroupTopicConsumptionProperties"),
+    /** TBC */
+    KAFKA_TOPIC_CLEANUP_POLICY("kafkaTopicCleanupPolicy"),
+    /** TBC */
+    KAFKA_TOPIC_COMPRESSION_TYPE("kafkaTopicCompressionType"),
+    /** TBC */
+    KAFKA_TOPIC_NAMES("kafkaTopicNames"),
+    /** TBC */
+    KAFKA_TOPIC_QUALIFIED_NAMES("kafkaTopicQualifiedNames"),
     /** Unused. */
     LANGUAGE("language"),
     /** Name of the last run of the crawler that last synchronized this asset. */
@@ -621,6 +631,36 @@ public enum KeywordFields implements AtlanSearchableField {
     QUERY_PREVIEW_CONFIG("queryPreviewConfig"),
     /** TBC */
     QUERY_USER_MAP("queryUserMap"),
+    /** TBC */
+    QUERY_USERNAME_STRATEGY("queryUsernameStrategy"),
+    /** TBC */
+    QUICK_SIGHT_ANALYSIS_CALCULATED_FIELDS("quickSightAnalysisCalculatedFields"),
+    /** TBC */
+    QUICK_SIGHT_ANALYSIS_FILTER_GROUPS("quickSightAnalysisFilterGroups"),
+    /** TBC */
+    QUICK_SIGHT_ANALYSIS_PARAMETER_DECLARATIONS("quickSightAnalysisParameterDeclarations"),
+    /** TBC */
+    QUICK_SIGHT_ANALYSIS_QUALIFIED_NAME("quickSightAnalysisQualifiedName"),
+    /** TBC */
+    QUICK_SIGHT_ANALYSIS_STATUS("quickSightAnalysisStatus"),
+    /** TBC */
+    QUICK_SIGHT_DASHBOARD_QUALIFIED_NAME("quickSightDashboardQualifiedName"),
+    /** TBC */
+    QUICK_SIGHT_DATASET_FIELD_TYPE("quickSightDatasetFieldType"),
+    /** TBC */
+    QUICK_SIGHT_DATASET_IMPORT_MODE("quickSightDatasetImportMode"),
+    /** TBC */
+    QUICK_SIGHT_DATASET_QUALIFIED_NAME("quickSightDatasetQualifiedName"),
+    /** TBC */
+    QUICK_SIGHT_FOLDER_HIERARCHY("quickSightFolderHierarchy"),
+    /** TBC */
+    QUICK_SIGHT_FOLDER_TYPE("quickSightFolderType"),
+    /** TBC */
+    QUICK_SIGHT_ID("quickSightId"),
+    /** TBC */
+    QUICK_SIGHT_SHEET_ID("quickSightSheetId"),
+    /** TBC */
+    QUICK_SIGHT_SHEET_NAME("quickSightSheetName.keyword"),
     /** TBC */
     RAW_QUERY("rawQuery"),
     /** TBC */

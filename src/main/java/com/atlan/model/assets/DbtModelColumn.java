@@ -10,6 +10,7 @@ import com.atlan.model.enums.*;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.SortedSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -40,6 +41,11 @@ public class DbtModelColumn extends Dbt {
     /** TBC */
     @Attribute
     Integer dbtModelColumnOrder;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<Column> dbtModelColumnSqlColumns;
 
     /** TBC */
     @Attribute

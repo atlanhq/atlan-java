@@ -372,7 +372,7 @@ public class ModelGenerator extends AbstractGenerator {
                 .append(className)
                 .append(") {")
                 .append(System.lineSeparator());
-        fs.append("            return (").append(className).append(") asset;").append(System.lineSeparator());
+        fs.append("            return asset;").append(System.lineSeparator());
         fs.append("        } else {").append(System.lineSeparator());
         fs.append("            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, \"")
                 .append(className)
@@ -411,7 +411,7 @@ public class ModelGenerator extends AbstractGenerator {
                 .append(className)
                 .append(") {")
                 .append(System.lineSeparator());
-        fs.append("            return (").append(className).append(") asset;").append(System.lineSeparator());
+        fs.append("            return asset;").append(System.lineSeparator());
         fs.append("        } else {").append(System.lineSeparator());
         fs.append("            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, \"")
                 .append(className)

@@ -67,11 +67,6 @@ public class View extends SQL {
     @Attribute
     String definition;
 
-    /** Schema in which this view exists. */
-    @Attribute
-    @JsonProperty("atlanSchema")
-    Schema schema;
-
     /** Columns that exist within this view. */
     @Attribute
     @Singular
@@ -81,6 +76,11 @@ public class View extends SQL {
     @Attribute
     @Singular
     SortedSet<AtlanQuery> queries;
+
+    /** Schema in which this view exists. */
+    @Attribute
+    @JsonProperty("atlanSchema")
+    Schema schema;
 
     /**
      * Reference to a View by GUID.
