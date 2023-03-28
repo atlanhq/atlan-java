@@ -12,7 +12,7 @@ import lombok.extern.jackson.Jacksonized;
  */
 @Getter
 @Jacksonized
-@SuperBuilder
+@SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 public class AWSTag extends AtlanObject {
     /**
