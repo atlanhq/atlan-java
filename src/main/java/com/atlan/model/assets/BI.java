@@ -15,6 +15,7 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 @JsonSubTypes({
     @JsonSubTypes.Type(value = Metabase.class, name = Metabase.TYPE_NAME),
+    @JsonSubTypes.Type(value = QuickSight.class, name = QuickSight.TYPE_NAME),
     @JsonSubTypes.Type(value = PowerBI.class, name = PowerBI.TYPE_NAME),
     @JsonSubTypes.Type(value = Preset.class, name = Preset.TYPE_NAME),
     @JsonSubTypes.Type(value = Sigma.class, name = Sigma.TYPE_NAME),

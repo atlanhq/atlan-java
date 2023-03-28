@@ -84,6 +84,10 @@ public class Connection extends Asset {
     @Attribute
     String policyStrategy;
 
+    /** TBC */
+    @Attribute
+    QueryUsernameStrategy queryUsernameStrategy;
+
     /** Maximum number of rows that can be returned for the source. */
     @Attribute
     Long rowLimit;

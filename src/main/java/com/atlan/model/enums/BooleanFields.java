@@ -106,6 +106,8 @@ public enum BooleanFields implements AtlanSearchableField {
     /** TBC */
     IS_VISUAL_QUERY("isVisualQuery"),
     /** TBC */
+    KAFKA_TOPIC_IS_INTERNAL("kafkaTopicIsInternal"),
+    /** TBC */
     METABASE_IS_PERSONAL_COLLECTION("metabaseIsPersonalCollection"),
     /** TBC */
     MODE_IS_PUBLIC("modeIsPublic"),

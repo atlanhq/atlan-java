@@ -119,6 +119,18 @@ public enum NumericFields implements AtlanSearchableField {
     GCS_OBJECT_SIZE("gcsObjectSize"),
     /** TBC */
     GOOGLE_PROJECT_NUMBER("googleProjectNumber"),
+    /** TBC */
+    KAFKA_CONSUMER_GROUP_MEMBER_COUNT("kafkaConsumerGroupMemberCount"),
+    /** TBC */
+    KAFKA_TOPIC_PARTITIONS_COUNT("kafkaTopicPartitionsCount"),
+    /** TBC */
+    KAFKA_TOPIC_RECORD_COUNT("kafkaTopicRecordCount"),
+    /** TBC */
+    KAFKA_TOPIC_REPLICATION_FACTOR("kafkaTopicReplicationFactor"),
+    /** TBC */
+    KAFKA_TOPIC_SEGMENT_BYTES("kafkaTopicSegmentBytes"),
+    /** TBC */
+    KAFKA_TOPIC_SIZE_IN_BYTES("kafkaTopicSizeInBytes"),
     /** Time (epoch) at which the asset was last profiled, in milliseconds. */
     LAST_PROFILED_AT("lastProfiledAt"),
     /** Timestamp of last operation that inserted, updated, or deleted rows. */
@@ -201,6 +213,12 @@ public enum NumericFields implements AtlanSearchableField {
     QUERY_ID("queryID"),
     /** TBC */
     QUERY_USER_COUNT("queryUserCount"),
+    /** TBC */
+    QUICK_SIGHT_DASHBOARD_LAST_PUBLISHED_TIME("quickSightDashboardLastPublishedTime"),
+    /** TBC */
+    QUICK_SIGHT_DASHBOARD_PUBLISHED_VERSION_NUMBER("quickSightDashboardPublishedVersionNumber"),
+    /** TBC */
+    QUICK_SIGHT_DATASET_COLUMN_COUNT("quickSightDatasetColumnCount"),
     /** Number of reports linked to the dashboard in Salesforce. */
     REPORT_COUNT("reportCount"),
     /** TBC */

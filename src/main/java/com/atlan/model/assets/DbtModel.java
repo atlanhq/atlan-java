@@ -91,6 +91,11 @@ public class DbtModel extends Dbt {
     /** TBC */
     @Attribute
     @Singular
+    SortedSet<SQL> dbtModelSqlAssets;
+
+    /** TBC */
+    @Attribute
+    @Singular
     SortedSet<DbtModelColumn> dbtModelColumns;
 
     /** TBC */
