@@ -32,7 +32,7 @@ public class QuickSightAnalysis extends QuickSight {
 
     /** TBC */
     @Attribute
-    quick_sight_analysis_status quickSightAnalysisStatus;
+    QuickSightAnalysisStatus quickSightAnalysisStatus;
 
     /** TBC */
     @Attribute

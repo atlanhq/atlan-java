@@ -115,7 +115,7 @@ public class QuickSightDatasetFieldTest {
             .quickSightId("quickSightId")
             .quickSightSheetId("quickSightSheetId")
             .quickSightSheetName("quickSightSheetName")
-            .quickSightDatasetFieldType(Table.refByGuid("42aa4dd6-e84a-4e58-ad6e-bb8f6eaa1598"))
+            .quickSightDatasetFieldType(QuickSightDatasetFieldType.STRING)
             .quickSightDatasetQualifiedName("quickSightDatasetQualifiedName")
             .quickSightDataset(QuickSightDataset.refByGuid("92dace25-b41d-42f2-936d-d28d8ac714eb"))
             .build();

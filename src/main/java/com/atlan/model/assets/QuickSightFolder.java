@@ -34,11 +34,11 @@ public class QuickSightFolder extends QuickSight {
 
     /** TBC */
     @Attribute
-    quick_sight_folder_type quickSightFolderType;
+    QuickSightFolderType quickSightFolderType;
 
     /** TBC */
     @Attribute
-    @Singular
+    @Singular("addQuickSightFolderHierarchy")
     List<Map<String, String>> quickSightFolderHierarchy;
 
     /** TBC */

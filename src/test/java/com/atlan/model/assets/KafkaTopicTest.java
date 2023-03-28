@@ -113,13 +113,13 @@ public class KafkaTopicTest {
                     LineageProcess.refByGuid("dff75e06-fad3-4c9d-81b7-0c66269fd450"),
                     LineageProcess.refByGuid("0ff57000-76f3-4b68-a101-f4bc68b9c7ac")))
             .kafkaTopicIsInternal(false)
-            .kafkaTopicCompressionType(Table.refByGuid("d38b1490-2ae6-46d5-888e-5e1701346156"))
+            .kafkaTopicCompressionType(KafkaTopicCompressionType.SNAPPY)
             .kafkaTopicReplicationFactor(8357037595245136330L)
             .kafkaTopicSegmentBytes(-7808260519662995755L)
             .kafkaTopicPartitionsCount(1699254577139633411L)
             .kafkaTopicSizeInBytes(2839798306816081326L)
             .kafkaTopicRecordCount(8218348678805569377L)
-            .kafkaTopicCleanupPolicy(Table.refByGuid("1b810914-59ea-44df-a66f-3a1b820eb40d"))
+            .kafkaTopicCleanupPolicy(KafkaTopicCleanupPolicy.COMPACT)
             .kafkaConsumerGroups(Set.of(
                     KafkaConsumerGroup.refByGuid("34fe9a68-2d1d-45df-9486-9fde061e66ab"),
                     KafkaConsumerGroup.refByGuid("0ae4ce54-d8e9-43af-8ae6-cbd053447e9d")))

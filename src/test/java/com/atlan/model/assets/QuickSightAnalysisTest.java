@@ -115,7 +115,7 @@ public class QuickSightAnalysisTest {
             .quickSightId("quickSightId")
             .quickSightSheetId("quickSightSheetId")
             .quickSightSheetName("quickSightSheetName")
-            .quickSightAnalysisStatus(Table.refByGuid("925f9107-2c78-40ed-81c2-c1989d6f4650"))
+            .quickSightAnalysisStatus(QuickSightAnalysisStatus.UPDATE_IN_PROGRESS)
             .quickSightAnalysisCalculatedFields(Set.of("one", "two", "three"))
             .quickSightAnalysisParameterDeclarations(Set.of("one", "two", "three"))
             .quickSightAnalysisFilterGroups(Set.of("one", "two", "three"))

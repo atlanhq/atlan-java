@@ -115,7 +115,7 @@ public class QuickSightFolderTest {
             .quickSightId("quickSightId")
             .quickSightSheetId("quickSightSheetId")
             .quickSightSheetName("quickSightSheetName")
-            .quickSightFolderType(Table.refByGuid("8aae5b73-342d-43de-92c6-c1e53509939b"))
+            .quickSightFolderType(QuickSightFolderType.SHARED)
             .quickSightFolderHierarchy(List.of(Map.of("key1", "value1", "key2", "value2")))
             .quickSightDashboards(Set.of(
                     QuickSightDashboard.refByGuid("9b641725-e777-4b8c-bda2-5bc98279a2af"),

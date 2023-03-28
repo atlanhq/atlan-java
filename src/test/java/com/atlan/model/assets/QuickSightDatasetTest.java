@@ -115,7 +115,7 @@ public class QuickSightDatasetTest {
             .quickSightId("quickSightId")
             .quickSightSheetId("quickSightSheetId")
             .quickSightSheetName("quickSightSheetName")
-            .quickSightDatasetImportMode(Table.refByGuid("31042e6d-f187-4c2f-ac0a-4b95de7d5b88"))
+            .quickSightDatasetImportMode(QuickSightDatasetImportMode.SPICE)
             .quickSightDatasetColumnCount(-3124725506369944348L)
             .quickSightDatasetFolders(Set.of(
                     QuickSightFolder.refByGuid("0cc82440-7e42-43c6-8005-d104729908a1"),

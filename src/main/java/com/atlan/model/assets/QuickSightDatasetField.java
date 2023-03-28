@@ -31,7 +31,7 @@ public class QuickSightDatasetField extends QuickSight {
 
     /** TBC */
     @Attribute
-    quick_sight_dataset_field_type quickSightDatasetFieldType;
+    QuickSightDatasetFieldType quickSightDatasetFieldType;
 
     /** TBC */
     @Attribute

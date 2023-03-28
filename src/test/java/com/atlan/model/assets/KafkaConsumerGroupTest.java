@@ -112,7 +112,12 @@ public class KafkaConsumerGroupTest {
             .outputFromProcesses(Set.of(
                     LineageProcess.refByGuid("799ca2d0-edbd-4bbb-8d26-ebebe9b5d10d"),
                     LineageProcess.refByGuid("000a4401-3aa0-48f9-ad90-02f75b1d3df1")))
-            .kafkaConsumerGroupTopicConsumptionProperties(Table.refByGuid("f35241ef-0448-4eb0-945f-a1ea53ff0264"))
+            .kafkaConsumerGroupTopicConsumptionProperty(KafkaTopicConsumption.builder()
+                    .topicName("topicName")
+                    .topicPartition("topicPartition")
+                    .topicLag(123L)
+                    .topicCurrentOffset(54321L)
+                    .build())
             .kafkaConsumerGroupMemberCount(985013511123434653L)
             .kafkaTopicNames(Set.of("one", "two", "three"))
             .kafkaTopicQualifiedNames(Set.of("one", "two", "three"))

@@ -36,7 +36,7 @@ public class KafkaTopic extends Kafka {
 
     /** TBC */
     @Attribute
-    kafka_topic_compression_type kafkaTopicCompressionType;
+    KafkaTopicCompressionType kafkaTopicCompressionType;
 
     /** TBC */
     @Attribute
@@ -60,7 +60,7 @@ public class KafkaTopic extends Kafka {
 
     /** TBC */
     @Attribute
-    kafka_topic_cleanup_policy kafkaTopicCleanupPolicy;
+    KafkaTopicCleanupPolicy kafkaTopicCleanupPolicy;
 
     /** TBC */
     @Attribute

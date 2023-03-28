@@ -62,7 +62,14 @@ public abstract class AbstractGenerator extends AtlanLiveTest {
             Map.entry("AwsCloudWatchMetric", "AWSCloudWatchMetric"),
             Map.entry("google_datastudio_asset_type", "GoogleDataStudioAssetType"),
             Map.entry("icon_type", "LinkIconType"),
-            Map.entry("powerbi_endorsement", "PowerBIEndorsementType"));
+            Map.entry("powerbi_endorsement", "PowerBIEndorsementType"),
+            Map.entry("quick_sight_folder_type", "QuickSightFolderType"),
+            Map.entry("quick_sight_analysis_status", "QuickSightAnalysisStatus"),
+            Map.entry("quick_sight_dataset_field_type", "QuickSightDatasetFieldType"),
+            Map.entry("quick_sight_dataset_import_mode", "QuickSightDatasetImportMode"),
+            Map.entry("query_username_strategy", "QueryUsernameStrategy"),
+            Map.entry("kafka_topic_compression_type", "KafkaTopicCompressionType"),
+            Map.entry("kafka_topic_cleanup_policy", "KafkaTopicCleanupPolicy"));
 
     // Map attribute types to native Java types
     protected static final Map<String, String> TYPE_MAPPINGS = Map.ofEntries(

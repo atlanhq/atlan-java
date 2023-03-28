@@ -33,7 +33,7 @@ public class KafkaConsumerGroup extends Kafka {
     /** TBC */
     @Attribute
     @Singular
-    array<KafkaTopicConsumption> kafkaConsumerGroupTopicConsumptionProperties;
+    SortedSet<KafkaTopicConsumption> kafkaConsumerGroupTopicConsumptionProperties;
 
     /** TBC */
     @Attribute

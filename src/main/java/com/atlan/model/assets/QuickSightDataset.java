@@ -32,7 +32,7 @@ public class QuickSightDataset extends QuickSight {
 
     /** TBC */
     @Attribute
-    quick_sight_dataset_import_mode quickSightDatasetImportMode;
+    QuickSightDatasetImportMode quickSightDatasetImportMode;
 
     /** TBC */
     @Attribute
