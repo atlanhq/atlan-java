@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":6,"i3":6,"i4":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":6,"i4":6,"i5":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -184,38 +184,36 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code><a href="AWSTag.AWSTagBuilder.html" title="type parameter in AWSTag.AWSTagBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#awsTagKey(java.lang.String)">awsTagKey</a></span>&#8203;(java.lang.String&nbsp;awsTagKey)</code></th>
+<td class="colFirst"><code>protected <a href="AWSTag.AWSTagBuilder.html" title="type parameter in AWSTag.AWSTagBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#$fillValuesFrom(C)">$fillValuesFrom</a></span>&#8203;(<a href="AWSTag.AWSTagBuilder.html" title="type parameter in AWSTag.AWSTagBuilder">C</a>&nbsp;instance)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="AWSTag.AWSTagBuilder.html" title="type parameter in AWSTag.AWSTagBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#awsTagValue(java.lang.String)">awsTagValue</a></span>&#8203;(java.lang.String&nbsp;awsTagValue)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#awsTagKey(java.lang.String)">awsTagKey</a></span>&#8203;(java.lang.String&nbsp;awsTagKey)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
+<td class="colFirst"><code><a href="AWSTag.AWSTagBuilder.html" title="type parameter in AWSTag.AWSTagBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#awsTagValue(java.lang.String)">awsTagValue</a></span>&#8203;(java.lang.String&nbsp;awsTagValue)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>abstract <a href="AWSTag.AWSTagBuilder.html" title="type parameter in AWSTag.AWSTagBuilder">C</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#build()">build</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>protected abstract <a href="AWSTag.AWSTagBuilder.html" title="type parameter in AWSTag.AWSTagBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#self()">self</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
-<ul class="blockList">
-<li class="blockList"><a id="methods.inherited.from.class.com.atlan.model.core.AtlanObject.AtlanObjectBuilder">
-<!--   -->
-</a>
-<h3>Methods inherited from class&nbsp;com.atlan.model.core.<a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in com.atlan.model.core">AtlanObject.AtlanObjectBuilder</a></h3>
-<code><a href="../core/AtlanObject.AtlanObjectBuilder.html#$fillValuesFrom(C)">$fillValuesFrom</a></code></li>
-</ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
 <!--   -->
@@ -258,6 +256,21 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a id="$fillValuesFrom(com.atlan.model.assets.AWSTag)">
+<!--   -->
+</a><a id="$fillValuesFrom(C)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>$fillValuesFrom</h4>
+<pre class="methodSignature">protected&nbsp;<a href="AWSTag.AWSTagBuilder.html" title="type parameter in AWSTag.AWSTagBuilder">B</a>&nbsp;$fillValuesFrom&#8203;(<a href="AWSTag.AWSTagBuilder.html" title="type parameter in AWSTag.AWSTagBuilder">C</a>&nbsp;instance)</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
+<dd><code><a href="../core/AtlanObject.AtlanObjectBuilder.html#$fillValuesFrom(C)">$fillValuesFrom</a></code>&nbsp;in class&nbsp;<code><a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in com.atlan.model.core">AtlanObject.AtlanObjectBuilder</a>&lt;<a href="AWSTag.AWSTagBuilder.html" title="type parameter in AWSTag.AWSTagBuilder">C</a> extends <a href="AWSTag.html" title="class in com.atlan.model.assets">AWSTag</a>,&#8203;<a href="AWSTag.AWSTagBuilder.html" title="type parameter in AWSTag.AWSTagBuilder">B</a> extends <a href="AWSTag.AWSTagBuilder.html" title="class in com.atlan.model.assets">AWSTag.AWSTagBuilder</a>&lt;<a href="AWSTag.AWSTagBuilder.html" title="type parameter in AWSTag.AWSTagBuilder">C</a>,&#8203;<a href="AWSTag.AWSTagBuilder.html" title="type parameter in AWSTag.AWSTagBuilder">B</a>&gt;&gt;</code></dd>
+</dl>
+</li>
+</ul>
 <a id="self()">
 <!--   -->
 </a>

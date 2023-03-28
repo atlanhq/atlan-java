@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":6,"i2":10,"i3":10,"i4":10,"i5":10,"i6":6,"i7":10,"i8":10,"i9":10};
+var data = {"i0":10,"i1":6,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":6,"i10":10,"i11":10,"i12":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -215,40 +215,55 @@ extends <a href="Dbt.DbtBuilder.html" title="class in com.atlan.model.assets">Db
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="DbtModelColumn.DbtModelColumnBuilder.html" title="type parameter in DbtModelColumn.DbtModelColumnBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#dbtModel(com.atlan.model.assets.DbtModel)">dbtModel</a></span>&#8203;(<a href="DbtModel.html" title="class in com.atlan.model.assets">DbtModel</a>&nbsp;dbtModel)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearDbtModelColumnSqlColumns()">clearDbtModelColumnSqlColumns</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code><a href="DbtModelColumn.DbtModelColumnBuilder.html" title="type parameter in DbtModelColumn.DbtModelColumnBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#dbtModelColumnDataType(java.lang.String)">dbtModelColumnDataType</a></span>&#8203;(java.lang.String&nbsp;dbtModelColumnDataType)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#dbtModel(com.atlan.model.assets.DbtModel)">dbtModel</a></span>&#8203;(<a href="DbtModel.html" title="class in com.atlan.model.assets">DbtModel</a>&nbsp;dbtModel)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="DbtModelColumn.DbtModelColumnBuilder.html" title="type parameter in DbtModelColumn.DbtModelColumnBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#dbtModelColumnOrder(java.lang.Integer)">dbtModelColumnOrder</a></span>&#8203;(java.lang.Integer&nbsp;dbtModelColumnOrder)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#dbtModelColumnDataType(java.lang.String)">dbtModelColumnDataType</a></span>&#8203;(java.lang.String&nbsp;dbtModelColumnDataType)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="DbtModelColumn.DbtModelColumnBuilder.html" title="type parameter in DbtModelColumn.DbtModelColumnBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#dbtModelQualifiedName(java.lang.String)">dbtModelQualifiedName</a></span>&#8203;(java.lang.String&nbsp;dbtModelQualifiedName)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#dbtModelColumnOrder(java.lang.Integer)">dbtModelColumnOrder</a></span>&#8203;(java.lang.Integer&nbsp;dbtModelColumnOrder)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
-<td class="colFirst"><code>protected abstract <a href="DbtModelColumn.DbtModelColumnBuilder.html" title="type parameter in DbtModelColumn.DbtModelColumnBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#self()">self</a></span>()</code></th>
+<td class="colFirst"><code><a href="DbtModelColumn.DbtModelColumnBuilder.html" title="type parameter in DbtModelColumn.DbtModelColumnBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#dbtModelColumnSqlColumn(com.atlan.model.assets.Column)">dbtModelColumnSqlColumn</a></span>&#8203;(<a href="Column.html" title="class in com.atlan.model.assets">Column</a>&nbsp;dbtModelColumnSqlColumn)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="DbtModelColumn.DbtModelColumnBuilder.html" title="type parameter in DbtModelColumn.DbtModelColumnBuilder">B</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#sqlColumn(com.atlan.model.assets.Column)">sqlColumn</a></span>&#8203;(<a href="Column.html" title="class in com.atlan.model.assets">Column</a>&nbsp;sqlColumn)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#dbtModelColumnSqlColumns(java.util.Collection)">dbtModelColumnSqlColumns</a></span>&#8203;(java.util.Collection&lt;? extends <a href="Column.html" title="class in com.atlan.model.assets">Column</a>&gt;&nbsp;dbtModelColumnSqlColumns)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i8" class="altColor">
+<td class="colFirst"><code><a href="DbtModelColumn.DbtModelColumnBuilder.html" title="type parameter in DbtModelColumn.DbtModelColumnBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#dbtModelQualifiedName(java.lang.String)">dbtModelQualifiedName</a></span>&#8203;(java.lang.String&nbsp;dbtModelQualifiedName)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i9" class="rowColor">
+<td class="colFirst"><code>protected abstract <a href="DbtModelColumn.DbtModelColumnBuilder.html" title="type parameter in DbtModelColumn.DbtModelColumnBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#self()">self</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i10" class="altColor">
+<td class="colFirst"><code><a href="DbtModelColumn.DbtModelColumnBuilder.html" title="type parameter in DbtModelColumn.DbtModelColumnBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#sqlColumn(com.atlan.model.assets.Column)">sqlColumn</a></span>&#8203;(<a href="Column.html" title="class in com.atlan.model.assets">Column</a>&nbsp;sqlColumn)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code><a href="DbtModelColumn.DbtModelColumnBuilder.html" title="type parameter in DbtModelColumn.DbtModelColumnBuilder">B</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#typeName(java.lang.String)">typeName</a></span>&#8203;(java.lang.String&nbsp;typeName)</code></th>
 <td class="colLast">&nbsp;</td>
@@ -417,6 +432,33 @@ extends <a href="Dbt.DbtBuilder.html" title="class in com.atlan.model.assets">Db
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd><code>this</code>.</dd>
 </dl>
+</li>
+</ul>
+<a id="dbtModelColumnSqlColumn(com.atlan.model.assets.Column)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>dbtModelColumnSqlColumn</h4>
+<pre class="methodSignature">public&nbsp;<a href="DbtModelColumn.DbtModelColumnBuilder.html" title="type parameter in DbtModelColumn.DbtModelColumnBuilder">B</a>&nbsp;dbtModelColumnSqlColumn&#8203;(<a href="Column.html" title="class in com.atlan.model.assets">Column</a>&nbsp;dbtModelColumnSqlColumn)</pre>
+</li>
+</ul>
+<a id="dbtModelColumnSqlColumns(java.util.Collection)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>dbtModelColumnSqlColumns</h4>
+<pre class="methodSignature">public&nbsp;<a href="DbtModelColumn.DbtModelColumnBuilder.html" title="type parameter in DbtModelColumn.DbtModelColumnBuilder">B</a>&nbsp;dbtModelColumnSqlColumns&#8203;(java.util.Collection&lt;? extends <a href="Column.html" title="class in com.atlan.model.assets">Column</a>&gt;&nbsp;dbtModelColumnSqlColumns)</pre>
+</li>
+</ul>
+<a id="clearDbtModelColumnSqlColumns()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>clearDbtModelColumnSqlColumns</h4>
+<pre class="methodSignature">public&nbsp;<a href="DbtModelColumn.DbtModelColumnBuilder.html" title="type parameter in DbtModelColumn.DbtModelColumnBuilder">B</a>&nbsp;clearDbtModelColumnSqlColumns()</pre>
 </li>
 </ul>
 <a id="sqlColumn(com.atlan.model.assets.Column)">
