@@ -29,8 +29,8 @@ public class PresetAssetTest extends AtlanLiveTest {
 
     private static final String PREFIX = AtlanLiveTest.PREFIX + "Preset";
 
-    private static final AtlanConnectorType CONNECTOR_TYPE = AtlanConnectorType.PRESET;
-    private static final String CONNECTION_NAME = PREFIX;
+    public static final AtlanConnectorType CONNECTOR_TYPE = AtlanConnectorType.PRESET;
+    public static final String CONNECTION_NAME = PREFIX;
 
     private static final String WORKSPACE_NAME = PREFIX + "-ws";
     private static final String COLLECTION_NAME = PREFIX + "-coll";

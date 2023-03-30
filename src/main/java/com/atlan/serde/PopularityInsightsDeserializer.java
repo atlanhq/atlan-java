@@ -50,7 +50,8 @@ public class PopularityInsightsDeserializer extends StdDeserializer<PopularityIn
     PopularityInsights deserialize(JsonNode root) throws IOException {
         JsonNode attributes = root.get("attributes");
         if (attributes == null) {
-            throw new IOException("Unable to find embedded attributes in PopularityInsights record: " + root);
+            // PopularityInsights embedded in events (mutatedDetails) do not have an outer 'attributes' wrapper
+            attributes = root;
         }
         return PopularityInsights.builder()
                 .recordTotalUserCount(JacksonUtils.deserializeLong(attributes, "recordTotalUserCount"))

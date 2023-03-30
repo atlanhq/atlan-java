@@ -155,7 +155,9 @@ testing {
                 all {
                     testTask.configure {
                         filter {
-                            excludeTestsMatching "com.atlan.experimental.*"
+                            excludeTestsMatching "com.atlan.generators.*"
+                            excludeTestsMatching "com.atlan.model.assets.*"
+                            excludeTestsMatching "com.atlan.loop.*"
                         }
                         testLogging.showStandardStreams = true
                     }

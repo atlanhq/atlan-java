@@ -221,7 +221,7 @@ public class AdminTest extends AtlanLiveTest {
         assertNotNull(one);
         assertEquals(one.getId(), user1.getId());
         assertEquals(one.getGroupCount().longValue(), 1 + defaultGroupCount);
-        AtlanUser guest = AtlanUser.retrieveByUsername("guest");
+        AtlanUser guest = AtlanUser.retrieveByUsername("jsdk-admin1");
         assertEquals(guest, one);
     }
 
