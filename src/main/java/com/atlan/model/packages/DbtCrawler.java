@@ -31,7 +31,8 @@ public class DbtCrawler extends AbstractCrawler {
      * @throws AtlanException if there is any issue obtaining the admin role GUID
      */
     public static Workflow mtCloudAuth(String connectionName, String apiToken) throws AtlanException {
-        return mtCloudAuth(connectionName, apiToken, List.of(RoleCache.getIdForName("$admin")), null, null, null, null);
+        return mtCloudAuth(
+                connectionName, apiToken, List.of(RoleCache.getIdForName("$admin")), null, null, null, null, null);
     }
 
     /**
@@ -46,6 +47,7 @@ public class DbtCrawler extends AbstractCrawler {
      *                      by dbt Cloud account ID, with the list of values being project IDs.
      * @param excludeAssets which assets to exclude when crawling (when null: none). The map should be keyed
      *                      by dbt Cloud account ID, with the list of values being project IDs.
+     * @param limitToConnection qualifiedName of a connection to which to limit the crawling
      * @return the minimal workflow necessary to crawl dbt
      * @throws InvalidRequestException if there is no administrator specified for the connection, or the provided filters cannot be serialized to JSON
      * @throws com.atlan.exception.NotFoundException if the specified administrator does not exist
@@ -58,7 +60,8 @@ public class DbtCrawler extends AbstractCrawler {
             List<String> adminGroups,
             List<String> adminUsers,
             Map<String, List<String>> includeAssets,
-            Map<String, List<String>> excludeAssets)
+            Map<String, List<String>> excludeAssets,
+            String limitToConnection)
             throws AtlanException {
 
         Connection connection = Connection.creator(
@@ -104,6 +107,9 @@ public class DbtCrawler extends AbstractCrawler {
         argsBuilder = argsBuilder
                 .parameter(NameValuePair.of("include-filter-core", "*"))
                 .parameter(NameValuePair.of("exclude-filter-core", "*"));
+        if (limitToConnection != null && limitToConnection.length() > 0) {
+            argsBuilder = argsBuilder.parameter(NameValuePair.of("connection-qualified-name", limitToConnection));
+        }
 
         String name = PREFIX + "-" + epoch;
         String runName = PREFIX + "-default-dbt-" + epoch;
