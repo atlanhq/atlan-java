@@ -52,11 +52,13 @@ public class PurposeSerializer extends StdSerializer<Purpose> {
         Set<String> tags = cls.getTags();
         SortedSet<String> tagIds = new TreeSet<>();
         for (String tag : tags) {
-            try {
-                String id = ClassificationCache.getIdForName(tag);
-                tagIds.add(id);
-            } catch (AtlanException e) {
-                throw new IOException("Unable to find classification with name: " + tag, e);
+            if (tag != null) {
+                try {
+                    String id = ClassificationCache.getIdForName(tag);
+                    tagIds.add(id);
+                } catch (AtlanException e) {
+                    throw new IOException("Unable to find classification with name: " + tag, e);
+                }
             }
         }
 
