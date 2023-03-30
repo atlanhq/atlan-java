@@ -213,13 +213,14 @@ extends <a href="AbstractCrawler.html" title="class in com.atlan.model.packages"
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>static <a href="../workflow/Workflow.html" title="class in com.atlan.model.workflow">Workflow</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#mtCloudAuth(java.lang.String,java.lang.String,java.util.List,java.util.List,java.util.List,java.util.Map,java.util.Map)">mtCloudAuth</a></span>&#8203;(java.lang.String&nbsp;connectionName,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#mtCloudAuth(java.lang.String,java.lang.String,java.util.List,java.util.List,java.util.List,java.util.Map,java.util.Map,java.lang.String)">mtCloudAuth</a></span>&#8203;(java.lang.String&nbsp;connectionName,
            java.lang.String&nbsp;apiToken,
            java.util.List&lt;java.lang.String&gt;&nbsp;adminRoles,
            java.util.List&lt;java.lang.String&gt;&nbsp;adminGroups,
            java.util.List&lt;java.lang.String&gt;&nbsp;adminUsers,
            java.util.Map&lt;java.lang.String,&#8203;java.util.List&lt;java.lang.String&gt;&gt;&nbsp;includeAssets,
-           java.util.Map&lt;java.lang.String,&#8203;java.util.List&lt;java.lang.String&gt;&gt;&nbsp;excludeAssets)</code></th>
+           java.util.Map&lt;java.lang.String,&#8203;java.util.List&lt;java.lang.String&gt;&gt;&nbsp;excludeAssets,
+           java.lang.String&nbsp;limitToConnection)</code></th>
 <td class="colLast">
 <div class="block">Builds the minimal object necessary to create a new crawler for dbt.</div>
 </td>
@@ -312,7 +313,7 @@ extends <a href="AbstractCrawler.html" title="class in com.atlan.model.packages"
 </dl>
 </li>
 </ul>
-<a id="mtCloudAuth(java.lang.String,java.lang.String,java.util.List,java.util.List,java.util.List,java.util.Map,java.util.Map)">
+<a id="mtCloudAuth(java.lang.String,java.lang.String,java.util.List,java.util.List,java.util.List,java.util.Map,java.util.Map,java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockListLast">
@@ -324,7 +325,8 @@ extends <a href="AbstractCrawler.html" title="class in com.atlan.model.packages"
                                    java.util.List&lt;java.lang.String&gt;&nbsp;adminGroups,
                                    java.util.List&lt;java.lang.String&gt;&nbsp;adminUsers,
                                    java.util.Map&lt;java.lang.String,&#8203;java.util.List&lt;java.lang.String&gt;&gt;&nbsp;includeAssets,
-                                   java.util.Map&lt;java.lang.String,&#8203;java.util.List&lt;java.lang.String&gt;&gt;&nbsp;excludeAssets)
+                                   java.util.Map&lt;java.lang.String,&#8203;java.util.List&lt;java.lang.String&gt;&gt;&nbsp;excludeAssets,
+                                   java.lang.String&nbsp;limitToConnection)
                             throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
 <div class="block">Builds the minimal object necessary to create a new crawler for dbt.</div>
 <dl>
@@ -338,6 +340,7 @@ extends <a href="AbstractCrawler.html" title="class in com.atlan.model.packages"
                       by dbt Cloud account ID, with the list of values being project IDs.</dd>
 <dd><code>excludeAssets</code> - which assets to exclude when crawling (when null: none). The map should be keyed
                       by dbt Cloud account ID, with the list of values being project IDs.</dd>
+<dd><code>limitToConnection</code> - qualifiedName of a connection to which to limit the crawling</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the minimal workflow necessary to crawl dbt</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
