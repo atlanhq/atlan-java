@@ -14,7 +14,8 @@ public enum AtlanConnectionCategory implements AtlanEnum {
     QUERY_ENGINE("queryengine"),
     ELT("elt"),
     DATABASE("database"),
-    API("API");
+    API("API"),
+    EVENT_BUS("eventbus");
 
     @JsonValue
     @Getter(onMethod_ = {@Override})
