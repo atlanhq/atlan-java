@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":9};
+var data = {"i0":9,"i1":9,"i2":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -204,6 +204,23 @@ extends <a href="AbstractCrawler.html" title="class in com.atlan.model.packages"
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>static <a href="../workflow/Workflow.html" title="class in com.atlan.model.workflow">Workflow</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#coreCrawler(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.util.List,java.util.List,java.util.List,java.lang.String,java.lang.String,java.lang.String,boolean)">coreCrawler</a></span>&#8203;(java.lang.String&nbsp;connectionName,
+           java.lang.String&nbsp;bucketName,
+           java.lang.String&nbsp;s3Prefix,
+           java.lang.String&nbsp;region,
+           java.util.List&lt;java.lang.String&gt;&nbsp;adminRoles,
+           java.util.List&lt;java.lang.String&gt;&nbsp;adminGroups,
+           java.util.List&lt;java.lang.String&gt;&nbsp;adminUsers,
+           java.lang.String&nbsp;includeAssets,
+           java.lang.String&nbsp;excludeAssets,
+           java.lang.String&nbsp;limitToConnection,
+           boolean&nbsp;enrichMaterializedAssets)</code></th>
+<td class="colLast">
+<div class="block">Builds the minimal object necessary to create a new crawler for dbt.</div>
+</td>
+</tr>
+<tr id="i1" class="rowColor">
+<td class="colFirst"><code>static <a href="../workflow/Workflow.html" title="class in com.atlan.model.workflow">Workflow</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#mtCloudAuth(java.lang.String,java.lang.String)">mtCloudAuth</a></span>&#8203;(java.lang.String&nbsp;connectionName,
            java.lang.String&nbsp;apiToken)</code></th>
 <td class="colLast">
@@ -211,7 +228,7 @@ extends <a href="AbstractCrawler.html" title="class in com.atlan.model.packages"
  using API-based authentication for multi-tenant cloud, with the default settings.</div>
 </td>
 </tr>
-<tr id="i1" class="rowColor">
+<tr id="i2" class="altColor">
 <td class="colFirst"><code>static <a href="../workflow/Workflow.html" title="class in com.atlan.model.workflow">Workflow</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#mtCloudAuth(java.lang.String,java.lang.String,java.util.List,java.util.List,java.util.List,java.util.Map,java.util.Map,java.lang.String)">mtCloudAuth</a></span>&#8203;(java.lang.String&nbsp;connectionName,
            java.lang.String&nbsp;apiToken,
@@ -316,7 +333,7 @@ extends <a href="AbstractCrawler.html" title="class in com.atlan.model.packages"
 <a id="mtCloudAuth(java.lang.String,java.lang.String,java.util.List,java.util.List,java.util.List,java.util.Map,java.util.Map,java.lang.String)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>mtCloudAuth</h4>
 <pre class="methodSignature">public static&nbsp;<a href="../workflow/Workflow.html" title="class in com.atlan.model.workflow">Workflow</a>&nbsp;mtCloudAuth&#8203;(java.lang.String&nbsp;connectionName,
@@ -341,6 +358,47 @@ extends <a href="AbstractCrawler.html" title="class in com.atlan.model.packages"
 <dd><code>excludeAssets</code> - which assets to exclude when crawling (when null: none). The map should be keyed
                       by dbt Cloud account ID, with the list of values being project IDs.</dd>
 <dd><code>limitToConnection</code> - qualifiedName of a connection to which to limit the crawling</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the minimal workflow necessary to crawl dbt</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../exception/InvalidRequestException.html" title="class in com.atlan.exception">InvalidRequestException</a></code> - if there is no administrator specified for the connection, or the provided filters cannot be serialized to JSON</dd>
+<dd><code><a href="../../exception/NotFoundException.html" title="class in com.atlan.exception">NotFoundException</a></code> - if the specified administrator does not exist</dd>
+<dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any other error, such as an inability to retrieve the users, groups or roles in Atlan</dd>
+</dl>
+</li>
+</ul>
+<a id="coreCrawler(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.util.List,java.util.List,java.util.List,java.lang.String,java.lang.String,java.lang.String,boolean)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>coreCrawler</h4>
+<pre class="methodSignature">public static&nbsp;<a href="../workflow/Workflow.html" title="class in com.atlan.model.workflow">Workflow</a>&nbsp;coreCrawler&#8203;(java.lang.String&nbsp;connectionName,
+                                   java.lang.String&nbsp;bucketName,
+                                   java.lang.String&nbsp;s3Prefix,
+                                   java.lang.String&nbsp;region,
+                                   java.util.List&lt;java.lang.String&gt;&nbsp;adminRoles,
+                                   java.util.List&lt;java.lang.String&gt;&nbsp;adminGroups,
+                                   java.util.List&lt;java.lang.String&gt;&nbsp;adminUsers,
+                                   java.lang.String&nbsp;includeAssets,
+                                   java.lang.String&nbsp;excludeAssets,
+                                   java.lang.String&nbsp;limitToConnection,
+                                   boolean&nbsp;enrichMaterializedAssets)
+                            throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Builds the minimal object necessary to create a new crawler for dbt.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>connectionName</code> - name of the connection to create</dd>
+<dd><code>bucketName</code> - name of the S3 bucket containing the dbt Core JSON files</dd>
+<dd><code>s3Prefix</code> - prefix within the S3 bucket where the dbt Core JSON files exist</dd>
+<dd><code>region</code> - name of the S3 region to use</dd>
+<dd><code>adminRoles</code> - the GUIDs of the roles that can administer this connection</dd>
+<dd><code>adminGroups</code> - the names of the groups that can administer this connection</dd>
+<dd><code>adminUsers</code> - the names of the users that can administer this connection</dd>
+<dd><code>includeAssets</code> - which assets to include when crawling (when null: all). Should be a regular expression.</dd>
+<dd><code>excludeAssets</code> - which assets to exclude when crawling (when null: none). Should be a regular expression.</dd>
+<dd><code>limitToConnection</code> - qualifiedName of a connection to which to limit the crawling</dd>
+<dd><code>enrichMaterializedAssets</code> - when true, include the dbt metadata on the assets that dbt materializes</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the minimal workflow necessary to crawl dbt</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
