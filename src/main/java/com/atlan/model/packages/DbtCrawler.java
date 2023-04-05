@@ -110,7 +110,92 @@ public class DbtCrawler extends AbstractCrawler {
         if (limitToConnection != null && limitToConnection.length() > 0) {
             argsBuilder = argsBuilder.parameter(NameValuePair.of("connection-qualified-name", limitToConnection));
         }
+        return buildWorkflow(
+                epoch,
+                argsBuilder,
+                List.of(PackageParameter.builder()
+                        .parameter("credentialGuid")
+                        .type("credential")
+                        .body(credentialBody)
+                        .build()));
+    }
 
+    /**
+     * Builds the minimal object necessary to create a new crawler for dbt.
+     *
+     * @param connectionName name of the connection to create
+     * @param bucketName name of the S3 bucket containing the dbt Core JSON files
+     * @param s3Prefix prefix within the S3 bucket where the dbt Core JSON files exist
+     * @param region name of the S3 region to use
+     * @param adminRoles the GUIDs of the roles that can administer this connection
+     * @param adminGroups the names of the groups that can administer this connection
+     * @param adminUsers the names of the users that can administer this connection
+     * @param includeAssets which assets to include when crawling (when null: all). Should be a regular expression.
+     * @param excludeAssets which assets to exclude when crawling (when null: none). Should be a regular expression.
+     * @param limitToConnection qualifiedName of a connection to which to limit the crawling
+     * @param enrichMaterializedAssets when true, include the dbt metadata on the assets that dbt materializes
+     * @return the minimal workflow necessary to crawl dbt
+     * @throws InvalidRequestException if there is no administrator specified for the connection, or the provided filters cannot be serialized to JSON
+     * @throws com.atlan.exception.NotFoundException if the specified administrator does not exist
+     * @throws AtlanException on any other error, such as an inability to retrieve the users, groups or roles in Atlan
+     */
+    public static Workflow coreCrawler(
+            String connectionName,
+            String bucketName,
+            String s3Prefix,
+            String region,
+            List<String> adminRoles,
+            List<String> adminGroups,
+            List<String> adminUsers,
+            String includeAssets,
+            String excludeAssets,
+            String limitToConnection,
+            boolean enrichMaterializedAssets)
+            throws AtlanException {
+
+        Connection connection = Connection.creator(
+                        connectionName, AtlanConnectorType.DBT, adminRoles, adminGroups, adminUsers)
+                .allowQuery(true)
+                .allowQueryPreview(true)
+                .rowLimit(10000L)
+                .defaultCredentialGuid("{{credentialGuid}}")
+                .sourceLogo("https://assets.atlan.com/assets/dbt-new.svg")
+                .isDiscoverable(true)
+                .isEditable(false)
+                .build();
+
+        String epoch = Connection.getEpochFromQualifiedName(connection.getQualifiedName());
+
+        if (includeAssets == null) {
+            includeAssets = "*";
+        }
+        if (excludeAssets == null) {
+            excludeAssets = "*";
+        }
+
+        WorkflowParameters.WorkflowParametersBuilder<?, ?> argsBuilder = WorkflowParameters.builder()
+                .parameter(NameValuePair.of("connection", connection.toJson()))
+                .parameter(NameValuePair.of("extraction-method", "core"))
+                .parameter(NameValuePair.of("deployment-type", "multi"))
+                .parameter(NameValuePair.of("core-extraction-method", "s3"))
+                .parameter(NameValuePair.of("core-extraction-s3-bucket", bucketName))
+                .parameter(NameValuePair.of("core-extraction-s3-prefix", s3Prefix))
+                .parameter(NameValuePair.of("core-extraction-s3-region", region))
+                .parameter(NameValuePair.of("include-filter", "{}"))
+                .parameter(NameValuePair.of("exclude-filter", "{}"))
+                .parameter(NameValuePair.of("include-filter-core", includeAssets))
+                .parameter(NameValuePair.of("exclude-filter-core", excludeAssets))
+                .parameter(NameValuePair.of("enrich-materialized-sql-assets", enrichMaterializedAssets));
+        if (limitToConnection != null && limitToConnection.length() > 0) {
+            argsBuilder = argsBuilder.parameter(NameValuePair.of("connection-qualified-name", limitToConnection));
+        }
+        return buildWorkflow(epoch, argsBuilder, Collections.emptyList());
+    }
+
+    private static Workflow buildWorkflow(
+            String epoch,
+            WorkflowParameters.WorkflowParametersBuilder<?, ?> argsBuilder,
+            List<PackageParameter> payload) {
         String name = PREFIX + "-" + epoch;
         String runName = PREFIX + "-default-dbt-" + epoch;
         return Workflow.builder()
@@ -163,7 +248,7 @@ public class DbtCrawler extends AbstractCrawler {
                                                 .name("run")
                                                 .arguments(argsBuilder.build())
                                                 .templateRef(WorkflowTemplateRef.builder()
-                                                        .name("atlan-dbt")
+                                                        .name(PREFIX)
                                                         .template("main")
                                                         .clusterScope(true)
                                                         .build())
@@ -171,12 +256,10 @@ public class DbtCrawler extends AbstractCrawler {
                                         .build())
                                 .build()))
                         .entrypoint("main")
+                        .workflowMetadata(Map.ofEntries(Map.entry(
+                                "annotations", Map.ofEntries(Map.entry("package.argoproj.io/name", "@atlan/dbt")))))
                         .build())
-                .payload(List.of(PackageParameter.builder()
-                        .parameter("credentialGuid")
-                        .type("credential")
-                        .body(credentialBody)
-                        .build()))
+                .payload(payload)
                 .build();
     }
 }
