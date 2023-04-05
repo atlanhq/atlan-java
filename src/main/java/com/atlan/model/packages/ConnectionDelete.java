@@ -89,6 +89,9 @@ public class ConnectionDelete {
                                         .build())
                                 .build()))
                         .entrypoint("main")
+                        .workflowMetadata(WorkflowMetadata.builder()
+                                .annotation("package.argoproj.io/name", "@atlan/connection-delete")
+                                .build())
                         .build())
                 .payload(Collections.emptyList())
                 .build();

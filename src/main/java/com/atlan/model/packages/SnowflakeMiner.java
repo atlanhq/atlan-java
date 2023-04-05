@@ -112,6 +112,9 @@ public class SnowflakeMiner extends AbstractMiner {
                                         .build())
                                 .build()))
                         .entrypoint("main")
+                        .workflowMetadata(WorkflowMetadata.builder()
+                                .annotation("package.argoproj.io/name", "@atlan/snowflake-miner")
+                                .build())
                         .build())
                 .payload(Collections.emptyList())
                 .build();

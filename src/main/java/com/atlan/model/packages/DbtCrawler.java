@@ -256,8 +256,9 @@ public class DbtCrawler extends AbstractCrawler {
                                         .build())
                                 .build()))
                         .entrypoint("main")
-                        .workflowMetadata(Map.ofEntries(Map.entry(
-                                "annotations", Map.ofEntries(Map.entry("package.argoproj.io/name", "@atlan/dbt")))))
+                        .workflowMetadata(WorkflowMetadata.builder()
+                                .annotation("package.argoproj.io/name", "@atlan/dbt")
+                                .build())
                         .build())
                 .payload(payload)
                 .build();
