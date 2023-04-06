@@ -24,7 +24,7 @@ public class ReadmeTest {
             .qualifiedName("qualifiedName")
             .name("name")
             .displayName("displayName")
-            .description("<h1>description</h1><p>&lt;with some extra stuff&gt;</p>")
+            .description("description")
             .userDescription("userDescription")
             .tenantId("tenantId")
             .certificateStatus(AtlanCertificateStatus.VERIFIED)
@@ -107,30 +107,31 @@ public class ReadmeTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("bd9b412a-6191-4fa7-876b-fb11846f1de8"),
-                    LineageProcess.refByGuid("00803ac3-11dc-4a6e-ae2f-9e1a48f98adb")))
+                    LineageProcess.refByGuid("164b25d2-273a-47d6-92ef-863dd9be048e"),
+                    LineageProcess.refByGuid("ab7dc352-9e23-4bea-bf35-1c7108a07ac9")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("480635e8-bd6c-4efe-8f0b-b160208fc532"),
-                    LineageProcess.refByGuid("fb743502-a5d6-4931-b872-70f9ff7284f1")))
+                    LineageProcess.refByGuid("5dba5406-e058-4ec2-99a9-7afedf2b5211"),
+                    LineageProcess.refByGuid("3d325ea7-d593-440e-8fbf-c7d935190f62")))
             .link("link")
             .isGlobal(true)
             .reference("reference")
-            .asset(Table.refByGuid("9af29fc4-23ee-48e0-a031-4b43222c0e87"))
+            .resourceMetadata(Map.of("key1", "value1", "key2", "value2"))
+            .asset(Table.refByGuid("c42529c8-64f8-402f-9566-011bc92180c6"))
             .seeAlso(Set.of(
-                    Readme.refByGuid("ec9e3f73-7275-4ae9-aff0-d9f80a02ba60"),
-                    Readme.refByGuid("db960c03-a10e-4042-9fb5-013252a1924f")))
+                    Readme.refByGuid("6cfe65f1-e6c7-4fab-801e-2f976d8ffe57"),
+                    Readme.refByGuid("49e3d10c-5a28-4b1f-b7c2-52330639671b")))
             .build();
     private static Readme frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"Readme.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"Readme.serialize"},
+            dependsOnGroups = {"Readme.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -138,8 +139,8 @@ public class ReadmeTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"Readme.deserialize"},
+            dependsOnGroups = {"Readme.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, Readme.class);
@@ -147,8 +148,8 @@ public class ReadmeTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"Readme.equivalency"},
+            dependsOnGroups = {"Readme.serialize", "Readme.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -157,8 +158,8 @@ public class ReadmeTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"Readme.equivalency"},
+            dependsOnGroups = {"Readme.serialize", "Readme.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

@@ -107,11 +107,11 @@ public class TableauDatasourceTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("0f35dee3-50e0-4de7-a42b-b559b5f167d9"),
-                    LineageProcess.refByGuid("82842e72-16d5-4f81-be7d-ddf97bb73628")))
+                    LineageProcess.refByGuid("2287b4ba-1d92-4cfd-8b73-213c670021e4"),
+                    LineageProcess.refByGuid("a6f01334-c34f-45a7-b52a-1e324804fa7f")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("e2d79e1c-2c71-4102-976a-2407523f3c0f"),
-                    LineageProcess.refByGuid("7ee540db-e15c-4c48-9240-1ff840b04791")))
+                    LineageProcess.refByGuid("af0b9a12-a85a-4e21-9208-ae0d3de42620"),
+                    LineageProcess.refByGuid("fe94642b-5c7e-4cdc-98ba-141300bb368f")))
             .siteQualifiedName("siteQualifiedName")
             .projectQualifiedName("projectQualifiedName")
             .topLevelProjectQualifiedName("topLevelProjectQualifiedName")
@@ -119,14 +119,14 @@ public class TableauDatasourceTest {
             .projectHierarchy(List.of(Map.of("key1", "value1", "key2", "value2")))
             .isPublished(true)
             .hasExtracts(false)
-            .isCertified(false)
+            .isCertified(true)
             .certifier(Map.of("key1", "value1", "key2", "value2"))
             .certificationNote("certificationNote")
             .certifierDisplayName("certifierDisplayName")
             .upstreamTables(List.of(Map.of("key1", "value1", "key2", "value2")))
             .upstreamDatasources(List.of(Map.of("key1", "value1", "key2", "value2")))
-            .workbook(TableauWorkbook.refByGuid("8a78dc7e-34b1-462c-84e6-f45091b7bd8d"))
-            .project(TableauProject.refByGuid("2ff720e2-0909-4433-9a7b-b7c9935ae31d"))
+            .workbook(TableauWorkbook.refByGuid("94bf2b3d-438d-4633-a18e-2d40d0ac9174"))
+            .project(TableauProject.refByGuid("11054492-f388-4aa1-b083-19f186489b44"))
             .fields(Set.of(
                     TableauCalculatedField.refByGuid("68a20dee-57ee-416e-960b-3b1b52094029"),
                     TableauCalculatedField.refByGuid("3b7997ef-4773-44d7-9904-d433bf3c8ccb")))
@@ -134,14 +134,14 @@ public class TableauDatasourceTest {
     private static TableauDatasource frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"TableauDatasource.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"TableauDatasource.serialize"},
+            dependsOnGroups = {"TableauDatasource.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -149,8 +149,8 @@ public class TableauDatasourceTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"TableauDatasource.deserialize"},
+            dependsOnGroups = {"TableauDatasource.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, TableauDatasource.class);
@@ -158,8 +158,8 @@ public class TableauDatasourceTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"TableauDatasource.equivalency"},
+            dependsOnGroups = {"TableauDatasource.serialize", "TableauDatasource.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -168,8 +168,8 @@ public class TableauDatasourceTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"TableauDatasource.equivalency"},
+            dependsOnGroups = {"TableauDatasource.serialize", "TableauDatasource.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

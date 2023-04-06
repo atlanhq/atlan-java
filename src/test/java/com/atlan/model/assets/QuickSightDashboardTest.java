@@ -107,34 +107,34 @@ public class QuickSightDashboardTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("689976f6-6ac1-4f60-939d-9a940293cc94"),
-                    LineageProcess.refByGuid("05605b98-b5eb-4180-a7d3-ac2abacc3632")))
+                    LineageProcess.refByGuid("96bcbe76-3997-414e-a55f-c1147b8f00df"),
+                    LineageProcess.refByGuid("16eae0b3-9d48-4b61-9c7c-92ebc82295cb")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("331c5066-3a54-4af6-b886-59bcccc1dd06"),
-                    LineageProcess.refByGuid("af742dee-88ea-4d92-ac52-a78fa6c649d2")))
+                    LineageProcess.refByGuid("620558f3-3640-4218-ad59-f59eda1d9251"),
+                    LineageProcess.refByGuid("ef710540-cb89-4bff-87b9-4cd33c8571f5")))
             .quickSightId("quickSightId")
             .quickSightSheetId("quickSightSheetId")
             .quickSightSheetName("quickSightSheetName")
-            .quickSightDashboardPublishedVersionNumber(6914009796232361465L)
-            .quickSightDashboardLastPublishedTime(-7544609503137485507L)
+            .quickSightDashboardPublishedVersionNumber(-15980533084712590L)
+            .quickSightDashboardLastPublishedTime(648698715239544207L)
             .quickSightDashboardFolders(Set.of(
-                    QuickSightFolder.refByGuid("41cca1fb-0214-4feb-94ff-ccfaa11241a4"),
-                    QuickSightFolder.refByGuid("c201ab76-562a-46fd-86dc-2afec3c907cd")))
+                    QuickSightFolder.refByGuid("cb77c6c4-b4a3-4a0e-9814-124e6dceff83"),
+                    QuickSightFolder.refByGuid("853a4545-0ee5-4608-9104-4b304d570aed")))
             .quickSightDashboardVisuals(Set.of(
-                    QuickSightDashboardVisual.refByGuid("918dab0f-7948-48a7-9709-6d9ecd0b6d33"),
-                    QuickSightDashboardVisual.refByGuid("8bb82272-16fa-4c67-9522-dbc80d4a792f")))
+                    QuickSightDashboardVisual.refByGuid("388b698a-cdc2-4061-b275-6b96f0b2e810"),
+                    QuickSightDashboardVisual.refByGuid("7ba17ae9-3916-4e7a-9df1-3a035c7f92a7")))
             .build();
     private static QuickSightDashboard frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"QuickSightDashboard.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"QuickSightDashboard.serialize"},
+            dependsOnGroups = {"QuickSightDashboard.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -142,8 +142,8 @@ public class QuickSightDashboardTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"QuickSightDashboard.deserialize"},
+            dependsOnGroups = {"QuickSightDashboard.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, QuickSightDashboard.class);
@@ -151,8 +151,8 @@ public class QuickSightDashboardTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"QuickSightDashboard.equivalency"},
+            dependsOnGroups = {"QuickSightDashboard.serialize", "QuickSightDashboard.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -161,8 +161,8 @@ public class QuickSightDashboardTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"QuickSightDashboard.equivalency"},
+            dependsOnGroups = {"QuickSightDashboard.serialize", "QuickSightDashboard.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

@@ -107,38 +107,38 @@ public class TableauWorkbookTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("796afb63-f443-476c-8ef2-3d7807b0d2a3"),
-                    LineageProcess.refByGuid("245ca018-d83d-4841-bdb2-1ebb4d6af38b")))
+                    LineageProcess.refByGuid("aead8b3a-f9a8-45c5-8e15-16e0421799db"),
+                    LineageProcess.refByGuid("ca9bb080-eac4-4c91-ae10-0175f6c683fd")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("c57f75e9-a43c-4a98-ba18-d86c93d44ef5"),
-                    LineageProcess.refByGuid("ed90ffdf-548b-4780-9f40-4ea11e279861")))
+                    LineageProcess.refByGuid("c077f8d6-4d67-4393-a639-5524d66eb272"),
+                    LineageProcess.refByGuid("5c2cfeb0-0db3-4157-8062-87190647b243")))
             .siteQualifiedName("siteQualifiedName")
             .projectQualifiedName("projectQualifiedName")
             .topLevelProjectName("topLevelProjectName")
             .topLevelProjectQualifiedName("topLevelProjectQualifiedName")
             .projectHierarchy(List.of(Map.of("key1", "value1", "key2", "value2")))
             .worksheets(Set.of(
-                    TableauWorksheet.refByGuid("773e58ed-bd45-4944-9e3b-9bbe5b9cdedb"),
-                    TableauWorksheet.refByGuid("c1c6fe49-9271-492a-9474-4b70b1719141")))
+                    TableauWorksheet.refByGuid("0e935532-afe3-4ae4-be99-d8cb697c9974"),
+                    TableauWorksheet.refByGuid("579b4ca0-7415-4400-97e4-7b0dde8ff20b")))
             .datasources(Set.of(
-                    TableauDatasource.refByGuid("e9f774de-a39e-4dd3-8485-658a3f3f3c05"),
-                    TableauDatasource.refByGuid("c0dd0d72-358f-4824-90c9-4001014af9a1")))
-            .project(TableauProject.refByGuid("3732bbcb-2241-4c28-8b98-2001faf62d20"))
+                    TableauDatasource.refByGuid("0b64a1c0-94d8-47ca-93a0-bd4dd5b1b84e"),
+                    TableauDatasource.refByGuid("c3b81d46-8a90-424e-8b55-e4fed010bc4b")))
+            .project(TableauProject.refByGuid("8f2b8638-fa76-45a0-a389-a8008ef7a73a"))
             .dashboards(Set.of(
-                    TableauDashboard.refByGuid("219fbeb5-d6fc-4ee9-aff1-234601785334"),
-                    TableauDashboard.refByGuid("ece8b373-0b5a-403f-aa38-185869ecb733")))
+                    TableauDashboard.refByGuid("8f4aed76-a585-4001-94b8-b0878115072a"),
+                    TableauDashboard.refByGuid("7892664e-32d4-4222-856a-1afe09ebeddf")))
             .build();
     private static TableauWorkbook frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"TableauWorkbook.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"TableauWorkbook.serialize"},
+            dependsOnGroups = {"TableauWorkbook.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -146,8 +146,8 @@ public class TableauWorkbookTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"TableauWorkbook.deserialize"},
+            dependsOnGroups = {"TableauWorkbook.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, TableauWorkbook.class);
@@ -155,8 +155,8 @@ public class TableauWorkbookTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"TableauWorkbook.equivalency"},
+            dependsOnGroups = {"TableauWorkbook.serialize", "TableauWorkbook.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -165,8 +165,8 @@ public class TableauWorkbookTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"TableauWorkbook.equivalency"},
+            dependsOnGroups = {"TableauWorkbook.serialize", "TableauWorkbook.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

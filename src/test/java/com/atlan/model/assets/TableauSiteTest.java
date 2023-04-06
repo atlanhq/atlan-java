@@ -107,26 +107,26 @@ public class TableauSiteTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("f1d7d8c3-2dac-4169-8a87-c3496b1b7d8c"),
-                    LineageProcess.refByGuid("ad067dea-069d-49f2-a44e-1123b112ca4e")))
+                    LineageProcess.refByGuid("0dd27776-554e-4804-b4f4-b5989baaa9d7"),
+                    LineageProcess.refByGuid("1ab92ee1-f4de-49ff-9afd-b1260cc90109")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("38f5e76e-4740-4a18-961f-f2c6c94fbf15"),
-                    LineageProcess.refByGuid("ce2c2922-3f4a-49f8-af61-a20d15c0c25b")))
+                    LineageProcess.refByGuid("0ae1d8fc-d5d7-423e-9984-65b6865f19db"),
+                    LineageProcess.refByGuid("100785a2-a18b-4582-a488-967160fee507")))
             .projects(Set.of(
-                    TableauProject.refByGuid("121469a0-9e75-48f6-b602-54c93c0d7da9"),
-                    TableauProject.refByGuid("1bd21acb-d85f-4ae5-8ec8-d0dd83f7c288")))
+                    TableauProject.refByGuid("898faa40-71b7-4057-97ca-afa86eaa51fa"),
+                    TableauProject.refByGuid("5964c067-fcb7-41df-88ba-3cfe7b379ab3")))
             .build();
     private static TableauSite frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"TableauSite.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"TableauSite.serialize"},
+            dependsOnGroups = {"TableauSite.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -134,8 +134,8 @@ public class TableauSiteTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"TableauSite.deserialize"},
+            dependsOnGroups = {"TableauSite.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, TableauSite.class);
@@ -143,8 +143,8 @@ public class TableauSiteTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"TableauSite.equivalency"},
+            dependsOnGroups = {"TableauSite.serialize", "TableauSite.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -153,8 +153,8 @@ public class TableauSiteTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"TableauSite.equivalency"},
+            dependsOnGroups = {"TableauSite.serialize", "TableauSite.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

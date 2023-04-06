@@ -107,15 +107,15 @@ public class MaterializedViewTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("3e045a71-a5ca-4ec9-ac1a-0a516b89d64d"),
-                    LineageProcess.refByGuid("2d0b1f0f-afc9-4727-ae0f-9f52782243be")))
+                    LineageProcess.refByGuid("6bf0aebc-487f-4309-9fa5-27c05ef9cce8"),
+                    LineageProcess.refByGuid("f31b26b6-1ac4-4a2e-b956-826f50aa9365")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("6ade8f3e-6757-4064-8e4c-2b8fd94bbac1"),
-                    LineageProcess.refByGuid("953b6d6a-7944-494c-8374-027de4d77412")))
-            .queryCount(-7034941422205517900L)
-            .queryUserCount(-3246559587581554028L)
+                    LineageProcess.refByGuid("863a9487-3bd7-4379-9bfc-c62b158760e0"),
+                    LineageProcess.refByGuid("08920747-7ec6-42f4-a374-4089b650f352")))
+            .queryCount(271200061148370090L)
+            .queryUserCount(-4784655364131454559L)
             // .queryUserMap(Map.of("key1", 123456L, "key2", 654321L))
-            .queryCountUpdatedAt(607913222162689196L)
+            .queryCountUpdatedAt(3944923788383854516L)
             .databaseName("databaseName")
             .databaseQualifiedName("databaseQualifiedName")
             .schemaName("schemaName")
@@ -124,40 +124,48 @@ public class MaterializedViewTest {
             .tableQualifiedName("tableQualifiedName")
             .viewName("viewName")
             .viewQualifiedName("viewQualifiedName")
+            .isProfiled(true)
+            .lastProfiledAt(5468384196483471327L)
             .dbtModels(Set.of(
-                    DbtModel.refByGuid("f2e0fbf4-ef30-45e8-beec-f0b9e292a8dc"),
-                    DbtModel.refByGuid("c03c0e19-285c-42d2-9d02-ba28a31c1130")))
+                    DbtModel.refByGuid("4b1ce782-7fcd-4879-92bb-379fdf548479"),
+                    DbtModel.refByGuid("94cc1052-1d9f-4131-9f2c-579a447fdeb9")))
             .dbtSources(Set.of(
-                    DbtSource.refByGuid("8671a5b4-cf5b-4a78-b939-62d5dcf21dbb"),
-                    DbtSource.refByGuid("237d1039-81c5-478b-81ef-c25ecbdd79e7")))
+                    DbtSource.refByGuid("0b56eab1-c235-4fff-9bd6-acc578df91be"),
+                    DbtSource.refByGuid("288f7ad2-ce9a-47e1-ba96-2fd1b91763d8")))
+            .sqlDbtModels(Set.of(
+                    DbtModel.refByGuid("2d10211b-ce4a-4c1b-b05f-cb92745fbe24"),
+                    DbtModel.refByGuid("997a2cb8-905e-459d-a5f7-5bac0c31c1f9")))
+            .sqlDBTSources(Set.of(
+                    DbtSource.refByGuid("8a741b4a-7a3d-4412-938a-c7e3d695d6fc"),
+                    DbtSource.refByGuid("e840d00a-79e0-4d6d-92ff-cff174704b91")))
             .refreshMode("refreshMode")
             .refreshMethod("refreshMethod")
             .staleness("staleness")
-            .staleSinceDate(-6410106751212336728L)
-            .columnCount(-2338053567411409352L)
-            .rowCount(-594037127363138063L)
-            .sizeBytes(-5779826309815501387L)
+            .staleSinceDate(-441827932175840995L)
+            .columnCount(-369631243161182849L)
+            .rowCount(4348730234918463856L)
+            .sizeBytes(-1618253579061775599L)
             .isQueryPreview(false)
             .queryPreviewConfig(Map.of("key1", "value1", "key2", "value2"))
             .alias("alias")
-            .isTemporary(false)
+            .isTemporary(true)
             .definition("definition")
-            .schema(Schema.refByGuid("781a6ccb-cfbe-4c44-a91c-57930d901768"))
+            .schema(Schema.refByGuid("9905c7e1-8b33-456b-a5e7-6d67f4f00d30"))
             .columns(Set.of(
-                    Column.refByGuid("3fb8feff-a8d9-49ef-b005-03b06e03a5c2"),
-                    Column.refByGuid("234728c1-3297-46ec-bca2-483897f90926")))
+                    Column.refByGuid("de572a32-acb5-4f38-bdd1-5371e78aac35"),
+                    Column.refByGuid("e7ea30b3-3628-4ddf-86e8-146d7e1874d5")))
             .build();
     private static MaterializedView frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"MaterializedView.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"MaterializedView.serialize"},
+            dependsOnGroups = {"MaterializedView.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -165,8 +173,8 @@ public class MaterializedViewTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"MaterializedView.deserialize"},
+            dependsOnGroups = {"MaterializedView.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, MaterializedView.class);
@@ -174,8 +182,8 @@ public class MaterializedViewTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"MaterializedView.equivalency"},
+            dependsOnGroups = {"MaterializedView.serialize", "MaterializedView.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -184,8 +192,8 @@ public class MaterializedViewTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"MaterializedView.equivalency"},
+            dependsOnGroups = {"MaterializedView.serialize", "MaterializedView.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

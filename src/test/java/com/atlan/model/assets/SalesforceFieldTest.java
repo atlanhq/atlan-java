@@ -107,45 +107,45 @@ public class SalesforceFieldTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("5b303876-d3e2-4b8f-8ad6-88e59cf52b10"),
-                    LineageProcess.refByGuid("fcbfa156-ecad-4573-86c5-68d8d5abbe17")))
+                    LineageProcess.refByGuid("2faa1cd5-a41a-4cb0-9e02-3adcbd5fdd05"),
+                    LineageProcess.refByGuid("6eb10001-3be9-4947-a026-e5fc1d459dad")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("46dd5ec9-5528-43da-9ff3-62f2c5c50228"),
-                    LineageProcess.refByGuid("83b208cc-8cba-423f-9cc0-710cc2d07cf1")))
+                    LineageProcess.refByGuid("22a15d0c-e5f4-4878-ac50-cf0ebd91bd35"),
+                    LineageProcess.refByGuid("75aba59d-6fd0-4f8d-891e-8b3b0c0b0476")))
             .organizationQualifiedName("organizationQualifiedName")
             .apiName("apiName")
             .dataType("dataType")
             .objectQualifiedName("objectQualifiedName")
-            .order(-1553370498)
+            .order(-657977344)
             .inlineHelpText("inlineHelpText")
-            .isCalculated(true)
+            .isCalculated(false)
             .formula("formula")
-            .isCaseSensitive(true)
+            .isCaseSensitive(false)
             .isEncrypted(true)
-            .maxLength(-1363906348085572778L)
-            .isNullable(false)
-            .precision(262638513)
-            .numericScale(0.2085745024236627)
-            .isUnique(true)
+            .maxLength(-4318404506162600677L)
+            .isNullable(true)
+            .precision(635362546)
+            .numericScale(0.610116530643438)
+            .isUnique(false)
             .picklistValues(Set.of("one", "two", "three"))
-            .isPolymorphicForeignKey(true)
+            .isPolymorphicForeignKey(false)
             .defaultValueFormula("defaultValueFormula")
             .lookupObjects(Set.of(
-                    SalesforceObject.refByGuid("2b38fa9a-209d-4ff3-9b53-72480d8dd2b2"),
-                    SalesforceObject.refByGuid("42012a80-a5f2-40ec-ba6a-790e29e5e7da")))
-            .object(SalesforceObject.refByGuid("aa36a957-ee92-44b6-9401-d0b4a9e0990d"))
+                    SalesforceObject.refByGuid("16ec1ffc-978c-4b6b-90e7-440eb83a81ff"),
+                    SalesforceObject.refByGuid("3683bf8f-6d56-4f6a-8943-3753be2c4c01")))
+            .object(SalesforceObject.refByGuid("4d09f575-15f7-4b16-aaa3-088c93bf61b0"))
             .build();
     private static SalesforceField frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"SalesforceField.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"SalesforceField.serialize"},
+            dependsOnGroups = {"SalesforceField.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -153,8 +153,8 @@ public class SalesforceFieldTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"SalesforceField.deserialize"},
+            dependsOnGroups = {"SalesforceField.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, SalesforceField.class);
@@ -162,8 +162,8 @@ public class SalesforceFieldTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"SalesforceField.equivalency"},
+            dependsOnGroups = {"SalesforceField.serialize", "SalesforceField.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -172,8 +172,8 @@ public class SalesforceFieldTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"SalesforceField.equivalency"},
+            dependsOnGroups = {"SalesforceField.serialize", "SalesforceField.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

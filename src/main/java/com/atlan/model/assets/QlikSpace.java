@@ -8,6 +8,7 @@ import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.*;
 import com.atlan.model.relations.UniqueAttributes;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
@@ -20,8 +21,10 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@JsonSubTypes({
+    @JsonSubTypes.Type(value = QlikStream.class, name = QlikStream.TYPE_NAME),
+})
 public class QlikSpace extends Qlik {
-    private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "QlikSpace";
 

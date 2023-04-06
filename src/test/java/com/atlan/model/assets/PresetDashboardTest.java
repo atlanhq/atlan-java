@@ -107,40 +107,40 @@ public class PresetDashboardTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("9a4c2aa9-0653-4ea0-a0b6-4ca2ab1e4ea0"),
-                    LineageProcess.refByGuid("2bfef743-51d4-44b2-8a8c-478f32b31f79")))
+                    LineageProcess.refByGuid("acbd06b1-4fee-40d9-8c2e-1921c1e8f5e2"),
+                    LineageProcess.refByGuid("76fddb2f-d5c9-4af4-8613-e560c54eb9da")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("4df673ae-1f6b-4950-8ff4-5334277a4164"),
-                    LineageProcess.refByGuid("d32dd8ce-6662-4016-87e2-36f289618bb7")))
-            .presetWorkspaceId(-3897600202147196153L)
+                    LineageProcess.refByGuid("880e0d6c-f74e-4693-9a88-cff39755fbd2"),
+                    LineageProcess.refByGuid("49d60fc3-5ac9-4308-aba3-d37ac464f22b")))
+            .presetWorkspaceId(-5869278205759496241L)
             .presetWorkspaceQualifiedName("presetWorkspaceQualifiedName")
-            .presetDashboardId(9006251846872037153L)
+            .presetDashboardId(-3779935214755332928L)
             .presetDashboardQualifiedName("presetDashboardQualifiedName")
             .presetDashboardChangedByName("presetDashboardChangedByName")
             .presetDashboardChangedByURL("presetDashboardChangedByURL")
             .presetDashboardIsManagedExternally(true)
             .presetDashboardIsPublished(false)
             .presetDashboardThumbnailURL("presetDashboardThumbnailURL")
-            .presetDashboardChartCount(-3307836735547316488L)
+            .presetDashboardChartCount(1884216312736405084L)
             .presetDatasets(Set.of(
-                    PresetDataset.refByGuid("0ba444df-cc21-4841-b0e3-a803919f33f5"),
-                    PresetDataset.refByGuid("4e2a8229-35e3-4273-a7ae-4aefede4c310")))
+                    PresetDataset.refByGuid("164eae8d-c0f2-46f8-acc8-ce0dafe1e740"),
+                    PresetDataset.refByGuid("558363ff-5185-4026-a173-b8eccf013300")))
             .presetCharts(Set.of(
-                    PresetChart.refByGuid("101ed576-2a65-4ea8-b596-c8f39ccf6ce2"),
-                    PresetChart.refByGuid("a0fc6656-956b-4c75-b7b3-310679fba4f6")))
-            .presetWorkspace(PresetWorkspace.refByGuid("2fa808b7-e243-406c-94f1-6b2b44073a7e"))
+                    PresetChart.refByGuid("699d2350-3047-457f-888e-401d06ee0e89"),
+                    PresetChart.refByGuid("d47355b5-50b0-43c5-80e8-bd058cb8e90b")))
+            .presetWorkspace(PresetWorkspace.refByGuid("3bb21938-39cd-4d48-86ab-d69044f5b07e"))
             .build();
     private static PresetDashboard frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"PresetDashboard.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"PresetDashboard.serialize"},
+            dependsOnGroups = {"PresetDashboard.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -148,8 +148,8 @@ public class PresetDashboardTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"PresetDashboard.deserialize"},
+            dependsOnGroups = {"PresetDashboard.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, PresetDashboard.class);
@@ -157,8 +157,8 @@ public class PresetDashboardTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"PresetDashboard.equivalency"},
+            dependsOnGroups = {"PresetDashboard.serialize", "PresetDashboard.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -167,8 +167,8 @@ public class PresetDashboardTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"PresetDashboard.equivalency"},
+            dependsOnGroups = {"PresetDashboard.serialize", "PresetDashboard.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

@@ -107,11 +107,11 @@ public class S3BucketTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("95cf9e2e-cdd8-4190-b86a-fce1daea3be7"),
-                    LineageProcess.refByGuid("105631b5-e4c9-4bbe-a17d-4b55c288d104")))
+                    LineageProcess.refByGuid("ebdd1987-0495-464b-9912-cd256e816cc6"),
+                    LineageProcess.refByGuid("6e1e1e7a-2776-4833-b9b7-c09090909256")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("b71149d1-f9f9-46a3-a73a-4b0305296a32"),
-                    LineageProcess.refByGuid("8ca5df1f-498b-4ed5-8b6d-9954dc699d5c")))
+                    LineageProcess.refByGuid("905f12dd-06ba-4ac3-b73d-ab3c220874a4"),
+                    LineageProcess.refByGuid("bf261630-2dee-49e3-8cf4-a28d7bc2bfe4")))
             .awsArn("awsArn")
             .awsPartition("awsPartition")
             .awsService("awsService")
@@ -123,23 +123,23 @@ public class S3BucketTest {
             .awsTags(List.of(AWSTag.of("key1", "value1"), AWSTag.of("key2", "value2")))
             .s3ETag("s3ETag")
             .s3Encryption("s3Encryption")
-            .s3ObjectCount(6437696448010883110L)
-            .s3BucketVersioningEnabled(false)
+            .s3ObjectCount(7078094599125318566L)
+            .s3BucketVersioningEnabled(true)
             .objects(Set.of(
-                    S3Object.refByGuid("b35bd965-fbe6-419a-86e6-a8a3613b794a"),
-                    S3Object.refByGuid("206e1f1d-9175-443b-afd5-77cefa1c07be")))
+                    S3Object.refByGuid("4deb6006-14af-4b70-8419-d7a3dbbaecd1"),
+                    S3Object.refByGuid("f5b24025-d636-4297-9ef6-ccab7557323c")))
             .build();
     private static S3Bucket frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"S3Bucket.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"S3Bucket.serialize"},
+            dependsOnGroups = {"S3Bucket.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -147,8 +147,8 @@ public class S3BucketTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"S3Bucket.deserialize"},
+            dependsOnGroups = {"S3Bucket.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, S3Bucket.class);
@@ -156,8 +156,8 @@ public class S3BucketTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"S3Bucket.equivalency"},
+            dependsOnGroups = {"S3Bucket.serialize", "S3Bucket.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -166,8 +166,8 @@ public class S3BucketTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"S3Bucket.equivalency"},
+            dependsOnGroups = {"S3Bucket.serialize", "S3Bucket.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

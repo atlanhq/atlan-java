@@ -107,41 +107,41 @@ public class TableauProjectTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("d51049b9-f432-4c24-9862-4ae5b386995f"),
-                    LineageProcess.refByGuid("8ab19ce0-46bf-4ece-9291-5b074bb643d6")))
+                    LineageProcess.refByGuid("f7f46fc8-e37d-492f-b657-8b444c57cc78"),
+                    LineageProcess.refByGuid("4a6d6431-12a0-4991-a48f-53e890083c35")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("d73253b2-35c0-4389-a2f0-1cfa24fccc51"),
-                    LineageProcess.refByGuid("18f9035f-4400-4c1b-a0de-7a582349241a")))
+                    LineageProcess.refByGuid("d4ff363e-61dc-407b-981a-c8bd8feeaf31"),
+                    LineageProcess.refByGuid("d1966c51-2226-4ed8-8684-63e80c4ca252")))
             .siteQualifiedName("siteQualifiedName")
             .topLevelProjectQualifiedName("topLevelProjectQualifiedName")
             .isTopLevelProject(false)
             .projectHierarchy(List.of(Map.of("key1", "value1", "key2", "value2")))
             .workbooks(Set.of(
-                    TableauWorkbook.refByGuid("08c09f04-7258-4c64-a86c-2b7f478ab800"),
-                    TableauWorkbook.refByGuid("4f40ac18-3d03-44fb-91d4-fb685c46d8d6")))
-            .site(TableauSite.refByGuid("7beb9957-52ac-4bed-85b6-6e99a94610dd"))
-            .parentProject(TableauProject.refByGuid("327a49a0-d933-40ef-9689-f25872423cbc"))
+                    TableauWorkbook.refByGuid("e4c831b0-7c6f-47cc-9bfc-9ef48b1cd3a1"),
+                    TableauWorkbook.refByGuid("d5c6b4e7-9263-494a-8dcf-38e4e493e1d7")))
+            .site(TableauSite.refByGuid("36d8fca5-e218-4346-a330-5fa76fe9ee47"))
+            .parentProject(TableauProject.refByGuid("b04020af-1738-4cfc-98dd-ee99ecb17242"))
             .datasources(Set.of(
-                    TableauDatasource.refByGuid("a1531522-5bc7-4808-934a-9d8a21722d16"),
-                    TableauDatasource.refByGuid("56cb358d-3b15-4247-a185-0fc44b38267a")))
+                    TableauDatasource.refByGuid("767edebe-8695-4734-b6cb-4c227c0c11a8"),
+                    TableauDatasource.refByGuid("be368072-28f9-4b5e-8e71-1cdd856621e2")))
             .flows(Set.of(
-                    TableauFlow.refByGuid("a243d8a2-f6c8-4100-ae06-b369a0fe7d69"),
-                    TableauFlow.refByGuid("340d21b1-ada1-49be-b9d5-ec592496c759")))
+                    TableauFlow.refByGuid("0a7712de-94c3-4e11-ab48-651d15df5c95"),
+                    TableauFlow.refByGuid("fb2fdd19-3263-4d93-b12d-d5726f5680ea")))
             .childProjects(Set.of(
-                    TableauProject.refByGuid("f094b981-2eec-4c62-814e-f9ffaa2019bf"),
-                    TableauProject.refByGuid("9d95accc-623c-4205-b66e-7149bdf6f12b")))
+                    TableauProject.refByGuid("fcbc78f3-f572-42d2-a108-5cd8d418fe13"),
+                    TableauProject.refByGuid("447c6054-ba90-48a7-976d-002a07487d68")))
             .build();
     private static TableauProject frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"TableauProject.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"TableauProject.serialize"},
+            dependsOnGroups = {"TableauProject.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -149,8 +149,8 @@ public class TableauProjectTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"TableauProject.deserialize"},
+            dependsOnGroups = {"TableauProject.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, TableauProject.class);
@@ -158,8 +158,8 @@ public class TableauProjectTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"TableauProject.equivalency"},
+            dependsOnGroups = {"TableauProject.serialize", "TableauProject.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -168,8 +168,8 @@ public class TableauProjectTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"TableauProject.equivalency"},
+            dependsOnGroups = {"TableauProject.serialize", "TableauProject.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

@@ -107,30 +107,30 @@ public class MetabaseDashboardTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("fa180dac-48ba-4f0d-817b-f08986bcfb46"),
-                    LineageProcess.refByGuid("f58a4781-6b74-48a4-bb80-3271bc8a221c")))
+                    LineageProcess.refByGuid("3ca5542d-dd27-4995-9179-9d1fcd7d2a96"),
+                    LineageProcess.refByGuid("84962da8-f13c-4905-a0ee-c0d8482fe12e")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("3a62c6c4-715b-4c26-82d7-f9b59bcadb58"),
-                    LineageProcess.refByGuid("13f3f8f6-3eba-4e2d-ad47-ce10c2683644")))
+                    LineageProcess.refByGuid("9b470211-0e23-41aa-b191-f81800449545"),
+                    LineageProcess.refByGuid("78fa31f0-e335-409e-bde0-20b39728f7c7")))
             .metabaseCollectionName("metabaseCollectionName")
             .metabaseCollectionQualifiedName("metabaseCollectionQualifiedName")
-            .metabaseQuestionCount(3152063418342280020L)
+            .metabaseQuestionCount(-6370253610169438848L)
             .metabaseQuestions(Set.of(
-                    MetabaseQuestion.refByGuid("db5f8cf2-7348-45d2-925f-435f90307f14"),
-                    MetabaseQuestion.refByGuid("eab63501-9e2d-4fb7-bd1c-20e4c964adb0")))
-            .metabaseCollection(MetabaseCollection.refByGuid("81eb49b3-469c-4158-a3a5-2c7dcd12db0d"))
+                    MetabaseQuestion.refByGuid("5da95ff1-9037-44f5-a22b-e3ff6e028629"),
+                    MetabaseQuestion.refByGuid("c8c2e91f-b8f0-44c6-aa07-793ffe408b44")))
+            .metabaseCollection(MetabaseCollection.refByGuid("f0865475-260f-4f1d-89c5-b6baf08ce0f2"))
             .build();
     private static MetabaseDashboard frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"MetabaseDashboard.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"MetabaseDashboard.serialize"},
+            dependsOnGroups = {"MetabaseDashboard.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -138,8 +138,8 @@ public class MetabaseDashboardTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"MetabaseDashboard.deserialize"},
+            dependsOnGroups = {"MetabaseDashboard.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, MetabaseDashboard.class);
@@ -147,8 +147,8 @@ public class MetabaseDashboardTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"MetabaseDashboard.equivalency"},
+            dependsOnGroups = {"MetabaseDashboard.serialize", "MetabaseDashboard.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -157,8 +157,8 @@ public class MetabaseDashboardTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"MetabaseDashboard.equivalency"},
+            dependsOnGroups = {"MetabaseDashboard.serialize", "MetabaseDashboard.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

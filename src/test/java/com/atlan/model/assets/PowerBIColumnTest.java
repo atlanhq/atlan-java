@@ -107,11 +107,11 @@ public class PowerBIColumnTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("8886c64c-5d9c-42f9-a863-e7f4f73040e4"),
-                    LineageProcess.refByGuid("0fb8f389-a781-4d7a-bcb6-edc386ce85a6")))
+                    LineageProcess.refByGuid("068c187d-3f6b-41a0-b615-4bc6fc47242b"),
+                    LineageProcess.refByGuid("0bf4daf4-3226-400d-83f7-f6425bf562af")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("ebdd6e1b-06a6-40ca-ace2-2896d1388d98"),
-                    LineageProcess.refByGuid("932f4ba8-849f-4a37-a1b0-fb43b9a703ea")))
+                    LineageProcess.refByGuid("36d09c2e-5994-459c-933e-a90c89e7b756"),
+                    LineageProcess.refByGuid("6ad81af8-fef1-4666-9fea-2c58567c57d7")))
             .powerBIIsHidden(true)
             .powerBITableQualifiedName("powerBITableQualifiedName")
             .powerBIFormatString("powerBIFormatString")
@@ -122,19 +122,19 @@ public class PowerBIColumnTest {
             .powerBIColumnDataType("powerBIColumnDataType")
             .powerBISortByColumn("powerBISortByColumn")
             .powerBIColumnSummarizeBy("powerBIColumnSummarizeBy")
-            .table(PowerBITable.refByGuid("d80cc147-94b3-48dc-8332-341cc7d67a76"))
+            .table(PowerBITable.refByGuid("14eab457-2fc4-48c9-b54a-14b56b11feb9"))
             .build();
     private static PowerBIColumn frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"PowerBIColumn.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"PowerBIColumn.serialize"},
+            dependsOnGroups = {"PowerBIColumn.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -142,8 +142,8 @@ public class PowerBIColumnTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"PowerBIColumn.deserialize"},
+            dependsOnGroups = {"PowerBIColumn.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, PowerBIColumn.class);
@@ -151,8 +151,8 @@ public class PowerBIColumnTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"PowerBIColumn.equivalency"},
+            dependsOnGroups = {"PowerBIColumn.serialize", "PowerBIColumn.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -161,8 +161,8 @@ public class PowerBIColumnTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"PowerBIColumn.equivalency"},
+            dependsOnGroups = {"PowerBIColumn.serialize", "PowerBIColumn.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

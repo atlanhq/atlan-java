@@ -37,7 +37,7 @@ public class IndexSearchDSLTest {
     private static IndexSearchDSL frodo;
     private static String serialized;
 
-    @Test(groups = {"serialize"})
+    @Test(groups = {"IndexSearchDSL.serialize"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -45,8 +45,8 @@ public class IndexSearchDSLTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"IndexSearchDSL.deserialize"},
+            dependsOnGroups = {"IndexSearchDSL.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, IndexSearchDSL.class);
@@ -54,8 +54,8 @@ public class IndexSearchDSLTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"IndexSearchDSL.equivalency"},
+            dependsOnGroups = {"IndexSearchDSL.serialize", "IndexSearchDSL.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);

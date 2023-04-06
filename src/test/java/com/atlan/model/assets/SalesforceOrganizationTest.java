@@ -107,35 +107,35 @@ public class SalesforceOrganizationTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("bb203906-e0db-4df7-bede-6e3f71b34e0a"),
-                    LineageProcess.refByGuid("74596a83-e2d2-4b97-91a1-17c396f20859")))
+                    LineageProcess.refByGuid("f50c2f6a-6b11-4bc9-b163-2a67a3abf048"),
+                    LineageProcess.refByGuid("699b89c9-ba68-4276-87e1-10c9b4d3849e")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("5e7e8c64-a656-420a-8a2a-234ab77677a3"),
-                    LineageProcess.refByGuid("699b94fb-a4c6-49f2-8b65-65f34f564d84")))
+                    LineageProcess.refByGuid("7024cf92-3dd9-4f13-8155-bc10357ebb86"),
+                    LineageProcess.refByGuid("a0b4dfe0-a39c-43f7-b672-7111e8aa63bf")))
             .organizationQualifiedName("organizationQualifiedName")
             .apiName("apiName")
             .sourceId("sourceId")
             .reports(Set.of(
-                    SalesforceReport.refByGuid("998f0ed5-2359-435c-9107-83d9d4b615c1"),
-                    SalesforceReport.refByGuid("6e216e21-f4d4-4d38-bfa3-3ef1e0a7c056")))
+                    SalesforceReport.refByGuid("8bca064c-47c7-4202-82d7-928369e63015"),
+                    SalesforceReport.refByGuid("9902c98e-0a81-46c6-948c-52f34418db37")))
             .objects(Set.of(
-                    SalesforceObject.refByGuid("954e596b-577f-4552-9b6e-329118672168"),
-                    SalesforceObject.refByGuid("bdb1c708-adc6-4e11-a8af-7113fa607628")))
+                    SalesforceObject.refByGuid("95517d08-7709-425b-9f76-3608ad747e9a"),
+                    SalesforceObject.refByGuid("6ecf365b-3e56-4d13-9c09-0f5ca98a175d")))
             .dashboards(Set.of(
-                    SalesforceDashboard.refByGuid("fb42b3a8-45ff-4de3-b1d3-a90874f458a2"),
-                    SalesforceDashboard.refByGuid("6189574b-fdc8-426a-871b-ac6da1225d28")))
+                    SalesforceDashboard.refByGuid("339685db-6fcf-43ea-ad70-66090fcb78b7"),
+                    SalesforceDashboard.refByGuid("ba487f6d-d65c-41ab-92cf-50ec0393135e")))
             .build();
     private static SalesforceOrganization frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"SalesforceOrganization.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"SalesforceOrganization.serialize"},
+            dependsOnGroups = {"SalesforceOrganization.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -143,8 +143,8 @@ public class SalesforceOrganizationTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"SalesforceOrganization.deserialize"},
+            dependsOnGroups = {"SalesforceOrganization.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, SalesforceOrganization.class);
@@ -152,8 +152,8 @@ public class SalesforceOrganizationTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"SalesforceOrganization.equivalency"},
+            dependsOnGroups = {"SalesforceOrganization.serialize", "SalesforceOrganization.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -162,8 +162,8 @@ public class SalesforceOrganizationTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"SalesforceOrganization.equivalency"},
+            dependsOnGroups = {"SalesforceOrganization.serialize", "SalesforceOrganization.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

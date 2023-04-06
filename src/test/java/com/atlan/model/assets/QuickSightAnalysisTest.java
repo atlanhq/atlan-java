@@ -107,11 +107,11 @@ public class QuickSightAnalysisTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("0e55a9a2-109d-4c40-a907-81eeb3ca9412"),
-                    LineageProcess.refByGuid("e32a9e4a-a40f-4482-9df9-acb6f346611c")))
+                    LineageProcess.refByGuid("10dc266c-a966-41d0-88a5-462fe2552fb8"),
+                    LineageProcess.refByGuid("c0301359-738e-449c-88be-fa1a971be35e")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("3a0421e1-ec8d-4517-8c23-79a6a0bc2d67"),
-                    LineageProcess.refByGuid("daeabd75-baac-4c28-91bb-089b3204f9c4")))
+                    LineageProcess.refByGuid("bfc058f4-6a41-4a69-95ff-8e70c1e7df20"),
+                    LineageProcess.refByGuid("b49180bb-0158-44ae-8ea1-25b9fe2bd549")))
             .quickSightId("quickSightId")
             .quickSightSheetId("quickSightSheetId")
             .quickSightSheetName("quickSightSheetName")
@@ -120,23 +120,23 @@ public class QuickSightAnalysisTest {
             .quickSightAnalysisParameterDeclarations(Set.of("one", "two", "three"))
             .quickSightAnalysisFilterGroups(Set.of("one", "two", "three"))
             .quickSightAnalysisVisuals(Set.of(
-                    QuickSightAnalysisVisual.refByGuid("b23a0e04-3b59-47b7-8995-8afe276d9d21"),
-                    QuickSightAnalysisVisual.refByGuid("334f0cda-5323-46f3-b20f-42d17411783b")))
+                    QuickSightAnalysisVisual.refByGuid("109bb6bb-571a-407d-96c2-86c11a301bc3"),
+                    QuickSightAnalysisVisual.refByGuid("259dd1ae-17c1-42e7-8717-03ffd79154dd")))
             .quickSightAnalysisFolders(Set.of(
-                    QuickSightFolder.refByGuid("63cb37a4-125c-4642-8bb1-833f24559903"),
-                    QuickSightFolder.refByGuid("6eb67185-3146-43db-af7a-fd4db223ddd0")))
+                    QuickSightFolder.refByGuid("43e59d9a-b4bc-4d00-9667-ddf441a15fdd"),
+                    QuickSightFolder.refByGuid("a698ee3c-b41c-46da-bf70-c244e59c32ad")))
             .build();
     private static QuickSightAnalysis frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"QuickSightAnalysis.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"QuickSightAnalysis.serialize"},
+            dependsOnGroups = {"QuickSightAnalysis.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -144,8 +144,8 @@ public class QuickSightAnalysisTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"QuickSightAnalysis.deserialize"},
+            dependsOnGroups = {"QuickSightAnalysis.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, QuickSightAnalysis.class);
@@ -153,8 +153,8 @@ public class QuickSightAnalysisTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"QuickSightAnalysis.equivalency"},
+            dependsOnGroups = {"QuickSightAnalysis.serialize", "QuickSightAnalysis.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -163,8 +163,8 @@ public class QuickSightAnalysisTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"QuickSightAnalysis.equivalency"},
+            dependsOnGroups = {"QuickSightAnalysis.serialize", "QuickSightAnalysis.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

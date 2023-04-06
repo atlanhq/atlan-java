@@ -107,15 +107,15 @@ public class SnowflakeStreamTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("1975422f-836b-4fb5-9ec1-42088376d81b"),
-                    LineageProcess.refByGuid("aca50806-293d-4717-86b3-e9be07ba6c04")))
+                    LineageProcess.refByGuid("c4f96878-7f64-4aaf-82a7-9f5995476ce8"),
+                    LineageProcess.refByGuid("13501ca8-a38f-4dad-b134-d6c80ae081bb")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("8bf5c2ab-c755-492a-9750-5a43924e1bd6"),
-                    LineageProcess.refByGuid("aefc7c28-757b-4441-9ade-a0921b116d28")))
-            .queryCount(-100394149386355066L)
-            .queryUserCount(2823640624279697250L)
+                    LineageProcess.refByGuid("f1ee1433-03a3-4654-8b25-5ebc66316421"),
+                    LineageProcess.refByGuid("c3be3ed8-2f9d-4398-8dd0-3851774d1b8f")))
+            .queryCount(949803543835061246L)
+            .queryUserCount(-92772542301417173L)
             // .queryUserMap(Map.of("key1", 123456L, "key2", 654321L))
-            .queryCountUpdatedAt(-6575188186558174073L)
+            .queryCountUpdatedAt(1675309844584606487L)
             .databaseName("databaseName")
             .databaseQualifiedName("databaseQualifiedName")
             .schemaName("schemaName")
@@ -125,31 +125,37 @@ public class SnowflakeStreamTest {
             .viewName("viewName")
             .viewQualifiedName("viewQualifiedName")
             .isProfiled(false)
-            .lastProfiledAt(-2529222892357614976L)
+            .lastProfiledAt(7935140462565600856L)
             .dbtModels(Set.of(
-                    DbtModel.refByGuid("7657c6d0-87e4-442b-a864-8ee95020e130"),
-                    DbtModel.refByGuid("5eca8ebd-96e0-4adc-93d6-d7b8de7369f9")))
+                    DbtModel.refByGuid("705e0a8d-5c2c-4295-a9df-808dba6173bc"),
+                    DbtModel.refByGuid("884e9341-1793-4140-87b5-068896cb9b6f")))
             .dbtSources(Set.of(
-                    DbtSource.refByGuid("cd1c4750-8dab-4beb-a0d5-0b66ecbf59c7"),
-                    DbtSource.refByGuid("5b6ea299-2f00-4766-b101-6f66f58a1183")))
+                    DbtSource.refByGuid("2d1d23f7-02ec-4c66-90ef-d9933a28cfa3"),
+                    DbtSource.refByGuid("ed882132-7a61-4126-8566-c3bf240dede1")))
+            .sqlDbtModels(Set.of(
+                    DbtModel.refByGuid("fa57ad94-5aaf-42d6-bc94-81de8a110b31"),
+                    DbtModel.refByGuid("61545e9a-e86b-40ba-af98-10acd6d322db")))
+            .sqlDBTSources(Set.of(
+                    DbtSource.refByGuid("fc1679b3-3388-4830-96f8-1a9651a7e57f"),
+                    DbtSource.refByGuid("e4d329ab-7a0e-4c72-a6ee-80e0606f447d")))
             .snowflakeStreamType("snowflakeStreamType")
             .snowflakeStreamSourceType("snowflakeStreamSourceType")
             .snowflakeStreamMode("snowflakeStreamMode")
             .snowflakeStreamIsStale(true)
-            .snowflakeStreamStaleAfter(6316084139740075976L)
-            .schema(Schema.refByGuid("54dfc2a3-4c3d-4650-8048-986332599af0"))
+            .snowflakeStreamStaleAfter(6926847985741731936L)
+            .schema(Schema.refByGuid("53368b93-2d6a-44b2-8f5c-ae608739e3d3"))
             .build();
     private static SnowflakeStream frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"SnowflakeStream.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"SnowflakeStream.serialize"},
+            dependsOnGroups = {"SnowflakeStream.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -157,8 +163,8 @@ public class SnowflakeStreamTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"SnowflakeStream.deserialize"},
+            dependsOnGroups = {"SnowflakeStream.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, SnowflakeStream.class);
@@ -166,8 +172,8 @@ public class SnowflakeStreamTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"SnowflakeStream.equivalency"},
+            dependsOnGroups = {"SnowflakeStream.serialize", "SnowflakeStream.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -176,8 +182,8 @@ public class SnowflakeStreamTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"SnowflakeStream.equivalency"},
+            dependsOnGroups = {"SnowflakeStream.serialize", "SnowflakeStream.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

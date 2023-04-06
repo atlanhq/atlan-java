@@ -12,31 +12,6 @@ import org.testng.annotations.Test;
 
 public class TableTest {
 
-    private static final PopularityInsights popInsights1 = PopularityInsights.builder()
-            .recordTotalUserCount(123L)
-            .recordUser("recordUser1")
-            .recordQueryCount(456L)
-            .recordWarehouse("recordWarehouse1")
-            .recordComputeCost(123.456)
-            .recordLastTimestamp(1234567890L)
-            .recordQuery("recordQuery1")
-            .recordQueryDuration(789L)
-            .recordMaxComputeCost(456.789)
-            .recordComputeCostUnit(SourceCostUnitType.CREDITS)
-            .build();
-    private static final PopularityInsights popInsights2 = PopularityInsights.builder()
-            .recordTotalUserCount(123L)
-            .recordUser("recordUser2")
-            .recordQueryCount(456L)
-            .recordWarehouse("recordWarehouse2")
-            .recordComputeCost(123.456)
-            .recordLastTimestamp(1234567890L)
-            .recordQuery("recordQuery2")
-            .recordQueryDuration(789L)
-            .recordMaxComputeCost(456.789)
-            .recordComputeCostUnit(SourceCostUnitType.CREDITS)
-            .build();
-
     private static final Table full = Table.builder()
             .guid("guid")
             .displayText("displayText")
@@ -86,29 +61,6 @@ public class TableTest {
             .sourceCreatedAt(123456789L)
             .sourceUpdatedAt(123456789L)
             .sourceUpdatedBy("sourceUpdatedBy")
-            .sourceReadCount(123L)
-            .sourceReadUserCount(456L)
-            .sourceLastReadAt(1234567890L)
-            .lastRowChangedAt(123456789L)
-            .sourceTotalCost(123.456)
-            .sourceCostUnit(SourceCostUnitType.CREDITS)
-            .sourceReadRecentUsers(List.of("one", "two"))
-            .sourceReadRecentUserRecord(popInsights1)
-            .sourceReadRecentUserRecord(popInsights2)
-            .sourceReadTopUser("one")
-            .sourceReadTopUser("two")
-            .sourceReadTopUserRecord(popInsights1)
-            .sourceReadTopUserRecord(popInsights2)
-            .sourceReadPopularQueryRecord(popInsights1)
-            .sourceReadPopularQueryRecord(popInsights2)
-            .sourceReadExpensiveQueryRecord(popInsights1)
-            .sourceReadExpensiveQueryRecord(popInsights2)
-            .sourceReadSlowQueryRecord(popInsights1)
-            .sourceReadSlowQueryRecord(popInsights2)
-            .sourceQueryComputeCost("warehouse1")
-            .sourceQueryComputeCost("warehouse2")
-            .sourceQueryComputeCostRecord(popInsights1)
-            .sourceQueryComputeCostRecord(popInsights2)
             .dbtQualifiedName("dbtQualifiedName")
             .assetDbtAlias("assetDbtAlias")
             .assetDbtMeta("assetDbtMeta")
@@ -155,15 +107,15 @@ public class TableTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("fb6e975c-494c-4043-ad1a-74d7206ed6cb"),
-                    LineageProcess.refByGuid("829ac1e8-4c6e-4cd8-bdcc-26f26939daee")))
+                    LineageProcess.refByGuid("333e79a7-a822-4123-8c8c-1fb7ef6403c3"),
+                    LineageProcess.refByGuid("2ff25ff8-51ac-4703-b8ca-68231feadb38")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("211ec8e4-f47e-4f39-a100-0330580ec425"),
-                    LineageProcess.refByGuid("ca7844c2-b090-4673-acc0-7589d6ef6b1c")))
-            .queryCount(5593136444823387055L)
-            .queryUserCount(-2504782676441769647L)
+                    LineageProcess.refByGuid("d0c8ccfb-065c-4d48-8a7f-acec947e4ce3"),
+                    LineageProcess.refByGuid("ced06ae5-1ead-4abe-98be-281eeab8cad4")))
+            .queryCount(-1666680909191730079L)
+            .queryUserCount(6356379793764929150L)
             // .queryUserMap(Map.of("key1", 123456L, "key2", 654321L))
-            .queryCountUpdatedAt(-3019884122298215214L)
+            .queryCountUpdatedAt(501458149465324825L)
             .databaseName("databaseName")
             .databaseQualifiedName("databaseQualifiedName")
             .schemaName("schemaName")
@@ -172,48 +124,56 @@ public class TableTest {
             .tableQualifiedName("tableQualifiedName")
             .viewName("viewName")
             .viewQualifiedName("viewQualifiedName")
+            .isProfiled(false)
+            .lastProfiledAt(-7630635268113772927L)
             .dbtModels(Set.of(
-                    DbtModel.refByGuid("5931e8be-09c2-4beb-a8ac-68e3a41772fa"),
-                    DbtModel.refByGuid("0feefcc6-2dcc-40a2-bc2c-27d1fa4a330b")))
+                    DbtModel.refByGuid("61425cf2-c8f7-4535-92d6-b21104622ce5"),
+                    DbtModel.refByGuid("8ebbaebf-77be-4da4-9b57-49266a8de67f")))
             .dbtSources(Set.of(
-                    DbtSource.refByGuid("2047a5b0-1287-4897-a0ef-e1aafd8354ee"),
-                    DbtSource.refByGuid("c21a830e-79a2-4b90-8da1-04895c6ff72c")))
-            .columnCount(4383463849834591400L)
-            .rowCount(3436894873169458769L)
-            .sizeBytes(1423921858742695292L)
+                    DbtSource.refByGuid("30926af5-0e42-4fba-b388-8ebd629088c5"),
+                    DbtSource.refByGuid("f64e9a69-d8af-45fa-967d-c383842d8263")))
+            .sqlDbtModels(Set.of(
+                    DbtModel.refByGuid("b989a2ab-598b-4634-85ac-42c42e5158c5"),
+                    DbtModel.refByGuid("aca6cf21-25d2-4398-b065-35c0086b5dd5")))
+            .sqlDBTSources(Set.of(
+                    DbtSource.refByGuid("d8dd4080-3eaf-4b79-ae3a-e131cc0af79b"),
+                    DbtSource.refByGuid("2a73ff06-a188-4ae6-bad4-901addb2d0a1")))
+            .columnCount(3634627257025430943L)
+            .rowCount(5983706554036988052L)
+            .sizeBytes(8207880686149652699L)
             .alias("alias")
             .isTemporary(false)
-            .isQueryPreview(true)
+            .isQueryPreview(false)
             .queryPreviewConfig(Map.of("key1", "value1", "key2", "value2"))
             .externalLocation("externalLocation")
             .externalLocationRegion("externalLocationRegion")
             .externalLocationFormat("externalLocationFormat")
             .isPartitioned(false)
             .partitionStrategy("partitionStrategy")
-            .partitionCount(-1975468973547775862L)
+            .partitionCount(-6842808470179792012L)
             .partitionList("partitionList")
             .partitions(Set.of(
-                    TablePartition.refByGuid("7b08dd50-5664-4aae-ae84-5c6b9d48f769"),
-                    TablePartition.refByGuid("9e8d5020-cc9c-4458-af51-74c0ca8189a9")))
-            .schema(Schema.refByGuid("2cc72098-add0-4679-969b-3e7c76fc5fa0"))
+                    TablePartition.refByGuid("62e7cdca-9ea8-434c-af0c-6cf005272319"),
+                    TablePartition.refByGuid("02afb9fc-38ef-4f69-b898-969ff5177798")))
             .columns(Set.of(
-                    Column.refByGuid("69ac6980-b5a1-4497-a70c-d64f0fc39756"),
-                    Column.refByGuid("47f5a357-313f-4393-b3a2-3aa2ae1c78c5")))
+                    Column.refByGuid("e2790fc5-5b4b-4310-b652-f4f685b20a2d"),
+                    Column.refByGuid("c494e69b-e909-40c6-9297-6b3339fd4420")))
             .queries(Set.of(
-                    AtlanQuery.refByGuid("c662399d-ddad-431f-a94e-5e861fb806a3"),
-                    AtlanQuery.refByGuid("54aebe3d-7fe5-433f-a008-06480ccff777")))
+                    AtlanQuery.refByGuid("31ec001c-a081-4ee5-8be2-b7067e46e922"),
+                    AtlanQuery.refByGuid("e4265d70-b64e-476b-a95c-f0ca36dee676")))
+            .schema(Schema.refByGuid("f7bbe6f1-775d-46d9-bd20-7294637f8d23"))
             .build();
     private static Table frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"Table.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"Table.serialize"},
+            dependsOnGroups = {"Table.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -221,8 +181,8 @@ public class TableTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"Table.deserialize"},
+            dependsOnGroups = {"Table.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, Table.class);
@@ -230,8 +190,8 @@ public class TableTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"Table.equivalency"},
+            dependsOnGroups = {"Table.serialize", "Table.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -240,8 +200,8 @@ public class TableTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"Table.equivalency"},
+            dependsOnGroups = {"Table.serialize", "Table.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

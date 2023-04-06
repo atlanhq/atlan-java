@@ -107,32 +107,32 @@ public class PowerBITileTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("8d8c6fc0-1a3a-41c3-858c-62c500c806bf"),
-                    LineageProcess.refByGuid("bd854052-46a3-4ceb-acd1-969cfa35d4d5")))
+                    LineageProcess.refByGuid("c90ace60-e302-455c-9890-dc3b7c6ca218"),
+                    LineageProcess.refByGuid("8d4e7040-9116-43f5-a2eb-fcbfb69a18be")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("392bf841-588a-4da1-9581-aff0c3ad5c56"),
-                    LineageProcess.refByGuid("9b2ebd45-1e52-4322-8668-eb8783d67366")))
+                    LineageProcess.refByGuid("2e7fba75-a711-4d08-a931-141b6b862d7a"),
+                    LineageProcess.refByGuid("5b99e789-5d11-4016-acb4-4cd6cd3e8f0e")))
             .powerBIIsHidden(true)
             .powerBITableQualifiedName("powerBITableQualifiedName")
             .powerBIFormatString("powerBIFormatString")
             .powerBIEndorsement(PowerBIEndorsementType.PROMOTED)
             .workspaceQualifiedName("workspaceQualifiedName")
             .dashboardQualifiedName("dashboardQualifiedName")
-            .report(PowerBIReport.refByGuid("87192c5f-a4be-481b-b3cc-4f088ba631f2"))
-            .dataset(PowerBIDataset.refByGuid("d76031ae-5448-46f7-a9ca-1b9129bffa78"))
-            .dashboard(PowerBIDashboard.refByGuid("6383bbd3-4273-4ba3-95ca-840934765520"))
+            .report(PowerBIReport.refByGuid("803fe522-d3fd-47e2-8243-64c7cd5c9ca7"))
+            .dataset(PowerBIDataset.refByGuid("024864ca-a377-45f0-9db2-23ddad599915"))
+            .dashboard(PowerBIDashboard.refByGuid("8fa54cc4-bad0-418e-8603-4348ee908ab8"))
             .build();
     private static PowerBITile frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"PowerBITile.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"PowerBITile.serialize"},
+            dependsOnGroups = {"PowerBITile.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -140,8 +140,8 @@ public class PowerBITileTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"PowerBITile.deserialize"},
+            dependsOnGroups = {"PowerBITile.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, PowerBITile.class);
@@ -149,8 +149,8 @@ public class PowerBITileTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"PowerBITile.equivalency"},
+            dependsOnGroups = {"PowerBITile.serialize", "PowerBITile.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -159,8 +159,8 @@ public class PowerBITileTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"PowerBITile.equivalency"},
+            dependsOnGroups = {"PowerBITile.serialize", "PowerBITile.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

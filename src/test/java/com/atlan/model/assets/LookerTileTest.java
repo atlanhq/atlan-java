@@ -107,33 +107,33 @@ public class LookerTileTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("e22e7a28-cf99-4a15-ad87-7e47415b6fd6"),
-                    LineageProcess.refByGuid("d8e66401-e08e-4185-9d58-e9597d63976f")))
+                    LineageProcess.refByGuid("6add7cfa-fa2c-449b-a7a0-0d0e9d427b1a"),
+                    LineageProcess.refByGuid("2f64e612-b037-4145-bce3-0ac984585b85")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("38854699-fda6-4f54-97b7-348b42515752"),
-                    LineageProcess.refByGuid("0b988dc0-389b-4343-82a6-e67d455cf9a7")))
+                    LineageProcess.refByGuid("58972382-460a-443c-858b-5b33af4b2d1d"),
+                    LineageProcess.refByGuid("ac0c3dbf-f14b-4a6c-ac54-fbd04792a1cb")))
             .lookmlLinkId("lookmlLinkId")
             .mergeResultId("mergeResultId")
             .noteText("noteText")
-            .queryID(1481946274)
-            .resultMakerID(-675895472)
+            .queryID(1884193165)
+            .resultMakerID(-772616952)
             .subtitleText("subtitleText")
-            .lookId(1318873166)
-            .query(LookerQuery.refByGuid("1b290f24-f92d-4e72-a5f5-882c5fd5540d"))
-            .look(LookerLook.refByGuid("f697d923-3992-4310-ba80-8f65edbc216c"))
-            .dashboard(LookerDashboard.refByGuid("8c81b444-ad45-47d7-b614-3ce8d0d32fd9"))
+            .lookId(-1468525388)
+            .query(LookerQuery.refByGuid("dc0bfb13-dbb3-4f5f-a5f1-cbf61d540454"))
+            .look(LookerLook.refByGuid("e158ebea-ca2c-4f78-9fc0-16e5ee2bc305"))
+            .dashboard(LookerDashboard.refByGuid("65686710-d2b7-4bf5-bfef-2f4109f98990"))
             .build();
     private static LookerTile frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"LookerTile.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"LookerTile.serialize"},
+            dependsOnGroups = {"LookerTile.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -141,8 +141,8 @@ public class LookerTileTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"LookerTile.deserialize"},
+            dependsOnGroups = {"LookerTile.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, LookerTile.class);
@@ -150,8 +150,8 @@ public class LookerTileTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"LookerTile.equivalency"},
+            dependsOnGroups = {"LookerTile.serialize", "LookerTile.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -160,8 +160,8 @@ public class LookerTileTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"LookerTile.equivalency"},
+            dependsOnGroups = {"LookerTile.serialize", "LookerTile.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

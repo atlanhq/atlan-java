@@ -107,39 +107,39 @@ public class PresetWorkspaceTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("fbe00eda-fedc-42de-973c-04f98d3f5242"),
-                    LineageProcess.refByGuid("edc2112c-329c-41a8-8be9-765e9cf74805")))
+                    LineageProcess.refByGuid("4eccb5cd-6aea-4cc4-be14-aa0efa955be8"),
+                    LineageProcess.refByGuid("10e2d1cc-d053-499d-9cf8-734164e51786")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("a6eeeced-3b80-4c8a-823b-e6ed7a5a9895"),
-                    LineageProcess.refByGuid("a7370868-679d-49b7-8b1f-df7ec2bae8b9")))
-            .presetWorkspaceId(-5037505705709102800L)
+                    LineageProcess.refByGuid("3745ea70-7d79-4e32-a9ac-a98c05445e96"),
+                    LineageProcess.refByGuid("64aae8da-4098-4b58-87da-284f59e1500d")))
+            .presetWorkspaceId(-3975012296677052278L)
             .presetWorkspaceQualifiedName("presetWorkspaceQualifiedName")
-            .presetDashboardId(-2053725390677020465L)
+            .presetDashboardId(-7083995690064598264L)
             .presetDashboardQualifiedName("presetDashboardQualifiedName")
-            .presetWorkspacePublicDashboardsAllowed(true)
-            .presetWorkspaceClusterId(-8717035498585774898L)
+            .presetWorkspacePublicDashboardsAllowed(false)
+            .presetWorkspaceClusterId(5420089982625187162L)
             .presetWorkspaceHostname("presetWorkspaceHostname")
-            .presetWorkspaceIsInMaintenanceMode(false)
+            .presetWorkspaceIsInMaintenanceMode(true)
             .presetWorkspaceRegion("presetWorkspaceRegion")
             .presetWorkspaceStatus("presetWorkspaceStatus")
-            .presetWorkspaceDeploymentId(-4969027351968316596L)
-            .presetWorkspaceDashboardCount(7659218209804310791L)
-            .presetWorkspaceDatasetCount(2441272767179136961L)
+            .presetWorkspaceDeploymentId(7747909453242054336L)
+            .presetWorkspaceDashboardCount(8466965832165139589L)
+            .presetWorkspaceDatasetCount(-5934563893747315072L)
             .presetDashboards(Set.of(
-                    PresetDashboard.refByGuid("f72263ca-d148-46f1-a3c3-78082a13d9c2"),
-                    PresetDashboard.refByGuid("b6bf5fa7-8a23-4fc2-b4dc-f5f25ea71d00")))
+                    PresetDashboard.refByGuid("ebbd5a82-3f83-4a30-b6a3-763b799104fe"),
+                    PresetDashboard.refByGuid("35f2d1a9-1f23-4e48-969e-eee5cac947ba")))
             .build();
     private static PresetWorkspace frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"PresetWorkspace.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"PresetWorkspace.serialize"},
+            dependsOnGroups = {"PresetWorkspace.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -147,8 +147,8 @@ public class PresetWorkspaceTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"PresetWorkspace.deserialize"},
+            dependsOnGroups = {"PresetWorkspace.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, PresetWorkspace.class);
@@ -156,8 +156,8 @@ public class PresetWorkspaceTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"PresetWorkspace.equivalency"},
+            dependsOnGroups = {"PresetWorkspace.serialize", "PresetWorkspace.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -166,8 +166,8 @@ public class PresetWorkspaceTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"PresetWorkspace.equivalency"},
+            dependsOnGroups = {"PresetWorkspace.serialize", "PresetWorkspace.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

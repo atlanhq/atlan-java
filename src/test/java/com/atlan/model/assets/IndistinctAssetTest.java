@@ -114,14 +114,14 @@ public class IndistinctAssetTest {
     private static IndistinctAsset frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"IndistinctAsset.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"IndistinctAsset.serialize"},
+            dependsOnGroups = {"IndistinctAsset.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -129,8 +129,8 @@ public class IndistinctAssetTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"IndistinctAsset.deserialize"},
+            dependsOnGroups = {"IndistinctAsset.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, IndistinctAsset.class);
@@ -138,8 +138,8 @@ public class IndistinctAssetTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"IndistinctAsset.equivalency"},
+            dependsOnGroups = {"IndistinctAsset.serialize", "IndistinctAsset.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -148,8 +148,8 @@ public class IndistinctAssetTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"IndistinctAsset.equivalency"},
+            dependsOnGroups = {"IndistinctAsset.serialize", "IndistinctAsset.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

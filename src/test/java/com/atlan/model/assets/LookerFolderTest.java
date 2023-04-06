@@ -107,33 +107,33 @@ public class LookerFolderTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("97f8e305-eb23-486c-b4e7-fdd748daa10d"),
-                    LineageProcess.refByGuid("3d1e797e-dd8c-4562-b414-b7c9d84db92c")))
+                    LineageProcess.refByGuid("cb895ec1-c589-44a5-ba3f-cb4173025ae9"),
+                    LineageProcess.refByGuid("60a4c948-5e80-4734-baf2-b49335bc86b6")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("8b634145-86e9-4236-aa2d-812d4d81f3aa"),
-                    LineageProcess.refByGuid("a8b5e0d2-b8b7-4d62-adf2-6060622fd789")))
-            .sourceContentMetadataId(-554130154)
-            .sourceCreatorId(-1704917312)
-            .sourceChildCount(-406379058)
-            .sourceParentID(-370290391)
+                    LineageProcess.refByGuid("ba8aa039-278f-4ae7-909e-fbe4c35526c1"),
+                    LineageProcess.refByGuid("8efb33d2-15ee-4bc8-84dd-70c8e2fd00d2")))
+            .sourceContentMetadataId(64190031)
+            .sourceCreatorId(-1230456266)
+            .sourceChildCount(1845202683)
+            .sourceParentID(-1711671254)
             .looks(Set.of(
-                    LookerLook.refByGuid("bcc9848c-1574-456f-9c3a-b33ff55d814b"),
-                    LookerLook.refByGuid("1c93a6c3-b9e7-4469-97e6-e483f38dc4fc")))
+                    LookerLook.refByGuid("9a4a001a-5561-4375-a68e-0d4cbbd8378e"),
+                    LookerLook.refByGuid("6cf63756-fa41-4d09-a506-ebf798b5128a")))
             .dashboards(Set.of(
-                    LookerDashboard.refByGuid("60d6b08f-d5f2-4783-96d7-ce704c5617b7"),
-                    LookerDashboard.refByGuid("7ed5e2d6-51f3-4e32-9aa2-fe89bbd14acc")))
+                    LookerDashboard.refByGuid("fafebc03-a2f2-4427-a9a8-3c2919c92b4b"),
+                    LookerDashboard.refByGuid("d4e884ba-d12d-4919-8907-a1cc0e54d15c")))
             .build();
     private static LookerFolder frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"LookerFolder.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"LookerFolder.serialize"},
+            dependsOnGroups = {"LookerFolder.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -141,8 +141,8 @@ public class LookerFolderTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"LookerFolder.deserialize"},
+            dependsOnGroups = {"LookerFolder.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, LookerFolder.class);
@@ -150,8 +150,8 @@ public class LookerFolderTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"LookerFolder.equivalency"},
+            dependsOnGroups = {"LookerFolder.serialize", "LookerFolder.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -160,8 +160,8 @@ public class LookerFolderTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"LookerFolder.equivalency"},
+            dependsOnGroups = {"LookerFolder.serialize", "LookerFolder.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

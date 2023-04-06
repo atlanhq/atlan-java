@@ -107,28 +107,28 @@ public class TableauMetricTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("4bb549ff-431a-4c79-9222-9b806a8e4c06"),
-                    LineageProcess.refByGuid("653f1ded-c3a3-42f0-84b7-3e4e459582d3")))
+                    LineageProcess.refByGuid("77e8bd80-7214-420b-9058-41c321bd75b4"),
+                    LineageProcess.refByGuid("01422b78-54ac-4dca-838a-0b435c995a4a")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("cd4e7bac-6479-4e09-ba26-0ec1c0a1bd8e"),
-                    LineageProcess.refByGuid("11397a2d-48e3-48cf-a625-f201a2cddb83")))
+                    LineageProcess.refByGuid("bb365c0e-bd54-4772-bc84-489b171ad38f"),
+                    LineageProcess.refByGuid("959d9df5-2598-42dc-ba8c-132b745bb3a9")))
             .siteQualifiedName("siteQualifiedName")
             .projectQualifiedName("projectQualifiedName")
             .topLevelProjectQualifiedName("topLevelProjectQualifiedName")
             .projectHierarchy(List.of(Map.of("key1", "value1", "key2", "value2")))
-            .project(TableauProject.refByGuid("b467a6be-d4ab-4ee4-99d9-3b05dd542966"))
+            .project(TableauProject.refByGuid("c6ef2871-576b-4ef5-93cc-8a9274afb091"))
             .build();
     private static TableauMetric frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"TableauMetric.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"TableauMetric.serialize"},
+            dependsOnGroups = {"TableauMetric.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -136,8 +136,8 @@ public class TableauMetricTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"TableauMetric.deserialize"},
+            dependsOnGroups = {"TableauMetric.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, TableauMetric.class);
@@ -145,8 +145,8 @@ public class TableauMetricTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"TableauMetric.equivalency"},
+            dependsOnGroups = {"TableauMetric.serialize", "TableauMetric.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -155,8 +155,8 @@ public class TableauMetricTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"TableauMetric.equivalency"},
+            dependsOnGroups = {"TableauMetric.serialize", "TableauMetric.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

@@ -107,32 +107,32 @@ public class SigmaDataElementFieldTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("0b2b570a-d0e8-4703-836c-681920957bb9"),
-                    LineageProcess.refByGuid("0d568608-226c-4a46-aa98-3336e2655e92")))
+                    LineageProcess.refByGuid("59876fe9-38e1-4f9a-83ee-b1f8e0c4ac21"),
+                    LineageProcess.refByGuid("5cb61897-c612-4362-80fe-ee96c2cc5fb5")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("da2c4390-cb0f-419c-a88d-01be79af36fc"),
-                    LineageProcess.refByGuid("6e1b1d46-bbc5-42de-948e-461084673101")))
+                    LineageProcess.refByGuid("3e5d47d1-55d4-40ca-8705-9e3b55fa6eb9"),
+                    LineageProcess.refByGuid("1ee6fbcf-08da-4242-a273-09f987f8459e")))
             .sigmaWorkbookQualifiedName("sigmaWorkbookQualifiedName")
             .sigmaWorkbookName("sigmaWorkbookName")
             .sigmaPageQualifiedName("sigmaPageQualifiedName")
             .sigmaPageName("sigmaPageName")
             .sigmaDataElementQualifiedName("sigmaDataElementQualifiedName")
             .sigmaDataElementName("sigmaDataElementName")
-            .sigmaDataElementFieldIsHidden(false)
+            .sigmaDataElementFieldIsHidden(true)
             .sigmaDataElementFieldFormula("sigmaDataElementFieldFormula")
-            .sigmaDataElement(SigmaDataElement.refByGuid("141d9d08-7efe-4c5f-8d56-3b9f804d309a"))
+            .sigmaDataElement(SigmaDataElement.refByGuid("b4adecbb-ca92-4b52-97dd-0bd0a3b39ef7"))
             .build();
     private static SigmaDataElementField frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"SigmaDataElementField.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"SigmaDataElementField.serialize"},
+            dependsOnGroups = {"SigmaDataElementField.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -140,8 +140,8 @@ public class SigmaDataElementFieldTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"SigmaDataElementField.deserialize"},
+            dependsOnGroups = {"SigmaDataElementField.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, SigmaDataElementField.class);
@@ -149,8 +149,8 @@ public class SigmaDataElementFieldTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"SigmaDataElementField.equivalency"},
+            dependsOnGroups = {"SigmaDataElementField.serialize", "SigmaDataElementField.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -159,8 +159,8 @@ public class SigmaDataElementFieldTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"SigmaDataElementField.equivalency"},
+            dependsOnGroups = {"SigmaDataElementField.serialize", "SigmaDataElementField.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

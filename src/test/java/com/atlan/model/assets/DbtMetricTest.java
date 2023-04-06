@@ -107,18 +107,18 @@ public class DbtMetricTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("785f09da-0670-4e41-a68c-387cda6e08ba"),
-                    LineageProcess.refByGuid("e1636796-676e-4bb0-a03c-6ae4bf74544e")))
+                    LineageProcess.refByGuid("c514a2e2-fbfd-4c4c-9a13-e98075b92062"),
+                    LineageProcess.refByGuid("f4dd3aca-5cc0-4be6-98be-8aa5b102677b")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("3f6dc6f0-3825-4452-a871-aa1a0e59fe94"),
-                    LineageProcess.refByGuid("643548ca-9da6-4be6-8a2f-0a2810c697bb")))
+                    LineageProcess.refByGuid("ce7eff8e-2054-4c4b-a2b9-d977e031145c"),
+                    LineageProcess.refByGuid("5e792d35-2dad-4c21-a335-a2628db97746")))
             .metricType("metricType")
             .metricSQL("metricSQL")
             .metricFilters("metricFilters")
             .metricTimeGrains(Set.of("one", "two", "three"))
             .assets(Set.of(
-                    Table.refByGuid("bf674b21-4136-493d-8a0c-9151450e2e92"),
-                    Table.refByGuid("393329bb-a768-4949-ab1b-111204e859d9")))
+                    Table.refByGuid("409ef98a-1687-43e0-bdde-db08448a5cf9"),
+                    Table.refByGuid("7920d3ce-c172-4f0a-b58e-5d37807cfe76")))
             .metricDimensionColumns(Set.of(
                     Column.refByGuid("ba62c99b-4863-473d-ae77-a1db9acab97d"),
                     Column.refByGuid("788bd781-9e25-4694-b766-d3c89a14bf44")))
@@ -130,21 +130,21 @@ public class DbtMetricTest {
                     .dbtMetricFilterValue("dbtMetricFilterValue")
                     .build())
             .dbtMetricFilterColumns(Set.of(
-                    Column.refByGuid("c3c07b72-ae87-4312-97d7-52bc4aae0a42"),
-                    Column.refByGuid("c6e03cd7-dadb-46a4-b560-a85bb7653132")))
-            .dbtModel(DbtModel.refByGuid("898d7380-4596-4f2f-a8a7-91e30c3f7482"))
+                    Column.refByGuid("20ae84a5-d2d9-42b1-821d-8af6b17cfa9d"),
+                    Column.refByGuid("1ac3152b-185e-46ca-89a3-beff2b7b154f")))
+            .dbtModel(DbtModel.refByGuid("8166586b-b515-41a2-b52a-8163984d881f"))
             .build();
     private static DbtMetric frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"DbtMetric.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"DbtMetric.serialize"},
+            dependsOnGroups = {"DbtMetric.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -152,8 +152,8 @@ public class DbtMetricTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"DbtMetric.deserialize"},
+            dependsOnGroups = {"DbtMetric.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, DbtMetric.class);
@@ -161,8 +161,8 @@ public class DbtMetricTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"DbtMetric.equivalency"},
+            dependsOnGroups = {"DbtMetric.serialize", "DbtMetric.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -171,8 +171,8 @@ public class DbtMetricTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"DbtMetric.equivalency"},
+            dependsOnGroups = {"DbtMetric.serialize", "DbtMetric.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

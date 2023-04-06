@@ -107,11 +107,11 @@ public class ModeWorkspaceTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("91b3e918-2894-4ddb-af32-1e095279aa30"),
-                    LineageProcess.refByGuid("a0675344-2a47-475f-b897-b7a060a4449a")))
+                    LineageProcess.refByGuid("7750d2dc-c632-4570-97ec-4c8e06a8c47f"),
+                    LineageProcess.refByGuid("c1804b10-f759-4677-b81c-a15d8beb647e")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("452bc501-b191-4c93-afeb-676cc92dd452"),
-                    LineageProcess.refByGuid("da6f0cdf-3340-4a4d-bfb6-f689bca62d39")))
+                    LineageProcess.refByGuid("c90b8911-63b7-4690-b6a3-90bd1d54b5f4"),
+                    LineageProcess.refByGuid("11a27b9d-11b2-4a1f-b799-527799ece8ff")))
             .modeId("modeId")
             .modeToken("modeToken")
             .modeWorkspaceName("modeWorkspaceName")
@@ -121,22 +121,22 @@ public class ModeWorkspaceTest {
             .modeReportQualifiedName("modeReportQualifiedName")
             .modeQueryName("modeQueryName")
             .modeQueryQualifiedName("modeQueryQualifiedName")
-            .modeCollectionCount(-6746846584286652790L)
+            .modeCollectionCount(-2559317948254058291L)
             .modeCollections(Set.of(
-                    ModeCollection.refByGuid("779dd6d2-fd50-43c8-83ce-55d621b64d27"),
-                    ModeCollection.refByGuid("9e168620-2e47-426f-985d-998a5ac7469e")))
+                    ModeCollection.refByGuid("e558603c-8ac9-4247-8fd0-e4f8dda526d2"),
+                    ModeCollection.refByGuid("6aefacf1-4487-4d8a-80a6-5b4669a3471a")))
             .build();
     private static ModeWorkspace frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"ModeWorkspace.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"ModeWorkspace.serialize"},
+            dependsOnGroups = {"ModeWorkspace.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -144,8 +144,8 @@ public class ModeWorkspaceTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"ModeWorkspace.deserialize"},
+            dependsOnGroups = {"ModeWorkspace.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, ModeWorkspace.class);
@@ -153,8 +153,8 @@ public class ModeWorkspaceTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"ModeWorkspace.equivalency"},
+            dependsOnGroups = {"ModeWorkspace.serialize", "ModeWorkspace.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -163,8 +163,8 @@ public class ModeWorkspaceTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"ModeWorkspace.equivalency"},
+            dependsOnGroups = {"ModeWorkspace.serialize", "ModeWorkspace.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

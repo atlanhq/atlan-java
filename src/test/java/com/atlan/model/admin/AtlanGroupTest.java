@@ -34,7 +34,7 @@ public class AtlanGroupTest {
     private static AtlanGroup frodo;
     private static String serialized;
 
-    @Test(groups = {"serialize"})
+    @Test(groups = {"AtlanGroup.serialize"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -42,8 +42,8 @@ public class AtlanGroupTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"AtlanGroup.deserialize"},
+            dependsOnGroups = {"AtlanGroup.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, AtlanGroup.class);
@@ -51,8 +51,8 @@ public class AtlanGroupTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"AtlanGroup.equivalency"},
+            dependsOnGroups = {"AtlanGroup.serialize", "AtlanGroup.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -61,8 +61,8 @@ public class AtlanGroupTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"AtlanGroup.equivalency"},
+            dependsOnGroups = {"AtlanGroup.serialize", "AtlanGroup.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

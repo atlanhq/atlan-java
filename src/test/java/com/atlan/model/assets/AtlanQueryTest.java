@@ -107,15 +107,15 @@ public class AtlanQueryTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("f84714a1-1389-4594-8532-c5ce281d4700"),
-                    LineageProcess.refByGuid("7b157af3-a070-4646-8ad8-9da361d5c5be")))
+                    LineageProcess.refByGuid("62643689-44ff-40ec-a58f-a1a8a6de09e1"),
+                    LineageProcess.refByGuid("84fa3899-6ae1-4172-9cc9-84034785eba2")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("85383322-028e-45e0-b5ca-ff69dff3f60f"),
-                    LineageProcess.refByGuid("f02ede14-d6a2-4244-b9e6-db583e25947d")))
-            .queryCount(-5956391955168112618L)
-            .queryUserCount(-7854075359620776227L)
+                    LineageProcess.refByGuid("b7011b42-e0d5-4d86-9005-c01e774dfdfc"),
+                    LineageProcess.refByGuid("98d6b502-522c-48d1-8eb4-6fb8ed3fc3da")))
+            .queryCount(-5706166928549924885L)
+            .queryUserCount(-7554215961707564365L)
             // .queryUserMap(Map.of("key1", 123456L, "key2", 654321L))
-            .queryCountUpdatedAt(-4615608701367559705L)
+            .queryCountUpdatedAt(8201441841631989489L)
             .databaseName("databaseName")
             .databaseQualifiedName("databaseQualifiedName")
             .schemaName("schemaName")
@@ -124,12 +124,20 @@ public class AtlanQueryTest {
             .tableQualifiedName("tableQualifiedName")
             .viewName("viewName")
             .viewQualifiedName("viewQualifiedName")
+            .isProfiled(false)
+            .lastProfiledAt(-6206043472338803859L)
             .dbtModels(Set.of(
-                    DbtModel.refByGuid("a6abd0d4-bb50-42a6-8b96-a0acf28cf866"),
-                    DbtModel.refByGuid("ff415f8d-eddb-4e91-a060-d6eadac13ea8")))
+                    DbtModel.refByGuid("10589e8b-3067-4ae2-bf27-5f825cf6b088"),
+                    DbtModel.refByGuid("7174b7c6-c6b0-47a6-ab37-05ad1692d874")))
             .dbtSources(Set.of(
-                    DbtSource.refByGuid("549567f1-1e51-40bc-9d2e-409d60c3db23"),
-                    DbtSource.refByGuid("d450008b-48f9-4dbc-8a01-998e1629942d")))
+                    DbtSource.refByGuid("a4dc11ab-de49-4dd6-92f8-76f1204ee01b"),
+                    DbtSource.refByGuid("26dbf273-cea8-4fd6-86cb-ab8744946de6")))
+            .sqlDbtModels(Set.of(
+                    DbtModel.refByGuid("bf19e1ca-777e-4d73-b411-af68829e3b24"),
+                    DbtModel.refByGuid("60a5e2b8-5cb6-4527-afbc-7c698610c834")))
+            .sqlDBTSources(Set.of(
+                    DbtSource.refByGuid("3f1a5e9b-bb92-4e53-8ca1-7484e178f839"),
+                    DbtSource.refByGuid("92be988a-cfa5-4f09-b3c4-28646f0a829d")))
             .rawQuery("rawQuery")
             .defaultSchemaQualifiedName("defaultSchemaQualifiedName")
             .defaultDatabaseQualifiedName("defaultDatabaseQualifiedName")
@@ -140,28 +148,28 @@ public class AtlanQueryTest {
             .collectionQualifiedName("collectionQualifiedName")
             .isVisualQuery(true)
             .visualBuilderSchemaBase64("visualBuilderSchemaBase64")
-            .parent(Folder.refByGuid("50a8c40c-3d27-40e5-b96c-0c7d79344a6a"))
-            .tables(Set.of(
-                    Table.refByGuid("c63dab5d-a437-4fe7-a876-34895f559ff7"),
-                    Table.refByGuid("f0fe2428-3745-4f70-b50f-57dc29a3cea4")))
+            .parent(Folder.refByGuid("fe3cbb73-bfa3-4bbd-a6bc-2732f3f99089"))
             .columns(Set.of(
-                    Column.refByGuid("f845b70d-c1cd-438a-a8f0-07e1591639f5"),
-                    Column.refByGuid("55db996c-a02a-4776-9855-5c44213c6b4a")))
+                    Column.refByGuid("fcfb1f38-9b60-469e-ad66-87bd69cff7d8"),
+                    Column.refByGuid("21d08a72-664d-4538-b74f-e3ee4ab4c3a6")))
+            .tables(Set.of(
+                    Table.refByGuid("b5a3b7d9-c79f-4e7c-a0bc-901367e29e91"),
+                    Table.refByGuid("3c679f20-b4ae-4ad8-91d2-6646bc965eb8")))
             .views(Set.of(
-                    View.refByGuid("9992ad61-a64d-49b4-9477-b82c2a4560c4"),
-                    View.refByGuid("2924ff96-c6bc-4ab7-8e76-9b758af8d7f9")))
+                    View.refByGuid("aa7b546d-e6b4-4730-8523-0462819d0b30"),
+                    View.refByGuid("2994dac5-8dbc-4fbf-a90e-761a32832368")))
             .build();
     private static AtlanQuery frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"AtlanQuery.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"AtlanQuery.serialize"},
+            dependsOnGroups = {"AtlanQuery.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -169,8 +177,8 @@ public class AtlanQueryTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"AtlanQuery.deserialize"},
+            dependsOnGroups = {"AtlanQuery.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, AtlanQuery.class);
@@ -178,8 +186,8 @@ public class AtlanQueryTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"AtlanQuery.equivalency"},
+            dependsOnGroups = {"AtlanQuery.serialize", "AtlanQuery.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -188,8 +196,8 @@ public class AtlanQueryTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"AtlanQuery.equivalency"},
+            dependsOnGroups = {"AtlanQuery.serialize", "AtlanQuery.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

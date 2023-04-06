@@ -110,27 +110,27 @@ public class ColumnProcessTest {
             .sql("sql")
             .ast("ast")
             .outputs(Set.of(
-                    Table.refByGuid("6bb5c102-558e-40ed-af21-e7708c269c8f"),
-                    Table.refByGuid("5a74cfd3-021e-444b-97ec-26b01ad3dbd6")))
+                    Table.refByGuid("0ba0d7ec-52b0-484b-92fd-8a82c7224040"),
+                    Table.refByGuid("a1c8a156-cc61-4505-a2ff-2e8a29fa0c39")))
             .inputs(Set.of(
-                    Table.refByGuid("5e57018c-992a-4511-a61e-6249612c2ca3"),
-                    Table.refByGuid("1cb129cb-6979-41b2-80a4-05851dde5641")))
+                    Table.refByGuid("282ae9d5-a72f-4e33-88cd-05cf06c2dd19"),
+                    Table.refByGuid("eb701a58-df20-4397-b6fb-df361755dccb")))
             .columnProcesses(Set.of(
-                    ColumnProcess.refByGuid("c4b5df42-c42e-492e-bf74-1ab4fbc270c4"),
-                    ColumnProcess.refByGuid("2942987c-f04b-4992-9634-c3f2ac09de2e")))
-            .process(LineageProcess.refByGuid("02b7197c-95ee-488f-9c8a-13bb046bc8ae"))
+                    ColumnProcess.refByGuid("7decb80e-e2e2-42e0-a963-7fb815cbd8e2"),
+                    ColumnProcess.refByGuid("ff9529c0-d2c6-40f0-bf43-16d867e5200a")))
+            .process(LineageProcess.refByGuid("e6766ffd-c977-4c37-8866-d926f8d19e91"))
             .build();
     private static ColumnProcess frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"ColumnProcess.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"ColumnProcess.serialize"},
+            dependsOnGroups = {"ColumnProcess.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -138,8 +138,8 @@ public class ColumnProcessTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"ColumnProcess.deserialize"},
+            dependsOnGroups = {"ColumnProcess.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, ColumnProcess.class);
@@ -147,8 +147,8 @@ public class ColumnProcessTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"ColumnProcess.equivalency"},
+            dependsOnGroups = {"ColumnProcess.serialize", "ColumnProcess.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -157,8 +157,8 @@ public class ColumnProcessTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"ColumnProcess.equivalency"},
+            dependsOnGroups = {"ColumnProcess.serialize", "ColumnProcess.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

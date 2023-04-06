@@ -107,23 +107,23 @@ public class InsightTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("bd0d72c1-8197-43fe-ab97-8a89ac534b4f"),
-                    LineageProcess.refByGuid("96fb7948-3e42-4fde-a349-1f68d43f2f90")))
+                    LineageProcess.refByGuid("1a9a3056-94a6-4ccb-bd25-5c5ed17589a0"),
+                    LineageProcess.refByGuid("af4bef7b-1a31-45cb-8689-5a75563d13b0")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("b55915c7-5dbb-497e-8b31-424333d01351"),
-                    LineageProcess.refByGuid("ee8eb454-b6df-447a-831d-519495731b02")))
+                    LineageProcess.refByGuid("48806ebd-4300-4115-97e8-4857ba8b495e"),
+                    LineageProcess.refByGuid("7bea1560-6640-469d-9107-02edcbdfe30c")))
             .build();
     private static Insight frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"Insight.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"Insight.serialize"},
+            dependsOnGroups = {"Insight.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -131,8 +131,8 @@ public class InsightTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"Insight.deserialize"},
+            dependsOnGroups = {"Insight.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, Insight.class);
@@ -140,8 +140,8 @@ public class InsightTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"Insight.equivalency"},
+            dependsOnGroups = {"Insight.serialize", "Insight.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -150,8 +150,8 @@ public class InsightTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"Insight.equivalency"},
+            dependsOnGroups = {"Insight.serialize", "Insight.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

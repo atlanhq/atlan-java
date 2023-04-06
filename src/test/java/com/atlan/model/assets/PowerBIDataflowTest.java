@@ -107,33 +107,33 @@ public class PowerBIDataflowTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("b50d81b6-ee9d-4f5e-9fb4-17f7e0c60ad4"),
-                    LineageProcess.refByGuid("fea2a0e9-9f87-462c-8ce8-c92fd4c400c8")))
+                    LineageProcess.refByGuid("5b1a8c5b-a021-4595-89a4-9b6df910b2cd"),
+                    LineageProcess.refByGuid("245fde68-df8e-4131-ada3-da0807f54c5f")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("e649e475-0d48-4626-8fc9-96c8b2a15357"),
-                    LineageProcess.refByGuid("ef2462a1-4b5d-4a0f-bb9d-df267b5690ef")))
+                    LineageProcess.refByGuid("70773c8c-0fbe-480d-9fdc-d9f9215f5b80"),
+                    LineageProcess.refByGuid("57d16979-3992-48e2-98fb-a72ecd2731da")))
             .powerBIIsHidden(true)
             .powerBITableQualifiedName("powerBITableQualifiedName")
             .powerBIFormatString("powerBIFormatString")
             .powerBIEndorsement(PowerBIEndorsementType.PROMOTED)
             .workspaceQualifiedName("workspaceQualifiedName")
             .webUrl("webUrl")
-            .workspace(PowerBIWorkspace.refByGuid("4dff1188-dff1-4e79-819e-311412b0306c"))
+            .workspace(PowerBIWorkspace.refByGuid("a03fe97a-6cfa-4e41-9adc-148edbff33e5"))
             .datasets(Set.of(
-                    PowerBIDataset.refByGuid("37c410ba-e6f5-42bf-8657-58ca276f3510"),
-                    PowerBIDataset.refByGuid("bb5c68f9-3185-4641-8e2f-632f22bc6cdd")))
+                    PowerBIDataset.refByGuid("d3bf3e88-d3c5-496c-b1e4-97589abf39f4"),
+                    PowerBIDataset.refByGuid("8b10c6dc-52c6-4ac7-9ea3-f569306b9273")))
             .build();
     private static PowerBIDataflow frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"PowerBIDataflow.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"PowerBIDataflow.serialize"},
+            dependsOnGroups = {"PowerBIDataflow.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -141,8 +141,8 @@ public class PowerBIDataflowTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"PowerBIDataflow.deserialize"},
+            dependsOnGroups = {"PowerBIDataflow.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, PowerBIDataflow.class);
@@ -150,8 +150,8 @@ public class PowerBIDataflowTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"PowerBIDataflow.equivalency"},
+            dependsOnGroups = {"PowerBIDataflow.serialize", "PowerBIDataflow.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -160,8 +160,8 @@ public class PowerBIDataflowTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"PowerBIDataflow.equivalency"},
+            dependsOnGroups = {"PowerBIDataflow.serialize", "PowerBIDataflow.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

@@ -29,14 +29,14 @@ public class AssetCreateTest {
     private static String serialized;
     private static final int HASH = full.hashCode();
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"AssetCreate.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"AssetCreate.serialize"},
+            dependsOnGroups = {"AssetCreate.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -45,8 +45,8 @@ public class AssetCreateTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"AssetCreate.deserialize"},
+            dependsOnGroups = {"AssetCreate.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, AtlanEvent.class);
@@ -54,8 +54,8 @@ public class AssetCreateTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"AssetCreate.equivalency"},
+            dependsOnGroups = {"AssetCreate.serialize", "AssetCreate.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -64,8 +64,8 @@ public class AssetCreateTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"AssetCreate.equivalency"},
+            dependsOnGroups = {"AssetCreate.serialize", "AssetCreate.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

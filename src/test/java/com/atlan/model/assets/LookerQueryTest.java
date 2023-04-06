@@ -107,34 +107,34 @@ public class LookerQueryTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("7b1c934b-5b80-4eaf-8716-4b4f8be5bf04"),
-                    LineageProcess.refByGuid("ccafa45a-e966-4c83-ab9e-088c3eac6ce3")))
+                    LineageProcess.refByGuid("2157b543-d033-43ac-ba90-65aa3c07fcab"),
+                    LineageProcess.refByGuid("73a4a124-94a3-49bb-ac3c-88b9ad6efbc1")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("a0342280-0f9d-4873-88b3-9a63df921893"),
-                    LineageProcess.refByGuid("db1ae341-793c-4473-8f41-9c6c294daf96")))
+                    LineageProcess.refByGuid("e157533d-414f-462f-a524-82931c2dd02b"),
+                    LineageProcess.refByGuid("3d33a257-69f0-4f2f-a05a-e1dabb38380e")))
             .sourceDefinition("sourceDefinition")
             .sourceDefinitionDatabase("sourceDefinitionDatabase")
             .sourceDefinitionSchema("sourceDefinitionSchema")
             .fields(Set.of("one", "two", "three"))
             .tiles(Set.of(
-                    LookerTile.refByGuid("bbf61e27-2f7e-485c-8057-2af7081d1ff6"),
-                    LookerTile.refByGuid("724e40eb-4631-4d77-82d9-ba267bc46962")))
+                    LookerTile.refByGuid("105f338a-981f-42da-838d-3d88997884bf"),
+                    LookerTile.refByGuid("b891dec4-f055-4abe-9b7a-d526ba40f5cc")))
             .looks(Set.of(
-                    LookerLook.refByGuid("61301a47-399b-47c6-8c5b-6feb29ad8d25"),
-                    LookerLook.refByGuid("ef475b11-ff51-4b2c-bff9-a859a5dfa179")))
-            .model(LookerModel.refByGuid("f3f44d2e-2f8a-42d9-9755-184ac3d2e18f"))
+                    LookerLook.refByGuid("2edc358f-d4d7-437e-a61a-2db6ed06010a"),
+                    LookerLook.refByGuid("b7816bf1-d238-4e47-932d-42910d57bc79")))
+            .model(LookerModel.refByGuid("f403304e-72e1-4827-bddd-524e2c24b794"))
             .build();
     private static LookerQuery frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"LookerQuery.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"LookerQuery.serialize"},
+            dependsOnGroups = {"LookerQuery.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -142,8 +142,8 @@ public class LookerQueryTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"LookerQuery.deserialize"},
+            dependsOnGroups = {"LookerQuery.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, LookerQuery.class);
@@ -151,8 +151,8 @@ public class LookerQueryTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"LookerQuery.equivalency"},
+            dependsOnGroups = {"LookerQuery.serialize", "LookerQuery.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -161,8 +161,8 @@ public class LookerQueryTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"LookerQuery.equivalency"},
+            dependsOnGroups = {"LookerQuery.serialize", "LookerQuery.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

@@ -110,26 +110,26 @@ public class BIProcessTest {
             .sql("sql")
             .ast("ast")
             .outputs(Set.of(
-                    Table.refByGuid("766cd862-4385-431b-80be-0465cd9d8f7a"),
-                    Table.refByGuid("90105365-c714-4a29-bc03-76305d948af1")))
+                    Table.refByGuid("3cde7d91-5a23-4685-bd86-7b5d80309025"),
+                    Table.refByGuid("a1de53ed-0f12-4748-84fa-657fb9f9d5af")))
             .inputs(Set.of(
-                    Table.refByGuid("e8d9c3e0-d75a-4743-a4bc-9fc6f0b7384d"),
-                    Table.refByGuid("43b1d2fe-1370-4a1b-b6cd-f449f5239071")))
+                    Table.refByGuid("d154fb34-4c39-494b-ac4c-76cbd9cf96b0"),
+                    Table.refByGuid("bb725ccd-3451-4d8f-a619-337e24437ada")))
             .columnProcesses(Set.of(
-                    ColumnProcess.refByGuid("2a5c30fe-c877-4101-ad52-15d550bafbe0"),
-                    ColumnProcess.refByGuid("b5b64c98-8ff8-4720-b6d5-c88b554af0a1")))
+                    ColumnProcess.refByGuid("8cd70774-29c2-43a4-bca1-05399008bf72"),
+                    ColumnProcess.refByGuid("e50a6d21-45b6-4b74-9047-ead8a56df482")))
             .build();
     private static BIProcess frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"BIProcess.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"BIProcess.serialize"},
+            dependsOnGroups = {"BIProcess.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -137,8 +137,8 @@ public class BIProcessTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"BIProcess.deserialize"},
+            dependsOnGroups = {"BIProcess.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, BIProcess.class);
@@ -146,8 +146,8 @@ public class BIProcessTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"BIProcess.equivalency"},
+            dependsOnGroups = {"BIProcess.serialize", "BIProcess.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -156,8 +156,8 @@ public class BIProcessTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"BIProcess.equivalency"},
+            dependsOnGroups = {"BIProcess.serialize", "BIProcess.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

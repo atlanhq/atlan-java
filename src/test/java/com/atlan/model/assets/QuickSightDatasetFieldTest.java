@@ -107,29 +107,29 @@ public class QuickSightDatasetFieldTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("2fa8a023-f992-41a1-a70e-1601da9ddb13"),
-                    LineageProcess.refByGuid("110e8deb-4087-4a42-b20a-7c77d7b80362")))
+                    LineageProcess.refByGuid("85457a1d-e213-4ed8-a6cc-d9f325791b2e"),
+                    LineageProcess.refByGuid("1f9fb848-e7df-4f39-842e-5192f52fe558")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("adffb309-3fb9-4cd9-9d7a-e6bdf91a84f8"),
-                    LineageProcess.refByGuid("5da64979-f1b6-4d28-a5fd-971f75f76504")))
+                    LineageProcess.refByGuid("39846e91-bc9c-4507-9c2f-52d01b0dc4ad"),
+                    LineageProcess.refByGuid("51042652-2521-4679-877d-5a29960fb8eb")))
             .quickSightId("quickSightId")
             .quickSightSheetId("quickSightSheetId")
             .quickSightSheetName("quickSightSheetName")
             .quickSightDatasetFieldType(QuickSightDatasetFieldType.STRING)
             .quickSightDatasetQualifiedName("quickSightDatasetQualifiedName")
-            .quickSightDataset(QuickSightDataset.refByGuid("92dace25-b41d-42f2-936d-d28d8ac714eb"))
+            .quickSightDataset(QuickSightDataset.refByGuid("7c8604fc-d952-4f76-b8dd-fe04d91c5322"))
             .build();
     private static QuickSightDatasetField frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"QuickSightDatasetField.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"QuickSightDatasetField.serialize"},
+            dependsOnGroups = {"QuickSightDatasetField.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -137,8 +137,8 @@ public class QuickSightDatasetFieldTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"QuickSightDatasetField.deserialize"},
+            dependsOnGroups = {"QuickSightDatasetField.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, QuickSightDatasetField.class);
@@ -146,8 +146,8 @@ public class QuickSightDatasetFieldTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"QuickSightDatasetField.equivalency"},
+            dependsOnGroups = {"QuickSightDatasetField.serialize", "QuickSightDatasetField.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -156,8 +156,8 @@ public class QuickSightDatasetFieldTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"QuickSightDatasetField.equivalency"},
+            dependsOnGroups = {"QuickSightDatasetField.serialize", "QuickSightDatasetField.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

@@ -109,34 +109,36 @@ public class ConnectionTest {
             .category(AtlanConnectionCategory.DATABASE)
             .subCategory("subCategory")
             .host("host")
-            .port(-583368867)
+            .port(803540773)
             .allowQuery(false)
-            .allowQueryPreview(true)
+            .allowQueryPreview(false)
             .queryPreviewConfig(Map.of("key1", "value1", "key2", "value2"))
             .queryConfig("queryConfig")
             .credentialStrategy("credentialStrategy")
             .previewCredentialStrategy("previewCredentialStrategy")
-            .rowLimit(3028736751300018007L)
+            .policyStrategy("policyStrategy")
+            .queryUsernameStrategy(QueryUsernameStrategy.ATLAN)
+            .rowLimit(-3920537747791907458L)
             .defaultCredentialGuid("defaultCredentialGuid")
             .connectorIcon("connectorIcon")
             .connectorImage("connectorImage")
             .sourceLogo("sourceLogo")
             .isSampleDataPreviewEnabled(false)
-            .popularityInsightsTimeframe(-3923148251533697428L)
-            .hasPopularityInsights(true)
+            .popularityInsightsTimeframe(6028120599299942171L)
+            .hasPopularityInsights(false)
             .connectionDbtEnvironments(Set.of("one", "two", "three"))
             .build();
     private static Connection frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"Connection.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"Connection.serialize"},
+            dependsOnGroups = {"Connection.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -144,8 +146,8 @@ public class ConnectionTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"Connection.deserialize"},
+            dependsOnGroups = {"Connection.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, Connection.class);
@@ -153,8 +155,8 @@ public class ConnectionTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"Connection.equivalency"},
+            dependsOnGroups = {"Connection.serialize", "Connection.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -163,8 +165,8 @@ public class ConnectionTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"Connection.equivalency"},
+            dependsOnGroups = {"Connection.serialize", "Connection.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

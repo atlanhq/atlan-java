@@ -107,26 +107,26 @@ public class FolderTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .childrenQueries(Set.of(
-                    AtlanQuery.refByGuid("283ad369-4aa5-47ca-8f75-81017ed27b81"),
-                    AtlanQuery.refByGuid("40c42d73-e810-483c-9495-ce9b0ecf8ebe")))
+                    AtlanQuery.refByGuid("47361db3-fe8b-42b3-88df-3e6b40d9f2d3"),
+                    AtlanQuery.refByGuid("f0271754-54d2-4e36-8156-d985e1b636b1")))
             .childrenFolders(Set.of(
-                    Folder.refByGuid("3c60465a-b591-4f25-871c-596ca0b957db"),
-                    Folder.refByGuid("aa72cd9c-26de-4eb4-a1db-2c2ded1e38bc")))
+                    Folder.refByGuid("d782231e-42f7-4b9e-92a0-49c1ce52ac56"),
+                    Folder.refByGuid("71be884d-7983-41d1-9e40-1412b5fba53c")))
             .parentQualifiedName("parentQualifiedName")
             .collectionQualifiedName("collectionQualifiedName")
-            .parent(Folder.refByGuid("aa26649c-c583-49af-bfd9-97d871052eac"))
+            .parent(Folder.refByGuid("a312afa9-d5cf-4ce2-91d3-804d62506264"))
             .build();
     private static Folder frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"Folder.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"Folder.serialize"},
+            dependsOnGroups = {"Folder.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -134,8 +134,8 @@ public class FolderTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"Folder.deserialize"},
+            dependsOnGroups = {"Folder.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, Folder.class);
@@ -143,8 +143,8 @@ public class FolderTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"Folder.equivalency"},
+            dependsOnGroups = {"Folder.serialize", "Folder.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -153,8 +153,8 @@ public class FolderTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"Folder.equivalency"},
+            dependsOnGroups = {"Folder.serialize", "Folder.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

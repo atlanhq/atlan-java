@@ -107,11 +107,11 @@ public class TableauCalculatedFieldTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("de7a491c-d16f-4aa3-a5cc-3b4f8d59fbb6"),
-                    LineageProcess.refByGuid("dd5847ff-5bd4-4068-99a4-72e92aa81fef")))
+                    LineageProcess.refByGuid("e13daeff-4174-4c29-a505-76370e07570b"),
+                    LineageProcess.refByGuid("67baf450-b294-4e63-820e-30b0fed2f3d8")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("84e4d177-6883-45dc-b8e6-b9756cef97ef"),
-                    LineageProcess.refByGuid("ff5293a2-7c4e-4824-9bf1-ef4cd3d5f891")))
+                    LineageProcess.refByGuid("87d217e5-0b7f-400a-a400-323362622371"),
+                    LineageProcess.refByGuid("a3ce8c99-1260-465d-8db2-368126ea0eb5")))
             .siteQualifiedName("siteQualifiedName")
             .projectQualifiedName("projectQualifiedName")
             .topLevelProjectQualifiedName("topLevelProjectQualifiedName")
@@ -122,23 +122,23 @@ public class TableauCalculatedFieldTest {
             .role("role")
             .tableauDataType("tableauDataType")
             .formula("formula")
-            // .upstreamFields(List.of(Map.of("key1", "value1", "key2", "value2")))
+            .upstreamFields(List.of(Map.of("key1", "value1", "key2", "value2")))
             .worksheets(Set.of(
-                    TableauWorksheet.refByGuid("3747ad34-fcbc-48ef-8e3b-8bd433012a01"),
-                    TableauWorksheet.refByGuid("3449ad8d-4bb0-4fc4-803c-84c8ac17ead1")))
-            .datasource(TableauDatasource.refByGuid("e5eac11c-8e23-4419-8121-a2b65c47c06b"))
+                    TableauWorksheet.refByGuid("f6411f08-4c36-4958-83d0-c3f665f8610d"),
+                    TableauWorksheet.refByGuid("a739d01f-4619-4fb4-b4c1-43a3ea51c533")))
+            .datasource(TableauDatasource.refByGuid("58a4d35e-90ad-4f89-aea3-b852940a472a"))
             .build();
     private static TableauCalculatedField frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"TableauCalculatedField.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"TableauCalculatedField.serialize"},
+            dependsOnGroups = {"TableauCalculatedField.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -146,8 +146,8 @@ public class TableauCalculatedFieldTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"TableauCalculatedField.deserialize"},
+            dependsOnGroups = {"TableauCalculatedField.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, TableauCalculatedField.class);
@@ -155,8 +155,8 @@ public class TableauCalculatedFieldTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"TableauCalculatedField.equivalency"},
+            dependsOnGroups = {"TableauCalculatedField.serialize", "TableauCalculatedField.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -165,8 +165,8 @@ public class TableauCalculatedFieldTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"TableauCalculatedField.equivalency"},
+            dependsOnGroups = {"TableauCalculatedField.serialize", "TableauCalculatedField.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

@@ -107,34 +107,34 @@ public class LookerFieldTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("61ce0c8c-4b38-4f90-a9b5-fd90a9e57b2d"),
-                    LineageProcess.refByGuid("ad44a4f5-a23c-4e29-b59a-848986d6c95b")))
+                    LineageProcess.refByGuid("f7223b74-5b25-4f4d-bfd5-abaeaf72e5f9"),
+                    LineageProcess.refByGuid("f664aff2-0ec6-4301-bf5d-b5cddacd1cac")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("94efffd7-3e03-4f21-b941-4ffc49696c08"),
-                    LineageProcess.refByGuid("1706fc7c-e838-405b-b449-58820b2d5ba4")))
+                    LineageProcess.refByGuid("39c3d2b4-f91c-4f0b-8ade-7845c1e2e0c3"),
+                    LineageProcess.refByGuid("21fabad9-a81f-41e8-9454-6ec8122eac2e")))
             .projectName("projectName")
             .lookerExploreQualifiedName("lookerExploreQualifiedName")
             .lookerViewQualifiedName("lookerViewQualifiedName")
             .modelName("modelName")
             .sourceDefinition("sourceDefinition")
             .lookerFieldDataType("lookerFieldDataType")
-            .lookerTimesUsed(-1450307085)
-            .view(LookerView.refByGuid("af57d21c-2919-4206-b716-2e080bb4a5c3"))
-            .explore(LookerExplore.refByGuid("d49b7ed4-2eb7-448b-b043-1ee26eeb10e4"))
-            .project(LookerProject.refByGuid("759ad04d-c0b4-45b0-b689-713a07ebaf4a"))
-            .model(LookerModel.refByGuid("41ef7a3f-4cc9-4340-9af3-ac7f87691647"))
+            .lookerTimesUsed(-73143692)
+            .view(LookerView.refByGuid("da307585-c9d8-41ce-b8fd-a526143eca1b"))
+            .explore(LookerExplore.refByGuid("b846ef77-66e9-41a0-bea1-108e6a40c511"))
+            .project(LookerProject.refByGuid("9d6f1548-74ac-4bdf-9a15-916d98449232"))
+            .model(LookerModel.refByGuid("6bbb6307-7729-4ee1-8990-cbf5e16cc0ae"))
             .build();
     private static LookerField frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"LookerField.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"LookerField.serialize"},
+            dependsOnGroups = {"LookerField.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -142,8 +142,8 @@ public class LookerFieldTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"LookerField.deserialize"},
+            dependsOnGroups = {"LookerField.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, LookerField.class);
@@ -151,8 +151,8 @@ public class LookerFieldTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"LookerField.equivalency"},
+            dependsOnGroups = {"LookerField.serialize", "LookerField.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -161,8 +161,8 @@ public class LookerFieldTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"LookerField.equivalency"},
+            dependsOnGroups = {"LookerField.serialize", "LookerField.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

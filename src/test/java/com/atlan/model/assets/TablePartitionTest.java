@@ -107,15 +107,15 @@ public class TablePartitionTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("ba615d5a-8712-4dd9-8adf-e18c29858185"),
-                    LineageProcess.refByGuid("80ab93fa-1b61-4da3-ac4c-396ed127b870")))
+                    LineageProcess.refByGuid("b2db57dc-3091-4eee-a5d2-dc9e9b03f010"),
+                    LineageProcess.refByGuid("ece9e0d6-ec11-420f-850a-3c25fd8eac77")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("c36510a9-f08a-4924-ab59-62a612fc452c"),
-                    LineageProcess.refByGuid("88ead958-7069-4a35-a6a5-7a6a81e9ccdd")))
-            .queryCount(-7448289257884691767L)
-            .queryUserCount(6862656725206033266L)
+                    LineageProcess.refByGuid("5badd0be-4414-4220-8cd0-ae52f895b7b0"),
+                    LineageProcess.refByGuid("0718f0ac-9649-41cb-998e-1380344b8c12")))
+            .queryCount(-3918158359311912933L)
+            .queryUserCount(3907496560807504625L)
             // .queryUserMap(Map.of("key1", 123456L, "key2", 654321L))
-            .queryCountUpdatedAt(-4992025177262714178L)
+            .queryCountUpdatedAt(-6311641284624351125L)
             .databaseName("databaseName")
             .databaseQualifiedName("databaseQualifiedName")
             .schemaName("schemaName")
@@ -124,43 +124,51 @@ public class TablePartitionTest {
             .tableQualifiedName("tableQualifiedName")
             .viewName("viewName")
             .viewQualifiedName("viewQualifiedName")
+            .isProfiled(false)
+            .lastProfiledAt(4380342658431213479L)
             .dbtModels(Set.of(
-                    DbtModel.refByGuid("f597d272-df21-4825-8b32-8c5e4a0e5143"),
-                    DbtModel.refByGuid("7421491f-ab01-4099-9175-485bdd49bfc3")))
+                    DbtModel.refByGuid("fbf1b354-2291-44d7-bdd1-b0aeabc4dc3e"),
+                    DbtModel.refByGuid("8e15f461-2a96-4177-8725-1a64717232a3")))
             .dbtSources(Set.of(
-                    DbtSource.refByGuid("6d223536-d17b-449f-8e27-14e2aef65222"),
-                    DbtSource.refByGuid("89bd3a7b-d455-451a-ba00-663a105601d7")))
+                    DbtSource.refByGuid("ba2c8d70-381a-4678-9f4a-c73dd278094a"),
+                    DbtSource.refByGuid("713ba2ed-c4dd-4f17-ae49-697bf80efafb")))
+            .sqlDbtModels(Set.of(
+                    DbtModel.refByGuid("2c72dce5-6320-4d2a-924b-be3f069201ad"),
+                    DbtModel.refByGuid("8ac1163f-9a2a-491e-b599-d722911f396e")))
+            .sqlDBTSources(Set.of(
+                    DbtSource.refByGuid("f09f1585-65af-47d8-adf9-bd7e437754dd"),
+                    DbtSource.refByGuid("c37e0e91-5c0f-4771-a445-7f7ac2cb7893")))
             .constraint("constraint")
-            .columnCount(7676970678518032565L)
-            .rowCount(-7605413318943090702L)
-            .sizeBytes(-4803057256196692220L)
+            .columnCount(-9001792185068200817L)
+            .rowCount(-1048303578309653054L)
+            .sizeBytes(7138041396881024384L)
             .alias("alias")
             .isTemporary(true)
-            .isQueryPreview(false)
+            .isQueryPreview(true)
             .queryPreviewConfig(Map.of("key1", "value1", "key2", "value2"))
             .externalLocation("externalLocation")
             .externalLocationRegion("externalLocationRegion")
             .externalLocationFormat("externalLocationFormat")
-            .isPartitioned(false)
+            .isPartitioned(true)
             .partitionStrategy("partitionStrategy")
-            .partitionCount(6142388196139922398L)
+            .partitionCount(-2014085021728451831L)
             .partitionList("partitionList")
             .columns(Set.of(
-                    Column.refByGuid("93c5d7bc-9107-4ef7-99ba-43c103ec8765"),
-                    Column.refByGuid("49cf1247-e796-4ac8-a160-608a862ea98e")))
-            .parentTable(Table.refByGuid("811beac4-b960-4541-a245-fabfb5b2a696"))
+                    Column.refByGuid("9463ecf7-a87c-4a92-a4e6-008826c0d488"),
+                    Column.refByGuid("995c1648-a84f-4226-a360-32705ddbe1b4")))
+            .parentTable(Table.refByGuid("9fe29782-bd58-4b46-ab5e-d8fc4c169c49"))
             .build();
     private static TablePartition frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"TablePartition.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"TablePartition.serialize"},
+            dependsOnGroups = {"TablePartition.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -168,8 +176,8 @@ public class TablePartitionTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"TablePartition.deserialize"},
+            dependsOnGroups = {"TablePartition.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, TablePartition.class);
@@ -177,8 +185,8 @@ public class TablePartitionTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"TablePartition.equivalency"},
+            dependsOnGroups = {"TablePartition.serialize", "TablePartition.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -187,8 +195,8 @@ public class TablePartitionTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"TablePartition.equivalency"},
+            dependsOnGroups = {"TablePartition.serialize", "TablePartition.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

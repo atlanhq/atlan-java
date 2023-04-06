@@ -10,9 +10,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.*;
 import org.testng.annotations.Test;
 
-public class DbtModelTest {
+public class QlikStreamTest {
 
-    private static final DbtModel full = DbtModel.builder()
+    private static final QlikStream full = QlikStream.builder()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -107,64 +107,38 @@ public class DbtModelTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("20e1f41d-f246-40fc-b9f2-7700a84d13a1"),
-                    LineageProcess.refByGuid("da56ecf3-a925-4ab5-878d-d0599e8db260")))
+                    LineageProcess.refByGuid("246ddc31-a02b-433f-bd0b-a35853a32240"),
+                    LineageProcess.refByGuid("b3a8338e-d544-4298-98a4-a516c0b0524d")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("35ddc0c0-18f9-43d9-ab4b-b296e1e452e5"),
-                    LineageProcess.refByGuid("04aaf67d-ce45-4770-bbcc-0f9cc9807bd0")))
-            .dbtAlias("dbtAlias")
-            .dbtMeta("dbtMeta")
-            .dbtUniqueId("dbtUniqueId")
-            .dbtAccountName("dbtAccountName")
-            .dbtProjectName("dbtProjectName")
-            .dbtPackageName("dbtPackageName")
-            .dbtJobName("dbtJobName")
-            .dbtJobSchedule("dbtJobSchedule")
-            .dbtJobStatus("dbtJobStatus")
-            .dbtJobScheduleCronHumanized("dbtJobScheduleCronHumanized")
-            .dbtJobLastRun(-6796933137269949035L)
-            .dbtJobNextRun(-7331715196206200523L)
-            .dbtJobNextRunHumanized("dbtJobNextRunHumanized")
-            .dbtEnvironmentName("dbtEnvironmentName")
-            .dbtEnvironmentDbtVersion("dbtEnvironmentDbtVersion")
-            .dbtTags(Set.of("one", "two", "three"))
-            .dbtConnectionContext("dbtConnectionContext")
-            .dbtSemanticLayerProxyUrl("dbtSemanticLayerProxyUrl")
-            .dbtStatus("dbtStatus")
-            .dbtError("dbtError")
-            .dbtRawSQL("dbtRawSQL")
-            .dbtCompiledSQL("dbtCompiledSQL")
-            .dbtStats("dbtStats")
-            .dbtMaterializationType("dbtMaterializationType")
-            .dbtModelCompileStartedAt(-1318569586905225725L)
-            .dbtModelCompileCompletedAt(-3545998527247369642L)
-            .dbtModelExecuteStartedAt(8095444791227889306L)
-            .dbtModelExecuteCompletedAt(-5910915299582223764L)
-            .dbtModelExecutionTime(0.35820156127988867)
-            .dbtModelRunGeneratedAt(9088070212838596768L)
-            .dbtModelRunElapsedTime(0.8507109372592024)
-            .dbtMetrics(Set.of(
-                    DbtMetric.refByGuid("0d9ccd83-f096-4824-a522-d979150361f8"),
-                    DbtMetric.refByGuid("cbb0ecfc-97fa-42c3-ad34-fc3fd4afba12")))
-            .dbtModelSqlAssets(Set.of(
-                    Table.refByGuid("968cfc6c-7a04-4569-a1e0-96cf44bacd90"),
-                    Table.refByGuid("1d4d2b99-91f5-4b53-97af-fd406044cda4")))
-            .dbtModelColumns(Set.of(
-                    DbtModelColumn.refByGuid("2476f9e3-40cf-4ab7-850d-1e8e651bf19b"),
-                    DbtModelColumn.refByGuid("7528afe2-0291-4e26-bfd3-704248ae58e8")))
-            .primarySqlAsset(Table.refByGuid("17f3503d-37b6-4228-af4d-d344af729ee0"))
+                    LineageProcess.refByGuid("e441375d-8591-419f-baef-664c1a78f8b7"),
+                    LineageProcess.refByGuid("debaf17e-9cc1-4da2-8c2b-b394fa959989")))
+            .qlikId("qlikId")
+            .qlikQRI("qlikQRI")
+            .qlikSpaceId("qlikSpaceId")
+            .qlikSpaceQualifiedName("qlikSpaceQualifiedName")
+            .qlikAppId("qlikAppId")
+            .qlikAppQualifiedName("qlikAppQualifiedName")
+            .qlikOwnerId("qlikOwnerId")
+            .qlikIsPublished(false)
+            .qlikSpaceType("qlikSpaceType")
+            .qlikDatasets(Set.of(
+                    QlikDataset.refByGuid("251b2e6a-db42-4100-a9bd-3fb323ecee3b"),
+                    QlikDataset.refByGuid("a7ad657a-69ec-4755-afe6-d3a3e2b575e3")))
+            .qlikApps(Set.of(
+                    QlikApp.refByGuid("a41532e8-b803-4986-b130-51af58562eeb"),
+                    QlikApp.refByGuid("3581ac0e-bbe8-4546-bfc8-9e7b03cf6f3d")))
             .build();
-    private static DbtModel frodo;
+    private static QlikStream frodo;
     private static String serialized;
 
-    @Test(groups = {"DbtModel.builderEquivalency"})
+    @Test(groups = {"QlikStream.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"DbtModel.serialize"},
-            dependsOnGroups = {"DbtModel.builderEquivalency"})
+            groups = {"QlikStream.serialize"},
+            dependsOnGroups = {"QlikStream.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -172,17 +146,17 @@ public class DbtModelTest {
     }
 
     @Test(
-            groups = {"DbtModel.deserialize"},
-            dependsOnGroups = {"DbtModel.serialize"})
+            groups = {"QlikStream.deserialize"},
+            dependsOnGroups = {"QlikStream.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
-        frodo = Serde.mapper.readValue(serialized, DbtModel.class);
+        frodo = Serde.mapper.readValue(serialized, QlikStream.class);
         assertNotNull(frodo);
     }
 
     @Test(
-            groups = {"DbtModel.equivalency"},
-            dependsOnGroups = {"DbtModel.serialize", "DbtModel.deserialize"})
+            groups = {"QlikStream.equivalency"},
+            dependsOnGroups = {"QlikStream.serialize", "QlikStream.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -191,8 +165,8 @@ public class DbtModelTest {
     }
 
     @Test(
-            groups = {"DbtModel.equivalency"},
-            dependsOnGroups = {"DbtModel.serialize", "DbtModel.deserialize"})
+            groups = {"QlikStream.equivalency"},
+            dependsOnGroups = {"QlikStream.serialize", "QlikStream.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

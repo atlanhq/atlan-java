@@ -107,35 +107,35 @@ public class LookerProjectTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("d8da3c5b-84f2-4d60-952b-4a843f3536bc"),
-                    LineageProcess.refByGuid("45ea7752-828e-4cdf-8449-a6f2ae74d757")))
+                    LineageProcess.refByGuid("edcb2888-636a-444b-a9fb-3b9395b737ae"),
+                    LineageProcess.refByGuid("1bce40ef-2913-4bf4-b388-49e1203e9a70")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("bb048045-503c-463f-972d-0d1c48006a29"),
-                    LineageProcess.refByGuid("ab9e2944-fc00-40ec-b02f-79a628c643bc")))
+                    LineageProcess.refByGuid("b507a79c-bf74-4628-a114-b3ba7a41afa1"),
+                    LineageProcess.refByGuid("ac5ffa39-a0f6-4831-ac02-43f1941547d8")))
             .models(Set.of(
-                    LookerModel.refByGuid("8213fc04-1d8f-41d7-a45e-6497414daaad"),
-                    LookerModel.refByGuid("c2d3108c-3be1-4894-990a-33c9c145a1aa")))
+                    LookerModel.refByGuid("3ab76d8a-2392-4b7c-bb2d-262b0edbe5bd"),
+                    LookerModel.refByGuid("f77d5ee0-97dc-4882-b38a-94530f1b5f79")))
             .explores(Set.of(
-                    LookerExplore.refByGuid("e280de2c-8188-42a3-af31-176620d894aa"),
-                    LookerExplore.refByGuid("c2f20ce2-5ea8-4385-9352-97d611881a79")))
+                    LookerExplore.refByGuid("0e85b1e4-9a7d-4d4e-a2e4-5746cebcd8c3"),
+                    LookerExplore.refByGuid("5901df18-9e5e-4532-8f07-391d7198351f")))
             .fields(Set.of(
-                    LookerField.refByGuid("9eec1c4e-b5ef-4908-9952-7fd9d4f4d8cc"),
-                    LookerField.refByGuid("07690688-72ed-4830-8305-b53fc251437e")))
+                    LookerField.refByGuid("68a990a2-a9f2-4fbb-9ed7-8c3c1c774b4d"),
+                    LookerField.refByGuid("0ef43936-3523-471c-8aa1-c36cba9786fa")))
             .views(Set.of(
-                    LookerView.refByGuid("37ed5b10-8b38-4861-b043-52cc456920db"),
-                    LookerView.refByGuid("18b0f2be-f159-401a-9583-566c4bbe8b89")))
+                    LookerView.refByGuid("0cb3119c-d6e0-4b01-949e-3756d92a9899"),
+                    LookerView.refByGuid("0743b9c9-a9af-4e40-a9ac-8e3fc011e0f2")))
             .build();
     private static LookerProject frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"LookerProject.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"LookerProject.serialize"},
+            dependsOnGroups = {"LookerProject.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -143,8 +143,8 @@ public class LookerProjectTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"LookerProject.deserialize"},
+            dependsOnGroups = {"LookerProject.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, LookerProject.class);
@@ -152,8 +152,8 @@ public class LookerProjectTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"LookerProject.equivalency"},
+            dependsOnGroups = {"LookerProject.serialize", "LookerProject.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -162,8 +162,8 @@ public class LookerProjectTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"LookerProject.equivalency"},
+            dependsOnGroups = {"LookerProject.serialize", "LookerProject.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

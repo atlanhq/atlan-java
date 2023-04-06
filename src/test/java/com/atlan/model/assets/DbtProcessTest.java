@@ -110,33 +110,33 @@ public class DbtProcessTest {
             .sql("sql")
             .ast("ast")
             .outputs(Set.of(
-                    Table.refByGuid("73dfbcf8-621c-435b-ae39-077794926ad6"),
-                    Table.refByGuid("d989a20f-0145-4e77-b2e9-4b23db240f90")))
+                    Table.refByGuid("21878732-2650-4dce-b74c-ed1bca440042"),
+                    Table.refByGuid("69307047-c70a-4914-bf5f-17dfc94c21bc")))
             .inputs(Set.of(
-                    Table.refByGuid("948210ac-ccc6-4ebb-9f65-be56e09472c3"),
-                    Table.refByGuid("9f6b538c-8c90-4b65-851e-e92883500b01")))
+                    Table.refByGuid("4ffaa565-e2db-4647-b329-124c9990b005"),
+                    Table.refByGuid("b206f9ed-93f6-4062-a536-60098dbabab9")))
             .columnProcesses(Set.of(
-                    ColumnProcess.refByGuid("1361ed7c-389d-4f97-9f42-4fbaecd7e335"),
-                    ColumnProcess.refByGuid("21660277-bb51-401a-b95c-df54d72649a7")))
+                    ColumnProcess.refByGuid("76b1f0aa-7f1c-4319-8730-e61534f4ef95"),
+                    ColumnProcess.refByGuid("f815ee3b-3d6c-4fbc-8773-6e7f90e6f09c")))
             .dbtProcessJobStatus("dbtProcessJobStatus")
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("aa683ca5-ab82-48a0-a0a0-9a35e8f039ca"),
-                    LineageProcess.refByGuid("23827217-59ee-4b7e-8d84-033590c52d24")))
+                    LineageProcess.refByGuid("396ee2ac-fbc4-4fdf-96ce-744559644360"),
+                    LineageProcess.refByGuid("0bd88e22-61ee-4a38-a31f-c543fad17ae4")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("80ac0616-ea86-44bf-89ef-34faad67d0e9"),
-                    LineageProcess.refByGuid("84ef157a-44cd-454b-82e0-49afbf80b342")))
+                    LineageProcess.refByGuid("3ceb019b-2f69-4767-bbd2-9dbf4dbd4b9d"),
+                    LineageProcess.refByGuid("ff865f6b-3d5d-4e86-9b47-77aa1f5b04c2")))
             .build();
     private static DbtProcess frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"DbtProcess.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"DbtProcess.serialize"},
+            dependsOnGroups = {"DbtProcess.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -144,8 +144,8 @@ public class DbtProcessTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"DbtProcess.deserialize"},
+            dependsOnGroups = {"DbtProcess.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, DbtProcess.class);
@@ -153,8 +153,8 @@ public class DbtProcessTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"DbtProcess.equivalency"},
+            dependsOnGroups = {"DbtProcess.serialize", "DbtProcess.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -163,8 +163,8 @@ public class DbtProcessTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"DbtProcess.equivalency"},
+            dependsOnGroups = {"DbtProcess.serialize", "DbtProcess.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

@@ -107,30 +107,30 @@ public class PresetChartTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("fe359cf8-64b9-4bf4-a239-f80786bc7a33"),
-                    LineageProcess.refByGuid("e675caa2-d69f-43af-92a9-6f4316eae839")))
+                    LineageProcess.refByGuid("58b7364e-4521-4d36-aa8e-44f7fc80196d"),
+                    LineageProcess.refByGuid("5dbbe90e-6cdf-4591-bf59-01d10bdef916")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("70d026f7-1075-4a26-885c-6e5e82ae52da"),
-                    LineageProcess.refByGuid("b2aa0532-b8e6-4a3d-af65-c110e3e6195d")))
-            .presetWorkspaceId(5831110046842544806L)
+                    LineageProcess.refByGuid("5e017926-258c-429f-b46f-c506ced70463"),
+                    LineageProcess.refByGuid("9cd6131c-b983-4172-96e7-3e7c7607d8f8")))
+            .presetWorkspaceId(-7576635269689435914L)
             .presetWorkspaceQualifiedName("presetWorkspaceQualifiedName")
-            .presetDashboardId(493713277130449615L)
+            .presetDashboardId(6336824532483135970L)
             .presetDashboardQualifiedName("presetDashboardQualifiedName")
             .presetChartDescriptionMarkdown("presetChartDescriptionMarkdown")
             .presetChartFormData(Map.of("key1", "value1", "key2", "value2"))
-            .presetDashboard(PresetDashboard.refByGuid("8d109a49-5c7d-4d98-b57b-cb171e0a8994"))
+            .presetDashboard(PresetDashboard.refByGuid("ee99480f-8dfd-4a0b-9b71-19a43bd9b053"))
             .build();
     private static PresetChart frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"PresetChart.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"PresetChart.serialize"},
+            dependsOnGroups = {"PresetChart.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -138,8 +138,8 @@ public class PresetChartTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"PresetChart.deserialize"},
+            dependsOnGroups = {"PresetChart.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, PresetChart.class);
@@ -147,8 +147,8 @@ public class PresetChartTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"PresetChart.equivalency"},
+            dependsOnGroups = {"PresetChart.serialize", "PresetChart.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -157,8 +157,8 @@ public class PresetChartTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"PresetChart.equivalency"},
+            dependsOnGroups = {"PresetChart.serialize", "PresetChart.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

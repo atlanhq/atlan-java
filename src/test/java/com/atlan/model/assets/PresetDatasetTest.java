@@ -107,31 +107,31 @@ public class PresetDatasetTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("3c1dbe07-e54e-42d2-9ab9-77e4d948b189"),
-                    LineageProcess.refByGuid("44ae09bf-ff39-40a0-af14-435bf24657e2")))
+                    LineageProcess.refByGuid("93027000-c32a-4b38-8898-a0c490864c10"),
+                    LineageProcess.refByGuid("0f0dd2c9-7446-4013-98f0-c80ce941bbe2")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("dd24c8f9-89e2-459a-b349-b148d92b02a3"),
-                    LineageProcess.refByGuid("a92d3cdc-b069-44b2-8579-bba4a381556a")))
-            .presetWorkspaceId(-5994717840282851867L)
+                    LineageProcess.refByGuid("ba58fe99-7382-486b-9df1-3b5d9b7ddd74"),
+                    LineageProcess.refByGuid("277a55a9-1b51-4bdd-b44d-5f3b913f1d04")))
+            .presetWorkspaceId(386096891373976889L)
             .presetWorkspaceQualifiedName("presetWorkspaceQualifiedName")
-            .presetDashboardId(5435600488633070415L)
+            .presetDashboardId(-3601054723195759365L)
             .presetDashboardQualifiedName("presetDashboardQualifiedName")
             .presetDatasetDatasourceName("presetDatasetDatasourceName")
-            .presetDatasetId(-580562722078805535L)
+            .presetDatasetId(-5397878723076383759L)
             .presetDatasetType("presetDatasetType")
-            .presetDashboard(PresetDashboard.refByGuid("8d735a6f-7ea6-48fb-b7c9-505a67adf6c4"))
+            .presetDashboard(PresetDashboard.refByGuid("ae989090-b2e3-45f3-a311-4d2d2bd503ba"))
             .build();
     private static PresetDataset frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"PresetDataset.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"PresetDataset.serialize"},
+            dependsOnGroups = {"PresetDataset.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -139,8 +139,8 @@ public class PresetDatasetTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"PresetDataset.deserialize"},
+            dependsOnGroups = {"PresetDataset.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, PresetDataset.class);
@@ -148,8 +148,8 @@ public class PresetDatasetTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"PresetDataset.equivalency"},
+            dependsOnGroups = {"PresetDataset.serialize", "PresetDataset.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -158,8 +158,8 @@ public class PresetDatasetTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"PresetDataset.equivalency"},
+            dependsOnGroups = {"PresetDataset.serialize", "PresetDataset.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

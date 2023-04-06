@@ -107,37 +107,37 @@ public class LookerLookTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("7f9663c0-f0c6-450e-bc12-a6a2266014f1"),
-                    LineageProcess.refByGuid("bc5bfe0c-132a-4495-8087-a3f801bdba45")))
+                    LineageProcess.refByGuid("5bd86134-43d2-4413-9e36-e5c783e46be6"),
+                    LineageProcess.refByGuid("af86724c-a5ce-4871-9102-a7e479bfb0af")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("eec22592-f23e-4116-a4b7-0e64f5835b55"),
-                    LineageProcess.refByGuid("0ab86489-eace-4837-9263-59bb8a8c7269")))
+                    LineageProcess.refByGuid("9b4d1e0e-8fd3-41f7-a39b-4314ea63c707"),
+                    LineageProcess.refByGuid("bb7c42da-a706-4b60-8ef6-4c477329bcc8")))
             .folderName("folderName")
-            .sourceUserId(-2086803793)
-            .sourceViewCount(617839287)
-            .sourcelastUpdaterId(149712645)
-            .sourceLastAccessedAt(2617821303818693517L)
-            .sourceLastViewedAt(-3041175743661951679L)
-            .sourceContentMetadataId(-432082457)
-            .sourceQueryId(423625784)
+            .sourceUserId(-699615224)
+            .sourceViewCount(-1455279158)
+            .sourcelastUpdaterId(-357440379)
+            .sourceLastAccessedAt(-2200267646463916008L)
+            .sourceLastViewedAt(-8429978697523413190L)
+            .sourceContentMetadataId(-627461699)
+            .sourceQueryId(-1902782222)
             .modelName("modelName")
-            .folder(LookerFolder.refByGuid("8f33bed2-f4d1-44a6-8728-d576e9c8a090"))
-            .query(LookerQuery.refByGuid("20d78563-a668-42b4-9622-845a542b20c8"))
-            .tile(LookerTile.refByGuid("6e72a2b7-ab59-4618-8a32-d6d6aac4c0b9"))
-            .model(LookerModel.refByGuid("53ea726d-d200-406e-9132-1d47d92c3fb5"))
-            .dashboard(LookerDashboard.refByGuid("3c01819c-fa77-4605-87d8-3469d4e2676d"))
+            .folder(LookerFolder.refByGuid("4dc0449a-9f1c-4731-8e3c-dfe77ef9d5cd"))
+            .query(LookerQuery.refByGuid("1fea0a52-afb3-4a71-b322-eb9d2c40eabc"))
+            .tile(LookerTile.refByGuid("e9c7b44e-3c9d-471c-98ad-45e5157ad8e6"))
+            .model(LookerModel.refByGuid("44fe461c-bb21-4c6b-a580-e96e5da5ec4c"))
+            .dashboard(LookerDashboard.refByGuid("67b164c0-39e6-4fdc-9ed8-beaa2215b3cc"))
             .build();
     private static LookerLook frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"LookerLook.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"LookerLook.serialize"},
+            dependsOnGroups = {"LookerLook.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -145,8 +145,8 @@ public class LookerLookTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"LookerLook.deserialize"},
+            dependsOnGroups = {"LookerLook.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, LookerLook.class);
@@ -154,8 +154,8 @@ public class LookerLookTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"LookerLook.equivalency"},
+            dependsOnGroups = {"LookerLook.serialize", "LookerLook.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -164,8 +164,8 @@ public class LookerLookTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"LookerLook.equivalency"},
+            dependsOnGroups = {"LookerLook.serialize", "LookerLook.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

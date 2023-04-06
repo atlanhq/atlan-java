@@ -107,15 +107,15 @@ public class ColumnTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("f76bb2c6-2968-476f-b33d-fe0b4a75e980"),
-                    LineageProcess.refByGuid("aaedd884-c653-49c7-8143-540a36ba66b6")))
+                    LineageProcess.refByGuid("dedbd185-c593-417d-b9a3-ad301d9ae28b"),
+                    LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("2492a268-8761-49b8-ba53-7e208cff3dcd"),
-                    LineageProcess.refByGuid("e8d27461-2f24-49e5-bc5a-f0fe0b5eeb32")))
-            .queryCount(-3022545005103052920L)
-            .queryUserCount(-5308765275880160862L)
+                    LineageProcess.refByGuid("3653bfe0-98cf-45e2-8b08-1b9c0cd71779"),
+                    LineageProcess.refByGuid("a8095e02-bccc-49b1-a1c7-6339a47aca8c")))
+            .queryCount(-479597481647961611L)
+            .queryUserCount(-2988747526011003636L)
             // .queryUserMap(Map.of("key1", 123456L, "key2", 654321L))
-            .queryCountUpdatedAt(3464630707843017083L)
+            .queryCountUpdatedAt(-5039324225773727914L)
             .databaseName("databaseName")
             .databaseQualifiedName("databaseQualifiedName")
             .schemaName("schemaName")
@@ -125,32 +125,38 @@ public class ColumnTest {
             .viewName("viewName")
             .viewQualifiedName("viewQualifiedName")
             .isProfiled(false)
-            .lastProfiledAt(-2153163356971756433L)
+            .lastProfiledAt(-5771720575992588146L)
             .dbtModels(Set.of(
-                    DbtModel.refByGuid("a70efc0e-a17f-4b5d-9e35-88f10fff9fcd"),
-                    DbtModel.refByGuid("2abeec3e-69c5-48ed-b067-187bab851285")))
+                    DbtModel.refByGuid("0926ac88-035a-49dd-bd21-3811d8ea5632"),
+                    DbtModel.refByGuid("8de12dac-d107-40cb-a016-96180f589f35")))
             .dbtSources(Set.of(
-                    DbtSource.refByGuid("172d726a-70ed-4074-a9b1-0f58c8c76709"),
-                    DbtSource.refByGuid("0d9495b0-98aa-4656-990c-8abba34dfcc8")))
+                    DbtSource.refByGuid("5fcd1a23-82e1-4806-898b-6b06d37def32"),
+                    DbtSource.refByGuid("c9ae8415-f617-4ea4-8367-5cd3248d1437")))
+            .sqlDbtModels(Set.of(
+                    DbtModel.refByGuid("6a3558b5-8c99-4efd-b6b6-fdff85c03cc8"),
+                    DbtModel.refByGuid("965ef52e-949e-480c-b33a-604c279a6713")))
+            .sqlDBTSources(Set.of(
+                    DbtSource.refByGuid("9397638e-d8b2-4c02-b29f-dd9df1fa3cf1"),
+                    DbtSource.refByGuid("16bfc6bd-dbe2-4244-9c02-4743c2c5a0d1")))
             .dataType("dataType")
             .subDataType("subDataType")
-            .order(-1966902301)
-            .isPartition(false)
-            .partitionOrder(592110913)
+            .order(-1173797698)
+            .isPartition(true)
+            .partitionOrder(1872689210)
             .isClustered(false)
             .isPrimary(true)
             .isForeign(true)
             .isIndexed(true)
-            .isSort(true)
-            .isDist(false)
-            .isPinned(true)
+            .isSort(false)
+            .isDist(true)
+            .isPinned(false)
             .pinnedBy("pinnedBy")
-            .pinnedAt(3844993251426572894L)
-            .precision(-1475323273)
+            .pinnedAt(8503031643014693118L)
+            .precision(1539352978)
             .defaultValue("defaultValue")
             .isNullable(false)
-            .numericScale(0.11822494766105718)
-            .maxLength(3539946568009515085L)
+            .numericScale(0.582608550386072)
+            .maxLength(-5646133551701489137L)
             .validations(Map.of("key1", "value1", "key2", "value2"))
             .columnDistinctValuesCount(-24042661)
             .columnDistinctValuesCountLong(2669818931470942023L)
@@ -177,35 +183,38 @@ public class ColumnTest {
             .columnVariance(0.02620209349747904)
             .materializedView(MaterializedView.refByGuid("057c3961-3a26-4151-8606-f795a0a33908"))
             .queries(Set.of(
-                    AtlanQuery.refByGuid("2c5b2b2d-018b-4c06-96d3-000d45414df6"),
-                    AtlanQuery.refByGuid("6aae2b13-9670-4c52-8ace-1e0d1ca3bf3b")))
+                    AtlanQuery.refByGuid("f8d94b51-3a06-476c-bdc8-c5bde05ed20b"),
+                    AtlanQuery.refByGuid("12e19c7a-1780-4aff-b67f-04a8b627f995")))
             .metricTimestamps(Set.of(
-                    DbtMetric.refByGuid("4855f267-bc65-467e-b7a8-62cb54fa1a10"),
-                    DbtMetric.refByGuid("d4683d16-b53a-44e7-86e3-3d26badcf4b7")))
+                    DbtMetric.refByGuid("42225557-294d-43bb-8135-933b01cf5c5e"),
+                    DbtMetric.refByGuid("4df80de8-d6d5-43ae-aaee-bac97c0be675")))
             .dbtMetrics(Set.of(
-                    DbtMetric.refByGuid("4d17bc7b-dad5-4c3e-8895-f5981d3ef81f"),
-                    DbtMetric.refByGuid("e108cade-398d-4d49-a34e-baea44cbbe6d")))
-            .view(View.refByGuid("3932639b-588b-406b-8b1f-0973fd93d8b4"))
-            .tablePartition(TablePartition.refByGuid("93a45ab9-874f-4825-ab4c-d60b33c79f0f"))
+                    DbtMetric.refByGuid("71e01620-24e9-4af9-9e41-4d0b51f7222c"),
+                    DbtMetric.refByGuid("523a5888-a4bc-4fe7-ac0e-0e1b6201a0c3")))
+            .view(View.refByGuid("fe8633a7-b0c6-445e-82b4-ae3c09cd3c09"))
+            .tablePartition(TablePartition.refByGuid("2d907b57-beff-48c9-b5d1-ec56e04a69a0"))
             .dataQualityMetricDimensions(Set.of(
-                    DbtMetric.refByGuid("987adbda-32c4-4f17-a773-89c8944bb702"),
-                    DbtMetric.refByGuid("d7114c8c-a113-42d8-a6b3-792d44cf1e89")))
+                    DbtMetric.refByGuid("4862d999-351f-4093-9912-d320f283cf98"),
+                    DbtMetric.refByGuid("dfc55a21-8473-4963-ad2b-f38ca6121680")))
             .dbtModelColumns(Set.of(
-                    DbtModelColumn.refByGuid("0542e16e-8ca0-48b8-bd33-d2f2b7380d4c"),
-                    DbtModelColumn.refByGuid("d4c7db64-6f49-4f84-b895-e5f411f747ab")))
-            .table(Table.refByGuid("544e0b61-9091-4645-bbe3-bec40303d9b3"))
+                    DbtModelColumn.refByGuid("a9b8e691-40f4-4353-bac2-49bd59863660"),
+                    DbtModelColumn.refByGuid("26907d82-e9c8-493b-aeac-8386b4846d41")))
+            .table(Table.refByGuid("23ea4240-1918-4135-9126-0810c52e3a38"))
+            .columnDbtModelColumns(Set.of(
+                    DbtModelColumn.refByGuid("c5c2540b-768f-4da3-81b7-a26fa3e6688d"),
+                    DbtModelColumn.refByGuid("bbbc9b84-3b50-4f1a-aebb-3b10d1aaa88e")))
             .build();
     private static Column frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"Column.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"Column.serialize"},
+            dependsOnGroups = {"Column.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -213,8 +222,8 @@ public class ColumnTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"Column.deserialize"},
+            dependsOnGroups = {"Column.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, Column.class);
@@ -222,8 +231,8 @@ public class ColumnTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"Column.equivalency"},
+            dependsOnGroups = {"Column.serialize", "Column.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -232,8 +241,8 @@ public class ColumnTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"Column.equivalency"},
+            dependsOnGroups = {"Column.serialize", "Column.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

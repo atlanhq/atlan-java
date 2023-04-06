@@ -107,11 +107,11 @@ public class QlikDatasetTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("b1e38fb3-c6bc-4b73-aae7-ef7d798d5e91"),
-                    LineageProcess.refByGuid("e8d1c0f6-2117-4278-9016-3e2f0309891d")))
+                    LineageProcess.refByGuid("eeeabbbe-1606-4052-b293-9fb6b01a7c8e"),
+                    LineageProcess.refByGuid("8e65c6ba-2dd5-4a2c-9b30-5dcd2b85ca22")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("5bf8d22e-82cd-48f4-9380-95fbff9d1c9a"),
-                    LineageProcess.refByGuid("8f6099c9-9fc0-42ca-8f2c-03158dd1e00d")))
+                    LineageProcess.refByGuid("77c0bc6b-89a2-40db-8a32-8a2d83a91e25"),
+                    LineageProcess.refByGuid("0e11c899-d814-4281-bffb-752d2b316d0d")))
             .qlikId("qlikId")
             .qlikQRI("qlikQRI")
             .qlikSpaceId("qlikSpaceId")
@@ -129,14 +129,14 @@ public class QlikDatasetTest {
     private static QlikDataset frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"QlikDataset.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"QlikDataset.serialize"},
+            dependsOnGroups = {"QlikDataset.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -144,8 +144,8 @@ public class QlikDatasetTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"QlikDataset.deserialize"},
+            dependsOnGroups = {"QlikDataset.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, QlikDataset.class);
@@ -153,8 +153,8 @@ public class QlikDatasetTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"QlikDataset.equivalency"},
+            dependsOnGroups = {"QlikDataset.serialize", "QlikDataset.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -163,8 +163,8 @@ public class QlikDatasetTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"QlikDataset.equivalency"},
+            dependsOnGroups = {"QlikDataset.serialize", "QlikDataset.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

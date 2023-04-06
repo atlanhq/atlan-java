@@ -107,11 +107,11 @@ public class TableauFlowTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("812e7563-af38-49b4-be26-7ed56900fbab"),
-                    LineageProcess.refByGuid("4686ec05-44fd-4662-a4b8-1b35ae9751e4")))
+                    LineageProcess.refByGuid("2d16e19b-3839-4091-ae16-c42b8438dfca"),
+                    LineageProcess.refByGuid("2ed86ccd-70bc-4f3f-ad61-edad06b5b033")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("5d1d1d4e-ef02-4e1b-97a1-e64a550abd4e"),
-                    LineageProcess.refByGuid("faed7e34-a989-4595-8825-bd68cd503469")))
+                    LineageProcess.refByGuid("6e7833dd-6a34-45b7-96e5-8ad683a2a502"),
+                    LineageProcess.refByGuid("35436ac7-ab25-457c-b5c0-a208579f26e9")))
             .siteQualifiedName("siteQualifiedName")
             .projectQualifiedName("projectQualifiedName")
             .topLevelProjectQualifiedName("topLevelProjectQualifiedName")
@@ -119,19 +119,19 @@ public class TableauFlowTest {
             .inputFields(List.of(Map.of("key1", "value1", "key2", "value2")))
             .outputFields(List.of(Map.of("key1", "value1", "key2", "value2")))
             .outputSteps(List.of(Map.of("key1", "value1", "key2", "value2")))
-            .project(TableauProject.refByGuid("29614ffd-d3a0-4db8-ac2d-e9543a7145df"))
+            .project(TableauProject.refByGuid("c6c0e111-d220-4690-b3f5-2d87533a524c"))
             .build();
     private static TableauFlow frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"TableauFlow.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"TableauFlow.serialize"},
+            dependsOnGroups = {"TableauFlow.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -139,8 +139,8 @@ public class TableauFlowTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"TableauFlow.deserialize"},
+            dependsOnGroups = {"TableauFlow.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, TableauFlow.class);
@@ -148,8 +148,8 @@ public class TableauFlowTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"TableauFlow.equivalency"},
+            dependsOnGroups = {"TableauFlow.serialize", "TableauFlow.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -158,8 +158,8 @@ public class TableauFlowTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"TableauFlow.equivalency"},
+            dependsOnGroups = {"TableauFlow.serialize", "TableauFlow.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

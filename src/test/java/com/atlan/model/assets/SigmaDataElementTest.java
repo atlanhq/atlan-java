@@ -107,11 +107,11 @@ public class SigmaDataElementTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("61953697-73cf-4b1d-9277-23432ad781fd"),
-                    LineageProcess.refByGuid("79691981-6456-4e6b-80f6-bd33717bae61")))
+                    LineageProcess.refByGuid("6e4ce37d-44bd-45a8-a788-d30c31d54231"),
+                    LineageProcess.refByGuid("678be85d-7c06-4ccd-a8fa-09abdaeac816")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("05a52e64-71b5-4a3b-8699-2a3e9fb140aa"),
-                    LineageProcess.refByGuid("48a41bfd-7a6e-4889-811c-dc5f5f05ba0d")))
+                    LineageProcess.refByGuid("b883295a-ff85-4322-b507-3294237ba3d1"),
+                    LineageProcess.refByGuid("fc958a39-cdd3-49ab-8765-56928d172461")))
             .sigmaWorkbookQualifiedName("sigmaWorkbookQualifiedName")
             .sigmaWorkbookName("sigmaWorkbookName")
             .sigmaPageQualifiedName("sigmaPageQualifiedName")
@@ -120,23 +120,23 @@ public class SigmaDataElementTest {
             .sigmaDataElementName("sigmaDataElementName")
             .sigmaDataElementQuery("sigmaDataElementQuery")
             .sigmaDataElementType("sigmaDataElementType")
-            .sigmaDataElementFieldCount(-1953073537469327118L)
-            .sigmaPage(SigmaPage.refByGuid("a009475e-5a4c-4874-bc16-9208f166c046"))
+            .sigmaDataElementFieldCount(760380162870148798L)
+            .sigmaPage(SigmaPage.refByGuid("01202092-b3ef-4c35-8802-ce7ae06f0e51"))
             .sigmaDataElementFields(Set.of(
-                    SigmaDataElementField.refByGuid("7eae0db0-d326-4242-bc4b-14f2e94ea36b"),
-                    SigmaDataElementField.refByGuid("66693511-7126-4b0c-9d60-136d6907fb47")))
+                    SigmaDataElementField.refByGuid("5058ddb5-9b01-408d-b484-738367186f4d"),
+                    SigmaDataElementField.refByGuid("3916b868-5a17-470b-933b-576fa67372d0")))
             .build();
     private static SigmaDataElement frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"SigmaDataElement.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"SigmaDataElement.serialize"},
+            dependsOnGroups = {"SigmaDataElement.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -144,8 +144,8 @@ public class SigmaDataElementTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"SigmaDataElement.deserialize"},
+            dependsOnGroups = {"SigmaDataElement.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, SigmaDataElement.class);
@@ -153,8 +153,8 @@ public class SigmaDataElementTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"SigmaDataElement.equivalency"},
+            dependsOnGroups = {"SigmaDataElement.serialize", "SigmaDataElement.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -163,8 +163,8 @@ public class SigmaDataElementTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"SigmaDataElement.equivalency"},
+            dependsOnGroups = {"SigmaDataElement.serialize", "SigmaDataElement.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

@@ -107,37 +107,37 @@ public class QuickSightFolderTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("97ad3820-f516-43ce-8071-10aaa9a30fe2"),
-                    LineageProcess.refByGuid("970a5472-5482-4b4c-9821-8194fa980136")))
+                    LineageProcess.refByGuid("2aa4bced-ab38-42b3-968e-121f8281e2f3"),
+                    LineageProcess.refByGuid("183981b0-48c3-47cd-8ed0-8c5867efaed8")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("b426f0fc-2a15-4500-a001-47e0a20810ec"),
-                    LineageProcess.refByGuid("e047689c-65dc-44bd-896c-1aa2503ccbc4")))
+                    LineageProcess.refByGuid("b63cac4a-058d-43c0-bfbf-35fca46a516d"),
+                    LineageProcess.refByGuid("6039f198-7e5e-475c-9fa9-2cc712ac68a7")))
             .quickSightId("quickSightId")
             .quickSightSheetId("quickSightSheetId")
             .quickSightSheetName("quickSightSheetName")
             .quickSightFolderType(QuickSightFolderType.SHARED)
             .quickSightFolderHierarchy(List.of(Map.of("key1", "value1", "key2", "value2")))
             .quickSightDashboards(Set.of(
-                    QuickSightDashboard.refByGuid("9b641725-e777-4b8c-bda2-5bc98279a2af"),
-                    QuickSightDashboard.refByGuid("e74eda15-bf10-48e2-904f-c5a6c2658106")))
+                    QuickSightDashboard.refByGuid("e1a2f24a-1724-4c0d-ad85-d133d94e6e02"),
+                    QuickSightDashboard.refByGuid("aca793da-643b-423c-ba64-cc994d839b29")))
             .quickSightAnalyses(Set.of(
-                    QuickSightAnalysis.refByGuid("eaa47126-cede-4186-aca3-f7fe13a46a2e"),
-                    QuickSightAnalysis.refByGuid("5955eaf1-a1ab-43e0-b3fe-615dd09f9935")))
+                    QuickSightAnalysis.refByGuid("aebf048f-a59e-4abd-8c3d-7be251ad77e8"),
+                    QuickSightAnalysis.refByGuid("4270f0ac-2687-48aa-b1a1-789b7c495956")))
             .quickSightDatasets(Set.of(
-                    QuickSightDataset.refByGuid("782320b8-97e6-4622-862b-22a8fdc82d47"),
-                    QuickSightDataset.refByGuid("051e9859-d44b-43b1-90c0-fcc2370ef117")))
+                    QuickSightDataset.refByGuid("cc27f2b3-67d0-49c8-825d-d9a3cb56f331"),
+                    QuickSightDataset.refByGuid("0876c57d-01f8-444e-9e6a-dff8f93c1f3f")))
             .build();
     private static QuickSightFolder frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"QuickSightFolder.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"QuickSightFolder.serialize"},
+            dependsOnGroups = {"QuickSightFolder.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -145,8 +145,8 @@ public class QuickSightFolderTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"QuickSightFolder.deserialize"},
+            dependsOnGroups = {"QuickSightFolder.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, QuickSightFolder.class);
@@ -154,8 +154,8 @@ public class QuickSightFolderTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"QuickSightFolder.equivalency"},
+            dependsOnGroups = {"QuickSightFolder.serialize", "QuickSightFolder.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -164,8 +164,8 @@ public class QuickSightFolderTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"QuickSightFolder.equivalency"},
+            dependsOnGroups = {"QuickSightFolder.serialize", "QuickSightFolder.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);
