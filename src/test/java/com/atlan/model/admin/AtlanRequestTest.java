@@ -70,7 +70,7 @@ public class AtlanRequestTest {
     private static String serialized;
     private static final int HASH = full.hashCode();
 
-    @Test(groups = {"serialize"})
+    @Test(groups = {"AtlanRequest.serialize"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -79,8 +79,8 @@ public class AtlanRequestTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"AtlanRequest.deserialize"},
+            dependsOnGroups = {"AtlanRequest.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, AtlanRequest.class);
@@ -88,8 +88,8 @@ public class AtlanRequestTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"AtlanRequest.equivalency"},
+            dependsOnGroups = {"AtlanRequest.serialize", "AtlanRequest.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -98,8 +98,8 @@ public class AtlanRequestTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"AtlanRequest.equivalency"},
+            dependsOnGroups = {"AtlanRequest.serialize", "AtlanRequest.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

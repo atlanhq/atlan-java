@@ -372,7 +372,7 @@ public class ModelGenerator extends AbstractGenerator {
                 .append(className)
                 .append(") {")
                 .append(System.lineSeparator());
-        fs.append("            return asset;").append(System.lineSeparator());
+        fs.append("            return (").append(className).append(") asset;").append(System.lineSeparator());
         fs.append("        } else {").append(System.lineSeparator());
         fs.append("            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, \"")
                 .append(className)
@@ -411,7 +411,7 @@ public class ModelGenerator extends AbstractGenerator {
                 .append(className)
                 .append(") {")
                 .append(System.lineSeparator());
-        fs.append("            return asset;").append(System.lineSeparator());
+        fs.append("            return (").append(className).append(") asset;").append(System.lineSeparator());
         fs.append("        } else {").append(System.lineSeparator());
         fs.append("            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, \"")
                 .append(className)
@@ -1157,11 +1157,11 @@ public class ModelGenerator extends AbstractGenerator {
             addTestOpening(fs, testClassName);
 
             addMembers(fs, className, typeDetails);
-            builderEquivalency(fs);
-            serialization(fs);
+            builderEquivalency(fs, className);
+            serialization(fs, className);
             deserialization(fs, className);
-            serializedEquivalency(fs);
-            deserializedEquivalency(fs);
+            serializedEquivalency(fs, className);
+            deserializedEquivalency(fs, className);
 
             addClosing(fs);
 
@@ -1468,18 +1468,27 @@ public class ModelGenerator extends AbstractGenerator {
         }
     }
 
-    private void builderEquivalency(BufferedWriter fs) throws IOException {
-        fs.append("    @Test(groups = {\"builderEquivalency\"})").append(System.lineSeparator());
+    private void builderEquivalency(BufferedWriter fs, String className) throws IOException {
+        fs.append("    @Test(groups = {\"")
+                .append(className)
+                .append(".builderEquivalency\"})")
+                .append(System.lineSeparator());
         fs.append("    void builderEquivalency() {").append(System.lineSeparator());
         fs.append("        assertEquals(full.toBuilder().build(), full);").append(System.lineSeparator());
         fs.append("    }").append(System.lineSeparator());
         fs.append(System.lineSeparator());
     }
 
-    private void serialization(BufferedWriter fs) throws IOException {
+    private void serialization(BufferedWriter fs, String className) throws IOException {
         fs.append("    @Test(").append(System.lineSeparator());
-        fs.append("            groups = {\"serialize\"},").append(System.lineSeparator());
-        fs.append("            dependsOnGroups = {\"builderEquivalency\"})").append(System.lineSeparator());
+        fs.append("            groups = {\"")
+                .append(className)
+                .append(".serialize\"},")
+                .append(System.lineSeparator());
+        fs.append("            dependsOnGroups = {\"")
+                .append(className)
+                .append(".builderEquivalency\"})")
+                .append(System.lineSeparator());
         fs.append("    void serialization() {").append(System.lineSeparator());
         fs.append("        assertNotNull(full);").append(System.lineSeparator());
         fs.append("        serialized = full.toJson();").append(System.lineSeparator());
@@ -1490,8 +1499,14 @@ public class ModelGenerator extends AbstractGenerator {
 
     private void deserialization(BufferedWriter fs, String className) throws IOException {
         fs.append("    @Test(").append(System.lineSeparator());
-        fs.append("            groups = {\"deserialize\"},").append(System.lineSeparator());
-        fs.append("            dependsOnGroups = {\"serialize\"})").append(System.lineSeparator());
+        fs.append("            groups = {\"")
+                .append(className)
+                .append(".deserialize\"},")
+                .append(System.lineSeparator());
+        fs.append("            dependsOnGroups = {\"")
+                .append(className)
+                .append(".serialize\"})")
+                .append(System.lineSeparator());
         fs.append("    void deserialization() throws JsonProcessingException {").append(System.lineSeparator());
         fs.append("        assertNotNull(serialized);").append(System.lineSeparator());
         fs.append("        frodo = Serde.mapper.readValue(serialized, ")
@@ -1503,10 +1518,17 @@ public class ModelGenerator extends AbstractGenerator {
         fs.append(System.lineSeparator());
     }
 
-    private void serializedEquivalency(BufferedWriter fs) throws IOException {
+    private void serializedEquivalency(BufferedWriter fs, String className) throws IOException {
         fs.append("    @Test(").append(System.lineSeparator());
-        fs.append("            groups = {\"equivalency\"},").append(System.lineSeparator());
-        fs.append("            dependsOnGroups = {\"serialize\", \"deserialize\"})")
+        fs.append("            groups = {\"")
+                .append(className)
+                .append(".equivalency\"},")
+                .append(System.lineSeparator());
+        fs.append("            dependsOnGroups = {\"")
+                .append(className)
+                .append(".serialize\", \"")
+                .append(className)
+                .append(".deserialize\"})")
                 .append(System.lineSeparator());
         fs.append("    void serializedEquivalency() {").append(System.lineSeparator());
         fs.append("        assertNotNull(serialized);").append(System.lineSeparator());
@@ -1518,10 +1540,17 @@ public class ModelGenerator extends AbstractGenerator {
         fs.append(System.lineSeparator());
     }
 
-    private void deserializedEquivalency(BufferedWriter fs) throws IOException {
+    private void deserializedEquivalency(BufferedWriter fs, String className) throws IOException {
         fs.append("    @Test(").append(System.lineSeparator());
-        fs.append("            groups = {\"equivalency\"},").append(System.lineSeparator());
-        fs.append("            dependsOnGroups = {\"serialize\", \"deserialize\"})")
+        fs.append("            groups = {\"")
+                .append(className)
+                .append(".equivalency\"},")
+                .append(System.lineSeparator());
+        fs.append("            dependsOnGroups = {\"")
+                .append(className)
+                .append(".serialize\", \"")
+                .append(className)
+                .append(".deserialize\"})")
                 .append(System.lineSeparator());
         fs.append("    void deserializedEquivalency() {").append(System.lineSeparator());
         fs.append("        assertNotNull(full);").append(System.lineSeparator());

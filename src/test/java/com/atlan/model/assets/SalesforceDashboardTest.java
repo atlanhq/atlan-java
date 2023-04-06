@@ -107,32 +107,32 @@ public class SalesforceDashboardTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("3e616046-a14e-43b7-8378-bc9cfe087939"),
-                    LineageProcess.refByGuid("78604c54-55c0-410d-a7d1-bf13df11a77d")))
+                    LineageProcess.refByGuid("05ecce7b-0008-475a-8d46-ce46fd0c95de"),
+                    LineageProcess.refByGuid("6bfa2bcd-347e-464d-a52f-650367128018")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("bc20f7cd-9341-44c8-81c3-35d0ce33f649"),
-                    LineageProcess.refByGuid("5837b425-4a19-4dde-a4a4-ae324824429e")))
+                    LineageProcess.refByGuid("f163726b-967a-4c32-9523-6a5b0a61c1f4"),
+                    LineageProcess.refByGuid("a4c5bd23-850e-400f-9f4e-f4feffb9273d")))
             .organizationQualifiedName("organizationQualifiedName")
             .apiName("apiName")
             .sourceId("sourceId")
             .dashboardType("dashboardType")
-            .reportCount(8418479415473115427L)
+            .reportCount(1092767290792805203L)
             .reports(Set.of(
-                    SalesforceReport.refByGuid("d03cb096-909b-422a-a435-a4f8824adb25"),
-                    SalesforceReport.refByGuid("0f0111bd-e7df-4949-8c48-2f8c7077c641")))
-            .organization(SalesforceOrganization.refByGuid("01b76f24-571f-4b5d-93f5-8a62d3f67bba"))
+                    SalesforceReport.refByGuid("6fae7472-149a-4a83-a8b7-a542473930d5"),
+                    SalesforceReport.refByGuid("ba44728f-1fbf-479f-a47f-3c5894dca81c")))
+            .organization(SalesforceOrganization.refByGuid("ea9065d4-77ea-43bd-95ca-83cb6e5d8ecb"))
             .build();
     private static SalesforceDashboard frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"SalesforceDashboard.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"SalesforceDashboard.serialize"},
+            dependsOnGroups = {"SalesforceDashboard.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -140,8 +140,8 @@ public class SalesforceDashboardTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"SalesforceDashboard.deserialize"},
+            dependsOnGroups = {"SalesforceDashboard.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, SalesforceDashboard.class);
@@ -149,8 +149,8 @@ public class SalesforceDashboardTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"SalesforceDashboard.equivalency"},
+            dependsOnGroups = {"SalesforceDashboard.serialize", "SalesforceDashboard.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -159,8 +159,8 @@ public class SalesforceDashboardTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"SalesforceDashboard.equivalency"},
+            dependsOnGroups = {"SalesforceDashboard.serialize", "SalesforceDashboard.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

@@ -300,6 +300,9 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
                 case QlikSpace.TYPE_NAME:
                     builder = QlikSpace.builder();
                     break;
+                case QlikStream.TYPE_NAME:
+                    builder = QlikStream.builder();
+                    break;
                 case QuickSightAnalysis.TYPE_NAME:
                     builder = QuickSightAnalysis.builder();
                     break;

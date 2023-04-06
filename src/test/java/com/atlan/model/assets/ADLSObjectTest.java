@@ -106,6 +106,12 @@ public class ADLSObjectTest {
             .readme(Readme.refByGuid("readmeGuid"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
+            .inputToProcesses(Set.of(
+                    LineageProcess.refByGuid("5c066be5-2153-4a69-bb3a-93576920f8c7"),
+                    LineageProcess.refByGuid("329e5318-a895-4a72-9b3b-660ca81e96fe")))
+            .outputFromProcesses(Set.of(
+                    LineageProcess.refByGuid("961a5322-de48-4501-9196-32e8033710b4"),
+                    LineageProcess.refByGuid("f00bb525-d20a-4ca8-abfc-aced6f153713")))
             .azureResourceId("azureResourceId")
             .azureLocation("azureLocation")
             .adlsAccountSecondaryLocation("adlsAccountSecondaryLocation")
@@ -124,7 +130,7 @@ public class ADLSObjectTest {
             .adlsObjectAccessTierLastModifiedTime(3541758216269101356L)
             .adlsObjectArchiveStatus(ADLSObjectArchiveStatus.PENDING_TO_COOL)
             .adlsObjectServerEncrypted(false)
-            .adlsObjectVersionLevelImmutabilitySupport(true)
+            .adlsObjectVersionLevelImmutabilitySupport(false)
             .adlsObjectCacheControl("adlsObjectCacheControl")
             .adlsObjectContentType("adlsObjectContentType")
             .adlsObjectContentMD5Hash("adlsObjectContentMD5Hash")
@@ -132,19 +138,20 @@ public class ADLSObjectTest {
             .adlsObjectLeaseStatus(ADLSLeaseStatus.LOCKED)
             .adlsObjectLeaseState(ADLSLeaseState.AVAILABLE)
             .adlsObjectMetadata(Map.of("key1", "value1", "key2", "value2"))
-            .adlsContainer(ADLSContainer.refByGuid("ff577679-867c-489f-acf0-d9b32e830cfa"))
+            .adlsContainerQualifiedName("adlsContainerQualifiedName")
+            .adlsContainer(ADLSContainer.refByGuid("298a8fbb-9f37-4558-89f4-00ea92941c1d"))
             .build();
     private static ADLSObject frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"ADLSObject.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"ADLSObject.serialize"},
+            dependsOnGroups = {"ADLSObject.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -152,8 +159,8 @@ public class ADLSObjectTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"ADLSObject.deserialize"},
+            dependsOnGroups = {"ADLSObject.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, ADLSObject.class);
@@ -161,8 +168,8 @@ public class ADLSObjectTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"ADLSObject.equivalency"},
+            dependsOnGroups = {"ADLSObject.serialize", "ADLSObject.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -171,8 +178,8 @@ public class ADLSObjectTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"ADLSObject.equivalency"},
+            dependsOnGroups = {"ADLSObject.serialize", "ADLSObject.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

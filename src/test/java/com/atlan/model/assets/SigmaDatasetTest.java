@@ -107,33 +107,33 @@ public class SigmaDatasetTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("31a1f4ac-f1f3-42c5-9f53-f9cd37ce65f3"),
-                    LineageProcess.refByGuid("f2d47f16-3766-4fb6-993e-f3110d6a30b6")))
+                    LineageProcess.refByGuid("9ad90848-2a3c-4735-9ba2-15ccea0abd36"),
+                    LineageProcess.refByGuid("8def95a8-b062-43cc-a962-795ab2e9245f")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("b5c6a94f-3b41-4403-95d7-034401546b11"),
-                    LineageProcess.refByGuid("623c95ef-40a8-4709-ba06-b3e5f77c87d8")))
+                    LineageProcess.refByGuid("d1161ea4-e3d3-4983-90f3-d7beabc605a1"),
+                    LineageProcess.refByGuid("53162fdc-9dcd-4ffb-b034-815989607f26")))
             .sigmaWorkbookQualifiedName("sigmaWorkbookQualifiedName")
             .sigmaWorkbookName("sigmaWorkbookName")
             .sigmaPageQualifiedName("sigmaPageQualifiedName")
             .sigmaPageName("sigmaPageName")
             .sigmaDataElementQualifiedName("sigmaDataElementQualifiedName")
             .sigmaDataElementName("sigmaDataElementName")
-            .sigmaDatasetColumnCount(-8651818312768971592L)
+            .sigmaDatasetColumnCount(2269472131457053486L)
             .sigmaDatasetColumns(Set.of(
-                    SigmaDatasetColumn.refByGuid("135ede39-344c-4b0f-8e8e-a5887bfb70d8"),
-                    SigmaDatasetColumn.refByGuid("2744917c-7413-40fd-9cec-1ffa77b3dd7d")))
+                    SigmaDatasetColumn.refByGuid("be5b1572-7623-40b5-89ff-407bd299a032"),
+                    SigmaDatasetColumn.refByGuid("18cc127a-95a7-4a3e-bbac-5110a168adfa")))
             .build();
     private static SigmaDataset frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"SigmaDataset.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"SigmaDataset.serialize"},
+            dependsOnGroups = {"SigmaDataset.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -141,8 +141,8 @@ public class SigmaDatasetTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"SigmaDataset.deserialize"},
+            dependsOnGroups = {"SigmaDataset.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, SigmaDataset.class);
@@ -150,8 +150,8 @@ public class SigmaDatasetTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"SigmaDataset.equivalency"},
+            dependsOnGroups = {"SigmaDataset.serialize", "SigmaDataset.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -160,8 +160,8 @@ public class SigmaDatasetTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"SigmaDataset.equivalency"},
+            dependsOnGroups = {"SigmaDataset.serialize", "SigmaDataset.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

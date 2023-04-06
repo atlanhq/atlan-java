@@ -112,23 +112,23 @@ public class GlossaryTest {
             .usage("usage")
             .additionalAttributes(Map.of("key1", "value1", "key2", "value2"))
             .terms(Set.of(
-                    GlossaryTerm.refByGuid("42b97b5e-4781-4d24-a464-0e1f393093b9"),
-                    GlossaryTerm.refByGuid("c7919a75-4d4c-4576-82a7-9001440e1714")))
+                    GlossaryTerm.refByGuid("de3575e8-d9d5-474e-8afe-880685bdf82e"),
+                    GlossaryTerm.refByGuid("db601274-dc22-4325-b98a-67fb148a574b")))
             .categories(Set.of(
-                    GlossaryCategory.refByGuid("7090bca4-2064-427e-b2d3-72a4985fa263"),
-                    GlossaryCategory.refByGuid("e0623ef8-646f-49f3-97e4-ea2b90242d8d")))
+                    GlossaryCategory.refByGuid("1dad5205-9e2e-49bc-941e-d3d6c9aa12f5"),
+                    GlossaryCategory.refByGuid("6df281b9-51d3-44b4-b387-09a985ff5327")))
             .build();
     private static Glossary frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"Glossary.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"Glossary.serialize"},
+            dependsOnGroups = {"Glossary.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -136,8 +136,8 @@ public class GlossaryTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"Glossary.deserialize"},
+            dependsOnGroups = {"Glossary.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, Glossary.class);
@@ -145,8 +145,8 @@ public class GlossaryTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"Glossary.equivalency"},
+            dependsOnGroups = {"Glossary.serialize", "Glossary.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -155,39 +155,11 @@ public class GlossaryTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"Glossary.equivalency"},
+            dependsOnGroups = {"Glossary.serialize", "Glossary.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);
         assertEquals(frodo, full, "Deserialization is not equivalent after serde loop,");
-    }
-
-    @Test
-    void anchorLinkByGuid() {
-        Glossary anchorLink = Glossary.anchorLink("glossaryGuid", null);
-        assertNotNull(anchorLink);
-        assertEquals(anchorLink.getTypeName(), Glossary.TYPE_NAME);
-        assertEquals(anchorLink.getGuid(), "glossaryGuid");
-        assertNull(anchorLink.getUniqueAttributes());
-    }
-
-    @Test
-    void anchorLinkByQualifiedName() {
-        Glossary anchorLink = Glossary.anchorLink(null, "glossaryQualifiedName");
-        assertNotNull(anchorLink);
-        assertEquals(anchorLink.getTypeName(), Glossary.TYPE_NAME);
-        assertNotNull(anchorLink.getUniqueAttributes());
-        assertEquals(anchorLink.getUniqueAttributes().getQualifiedName(), "glossaryQualifiedName");
-        assertNull(anchorLink.getGuid());
-    }
-
-    @Test
-    void anchorLinkByBoth() {
-        Glossary anchorLink = Glossary.anchorLink("glossaryGuid", "glossaryQualifiedName");
-        assertNotNull(anchorLink);
-        assertEquals(anchorLink.getTypeName(), Glossary.TYPE_NAME);
-        assertEquals(anchorLink.getGuid(), "glossaryGuid");
-        assertNull(anchorLink.getUniqueAttributes());
     }
 }

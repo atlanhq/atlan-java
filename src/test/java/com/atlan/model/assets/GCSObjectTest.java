@@ -107,15 +107,15 @@ public class GCSObjectTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("b8234c44-48d2-45c8-ba8e-5e52f7760eff"),
-                    LineageProcess.refByGuid("aba7e3dd-4beb-4885-9177-c9574e01b1c2")))
+                    LineageProcess.refByGuid("7caee1f1-e9ee-4996-9b76-0474f7873ba2"),
+                    LineageProcess.refByGuid("18654745-2bbe-4d79-8529-32841ff6d859")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("951c0959-b1e0-483c-a468-323273996a8c"),
-                    LineageProcess.refByGuid("faff5fc6-237f-4029-885a-80f460553467")))
+                    LineageProcess.refByGuid("b53b430b-d8c4-4db2-8888-94d20c5120d3"),
+                    LineageProcess.refByGuid("700d11f7-6f60-49e1-b9a6-259d455cf0d9")))
             .googleService("googleService")
             .googleProjectName("googleProjectName")
             .googleProjectId("googleProjectId")
-            .googleProjectNumber(453881899512736412L)
+            .googleProjectNumber(-5655569751307817193L)
             .googleLocation("googleLocation")
             .googleLocationType("googleLocationType")
             .googleLabel(GoogleLabel.of("key1", "value1"))
@@ -127,35 +127,35 @@ public class GCSObjectTest {
             .gcsETag("gcsETag")
             .gcsRequesterPays(true)
             .gcsAccessControl("gcsAccessControl")
-            .gcsMetaGenerationId(-6203784219991084327L)
+            .gcsMetaGenerationId(7301106230656543084L)
             .gcsBucketName("gcsBucketName")
             .gcsBucketQualifiedName("gcsBucketQualifiedName")
-            .gcsObjectSize(-8014471683314565842L)
+            .gcsObjectSize(-3860147200356214492L)
             .gcsObjectKey("gcsObjectKey")
             .gcsObjectMediaLink("gcsObjectMediaLink")
             .gcsObjectHoldType("gcsObjectHoldType")
-            .gcsObjectGenerationId(8250429657138933949L)
+            .gcsObjectGenerationId(1694763665417568460L)
             .gcsObjectCRC32CHash("gcsObjectCRC32CHash")
             .gcsObjectMD5Hash("gcsObjectMD5Hash")
-            .gcsObjectDataLastModifiedTime(-4137136745878046810L)
+            .gcsObjectDataLastModifiedTime(713780278613201016L)
             .gcsObjectContentType("gcsObjectContentType")
             .gcsObjectContentEncoding("gcsObjectContentEncoding")
             .gcsObjectContentDisposition("gcsObjectContentDisposition")
             .gcsObjectContentLanguage("gcsObjectContentLanguage")
-            .gcsObjectRetentionExpirationDate(3484827525323156340L)
-            .gcsBucket(GCSBucket.refByGuid("2d8a6623-e6ac-46ee-90a4-1165bae1a16c"))
+            .gcsObjectRetentionExpirationDate(3613704574085639456L)
+            .gcsBucket(GCSBucket.refByGuid("54ec88ca-5dc4-4d38-9bcc-6adf2dcf18b6"))
             .build();
     private static GCSObject frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"GCSObject.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"GCSObject.serialize"},
+            dependsOnGroups = {"GCSObject.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -163,8 +163,8 @@ public class GCSObjectTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"GCSObject.deserialize"},
+            dependsOnGroups = {"GCSObject.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, GCSObject.class);
@@ -172,8 +172,8 @@ public class GCSObjectTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"GCSObject.equivalency"},
+            dependsOnGroups = {"GCSObject.serialize", "GCSObject.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -182,8 +182,8 @@ public class GCSObjectTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"GCSObject.equivalency"},
+            dependsOnGroups = {"GCSObject.serialize", "GCSObject.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

@@ -122,14 +122,14 @@ public class LineageProcessTest {
     private static LineageProcess frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"LineageProcess.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"LineageProcess.serialize"},
+            dependsOnGroups = {"LineageProcess.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -137,8 +137,8 @@ public class LineageProcessTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"LineageProcess.deserialize"},
+            dependsOnGroups = {"LineageProcess.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, LineageProcess.class);
@@ -146,8 +146,8 @@ public class LineageProcessTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"LineageProcess.equivalency"},
+            dependsOnGroups = {"LineageProcess.serialize", "LineageProcess.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -156,8 +156,8 @@ public class LineageProcessTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"LineageProcess.equivalency"},
+            dependsOnGroups = {"LineageProcess.serialize", "LineageProcess.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

@@ -107,11 +107,11 @@ public class DataStudioAssetTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("5edb9a1b-6799-4b21-83ca-e84c6791d7f0"),
-                    LineageProcess.refByGuid("398ce2dd-f0a4-4839-8b20-c0d6b0582fb9")))
+                    LineageProcess.refByGuid("9079295f-6737-47ff-a36e-2c4414dd2885"),
+                    LineageProcess.refByGuid("e42896d9-84ea-48b1-81a9-8ac42219bb9f")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("13c2390b-f8ac-415f-ac06-e5a67651151f"),
-                    LineageProcess.refByGuid("c31b29bd-1238-4205-bc82-490f8016a8aa")))
+                    LineageProcess.refByGuid("a8568594-2c76-4c3b-bb5f-655931061a29"),
+                    LineageProcess.refByGuid("e75ea8d7-fb31-4c08-aa04-816b0e2b2754")))
             .googleService("googleService")
             .googleProjectName("googleProjectName")
             .googleProjectId("googleProjectId")
@@ -128,14 +128,14 @@ public class DataStudioAssetTest {
     private static DataStudioAsset frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"DataStudioAsset.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"DataStudioAsset.serialize"},
+            dependsOnGroups = {"DataStudioAsset.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -143,8 +143,8 @@ public class DataStudioAssetTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"DataStudioAsset.deserialize"},
+            dependsOnGroups = {"DataStudioAsset.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, DataStudioAsset.class);
@@ -152,8 +152,8 @@ public class DataStudioAssetTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"DataStudioAsset.equivalency"},
+            dependsOnGroups = {"DataStudioAsset.serialize", "DataStudioAsset.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -162,8 +162,8 @@ public class DataStudioAssetTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"DataStudioAsset.equivalency"},
+            dependsOnGroups = {"DataStudioAsset.serialize", "DataStudioAsset.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

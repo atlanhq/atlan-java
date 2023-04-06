@@ -107,39 +107,39 @@ public class PowerBIReportTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("d4afe630-57c4-4f47-bf81-6193937f5d77"),
-                    LineageProcess.refByGuid("39dcf5c6-aa44-41ee-a531-3e1e7deb862e")))
+                    LineageProcess.refByGuid("a9dafb8d-da33-4e66-815a-8f2df565266e"),
+                    LineageProcess.refByGuid("0fe8e1b6-4021-41b0-ad1f-8d6353ece2cd")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("e562aba8-ef16-47c2-b8e0-5e947e6e0ed0"),
-                    LineageProcess.refByGuid("eac0ac7d-4ca7-4e11-9b03-6a3f54b59985")))
-            .powerBIIsHidden(true)
+                    LineageProcess.refByGuid("808c3073-9eb2-47ba-a4ad-e0c281172e91"),
+                    LineageProcess.refByGuid("b29c3c2f-5fb5-41af-9b0d-c28febc33416")))
+            .powerBIIsHidden(false)
             .powerBITableQualifiedName("powerBITableQualifiedName")
             .powerBIFormatString("powerBIFormatString")
             .powerBIEndorsement(PowerBIEndorsementType.PROMOTED)
             .workspaceQualifiedName("workspaceQualifiedName")
             .datasetQualifiedName("datasetQualifiedName")
             .webUrl("webUrl")
-            .pageCount(-8400848110502461590L)
+            .pageCount(-2134459559446450218L)
             .tiles(Set.of(
-                    PowerBITile.refByGuid("c8415c58-4041-4221-ab94-6d24cddfc0b5"),
-                    PowerBITile.refByGuid("08536381-630f-4347-b0b5-e239034ecae5")))
-            .workspace(PowerBIWorkspace.refByGuid("674cdbed-b167-44c5-8529-bc907a5abc39"))
+                    PowerBITile.refByGuid("33c0ae36-3777-4c02-8c02-cc69814430f4"),
+                    PowerBITile.refByGuid("51439240-0a82-4e0c-b2bb-797ff9858e21")))
+            .workspace(PowerBIWorkspace.refByGuid("852e41ec-4fee-44a5-b6dd-05ba23fd0747"))
             .pages(Set.of(
-                    PowerBIPage.refByGuid("d397b467-adbe-4479-ac32-18c412175359"),
-                    PowerBIPage.refByGuid("f244f16c-134f-4d00-bed3-e67f5df29f8a")))
-            .dataset(PowerBIDataset.refByGuid("e44cf07b-c9eb-47f0-a904-45dba8a07587"))
+                    PowerBIPage.refByGuid("9f0b4a6e-452f-408c-8110-9a09c417c772"),
+                    PowerBIPage.refByGuid("5e62153d-57ae-4510-9bb3-a705f7bf9d22")))
+            .dataset(PowerBIDataset.refByGuid("a6867a6a-481e-4f37-a50b-75a6b75985c0"))
             .build();
     private static PowerBIReport frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"PowerBIReport.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"PowerBIReport.serialize"},
+            dependsOnGroups = {"PowerBIReport.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -147,8 +147,8 @@ public class PowerBIReportTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"PowerBIReport.deserialize"},
+            dependsOnGroups = {"PowerBIReport.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, PowerBIReport.class);
@@ -156,8 +156,8 @@ public class PowerBIReportTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"PowerBIReport.equivalency"},
+            dependsOnGroups = {"PowerBIReport.serialize", "PowerBIReport.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -166,8 +166,8 @@ public class PowerBIReportTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"PowerBIReport.equivalency"},
+            dependsOnGroups = {"PowerBIReport.serialize", "PowerBIReport.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

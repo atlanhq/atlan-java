@@ -107,28 +107,28 @@ public class QuickSightAnalysisVisualTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("3a66a047-827b-417c-a7cc-1c1f96aafe8a"),
-                    LineageProcess.refByGuid("dbc047e7-ec21-44b2-a7dd-689971ef7115")))
+                    LineageProcess.refByGuid("4d933ad5-dd18-4e43-85cd-603adf661d43"),
+                    LineageProcess.refByGuid("e1d8d8e0-5544-4caa-8778-e0810448daf1")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("e44f558a-1b8a-4402-90e2-39d6dcd68ea1"),
-                    LineageProcess.refByGuid("6e0a65cb-5296-4767-9dc6-06f652b7085a")))
+                    LineageProcess.refByGuid("2d940d13-dc01-4832-954f-d4357d3446ec"),
+                    LineageProcess.refByGuid("02c20c96-9c03-48b5-962a-397226334c41")))
             .quickSightId("quickSightId")
             .quickSightSheetId("quickSightSheetId")
             .quickSightSheetName("quickSightSheetName")
             .quickSightAnalysisQualifiedName("quickSightAnalysisQualifiedName")
-            .quickSightAnalysis(QuickSightAnalysis.refByGuid("6acdd662-bf3e-433b-be90-e9b6a69f0096"))
+            .quickSightAnalysis(QuickSightAnalysis.refByGuid("9566a5f3-2a70-4ce3-9ebe-1bca4c241997"))
             .build();
     private static QuickSightAnalysisVisual frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"QuickSightAnalysisVisual.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"QuickSightAnalysisVisual.serialize"},
+            dependsOnGroups = {"QuickSightAnalysisVisual.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -136,8 +136,8 @@ public class QuickSightAnalysisVisualTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"QuickSightAnalysisVisual.deserialize"},
+            dependsOnGroups = {"QuickSightAnalysisVisual.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, QuickSightAnalysisVisual.class);
@@ -145,8 +145,8 @@ public class QuickSightAnalysisVisualTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"QuickSightAnalysisVisual.equivalency"},
+            dependsOnGroups = {"QuickSightAnalysisVisual.serialize", "QuickSightAnalysisVisual.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -155,8 +155,8 @@ public class QuickSightAnalysisVisualTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"QuickSightAnalysisVisual.equivalency"},
+            dependsOnGroups = {"QuickSightAnalysisVisual.serialize", "QuickSightAnalysisVisual.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

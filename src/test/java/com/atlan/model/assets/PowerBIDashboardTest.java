@@ -107,34 +107,34 @@ public class PowerBIDashboardTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("dc83ac80-8ad0-4089-a440-1263c8c4a39f"),
-                    LineageProcess.refByGuid("35026739-0fe4-4e16-ad69-7a321cbb86a1")))
+                    LineageProcess.refByGuid("01e2db0f-9ff8-4d9c-b32a-d21e9dd1745c"),
+                    LineageProcess.refByGuid("627b03d7-298b-469c-b7c2-1e4fde5547ec")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("262354aa-3bef-4b97-9fe3-5ba5b5ec56d4"),
-                    LineageProcess.refByGuid("e92b8c2e-be80-45fb-9ce0-364ba4903a19")))
-            .powerBIIsHidden(true)
+                    LineageProcess.refByGuid("6a660e8f-d3ab-4c65-a3c2-5db116e0cf2d"),
+                    LineageProcess.refByGuid("8efe7db0-1606-46fe-86a3-03c227e4d415")))
+            .powerBIIsHidden(false)
             .powerBITableQualifiedName("powerBITableQualifiedName")
             .powerBIFormatString("powerBIFormatString")
             .powerBIEndorsement(PowerBIEndorsementType.PROMOTED)
             .workspaceQualifiedName("workspaceQualifiedName")
             .webUrl("webUrl")
-            .tileCount(-2989678486500981176L)
+            .tileCount(-650031479046197820L)
             .tiles(Set.of(
-                    PowerBITile.refByGuid("9b87d7a6-ca3e-48cb-9898-372a8f9306b8"),
-                    PowerBITile.refByGuid("5ae01b34-bc88-4e54-bf71-3af1d7dbb7d4")))
-            .workspace(PowerBIWorkspace.refByGuid("d4ad6617-3ab6-4859-a22d-743503d36543"))
+                    PowerBITile.refByGuid("f60adc1c-3221-42e2-af83-81a67db75160"),
+                    PowerBITile.refByGuid("d33f4cad-24bc-4916-a8e9-7f92e8a16490")))
+            .workspace(PowerBIWorkspace.refByGuid("098de1e7-2603-4bd7-99e3-32426bc67c83"))
             .build();
     private static PowerBIDashboard frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"PowerBIDashboard.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"PowerBIDashboard.serialize"},
+            dependsOnGroups = {"PowerBIDashboard.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -142,8 +142,8 @@ public class PowerBIDashboardTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"PowerBIDashboard.deserialize"},
+            dependsOnGroups = {"PowerBIDashboard.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, PowerBIDashboard.class);
@@ -151,8 +151,8 @@ public class PowerBIDashboardTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"PowerBIDashboard.equivalency"},
+            dependsOnGroups = {"PowerBIDashboard.serialize", "PowerBIDashboard.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -161,8 +161,8 @@ public class PowerBIDashboardTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"PowerBIDashboard.equivalency"},
+            dependsOnGroups = {"PowerBIDashboard.serialize", "PowerBIDashboard.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

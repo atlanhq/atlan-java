@@ -107,15 +107,15 @@ public class SnowflakePipeTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("b6858ad3-cdba-46e4-ac6f-b0738c865b91"),
-                    LineageProcess.refByGuid("bd206611-edf7-4828-aae9-d71f51d1a665")))
+                    LineageProcess.refByGuid("5f3d8e02-14fd-4047-986c-8900c48cb5d1"),
+                    LineageProcess.refByGuid("6ea69adf-0647-4a47-afa9-8d6a5acf9e14")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("3fcc1c85-2ca8-42b9-8509-0a0e2171788b"),
-                    LineageProcess.refByGuid("89382cd2-8969-4340-88a6-316a1adb815f")))
-            .queryCount(-5015143433325265509L)
-            .queryUserCount(-4523629699615405752L)
+                    LineageProcess.refByGuid("9a3ef338-16e8-4f3b-8faf-d8de80ed4020"),
+                    LineageProcess.refByGuid("d9910dd5-13d2-4b61-8065-0b943bb56b6f")))
+            .queryCount(980828367166852340L)
+            .queryUserCount(-4523751100975730859L)
             // .queryUserMap(Map.of("key1", 123456L, "key2", 654321L))
-            .queryCountUpdatedAt(-2366363794938144435L)
+            .queryCountUpdatedAt(-3802346789333478547L)
             .databaseName("databaseName")
             .databaseQualifiedName("databaseQualifiedName")
             .schemaName("schemaName")
@@ -125,29 +125,35 @@ public class SnowflakePipeTest {
             .viewName("viewName")
             .viewQualifiedName("viewQualifiedName")
             .isProfiled(false)
-            .lastProfiledAt(2747464393592379911L)
+            .lastProfiledAt(6602170762858407790L)
             .dbtModels(Set.of(
-                    DbtModel.refByGuid("187c6c5a-8af2-47c0-bb7e-63dc85e45f15"),
-                    DbtModel.refByGuid("e2286f6d-7bb6-4073-ab49-e12bf5101049")))
+                    DbtModel.refByGuid("d24dd6a5-8a97-40f0-ba6e-1459400918b4"),
+                    DbtModel.refByGuid("34aea413-abf9-4bd3-ae79-cc181806f5fe")))
             .dbtSources(Set.of(
-                    DbtSource.refByGuid("ea868ae5-82d6-44a3-95fb-f60399ad4238"),
-                    DbtSource.refByGuid("fa62b46f-fc5c-4c20-b043-410be404a821")))
+                    DbtSource.refByGuid("d4a7c22a-9bd4-401a-8000-218d41dea57e"),
+                    DbtSource.refByGuid("4fda5321-4fc3-4f0b-afea-ea5326a46dee")))
+            .sqlDbtModels(Set.of(
+                    DbtModel.refByGuid("aefbc009-0bfe-49bf-a9e9-4d0d80775560"),
+                    DbtModel.refByGuid("91712be4-cddf-4ba2-b6cc-5b432a203d10")))
+            .sqlDBTSources(Set.of(
+                    DbtSource.refByGuid("a774f9f1-7a58-4e7e-bdb5-8ac22bcde593"),
+                    DbtSource.refByGuid("36421c8b-90f2-41b1-90ef-347fdeaf5b08")))
             .definition("definition")
-            .snowflakePipeIsAutoIngestEnabled(false)
+            .snowflakePipeIsAutoIngestEnabled(true)
             .snowflakePipeNotificationChannelName("snowflakePipeNotificationChannelName")
-            .schema(Schema.refByGuid("3c5e6d42-0fad-4d29-b41a-2ca7dac8455b"))
+            .schema(Schema.refByGuid("9b17fb5b-10a7-441d-a380-1ab25e02c534"))
             .build();
     private static SnowflakePipe frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"SnowflakePipe.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"SnowflakePipe.serialize"},
+            dependsOnGroups = {"SnowflakePipe.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -155,8 +161,8 @@ public class SnowflakePipeTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"SnowflakePipe.deserialize"},
+            dependsOnGroups = {"SnowflakePipe.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, SnowflakePipe.class);
@@ -164,8 +170,8 @@ public class SnowflakePipeTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"SnowflakePipe.equivalency"},
+            dependsOnGroups = {"SnowflakePipe.serialize", "SnowflakePipe.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -174,8 +180,8 @@ public class SnowflakePipeTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"SnowflakePipe.equivalency"},
+            dependsOnGroups = {"SnowflakePipe.serialize", "SnowflakePipe.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

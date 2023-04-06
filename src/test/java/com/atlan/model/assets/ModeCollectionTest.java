@@ -107,11 +107,11 @@ public class ModeCollectionTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("f26c666a-3bbb-4eef-b4e6-43b9a2ef84e4"),
-                    LineageProcess.refByGuid("994c7e98-f741-447f-ac61-7ab8e63c61c9")))
+                    LineageProcess.refByGuid("5846ab48-adc1-4778-ad70-cad1234a1bfd"),
+                    LineageProcess.refByGuid("f72144cf-de88-4da1-a281-d5e4f3167898")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("281fbaf9-1961-4991-b31c-7847670a11bb"),
-                    LineageProcess.refByGuid("9dedbc03-046c-44d4-8ee7-b90522cc748e")))
+                    LineageProcess.refByGuid("56bb7a9b-5ac5-4f62-b8e9-6f929a5bd889"),
+                    LineageProcess.refByGuid("0f5cf3a2-b3df-408d-bb08-292ff785c080")))
             .modeId("modeId")
             .modeToken("modeToken")
             .modeWorkspaceName("modeWorkspaceName")
@@ -123,22 +123,22 @@ public class ModeCollectionTest {
             .modeQueryQualifiedName("modeQueryQualifiedName")
             .modeCollectionType("modeCollectionType")
             .modeCollectionState("modeCollectionState")
-            .modeWorkspace(ModeWorkspace.refByGuid("489c76a7-91d5-4302-8ab5-8d809cb04a7d"))
+            .modeWorkspace(ModeWorkspace.refByGuid("ab41b281-e39f-43f9-af30-8f060a06581e"))
             .modeReports(Set.of(
-                    ModeReport.refByGuid("f22d49d5-5ee2-4f75-9a11-72000721d88f"),
-                    ModeReport.refByGuid("b2601bff-921c-43fc-a291-75588e1f8650")))
+                    ModeReport.refByGuid("9a143a02-6c7c-46d7-81c9-c30799d4735f"),
+                    ModeReport.refByGuid("b72b2ba9-2b8e-4091-b726-05b45c749242")))
             .build();
     private static ModeCollection frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"ModeCollection.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"ModeCollection.serialize"},
+            dependsOnGroups = {"ModeCollection.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -146,8 +146,8 @@ public class ModeCollectionTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"ModeCollection.deserialize"},
+            dependsOnGroups = {"ModeCollection.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, ModeCollection.class);
@@ -155,8 +155,8 @@ public class ModeCollectionTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"ModeCollection.equivalency"},
+            dependsOnGroups = {"ModeCollection.serialize", "ModeCollection.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -165,8 +165,8 @@ public class ModeCollectionTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"ModeCollection.equivalency"},
+            dependsOnGroups = {"ModeCollection.serialize", "ModeCollection.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

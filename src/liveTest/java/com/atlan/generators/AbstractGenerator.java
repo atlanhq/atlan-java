@@ -90,7 +90,8 @@ public abstract class AbstractGenerator extends AtlanLiveTest {
             Map.entry("array<DbtMetricFilter>", "List<DbtMetricFilter>"),
             Map.entry("array<BadgeCondition>", "List<BadgeCondition>"),
             Map.entry("array<PopularityInsights>", "List<PopularityInsights>"),
-            Map.entry("array<ColumnValueFrequencyMap>", "List<ColumnValueFrequencyMap>"));
+            Map.entry("array<ColumnValueFrequencyMap>", "List<ColumnValueFrequencyMap>"),
+            Map.entry("array<KafkaTopicConsumption>", "List< KafkaTopicConsumption >"));
 
     // Map types that use polymorphism to only a single supertype
     protected static final Map<String, String> INHERITANCE_OVERRIDES = Map.ofEntries(
@@ -315,7 +316,7 @@ public abstract class AbstractGenerator extends AtlanLiveTest {
                     allInherited.putAll(getAllInheritedAttributes(superTypeDef));
                     allInherited.put(superTypeName, superTypeDef.getAttributeDefs());
                 }
-                return allInherited;
+                return Collections.unmodifiableMap(allInherited);
             }
         } else {
             return Collections.emptyMap();

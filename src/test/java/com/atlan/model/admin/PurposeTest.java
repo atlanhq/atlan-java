@@ -60,7 +60,7 @@ public class PurposeTest {
     private static Purpose frodo;
     private static String serialized;
 
-    @Test(groups = {"serialize"})
+    @Test(groups = {"Purpose.serialize"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -68,8 +68,8 @@ public class PurposeTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"Purpose.deserialize"},
+            dependsOnGroups = {"Purpose.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, Purpose.class);
@@ -77,8 +77,8 @@ public class PurposeTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"Purpose.equivalency"},
+            dependsOnGroups = {"Purpose.serialize", "Purpose.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -87,8 +87,8 @@ public class PurposeTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"Purpose.equivalency"},
+            dependsOnGroups = {"Purpose.serialize", "Purpose.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

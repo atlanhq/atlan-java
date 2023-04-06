@@ -107,32 +107,32 @@ public class SalesforceReportTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("a48e7251-8c6d-4e57-b9ae-b30d7ddd7825"),
-                    LineageProcess.refByGuid("bb6ad1bf-7dd9-4660-a0d7-7a22c2ea4d99")))
+                    LineageProcess.refByGuid("55da2001-d196-419e-a3eb-d3f3dd6b6d74"),
+                    LineageProcess.refByGuid("b3cc0d14-2d10-470a-ac92-ce304f67279c")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("7ab305e7-cfc4-4671-a3cd-7c14b9d703a2"),
-                    LineageProcess.refByGuid("9e8b706e-6d96-46b3-8e15-c3caed0c1bb9")))
+                    LineageProcess.refByGuid("d07afd95-d74b-44aa-9a2b-2e936bc259e8"),
+                    LineageProcess.refByGuid("5c3a11cf-29e9-4821-bc44-6b511c1cc8f8")))
             .organizationQualifiedName("organizationQualifiedName")
             .apiName("apiName")
             .sourceId("sourceId")
             .reportType(Map.of("key1", "value1", "key2", "value2"))
             .detailColumns(Set.of("one", "two", "three"))
-            .organization(SalesforceOrganization.refByGuid("86e15e2d-b4ec-4e35-9815-f85bfebbff73"))
+            .organization(SalesforceOrganization.refByGuid("001052ea-c35d-4107-b758-d891c7d5a3b7"))
             .dashboards(Set.of(
-                    SalesforceDashboard.refByGuid("cee29291-c05a-4430-930a-3ae741a27175"),
-                    SalesforceDashboard.refByGuid("3a07fb9b-fd6b-48c0-aa4f-04b9e090c8be")))
+                    SalesforceDashboard.refByGuid("11080988-3eb1-437c-beb6-f4a3fd15a9d2"),
+                    SalesforceDashboard.refByGuid("adeaa4f6-3fa2-45f4-ad06-b4db1ec2c392")))
             .build();
     private static SalesforceReport frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"SalesforceReport.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"SalesforceReport.serialize"},
+            dependsOnGroups = {"SalesforceReport.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -140,8 +140,8 @@ public class SalesforceReportTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"SalesforceReport.deserialize"},
+            dependsOnGroups = {"SalesforceReport.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, SalesforceReport.class);
@@ -149,8 +149,8 @@ public class SalesforceReportTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"SalesforceReport.equivalency"},
+            dependsOnGroups = {"SalesforceReport.serialize", "SalesforceReport.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -159,8 +159,8 @@ public class SalesforceReportTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"SalesforceReport.equivalency"},
+            dependsOnGroups = {"SalesforceReport.serialize", "SalesforceReport.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

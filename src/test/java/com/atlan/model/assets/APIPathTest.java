@@ -107,36 +107,36 @@ public class APIPathTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("58a6e5b9-5fe8-47af-af92-88a59eb3b492"),
-                    LineageProcess.refByGuid("2dbec5e6-3970-4588-91a3-b0f7a8472f56")))
+                    LineageProcess.refByGuid("b6202ab8-3094-4227-a511-ec0d2dd0850c"),
+                    LineageProcess.refByGuid("cafcfc55-9b7d-47e2-8f46-97eec6bc70c9")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("3ee64b06-6059-4f9f-bc6c-4839cb6a88d3"),
-                    LineageProcess.refByGuid("60360424-9d47-4b7d-9723-9965aee79663")))
+                    LineageProcess.refByGuid("f5a6f26b-0090-4ace-be1d-0ede0be38a0a"),
+                    LineageProcess.refByGuid("2fde29f0-f0f8-4579-98c5-48a90f00ca64")))
             .apiSpecType("apiSpecType")
             .apiSpecVersion("apiSpecVersion")
             .apiSpecName("apiSpecName")
             .apiSpecQualifiedName("apiSpecQualifiedName")
             .apiExternalDocs(Map.of("key1", "value1", "key2", "value2"))
-            .apiIsAuthOptional(false)
+            .apiIsAuthOptional(true)
             .apiPathSummary("apiPathSummary")
             .apiPathRawURI("apiPathRawURI")
-            .apiPathIsTemplated(false)
+            .apiPathIsTemplated(true)
             .apiPathAvailableOperations(Set.of("one", "two", "three"))
             .apiPathAvailableResponseCodes(Map.of("key1", "value1", "key2", "value2"))
             .apiPathIsIngressExposed(false)
-            .apiSpec(APISpec.refByGuid("54c5fe72-019b-4fcf-b861-eb254ef01066"))
+            .apiSpec(APISpec.refByGuid("ab9c4d1d-e622-47eb-a366-db7699afcbbc"))
             .build();
     private static APIPath frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"APIPath.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"APIPath.serialize"},
+            dependsOnGroups = {"APIPath.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -144,8 +144,8 @@ public class APIPathTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"APIPath.deserialize"},
+            dependsOnGroups = {"APIPath.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, APIPath.class);
@@ -153,8 +153,8 @@ public class APIPathTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"APIPath.equivalency"},
+            dependsOnGroups = {"APIPath.serialize", "APIPath.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -163,8 +163,8 @@ public class APIPathTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"APIPath.equivalency"},
+            dependsOnGroups = {"APIPath.serialize", "APIPath.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

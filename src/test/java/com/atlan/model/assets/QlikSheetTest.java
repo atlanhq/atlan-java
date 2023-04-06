@@ -107,11 +107,11 @@ public class QlikSheetTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("9904e79d-544b-4ade-b091-c45fdd8dba0a"),
-                    LineageProcess.refByGuid("ba4e870d-be6c-451e-a4dd-ebb0a6464f05")))
+                    LineageProcess.refByGuid("64371d2a-3c09-4e1a-8548-1b1972769c38"),
+                    LineageProcess.refByGuid("80ffb459-f1c2-4766-8081-4713532c30bc")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("d069577e-1e5f-4a25-875b-ad787e1df2cf"),
-                    LineageProcess.refByGuid("7fc85dec-e59f-405e-b22c-6d450d299482")))
+                    LineageProcess.refByGuid("67e50626-1005-4acc-ba58-82dca028bcb6"),
+                    LineageProcess.refByGuid("eefe00e8-1202-4bca-a0a5-6232851741fa")))
             .qlikId("qlikId")
             .qlikQRI("qlikQRI")
             .qlikSpaceId("qlikSpaceId")
@@ -121,22 +121,22 @@ public class QlikSheetTest {
             .qlikOwnerId("qlikOwnerId")
             .qlikIsPublished(true)
             .qlikSheetIsApproved(false)
-            .qlikApp(QlikApp.refByGuid("abcc35ab-27b1-4ed3-85f5-f7cefd9748c3"))
+            .qlikApp(QlikApp.refByGuid("2f230bff-8ad3-4dff-b8ea-18e1747c7b2e"))
             .qlikCharts(Set.of(
-                    QlikChart.refByGuid("38b547d8-d816-46d7-87cd-931a5f8b5aea"),
-                    QlikChart.refByGuid("d6e502e8-b5f5-45fb-850e-94e1c1608502")))
+                    QlikChart.refByGuid("e11ee284-bf09-4c5a-a53b-2b7d2d42534d"),
+                    QlikChart.refByGuid("30806b6e-f6f3-4273-8229-83c436ecc802")))
             .build();
     private static QlikSheet frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"QlikSheet.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"QlikSheet.serialize"},
+            dependsOnGroups = {"QlikSheet.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -144,8 +144,8 @@ public class QlikSheetTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"QlikSheet.deserialize"},
+            dependsOnGroups = {"QlikSheet.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, QlikSheet.class);
@@ -153,8 +153,8 @@ public class QlikSheetTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"QlikSheet.equivalency"},
+            dependsOnGroups = {"QlikSheet.serialize", "QlikSheet.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -163,8 +163,8 @@ public class QlikSheetTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"QlikSheet.equivalency"},
+            dependsOnGroups = {"QlikSheet.serialize", "QlikSheet.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

@@ -107,11 +107,11 @@ public class QlikAppTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("cf50601c-de99-47c8-ac2b-86cd6fa60fae"),
-                    LineageProcess.refByGuid("66799fbc-8fd2-42b1-b631-818c42300a02")))
+                    LineageProcess.refByGuid("015dd797-7df1-4799-b914-20db4fac9b9a"),
+                    LineageProcess.refByGuid("b06ccdb9-c1e3-40c0-a1c2-d9423056c967")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("53961f6d-e3bd-43d7-98f6-39662a8a0be6"),
-                    LineageProcess.refByGuid("9e76029a-aec0-4ab6-a1d8-3eb7d095383c")))
+                    LineageProcess.refByGuid("83764f01-18fd-4f05-9bd3-4852ca9de227"),
+                    LineageProcess.refByGuid("bddcd486-e84c-4581-a0d8-1aea9f26f272")))
             .qlikId("qlikId")
             .qlikQRI("qlikQRI")
             .qlikSpaceId("qlikSpaceId")
@@ -119,7 +119,7 @@ public class QlikAppTest {
             .qlikAppId("qlikAppId")
             .qlikAppQualifiedName("qlikAppQualifiedName")
             .qlikOwnerId("qlikOwnerId")
-            .qlikIsPublished(false)
+            .qlikIsPublished(true)
             .qlikHasSectionAccess(false)
             .qlikOriginAppId("qlikOriginAppId")
             .qlikIsEncrypted(true)
@@ -127,20 +127,20 @@ public class QlikAppTest {
             .qlikAppStaticByteSize(-2427812656943482981L)
             .qlikSpace(QlikSpace.refByGuid("c49a241b-d568-4d36-b1ad-c58aa48bf24e"))
             .qlikSheets(Set.of(
-                    QlikSheet.refByGuid("01d530b6-0407-4a6b-a056-30a7570db472"),
-                    QlikSheet.refByGuid("20ee19fb-744e-47d2-b586-b45725c63b42")))
+                    QlikSheet.refByGuid("b343eb0a-b597-429a-be2b-80819c50cc92"),
+                    QlikSheet.refByGuid("39f5f311-2d9b-4c94-b800-b6473218f4d4")))
             .build();
     private static QlikApp frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"QlikApp.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"QlikApp.serialize"},
+            dependsOnGroups = {"QlikApp.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -148,8 +148,8 @@ public class QlikAppTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"QlikApp.deserialize"},
+            dependsOnGroups = {"QlikApp.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, QlikApp.class);
@@ -157,8 +157,8 @@ public class QlikAppTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"QlikApp.equivalency"},
+            dependsOnGroups = {"QlikApp.serialize", "QlikApp.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -167,8 +167,8 @@ public class QlikAppTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"QlikApp.equivalency"},
+            dependsOnGroups = {"QlikApp.serialize", "QlikApp.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

@@ -107,11 +107,11 @@ public class TableauDatasourceFieldTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("89e86bb7-44bf-4d17-9362-d56dd3e66e15"),
-                    LineageProcess.refByGuid("ed10a7c3-6dec-42ea-b8a9-eb2d65c8f3ff")))
+                    LineageProcess.refByGuid("10d0d861-e80e-4218-ade7-cc7b9565b3db"),
+                    LineageProcess.refByGuid("93fa6cf3-af89-46b9-bd6c-d5ac29e8e817")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("31dbeef9-2e25-479d-9f66-7a928a9ae4cd"),
-                    LineageProcess.refByGuid("e4f98d55-ad6d-42c6-b2b1-707757ff35f5")))
+                    LineageProcess.refByGuid("87535d8d-64ef-4264-962c-1855abd8526e"),
+                    LineageProcess.refByGuid("399fdec4-3e7b-4e28-a9f0-76a25ee63bf7")))
             .siteQualifiedName("siteQualifiedName")
             .projectQualifiedName("projectQualifiedName")
             .topLevelProjectQualifiedName("topLevelProjectQualifiedName")
@@ -129,21 +129,21 @@ public class TableauDatasourceFieldTest {
             .upstreamFields(List.of(Map.of("key1", "value1", "key2", "value2")))
             .datasourceFieldType("datasourceFieldType")
             .worksheets(Set.of(
-                    TableauWorksheet.refByGuid("f1be7f0b-0f35-48ad-9d60-a2696b4e41de"),
-                    TableauWorksheet.refByGuid("bbba81e3-2217-40be-a58b-3fc3f16052c3")))
-            .datasource(TableauDatasource.refByGuid("29dd5131-526e-4181-9522-350af9efa0e2"))
+                    TableauWorksheet.refByGuid("a6845896-1009-4c30-abf3-1f1fe47acee3"),
+                    TableauWorksheet.refByGuid("30b998a6-12ad-4b70-83bd-281607a29b12")))
+            .datasource(TableauDatasource.refByGuid("bf9e92ed-4e8a-4c16-916d-b542dce20b7f"))
             .build();
     private static TableauDatasourceField frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"TableauDatasourceField.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"TableauDatasourceField.serialize"},
+            dependsOnGroups = {"TableauDatasourceField.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -151,8 +151,8 @@ public class TableauDatasourceFieldTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"TableauDatasourceField.deserialize"},
+            dependsOnGroups = {"TableauDatasourceField.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, TableauDatasourceField.class);
@@ -160,8 +160,8 @@ public class TableauDatasourceFieldTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"TableauDatasourceField.equivalency"},
+            dependsOnGroups = {"TableauDatasourceField.serialize", "TableauDatasourceField.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -170,8 +170,8 @@ public class TableauDatasourceFieldTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"TableauDatasourceField.equivalency"},
+            dependsOnGroups = {"TableauDatasourceField.serialize", "TableauDatasourceField.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

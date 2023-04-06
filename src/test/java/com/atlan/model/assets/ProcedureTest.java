@@ -107,15 +107,15 @@ public class ProcedureTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("18330dd8-396b-4bc4-a5f0-161d18e68ff9"),
-                    LineageProcess.refByGuid("e8c6880b-1719-4547-bcff-d40ae78bd7f6")))
+                    LineageProcess.refByGuid("df517399-d35b-477f-ac76-b1a478feef06"),
+                    LineageProcess.refByGuid("481f23d6-5049-4041-8cd1-1108d50b4216")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("fa37f485-8408-496a-8616-32f42f88f109"),
-                    LineageProcess.refByGuid("de79f0bc-1ab3-491a-8498-e7b4afd88cd3")))
-            .queryCount(5624454118225854814L)
-            .queryUserCount(6866187565001208012L)
+                    LineageProcess.refByGuid("47b93db8-0520-4b49-bcdd-29d2cd0e4676"),
+                    LineageProcess.refByGuid("bdc33454-06ed-4cbe-8dea-7939e0a698e2")))
+            .queryCount(7534400451738244039L)
+            .queryUserCount(4034460197613384848L)
             // .queryUserMap(Map.of("key1", 123456L, "key2", 654321L))
-            .queryCountUpdatedAt(4199030202730910019L)
+            .queryCountUpdatedAt(5637727672566714534L)
             .databaseName("databaseName")
             .databaseQualifiedName("databaseQualifiedName")
             .schemaName("schemaName")
@@ -124,26 +124,34 @@ public class ProcedureTest {
             .tableQualifiedName("tableQualifiedName")
             .viewName("viewName")
             .viewQualifiedName("viewQualifiedName")
+            .isProfiled(true)
+            .lastProfiledAt(1740993155480513502L)
             .dbtModels(Set.of(
-                    DbtModel.refByGuid("f16cb46d-8719-4ee8-83cf-422935fa989b"),
-                    DbtModel.refByGuid("2e2ce484-ff05-4ed7-86b1-46c7d6b3257c")))
+                    DbtModel.refByGuid("26508073-66b5-4ec2-a909-ddd4797e2153"),
+                    DbtModel.refByGuid("1f320e84-e385-4613-8ef9-d8d74027ef2b")))
             .dbtSources(Set.of(
-                    DbtSource.refByGuid("e66dc722-e1e7-45a1-9212-3ac654da53c1"),
-                    DbtSource.refByGuid("7f9d7b24-6ba3-444f-9336-985db9e091fa")))
+                    DbtSource.refByGuid("456c9a73-93cf-44ac-9757-1643565bf53c"),
+                    DbtSource.refByGuid("4e6264f8-8f25-4f60-aec4-deec24b592c4")))
+            .sqlDbtModels(Set.of(
+                    DbtModel.refByGuid("a65b3e01-2719-4297-8b51-2ad5b56f2d30"),
+                    DbtModel.refByGuid("af6e8f74-1de7-4bde-8012-39f60862db6d")))
+            .sqlDBTSources(Set.of(
+                    DbtSource.refByGuid("91f80f9e-6296-4243-b2d2-113d7e5c2dca"),
+                    DbtSource.refByGuid("b0bb0e72-5c78-43f6-9d87-2250ab4b68c5")))
             .definition("definition")
-            .schema(Schema.refByGuid("75618748-b794-453e-bcaa-3462cf3d2d27"))
+            .schema(Schema.refByGuid("0499d29a-734d-4352-b849-ace14a876a54"))
             .build();
     private static Procedure frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"Procedure.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"Procedure.serialize"},
+            dependsOnGroups = {"Procedure.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -151,8 +159,8 @@ public class ProcedureTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"Procedure.deserialize"},
+            dependsOnGroups = {"Procedure.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, Procedure.class);
@@ -160,8 +168,8 @@ public class ProcedureTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"Procedure.equivalency"},
+            dependsOnGroups = {"Procedure.serialize", "Procedure.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -170,8 +178,8 @@ public class ProcedureTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"Procedure.equivalency"},
+            dependsOnGroups = {"Procedure.serialize", "Procedure.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

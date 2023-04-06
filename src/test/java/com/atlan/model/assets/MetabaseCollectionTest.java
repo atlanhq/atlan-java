@@ -107,11 +107,11 @@ public class MetabaseCollectionTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("ce27fef6-e1f6-4948-81ec-8524fd468b41"),
-                    LineageProcess.refByGuid("e8e9ed8e-331d-4fd4-b938-8b2fc736a2a9")))
+                    LineageProcess.refByGuid("960d9aca-d062-4008-b688-c90eda2a0cef"),
+                    LineageProcess.refByGuid("e030d698-0f72-4e50-98d1-2b0cf4ccb79b")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("ca31e234-e62c-4d01-936e-3aeaa096141d"),
-                    LineageProcess.refByGuid("6d9ab0cc-39fa-4ca6-b756-6856217d80ea")))
+                    LineageProcess.refByGuid("48ce8791-b361-411b-9cf9-8932addd7664"),
+                    LineageProcess.refByGuid("77c3b3d5-f496-403b-9945-f28f51c7a804")))
             .metabaseCollectionName("metabaseCollectionName")
             .metabaseCollectionQualifiedName("metabaseCollectionQualifiedName")
             .metabaseSlug("metabaseSlug")
@@ -119,23 +119,23 @@ public class MetabaseCollectionTest {
             .metabaseNamespace("metabaseNamespace")
             .metabaseIsPersonalCollection(true)
             .metabaseDashboards(Set.of(
-                    MetabaseDashboard.refByGuid("ec1db529-4649-450f-a7c0-1021858cef55"),
-                    MetabaseDashboard.refByGuid("75af3537-516b-449f-9f6a-2eda94c58ba7")))
+                    MetabaseDashboard.refByGuid("260e184e-d243-43a0-928b-fef05772f43c"),
+                    MetabaseDashboard.refByGuid("57949eff-831a-47c1-8f34-3395e52809bc")))
             .metabaseQuestions(Set.of(
-                    MetabaseQuestion.refByGuid("8f9ed331-d519-46ab-b062-6b689b6cc3d1"),
-                    MetabaseQuestion.refByGuid("6851a48a-5f87-479a-b05e-ed08df85418b")))
+                    MetabaseQuestion.refByGuid("2e1e8bde-9169-4ce7-b249-27f65b7b5c67"),
+                    MetabaseQuestion.refByGuid("d01f987a-9d10-4ad3-b769-ce4c029c1c6a")))
             .build();
     private static MetabaseCollection frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"MetabaseCollection.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"MetabaseCollection.serialize"},
+            dependsOnGroups = {"MetabaseCollection.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -143,8 +143,8 @@ public class MetabaseCollectionTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"MetabaseCollection.deserialize"},
+            dependsOnGroups = {"MetabaseCollection.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, MetabaseCollection.class);
@@ -152,8 +152,8 @@ public class MetabaseCollectionTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"MetabaseCollection.equivalency"},
+            dependsOnGroups = {"MetabaseCollection.serialize", "MetabaseCollection.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -162,8 +162,8 @@ public class MetabaseCollectionTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"MetabaseCollection.equivalency"},
+            dependsOnGroups = {"MetabaseCollection.serialize", "MetabaseCollection.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

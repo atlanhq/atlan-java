@@ -110,25 +110,25 @@ public class GlossaryCategoryTest {
             .longDescription("longDescription")
             .additionalAttributes(Map.of("key1", "value1", "key2", "value2"))
             .terms(Set.of(
-                    GlossaryTerm.refByGuid("2c13b2a7-6d3f-4cf8-950c-0d5c607f696b"),
-                    GlossaryTerm.refByGuid("5c93bd64-ce71-4784-a08c-a40b09c80e90")))
-            .anchor(Glossary.refByGuid("fd6e01a6-f1db-4472-bf0c-f800ff40e413"))
-            .parentCategory(GlossaryCategory.refByGuid("d454b107-5dc3-43e2-8403-ed08b33e87cc"))
+                    GlossaryTerm.refByGuid("11694098-de12-47a5-a217-efef6af2cbb7"),
+                    GlossaryTerm.refByGuid("4f7262e0-c64f-41a2-bcd9-fab718fa6e1c")))
+            .anchor(Glossary.refByGuid("6d36427e-2eac-45c1-824b-19814405af10"))
+            .parentCategory(GlossaryCategory.refByGuid("a900684f-8ce6-4e78-a8cf-49c70522624b"))
             .childrenCategories(Set.of(
-                    GlossaryCategory.refByGuid("864882b7-ce4e-40cc-aa64-c85912c3c96c"),
-                    GlossaryCategory.refByGuid("2cb3cfd6-172d-4c75-a935-fff98e1b6dcc")))
+                    GlossaryCategory.refByGuid("2ac3d09d-2118-4433-8621-7fa48d39442f"),
+                    GlossaryCategory.refByGuid("a32468ed-be02-4ee2-a0e8-f305b074338c")))
             .build();
     private static GlossaryCategory frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"GlossaryCategory.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"GlossaryCategory.serialize"},
+            dependsOnGroups = {"GlossaryCategory.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -136,8 +136,8 @@ public class GlossaryCategoryTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"GlossaryCategory.deserialize"},
+            dependsOnGroups = {"GlossaryCategory.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, GlossaryCategory.class);
@@ -145,8 +145,8 @@ public class GlossaryCategoryTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"GlossaryCategory.equivalency"},
+            dependsOnGroups = {"GlossaryCategory.serialize", "GlossaryCategory.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -155,8 +155,8 @@ public class GlossaryCategoryTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"GlossaryCategory.equivalency"},
+            dependsOnGroups = {"GlossaryCategory.serialize", "GlossaryCategory.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

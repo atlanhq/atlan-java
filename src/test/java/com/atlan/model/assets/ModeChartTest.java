@@ -107,11 +107,11 @@ public class ModeChartTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("9af45a91-1f9e-4c85-b215-6e19439642b7"),
-                    LineageProcess.refByGuid("713c00c7-0c6d-4a32-9809-932d0ab129ea")))
+                    LineageProcess.refByGuid("1cbcbb1e-b081-44a7-b76e-a96c731228b5"),
+                    LineageProcess.refByGuid("b00ad6c8-2779-4c24-921e-d370516fbc8e")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("497fbb1b-ce76-4e0f-afbc-1cdfafa0174a"),
-                    LineageProcess.refByGuid("b8acd59d-8d64-479d-85df-b9bf9406277d")))
+                    LineageProcess.refByGuid("59f74fbe-0c13-44a7-9ac3-4a5219700537"),
+                    LineageProcess.refByGuid("8d4bd2e5-e29a-4d83-8e7c-64225956878b")))
             .modeId("modeId")
             .modeToken("modeToken")
             .modeWorkspaceName("modeWorkspaceName")
@@ -122,19 +122,19 @@ public class ModeChartTest {
             .modeQueryName("modeQueryName")
             .modeQueryQualifiedName("modeQueryQualifiedName")
             .modeChartType("modeChartType")
-            .modeQuery(ModeQuery.refByGuid("415e0d7d-38a8-453e-9101-5f3b9eec5ce4"))
+            .modeQuery(ModeQuery.refByGuid("58248aab-8344-4792-b4bc-f1740cfc0baa"))
             .build();
     private static ModeChart frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"ModeChart.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"ModeChart.serialize"},
+            dependsOnGroups = {"ModeChart.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -142,8 +142,8 @@ public class ModeChartTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"ModeChart.deserialize"},
+            dependsOnGroups = {"ModeChart.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, ModeChart.class);
@@ -151,8 +151,8 @@ public class ModeChartTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"ModeChart.equivalency"},
+            dependsOnGroups = {"ModeChart.serialize", "ModeChart.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -161,8 +161,8 @@ public class ModeChartTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"ModeChart.equivalency"},
+            dependsOnGroups = {"ModeChart.serialize", "ModeChart.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

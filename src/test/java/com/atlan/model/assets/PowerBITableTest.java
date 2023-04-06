@@ -107,11 +107,11 @@ public class PowerBITableTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("de121c17-5598-4ae7-beea-54bad894a2ac"),
-                    LineageProcess.refByGuid("bcb54bf3-6c8c-4df1-92e0-6561c0580d1b")))
+                    LineageProcess.refByGuid("b2ee4e6c-e954-4896-8359-9d7e5d3375bc"),
+                    LineageProcess.refByGuid("7f938c48-068a-424a-b162-b12bbd2c7a85")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("7677471b-7983-4aa0-adcd-ee75f8d8367d"),
-                    LineageProcess.refByGuid("9ca07135-e38d-4fe5-a428-8d37c1a7d7e0")))
+                    LineageProcess.refByGuid("74d0777d-e13e-4fa4-bad0-a52eb89bf045"),
+                    LineageProcess.refByGuid("f8c575ed-1ad0-4bc0-a824-2ca296ced128")))
             .powerBIIsHidden(false)
             .powerBITableQualifiedName("powerBITableQualifiedName")
             .powerBIFormatString("powerBIFormatString")
@@ -119,27 +119,27 @@ public class PowerBITableTest {
             .workspaceQualifiedName("workspaceQualifiedName")
             .datasetQualifiedName("datasetQualifiedName")
             .powerBITableSourceExpressions(Set.of("one", "two", "three"))
-            .powerBITableColumnCount(-6067297269068491702L)
-            .powerBITableMeasureCount(2004789211860214715L)
+            .powerBITableColumnCount(-6088710994716487739L)
+            .powerBITableMeasureCount(-4620090755166262296L)
             .measures(Set.of(
-                    PowerBIMeasure.refByGuid("10dd146d-b5cd-4f54-8f5f-faa4a6529a23"),
-                    PowerBIMeasure.refByGuid("0cb19748-e106-47db-ac8f-042944b0b837")))
+                    PowerBIMeasure.refByGuid("79c79f95-0c46-4882-8473-2622539089e3"),
+                    PowerBIMeasure.refByGuid("86cf978b-a462-42d5-b0a4-be7d583efb68")))
             .columns(Set.of(
-                    PowerBIColumn.refByGuid("af0fcbda-1950-4e62-8176-6bbc3b7977e0"),
-                    PowerBIColumn.refByGuid("2e581289-c422-4103-98d6-94a803ce59f6")))
-            .dataset(PowerBIDataset.refByGuid("b482e420-b97d-4b12-b19d-6b12a31504f5"))
+                    PowerBIColumn.refByGuid("dc4ef833-37d1-4525-b2ea-449362d0acc3"),
+                    PowerBIColumn.refByGuid("2ec88639-7ff1-4031-b2cb-f420d463d12c")))
+            .dataset(PowerBIDataset.refByGuid("c0e52785-c990-4c36-8fd2-e071cd165be2"))
             .build();
     private static PowerBITable frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"PowerBITable.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"PowerBITable.serialize"},
+            dependsOnGroups = {"PowerBITable.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -147,8 +147,8 @@ public class PowerBITableTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"PowerBITable.deserialize"},
+            dependsOnGroups = {"PowerBITable.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, PowerBITable.class);
@@ -156,8 +156,8 @@ public class PowerBITableTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"PowerBITable.equivalency"},
+            dependsOnGroups = {"PowerBITable.serialize", "PowerBITable.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -166,8 +166,8 @@ public class PowerBITableTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"PowerBITable.equivalency"},
+            dependsOnGroups = {"PowerBITable.serialize", "PowerBITable.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

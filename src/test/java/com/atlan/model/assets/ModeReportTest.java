@@ -107,11 +107,11 @@ public class ModeReportTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("27cad84a-4e81-4c0c-90d3-aa6cec706af2"),
-                    LineageProcess.refByGuid("47fe0705-8538-4f94-8566-692c0f656f81")))
+                    LineageProcess.refByGuid("820c9470-9454-4a40-bf68-8dc06698e5c1"),
+                    LineageProcess.refByGuid("16dfca0c-16a6-4d4a-bb8a-86c84785a4a7")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("e851af08-6161-498d-9f0a-f11b9025bbce"),
-                    LineageProcess.refByGuid("3f743a41-9ad2-4012-b5b7-18d6a77c2d84")))
+                    LineageProcess.refByGuid("3f7ab14f-cadb-48d3-b44b-b7012ec9fb85"),
+                    LineageProcess.refByGuid("ee29154f-d148-42d9-8401-5f62f47eec6e")))
             .modeId("modeId")
             .modeToken("modeToken")
             .modeWorkspaceName("modeWorkspaceName")
@@ -122,30 +122,30 @@ public class ModeReportTest {
             .modeQueryName("modeQueryName")
             .modeQueryQualifiedName("modeQueryQualifiedName")
             .modeCollectionToken("modeCollectionToken")
-            .modeReportPublishedAt(-2029470656746427556L)
-            .modeQueryCount(-2608955696002998575L)
-            .modeChartCount(-4499943910064997401L)
+            .modeReportPublishedAt(-3510212087176838109L)
+            .modeQueryCount(4583003661886899374L)
+            .modeChartCount(8027557229592881016L)
             .modeQueryPreview("modeQueryPreview")
-            .modeIsPublic(true)
-            .modeIsShared(false)
+            .modeIsPublic(false)
+            .modeIsShared(true)
             .modeCollections(Set.of(
-                    ModeCollection.refByGuid("21fe113e-328c-4c95-83c1-21e8b7cfca3d"),
-                    ModeCollection.refByGuid("cfd8048d-d508-4d36-b72a-1375d7a9b796")))
+                    ModeCollection.refByGuid("fa5b30a7-dde1-4e22-bbb9-d082585fa6f5"),
+                    ModeCollection.refByGuid("4bb2243e-1ff8-4089-8957-59da8de889ef")))
             .modeQueries(Set.of(
-                    ModeQuery.refByGuid("134af367-9de2-4914-82a5-5a823dba003d"),
-                    ModeQuery.refByGuid("55f4797c-f711-4822-9f03-4333db015d02")))
+                    ModeQuery.refByGuid("0bd02a36-e3a1-4dd2-a070-6ee3c51bcfa4"),
+                    ModeQuery.refByGuid("2da5465d-b8ce-417d-8327-e4c8363f5e20")))
             .build();
     private static ModeReport frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"ModeReport.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"ModeReport.serialize"},
+            dependsOnGroups = {"ModeReport.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -153,8 +153,8 @@ public class ModeReportTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"ModeReport.deserialize"},
+            dependsOnGroups = {"ModeReport.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, ModeReport.class);
@@ -162,8 +162,8 @@ public class ModeReportTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"ModeReport.equivalency"},
+            dependsOnGroups = {"ModeReport.serialize", "ModeReport.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -172,8 +172,8 @@ public class ModeReportTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"ModeReport.equivalency"},
+            dependsOnGroups = {"ModeReport.serialize", "ModeReport.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

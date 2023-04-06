@@ -107,15 +107,15 @@ public class DatabaseTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("e4dbc11e-fda9-4cb2-b2fa-4b7c9aa4c23e"),
-                    LineageProcess.refByGuid("7ae6ca4d-5b2e-43a2-8f2e-5b7a554f2a3b")))
+                    LineageProcess.refByGuid("1dcee3ad-7a42-49d0-975d-911612300fe8"),
+                    LineageProcess.refByGuid("4161a988-9613-479d-a1db-6f6a1dc81436")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("04abe6cc-297f-4c7c-be66-5ba4f3224fed"),
-                    LineageProcess.refByGuid("be7a9693-7392-42f4-9f20-a88e9f67e0fe")))
-            .queryCount(286012725161563379L)
-            .queryUserCount(202413607703866469L)
+                    LineageProcess.refByGuid("335531be-2bb3-4628-b13c-930f03829e23"),
+                    LineageProcess.refByGuid("f0c451d3-0328-448f-9367-925df0adef53")))
+            .queryCount(167180186157270686L)
+            .queryUserCount(5791572572003956006L)
             // .queryUserMap(Map.of("key1", 123456L, "key2", 654321L))
-            .queryCountUpdatedAt(7964669356991516131L)
+            .queryCountUpdatedAt(-3188786894819063531L)
             .databaseName("databaseName")
             .databaseQualifiedName("databaseQualifiedName")
             .schemaName("schemaName")
@@ -124,28 +124,36 @@ public class DatabaseTest {
             .tableQualifiedName("tableQualifiedName")
             .viewName("viewName")
             .viewQualifiedName("viewQualifiedName")
+            .isProfiled(false)
+            .lastProfiledAt(636903600845066325L)
             .dbtModels(Set.of(
-                    DbtModel.refByGuid("209e84d8-4811-431c-9104-c52064bcb6b9"),
-                    DbtModel.refByGuid("7de8e307-3d28-4c9e-8d95-5048656b59a3")))
+                    DbtModel.refByGuid("617e102c-da23-4f48-b004-d6542ac7f5b4"),
+                    DbtModel.refByGuid("ccb706dd-fd37-4563-95a5-09ce0ee58a40")))
             .dbtSources(Set.of(
-                    DbtSource.refByGuid("b47648b7-10f1-415c-9df9-743dd2ba06ea"),
-                    DbtSource.refByGuid("53f4b1b4-5be9-4098-aaec-f61f9dd5973b")))
-            .schemaCount(-1656928774)
+                    DbtSource.refByGuid("cc690dcf-5ec9-47c6-b86a-ac14dc338bc0"),
+                    DbtSource.refByGuid("f80f34e6-eeaa-4203-aadc-0453c4ba8325")))
+            .sqlDbtModels(Set.of(
+                    DbtModel.refByGuid("da5b5d4b-4b00-46cf-b9e4-6db6fca6f450"),
+                    DbtModel.refByGuid("db5d4dfd-090d-4480-9b30-8423773793e0")))
+            .sqlDBTSources(Set.of(
+                    DbtSource.refByGuid("f426d169-a071-4dfe-ae2d-a89f570950ef"),
+                    DbtSource.refByGuid("ffce6a9c-7a24-417b-9b8d-c98650cb7f26")))
+            .schemaCount(1494527964)
             .schemas(Set.of(
-                    Schema.refByGuid("af1d7593-4d37-45eb-b6c4-665ecb47ef1d"),
-                    Schema.refByGuid("ade12179-bfef-4337-8348-78937047dd79")))
+                    Schema.refByGuid("9cdfc03e-7653-4a22-9752-19c5b2fb180c"),
+                    Schema.refByGuid("ef8fd9b8-90bd-426b-b85f-54dc7e831eb8")))
             .build();
     private static Database frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"Database.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"Database.serialize"},
+            dependsOnGroups = {"Database.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -153,8 +161,8 @@ public class DatabaseTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"Database.deserialize"},
+            dependsOnGroups = {"Database.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, Database.class);
@@ -162,8 +170,8 @@ public class DatabaseTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"Database.equivalency"},
+            dependsOnGroups = {"Database.serialize", "Database.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -172,8 +180,8 @@ public class DatabaseTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"Database.equivalency"},
+            dependsOnGroups = {"Database.serialize", "Database.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

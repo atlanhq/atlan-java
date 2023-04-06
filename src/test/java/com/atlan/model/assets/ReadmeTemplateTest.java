@@ -107,28 +107,29 @@ public class ReadmeTemplateTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("f86441d7-f550-44ef-9d55-e729571f3c2b"),
-                    LineageProcess.refByGuid("d2299091-80ac-475c-9691-28fb92e3eefd")))
+                    LineageProcess.refByGuid("70750afe-bdd1-4d22-a993-6b7388b7d1ca"),
+                    LineageProcess.refByGuid("3a4f27bc-6889-468a-9541-936f5a75b434")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("b5661f99-c4f1-4cab-a271-9cd0d992e69a"),
-                    LineageProcess.refByGuid("0734c77e-7457-4067-93d5-05afac90b00c")))
+                    LineageProcess.refByGuid("78b71d16-4e35-4b66-8b69-f793f6be6a2b"),
+                    LineageProcess.refByGuid("3b75db4d-44a5-4b16-80fd-25360bf94938")))
             .link("link")
             .isGlobal(false)
             .reference("reference")
+            .resourceMetadata(Map.of("key1", "value1", "key2", "value2"))
             .icon("icon")
             .iconType(LinkIconType.EMOJI)
             .build();
     private static ReadmeTemplate frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"ReadmeTemplate.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"ReadmeTemplate.serialize"},
+            dependsOnGroups = {"ReadmeTemplate.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -136,8 +137,8 @@ public class ReadmeTemplateTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"ReadmeTemplate.deserialize"},
+            dependsOnGroups = {"ReadmeTemplate.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, ReadmeTemplate.class);
@@ -145,8 +146,8 @@ public class ReadmeTemplateTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"ReadmeTemplate.equivalency"},
+            dependsOnGroups = {"ReadmeTemplate.serialize", "ReadmeTemplate.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -155,8 +156,8 @@ public class ReadmeTemplateTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"ReadmeTemplate.equivalency"},
+            dependsOnGroups = {"ReadmeTemplate.serialize", "ReadmeTemplate.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

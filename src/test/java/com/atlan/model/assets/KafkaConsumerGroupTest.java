@@ -107,8 +107,8 @@ public class KafkaConsumerGroupTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("3ac4fc32-9ab2-4e07-8580-63dcda74ca44"),
-                    LineageProcess.refByGuid("a8b2f5d9-da56-4034-bce9-b16bf781f300")))
+                    LineageProcess.refByGuid("a02a43cd-4f41-46b9-9215-cd8743f3328c"),
+                    LineageProcess.refByGuid("2baf9160-eff2-4d53-a0cd-4f83de62b5b7")))
             .outputFromProcesses(Set.of(
                     LineageProcess.refByGuid("799ca2d0-edbd-4bbb-8d26-ebebe9b5d10d"),
                     LineageProcess.refByGuid("000a4401-3aa0-48f9-ad90-02f75b1d3df1")))
@@ -122,20 +122,20 @@ public class KafkaConsumerGroupTest {
             .kafkaTopicNames(Set.of("one", "two", "three"))
             .kafkaTopicQualifiedNames(Set.of("one", "two", "three"))
             .kafkaTopics(Set.of(
-                    KafkaTopic.refByGuid("184a89b2-1c24-499e-a913-773e4919a8f8"),
-                    KafkaTopic.refByGuid("3d85c533-7e71-4e5e-9daa-6935212a8060")))
+                    KafkaTopic.refByGuid("2393d6b7-8798-41cb-8012-38fe3d7a5728"),
+                    KafkaTopic.refByGuid("48eb2b53-6555-414e-9def-f996353df4fb")))
             .build();
     private static KafkaConsumerGroup frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"KafkaConsumerGroup.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"KafkaConsumerGroup.serialize"},
+            dependsOnGroups = {"KafkaConsumerGroup.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -143,8 +143,8 @@ public class KafkaConsumerGroupTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"KafkaConsumerGroup.deserialize"},
+            dependsOnGroups = {"KafkaConsumerGroup.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, KafkaConsumerGroup.class);
@@ -152,8 +152,8 @@ public class KafkaConsumerGroupTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"KafkaConsumerGroup.equivalency"},
+            dependsOnGroups = {"KafkaConsumerGroup.serialize", "KafkaConsumerGroup.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -162,8 +162,8 @@ public class KafkaConsumerGroupTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"KafkaConsumerGroup.equivalency"},
+            dependsOnGroups = {"KafkaConsumerGroup.serialize", "KafkaConsumerGroup.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

@@ -107,25 +107,25 @@ public class AtlanCollectionTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .childrenQueries(Set.of(
-                    AtlanQuery.refByGuid("a734c779-91ba-4708-85c7-b7891317de6d"),
-                    AtlanQuery.refByGuid("6a461066-079a-471d-94e6-77f668af8cd5")))
+                    AtlanQuery.refByGuid("e554cd89-5b8b-4692-b620-ccd43fa8842d"),
+                    AtlanQuery.refByGuid("40abea2d-e35d-44fb-9403-e2c747aec67b")))
             .childrenFolders(Set.of(
-                    Folder.refByGuid("78bfd0c7-5616-4cad-9630-659a27352f4d"),
-                    Folder.refByGuid("b8703193-1637-4f98-8342-4b04fbd4ebb4")))
+                    Folder.refByGuid("9f69d9fe-9751-4438-ad63-86860eda9da9"),
+                    Folder.refByGuid("7e9bfd07-8461-4fa9-b70b-5ebc5aecf959")))
             .icon("icon")
             .iconType(LinkIconType.EMOJI)
             .build();
     private static AtlanCollection frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"AtlanCollection.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"AtlanCollection.serialize"},
+            dependsOnGroups = {"AtlanCollection.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -133,8 +133,8 @@ public class AtlanCollectionTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"AtlanCollection.deserialize"},
+            dependsOnGroups = {"AtlanCollection.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, AtlanCollection.class);
@@ -142,8 +142,8 @@ public class AtlanCollectionTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"AtlanCollection.equivalency"},
+            dependsOnGroups = {"AtlanCollection.serialize", "AtlanCollection.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -152,8 +152,8 @@ public class AtlanCollectionTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"AtlanCollection.equivalency"},
+            dependsOnGroups = {"AtlanCollection.serialize", "AtlanCollection.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

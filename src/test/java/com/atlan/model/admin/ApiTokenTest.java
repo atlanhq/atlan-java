@@ -34,7 +34,7 @@ public class ApiTokenTest {
     private static ApiToken frodo;
     private static String serialized;
 
-    @Test(groups = {"serialize"})
+    @Test(groups = {"ApiToken.serialize"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -42,8 +42,8 @@ public class ApiTokenTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"ApiToken.deserialize"},
+            dependsOnGroups = {"ApiToken.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, ApiToken.class);
@@ -51,8 +51,8 @@ public class ApiTokenTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"ApiToken.equivalency"},
+            dependsOnGroups = {"ApiToken.serialize", "ApiToken.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -61,8 +61,8 @@ public class ApiTokenTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"ApiToken.equivalency"},
+            dependsOnGroups = {"ApiToken.serialize", "ApiToken.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

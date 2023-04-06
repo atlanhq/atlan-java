@@ -106,6 +106,12 @@ public class ADLSContainerTest {
             .readme(Readme.refByGuid("readmeGuid"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
+            .inputToProcesses(Set.of(
+                    LineageProcess.refByGuid("9abb2282-8357-49c3-8a2f-0ddb905f9971"),
+                    LineageProcess.refByGuid("1ac3fabe-483e-414c-89a2-5b7174417a35")))
+            .outputFromProcesses(Set.of(
+                    LineageProcess.refByGuid("c4ab22a5-f22b-49c5-8098-453b8be75986"),
+                    LineageProcess.refByGuid("effb84b4-e878-4544-aa7b-41b77d7fbce9")))
             .azureResourceId("azureResourceId")
             .azureLocation("azureLocation")
             .adlsAccountSecondaryLocation("adlsAccountSecondaryLocation")
@@ -121,22 +127,23 @@ public class ADLSContainerTest {
             .adlsContainerLeaseStatus(ADLSLeaseStatus.UNLOCKED)
             .adlsContainerEncryptionScope("adlsContainerEncryptionScope")
             .adlsContainerVersionLevelImmutabilitySupport(false)
+            .adlsObjectCount(247506111)
             .adlsObjects(Set.of(
-                    ADLSObject.refByGuid("47d6b186-573b-4fbe-a201-cd2be135c260"),
-                    ADLSObject.refByGuid("1f077366-9fd5-4bb3-8ca1-786bc92630b4")))
-            .adlsAccount(ADLSAccount.refByGuid("0e073506-83ce-4f20-8406-110140a4a3d1"))
+                    ADLSObject.refByGuid("3192124d-8e7c-46e8-a63b-bf203af14257"),
+                    ADLSObject.refByGuid("569147f0-bf88-46d0-b159-06fea7ac3e18")))
+            .adlsAccount(ADLSAccount.refByGuid("3022f5be-9462-4630-9f85-07a7fc420486"))
             .build();
     private static ADLSContainer frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"ADLSContainer.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"ADLSContainer.serialize"},
+            dependsOnGroups = {"ADLSContainer.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -144,8 +151,8 @@ public class ADLSContainerTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"ADLSContainer.deserialize"},
+            dependsOnGroups = {"ADLSContainer.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, ADLSContainer.class);
@@ -153,8 +160,8 @@ public class ADLSContainerTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"ADLSContainer.equivalency"},
+            dependsOnGroups = {"ADLSContainer.serialize", "ADLSContainer.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -163,8 +170,8 @@ public class ADLSContainerTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"ADLSContainer.equivalency"},
+            dependsOnGroups = {"ADLSContainer.serialize", "ADLSContainer.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

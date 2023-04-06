@@ -110,34 +110,34 @@ public class DbtColumnProcessTest {
             .sql("sql")
             .ast("ast")
             .outputs(Set.of(
-                    Table.refByGuid("9abc82cf-da9b-4015-b683-68d552706dee"),
-                    Table.refByGuid("284a017b-d87c-40a0-aa63-13f02d1bab51")))
+                    Table.refByGuid("e2642b46-42af-4b26-83db-339fb0ade9b2"),
+                    Table.refByGuid("9154c5c2-7666-400a-abb0-9569c30f9de6")))
             .inputs(Set.of(
-                    Table.refByGuid("aa041bf2-1c76-481c-bf2a-d66db34e4520"),
-                    Table.refByGuid("5471b4a4-f13c-49bb-b1d2-81b29188c3f9")))
+                    Table.refByGuid("cc75d3fc-811d-4f2d-ac89-76b27fe3b53a"),
+                    Table.refByGuid("9bd1262f-cc06-426b-bfc4-89d41a941f43")))
             .columnProcesses(Set.of(
-                    ColumnProcess.refByGuid("7d7260e3-fffd-4914-8452-b4fbe7cefcba"),
-                    ColumnProcess.refByGuid("92491844-bf26-460a-b85c-c15f476342df")))
-            .process(LineageProcess.refByGuid("25e794a3-b7d2-49ac-a0ae-2b66c959d012"))
+                    ColumnProcess.refByGuid("679eb5a6-d776-4231-9770-46156b1b45f1"),
+                    ColumnProcess.refByGuid("4a6ba53a-848b-449d-93b1-96059b89eb40")))
+            .process(LineageProcess.refByGuid("d5865101-feec-41b6-b766-a93a279f9d06"))
             .dbtColumnProcessJobStatus("dbtColumnProcessJobStatus")
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("0efe5298-3c7b-46e6-bfbd-0fd575cc7505"),
-                    LineageProcess.refByGuid("e5c32d20-e181-4bc5-b536-c9eea033c7fe")))
+                    LineageProcess.refByGuid("30bb18b2-a247-4854-aa20-16c76adfad00"),
+                    LineageProcess.refByGuid("4dd7beea-0fcc-480a-950d-b275a4eb985b")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("0c834aae-293d-4aaa-90c0-5d862a63e6db"),
-                    LineageProcess.refByGuid("3ee6fd6d-5a67-41f1-bfa4-9e9137fcdcc6")))
+                    LineageProcess.refByGuid("6949f0d2-abe5-49de-85fb-0114b0ee95c5"),
+                    LineageProcess.refByGuid("b19a9ae3-524e-4b4b-a14e-129dab591935")))
             .build();
     private static DbtColumnProcess frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"DbtColumnProcess.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"DbtColumnProcess.serialize"},
+            dependsOnGroups = {"DbtColumnProcess.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -145,8 +145,8 @@ public class DbtColumnProcessTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"DbtColumnProcess.deserialize"},
+            dependsOnGroups = {"DbtColumnProcess.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, DbtColumnProcess.class);
@@ -154,8 +154,8 @@ public class DbtColumnProcessTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"DbtColumnProcess.equivalency"},
+            dependsOnGroups = {"DbtColumnProcess.serialize", "DbtColumnProcess.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -164,8 +164,8 @@ public class DbtColumnProcessTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"DbtColumnProcess.equivalency"},
+            dependsOnGroups = {"DbtColumnProcess.serialize", "DbtColumnProcess.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

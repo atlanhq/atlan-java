@@ -107,36 +107,36 @@ public class SalesforceObjectTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("6698bb9b-99ff-4219-8977-888a5c57a979"),
-                    LineageProcess.refByGuid("c9fb13d5-d3a7-4bec-a2ef-773651168ed0")))
+                    LineageProcess.refByGuid("98edb413-a69f-4873-8dbc-c98d7450e5d4"),
+                    LineageProcess.refByGuid("441c468a-a66a-4606-90d6-af706c92a7c9")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("8e574dbc-00d1-4229-9007-18f74ac09733"),
-                    LineageProcess.refByGuid("77060dda-007c-426d-bd65-0c7eb2a9fd4a")))
+                    LineageProcess.refByGuid("0f0cf156-e83a-4eab-aee3-47f9433c98a7"),
+                    LineageProcess.refByGuid("50c0edbb-ec4e-4651-98e9-658175ce2348")))
             .organizationQualifiedName("organizationQualifiedName")
             .apiName("apiName")
             .isCustom(false)
             .isMergable(false)
             .isQueryable(false)
-            .fieldCount(-9176728606458965723L)
-            .organization(SalesforceOrganization.refByGuid("9db094fc-72af-4932-8c47-6e79a42697cf"))
+            .fieldCount(7472154510507529224L)
+            .organization(SalesforceOrganization.refByGuid("194ea6bd-50a2-41aa-9878-8352f1e5a98e"))
             .lookupFields(Set.of(
-                    SalesforceField.refByGuid("d8e1637e-cfc8-43e6-9605-d6760ebe3edc"),
-                    SalesforceField.refByGuid("74950a3c-9a38-4959-aadd-54e972c538bf")))
+                    SalesforceField.refByGuid("858b153b-7265-448e-988b-30edd7374a9d"),
+                    SalesforceField.refByGuid("affbe3d8-c50c-4c0b-b19a-630c33864798")))
             .fields(Set.of(
-                    SalesforceField.refByGuid("85716fac-a1d3-4b84-b746-b5ed9aa6255f"),
-                    SalesforceField.refByGuid("7807d6b5-f2ad-4947-92e3-8dd684c6e37e")))
+                    SalesforceField.refByGuid("a99a5933-9411-4e26-a4e8-083203709592"),
+                    SalesforceField.refByGuid("87486633-8bf4-4f89-9549-937ebc5c7a4b")))
             .build();
     private static SalesforceObject frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"SalesforceObject.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"SalesforceObject.serialize"},
+            dependsOnGroups = {"SalesforceObject.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -144,8 +144,8 @@ public class SalesforceObjectTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"SalesforceObject.deserialize"},
+            dependsOnGroups = {"SalesforceObject.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, SalesforceObject.class);
@@ -153,8 +153,8 @@ public class SalesforceObjectTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"SalesforceObject.equivalency"},
+            dependsOnGroups = {"SalesforceObject.serialize", "SalesforceObject.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -163,8 +163,8 @@ public class SalesforceObjectTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"SalesforceObject.equivalency"},
+            dependsOnGroups = {"SalesforceObject.serialize", "SalesforceObject.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

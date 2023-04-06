@@ -107,32 +107,32 @@ public class TableauDashboardTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("4fb3eedf-ab8e-43be-b278-a49d591ce776"),
-                    LineageProcess.refByGuid("153c31a6-77d9-4cc6-9cbb-e56078c01778")))
+                    LineageProcess.refByGuid("fc27ae31-67ae-463c-9f3e-441414062479"),
+                    LineageProcess.refByGuid("161e5bc3-781a-4e64-ad28-04d9b9705345")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("c1ea0b08-48e1-4e7c-933c-1b2b8f9c46e3"),
-                    LineageProcess.refByGuid("5daec20e-6f4c-4d75-a062-69374d9b8505")))
+                    LineageProcess.refByGuid("32d05405-8e13-4121-99ef-a74c4cadb3b7"),
+                    LineageProcess.refByGuid("9f83a6e4-1b14-4099-9f04-16e428a5f40b")))
             .siteQualifiedName("siteQualifiedName")
             .projectQualifiedName("projectQualifiedName")
             .workbookQualifiedName("workbookQualifiedName")
             .topLevelProjectQualifiedName("topLevelProjectQualifiedName")
             .projectHierarchy(List.of(Map.of("key1", "value1", "key2", "value2")))
-            .workbook(TableauWorkbook.refByGuid("3fce0d40-0f93-4605-a148-1e312ec4d74c"))
+            .workbook(TableauWorkbook.refByGuid("e3902776-d65d-49b3-84f3-1bcbc84ff856"))
             .worksheets(Set.of(
-                    TableauWorksheet.refByGuid("371518c8-1daa-4142-ba78-bbf4606864b0"),
-                    TableauWorksheet.refByGuid("086e86e4-87b8-4645-969d-59bb09fb85c9")))
+                    TableauWorksheet.refByGuid("107f8013-4fa4-4cfd-92c0-11316c1f3905"),
+                    TableauWorksheet.refByGuid("9c0f2ca6-ebab-428a-ae14-b18e8c4cf585")))
             .build();
     private static TableauDashboard frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"TableauDashboard.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"TableauDashboard.serialize"},
+            dependsOnGroups = {"TableauDashboard.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -140,8 +140,8 @@ public class TableauDashboardTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"TableauDashboard.deserialize"},
+            dependsOnGroups = {"TableauDashboard.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, TableauDashboard.class);
@@ -149,8 +149,8 @@ public class TableauDashboardTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"TableauDashboard.equivalency"},
+            dependsOnGroups = {"TableauDashboard.serialize", "TableauDashboard.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -159,8 +159,8 @@ public class TableauDashboardTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"TableauDashboard.equivalency"},
+            dependsOnGroups = {"TableauDashboard.serialize", "TableauDashboard.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

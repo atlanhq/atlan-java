@@ -107,11 +107,11 @@ public class DbtModelColumnTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("9e6b8359-e565-409b-9fec-325c9399b899"),
-                    LineageProcess.refByGuid("5a6ddba4-629d-4953-ba29-1ee53588c0fd")))
+                    LineageProcess.refByGuid("cab21b07-9bef-44da-88fe-36629c6a812b"),
+                    LineageProcess.refByGuid("f383f36c-96b4-4d67-8abb-38a45a9aeb0d")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("f0211bce-cd89-45bf-8b0b-2aaf64a10e3d"),
-                    LineageProcess.refByGuid("7c4b2091-9543-4f65-9a81-5064fcc83d1d")))
+                    LineageProcess.refByGuid("0e240d2d-a979-48c5-93dc-f79d0cbf589b"),
+                    LineageProcess.refByGuid("52f903e8-f4f5-4795-ba54-8469399ea6a1")))
             .dbtAlias("dbtAlias")
             .dbtMeta("dbtMeta")
             .dbtUniqueId("dbtUniqueId")
@@ -122,8 +122,8 @@ public class DbtModelColumnTest {
             .dbtJobSchedule("dbtJobSchedule")
             .dbtJobStatus("dbtJobStatus")
             .dbtJobScheduleCronHumanized("dbtJobScheduleCronHumanized")
-            .dbtJobLastRun(-4774780242463776745L)
-            .dbtJobNextRun(-6793558438088253000L)
+            .dbtJobLastRun(-8406688296589677162L)
+            .dbtJobNextRun(3772585979247133488L)
             .dbtJobNextRunHumanized("dbtJobNextRunHumanized")
             .dbtEnvironmentName("dbtEnvironmentName")
             .dbtEnvironmentDbtVersion("dbtEnvironmentDbtVersion")
@@ -132,21 +132,24 @@ public class DbtModelColumnTest {
             .dbtSemanticLayerProxyUrl("dbtSemanticLayerProxyUrl")
             .dbtModelQualifiedName("dbtModelQualifiedName")
             .dbtModelColumnDataType("dbtModelColumnDataType")
-            .dbtModelColumnOrder(1402224347)
-            .sqlColumn(Column.refByGuid("74e1fc95-30ff-4f0d-97c2-f79b2e7eb867"))
-            .dbtModel(DbtModel.refByGuid("6f3d22ab-7905-48e4-a47d-1240f8fa585f"))
+            .dbtModelColumnOrder(2061906394)
+            .dbtModelColumnSqlColumns(Set.of(
+                    Column.refByGuid("80c012c1-b18e-4ba5-afc7-a94470466e98"),
+                    Column.refByGuid("9f1539c7-bd4b-4f94-9f39-fe4b4c0471b4")))
+            .sqlColumn(Column.refByGuid("98d61f93-0f4f-4639-abec-d3395cc17b8b"))
+            .dbtModel(DbtModel.refByGuid("c0199c89-49fb-4918-aab2-176f784e9fdc"))
             .build();
     private static DbtModelColumn frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"DbtModelColumn.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"DbtModelColumn.serialize"},
+            dependsOnGroups = {"DbtModelColumn.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -154,8 +157,8 @@ public class DbtModelColumnTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"DbtModelColumn.deserialize"},
+            dependsOnGroups = {"DbtModelColumn.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, DbtModelColumn.class);
@@ -163,8 +166,8 @@ public class DbtModelColumnTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"DbtModelColumn.equivalency"},
+            dependsOnGroups = {"DbtModelColumn.serialize", "DbtModelColumn.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -173,8 +176,8 @@ public class DbtModelColumnTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"DbtModelColumn.equivalency"},
+            dependsOnGroups = {"DbtModelColumn.serialize", "DbtModelColumn.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

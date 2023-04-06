@@ -107,15 +107,15 @@ public class SchemaTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("bbacedf0-457c-4848-b693-455d76b77042"),
-                    LineageProcess.refByGuid("6d4c3f33-86e5-4b30-a490-2aaa91e5c899")))
+                    LineageProcess.refByGuid("354d17c4-0fa9-4275-ad98-a3edbc88834d"),
+                    LineageProcess.refByGuid("e41fa6a4-30f9-417f-ba98-536cea1acda4")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("7606155b-1177-4666-b3eb-4f2ab1b67270"),
-                    LineageProcess.refByGuid("8f8477ca-a005-4ceb-8d3a-f840ca4d0504")))
-            .queryCount(2464237304231026524L)
-            .queryUserCount(334294096927994536L)
+                    LineageProcess.refByGuid("71d4299d-be82-47d1-b2dc-b7decae9c178"),
+                    LineageProcess.refByGuid("c106b92b-8668-4526-8fab-2379d6f059b0")))
+            .queryCount(-5323718724479795273L)
+            .queryUserCount(5407834279798490699L)
             // .queryUserMap(Map.of("key1", 123456L, "key2", 654321L))
-            .queryCountUpdatedAt(5978241532919146081L)
+            .queryCountUpdatedAt(-4441334462722413579L)
             .databaseName("databaseName")
             .databaseQualifiedName("databaseQualifiedName")
             .schemaName("schemaName")
@@ -125,46 +125,52 @@ public class SchemaTest {
             .viewName("viewName")
             .viewQualifiedName("viewQualifiedName")
             .isProfiled(true)
-            .lastProfiledAt(6930420688206387977L)
+            .lastProfiledAt(-6087788523547470388L)
             .dbtModels(Set.of(
-                    DbtModel.refByGuid("ef1d1c25-1ce1-4622-bafe-3ab9a4ba1845"),
-                    DbtModel.refByGuid("15285fae-8331-40b5-a96f-9d46da3445f3")))
+                    DbtModel.refByGuid("b084e656-c86b-46dc-b08e-ef5ef7dc756b"),
+                    DbtModel.refByGuid("d9d3a616-08b4-4057-9a22-514b5bf4aafc")))
             .dbtSources(Set.of(
-                    DbtSource.refByGuid("21a06a9e-aae2-46e1-8d12-ef88fa438a47"),
-                    DbtSource.refByGuid("8f569916-1297-4267-9342-05bc5ec72637")))
-            .tableCount(-1778971936)
-            .viewCount(2134235396)
+                    DbtSource.refByGuid("5e8608b0-8df3-4bcf-91f3-0cc25d1cc94b"),
+                    DbtSource.refByGuid("292e133a-b74b-4e1d-af7b-90d0610b8bb5")))
+            .sqlDbtModels(Set.of(
+                    DbtModel.refByGuid("31d1fff9-16a0-42b8-87ad-dd371eba1eb6"),
+                    DbtModel.refByGuid("c8dc81be-4b9e-43c1-8ad0-abfed48d7f52")))
+            .sqlDBTSources(Set.of(
+                    DbtSource.refByGuid("ae33915c-6302-4b45-a737-d71630048d0b"),
+                    DbtSource.refByGuid("286a66a5-b855-464c-b252-d7462a35183e")))
+            .tableCount(-1415459775)
+            .viewCount(-999102117)
             .materializedViews(Set.of(
-                    MaterializedView.refByGuid("1ff7c81f-480c-476d-a6a9-1b4c29356f2b"),
-                    MaterializedView.refByGuid("b6bfb2e1-c83d-450f-adfc-715d26a26b9e")))
+                    MaterializedView.refByGuid("1ddef7dd-d75b-45bf-af28-9cca8e661148"),
+                    MaterializedView.refByGuid("4ce31441-25d5-48ec-82f6-e32cbd70156c")))
             .tables(Set.of(
-                    Table.refByGuid("99450e1d-fbaa-4b6f-82c9-42e0d0e8d518"),
-                    Table.refByGuid("344847fd-dab3-4e37-93a1-2c74ac49a651")))
-            .database(Database.refByGuid("bafa377d-6619-4e8e-b6c6-5f801a4546ed"))
+                    Table.refByGuid("a4c69475-848f-4ee1-b6ca-bf8ca810d280"),
+                    Table.refByGuid("b4bf7f05-a710-4174-9474-487734cac8a1")))
+            .database(Database.refByGuid("61b6ee55-20b5-44fb-970d-7be65366e658"))
             .snowflakePipes(Set.of(
-                    SnowflakePipe.refByGuid("cdf51c53-644b-40ad-9846-fad42f2c2e69"),
-                    SnowflakePipe.refByGuid("b7a0822d-fe3f-487b-882a-f0ecf51a0d9d")))
+                    SnowflakePipe.refByGuid("90ccae23-2a6f-4d93-82e4-2d99d0b011b2"),
+                    SnowflakePipe.refByGuid("e73037c0-5ed2-4e0a-93ea-67db8b8435fe")))
             .snowflakeStreams(Set.of(
-                    SnowflakeStream.refByGuid("5baf58cf-83e0-4caf-a52a-4b043dbd5210"),
-                    SnowflakeStream.refByGuid("b8114edd-b146-47a1-8033-cf5d665c93cc")))
+                    SnowflakeStream.refByGuid("efaee0e1-c1cf-4a22-bba2-8047737d4c5d"),
+                    SnowflakeStream.refByGuid("7dc9e730-1552-4830-ba2a-daa2044f8cdc")))
             .procedures(Set.of(
-                    Procedure.refByGuid("a92f153e-07fa-4feb-8c2d-9b924a05a635"),
-                    Procedure.refByGuid("03b44067-d7ca-4001-8d12-db3068c76937")))
+                    Procedure.refByGuid("2db45640-96c9-4476-baeb-77ec3b2f2268"),
+                    Procedure.refByGuid("3a11ab0b-4c9d-4c41-ab7d-a37272945ab8")))
             .views(Set.of(
-                    View.refByGuid("c56f5867-612a-4d2a-be20-cfc6fef81276"),
-                    View.refByGuid("9f42a249-7923-4de7-9fd3-98c29a3d49fb")))
+                    View.refByGuid("b2aee7eb-dc80-4499-b91e-c1d99de2a1d8"),
+                    View.refByGuid("063a9f90-1262-4cb2-b729-917df8856514")))
             .build();
     private static Schema frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"Schema.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"Schema.serialize"},
+            dependsOnGroups = {"Schema.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -172,8 +178,8 @@ public class SchemaTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"Schema.deserialize"},
+            dependsOnGroups = {"Schema.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, Schema.class);
@@ -181,8 +187,8 @@ public class SchemaTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"Schema.equivalency"},
+            dependsOnGroups = {"Schema.serialize", "Schema.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -191,8 +197,8 @@ public class SchemaTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"Schema.equivalency"},
+            dependsOnGroups = {"Schema.serialize", "Schema.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

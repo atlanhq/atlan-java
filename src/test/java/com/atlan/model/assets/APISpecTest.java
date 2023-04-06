@@ -107,11 +107,11 @@ public class APISpecTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("ab22c0e0-c8f3-4751-9893-b74d514fd587"),
-                    LineageProcess.refByGuid("d40cdbd4-8a17-4875-8381-80d13c876295")))
+                    LineageProcess.refByGuid("79004c98-b7da-4519-b5bc-2103f3a7f1fe"),
+                    LineageProcess.refByGuid("d1b932a4-3777-4ad2-8b03-5f4269c4c7b6")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("b7321fbc-1a29-4e26-8b5f-35709e8bf2af"),
-                    LineageProcess.refByGuid("be591976-12d9-4b7b-9103-2c0230709348")))
+                    LineageProcess.refByGuid("debe8534-c68f-4150-b3dc-5cd6719ff0bc"),
+                    LineageProcess.refByGuid("8ccb1ff1-b1e8-468f-bc34-d909644d243c")))
             .apiSpecType("apiSpecType")
             .apiSpecVersion("apiSpecVersion")
             .apiSpecName("apiSpecName")
@@ -127,20 +127,20 @@ public class APISpecTest {
             .apiSpecContractVersion("apiSpecContractVersion")
             .apiSpecServiceAlias("apiSpecServiceAlias")
             .apiPaths(Set.of(
-                    APIPath.refByGuid("1345ffd4-d637-45be-afc6-135a825534f0"),
-                    APIPath.refByGuid("77e6fa05-6ab2-49f5-ae3c-7f6c47d84de5")))
+                    APIPath.refByGuid("7278709e-3c5b-4827-95ce-43b5367ee16f"),
+                    APIPath.refByGuid("98fd846c-a929-4f77-b7bc-f3ab1618213b")))
             .build();
     private static APISpec frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"APISpec.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"APISpec.serialize"},
+            dependsOnGroups = {"APISpec.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -148,8 +148,8 @@ public class APISpecTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"APISpec.deserialize"},
+            dependsOnGroups = {"APISpec.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, APISpec.class);
@@ -157,8 +157,8 @@ public class APISpecTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"APISpec.equivalency"},
+            dependsOnGroups = {"APISpec.serialize", "APISpec.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -167,8 +167,8 @@ public class APISpecTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"APISpec.equivalency"},
+            dependsOnGroups = {"APISpec.serialize", "APISpec.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

@@ -72,7 +72,7 @@ public class PersonaTest {
     private static Persona frodo;
     private static String serialized;
 
-    @Test(groups = {"serialize"})
+    @Test(groups = {"Persona.serialize"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -80,8 +80,8 @@ public class PersonaTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"Persona.deserialize"},
+            dependsOnGroups = {"Persona.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, Persona.class);
@@ -89,8 +89,8 @@ public class PersonaTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"Persona.equivalency"},
+            dependsOnGroups = {"Persona.serialize", "Persona.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -99,8 +99,8 @@ public class PersonaTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"Persona.equivalency"},
+            dependsOnGroups = {"Persona.serialize", "Persona.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

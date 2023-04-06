@@ -107,28 +107,28 @@ public class LookerViewTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("69b68a4a-5a30-434a-8ece-297542ffe193"),
-                    LineageProcess.refByGuid("947bfc2d-cf8a-48c2-b3a1-089cf91c91a1")))
+                    LineageProcess.refByGuid("45eb6727-e878-4150-a5ea-582f637e8088"),
+                    LineageProcess.refByGuid("8d52c3aa-1877-4fab-8a39-2c7c4deac82e")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("69539d53-0cc1-4515-a2b8-6e23fcd379bb"),
-                    LineageProcess.refByGuid("ca884d86-3064-4851-8ce7-9d56869abff3")))
+                    LineageProcess.refByGuid("f4d6c3ed-3f84-47ec-8014-cd37326efc87"),
+                    LineageProcess.refByGuid("e0608ecf-1b0b-4581-8a55-f6c639cbcb7c")))
             .projectName("projectName")
-            .project(LookerProject.refByGuid("8042ca0c-edb9-4ae8-999f-1b5908b04470"))
+            .project(LookerProject.refByGuid("1dfe7967-8676-47bd-96ee-85b6527d10b1"))
             .fields(Set.of(
-                    LookerField.refByGuid("72c6d025-9586-4d74-9fae-d38369f48689"),
-                    LookerField.refByGuid("31f24b00-673a-4e08-af8f-f16baa350464")))
+                    LookerField.refByGuid("85649f33-e197-4e7a-86c7-8db4bfe35465"),
+                    LookerField.refByGuid("54d0f5e5-3b07-4526-8fe9-4ec4cc2d099a")))
             .build();
     private static LookerView frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"LookerView.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"LookerView.serialize"},
+            dependsOnGroups = {"LookerView.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -136,8 +136,8 @@ public class LookerViewTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"LookerView.deserialize"},
+            dependsOnGroups = {"LookerView.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, LookerView.class);
@@ -145,8 +145,8 @@ public class LookerViewTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"LookerView.equivalency"},
+            dependsOnGroups = {"LookerView.serialize", "LookerView.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -155,8 +155,8 @@ public class LookerViewTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"LookerView.equivalency"},
+            dependsOnGroups = {"LookerView.serialize", "LookerView.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

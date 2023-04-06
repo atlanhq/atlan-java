@@ -107,30 +107,30 @@ public class LinkTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("11d21188-eacd-47a8-81e9-faa8abb70fb1"),
-                    LineageProcess.refByGuid("49b9a687-8fbe-4d63-aa1a-eac0da51adda")))
+                    LineageProcess.refByGuid("14706ed3-3aa9-4fcf-a2e6-eb3c45972712"),
+                    LineageProcess.refByGuid("7d7b52de-db93-4ffa-b181-f9d4bdbc1701")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("b977cacd-2ce4-4bcd-9f2a-3f7cf62d59e7"),
-                    LineageProcess.refByGuid("e479828e-9584-4138-9321-bb58f68cb8e9")))
+                    LineageProcess.refByGuid("1aed20e8-f073-481d-8f0c-c9592bd82462"),
+                    LineageProcess.refByGuid("fd2f2815-5e28-426e-baf6-b657cfff6704")))
             .link("link")
             .isGlobal(false)
             .reference("reference")
             .resourceMetadata(Map.of("key1", "value1", "key2", "value2"))
             .icon("icon")
             .iconType(LinkIconType.EMOJI)
-            .asset(Table.refByGuid("894ebeaa-ca1a-44e7-9399-82e55fa1faf8"))
+            .asset(Table.refByGuid("d04498a0-d263-4218-9258-a3b1c818252c"))
             .build();
     private static Link frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"Link.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"Link.serialize"},
+            dependsOnGroups = {"Link.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -138,8 +138,8 @@ public class LinkTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"Link.deserialize"},
+            dependsOnGroups = {"Link.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, Link.class);
@@ -147,8 +147,8 @@ public class LinkTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"Link.equivalency"},
+            dependsOnGroups = {"Link.serialize", "Link.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -157,8 +157,8 @@ public class LinkTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"Link.equivalency"},
+            dependsOnGroups = {"Link.serialize", "Link.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

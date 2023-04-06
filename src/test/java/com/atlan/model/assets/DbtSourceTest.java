@@ -107,11 +107,11 @@ public class DbtSourceTest {
             .assignedTerm(GlossaryTerm.refByGuid("termGuid1"))
             .assignedTerm(GlossaryTerm.refByGuid("termGuid2"))
             .inputToProcesses(Set.of(
-                    LineageProcess.refByGuid("d0fbae70-adb7-42bf-aa7f-d545ea69c73a"),
-                    LineageProcess.refByGuid("f5cdf9fd-6025-41b9-8853-fcd4c302e7eb")))
+                    LineageProcess.refByGuid("d0071540-f55b-4b16-80db-2fbfb8d504ec"),
+                    LineageProcess.refByGuid("400fd4dd-52dc-4c91-bdd6-49c1bd944715")))
             .outputFromProcesses(Set.of(
-                    LineageProcess.refByGuid("7a664fa1-b1ea-40ec-bf93-020f612dc5c9"),
-                    LineageProcess.refByGuid("a3e569eb-1f5b-418a-9dc6-b9676cb21460")))
+                    LineageProcess.refByGuid("d8c6af6a-a4ae-4497-87c4-5d96fa75a9a9"),
+                    LineageProcess.refByGuid("a4460a2a-0a71-442d-864a-2be891d20b73")))
             .dbtAlias("dbtAlias")
             .dbtMeta("dbtMeta")
             .dbtUniqueId("dbtUniqueId")
@@ -122,8 +122,8 @@ public class DbtSourceTest {
             .dbtJobSchedule("dbtJobSchedule")
             .dbtJobStatus("dbtJobStatus")
             .dbtJobScheduleCronHumanized("dbtJobScheduleCronHumanized")
-            .dbtJobLastRun(5492603544869549720L)
-            .dbtJobNextRun(-9022360906040166962L)
+            .dbtJobLastRun(8692967710972636743L)
+            .dbtJobNextRun(-4923961817957027964L)
             .dbtJobNextRunHumanized("dbtJobNextRunHumanized")
             .dbtEnvironmentName("dbtEnvironmentName")
             .dbtEnvironmentDbtVersion("dbtEnvironmentDbtVersion")
@@ -132,20 +132,22 @@ public class DbtSourceTest {
             .dbtSemanticLayerProxyUrl("dbtSemanticLayerProxyUrl")
             .dbtState("dbtState")
             .dbtFreshnessCriteria("dbtFreshnessCriteria")
-            .primarySqlAsset(Table.refByGuid("3a7108c3-1fa1-4234-b6a4-1d3ee55d5dac"))
-            .sqlAsset(Table.refByGuid("3a7108c3-1fa1-4234-b6a4-1d3ee55d5dac"))
+            .sqlAssets(Set.of(
+                    Table.refByGuid("acc205bc-18b0-4271-aab7-8e2eaccaefd2"),
+                    Table.refByGuid("160135ce-5551-474c-bbae-59f11ce1329d")))
+            .primarySqlAsset(Table.refByGuid("40bc4b5c-71e1-4ecd-8525-f899d8ec1943"))
             .build();
     private static DbtSource frodo;
     private static String serialized;
 
-    @Test(groups = {"builderEquivalency"})
+    @Test(groups = {"DbtSource.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"serialize"},
-            dependsOnGroups = {"builderEquivalency"})
+            groups = {"DbtSource.serialize"},
+            dependsOnGroups = {"DbtSource.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -153,8 +155,8 @@ public class DbtSourceTest {
     }
 
     @Test(
-            groups = {"deserialize"},
-            dependsOnGroups = {"serialize"})
+            groups = {"DbtSource.deserialize"},
+            dependsOnGroups = {"DbtSource.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
         frodo = Serde.mapper.readValue(serialized, DbtSource.class);
@@ -162,8 +164,8 @@ public class DbtSourceTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"DbtSource.equivalency"},
+            dependsOnGroups = {"DbtSource.serialize", "DbtSource.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -172,8 +174,8 @@ public class DbtSourceTest {
     }
 
     @Test(
-            groups = {"equivalency"},
-            dependsOnGroups = {"serialize", "deserialize"})
+            groups = {"DbtSource.equivalency"},
+            dependsOnGroups = {"DbtSource.serialize", "DbtSource.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);
