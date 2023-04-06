@@ -185,7 +185,7 @@ public class DbtCrawler extends AbstractCrawler {
                 .parameter(NameValuePair.of("exclude-filter", "{}"))
                 .parameter(NameValuePair.of("include-filter-core", includeAssets))
                 .parameter(NameValuePair.of("exclude-filter-core", excludeAssets))
-                .parameter(NameValuePair.of("enrich-materialized-sql-assets", String.valueOf(enrichMaterializedAssets)));
+                .parameter(NameValuePair.of("enrich-materialised-sql-assets", enrichMaterializedAssets));
         if (limitToConnection != null && limitToConnection.length() > 0) {
             argsBuilder = argsBuilder.parameter(NameValuePair.of("connection-qualified-name", limitToConnection));
         }
