@@ -100,10 +100,8 @@ dependencies {
     api group: "co.elastic.clients", name: "elasticsearch-java", version: "8.5.1"
     numaflow group: "io.numaproj.numaflow", name: "numaflow-java", version: "+"
     numaflow "io.netty:netty-transport-native-epoll:4.1.79.Final:linux-x86_64"
-    testImplementation group: 'org.testng', name: 'testng', version: '7.4.0'
+    testImplementation group: 'org.testng', name: 'testng', version: '7.7.0'
     testImplementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.11'
-    testRuntimeOnly group: 'org.testng', name: 'testng', version: '7.4.0'
-    testRuntimeOnly group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.11'
 }
 
 jar {
@@ -166,7 +164,7 @@ testing {
             }
             dependencies {
                 implementation project
-                implementation group: 'org.testng', name: 'testng', version: '7.4.0'
+                implementation group: 'org.testng', name: 'testng', version: '7.7.0'
                 implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.11'
                 implementation group: 'org.apache.commons', name: 'commons-csv', version: '1.9.0'
             }
