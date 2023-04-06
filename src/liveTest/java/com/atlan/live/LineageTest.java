@@ -50,12 +50,6 @@ public class LineageTest extends AtlanLiveTest {
     private static Table table = null;
     private static MaterializedView mview = null;
     private static View view = null;
-    private static Column column1 = null;
-    private static Column column2 = null;
-    private static Column column3 = null;
-    private static Column column4 = null;
-    private static Column column5 = null;
-    private static Column column6 = null;
 
     private static LineageProcess start = null;
     private static LineageProcess end = null;
@@ -68,12 +62,12 @@ public class LineageTest extends AtlanLiveTest {
         table = SQLAssetTest.createTable(TABLE_NAME, schema.getQualifiedName());
         mview = SQLAssetTest.createMaterializedView(MVIEW_NAME, schema.getQualifiedName());
         view = SQLAssetTest.createView(VIEW_NAME, schema.getQualifiedName());
-        column1 = SQLAssetTest.createColumn(COLUMN_NAME1, Table.TYPE_NAME, table.getQualifiedName(), 1);
-        column2 = SQLAssetTest.createColumn(COLUMN_NAME2, Table.TYPE_NAME, table.getQualifiedName(), 2);
-        column3 = SQLAssetTest.createColumn(COLUMN_NAME3, MaterializedView.TYPE_NAME, mview.getQualifiedName(), 1);
-        column4 = SQLAssetTest.createColumn(COLUMN_NAME4, MaterializedView.TYPE_NAME, mview.getQualifiedName(), 2);
-        column5 = SQLAssetTest.createColumn(COLUMN_NAME5, View.TYPE_NAME, view.getQualifiedName(), 1);
-        column6 = SQLAssetTest.createColumn(COLUMN_NAME6, View.TYPE_NAME, view.getQualifiedName(), 2);
+        SQLAssetTest.createColumn(COLUMN_NAME1, Table.TYPE_NAME, table.getQualifiedName(), 1);
+        SQLAssetTest.createColumn(COLUMN_NAME2, Table.TYPE_NAME, table.getQualifiedName(), 2);
+        SQLAssetTest.createColumn(COLUMN_NAME3, MaterializedView.TYPE_NAME, mview.getQualifiedName(), 1);
+        SQLAssetTest.createColumn(COLUMN_NAME4, MaterializedView.TYPE_NAME, mview.getQualifiedName(), 2);
+        SQLAssetTest.createColumn(COLUMN_NAME5, View.TYPE_NAME, view.getQualifiedName(), 1);
+        SQLAssetTest.createColumn(COLUMN_NAME6, View.TYPE_NAME, view.getQualifiedName(), 2);
     }
 
     // TODO: column-level lineage

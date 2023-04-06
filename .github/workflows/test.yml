@@ -17,12 +17,13 @@ jobs:
         with:
           java-version: 11
           distribution: adopt
-      - name: Check formatting
+      - name: Run integration tests
         run: ./gradlew liveTest
         env:
           ATLAN_BASE_URL: ${{ secrets.ATLAN_BASE_URL }}
           ATLAN_API_KEY: ${{ secrets.ATLAN_API_KEY }}
-      - uses: actions/upload-artifact@v3
+      - if: success() || failure()
+        uses: actions/upload-artifact@v3
         with:
           name: log
           path: test.log

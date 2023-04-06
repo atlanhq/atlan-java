@@ -21,6 +21,7 @@ plugins {
     id "biz.aQute.bnd.builder" version "6.1.0"
     id "org.ajoberstar.git-publish" version "3.0.1"
     id "com.github.johnrengelman.shadow" version "7.1.2"
+    id "com.adarshr.test-logger" version "3.2.0"
 }
 
 sourceCompatibility = JavaVersion.VERSION_11
