@@ -6,6 +6,7 @@ import static com.atlan.util.QueryFactory.*;
 import static org.testng.Assert.*;
 
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
+import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.assets.*;
@@ -21,6 +22,8 @@ import com.atlan.model.search.IndexSearchResponse;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import com.atlan.net.HttpClient;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.Test;
 
@@ -337,7 +340,7 @@ public class LineageTest extends AtlanLiveTest {
     @Test(
             groups = {"lineage.search.lineage"},
             dependsOnGroups = {"lineage.read.lineage.*"})
-    void searchByLineage() throws AtlanException {
+    void searchByLineage() throws AtlanException, InterruptedException {
         Query combined = CompoundQuery.builder()
                 .must(beActive())
                 .must(haveLineage())
@@ -353,6 +356,13 @@ public class LineageTest extends AtlanLiveTest {
                 .build();
 
         IndexSearchResponse response = index.search();
+
+        int count = 0;
+        while (response.getApproximateCount() < 3L && count < Atlan.getMaxNetworkRetries()) {
+            Thread.sleep(HttpClient.waitTime(count).toMillis());
+            response = index.search();
+            count++;
+        }
 
         assertNotNull(response);
         assertEquals(response.getApproximateCount().longValue(), 3L);
