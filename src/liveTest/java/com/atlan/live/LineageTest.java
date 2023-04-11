@@ -19,11 +19,10 @@ import com.atlan.model.lineage.LineageResponse;
 import com.atlan.model.search.IndexSearchDSL;
 import com.atlan.model.search.IndexSearchRequest;
 import com.atlan.model.search.IndexSearchResponse;
+import com.atlan.net.HttpClient;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import com.atlan.net.HttpClient;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.Test;
 
