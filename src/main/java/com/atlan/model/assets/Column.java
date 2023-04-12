@@ -274,6 +274,8 @@ public class Column extends SQL {
             return view;
         } else if (materializedView != null) {
             return materializedView;
+        } else if (tablePartition != null) {
+            return tablePartition;
         }
         return null;
     }
@@ -314,7 +316,16 @@ public class Column extends SQL {
         String[] tokens = parentQualifiedName.split("/");
         AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(tokens);
         String parentName = StringUtils.getNameFromQualifiedName(parentQualifiedName);
-        String schemaQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(parentQualifiedName);
+        String tableName = null;
+        String tableQualifiedName = null;
+        String schemaQualifiedName;
+        if (TablePartition.TYPE_NAME.equals(parentType)) {
+            tableQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(parentQualifiedName);
+            tableName = StringUtils.getNameFromQualifiedName(tableQualifiedName);
+            schemaQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(tableQualifiedName);
+        } else {
+            schemaQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(parentQualifiedName);
+        }
         String schemaName = StringUtils.getNameFromQualifiedName(schemaQualifiedName);
         String databaseQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(schemaQualifiedName);
         String databaseName = StringUtils.getNameFromQualifiedName(databaseQualifiedName);
@@ -344,6 +355,11 @@ public class Column extends SQL {
                 builder.viewName(parentName)
                         .viewQualifiedName(parentQualifiedName)
                         .materializedView(MaterializedView.refByQualifiedName(parentQualifiedName));
+                break;
+            case TablePartition.TYPE_NAME:
+                builder.tableName(tableName)
+                        .tableQualifiedName(tableQualifiedName)
+                        .tablePartition(TablePartition.refByQualifiedName(parentQualifiedName));
                 break;
         }
         return builder;
