@@ -2,15 +2,18 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
+import com.atlan.Atlan;
 import com.atlan.api.EntityBulkEndpoint;
 import com.atlan.api.EntityGuidEndpoint;
 import com.atlan.api.EntityUniqueAttributesEndpoint;
+import com.atlan.exception.ApiException;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.core.*;
 import com.atlan.model.enums.*;
 import com.atlan.model.relations.Reference;
+import com.atlan.net.HttpClient;
 import com.atlan.serde.AssetDeserializer;
 import com.atlan.serde.AssetSerializer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -22,6 +25,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Base class for all assets.
@@ -47,6 +51,7 @@ import lombok.experimental.SuperBuilder;
     @JsonSubTypes.Type(value = Badge.class, name = Badge.TYPE_NAME),
     @JsonSubTypes.Type(value = Namespace.class, name = Namespace.TYPE_NAME),
 })
+@Slf4j
 @SuppressWarnings("cast")
 public abstract class Asset extends Reference {
 
@@ -945,17 +950,49 @@ public abstract class Asset extends Reference {
     /**
      * Restore an archived (soft-deleted) asset to active.
      *
+     * @param typeName type of the asset to restore
+     * @param qualifiedName of the asset to restore
      * @return true if the asset is now restored, or false if not
      * @throws AtlanException on any API problems
      */
     protected static boolean restore(String typeName, String qualifiedName) throws AtlanException {
+        try {
+            return restore(typeName, qualifiedName, 0);
+        } catch (InterruptedException e) {
+            throw new ApiException(ErrorCode.RETRIES_INTERRUPTED, e);
+        }
+    }
+
+    /**
+     * Restore an archived (soft-deleted) asset to active, retrying in case it is found to
+     * already be active (since the delete handlers run asynchronously).
+     *
+     * @param typeName type of the asset to restore
+     * @param qualifiedName of the asset to restore
+     * @param retryCount number of retries we have already attempted
+     * @return true if the asset is now restored, or false if not
+     * @throws AtlanException on any API problems
+     * @throws InterruptedException if the retry cycle sleeps are interrupted
+     */
+    private static boolean restore(String typeName, String qualifiedName, int retryCount)
+            throws AtlanException, InterruptedException {
         Asset existing = getExistingAsset(typeName, qualifiedName);
         if (existing == null) {
             // Nothing to restore, so cannot be restored
             return false;
         } else if (existing.getStatus() == AtlanStatus.ACTIVE) {
-            // Already active, no need to restore
-            return true;
+            // Already active, but this could be due to the async nature of the delete handlers
+            if (retryCount < Atlan.getMaxNetworkRetries()) {
+                // So continue to retry up to the maximum number of allowed retries
+                log.debug(
+                        "Attempted to restore an active asset, retrying status check for async delete handling (attempt: {}).",
+                        retryCount + 1);
+                Thread.sleep(HttpClient.waitTime(retryCount).toMillis());
+                return restore(typeName, qualifiedName, retryCount + 1);
+            } else {
+                // If we have exhausted the retries, though, then we should just short-circuit
+                return true;
+            }
         } else {
             Optional<String> guidRestored = restore(existing);
             return guidRestored.isPresent() && guidRestored.get().equals(existing.getGuid());
