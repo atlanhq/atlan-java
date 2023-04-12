@@ -8,6 +8,7 @@ import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.*;
 import com.atlan.model.relations.UniqueAttributes;
+import com.atlan.util.StringUtils;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -123,6 +124,47 @@ public class TablePartition extends SQL {
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
+    }
+
+    /**
+     * Builds the minimal object necessary to create a table partition.
+     *
+     * @param name of the table partition
+     * @param tableQualifiedName unique name of the table in which this table partition exists
+     * @return the minimal request necessary to create the table partition, as a builder
+     */
+    public static TablePartitionBuilder<?, ?> creator(String name, String tableQualifiedName) {
+        String[] tokens = tableQualifiedName.split("/");
+        AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(tokens);
+        String tableName = StringUtils.getNameFromQualifiedName(tableQualifiedName);
+        String schemaQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(tableQualifiedName);
+        String schemaName = StringUtils.getNameFromQualifiedName(schemaQualifiedName);
+        String databaseQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(schemaQualifiedName);
+        String databaseName = StringUtils.getNameFromQualifiedName(databaseQualifiedName);
+        String connectionQualifiedName = StringUtils.getParentQualifiedNameFromQualifiedName(databaseQualifiedName);
+        return TablePartition.builder()
+                .name(name)
+                .qualifiedName(generateQualifiedName(name, tableQualifiedName))
+                .connectorType(connectorType)
+                .tableName(tableName)
+                .tableQualifiedName(tableQualifiedName)
+                .parentTable(Table.refByQualifiedName(tableQualifiedName))
+                .schemaName(schemaName)
+                .schemaQualifiedName(schemaQualifiedName)
+                .databaseName(databaseName)
+                .databaseQualifiedName(databaseQualifiedName)
+                .connectionQualifiedName(connectionQualifiedName);
+    }
+
+    /**
+     * Generate a unique table partition name.
+     *
+     * @param name of the table partition
+     * @param tableQualifiedName unique name of the table in which this partition exists
+     * @return a unique name for the table partition
+     */
+    public static String generateQualifiedName(String name, String tableQualifiedName) {
+        return tableQualifiedName + "/" + name;
     }
 
     /**
