@@ -34,12 +34,13 @@ public class SQLAssetTest extends AtlanLiveTest {
 
     private static final String PREFIX = AtlanLiveTest.PREFIX + "SQL";
 
-    public static final AtlanConnectorType CONNECTOR_TYPE = AtlanConnectorType.SAPHANA;
+    public static final AtlanConnectorType CONNECTOR_TYPE = AtlanConnectorType.DATABRICKS;
     public static final String CONNECTION_NAME = PREFIX;
 
     public static final String DATABASE_NAME = PREFIX + "_db";
     public static final String SCHEMA_NAME = PREFIX + "_schema";
     public static final String TABLE_NAME = PREFIX + "_table";
+    public static final String TABLE_NAME2 = TABLE_NAME + "2";
     public static final String VIEW_NAME = PREFIX + "_view";
     public static final String MVIEW_NAME = PREFIX + "_mview";
     public static final String PARTITION_NAME = PREFIX + "_partition";
@@ -61,6 +62,7 @@ public class SQLAssetTest extends AtlanLiveTest {
     private static Database database = null;
     private static Schema schema = null;
     private static Table table = null;
+    private static Table table2 = null;
     private static View view = null;
     private static MaterializedView mview = null;
     private static TablePartition partition = null;
@@ -356,9 +358,30 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.create.partition"},
             dependsOnGroups = {"asset.create.mview"})
     void createPartition() throws AtlanException {
-        partition = createTablePartition(PARTITION_NAME, table.getQualifiedName());
+        Table table = Table.creator(TABLE_NAME2, schema.getQualifiedName())
+                .columnCount(2L)
+                .isPartitioned(true)
+                .partitionCount(1L)
+                .build();
+        AssetMutationResponse response = table.upsert();
+        assertNotNull(response);
+        assertTrue(response.getDeletedAssets().isEmpty());
+        assertEquals(response.getUpdatedAssets().size(), 1);
+        Asset one = response.getUpdatedAssets().get(0);
+        assertTrue(one instanceof Schema);
+        Schema schema = (Schema) one;
+        assertEquals(schema.getQualifiedName(), schema.getQualifiedName());
+        assertEquals(response.getCreatedAssets().size(), 1);
+        one = response.getCreatedAssets().get(0);
+        assertTrue(one instanceof Table);
+        table2 = (Table) one;
+        assertNotNull(table2.getGuid());
+        assertNotNull(table2.getQualifiedName());
+        assertEquals(table2.getName(), TABLE_NAME2);
+        assertEquals(table2.getSchemaQualifiedName(), schema.getQualifiedName());
+        partition = createTablePartition(PARTITION_NAME, table2.getQualifiedName());
         assertEquals(partition.getConnectorType(), CONNECTOR_TYPE);
-        assertEquals(partition.getTableName(), TABLE_NAME);
+        assertEquals(partition.getTableName(), TABLE_NAME2);
         assertEquals(partition.getSchemaName(), SCHEMA_NAME);
         assertEquals(partition.getDatabaseName(), DATABASE_NAME);
         assertEquals(partition.getDatabaseQualifiedName(), database.getQualifiedName());
@@ -453,10 +476,25 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.create.column.7"},
             dependsOnGroups = {"asset.create.column.6"})
     void createColumn7() throws AtlanException {
-        column7 = createColumn(COLUMN_NAME7, TablePartition.TYPE_NAME, partition.getQualifiedName(), 1);
+        Column column = Column.creator(COLUMN_NAME7, TablePartition.TYPE_NAME, partition.getQualifiedName(), 1)
+                .partitionOrder(1)
+                .isPartition(true)
+                .build();
+        AssetMutationResponse response = column.upsert();
+        assertNotNull(response);
+        assertTrue(response.getDeletedAssets().isEmpty());
+        assertEquals(response.getUpdatedAssets().size(), 1);
+        Asset one = response.getUpdatedAssets().get(0);
+        assertTrue(one instanceof SQL);
+        SQL parent = (SQL) one;
+        assertEquals(parent.getQualifiedName(), partition.getQualifiedName());
+        assertEquals(response.getCreatedAssets().size(), 1);
+        one = response.getCreatedAssets().get(0);
+        assertTrue(one instanceof Column);
+        column7 = (Column) one;
         assertEquals(column7.getConnectorType(), CONNECTOR_TYPE);
-        assertEquals(column7.getTableName(), TABLE_NAME);
-        assertEquals(column7.getTableQualifiedName(), table.getQualifiedName());
+        assertEquals(column7.getTableName(), TABLE_NAME2);
+        assertEquals(column7.getTableQualifiedName(), table2.getQualifiedName());
         assertEquals(column7.getSchemaName(), SCHEMA_NAME);
         assertEquals(column7.getSchemaQualifiedName(), schema.getQualifiedName());
         assertEquals(column7.getDatabaseName(), DATABASE_NAME);
@@ -468,10 +506,25 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.create.column.8"},
             dependsOnGroups = {"asset.create.column.7"})
     void createColumn8() throws AtlanException {
-        column8 = createColumn(COLUMN_NAME8, TablePartition.TYPE_NAME, partition.getQualifiedName(), 2);
+        Column column = Column.creator(COLUMN_NAME8, TablePartition.TYPE_NAME, partition.getQualifiedName(), 2)
+                .partitionOrder(2)
+                .isPartition(true)
+                .build();
+        AssetMutationResponse response = column.upsert();
+        assertNotNull(response);
+        assertTrue(response.getDeletedAssets().isEmpty());
+        assertEquals(response.getUpdatedAssets().size(), 1);
+        Asset one = response.getUpdatedAssets().get(0);
+        assertTrue(one instanceof SQL);
+        SQL parent = (SQL) one;
+        assertEquals(parent.getQualifiedName(), partition.getQualifiedName());
+        assertEquals(response.getCreatedAssets().size(), 1);
+        one = response.getCreatedAssets().get(0);
+        assertTrue(one instanceof Column);
+        column8 = (Column) one;
         assertEquals(column8.getConnectorType(), CONNECTOR_TYPE);
-        assertEquals(column8.getTableName(), TABLE_NAME);
-        assertEquals(column8.getTableQualifiedName(), table.getQualifiedName());
+        assertEquals(column8.getTableName(), TABLE_NAME2);
+        assertEquals(column8.getTableQualifiedName(), table2.getQualifiedName());
         assertEquals(column8.getSchemaName(), SCHEMA_NAME);
         assertEquals(column8.getSchemaQualifiedName(), schema.getQualifiedName());
         assertEquals(column8.getDatabaseName(), DATABASE_NAME);
@@ -558,13 +611,13 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertNotNull(response);
 
         int count = 0;
-        while (response.getApproximateCount() < 15L && count < Atlan.getMaxNetworkRetries()) {
+        while (response.getApproximateCount() < 16L && count < Atlan.getMaxNetworkRetries()) {
             Thread.sleep(HttpClient.waitTime(count).toMillis());
             response = index.search();
             count++;
         }
 
-        assertEquals(response.getApproximateCount().longValue(), 15L);
+        assertEquals(response.getApproximateCount().longValue(), 16L);
         List<Asset> entities = response.getAssets();
         assertNotNull(response.getAggregations());
         assertEquals(response.getAggregations().size(), 1);
@@ -576,7 +629,7 @@ public class SQLAssetTest extends AtlanLiveTest {
                 8);
 
         assertNotNull(entities);
-        assertEquals(entities.size(), 15);
+        assertEquals(entities.size(), 16);
 
         Asset one = entities.get(0);
         assertTrue(one instanceof Connection);
@@ -621,62 +674,69 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertEquals(m.getName(), MVIEW_NAME);
 
         one = entities.get(6);
+        assertTrue(one instanceof Table);
+        t = (Table) one;
+        assertEquals(t.getGuid(), table2.getGuid());
+        assertEquals(t.getQualifiedName(), table2.getQualifiedName());
+        assertEquals(t.getName(), TABLE_NAME2);
+
+        one = entities.get(7);
         assertTrue(one instanceof TablePartition);
         TablePartition p = (TablePartition) one;
         assertEquals(p.getGuid(), partition.getGuid());
         assertEquals(p.getQualifiedName(), partition.getQualifiedName());
         assertEquals(p.getName(), PARTITION_NAME);
 
-        one = entities.get(7);
+        one = entities.get(8);
         assertTrue(one instanceof Column);
         Column column = (Column) one;
         assertEquals(column.getGuid(), column1.getGuid());
         assertEquals(column.getQualifiedName(), column1.getQualifiedName());
         assertEquals(column.getName(), COLUMN_NAME1);
 
-        one = entities.get(8);
+        one = entities.get(9);
         assertTrue(one instanceof Column);
         column = (Column) one;
         assertEquals(column.getGuid(), column2.getGuid());
         assertEquals(column.getQualifiedName(), column2.getQualifiedName());
         assertEquals(column.getName(), COLUMN_NAME2);
 
-        one = entities.get(9);
+        one = entities.get(10);
         assertTrue(one instanceof Column);
         column = (Column) one;
         assertEquals(column.getGuid(), column3.getGuid());
         assertEquals(column.getQualifiedName(), column3.getQualifiedName());
         assertEquals(column.getName(), COLUMN_NAME3);
 
-        one = entities.get(10);
+        one = entities.get(11);
         assertTrue(one instanceof Column);
         column = (Column) one;
         assertEquals(column.getGuid(), column4.getGuid());
         assertEquals(column.getQualifiedName(), column4.getQualifiedName());
         assertEquals(column.getName(), COLUMN_NAME4);
 
-        one = entities.get(11);
+        one = entities.get(12);
         assertTrue(one instanceof Column);
         column = (Column) one;
         assertEquals(column.getGuid(), column5.getGuid());
         assertEquals(column.getQualifiedName(), column5.getQualifiedName());
         assertEquals(column.getName(), COLUMN_NAME5);
 
-        one = entities.get(12);
+        one = entities.get(13);
         assertTrue(one instanceof Column);
         column = (Column) one;
         assertEquals(column.getGuid(), column6.getGuid());
         assertEquals(column.getQualifiedName(), column6.getQualifiedName());
         assertEquals(column.getName(), COLUMN_NAME6);
 
-        one = entities.get(13);
+        one = entities.get(14);
         assertTrue(one instanceof Column);
         column = (Column) one;
         assertEquals(column.getGuid(), column7.getGuid());
         assertEquals(column.getQualifiedName(), column7.getQualifiedName());
         assertEquals(column.getName(), COLUMN_NAME7);
 
-        one = entities.get(14);
+        one = entities.get(15);
         assertTrue(one instanceof Column);
         column = (Column) one;
         assertEquals(column.getGuid(), column8.getGuid());
