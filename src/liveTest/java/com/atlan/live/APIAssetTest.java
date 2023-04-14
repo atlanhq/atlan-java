@@ -7,6 +7,7 @@ import static org.testng.Assert.*;
 
 import co.elastic.clients.elasticsearch._types.SortOrder;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
+import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.assets.*;
 import com.atlan.model.core.AssetMutationResponse;
@@ -15,6 +16,7 @@ import com.atlan.model.search.AggregationBucketResult;
 import com.atlan.model.search.IndexSearchDSL;
 import com.atlan.model.search.IndexSearchRequest;
 import com.atlan.model.search.IndexSearchResponse;
+import com.atlan.net.HttpClient;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.Test;
@@ -137,7 +139,7 @@ public class APIAssetTest extends AtlanLiveTest {
     @Test(
             groups = {"api.search.assets"},
             dependsOnGroups = {"api.update.spec.again"})
-    void searchAssets() throws AtlanException {
+    void searchAssets() throws AtlanException, InterruptedException {
         Query combined = CompoundQuery.builder()
                 .must(beActive())
                 .must(beOfType(APIPath.TYPE_NAME))
@@ -159,6 +161,14 @@ public class APIAssetTest extends AtlanLiveTest {
 
         IndexSearchResponse response = index.search();
         assertNotNull(response);
+
+        int count = 0;
+        while (response.getApproximateCount() < 1L && count < Atlan.getMaxNetworkRetries()) {
+            Thread.sleep(HttpClient.waitTime(count).toMillis());
+            response = index.search();
+            count++;
+        }
+
         assertNotNull(response.getAggregations());
         assertEquals(response.getAggregations().size(), 1);
         assertTrue(response.getAggregations().get("type") instanceof AggregationBucketResult);
