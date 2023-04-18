@@ -34,7 +34,7 @@ public class SQLAssetTest extends AtlanLiveTest {
 
     private static final String PREFIX = AtlanLiveTest.PREFIX + "SQL";
 
-    public static final AtlanConnectorType CONNECTOR_TYPE = AtlanConnectorType.DATABRICKS;
+    public static final AtlanConnectorType CONNECTOR_TYPE = AtlanConnectorType.CLICKHOUSE;
     public static final String CONNECTION_NAME = PREFIX;
 
     public static final String DATABASE_NAME = PREFIX + "_db";
