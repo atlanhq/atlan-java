@@ -6,8 +6,11 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.assets.Asset;
+import com.atlan.model.assets.Connection;
+import com.atlan.model.core.AssetDeletionResponse;
 import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.core.AtlanObject;
+import com.atlan.model.core.ConnectionCreationResponse;
 import com.atlan.model.enums.AtlanDeleteType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.net.ApiResource;
@@ -63,6 +66,30 @@ public class EntityBulkEndpoint extends AtlasEndpoint {
     }
 
     /**
+     * Creates any assets, optionally overwriting the existing assets' classifications and / or
+     * custom metadata.
+     *
+     * @param value connection to upsert
+     * @param replaceClassifications whether to overwrite any existing classifications (true) or not (false)
+     * @param replaceCustomMetadata whether to overwrite any existing custom metadata (true) or not (false)
+     * @return the results of the upsert
+     * @throws AtlanException on any API interaction problems
+     */
+    public static ConnectionCreationResponse connectionUpsert(
+            Connection value, boolean replaceClassifications, boolean replaceCustomMetadata) throws AtlanException {
+        String url = String.format(
+                "%s%s",
+                getBaseUrl(),
+                String.format(
+                        "%s?replaceClassifications=%s&replaceBusinessAttributes=%s&overwriteBusinessAttributes=%s",
+                        endpoint, replaceClassifications, replaceCustomMetadata, replaceCustomMetadata));
+        BulkEntityRequest beq = BulkEntityRequest.builder()
+                .entities(Collections.singletonList(value))
+                .build();
+        return ApiResource.request(ApiResource.RequestMethod.POST, url, beq, ConnectionCreationResponse.class, null);
+    }
+
+    /**
      * Deletes any asset.
      *
      * @param guid unique ID of the asset to delete
@@ -70,7 +97,7 @@ public class EntityBulkEndpoint extends AtlasEndpoint {
      * @return the results of the deletion
      * @throws AtlanException on any API interaction problems
      */
-    public static AssetMutationResponse delete(String guid, AtlanDeleteType deleteType) throws AtlanException {
+    public static AssetDeletionResponse delete(String guid, AtlanDeleteType deleteType) throws AtlanException {
         return delete(Collections.singletonList(guid), deleteType);
     }
 
@@ -82,7 +109,7 @@ public class EntityBulkEndpoint extends AtlasEndpoint {
      * @return the results of the deletion
      * @throws AtlanException on any API interaction problems
      */
-    public static AssetMutationResponse delete(List<String> guids, AtlanDeleteType deleteType) throws AtlanException {
+    public static AssetDeletionResponse delete(List<String> guids, AtlanDeleteType deleteType) throws AtlanException {
         if (guids != null) {
             StringBuilder guidList = new StringBuilder();
             for (String guid : guids) {
@@ -96,7 +123,7 @@ public class EntityBulkEndpoint extends AtlasEndpoint {
                 String url = String.format(
                         "%s%s", getBaseUrl(), String.format("%s?%s&deleteType=%s", endpoint, guidList, deleteType));
                 return ApiResource.request(
-                        ApiResource.RequestMethod.DELETE, url, "", AssetMutationResponse.class, null);
+                        ApiResource.RequestMethod.DELETE, url, "", AssetDeletionResponse.class, null);
             }
         }
         throw new InvalidRequestException(ErrorCode.MISSING_GUID_FOR_DELETE);

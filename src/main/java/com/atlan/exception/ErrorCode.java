@@ -375,7 +375,12 @@ public enum ErrorCode implements ExceptionMessageSet {
             500,
             "ATLAN-JAVA-500-005",
             "Loop for retrying a failed action was interrupted.",
-            "Allow the retry loop to complete, or ignore this error if it was your intention to interrupt the retries.");
+            "Allow the retry loop to complete, or ignore this error if it was your intention to interrupt the retries."),
+    RETRY_OVERRUN(
+            500,
+            "ATLAN-JAVA-500-006",
+            "Loop for retrying a failed action hit the maximum number of retries.",
+            "Increase the maximum number of retries through Atlan.setMaxNetworkRetries(), or ignore this error if it was your intention to fail after a maximum number of retries was reached.");
 
     private static final String RAISE_GITHUB_ISSUE =
             "Please raise an issue on the Java SDK GitHub repository providing context in which this error occurred.";

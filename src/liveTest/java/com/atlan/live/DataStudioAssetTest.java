@@ -201,7 +201,7 @@ public class DataStudioAssetTest extends AtlanLiveTest {
             groups = {"gds.delete.source"},
             dependsOnGroups = {"gds.update.*", "gds.search.*"})
     void deleteSource() throws AtlanException {
-        AssetMutationResponse response = Asset.delete(source.getGuid());
+        AssetMutationResponse response = Asset.delete(source.getGuid()).block();
         assertNotNull(response);
         assertTrue(response.getCreatedAssets().isEmpty());
         assertTrue(response.getUpdatedAssets().isEmpty());
@@ -220,6 +220,7 @@ public class DataStudioAssetTest extends AtlanLiveTest {
             dependsOnGroups = {"gds.delete.source"})
     void readDeletedSource() throws AtlanException {
         DataStudioAsset deleted = DataStudioAsset.retrieveByGuid(source.getGuid());
+        assertNotNull(deleted);
         assertEquals(deleted.getGuid(), source.getGuid());
         assertEquals(deleted.getQualifiedName(), source.getQualifiedName());
         assertEquals(deleted.getStatus(), AtlanStatus.DELETED);

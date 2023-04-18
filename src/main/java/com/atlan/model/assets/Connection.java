@@ -3,6 +3,7 @@
 package com.atlan.model.assets;
 
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
+import com.atlan.api.EntityBulkEndpoint;
 import com.atlan.cache.GroupCache;
 import com.atlan.cache.RoleCache;
 import com.atlan.cache.UserCache;
@@ -10,7 +11,7 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.core.AssetMutationResponse;
+import com.atlan.model.core.ConnectionCreationResponse;
 import com.atlan.model.enums.*;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.IndexSearchDSL;
@@ -237,7 +238,7 @@ public class Connection extends Asset {
      * @throws NotFoundException if any of the provided connection admins do not actually exist
      */
     @Override
-    public AssetMutationResponse upsert() throws AtlanException {
+    public ConnectionCreationResponse upsert() throws AtlanException {
         // Validate the provided connection admins prior to attempting to create
         // (the cache retrievals will throw errors directly if there are any)
         if (adminRoles != null && !adminRoles.isEmpty()) {
@@ -255,7 +256,7 @@ public class Connection extends Asset {
                 UserCache.getIdForName(userName);
             }
         }
-        return super.upsert();
+        return EntityBulkEndpoint.connectionUpsert(this, false, false);
     }
 
     /**
@@ -269,7 +270,7 @@ public class Connection extends Asset {
      * @throws NotFoundException if any of the provided connection admins do not actually exist
      */
     @Override
-    public AssetMutationResponse upsert(boolean replaceClassifications, boolean replaceCustomMetadata)
+    public ConnectionCreationResponse upsert(boolean replaceClassifications, boolean replaceCustomMetadata)
             throws AtlanException {
         // Validate the provided connection admins prior to attempting to create
         // (the cache retrievals will throw errors directly if there are any)
@@ -288,7 +289,7 @@ public class Connection extends Asset {
                 UserCache.getIdForName(userName);
             }
         }
-        return super.upsert(replaceClassifications, replaceCustomMetadata);
+        return EntityBulkEndpoint.connectionUpsert(this, replaceClassifications, replaceCustomMetadata);
     }
 
     /**

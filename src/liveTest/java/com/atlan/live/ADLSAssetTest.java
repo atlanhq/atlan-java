@@ -247,7 +247,7 @@ public class ADLSAssetTest extends AtlanLiveTest {
             groups = {"adls.delete.object"},
             dependsOnGroups = {"adls.update.*", "adls.search.*"})
     void deleteObject() throws AtlanException {
-        AssetMutationResponse response = Asset.delete(object.getGuid());
+        AssetMutationResponse response = Asset.delete(object.getGuid()).block();
         assertNotNull(response);
         assertTrue(response.getCreatedAssets().isEmpty());
         assertTrue(response.getUpdatedAssets().isEmpty());
@@ -266,6 +266,7 @@ public class ADLSAssetTest extends AtlanLiveTest {
             dependsOnGroups = {"adls.delete.object"})
     void readDeletedObject() throws AtlanException {
         ADLSObject deleted = ADLSObject.retrieveByGuid(object.getGuid());
+        assertNotNull(deleted);
         assertEquals(deleted.getGuid(), object.getGuid());
         assertEquals(deleted.getQualifiedName(), object.getQualifiedName());
         assertEquals(deleted.getStatus(), AtlanStatus.DELETED);

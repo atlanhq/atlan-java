@@ -213,7 +213,7 @@ public class GCSAssetTest extends AtlanLiveTest {
             groups = {"gcs.delete.object"},
             dependsOnGroups = {"gcs.update.*", "gcs.search.*"})
     void deleteObject() throws AtlanException {
-        AssetMutationResponse response = Asset.delete(object.getGuid());
+        AssetMutationResponse response = Asset.delete(object.getGuid()).block();
         assertNotNull(response);
         assertTrue(response.getCreatedAssets().isEmpty());
         assertTrue(response.getUpdatedAssets().isEmpty());
@@ -232,6 +232,7 @@ public class GCSAssetTest extends AtlanLiveTest {
             dependsOnGroups = {"gcs.delete.object"})
     void readDeletedObject() throws AtlanException {
         GCSObject deleted = GCSObject.retrieveByGuid(object.getGuid());
+        assertNotNull(deleted);
         assertEquals(deleted.getGuid(), object.getGuid());
         assertEquals(deleted.getQualifiedName(), object.getQualifiedName());
         assertEquals(deleted.getStatus(), AtlanStatus.DELETED);

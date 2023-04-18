@@ -1659,7 +1659,7 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.delete.column"},
             dependsOnGroups = {"asset.update.*", "asset.search.*"})
     void deleteColumn() throws AtlanException {
-        AssetMutationResponse response = Asset.delete(column5.getGuid());
+        AssetMutationResponse response = Asset.delete(column5.getGuid()).block();
         assertNotNull(response);
         assertTrue(response.getCreatedAssets().isEmpty());
         assertTrue(response.getUpdatedAssets().isEmpty());
