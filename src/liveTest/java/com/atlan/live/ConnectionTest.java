@@ -47,7 +47,7 @@ public class ConnectionTest extends AtlanLiveTest {
         String adminRoleGuid = RoleCache.getIdForName("$admin");
         Connection connection = Connection.creator(prefix, type, List.of(adminRoleGuid), null, null)
                 .build();
-        AssetMutationResponse response = connection.upsert();
+        AssetMutationResponse response = connection.upsert().block();
         assertNotNull(response);
         assertTrue(response.getUpdatedAssets().isEmpty());
         assertTrue(response.getDeletedAssets().isEmpty());
@@ -58,10 +58,6 @@ public class ConnectionTest extends AtlanLiveTest {
         assertNotNull(connection.getGuid());
         assertNotNull(connection.getQualifiedName());
         assertEquals(connection.getName(), prefix);
-        Asset minimal;
-        do {
-            minimal = Asset.retrieveMinimal(connection.getGuid());
-        } while (minimal == null);
         return connection;
     }
 

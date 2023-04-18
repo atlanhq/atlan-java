@@ -300,7 +300,7 @@ public class PresetAssetTest extends AtlanLiveTest {
             groups = {"preset.delete.chart"},
             dependsOnGroups = {"preset.update.*", "preset.search.*"})
     void deleteChart() throws AtlanException {
-        AssetMutationResponse response = Asset.delete(chart.getGuid());
+        AssetMutationResponse response = Asset.delete(chart.getGuid()).block();
         assertNotNull(response);
         assertTrue(response.getCreatedAssets().isEmpty());
         assertTrue(response.getUpdatedAssets().isEmpty());
@@ -319,6 +319,7 @@ public class PresetAssetTest extends AtlanLiveTest {
             dependsOnGroups = {"preset.delete.chart"})
     void readDeletedChart() throws AtlanException {
         PresetChart deleted = PresetChart.retrieveByGuid(chart.getGuid());
+        assertNotNull(deleted);
         assertEquals(deleted.getGuid(), chart.getGuid());
         assertEquals(deleted.getQualifiedName(), chart.getQualifiedName());
         assertEquals(deleted.getStatus(), AtlanStatus.DELETED);

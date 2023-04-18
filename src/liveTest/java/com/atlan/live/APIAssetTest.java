@@ -196,7 +196,7 @@ public class APIAssetTest extends AtlanLiveTest {
             groups = {"api.delete.path"},
             dependsOnGroups = {"api.update.*", "api.search.*"})
     void deletePath() throws AtlanException {
-        AssetMutationResponse response = Asset.delete(path.getGuid());
+        AssetMutationResponse response = Asset.delete(path.getGuid()).block();
         assertNotNull(response);
         assertTrue(response.getCreatedAssets().isEmpty());
         assertTrue(response.getUpdatedAssets().isEmpty());
@@ -215,6 +215,7 @@ public class APIAssetTest extends AtlanLiveTest {
             dependsOnGroups = {"api.delete.path"})
     void readDeletedPath() throws AtlanException {
         APIPath deleted = APIPath.retrieveByGuid(path.getGuid());
+        assertNotNull(deleted);
         assertEquals(deleted.getGuid(), path.getGuid());
         assertEquals(deleted.getQualifiedName(), path.getQualifiedName());
         assertEquals(deleted.getStatus(), AtlanStatus.DELETED);

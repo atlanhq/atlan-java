@@ -666,7 +666,7 @@ public abstract class Asset extends Reference {
      * @return details of the soft-deleted asset
      * @throws AtlanException on any error during the API invocation
      */
-    public static AssetMutationResponse delete(String guid) throws AtlanException {
+    public static AssetDeletionResponse delete(String guid) throws AtlanException {
         return EntityBulkEndpoint.delete(guid, AtlanDeleteType.SOFT);
     }
 
@@ -677,7 +677,7 @@ public abstract class Asset extends Reference {
      * @return details of the hard-deleted asset
      * @throws AtlanException on any error during the API invocation
      */
-    public static AssetMutationResponse purge(String guid) throws AtlanException {
+    public static AssetDeletionResponse purge(String guid) throws AtlanException {
         return EntityBulkEndpoint.delete(guid, AtlanDeleteType.PURGE);
     }
 

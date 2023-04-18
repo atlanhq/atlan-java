@@ -218,7 +218,7 @@ public class S3AssetTest extends AtlanLiveTest {
             groups = {"s3.delete.object"},
             dependsOnGroups = {"s3.update.*", "s3.search.*"})
     void deleteObject() throws AtlanException {
-        AssetMutationResponse response = Asset.delete(object.getGuid());
+        AssetMutationResponse response = Asset.delete(object.getGuid()).block();
         assertNotNull(response);
         assertTrue(response.getCreatedAssets().isEmpty());
         assertTrue(response.getUpdatedAssets().isEmpty());
@@ -237,6 +237,7 @@ public class S3AssetTest extends AtlanLiveTest {
             dependsOnGroups = {"s3.delete.object"})
     void readDeletedObject() throws AtlanException {
         S3Object deleted = S3Object.retrieveByGuid(object.getGuid());
+        assertNotNull(deleted);
         assertEquals(deleted.getGuid(), object.getGuid());
         assertEquals(deleted.getQualifiedName(), object.getQualifiedName());
         assertEquals(deleted.getStatus(), AtlanStatus.DELETED);
