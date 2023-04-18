@@ -70,6 +70,11 @@ public enum AtlanConnectorType implements AtlanEnum {
     AZURE_ANALYSIS_SERVICES("azure-analysis-services", AtlanConnectionCategory.WAREHOUSE),
     SINGLESTORE("singlestore", AtlanConnectionCategory.WAREHOUSE),
     FIREBIRD("firebird", AtlanConnectionCategory.DATABASE),
+    THOUGHTSPOT("thoughtspot", AtlanConnectionCategory.BI),
+    CLICKHOUSE("clickhouse", AtlanConnectionCategory.WAREHOUSE),
+    MULESOFT("mulesoft", AtlanConnectionCategory.API),
+    CLARI("clari", AtlanConnectionCategory.SAAS),
+    MARKETO("marketo", AtlanConnectionCategory.SAAS),
     ;
 
     @JsonValue
