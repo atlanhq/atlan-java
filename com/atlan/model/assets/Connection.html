@@ -635,14 +635,14 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 </td>
 </tr>
 <tr id="i51" class="rowColor">
-<td class="colFirst"><code><a href="../core/AssetMutationResponse.html" title="class in com.atlan.model.core">AssetMutationResponse</a></code></td>
+<td class="colFirst"><code><a href="../core/ConnectionCreationResponse.html" title="class in com.atlan.model.core">ConnectionCreationResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#upsert()">upsert</a></span>()</code></th>
 <td class="colLast">
 <div class="block">If an asset with the same qualifiedName exists, updates the existing asset.</div>
 </td>
 </tr>
 <tr id="i52" class="altColor">
-<td class="colFirst"><code><a href="../core/AssetMutationResponse.html" title="class in com.atlan.model.core">AssetMutationResponse</a></code></td>
+<td class="colFirst"><code><a href="../core/ConnectionCreationResponse.html" title="class in com.atlan.model.core">ConnectionCreationResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#upsert(boolean,boolean)">upsert</a></span>&#8203;(boolean&nbsp;replaceClassifications,
       boolean&nbsp;replaceCustomMetadata)</code></th>
 <td class="colLast">
@@ -837,8 +837,8 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 <ul class="blockList">
 <li class="blockList">
 <h4>upsert</h4>
-<pre class="methodSignature">public&nbsp;<a href="../core/AssetMutationResponse.html" title="class in com.atlan.model.core">AssetMutationResponse</a>&nbsp;upsert()
-                             throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<pre class="methodSignature">public&nbsp;<a href="../core/ConnectionCreationResponse.html" title="class in com.atlan.model.core">ConnectionCreationResponse</a>&nbsp;upsert()
+                                  throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
 <div class="block">If an asset with the same qualifiedName exists, updates the existing asset. Otherwise, creates the asset.
  No classifications or custom metadata will be changed if updating an existing asset, irrespective of what
  is included in the asset itself when the method is called.</div>
@@ -859,9 +859,9 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 <ul class="blockList">
 <li class="blockList">
 <h4>upsert</h4>
-<pre class="methodSignature">public&nbsp;<a href="../core/AssetMutationResponse.html" title="class in com.atlan.model.core">AssetMutationResponse</a>&nbsp;upsert&#8203;(boolean&nbsp;replaceClassifications,
-                                    boolean&nbsp;replaceCustomMetadata)
-                             throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<pre class="methodSignature">public&nbsp;<a href="../core/ConnectionCreationResponse.html" title="class in com.atlan.model.core">ConnectionCreationResponse</a>&nbsp;upsert&#8203;(boolean&nbsp;replaceClassifications,
+                                         boolean&nbsp;replaceCustomMetadata)
+                                  throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
 <div class="block">If no asset exists, has the same behavior as the <a href="#upsert()"><code>upsert()</code></a> method.
  If an asset does exist, optionally overwrites any classifications and / or custom metadata.</div>
 <dl>
