@@ -179,9 +179,13 @@ public class DocumentationGenerator extends AbstractGenerator {
         out.write("\n# " + typeName + "\n\n");
         out.write(getTypeDescription(typeName) + "\n\n");
         out.write("!!! warning \"Complete reference\"\n");
-        out.write("    This is a complete reference for the `" + typeName + "` object in Atlan, showing every possible property and relationship that can exist for these objects. For an introduction, you probably want to start with:\n\n");
-        out.write("    - [:material-hexagon-slice-1: snippets](../../sdks) — small, atomic examples of single-step use cases.\n");
-        out.write("    - [:material-hexagon-slice-3: implementation patterns](../../patterns) — walkthroughs of common multi-step implementation patterns.\n\n");
+        out.write(
+                "    This is a complete reference for the `" + typeName
+                        + "` object in Atlan, showing every possible property and relationship that can exist for these objects. For an introduction, you probably want to start with:\n\n");
+        out.write(
+                "    - [:material-hexagon-slice-1: snippets](../../sdks) — small, atomic examples of single-step use cases.\n");
+        out.write(
+                "    - [:material-hexagon-slice-3: implementation patterns](../../patterns) — walkthroughs of common multi-step implementation patterns.\n\n");
         String className = NAME_MAPPINGS.getOrDefault(typeName, typeName);
         if (!className.equals(typeName)) {
             out.write("!!! warning \"Renamed in SDK\"\n");

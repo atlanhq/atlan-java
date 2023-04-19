@@ -734,6 +734,34 @@ public abstract class Asset extends Reference {
     }
 
     /**
+     * Add classifications to an asset.
+     *
+     * @param typeName type of the asset
+     * @param qualifiedName of the asset
+     * @param classificationNames human-readable names of the classifications to add
+     * @param propagate whether to propagate the classification (true) or not (false)
+     * @param removePropagationsOnDelete whether to remove the propagated classifications when the classification is removed from this asset (true) or not (false)
+     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
+     * @throws AtlanException on any API problems, or if any of the classifications already exist on the asset
+     */
+    protected static void addClassifications(
+            String typeName,
+            String qualifiedName,
+            List<String> classificationNames,
+            boolean propagate,
+            boolean removePropagationsOnDelete,
+            boolean restrictLineagePropagation)
+            throws AtlanException {
+        EntityUniqueAttributesEndpoint.addClassifications(
+                typeName,
+                qualifiedName,
+                classificationNames,
+                propagate,
+                removePropagationsOnDelete,
+                restrictLineagePropagation);
+    }
+
+    /**
      * Remove a classification from an asset.
      *
      * @param typeName type of the asset
