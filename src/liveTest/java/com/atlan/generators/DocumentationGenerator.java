@@ -178,6 +178,10 @@ public class DocumentationGenerator extends AbstractGenerator {
     private void writeHeader(BufferedWriter out, String typeName) throws IOException {
         out.write("\n# " + typeName + "\n\n");
         out.write(getTypeDescription(typeName) + "\n\n");
+        out.write("!!! warning \"Complete reference\"\n");
+        out.write("    This is a complete reference for the `" + typeName + "` object in Atlan, showing every possible property and relationship that can exist for these objects. For an introduction, you probably want to start with:\n\n");
+        out.write("    - [:material-hexagon-slice-1: snippets](../../sdks) — small, atomic examples of single-step use cases.\n");
+        out.write("    - [:material-hexagon-slice-3: implementation patterns](../../patterns) — walkthroughs of common multi-step implementation patterns.\n\n");
         String className = NAME_MAPPINGS.getOrDefault(typeName, typeName);
         if (!className.equals(typeName)) {
             out.write("!!! warning \"Renamed in SDK\"\n");
@@ -190,7 +194,7 @@ public class DocumentationGenerator extends AbstractGenerator {
         out.write("## Model\n\n");
         out.write(
                 "Following is the inheritance structure for `" + typeName
-                        + "`. The type structure may be simplified in some of the SDKs, but for search purposes you could still use any of the super types shown in the JSON view.\n\n");
+                        + "`. The type structure may be simplified in some of the SDKs, but for search purposes you could still use any of the super types shown in the Raw REST API view.\n\n");
         out.write("=== \":fontawesome-brands-java: Java\"\n\n");
         out.write("    ```mermaid\n");
         writeMainModelDiagram(out, typeName, entityDef, "    ", Rename.JAVA);
@@ -201,7 +205,7 @@ public class DocumentationGenerator extends AbstractGenerator {
         writeMainModelDiagram(out, typeName, entityDef, "    ", Rename.PYTHON);
         out.write("    ```\n\n");
         writeSubtypesDiagram(out, typeName, entityDef, Rename.PYTHON);
-        out.write("=== \":material-code-json: JSON\"\n\n");
+        out.write("=== \":material-code-json: Raw REST API\"\n\n");
         out.write("    ```mermaid\n");
         writeMainModelDiagram(out, typeName, entityDef, "    ", Rename.NONE);
         out.write("    ```\n\n");
@@ -415,7 +419,7 @@ public class DocumentationGenerator extends AbstractGenerator {
                 null);
         out.write("=== \":material-language-python: Python\"\n\n");
         out.write("    !!! construction \"Coming soon\"\n\n");
-        out.write("=== \":material-code-json: JSON\"\n\n");
+        out.write("=== \":material-code-json: Raw REST API\"\n\n");
         typeNameIndexes = Map.of(
                 "[`__typeName.keyword`](../../../search/attributes/common/#__typename)",
                 IndexType.KEYWORD,
@@ -539,14 +543,14 @@ public class DocumentationGenerator extends AbstractGenerator {
         writeInheritedAttributes(out, typeDef, Rename.JAVA);
         out.write("=== \":material-language-python: Python\"\n\n");
         writeInheritedAttributes(out, typeDef, Rename.PYTHON);
-        out.write("=== \":material-code-json: JSON\"\n\n");
+        out.write("=== \":material-code-json: Raw REST API\"\n\n");
         writeInheritedAttributes(out, typeDef, Rename.NONE);
         out.write("### Type-specific attributes\n\n");
         out.write("=== \":fontawesome-brands-java: Java\"\n\n");
         writeAttributes(out, typeName, typeDef, Rename.JAVA);
         out.write("=== \":material-language-python: Python\"\n\n");
         writeAttributes(out, typeName, typeDef, Rename.PYTHON);
-        out.write("=== \":material-code-json: JSON\"\n\n");
+        out.write("=== \":material-code-json: Raw REST API\"\n\n");
         writeAttributes(out, typeName, typeDef, Rename.NONE);
     }
 
@@ -561,14 +565,14 @@ public class DocumentationGenerator extends AbstractGenerator {
         writeInheritedRelationships(out, entityDef, Rename.JAVA);
         out.write("=== \":material-language-python: Python\"\n\n");
         writeInheritedRelationships(out, entityDef, Rename.PYTHON);
-        out.write("=== \":material-code-json: JSON\"\n\n");
+        out.write("=== \":material-code-json: Raw REST API\"\n\n");
         writeInheritedRelationships(out, entityDef, Rename.NONE);
         out.write("### Type-specific relationships\n\n");
         out.write("=== \":fontawesome-brands-java: Java\"\n\n");
         writeRelationships(out, typeName, entityDef, Rename.JAVA);
         out.write("=== \":material-language-python: Python\"\n\n");
         writeRelationships(out, typeName, entityDef, Rename.PYTHON);
-        out.write("=== \":material-code-json: JSON\"\n\n");
+        out.write("=== \":material-code-json: Raw REST API\"\n\n");
         writeRelationships(out, typeName, entityDef, Rename.NONE);
     }
 
