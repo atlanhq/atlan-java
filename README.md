@@ -11,9 +11,9 @@
 
 This repository houses the code for a Java SDK to interact with [Atlan](https://atlan.com).
 
-## [Documentation](https://developer.atlan.com/sdks/java/)
+## [Documentation](https://developer.atlan.com/getting-started/java-sdk/)
 
-[https://developer.atlan.com/sdks/java/](https://developer.atlan.com/sdks/java/)
+[https://developer.atlan.com/getting-started/java-sdk/](https://developer.atlan.com/getting-started/java-sdk/)
 
 ## Attribution
 
