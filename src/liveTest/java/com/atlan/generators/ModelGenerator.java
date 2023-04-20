@@ -663,6 +663,40 @@ public class ModelGenerator extends AbstractGenerator {
         fs.append(System.lineSeparator());
         fs.append("    }");
         fs.append(System.lineSeparator()).append(System.lineSeparator());
+        fs.append("    /**");
+        fs.append(System.lineSeparator());
+        fs.append("     * Add classifications to a ").append(className).append(".");
+        fs.append(System.lineSeparator());
+        fs.append("     *");
+        fs.append(System.lineSeparator());
+        fs.append("     * @param qualifiedName of the ").append(className);
+        fs.append(System.lineSeparator());
+        fs.append("     * @param classificationNames human-readable names of the classifications to add");
+        fs.append(System.lineSeparator());
+        fs.append("     * @param propagate whether to propagate the classification (true) or not (false)");
+        fs.append(System.lineSeparator());
+        fs.append(
+                "     * @param removePropagationsOnDelete whether to remove the propagated classifications when the classification is removed from this asset (true) or not (false)");
+        fs.append(System.lineSeparator());
+        fs.append(
+                "     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)");
+        fs.append(System.lineSeparator());
+        fs.append(
+                        "     * @throws AtlanException on any API problems, or if any of the classifications already exist on the ")
+                .append(className);
+        fs.append(System.lineSeparator());
+        fs.append("     */");
+        fs.append(System.lineSeparator());
+        fs.append(
+                "    public static void addClassifications(String qualifiedName, List<String> classificationNames, boolean propagate, boolean removePropagationsOnDelete, boolean restrictLineagePropagation)");
+        fs.append(System.lineSeparator());
+        fs.append("            throws AtlanException {");
+        fs.append(System.lineSeparator());
+        fs.append(
+                "        Asset.addClassifications(TYPE_NAME, qualifiedName, classificationNames, propagate, removePropagationsOnDelete, restrictLineagePropagation);");
+        fs.append(System.lineSeparator());
+        fs.append("    }");
+        fs.append(System.lineSeparator()).append(System.lineSeparator());
     }
 
     private void removeClassification(BufferedWriter fs, String className) throws IOException {
