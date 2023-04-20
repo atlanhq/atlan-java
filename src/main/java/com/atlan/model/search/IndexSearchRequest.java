@@ -8,11 +8,13 @@ import com.atlan.model.core.AtlanObject;
 import java.util.List;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.jackson.Jacksonized;
 
 /**
  * Class from which to configure and run a search against Atlan.
  */
 @Getter
+@Jacksonized
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 public class IndexSearchRequest extends AtlanObject {
