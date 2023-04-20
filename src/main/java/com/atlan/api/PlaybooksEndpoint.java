@@ -1,3 +1,5 @@
+/* SPDX-License-Identifier: Apache-2.0 */
+/* Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.api;
 
 import co.elastic.clients.elasticsearch._types.FieldSort;
@@ -25,18 +27,19 @@ public class PlaybooksEndpoint extends WorkflowsEndpoint {
      */
     public static WorkflowSearchResponse list(int max) throws AtlanException {
         WorkflowSearchRequest request = WorkflowSearchRequest.builder()
-            .from(0)
-            .size(max)
-            .query(BoolQuery.of(b -> b
-                .filter(NestedQuery.of(n -> n
-                    .path("metadata")
-                    .query(TermQuery.of(t -> t
-                        .field("metadata.annotations.package.argoproj.io/name.keyword")
-                        .value("@atlan/playbook"))._toQuery()
-                ))._toQuery()
-            ))._toQuery())
-            .sortOption(SortOptions.of(s -> s.field(FieldSort.of(f -> f.field("metadata.creationTimestamp").order(SortOrder.Desc).nested(NestedSortValue.of(n -> n.path("metadata")))))))
-            .build();
+                .from(0)
+                .size(max)
+                .query(BoolQuery.of(b -> b.filter(NestedQuery.of(n -> n.path("metadata")
+                                        .query(TermQuery.of(t -> t.field(
+                                                                "metadata.annotations.package.argoproj.io/name.keyword")
+                                                        .value("@atlan/playbook"))
+                                                ._toQuery()))
+                                ._toQuery()))
+                        ._toQuery())
+                .sortOption(SortOptions.of(s -> s.field(FieldSort.of(f -> f.field("metadata.creationTimestamp")
+                        .order(SortOrder.Desc)
+                        .nested(NestedSortValue.of(n -> n.path("metadata")))))))
+                .build();
         return search(request);
     }
 }
