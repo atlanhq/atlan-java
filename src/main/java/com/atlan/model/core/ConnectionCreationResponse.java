@@ -6,6 +6,7 @@ import com.atlan.Atlan;
 import com.atlan.exception.ApiException;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
+import com.atlan.exception.PermissionException;
 import com.atlan.model.assets.Asset;
 import com.atlan.model.assets.Connection;
 import com.atlan.net.HttpClient;
@@ -62,6 +63,10 @@ public class ConnectionCreationResponse extends AssetMutationResponse implements
                         // definition overrun the retry limit
                         throw new ApiException(ErrorCode.RETRY_OVERRUN, null);
                     }
+                } catch (PermissionException e) {
+                    // If we get a permission exception after the built-in retries above, throw it
+                    // onwards as a retry overrun
+                    throw new ApiException(ErrorCode.RETRY_OVERRUN, e);
                 } catch (AtlanException e) {
                     // If there was some other exception, we should try again
                     leftovers.add(one);
