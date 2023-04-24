@@ -12,7 +12,7 @@ public enum KafkaTopicCompressionType implements AtlanEnum {
     SNAPPY("snappy"),
     GZIP("gzip"),
     PRODUCER("producer"),
-;
+    ;
 
     @JsonValue
     @Getter(onMethod_ = {@Override})

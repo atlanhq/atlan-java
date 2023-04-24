@@ -9,7 +9,7 @@ public enum ADLSAccessTier implements AtlanEnum {
     COOL("Cool"),
     HOT("Hot"),
     ARCHIVE("Archive"),
-;
+    ;
 
     @JsonValue
     @Getter(onMethod_ = {@Override})

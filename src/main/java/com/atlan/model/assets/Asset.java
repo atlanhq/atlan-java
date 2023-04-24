@@ -783,8 +783,8 @@ public abstract class Asset extends Reference {
      * @return the result of the update, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    protected static Asset updateCertificate(
-        AssetBuilder<?, ?> builder, CertificateStatus certificate, String message) throws AtlanException {
+    protected static Asset updateCertificate(AssetBuilder<?, ?> builder, CertificateStatus certificate, String message)
+            throws AtlanException {
         builder.certificateStatus(certificate);
         if (message != null && message.length() > 1) {
             builder.certificateStatusMessage(message);

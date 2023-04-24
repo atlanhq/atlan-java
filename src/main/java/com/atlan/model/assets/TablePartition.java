@@ -291,8 +291,8 @@ public class TablePartition extends SQL {
      * @return the updated TablePartition, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static TablePartition updateCertificate(
-            String qualifiedName, CertificateStatus certificate, String message) throws AtlanException {
+    public static TablePartition updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
+            throws AtlanException {
         return (TablePartition) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }
 

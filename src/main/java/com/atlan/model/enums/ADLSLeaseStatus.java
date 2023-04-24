@@ -8,7 +8,7 @@ import lombok.Getter;
 public enum ADLSLeaseStatus implements AtlanEnum {
     LOCKED("Locked"),
     UNLOCKED("Unlocked"),
-;
+    ;
 
     @JsonValue
     @Getter(onMethod_ = {@Override})

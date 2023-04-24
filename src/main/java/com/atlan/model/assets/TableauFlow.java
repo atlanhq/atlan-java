@@ -214,8 +214,8 @@ public class TableauFlow extends Tableau {
      * @return the updated TableauFlow, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static TableauFlow updateCertificate(
-            String qualifiedName, CertificateStatus certificate, String message) throws AtlanException {
+    public static TableauFlow updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
+            throws AtlanException {
         return (TableauFlow) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }
 

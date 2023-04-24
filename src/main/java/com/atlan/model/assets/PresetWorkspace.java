@@ -244,8 +244,8 @@ public class PresetWorkspace extends Preset {
      * @return the updated PresetWorkspace, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static PresetWorkspace updateCertificate(
-            String qualifiedName, CertificateStatus certificate, String message) throws AtlanException {
+    public static PresetWorkspace updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
+            throws AtlanException {
         return (PresetWorkspace) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }
 

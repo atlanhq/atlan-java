@@ -10,7 +10,7 @@ public enum QuickSightDatasetFieldType implements AtlanEnum {
     INTEGER("INTEGER"),
     DECIMAL("DECIMAL"),
     DATETIME("DATETIME"),
-;
+    ;
 
     @JsonValue
     @Getter(onMethod_ = {@Override})

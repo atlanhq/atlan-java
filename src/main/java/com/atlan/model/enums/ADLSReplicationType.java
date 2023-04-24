@@ -11,7 +11,7 @@ public enum ADLSReplicationType implements AtlanEnum {
     GRS("GRS"),
     GZRS("GZRS"),
     RA_GRS("RA-GRS"),
-;
+    ;
 
     @JsonValue
     @Getter(onMethod_ = {@Override})

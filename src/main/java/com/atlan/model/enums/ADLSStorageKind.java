@@ -11,7 +11,7 @@ public enum ADLSStorageKind implements AtlanEnum {
     FILE_STORAGE("FileStorage"),
     STORAGE("Storage"),
     STORAGE_V2("StorageV2"),
-;
+    ;
 
     @JsonValue
     @Getter(onMethod_ = {@Override})

@@ -210,8 +210,8 @@ public class DataStudioAsset extends Google {
      * @return the updated DataStudioAsset, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static DataStudioAsset updateCertificate(
-            String qualifiedName, CertificateStatus certificate, String message) throws AtlanException {
+    public static DataStudioAsset updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
+            throws AtlanException {
         return (DataStudioAsset) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }
 

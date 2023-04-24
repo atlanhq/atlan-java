@@ -199,8 +199,8 @@ public class TableauMetric extends Tableau {
      * @return the updated TableauMetric, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static TableauMetric updateCertificate(
-            String qualifiedName, CertificateStatus certificate, String message) throws AtlanException {
+    public static TableauMetric updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
+            throws AtlanException {
         return (TableauMetric) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }
 

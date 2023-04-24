@@ -219,8 +219,8 @@ public class LookerDashboard extends Looker {
      * @return the updated LookerDashboard, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static LookerDashboard updateCertificate(
-            String qualifiedName, CertificateStatus certificate, String message) throws AtlanException {
+    public static LookerDashboard updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
+            throws AtlanException {
         return (LookerDashboard) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }
 

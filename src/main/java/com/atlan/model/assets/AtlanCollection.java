@@ -184,8 +184,8 @@ public class AtlanCollection extends Namespace {
      * @return the updated AtlanCollection, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static AtlanCollection updateCertificate(
-        String qualifiedName, CertificateStatus certificate, String message) throws AtlanException {
+    public static AtlanCollection updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
+            throws AtlanException {
         return (AtlanCollection) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }
 

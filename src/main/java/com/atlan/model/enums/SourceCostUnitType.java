@@ -9,7 +9,7 @@ public enum SourceCostUnitType implements AtlanEnum {
     CREDITS("Credits"),
     BYTES("bytes"),
     SLOT_MS("slot-ms"),
-;
+    ;
 
     @JsonValue
     @Getter(onMethod_ = {@Override})

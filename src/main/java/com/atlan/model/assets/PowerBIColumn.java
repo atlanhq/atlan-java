@@ -204,8 +204,8 @@ public class PowerBIColumn extends PowerBI {
      * @return the updated PowerBIColumn, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static PowerBIColumn updateCertificate(
-            String qualifiedName, CertificateStatus certificate, String message) throws AtlanException {
+    public static PowerBIColumn updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
+            throws AtlanException {
         return (PowerBIColumn) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }
 

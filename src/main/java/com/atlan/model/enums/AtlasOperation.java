@@ -16,7 +16,7 @@ public enum AtlasOperation implements AtlanEnum {
     TYPE_DEF_DELETE("TYPE_DEF_DELETE"),
     SERVER_START("SERVER_START"),
     SERVER_STATE_ACTIVE("SERVER_STATE_ACTIVE"),
-;
+    ;
 
     @JsonValue
     @Getter(onMethod_ = {@Override})

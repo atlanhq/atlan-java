@@ -8,7 +8,7 @@ import lombok.Getter;
 public enum ADLSObjectArchiveStatus implements AtlanEnum {
     REHYDRATE_PENDING_TO_HOT("rehydrate-pending-to-hot"),
     REHYDRATE_PENDING_TO_COOL("rehydrate-pending-to-cool"),
-;
+    ;
 
     @JsonValue
     @Getter(onMethod_ = {@Override})

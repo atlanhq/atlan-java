@@ -9,7 +9,7 @@ public enum CertificateStatus implements AtlanEnum {
     DEPRECATED("DEPRECATED"),
     DRAFT("DRAFT"),
     VERIFIED("VERIFIED"),
-;
+    ;
 
     @JsonValue
     @Getter(onMethod_ = {@Override})

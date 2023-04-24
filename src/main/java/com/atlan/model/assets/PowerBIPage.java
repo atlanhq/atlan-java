@@ -188,8 +188,8 @@ public class PowerBIPage extends PowerBI {
      * @return the updated PowerBIPage, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static PowerBIPage updateCertificate(
-            String qualifiedName, CertificateStatus certificate, String message) throws AtlanException {
+    public static PowerBIPage updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
+            throws AtlanException {
         return (PowerBIPage) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }
 

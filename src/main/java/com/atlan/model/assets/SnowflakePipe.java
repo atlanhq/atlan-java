@@ -194,8 +194,8 @@ public class SnowflakePipe extends SQL {
      * @return the updated SnowflakePipe, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static SnowflakePipe updateCertificate(
-        String qualifiedName, CertificateStatus certificate, String message) throws AtlanException {
+    public static SnowflakePipe updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
+            throws AtlanException {
         return (SnowflakePipe) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }
 

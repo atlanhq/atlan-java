@@ -214,8 +214,8 @@ public class PowerBIDataset extends PowerBI {
      * @return the updated PowerBIDataset, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static PowerBIDataset updateCertificate(
-            String qualifiedName, CertificateStatus certificate, String message) throws AtlanException {
+    public static PowerBIDataset updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
+            throws AtlanException {
         return (PowerBIDataset) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }
 

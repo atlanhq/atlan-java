@@ -194,8 +194,8 @@ public class PowerBIDataflow extends PowerBI {
      * @return the updated PowerBIDataflow, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static PowerBIDataflow updateCertificate(
-            String qualifiedName, CertificateStatus certificate, String message) throws AtlanException {
+    public static PowerBIDataflow updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
+            throws AtlanException {
         return (PowerBIDataflow) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }
 

@@ -236,8 +236,8 @@ public class PresetDashboard extends Preset {
      * @return the updated PresetDashboard, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static PresetDashboard updateCertificate(
-            String qualifiedName, CertificateStatus certificate, String message) throws AtlanException {
+    public static PresetDashboard updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
+            throws AtlanException {
         return (PresetDashboard) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }
 

@@ -202,8 +202,8 @@ public class SnowflakeStream extends SQL {
      * @return the updated SnowflakeStream, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static SnowflakeStream updateCertificate(
-        String qualifiedName, CertificateStatus certificate, String message) throws AtlanException {
+    public static SnowflakeStream updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
+            throws AtlanException {
         return (SnowflakeStream) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }
 

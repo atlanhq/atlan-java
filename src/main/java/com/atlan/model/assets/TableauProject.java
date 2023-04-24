@@ -224,8 +224,8 @@ public class TableauProject extends Tableau {
      * @return the updated TableauProject, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static TableauProject updateCertificate(
-            String qualifiedName, CertificateStatus certificate, String message) throws AtlanException {
+    public static TableauProject updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
+            throws AtlanException {
         return (TableauProject) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }
 

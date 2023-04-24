@@ -199,7 +199,7 @@ public class SigmaDataElement extends Sigma {
      * @throws AtlanException on any API problems
      */
     public static SigmaDataElement updateCertificate(
-        String qualifiedName, CertificateStatus certificate, String message) throws AtlanException {
+            String qualifiedName, CertificateStatus certificate, String message) throws AtlanException {
         return (SigmaDataElement) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }
 

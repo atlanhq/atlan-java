@@ -196,8 +196,8 @@ public class PowerBIMeasure extends PowerBI {
      * @return the updated PowerBIMeasure, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static PowerBIMeasure updateCertificate(
-            String qualifiedName, CertificateStatus certificate, String message) throws AtlanException {
+    public static PowerBIMeasure updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
+            throws AtlanException {
         return (PowerBIMeasure) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }
 

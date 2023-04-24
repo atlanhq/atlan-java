@@ -214,8 +214,8 @@ public class PresetChart extends Preset {
      * @return the updated PresetChart, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static PresetChart updateCertificate(
-            String qualifiedName, CertificateStatus certificate, String message) throws AtlanException {
+    public static PresetChart updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
+            throws AtlanException {
         return (PresetChart) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }
 

@@ -11,7 +11,7 @@ public enum AtlasGlossaryTermRelationshipStatus implements AtlanEnum {
     DEPRECATED("DEPRECATED"),
     OBSOLETE("OBSOLETE"),
     OTHER("OTHER"),
-;
+    ;
 
     @JsonValue
     @Getter(onMethod_ = {@Override})

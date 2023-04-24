@@ -220,8 +220,8 @@ public class LookerField extends Looker {
      * @return the updated LookerField, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static LookerField updateCertificate(
-            String qualifiedName, CertificateStatus certificate, String message) throws AtlanException {
+    public static LookerField updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
+            throws AtlanException {
         return (LookerField) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }
 

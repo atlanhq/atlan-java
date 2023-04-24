@@ -8,7 +8,7 @@ import lombok.Getter;
 public enum ADLSEncryptionTypes implements AtlanEnum {
     MICROSOFT_STORAGE("Microsoft.Storage"),
     MICROSOFT_KEYVAULT("Microsoft.Keyvault"),
-;
+    ;
 
     @JsonValue
     @Getter(onMethod_ = {@Override})

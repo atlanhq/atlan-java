@@ -8,7 +8,7 @@ import lombok.Getter;
 public enum QueryUsernameStrategy implements AtlanEnum {
     CONNECTION_USERNAME("connectionUsername"),
     ATLAN_USERNAME("atlanUsername"),
-;
+    ;
 
     @JsonValue
     @Getter(onMethod_ = {@Override})

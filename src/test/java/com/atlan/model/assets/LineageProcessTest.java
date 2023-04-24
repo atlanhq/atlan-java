@@ -5,9 +5,9 @@ package com.atlan.model.assets;
 import static org.testng.Assert.*;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
+import com.atlan.model.enums.CertificateStatus;
 import com.atlan.serde.Serde;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.testng.annotations.Test;

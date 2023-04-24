@@ -202,8 +202,8 @@ public class DbtModelColumn extends Dbt {
      * @return the updated DbtModelColumn, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static DbtModelColumn updateCertificate(
-            String qualifiedName, CertificateStatus certificate, String message) throws AtlanException {
+    public static DbtModelColumn updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
+            throws AtlanException {
         return (DbtModelColumn) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }
 

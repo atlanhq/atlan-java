@@ -207,8 +207,8 @@ public class ColumnProcess extends AbstractColumnProcess {
      * @return the updated ColumnProcess, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static ColumnProcess updateCertificate(
-            String qualifiedName, CertificateStatus certificate, String message) throws AtlanException {
+    public static ColumnProcess updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
+            throws AtlanException {
         return (ColumnProcess) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }
 

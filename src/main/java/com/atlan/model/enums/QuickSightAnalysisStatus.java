@@ -13,7 +13,7 @@ public enum QuickSightAnalysisStatus implements AtlanEnum {
     UPDATE_SUCCESSFUL("UPDATE_SUCCESSFUL"),
     UPDATE_FAILED("UPDATE_FAILED"),
     DELETED("DELETED"),
-;
+    ;
 
     @JsonValue
     @Getter(onMethod_ = {@Override})
