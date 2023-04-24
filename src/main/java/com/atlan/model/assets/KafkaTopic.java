@@ -214,7 +214,7 @@ public class KafkaTopic extends Kafka {
      * @return the updated KafkaTopic, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static KafkaTopic updateCertificate(String qualifiedName, AtlanCertificateStatus certificate, String message)
+    public static KafkaTopic updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (KafkaTopic) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }

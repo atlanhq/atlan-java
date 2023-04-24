@@ -203,7 +203,7 @@ public class DbtModelColumn extends Dbt {
      * @throws AtlanException on any API problems
      */
     public static DbtModelColumn updateCertificate(
-            String qualifiedName, AtlanCertificateStatus certificate, String message) throws AtlanException {
+            String qualifiedName, CertificateStatus certificate, String message) throws AtlanException {
         return (DbtModelColumn) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }
 

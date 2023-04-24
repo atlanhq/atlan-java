@@ -36,7 +36,7 @@ public class Link extends Resource {
 
     /** Type of icon for the link. */
     @Attribute
-    LinkIconType iconType;
+    IconType iconType;
 
     /** Asset to which the link is attached. */
     @Attribute

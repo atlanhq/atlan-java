@@ -216,7 +216,7 @@ public class PresetDataset extends Preset {
      * @throws AtlanException on any API problems
      */
     public static PresetDataset updateCertificate(
-            String qualifiedName, AtlanCertificateStatus certificate, String message) throws AtlanException {
+            String qualifiedName, CertificateStatus certificate, String message) throws AtlanException {
         return (PresetDataset) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }
 

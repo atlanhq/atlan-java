@@ -27,7 +27,7 @@ public class AtlanCollectionTest {
             .description("description")
             .userDescription("userDescription")
             .tenantId("tenantId")
-            .certificateStatus(AtlanCertificateStatus.VERIFIED)
+            .certificateStatus(CertificateStatus.VERIFIED)
             .certificateStatusMessage("certificateStatusMessage")
             .certificateUpdatedBy("certificateUpdatedBy")
             .certificateUpdatedAt(123456789L)
@@ -113,7 +113,7 @@ public class AtlanCollectionTest {
                     Folder.refByGuid("9f69d9fe-9751-4438-ad63-86860eda9da9"),
                     Folder.refByGuid("7e9bfd07-8461-4fa9-b70b-5ebc5aecf959")))
             .icon("icon")
-            .iconType(LinkIconType.EMOJI)
+            .iconType(IconType.EMOJI)
             .build();
     private static AtlanCollection frodo;
     private static String serialized;

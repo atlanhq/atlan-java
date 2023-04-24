@@ -214,7 +214,7 @@ public class Database extends SQL {
      * @return the updated Database, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static Database updateCertificate(String qualifiedName, AtlanCertificateStatus certificate, String message)
+    public static Database updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (Database) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }

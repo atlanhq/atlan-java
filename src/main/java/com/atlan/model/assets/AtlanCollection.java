@@ -35,7 +35,7 @@ public class AtlanCollection extends Namespace {
 
     /** Type of image used to represent the collection (for example, an emoji). */
     @Attribute
-    LinkIconType iconType;
+    IconType iconType;
 
     /**
      * Reference to a AtlanCollection by GUID.
@@ -185,7 +185,7 @@ public class AtlanCollection extends Namespace {
      * @throws AtlanException on any API problems
      */
     public static AtlanCollection updateCertificate(
-            String qualifiedName, AtlanCertificateStatus certificate, String message) throws AtlanException {
+        String qualifiedName, CertificateStatus certificate, String message) throws AtlanException {
         return (AtlanCollection) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }
 

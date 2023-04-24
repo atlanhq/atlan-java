@@ -202,7 +202,7 @@ public class KafkaConsumerGroup extends Kafka {
      * @throws AtlanException on any API problems
      */
     public static KafkaConsumerGroup updateCertificate(
-            String qualifiedName, AtlanCertificateStatus certificate, String message) throws AtlanException {
+            String qualifiedName, CertificateStatus certificate, String message) throws AtlanException {
         return (KafkaConsumerGroup) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }
 

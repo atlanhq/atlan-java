@@ -266,7 +266,7 @@ public class View extends SQL {
      * @return the updated View, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static View updateCertificate(String qualifiedName, AtlanCertificateStatus certificate, String message)
+    public static View updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (View) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }

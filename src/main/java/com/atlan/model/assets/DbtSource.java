@@ -196,7 +196,7 @@ public class DbtSource extends Dbt {
      * @return the updated DbtSource, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static DbtSource updateCertificate(String qualifiedName, AtlanCertificateStatus certificate, String message)
+    public static DbtSource updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (DbtSource) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }

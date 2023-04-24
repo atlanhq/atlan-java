@@ -272,7 +272,7 @@ public class GCSObject extends GCS {
      * @return the updated GCSObject, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static GCSObject updateCertificate(String qualifiedName, AtlanCertificateStatus certificate, String message)
+    public static GCSObject updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (GCSObject) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }

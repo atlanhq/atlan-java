@@ -206,7 +206,7 @@ public class QlikApp extends Qlik {
      * @return the updated QlikApp, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static QlikApp updateCertificate(String qualifiedName, AtlanCertificateStatus certificate, String message)
+    public static QlikApp updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (QlikApp) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }

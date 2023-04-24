@@ -210,7 +210,7 @@ public class TableauDashboard extends Tableau {
      * @throws AtlanException on any API problems
      */
     public static TableauDashboard updateCertificate(
-            String qualifiedName, AtlanCertificateStatus certificate, String message) throws AtlanException {
+            String qualifiedName, CertificateStatus certificate, String message) throws AtlanException {
         return (TableauDashboard) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }
 

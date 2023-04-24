@@ -241,7 +241,7 @@ public class ADLSContainer extends ADLS {
      * @throws AtlanException on any API problems
      */
     public static ADLSContainer updateCertificate(
-            String qualifiedName, AtlanCertificateStatus certificate, String message) throws AtlanException {
+        String qualifiedName, CertificateStatus certificate, String message) throws AtlanException {
         return (ADLSContainer) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }
 

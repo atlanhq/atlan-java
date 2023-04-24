@@ -176,7 +176,7 @@ public class BIProcess extends AbstractProcess {
      * @return the updated BIProcess, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static BIProcess updateCertificate(String qualifiedName, AtlanCertificateStatus certificate, String message)
+    public static BIProcess updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (BIProcess) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }

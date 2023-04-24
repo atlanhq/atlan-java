@@ -254,7 +254,7 @@ public class TableauDatasource extends Tableau {
      * @throws AtlanException on any API problems
      */
     public static TableauDatasource updateCertificate(
-            String qualifiedName, AtlanCertificateStatus certificate, String message) throws AtlanException {
+            String qualifiedName, CertificateStatus certificate, String message) throws AtlanException {
         return (TableauDatasource) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }
 

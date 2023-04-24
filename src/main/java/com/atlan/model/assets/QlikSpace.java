@@ -194,7 +194,7 @@ public class QlikSpace extends Qlik {
      * @return the updated QlikSpace, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static QlikSpace updateCertificate(String qualifiedName, AtlanCertificateStatus certificate, String message)
+    public static QlikSpace updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (QlikSpace) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }

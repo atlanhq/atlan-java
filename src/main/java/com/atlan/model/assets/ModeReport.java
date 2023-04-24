@@ -215,7 +215,7 @@ public class ModeReport extends Mode {
      * @return the updated ModeReport, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static ModeReport updateCertificate(String qualifiedName, AtlanCertificateStatus certificate, String message)
+    public static ModeReport updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (ModeReport) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }

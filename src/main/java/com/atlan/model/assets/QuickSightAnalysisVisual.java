@@ -186,7 +186,7 @@ public class QuickSightAnalysisVisual extends QuickSight {
      * @throws AtlanException on any API problems
      */
     public static QuickSightAnalysisVisual updateCertificate(
-            String qualifiedName, AtlanCertificateStatus certificate, String message) throws AtlanException {
+            String qualifiedName, CertificateStatus certificate, String message) throws AtlanException {
         return (QuickSightAnalysisVisual)
                 Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }

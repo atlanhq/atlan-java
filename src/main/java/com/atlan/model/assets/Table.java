@@ -295,7 +295,7 @@ public class Table extends SQL {
      * @return the updated Table, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static Table updateCertificate(String qualifiedName, AtlanCertificateStatus certificate, String message)
+    public static Table updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (Table) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }

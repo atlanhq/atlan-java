@@ -451,7 +451,7 @@ public class Glossary extends Asset {
      * @throws AtlanException on any API problems
      */
     public static Glossary updateCertificate(
-            String qualifiedName, String name, AtlanCertificateStatus certificate, String message)
+            String qualifiedName, String name, CertificateStatus certificate, String message)
             throws AtlanException {
         return (Glossary) Asset.updateCertificate(builder().name(name), TYPE_NAME, qualifiedName, certificate, message);
     }

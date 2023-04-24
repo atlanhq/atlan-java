@@ -211,7 +211,7 @@ public class LookerExplore extends Looker {
      * @throws AtlanException on any API problems
      */
     public static LookerExplore updateCertificate(
-            String qualifiedName, AtlanCertificateStatus certificate, String message) throws AtlanException {
+            String qualifiedName, CertificateStatus certificate, String message) throws AtlanException {
         return (LookerExplore) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }
 

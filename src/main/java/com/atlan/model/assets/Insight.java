@@ -176,7 +176,7 @@ public class Insight extends Catalog {
      * @return the updated Insight, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static Insight updateCertificate(String qualifiedName, AtlanCertificateStatus certificate, String message)
+    public static Insight updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (Insight) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }

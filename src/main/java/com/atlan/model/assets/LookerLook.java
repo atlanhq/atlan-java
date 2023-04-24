@@ -232,7 +232,7 @@ public class LookerLook extends Looker {
      * @return the updated LookerLook, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static LookerLook updateCertificate(String qualifiedName, AtlanCertificateStatus certificate, String message)
+    public static LookerLook updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (LookerLook) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }

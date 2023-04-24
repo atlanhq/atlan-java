@@ -220,7 +220,7 @@ public class TableauWorksheet extends Tableau {
      * @throws AtlanException on any API problems
      */
     public static TableauWorksheet updateCertificate(
-            String qualifiedName, AtlanCertificateStatus certificate, String message) throws AtlanException {
+            String qualifiedName, CertificateStatus certificate, String message) throws AtlanException {
         return (TableauWorksheet) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }
 

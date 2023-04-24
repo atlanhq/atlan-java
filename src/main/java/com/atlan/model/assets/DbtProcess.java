@@ -191,7 +191,7 @@ public class DbtProcess extends AbstractProcess {
      * @return the updated DbtProcess, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static DbtProcess updateCertificate(String qualifiedName, AtlanCertificateStatus certificate, String message)
+    public static DbtProcess updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (DbtProcess) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }

@@ -190,7 +190,7 @@ public class PowerBIDatasource extends PowerBI {
      * @throws AtlanException on any API problems
      */
     public static PowerBIDatasource updateCertificate(
-            String qualifiedName, AtlanCertificateStatus certificate, String message) throws AtlanException {
+            String qualifiedName, CertificateStatus certificate, String message) throws AtlanException {
         return (PowerBIDatasource) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }
 

@@ -27,7 +27,7 @@ public class LinkTest {
             .description("description")
             .userDescription("userDescription")
             .tenantId("tenantId")
-            .certificateStatus(AtlanCertificateStatus.VERIFIED)
+            .certificateStatus(CertificateStatus.VERIFIED)
             .certificateStatusMessage("certificateStatusMessage")
             .certificateUpdatedBy("certificateUpdatedBy")
             .certificateUpdatedAt(123456789L)
@@ -117,7 +117,7 @@ public class LinkTest {
             .reference("reference")
             .resourceMetadata(Map.of("key1", "value1", "key2", "value2"))
             .icon("icon")
-            .iconType(LinkIconType.EMOJI)
+            .iconType(IconType.EMOJI)
             .asset(Table.refByGuid("d04498a0-d263-4218-9258-a3b1c818252c"))
             .build();
     private static Link frodo;

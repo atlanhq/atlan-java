@@ -190,7 +190,7 @@ public class QlikSheet extends Qlik {
      * @return the updated QlikSheet, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static QlikSheet updateCertificate(String qualifiedName, AtlanCertificateStatus certificate, String message)
+    public static QlikSheet updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (QlikSheet) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }

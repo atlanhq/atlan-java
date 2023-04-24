@@ -252,7 +252,7 @@ public class SalesforceField extends Salesforce {
      * @throws AtlanException on any API problems
      */
     public static SalesforceField updateCertificate(
-            String qualifiedName, AtlanCertificateStatus certificate, String message) throws AtlanException {
+        String qualifiedName, CertificateStatus certificate, String message) throws AtlanException {
         return (SalesforceField) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }
 

@@ -236,7 +236,7 @@ public class TableauCalculatedField extends Tableau {
      * @throws AtlanException on any API problems
      */
     public static TableauCalculatedField updateCertificate(
-            String qualifiedName, AtlanCertificateStatus certificate, String message) throws AtlanException {
+            String qualifiedName, CertificateStatus certificate, String message) throws AtlanException {
         return (TableauCalculatedField)
                 Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }

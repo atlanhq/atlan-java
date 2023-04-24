@@ -500,7 +500,7 @@ public class Column extends SQL {
      * @return the updated Column, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static Column updateCertificate(String qualifiedName, AtlanCertificateStatus certificate, String message)
+    public static Column updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (Column) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }

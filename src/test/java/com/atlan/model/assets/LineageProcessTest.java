@@ -5,7 +5,7 @@ package com.atlan.model.assets;
 import static org.testng.Assert.*;
 
 import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.AtlanCertificateStatus;
+import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.serde.Serde;
@@ -29,7 +29,7 @@ public class LineageProcessTest {
             .description("description")
             .userDescription("userDescription")
             .tenantId("tenantId")
-            .certificateStatus(AtlanCertificateStatus.VERIFIED)
+            .certificateStatus(CertificateStatus.VERIFIED)
             .certificateStatusMessage("certificateStatusMessage")
             .certificateUpdatedBy("certificateUpdatedBy")
             .certificateUpdatedAt(123456789L)

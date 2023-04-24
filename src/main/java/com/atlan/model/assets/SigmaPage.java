@@ -190,7 +190,7 @@ public class SigmaPage extends Sigma {
      * @return the updated SigmaPage, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static SigmaPage updateCertificate(String qualifiedName, AtlanCertificateStatus certificate, String message)
+    public static SigmaPage updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (SigmaPage) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }

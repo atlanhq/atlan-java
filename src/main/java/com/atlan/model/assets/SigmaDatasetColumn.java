@@ -189,7 +189,7 @@ public class SigmaDatasetColumn extends Sigma {
      * @throws AtlanException on any API problems
      */
     public static SigmaDatasetColumn updateCertificate(
-            String qualifiedName, AtlanCertificateStatus certificate, String message) throws AtlanException {
+        String qualifiedName, CertificateStatus certificate, String message) throws AtlanException {
         return (SigmaDatasetColumn) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }
 

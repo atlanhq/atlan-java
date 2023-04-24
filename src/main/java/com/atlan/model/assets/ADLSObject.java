@@ -282,7 +282,7 @@ public class ADLSObject extends ADLS {
      * @return the updated ADLSObject, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static ADLSObject updateCertificate(String qualifiedName, AtlanCertificateStatus certificate, String message)
+    public static ADLSObject updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (ADLSObject) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }

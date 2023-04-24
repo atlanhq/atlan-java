@@ -229,7 +229,7 @@ public class APISpec extends API {
      * @return the updated APISpec, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static APISpec updateCertificate(String qualifiedName, AtlanCertificateStatus certificate, String message)
+    public static APISpec updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (APISpec) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }

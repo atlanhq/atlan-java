@@ -205,7 +205,7 @@ public class LineageProcess extends AbstractProcess {
      * @throws AtlanException on any API problems
      */
     public static LineageProcess updateCertificate(
-            String qualifiedName, AtlanCertificateStatus certificate, String message) throws AtlanException {
+            String qualifiedName, CertificateStatus certificate, String message) throws AtlanException {
         return (LineageProcess) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }
 

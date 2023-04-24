@@ -256,7 +256,7 @@ public class Schema extends SQL {
      * @return the updated Schema, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static Schema updateCertificate(String qualifiedName, AtlanCertificateStatus certificate, String message)
+    public static Schema updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (Schema) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }

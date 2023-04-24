@@ -209,7 +209,7 @@ public class LookerQuery extends Looker {
      * @throws AtlanException on any API problems
      */
     public static LookerQuery updateCertificate(
-            String qualifiedName, AtlanCertificateStatus certificate, String message) throws AtlanException {
+            String qualifiedName, CertificateStatus certificate, String message) throws AtlanException {
         return (LookerQuery) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }
 

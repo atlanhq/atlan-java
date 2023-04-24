@@ -188,7 +188,7 @@ public class Folder extends Namespace {
      * @return the updated Folder, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static Folder updateCertificate(String qualifiedName, AtlanCertificateStatus certificate, String message)
+    public static Folder updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (Folder) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }

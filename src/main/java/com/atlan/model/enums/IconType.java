@@ -5,21 +5,20 @@ package com.atlan.model.enums;
 import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 
-public enum QueryUsernameStrategy implements AtlanEnum {
-    CONNECTION_USERNAME("connectionUsername"),
-    ATLAN_USERNAME("atlanUsername"),
-;
+public enum IconType implements AtlanEnum {
+    IMAGE("image"),
+    EMOJI("emoji");
 
     @JsonValue
     @Getter(onMethod_ = {@Override})
     private final String value;
 
-    QueryUsernameStrategy(String value) {
+    IconType(String value) {
         this.value = value;
     }
 
-    public static QueryUsernameStrategy fromValue(String value) {
-        for (QueryUsernameStrategy b : QueryUsernameStrategy.values()) {
+    public static IconType fromValue(String value) {
+        for (IconType b : IconType.values()) {
             if (b.value.equals(value)) {
                 return b;
             }

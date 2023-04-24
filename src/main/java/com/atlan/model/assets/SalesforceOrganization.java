@@ -198,7 +198,7 @@ public class SalesforceOrganization extends Salesforce {
      * @throws AtlanException on any API problems
      */
     public static SalesforceOrganization updateCertificate(
-            String qualifiedName, AtlanCertificateStatus certificate, String message) throws AtlanException {
+        String qualifiedName, CertificateStatus certificate, String message) throws AtlanException {
         return (SalesforceOrganization)
                 Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }

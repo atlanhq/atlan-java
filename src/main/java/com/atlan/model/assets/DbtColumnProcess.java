@@ -192,7 +192,7 @@ public class DbtColumnProcess extends AbstractColumnProcess {
      * @throws AtlanException on any API problems
      */
     public static DbtColumnProcess updateCertificate(
-            String qualifiedName, AtlanCertificateStatus certificate, String message) throws AtlanException {
+            String qualifiedName, CertificateStatus certificate, String message) throws AtlanException {
         return (DbtColumnProcess) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }
 

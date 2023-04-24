@@ -199,7 +199,7 @@ public class PowerBIDashboard extends PowerBI {
      * @throws AtlanException on any API problems
      */
     public static PowerBIDashboard updateCertificate(
-            String qualifiedName, AtlanCertificateStatus certificate, String message) throws AtlanException {
+            String qualifiedName, CertificateStatus certificate, String message) throws AtlanException {
         return (PowerBIDashboard) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }
 

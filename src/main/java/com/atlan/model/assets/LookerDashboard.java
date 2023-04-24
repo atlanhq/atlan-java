@@ -220,7 +220,7 @@ public class LookerDashboard extends Looker {
      * @throws AtlanException on any API problems
      */
     public static LookerDashboard updateCertificate(
-            String qualifiedName, AtlanCertificateStatus certificate, String message) throws AtlanException {
+            String qualifiedName, CertificateStatus certificate, String message) throws AtlanException {
         return (LookerDashboard) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }
 

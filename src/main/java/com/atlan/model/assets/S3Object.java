@@ -240,7 +240,7 @@ public class S3Object extends S3 {
      * @return the updated S3Object, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static S3Object updateCertificate(String qualifiedName, AtlanCertificateStatus certificate, String message)
+    public static S3Object updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (S3Object) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }

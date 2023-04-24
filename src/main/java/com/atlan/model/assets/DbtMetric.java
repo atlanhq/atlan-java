@@ -191,7 +191,7 @@ public class DbtMetric extends Metric {
      * @return the updated DbtMetric, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static DbtMetric updateCertificate(String qualifiedName, AtlanCertificateStatus certificate, String message)
+    public static DbtMetric updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (DbtMetric) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }

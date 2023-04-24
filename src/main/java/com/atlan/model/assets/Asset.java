@@ -152,7 +152,7 @@ public abstract class Asset extends Reference {
 
     /** Status of the asset's certification. */
     @Attribute
-    AtlanCertificateStatus certificateStatus;
+    CertificateStatus certificateStatus;
 
     /** Human-readable descriptive message that can optionally be submitted when the certificateStatus is changed. */
     @Attribute
@@ -784,7 +784,7 @@ public abstract class Asset extends Reference {
      * @throws AtlanException on any API problems
      */
     protected static Asset updateCertificate(
-            AssetBuilder<?, ?> builder, AtlanCertificateStatus certificate, String message) throws AtlanException {
+        AssetBuilder<?, ?> builder, CertificateStatus certificate, String message) throws AtlanException {
         builder.certificateStatus(certificate);
         if (message != null && message.length() > 1) {
             builder.certificateStatusMessage(message);
@@ -923,7 +923,7 @@ public abstract class Asset extends Reference {
             AssetBuilder<?, ?> builder,
             String typeName,
             String qualifiedName,
-            AtlanCertificateStatus certificate,
+            CertificateStatus certificate,
             String message)
             throws AtlanException {
         builder.qualifiedName(qualifiedName).certificateStatus(certificate);

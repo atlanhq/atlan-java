@@ -5,21 +5,24 @@ package com.atlan.model.enums;
 import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 
-public enum AtlanCertificateStatus implements AtlanEnum {
-    VERIFIED("VERIFIED"),
+public enum AtlasGlossaryTermRelationshipStatus implements AtlanEnum {
     DRAFT("DRAFT"),
-    DEPRECATED("DEPRECATED");
+    ACTIVE("ACTIVE"),
+    DEPRECATED("DEPRECATED"),
+    OBSOLETE("OBSOLETE"),
+    OTHER("OTHER"),
+;
 
     @JsonValue
     @Getter(onMethod_ = {@Override})
     private final String value;
 
-    AtlanCertificateStatus(String value) {
+    AtlasGlossaryTermRelationshipStatus(String value) {
         this.value = value;
     }
 
-    public static AtlanCertificateStatus fromValue(String value) {
-        for (AtlanCertificateStatus b : AtlanCertificateStatus.values()) {
+    public static AtlasGlossaryTermRelationshipStatus fromValue(String value) {
+        for (AtlasGlossaryTermRelationshipStatus b : AtlasGlossaryTermRelationshipStatus.values()) {
             if (b.value.equals(value)) {
                 return b;
             }

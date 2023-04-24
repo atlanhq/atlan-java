@@ -27,7 +27,7 @@ public class ReadmeTemplateTest {
             .description("description")
             .userDescription("userDescription")
             .tenantId("tenantId")
-            .certificateStatus(AtlanCertificateStatus.VERIFIED)
+            .certificateStatus(CertificateStatus.VERIFIED)
             .certificateStatusMessage("certificateStatusMessage")
             .certificateUpdatedBy("certificateUpdatedBy")
             .certificateUpdatedAt(123456789L)
@@ -117,7 +117,7 @@ public class ReadmeTemplateTest {
             .reference("reference")
             .resourceMetadata(Map.of("key1", "value1", "key2", "value2"))
             .icon("icon")
-            .iconType(LinkIconType.EMOJI)
+            .iconType(IconType.EMOJI)
             .build();
     private static ReadmeTemplate frodo;
     private static String serialized;

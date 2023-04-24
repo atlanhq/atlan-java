@@ -215,7 +215,7 @@ public class TableauFlow extends Tableau {
      * @throws AtlanException on any API problems
      */
     public static TableauFlow updateCertificate(
-            String qualifiedName, AtlanCertificateStatus certificate, String message) throws AtlanException {
+            String qualifiedName, CertificateStatus certificate, String message) throws AtlanException {
         return (TableauFlow) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }
 

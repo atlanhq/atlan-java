@@ -195,7 +195,7 @@ public class ModeCollection extends Mode {
      * @throws AtlanException on any API problems
      */
     public static ModeCollection updateCertificate(
-            String qualifiedName, AtlanCertificateStatus certificate, String message) throws AtlanException {
+            String qualifiedName, CertificateStatus certificate, String message) throws AtlanException {
         return (ModeCollection) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }
 

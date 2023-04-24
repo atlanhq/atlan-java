@@ -27,7 +27,7 @@ public class SigmaDataElementTest {
             .description("description")
             .userDescription("userDescription")
             .tenantId("tenantId")
-            .certificateStatus(AtlanCertificateStatus.VERIFIED)
+            .certificateStatus(CertificateStatus.VERIFIED)
             .certificateStatusMessage("certificateStatusMessage")
             .certificateUpdatedBy("certificateUpdatedBy")
             .certificateUpdatedAt(123456789L)

@@ -187,7 +187,7 @@ public class SigmaWorkbook extends Sigma {
      * @throws AtlanException on any API problems
      */
     public static SigmaWorkbook updateCertificate(
-            String qualifiedName, AtlanCertificateStatus certificate, String message) throws AtlanException {
+        String qualifiedName, CertificateStatus certificate, String message) throws AtlanException {
         return (SigmaWorkbook) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }
 

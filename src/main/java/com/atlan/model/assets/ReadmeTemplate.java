@@ -35,7 +35,7 @@ public class ReadmeTemplate extends Resource {
 
     /** TBC */
     @Attribute
-    LinkIconType iconType;
+    IconType iconType;
 
     /**
      * Reference to a ReadmeTemplate by GUID.
@@ -185,7 +185,7 @@ public class ReadmeTemplate extends Resource {
      * @throws AtlanException on any API problems
      */
     public static ReadmeTemplate updateCertificate(
-            String qualifiedName, AtlanCertificateStatus certificate, String message) throws AtlanException {
+        String qualifiedName, CertificateStatus certificate, String message) throws AtlanException {
         return (ReadmeTemplate) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
