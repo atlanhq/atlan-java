@@ -7,7 +7,8 @@ import lombok.Getter;
 
 public enum QuickSightDatasetImportMode implements AtlanEnum {
     SPICE("SPICE"),
-    DIRECT_QUERY("DIRECT_QUERY");
+    DIRECT_QUERY("DIRECT_QUERY"),
+;
 
     @JsonValue
     @Getter(onMethod_ = {@Override})

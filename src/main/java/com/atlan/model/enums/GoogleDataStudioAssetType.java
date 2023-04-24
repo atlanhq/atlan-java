@@ -5,20 +5,21 @@ package com.atlan.model.enums;
 import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 
-public enum GoogleDataStudioAssetType implements AtlanEnum {
+public enum GoogleDatastudioAssetType implements AtlanEnum {
     REPORT("REPORT"),
-    DATA_SOURCE("DATA_SOURCE");
+    DATA_SOURCE("DATA_SOURCE"),
+;
 
     @JsonValue
     @Getter(onMethod_ = {@Override})
     private final String value;
 
-    GoogleDataStudioAssetType(String value) {
+    GoogleDatastudioAssetType(String value) {
         this.value = value;
     }
 
-    public static GoogleDataStudioAssetType fromValue(String value) {
-        for (GoogleDataStudioAssetType b : GoogleDataStudioAssetType.values()) {
+    public static GoogleDatastudioAssetType fromValue(String value) {
+        for (GoogleDatastudioAssetType b : GoogleDatastudioAssetType.values()) {
             if (b.value.equals(value)) {
                 return b;
             }

@@ -7,7 +7,8 @@ import lombok.Getter;
 
 public enum KafkaTopicCleanupPolicy implements AtlanEnum {
     COMPACT("compact"),
-    DELETE("delete");
+    DELETE("delete"),
+;
 
     @JsonValue
     @Getter(onMethod_ = {@Override})

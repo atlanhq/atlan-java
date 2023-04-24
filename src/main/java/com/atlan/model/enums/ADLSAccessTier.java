@@ -8,7 +8,8 @@ import lombok.Getter;
 public enum ADLSAccessTier implements AtlanEnum {
     COOL("Cool"),
     HOT("Hot"),
-    ARCHIVE("Archive");
+    ARCHIVE("Archive"),
+;
 
     @JsonValue
     @Getter(onMethod_ = {@Override})
