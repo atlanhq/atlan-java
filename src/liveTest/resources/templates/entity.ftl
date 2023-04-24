@@ -1,0 +1,346 @@
+/* SPDX-License-Identifier: Apache-2.0 */
+/* Copyright 2022 Atlan Pte. Ltd. */
+package com.atlan.model.assets;
+
+import com.atlan.exception.AtlanException;
+import com.atlan.exception.ErrorCode;
+import com.atlan.exception.InvalidRequestException;
+import com.atlan.exception.NotFoundException;
+import com.atlan.model.relations.UniqueAttributes;
+<#list attributes as attribute>
+<#if attribute.type.type == "ENUM">
+import com.atlan.model.enums.${attribute.type.name};
+<#elseif attribute.type.type == "STRUCT">
+import com.atlan.model.structs.${attribute.type.name};
+</#if>
+</#list>
+import com.atlan.util.StringUtils;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.SortedSet;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
+
+/**
+ * ${description}
+ */
+@Getter
+@SuperBuilder(toBuilder = true)
+@EqualsAndHashCode(callSuper = true)
+public class ${className} extends ${parentClassName} {
+    private static final long serialVersionUID = 2L;
+
+    public static final String TYPE_NAME = "${originalName}";
+
+    /** Fixed typeName for ${className}s. */
+    @Getter(onMethod_ = {@Override})
+    @Builder.Default
+    String typeName = TYPE_NAME;
+
+<#list attributes as attribute>
+    /** ${attribute.description} */
+    @Attribute
+    <#if attribute.singular??>@Singular<#if attribute.singular?has_content>("${attribute.singular}")</#if></#if>
+    <#if attribute.renamed != attribute.originalName>
+    @JsonProperty("${attribute.originalName}")
+    </#if>
+    ${attribute.type.name} ${attribute.renamed};
+
+</#list>
+    /**
+     * Reference to a ${className} by GUID.
+     *
+     * @param guid the GUID of the ${className} to reference
+     * @return reference to a ${className} that can be used for defining a relationship to a ${className}
+     */
+    public static ${className} refByGuid(String guid) {
+        return ${className}.builder().guid(guid).build();
+    }
+
+    /**
+     * Reference to a ${className} by qualifiedName.
+     *
+     * @param qualifiedName the qualifiedName of the ${className} to reference
+     * @return reference to a ${className} that can be used for defining a relationship to a ${className}
+     */
+    public static ${className} refByQualifiedName(String qualifiedName) {
+        return ${className}.builder()
+                .uniqueAttributes(
+                        UniqueAttributes.builder().qualifiedName(qualifiedName).build())
+                .build();
+    }
+
+<#if templateFile??>
+<#import templateFile as methods>
+<@methods.all/>
+<#else>
+    /**
+     * Builds the minimal object necessary to update a ${className}.
+     *
+     * @param qualifiedName of the ${className}
+     * @param name of the ${className}
+     * @return the minimal request necessary to update the ${className}, as a builder
+     */
+    public static ${className}Builder<?, ?> updater(String qualifiedName, String name) {
+        return ${className}.builder().qualifiedName(qualifiedName).name(name);
+    }
+
+    /**
+     * Builds the minimal object necessary to apply an update to a ${className}, from a potentially
+     * more-complete ${className} object.
+     *
+     * @return the minimal object necessary to update the ${className}, as a builder
+     * @throws InvalidRequestException if any of the minimal set of required properties for ${className} are not found in the initial object
+     */
+    @Override
+    public ${className}Builder<?, ?> trimToRequired() throws InvalidRequestException {
+        List<String> missing = new ArrayList<>();
+        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
+            missing.add("qualifiedName");
+        }
+        if (this.getName() == null || this.getName().length() == 0) {
+            missing.add("name");
+        }
+        if (!missing.isEmpty()) {
+            throw new InvalidRequestException(
+                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "${className}", String.join(",", missing));
+        }
+        return updater(this.getQualifiedName(), this.getName());
+    }
+</#if>
+
+    /**
+     * Retrieves a ${className} by its GUID, complete with all of its relationships.
+     *
+     * @param guid of the ${className} to retrieve
+     * @return the requested full ${className}, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ${className} does not exist or the provided GUID is not a ${className}
+     */
+    public static ${className} retrieveByGuid(String guid) throws AtlanException {
+        Asset asset = Asset.retrieveFull(guid);
+        if (asset == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
+        } else if (asset instanceof ${className}) {
+            return (${className}) asset;
+        } else {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "${className}");
+        }
+    }
+
+    /**
+     * Retrieves a ${className} by its qualifiedName, complete with all of its relationships.
+     *
+     * @param qualifiedName of the ${className} to retrieve
+     * @return the requested full ${className}, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ${className} does not exist
+     */
+    public static ${className} retrieveByQualifiedName(String qualifiedName) throws AtlanException {
+        Asset asset = Asset.retrieveFull(TYPE_NAME, qualifiedName);
+        if (asset instanceof ${className}) {
+            return (${className}) asset;
+        } else {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "${className}");
+        }
+    }
+
+    /**
+     * Restore the archived (soft-deleted) ${className} to active.
+     *
+     * @param qualifiedName for the ${className}
+     * @return true if the ${className} is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+<#if className != "GlossaryCategory" && className != "GlossaryTerm">
+    /**
+     * Remove the system description from a ${className}.
+     *
+     * @param qualifiedName of the ${className}
+     * @param name of the ${className}
+     * @return the updated ${className}, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static ${className} removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (${className}) Asset.removeDescription(updater(qualifiedName, name));
+    }
+
+    /**
+     * Remove the user's description from a ${className}.
+     *
+     * @param qualifiedName of the ${className}
+     * @param name of the ${className}
+     * @return the updated ${className}, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static ${className} removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (${className}) Asset.removeUserDescription(updater(qualifiedName, name));
+    }
+
+<#if className != "Readme" && className != "Link" && className != "ReadmeTemplate" && className != "Badge">
+    /**
+     * Remove the owners from a ${className}.
+     *
+     * @param qualifiedName of the ${className}
+     * @param name of the ${className}
+     * @return the updated ${className}, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static ${className} removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (${className}) Asset.removeOwners(updater(qualifiedName, name));
+    }
+
+    /**
+     * Update the certificate on a ${className}.
+     *
+     * @param qualifiedName of the ${className}
+     * @param certificate to use
+     * @param message (optional) message, or null if no message
+     * @return the updated ${className}, or null if the update failed
+     * @throws AtlanException on any API problems
+     */
+    public static ${className} updateCertificate(String qualifiedName, AtlanCertificateStatus certificate, String message)
+            throws AtlanException {
+        return (${className}) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
+    }
+
+    /**
+     * Remove the certificate from a ${className}.
+     *
+     * @param qualifiedName of the ${className}
+     * @param name of the ${className}
+     * @return the updated ${className}, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static ${className} removeCertificate(String qualifiedName, String name) throws AtlanException {
+        return (${className}) Asset.removeCertificate(updater(qualifiedName, name));
+    }
+
+    /**
+     * Update the announcement on a ${className}.
+     *
+     * @param qualifiedName of the ${className}
+     * @param type type of announcement to set
+     * @param title (optional) title of the announcement to set (or null for no title)
+     * @param message (optional) message of the announcement to set (or null for no message)
+     * @return the result of the update, or null if the update failed
+     * @throws AtlanException on any API problems
+     */
+    public static ${className} updateAnnouncement(
+            String qualifiedName, AtlanAnnouncementType type, String title, String message) throws AtlanException {
+        return (${className}) Asset.updateAnnouncement(builder(), TYPE_NAME, qualifiedName, type, title, message);
+    }
+
+    /**
+     * Remove the announcement from a ${className}.
+     *
+     * @param qualifiedName of the ${className}
+     * @param name of the ${className}
+     * @return the updated ${className}, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static ${className} removeAnnouncement(String qualifiedName, String name) throws AtlanException {
+        return (${className}) Asset.removeAnnouncement(updater(qualifiedName, name));
+    }
+</#if>
+</#if>
+
+<#if className != "Readme" && className != "Link" && className != "ReadmeTemplate" && className != "Badge">
+    /**
+     * Add classifications to a ${className}.
+     *
+     * @param qualifiedName of the ${className}
+     * @param classificationNames human-readable names of the classifications to add
+     * @throws AtlanException on any API problems, or if any of the classifications already exist on the ${className}
+     */
+    public static void addClassifications(String qualifiedName, List<String> classificationNames)
+            throws AtlanException {
+        Asset.addClassifications(TYPE_NAME, qualifiedName, classificationNames);
+    }
+
+    /**
+     * Add classifications to a ${className}.
+     *
+     * @param qualifiedName of the ${className}
+     * @param classificationNames human-readable names of the classifications to add
+     * @param propagate whether to propagate the classification (true) or not (false)
+     * @param removePropagationsOnDelete whether to remove the propagated classifications when the classification is removed from this asset (true) or not (false)
+     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
+     * @throws AtlanException on any API problems, or if any of the classifications already exist on the ${className}
+     */
+    public static void addClassifications(
+            String qualifiedName,
+            List<String> classificationNames,
+            boolean propagate,
+            boolean removePropagationsOnDelete,
+            boolean restrictLineagePropagation)
+            throws AtlanException {
+        Asset.addClassifications(
+                TYPE_NAME,
+                qualifiedName,
+                classificationNames,
+                propagate,
+                removePropagationsOnDelete,
+                restrictLineagePropagation);
+    }
+
+    /**
+     * Remove a classification from a ${className}.
+     *
+     * @param qualifiedName of the ${className}
+     * @param classificationName human-readable name of the classification to remove
+     * @throws AtlanException on any API problems, or if the classification does not exist on the ${className}
+     */
+    public static void removeClassification(String qualifiedName, String classificationName) throws AtlanException {
+        Asset.removeClassification(TYPE_NAME, qualifiedName, classificationName);
+    }
+
+<#if className != "Glossary" && className != "GlossaryCategory" && className != "GlossaryTerm">
+    /**
+     * Replace the terms linked to the ${className}.
+     *
+     * @param qualifiedName for the ${className}
+     * @param name human-readable name of the ${className}
+     * @param terms the list of terms to replace on the ${className}, or null to remove all terms from the ${className}
+     * @return the ${className} that was updated (note that it will NOT contain details of the replaced terms)
+     * @throws AtlanException on any API problems
+     */
+    public static ${className} replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+            throws AtlanException {
+        return (${className}) Asset.replaceTerms(updater(qualifiedName, name), terms);
+    }
+
+    /**
+     * Link additional terms to the ${className}, without replacing existing terms linked to the ${className}.
+     * Note: this operation must make two API calls — one to retrieve the ${className}'s existing terms,
+     * and a second to append the new terms.
+     *
+     * @param qualifiedName for the ${className}
+     * @param terms the list of terms to append to the ${className}
+     * @return the ${className} that was updated  (note that it will NOT contain details of the appended terms)
+     * @throws AtlanException on any API problems
+     */
+    public static ${className} appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (${className}) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
+    }
+
+    /**
+     * Remove terms from a ${className}, without replacing all existing terms linked to the ${className}.
+     * Note: this operation must make two API calls — one to retrieve the ${className}'s existing terms,
+     * and a second to remove the provided terms.
+     *
+     * @param qualifiedName for the ${className}
+     * @param terms the list of terms to remove from the ${className}, which must be referenced by GUID
+     * @return the ${className} that was updated (note that it will NOT contain details of the resulting terms)
+     * @throws AtlanException on any API problems
+     */
+    public static ${className} removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (${className}) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
+    }
+</#if>
+</#if>
+}
