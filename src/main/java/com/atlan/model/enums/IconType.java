@@ -7,7 +7,8 @@ import lombok.Getter;
 
 public enum IconType implements AtlanEnum {
     IMAGE("image"),
-    EMOJI("emoji");
+    EMOJI("emoji"),
+;
 
     @JsonValue
     @Getter(onMethod_ = {@Override})

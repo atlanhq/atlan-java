@@ -6,9 +6,10 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 
 public enum CertificateStatus implements AtlanEnum {
-    VERIFIED("VERIFIED"),
+    DEPRECATED("DEPRECATED"),
     DRAFT("DRAFT"),
-    DEPRECATED("DEPRECATED");
+    VERIFIED("VERIFIED"),
+;
 
     @JsonValue
     @Getter(onMethod_ = {@Override})
