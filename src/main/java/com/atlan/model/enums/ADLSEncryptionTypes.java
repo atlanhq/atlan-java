@@ -6,8 +6,9 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 
 public enum ADLSEncryptionTypes implements AtlanEnum {
-    STORAGE("Microsoft.Storage"),
-    KEYVAULT("Microsoft.Keyvault");
+    MICROSOFT_STORAGE("Microsoft.Storage"),
+    MICROSOFT_KEYVAULT("Microsoft.Keyvault"),
+;
 
     @JsonValue
     @Getter(onMethod_ = {@Override})
