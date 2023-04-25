@@ -38,7 +38,7 @@ public class ${className} extends AtlanObject {
 </#list>
      * @return a ${className} with the provided information
      */
-    public static ${className} of(<#list attributes as attribute>${attribute.type.name} ${attribute.renamed}<#sep>, </#list>) {
+    public static ${className} of(<#list attributes as attribute>${attribute.fullType} ${attribute.renamed}<#sep>, </#list>) {
         return ${className}.builder()
         <#list attributes as attribute>
             .${attribute.renamed}(${attribute.renamed})
@@ -51,7 +51,7 @@ public class ${className} extends AtlanObject {
     <#if attribute.renamed != attribute.originalName>
     @JsonProperty("${attribute.originalName}")
     </#if>
-    ${attribute.type.name} ${attribute.renamed};
+    ${attribute.fullType} ${attribute.renamed};
 
 </#list>
 <#if className == "BadgeCondition">

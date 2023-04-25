@@ -17,25 +17,22 @@ public abstract class TypeGenerator {
             Map.entry("long", "Long"),
             Map.entry("date", "Long"),
             Map.entry("float", "Double"),
-            Map.entry("array<string>", "SortedSet<String>"),
-            Map.entry("array<float>", "List<Double>"),
-            Map.entry("map<string,string>", "Map<String, String>"),
-            Map.entry("map<string,long>", "Map<String, Long>"),
-            Map.entry("array<map<string,string>>", "List<Map<String, String>>"));
+            Map.entry("string,string", "String, String"),
+            Map.entry("string,long", "String, Long"));
 
     protected String originalName;
     protected String className;
     protected String description;
+
+    protected TypeGenerator() {
+        // Do nothing...
+    }
 
     protected TypeGenerator(TypeDef typeDef) {
         this.originalName = typeDef.getDisplayName() == null ? typeDef.getName() : typeDef.getDisplayName();
     }
 
     protected abstract void resolveClassName();
-
-    public boolean isRenamed() {
-        return originalName != null && !originalName.equals(className);
-    }
 
     protected static String getUpperCamelCase(String text) {
         String[] words = text.split("[\\W_]+");
@@ -64,27 +61,63 @@ public abstract class TypeGenerator {
     }
 
     protected static MappedType getMappedType(String type) {
+        // First look for contained types...
+        String baseType = type;
+        String container = null;
+        if (type.contains("<")) {
+            if (type.startsWith("array<")) {
+                if (type.startsWith("array<map<")) {
+                    baseType = getEmbeddedType(type.substring("array<".length(), type.length() - 1));
+                    container = "List<Map<";
+                } else {
+                    baseType = getEmbeddedType(type);
+                    container = "SortedSet<";
+                }
+            } else if (type.startsWith("map<")) {
+                baseType = getEmbeddedType(type);
+                container = "Map<";
+            }
+        }
+        MappedType.MappedTypeBuilder builder = MappedType.builder();
         // First try to map a primitive type
-        String primitiveName = PRIMITIVE_MAPPINGS.getOrDefault(type, null);
+        String primitiveName = PRIMITIVE_MAPPINGS.getOrDefault(baseType, null);
         if (primitiveName != null) {
-            return MappedType.builder()
-                    .type(MappedType.Type.PRIMITIVE)
-                    .name(primitiveName)
-                    .build();
+            builder.type(MappedType.Type.PRIMITIVE).name(primitiveName);
+        } else {
+            // Failing that, attempt to map to a cached type (enum, struct, etc)
+            MappedType mappedType = ModelGeneratorV2.getCachedType(baseType);
+            if (mappedType == null) {
+                // Failing that, fall-back to just the name of the object
+                builder.type(MappedType.Type.ASSET).name(baseType);
+            } else {
+                MappedType.Type baseTypeOfMapped = mappedType.getType();
+                builder.type(baseTypeOfMapped).name(mappedType.getName());
+                if (baseTypeOfMapped == MappedType.Type.STRUCT) {
+                    // If the referred object is a struct, change the container to a list rather
+                    // than a set
+                    container = "List<";
+                }
+            }
         }
-        // Failing that, attempt to map to a cached type (enum, struct, etc)
-        MappedType mappedType = ModelGeneratorV2.getCachedType(type);
-        if (mappedType == null) {
-            // Failing that, fall-back to just the name of the object
-            // TODO: will need more once we have entities, since they can even
-            //  refer to themselves (before being cached)
-            return MappedType.builder().type(MappedType.Type.ASSET).name(type).build();
+        if (container != null) {
+            builder.container(container);
         }
-        return mappedType;
+        return builder.build();
+    }
+
+    /**
+     * Determine the primitive type of the attribute when it's values are contained in an
+     * array or map.
+     *
+     * @param attrType data type of the attribute
+     * @return the primitive contained type of the attribute's values
+     */
+    private static String getEmbeddedType(String attrType) {
+        return attrType.substring(attrType.indexOf("<") + 1, attrType.indexOf(">"));
     }
 
     @Getter
-    @Builder
+    @Builder(toBuilder = true)
     public static final class MappedType {
 
         public enum Type {
@@ -95,6 +128,7 @@ public abstract class TypeGenerator {
         }
 
         private String name;
+        private String container;
         private Type type;
     }
 }

@@ -8,9 +8,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import lombok.AccessLevel;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 @Getter
@@ -61,21 +59,19 @@ public class StructGenerator extends TypeGenerator {
     }
 
     @Getter
-    public static final class Attribute {
-
-        @Setter(AccessLevel.PRIVATE)
-        private MappedType type;
-
-        private final String originalName;
-        private final String renamed;
-        private final String description;
+    public static final class Attribute extends AttributeGenerator {
 
         public Attribute(String className, AttributeDef attributeDef) {
-            this.type = getMappedType(attributeDef.getTypeName());
-            this.originalName =
-                    attributeDef.getDisplayName() == null ? attributeDef.getName() : attributeDef.getDisplayName();
-            this.renamed = getLowerCamelCase(originalName);
-            this.description = AttributeCSVCache.getAttributeDescription(className, originalName);
+            super(className, attributeDef);
+        }
+
+        @Override
+        protected void resolveType(AttributeDef attributeDef) {
+            super.resolveType(attributeDef);
+            if (attributeDef.getTypeName().startsWith("array<")) {
+                // Always use lists in structs, not sorted sets
+                setType(getType().toBuilder().container("List<").build());
+            }
         }
     }
 }

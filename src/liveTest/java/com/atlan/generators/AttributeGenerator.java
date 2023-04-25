@@ -1,0 +1,50 @@
+/* SPDX-License-Identifier: Apache-2.0 */
+/* Copyright 2023 Atlan Pte. Ltd. */
+package com.atlan.generators;
+
+import com.atlan.model.typedefs.AttributeDef;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter(AccessLevel.PACKAGE)
+public class AttributeGenerator extends TypeGenerator {
+
+    private MappedType type;
+    private String renamed;
+
+    public AttributeGenerator(String className, AttributeDef attributeDef) {
+        super.className = className;
+        this.originalName =
+                attributeDef.getDisplayName() == null ? attributeDef.getName() : attributeDef.getDisplayName();
+        this.description = AttributeCSVCache.getAttributeDescription(className, originalName);
+        resolveName();
+        resolveType(attributeDef);
+    }
+
+    @Override
+    protected void resolveClassName() {
+        // Nothing to do, already set by constructor
+    }
+
+    protected void resolveName() {
+        this.renamed = getLowerCamelCase(originalName);
+    }
+
+    protected void resolveType(AttributeDef attributeDef) {
+        this.type = getMappedType(attributeDef.getTypeName());
+    }
+
+    public String getFullType() {
+        String fullType;
+        String container = type.getContainer();
+        if (container != null) {
+            long nestingCount = container.chars().filter(c -> c == '<').count();
+            fullType = container + type.getName() + ">".repeat((int) nestingCount);
+        } else {
+            fullType = type.getName();
+        }
+        return fullType;
+    }
+}
