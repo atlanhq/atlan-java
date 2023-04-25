@@ -260,4 +260,103 @@
             }
         }
     }
+
+    /**
+     * Remove the system description from a Glossary.
+     *
+     * @param qualifiedName of the Glossary
+     * @param name of the Glossary
+     * @return the updated Glossary, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static Glossary removeDescription(String qualifiedName, String name) throws AtlanException {
+        return (Glossary)
+                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the user's description from a Glossary.
+     *
+     * @param qualifiedName of the Glossary
+     * @param name of the Glossary
+     * @return the updated Glossary, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static Glossary removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return (Glossary) Asset.removeUserDescription(
+                builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Remove the owners from a Glossary.
+     *
+     * @param qualifiedName of the Glossary
+     * @param name of the Glossary
+     * @return the updated Glossary, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static Glossary removeOwners(String qualifiedName, String name) throws AtlanException {
+        return (Glossary)
+                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Update the certificate on a Glossary.
+     *
+     * @param qualifiedName of the Glossary
+     * @param name of the Glossary
+     * @param certificate to use
+     * @param message (optional) message, or null if no message
+     * @return the updated Glossary, or null if the update failed
+     * @throws AtlanException on any API problems
+     */
+    public static Glossary updateCertificate(
+            String qualifiedName, String name, CertificateStatus certificate, String message)
+            throws AtlanException {
+        return (Glossary) Asset.updateCertificate(builder().name(name), TYPE_NAME, qualifiedName, certificate, message);
+    }
+
+    /**
+     * Remove the certificate from a Glossary.
+     *
+     * @param qualifiedName of the Glossary
+     * @param name of the Glossary
+     * @return the updated Glossary, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static Glossary removeCertificate(String qualifiedName, String name) throws AtlanException {
+        return (Glossary)
+                Asset.removeCertificate(builder().qualifiedName(qualifiedName).name(name));
+    }
+
+    /**
+     * Update the announcement on a Glossary.
+     *
+     * @param qualifiedName of the Glossary
+     * @param name of the Glossary
+     * @param type type of announcement to set
+     * @param title (optional) title of the announcement to set (or null for no title)
+     * @param message (optional) message of the announcement to set (or null for no message)
+     * @return the result of the update, or null if the update failed
+     * @throws AtlanException on any API problems
+     */
+    public static Glossary updateAnnouncement(
+            String qualifiedName, String name, AtlanAnnouncementType type, String title, String message)
+            throws AtlanException {
+        return (Glossary)
+                Asset.updateAnnouncement(builder().name(name), TYPE_NAME, qualifiedName, type, title, message);
+    }
+
+    /**
+     * Remove the announcement from a Glossary.
+     *
+     * @param qualifiedName of the Glossary
+     * @param name of the Glossary
+     * @return the updated Glossary, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static Glossary removeAnnouncement(String qualifiedName, String name) throws AtlanException {
+        return (Glossary)
+                Asset.removeAnnouncement(builder().qualifiedName(qualifiedName).name(name));
+    }
 </#macro>

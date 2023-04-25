@@ -221,7 +221,7 @@ public <#if subTypes??>abstract</#if> class ${className} extends ${parentClassNa
         return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
-<#if className != "GlossaryCategory" && className != "GlossaryTerm">
+<#if className != "Glossary" && className != "GlossaryCategory" && className != "GlossaryTerm">
     /**
      * Remove the system description from a ${className}.
      *
@@ -311,6 +311,48 @@ public <#if subTypes??>abstract</#if> class ${className} extends ${parentClassNa
     public static ${className} removeAnnouncement(String qualifiedName, String name) throws AtlanException {
         return (${className}) Asset.removeAnnouncement(updater(qualifiedName, name));
     }
+
+    /**
+     * Replace the terms linked to the ${className}.
+     *
+     * @param qualifiedName for the ${className}
+     * @param name human-readable name of the ${className}
+     * @param terms the list of terms to replace on the ${className}, or null to remove all terms from the ${className}
+     * @return the ${className} that was updated (note that it will NOT contain details of the replaced terms)
+     * @throws AtlanException on any API problems
+     */
+    public static ${className} replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+            throws AtlanException {
+        return (${className}) Asset.replaceTerms(updater(qualifiedName, name), terms);
+    }
+
+    /**
+     * Link additional terms to the ${className}, without replacing existing terms linked to the ${className}.
+     * Note: this operation must make two API calls — one to retrieve the ${className}'s existing terms,
+     * and a second to append the new terms.
+     *
+     * @param qualifiedName for the ${className}
+     * @param terms the list of terms to append to the ${className}
+     * @return the ${className} that was updated  (note that it will NOT contain details of the appended terms)
+     * @throws AtlanException on any API problems
+     */
+    public static ${className} appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (${className}) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
+    }
+
+    /**
+     * Remove terms from a ${className}, without replacing all existing terms linked to the ${className}.
+     * Note: this operation must make two API calls — one to retrieve the ${className}'s existing terms,
+     * and a second to remove the provided terms.
+     *
+     * @param qualifiedName for the ${className}
+     * @param terms the list of terms to remove from the ${className}, which must be referenced by GUID
+     * @return the ${className} that was updated (note that it will NOT contain details of the resulting terms)
+     * @throws AtlanException on any API problems
+     */
+    public static ${className} removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (${className}) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
+    }
 </#if>
 </#if>
 
@@ -363,50 +405,6 @@ public <#if subTypes??>abstract</#if> class ${className} extends ${parentClassNa
     public static void removeClassification(String qualifiedName, String classificationName) throws AtlanException {
         Asset.removeClassification(TYPE_NAME, qualifiedName, classificationName);
     }
-
-<#if className != "Glossary" && className != "GlossaryCategory" && className != "GlossaryTerm">
-    /**
-     * Replace the terms linked to the ${className}.
-     *
-     * @param qualifiedName for the ${className}
-     * @param name human-readable name of the ${className}
-     * @param terms the list of terms to replace on the ${className}, or null to remove all terms from the ${className}
-     * @return the ${className} that was updated (note that it will NOT contain details of the replaced terms)
-     * @throws AtlanException on any API problems
-     */
-    public static ${className} replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
-            throws AtlanException {
-        return (${className}) Asset.replaceTerms(updater(qualifiedName, name), terms);
-    }
-
-    /**
-     * Link additional terms to the ${className}, without replacing existing terms linked to the ${className}.
-     * Note: this operation must make two API calls — one to retrieve the ${className}'s existing terms,
-     * and a second to append the new terms.
-     *
-     * @param qualifiedName for the ${className}
-     * @param terms the list of terms to append to the ${className}
-     * @return the ${className} that was updated  (note that it will NOT contain details of the appended terms)
-     * @throws AtlanException on any API problems
-     */
-    public static ${className} appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (${className}) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
-    }
-
-    /**
-     * Remove terms from a ${className}, without replacing all existing terms linked to the ${className}.
-     * Note: this operation must make two API calls — one to retrieve the ${className}'s existing terms,
-     * and a second to remove the provided terms.
-     *
-     * @param qualifiedName for the ${className}
-     * @param terms the list of terms to remove from the ${className}, which must be referenced by GUID
-     * @return the ${className} that was updated (note that it will NOT contain details of the resulting terms)
-     * @throws AtlanException on any API problems
-     */
-    public static ${className} removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (${className}) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
-    }
-</#if>
 </#if>
 </#if>
 }
