@@ -3,14 +3,24 @@
 package com.atlan.model.assets;
 
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
-import com.atlan.exception.*;
-import com.atlan.model.enums.*;
+import com.atlan.exception.AtlanException;
+import com.atlan.exception.ErrorCode;
+import com.atlan.exception.InvalidRequestException;
+import com.atlan.exception.LogicException;
+import com.atlan.exception.NotFoundException;
+import com.atlan.model.enums.AtlanAnnouncementType;
+import com.atlan.model.enums.CertificateStatus;
+import com.atlan.model.enums.KeywordFields;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.IndexSearchDSL;
 import com.atlan.model.search.IndexSearchRequest;
 import com.atlan.model.search.IndexSearchResponse;
 import com.atlan.util.QueryFactory;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.SortedSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
@@ -33,60 +43,37 @@ public class GlossaryCategory extends Asset {
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Unused. */
+    /** TBC */
     @Attribute
     String shortDescription;
 
-    /** Unused. */
+    /** TBC */
     @Attribute
     String longDescription;
 
-    /** Unused. */
+    /** TBC */
     @Attribute
     @Singular
     Map<String, String> additionalAttributes;
 
-    /** Terms organized within this category. */
+    /** TBC */
     @Attribute
     @Singular
     SortedSet<GlossaryTerm> terms;
 
-    /** Glossary in which this category is contained. */
+    /** TBC */
     @Attribute
     Glossary anchor;
 
-    /** Parent category in which this category is located (or empty if this is a root-level category). */
+    /** TBC */
     @Attribute
     GlossaryCategory parentCategory;
 
-    /** Child categories organized within this category. */
+    /** TBC */
     @Attribute
     @Singular("childCategory")
     @Setter(AccessLevel.PACKAGE)
     SortedSet<GlossaryCategory> childrenCategories;
-
-    /**
-     * Reference to a GlossaryCategory by GUID.
-     *
-     * @param guid the GUID of the GlossaryCategory to reference
-     * @return reference to a GlossaryCategory that can be used for defining a relationship to a GlossaryCategory
-     */
-    public static GlossaryCategory refByGuid(String guid) {
-        return GlossaryCategory.builder().guid(guid).build();
-    }
-
-    /**
-     * Reference to a GlossaryCategory by qualifiedName.
-     *
-     * @param qualifiedName the qualifiedName of the GlossaryCategory to reference
-     * @return reference to a GlossaryCategory that can be used for defining a relationship to a GlossaryCategory
-     */
-    public static GlossaryCategory refByQualifiedName(String qualifiedName) {
-        return GlossaryCategory.builder()
-                .uniqueAttributes(
-                        UniqueAttributes.builder().qualifiedName(qualifiedName).build())
-                .build();
-    }
 
     /**
      * Builds the minimal object necessary for creating a GlossaryCategory. At least one of glossaryGuid or
@@ -214,51 +201,6 @@ public class GlossaryCategory extends Asset {
     }
 
     /**
-     * Retrieves a GlossaryCategory by its GUID, complete with all of its relationships.
-     *
-     * @param guid of the GlossaryCategory to retrieve
-     * @return the requested full GlossaryCategory, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the GlossaryCategory does not exist or the provided GUID is not a GlossaryCategory
-     */
-    public static GlossaryCategory retrieveByGuid(String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof GlossaryCategory) {
-            return (GlossaryCategory) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "GlossaryCategory");
-        }
-    }
-
-    /**
-     * Retrieves a GlossaryCategory by its qualifiedName, complete with all of its relationships.
-     *
-     * @param qualifiedName of the GlossaryCategory to retrieve
-     * @return the requested full GlossaryCategory, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the GlossaryCategory does not exist
-     */
-    public static GlossaryCategory retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        Asset asset = Asset.retrieveFull(TYPE_NAME, qualifiedName);
-        if (asset instanceof GlossaryCategory) {
-            return (GlossaryCategory) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "GlossaryCategory");
-        }
-    }
-
-    /**
-     * Restore the archived (soft-deleted) GlossaryCategory to active.
-     *
-     * @param qualifiedName for the GlossaryCategory
-     * @return true if the GlossaryCategory is now active, and false otherwise
-     * @throws AtlanException on any API problems
-     */
-    public static boolean restore(String qualifiedName) throws AtlanException {
-        return Asset.restore(TYPE_NAME, qualifiedName);
-    }
-
-    /**
      * Remove the system description from a GlossaryCategory.
      *
      * @param qualifiedName of the GlossaryCategory
@@ -366,6 +308,73 @@ public class GlossaryCategory extends Asset {
     public static GlossaryCategory removeAnnouncement(String qualifiedName, String name, String glossaryGuid)
             throws AtlanException {
         return (GlossaryCategory) Asset.removeAnnouncement(updater(qualifiedName, name, glossaryGuid));
+    }
+    /**
+     * Reference to a GlossaryCategory by GUID.
+     *
+     * @param guid the GUID of the GlossaryCategory to reference
+     * @return reference to a GlossaryCategory that can be used for defining a relationship to a GlossaryCategory
+     */
+    public static GlossaryCategory refByGuid(String guid) {
+        return GlossaryCategory.builder().guid(guid).build();
+    }
+
+    /**
+     * Reference to a GlossaryCategory by qualifiedName.
+     *
+     * @param qualifiedName the qualifiedName of the GlossaryCategory to reference
+     * @return reference to a GlossaryCategory that can be used for defining a relationship to a GlossaryCategory
+     */
+    public static GlossaryCategory refByQualifiedName(String qualifiedName) {
+        return GlossaryCategory.builder()
+                .uniqueAttributes(
+                        UniqueAttributes.builder().qualifiedName(qualifiedName).build())
+                .build();
+    }
+
+    /**
+     * Retrieves a GlossaryCategory by its GUID, complete with all of its relationships.
+     *
+     * @param guid of the GlossaryCategory to retrieve
+     * @return the requested full GlossaryCategory, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the GlossaryCategory does not exist or the provided GUID is not a GlossaryCategory
+     */
+    public static GlossaryCategory retrieveByGuid(String guid) throws AtlanException {
+        Asset asset = Asset.retrieveFull(guid);
+        if (asset == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
+        } else if (asset instanceof GlossaryCategory) {
+            return (GlossaryCategory) asset;
+        } else {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "GlossaryCategory");
+        }
+    }
+
+    /**
+     * Retrieves a GlossaryCategory by its qualifiedName, complete with all of its relationships.
+     *
+     * @param qualifiedName of the GlossaryCategory to retrieve
+     * @return the requested full GlossaryCategory, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the GlossaryCategory does not exist
+     */
+    public static GlossaryCategory retrieveByQualifiedName(String qualifiedName) throws AtlanException {
+        Asset asset = Asset.retrieveFull(TYPE_NAME, qualifiedName);
+        if (asset instanceof GlossaryCategory) {
+            return (GlossaryCategory) asset;
+        } else {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "GlossaryCategory");
+        }
+    }
+
+    /**
+     * Restore the archived (soft-deleted) GlossaryCategory to active.
+     *
+     * @param qualifiedName for the GlossaryCategory
+     * @return true if the GlossaryCategory is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**

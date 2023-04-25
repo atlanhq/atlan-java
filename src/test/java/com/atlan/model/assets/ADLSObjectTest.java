@@ -128,7 +128,7 @@ public class ADLSObjectTest {
             .adlsObjectSize(-4522292454635227782L)
             .adlsObjectAccessTier(ADLSAccessTier.HOT)
             .adlsObjectAccessTierLastModifiedTime(3541758216269101356L)
-            .adlsObjectArchiveStatus(ADLSObjectArchiveStatus.PENDING_TO_COOL)
+            .adlsObjectArchiveStatus(ADLSObjectArchiveStatus.REHYDRATE_PENDING_TO_COOL)
             .adlsObjectServerEncrypted(false)
             .adlsObjectVersionLevelImmutabilitySupport(false)
             .adlsObjectCacheControl("adlsObjectCacheControl")

@@ -117,7 +117,7 @@ public class ConnectionTest {
             .credentialStrategy("credentialStrategy")
             .previewCredentialStrategy("previewCredentialStrategy")
             .policyStrategy("policyStrategy")
-            .queryUsernameStrategy(QueryUsernameStrategy.ATLAN)
+            .queryUsernameStrategy(QueryUsernameStrategy.ATLAN_USERNAME)
             .rowLimit(-3920537747791907458L)
             .defaultCredentialGuid("defaultCredentialGuid")
             .connectorIcon("connectorIcon")

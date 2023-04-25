@@ -1,11 +1,28 @@
 /* SPDX-License-Identifier: Apache-2.0 */
-/* Copyright 2022 Atlan Pte. Ltd. */
+/* Copyright 2022- Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
+import co.elastic.clients.elasticsearch._types.query_dsl.Query;
+import co.elastic.clients.elasticsearch._types.FieldSort;
+import co.elastic.clients.elasticsearch._types.SortOptions;
+import co.elastic.clients.elasticsearch._types.SortOrder;
+import com.atlan.exception.ApiException;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
+import com.atlan.exception.LogicException;
 import com.atlan.exception.NotFoundException;
+import com.atlan.model.core.AssetDeletionResponse;
+import com.atlan.model.core.AssetMutationResponse;
+import com.atlan.model.core.AssetResponse;
+import com.atlan.model.core.Classification;
+import com.atlan.model.core.CustomMetadataAttributes;
+import com.atlan.model.enums.AtlanAnnouncementType;
+import com.atlan.model.enums.AtlanConnectorType;
+import com.atlan.model.enums.AtlanDeleteType;
+import com.atlan.model.enums.AtlanStatus;
+import com.atlan.model.enums.CertificateStatus;
+import com.atlan.model.enums.KeywordFields;
 import com.atlan.model.relations.UniqueAttributes;
 <#list attributes as attribute>
 <#if attribute.type.type == "ENUM">
@@ -14,14 +31,43 @@ import com.atlan.model.enums.${attribute.type.name};
 import com.atlan.model.structs.${attribute.type.name};
 </#if>
 </#list>
+import com.atlan.model.search.IndexSearchDSL;
+import com.atlan.model.search.IndexSearchRequest;
+import com.atlan.model.search.IndexSearchResponse;
 import com.atlan.util.StringUtils;
+import com.atlan.util.QueryFactory;
+<#if className == "Asset">
+import com.atlan.Atlan;
+import com.atlan.api.EntityBulkEndpoint;
+import com.atlan.api.EntityGuidEndpoint;
+import com.atlan.api.EntityUniqueAttributesEndpoint;
+import com.atlan.model.relations.Reference;
+import com.atlan.net.HttpClient;
+import com.atlan.serde.AssetDeserializer;
+import com.atlan.serde.AssetSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+</#if>
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 import java.util.SortedSet;
+import java.util.TreeSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * ${description}
@@ -29,7 +75,25 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
-public class ${className} extends ${parentClassName} {
+<#if className == "Asset">
+@JsonSerialize(using = AssetSerializer.class)
+@JsonDeserialize(using = AssetDeserializer.class)
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.EXISTING_PROPERTY,
+        property = "typeName",
+        defaultImpl = IndistinctAsset.class)
+</#if>
+<#if subTypes??>
+@JsonSubTypes({
+<#list subTypes as subType>
+    @JsonSubTypes.Type(value = ${subType}.class, name = ${subType}.TYPE_NAME),
+</#list>
+})
+</#if>
+@Slf4j
+<#if mapContainers??>@SuppressWarnings("cast")</#if>
+public <#if subTypes??>abstract</#if> class ${className} extends ${parentClassName} {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "${originalName}";
@@ -43,39 +107,17 @@ public class ${className} extends ${parentClassName} {
     /** ${attribute.description} */
     @Attribute
     <#if attribute.singular??>@Singular<#if attribute.singular?has_content>("${attribute.singular}")</#if></#if>
+    <#if className == "GlossaryCategory" && attribute.renamed == "childrenCategories">@Setter(AccessLevel.PACKAGE)</#if>
     <#if attribute.renamed != attribute.originalName>
     @JsonProperty("${attribute.originalName}")
     </#if>
-    ${attribute.type.name} ${attribute.renamed};
+    ${attribute.fullType} ${attribute.renamed};
 
 </#list>
-    /**
-     * Reference to a ${className} by GUID.
-     *
-     * @param guid the GUID of the ${className} to reference
-     * @return reference to a ${className} that can be used for defining a relationship to a ${className}
-     */
-    public static ${className} refByGuid(String guid) {
-        return ${className}.builder().guid(guid).build();
-    }
-
-    /**
-     * Reference to a ${className} by qualifiedName.
-     *
-     * @param qualifiedName the qualifiedName of the ${className} to reference
-     * @return reference to a ${className} that can be used for defining a relationship to a ${className}
-     */
-    public static ${className} refByQualifiedName(String qualifiedName) {
-        return ${className}.builder()
-                .uniqueAttributes(
-                        UniqueAttributes.builder().qualifiedName(qualifiedName).build())
-                .build();
-    }
-
 <#if templateFile??>
 <#import templateFile as methods>
 <@methods.all/>
-<#else>
+<#elseif !subTypes?has_content>
     /**
      * Builds the minimal object necessary to update a ${className}.
      *
@@ -110,6 +152,29 @@ public class ${className} extends ${parentClassName} {
         return updater(this.getQualifiedName(), this.getName());
     }
 </#if>
+<#if !subTypes?has_content>
+    /**
+     * Reference to a ${className} by GUID.
+     *
+     * @param guid the GUID of the ${className} to reference
+     * @return reference to a ${className} that can be used for defining a relationship to a ${className}
+     */
+    public static ${className} refByGuid(String guid) {
+        return ${className}.builder().guid(guid).build();
+    }
+
+    /**
+     * Reference to a ${className} by qualifiedName.
+     *
+     * @param qualifiedName the qualifiedName of the ${className} to reference
+     * @return reference to a ${className} that can be used for defining a relationship to a ${className}
+     */
+    public static ${className} refByQualifiedName(String qualifiedName) {
+        return ${className}.builder()
+                .uniqueAttributes(
+                        UniqueAttributes.builder().qualifiedName(qualifiedName).build())
+                .build();
+    }
 
     /**
      * Retrieves a ${className} by its GUID, complete with all of its relationships.
@@ -203,7 +268,7 @@ public class ${className} extends ${parentClassName} {
      * @return the updated ${className}, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static ${className} updateCertificate(String qualifiedName, AtlanCertificateStatus certificate, String message)
+    public static ${className} updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (${className}) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }
@@ -341,6 +406,7 @@ public class ${className} extends ${parentClassName} {
     public static ${className} removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
         return (${className}) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
+</#if>
 </#if>
 </#if>
 }

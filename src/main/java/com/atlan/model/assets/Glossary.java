@@ -11,13 +11,25 @@ import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.LogicException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.enums.*;
+import com.atlan.model.enums.AtlanAnnouncementType;
+import com.atlan.model.enums.CertificateStatus;
+import com.atlan.model.enums.KeywordFields;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.IndexSearchDSL;
 import com.atlan.model.search.IndexSearchRequest;
 import com.atlan.model.search.IndexSearchResponse;
 import com.atlan.util.QueryFactory;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
@@ -40,33 +52,33 @@ public class Glossary extends Asset {
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Unused. */
+    /** TBC */
     @Attribute
     String shortDescription;
 
-    /** Unused. */
+    /** TBC */
     @Attribute
     String longDescription;
 
-    /** Unused. */
+    /** TBC */
     @Attribute
     String language;
 
-    /** Unused. */
+    /** TBC */
     @Attribute
     String usage;
 
-    /** Unused. */
+    /** TBC */
     @Attribute
     @Singular
     Map<String, String> additionalAttributes;
 
-    /** Terms contained within this glossary. */
+    /** TBC */
     @Attribute
     @Singular
     SortedSet<GlossaryTerm> terms;
 
-    /** Categories contained within this glossary. */
+    /** TBC */
     @Attribute
     @Singular
     SortedSet<GlossaryCategory> categories;
@@ -88,29 +100,6 @@ public class Glossary extends Asset {
             anchor = Glossary.refByQualifiedName(glossaryQualifiedName);
         }
         return anchor;
-    }
-
-    /**
-     * Reference to a Glossary by GUID.
-     *
-     * @param guid the GUID of the Glossary to reference
-     * @return reference to a Glossary that can be used for defining a relationship to a Glossary
-     */
-    public static Glossary refByGuid(String guid) {
-        return Glossary.builder().guid(guid).build();
-    }
-
-    /**
-     * Reference to a Glossary by qualifiedName.
-     *
-     * @param qualifiedName the qualifiedName of the Glossary to reference
-     * @return reference to a Glossary that can be used for defining a relationship to a Glossary
-     */
-    public static Glossary refByQualifiedName(String qualifiedName) {
-        return Glossary.builder()
-                .uniqueAttributes(
-                        UniqueAttributes.builder().qualifiedName(qualifiedName).build())
-                .build();
     }
 
     /**
@@ -195,40 +184,6 @@ public class Glossary extends Asset {
             }
         }
         throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_NAME, TYPE_NAME, name);
-    }
-
-    /**
-     * Retrieves a Glossary by its GUID, complete with all of its relationships.
-     *
-     * @param guid of the Glossary to retrieve
-     * @return the requested full Glossary, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Glossary does not exist or the provided GUID is not a Glossary
-     */
-    public static Glossary retrieveByGuid(String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof Glossary) {
-            return (Glossary) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "Glossary");
-        }
-    }
-
-    /**
-     * Retrieves a Glossary by its qualifiedName, complete with all of its relationships.
-     *
-     * @param qualifiedName of the Glossary to retrieve
-     * @return the requested full Glossary, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Glossary does not exist
-     */
-    public static Glossary retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        Asset asset = Asset.retrieveFull(TYPE_NAME, qualifiedName);
-        if (asset instanceof Glossary) {
-            return (Glossary) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "Glossary");
-        }
     }
 
     /**
@@ -389,6 +344,62 @@ public class Glossary extends Asset {
             }
         }
     }
+    /**
+     * Reference to a Glossary by GUID.
+     *
+     * @param guid the GUID of the Glossary to reference
+     * @return reference to a Glossary that can be used for defining a relationship to a Glossary
+     */
+    public static Glossary refByGuid(String guid) {
+        return Glossary.builder().guid(guid).build();
+    }
+
+    /**
+     * Reference to a Glossary by qualifiedName.
+     *
+     * @param qualifiedName the qualifiedName of the Glossary to reference
+     * @return reference to a Glossary that can be used for defining a relationship to a Glossary
+     */
+    public static Glossary refByQualifiedName(String qualifiedName) {
+        return Glossary.builder()
+                .uniqueAttributes(
+                        UniqueAttributes.builder().qualifiedName(qualifiedName).build())
+                .build();
+    }
+
+    /**
+     * Retrieves a Glossary by its GUID, complete with all of its relationships.
+     *
+     * @param guid of the Glossary to retrieve
+     * @return the requested full Glossary, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Glossary does not exist or the provided GUID is not a Glossary
+     */
+    public static Glossary retrieveByGuid(String guid) throws AtlanException {
+        Asset asset = Asset.retrieveFull(guid);
+        if (asset == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
+        } else if (asset instanceof Glossary) {
+            return (Glossary) asset;
+        } else {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "Glossary");
+        }
+    }
+
+    /**
+     * Retrieves a Glossary by its qualifiedName, complete with all of its relationships.
+     *
+     * @param qualifiedName of the Glossary to retrieve
+     * @return the requested full Glossary, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Glossary does not exist
+     */
+    public static Glossary retrieveByQualifiedName(String qualifiedName) throws AtlanException {
+        Asset asset = Asset.retrieveFull(TYPE_NAME, qualifiedName);
+        if (asset instanceof Glossary) {
+            return (Glossary) asset;
+        } else {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "Glossary");
+        }
+    }
 
     /**
      * Restore the archived (soft-deleted) Glossary to active.
@@ -410,8 +421,7 @@ public class Glossary extends Asset {
      * @throws AtlanException on any API problems
      */
     public static Glossary removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (Glossary)
-                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+        return (Glossary) Asset.removeDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -423,8 +433,7 @@ public class Glossary extends Asset {
      * @throws AtlanException on any API problems
      */
     public static Glossary removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (Glossary) Asset.removeUserDescription(
-                builder().qualifiedName(qualifiedName).name(name));
+        return (Glossary) Asset.removeUserDescription(updater(qualifiedName, name));
     }
 
     /**
@@ -436,23 +445,21 @@ public class Glossary extends Asset {
      * @throws AtlanException on any API problems
      */
     public static Glossary removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (Glossary)
-                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+        return (Glossary) Asset.removeOwners(updater(qualifiedName, name));
     }
 
     /**
      * Update the certificate on a Glossary.
      *
      * @param qualifiedName of the Glossary
-     * @param name of the Glossary
      * @param certificate to use
      * @param message (optional) message, or null if no message
      * @return the updated Glossary, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static Glossary updateCertificate(
-            String qualifiedName, String name, CertificateStatus certificate, String message) throws AtlanException {
-        return (Glossary) Asset.updateCertificate(builder().name(name), TYPE_NAME, qualifiedName, certificate, message);
+    public static Glossary updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
+            throws AtlanException {
+        return (Glossary) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -464,15 +471,13 @@ public class Glossary extends Asset {
      * @throws AtlanException on any API problems
      */
     public static Glossary removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (Glossary)
-                Asset.removeCertificate(builder().qualifiedName(qualifiedName).name(name));
+        return (Glossary) Asset.removeCertificate(updater(qualifiedName, name));
     }
 
     /**
      * Update the announcement on a Glossary.
      *
      * @param qualifiedName of the Glossary
-     * @param name of the Glossary
      * @param type type of announcement to set
      * @param title (optional) title of the announcement to set (or null for no title)
      * @param message (optional) message of the announcement to set (or null for no message)
@@ -480,10 +485,8 @@ public class Glossary extends Asset {
      * @throws AtlanException on any API problems
      */
     public static Glossary updateAnnouncement(
-            String qualifiedName, String name, AtlanAnnouncementType type, String title, String message)
-            throws AtlanException {
-        return (Glossary)
-                Asset.updateAnnouncement(builder().name(name), TYPE_NAME, qualifiedName, type, title, message);
+            String qualifiedName, AtlanAnnouncementType type, String title, String message) throws AtlanException {
+        return (Glossary) Asset.updateAnnouncement(builder(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -495,8 +498,7 @@ public class Glossary extends Asset {
      * @throws AtlanException on any API problems
      */
     public static Glossary removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (Glossary)
-                Asset.removeAnnouncement(builder().qualifiedName(qualifiedName).name(name));
+        return (Glossary) Asset.removeAnnouncement(updater(qualifiedName, name));
     }
 
     /**

@@ -9,9 +9,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import lombok.AccessLevel;
+import java.util.Set;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 @Getter
@@ -38,6 +37,7 @@ public class AssetGenerator extends TypeGenerator {
             Map.entry("MaterialisedView", "MaterializedView"));
 
     private static final Map<String, String> INHERITANCE_OVERRIDES = Map.ofEntries(
+            Map.entry("Asset", "Reference"),
             Map.entry("S3", "AWS"),
             Map.entry("DataStudioAsset", "Google"),
             Map.entry("DbtColumnProcess", "ColumnProcess"),
@@ -52,6 +52,8 @@ public class AssetGenerator extends TypeGenerator {
     private final EntityDef entityDef;
     private final String parentClassName;
     private List<Attribute> attributes;
+    private List<String> subTypes = null;
+    private List<String> mapContainers = null;
 
     public AssetGenerator(EntityDef entityDef) {
         super(entityDef);
@@ -69,6 +71,7 @@ public class AssetGenerator extends TypeGenerator {
     }
 
     public void resolveDetails() {
+        resolveSubTypes();
         resolveAttributes();
         resolveRelationships();
     }
@@ -77,18 +80,54 @@ public class AssetGenerator extends TypeGenerator {
         return ModelGeneratorV2.getTemplateFile(className);
     }
 
+    private void resolveSubTypes() {
+        List<String> originalSubTypes = entityDef.getSubTypes();
+        if (originalSubTypes != null && !originalSubTypes.isEmpty()) {
+            subTypes = new ArrayList<>();
+            for (String originalSubType : originalSubTypes) {
+                MappedType subType = ModelGeneratorV2.getCachedType(originalSubType);
+                if (subType != null) {
+                    String flattened = INHERITANCE_OVERRIDES.getOrDefault(originalSubType, null);
+                    // Only output the subtype if that subtype still considers this type its parent,
+                    // after polymorphic flattening...
+                    if (flattened == null || flattened.equals(originalSubType)) {
+                        subTypes.add(subType.getName());
+                    }
+                } else {
+                    log.warn("Mapped subType was not found: {}", originalSubType);
+                }
+            }
+        }
+    }
+
     private void resolveAttributes() {
         attributes = new ArrayList<>();
         for (AttributeDef attributeDef : entityDef.getAttributeDefs()) {
             Attribute attribute = new Attribute(className, attributeDef);
             attributes.add(attribute);
+            checkAndAddMapContainer(attribute);
         }
     }
 
     private void resolveRelationships() {
+        Set<String> uniqueRelationships = ModelGeneratorV2.getUniqueRelationshipsForType(getOriginalName());
         for (RelationshipAttributeDef relationshipAttributeDef : entityDef.getRelationshipAttributeDefs()) {
             Attribute attribute = new Attribute(className, relationshipAttributeDef);
-            attributes.add(attribute);
+            if (uniqueRelationships.contains(attribute.getOriginalName())
+                    && !attribute.getType().getName().equals("__internal")) {
+                attributes.add(attribute);
+                checkAndAddMapContainer(attribute);
+            }
+        }
+    }
+
+    private void checkAndAddMapContainer(Attribute attribute) {
+        if (attribute.getType().getContainer() != null
+                && attribute.getType().getContainer().contains("Map")) {
+            if (mapContainers == null) {
+                mapContainers = new ArrayList<>();
+            }
+            mapContainers.add(attribute.getRenamed());
         }
     }
 
@@ -99,7 +138,7 @@ public class AssetGenerator extends TypeGenerator {
      * @param superTypes list of super types that are defined for that type
      * @return the name of a single type to use for inheritance
      */
-    private static String getSingleTypeToExtend(String name, List<String> superTypes) {
+    static String getSingleTypeToExtend(String name, List<String> superTypes) {
         if (INHERITANCE_OVERRIDES.containsKey(name)) {
             return INHERITANCE_OVERRIDES.get(name);
         } else if (superTypes == null || superTypes.isEmpty()) {
@@ -113,7 +152,7 @@ public class AssetGenerator extends TypeGenerator {
     }
 
     @Getter
-    public static final class Attribute {
+    public static final class Attribute extends AttributeGenerator {
 
         // Provide a name that Lombok can use for the singularization of these multivalued attributes
         private static final Map<String, String> SINGULAR_MAPPINGS = Map.ofEntries(
@@ -132,23 +171,54 @@ public class AssetGenerator extends TypeGenerator {
                 Map.entry("resourceMetadata", "putResourceMetadata"),
                 Map.entry("adlsObjectMetadata", "putAdlsObjectMetadata"));
 
-        @Setter(AccessLevel.PRIVATE)
-        private MappedType type;
+        private static final Map<String, String> ATTRIBUTE_RENAMING = Map.ofEntries(
+                Map.entry("connectorName", "connectorType"),
+                Map.entry("__hasLineage", "hasLineage"),
+                Map.entry("viewsCount", "viewCount"),
+                Map.entry("materialisedView", "materializedView"),
+                Map.entry("materialisedViews", "materializedViews"),
+                Map.entry("atlanSchema", "schema"),
+                Map.entry("sourceQueryComputeCostList", "sourceQueryComputeCosts"),
+                Map.entry("sourceReadTopUserList", "sourceReadTopUsers"),
+                Map.entry("sourceReadRecentUserList", "sourceReadRecentUsers"),
+                Map.entry("sourceReadRecentUserRecordList", "sourceReadRecentUserRecords"),
+                Map.entry("sourceReadTopUserRecordList", "sourceReadTopUserRecords"),
+                Map.entry("sourceReadPopularQueryRecordList", "sourceReadPopularQueryRecords"),
+                Map.entry("sourceReadExpensiveQueryRecordList", "sourceReadExpensiveQueryRecords"),
+                Map.entry("sourceReadSlowQueryRecordList", "sourceReadSlowQueryRecords"),
+                Map.entry("sourceQueryComputeCostRecordList", "sourceQueryComputeCostRecords"),
+                Map.entry("meanings", "assignedTerms"),
+                Map.entry("sqlAsset", "primarySqlAsset"));
 
-        private final String originalName;
-        private final String renamed;
-        private final String description;
+        private static final Map<String, String> TYPE_OVERRIDES = Map.ofEntries(
+                Map.entry("announcementType", "AtlanAnnouncementType"),
+                Map.entry("connectorName", "AtlanConnectorType"));
 
         public Attribute(String className, AttributeDef attributeDef) {
-            this.type = getMappedType(attributeDef.getTypeName());
-            this.originalName =
-                    attributeDef.getDisplayName() == null ? attributeDef.getName() : attributeDef.getDisplayName();
-            this.renamed = getLowerCamelCase(originalName);
-            this.description = AttributeCSVCache.getAttributeDescription(className, originalName);
+            super(className, attributeDef);
+        }
+
+        @Override
+        protected void resolveName() {
+            super.resolveName();
+            setRenamed(
+                    ATTRIBUTE_RENAMING.containsKey(originalName)
+                            ? ATTRIBUTE_RENAMING.get(originalName)
+                            : getLowerCamelCase(originalName));
+        }
+
+        @Override
+        protected void resolveType(AttributeDef attributeDef) {
+            super.resolveType(attributeDef);
+            if (TYPE_OVERRIDES.containsKey(originalName)) {
+                setType(getType().toBuilder()
+                        .name(TYPE_OVERRIDES.get(originalName))
+                        .build());
+            }
         }
 
         public String getSingular() {
-            if (type.getName().contains("<")) {
+            if (getType().getContainer() != null) {
                 return SINGULAR_MAPPINGS.getOrDefault(originalName, "");
             }
             return null;

@@ -5,18 +5,15 @@ package com.atlan.generators;
 import com.atlan.Atlan;
 import com.atlan.api.TypeDefsEndpoint;
 import com.atlan.model.enums.AtlanTypeCategory;
-import com.atlan.model.typedefs.EntityDef;
-import com.atlan.model.typedefs.EnumDef;
-import com.atlan.model.typedefs.StructDef;
-import com.atlan.model.typedefs.TypeDefResponse;
+import com.atlan.model.typedefs.*;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateExceptionHandler;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TimeZone;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -28,11 +25,14 @@ public class ModelGeneratorV2 {
     }
 
     private static final String TEMPLATES_DIRECTORY =
-            "" + "src" + File.separator + "liveTest" + File.separator + "resources" + File.separator + "templates";
+            "src" + File.separator + "liveTest" + File.separator + "resources" + File.separator + "templates";
 
     private static final Map<String, EnumGenerator> enumCache = new HashMap<>();
     private static final Map<String, StructGenerator> structCache = new HashMap<>();
     private static final Map<String, AssetGenerator> assetCache = new HashMap<>();
+
+    protected static final Map<String, Set<String>> uniqueRelationshipsForType = new ConcurrentHashMap<>();
+    private static final Map<String, String> subTypeToSuperType = new ConcurrentHashMap<>();
 
     public static void main(String[] args) throws Exception {
 
@@ -45,9 +45,13 @@ public class ModelGeneratorV2 {
         cfg.setFallbackOnNullLoopVariable(false);
         cfg.setSQLDateAndTimeTimeZone(TimeZone.getDefault());
 
+        List<EntityDef> entityDefs =
+                TypeDefsEndpoint.getTypeDefs(AtlanTypeCategory.ENTITY).getEntityDefs();
+        cacheRelationshipsForInheritance(entityDefs);
+
         generateEnums(cfg);
         generateStructs(cfg);
-        generateAssets(cfg);
+        generateAssets(cfg, entityDefs);
     }
 
     private static void generateEnums(Configuration cfg) throws Exception {
@@ -86,16 +90,13 @@ public class ModelGeneratorV2 {
         }
     }
 
-    private static void generateAssets(Configuration cfg) throws Exception {
-        TypeDefResponse entities = TypeDefsEndpoint.getTypeDefs(AtlanTypeCategory.ENTITY);
-        if (entities != null && entities.getEntityDefs() != null) {
-            // In the first pass, only cache the class names and the un-resolved generators
-            // (need all class names resolved first, since they may all reference each other
-            // in their resolved details)
-            for (EntityDef entityDef : entities.getEntityDefs()) {
-                AssetGenerator generator = new AssetGenerator(entityDef);
-                assetCache.put(entityDef.getName(), generator);
-            }
+    private static void generateAssets(Configuration cfg, List<EntityDef> entityDefs) throws Exception {
+        // In the first pass, only cache the class names and the un-resolved generators
+        // (need all class names resolved first, since they may all reference each other
+        // in their resolved details)
+        for (EntityDef entityDef : entityDefs) {
+            AssetGenerator generator = new AssetGenerator(entityDef);
+            assetCache.put(entityDef.getName(), generator);
         }
         Template entityTemplate = cfg.getTemplate("entity.ftl");
         for (AssetGenerator generator : assetCache.values()) {
@@ -132,8 +133,58 @@ public class ModelGeneratorV2 {
         return null;
     }
 
-    public static String getTemplateFile(String className) {
+    static String getTemplateFile(String className) {
         File file = new File(TEMPLATES_DIRECTORY + File.separator + className + ".ftl");
         return file.isFile() ? file.getName() : null;
+    }
+
+    static Set<String> getUniqueRelationshipsForType(String originalName) {
+        return uniqueRelationshipsForType.get(originalName);
+    }
+
+    private static void cacheRelationshipsForInheritance(List<EntityDef> entityDefs) {
+        // Populate 'relationshipsForType' map so that we don't repeat inherited attributes in subtypes
+        // (this seems to only be a risk for relationship attributes)
+        if (!entityDefs.isEmpty()) {
+            List<EntityDef> leftOvers = new ArrayList<>();
+            for (EntityDef entityDef : entityDefs) {
+                String typeName = entityDef.getName();
+                List<String> superTypes = entityDef.getSuperTypes();
+                List<RelationshipAttributeDef> relationships = entityDef.getRelationshipAttributeDefs();
+                if (superTypes == null || superTypes.isEmpty() || typeName.equals("Asset")) {
+                    subTypeToSuperType.put(typeName, "");
+                    uniqueRelationshipsForType.put(
+                            typeName,
+                            relationships.stream()
+                                    .map(RelationshipAttributeDef::getName)
+                                    .collect(Collectors.toSet()));
+                } else {
+                    String singleSuperType = AssetGenerator.getSingleTypeToExtend(typeName, superTypes);
+                    if (uniqueRelationshipsForType.containsKey(singleSuperType)) {
+                        subTypeToSuperType.put(typeName, singleSuperType);
+                        Set<String> inheritedRelationships = getAllInheritedRelationships(singleSuperType);
+                        Set<String> uniqueRelationships = relationships.stream()
+                                .map(RelationshipAttributeDef::getName)
+                                .collect(Collectors.toSet());
+                        uniqueRelationships.removeAll(inheritedRelationships);
+                        uniqueRelationshipsForType.put(typeName, uniqueRelationships);
+                    } else {
+                        leftOvers.add(entityDef);
+                    }
+                }
+            }
+            cacheRelationshipsForInheritance(leftOvers);
+        }
+    }
+
+    private static Set<String> getAllInheritedRelationships(String superTypeName) {
+        // Retrieve all relationship attributes from the supertype (and up) for the received type
+        if (superTypeName.equals("")) {
+            return new HashSet<>();
+        } else {
+            Set<String> relations = new HashSet<>(uniqueRelationshipsForType.get(superTypeName));
+            relations.addAll(getAllInheritedRelationships(subTypeToSuperType.get(superTypeName)));
+            return relations;
+        }
     }
 }
