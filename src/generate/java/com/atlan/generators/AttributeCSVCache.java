@@ -29,7 +29,7 @@ public class AttributeCSVCache {
     private static final String DEFAULT_CLASS_DESCRIPTION = "TBC";
 
     private static final String DESCRIPTIONS_FILE =
-            "" + "src" + File.separator + "liveTest" + File.separator + "resources" + File.separator + "attributes.csv";
+            "" + "src" + File.separator + "generate" + File.separator + "resources" + File.separator + "attributes.csv";
 
     private static final Map<String, String> qualifiedAttrToDescription = new ConcurrentHashMap<>();
     private static final Map<String, String> typeNameToDescription = new ConcurrentHashMap<>();

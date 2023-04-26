@@ -25,7 +25,7 @@ public class ModelGeneratorV2 {
     }
 
     private static final String TEMPLATES_DIRECTORY =
-            "src" + File.separator + "liveTest" + File.separator + "resources" + File.separator + "templates";
+            "src" + File.separator + "generate" + File.separator + "resources" + File.separator + "templates";
 
     private static final Map<String, EnumGenerator> enumCache = new HashMap<>();
     private static final Map<String, StructGenerator> structCache = new HashMap<>();
@@ -52,6 +52,7 @@ public class ModelGeneratorV2 {
         generateEnums(cfg);
         generateStructs(cfg);
         generateAssets(cfg, entityDefs);
+        // generateAssetTests(cfg);
     }
 
     private static void generateEnums(Configuration cfg) throws Exception {
@@ -100,15 +101,38 @@ public class ModelGeneratorV2 {
         }
         Template entityTemplate = cfg.getTemplate("entity.ftl");
         for (AssetGenerator generator : assetCache.values()) {
-            String filename = AssetGenerator.DIRECTORY + File.separator + generator.getClassName() + ".java";
-            try (BufferedWriter fs = new BufferedWriter(
-                    new OutputStreamWriter(new FileOutputStream(filename), StandardCharsets.UTF_8))) {
-                // Now that all are cached, render the inner details of the generator
-                // before processing the template
-                generator.resolveDetails();
-                entityTemplate.process(generator, fs);
-            } catch (IOException e) {
-                log.error("Unable to open file output: {}", filename, e);
+            if (!AssetGenerator.SKIP_GENERATING.contains(generator.getOriginalName())) {
+                String filename = AssetGenerator.DIRECTORY + File.separator + generator.getClassName() + ".java";
+                try (BufferedWriter fs = new BufferedWriter(
+                        new OutputStreamWriter(new FileOutputStream(filename), StandardCharsets.UTF_8))) {
+                    // Now that all are cached, render the inner details of the generator
+                    // before processing the template
+                    generator.resolveDetails();
+                    entityTemplate.process(generator, fs);
+                } catch (IOException e) {
+                    log.error("Unable to open file output: {}", filename, e);
+                }
+            }
+        }
+    }
+
+    private static void generateAssetTests(Configuration cfg) throws Exception {
+        Template testTemplate = cfg.getTemplate("asset_test.ftl");
+        for (AssetGenerator assetGen : assetCache.values()) {
+            if (!AssetGenerator.SKIP_GENERATING.contains(assetGen.getOriginalName())) {
+                EntityDef entityDef = assetGen.getEntityDef();
+                AssetTestGenerator generator = new AssetTestGenerator(entityDef);
+                String filename =
+                        AssetTestGenerator.DIRECTORY + File.separator + generator.getClassName() + "Test.java";
+                try (BufferedWriter fs = new BufferedWriter(
+                        new OutputStreamWriter(new FileOutputStream(filename), StandardCharsets.UTF_8))) {
+                    // Now that all are cached, render the inner details of the generator
+                    // before processing the template
+                    generator.resolveDetails();
+                    testTemplate.process(generator, fs);
+                } catch (IOException e) {
+                    log.error("Unable to open file output: {}", filename, e);
+                }
             }
         }
     }
