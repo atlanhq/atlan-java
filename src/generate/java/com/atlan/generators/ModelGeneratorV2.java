@@ -115,6 +115,17 @@ public class ModelGeneratorV2 {
                 }
             }
         }
+        // Finally, inject all these generated assets into the AssetDeserializer class (regenerate it)
+        Template assetDeserializerTemplate = cfg.getTemplate("AssetDeserializer.ftl");
+        String filename = SerdeGenerator.DIRECTORY + File.separator + "AssetDeserializer.java";
+        try (BufferedWriter fs =
+                new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filename), StandardCharsets.UTF_8))) {
+            // Now that all are generated, output the generated switch-based deserialization
+            SerdeGenerator generator = new SerdeGenerator(assetCache.values());
+            assetDeserializerTemplate.process(generator, fs);
+        } catch (IOException e) {
+            log.error("Unable to open file output: {}", filename, e);
+        }
     }
 
     private static void generateSearchFields(Configuration cfg, List<EntityDef> entityDefs) throws Exception {
