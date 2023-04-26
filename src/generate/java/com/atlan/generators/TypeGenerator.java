@@ -78,7 +78,7 @@ public abstract class TypeGenerator {
                 container = "Map<";
             }
         }
-        MappedType.MappedTypeBuilder builder = MappedType.builder();
+        MappedType.MappedTypeBuilder builder = MappedType.builder().originalBase(baseType);
         // First try to map a primitive type
         String primitiveName = PRIMITIVE_MAPPINGS.getOrDefault(baseType, null);
         if (primitiveName != null) {
@@ -127,6 +127,7 @@ public abstract class TypeGenerator {
             ASSET
         }
 
+        private String originalBase;
         private String name;
         private String container;
         private Type type;

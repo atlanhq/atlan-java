@@ -248,6 +248,8 @@ public class AssetGenerator extends TypeGenerator {
                 Map.entry("connectorName", "AtlanConnectorType"),
                 Map.entry("category", "AtlanConnectionCategory"));
 
+        protected Attribute() {}
+
         public Attribute(String className, AttributeDef attributeDef) {
             super(className, attributeDef);
         }

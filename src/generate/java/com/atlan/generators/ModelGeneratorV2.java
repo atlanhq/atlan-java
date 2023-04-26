@@ -52,6 +52,7 @@ public class ModelGeneratorV2 {
         generateEnums(cfg);
         generateStructs(cfg);
         generateAssets(cfg, entityDefs);
+        generateSearchFields(cfg, entityDefs);
         // generateAssetTests(cfg);
     }
 
@@ -112,6 +113,28 @@ public class ModelGeneratorV2 {
                 } catch (IOException e) {
                     log.error("Unable to open file output: {}", filename, e);
                 }
+            }
+        }
+    }
+
+    private static void generateSearchFields(Configuration cfg, List<EntityDef> entityDefs) throws Exception {
+        Template searchTemplate = cfg.getTemplate("enum_search.ftl");
+        Set<SearchFieldGenerator.IndexType> enumsToGenerate = Set.of(
+                SearchFieldGenerator.IndexType.NUMERIC, // TODO: descriptions missing everywhere
+                SearchFieldGenerator.IndexType.KEYWORD,
+                SearchFieldGenerator.IndexType.TEXT,
+                SearchFieldGenerator.IndexType.STEMMED,
+                SearchFieldGenerator.IndexType.BOOLEAN,
+                SearchFieldGenerator.IndexType.RANK_FEATURE);
+        for (SearchFieldGenerator.IndexType toGenerate : enumsToGenerate) {
+            log.info("Generating for: {}", toGenerate);
+            SearchFieldGenerator generator = new SearchFieldGenerator(entityDefs, toGenerate);
+            String filename = SearchFieldGenerator.DIRECTORY + File.separator + generator.getClassName() + ".java";
+            try (BufferedWriter fs = new BufferedWriter(
+                    new OutputStreamWriter(new FileOutputStream(filename), StandardCharsets.UTF_8))) {
+                searchTemplate.process(generator, fs);
+            } catch (IOException e) {
+                log.error("Unable to open file output: {}", filename, e);
             }
         }
     }

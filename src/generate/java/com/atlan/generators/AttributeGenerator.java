@@ -14,6 +14,8 @@ public class AttributeGenerator extends TypeGenerator {
     private MappedType type;
     private String renamed;
 
+    protected AttributeGenerator() {}
+
     public AttributeGenerator(String className, AttributeDef attributeDef) {
         super.className = className;
         this.originalName =
