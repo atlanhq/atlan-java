@@ -6,7 +6,9 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.enums.*;
+import com.atlan.model.enums.AtlanAnnouncementType;
+import com.atlan.model.enums.AtlanConnectorType;
+import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -15,6 +17,7 @@ import java.util.List;
 import java.util.SortedSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Instance of a database schema in Atlan.
@@ -22,6 +25,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@Slf4j
 public class Schema extends SQL {
     private static final long serialVersionUID = 2L;
 
@@ -43,8 +47,8 @@ public class Schema extends SQL {
 
     /** Materialized views that exist within this schema. */
     @Attribute
-    @JsonProperty("materialisedViews")
     @Singular
+    @JsonProperty("materialisedViews")
     SortedSet<MaterializedView> materializedViews;
 
     /** Tables that exist within this schema. */
@@ -97,6 +101,51 @@ public class Schema extends SQL {
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
+    }
+
+    /**
+     * Retrieves a Schema by its GUID, complete with all of its relationships.
+     *
+     * @param guid of the Schema to retrieve
+     * @return the requested full Schema, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Schema does not exist or the provided GUID is not a Schema
+     */
+    public static Schema retrieveByGuid(String guid) throws AtlanException {
+        Asset asset = Asset.retrieveFull(guid);
+        if (asset == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
+        } else if (asset instanceof Schema) {
+            return (Schema) asset;
+        } else {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "Schema");
+        }
+    }
+
+    /**
+     * Retrieves a Schema by its qualifiedName, complete with all of its relationships.
+     *
+     * @param qualifiedName of the Schema to retrieve
+     * @return the requested full Schema, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Schema does not exist
+     */
+    public static Schema retrieveByQualifiedName(String qualifiedName) throws AtlanException {
+        Asset asset = Asset.retrieveFull(TYPE_NAME, qualifiedName);
+        if (asset instanceof Schema) {
+            return (Schema) asset;
+        } else {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "Schema");
+        }
+    }
+
+    /**
+     * Restore the archived (soft-deleted) Schema to active.
+     *
+     * @param qualifiedName for the Schema
+     * @return true if the Schema is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**
@@ -164,51 +213,6 @@ public class Schema extends SQL {
                     ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "Schema", String.join(",", missing));
         }
         return updater(this.getQualifiedName(), this.getName());
-    }
-
-    /**
-     * Retrieves a Schema by its GUID, complete with all of its relationships.
-     *
-     * @param guid of the Schema to retrieve
-     * @return the requested full Schema, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Schema does not exist or the provided GUID is not a Schema
-     */
-    public static Schema retrieveByGuid(String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof Schema) {
-            return (Schema) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "Schema");
-        }
-    }
-
-    /**
-     * Retrieves a Schema by its qualifiedName, complete with all of its relationships.
-     *
-     * @param qualifiedName of the Schema to retrieve
-     * @return the requested full Schema, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Schema does not exist
-     */
-    public static Schema retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        Asset asset = Asset.retrieveFull(TYPE_NAME, qualifiedName);
-        if (asset instanceof Schema) {
-            return (Schema) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "Schema");
-        }
-    }
-
-    /**
-     * Restore the archived (soft-deleted) Schema to active.
-     *
-     * @param qualifiedName for the Schema
-     * @return true if the Schema is now active, and false otherwise
-     * @throws AtlanException on any API problems
-     */
-    public static boolean restore(String qualifiedName) throws AtlanException {
-        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**
@@ -301,6 +305,48 @@ public class Schema extends SQL {
     }
 
     /**
+     * Replace the terms linked to the Schema.
+     *
+     * @param qualifiedName for the Schema
+     * @param name human-readable name of the Schema
+     * @param terms the list of terms to replace on the Schema, or null to remove all terms from the Schema
+     * @return the Schema that was updated (note that it will NOT contain details of the replaced terms)
+     * @throws AtlanException on any API problems
+     */
+    public static Schema replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+            throws AtlanException {
+        return (Schema) Asset.replaceTerms(updater(qualifiedName, name), terms);
+    }
+
+    /**
+     * Link additional terms to the Schema, without replacing existing terms linked to the Schema.
+     * Note: this operation must make two API calls — one to retrieve the Schema's existing terms,
+     * and a second to append the new terms.
+     *
+     * @param qualifiedName for the Schema
+     * @param terms the list of terms to append to the Schema
+     * @return the Schema that was updated  (note that it will NOT contain details of the appended terms)
+     * @throws AtlanException on any API problems
+     */
+    public static Schema appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (Schema) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
+    }
+
+    /**
+     * Remove terms from a Schema, without replacing all existing terms linked to the Schema.
+     * Note: this operation must make two API calls — one to retrieve the Schema's existing terms,
+     * and a second to remove the provided terms.
+     *
+     * @param qualifiedName for the Schema
+     * @param terms the list of terms to remove from the Schema, which must be referenced by GUID
+     * @return the Schema that was updated (note that it will NOT contain details of the resulting terms)
+     * @throws AtlanException on any API problems
+     */
+    public static Schema removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (Schema) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
+    }
+
+    /**
      * Add classifications to a Schema.
      *
      * @param qualifiedName of the Schema
@@ -347,47 +393,5 @@ public class Schema extends SQL {
      */
     public static void removeClassification(String qualifiedName, String classificationName) throws AtlanException {
         Asset.removeClassification(TYPE_NAME, qualifiedName, classificationName);
-    }
-
-    /**
-     * Replace the terms linked to the Schema.
-     *
-     * @param qualifiedName for the Schema
-     * @param name human-readable name of the Schema
-     * @param terms the list of terms to replace on the Schema, or null to remove all terms from the Schema
-     * @return the Schema that was updated (note that it will NOT contain details of the replaced terms)
-     * @throws AtlanException on any API problems
-     */
-    public static Schema replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
-            throws AtlanException {
-        return (Schema) Asset.replaceTerms(updater(qualifiedName, name), terms);
-    }
-
-    /**
-     * Link additional terms to the Schema, without replacing existing terms linked to the Schema.
-     * Note: this operation must make two API calls — one to retrieve the Schema's existing terms,
-     * and a second to append the new terms.
-     *
-     * @param qualifiedName for the Schema
-     * @param terms the list of terms to append to the Schema
-     * @return the Schema that was updated  (note that it will NOT contain details of the appended terms)
-     * @throws AtlanException on any API problems
-     */
-    public static Schema appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (Schema) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
-    }
-
-    /**
-     * Remove terms from a Schema, without replacing all existing terms linked to the Schema.
-     * Note: this operation must make two API calls — one to retrieve the Schema's existing terms,
-     * and a second to remove the provided terms.
-     *
-     * @param qualifiedName for the Schema
-     * @param terms the list of terms to remove from the Schema, which must be referenced by GUID
-     * @return the Schema that was updated (note that it will NOT contain details of the resulting terms)
-     * @throws AtlanException on any API problems
-     */
-    public static Schema removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (Schema) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 }

@@ -6,7 +6,9 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.enums.*;
+import com.atlan.model.enums.AtlanAnnouncementType;
+import com.atlan.model.enums.AtlanConnectorType;
+import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -16,6 +18,7 @@ import java.util.Map;
 import java.util.SortedSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Instance of a database view in Atlan.
@@ -23,6 +26,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@Slf4j
 @SuppressWarnings("cast")
 public class View extends SQL {
     private static final long serialVersionUID = 2L;
@@ -106,6 +110,51 @@ public class View extends SQL {
     }
 
     /**
+     * Retrieves a View by its GUID, complete with all of its relationships.
+     *
+     * @param guid of the View to retrieve
+     * @return the requested full View, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the View does not exist or the provided GUID is not a View
+     */
+    public static View retrieveByGuid(String guid) throws AtlanException {
+        Asset asset = Asset.retrieveFull(guid);
+        if (asset == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
+        } else if (asset instanceof View) {
+            return (View) asset;
+        } else {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "View");
+        }
+    }
+
+    /**
+     * Retrieves a View by its qualifiedName, complete with all of its relationships.
+     *
+     * @param qualifiedName of the View to retrieve
+     * @return the requested full View, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the View does not exist
+     */
+    public static View retrieveByQualifiedName(String qualifiedName) throws AtlanException {
+        Asset asset = Asset.retrieveFull(TYPE_NAME, qualifiedName);
+        if (asset instanceof View) {
+            return (View) asset;
+        } else {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "View");
+        }
+    }
+
+    /**
+     * Restore the archived (soft-deleted) View to active.
+     *
+     * @param qualifiedName for the View
+     * @return true if the View is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
      * Builds the minimal object necessary to create a view.
      *
      * @param name of the view
@@ -174,51 +223,6 @@ public class View extends SQL {
                     ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "View", String.join(",", missing));
         }
         return updater(this.getQualifiedName(), this.getName());
-    }
-
-    /**
-     * Retrieves a View by its GUID, complete with all of its relationships.
-     *
-     * @param guid of the View to retrieve
-     * @return the requested full View, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the View does not exist or the provided GUID is not a View
-     */
-    public static View retrieveByGuid(String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof View) {
-            return (View) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "View");
-        }
-    }
-
-    /**
-     * Retrieves a View by its qualifiedName, complete with all of its relationships.
-     *
-     * @param qualifiedName of the View to retrieve
-     * @return the requested full View, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the View does not exist
-     */
-    public static View retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        Asset asset = Asset.retrieveFull(TYPE_NAME, qualifiedName);
-        if (asset instanceof View) {
-            return (View) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "View");
-        }
-    }
-
-    /**
-     * Restore the archived (soft-deleted) View to active.
-     *
-     * @param qualifiedName for the View
-     * @return true if the View is now active, and false otherwise
-     * @throws AtlanException on any API problems
-     */
-    public static boolean restore(String qualifiedName) throws AtlanException {
-        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**
@@ -311,6 +315,47 @@ public class View extends SQL {
     }
 
     /**
+     * Replace the terms linked to the View.
+     *
+     * @param qualifiedName for the View
+     * @param name human-readable name of the View
+     * @param terms the list of terms to replace on the View, or null to remove all terms from the View
+     * @return the View that was updated (note that it will NOT contain details of the replaced terms)
+     * @throws AtlanException on any API problems
+     */
+    public static View replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms) throws AtlanException {
+        return (View) Asset.replaceTerms(updater(qualifiedName, name), terms);
+    }
+
+    /**
+     * Link additional terms to the View, without replacing existing terms linked to the View.
+     * Note: this operation must make two API calls — one to retrieve the View's existing terms,
+     * and a second to append the new terms.
+     *
+     * @param qualifiedName for the View
+     * @param terms the list of terms to append to the View
+     * @return the View that was updated  (note that it will NOT contain details of the appended terms)
+     * @throws AtlanException on any API problems
+     */
+    public static View appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (View) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
+    }
+
+    /**
+     * Remove terms from a View, without replacing all existing terms linked to the View.
+     * Note: this operation must make two API calls — one to retrieve the View's existing terms,
+     * and a second to remove the provided terms.
+     *
+     * @param qualifiedName for the View
+     * @param terms the list of terms to remove from the View, which must be referenced by GUID
+     * @return the View that was updated (note that it will NOT contain details of the resulting terms)
+     * @throws AtlanException on any API problems
+     */
+    public static View removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (View) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
+    }
+
+    /**
      * Add classifications to a View.
      *
      * @param qualifiedName of the View
@@ -357,46 +402,5 @@ public class View extends SQL {
      */
     public static void removeClassification(String qualifiedName, String classificationName) throws AtlanException {
         Asset.removeClassification(TYPE_NAME, qualifiedName, classificationName);
-    }
-
-    /**
-     * Replace the terms linked to the View.
-     *
-     * @param qualifiedName for the View
-     * @param name human-readable name of the View
-     * @param terms the list of terms to replace on the View, or null to remove all terms from the View
-     * @return the View that was updated (note that it will NOT contain details of the replaced terms)
-     * @throws AtlanException on any API problems
-     */
-    public static View replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms) throws AtlanException {
-        return (View) Asset.replaceTerms(updater(qualifiedName, name), terms);
-    }
-
-    /**
-     * Link additional terms to the View, without replacing existing terms linked to the View.
-     * Note: this operation must make two API calls — one to retrieve the View's existing terms,
-     * and a second to append the new terms.
-     *
-     * @param qualifiedName for the View
-     * @param terms the list of terms to append to the View
-     * @return the View that was updated  (note that it will NOT contain details of the appended terms)
-     * @throws AtlanException on any API problems
-     */
-    public static View appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (View) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
-    }
-
-    /**
-     * Remove terms from a View, without replacing all existing terms linked to the View.
-     * Note: this operation must make two API calls — one to retrieve the View's existing terms,
-     * and a second to remove the provided terms.
-     *
-     * @param qualifiedName for the View
-     * @param terms the list of terms to remove from the View, which must be referenced by GUID
-     * @return the View that was updated (note that it will NOT contain details of the resulting terms)
-     * @throws AtlanException on any API problems
-     */
-    public static View removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (View) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 }

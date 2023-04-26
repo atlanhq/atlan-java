@@ -6,13 +6,23 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.enums.*;
+import com.atlan.model.enums.ADLSAccessTier;
+import com.atlan.model.enums.ADLSAccountStatus;
+import com.atlan.model.enums.ADLSEncryptionTypes;
+import com.atlan.model.enums.ADLSPerformance;
+import com.atlan.model.enums.ADLSProvisionState;
+import com.atlan.model.enums.ADLSReplicationType;
+import com.atlan.model.enums.ADLSStorageKind;
+import com.atlan.model.enums.AtlanAnnouncementType;
+import com.atlan.model.enums.AtlanConnectorType;
+import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Instance of an Azure Data Lake Storage (ADLS) account in Atlan.
@@ -20,6 +30,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@Slf4j
 public class ADLSAccount extends ADLS {
     private static final long serialVersionUID = 2L;
 
@@ -99,6 +110,51 @@ public class ADLSAccount extends ADLS {
     }
 
     /**
+     * Retrieves a ADLSAccount by its GUID, complete with all of its relationships.
+     *
+     * @param guid of the ADLSAccount to retrieve
+     * @return the requested full ADLSAccount, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ADLSAccount does not exist or the provided GUID is not a ADLSAccount
+     */
+    public static ADLSAccount retrieveByGuid(String guid) throws AtlanException {
+        Asset asset = Asset.retrieveFull(guid);
+        if (asset == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
+        } else if (asset instanceof ADLSAccount) {
+            return (ADLSAccount) asset;
+        } else {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "ADLSAccount");
+        }
+    }
+
+    /**
+     * Retrieves a ADLSAccount by its qualifiedName, complete with all of its relationships.
+     *
+     * @param qualifiedName of the ADLSAccount to retrieve
+     * @return the requested full ADLSAccount, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ADLSAccount does not exist
+     */
+    public static ADLSAccount retrieveByQualifiedName(String qualifiedName) throws AtlanException {
+        Asset asset = Asset.retrieveFull(TYPE_NAME, qualifiedName);
+        if (asset instanceof ADLSAccount) {
+            return (ADLSAccount) asset;
+        } else {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "ADLSAccount");
+        }
+    }
+
+    /**
+     * Restore the archived (soft-deleted) ADLSAccount to active.
+     *
+     * @param qualifiedName for the ADLSAccount
+     * @return true if the ADLSAccount is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
      * Builds the minimal object necessary to create a ADLSAccount.
      *
      * @param name of the ADLSAccount
@@ -156,51 +212,6 @@ public class ADLSAccount extends ADLS {
                     ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "ADLSAccount", String.join(",", missing));
         }
         return updater(this.getQualifiedName(), this.getName());
-    }
-
-    /**
-     * Retrieves a ADLSAccount by its GUID, complete with all of its relationships.
-     *
-     * @param guid of the ADLSAccount to retrieve
-     * @return the requested full ADLSAccount, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ADLSAccount does not exist or the provided GUID is not a ADLSAccount
-     */
-    public static ADLSAccount retrieveByGuid(String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof ADLSAccount) {
-            return (ADLSAccount) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "ADLSAccount");
-        }
-    }
-
-    /**
-     * Retrieves a ADLSAccount by its qualifiedName, complete with all of its relationships.
-     *
-     * @param qualifiedName of the ADLSAccount to retrieve
-     * @return the requested full ADLSAccount, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ADLSAccount does not exist
-     */
-    public static ADLSAccount retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        Asset asset = Asset.retrieveFull(TYPE_NAME, qualifiedName);
-        if (asset instanceof ADLSAccount) {
-            return (ADLSAccount) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "ADLSAccount");
-        }
-    }
-
-    /**
-     * Restore the archived (soft-deleted) ADLSAccount to active.
-     *
-     * @param qualifiedName for the ADLSAccount
-     * @return true if the ADLSAccount is now active, and false otherwise
-     * @throws AtlanException on any API problems
-     */
-    public static boolean restore(String qualifiedName) throws AtlanException {
-        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**
@@ -293,6 +304,48 @@ public class ADLSAccount extends ADLS {
     }
 
     /**
+     * Replace the terms linked to the ADLSAccount.
+     *
+     * @param qualifiedName for the ADLSAccount
+     * @param name human-readable name of the ADLSAccount
+     * @param terms the list of terms to replace on the ADLSAccount, or null to remove all terms from the ADLSAccount
+     * @return the ADLSAccount that was updated (note that it will NOT contain details of the replaced terms)
+     * @throws AtlanException on any API problems
+     */
+    public static ADLSAccount replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+            throws AtlanException {
+        return (ADLSAccount) Asset.replaceTerms(updater(qualifiedName, name), terms);
+    }
+
+    /**
+     * Link additional terms to the ADLSAccount, without replacing existing terms linked to the ADLSAccount.
+     * Note: this operation must make two API calls — one to retrieve the ADLSAccount's existing terms,
+     * and a second to append the new terms.
+     *
+     * @param qualifiedName for the ADLSAccount
+     * @param terms the list of terms to append to the ADLSAccount
+     * @return the ADLSAccount that was updated  (note that it will NOT contain details of the appended terms)
+     * @throws AtlanException on any API problems
+     */
+    public static ADLSAccount appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (ADLSAccount) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
+    }
+
+    /**
+     * Remove terms from a ADLSAccount, without replacing all existing terms linked to the ADLSAccount.
+     * Note: this operation must make two API calls — one to retrieve the ADLSAccount's existing terms,
+     * and a second to remove the provided terms.
+     *
+     * @param qualifiedName for the ADLSAccount
+     * @param terms the list of terms to remove from the ADLSAccount, which must be referenced by GUID
+     * @return the ADLSAccount that was updated (note that it will NOT contain details of the resulting terms)
+     * @throws AtlanException on any API problems
+     */
+    public static ADLSAccount removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (ADLSAccount) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
+    }
+
+    /**
      * Add classifications to a ADLSAccount.
      *
      * @param qualifiedName of the ADLSAccount
@@ -339,47 +392,5 @@ public class ADLSAccount extends ADLS {
      */
     public static void removeClassification(String qualifiedName, String classificationName) throws AtlanException {
         Asset.removeClassification(TYPE_NAME, qualifiedName, classificationName);
-    }
-
-    /**
-     * Replace the terms linked to the ADLSAccount.
-     *
-     * @param qualifiedName for the ADLSAccount
-     * @param name human-readable name of the ADLSAccount
-     * @param terms the list of terms to replace on the ADLSAccount, or null to remove all terms from the ADLSAccount
-     * @return the ADLSAccount that was updated (note that it will NOT contain details of the replaced terms)
-     * @throws AtlanException on any API problems
-     */
-    public static ADLSAccount replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
-            throws AtlanException {
-        return (ADLSAccount) Asset.replaceTerms(updater(qualifiedName, name), terms);
-    }
-
-    /**
-     * Link additional terms to the ADLSAccount, without replacing existing terms linked to the ADLSAccount.
-     * Note: this operation must make two API calls — one to retrieve the ADLSAccount's existing terms,
-     * and a second to append the new terms.
-     *
-     * @param qualifiedName for the ADLSAccount
-     * @param terms the list of terms to append to the ADLSAccount
-     * @return the ADLSAccount that was updated  (note that it will NOT contain details of the appended terms)
-     * @throws AtlanException on any API problems
-     */
-    public static ADLSAccount appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (ADLSAccount) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
-    }
-
-    /**
-     * Remove terms from a ADLSAccount, without replacing all existing terms linked to the ADLSAccount.
-     * Note: this operation must make two API calls — one to retrieve the ADLSAccount's existing terms,
-     * and a second to remove the provided terms.
-     *
-     * @param qualifiedName for the ADLSAccount
-     * @param terms the list of terms to remove from the ADLSAccount, which must be referenced by GUID
-     * @return the ADLSAccount that was updated (note that it will NOT contain details of the resulting terms)
-     * @throws AtlanException on any API problems
-     */
-    public static ADLSAccount removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (ADLSAccount) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 }

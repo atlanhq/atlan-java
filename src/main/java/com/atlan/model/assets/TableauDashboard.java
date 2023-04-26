@@ -6,7 +6,8 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.enums.*;
+import com.atlan.model.enums.AtlanAnnouncementType;
+import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.Map;
 import java.util.SortedSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Instance of a Tableau dashboard in Atlan.
@@ -21,6 +23,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@Slf4j
 @SuppressWarnings("cast")
 public class TableauDashboard extends Tableau {
     private static final long serialVersionUID = 2L;
@@ -86,40 +89,6 @@ public class TableauDashboard extends Tableau {
     }
 
     /**
-     * Builds the minimal object necessary to update a TableauDashboard.
-     *
-     * @param qualifiedName of the TableauDashboard
-     * @param name of the TableauDashboard
-     * @return the minimal request necessary to update the TableauDashboard, as a builder
-     */
-    public static TableauDashboardBuilder<?, ?> updater(String qualifiedName, String name) {
-        return TableauDashboard.builder().qualifiedName(qualifiedName).name(name);
-    }
-
-    /**
-     * Builds the minimal object necessary to apply an update to a TableauDashboard, from a potentially
-     * more-complete TableauDashboard object.
-     *
-     * @return the minimal object necessary to update the TableauDashboard, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for TableauDashboard are not found in the initial object
-     */
-    @Override
-    public TableauDashboardBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        List<String> missing = new ArrayList<>();
-        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
-            missing.add("qualifiedName");
-        }
-        if (this.getName() == null || this.getName().length() == 0) {
-            missing.add("name");
-        }
-        if (!missing.isEmpty()) {
-            throw new InvalidRequestException(
-                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "TableauDashboard", String.join(",", missing));
-        }
-        return updater(this.getQualifiedName(), this.getName());
-    }
-
-    /**
      * Retrieves a TableauDashboard by its GUID, complete with all of its relationships.
      *
      * @param guid of the TableauDashboard to retrieve
@@ -162,6 +131,40 @@ public class TableauDashboard extends Tableau {
      */
     public static boolean restore(String qualifiedName) throws AtlanException {
         return Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Builds the minimal object necessary to update a TableauDashboard.
+     *
+     * @param qualifiedName of the TableauDashboard
+     * @param name of the TableauDashboard
+     * @return the minimal request necessary to update the TableauDashboard, as a builder
+     */
+    public static TableauDashboardBuilder<?, ?> updater(String qualifiedName, String name) {
+        return TableauDashboard.builder().qualifiedName(qualifiedName).name(name);
+    }
+
+    /**
+     * Builds the minimal object necessary to apply an update to a TableauDashboard, from a potentially
+     * more-complete TableauDashboard object.
+     *
+     * @return the minimal object necessary to update the TableauDashboard, as a builder
+     * @throws InvalidRequestException if any of the minimal set of required properties for TableauDashboard are not found in the initial object
+     */
+    @Override
+    public TableauDashboardBuilder<?, ?> trimToRequired() throws InvalidRequestException {
+        List<String> missing = new ArrayList<>();
+        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
+            missing.add("qualifiedName");
+        }
+        if (this.getName() == null || this.getName().length() == 0) {
+            missing.add("name");
+        }
+        if (!missing.isEmpty()) {
+            throw new InvalidRequestException(
+                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "TableauDashboard", String.join(",", missing));
+        }
+        return updater(this.getQualifiedName(), this.getName());
     }
 
     /**
@@ -254,6 +257,48 @@ public class TableauDashboard extends Tableau {
     }
 
     /**
+     * Replace the terms linked to the TableauDashboard.
+     *
+     * @param qualifiedName for the TableauDashboard
+     * @param name human-readable name of the TableauDashboard
+     * @param terms the list of terms to replace on the TableauDashboard, or null to remove all terms from the TableauDashboard
+     * @return the TableauDashboard that was updated (note that it will NOT contain details of the replaced terms)
+     * @throws AtlanException on any API problems
+     */
+    public static TableauDashboard replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+            throws AtlanException {
+        return (TableauDashboard) Asset.replaceTerms(updater(qualifiedName, name), terms);
+    }
+
+    /**
+     * Link additional terms to the TableauDashboard, without replacing existing terms linked to the TableauDashboard.
+     * Note: this operation must make two API calls — one to retrieve the TableauDashboard's existing terms,
+     * and a second to append the new terms.
+     *
+     * @param qualifiedName for the TableauDashboard
+     * @param terms the list of terms to append to the TableauDashboard
+     * @return the TableauDashboard that was updated  (note that it will NOT contain details of the appended terms)
+     * @throws AtlanException on any API problems
+     */
+    public static TableauDashboard appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (TableauDashboard) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
+    }
+
+    /**
+     * Remove terms from a TableauDashboard, without replacing all existing terms linked to the TableauDashboard.
+     * Note: this operation must make two API calls — one to retrieve the TableauDashboard's existing terms,
+     * and a second to remove the provided terms.
+     *
+     * @param qualifiedName for the TableauDashboard
+     * @param terms the list of terms to remove from the TableauDashboard, which must be referenced by GUID
+     * @return the TableauDashboard that was updated (note that it will NOT contain details of the resulting terms)
+     * @throws AtlanException on any API problems
+     */
+    public static TableauDashboard removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (TableauDashboard) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
+    }
+
+    /**
      * Add classifications to a TableauDashboard.
      *
      * @param qualifiedName of the TableauDashboard
@@ -300,47 +345,5 @@ public class TableauDashboard extends Tableau {
      */
     public static void removeClassification(String qualifiedName, String classificationName) throws AtlanException {
         Asset.removeClassification(TYPE_NAME, qualifiedName, classificationName);
-    }
-
-    /**
-     * Replace the terms linked to the TableauDashboard.
-     *
-     * @param qualifiedName for the TableauDashboard
-     * @param name human-readable name of the TableauDashboard
-     * @param terms the list of terms to replace on the TableauDashboard, or null to remove all terms from the TableauDashboard
-     * @return the TableauDashboard that was updated (note that it will NOT contain details of the replaced terms)
-     * @throws AtlanException on any API problems
-     */
-    public static TableauDashboard replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
-            throws AtlanException {
-        return (TableauDashboard) Asset.replaceTerms(updater(qualifiedName, name), terms);
-    }
-
-    /**
-     * Link additional terms to the TableauDashboard, without replacing existing terms linked to the TableauDashboard.
-     * Note: this operation must make two API calls — one to retrieve the TableauDashboard's existing terms,
-     * and a second to append the new terms.
-     *
-     * @param qualifiedName for the TableauDashboard
-     * @param terms the list of terms to append to the TableauDashboard
-     * @return the TableauDashboard that was updated  (note that it will NOT contain details of the appended terms)
-     * @throws AtlanException on any API problems
-     */
-    public static TableauDashboard appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (TableauDashboard) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
-    }
-
-    /**
-     * Remove terms from a TableauDashboard, without replacing all existing terms linked to the TableauDashboard.
-     * Note: this operation must make two API calls — one to retrieve the TableauDashboard's existing terms,
-     * and a second to remove the provided terms.
-     *
-     * @param qualifiedName for the TableauDashboard
-     * @param terms the list of terms to remove from the TableauDashboard, which must be referenced by GUID
-     * @return the TableauDashboard that was updated (note that it will NOT contain details of the resulting terms)
-     * @throws AtlanException on any API problems
-     */
-    public static TableauDashboard removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (TableauDashboard) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 }

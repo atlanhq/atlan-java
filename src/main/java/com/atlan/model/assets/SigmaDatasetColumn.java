@@ -6,12 +6,14 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.enums.*;
+import com.atlan.model.enums.AtlanAnnouncementType;
+import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Instance of a Sigma dataset column in Atlan.
@@ -19,6 +21,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@Slf4j
 public class SigmaDatasetColumn extends Sigma {
     private static final long serialVersionUID = 2L;
 
@@ -65,40 +68,6 @@ public class SigmaDatasetColumn extends Sigma {
     }
 
     /**
-     * Builds the minimal object necessary to update a SigmaDatasetColumn.
-     *
-     * @param qualifiedName of the SigmaDatasetColumn
-     * @param name of the SigmaDatasetColumn
-     * @return the minimal request necessary to update the SigmaDatasetColumn, as a builder
-     */
-    public static SigmaDatasetColumnBuilder<?, ?> updater(String qualifiedName, String name) {
-        return SigmaDatasetColumn.builder().qualifiedName(qualifiedName).name(name);
-    }
-
-    /**
-     * Builds the minimal object necessary to apply an update to a SigmaDatasetColumn, from a potentially
-     * more-complete SigmaDatasetColumn object.
-     *
-     * @return the minimal object necessary to update the SigmaDatasetColumn, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for SigmaDatasetColumn are not found in the initial object
-     */
-    @Override
-    public SigmaDatasetColumnBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        List<String> missing = new ArrayList<>();
-        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
-            missing.add("qualifiedName");
-        }
-        if (this.getName() == null || this.getName().length() == 0) {
-            missing.add("name");
-        }
-        if (!missing.isEmpty()) {
-            throw new InvalidRequestException(
-                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "SigmaDatasetColumn", String.join(",", missing));
-        }
-        return updater(this.getQualifiedName(), this.getName());
-    }
-
-    /**
      * Retrieves a SigmaDatasetColumn by its GUID, complete with all of its relationships.
      *
      * @param guid of the SigmaDatasetColumn to retrieve
@@ -141,6 +110,40 @@ public class SigmaDatasetColumn extends Sigma {
      */
     public static boolean restore(String qualifiedName) throws AtlanException {
         return Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Builds the minimal object necessary to update a SigmaDatasetColumn.
+     *
+     * @param qualifiedName of the SigmaDatasetColumn
+     * @param name of the SigmaDatasetColumn
+     * @return the minimal request necessary to update the SigmaDatasetColumn, as a builder
+     */
+    public static SigmaDatasetColumnBuilder<?, ?> updater(String qualifiedName, String name) {
+        return SigmaDatasetColumn.builder().qualifiedName(qualifiedName).name(name);
+    }
+
+    /**
+     * Builds the minimal object necessary to apply an update to a SigmaDatasetColumn, from a potentially
+     * more-complete SigmaDatasetColumn object.
+     *
+     * @return the minimal object necessary to update the SigmaDatasetColumn, as a builder
+     * @throws InvalidRequestException if any of the minimal set of required properties for SigmaDatasetColumn are not found in the initial object
+     */
+    @Override
+    public SigmaDatasetColumnBuilder<?, ?> trimToRequired() throws InvalidRequestException {
+        List<String> missing = new ArrayList<>();
+        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
+            missing.add("qualifiedName");
+        }
+        if (this.getName() == null || this.getName().length() == 0) {
+            missing.add("name");
+        }
+        if (!missing.isEmpty()) {
+            throw new InvalidRequestException(
+                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "SigmaDatasetColumn", String.join(",", missing));
+        }
+        return updater(this.getQualifiedName(), this.getName());
     }
 
     /**
@@ -233,6 +236,48 @@ public class SigmaDatasetColumn extends Sigma {
     }
 
     /**
+     * Replace the terms linked to the SigmaDatasetColumn.
+     *
+     * @param qualifiedName for the SigmaDatasetColumn
+     * @param name human-readable name of the SigmaDatasetColumn
+     * @param terms the list of terms to replace on the SigmaDatasetColumn, or null to remove all terms from the SigmaDatasetColumn
+     * @return the SigmaDatasetColumn that was updated (note that it will NOT contain details of the replaced terms)
+     * @throws AtlanException on any API problems
+     */
+    public static SigmaDatasetColumn replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+            throws AtlanException {
+        return (SigmaDatasetColumn) Asset.replaceTerms(updater(qualifiedName, name), terms);
+    }
+
+    /**
+     * Link additional terms to the SigmaDatasetColumn, without replacing existing terms linked to the SigmaDatasetColumn.
+     * Note: this operation must make two API calls — one to retrieve the SigmaDatasetColumn's existing terms,
+     * and a second to append the new terms.
+     *
+     * @param qualifiedName for the SigmaDatasetColumn
+     * @param terms the list of terms to append to the SigmaDatasetColumn
+     * @return the SigmaDatasetColumn that was updated  (note that it will NOT contain details of the appended terms)
+     * @throws AtlanException on any API problems
+     */
+    public static SigmaDatasetColumn appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (SigmaDatasetColumn) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
+    }
+
+    /**
+     * Remove terms from a SigmaDatasetColumn, without replacing all existing terms linked to the SigmaDatasetColumn.
+     * Note: this operation must make two API calls — one to retrieve the SigmaDatasetColumn's existing terms,
+     * and a second to remove the provided terms.
+     *
+     * @param qualifiedName for the SigmaDatasetColumn
+     * @param terms the list of terms to remove from the SigmaDatasetColumn, which must be referenced by GUID
+     * @return the SigmaDatasetColumn that was updated (note that it will NOT contain details of the resulting terms)
+     * @throws AtlanException on any API problems
+     */
+    public static SigmaDatasetColumn removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (SigmaDatasetColumn) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
+    }
+
+    /**
      * Add classifications to a SigmaDatasetColumn.
      *
      * @param qualifiedName of the SigmaDatasetColumn
@@ -279,47 +324,5 @@ public class SigmaDatasetColumn extends Sigma {
      */
     public static void removeClassification(String qualifiedName, String classificationName) throws AtlanException {
         Asset.removeClassification(TYPE_NAME, qualifiedName, classificationName);
-    }
-
-    /**
-     * Replace the terms linked to the SigmaDatasetColumn.
-     *
-     * @param qualifiedName for the SigmaDatasetColumn
-     * @param name human-readable name of the SigmaDatasetColumn
-     * @param terms the list of terms to replace on the SigmaDatasetColumn, or null to remove all terms from the SigmaDatasetColumn
-     * @return the SigmaDatasetColumn that was updated (note that it will NOT contain details of the replaced terms)
-     * @throws AtlanException on any API problems
-     */
-    public static SigmaDatasetColumn replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
-            throws AtlanException {
-        return (SigmaDatasetColumn) Asset.replaceTerms(updater(qualifiedName, name), terms);
-    }
-
-    /**
-     * Link additional terms to the SigmaDatasetColumn, without replacing existing terms linked to the SigmaDatasetColumn.
-     * Note: this operation must make two API calls — one to retrieve the SigmaDatasetColumn's existing terms,
-     * and a second to append the new terms.
-     *
-     * @param qualifiedName for the SigmaDatasetColumn
-     * @param terms the list of terms to append to the SigmaDatasetColumn
-     * @return the SigmaDatasetColumn that was updated  (note that it will NOT contain details of the appended terms)
-     * @throws AtlanException on any API problems
-     */
-    public static SigmaDatasetColumn appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (SigmaDatasetColumn) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
-    }
-
-    /**
-     * Remove terms from a SigmaDatasetColumn, without replacing all existing terms linked to the SigmaDatasetColumn.
-     * Note: this operation must make two API calls — one to retrieve the SigmaDatasetColumn's existing terms,
-     * and a second to remove the provided terms.
-     *
-     * @param qualifiedName for the SigmaDatasetColumn
-     * @param terms the list of terms to remove from the SigmaDatasetColumn, which must be referenced by GUID
-     * @return the SigmaDatasetColumn that was updated (note that it will NOT contain details of the resulting terms)
-     * @throws AtlanException on any API problems
-     */
-    public static SigmaDatasetColumn removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (SigmaDatasetColumn) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 }

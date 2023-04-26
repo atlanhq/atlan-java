@@ -12,16 +12,26 @@ import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.core.ConnectionCreationResponse;
-import com.atlan.model.enums.*;
+import com.atlan.model.enums.AtlanAnnouncementType;
+import com.atlan.model.enums.AtlanConnectionCategory;
+import com.atlan.model.enums.AtlanConnectorType;
+import com.atlan.model.enums.CertificateStatus;
+import com.atlan.model.enums.KeywordFields;
+import com.atlan.model.enums.QueryUsernameStrategy;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.search.IndexSearchDSL;
 import com.atlan.model.search.IndexSearchRequest;
 import com.atlan.model.search.IndexSearchResponse;
 import com.atlan.util.QueryFactory;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.SortedSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Instance of a connection in Atlan.
@@ -29,6 +39,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@Slf4j
 @SuppressWarnings("cast")
 public class Connection extends Asset {
     private static final long serialVersionUID = 2L;
@@ -127,29 +138,6 @@ public class Connection extends Asset {
     SortedSet<String> connectionDbtEnvironments;
 
     /**
-     * Determine the connector type from the provided qualifiedName.
-     *
-     * @param qualifiedName of the connection
-     * @return the connector type, or null if the qualifiedName is not for a connected asset
-     */
-    public static AtlanConnectorType getConnectorTypeFromQualifiedName(String qualifiedName) {
-        return getConnectorTypeFromQualifiedName(qualifiedName.split("/"));
-    }
-
-    /**
-     * Determine the connector type from the provided qualifiedName.
-     *
-     * @param tokens of the qualifiedName, from which to determine the connector type
-     * @return the connector type, or null if the qualifiedName is not for a connected asset
-     */
-    protected static AtlanConnectorType getConnectorTypeFromQualifiedName(String[] tokens) {
-        if (tokens.length > 1) {
-            return AtlanConnectorType.fromValue(tokens[1]);
-        }
-        return null;
-    }
-
-    /**
      * Reference to a Connection by GUID.
      *
      * @param guid the GUID of the Connection to reference
@@ -170,6 +158,74 @@ public class Connection extends Asset {
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
+    }
+
+    /**
+     * Retrieves a Connection by its GUID, complete with all of its relationships.
+     *
+     * @param guid of the Connection to retrieve
+     * @return the requested full Connection, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Connection does not exist or the provided GUID is not a Connection
+     */
+    public static Connection retrieveByGuid(String guid) throws AtlanException {
+        Asset asset = Asset.retrieveFull(guid);
+        if (asset == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
+        } else if (asset instanceof Connection) {
+            return (Connection) asset;
+        } else {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "Connection");
+        }
+    }
+
+    /**
+     * Retrieves a Connection by its qualifiedName, complete with all of its relationships.
+     *
+     * @param qualifiedName of the Connection to retrieve
+     * @return the requested full Connection, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Connection does not exist
+     */
+    public static Connection retrieveByQualifiedName(String qualifiedName) throws AtlanException {
+        Asset asset = Asset.retrieveFull(TYPE_NAME, qualifiedName);
+        if (asset instanceof Connection) {
+            return (Connection) asset;
+        } else {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "Connection");
+        }
+    }
+
+    /**
+     * Restore the archived (soft-deleted) Connection to active.
+     *
+     * @param qualifiedName for the Connection
+     * @return true if the Connection is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Determine the connector type from the provided qualifiedName.
+     *
+     * @param qualifiedName of the connection
+     * @return the connector type, or null if the qualifiedName is not for a connected asset
+     */
+    public static AtlanConnectorType getConnectorTypeFromQualifiedName(String qualifiedName) {
+        return getConnectorTypeFromQualifiedName(qualifiedName.split("/"));
+    }
+
+    /**
+     * Determine the connector type from the provided qualifiedName.
+     *
+     * @param tokens of the qualifiedName, from which to determine the connector type
+     * @return the connector type, or null if the qualifiedName is not for a connected asset
+     */
+    protected static AtlanConnectorType getConnectorTypeFromQualifiedName(String[] tokens) {
+        if (tokens.length > 1) {
+            return AtlanConnectorType.fromValue(tokens[1]);
+        }
+        return null;
     }
 
     /**
@@ -395,51 +451,6 @@ public class Connection extends Asset {
     }
 
     /**
-     * Retrieves a Connection by its GUID, complete with all of its relationships.
-     *
-     * @param guid of the Connection to retrieve
-     * @return the requested full Connection, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Connection does not exist or the provided GUID is not a Connection
-     */
-    public static Connection retrieveByGuid(String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof Connection) {
-            return (Connection) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "Connection");
-        }
-    }
-
-    /**
-     * Retrieves a Connection by its qualifiedName, complete with all of its relationships.
-     *
-     * @param qualifiedName of the Connection to retrieve
-     * @return the requested full Connection, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Connection does not exist
-     */
-    public static Connection retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        Asset asset = Asset.retrieveFull(TYPE_NAME, qualifiedName);
-        if (asset instanceof Connection) {
-            return (Connection) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "Connection");
-        }
-    }
-
-    /**
-     * Restore the archived (soft-deleted) Connection to active.
-     *
-     * @param qualifiedName for the Connection
-     * @return true if the Connection is now active, and false otherwise
-     * @throws AtlanException on any API problems
-     */
-    public static boolean restore(String qualifiedName) throws AtlanException {
-        return Asset.restore(TYPE_NAME, qualifiedName);
-    }
-
-    /**
      * Remove the system description from a Connection.
      *
      * @param qualifiedName of the Connection
@@ -529,6 +540,48 @@ public class Connection extends Asset {
     }
 
     /**
+     * Replace the terms linked to the Connection.
+     *
+     * @param qualifiedName for the Connection
+     * @param name human-readable name of the Connection
+     * @param terms the list of terms to replace on the Connection, or null to remove all terms from the Connection
+     * @return the Connection that was updated (note that it will NOT contain details of the replaced terms)
+     * @throws AtlanException on any API problems
+     */
+    public static Connection replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+            throws AtlanException {
+        return (Connection) Asset.replaceTerms(updater(qualifiedName, name), terms);
+    }
+
+    /**
+     * Link additional terms to the Connection, without replacing existing terms linked to the Connection.
+     * Note: this operation must make two API calls — one to retrieve the Connection's existing terms,
+     * and a second to append the new terms.
+     *
+     * @param qualifiedName for the Connection
+     * @param terms the list of terms to append to the Connection
+     * @return the Connection that was updated  (note that it will NOT contain details of the appended terms)
+     * @throws AtlanException on any API problems
+     */
+    public static Connection appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (Connection) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
+    }
+
+    /**
+     * Remove terms from a Connection, without replacing all existing terms linked to the Connection.
+     * Note: this operation must make two API calls — one to retrieve the Connection's existing terms,
+     * and a second to remove the provided terms.
+     *
+     * @param qualifiedName for the Connection
+     * @param terms the list of terms to remove from the Connection, which must be referenced by GUID
+     * @return the Connection that was updated (note that it will NOT contain details of the resulting terms)
+     * @throws AtlanException on any API problems
+     */
+    public static Connection removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (Connection) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
+    }
+
+    /**
      * Add classifications to a Connection.
      *
      * @param qualifiedName of the Connection
@@ -575,47 +628,5 @@ public class Connection extends Asset {
      */
     public static void removeClassification(String qualifiedName, String classificationName) throws AtlanException {
         Asset.removeClassification(TYPE_NAME, qualifiedName, classificationName);
-    }
-
-    /**
-     * Replace the terms linked to the Connection.
-     *
-     * @param qualifiedName for the Connection
-     * @param name human-readable name of the Connection
-     * @param terms the list of terms to replace on the Connection, or null to remove all terms from the Connection
-     * @return the Connection that was updated (note that it will NOT contain details of the replaced terms)
-     * @throws AtlanException on any API problems
-     */
-    public static Connection replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
-            throws AtlanException {
-        return (Connection) Asset.replaceTerms(updater(qualifiedName, name), terms);
-    }
-
-    /**
-     * Link additional terms to the Connection, without replacing existing terms linked to the Connection.
-     * Note: this operation must make two API calls — one to retrieve the Connection's existing terms,
-     * and a second to append the new terms.
-     *
-     * @param qualifiedName for the Connection
-     * @param terms the list of terms to append to the Connection
-     * @return the Connection that was updated  (note that it will NOT contain details of the appended terms)
-     * @throws AtlanException on any API problems
-     */
-    public static Connection appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (Connection) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
-    }
-
-    /**
-     * Remove terms from a Connection, without replacing all existing terms linked to the Connection.
-     * Note: this operation must make two API calls — one to retrieve the Connection's existing terms,
-     * and a second to remove the provided terms.
-     *
-     * @param qualifiedName for the Connection
-     * @param terms the list of terms to remove from the Connection, which must be referenced by GUID
-     * @return the Connection that was updated (note that it will NOT contain details of the resulting terms)
-     * @throws AtlanException on any API problems
-     */
-    public static Connection removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (Connection) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 }

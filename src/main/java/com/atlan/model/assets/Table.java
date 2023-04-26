@@ -6,7 +6,9 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.enums.*;
+import com.atlan.model.enums.AtlanAnnouncementType;
+import com.atlan.model.enums.AtlanConnectorType;
+import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -16,6 +18,7 @@ import java.util.Map;
 import java.util.SortedSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Instance of a database table in Atlan.
@@ -23,6 +26,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@Slf4j
 @SuppressWarnings("cast")
 public class Table extends SQL {
     private static final long serialVersionUID = 2L;
@@ -135,6 +139,51 @@ public class Table extends SQL {
     }
 
     /**
+     * Retrieves a Table by its GUID, complete with all of its relationships.
+     *
+     * @param guid of the Table to retrieve
+     * @return the requested full Table, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Table does not exist or the provided GUID is not a Table
+     */
+    public static Table retrieveByGuid(String guid) throws AtlanException {
+        Asset asset = Asset.retrieveFull(guid);
+        if (asset == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
+        } else if (asset instanceof Table) {
+            return (Table) asset;
+        } else {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "Table");
+        }
+    }
+
+    /**
+     * Retrieves a Table by its qualifiedName, complete with all of its relationships.
+     *
+     * @param qualifiedName of the Table to retrieve
+     * @return the requested full Table, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Table does not exist
+     */
+    public static Table retrieveByQualifiedName(String qualifiedName) throws AtlanException {
+        Asset asset = Asset.retrieveFull(TYPE_NAME, qualifiedName);
+        if (asset instanceof Table) {
+            return (Table) asset;
+        } else {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "Table");
+        }
+    }
+
+    /**
+     * Restore the archived (soft-deleted) Table to active.
+     *
+     * @param qualifiedName for the Table
+     * @return true if the Table is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
      * Builds the minimal object necessary to create a table.
      *
      * @param name of the table
@@ -203,51 +252,6 @@ public class Table extends SQL {
                     ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "Table", String.join(",", missing));
         }
         return updater(this.getQualifiedName(), this.getName());
-    }
-
-    /**
-     * Retrieves a Table by its GUID, complete with all of its relationships.
-     *
-     * @param guid of the Table to retrieve
-     * @return the requested full Table, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Table does not exist or the provided GUID is not a Table
-     */
-    public static Table retrieveByGuid(String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof Table) {
-            return (Table) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "Table");
-        }
-    }
-
-    /**
-     * Retrieves a Table by its qualifiedName, complete with all of its relationships.
-     *
-     * @param qualifiedName of the Table to retrieve
-     * @return the requested full Table, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Table does not exist
-     */
-    public static Table retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        Asset asset = Asset.retrieveFull(TYPE_NAME, qualifiedName);
-        if (asset instanceof Table) {
-            return (Table) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "Table");
-        }
-    }
-
-    /**
-     * Restore the archived (soft-deleted) Table to active.
-     *
-     * @param qualifiedName for the Table
-     * @return true if the Table is now active, and false otherwise
-     * @throws AtlanException on any API problems
-     */
-    public static boolean restore(String qualifiedName) throws AtlanException {
-        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**
@@ -340,6 +344,48 @@ public class Table extends SQL {
     }
 
     /**
+     * Replace the terms linked to the Table.
+     *
+     * @param qualifiedName for the Table
+     * @param name human-readable name of the Table
+     * @param terms the list of terms to replace on the Table, or null to remove all terms from the Table
+     * @return the Table that was updated (note that it will NOT contain details of the replaced terms)
+     * @throws AtlanException on any API problems
+     */
+    public static Table replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+            throws AtlanException {
+        return (Table) Asset.replaceTerms(updater(qualifiedName, name), terms);
+    }
+
+    /**
+     * Link additional terms to the Table, without replacing existing terms linked to the Table.
+     * Note: this operation must make two API calls — one to retrieve the Table's existing terms,
+     * and a second to append the new terms.
+     *
+     * @param qualifiedName for the Table
+     * @param terms the list of terms to append to the Table
+     * @return the Table that was updated  (note that it will NOT contain details of the appended terms)
+     * @throws AtlanException on any API problems
+     */
+    public static Table appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (Table) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
+    }
+
+    /**
+     * Remove terms from a Table, without replacing all existing terms linked to the Table.
+     * Note: this operation must make two API calls — one to retrieve the Table's existing terms,
+     * and a second to remove the provided terms.
+     *
+     * @param qualifiedName for the Table
+     * @param terms the list of terms to remove from the Table, which must be referenced by GUID
+     * @return the Table that was updated (note that it will NOT contain details of the resulting terms)
+     * @throws AtlanException on any API problems
+     */
+    public static Table removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (Table) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
+    }
+
+    /**
      * Add classifications to a Table.
      *
      * @param qualifiedName of the Table
@@ -386,47 +432,5 @@ public class Table extends SQL {
      */
     public static void removeClassification(String qualifiedName, String classificationName) throws AtlanException {
         Asset.removeClassification(TYPE_NAME, qualifiedName, classificationName);
-    }
-
-    /**
-     * Replace the terms linked to the Table.
-     *
-     * @param qualifiedName for the Table
-     * @param name human-readable name of the Table
-     * @param terms the list of terms to replace on the Table, or null to remove all terms from the Table
-     * @return the Table that was updated (note that it will NOT contain details of the replaced terms)
-     * @throws AtlanException on any API problems
-     */
-    public static Table replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
-            throws AtlanException {
-        return (Table) Asset.replaceTerms(updater(qualifiedName, name), terms);
-    }
-
-    /**
-     * Link additional terms to the Table, without replacing existing terms linked to the Table.
-     * Note: this operation must make two API calls — one to retrieve the Table's existing terms,
-     * and a second to append the new terms.
-     *
-     * @param qualifiedName for the Table
-     * @param terms the list of terms to append to the Table
-     * @return the Table that was updated  (note that it will NOT contain details of the appended terms)
-     * @throws AtlanException on any API problems
-     */
-    public static Table appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (Table) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
-    }
-
-    /**
-     * Remove terms from a Table, without replacing all existing terms linked to the Table.
-     * Note: this operation must make two API calls — one to retrieve the Table's existing terms,
-     * and a second to remove the provided terms.
-     *
-     * @param qualifiedName for the Table
-     * @param terms the list of terms to remove from the Table, which must be referenced by GUID
-     * @return the Table that was updated (note that it will NOT contain details of the resulting terms)
-     * @throws AtlanException on any API problems
-     */
-    public static Table removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (Table) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 }

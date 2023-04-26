@@ -6,13 +6,16 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.enums.*;
+import com.atlan.model.enums.AtlanAnnouncementType;
+import com.atlan.model.enums.AtlanConnectorType;
+import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Instance of a Google Cloud Storage bucket in Atlan.
@@ -20,6 +23,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@Slf4j
 public class GCSBucket extends GCS {
     private static final long serialVersionUID = 2L;
 
@@ -87,6 +91,51 @@ public class GCSBucket extends GCS {
     }
 
     /**
+     * Retrieves a GCSBucket by its GUID, complete with all of its relationships.
+     *
+     * @param guid of the GCSBucket to retrieve
+     * @return the requested full GCSBucket, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the GCSBucket does not exist or the provided GUID is not a GCSBucket
+     */
+    public static GCSBucket retrieveByGuid(String guid) throws AtlanException {
+        Asset asset = Asset.retrieveFull(guid);
+        if (asset == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
+        } else if (asset instanceof GCSBucket) {
+            return (GCSBucket) asset;
+        } else {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "GCSBucket");
+        }
+    }
+
+    /**
+     * Retrieves a GCSBucket by its qualifiedName, complete with all of its relationships.
+     *
+     * @param qualifiedName of the GCSBucket to retrieve
+     * @return the requested full GCSBucket, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the GCSBucket does not exist
+     */
+    public static GCSBucket retrieveByQualifiedName(String qualifiedName) throws AtlanException {
+        Asset asset = Asset.retrieveFull(TYPE_NAME, qualifiedName);
+        if (asset instanceof GCSBucket) {
+            return (GCSBucket) asset;
+        } else {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "GCSBucket");
+        }
+    }
+
+    /**
+     * Restore the archived (soft-deleted) GCSBucket to active.
+     *
+     * @param qualifiedName for the GCSBucket
+     * @return true if the GCSBucket is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
      * Builds the minimal object necessary to create a GCSBucket.
      *
      * @param name of the GCSBucket
@@ -144,51 +193,6 @@ public class GCSBucket extends GCS {
                     ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "GCSBucket", String.join(",", missing));
         }
         return updater(this.getQualifiedName(), this.getName());
-    }
-
-    /**
-     * Retrieves a GCSBucket by its GUID, complete with all of its relationships.
-     *
-     * @param guid of the GCSBucket to retrieve
-     * @return the requested full GCSBucket, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the GCSBucket does not exist or the provided GUID is not a GCSBucket
-     */
-    public static GCSBucket retrieveByGuid(String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof GCSBucket) {
-            return (GCSBucket) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "GCSBucket");
-        }
-    }
-
-    /**
-     * Retrieves a GCSBucket by its qualifiedName, complete with all of its relationships.
-     *
-     * @param qualifiedName of the GCSBucket to retrieve
-     * @return the requested full GCSBucket, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the GCSBucket does not exist
-     */
-    public static GCSBucket retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        Asset asset = Asset.retrieveFull(TYPE_NAME, qualifiedName);
-        if (asset instanceof GCSBucket) {
-            return (GCSBucket) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "GCSBucket");
-        }
-    }
-
-    /**
-     * Restore the archived (soft-deleted) GCSBucket to active.
-     *
-     * @param qualifiedName for the GCSBucket
-     * @return true if the GCSBucket is now active, and false otherwise
-     * @throws AtlanException on any API problems
-     */
-    public static boolean restore(String qualifiedName) throws AtlanException {
-        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**
@@ -281,6 +285,48 @@ public class GCSBucket extends GCS {
     }
 
     /**
+     * Replace the terms linked to the GCSBucket.
+     *
+     * @param qualifiedName for the GCSBucket
+     * @param name human-readable name of the GCSBucket
+     * @param terms the list of terms to replace on the GCSBucket, or null to remove all terms from the GCSBucket
+     * @return the GCSBucket that was updated (note that it will NOT contain details of the replaced terms)
+     * @throws AtlanException on any API problems
+     */
+    public static GCSBucket replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+            throws AtlanException {
+        return (GCSBucket) Asset.replaceTerms(updater(qualifiedName, name), terms);
+    }
+
+    /**
+     * Link additional terms to the GCSBucket, without replacing existing terms linked to the GCSBucket.
+     * Note: this operation must make two API calls — one to retrieve the GCSBucket's existing terms,
+     * and a second to append the new terms.
+     *
+     * @param qualifiedName for the GCSBucket
+     * @param terms the list of terms to append to the GCSBucket
+     * @return the GCSBucket that was updated  (note that it will NOT contain details of the appended terms)
+     * @throws AtlanException on any API problems
+     */
+    public static GCSBucket appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (GCSBucket) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
+    }
+
+    /**
+     * Remove terms from a GCSBucket, without replacing all existing terms linked to the GCSBucket.
+     * Note: this operation must make two API calls — one to retrieve the GCSBucket's existing terms,
+     * and a second to remove the provided terms.
+     *
+     * @param qualifiedName for the GCSBucket
+     * @param terms the list of terms to remove from the GCSBucket, which must be referenced by GUID
+     * @return the GCSBucket that was updated (note that it will NOT contain details of the resulting terms)
+     * @throws AtlanException on any API problems
+     */
+    public static GCSBucket removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (GCSBucket) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
+    }
+
+    /**
      * Add classifications to a GCSBucket.
      *
      * @param qualifiedName of the GCSBucket
@@ -327,47 +373,5 @@ public class GCSBucket extends GCS {
      */
     public static void removeClassification(String qualifiedName, String classificationName) throws AtlanException {
         Asset.removeClassification(TYPE_NAME, qualifiedName, classificationName);
-    }
-
-    /**
-     * Replace the terms linked to the GCSBucket.
-     *
-     * @param qualifiedName for the GCSBucket
-     * @param name human-readable name of the GCSBucket
-     * @param terms the list of terms to replace on the GCSBucket, or null to remove all terms from the GCSBucket
-     * @return the GCSBucket that was updated (note that it will NOT contain details of the replaced terms)
-     * @throws AtlanException on any API problems
-     */
-    public static GCSBucket replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
-            throws AtlanException {
-        return (GCSBucket) Asset.replaceTerms(updater(qualifiedName, name), terms);
-    }
-
-    /**
-     * Link additional terms to the GCSBucket, without replacing existing terms linked to the GCSBucket.
-     * Note: this operation must make two API calls — one to retrieve the GCSBucket's existing terms,
-     * and a second to append the new terms.
-     *
-     * @param qualifiedName for the GCSBucket
-     * @param terms the list of terms to append to the GCSBucket
-     * @return the GCSBucket that was updated  (note that it will NOT contain details of the appended terms)
-     * @throws AtlanException on any API problems
-     */
-    public static GCSBucket appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (GCSBucket) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
-    }
-
-    /**
-     * Remove terms from a GCSBucket, without replacing all existing terms linked to the GCSBucket.
-     * Note: this operation must make two API calls — one to retrieve the GCSBucket's existing terms,
-     * and a second to remove the provided terms.
-     *
-     * @param qualifiedName for the GCSBucket
-     * @param terms the list of terms to remove from the GCSBucket, which must be referenced by GUID
-     * @return the GCSBucket that was updated (note that it will NOT contain details of the resulting terms)
-     * @throws AtlanException on any API problems
-     */
-    public static GCSBucket removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (GCSBucket) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 }

@@ -6,13 +6,15 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.enums.*;
+import com.atlan.model.enums.AtlanAnnouncementType;
+import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Instance of a Metabase dashboard in Atlan.
@@ -20,6 +22,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@Slf4j
 public class MetabaseDashboard extends Metabase {
     private static final long serialVersionUID = 2L;
 
@@ -67,40 +70,6 @@ public class MetabaseDashboard extends Metabase {
     }
 
     /**
-     * Builds the minimal object necessary to update a MetabaseDashboard.
-     *
-     * @param qualifiedName of the MetabaseDashboard
-     * @param name of the MetabaseDashboard
-     * @return the minimal request necessary to update the MetabaseDashboard, as a builder
-     */
-    public static MetabaseDashboardBuilder<?, ?> updater(String qualifiedName, String name) {
-        return MetabaseDashboard.builder().qualifiedName(qualifiedName).name(name);
-    }
-
-    /**
-     * Builds the minimal object necessary to apply an update to a MetabaseDashboard, from a potentially
-     * more-complete MetabaseDashboard object.
-     *
-     * @return the minimal object necessary to update the MetabaseDashboard, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for MetabaseDashboard are not found in the initial object
-     */
-    @Override
-    public MetabaseDashboardBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        List<String> missing = new ArrayList<>();
-        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
-            missing.add("qualifiedName");
-        }
-        if (this.getName() == null || this.getName().length() == 0) {
-            missing.add("name");
-        }
-        if (!missing.isEmpty()) {
-            throw new InvalidRequestException(
-                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "MetabaseDashboard", String.join(",", missing));
-        }
-        return updater(this.getQualifiedName(), this.getName());
-    }
-
-    /**
      * Retrieves a MetabaseDashboard by its GUID, complete with all of its relationships.
      *
      * @param guid of the MetabaseDashboard to retrieve
@@ -143,6 +112,40 @@ public class MetabaseDashboard extends Metabase {
      */
     public static boolean restore(String qualifiedName) throws AtlanException {
         return Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Builds the minimal object necessary to update a MetabaseDashboard.
+     *
+     * @param qualifiedName of the MetabaseDashboard
+     * @param name of the MetabaseDashboard
+     * @return the minimal request necessary to update the MetabaseDashboard, as a builder
+     */
+    public static MetabaseDashboardBuilder<?, ?> updater(String qualifiedName, String name) {
+        return MetabaseDashboard.builder().qualifiedName(qualifiedName).name(name);
+    }
+
+    /**
+     * Builds the minimal object necessary to apply an update to a MetabaseDashboard, from a potentially
+     * more-complete MetabaseDashboard object.
+     *
+     * @return the minimal object necessary to update the MetabaseDashboard, as a builder
+     * @throws InvalidRequestException if any of the minimal set of required properties for MetabaseDashboard are not found in the initial object
+     */
+    @Override
+    public MetabaseDashboardBuilder<?, ?> trimToRequired() throws InvalidRequestException {
+        List<String> missing = new ArrayList<>();
+        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
+            missing.add("qualifiedName");
+        }
+        if (this.getName() == null || this.getName().length() == 0) {
+            missing.add("name");
+        }
+        if (!missing.isEmpty()) {
+            throw new InvalidRequestException(
+                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "MetabaseDashboard", String.join(",", missing));
+        }
+        return updater(this.getQualifiedName(), this.getName());
     }
 
     /**
@@ -235,6 +238,48 @@ public class MetabaseDashboard extends Metabase {
     }
 
     /**
+     * Replace the terms linked to the MetabaseDashboard.
+     *
+     * @param qualifiedName for the MetabaseDashboard
+     * @param name human-readable name of the MetabaseDashboard
+     * @param terms the list of terms to replace on the MetabaseDashboard, or null to remove all terms from the MetabaseDashboard
+     * @return the MetabaseDashboard that was updated (note that it will NOT contain details of the replaced terms)
+     * @throws AtlanException on any API problems
+     */
+    public static MetabaseDashboard replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+            throws AtlanException {
+        return (MetabaseDashboard) Asset.replaceTerms(updater(qualifiedName, name), terms);
+    }
+
+    /**
+     * Link additional terms to the MetabaseDashboard, without replacing existing terms linked to the MetabaseDashboard.
+     * Note: this operation must make two API calls — one to retrieve the MetabaseDashboard's existing terms,
+     * and a second to append the new terms.
+     *
+     * @param qualifiedName for the MetabaseDashboard
+     * @param terms the list of terms to append to the MetabaseDashboard
+     * @return the MetabaseDashboard that was updated  (note that it will NOT contain details of the appended terms)
+     * @throws AtlanException on any API problems
+     */
+    public static MetabaseDashboard appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (MetabaseDashboard) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
+    }
+
+    /**
+     * Remove terms from a MetabaseDashboard, without replacing all existing terms linked to the MetabaseDashboard.
+     * Note: this operation must make two API calls — one to retrieve the MetabaseDashboard's existing terms,
+     * and a second to remove the provided terms.
+     *
+     * @param qualifiedName for the MetabaseDashboard
+     * @param terms the list of terms to remove from the MetabaseDashboard, which must be referenced by GUID
+     * @return the MetabaseDashboard that was updated (note that it will NOT contain details of the resulting terms)
+     * @throws AtlanException on any API problems
+     */
+    public static MetabaseDashboard removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (MetabaseDashboard) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
+    }
+
+    /**
      * Add classifications to a MetabaseDashboard.
      *
      * @param qualifiedName of the MetabaseDashboard
@@ -281,47 +326,5 @@ public class MetabaseDashboard extends Metabase {
      */
     public static void removeClassification(String qualifiedName, String classificationName) throws AtlanException {
         Asset.removeClassification(TYPE_NAME, qualifiedName, classificationName);
-    }
-
-    /**
-     * Replace the terms linked to the MetabaseDashboard.
-     *
-     * @param qualifiedName for the MetabaseDashboard
-     * @param name human-readable name of the MetabaseDashboard
-     * @param terms the list of terms to replace on the MetabaseDashboard, or null to remove all terms from the MetabaseDashboard
-     * @return the MetabaseDashboard that was updated (note that it will NOT contain details of the replaced terms)
-     * @throws AtlanException on any API problems
-     */
-    public static MetabaseDashboard replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
-            throws AtlanException {
-        return (MetabaseDashboard) Asset.replaceTerms(updater(qualifiedName, name), terms);
-    }
-
-    /**
-     * Link additional terms to the MetabaseDashboard, without replacing existing terms linked to the MetabaseDashboard.
-     * Note: this operation must make two API calls — one to retrieve the MetabaseDashboard's existing terms,
-     * and a second to append the new terms.
-     *
-     * @param qualifiedName for the MetabaseDashboard
-     * @param terms the list of terms to append to the MetabaseDashboard
-     * @return the MetabaseDashboard that was updated  (note that it will NOT contain details of the appended terms)
-     * @throws AtlanException on any API problems
-     */
-    public static MetabaseDashboard appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (MetabaseDashboard) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
-    }
-
-    /**
-     * Remove terms from a MetabaseDashboard, without replacing all existing terms linked to the MetabaseDashboard.
-     * Note: this operation must make two API calls — one to retrieve the MetabaseDashboard's existing terms,
-     * and a second to remove the provided terms.
-     *
-     * @param qualifiedName for the MetabaseDashboard
-     * @param terms the list of terms to remove from the MetabaseDashboard, which must be referenced by GUID
-     * @return the MetabaseDashboard that was updated (note that it will NOT contain details of the resulting terms)
-     * @throws AtlanException on any API problems
-     */
-    public static MetabaseDashboard removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (MetabaseDashboard) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 }

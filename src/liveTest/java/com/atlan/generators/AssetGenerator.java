@@ -17,14 +17,28 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class AssetGenerator extends TypeGenerator {
 
-    public static final String DIRECTORY = ""
-            + "src" + File.separator
+    public static final String DIRECTORY = "src" + File.separator
             + "main" + File.separator
             + "java" + File.separator
             + "com" + File.separator
             + "atlan" + File.separator
             + "model" + File.separator
             + "assets";
+
+    public static final Set<String> SKIP_GENERATING = Set.of(
+            "Referenceable",
+            "DataStudio",
+            "AtlasServer",
+            "DataSet",
+            "Infrastructure",
+            "ProcessExecution",
+            "__AtlasAuditEntry",
+            "__AtlasUserProfile",
+            "__AtlasUserSavedSearch",
+            "__ExportImportAuditEntry",
+            "__internal");
+
+    public static final Set<String> NON_ABSTRACT = Set.of("Process", "ColumnProcess", "QlikSpace");
 
     private static final Map<String, String> CLASS_RENAMING = Map.ofEntries(
             Map.entry("Referenceable", "Asset"),
@@ -50,15 +64,15 @@ public class AssetGenerator extends TypeGenerator {
             Map.entry("ADLS", "Azure"));
 
     private final EntityDef entityDef;
-    private final String parentClassName;
+    private String parentClassName;
     private List<Attribute> attributes;
+    private List<String> originalSubTypes = null;
     private List<String> subTypes = null;
     private List<String> mapContainers = null;
 
     public AssetGenerator(EntityDef entityDef) {
         super(entityDef);
         this.entityDef = entityDef;
-        this.parentClassName = getSingleTypeToExtend(originalName, entityDef.getSuperTypes());
         resolveClassName();
         super.description = AttributeCSVCache.getTypeDescription(originalName);
     }
@@ -71,6 +85,7 @@ public class AssetGenerator extends TypeGenerator {
     }
 
     public void resolveDetails() {
+        resolveParentClassName();
         resolveSubTypes();
         resolveAttributes();
         resolveRelationships();
@@ -80,21 +95,37 @@ public class AssetGenerator extends TypeGenerator {
         return ModelGeneratorV2.getTemplateFile(className);
     }
 
+    public boolean isAbstract() {
+        return (originalSubTypes != null && !originalSubTypes.isEmpty()) && !NON_ABSTRACT.contains(getOriginalName());
+    }
+
+    public void resolveParentClassName() {
+        String parentOriginalName = getSingleTypeToExtend(originalName, entityDef.getSuperTypes());
+        this.parentClassName = getClassToExtend(parentOriginalName);
+    }
+
+    private String getClassToExtend(String originalSuperTypeName) {
+        // Default to the mapped name
+        return CLASS_RENAMING.getOrDefault(originalSuperTypeName, getUpperCamelCase(originalSuperTypeName));
+    }
+
     private void resolveSubTypes() {
-        List<String> originalSubTypes = entityDef.getSubTypes();
+        originalSubTypes = entityDef.getSubTypes();
         if (originalSubTypes != null && !originalSubTypes.isEmpty()) {
             subTypes = new ArrayList<>();
             for (String originalSubType : originalSubTypes) {
-                MappedType subType = ModelGeneratorV2.getCachedType(originalSubType);
-                if (subType != null) {
-                    String flattened = INHERITANCE_OVERRIDES.getOrDefault(originalSubType, null);
-                    // Only output the subtype if that subtype still considers this type its parent,
-                    // after polymorphic flattening...
-                    if (flattened == null || flattened.equals(originalSubType)) {
-                        subTypes.add(subType.getName());
+                if (!SKIP_GENERATING.contains(originalSubType)) {
+                    MappedType subType = ModelGeneratorV2.getCachedType(originalSubType);
+                    if (subType != null) {
+                        String flattened = INHERITANCE_OVERRIDES.getOrDefault(originalSubType, null);
+                        // Only output the subtype if that subtype still considers this type its parent,
+                        // after polymorphic flattening...
+                        if (flattened == null || flattened.equals(originalSubType)) {
+                            subTypes.add(subType.getName());
+                        }
+                    } else {
+                        log.warn("Mapped subType was not found: {}", originalSubType);
                     }
-                } else {
-                    log.warn("Mapped subType was not found: {}", originalSubType);
                 }
             }
         }
@@ -104,8 +135,10 @@ public class AssetGenerator extends TypeGenerator {
         attributes = new ArrayList<>();
         for (AttributeDef attributeDef : entityDef.getAttributeDefs()) {
             Attribute attribute = new Attribute(className, attributeDef);
-            attributes.add(attribute);
-            checkAndAddMapContainer(attribute);
+            if (!attribute.getType().getName().equals("Internal")) {
+                attributes.add(attribute);
+                checkAndAddMapContainer(attribute);
+            }
         }
     }
 
@@ -114,9 +147,24 @@ public class AssetGenerator extends TypeGenerator {
         for (RelationshipAttributeDef relationshipAttributeDef : entityDef.getRelationshipAttributeDefs()) {
             Attribute attribute = new Attribute(className, relationshipAttributeDef);
             if (uniqueRelationships.contains(attribute.getOriginalName())
-                    && !attribute.getType().getName().equals("__internal")) {
-                attributes.add(attribute);
-                checkAndAddMapContainer(attribute);
+                    && !attribute.getType().getName().equals("Internal")) {
+                boolean duplicate = false;
+                for (Attribute existing : attributes) {
+                    if (existing.getRenamed().equals(attribute.getRenamed())) {
+                        duplicate = true;
+                        break;
+                    }
+                }
+                if (duplicate) {
+                    log.warn(
+                            "Found duplicate relationship defined in {} for {} ({}) - skipping.",
+                            className,
+                            attribute.getRenamed(),
+                            attribute.getFullType());
+                } else {
+                    attributes.add(attribute);
+                    checkAndAddMapContainer(attribute);
+                }
             }
         }
     }
@@ -152,7 +200,7 @@ public class AssetGenerator extends TypeGenerator {
     }
 
     @Getter
-    public static final class Attribute extends AttributeGenerator {
+    public static class Attribute extends AttributeGenerator {
 
         // Provide a name that Lombok can use for the singularization of these multivalued attributes
         private static final Map<String, String> SINGULAR_MAPPINGS = Map.ofEntries(
@@ -169,7 +217,12 @@ public class AssetGenerator extends TypeGenerator {
                 Map.entry("certifier", "putCertifier"),
                 Map.entry("presetChartFormData", "putPresetChartFormData"),
                 Map.entry("resourceMetadata", "putResourceMetadata"),
-                Map.entry("adlsObjectMetadata", "putAdlsObjectMetadata"));
+                Map.entry("adlsObjectMetadata", "putAdlsObjectMetadata"),
+                Map.entry("columnHistogram", "addColumnHistogram"),
+                Map.entry("foreignKeyTo", "addForeignKeyTo"),
+                Map.entry("quickSightFolderHierarchy", "addQuickSightFolderHierarchy"),
+                Map.entry("columnMaxs", "addColumnMax"),
+                Map.entry("columnMins", "addColumnMin"));
 
         private static final Map<String, String> ATTRIBUTE_RENAMING = Map.ofEntries(
                 Map.entry("connectorName", "connectorType"),
@@ -192,7 +245,8 @@ public class AssetGenerator extends TypeGenerator {
 
         private static final Map<String, String> TYPE_OVERRIDES = Map.ofEntries(
                 Map.entry("announcementType", "AtlanAnnouncementType"),
-                Map.entry("connectorName", "AtlanConnectorType"));
+                Map.entry("connectorName", "AtlanConnectorType"),
+                Map.entry("category", "AtlanConnectionCategory"));
 
         public Attribute(String className, AttributeDef attributeDef) {
             super(className, attributeDef);

@@ -6,7 +6,8 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.enums.*;
+import com.atlan.model.enums.AtlanAnnouncementType;
+import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.Map;
 import java.util.SortedSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Instance of a Tableau project in Atlan.
@@ -21,6 +23,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@Slf4j
 @SuppressWarnings("cast")
 public class TableauProject extends Tableau {
     private static final long serialVersionUID = 2L;
@@ -101,40 +104,6 @@ public class TableauProject extends Tableau {
     }
 
     /**
-     * Builds the minimal object necessary to update a TableauProject.
-     *
-     * @param qualifiedName of the TableauProject
-     * @param name of the TableauProject
-     * @return the minimal request necessary to update the TableauProject, as a builder
-     */
-    public static TableauProjectBuilder<?, ?> updater(String qualifiedName, String name) {
-        return TableauProject.builder().qualifiedName(qualifiedName).name(name);
-    }
-
-    /**
-     * Builds the minimal object necessary to apply an update to a TableauProject, from a potentially
-     * more-complete TableauProject object.
-     *
-     * @return the minimal object necessary to update the TableauProject, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for TableauProject are not found in the initial object
-     */
-    @Override
-    public TableauProjectBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        List<String> missing = new ArrayList<>();
-        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
-            missing.add("qualifiedName");
-        }
-        if (this.getName() == null || this.getName().length() == 0) {
-            missing.add("name");
-        }
-        if (!missing.isEmpty()) {
-            throw new InvalidRequestException(
-                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "TableauProject", String.join(",", missing));
-        }
-        return updater(this.getQualifiedName(), this.getName());
-    }
-
-    /**
      * Retrieves a TableauProject by its GUID, complete with all of its relationships.
      *
      * @param guid of the TableauProject to retrieve
@@ -177,6 +146,40 @@ public class TableauProject extends Tableau {
      */
     public static boolean restore(String qualifiedName) throws AtlanException {
         return Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Builds the minimal object necessary to update a TableauProject.
+     *
+     * @param qualifiedName of the TableauProject
+     * @param name of the TableauProject
+     * @return the minimal request necessary to update the TableauProject, as a builder
+     */
+    public static TableauProjectBuilder<?, ?> updater(String qualifiedName, String name) {
+        return TableauProject.builder().qualifiedName(qualifiedName).name(name);
+    }
+
+    /**
+     * Builds the minimal object necessary to apply an update to a TableauProject, from a potentially
+     * more-complete TableauProject object.
+     *
+     * @return the minimal object necessary to update the TableauProject, as a builder
+     * @throws InvalidRequestException if any of the minimal set of required properties for TableauProject are not found in the initial object
+     */
+    @Override
+    public TableauProjectBuilder<?, ?> trimToRequired() throws InvalidRequestException {
+        List<String> missing = new ArrayList<>();
+        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
+            missing.add("qualifiedName");
+        }
+        if (this.getName() == null || this.getName().length() == 0) {
+            missing.add("name");
+        }
+        if (!missing.isEmpty()) {
+            throw new InvalidRequestException(
+                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "TableauProject", String.join(",", missing));
+        }
+        return updater(this.getQualifiedName(), this.getName());
     }
 
     /**
@@ -269,6 +272,48 @@ public class TableauProject extends Tableau {
     }
 
     /**
+     * Replace the terms linked to the TableauProject.
+     *
+     * @param qualifiedName for the TableauProject
+     * @param name human-readable name of the TableauProject
+     * @param terms the list of terms to replace on the TableauProject, or null to remove all terms from the TableauProject
+     * @return the TableauProject that was updated (note that it will NOT contain details of the replaced terms)
+     * @throws AtlanException on any API problems
+     */
+    public static TableauProject replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+            throws AtlanException {
+        return (TableauProject) Asset.replaceTerms(updater(qualifiedName, name), terms);
+    }
+
+    /**
+     * Link additional terms to the TableauProject, without replacing existing terms linked to the TableauProject.
+     * Note: this operation must make two API calls — one to retrieve the TableauProject's existing terms,
+     * and a second to append the new terms.
+     *
+     * @param qualifiedName for the TableauProject
+     * @param terms the list of terms to append to the TableauProject
+     * @return the TableauProject that was updated  (note that it will NOT contain details of the appended terms)
+     * @throws AtlanException on any API problems
+     */
+    public static TableauProject appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (TableauProject) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
+    }
+
+    /**
+     * Remove terms from a TableauProject, without replacing all existing terms linked to the TableauProject.
+     * Note: this operation must make two API calls — one to retrieve the TableauProject's existing terms,
+     * and a second to remove the provided terms.
+     *
+     * @param qualifiedName for the TableauProject
+     * @param terms the list of terms to remove from the TableauProject, which must be referenced by GUID
+     * @return the TableauProject that was updated (note that it will NOT contain details of the resulting terms)
+     * @throws AtlanException on any API problems
+     */
+    public static TableauProject removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (TableauProject) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
+    }
+
+    /**
      * Add classifications to a TableauProject.
      *
      * @param qualifiedName of the TableauProject
@@ -315,47 +360,5 @@ public class TableauProject extends Tableau {
      */
     public static void removeClassification(String qualifiedName, String classificationName) throws AtlanException {
         Asset.removeClassification(TYPE_NAME, qualifiedName, classificationName);
-    }
-
-    /**
-     * Replace the terms linked to the TableauProject.
-     *
-     * @param qualifiedName for the TableauProject
-     * @param name human-readable name of the TableauProject
-     * @param terms the list of terms to replace on the TableauProject, or null to remove all terms from the TableauProject
-     * @return the TableauProject that was updated (note that it will NOT contain details of the replaced terms)
-     * @throws AtlanException on any API problems
-     */
-    public static TableauProject replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
-            throws AtlanException {
-        return (TableauProject) Asset.replaceTerms(updater(qualifiedName, name), terms);
-    }
-
-    /**
-     * Link additional terms to the TableauProject, without replacing existing terms linked to the TableauProject.
-     * Note: this operation must make two API calls — one to retrieve the TableauProject's existing terms,
-     * and a second to append the new terms.
-     *
-     * @param qualifiedName for the TableauProject
-     * @param terms the list of terms to append to the TableauProject
-     * @return the TableauProject that was updated  (note that it will NOT contain details of the appended terms)
-     * @throws AtlanException on any API problems
-     */
-    public static TableauProject appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (TableauProject) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
-    }
-
-    /**
-     * Remove terms from a TableauProject, without replacing all existing terms linked to the TableauProject.
-     * Note: this operation must make two API calls — one to retrieve the TableauProject's existing terms,
-     * and a second to remove the provided terms.
-     *
-     * @param qualifiedName for the TableauProject
-     * @param terms the list of terms to remove from the TableauProject, which must be referenced by GUID
-     * @return the TableauProject that was updated (note that it will NOT contain details of the resulting terms)
-     * @throws AtlanException on any API problems
-     */
-    public static TableauProject removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (TableauProject) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 }

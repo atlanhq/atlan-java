@@ -6,13 +6,16 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.enums.*;
+import com.atlan.model.enums.AtlanAnnouncementType;
+import com.atlan.model.enums.AtlanConnectorType;
+import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Instance of a Preset workspace in Atlan.
@@ -20,6 +23,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@Slf4j
 public class PresetWorkspace extends Preset {
     private static final long serialVersionUID = 2L;
 
@@ -95,6 +99,51 @@ public class PresetWorkspace extends Preset {
     }
 
     /**
+     * Retrieves a PresetWorkspace by its GUID, complete with all of its relationships.
+     *
+     * @param guid of the PresetWorkspace to retrieve
+     * @return the requested full PresetWorkspace, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PresetWorkspace does not exist or the provided GUID is not a PresetWorkspace
+     */
+    public static PresetWorkspace retrieveByGuid(String guid) throws AtlanException {
+        Asset asset = Asset.retrieveFull(guid);
+        if (asset == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
+        } else if (asset instanceof PresetWorkspace) {
+            return (PresetWorkspace) asset;
+        } else {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "PresetWorkspace");
+        }
+    }
+
+    /**
+     * Retrieves a PresetWorkspace by its qualifiedName, complete with all of its relationships.
+     *
+     * @param qualifiedName of the PresetWorkspace to retrieve
+     * @return the requested full PresetWorkspace, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PresetWorkspace does not exist
+     */
+    public static PresetWorkspace retrieveByQualifiedName(String qualifiedName) throws AtlanException {
+        Asset asset = Asset.retrieveFull(TYPE_NAME, qualifiedName);
+        if (asset instanceof PresetWorkspace) {
+            return (PresetWorkspace) asset;
+        } else {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "PresetWorkspace");
+        }
+    }
+
+    /**
+     * Restore the archived (soft-deleted) PresetWorkspace to active.
+     *
+     * @param qualifiedName for the PresetWorkspace
+     * @return true if the PresetWorkspace is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
      * Builds the minimal object necessary to create a Preset workspace.
      *
      * @param name of the workspace
@@ -152,51 +201,6 @@ public class PresetWorkspace extends Preset {
      */
     private static String generateQualifiedName(String connectionQualifiedName, String name) {
         return connectionQualifiedName + "/" + name;
-    }
-
-    /**
-     * Retrieves a PresetWorkspace by its GUID, complete with all of its relationships.
-     *
-     * @param guid of the PresetWorkspace to retrieve
-     * @return the requested full PresetWorkspace, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PresetWorkspace does not exist or the provided GUID is not a PresetWorkspace
-     */
-    public static PresetWorkspace retrieveByGuid(String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof PresetWorkspace) {
-            return (PresetWorkspace) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "PresetWorkspace");
-        }
-    }
-
-    /**
-     * Retrieves a PresetWorkspace by its qualifiedName, complete with all of its relationships.
-     *
-     * @param qualifiedName of the PresetWorkspace to retrieve
-     * @return the requested full PresetWorkspace, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PresetWorkspace does not exist
-     */
-    public static PresetWorkspace retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        Asset asset = Asset.retrieveFull(TYPE_NAME, qualifiedName);
-        if (asset instanceof PresetWorkspace) {
-            return (PresetWorkspace) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "PresetWorkspace");
-        }
-    }
-
-    /**
-     * Restore the archived (soft-deleted) PresetWorkspace to active.
-     *
-     * @param qualifiedName for the PresetWorkspace
-     * @return true if the PresetWorkspace is now active, and false otherwise
-     * @throws AtlanException on any API problems
-     */
-    public static boolean restore(String qualifiedName) throws AtlanException {
-        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**
@@ -289,6 +293,48 @@ public class PresetWorkspace extends Preset {
     }
 
     /**
+     * Replace the terms linked to the PresetWorkspace.
+     *
+     * @param qualifiedName for the PresetWorkspace
+     * @param name human-readable name of the PresetWorkspace
+     * @param terms the list of terms to replace on the PresetWorkspace, or null to remove all terms from the PresetWorkspace
+     * @return the PresetWorkspace that was updated (note that it will NOT contain details of the replaced terms)
+     * @throws AtlanException on any API problems
+     */
+    public static PresetWorkspace replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+            throws AtlanException {
+        return (PresetWorkspace) Asset.replaceTerms(updater(qualifiedName, name), terms);
+    }
+
+    /**
+     * Link additional terms to the PresetWorkspace, without replacing existing terms linked to the PresetWorkspace.
+     * Note: this operation must make two API calls — one to retrieve the PresetWorkspace's existing terms,
+     * and a second to append the new terms.
+     *
+     * @param qualifiedName for the PresetWorkspace
+     * @param terms the list of terms to append to the PresetWorkspace
+     * @return the PresetWorkspace that was updated  (note that it will NOT contain details of the appended terms)
+     * @throws AtlanException on any API problems
+     */
+    public static PresetWorkspace appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (PresetWorkspace) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
+    }
+
+    /**
+     * Remove terms from a PresetWorkspace, without replacing all existing terms linked to the PresetWorkspace.
+     * Note: this operation must make two API calls — one to retrieve the PresetWorkspace's existing terms,
+     * and a second to remove the provided terms.
+     *
+     * @param qualifiedName for the PresetWorkspace
+     * @param terms the list of terms to remove from the PresetWorkspace, which must be referenced by GUID
+     * @return the PresetWorkspace that was updated (note that it will NOT contain details of the resulting terms)
+     * @throws AtlanException on any API problems
+     */
+    public static PresetWorkspace removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (PresetWorkspace) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
+    }
+
+    /**
      * Add classifications to a PresetWorkspace.
      *
      * @param qualifiedName of the PresetWorkspace
@@ -335,47 +381,5 @@ public class PresetWorkspace extends Preset {
      */
     public static void removeClassification(String qualifiedName, String classificationName) throws AtlanException {
         Asset.removeClassification(TYPE_NAME, qualifiedName, classificationName);
-    }
-
-    /**
-     * Replace the terms linked to the PresetWorkspace.
-     *
-     * @param qualifiedName for the PresetWorkspace
-     * @param name human-readable name of the PresetWorkspace
-     * @param terms the list of terms to replace on the PresetWorkspace, or null to remove all terms from the PresetWorkspace
-     * @return the PresetWorkspace that was updated (note that it will NOT contain details of the replaced terms)
-     * @throws AtlanException on any API problems
-     */
-    public static PresetWorkspace replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
-            throws AtlanException {
-        return (PresetWorkspace) Asset.replaceTerms(updater(qualifiedName, name), terms);
-    }
-
-    /**
-     * Link additional terms to the PresetWorkspace, without replacing existing terms linked to the PresetWorkspace.
-     * Note: this operation must make two API calls — one to retrieve the PresetWorkspace's existing terms,
-     * and a second to append the new terms.
-     *
-     * @param qualifiedName for the PresetWorkspace
-     * @param terms the list of terms to append to the PresetWorkspace
-     * @return the PresetWorkspace that was updated  (note that it will NOT contain details of the appended terms)
-     * @throws AtlanException on any API problems
-     */
-    public static PresetWorkspace appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (PresetWorkspace) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
-    }
-
-    /**
-     * Remove terms from a PresetWorkspace, without replacing all existing terms linked to the PresetWorkspace.
-     * Note: this operation must make two API calls — one to retrieve the PresetWorkspace's existing terms,
-     * and a second to remove the provided terms.
-     *
-     * @param qualifiedName for the PresetWorkspace
-     * @param terms the list of terms to remove from the PresetWorkspace, which must be referenced by GUID
-     * @return the PresetWorkspace that was updated (note that it will NOT contain details of the resulting terms)
-     * @throws AtlanException on any API problems
-     */
-    public static PresetWorkspace removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (PresetWorkspace) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 }

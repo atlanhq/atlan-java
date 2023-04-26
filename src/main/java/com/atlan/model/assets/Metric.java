@@ -2,11 +2,11 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
-import com.atlan.model.enums.*;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import java.util.SortedSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Base class for metrics assets.
@@ -14,9 +14,8 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
-@JsonSubTypes({
-    @JsonSubTypes.Type(value = DbtMetric.class, name = DbtMetric.TYPE_NAME),
-})
+@JsonSubTypes({})
+@Slf4j
 public abstract class Metric extends DataQuality {
 
     public static final String TYPE_NAME = "Metric";

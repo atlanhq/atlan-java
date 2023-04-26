@@ -6,7 +6,9 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.enums.*;
+import com.atlan.model.enums.AtlanAnnouncementType;
+import com.atlan.model.enums.AtlanConnectorType;
+import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.StringUtils;
 import java.util.ArrayList;
@@ -15,6 +17,7 @@ import java.util.Map;
 import java.util.SortedSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Instance of a database table partition in Atlan.
@@ -22,6 +25,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@Slf4j
 @SuppressWarnings("cast")
 public class TablePartition extends SQL {
     private static final long serialVersionUID = 2L;
@@ -127,6 +131,51 @@ public class TablePartition extends SQL {
     }
 
     /**
+     * Retrieves a TablePartition by its GUID, complete with all of its relationships.
+     *
+     * @param guid of the TablePartition to retrieve
+     * @return the requested full TablePartition, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the TablePartition does not exist or the provided GUID is not a TablePartition
+     */
+    public static TablePartition retrieveByGuid(String guid) throws AtlanException {
+        Asset asset = Asset.retrieveFull(guid);
+        if (asset == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
+        } else if (asset instanceof TablePartition) {
+            return (TablePartition) asset;
+        } else {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "TablePartition");
+        }
+    }
+
+    /**
+     * Retrieves a TablePartition by its qualifiedName, complete with all of its relationships.
+     *
+     * @param qualifiedName of the TablePartition to retrieve
+     * @return the requested full TablePartition, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the TablePartition does not exist
+     */
+    public static TablePartition retrieveByQualifiedName(String qualifiedName) throws AtlanException {
+        Asset asset = Asset.retrieveFull(TYPE_NAME, qualifiedName);
+        if (asset instanceof TablePartition) {
+            return (TablePartition) asset;
+        } else {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "TablePartition");
+        }
+    }
+
+    /**
+     * Restore the archived (soft-deleted) TablePartition to active.
+     *
+     * @param qualifiedName for the TablePartition
+     * @return true if the TablePartition is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
      * Builds the minimal object necessary to create a table partition.
      *
      * @param name of the table partition
@@ -199,51 +248,6 @@ public class TablePartition extends SQL {
                     ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "TablePartition", String.join(",", missing));
         }
         return updater(this.getQualifiedName(), this.getName());
-    }
-
-    /**
-     * Retrieves a TablePartition by its GUID, complete with all of its relationships.
-     *
-     * @param guid of the TablePartition to retrieve
-     * @return the requested full TablePartition, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the TablePartition does not exist or the provided GUID is not a TablePartition
-     */
-    public static TablePartition retrieveByGuid(String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof TablePartition) {
-            return (TablePartition) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "TablePartition");
-        }
-    }
-
-    /**
-     * Retrieves a TablePartition by its qualifiedName, complete with all of its relationships.
-     *
-     * @param qualifiedName of the TablePartition to retrieve
-     * @return the requested full TablePartition, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the TablePartition does not exist
-     */
-    public static TablePartition retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        Asset asset = Asset.retrieveFull(TYPE_NAME, qualifiedName);
-        if (asset instanceof TablePartition) {
-            return (TablePartition) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "TablePartition");
-        }
-    }
-
-    /**
-     * Restore the archived (soft-deleted) TablePartition to active.
-     *
-     * @param qualifiedName for the TablePartition
-     * @return true if the TablePartition is now active, and false otherwise
-     * @throws AtlanException on any API problems
-     */
-    public static boolean restore(String qualifiedName) throws AtlanException {
-        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**
@@ -336,6 +340,48 @@ public class TablePartition extends SQL {
     }
 
     /**
+     * Replace the terms linked to the TablePartition.
+     *
+     * @param qualifiedName for the TablePartition
+     * @param name human-readable name of the TablePartition
+     * @param terms the list of terms to replace on the TablePartition, or null to remove all terms from the TablePartition
+     * @return the TablePartition that was updated (note that it will NOT contain details of the replaced terms)
+     * @throws AtlanException on any API problems
+     */
+    public static TablePartition replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+            throws AtlanException {
+        return (TablePartition) Asset.replaceTerms(updater(qualifiedName, name), terms);
+    }
+
+    /**
+     * Link additional terms to the TablePartition, without replacing existing terms linked to the TablePartition.
+     * Note: this operation must make two API calls — one to retrieve the TablePartition's existing terms,
+     * and a second to append the new terms.
+     *
+     * @param qualifiedName for the TablePartition
+     * @param terms the list of terms to append to the TablePartition
+     * @return the TablePartition that was updated  (note that it will NOT contain details of the appended terms)
+     * @throws AtlanException on any API problems
+     */
+    public static TablePartition appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (TablePartition) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
+    }
+
+    /**
+     * Remove terms from a TablePartition, without replacing all existing terms linked to the TablePartition.
+     * Note: this operation must make two API calls — one to retrieve the TablePartition's existing terms,
+     * and a second to remove the provided terms.
+     *
+     * @param qualifiedName for the TablePartition
+     * @param terms the list of terms to remove from the TablePartition, which must be referenced by GUID
+     * @return the TablePartition that was updated (note that it will NOT contain details of the resulting terms)
+     * @throws AtlanException on any API problems
+     */
+    public static TablePartition removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (TablePartition) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
+    }
+
+    /**
      * Add classifications to a TablePartition.
      *
      * @param qualifiedName of the TablePartition
@@ -382,47 +428,5 @@ public class TablePartition extends SQL {
      */
     public static void removeClassification(String qualifiedName, String classificationName) throws AtlanException {
         Asset.removeClassification(TYPE_NAME, qualifiedName, classificationName);
-    }
-
-    /**
-     * Replace the terms linked to the TablePartition.
-     *
-     * @param qualifiedName for the TablePartition
-     * @param name human-readable name of the TablePartition
-     * @param terms the list of terms to replace on the TablePartition, or null to remove all terms from the TablePartition
-     * @return the TablePartition that was updated (note that it will NOT contain details of the replaced terms)
-     * @throws AtlanException on any API problems
-     */
-    public static TablePartition replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
-            throws AtlanException {
-        return (TablePartition) Asset.replaceTerms(updater(qualifiedName, name), terms);
-    }
-
-    /**
-     * Link additional terms to the TablePartition, without replacing existing terms linked to the TablePartition.
-     * Note: this operation must make two API calls — one to retrieve the TablePartition's existing terms,
-     * and a second to append the new terms.
-     *
-     * @param qualifiedName for the TablePartition
-     * @param terms the list of terms to append to the TablePartition
-     * @return the TablePartition that was updated  (note that it will NOT contain details of the appended terms)
-     * @throws AtlanException on any API problems
-     */
-    public static TablePartition appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (TablePartition) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
-    }
-
-    /**
-     * Remove terms from a TablePartition, without replacing all existing terms linked to the TablePartition.
-     * Note: this operation must make two API calls — one to retrieve the TablePartition's existing terms,
-     * and a second to remove the provided terms.
-     *
-     * @param qualifiedName for the TablePartition
-     * @param terms the list of terms to remove from the TablePartition, which must be referenced by GUID
-     * @return the TablePartition that was updated (note that it will NOT contain details of the resulting terms)
-     * @throws AtlanException on any API problems
-     */
-    public static TablePartition removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (TablePartition) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 }

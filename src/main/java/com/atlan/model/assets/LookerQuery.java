@@ -6,13 +6,15 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.enums.*;
+import com.atlan.model.enums.AtlanAnnouncementType;
+import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Instance of a Looker query in Atlan.
@@ -20,6 +22,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@Slf4j
 public class LookerQuery extends Looker {
     private static final long serialVersionUID = 2L;
 
@@ -85,40 +88,6 @@ public class LookerQuery extends Looker {
     }
 
     /**
-     * Builds the minimal object necessary to update a LookerQuery.
-     *
-     * @param qualifiedName of the LookerQuery
-     * @param name of the LookerQuery
-     * @return the minimal request necessary to update the LookerQuery, as a builder
-     */
-    public static LookerQueryBuilder<?, ?> updater(String qualifiedName, String name) {
-        return LookerQuery.builder().qualifiedName(qualifiedName).name(name);
-    }
-
-    /**
-     * Builds the minimal object necessary to apply an update to a LookerQuery, from a potentially
-     * more-complete LookerQuery object.
-     *
-     * @return the minimal object necessary to update the LookerQuery, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for LookerQuery are not found in the initial object
-     */
-    @Override
-    public LookerQueryBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        List<String> missing = new ArrayList<>();
-        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
-            missing.add("qualifiedName");
-        }
-        if (this.getName() == null || this.getName().length() == 0) {
-            missing.add("name");
-        }
-        if (!missing.isEmpty()) {
-            throw new InvalidRequestException(
-                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "LookerQuery", String.join(",", missing));
-        }
-        return updater(this.getQualifiedName(), this.getName());
-    }
-
-    /**
      * Retrieves a LookerQuery by its GUID, complete with all of its relationships.
      *
      * @param guid of the LookerQuery to retrieve
@@ -161,6 +130,40 @@ public class LookerQuery extends Looker {
      */
     public static boolean restore(String qualifiedName) throws AtlanException {
         return Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Builds the minimal object necessary to update a LookerQuery.
+     *
+     * @param qualifiedName of the LookerQuery
+     * @param name of the LookerQuery
+     * @return the minimal request necessary to update the LookerQuery, as a builder
+     */
+    public static LookerQueryBuilder<?, ?> updater(String qualifiedName, String name) {
+        return LookerQuery.builder().qualifiedName(qualifiedName).name(name);
+    }
+
+    /**
+     * Builds the minimal object necessary to apply an update to a LookerQuery, from a potentially
+     * more-complete LookerQuery object.
+     *
+     * @return the minimal object necessary to update the LookerQuery, as a builder
+     * @throws InvalidRequestException if any of the minimal set of required properties for LookerQuery are not found in the initial object
+     */
+    @Override
+    public LookerQueryBuilder<?, ?> trimToRequired() throws InvalidRequestException {
+        List<String> missing = new ArrayList<>();
+        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
+            missing.add("qualifiedName");
+        }
+        if (this.getName() == null || this.getName().length() == 0) {
+            missing.add("name");
+        }
+        if (!missing.isEmpty()) {
+            throw new InvalidRequestException(
+                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "LookerQuery", String.join(",", missing));
+        }
+        return updater(this.getQualifiedName(), this.getName());
     }
 
     /**
@@ -253,6 +256,48 @@ public class LookerQuery extends Looker {
     }
 
     /**
+     * Replace the terms linked to the LookerQuery.
+     *
+     * @param qualifiedName for the LookerQuery
+     * @param name human-readable name of the LookerQuery
+     * @param terms the list of terms to replace on the LookerQuery, or null to remove all terms from the LookerQuery
+     * @return the LookerQuery that was updated (note that it will NOT contain details of the replaced terms)
+     * @throws AtlanException on any API problems
+     */
+    public static LookerQuery replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+            throws AtlanException {
+        return (LookerQuery) Asset.replaceTerms(updater(qualifiedName, name), terms);
+    }
+
+    /**
+     * Link additional terms to the LookerQuery, without replacing existing terms linked to the LookerQuery.
+     * Note: this operation must make two API calls — one to retrieve the LookerQuery's existing terms,
+     * and a second to append the new terms.
+     *
+     * @param qualifiedName for the LookerQuery
+     * @param terms the list of terms to append to the LookerQuery
+     * @return the LookerQuery that was updated  (note that it will NOT contain details of the appended terms)
+     * @throws AtlanException on any API problems
+     */
+    public static LookerQuery appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (LookerQuery) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
+    }
+
+    /**
+     * Remove terms from a LookerQuery, without replacing all existing terms linked to the LookerQuery.
+     * Note: this operation must make two API calls — one to retrieve the LookerQuery's existing terms,
+     * and a second to remove the provided terms.
+     *
+     * @param qualifiedName for the LookerQuery
+     * @param terms the list of terms to remove from the LookerQuery, which must be referenced by GUID
+     * @return the LookerQuery that was updated (note that it will NOT contain details of the resulting terms)
+     * @throws AtlanException on any API problems
+     */
+    public static LookerQuery removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (LookerQuery) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
+    }
+
+    /**
      * Add classifications to a LookerQuery.
      *
      * @param qualifiedName of the LookerQuery
@@ -299,47 +344,5 @@ public class LookerQuery extends Looker {
      */
     public static void removeClassification(String qualifiedName, String classificationName) throws AtlanException {
         Asset.removeClassification(TYPE_NAME, qualifiedName, classificationName);
-    }
-
-    /**
-     * Replace the terms linked to the LookerQuery.
-     *
-     * @param qualifiedName for the LookerQuery
-     * @param name human-readable name of the LookerQuery
-     * @param terms the list of terms to replace on the LookerQuery, or null to remove all terms from the LookerQuery
-     * @return the LookerQuery that was updated (note that it will NOT contain details of the replaced terms)
-     * @throws AtlanException on any API problems
-     */
-    public static LookerQuery replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
-            throws AtlanException {
-        return (LookerQuery) Asset.replaceTerms(updater(qualifiedName, name), terms);
-    }
-
-    /**
-     * Link additional terms to the LookerQuery, without replacing existing terms linked to the LookerQuery.
-     * Note: this operation must make two API calls — one to retrieve the LookerQuery's existing terms,
-     * and a second to append the new terms.
-     *
-     * @param qualifiedName for the LookerQuery
-     * @param terms the list of terms to append to the LookerQuery
-     * @return the LookerQuery that was updated  (note that it will NOT contain details of the appended terms)
-     * @throws AtlanException on any API problems
-     */
-    public static LookerQuery appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (LookerQuery) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
-    }
-
-    /**
-     * Remove terms from a LookerQuery, without replacing all existing terms linked to the LookerQuery.
-     * Note: this operation must make two API calls — one to retrieve the LookerQuery's existing terms,
-     * and a second to remove the provided terms.
-     *
-     * @param qualifiedName for the LookerQuery
-     * @param terms the list of terms to remove from the LookerQuery, which must be referenced by GUID
-     * @return the LookerQuery that was updated (note that it will NOT contain details of the resulting terms)
-     * @throws AtlanException on any API problems
-     */
-    public static LookerQuery removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (LookerQuery) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 }

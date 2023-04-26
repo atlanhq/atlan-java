@@ -6,13 +6,14 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.enums.*;
+import com.atlan.model.enums.IconType;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Instance of a link in Atlan.
@@ -20,6 +21,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@Slf4j
 public class Link extends Resource {
     private static final long serialVersionUID = 2L;
 
@@ -63,6 +65,51 @@ public class Link extends Resource {
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
+    }
+
+    /**
+     * Retrieves a Link by its GUID, complete with all of its relationships.
+     *
+     * @param guid of the Link to retrieve
+     * @return the requested full Link, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Link does not exist or the provided GUID is not a Link
+     */
+    public static Link retrieveByGuid(String guid) throws AtlanException {
+        Asset asset = Asset.retrieveFull(guid);
+        if (asset == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
+        } else if (asset instanceof Link) {
+            return (Link) asset;
+        } else {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "Link");
+        }
+    }
+
+    /**
+     * Retrieves a Link by its qualifiedName, complete with all of its relationships.
+     *
+     * @param qualifiedName of the Link to retrieve
+     * @return the requested full Link, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Link does not exist
+     */
+    public static Link retrieveByQualifiedName(String qualifiedName) throws AtlanException {
+        Asset asset = Asset.retrieveFull(TYPE_NAME, qualifiedName);
+        if (asset instanceof Link) {
+            return (Link) asset;
+        } else {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "Link");
+        }
+    }
+
+    /**
+     * Restore the archived (soft-deleted) Link to active.
+     *
+     * @param qualifiedName for the Link
+     * @return true if the Link is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**
@@ -122,51 +169,6 @@ public class Link extends Resource {
      */
     private static String generateQualifiedName() {
         return UUID.randomUUID().toString();
-    }
-
-    /**
-     * Retrieves a Link by its GUID, complete with all of its relationships.
-     *
-     * @param guid of the Link to retrieve
-     * @return the requested full Link, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Link does not exist or the provided GUID is not a Link
-     */
-    public static Link retrieveByGuid(String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof Link) {
-            return (Link) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "Link");
-        }
-    }
-
-    /**
-     * Retrieves a Link by its qualifiedName, complete with all of its relationships.
-     *
-     * @param qualifiedName of the Link to retrieve
-     * @return the requested full Link, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Link does not exist
-     */
-    public static Link retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        Asset asset = Asset.retrieveFull(TYPE_NAME, qualifiedName);
-        if (asset instanceof Link) {
-            return (Link) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "Link");
-        }
-    }
-
-    /**
-     * Restore the archived (soft-deleted) Link to active.
-     *
-     * @param qualifiedName for the Link
-     * @return true if the Link is now active, and false otherwise
-     * @throws AtlanException on any API problems
-     */
-    public static boolean restore(String qualifiedName) throws AtlanException {
-        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**

@@ -6,13 +6,15 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.enums.*;
+import com.atlan.model.enums.AtlanAnnouncementType;
+import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Instance of a column within a dbt model in Atlan.
@@ -20,6 +22,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@Slf4j
 public class DbtModelColumn extends Dbt {
     private static final long serialVersionUID = 2L;
 
@@ -79,40 +82,6 @@ public class DbtModelColumn extends Dbt {
     }
 
     /**
-     * Builds the minimal object necessary to update a DbtModelColumn.
-     *
-     * @param qualifiedName of the DbtModelColumn
-     * @param name of the DbtModelColumn
-     * @return the minimal request necessary to update the DbtModelColumn, as a builder
-     */
-    public static DbtModelColumnBuilder<?, ?> updater(String qualifiedName, String name) {
-        return DbtModelColumn.builder().qualifiedName(qualifiedName).name(name);
-    }
-
-    /**
-     * Builds the minimal object necessary to apply an update to a DbtModelColumn, from a potentially
-     * more-complete DbtModelColumn object.
-     *
-     * @return the minimal object necessary to update the DbtModelColumn, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for DbtModelColumn are not found in the initial object
-     */
-    @Override
-    public DbtModelColumnBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        List<String> missing = new ArrayList<>();
-        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
-            missing.add("qualifiedName");
-        }
-        if (this.getName() == null || this.getName().length() == 0) {
-            missing.add("name");
-        }
-        if (!missing.isEmpty()) {
-            throw new InvalidRequestException(
-                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "DbtModelColumn", String.join(",", missing));
-        }
-        return updater(this.getQualifiedName(), this.getName());
-    }
-
-    /**
      * Retrieves a DbtModelColumn by its GUID, complete with all of its relationships.
      *
      * @param guid of the DbtModelColumn to retrieve
@@ -155,6 +124,40 @@ public class DbtModelColumn extends Dbt {
      */
     public static boolean restore(String qualifiedName) throws AtlanException {
         return Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Builds the minimal object necessary to update a DbtModelColumn.
+     *
+     * @param qualifiedName of the DbtModelColumn
+     * @param name of the DbtModelColumn
+     * @return the minimal request necessary to update the DbtModelColumn, as a builder
+     */
+    public static DbtModelColumnBuilder<?, ?> updater(String qualifiedName, String name) {
+        return DbtModelColumn.builder().qualifiedName(qualifiedName).name(name);
+    }
+
+    /**
+     * Builds the minimal object necessary to apply an update to a DbtModelColumn, from a potentially
+     * more-complete DbtModelColumn object.
+     *
+     * @return the minimal object necessary to update the DbtModelColumn, as a builder
+     * @throws InvalidRequestException if any of the minimal set of required properties for DbtModelColumn are not found in the initial object
+     */
+    @Override
+    public DbtModelColumnBuilder<?, ?> trimToRequired() throws InvalidRequestException {
+        List<String> missing = new ArrayList<>();
+        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
+            missing.add("qualifiedName");
+        }
+        if (this.getName() == null || this.getName().length() == 0) {
+            missing.add("name");
+        }
+        if (!missing.isEmpty()) {
+            throw new InvalidRequestException(
+                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "DbtModelColumn", String.join(",", missing));
+        }
+        return updater(this.getQualifiedName(), this.getName());
     }
 
     /**
@@ -247,6 +250,48 @@ public class DbtModelColumn extends Dbt {
     }
 
     /**
+     * Replace the terms linked to the DbtModelColumn.
+     *
+     * @param qualifiedName for the DbtModelColumn
+     * @param name human-readable name of the DbtModelColumn
+     * @param terms the list of terms to replace on the DbtModelColumn, or null to remove all terms from the DbtModelColumn
+     * @return the DbtModelColumn that was updated (note that it will NOT contain details of the replaced terms)
+     * @throws AtlanException on any API problems
+     */
+    public static DbtModelColumn replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+            throws AtlanException {
+        return (DbtModelColumn) Asset.replaceTerms(updater(qualifiedName, name), terms);
+    }
+
+    /**
+     * Link additional terms to the DbtModelColumn, without replacing existing terms linked to the DbtModelColumn.
+     * Note: this operation must make two API calls — one to retrieve the DbtModelColumn's existing terms,
+     * and a second to append the new terms.
+     *
+     * @param qualifiedName for the DbtModelColumn
+     * @param terms the list of terms to append to the DbtModelColumn
+     * @return the DbtModelColumn that was updated  (note that it will NOT contain details of the appended terms)
+     * @throws AtlanException on any API problems
+     */
+    public static DbtModelColumn appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (DbtModelColumn) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
+    }
+
+    /**
+     * Remove terms from a DbtModelColumn, without replacing all existing terms linked to the DbtModelColumn.
+     * Note: this operation must make two API calls — one to retrieve the DbtModelColumn's existing terms,
+     * and a second to remove the provided terms.
+     *
+     * @param qualifiedName for the DbtModelColumn
+     * @param terms the list of terms to remove from the DbtModelColumn, which must be referenced by GUID
+     * @return the DbtModelColumn that was updated (note that it will NOT contain details of the resulting terms)
+     * @throws AtlanException on any API problems
+     */
+    public static DbtModelColumn removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (DbtModelColumn) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
+    }
+
+    /**
      * Add classifications to a DbtModelColumn.
      *
      * @param qualifiedName of the DbtModelColumn
@@ -293,47 +338,5 @@ public class DbtModelColumn extends Dbt {
      */
     public static void removeClassification(String qualifiedName, String classificationName) throws AtlanException {
         Asset.removeClassification(TYPE_NAME, qualifiedName, classificationName);
-    }
-
-    /**
-     * Replace the terms linked to the DbtModelColumn.
-     *
-     * @param qualifiedName for the DbtModelColumn
-     * @param name human-readable name of the DbtModelColumn
-     * @param terms the list of terms to replace on the DbtModelColumn, or null to remove all terms from the DbtModelColumn
-     * @return the DbtModelColumn that was updated (note that it will NOT contain details of the replaced terms)
-     * @throws AtlanException on any API problems
-     */
-    public static DbtModelColumn replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
-            throws AtlanException {
-        return (DbtModelColumn) Asset.replaceTerms(updater(qualifiedName, name), terms);
-    }
-
-    /**
-     * Link additional terms to the DbtModelColumn, without replacing existing terms linked to the DbtModelColumn.
-     * Note: this operation must make two API calls — one to retrieve the DbtModelColumn's existing terms,
-     * and a second to append the new terms.
-     *
-     * @param qualifiedName for the DbtModelColumn
-     * @param terms the list of terms to append to the DbtModelColumn
-     * @return the DbtModelColumn that was updated  (note that it will NOT contain details of the appended terms)
-     * @throws AtlanException on any API problems
-     */
-    public static DbtModelColumn appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (DbtModelColumn) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
-    }
-
-    /**
-     * Remove terms from a DbtModelColumn, without replacing all existing terms linked to the DbtModelColumn.
-     * Note: this operation must make two API calls — one to retrieve the DbtModelColumn's existing terms,
-     * and a second to remove the provided terms.
-     *
-     * @param qualifiedName for the DbtModelColumn
-     * @param terms the list of terms to remove from the DbtModelColumn, which must be referenced by GUID
-     * @return the DbtModelColumn that was updated (note that it will NOT contain details of the resulting terms)
-     * @throws AtlanException on any API problems
-     */
-    public static DbtModelColumn removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (DbtModelColumn) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 }

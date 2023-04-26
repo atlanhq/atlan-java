@@ -10,9 +10,19 @@ import com.atlan.exception.ApiException;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
-import com.atlan.model.core.*;
-import com.atlan.model.enums.*;
+import com.atlan.model.core.AssetDeletionResponse;
+import com.atlan.model.core.AssetMutationResponse;
+import com.atlan.model.core.AssetResponse;
+import com.atlan.model.core.Classification;
+import com.atlan.model.core.CustomMetadataAttributes;
+import com.atlan.model.enums.AtlanAnnouncementType;
+import com.atlan.model.enums.AtlanConnectorType;
+import com.atlan.model.enums.AtlanDeleteType;
+import com.atlan.model.enums.AtlanStatus;
+import com.atlan.model.enums.CertificateStatus;
+import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.relations.Reference;
+import com.atlan.model.structs.PopularityInsights;
 import com.atlan.net.HttpClient;
 import com.atlan.serde.AssetDeserializer;
 import com.atlan.serde.AssetSerializer;
@@ -22,7 +32,15 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import java.util.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
@@ -41,7 +59,6 @@ import lombok.extern.slf4j.Slf4j;
         property = "typeName",
         defaultImpl = IndistinctAsset.class)
 @JsonSubTypes({
-    @JsonSubTypes.Type(value = Catalog.class, name = Catalog.TYPE_NAME),
     @JsonSubTypes.Type(value = Glossary.class, name = Glossary.TYPE_NAME),
     @JsonSubTypes.Type(value = GlossaryTerm.class, name = GlossaryTerm.TYPE_NAME),
     @JsonSubTypes.Type(value = Cloud.class, name = Cloud.TYPE_NAME),
@@ -50,85 +67,13 @@ import lombok.extern.slf4j.Slf4j;
     @JsonSubTypes.Type(value = GlossaryCategory.class, name = GlossaryCategory.TYPE_NAME),
     @JsonSubTypes.Type(value = Badge.class, name = Badge.TYPE_NAME),
     @JsonSubTypes.Type(value = Namespace.class, name = Namespace.TYPE_NAME),
+    @JsonSubTypes.Type(value = Catalog.class, name = Catalog.TYPE_NAME),
 })
 @Slf4j
 @SuppressWarnings("cast")
 public abstract class Asset extends Reference {
 
     public static final String TYPE_NAME = "Asset";
-
-    /** Internal tracking of fields that should be serialized with null values. */
-    @JsonIgnore
-    @Singular
-    transient Set<String> nullFields;
-
-    /** Retrieve the list of fields to be serialized with null values. */
-    @JsonIgnore
-    public Set<String> getNullFields() {
-        if (nullFields == null) {
-            return Collections.emptySet();
-        }
-        return Collections.unmodifiableSet(nullFields);
-    }
-
-    /** Classifications assigned to the asset. */
-    @Singular
-    Set<Classification> classifications;
-
-    /**
-     * Map of custom metadata attributes and values defined on the asset. The map is keyed by the human-readable
-     * name of the custom metadata set, and the values are a further mapping from human-readable attribute name
-     * to the value for that attribute on this asset.
-     */
-    @Singular("customMetadata")
-    Map<String, CustomMetadataAttributes> customMetadataSets;
-
-    /** Status of the asset. */
-    AtlanStatus status;
-
-    /** User or account that created the asset. */
-    final String createdBy;
-
-    /** User or account that last updated the asset. */
-    final String updatedBy;
-
-    /** Time (epoch) at which the asset was created, in milliseconds. */
-    final Long createTime;
-
-    /** Time (epoch) at which the asset was last updated, in milliseconds. */
-    final Long updateTime;
-
-    /** Details on the handler used for deletion of the asset. */
-    final String deleteHandler;
-
-    /**
-     * The names of the classifications that exist on the asset. This is not always returned, even by
-     * full retrieval operations. It is better to depend on the detailed values in the classifications
-     * property.
-     * @see #classifications
-     */
-    @Deprecated
-    @Singular
-    Set<String> classificationNames;
-
-    /** Unused. */
-    Boolean isIncomplete;
-
-    /** Names of terms that have been linked to this asset. */
-    Set<String> meaningNames;
-
-    /** Details of terms that have been linked to this asset. */
-    Set<Meaning> meanings;
-
-    /** Unique identifiers (GUIDs) for any background tasks that are yet to operate on this asset. */
-    final Set<String> pendingTasks;
-
-    /**
-     * Unique name for this asset. This is typically a concatenation of the asset's name onto its
-     * parent's qualifiedName.
-     */
-    @Attribute
-    String qualifiedName;
 
     /** Human-readable name of the asset. */
     @Attribute
@@ -325,56 +270,56 @@ public abstract class Asset extends Reference {
 
     /** List of usernames of the most recent users who read the asset. */
     @Attribute
-    @JsonProperty("sourceReadRecentUserList")
     @Singular
-    List<String> sourceReadRecentUsers;
+    @JsonProperty("sourceReadRecentUserList")
+    SortedSet<String> sourceReadRecentUsers;
 
     /** List of usernames with extra insights for the most recent users who read the asset. */
     @Attribute
-    @JsonProperty("sourceReadRecentUserRecordList")
     @Singular
+    @JsonProperty("sourceReadRecentUserRecordList")
     List<PopularityInsights> sourceReadRecentUserRecords;
 
     /** List of usernames of the users who read the asset the most. */
     @Attribute
-    @JsonProperty("sourceReadTopUserList")
     @Singular
-    List<String> sourceReadTopUsers;
+    @JsonProperty("sourceReadTopUserList")
+    SortedSet<String> sourceReadTopUsers;
 
     /** List of usernames with extra insights for the users who read the asset the most. */
     @Attribute
-    @JsonProperty("sourceReadTopUserRecordList")
     @Singular
+    @JsonProperty("sourceReadTopUserRecordList")
     List<PopularityInsights> sourceReadTopUserRecords;
 
     /** List of the most popular queries that accessed this asset. */
     @Attribute
-    @JsonProperty("sourceReadPopularQueryRecordList")
     @Singular
+    @JsonProperty("sourceReadPopularQueryRecordList")
     List<PopularityInsights> sourceReadPopularQueryRecords;
 
     /** List of the most expensive queries that accessed this asset. */
     @Attribute
-    @JsonProperty("sourceReadExpensiveQueryRecordList")
     @Singular
+    @JsonProperty("sourceReadExpensiveQueryRecordList")
     List<PopularityInsights> sourceReadExpensiveQueryRecords;
 
     /** List of the slowest queries that accessed this asset. */
     @Attribute
-    @JsonProperty("sourceReadSlowQueryRecordList")
     @Singular
+    @JsonProperty("sourceReadSlowQueryRecordList")
     List<PopularityInsights> sourceReadSlowQueryRecords;
 
     /** List of most expensive warehouse names. */
     @Attribute
-    @JsonProperty("sourceQueryComputeCostList")
     @Singular
-    List<String> sourceQueryComputeCosts;
+    @JsonProperty("sourceQueryComputeCostList")
+    SortedSet<String> sourceQueryComputeCosts;
 
     /** List of most expensive warehouses with extra insights. */
     @Attribute
-    @JsonProperty("sourceQueryComputeCostRecordList")
     @Singular
+    @JsonProperty("sourceQueryComputeCostRecordList")
     List<PopularityInsights> sourceQueryComputeCostRecords;
 
     /** TBC */
@@ -542,6 +487,11 @@ public abstract class Asset extends Reference {
     @Attribute
     String sampleDataUrl;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<String> assetTags;
+
     /** Resources that are linked to this asset. */
     @Attribute
     @Singular
@@ -556,11 +506,84 @@ public abstract class Asset extends Reference {
     @Attribute
     Readme readme;
 
-    /** Terms that are linked to this asset. */
-    @Singular
+    /** TBC */
     @Attribute
+    @Singular
     @JsonProperty("meanings")
     SortedSet<GlossaryTerm> assignedTerms;
+
+    /**
+     * Unique name for this asset. This is typically a concatenation of the asset's name onto its
+     * parent's qualifiedName.
+     */
+    @Attribute
+    String qualifiedName;
+
+    /** Internal tracking of fields that should be serialized with null values. */
+    @JsonIgnore
+    @Singular
+    transient Set<String> nullFields;
+
+    /** Retrieve the list of fields to be serialized with null values. */
+    @JsonIgnore
+    public Set<String> getNullFields() {
+        if (nullFields == null) {
+            return Collections.emptySet();
+        }
+        return Collections.unmodifiableSet(nullFields);
+    }
+
+    /** Classifications assigned to the asset. */
+    @Singular
+    Set<Classification> classifications;
+
+    /**
+     * Map of custom metadata attributes and values defined on the asset. The map is keyed by the human-readable
+     * name of the custom metadata set, and the values are a further mapping from human-readable attribute name
+     * to the value for that attribute on this asset.
+     */
+    @Singular("customMetadata")
+    Map<String, CustomMetadataAttributes> customMetadataSets;
+
+    /** Status of the asset. */
+    AtlanStatus status;
+
+    /** User or account that created the asset. */
+    final String createdBy;
+
+    /** User or account that last updated the asset. */
+    final String updatedBy;
+
+    /** Time (epoch) at which the asset was created, in milliseconds. */
+    final Long createTime;
+
+    /** Time (epoch) at which the asset was last updated, in milliseconds. */
+    final Long updateTime;
+
+    /** Details on the handler used for deletion of the asset. */
+    final String deleteHandler;
+
+    /**
+     * The names of the classifications that exist on the asset. This is not always returned, even by
+     * full retrieval operations. It is better to depend on the detailed values in the classifications
+     * property.
+     * @see #classifications
+     */
+    @Deprecated
+    @Singular
+    Set<String> classificationNames;
+
+    /** Unused. */
+    Boolean isIncomplete;
+
+    /** Names of terms that have been linked to this asset. */
+    Set<String> meaningNames;
+
+    /** Details of terms that have been linked to this asset. */
+    Set<Meaning> meanings;
+
+    /** Unique identifiers (GUIDs) for any background tasks that are yet to operate on this asset. */
+    final Set<String> pendingTasks;
 
     /**
      * Reduce the asset to the minimum set of properties required to update it.

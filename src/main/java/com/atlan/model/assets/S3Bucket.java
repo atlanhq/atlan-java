@@ -6,13 +6,16 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.enums.*;
+import com.atlan.model.enums.AtlanAnnouncementType;
+import com.atlan.model.enums.AtlanConnectorType;
+import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Instance of an S3 bucket in Atlan.
@@ -20,6 +23,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@Slf4j
 public class S3Bucket extends S3 {
     private static final long serialVersionUID = 2L;
 
@@ -64,6 +68,51 @@ public class S3Bucket extends S3 {
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
+    }
+
+    /**
+     * Retrieves a S3Bucket by its GUID, complete with all of its relationships.
+     *
+     * @param guid of the S3Bucket to retrieve
+     * @return the requested full S3Bucket, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the S3Bucket does not exist or the provided GUID is not a S3Bucket
+     */
+    public static S3Bucket retrieveByGuid(String guid) throws AtlanException {
+        Asset asset = Asset.retrieveFull(guid);
+        if (asset == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
+        } else if (asset instanceof S3Bucket) {
+            return (S3Bucket) asset;
+        } else {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "S3Bucket");
+        }
+    }
+
+    /**
+     * Retrieves a S3Bucket by its qualifiedName, complete with all of its relationships.
+     *
+     * @param qualifiedName of the S3Bucket to retrieve
+     * @return the requested full S3Bucket, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the S3Bucket does not exist
+     */
+    public static S3Bucket retrieveByQualifiedName(String qualifiedName) throws AtlanException {
+        Asset asset = Asset.retrieveFull(TYPE_NAME, qualifiedName);
+        if (asset instanceof S3Bucket) {
+            return (S3Bucket) asset;
+        } else {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "S3Bucket");
+        }
+    }
+
+    /**
+     * Restore the archived (soft-deleted) S3Bucket to active.
+     *
+     * @param qualifiedName for the S3Bucket
+     * @return true if the S3Bucket is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**
@@ -115,51 +164,6 @@ public class S3Bucket extends S3 {
                     ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "S3Bucket", String.join(",", missing));
         }
         return updater(this.getQualifiedName(), this.getName());
-    }
-
-    /**
-     * Retrieves a S3Bucket by its GUID, complete with all of its relationships.
-     *
-     * @param guid of the S3Bucket to retrieve
-     * @return the requested full S3Bucket, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the S3Bucket does not exist or the provided GUID is not a S3Bucket
-     */
-    public static S3Bucket retrieveByGuid(String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof S3Bucket) {
-            return (S3Bucket) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "S3Bucket");
-        }
-    }
-
-    /**
-     * Retrieves a S3Bucket by its qualifiedName, complete with all of its relationships.
-     *
-     * @param qualifiedName of the S3Bucket to retrieve
-     * @return the requested full S3Bucket, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the S3Bucket does not exist
-     */
-    public static S3Bucket retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        Asset asset = Asset.retrieveFull(TYPE_NAME, qualifiedName);
-        if (asset instanceof S3Bucket) {
-            return (S3Bucket) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "S3Bucket");
-        }
-    }
-
-    /**
-     * Restore the archived (soft-deleted) S3Bucket to active.
-     *
-     * @param qualifiedName for the S3Bucket
-     * @return true if the S3Bucket is now active, and false otherwise
-     * @throws AtlanException on any API problems
-     */
-    public static boolean restore(String qualifiedName) throws AtlanException {
-        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**
@@ -252,6 +256,48 @@ public class S3Bucket extends S3 {
     }
 
     /**
+     * Replace the terms linked to the S3Bucket.
+     *
+     * @param qualifiedName for the S3Bucket
+     * @param name human-readable name of the S3Bucket
+     * @param terms the list of terms to replace on the S3Bucket, or null to remove all terms from the S3Bucket
+     * @return the S3Bucket that was updated (note that it will NOT contain details of the replaced terms)
+     * @throws AtlanException on any API problems
+     */
+    public static S3Bucket replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+            throws AtlanException {
+        return (S3Bucket) Asset.replaceTerms(updater(qualifiedName, name), terms);
+    }
+
+    /**
+     * Link additional terms to the S3Bucket, without replacing existing terms linked to the S3Bucket.
+     * Note: this operation must make two API calls — one to retrieve the S3Bucket's existing terms,
+     * and a second to append the new terms.
+     *
+     * @param qualifiedName for the S3Bucket
+     * @param terms the list of terms to append to the S3Bucket
+     * @return the S3Bucket that was updated  (note that it will NOT contain details of the appended terms)
+     * @throws AtlanException on any API problems
+     */
+    public static S3Bucket appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (S3Bucket) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
+    }
+
+    /**
+     * Remove terms from a S3Bucket, without replacing all existing terms linked to the S3Bucket.
+     * Note: this operation must make two API calls — one to retrieve the S3Bucket's existing terms,
+     * and a second to remove the provided terms.
+     *
+     * @param qualifiedName for the S3Bucket
+     * @param terms the list of terms to remove from the S3Bucket, which must be referenced by GUID
+     * @return the S3Bucket that was updated (note that it will NOT contain details of the resulting terms)
+     * @throws AtlanException on any API problems
+     */
+    public static S3Bucket removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (S3Bucket) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
+    }
+
+    /**
      * Add classifications to a S3Bucket.
      *
      * @param qualifiedName of the S3Bucket
@@ -298,47 +344,5 @@ public class S3Bucket extends S3 {
      */
     public static void removeClassification(String qualifiedName, String classificationName) throws AtlanException {
         Asset.removeClassification(TYPE_NAME, qualifiedName, classificationName);
-    }
-
-    /**
-     * Replace the terms linked to the S3Bucket.
-     *
-     * @param qualifiedName for the S3Bucket
-     * @param name human-readable name of the S3Bucket
-     * @param terms the list of terms to replace on the S3Bucket, or null to remove all terms from the S3Bucket
-     * @return the S3Bucket that was updated (note that it will NOT contain details of the replaced terms)
-     * @throws AtlanException on any API problems
-     */
-    public static S3Bucket replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
-            throws AtlanException {
-        return (S3Bucket) Asset.replaceTerms(updater(qualifiedName, name), terms);
-    }
-
-    /**
-     * Link additional terms to the S3Bucket, without replacing existing terms linked to the S3Bucket.
-     * Note: this operation must make two API calls — one to retrieve the S3Bucket's existing terms,
-     * and a second to append the new terms.
-     *
-     * @param qualifiedName for the S3Bucket
-     * @param terms the list of terms to append to the S3Bucket
-     * @return the S3Bucket that was updated  (note that it will NOT contain details of the appended terms)
-     * @throws AtlanException on any API problems
-     */
-    public static S3Bucket appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (S3Bucket) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
-    }
-
-    /**
-     * Remove terms from a S3Bucket, without replacing all existing terms linked to the S3Bucket.
-     * Note: this operation must make two API calls — one to retrieve the S3Bucket's existing terms,
-     * and a second to remove the provided terms.
-     *
-     * @param qualifiedName for the S3Bucket
-     * @param terms the list of terms to remove from the S3Bucket, which must be referenced by GUID
-     * @return the S3Bucket that was updated (note that it will NOT contain details of the resulting terms)
-     * @throws AtlanException on any API problems
-     */
-    public static S3Bucket removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (S3Bucket) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 }

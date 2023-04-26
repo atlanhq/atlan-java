@@ -149,6 +149,74 @@ public class GlossaryTerm extends Asset {
     SortedSet<GlossaryTerm> preferredTerms;
 
     /**
+     * Reference to a GlossaryTerm by GUID.
+     *
+     * @param guid the GUID of the GlossaryTerm to reference
+     * @return reference to a GlossaryTerm that can be used for defining a relationship to a GlossaryTerm
+     */
+    public static GlossaryTerm refByGuid(String guid) {
+        return GlossaryTerm.builder().guid(guid).build();
+    }
+
+    /**
+     * Reference to a GlossaryTerm by qualifiedName.
+     *
+     * @param qualifiedName the qualifiedName of the GlossaryTerm to reference
+     * @return reference to a GlossaryTerm that can be used for defining a relationship to a GlossaryTerm
+     */
+    public static GlossaryTerm refByQualifiedName(String qualifiedName) {
+        return GlossaryTerm.builder()
+                .uniqueAttributes(
+                        UniqueAttributes.builder().qualifiedName(qualifiedName).build())
+                .build();
+    }
+
+    /**
+     * Retrieves a GlossaryTerm by its GUID, complete with all of its relationships.
+     *
+     * @param guid of the GlossaryTerm to retrieve
+     * @return the requested full GlossaryTerm, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the GlossaryTerm does not exist or the provided GUID is not a GlossaryTerm
+     */
+    public static GlossaryTerm retrieveByGuid(String guid) throws AtlanException {
+        Asset asset = Asset.retrieveFull(guid);
+        if (asset == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
+        } else if (asset instanceof GlossaryTerm) {
+            return (GlossaryTerm) asset;
+        } else {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "GlossaryTerm");
+        }
+    }
+
+    /**
+     * Retrieves a GlossaryTerm by its qualifiedName, complete with all of its relationships.
+     *
+     * @param qualifiedName of the GlossaryTerm to retrieve
+     * @return the requested full GlossaryTerm, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the GlossaryTerm does not exist
+     */
+    public static GlossaryTerm retrieveByQualifiedName(String qualifiedName) throws AtlanException {
+        Asset asset = Asset.retrieveFull(TYPE_NAME, qualifiedName);
+        if (asset instanceof GlossaryTerm) {
+            return (GlossaryTerm) asset;
+        } else {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "GlossaryTerm");
+        }
+    }
+
+    /**
+     * Restore the archived (soft-deleted) GlossaryTerm to active.
+     *
+     * @param qualifiedName for the GlossaryTerm
+     * @return true if the GlossaryTerm is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
      * Builds the minimal object necessary for creating a term. At least one of glossaryGuid or
      * glossaryQualifiedName must be provided.
      *
@@ -381,73 +449,6 @@ public class GlossaryTerm extends Asset {
     public static GlossaryTerm removeAnnouncement(String qualifiedName, String name, String glossaryGuid)
             throws AtlanException {
         return (GlossaryTerm) Asset.removeAnnouncement(updater(qualifiedName, name, glossaryGuid));
-    }
-    /**
-     * Reference to a GlossaryTerm by GUID.
-     *
-     * @param guid the GUID of the GlossaryTerm to reference
-     * @return reference to a GlossaryTerm that can be used for defining a relationship to a GlossaryTerm
-     */
-    public static GlossaryTerm refByGuid(String guid) {
-        return GlossaryTerm.builder().guid(guid).build();
-    }
-
-    /**
-     * Reference to a GlossaryTerm by qualifiedName.
-     *
-     * @param qualifiedName the qualifiedName of the GlossaryTerm to reference
-     * @return reference to a GlossaryTerm that can be used for defining a relationship to a GlossaryTerm
-     */
-    public static GlossaryTerm refByQualifiedName(String qualifiedName) {
-        return GlossaryTerm.builder()
-                .uniqueAttributes(
-                        UniqueAttributes.builder().qualifiedName(qualifiedName).build())
-                .build();
-    }
-
-    /**
-     * Retrieves a GlossaryTerm by its GUID, complete with all of its relationships.
-     *
-     * @param guid of the GlossaryTerm to retrieve
-     * @return the requested full GlossaryTerm, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the GlossaryTerm does not exist or the provided GUID is not a GlossaryTerm
-     */
-    public static GlossaryTerm retrieveByGuid(String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof GlossaryTerm) {
-            return (GlossaryTerm) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "GlossaryTerm");
-        }
-    }
-
-    /**
-     * Retrieves a GlossaryTerm by its qualifiedName, complete with all of its relationships.
-     *
-     * @param qualifiedName of the GlossaryTerm to retrieve
-     * @return the requested full GlossaryTerm, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the GlossaryTerm does not exist
-     */
-    public static GlossaryTerm retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        Asset asset = Asset.retrieveFull(TYPE_NAME, qualifiedName);
-        if (asset instanceof GlossaryTerm) {
-            return (GlossaryTerm) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "GlossaryTerm");
-        }
-    }
-
-    /**
-     * Restore the archived (soft-deleted) GlossaryTerm to active.
-     *
-     * @param qualifiedName for the GlossaryTerm
-     * @return true if the GlossaryTerm is now active, and false otherwise
-     * @throws AtlanException on any API problems
-     */
-    public static boolean restore(String qualifiedName) throws AtlanException {
-        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**

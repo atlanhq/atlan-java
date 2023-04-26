@@ -6,12 +6,13 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.enums.*;
+import com.atlan.model.enums.IconType;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Instance of a README template in Atlan.
@@ -19,6 +20,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@Slf4j
 public class ReadmeTemplate extends Resource {
     private static final long serialVersionUID = 2L;
 
@@ -58,40 +60,6 @@ public class ReadmeTemplate extends Resource {
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
-    }
-
-    /**
-     * Builds the minimal object necessary to update a ReadmeTemplate.
-     *
-     * @param qualifiedName of the ReadmeTemplate
-     * @param name of the ReadmeTemplate
-     * @return the minimal request necessary to update the ReadmeTemplate, as a builder
-     */
-    public static ReadmeTemplateBuilder<?, ?> updater(String qualifiedName, String name) {
-        return ReadmeTemplate.builder().qualifiedName(qualifiedName).name(name);
-    }
-
-    /**
-     * Builds the minimal object necessary to apply an update to a ReadmeTemplate, from a potentially
-     * more-complete ReadmeTemplate object.
-     *
-     * @return the minimal object necessary to update the ReadmeTemplate, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for ReadmeTemplate are not found in the initial object
-     */
-    @Override
-    public ReadmeTemplateBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        List<String> missing = new ArrayList<>();
-        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
-            missing.add("qualifiedName");
-        }
-        if (this.getName() == null || this.getName().length() == 0) {
-            missing.add("name");
-        }
-        if (!missing.isEmpty()) {
-            throw new InvalidRequestException(
-                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "ReadmeTemplate", String.join(",", missing));
-        }
-        return updater(this.getQualifiedName(), this.getName());
     }
 
     /**
@@ -140,6 +108,40 @@ public class ReadmeTemplate extends Resource {
     }
 
     /**
+     * Builds the minimal object necessary to update a ReadmeTemplate.
+     *
+     * @param qualifiedName of the ReadmeTemplate
+     * @param name of the ReadmeTemplate
+     * @return the minimal request necessary to update the ReadmeTemplate, as a builder
+     */
+    public static ReadmeTemplateBuilder<?, ?> updater(String qualifiedName, String name) {
+        return ReadmeTemplate.builder().qualifiedName(qualifiedName).name(name);
+    }
+
+    /**
+     * Builds the minimal object necessary to apply an update to a ReadmeTemplate, from a potentially
+     * more-complete ReadmeTemplate object.
+     *
+     * @return the minimal object necessary to update the ReadmeTemplate, as a builder
+     * @throws InvalidRequestException if any of the minimal set of required properties for ReadmeTemplate are not found in the initial object
+     */
+    @Override
+    public ReadmeTemplateBuilder<?, ?> trimToRequired() throws InvalidRequestException {
+        List<String> missing = new ArrayList<>();
+        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
+            missing.add("qualifiedName");
+        }
+        if (this.getName() == null || this.getName().length() == 0) {
+            missing.add("name");
+        }
+        if (!missing.isEmpty()) {
+            throw new InvalidRequestException(
+                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "ReadmeTemplate", String.join(",", missing));
+        }
+        return updater(this.getQualifiedName(), this.getName());
+    }
+
+    /**
      * Remove the system description from a ReadmeTemplate.
      *
      * @param qualifiedName of the ReadmeTemplate
@@ -161,161 +163,5 @@ public class ReadmeTemplate extends Resource {
      */
     public static ReadmeTemplate removeUserDescription(String qualifiedName, String name) throws AtlanException {
         return (ReadmeTemplate) Asset.removeUserDescription(updater(qualifiedName, name));
-    }
-
-    /**
-     * Remove the owners from a ReadmeTemplate.
-     *
-     * @param qualifiedName of the ReadmeTemplate
-     * @param name of the ReadmeTemplate
-     * @return the updated ReadmeTemplate, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static ReadmeTemplate removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (ReadmeTemplate) Asset.removeOwners(updater(qualifiedName, name));
-    }
-
-    /**
-     * Update the certificate on a ReadmeTemplate.
-     *
-     * @param qualifiedName of the ReadmeTemplate
-     * @param certificate to use
-     * @param message (optional) message, or null if no message
-     * @return the updated ReadmeTemplate, or null if the update failed
-     * @throws AtlanException on any API problems
-     */
-    public static ReadmeTemplate updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
-            throws AtlanException {
-        return (ReadmeTemplate) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
-    }
-
-    /**
-     * Remove the certificate from a ReadmeTemplate.
-     *
-     * @param qualifiedName of the ReadmeTemplate
-     * @param name of the ReadmeTemplate
-     * @return the updated ReadmeTemplate, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static ReadmeTemplate removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (ReadmeTemplate) Asset.removeCertificate(updater(qualifiedName, name));
-    }
-
-    /**
-     * Update the announcement on a ReadmeTemplate.
-     *
-     * @param qualifiedName of the ReadmeTemplate
-     * @param type type of announcement to set
-     * @param title (optional) title of the announcement to set (or null for no title)
-     * @param message (optional) message of the announcement to set (or null for no message)
-     * @return the result of the update, or null if the update failed
-     * @throws AtlanException on any API problems
-     */
-    public static ReadmeTemplate updateAnnouncement(
-            String qualifiedName, AtlanAnnouncementType type, String title, String message) throws AtlanException {
-        return (ReadmeTemplate) Asset.updateAnnouncement(builder(), TYPE_NAME, qualifiedName, type, title, message);
-    }
-
-    /**
-     * Remove the announcement from a ReadmeTemplate.
-     *
-     * @param qualifiedName of the ReadmeTemplate
-     * @param name of the ReadmeTemplate
-     * @return the updated ReadmeTemplate, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static ReadmeTemplate removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (ReadmeTemplate) Asset.removeAnnouncement(updater(qualifiedName, name));
-    }
-
-    /**
-     * Add classifications to a ReadmeTemplate.
-     *
-     * @param qualifiedName of the ReadmeTemplate
-     * @param classificationNames human-readable names of the classifications to add
-     * @throws AtlanException on any API problems, or if any of the classifications already exist on the ReadmeTemplate
-     */
-    public static void addClassifications(String qualifiedName, List<String> classificationNames)
-            throws AtlanException {
-        Asset.addClassifications(TYPE_NAME, qualifiedName, classificationNames);
-    }
-
-    /**
-     * Add classifications to a ReadmeTemplate.
-     *
-     * @param qualifiedName of the ReadmeTemplate
-     * @param classificationNames human-readable names of the classifications to add
-     * @param propagate whether to propagate the classification (true) or not (false)
-     * @param removePropagationsOnDelete whether to remove the propagated classifications when the classification is removed from this asset (true) or not (false)
-     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
-     * @throws AtlanException on any API problems, or if any of the classifications already exist on the ReadmeTemplate
-     */
-    public static void addClassifications(
-            String qualifiedName,
-            List<String> classificationNames,
-            boolean propagate,
-            boolean removePropagationsOnDelete,
-            boolean restrictLineagePropagation)
-            throws AtlanException {
-        Asset.addClassifications(
-                TYPE_NAME,
-                qualifiedName,
-                classificationNames,
-                propagate,
-                removePropagationsOnDelete,
-                restrictLineagePropagation);
-    }
-
-    /**
-     * Remove a classification from a ReadmeTemplate.
-     *
-     * @param qualifiedName of the ReadmeTemplate
-     * @param classificationName human-readable name of the classification to remove
-     * @throws AtlanException on any API problems, or if the classification does not exist on the ReadmeTemplate
-     */
-    public static void removeClassification(String qualifiedName, String classificationName) throws AtlanException {
-        Asset.removeClassification(TYPE_NAME, qualifiedName, classificationName);
-    }
-
-    /**
-     * Replace the terms linked to the ReadmeTemplate.
-     *
-     * @param qualifiedName for the ReadmeTemplate
-     * @param name human-readable name of the ReadmeTemplate
-     * @param terms the list of terms to replace on the ReadmeTemplate, or null to remove all terms from the ReadmeTemplate
-     * @return the ReadmeTemplate that was updated (note that it will NOT contain details of the replaced terms)
-     * @throws AtlanException on any API problems
-     */
-    public static ReadmeTemplate replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
-            throws AtlanException {
-        return (ReadmeTemplate) Asset.replaceTerms(updater(qualifiedName, name), terms);
-    }
-
-    /**
-     * Link additional terms to the ReadmeTemplate, without replacing existing terms linked to the ReadmeTemplate.
-     * Note: this operation must make two API calls — one to retrieve the ReadmeTemplate's existing terms,
-     * and a second to append the new terms.
-     *
-     * @param qualifiedName for the ReadmeTemplate
-     * @param terms the list of terms to append to the ReadmeTemplate
-     * @return the ReadmeTemplate that was updated  (note that it will NOT contain details of the appended terms)
-     * @throws AtlanException on any API problems
-     */
-    public static ReadmeTemplate appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (ReadmeTemplate) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
-    }
-
-    /**
-     * Remove terms from a ReadmeTemplate, without replacing all existing terms linked to the ReadmeTemplate.
-     * Note: this operation must make two API calls — one to retrieve the ReadmeTemplate's existing terms,
-     * and a second to remove the provided terms.
-     *
-     * @param qualifiedName for the ReadmeTemplate
-     * @param terms the list of terms to remove from the ReadmeTemplate, which must be referenced by GUID
-     * @return the ReadmeTemplate that was updated (note that it will NOT contain details of the resulting terms)
-     * @throws AtlanException on any API problems
-     */
-    public static ReadmeTemplate removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (ReadmeTemplate) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 }

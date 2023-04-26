@@ -6,6 +6,10 @@ import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import co.elastic.clients.elasticsearch._types.FieldSort;
 import co.elastic.clients.elasticsearch._types.SortOptions;
 import co.elastic.clients.elasticsearch._types.SortOrder;
+import com.atlan.api.EntityBulkEndpoint;
+import com.atlan.cache.GroupCache;
+import com.atlan.cache.RoleCache;
+import com.atlan.cache.UserCache;
 import com.atlan.exception.ApiException;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
@@ -16,8 +20,10 @@ import com.atlan.model.core.AssetDeletionResponse;
 import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.core.AssetResponse;
 import com.atlan.model.core.Classification;
+import com.atlan.model.core.ConnectionCreationResponse;
 import com.atlan.model.core.CustomMetadataAttributes;
 import com.atlan.model.enums.AtlanAnnouncementType;
+import com.atlan.model.enums.AtlanConnectionCategory;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanDeleteType;
 import com.atlan.model.enums.AtlanStatus;
@@ -52,6 +58,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -65,6 +75,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import java.util.UUID;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
@@ -92,16 +103,18 @@ import lombok.extern.slf4j.Slf4j;
 })
 </#if>
 @Slf4j
-<#if mapContainers??>@SuppressWarnings("cast")</#if>
-public <#if subTypes??>abstract</#if> class ${className} extends ${parentClassName} {
-    private static final long serialVersionUID = 2L;
+<#if mapContainers?? || className == "Asset">@SuppressWarnings("cast")</#if>
+public <#if abstract>abstract</#if> class ${className} extends ${parentClassName} {
+<#if !abstract>    private static final long serialVersionUID = 2L;</#if>
 
     public static final String TYPE_NAME = "${originalName}";
 
+<#if !abstract>
     /** Fixed typeName for ${className}s. */
     @Getter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
+</#if>
 
 <#list attributes as attribute>
     /** ${attribute.description} */
@@ -114,45 +127,7 @@ public <#if subTypes??>abstract</#if> class ${className} extends ${parentClassNa
     ${attribute.fullType} ${attribute.renamed};
 
 </#list>
-<#if templateFile??>
-<#import templateFile as methods>
-<@methods.all/>
-<#elseif !subTypes?has_content>
-    /**
-     * Builds the minimal object necessary to update a ${className}.
-     *
-     * @param qualifiedName of the ${className}
-     * @param name of the ${className}
-     * @return the minimal request necessary to update the ${className}, as a builder
-     */
-    public static ${className}Builder<?, ?> updater(String qualifiedName, String name) {
-        return ${className}.builder().qualifiedName(qualifiedName).name(name);
-    }
-
-    /**
-     * Builds the minimal object necessary to apply an update to a ${className}, from a potentially
-     * more-complete ${className} object.
-     *
-     * @return the minimal object necessary to update the ${className}, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for ${className} are not found in the initial object
-     */
-    @Override
-    public ${className}Builder<?, ?> trimToRequired() throws InvalidRequestException {
-        List<String> missing = new ArrayList<>();
-        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
-            missing.add("qualifiedName");
-        }
-        if (this.getName() == null || this.getName().length() == 0) {
-            missing.add("name");
-        }
-        if (!missing.isEmpty()) {
-            throw new InvalidRequestException(
-                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "${className}", String.join(",", missing));
-        }
-        return updater(this.getQualifiedName(), this.getName());
-    }
-</#if>
-<#if !subTypes?has_content>
+<#if !abstract>
     /**
      * Reference to a ${className} by GUID.
      *
@@ -221,6 +196,47 @@ public <#if subTypes??>abstract</#if> class ${className} extends ${parentClassNa
         return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
+</#if>
+<#if templateFile??>
+<#import templateFile as methods>
+<@methods.all/>
+<#elseif !abstract>
+    /**
+     * Builds the minimal object necessary to update a ${className}.
+     *
+     * @param qualifiedName of the ${className}
+     * @param name of the ${className}
+     * @return the minimal request necessary to update the ${className}, as a builder
+     */
+    public static ${className}Builder<?, ?> updater(String qualifiedName, String name) {
+        return ${className}.builder().qualifiedName(qualifiedName).name(name);
+    }
+
+    /**
+     * Builds the minimal object necessary to apply an update to a ${className}, from a potentially
+     * more-complete ${className} object.
+     *
+     * @return the minimal object necessary to update the ${className}, as a builder
+     * @throws InvalidRequestException if any of the minimal set of required properties for ${className} are not found in the initial object
+     */
+    @Override
+    public ${className}Builder<?, ?> trimToRequired() throws InvalidRequestException {
+        List<String> missing = new ArrayList<>();
+        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
+            missing.add("qualifiedName");
+        }
+        if (this.getName() == null || this.getName().length() == 0) {
+            missing.add("name");
+        }
+        if (!missing.isEmpty()) {
+            throw new InvalidRequestException(
+                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "${className}", String.join(",", missing));
+        }
+        return updater(this.getQualifiedName(), this.getName());
+    }
+</#if>
+
+<#if !abstract>
 <#if className != "Glossary" && className != "GlossaryCategory" && className != "GlossaryTerm">
     /**
      * Remove the system description from a ${className}.

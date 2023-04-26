@@ -2,10 +2,11 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
-import com.atlan.model.enums.*;
+import com.atlan.model.enums.PowerBIEndorsementType;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Base class for Power BI assets.
@@ -26,6 +27,7 @@ import lombok.experimental.SuperBuilder;
     @JsonSubTypes.Type(value = PowerBIPage.class, name = PowerBIPage.TYPE_NAME),
     @JsonSubTypes.Type(value = PowerBIDataflow.class, name = PowerBIDataflow.TYPE_NAME),
 })
+@Slf4j
 public abstract class PowerBI extends BI {
 
     public static final String TYPE_NAME = "PowerBI";

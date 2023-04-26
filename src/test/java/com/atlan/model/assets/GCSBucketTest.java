@@ -5,6 +5,8 @@ package com.atlan.model.assets;
 import static org.testng.Assert.*;
 
 import com.atlan.model.enums.*;
+import com.atlan.model.structs.GoogleLabel;
+import com.atlan.model.structs.GoogleTag;
 import com.atlan.serde.Serde;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.*;

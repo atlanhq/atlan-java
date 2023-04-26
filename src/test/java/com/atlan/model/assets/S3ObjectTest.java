@@ -5,6 +5,7 @@ package com.atlan.model.assets;
 import static org.testng.Assert.*;
 
 import com.atlan.model.enums.*;
+import com.atlan.model.structs.AwsTag;
 import com.atlan.serde.Serde;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.*;
@@ -120,7 +121,7 @@ public class S3ObjectTest {
             .awsResourceId("awsResourceId")
             .awsOwnerName("awsOwnerName")
             .awsOwnerId("awsOwnerId")
-            .awsTags(List.of(AWSTag.of("key1", "value1"), AWSTag.of("key2", "value2")))
+            .awsTags(List.of(AwsTag.of("key1", "value1"), AwsTag.of("key2", "value2")))
             .s3ETag("s3ETag")
             .s3Encryption("s3Encryption")
             .s3ObjectLastModifiedTime(8447013728355987816L)

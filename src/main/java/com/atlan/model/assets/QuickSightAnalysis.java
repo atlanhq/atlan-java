@@ -6,13 +6,16 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.enums.*;
+import com.atlan.model.enums.AtlanAnnouncementType;
+import com.atlan.model.enums.CertificateStatus;
+import com.atlan.model.enums.QuickSightAnalysisStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * TBC
@@ -20,6 +23,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@Slf4j
 public class QuickSightAnalysis extends QuickSight {
     private static final long serialVersionUID = 2L;
 
@@ -83,40 +87,6 @@ public class QuickSightAnalysis extends QuickSight {
     }
 
     /**
-     * Builds the minimal object necessary to update a QuickSightAnalysis.
-     *
-     * @param qualifiedName of the QuickSightAnalysis
-     * @param name of the QuickSightAnalysis
-     * @return the minimal request necessary to update the QuickSightAnalysis, as a builder
-     */
-    public static QuickSightAnalysisBuilder<?, ?> updater(String qualifiedName, String name) {
-        return QuickSightAnalysis.builder().qualifiedName(qualifiedName).name(name);
-    }
-
-    /**
-     * Builds the minimal object necessary to apply an update to a QuickSightAnalysis, from a potentially
-     * more-complete QuickSightAnalysis object.
-     *
-     * @return the minimal object necessary to update the QuickSightAnalysis, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for QuickSightAnalysis are not found in the initial object
-     */
-    @Override
-    public QuickSightAnalysisBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        List<String> missing = new ArrayList<>();
-        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
-            missing.add("qualifiedName");
-        }
-        if (this.getName() == null || this.getName().length() == 0) {
-            missing.add("name");
-        }
-        if (!missing.isEmpty()) {
-            throw new InvalidRequestException(
-                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "QuickSightAnalysis", String.join(",", missing));
-        }
-        return updater(this.getQualifiedName(), this.getName());
-    }
-
-    /**
      * Retrieves a QuickSightAnalysis by its GUID, complete with all of its relationships.
      *
      * @param guid of the QuickSightAnalysis to retrieve
@@ -159,6 +129,40 @@ public class QuickSightAnalysis extends QuickSight {
      */
     public static boolean restore(String qualifiedName) throws AtlanException {
         return Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Builds the minimal object necessary to update a QuickSightAnalysis.
+     *
+     * @param qualifiedName of the QuickSightAnalysis
+     * @param name of the QuickSightAnalysis
+     * @return the minimal request necessary to update the QuickSightAnalysis, as a builder
+     */
+    public static QuickSightAnalysisBuilder<?, ?> updater(String qualifiedName, String name) {
+        return QuickSightAnalysis.builder().qualifiedName(qualifiedName).name(name);
+    }
+
+    /**
+     * Builds the minimal object necessary to apply an update to a QuickSightAnalysis, from a potentially
+     * more-complete QuickSightAnalysis object.
+     *
+     * @return the minimal object necessary to update the QuickSightAnalysis, as a builder
+     * @throws InvalidRequestException if any of the minimal set of required properties for QuickSightAnalysis are not found in the initial object
+     */
+    @Override
+    public QuickSightAnalysisBuilder<?, ?> trimToRequired() throws InvalidRequestException {
+        List<String> missing = new ArrayList<>();
+        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
+            missing.add("qualifiedName");
+        }
+        if (this.getName() == null || this.getName().length() == 0) {
+            missing.add("name");
+        }
+        if (!missing.isEmpty()) {
+            throw new InvalidRequestException(
+                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "QuickSightAnalysis", String.join(",", missing));
+        }
+        return updater(this.getQualifiedName(), this.getName());
     }
 
     /**
@@ -251,6 +255,48 @@ public class QuickSightAnalysis extends QuickSight {
     }
 
     /**
+     * Replace the terms linked to the QuickSightAnalysis.
+     *
+     * @param qualifiedName for the QuickSightAnalysis
+     * @param name human-readable name of the QuickSightAnalysis
+     * @param terms the list of terms to replace on the QuickSightAnalysis, or null to remove all terms from the QuickSightAnalysis
+     * @return the QuickSightAnalysis that was updated (note that it will NOT contain details of the replaced terms)
+     * @throws AtlanException on any API problems
+     */
+    public static QuickSightAnalysis replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+            throws AtlanException {
+        return (QuickSightAnalysis) Asset.replaceTerms(updater(qualifiedName, name), terms);
+    }
+
+    /**
+     * Link additional terms to the QuickSightAnalysis, without replacing existing terms linked to the QuickSightAnalysis.
+     * Note: this operation must make two API calls — one to retrieve the QuickSightAnalysis's existing terms,
+     * and a second to append the new terms.
+     *
+     * @param qualifiedName for the QuickSightAnalysis
+     * @param terms the list of terms to append to the QuickSightAnalysis
+     * @return the QuickSightAnalysis that was updated  (note that it will NOT contain details of the appended terms)
+     * @throws AtlanException on any API problems
+     */
+    public static QuickSightAnalysis appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (QuickSightAnalysis) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
+    }
+
+    /**
+     * Remove terms from a QuickSightAnalysis, without replacing all existing terms linked to the QuickSightAnalysis.
+     * Note: this operation must make two API calls — one to retrieve the QuickSightAnalysis's existing terms,
+     * and a second to remove the provided terms.
+     *
+     * @param qualifiedName for the QuickSightAnalysis
+     * @param terms the list of terms to remove from the QuickSightAnalysis, which must be referenced by GUID
+     * @return the QuickSightAnalysis that was updated (note that it will NOT contain details of the resulting terms)
+     * @throws AtlanException on any API problems
+     */
+    public static QuickSightAnalysis removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (QuickSightAnalysis) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
+    }
+
+    /**
      * Add classifications to a QuickSightAnalysis.
      *
      * @param qualifiedName of the QuickSightAnalysis
@@ -297,47 +343,5 @@ public class QuickSightAnalysis extends QuickSight {
      */
     public static void removeClassification(String qualifiedName, String classificationName) throws AtlanException {
         Asset.removeClassification(TYPE_NAME, qualifiedName, classificationName);
-    }
-
-    /**
-     * Replace the terms linked to the QuickSightAnalysis.
-     *
-     * @param qualifiedName for the QuickSightAnalysis
-     * @param name human-readable name of the QuickSightAnalysis
-     * @param terms the list of terms to replace on the QuickSightAnalysis, or null to remove all terms from the QuickSightAnalysis
-     * @return the QuickSightAnalysis that was updated (note that it will NOT contain details of the replaced terms)
-     * @throws AtlanException on any API problems
-     */
-    public static QuickSightAnalysis replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
-            throws AtlanException {
-        return (QuickSightAnalysis) Asset.replaceTerms(updater(qualifiedName, name), terms);
-    }
-
-    /**
-     * Link additional terms to the QuickSightAnalysis, without replacing existing terms linked to the QuickSightAnalysis.
-     * Note: this operation must make two API calls — one to retrieve the QuickSightAnalysis's existing terms,
-     * and a second to append the new terms.
-     *
-     * @param qualifiedName for the QuickSightAnalysis
-     * @param terms the list of terms to append to the QuickSightAnalysis
-     * @return the QuickSightAnalysis that was updated  (note that it will NOT contain details of the appended terms)
-     * @throws AtlanException on any API problems
-     */
-    public static QuickSightAnalysis appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (QuickSightAnalysis) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
-    }
-
-    /**
-     * Remove terms from a QuickSightAnalysis, without replacing all existing terms linked to the QuickSightAnalysis.
-     * Note: this operation must make two API calls — one to retrieve the QuickSightAnalysis's existing terms,
-     * and a second to remove the provided terms.
-     *
-     * @param qualifiedName for the QuickSightAnalysis
-     * @param terms the list of terms to remove from the QuickSightAnalysis, which must be referenced by GUID
-     * @return the QuickSightAnalysis that was updated (note that it will NOT contain details of the resulting terms)
-     * @throws AtlanException on any API problems
-     */
-    public static QuickSightAnalysis removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (QuickSightAnalysis) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 }

@@ -2,11 +2,12 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
-import com.atlan.model.enums.*;
+import com.atlan.model.structs.AwsTag;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import java.util.List;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Base class for AWS assets.
@@ -14,9 +15,8 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
-@JsonSubTypes({
-    @JsonSubTypes.Type(value = S3.class, name = S3.TYPE_NAME),
-})
+@JsonSubTypes({})
+@Slf4j
 public abstract class AWS extends Catalog {
 
     public static final String TYPE_NAME = "AWS";
@@ -56,5 +56,5 @@ public abstract class AWS extends Catalog {
     /** List of tags that have been applied to the asset in AWS. */
     @Attribute
     @Singular
-    List<AWSTag> awsTags;
+    List<AwsTag> awsTags;
 }

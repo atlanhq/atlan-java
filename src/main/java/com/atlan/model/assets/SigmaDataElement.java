@@ -6,13 +6,15 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.enums.*;
+import com.atlan.model.enums.AtlanAnnouncementType;
+import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Instance of a Sigma data element in Atlan.
@@ -20,6 +22,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@Slf4j
 public class SigmaDataElement extends Sigma {
     private static final long serialVersionUID = 2L;
 
@@ -75,40 +78,6 @@ public class SigmaDataElement extends Sigma {
     }
 
     /**
-     * Builds the minimal object necessary to update a SigmaDataElement.
-     *
-     * @param qualifiedName of the SigmaDataElement
-     * @param name of the SigmaDataElement
-     * @return the minimal request necessary to update the SigmaDataElement, as a builder
-     */
-    public static SigmaDataElementBuilder<?, ?> updater(String qualifiedName, String name) {
-        return SigmaDataElement.builder().qualifiedName(qualifiedName).name(name);
-    }
-
-    /**
-     * Builds the minimal object necessary to apply an update to a SigmaDataElement, from a potentially
-     * more-complete SigmaDataElement object.
-     *
-     * @return the minimal object necessary to update the SigmaDataElement, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for SigmaDataElement are not found in the initial object
-     */
-    @Override
-    public SigmaDataElementBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        List<String> missing = new ArrayList<>();
-        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
-            missing.add("qualifiedName");
-        }
-        if (this.getName() == null || this.getName().length() == 0) {
-            missing.add("name");
-        }
-        if (!missing.isEmpty()) {
-            throw new InvalidRequestException(
-                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "SigmaDataElement", String.join(",", missing));
-        }
-        return updater(this.getQualifiedName(), this.getName());
-    }
-
-    /**
      * Retrieves a SigmaDataElement by its GUID, complete with all of its relationships.
      *
      * @param guid of the SigmaDataElement to retrieve
@@ -151,6 +120,40 @@ public class SigmaDataElement extends Sigma {
      */
     public static boolean restore(String qualifiedName) throws AtlanException {
         return Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Builds the minimal object necessary to update a SigmaDataElement.
+     *
+     * @param qualifiedName of the SigmaDataElement
+     * @param name of the SigmaDataElement
+     * @return the minimal request necessary to update the SigmaDataElement, as a builder
+     */
+    public static SigmaDataElementBuilder<?, ?> updater(String qualifiedName, String name) {
+        return SigmaDataElement.builder().qualifiedName(qualifiedName).name(name);
+    }
+
+    /**
+     * Builds the minimal object necessary to apply an update to a SigmaDataElement, from a potentially
+     * more-complete SigmaDataElement object.
+     *
+     * @return the minimal object necessary to update the SigmaDataElement, as a builder
+     * @throws InvalidRequestException if any of the minimal set of required properties for SigmaDataElement are not found in the initial object
+     */
+    @Override
+    public SigmaDataElementBuilder<?, ?> trimToRequired() throws InvalidRequestException {
+        List<String> missing = new ArrayList<>();
+        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
+            missing.add("qualifiedName");
+        }
+        if (this.getName() == null || this.getName().length() == 0) {
+            missing.add("name");
+        }
+        if (!missing.isEmpty()) {
+            throw new InvalidRequestException(
+                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "SigmaDataElement", String.join(",", missing));
+        }
+        return updater(this.getQualifiedName(), this.getName());
     }
 
     /**
@@ -243,6 +246,48 @@ public class SigmaDataElement extends Sigma {
     }
 
     /**
+     * Replace the terms linked to the SigmaDataElement.
+     *
+     * @param qualifiedName for the SigmaDataElement
+     * @param name human-readable name of the SigmaDataElement
+     * @param terms the list of terms to replace on the SigmaDataElement, or null to remove all terms from the SigmaDataElement
+     * @return the SigmaDataElement that was updated (note that it will NOT contain details of the replaced terms)
+     * @throws AtlanException on any API problems
+     */
+    public static SigmaDataElement replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+            throws AtlanException {
+        return (SigmaDataElement) Asset.replaceTerms(updater(qualifiedName, name), terms);
+    }
+
+    /**
+     * Link additional terms to the SigmaDataElement, without replacing existing terms linked to the SigmaDataElement.
+     * Note: this operation must make two API calls — one to retrieve the SigmaDataElement's existing terms,
+     * and a second to append the new terms.
+     *
+     * @param qualifiedName for the SigmaDataElement
+     * @param terms the list of terms to append to the SigmaDataElement
+     * @return the SigmaDataElement that was updated  (note that it will NOT contain details of the appended terms)
+     * @throws AtlanException on any API problems
+     */
+    public static SigmaDataElement appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (SigmaDataElement) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
+    }
+
+    /**
+     * Remove terms from a SigmaDataElement, without replacing all existing terms linked to the SigmaDataElement.
+     * Note: this operation must make two API calls — one to retrieve the SigmaDataElement's existing terms,
+     * and a second to remove the provided terms.
+     *
+     * @param qualifiedName for the SigmaDataElement
+     * @param terms the list of terms to remove from the SigmaDataElement, which must be referenced by GUID
+     * @return the SigmaDataElement that was updated (note that it will NOT contain details of the resulting terms)
+     * @throws AtlanException on any API problems
+     */
+    public static SigmaDataElement removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (SigmaDataElement) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
+    }
+
+    /**
      * Add classifications to a SigmaDataElement.
      *
      * @param qualifiedName of the SigmaDataElement
@@ -289,47 +334,5 @@ public class SigmaDataElement extends Sigma {
      */
     public static void removeClassification(String qualifiedName, String classificationName) throws AtlanException {
         Asset.removeClassification(TYPE_NAME, qualifiedName, classificationName);
-    }
-
-    /**
-     * Replace the terms linked to the SigmaDataElement.
-     *
-     * @param qualifiedName for the SigmaDataElement
-     * @param name human-readable name of the SigmaDataElement
-     * @param terms the list of terms to replace on the SigmaDataElement, or null to remove all terms from the SigmaDataElement
-     * @return the SigmaDataElement that was updated (note that it will NOT contain details of the replaced terms)
-     * @throws AtlanException on any API problems
-     */
-    public static SigmaDataElement replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
-            throws AtlanException {
-        return (SigmaDataElement) Asset.replaceTerms(updater(qualifiedName, name), terms);
-    }
-
-    /**
-     * Link additional terms to the SigmaDataElement, without replacing existing terms linked to the SigmaDataElement.
-     * Note: this operation must make two API calls — one to retrieve the SigmaDataElement's existing terms,
-     * and a second to append the new terms.
-     *
-     * @param qualifiedName for the SigmaDataElement
-     * @param terms the list of terms to append to the SigmaDataElement
-     * @return the SigmaDataElement that was updated  (note that it will NOT contain details of the appended terms)
-     * @throws AtlanException on any API problems
-     */
-    public static SigmaDataElement appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (SigmaDataElement) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
-    }
-
-    /**
-     * Remove terms from a SigmaDataElement, without replacing all existing terms linked to the SigmaDataElement.
-     * Note: this operation must make two API calls — one to retrieve the SigmaDataElement's existing terms,
-     * and a second to remove the provided terms.
-     *
-     * @param qualifiedName for the SigmaDataElement
-     * @param terms the list of terms to remove from the SigmaDataElement, which must be referenced by GUID
-     * @return the SigmaDataElement that was updated (note that it will NOT contain details of the resulting terms)
-     * @throws AtlanException on any API problems
-     */
-    public static SigmaDataElement removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (SigmaDataElement) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 }

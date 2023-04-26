@@ -6,7 +6,9 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.enums.*;
+import com.atlan.model.enums.AtlanAnnouncementType;
+import com.atlan.model.enums.AtlanConnectorType;
+import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.StringUtils;
 import java.util.ArrayList;
@@ -15,6 +17,7 @@ import java.util.Map;
 import java.util.SortedSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Instance of an API path that could contain one or more endpoints in Atlan.
@@ -22,6 +25,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@Slf4j
 @SuppressWarnings("cast")
 public class APIPath extends API {
     private static final long serialVersionUID = 2L;
@@ -87,6 +91,51 @@ public class APIPath extends API {
     }
 
     /**
+     * Retrieves a APIPath by its GUID, complete with all of its relationships.
+     *
+     * @param guid of the APIPath to retrieve
+     * @return the requested full APIPath, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the APIPath does not exist or the provided GUID is not a APIPath
+     */
+    public static APIPath retrieveByGuid(String guid) throws AtlanException {
+        Asset asset = Asset.retrieveFull(guid);
+        if (asset == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
+        } else if (asset instanceof APIPath) {
+            return (APIPath) asset;
+        } else {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "APIPath");
+        }
+    }
+
+    /**
+     * Retrieves a APIPath by its qualifiedName, complete with all of its relationships.
+     *
+     * @param qualifiedName of the APIPath to retrieve
+     * @return the requested full APIPath, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the APIPath does not exist
+     */
+    public static APIPath retrieveByQualifiedName(String qualifiedName) throws AtlanException {
+        Asset asset = Asset.retrieveFull(TYPE_NAME, qualifiedName);
+        if (asset instanceof APIPath) {
+            return (APIPath) asset;
+        } else {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "APIPath");
+        }
+    }
+
+    /**
+     * Restore the archived (soft-deleted) APIPath to active.
+     *
+     * @param qualifiedName for the APIPath
+     * @return true if the APIPath is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
      * Builds the minimal object necessary to create an API path.
      *
      * @param pathURI unique URI of the API path
@@ -137,51 +186,6 @@ public class APIPath extends API {
                     ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "APIPath", String.join(",", missing));
         }
         return updater(this.getQualifiedName(), this.getName());
-    }
-
-    /**
-     * Retrieves a APIPath by its GUID, complete with all of its relationships.
-     *
-     * @param guid of the APIPath to retrieve
-     * @return the requested full APIPath, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the APIPath does not exist or the provided GUID is not a APIPath
-     */
-    public static APIPath retrieveByGuid(String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof APIPath) {
-            return (APIPath) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "APIPath");
-        }
-    }
-
-    /**
-     * Retrieves a APIPath by its qualifiedName, complete with all of its relationships.
-     *
-     * @param qualifiedName of the APIPath to retrieve
-     * @return the requested full APIPath, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the APIPath does not exist
-     */
-    public static APIPath retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        Asset asset = Asset.retrieveFull(TYPE_NAME, qualifiedName);
-        if (asset instanceof APIPath) {
-            return (APIPath) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "APIPath");
-        }
-    }
-
-    /**
-     * Restore the archived (soft-deleted) APIPath to active.
-     *
-     * @param qualifiedName for the APIPath
-     * @return true if the APIPath is now active, and false otherwise
-     * @throws AtlanException on any API problems
-     */
-    public static boolean restore(String qualifiedName) throws AtlanException {
-        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**
@@ -274,6 +278,48 @@ public class APIPath extends API {
     }
 
     /**
+     * Replace the terms linked to the APIPath.
+     *
+     * @param qualifiedName for the APIPath
+     * @param name human-readable name of the APIPath
+     * @param terms the list of terms to replace on the APIPath, or null to remove all terms from the APIPath
+     * @return the APIPath that was updated (note that it will NOT contain details of the replaced terms)
+     * @throws AtlanException on any API problems
+     */
+    public static APIPath replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+            throws AtlanException {
+        return (APIPath) Asset.replaceTerms(updater(qualifiedName, name), terms);
+    }
+
+    /**
+     * Link additional terms to the APIPath, without replacing existing terms linked to the APIPath.
+     * Note: this operation must make two API calls — one to retrieve the APIPath's existing terms,
+     * and a second to append the new terms.
+     *
+     * @param qualifiedName for the APIPath
+     * @param terms the list of terms to append to the APIPath
+     * @return the APIPath that was updated  (note that it will NOT contain details of the appended terms)
+     * @throws AtlanException on any API problems
+     */
+    public static APIPath appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (APIPath) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
+    }
+
+    /**
+     * Remove terms from a APIPath, without replacing all existing terms linked to the APIPath.
+     * Note: this operation must make two API calls — one to retrieve the APIPath's existing terms,
+     * and a second to remove the provided terms.
+     *
+     * @param qualifiedName for the APIPath
+     * @param terms the list of terms to remove from the APIPath, which must be referenced by GUID
+     * @return the APIPath that was updated (note that it will NOT contain details of the resulting terms)
+     * @throws AtlanException on any API problems
+     */
+    public static APIPath removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (APIPath) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
+    }
+
+    /**
      * Add classifications to a APIPath.
      *
      * @param qualifiedName of the APIPath
@@ -320,47 +366,5 @@ public class APIPath extends API {
      */
     public static void removeClassification(String qualifiedName, String classificationName) throws AtlanException {
         Asset.removeClassification(TYPE_NAME, qualifiedName, classificationName);
-    }
-
-    /**
-     * Replace the terms linked to the APIPath.
-     *
-     * @param qualifiedName for the APIPath
-     * @param name human-readable name of the APIPath
-     * @param terms the list of terms to replace on the APIPath, or null to remove all terms from the APIPath
-     * @return the APIPath that was updated (note that it will NOT contain details of the replaced terms)
-     * @throws AtlanException on any API problems
-     */
-    public static APIPath replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
-            throws AtlanException {
-        return (APIPath) Asset.replaceTerms(updater(qualifiedName, name), terms);
-    }
-
-    /**
-     * Link additional terms to the APIPath, without replacing existing terms linked to the APIPath.
-     * Note: this operation must make two API calls — one to retrieve the APIPath's existing terms,
-     * and a second to append the new terms.
-     *
-     * @param qualifiedName for the APIPath
-     * @param terms the list of terms to append to the APIPath
-     * @return the APIPath that was updated  (note that it will NOT contain details of the appended terms)
-     * @throws AtlanException on any API problems
-     */
-    public static APIPath appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (APIPath) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
-    }
-
-    /**
-     * Remove terms from a APIPath, without replacing all existing terms linked to the APIPath.
-     * Note: this operation must make two API calls — one to retrieve the APIPath's existing terms,
-     * and a second to remove the provided terms.
-     *
-     * @param qualifiedName for the APIPath
-     * @param terms the list of terms to remove from the APIPath, which must be referenced by GUID
-     * @return the APIPath that was updated (note that it will NOT contain details of the resulting terms)
-     * @throws AtlanException on any API problems
-     */
-    public static APIPath removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (APIPath) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 }

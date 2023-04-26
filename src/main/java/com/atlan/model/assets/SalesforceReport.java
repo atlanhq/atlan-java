@@ -6,7 +6,8 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.enums.*;
+import com.atlan.model.enums.AtlanAnnouncementType;
+import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.Map;
 import java.util.SortedSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Instance of a Salesforce report in Atlan.
@@ -21,6 +23,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@Slf4j
 @SuppressWarnings("cast")
 public class SalesforceReport extends Salesforce {
     private static final long serialVersionUID = 2L;
@@ -79,40 +82,6 @@ public class SalesforceReport extends Salesforce {
     }
 
     /**
-     * Builds the minimal object necessary to update a SalesforceReport.
-     *
-     * @param qualifiedName of the SalesforceReport
-     * @param name of the SalesforceReport
-     * @return the minimal request necessary to update the SalesforceReport, as a builder
-     */
-    public static SalesforceReportBuilder<?, ?> updater(String qualifiedName, String name) {
-        return SalesforceReport.builder().qualifiedName(qualifiedName).name(name);
-    }
-
-    /**
-     * Builds the minimal object necessary to apply an update to a SalesforceReport, from a potentially
-     * more-complete SalesforceReport object.
-     *
-     * @return the minimal object necessary to update the SalesforceReport, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for SalesforceReport are not found in the initial object
-     */
-    @Override
-    public SalesforceReportBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        List<String> missing = new ArrayList<>();
-        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
-            missing.add("qualifiedName");
-        }
-        if (this.getName() == null || this.getName().length() == 0) {
-            missing.add("name");
-        }
-        if (!missing.isEmpty()) {
-            throw new InvalidRequestException(
-                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "SalesforceReport", String.join(",", missing));
-        }
-        return updater(this.getQualifiedName(), this.getName());
-    }
-
-    /**
      * Retrieves a SalesforceReport by its GUID, complete with all of its relationships.
      *
      * @param guid of the SalesforceReport to retrieve
@@ -155,6 +124,40 @@ public class SalesforceReport extends Salesforce {
      */
     public static boolean restore(String qualifiedName) throws AtlanException {
         return Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Builds the minimal object necessary to update a SalesforceReport.
+     *
+     * @param qualifiedName of the SalesforceReport
+     * @param name of the SalesforceReport
+     * @return the minimal request necessary to update the SalesforceReport, as a builder
+     */
+    public static SalesforceReportBuilder<?, ?> updater(String qualifiedName, String name) {
+        return SalesforceReport.builder().qualifiedName(qualifiedName).name(name);
+    }
+
+    /**
+     * Builds the minimal object necessary to apply an update to a SalesforceReport, from a potentially
+     * more-complete SalesforceReport object.
+     *
+     * @return the minimal object necessary to update the SalesforceReport, as a builder
+     * @throws InvalidRequestException if any of the minimal set of required properties for SalesforceReport are not found in the initial object
+     */
+    @Override
+    public SalesforceReportBuilder<?, ?> trimToRequired() throws InvalidRequestException {
+        List<String> missing = new ArrayList<>();
+        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
+            missing.add("qualifiedName");
+        }
+        if (this.getName() == null || this.getName().length() == 0) {
+            missing.add("name");
+        }
+        if (!missing.isEmpty()) {
+            throw new InvalidRequestException(
+                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "SalesforceReport", String.join(",", missing));
+        }
+        return updater(this.getQualifiedName(), this.getName());
     }
 
     /**
@@ -247,6 +250,48 @@ public class SalesforceReport extends Salesforce {
     }
 
     /**
+     * Replace the terms linked to the SalesforceReport.
+     *
+     * @param qualifiedName for the SalesforceReport
+     * @param name human-readable name of the SalesforceReport
+     * @param terms the list of terms to replace on the SalesforceReport, or null to remove all terms from the SalesforceReport
+     * @return the SalesforceReport that was updated (note that it will NOT contain details of the replaced terms)
+     * @throws AtlanException on any API problems
+     */
+    public static SalesforceReport replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+            throws AtlanException {
+        return (SalesforceReport) Asset.replaceTerms(updater(qualifiedName, name), terms);
+    }
+
+    /**
+     * Link additional terms to the SalesforceReport, without replacing existing terms linked to the SalesforceReport.
+     * Note: this operation must make two API calls — one to retrieve the SalesforceReport's existing terms,
+     * and a second to append the new terms.
+     *
+     * @param qualifiedName for the SalesforceReport
+     * @param terms the list of terms to append to the SalesforceReport
+     * @return the SalesforceReport that was updated  (note that it will NOT contain details of the appended terms)
+     * @throws AtlanException on any API problems
+     */
+    public static SalesforceReport appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (SalesforceReport) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
+    }
+
+    /**
+     * Remove terms from a SalesforceReport, without replacing all existing terms linked to the SalesforceReport.
+     * Note: this operation must make two API calls — one to retrieve the SalesforceReport's existing terms,
+     * and a second to remove the provided terms.
+     *
+     * @param qualifiedName for the SalesforceReport
+     * @param terms the list of terms to remove from the SalesforceReport, which must be referenced by GUID
+     * @return the SalesforceReport that was updated (note that it will NOT contain details of the resulting terms)
+     * @throws AtlanException on any API problems
+     */
+    public static SalesforceReport removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (SalesforceReport) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
+    }
+
+    /**
      * Add classifications to a SalesforceReport.
      *
      * @param qualifiedName of the SalesforceReport
@@ -293,47 +338,5 @@ public class SalesforceReport extends Salesforce {
      */
     public static void removeClassification(String qualifiedName, String classificationName) throws AtlanException {
         Asset.removeClassification(TYPE_NAME, qualifiedName, classificationName);
-    }
-
-    /**
-     * Replace the terms linked to the SalesforceReport.
-     *
-     * @param qualifiedName for the SalesforceReport
-     * @param name human-readable name of the SalesforceReport
-     * @param terms the list of terms to replace on the SalesforceReport, or null to remove all terms from the SalesforceReport
-     * @return the SalesforceReport that was updated (note that it will NOT contain details of the replaced terms)
-     * @throws AtlanException on any API problems
-     */
-    public static SalesforceReport replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
-            throws AtlanException {
-        return (SalesforceReport) Asset.replaceTerms(updater(qualifiedName, name), terms);
-    }
-
-    /**
-     * Link additional terms to the SalesforceReport, without replacing existing terms linked to the SalesforceReport.
-     * Note: this operation must make two API calls — one to retrieve the SalesforceReport's existing terms,
-     * and a second to append the new terms.
-     *
-     * @param qualifiedName for the SalesforceReport
-     * @param terms the list of terms to append to the SalesforceReport
-     * @return the SalesforceReport that was updated  (note that it will NOT contain details of the appended terms)
-     * @throws AtlanException on any API problems
-     */
-    public static SalesforceReport appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (SalesforceReport) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
-    }
-
-    /**
-     * Remove terms from a SalesforceReport, without replacing all existing terms linked to the SalesforceReport.
-     * Note: this operation must make two API calls — one to retrieve the SalesforceReport's existing terms,
-     * and a second to remove the provided terms.
-     *
-     * @param qualifiedName for the SalesforceReport
-     * @param terms the list of terms to remove from the SalesforceReport, which must be referenced by GUID
-     * @return the SalesforceReport that was updated (note that it will NOT contain details of the resulting terms)
-     * @throws AtlanException on any API problems
-     */
-    public static SalesforceReport removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (SalesforceReport) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 }

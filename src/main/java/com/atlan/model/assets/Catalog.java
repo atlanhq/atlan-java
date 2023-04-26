@@ -3,41 +3,43 @@
 package com.atlan.model.assets;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
-import java.util.List;
+import java.util.SortedSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.slf4j.Slf4j;
 
 /**
- * Detailed information about Catalog-related assets. Only types that inherit from Catalog can participate in lineage.
+ * Base class for catalog assets.
  */
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @JsonSubTypes({
-    @JsonSubTypes.Type(value = Azure.class, name = Azure.TYPE_NAME),
-    @JsonSubTypes.Type(value = API.class, name = API.TYPE_NAME),
-    @JsonSubTypes.Type(value = DataQuality.class, name = DataQuality.TYPE_NAME),
-    @JsonSubTypes.Type(value = Dbt.class, name = Dbt.TYPE_NAME),
-    @JsonSubTypes.Type(value = Resource.class, name = Resource.TYPE_NAME),
+    @JsonSubTypes.Type(value = EventStore.class, name = EventStore.TYPE_NAME),
     @JsonSubTypes.Type(value = ObjectStore.class, name = ObjectStore.TYPE_NAME),
-    @JsonSubTypes.Type(value = Insight.class, name = Insight.TYPE_NAME),
-    @JsonSubTypes.Type(value = SQL.class, name = SQL.TYPE_NAME),
+    @JsonSubTypes.Type(value = DataQuality.class, name = DataQuality.TYPE_NAME),
     @JsonSubTypes.Type(value = BI.class, name = BI.TYPE_NAME),
     @JsonSubTypes.Type(value = SaaS.class, name = SaaS.TYPE_NAME),
+    @JsonSubTypes.Type(value = Dbt.class, name = Dbt.TYPE_NAME),
+    @JsonSubTypes.Type(value = Resource.class, name = Resource.TYPE_NAME),
+    @JsonSubTypes.Type(value = Insight.class, name = Insight.TYPE_NAME),
+    @JsonSubTypes.Type(value = API.class, name = API.TYPE_NAME),
+    @JsonSubTypes.Type(value = SQL.class, name = SQL.TYPE_NAME),
 })
+@Slf4j
 public abstract class Catalog extends Asset {
 
     public static final String TYPE_NAME = "Catalog";
 
-    /** Processes that use this object as input. */
+    /** Processes to which this asset provides input. */
     @Attribute
     @Singular
-    List<AbstractProcess> inputToProcesses;
+    SortedSet<LineageProcess> inputToProcesses;
 
-    /** Processes that produce this object as output. */
+    /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
-    List<AbstractProcess> outputFromProcesses;
+    SortedSet<LineageProcess> outputFromProcesses;
 
     /**
      * Reference to an asset by its qualifiedName.

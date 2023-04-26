@@ -6,13 +6,15 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.enums.*;
+import com.atlan.model.enums.AtlanAnnouncementType;
+import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Instance of a Power BI dashboard in Atlan.
@@ -20,6 +22,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@Slf4j
 public class PowerBIDashboard extends PowerBI {
     private static final long serialVersionUID = 2L;
 
@@ -75,40 +78,6 @@ public class PowerBIDashboard extends PowerBI {
     }
 
     /**
-     * Builds the minimal object necessary to update a PowerBIDashboard.
-     *
-     * @param qualifiedName of the PowerBIDashboard
-     * @param name of the PowerBIDashboard
-     * @return the minimal request necessary to update the PowerBIDashboard, as a builder
-     */
-    public static PowerBIDashboardBuilder<?, ?> updater(String qualifiedName, String name) {
-        return PowerBIDashboard.builder().qualifiedName(qualifiedName).name(name);
-    }
-
-    /**
-     * Builds the minimal object necessary to apply an update to a PowerBIDashboard, from a potentially
-     * more-complete PowerBIDashboard object.
-     *
-     * @return the minimal object necessary to update the PowerBIDashboard, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for PowerBIDashboard are not found in the initial object
-     */
-    @Override
-    public PowerBIDashboardBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        List<String> missing = new ArrayList<>();
-        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
-            missing.add("qualifiedName");
-        }
-        if (this.getName() == null || this.getName().length() == 0) {
-            missing.add("name");
-        }
-        if (!missing.isEmpty()) {
-            throw new InvalidRequestException(
-                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "PowerBIDashboard", String.join(",", missing));
-        }
-        return updater(this.getQualifiedName(), this.getName());
-    }
-
-    /**
      * Retrieves a PowerBIDashboard by its GUID, complete with all of its relationships.
      *
      * @param guid of the PowerBIDashboard to retrieve
@@ -151,6 +120,40 @@ public class PowerBIDashboard extends PowerBI {
      */
     public static boolean restore(String qualifiedName) throws AtlanException {
         return Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Builds the minimal object necessary to update a PowerBIDashboard.
+     *
+     * @param qualifiedName of the PowerBIDashboard
+     * @param name of the PowerBIDashboard
+     * @return the minimal request necessary to update the PowerBIDashboard, as a builder
+     */
+    public static PowerBIDashboardBuilder<?, ?> updater(String qualifiedName, String name) {
+        return PowerBIDashboard.builder().qualifiedName(qualifiedName).name(name);
+    }
+
+    /**
+     * Builds the minimal object necessary to apply an update to a PowerBIDashboard, from a potentially
+     * more-complete PowerBIDashboard object.
+     *
+     * @return the minimal object necessary to update the PowerBIDashboard, as a builder
+     * @throws InvalidRequestException if any of the minimal set of required properties for PowerBIDashboard are not found in the initial object
+     */
+    @Override
+    public PowerBIDashboardBuilder<?, ?> trimToRequired() throws InvalidRequestException {
+        List<String> missing = new ArrayList<>();
+        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
+            missing.add("qualifiedName");
+        }
+        if (this.getName() == null || this.getName().length() == 0) {
+            missing.add("name");
+        }
+        if (!missing.isEmpty()) {
+            throw new InvalidRequestException(
+                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "PowerBIDashboard", String.join(",", missing));
+        }
+        return updater(this.getQualifiedName(), this.getName());
     }
 
     /**
@@ -243,6 +246,48 @@ public class PowerBIDashboard extends PowerBI {
     }
 
     /**
+     * Replace the terms linked to the PowerBIDashboard.
+     *
+     * @param qualifiedName for the PowerBIDashboard
+     * @param name human-readable name of the PowerBIDashboard
+     * @param terms the list of terms to replace on the PowerBIDashboard, or null to remove all terms from the PowerBIDashboard
+     * @return the PowerBIDashboard that was updated (note that it will NOT contain details of the replaced terms)
+     * @throws AtlanException on any API problems
+     */
+    public static PowerBIDashboard replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+            throws AtlanException {
+        return (PowerBIDashboard) Asset.replaceTerms(updater(qualifiedName, name), terms);
+    }
+
+    /**
+     * Link additional terms to the PowerBIDashboard, without replacing existing terms linked to the PowerBIDashboard.
+     * Note: this operation must make two API calls — one to retrieve the PowerBIDashboard's existing terms,
+     * and a second to append the new terms.
+     *
+     * @param qualifiedName for the PowerBIDashboard
+     * @param terms the list of terms to append to the PowerBIDashboard
+     * @return the PowerBIDashboard that was updated  (note that it will NOT contain details of the appended terms)
+     * @throws AtlanException on any API problems
+     */
+    public static PowerBIDashboard appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (PowerBIDashboard) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
+    }
+
+    /**
+     * Remove terms from a PowerBIDashboard, without replacing all existing terms linked to the PowerBIDashboard.
+     * Note: this operation must make two API calls — one to retrieve the PowerBIDashboard's existing terms,
+     * and a second to remove the provided terms.
+     *
+     * @param qualifiedName for the PowerBIDashboard
+     * @param terms the list of terms to remove from the PowerBIDashboard, which must be referenced by GUID
+     * @return the PowerBIDashboard that was updated (note that it will NOT contain details of the resulting terms)
+     * @throws AtlanException on any API problems
+     */
+    public static PowerBIDashboard removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (PowerBIDashboard) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
+    }
+
+    /**
      * Add classifications to a PowerBIDashboard.
      *
      * @param qualifiedName of the PowerBIDashboard
@@ -289,47 +334,5 @@ public class PowerBIDashboard extends PowerBI {
      */
     public static void removeClassification(String qualifiedName, String classificationName) throws AtlanException {
         Asset.removeClassification(TYPE_NAME, qualifiedName, classificationName);
-    }
-
-    /**
-     * Replace the terms linked to the PowerBIDashboard.
-     *
-     * @param qualifiedName for the PowerBIDashboard
-     * @param name human-readable name of the PowerBIDashboard
-     * @param terms the list of terms to replace on the PowerBIDashboard, or null to remove all terms from the PowerBIDashboard
-     * @return the PowerBIDashboard that was updated (note that it will NOT contain details of the replaced terms)
-     * @throws AtlanException on any API problems
-     */
-    public static PowerBIDashboard replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
-            throws AtlanException {
-        return (PowerBIDashboard) Asset.replaceTerms(updater(qualifiedName, name), terms);
-    }
-
-    /**
-     * Link additional terms to the PowerBIDashboard, without replacing existing terms linked to the PowerBIDashboard.
-     * Note: this operation must make two API calls — one to retrieve the PowerBIDashboard's existing terms,
-     * and a second to append the new terms.
-     *
-     * @param qualifiedName for the PowerBIDashboard
-     * @param terms the list of terms to append to the PowerBIDashboard
-     * @return the PowerBIDashboard that was updated  (note that it will NOT contain details of the appended terms)
-     * @throws AtlanException on any API problems
-     */
-    public static PowerBIDashboard appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (PowerBIDashboard) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
-    }
-
-    /**
-     * Remove terms from a PowerBIDashboard, without replacing all existing terms linked to the PowerBIDashboard.
-     * Note: this operation must make two API calls — one to retrieve the PowerBIDashboard's existing terms,
-     * and a second to remove the provided terms.
-     *
-     * @param qualifiedName for the PowerBIDashboard
-     * @param terms the list of terms to remove from the PowerBIDashboard, which must be referenced by GUID
-     * @return the PowerBIDashboard that was updated (note that it will NOT contain details of the resulting terms)
-     * @throws AtlanException on any API problems
-     */
-    public static PowerBIDashboard removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (PowerBIDashboard) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 }

@@ -2,11 +2,13 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
-import com.atlan.model.enums.*;
+import com.atlan.model.structs.GoogleLabel;
+import com.atlan.model.structs.GoogleTag;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import java.util.List;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Base class for Google assets.
@@ -14,10 +16,8 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
-@JsonSubTypes({
-    @JsonSubTypes.Type(value = GCS.class, name = GCS.TYPE_NAME),
-    @JsonSubTypes.Type(value = DataStudioAsset.class, name = DataStudioAsset.TYPE_NAME),
-})
+@JsonSubTypes({})
+@Slf4j
 public abstract class Google extends Catalog {
 
     public static final String TYPE_NAME = "Google";

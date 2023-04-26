@@ -6,13 +6,16 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.enums.*;
+import com.atlan.model.enums.AtlanAnnouncementType;
+import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
+import com.atlan.model.structs.DbtMetricFilter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Instance of a dbt metric in Atlan.
@@ -20,6 +23,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@Slf4j
 public class DbtMetric extends Metric {
     private static final long serialVersionUID = 2L;
 
@@ -68,40 +72,6 @@ public class DbtMetric extends Metric {
     }
 
     /**
-     * Builds the minimal object necessary to update a DbtMetric.
-     *
-     * @param qualifiedName of the DbtMetric
-     * @param name of the DbtMetric
-     * @return the minimal request necessary to update the DbtMetric, as a builder
-     */
-    public static DbtMetricBuilder<?, ?> updater(String qualifiedName, String name) {
-        return DbtMetric.builder().qualifiedName(qualifiedName).name(name);
-    }
-
-    /**
-     * Builds the minimal object necessary to apply an update to a DbtMetric, from a potentially
-     * more-complete DbtMetric object.
-     *
-     * @return the minimal object necessary to update the DbtMetric, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for DbtMetric are not found in the initial object
-     */
-    @Override
-    public DbtMetricBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        List<String> missing = new ArrayList<>();
-        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
-            missing.add("qualifiedName");
-        }
-        if (this.getName() == null || this.getName().length() == 0) {
-            missing.add("name");
-        }
-        if (!missing.isEmpty()) {
-            throw new InvalidRequestException(
-                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "DbtMetric", String.join(",", missing));
-        }
-        return updater(this.getQualifiedName(), this.getName());
-    }
-
-    /**
      * Retrieves a DbtMetric by its GUID, complete with all of its relationships.
      *
      * @param guid of the DbtMetric to retrieve
@@ -144,6 +114,40 @@ public class DbtMetric extends Metric {
      */
     public static boolean restore(String qualifiedName) throws AtlanException {
         return Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Builds the minimal object necessary to update a DbtMetric.
+     *
+     * @param qualifiedName of the DbtMetric
+     * @param name of the DbtMetric
+     * @return the minimal request necessary to update the DbtMetric, as a builder
+     */
+    public static DbtMetricBuilder<?, ?> updater(String qualifiedName, String name) {
+        return DbtMetric.builder().qualifiedName(qualifiedName).name(name);
+    }
+
+    /**
+     * Builds the minimal object necessary to apply an update to a DbtMetric, from a potentially
+     * more-complete DbtMetric object.
+     *
+     * @return the minimal object necessary to update the DbtMetric, as a builder
+     * @throws InvalidRequestException if any of the minimal set of required properties for DbtMetric are not found in the initial object
+     */
+    @Override
+    public DbtMetricBuilder<?, ?> trimToRequired() throws InvalidRequestException {
+        List<String> missing = new ArrayList<>();
+        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
+            missing.add("qualifiedName");
+        }
+        if (this.getName() == null || this.getName().length() == 0) {
+            missing.add("name");
+        }
+        if (!missing.isEmpty()) {
+            throw new InvalidRequestException(
+                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "DbtMetric", String.join(",", missing));
+        }
+        return updater(this.getQualifiedName(), this.getName());
     }
 
     /**
@@ -236,6 +240,48 @@ public class DbtMetric extends Metric {
     }
 
     /**
+     * Replace the terms linked to the DbtMetric.
+     *
+     * @param qualifiedName for the DbtMetric
+     * @param name human-readable name of the DbtMetric
+     * @param terms the list of terms to replace on the DbtMetric, or null to remove all terms from the DbtMetric
+     * @return the DbtMetric that was updated (note that it will NOT contain details of the replaced terms)
+     * @throws AtlanException on any API problems
+     */
+    public static DbtMetric replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+            throws AtlanException {
+        return (DbtMetric) Asset.replaceTerms(updater(qualifiedName, name), terms);
+    }
+
+    /**
+     * Link additional terms to the DbtMetric, without replacing existing terms linked to the DbtMetric.
+     * Note: this operation must make two API calls — one to retrieve the DbtMetric's existing terms,
+     * and a second to append the new terms.
+     *
+     * @param qualifiedName for the DbtMetric
+     * @param terms the list of terms to append to the DbtMetric
+     * @return the DbtMetric that was updated  (note that it will NOT contain details of the appended terms)
+     * @throws AtlanException on any API problems
+     */
+    public static DbtMetric appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (DbtMetric) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
+    }
+
+    /**
+     * Remove terms from a DbtMetric, without replacing all existing terms linked to the DbtMetric.
+     * Note: this operation must make two API calls — one to retrieve the DbtMetric's existing terms,
+     * and a second to remove the provided terms.
+     *
+     * @param qualifiedName for the DbtMetric
+     * @param terms the list of terms to remove from the DbtMetric, which must be referenced by GUID
+     * @return the DbtMetric that was updated (note that it will NOT contain details of the resulting terms)
+     * @throws AtlanException on any API problems
+     */
+    public static DbtMetric removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (DbtMetric) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
+    }
+
+    /**
      * Add classifications to a DbtMetric.
      *
      * @param qualifiedName of the DbtMetric
@@ -282,47 +328,5 @@ public class DbtMetric extends Metric {
      */
     public static void removeClassification(String qualifiedName, String classificationName) throws AtlanException {
         Asset.removeClassification(TYPE_NAME, qualifiedName, classificationName);
-    }
-
-    /**
-     * Replace the terms linked to the DbtMetric.
-     *
-     * @param qualifiedName for the DbtMetric
-     * @param name human-readable name of the DbtMetric
-     * @param terms the list of terms to replace on the DbtMetric, or null to remove all terms from the DbtMetric
-     * @return the DbtMetric that was updated (note that it will NOT contain details of the replaced terms)
-     * @throws AtlanException on any API problems
-     */
-    public static DbtMetric replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
-            throws AtlanException {
-        return (DbtMetric) Asset.replaceTerms(updater(qualifiedName, name), terms);
-    }
-
-    /**
-     * Link additional terms to the DbtMetric, without replacing existing terms linked to the DbtMetric.
-     * Note: this operation must make two API calls — one to retrieve the DbtMetric's existing terms,
-     * and a second to append the new terms.
-     *
-     * @param qualifiedName for the DbtMetric
-     * @param terms the list of terms to append to the DbtMetric
-     * @return the DbtMetric that was updated  (note that it will NOT contain details of the appended terms)
-     * @throws AtlanException on any API problems
-     */
-    public static DbtMetric appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (DbtMetric) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
-    }
-
-    /**
-     * Remove terms from a DbtMetric, without replacing all existing terms linked to the DbtMetric.
-     * Note: this operation must make two API calls — one to retrieve the DbtMetric's existing terms,
-     * and a second to remove the provided terms.
-     *
-     * @param qualifiedName for the DbtMetric
-     * @param terms the list of terms to remove from the DbtMetric, which must be referenced by GUID
-     * @return the DbtMetric that was updated (note that it will NOT contain details of the resulting terms)
-     * @throws AtlanException on any API problems
-     */
-    public static DbtMetric removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (DbtMetric) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 }

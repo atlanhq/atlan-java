@@ -6,13 +6,15 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.enums.*;
+import com.atlan.model.enums.AtlanAnnouncementType;
+import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Instance of a Power BI dataset in Atlan.
@@ -20,6 +22,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@Slf4j
 public class PowerBIDataset extends PowerBI {
     private static final long serialVersionUID = 2L;
 
@@ -91,40 +94,6 @@ public class PowerBIDataset extends PowerBI {
     }
 
     /**
-     * Builds the minimal object necessary to update a PowerBIDataset.
-     *
-     * @param qualifiedName of the PowerBIDataset
-     * @param name of the PowerBIDataset
-     * @return the minimal request necessary to update the PowerBIDataset, as a builder
-     */
-    public static PowerBIDatasetBuilder<?, ?> updater(String qualifiedName, String name) {
-        return PowerBIDataset.builder().qualifiedName(qualifiedName).name(name);
-    }
-
-    /**
-     * Builds the minimal object necessary to apply an update to a PowerBIDataset, from a potentially
-     * more-complete PowerBIDataset object.
-     *
-     * @return the minimal object necessary to update the PowerBIDataset, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for PowerBIDataset are not found in the initial object
-     */
-    @Override
-    public PowerBIDatasetBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        List<String> missing = new ArrayList<>();
-        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
-            missing.add("qualifiedName");
-        }
-        if (this.getName() == null || this.getName().length() == 0) {
-            missing.add("name");
-        }
-        if (!missing.isEmpty()) {
-            throw new InvalidRequestException(
-                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "PowerBIDataset", String.join(",", missing));
-        }
-        return updater(this.getQualifiedName(), this.getName());
-    }
-
-    /**
      * Retrieves a PowerBIDataset by its GUID, complete with all of its relationships.
      *
      * @param guid of the PowerBIDataset to retrieve
@@ -167,6 +136,40 @@ public class PowerBIDataset extends PowerBI {
      */
     public static boolean restore(String qualifiedName) throws AtlanException {
         return Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Builds the minimal object necessary to update a PowerBIDataset.
+     *
+     * @param qualifiedName of the PowerBIDataset
+     * @param name of the PowerBIDataset
+     * @return the minimal request necessary to update the PowerBIDataset, as a builder
+     */
+    public static PowerBIDatasetBuilder<?, ?> updater(String qualifiedName, String name) {
+        return PowerBIDataset.builder().qualifiedName(qualifiedName).name(name);
+    }
+
+    /**
+     * Builds the minimal object necessary to apply an update to a PowerBIDataset, from a potentially
+     * more-complete PowerBIDataset object.
+     *
+     * @return the minimal object necessary to update the PowerBIDataset, as a builder
+     * @throws InvalidRequestException if any of the minimal set of required properties for PowerBIDataset are not found in the initial object
+     */
+    @Override
+    public PowerBIDatasetBuilder<?, ?> trimToRequired() throws InvalidRequestException {
+        List<String> missing = new ArrayList<>();
+        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
+            missing.add("qualifiedName");
+        }
+        if (this.getName() == null || this.getName().length() == 0) {
+            missing.add("name");
+        }
+        if (!missing.isEmpty()) {
+            throw new InvalidRequestException(
+                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "PowerBIDataset", String.join(",", missing));
+        }
+        return updater(this.getQualifiedName(), this.getName());
     }
 
     /**
@@ -259,6 +262,48 @@ public class PowerBIDataset extends PowerBI {
     }
 
     /**
+     * Replace the terms linked to the PowerBIDataset.
+     *
+     * @param qualifiedName for the PowerBIDataset
+     * @param name human-readable name of the PowerBIDataset
+     * @param terms the list of terms to replace on the PowerBIDataset, or null to remove all terms from the PowerBIDataset
+     * @return the PowerBIDataset that was updated (note that it will NOT contain details of the replaced terms)
+     * @throws AtlanException on any API problems
+     */
+    public static PowerBIDataset replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+            throws AtlanException {
+        return (PowerBIDataset) Asset.replaceTerms(updater(qualifiedName, name), terms);
+    }
+
+    /**
+     * Link additional terms to the PowerBIDataset, without replacing existing terms linked to the PowerBIDataset.
+     * Note: this operation must make two API calls — one to retrieve the PowerBIDataset's existing terms,
+     * and a second to append the new terms.
+     *
+     * @param qualifiedName for the PowerBIDataset
+     * @param terms the list of terms to append to the PowerBIDataset
+     * @return the PowerBIDataset that was updated  (note that it will NOT contain details of the appended terms)
+     * @throws AtlanException on any API problems
+     */
+    public static PowerBIDataset appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (PowerBIDataset) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
+    }
+
+    /**
+     * Remove terms from a PowerBIDataset, without replacing all existing terms linked to the PowerBIDataset.
+     * Note: this operation must make two API calls — one to retrieve the PowerBIDataset's existing terms,
+     * and a second to remove the provided terms.
+     *
+     * @param qualifiedName for the PowerBIDataset
+     * @param terms the list of terms to remove from the PowerBIDataset, which must be referenced by GUID
+     * @return the PowerBIDataset that was updated (note that it will NOT contain details of the resulting terms)
+     * @throws AtlanException on any API problems
+     */
+    public static PowerBIDataset removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (PowerBIDataset) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
+    }
+
+    /**
      * Add classifications to a PowerBIDataset.
      *
      * @param qualifiedName of the PowerBIDataset
@@ -305,47 +350,5 @@ public class PowerBIDataset extends PowerBI {
      */
     public static void removeClassification(String qualifiedName, String classificationName) throws AtlanException {
         Asset.removeClassification(TYPE_NAME, qualifiedName, classificationName);
-    }
-
-    /**
-     * Replace the terms linked to the PowerBIDataset.
-     *
-     * @param qualifiedName for the PowerBIDataset
-     * @param name human-readable name of the PowerBIDataset
-     * @param terms the list of terms to replace on the PowerBIDataset, or null to remove all terms from the PowerBIDataset
-     * @return the PowerBIDataset that was updated (note that it will NOT contain details of the replaced terms)
-     * @throws AtlanException on any API problems
-     */
-    public static PowerBIDataset replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
-            throws AtlanException {
-        return (PowerBIDataset) Asset.replaceTerms(updater(qualifiedName, name), terms);
-    }
-
-    /**
-     * Link additional terms to the PowerBIDataset, without replacing existing terms linked to the PowerBIDataset.
-     * Note: this operation must make two API calls — one to retrieve the PowerBIDataset's existing terms,
-     * and a second to append the new terms.
-     *
-     * @param qualifiedName for the PowerBIDataset
-     * @param terms the list of terms to append to the PowerBIDataset
-     * @return the PowerBIDataset that was updated  (note that it will NOT contain details of the appended terms)
-     * @throws AtlanException on any API problems
-     */
-    public static PowerBIDataset appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (PowerBIDataset) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
-    }
-
-    /**
-     * Remove terms from a PowerBIDataset, without replacing all existing terms linked to the PowerBIDataset.
-     * Note: this operation must make two API calls — one to retrieve the PowerBIDataset's existing terms,
-     * and a second to remove the provided terms.
-     *
-     * @param qualifiedName for the PowerBIDataset
-     * @param terms the list of terms to remove from the PowerBIDataset, which must be referenced by GUID
-     * @return the PowerBIDataset that was updated (note that it will NOT contain details of the resulting terms)
-     * @throws AtlanException on any API problems
-     */
-    public static PowerBIDataset removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (PowerBIDataset) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 }
