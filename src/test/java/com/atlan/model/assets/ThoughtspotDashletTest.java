@@ -11,9 +11,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.*;
 import org.testng.annotations.Test;
 
-public class PowerBIDashboardTest {
+public class ThoughtspotDashletTest {
 
-    private static final PowerBIDashboard full = PowerBIDashboard.builder()
+    private static final ThoughtspotDashlet full = ThoughtspotDashlet.builder()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -296,30 +296,25 @@ public class PowerBIDashboardTest {
             .inputToProcess(LineageProcess.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .outputFromProcess(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .outputFromProcess(LineageProcess.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .powerBIIsHidden(true)
-            .powerBITableQualifiedName("String0")
-            .powerBIFormatString("String0")
-            .powerBIEndorsement(PowerBIEndorsementType.PROMOTED)
-            .workspaceQualifiedName("String0")
-            .webUrl("String0")
-            .tileCount(123456789L)
-            .tile(PowerBITile.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .tile(PowerBITile.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .workspace(PowerBIWorkspace.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .thoughtspotChartType("String0")
+            .thoughtspotQuestionText("String0")
+            .thoughtspotLiveboardName("String0")
+            .thoughtspotLiveboardQualifiedName("String0")
+            .thoughtspotLiveboard(ThoughtspotLiveboard.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .build();
 
     private static final int hash = full.hashCode();
-    private static PowerBIDashboard frodo;
+    private static ThoughtspotDashlet frodo;
     private static String serialized;
 
-    @Test(groups = {"PowerBIDashboard.builderEquivalency"})
+    @Test(groups = {"ThoughtspotDashlet.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"PowerBIDashboard.serialize"},
-            dependsOnGroups = {"PowerBIDashboard.builderEquivalency"})
+            groups = {"ThoughtspotDashlet.serialize"},
+            dependsOnGroups = {"ThoughtspotDashlet.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -328,17 +323,17 @@ public class PowerBIDashboardTest {
     }
 
     @Test(
-            groups = {"PowerBIDashboard.deserialize"},
-            dependsOnGroups = {"PowerBIDashboard.serialize"})
+            groups = {"ThoughtspotDashlet.deserialize"},
+            dependsOnGroups = {"ThoughtspotDashlet.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
-        frodo = Serde.mapper.readValue(serialized, PowerBIDashboard.class);
+        frodo = Serde.mapper.readValue(serialized, ThoughtspotDashlet.class);
         assertNotNull(frodo);
     }
 
     @Test(
-            groups = {"PowerBIDashboard.equivalency"},
-            dependsOnGroups = {"PowerBIDashboard.serialize", "PowerBIDashboard.deserialize"})
+            groups = {"ThoughtspotDashlet.equivalency"},
+            dependsOnGroups = {"ThoughtspotDashlet.serialize", "ThoughtspotDashlet.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -347,8 +342,8 @@ public class PowerBIDashboardTest {
     }
 
     @Test(
-            groups = {"PowerBIDashboard.equivalency"},
-            dependsOnGroups = {"PowerBIDashboard.serialize", "PowerBIDashboard.deserialize"})
+            groups = {"ThoughtspotDashlet.equivalency"},
+            dependsOnGroups = {"ThoughtspotDashlet.serialize", "ThoughtspotDashlet.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

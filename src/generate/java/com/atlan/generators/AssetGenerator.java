@@ -269,6 +269,7 @@ public class AssetGenerator extends TypeGenerator {
             if (TYPE_OVERRIDES.containsKey(originalName)) {
                 setType(getType().toBuilder()
                         .name(TYPE_OVERRIDES.get(originalName))
+                        .type(MappedType.Type.ENUM)
                         .build());
             }
         }

@@ -53,7 +53,7 @@ public class ModelGeneratorV2 {
         generateStructs(cfg);
         generateAssets(cfg, entityDefs);
         generateSearchFields(cfg, entityDefs);
-        // generateAssetTests(cfg);
+        generateAssetTests(cfg);
     }
 
     private static void generateEnums(Configuration cfg) throws Exception {
@@ -131,7 +131,7 @@ public class ModelGeneratorV2 {
     private static void generateSearchFields(Configuration cfg, List<EntityDef> entityDefs) throws Exception {
         Template searchTemplate = cfg.getTemplate("enum_search.ftl");
         Set<SearchFieldGenerator.IndexType> enumsToGenerate = Set.of(
-                SearchFieldGenerator.IndexType.NUMERIC, // TODO: descriptions missing everywhere
+                SearchFieldGenerator.IndexType.NUMERIC,
                 SearchFieldGenerator.IndexType.KEYWORD,
                 SearchFieldGenerator.IndexType.TEXT,
                 SearchFieldGenerator.IndexType.STEMMED,
@@ -153,9 +153,8 @@ public class ModelGeneratorV2 {
     private static void generateAssetTests(Configuration cfg) throws Exception {
         Template testTemplate = cfg.getTemplate("asset_test.ftl");
         for (AssetGenerator assetGen : assetCache.values()) {
-            if (!AssetGenerator.SKIP_GENERATING.contains(assetGen.getOriginalName())) {
-                EntityDef entityDef = assetGen.getEntityDef();
-                AssetTestGenerator generator = new AssetTestGenerator(entityDef);
+            if (!AssetGenerator.SKIP_GENERATING.contains(assetGen.getOriginalName()) && !assetGen.isAbstract()) {
+                AssetTestGenerator generator = new AssetTestGenerator(assetGen);
                 String filename =
                         AssetTestGenerator.DIRECTORY + File.separator + generator.getClassName() + "Test.java";
                 try (BufferedWriter fs = new BufferedWriter(
@@ -189,6 +188,10 @@ public class ModelGeneratorV2 {
                     .build();
         }
         return null;
+    }
+
+    public static AssetGenerator getCachedAssetType(String typeName) {
+        return assetCache.get(typeName);
     }
 
     static String getTemplateFile(String className) {
