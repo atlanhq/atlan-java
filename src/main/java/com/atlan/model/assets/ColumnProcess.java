@@ -24,7 +24,9 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
-@JsonSubTypes({})
+@JsonSubTypes({
+    @JsonSubTypes.Type(value = DbtColumnProcess.class, name = DbtColumnProcess.TYPE_NAME),
+})
 @Slf4j
 public class ColumnProcess extends LineageProcess {
     private static final long serialVersionUID = 2L;

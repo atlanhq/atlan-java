@@ -16,7 +16,10 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
-@JsonSubTypes({})
+@JsonSubTypes({
+    @JsonSubTypes.Type(value = GCS.class, name = GCS.TYPE_NAME),
+    @JsonSubTypes.Type(value = DataStudioAsset.class, name = DataStudioAsset.TYPE_NAME),
+})
 @Slf4j
 public abstract class Google extends Catalog {
 

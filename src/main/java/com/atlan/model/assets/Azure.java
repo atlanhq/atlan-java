@@ -15,7 +15,9 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
-@JsonSubTypes({})
+@JsonSubTypes({
+    @JsonSubTypes.Type(value = ADLS.class, name = ADLS.TYPE_NAME),
+})
 @Slf4j
 public abstract class Azure extends Catalog {
 

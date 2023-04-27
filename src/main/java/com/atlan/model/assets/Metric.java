@@ -14,7 +14,9 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
-@JsonSubTypes({})
+@JsonSubTypes({
+    @JsonSubTypes.Type(value = DbtMetric.class, name = DbtMetric.TYPE_NAME),
+})
 @Slf4j
 public abstract class Metric extends DataQuality {
 

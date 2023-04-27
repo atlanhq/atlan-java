@@ -30,6 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 @EqualsAndHashCode(callSuper = true)
 @JsonSubTypes({
     @JsonSubTypes.Type(value = BIProcess.class, name = BIProcess.TYPE_NAME),
+    @JsonSubTypes.Type(value = DbtProcess.class, name = DbtProcess.TYPE_NAME),
     @JsonSubTypes.Type(value = ColumnProcess.class, name = ColumnProcess.TYPE_NAME),
 })
 @Slf4j

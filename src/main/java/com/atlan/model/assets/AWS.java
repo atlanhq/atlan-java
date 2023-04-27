@@ -15,7 +15,9 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
-@JsonSubTypes({})
+@JsonSubTypes({
+    @JsonSubTypes.Type(value = S3.class, name = S3.TYPE_NAME),
+})
 @Slf4j
 public abstract class AWS extends Catalog {
 
