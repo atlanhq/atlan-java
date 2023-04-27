@@ -120,7 +120,7 @@ public class AssetGenerator extends TypeGenerator {
                         String flattened = INHERITANCE_OVERRIDES.getOrDefault(originalSubType, null);
                         // Only output the subtype if that subtype still considers this type its parent,
                         // after polymorphic flattening...
-                        if (flattened == null || flattened.equals(originalSubType)) {
+                        if (flattened == null || flattened.equals(getOriginalName())) {
                             subTypes.add(subType.getName());
                         }
                     } else {
