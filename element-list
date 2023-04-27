@@ -11,6 +11,7 @@ com.atlan.model.lineage
 com.atlan.model.packages
 com.atlan.model.relations
 com.atlan.model.search
+com.atlan.model.structs
 com.atlan.model.typedefs
 com.atlan.model.workflow
 com.atlan.net
