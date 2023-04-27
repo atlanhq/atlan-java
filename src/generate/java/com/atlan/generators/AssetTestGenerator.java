@@ -83,7 +83,7 @@ public class AssetTestGenerator extends AssetGenerator {
                 // TODO: Handle maps - possibly within the template itself (?)
                 switch (type.getType()) {
                     case PRIMITIVE:
-                        addPrimitive(builderMethod, multiValued, type.getName());
+                        addPrimitive(builderMethod, multiValued, type.getName(), type.getContainer());
                         break;
                     case ENUM:
                         addEnum(builderMethod, multiValued, type.getName());
@@ -104,16 +104,20 @@ public class AssetTestGenerator extends AssetGenerator {
         }
     }
 
-    private void addPrimitive(String builderMethod, boolean multiValued, String typeName) {
+    private void addPrimitive(String builderMethod, boolean multiValued, String typeName, String containerName) {
         if (!multiValued) {
-            testAttributes.add(new TestAttribute(builderMethod, List.of(getPrimitiveValue(typeName, 0))));
+            testAttributes.add(
+                    new TestAttribute(builderMethod, List.of(getPrimitiveValue(containerName, typeName, 0))));
         } else {
             testAttributes.add(new TestAttribute(
-                    builderMethod, List.of(getPrimitiveValue(typeName, 0), getPrimitiveValue(typeName, 1))));
+                    builderMethod,
+                    List.of(
+                            getPrimitiveValue(containerName, typeName, 0),
+                            getPrimitiveValue(containerName, typeName, 1))));
         }
     }
 
-    private String getPrimitiveValue(String typeName, int count) {
+    private String getPrimitiveValue(String containerName, String typeName, int count) {
         String value = null;
         switch (typeName) {
             case "String":
@@ -148,17 +152,33 @@ public class AssetTestGenerator extends AssetGenerator {
                 }
                 break;
             case "String, String":
-                if (Math.floorMod(count, 2) == 0) {
-                    value = "\"key1\", \"value1\"";
+                if (containerName.equals("List<Map<")) {
+                    if (Math.floorMod(count, 2) == 0) {
+                        value = "Map.of(\"key1\", \"value1\")";
+                    } else {
+                        value = "Map.of(\"key2\", \"value2\")";
+                    }
                 } else {
-                    value = "\"key2\", \"value2\"";
+                    if (Math.floorMod(count, 2) == 0) {
+                        value = "\"key1\", \"value1\"";
+                    } else {
+                        value = "\"key2\", \"value2\"";
+                    }
                 }
                 break;
             case "String, Long":
-                if (Math.floorMod(count, 2) == 0) {
-                    value = "\"key1\", 123456L";
+                if (containerName.equals("List<Map<")) {
+                    if (Math.floorMod(count, 2) == 0) {
+                        value = "Map.of(\"key1\", 123456L)";
+                    } else {
+                        value = "Map.of(\"key2\", 654321L)";
+                    }
                 } else {
-                    value = "\"key2\", 654321L";
+                    if (Math.floorMod(count, 2) == 0) {
+                        value = "\"key1\", 123456L";
+                    } else {
+                        value = "\"key2\", 654321L";
+                    }
                 }
                 break;
             default:
@@ -267,7 +287,7 @@ public class AssetTestGenerator extends AssetGenerator {
                 Class<?> fieldType = field.getType();
                 sb.append(".").append(field.getName()).append("(");
                 if (isPrimitive(fieldType)) {
-                    sb.append(getPrimitiveValue(fieldType.getSimpleName(), count));
+                    sb.append(getPrimitiveValue(null, fieldType.getSimpleName(), count));
                 } else if (fieldType == List.class) {
                     // Handle non-primitive fields
                     Type generic = field.getGenericType();
@@ -277,9 +297,9 @@ public class AssetTestGenerator extends AssetGenerator {
                         Class<?> embedded = Class.forName(type.getTypeName());
                         String simpleClassName = embedded.getSimpleName();
                         sb.append("List.of(")
-                                .append(getPrimitiveValue(simpleClassName, 0))
+                                .append(getPrimitiveValue("List<", simpleClassName, 0))
                                 .append(", ")
-                                .append(getPrimitiveValue(simpleClassName, 1))
+                                .append(getPrimitiveValue("List<", simpleClassName, 1))
                                 .append(")");
                     } else {
                         log.warn("Unable to reflectively identify list-wrapped type: {}", generic.getTypeName());

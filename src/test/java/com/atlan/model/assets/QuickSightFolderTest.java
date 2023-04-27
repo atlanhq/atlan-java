@@ -300,8 +300,8 @@ public class QuickSightFolderTest {
             .quickSightSheetId("String0")
             .quickSightSheetName("String0")
             .quickSightFolderType(QuickSightFolderType.SHARED)
-            .addQuickSightFolderHierarchy("key1", "value1")
-            .addQuickSightFolderHierarchy("key2", "value2")
+            .addQuickSightFolderHierarchy(Map.of("key1", "value1"))
+            .addQuickSightFolderHierarchy(Map.of("key2", "value2"))
             .quickSightDashboard(QuickSightDashboard.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .quickSightDashboard(
                     QuickSightDashboard.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))

@@ -299,8 +299,8 @@ public class TableauMetricTest {
             .siteQualifiedName("String0")
             .projectQualifiedName("String0")
             .topLevelProjectQualifiedName("String0")
-            .addProjectHierarchy("key1", "value1")
-            .addProjectHierarchy("key2", "value2")
+            .addProjectHierarchy(Map.of("key1", "value1"))
+            .addProjectHierarchy(Map.of("key2", "value2"))
             .project(TableauProject.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .build();
 

@@ -459,6 +459,10 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
         if (meaningNames != null) {
             builder.meaningNames(meaningNames);
         }
+        Set<Meaning> meanings = JacksonUtils.deserializeObject(root, "meanings", new TypeReference<>() {});
+        if (meanings != null) {
+            builder.meanings(meanings);
+        }
         Set<String> pendingTasks = JacksonUtils.deserializeObject(root, "pendingTasks", new TypeReference<>() {});
         if (pendingTasks != null) {
             builder.pendingTasks(pendingTasks);
