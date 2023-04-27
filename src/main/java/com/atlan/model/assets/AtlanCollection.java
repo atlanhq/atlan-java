@@ -6,12 +6,15 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.enums.*;
+import com.atlan.model.enums.AtlanAnnouncementType;
+import com.atlan.model.enums.CertificateStatus;
+import com.atlan.model.enums.IconType;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Instance of a query collection in Atlan.
@@ -19,6 +22,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@Slf4j
 public class AtlanCollection extends Namespace {
     private static final long serialVersionUID = 2L;
 
@@ -29,13 +33,13 @@ public class AtlanCollection extends Namespace {
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Image used to represent this collection. */
+    /** TBC */
     @Attribute
     String icon;
 
-    /** Type of image used to represent the collection (for example, an emoji). */
+    /** TBC */
     @Attribute
-    LinkIconType iconType;
+    IconType iconType;
 
     /**
      * Reference to a AtlanCollection by GUID.
@@ -58,40 +62,6 @@ public class AtlanCollection extends Namespace {
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
-    }
-
-    /**
-     * Builds the minimal object necessary to update a AtlanCollection.
-     *
-     * @param qualifiedName of the AtlanCollection
-     * @param name of the AtlanCollection
-     * @return the minimal request necessary to update the AtlanCollection, as a builder
-     */
-    public static AtlanCollectionBuilder<?, ?> updater(String qualifiedName, String name) {
-        return AtlanCollection.builder().qualifiedName(qualifiedName).name(name);
-    }
-
-    /**
-     * Builds the minimal object necessary to apply an update to a AtlanCollection, from a potentially
-     * more-complete AtlanCollection object.
-     *
-     * @return the minimal object necessary to update the AtlanCollection, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for AtlanCollection are not found in the initial object
-     */
-    @Override
-    public AtlanCollectionBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        List<String> missing = new ArrayList<>();
-        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
-            missing.add("qualifiedName");
-        }
-        if (this.getName() == null || this.getName().length() == 0) {
-            missing.add("name");
-        }
-        if (!missing.isEmpty()) {
-            throw new InvalidRequestException(
-                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "AtlanCollection", String.join(",", missing));
-        }
-        return updater(this.getQualifiedName(), this.getName());
     }
 
     /**
@@ -140,6 +110,40 @@ public class AtlanCollection extends Namespace {
     }
 
     /**
+     * Builds the minimal object necessary to update a AtlanCollection.
+     *
+     * @param qualifiedName of the AtlanCollection
+     * @param name of the AtlanCollection
+     * @return the minimal request necessary to update the AtlanCollection, as a builder
+     */
+    public static AtlanCollectionBuilder<?, ?> updater(String qualifiedName, String name) {
+        return AtlanCollection.builder().qualifiedName(qualifiedName).name(name);
+    }
+
+    /**
+     * Builds the minimal object necessary to apply an update to a AtlanCollection, from a potentially
+     * more-complete AtlanCollection object.
+     *
+     * @return the minimal object necessary to update the AtlanCollection, as a builder
+     * @throws InvalidRequestException if any of the minimal set of required properties for AtlanCollection are not found in the initial object
+     */
+    @Override
+    public AtlanCollectionBuilder<?, ?> trimToRequired() throws InvalidRequestException {
+        List<String> missing = new ArrayList<>();
+        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
+            missing.add("qualifiedName");
+        }
+        if (this.getName() == null || this.getName().length() == 0) {
+            missing.add("name");
+        }
+        if (!missing.isEmpty()) {
+            throw new InvalidRequestException(
+                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "AtlanCollection", String.join(",", missing));
+        }
+        return updater(this.getQualifiedName(), this.getName());
+    }
+
+    /**
      * Remove the system description from a AtlanCollection.
      *
      * @param qualifiedName of the AtlanCollection
@@ -184,8 +188,8 @@ public class AtlanCollection extends Namespace {
      * @return the updated AtlanCollection, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static AtlanCollection updateCertificate(
-            String qualifiedName, AtlanCertificateStatus certificate, String message) throws AtlanException {
+    public static AtlanCollection updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
+            throws AtlanException {
         return (AtlanCollection) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
@@ -226,6 +230,48 @@ public class AtlanCollection extends Namespace {
      */
     public static AtlanCollection removeAnnouncement(String qualifiedName, String name) throws AtlanException {
         return (AtlanCollection) Asset.removeAnnouncement(updater(qualifiedName, name));
+    }
+
+    /**
+     * Replace the terms linked to the AtlanCollection.
+     *
+     * @param qualifiedName for the AtlanCollection
+     * @param name human-readable name of the AtlanCollection
+     * @param terms the list of terms to replace on the AtlanCollection, or null to remove all terms from the AtlanCollection
+     * @return the AtlanCollection that was updated (note that it will NOT contain details of the replaced terms)
+     * @throws AtlanException on any API problems
+     */
+    public static AtlanCollection replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+            throws AtlanException {
+        return (AtlanCollection) Asset.replaceTerms(updater(qualifiedName, name), terms);
+    }
+
+    /**
+     * Link additional terms to the AtlanCollection, without replacing existing terms linked to the AtlanCollection.
+     * Note: this operation must make two API calls — one to retrieve the AtlanCollection's existing terms,
+     * and a second to append the new terms.
+     *
+     * @param qualifiedName for the AtlanCollection
+     * @param terms the list of terms to append to the AtlanCollection
+     * @return the AtlanCollection that was updated  (note that it will NOT contain details of the appended terms)
+     * @throws AtlanException on any API problems
+     */
+    public static AtlanCollection appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (AtlanCollection) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
+    }
+
+    /**
+     * Remove terms from a AtlanCollection, without replacing all existing terms linked to the AtlanCollection.
+     * Note: this operation must make two API calls — one to retrieve the AtlanCollection's existing terms,
+     * and a second to remove the provided terms.
+     *
+     * @param qualifiedName for the AtlanCollection
+     * @param terms the list of terms to remove from the AtlanCollection, which must be referenced by GUID
+     * @return the AtlanCollection that was updated (note that it will NOT contain details of the resulting terms)
+     * @throws AtlanException on any API problems
+     */
+    public static AtlanCollection removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (AtlanCollection) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 
     /**
@@ -275,47 +321,5 @@ public class AtlanCollection extends Namespace {
      */
     public static void removeClassification(String qualifiedName, String classificationName) throws AtlanException {
         Asset.removeClassification(TYPE_NAME, qualifiedName, classificationName);
-    }
-
-    /**
-     * Replace the terms linked to the AtlanCollection.
-     *
-     * @param qualifiedName for the AtlanCollection
-     * @param name human-readable name of the AtlanCollection
-     * @param terms the list of terms to replace on the AtlanCollection, or null to remove all terms from the AtlanCollection
-     * @return the AtlanCollection that was updated (note that it will NOT contain details of the replaced terms)
-     * @throws AtlanException on any API problems
-     */
-    public static AtlanCollection replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
-            throws AtlanException {
-        return (AtlanCollection) Asset.replaceTerms(updater(qualifiedName, name), terms);
-    }
-
-    /**
-     * Link additional terms to the AtlanCollection, without replacing existing terms linked to the AtlanCollection.
-     * Note: this operation must make two API calls — one to retrieve the AtlanCollection's existing terms,
-     * and a second to append the new terms.
-     *
-     * @param qualifiedName for the AtlanCollection
-     * @param terms the list of terms to append to the AtlanCollection
-     * @return the AtlanCollection that was updated  (note that it will NOT contain details of the appended terms)
-     * @throws AtlanException on any API problems
-     */
-    public static AtlanCollection appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (AtlanCollection) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
-    }
-
-    /**
-     * Remove terms from a AtlanCollection, without replacing all existing terms linked to the AtlanCollection.
-     * Note: this operation must make two API calls — one to retrieve the AtlanCollection's existing terms,
-     * and a second to remove the provided terms.
-     *
-     * @param qualifiedName for the AtlanCollection
-     * @param terms the list of terms to remove from the AtlanCollection, which must be referenced by GUID
-     * @return the AtlanCollection that was updated (note that it will NOT contain details of the resulting terms)
-     * @throws AtlanException on any API problems
-     */
-    public static AtlanCollection removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (AtlanCollection) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 }

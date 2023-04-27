@@ -6,8 +6,12 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.enums.*;
+import com.atlan.model.enums.AtlanAnnouncementType;
+import com.atlan.model.enums.AtlanConnectorType;
+import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
+import com.atlan.model.structs.ColumnValueFrequencyMap;
+import com.atlan.model.structs.Histogram;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
@@ -16,6 +20,7 @@ import java.util.Map;
 import java.util.SortedSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Instance of a column in Atlan.
@@ -23,6 +28,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@Slf4j
 @SuppressWarnings("cast")
 public class Column extends SQL {
     private static final long serialVersionUID = 2L;
@@ -125,7 +131,8 @@ public class Column extends SQL {
 
     /** List of values in a histogram that represents the contents of the column. */
     @Attribute
-    Histogram columnHistogram;
+    @Singular("addColumnHistogram")
+    List<Histogram> columnHistogram;
 
     /** Greatest value in a numeric column. */
     @Attribute
@@ -181,6 +188,7 @@ public class Column extends SQL {
 
     /** List of the greatest values in a column. */
     @Attribute
+    @Singular("addColumnMax")
     SortedSet<String> columnMaxs;
 
     /** Length of the shortest value in a string column. */
@@ -189,6 +197,7 @@ public class Column extends SQL {
 
     /** List of the least values in a column. */
     @Attribute
+    @Singular("addColumnMin")
     SortedSet<String> columnMins;
 
     /** Number of rows in a column that do not contain content. */
@@ -233,6 +242,15 @@ public class Column extends SQL {
 
     /** TBC */
     @Attribute
+    @Singular("addForeignKeyTo")
+    SortedSet<Column> foreignKeyTo;
+
+    /** TBC */
+    @Attribute
+    Column foreignKeyFrom;
+
+    /** TBC */
+    @Attribute
     @Singular
     SortedSet<DbtMetric> dbtMetrics;
 
@@ -264,23 +282,6 @@ public class Column extends SQL {
     SortedSet<DbtModelColumn> columnDbtModelColumns;
 
     /**
-     * Retrieve the parent of this column, irrespective of its type.
-     * @return the reference to this column's parent
-     */
-    public SQL getParent() {
-        if (table != null) {
-            return table;
-        } else if (view != null) {
-            return view;
-        } else if (materializedView != null) {
-            return materializedView;
-        } else if (tablePartition != null) {
-            return tablePartition;
-        }
-        return null;
-    }
-
-    /**
      * Reference to a Column by GUID.
      *
      * @param guid the GUID of the Column to reference
@@ -304,13 +305,75 @@ public class Column extends SQL {
     }
 
     /**
-     * Builds the minimal object necessary to create a column.
+     * Retrieves a Column by its GUID, complete with all of its relationships.
      *
-     * @param name of the column
+     * @param guid of the Column to retrieve
+     * @return the requested full Column, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Column does not exist or the provided GUID is not a Column
+     */
+    public static Column retrieveByGuid(String guid) throws AtlanException {
+        Asset asset = Asset.retrieveFull(guid);
+        if (asset == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
+        } else if (asset instanceof Column) {
+            return (Column) asset;
+        } else {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "Column");
+        }
+    }
+
+    /**
+     * Retrieves a Column by its qualifiedName, complete with all of its relationships.
+     *
+     * @param qualifiedName of the Column to retrieve
+     * @return the requested full Column, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Column does not exist
+     */
+    public static Column retrieveByQualifiedName(String qualifiedName) throws AtlanException {
+        Asset asset = Asset.retrieveFull(TYPE_NAME, qualifiedName);
+        if (asset instanceof Column) {
+            return (Column) asset;
+        } else {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "Column");
+        }
+    }
+
+    /**
+     * Restore the archived (soft-deleted) Column to active.
+     *
+     * @param qualifiedName for the Column
+     * @return true if the Column is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Retrieve the parent of this Column, irrespective of its type.
+     * @return the reference to this Column's parent
+     */
+    public SQL getParent() {
+        if (table != null) {
+            return table;
+        } else if (view != null) {
+            return view;
+        } else if (materializedView != null) {
+            return materializedView;
+        } else if (tablePartition != null) {
+            return tablePartition;
+        }
+        return null;
+    }
+
+    /**
+     * Builds the minimal object necessary to create a Column.
+     *
+     * @param name of the Column
      * @param parentType type of parent (table, view, materialized view), should be a TYPE_NAME static string
-     * @param parentQualifiedName unique name of the table / view / materialized view in which this column exists
-     * @param order the order the column appears within its parent (the column's position)
-     * @return the minimal request necessary to create the column, as a builder
+     * @param parentQualifiedName unique name of the table / view / materialized view in which this Column exists
+     * @param order the order the Column appears within its parent (the Column's position)
+     * @return the minimal request necessary to create the Column, as a builder
      */
     public static ColumnBuilder<?, ?> creator(String name, String parentType, String parentQualifiedName, int order) {
         String[] tokens = parentQualifiedName.split("/");
@@ -366,11 +429,11 @@ public class Column extends SQL {
     }
 
     /**
-     * Generate a unique column name.
+     * Generate a unique Column name.
      *
-     * @param name of the column
-     * @param parentQualifiedName unique name of the container in which this column exists
-     * @return a unique name for the column
+     * @param name of the Column
+     * @param parentQualifiedName unique name of the container in which this Column exists
+     * @return a unique name for the Column
      */
     public static String generateQualifiedName(String name, String parentQualifiedName) {
         return parentQualifiedName + "/" + name;
@@ -408,51 +471,6 @@ public class Column extends SQL {
                     ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "Column", String.join(",", missing));
         }
         return updater(this.getQualifiedName(), this.getName());
-    }
-
-    /**
-     * Retrieves a Column by its GUID, complete with all of its relationships.
-     *
-     * @param guid of the Column to retrieve
-     * @return the requested full Column, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Column does not exist or the provided GUID is not a Column
-     */
-    public static Column retrieveByGuid(String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof Column) {
-            return (Column) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "Column");
-        }
-    }
-
-    /**
-     * Retrieves a Column by its qualifiedName, complete with all of its relationships.
-     *
-     * @param qualifiedName of the Column to retrieve
-     * @return the requested full Column, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Column does not exist
-     */
-    public static Column retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        Asset asset = Asset.retrieveFull(TYPE_NAME, qualifiedName);
-        if (asset instanceof Column) {
-            return (Column) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "Column");
-        }
-    }
-
-    /**
-     * Restore the archived (soft-deleted) Column to active.
-     *
-     * @param qualifiedName for the Column
-     * @return true if the Column is now active, and false otherwise
-     * @throws AtlanException on any API problems
-     */
-    public static boolean restore(String qualifiedName) throws AtlanException {
-        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**
@@ -500,7 +518,7 @@ public class Column extends SQL {
      * @return the updated Column, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static Column updateCertificate(String qualifiedName, AtlanCertificateStatus certificate, String message)
+    public static Column updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (Column) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }
@@ -542,6 +560,48 @@ public class Column extends SQL {
      */
     public static Column removeAnnouncement(String qualifiedName, String name) throws AtlanException {
         return (Column) Asset.removeAnnouncement(updater(qualifiedName, name));
+    }
+
+    /**
+     * Replace the terms linked to the Column.
+     *
+     * @param qualifiedName for the Column
+     * @param name human-readable name of the Column
+     * @param terms the list of terms to replace on the Column, or null to remove all terms from the Column
+     * @return the Column that was updated (note that it will NOT contain details of the replaced terms)
+     * @throws AtlanException on any API problems
+     */
+    public static Column replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+            throws AtlanException {
+        return (Column) Asset.replaceTerms(updater(qualifiedName, name), terms);
+    }
+
+    /**
+     * Link additional terms to the Column, without replacing existing terms linked to the Column.
+     * Note: this operation must make two API calls — one to retrieve the Column's existing terms,
+     * and a second to append the new terms.
+     *
+     * @param qualifiedName for the Column
+     * @param terms the list of terms to append to the Column
+     * @return the Column that was updated  (note that it will NOT contain details of the appended terms)
+     * @throws AtlanException on any API problems
+     */
+    public static Column appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (Column) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
+    }
+
+    /**
+     * Remove terms from a Column, without replacing all existing terms linked to the Column.
+     * Note: this operation must make two API calls — one to retrieve the Column's existing terms,
+     * and a second to remove the provided terms.
+     *
+     * @param qualifiedName for the Column
+     * @param terms the list of terms to remove from the Column, which must be referenced by GUID
+     * @return the Column that was updated (note that it will NOT contain details of the resulting terms)
+     * @throws AtlanException on any API problems
+     */
+    public static Column removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (Column) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 
     /**
@@ -591,47 +651,5 @@ public class Column extends SQL {
      */
     public static void removeClassification(String qualifiedName, String classificationName) throws AtlanException {
         Asset.removeClassification(TYPE_NAME, qualifiedName, classificationName);
-    }
-
-    /**
-     * Replace the terms linked to the Column.
-     *
-     * @param qualifiedName for the Column
-     * @param name human-readable name of the Column
-     * @param terms the list of terms to replace on the Column, or null to remove all terms from the Column
-     * @return the Column that was updated (note that it will NOT contain details of the replaced terms)
-     * @throws AtlanException on any API problems
-     */
-    public static Column replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
-            throws AtlanException {
-        return (Column) Asset.replaceTerms(updater(qualifiedName, name), terms);
-    }
-
-    /**
-     * Link additional terms to the Column, without replacing existing terms linked to the Column.
-     * Note: this operation must make two API calls — one to retrieve the Column's existing terms,
-     * and a second to append the new terms.
-     *
-     * @param qualifiedName for the Column
-     * @param terms the list of terms to append to the Column
-     * @return the Column that was updated  (note that it will NOT contain details of the appended terms)
-     * @throws AtlanException on any API problems
-     */
-    public static Column appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (Column) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
-    }
-
-    /**
-     * Remove terms from a Column, without replacing all existing terms linked to the Column.
-     * Note: this operation must make two API calls — one to retrieve the Column's existing terms,
-     * and a second to remove the provided terms.
-     *
-     * @param qualifiedName for the Column
-     * @param terms the list of terms to remove from the Column, which must be referenced by GUID
-     * @return the Column that was updated (note that it will NOT contain details of the resulting terms)
-     * @throws AtlanException on any API problems
-     */
-    public static Column removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (Column) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 }

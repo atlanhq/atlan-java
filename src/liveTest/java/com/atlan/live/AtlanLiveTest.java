@@ -8,7 +8,7 @@ import com.atlan.Atlan;
 import com.atlan.model.assets.Asset;
 import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.AtlanCertificateStatus;
+import com.atlan.model.enums.CertificateStatus;
 
 /**
  * Base class with utility methods and constants for live (integration) tests.
@@ -19,7 +19,7 @@ public abstract class AtlanLiveTest {
 
     private static final String TESTING_STRING = "Automated testing of the Java SDK.";
 
-    public static final AtlanCertificateStatus CERTIFICATE_STATUS = AtlanCertificateStatus.VERIFIED;
+    public static final CertificateStatus CERTIFICATE_STATUS = CertificateStatus.VERIFIED;
     public static final String CERTIFICATE_MESSAGE = TESTING_STRING;
 
     public static final AtlanAnnouncementType ANNOUNCEMENT_TYPE = AtlanAnnouncementType.INFORMATION;

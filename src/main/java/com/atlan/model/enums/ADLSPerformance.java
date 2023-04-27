@@ -7,7 +7,8 @@ import lombok.Getter;
 
 public enum ADLSPerformance implements AtlanEnum {
     STANDARD("Standard"),
-    PREMIUM("Premium");
+    PREMIUM("Premium"),
+    ;
 
     @JsonValue
     @Getter(onMethod_ = {@Override})

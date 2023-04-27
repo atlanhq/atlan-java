@@ -8,7 +8,8 @@ import lombok.Getter;
 public enum ADLSProvisionState implements AtlanEnum {
     CREATING("Creating"),
     RESOLVING_DNS("ResolvingDNS"),
-    SUCCEEDED("Succeeded");
+    SUCCEEDED("Succeeded"),
+    ;
 
     @JsonValue
     @Getter(onMethod_ = {@Override})

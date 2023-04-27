@@ -6,13 +6,17 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.enums.*;
+import com.atlan.model.enums.AtlanAnnouncementType;
+import com.atlan.model.enums.AtlanConnectorType;
+import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.StringUtils;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Instance of a column-level lineage process in Atlan.
@@ -20,7 +24,11 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
-public class ColumnProcess extends AbstractColumnProcess {
+@JsonSubTypes({
+    @JsonSubTypes.Type(value = DbtColumnProcess.class, name = DbtColumnProcess.TYPE_NAME),
+})
+@Slf4j
+public class ColumnProcess extends LineageProcess {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "ColumnProcess";
@@ -29,6 +37,10 @@ public class ColumnProcess extends AbstractColumnProcess {
     @Getter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
+
+    /** Parent process that contains this column-level process. */
+    @Attribute
+    LineageProcess process;
 
     /**
      * Reference to a ColumnProcess by GUID.
@@ -51,6 +63,51 @@ public class ColumnProcess extends AbstractColumnProcess {
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
+    }
+
+    /**
+     * Retrieves a ColumnProcess by its GUID, complete with all of its relationships.
+     *
+     * @param guid of the ColumnProcess to retrieve
+     * @return the requested full ColumnProcess, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ColumnProcess does not exist or the provided GUID is not a ColumnProcess
+     */
+    public static ColumnProcess retrieveByGuid(String guid) throws AtlanException {
+        Asset asset = Asset.retrieveFull(guid);
+        if (asset == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
+        } else if (asset instanceof ColumnProcess) {
+            return (ColumnProcess) asset;
+        } else {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "ColumnProcess");
+        }
+    }
+
+    /**
+     * Retrieves a ColumnProcess by its qualifiedName, complete with all of its relationships.
+     *
+     * @param qualifiedName of the ColumnProcess to retrieve
+     * @return the requested full ColumnProcess, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ColumnProcess does not exist
+     */
+    public static ColumnProcess retrieveByQualifiedName(String qualifiedName) throws AtlanException {
+        Asset asset = Asset.retrieveFull(TYPE_NAME, qualifiedName);
+        if (asset instanceof ColumnProcess) {
+            return (ColumnProcess) asset;
+        } else {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "ColumnProcess");
+        }
+    }
+
+    /**
+     * Restore the archived (soft-deleted) ColumnProcess to active.
+     *
+     * @param qualifiedName for the ColumnProcess
+     * @return true if the ColumnProcess is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**
@@ -118,51 +175,6 @@ public class ColumnProcess extends AbstractColumnProcess {
     }
 
     /**
-     * Retrieves a ColumnProcess by its GUID, complete with all of its relationships.
-     *
-     * @param guid of the ColumnProcess to retrieve
-     * @return the requested full ColumnProcess, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ColumnProcess does not exist or the provided GUID is not a ColumnProcess
-     */
-    public static ColumnProcess retrieveByGuid(String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof ColumnProcess) {
-            return (ColumnProcess) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "ColumnProcess");
-        }
-    }
-
-    /**
-     * Retrieves a ColumnProcess by its qualifiedName, complete with all of its relationships.
-     *
-     * @param qualifiedName of the ColumnProcess to retrieve
-     * @return the requested full ColumnProcess, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ColumnProcess does not exist
-     */
-    public static ColumnProcess retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        Asset asset = Asset.retrieveFull(TYPE_NAME, qualifiedName);
-        if (asset instanceof ColumnProcess) {
-            return (ColumnProcess) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "ColumnProcess");
-        }
-    }
-
-    /**
-     * Restore the archived (soft-deleted) ColumnProcess to active.
-     *
-     * @param qualifiedName for the ColumnProcess
-     * @return true if the ColumnProcess is now active, and false otherwise
-     * @throws AtlanException on any API problems
-     */
-    public static boolean restore(String qualifiedName) throws AtlanException {
-        return Asset.restore(TYPE_NAME, qualifiedName);
-    }
-
-    /**
      * Remove the system description from a ColumnProcess.
      *
      * @param qualifiedName of the ColumnProcess
@@ -207,8 +219,8 @@ public class ColumnProcess extends AbstractColumnProcess {
      * @return the updated ColumnProcess, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static ColumnProcess updateCertificate(
-            String qualifiedName, AtlanCertificateStatus certificate, String message) throws AtlanException {
+    public static ColumnProcess updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
+            throws AtlanException {
         return (ColumnProcess) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
@@ -249,6 +261,48 @@ public class ColumnProcess extends AbstractColumnProcess {
      */
     public static ColumnProcess removeAnnouncement(String qualifiedName, String name) throws AtlanException {
         return (ColumnProcess) Asset.removeAnnouncement(updater(qualifiedName, name));
+    }
+
+    /**
+     * Replace the terms linked to the ColumnProcess.
+     *
+     * @param qualifiedName for the ColumnProcess
+     * @param name human-readable name of the ColumnProcess
+     * @param terms the list of terms to replace on the ColumnProcess, or null to remove all terms from the ColumnProcess
+     * @return the ColumnProcess that was updated (note that it will NOT contain details of the replaced terms)
+     * @throws AtlanException on any API problems
+     */
+    public static ColumnProcess replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+            throws AtlanException {
+        return (ColumnProcess) Asset.replaceTerms(updater(qualifiedName, name), terms);
+    }
+
+    /**
+     * Link additional terms to the ColumnProcess, without replacing existing terms linked to the ColumnProcess.
+     * Note: this operation must make two API calls — one to retrieve the ColumnProcess's existing terms,
+     * and a second to append the new terms.
+     *
+     * @param qualifiedName for the ColumnProcess
+     * @param terms the list of terms to append to the ColumnProcess
+     * @return the ColumnProcess that was updated  (note that it will NOT contain details of the appended terms)
+     * @throws AtlanException on any API problems
+     */
+    public static ColumnProcess appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (ColumnProcess) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
+    }
+
+    /**
+     * Remove terms from a ColumnProcess, without replacing all existing terms linked to the ColumnProcess.
+     * Note: this operation must make two API calls — one to retrieve the ColumnProcess's existing terms,
+     * and a second to remove the provided terms.
+     *
+     * @param qualifiedName for the ColumnProcess
+     * @param terms the list of terms to remove from the ColumnProcess, which must be referenced by GUID
+     * @return the ColumnProcess that was updated (note that it will NOT contain details of the resulting terms)
+     * @throws AtlanException on any API problems
+     */
+    public static ColumnProcess removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (ColumnProcess) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 
     /**
@@ -298,47 +352,5 @@ public class ColumnProcess extends AbstractColumnProcess {
      */
     public static void removeClassification(String qualifiedName, String classificationName) throws AtlanException {
         Asset.removeClassification(TYPE_NAME, qualifiedName, classificationName);
-    }
-
-    /**
-     * Replace the terms linked to the ColumnProcess.
-     *
-     * @param qualifiedName for the ColumnProcess
-     * @param name human-readable name of the ColumnProcess
-     * @param terms the list of terms to replace on the ColumnProcess, or null to remove all terms from the ColumnProcess
-     * @return the ColumnProcess that was updated (note that it will NOT contain details of the replaced terms)
-     * @throws AtlanException on any API problems
-     */
-    public static ColumnProcess replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
-            throws AtlanException {
-        return (ColumnProcess) Asset.replaceTerms(updater(qualifiedName, name), terms);
-    }
-
-    /**
-     * Link additional terms to the ColumnProcess, without replacing existing terms linked to the ColumnProcess.
-     * Note: this operation must make two API calls — one to retrieve the ColumnProcess's existing terms,
-     * and a second to append the new terms.
-     *
-     * @param qualifiedName for the ColumnProcess
-     * @param terms the list of terms to append to the ColumnProcess
-     * @return the ColumnProcess that was updated  (note that it will NOT contain details of the appended terms)
-     * @throws AtlanException on any API problems
-     */
-    public static ColumnProcess appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (ColumnProcess) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
-    }
-
-    /**
-     * Remove terms from a ColumnProcess, without replacing all existing terms linked to the ColumnProcess.
-     * Note: this operation must make two API calls — one to retrieve the ColumnProcess's existing terms,
-     * and a second to remove the provided terms.
-     *
-     * @param qualifiedName for the ColumnProcess
-     * @param terms the list of terms to remove from the ColumnProcess, which must be referenced by GUID
-     * @return the ColumnProcess that was updated (note that it will NOT contain details of the resulting terms)
-     * @throws AtlanException on any API problems
-     */
-    public static ColumnProcess removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (ColumnProcess) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 }

@@ -6,7 +6,8 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.enums.*;
+import com.atlan.model.enums.AtlanAnnouncementType;
+import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.SortedSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * TBC
@@ -24,7 +26,9 @@ import lombok.experimental.SuperBuilder;
 @JsonSubTypes({
     @JsonSubTypes.Type(value = QlikStream.class, name = QlikStream.TYPE_NAME),
 })
+@Slf4j
 public class QlikSpace extends Qlik {
+    private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "QlikSpace";
 
@@ -68,40 +72,6 @@ public class QlikSpace extends Qlik {
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
-    }
-
-    /**
-     * Builds the minimal object necessary to update a QlikSpace.
-     *
-     * @param qualifiedName of the QlikSpace
-     * @param name of the QlikSpace
-     * @return the minimal request necessary to update the QlikSpace, as a builder
-     */
-    public static QlikSpaceBuilder<?, ?> updater(String qualifiedName, String name) {
-        return QlikSpace.builder().qualifiedName(qualifiedName).name(name);
-    }
-
-    /**
-     * Builds the minimal object necessary to apply an update to a QlikSpace, from a potentially
-     * more-complete QlikSpace object.
-     *
-     * @return the minimal object necessary to update the QlikSpace, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for QlikSpace are not found in the initial object
-     */
-    @Override
-    public QlikSpaceBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        List<String> missing = new ArrayList<>();
-        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
-            missing.add("qualifiedName");
-        }
-        if (this.getName() == null || this.getName().length() == 0) {
-            missing.add("name");
-        }
-        if (!missing.isEmpty()) {
-            throw new InvalidRequestException(
-                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "QlikSpace", String.join(",", missing));
-        }
-        return updater(this.getQualifiedName(), this.getName());
     }
 
     /**
@@ -150,6 +120,40 @@ public class QlikSpace extends Qlik {
     }
 
     /**
+     * Builds the minimal object necessary to update a QlikSpace.
+     *
+     * @param qualifiedName of the QlikSpace
+     * @param name of the QlikSpace
+     * @return the minimal request necessary to update the QlikSpace, as a builder
+     */
+    public static QlikSpaceBuilder<?, ?> updater(String qualifiedName, String name) {
+        return QlikSpace.builder().qualifiedName(qualifiedName).name(name);
+    }
+
+    /**
+     * Builds the minimal object necessary to apply an update to a QlikSpace, from a potentially
+     * more-complete QlikSpace object.
+     *
+     * @return the minimal object necessary to update the QlikSpace, as a builder
+     * @throws InvalidRequestException if any of the minimal set of required properties for QlikSpace are not found in the initial object
+     */
+    @Override
+    public QlikSpaceBuilder<?, ?> trimToRequired() throws InvalidRequestException {
+        List<String> missing = new ArrayList<>();
+        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
+            missing.add("qualifiedName");
+        }
+        if (this.getName() == null || this.getName().length() == 0) {
+            missing.add("name");
+        }
+        if (!missing.isEmpty()) {
+            throw new InvalidRequestException(
+                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "QlikSpace", String.join(",", missing));
+        }
+        return updater(this.getQualifiedName(), this.getName());
+    }
+
+    /**
      * Remove the system description from a QlikSpace.
      *
      * @param qualifiedName of the QlikSpace
@@ -194,7 +198,7 @@ public class QlikSpace extends Qlik {
      * @return the updated QlikSpace, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static QlikSpace updateCertificate(String qualifiedName, AtlanCertificateStatus certificate, String message)
+    public static QlikSpace updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (QlikSpace) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }
@@ -239,29 +243,6 @@ public class QlikSpace extends Qlik {
     }
 
     /**
-     * Add classifications to a QlikSpace.
-     *
-     * @param qualifiedName of the QlikSpace
-     * @param classificationNames human-readable names of the classifications to add
-     * @throws AtlanException on any API problems, or if any of the classifications already exist on the QlikSpace
-     */
-    public static void addClassifications(String qualifiedName, List<String> classificationNames)
-            throws AtlanException {
-        Asset.addClassifications(TYPE_NAME, qualifiedName, classificationNames);
-    }
-
-    /**
-     * Remove a classification from a QlikSpace.
-     *
-     * @param qualifiedName of the QlikSpace
-     * @param classificationName human-readable name of the classification to remove
-     * @throws AtlanException on any API problems, or if the classification does not exist on the QlikSpace
-     */
-    public static void removeClassification(String qualifiedName, String classificationName) throws AtlanException {
-        Asset.removeClassification(TYPE_NAME, qualifiedName, classificationName);
-    }
-
-    /**
      * Replace the terms linked to the QlikSpace.
      *
      * @param qualifiedName for the QlikSpace
@@ -301,5 +282,54 @@ public class QlikSpace extends Qlik {
      */
     public static QlikSpace removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
         return (QlikSpace) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
+    }
+
+    /**
+     * Add classifications to a QlikSpace.
+     *
+     * @param qualifiedName of the QlikSpace
+     * @param classificationNames human-readable names of the classifications to add
+     * @throws AtlanException on any API problems, or if any of the classifications already exist on the QlikSpace
+     */
+    public static void addClassifications(String qualifiedName, List<String> classificationNames)
+            throws AtlanException {
+        Asset.addClassifications(TYPE_NAME, qualifiedName, classificationNames);
+    }
+
+    /**
+     * Add classifications to a QlikSpace.
+     *
+     * @param qualifiedName of the QlikSpace
+     * @param classificationNames human-readable names of the classifications to add
+     * @param propagate whether to propagate the classification (true) or not (false)
+     * @param removePropagationsOnDelete whether to remove the propagated classifications when the classification is removed from this asset (true) or not (false)
+     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
+     * @throws AtlanException on any API problems, or if any of the classifications already exist on the QlikSpace
+     */
+    public static void addClassifications(
+            String qualifiedName,
+            List<String> classificationNames,
+            boolean propagate,
+            boolean removePropagationsOnDelete,
+            boolean restrictLineagePropagation)
+            throws AtlanException {
+        Asset.addClassifications(
+                TYPE_NAME,
+                qualifiedName,
+                classificationNames,
+                propagate,
+                removePropagationsOnDelete,
+                restrictLineagePropagation);
+    }
+
+    /**
+     * Remove a classification from a QlikSpace.
+     *
+     * @param qualifiedName of the QlikSpace
+     * @param classificationName human-readable name of the classification to remove
+     * @throws AtlanException on any API problems, or if the classification does not exist on the QlikSpace
+     */
+    public static void removeClassification(String qualifiedName, String classificationName) throws AtlanException {
+        Asset.removeClassification(TYPE_NAME, qualifiedName, classificationName);
     }
 }

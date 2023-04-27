@@ -6,11 +6,12 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 
 public enum ADLSStorageKind implements AtlanEnum {
-    BLOB("BlobStorage"),
-    BLOCK_BLOB("BlockBlobStorage"),
-    FILE("FileStorage"),
+    BLOB_STORAGE("BlobStorage"),
+    BLOCK_BLOB_STORAGE("BlockBlobStorage"),
+    FILE_STORAGE("FileStorage"),
     STORAGE("Storage"),
-    STORAGE_V2("StorageV2");
+    STORAGE_V2("StorageV2"),
+    ;
 
     @JsonValue
     @Getter(onMethod_ = {@Override})

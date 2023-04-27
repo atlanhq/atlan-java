@@ -8,7 +8,8 @@ import lombok.Getter;
 public enum ADLSObjectType implements AtlanEnum {
     BLOCK_BLOB("BlockBlob"),
     PAGE_BLOB("PageBlob"),
-    APPEND_BLOB("AppendBlob");
+    APPEND_BLOB("AppendBlob"),
+    ;
 
     @JsonValue
     @Getter(onMethod_ = {@Override})

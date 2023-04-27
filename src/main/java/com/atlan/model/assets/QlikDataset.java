@@ -6,12 +6,14 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.enums.*;
+import com.atlan.model.enums.AtlanAnnouncementType;
+import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * TBC
@@ -19,6 +21,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@Slf4j
 public class QlikDataset extends Qlik {
     private static final long serialVersionUID = 2L;
 
@@ -73,40 +76,6 @@ public class QlikDataset extends Qlik {
     }
 
     /**
-     * Builds the minimal object necessary to update a QlikDataset.
-     *
-     * @param qualifiedName of the QlikDataset
-     * @param name of the QlikDataset
-     * @return the minimal request necessary to update the QlikDataset, as a builder
-     */
-    public static QlikDatasetBuilder<?, ?> updater(String qualifiedName, String name) {
-        return QlikDataset.builder().qualifiedName(qualifiedName).name(name);
-    }
-
-    /**
-     * Builds the minimal object necessary to apply an update to a QlikDataset, from a potentially
-     * more-complete QlikDataset object.
-     *
-     * @return the minimal object necessary to update the QlikDataset, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for QlikDataset are not found in the initial object
-     */
-    @Override
-    public QlikDatasetBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        List<String> missing = new ArrayList<>();
-        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
-            missing.add("qualifiedName");
-        }
-        if (this.getName() == null || this.getName().length() == 0) {
-            missing.add("name");
-        }
-        if (!missing.isEmpty()) {
-            throw new InvalidRequestException(
-                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "QlikDataset", String.join(",", missing));
-        }
-        return updater(this.getQualifiedName(), this.getName());
-    }
-
-    /**
      * Retrieves a QlikDataset by its GUID, complete with all of its relationships.
      *
      * @param guid of the QlikDataset to retrieve
@@ -149,6 +118,40 @@ public class QlikDataset extends Qlik {
      */
     public static boolean restore(String qualifiedName) throws AtlanException {
         return Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Builds the minimal object necessary to update a QlikDataset.
+     *
+     * @param qualifiedName of the QlikDataset
+     * @param name of the QlikDataset
+     * @return the minimal request necessary to update the QlikDataset, as a builder
+     */
+    public static QlikDatasetBuilder<?, ?> updater(String qualifiedName, String name) {
+        return QlikDataset.builder().qualifiedName(qualifiedName).name(name);
+    }
+
+    /**
+     * Builds the minimal object necessary to apply an update to a QlikDataset, from a potentially
+     * more-complete QlikDataset object.
+     *
+     * @return the minimal object necessary to update the QlikDataset, as a builder
+     * @throws InvalidRequestException if any of the minimal set of required properties for QlikDataset are not found in the initial object
+     */
+    @Override
+    public QlikDatasetBuilder<?, ?> trimToRequired() throws InvalidRequestException {
+        List<String> missing = new ArrayList<>();
+        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
+            missing.add("qualifiedName");
+        }
+        if (this.getName() == null || this.getName().length() == 0) {
+            missing.add("name");
+        }
+        if (!missing.isEmpty()) {
+            throw new InvalidRequestException(
+                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "QlikDataset", String.join(",", missing));
+        }
+        return updater(this.getQualifiedName(), this.getName());
     }
 
     /**
@@ -196,8 +199,8 @@ public class QlikDataset extends Qlik {
      * @return the updated QlikDataset, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static QlikDataset updateCertificate(
-            String qualifiedName, AtlanCertificateStatus certificate, String message) throws AtlanException {
+    public static QlikDataset updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
+            throws AtlanException {
         return (QlikDataset) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
@@ -238,6 +241,48 @@ public class QlikDataset extends Qlik {
      */
     public static QlikDataset removeAnnouncement(String qualifiedName, String name) throws AtlanException {
         return (QlikDataset) Asset.removeAnnouncement(updater(qualifiedName, name));
+    }
+
+    /**
+     * Replace the terms linked to the QlikDataset.
+     *
+     * @param qualifiedName for the QlikDataset
+     * @param name human-readable name of the QlikDataset
+     * @param terms the list of terms to replace on the QlikDataset, or null to remove all terms from the QlikDataset
+     * @return the QlikDataset that was updated (note that it will NOT contain details of the replaced terms)
+     * @throws AtlanException on any API problems
+     */
+    public static QlikDataset replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+            throws AtlanException {
+        return (QlikDataset) Asset.replaceTerms(updater(qualifiedName, name), terms);
+    }
+
+    /**
+     * Link additional terms to the QlikDataset, without replacing existing terms linked to the QlikDataset.
+     * Note: this operation must make two API calls — one to retrieve the QlikDataset's existing terms,
+     * and a second to append the new terms.
+     *
+     * @param qualifiedName for the QlikDataset
+     * @param terms the list of terms to append to the QlikDataset
+     * @return the QlikDataset that was updated  (note that it will NOT contain details of the appended terms)
+     * @throws AtlanException on any API problems
+     */
+    public static QlikDataset appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (QlikDataset) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
+    }
+
+    /**
+     * Remove terms from a QlikDataset, without replacing all existing terms linked to the QlikDataset.
+     * Note: this operation must make two API calls — one to retrieve the QlikDataset's existing terms,
+     * and a second to remove the provided terms.
+     *
+     * @param qualifiedName for the QlikDataset
+     * @param terms the list of terms to remove from the QlikDataset, which must be referenced by GUID
+     * @return the QlikDataset that was updated (note that it will NOT contain details of the resulting terms)
+     * @throws AtlanException on any API problems
+     */
+    public static QlikDataset removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (QlikDataset) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 
     /**
@@ -287,47 +332,5 @@ public class QlikDataset extends Qlik {
      */
     public static void removeClassification(String qualifiedName, String classificationName) throws AtlanException {
         Asset.removeClassification(TYPE_NAME, qualifiedName, classificationName);
-    }
-
-    /**
-     * Replace the terms linked to the QlikDataset.
-     *
-     * @param qualifiedName for the QlikDataset
-     * @param name human-readable name of the QlikDataset
-     * @param terms the list of terms to replace on the QlikDataset, or null to remove all terms from the QlikDataset
-     * @return the QlikDataset that was updated (note that it will NOT contain details of the replaced terms)
-     * @throws AtlanException on any API problems
-     */
-    public static QlikDataset replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
-            throws AtlanException {
-        return (QlikDataset) Asset.replaceTerms(updater(qualifiedName, name), terms);
-    }
-
-    /**
-     * Link additional terms to the QlikDataset, without replacing existing terms linked to the QlikDataset.
-     * Note: this operation must make two API calls — one to retrieve the QlikDataset's existing terms,
-     * and a second to append the new terms.
-     *
-     * @param qualifiedName for the QlikDataset
-     * @param terms the list of terms to append to the QlikDataset
-     * @return the QlikDataset that was updated  (note that it will NOT contain details of the appended terms)
-     * @throws AtlanException on any API problems
-     */
-    public static QlikDataset appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (QlikDataset) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
-    }
-
-    /**
-     * Remove terms from a QlikDataset, without replacing all existing terms linked to the QlikDataset.
-     * Note: this operation must make two API calls — one to retrieve the QlikDataset's existing terms,
-     * and a second to remove the provided terms.
-     *
-     * @param qualifiedName for the QlikDataset
-     * @param terms the list of terms to remove from the QlikDataset, which must be referenced by GUID
-     * @return the QlikDataset that was updated (note that it will NOT contain details of the resulting terms)
-     * @throws AtlanException on any API problems
-     */
-    public static QlikDataset removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (QlikDataset) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 }

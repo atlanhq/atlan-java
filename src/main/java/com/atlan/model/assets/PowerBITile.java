@@ -6,12 +6,14 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.enums.*;
+import com.atlan.model.enums.AtlanAnnouncementType;
+import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Instance of a Power BI tile in Atlan.
@@ -19,6 +21,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@Slf4j
 public class PowerBITile extends PowerBI {
     private static final long serialVersionUID = 2L;
 
@@ -73,40 +76,6 @@ public class PowerBITile extends PowerBI {
     }
 
     /**
-     * Builds the minimal object necessary to update a PowerBITile.
-     *
-     * @param qualifiedName of the PowerBITile
-     * @param name of the PowerBITile
-     * @return the minimal request necessary to update the PowerBITile, as a builder
-     */
-    public static PowerBITileBuilder<?, ?> updater(String qualifiedName, String name) {
-        return PowerBITile.builder().qualifiedName(qualifiedName).name(name);
-    }
-
-    /**
-     * Builds the minimal object necessary to apply an update to a PowerBITile, from a potentially
-     * more-complete PowerBITile object.
-     *
-     * @return the minimal object necessary to update the PowerBITile, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for PowerBITile are not found in the initial object
-     */
-    @Override
-    public PowerBITileBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        List<String> missing = new ArrayList<>();
-        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
-            missing.add("qualifiedName");
-        }
-        if (this.getName() == null || this.getName().length() == 0) {
-            missing.add("name");
-        }
-        if (!missing.isEmpty()) {
-            throw new InvalidRequestException(
-                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "PowerBITile", String.join(",", missing));
-        }
-        return updater(this.getQualifiedName(), this.getName());
-    }
-
-    /**
      * Retrieves a PowerBITile by its GUID, complete with all of its relationships.
      *
      * @param guid of the PowerBITile to retrieve
@@ -149,6 +118,40 @@ public class PowerBITile extends PowerBI {
      */
     public static boolean restore(String qualifiedName) throws AtlanException {
         return Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Builds the minimal object necessary to update a PowerBITile.
+     *
+     * @param qualifiedName of the PowerBITile
+     * @param name of the PowerBITile
+     * @return the minimal request necessary to update the PowerBITile, as a builder
+     */
+    public static PowerBITileBuilder<?, ?> updater(String qualifiedName, String name) {
+        return PowerBITile.builder().qualifiedName(qualifiedName).name(name);
+    }
+
+    /**
+     * Builds the minimal object necessary to apply an update to a PowerBITile, from a potentially
+     * more-complete PowerBITile object.
+     *
+     * @return the minimal object necessary to update the PowerBITile, as a builder
+     * @throws InvalidRequestException if any of the minimal set of required properties for PowerBITile are not found in the initial object
+     */
+    @Override
+    public PowerBITileBuilder<?, ?> trimToRequired() throws InvalidRequestException {
+        List<String> missing = new ArrayList<>();
+        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
+            missing.add("qualifiedName");
+        }
+        if (this.getName() == null || this.getName().length() == 0) {
+            missing.add("name");
+        }
+        if (!missing.isEmpty()) {
+            throw new InvalidRequestException(
+                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "PowerBITile", String.join(",", missing));
+        }
+        return updater(this.getQualifiedName(), this.getName());
     }
 
     /**
@@ -196,8 +199,8 @@ public class PowerBITile extends PowerBI {
      * @return the updated PowerBITile, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static PowerBITile updateCertificate(
-            String qualifiedName, AtlanCertificateStatus certificate, String message) throws AtlanException {
+    public static PowerBITile updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
+            throws AtlanException {
         return (PowerBITile) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
@@ -238,6 +241,48 @@ public class PowerBITile extends PowerBI {
      */
     public static PowerBITile removeAnnouncement(String qualifiedName, String name) throws AtlanException {
         return (PowerBITile) Asset.removeAnnouncement(updater(qualifiedName, name));
+    }
+
+    /**
+     * Replace the terms linked to the PowerBITile.
+     *
+     * @param qualifiedName for the PowerBITile
+     * @param name human-readable name of the PowerBITile
+     * @param terms the list of terms to replace on the PowerBITile, or null to remove all terms from the PowerBITile
+     * @return the PowerBITile that was updated (note that it will NOT contain details of the replaced terms)
+     * @throws AtlanException on any API problems
+     */
+    public static PowerBITile replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+            throws AtlanException {
+        return (PowerBITile) Asset.replaceTerms(updater(qualifiedName, name), terms);
+    }
+
+    /**
+     * Link additional terms to the PowerBITile, without replacing existing terms linked to the PowerBITile.
+     * Note: this operation must make two API calls — one to retrieve the PowerBITile's existing terms,
+     * and a second to append the new terms.
+     *
+     * @param qualifiedName for the PowerBITile
+     * @param terms the list of terms to append to the PowerBITile
+     * @return the PowerBITile that was updated  (note that it will NOT contain details of the appended terms)
+     * @throws AtlanException on any API problems
+     */
+    public static PowerBITile appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (PowerBITile) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
+    }
+
+    /**
+     * Remove terms from a PowerBITile, without replacing all existing terms linked to the PowerBITile.
+     * Note: this operation must make two API calls — one to retrieve the PowerBITile's existing terms,
+     * and a second to remove the provided terms.
+     *
+     * @param qualifiedName for the PowerBITile
+     * @param terms the list of terms to remove from the PowerBITile, which must be referenced by GUID
+     * @return the PowerBITile that was updated (note that it will NOT contain details of the resulting terms)
+     * @throws AtlanException on any API problems
+     */
+    public static PowerBITile removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (PowerBITile) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 
     /**
@@ -287,47 +332,5 @@ public class PowerBITile extends PowerBI {
      */
     public static void removeClassification(String qualifiedName, String classificationName) throws AtlanException {
         Asset.removeClassification(TYPE_NAME, qualifiedName, classificationName);
-    }
-
-    /**
-     * Replace the terms linked to the PowerBITile.
-     *
-     * @param qualifiedName for the PowerBITile
-     * @param name human-readable name of the PowerBITile
-     * @param terms the list of terms to replace on the PowerBITile, or null to remove all terms from the PowerBITile
-     * @return the PowerBITile that was updated (note that it will NOT contain details of the replaced terms)
-     * @throws AtlanException on any API problems
-     */
-    public static PowerBITile replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
-            throws AtlanException {
-        return (PowerBITile) Asset.replaceTerms(updater(qualifiedName, name), terms);
-    }
-
-    /**
-     * Link additional terms to the PowerBITile, without replacing existing terms linked to the PowerBITile.
-     * Note: this operation must make two API calls — one to retrieve the PowerBITile's existing terms,
-     * and a second to append the new terms.
-     *
-     * @param qualifiedName for the PowerBITile
-     * @param terms the list of terms to append to the PowerBITile
-     * @return the PowerBITile that was updated  (note that it will NOT contain details of the appended terms)
-     * @throws AtlanException on any API problems
-     */
-    public static PowerBITile appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (PowerBITile) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
-    }
-
-    /**
-     * Remove terms from a PowerBITile, without replacing all existing terms linked to the PowerBITile.
-     * Note: this operation must make two API calls — one to retrieve the PowerBITile's existing terms,
-     * and a second to remove the provided terms.
-     *
-     * @param qualifiedName for the PowerBITile
-     * @param terms the list of terms to remove from the PowerBITile, which must be referenced by GUID
-     * @return the PowerBITile that was updated (note that it will NOT contain details of the resulting terms)
-     * @throws AtlanException on any API problems
-     */
-    public static PowerBITile removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (PowerBITile) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 }

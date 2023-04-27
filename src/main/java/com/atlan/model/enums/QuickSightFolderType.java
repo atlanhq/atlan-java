@@ -6,7 +6,8 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 
 public enum QuickSightFolderType implements AtlanEnum {
-    SHARED("SHARED");
+    SHARED("SHARED"),
+    ;
 
     @JsonValue
     @Getter(onMethod_ = {@Override})

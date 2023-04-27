@@ -6,8 +6,9 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 
 public enum QueryUsernameStrategy implements AtlanEnum {
-    CONNECTION("connectionUsername"),
-    ATLAN("atlanUsername");
+    CONNECTION_USERNAME("connectionUsername"),
+    ATLAN_USERNAME("atlanUsername"),
+    ;
 
     @JsonValue
     @Getter(onMethod_ = {@Override})

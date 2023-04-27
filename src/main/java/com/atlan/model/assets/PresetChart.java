@@ -6,7 +6,9 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.enums.*;
+import com.atlan.model.enums.AtlanAnnouncementType;
+import com.atlan.model.enums.AtlanConnectorType;
+import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.StringUtils;
 import java.util.ArrayList;
@@ -14,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Instance of a Preset chart in Atlan.
@@ -21,6 +24,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@Slf4j
 @SuppressWarnings("cast")
 public class PresetChart extends Preset {
     private static final long serialVersionUID = 2L;
@@ -66,6 +70,51 @@ public class PresetChart extends Preset {
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
+    }
+
+    /**
+     * Retrieves a PresetChart by its GUID, complete with all of its relationships.
+     *
+     * @param guid of the PresetChart to retrieve
+     * @return the requested full PresetChart, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PresetChart does not exist or the provided GUID is not a PresetChart
+     */
+    public static PresetChart retrieveByGuid(String guid) throws AtlanException {
+        Asset asset = Asset.retrieveFull(guid);
+        if (asset == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
+        } else if (asset instanceof PresetChart) {
+            return (PresetChart) asset;
+        } else {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "PresetChart");
+        }
+    }
+
+    /**
+     * Retrieves a PresetChart by its qualifiedName, complete with all of its relationships.
+     *
+     * @param qualifiedName of the PresetChart to retrieve
+     * @return the requested full PresetChart, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PresetChart does not exist
+     */
+    public static PresetChart retrieveByQualifiedName(String qualifiedName) throws AtlanException {
+        Asset asset = Asset.retrieveFull(TYPE_NAME, qualifiedName);
+        if (asset instanceof PresetChart) {
+            return (PresetChart) asset;
+        } else {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "PresetChart");
+        }
+    }
+
+    /**
+     * Restore the archived (soft-deleted) PresetChart to active.
+     *
+     * @param qualifiedName for the PresetChart
+     * @return true if the PresetChart is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**
@@ -125,51 +174,6 @@ public class PresetChart extends Preset {
     }
 
     /**
-     * Retrieves a PresetChart by its GUID, complete with all of its relationships.
-     *
-     * @param guid of the PresetChart to retrieve
-     * @return the requested full PresetChart, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PresetChart does not exist or the provided GUID is not a PresetChart
-     */
-    public static PresetChart retrieveByGuid(String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof PresetChart) {
-            return (PresetChart) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "PresetChart");
-        }
-    }
-
-    /**
-     * Retrieves a PresetChart by its qualifiedName, complete with all of its relationships.
-     *
-     * @param qualifiedName of the PresetChart to retrieve
-     * @return the requested full PresetChart, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PresetChart does not exist
-     */
-    public static PresetChart retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        Asset asset = Asset.retrieveFull(TYPE_NAME, qualifiedName);
-        if (asset instanceof PresetChart) {
-            return (PresetChart) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "PresetChart");
-        }
-    }
-
-    /**
-     * Restore the archived (soft-deleted) PresetChart to active.
-     *
-     * @param qualifiedName for the PresetChart
-     * @return true if the PresetChart is now active, and false otherwise
-     * @throws AtlanException on any API problems
-     */
-    public static boolean restore(String qualifiedName) throws AtlanException {
-        return Asset.restore(TYPE_NAME, qualifiedName);
-    }
-
-    /**
      * Remove the system description from a PresetChart.
      *
      * @param qualifiedName of the PresetChart
@@ -214,8 +218,8 @@ public class PresetChart extends Preset {
      * @return the updated PresetChart, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static PresetChart updateCertificate(
-            String qualifiedName, AtlanCertificateStatus certificate, String message) throws AtlanException {
+    public static PresetChart updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
+            throws AtlanException {
         return (PresetChart) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
@@ -256,6 +260,48 @@ public class PresetChart extends Preset {
      */
     public static PresetChart removeAnnouncement(String qualifiedName, String name) throws AtlanException {
         return (PresetChart) Asset.removeAnnouncement(updater(qualifiedName, name));
+    }
+
+    /**
+     * Replace the terms linked to the PresetChart.
+     *
+     * @param qualifiedName for the PresetChart
+     * @param name human-readable name of the PresetChart
+     * @param terms the list of terms to replace on the PresetChart, or null to remove all terms from the PresetChart
+     * @return the PresetChart that was updated (note that it will NOT contain details of the replaced terms)
+     * @throws AtlanException on any API problems
+     */
+    public static PresetChart replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+            throws AtlanException {
+        return (PresetChart) Asset.replaceTerms(updater(qualifiedName, name), terms);
+    }
+
+    /**
+     * Link additional terms to the PresetChart, without replacing existing terms linked to the PresetChart.
+     * Note: this operation must make two API calls — one to retrieve the PresetChart's existing terms,
+     * and a second to append the new terms.
+     *
+     * @param qualifiedName for the PresetChart
+     * @param terms the list of terms to append to the PresetChart
+     * @return the PresetChart that was updated  (note that it will NOT contain details of the appended terms)
+     * @throws AtlanException on any API problems
+     */
+    public static PresetChart appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (PresetChart) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
+    }
+
+    /**
+     * Remove terms from a PresetChart, without replacing all existing terms linked to the PresetChart.
+     * Note: this operation must make two API calls — one to retrieve the PresetChart's existing terms,
+     * and a second to remove the provided terms.
+     *
+     * @param qualifiedName for the PresetChart
+     * @param terms the list of terms to remove from the PresetChart, which must be referenced by GUID
+     * @return the PresetChart that was updated (note that it will NOT contain details of the resulting terms)
+     * @throws AtlanException on any API problems
+     */
+    public static PresetChart removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (PresetChart) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 
     /**
@@ -305,47 +351,5 @@ public class PresetChart extends Preset {
      */
     public static void removeClassification(String qualifiedName, String classificationName) throws AtlanException {
         Asset.removeClassification(TYPE_NAME, qualifiedName, classificationName);
-    }
-
-    /**
-     * Replace the terms linked to the PresetChart.
-     *
-     * @param qualifiedName for the PresetChart
-     * @param name human-readable name of the PresetChart
-     * @param terms the list of terms to replace on the PresetChart, or null to remove all terms from the PresetChart
-     * @return the PresetChart that was updated (note that it will NOT contain details of the replaced terms)
-     * @throws AtlanException on any API problems
-     */
-    public static PresetChart replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
-            throws AtlanException {
-        return (PresetChart) Asset.replaceTerms(updater(qualifiedName, name), terms);
-    }
-
-    /**
-     * Link additional terms to the PresetChart, without replacing existing terms linked to the PresetChart.
-     * Note: this operation must make two API calls — one to retrieve the PresetChart's existing terms,
-     * and a second to append the new terms.
-     *
-     * @param qualifiedName for the PresetChart
-     * @param terms the list of terms to append to the PresetChart
-     * @return the PresetChart that was updated  (note that it will NOT contain details of the appended terms)
-     * @throws AtlanException on any API problems
-     */
-    public static PresetChart appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (PresetChart) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
-    }
-
-    /**
-     * Remove terms from a PresetChart, without replacing all existing terms linked to the PresetChart.
-     * Note: this operation must make two API calls — one to retrieve the PresetChart's existing terms,
-     * and a second to remove the provided terms.
-     *
-     * @param qualifiedName for the PresetChart
-     * @param terms the list of terms to remove from the PresetChart, which must be referenced by GUID
-     * @return the PresetChart that was updated (note that it will NOT contain details of the resulting terms)
-     * @throws AtlanException on any API problems
-     */
-    public static PresetChart removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (PresetChart) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 }

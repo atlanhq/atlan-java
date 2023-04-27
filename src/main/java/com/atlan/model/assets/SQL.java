@@ -2,12 +2,12 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
-import com.atlan.model.enums.*;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import java.util.Map;
 import java.util.SortedSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Base class for SQL assets.
@@ -28,6 +28,7 @@ import lombok.experimental.SuperBuilder;
     @JsonSubTypes.Type(value = View.class, name = View.TYPE_NAME),
     @JsonSubTypes.Type(value = MaterializedView.class, name = MaterializedView.TYPE_NAME),
 })
+@Slf4j
 @SuppressWarnings("cast")
 public abstract class SQL extends Catalog {
 

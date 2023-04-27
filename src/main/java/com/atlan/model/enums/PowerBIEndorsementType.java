@@ -7,7 +7,8 @@ import lombok.Getter;
 
 public enum PowerBIEndorsementType implements AtlanEnum {
     PROMOTED("Promoted"),
-    CERTIFIED("Certified");
+    CERTIFIED("Certified"),
+    ;
 
     @JsonValue
     @Getter(onMethod_ = {@Override})

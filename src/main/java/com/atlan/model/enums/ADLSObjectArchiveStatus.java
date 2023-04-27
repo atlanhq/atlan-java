@@ -6,8 +6,9 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 
 public enum ADLSObjectArchiveStatus implements AtlanEnum {
-    PENDING_TO_HOT("rehydrate-pending-to-hot"),
-    PENDING_TO_COOL("rehydrate-pending-to-cool");
+    REHYDRATE_PENDING_TO_HOT("rehydrate-pending-to-hot"),
+    REHYDRATE_PENDING_TO_COOL("rehydrate-pending-to-cool"),
+    ;
 
     @JsonValue
     @Getter(onMethod_ = {@Override})

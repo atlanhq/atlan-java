@@ -6,13 +6,16 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.enums.*;
+import com.atlan.model.enums.AtlanAnnouncementType;
+import com.atlan.model.enums.AtlanConnectorType;
+import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.StringUtils;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Instance of a Google Cloud Storage object in Atlan.
@@ -20,6 +23,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@Slf4j
 public class GCSObject extends GCS {
     private static final long serialVersionUID = 2L;
 
@@ -118,6 +122,51 @@ public class GCSObject extends GCS {
     }
 
     /**
+     * Retrieves a GCSObject by its GUID, complete with all of its relationships.
+     *
+     * @param guid of the GCSObject to retrieve
+     * @return the requested full GCSObject, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the GCSObject does not exist or the provided GUID is not a GCSObject
+     */
+    public static GCSObject retrieveByGuid(String guid) throws AtlanException {
+        Asset asset = Asset.retrieveFull(guid);
+        if (asset == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
+        } else if (asset instanceof GCSObject) {
+            return (GCSObject) asset;
+        } else {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "GCSObject");
+        }
+    }
+
+    /**
+     * Retrieves a GCSObject by its qualifiedName, complete with all of its relationships.
+     *
+     * @param qualifiedName of the GCSObject to retrieve
+     * @return the requested full GCSObject, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the GCSObject does not exist
+     */
+    public static GCSObject retrieveByQualifiedName(String qualifiedName) throws AtlanException {
+        Asset asset = Asset.retrieveFull(TYPE_NAME, qualifiedName);
+        if (asset instanceof GCSObject) {
+            return (GCSObject) asset;
+        } else {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "GCSObject");
+        }
+    }
+
+    /**
+     * Restore the archived (soft-deleted) GCSObject to active.
+     *
+     * @param qualifiedName for the GCSObject
+     * @return true if the GCSObject is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
      * Builds the minimal object necessary to create a GCSObject.
      *
      * @param name of the GCSObject
@@ -183,51 +232,6 @@ public class GCSObject extends GCS {
     }
 
     /**
-     * Retrieves a GCSObject by its GUID, complete with all of its relationships.
-     *
-     * @param guid of the GCSObject to retrieve
-     * @return the requested full GCSObject, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the GCSObject does not exist or the provided GUID is not a GCSObject
-     */
-    public static GCSObject retrieveByGuid(String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof GCSObject) {
-            return (GCSObject) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "GCSObject");
-        }
-    }
-
-    /**
-     * Retrieves a GCSObject by its qualifiedName, complete with all of its relationships.
-     *
-     * @param qualifiedName of the GCSObject to retrieve
-     * @return the requested full GCSObject, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the GCSObject does not exist
-     */
-    public static GCSObject retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        Asset asset = Asset.retrieveFull(TYPE_NAME, qualifiedName);
-        if (asset instanceof GCSObject) {
-            return (GCSObject) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "GCSObject");
-        }
-    }
-
-    /**
-     * Restore the archived (soft-deleted) GCSObject to active.
-     *
-     * @param qualifiedName for the GCSObject
-     * @return true if the GCSObject is now active, and false otherwise
-     * @throws AtlanException on any API problems
-     */
-    public static boolean restore(String qualifiedName) throws AtlanException {
-        return Asset.restore(TYPE_NAME, qualifiedName);
-    }
-
-    /**
      * Remove the system description from a GCSObject.
      *
      * @param qualifiedName of the GCSObject
@@ -272,7 +276,7 @@ public class GCSObject extends GCS {
      * @return the updated GCSObject, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static GCSObject updateCertificate(String qualifiedName, AtlanCertificateStatus certificate, String message)
+    public static GCSObject updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (GCSObject) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }
@@ -314,6 +318,48 @@ public class GCSObject extends GCS {
      */
     public static GCSObject removeAnnouncement(String qualifiedName, String name) throws AtlanException {
         return (GCSObject) Asset.removeAnnouncement(updater(qualifiedName, name));
+    }
+
+    /**
+     * Replace the terms linked to the GCSObject.
+     *
+     * @param qualifiedName for the GCSObject
+     * @param name human-readable name of the GCSObject
+     * @param terms the list of terms to replace on the GCSObject, or null to remove all terms from the GCSObject
+     * @return the GCSObject that was updated (note that it will NOT contain details of the replaced terms)
+     * @throws AtlanException on any API problems
+     */
+    public static GCSObject replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+            throws AtlanException {
+        return (GCSObject) Asset.replaceTerms(updater(qualifiedName, name), terms);
+    }
+
+    /**
+     * Link additional terms to the GCSObject, without replacing existing terms linked to the GCSObject.
+     * Note: this operation must make two API calls — one to retrieve the GCSObject's existing terms,
+     * and a second to append the new terms.
+     *
+     * @param qualifiedName for the GCSObject
+     * @param terms the list of terms to append to the GCSObject
+     * @return the GCSObject that was updated  (note that it will NOT contain details of the appended terms)
+     * @throws AtlanException on any API problems
+     */
+    public static GCSObject appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (GCSObject) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
+    }
+
+    /**
+     * Remove terms from a GCSObject, without replacing all existing terms linked to the GCSObject.
+     * Note: this operation must make two API calls — one to retrieve the GCSObject's existing terms,
+     * and a second to remove the provided terms.
+     *
+     * @param qualifiedName for the GCSObject
+     * @param terms the list of terms to remove from the GCSObject, which must be referenced by GUID
+     * @return the GCSObject that was updated (note that it will NOT contain details of the resulting terms)
+     * @throws AtlanException on any API problems
+     */
+    public static GCSObject removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (GCSObject) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 
     /**
@@ -363,47 +409,5 @@ public class GCSObject extends GCS {
      */
     public static void removeClassification(String qualifiedName, String classificationName) throws AtlanException {
         Asset.removeClassification(TYPE_NAME, qualifiedName, classificationName);
-    }
-
-    /**
-     * Replace the terms linked to the GCSObject.
-     *
-     * @param qualifiedName for the GCSObject
-     * @param name human-readable name of the GCSObject
-     * @param terms the list of terms to replace on the GCSObject, or null to remove all terms from the GCSObject
-     * @return the GCSObject that was updated (note that it will NOT contain details of the replaced terms)
-     * @throws AtlanException on any API problems
-     */
-    public static GCSObject replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
-            throws AtlanException {
-        return (GCSObject) Asset.replaceTerms(updater(qualifiedName, name), terms);
-    }
-
-    /**
-     * Link additional terms to the GCSObject, without replacing existing terms linked to the GCSObject.
-     * Note: this operation must make two API calls — one to retrieve the GCSObject's existing terms,
-     * and a second to append the new terms.
-     *
-     * @param qualifiedName for the GCSObject
-     * @param terms the list of terms to append to the GCSObject
-     * @return the GCSObject that was updated  (note that it will NOT contain details of the appended terms)
-     * @throws AtlanException on any API problems
-     */
-    public static GCSObject appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (GCSObject) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
-    }
-
-    /**
-     * Remove terms from a GCSObject, without replacing all existing terms linked to the GCSObject.
-     * Note: this operation must make two API calls — one to retrieve the GCSObject's existing terms,
-     * and a second to remove the provided terms.
-     *
-     * @param qualifiedName for the GCSObject
-     * @param terms the list of terms to remove from the GCSObject, which must be referenced by GUID
-     * @return the GCSObject that was updated (note that it will NOT contain details of the resulting terms)
-     * @throws AtlanException on any API problems
-     */
-    public static GCSObject removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (GCSObject) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 }

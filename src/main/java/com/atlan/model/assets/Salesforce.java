@@ -2,10 +2,10 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
-import com.atlan.model.enums.*;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Base class for Salesforce assets.
@@ -20,6 +20,7 @@ import lombok.experimental.SuperBuilder;
     @JsonSubTypes.Type(value = SalesforceDashboard.class, name = SalesforceDashboard.TYPE_NAME),
     @JsonSubTypes.Type(value = SalesforceReport.class, name = SalesforceReport.TYPE_NAME),
 })
+@Slf4j
 public abstract class Salesforce extends SaaS {
 
     public static final String TYPE_NAME = "Salesforce";

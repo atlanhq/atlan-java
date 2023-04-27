@@ -71,6 +71,8 @@ public enum TextFields implements AtlanSearchableField {
     ASSET_DBT_TAGS("assetDbtTags.text"),
     /** TBC */
     ASSET_DBT_UNIQUE_ID("assetDbtUniqueId"),
+    /** TBC */
+    ASSET_TAGS("assetTags.text"),
     /** Amazon Resource Name (ARN) for this asset. This uniquely identifies the asset in AWS, and thus must be unique across all AWS asset instances. */
     AWS_ARN("awsArn.text"),
     /** Root user's name. */
@@ -81,18 +83,18 @@ public enum TextFields implements AtlanSearchableField {
     CERTIFICATE_STATUS("certificateStatus.text"),
     /** All classifications that exist on an asset, whether directly assigned or propagated, searchable by the internal hashed-string ID of the classification. */
     CLASSIFICATIONS_TEXT("__classificationsText"),
-    /** qualifiedName of the collection in which this folder exists. */
+    /** TBC */
     COLLECTION_QUALIFIED_NAME("collectionQualifiedName.text"),
     /** TBC */
     CONNECTION_NAME("connectionName.text"),
     /** Unique name of the connection through which this asset is accessible. */
     CONNECTION_QUALIFIED_NAME("connectionQualifiedName.text"),
-    /** Title for the asset. */
-    DATA_STUDIO_ASSET_TITLE("dataStudioAssetTitle"),
-    /** Data type of values in the column. */
-    DATA_TYPE("dataType.text"),
     /** Simple name of the database in which this SQL asset exists, or empty if it does not exist within a database. */
     DATABASE_NAME("databaseName"),
+    /** Title for the asset. */
+    DATA_STUDIO_ASSET_TITLE("dataStudioAssetTitle"),
+    /** Data type of values in the field. */
+    DATA_TYPE("dataType.text"),
     /** TBC */
     DBT_ACCOUNT_NAME("dbtAccountName"),
     /** TBC */
@@ -142,7 +144,7 @@ public enum TextFields implements AtlanSearchableField {
     /** Name of the project in which the asset exists. */
     GOOGLE_PROJECT_NAME("googleProjectName.text"),
     /** TBC */
-    INLINE_HELP_TEXT("inlineHelpText.text"),
+    INLINE_HELP_TEXT("inlineHelpText"),
     /** TBC */
     LOOKER_EXPLORE_QUALIFIED_NAME("lookerExploreQualifiedName.text"),
     /** TBC */
@@ -221,7 +223,7 @@ public enum TextFields implements AtlanSearchableField {
     QLIK_QRI("qlikQRI.text"),
     /** TBC */
     QLIK_SPACE_QUALIFIED_NAME("qlikSpaceQualifiedName.text"),
-    /** Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName. */
+    /** Unique fully-qualified name of the asset in Atlan. */
     QUALIFIED_NAME("qualifiedName.text"),
     /** TBC */
     QUICK_SIGHT_ANALYSIS_QUALIFIED_NAME("quickSightAnalysisQualifiedName.text"),
@@ -241,16 +243,16 @@ public enum TextFields implements AtlanSearchableField {
     SAMPLE_DATA_URL("sampleDataUrl.text"),
     /** Simple name of the schema in which this SQL asset exists, or empty if it does not exist within a schema. */
     SCHEMA_NAME("schemaName"),
+    /** Human-readable name of the dataset that contains this column. */
+    SIGMA_DATASET_NAME("sigmaDatasetName"),
+    /** Unique name of the dataset that contains this column. */
+    SIGMA_DATASET_QUALIFIED_NAME("sigmaDatasetQualifiedName.text"),
     /** TBC */
     SIGMA_DATA_ELEMENT_FIELD_FORMULA("sigmaDataElementFieldFormula"),
     /** TBC */
     SIGMA_DATA_ELEMENT_NAME("sigmaDataElementName"),
     /** TBC */
     SIGMA_DATA_ELEMENT_QUALIFIED_NAME("sigmaDataElementQualifiedName.text"),
-    /** Human-readable name of the dataset that contains this column. */
-    SIGMA_DATASET_NAME("sigmaDatasetName"),
-    /** Unique name of the dataset that contains this column. */
-    SIGMA_DATASET_QUALIFIED_NAME("sigmaDatasetQualifiedName.text"),
     /** TBC */
     SIGMA_PAGE_NAME("sigmaPageName"),
     /** TBC */
@@ -263,12 +265,18 @@ public enum TextFields implements AtlanSearchableField {
     SNOWFLAKE_PIPE_NOTIFICATION_CHANNEL_NAME("snowflakePipeNotificationChannelName.text"),
     /** All super types of an asset. */
     SUPER_TYPE_NAMES("__superTypeNames"),
+    /** TBC */
+    TABLEAU_DATASOURCE_FIELD_DATA_TYPE("tableauDatasourceFieldDataType.text"),
+    /** TBC */
+    TABLEAU_DATA_TYPE("tableauDataType.text"),
     /** Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table. */
     TABLE_NAME("tableName"),
     /** TBC */
-    TABLEAU_DATA_TYPE("tableauDataType.text"),
+    THOUGHTSPOT_LIVEBOARD_NAME("thoughtspotLiveboardName"),
     /** TBC */
-    TABLEAU_DATASOURCE_FIELD_DATA_TYPE("tableauDatasourceFieldDataType.text"),
+    THOUGHTSPOT_LIVEBOARD_QUALIFIED_NAME("thoughtspotLiveboardQualifiedName.text"),
+    /** TBC */
+    THOUGHTSPOT_QUESTION_TEXT("thoughtspotQuestionText"),
     /** Type of the asset. For example Table, Column, and so on. */
     TYPE_NAME("__typeName"),
     /** Description of the asset, as provided by a user. If present, this will be used for the description in user interfaces. If not present, the description will be used. */

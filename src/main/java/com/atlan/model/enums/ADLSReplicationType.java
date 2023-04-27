@@ -6,11 +6,12 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 
 public enum ADLSReplicationType implements AtlanEnum {
-    LOCALLY_REDUNDANT("LRS"),
-    ZONE_REDUNDANT("ZRS"),
-    GEO_REDUNDANT("GRS"),
-    GEO_ZONE_REDUNDANT("GZRS"),
-    READ_ACCESS_GEO_REDUNDANT("RA-GRS");
+    LRS("LRS"),
+    ZRS("ZRS"),
+    GRS("GRS"),
+    GZRS("GZRS"),
+    RA_GRS("RA-GRS"),
+    ;
 
     @JsonValue
     @Getter(onMethod_ = {@Override})

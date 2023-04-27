@@ -2,18 +2,17 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
-import com.atlan.cache.CustomMetadataCache;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.enums.*;
 import com.atlan.model.relations.UniqueAttributes;
-import com.fasterxml.jackson.annotation.JsonInclude;
+import com.atlan.model.structs.BadgeCondition;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Instance of a badge in Atlan.
@@ -21,6 +20,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@Slf4j
 public class Badge extends Asset {
     private static final long serialVersionUID = 2L;
 
@@ -30,12 +30,6 @@ public class Badge extends Asset {
     @Getter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
-
-    /** Default empty string for description. */
-    @Getter(onMethod_ = {@Override})
-    @JsonInclude(JsonInclude.Include.ALWAYS)
-    @Builder.Default
-    String userDescription = "";
 
     /** TBC */
     @Attribute
@@ -67,72 +61,6 @@ public class Badge extends Asset {
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
-    }
-
-    /**
-     * Builds the minimal object necessary to create a Badge.
-     *
-     * @param name of the Badge
-     * @param cmName human-readable name of the custom metadata for which to create the badge
-     * @param cmAttribute human-readable name of the custom metadata attribute for which to create the badge
-     * @return the minimal request necessary to update the Badge, as a builder
-     * @throws AtlanException if the specified custom metadata for the badge cannot be found
-     */
-    public static BadgeBuilder<?, ?> creator(String name, String cmName, String cmAttribute) throws AtlanException {
-        String cmId = CustomMetadataCache.getIdForName(cmName);
-        String cmAttrId = CustomMetadataCache.getAttrIdForName(cmName, cmAttribute);
-        return Badge.builder()
-                .qualifiedName(generateQualifiedName(cmName, cmAttribute))
-                .name(name)
-                .badgeMetadataAttribute(cmId + "." + cmAttrId);
-    }
-
-    /**
-     * Generate a unique name for this badge.
-     *
-     * @param cmName human-readable name of the custom metadata for which to create the badge
-     * @param cmAttribute human-readable name of the custom metadata attribute for which to create the badge
-     * @return the unique qualifiedName of the badge
-     * @throws AtlanException if the specified custom metadata cannot be found
-     */
-    public static String generateQualifiedName(String cmName, String cmAttribute) throws AtlanException {
-        String cmId = CustomMetadataCache.getIdForName(cmName);
-        String cmAttrId = CustomMetadataCache.getAttrIdForName(cmName, cmAttribute);
-        return "badges/global/" + cmId + "." + cmAttrId;
-    }
-
-    /**
-     * Builds the minimal object necessary to update a Badge.
-     *
-     * @param qualifiedName of the Badge
-     * @param name of the Badge
-     * @return the minimal request necessary to update the Badge, as a builder
-     */
-    public static BadgeBuilder<?, ?> updater(String qualifiedName, String name) {
-        return Badge.builder().qualifiedName(qualifiedName).name(name);
-    }
-
-    /**
-     * Builds the minimal object necessary to apply an update to a Badge, from a potentially
-     * more-complete Badge object.
-     *
-     * @return the minimal object necessary to update the Badge, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for Badge are not found in the initial object
-     */
-    @Override
-    public BadgeBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        List<String> missing = new ArrayList<>();
-        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
-            missing.add("qualifiedName");
-        }
-        if (this.getName() == null || this.getName().length() == 0) {
-            missing.add("name");
-        }
-        if (!missing.isEmpty()) {
-            throw new InvalidRequestException(
-                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "Badge", String.join(",", missing));
-        }
-        return updater(this.getQualifiedName(), this.getName());
     }
 
     /**
@@ -181,6 +109,40 @@ public class Badge extends Asset {
     }
 
     /**
+     * Builds the minimal object necessary to update a Badge.
+     *
+     * @param qualifiedName of the Badge
+     * @param name of the Badge
+     * @return the minimal request necessary to update the Badge, as a builder
+     */
+    public static BadgeBuilder<?, ?> updater(String qualifiedName, String name) {
+        return Badge.builder().qualifiedName(qualifiedName).name(name);
+    }
+
+    /**
+     * Builds the minimal object necessary to apply an update to a Badge, from a potentially
+     * more-complete Badge object.
+     *
+     * @return the minimal object necessary to update the Badge, as a builder
+     * @throws InvalidRequestException if any of the minimal set of required properties for Badge are not found in the initial object
+     */
+    @Override
+    public BadgeBuilder<?, ?> trimToRequired() throws InvalidRequestException {
+        List<String> missing = new ArrayList<>();
+        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
+            missing.add("qualifiedName");
+        }
+        if (this.getName() == null || this.getName().length() == 0) {
+            missing.add("name");
+        }
+        if (!missing.isEmpty()) {
+            throw new InvalidRequestException(
+                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "Badge", String.join(",", missing));
+        }
+        return updater(this.getQualifiedName(), this.getName());
+    }
+
+    /**
      * Remove the system description from a Badge.
      *
      * @param qualifiedName of the Badge
@@ -202,161 +164,5 @@ public class Badge extends Asset {
      */
     public static Badge removeUserDescription(String qualifiedName, String name) throws AtlanException {
         return (Badge) Asset.removeUserDescription(updater(qualifiedName, name));
-    }
-
-    /**
-     * Remove the owners from a Badge.
-     *
-     * @param qualifiedName of the Badge
-     * @param name of the Badge
-     * @return the updated Badge, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static Badge removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (Badge) Asset.removeOwners(updater(qualifiedName, name));
-    }
-
-    /**
-     * Update the certificate on a Badge.
-     *
-     * @param qualifiedName of the Badge
-     * @param certificate to use
-     * @param message (optional) message, or null if no message
-     * @return the updated Badge, or null if the update failed
-     * @throws AtlanException on any API problems
-     */
-    public static Badge updateCertificate(String qualifiedName, AtlanCertificateStatus certificate, String message)
-            throws AtlanException {
-        return (Badge) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
-    }
-
-    /**
-     * Remove the certificate from a Badge.
-     *
-     * @param qualifiedName of the Badge
-     * @param name of the Badge
-     * @return the updated Badge, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static Badge removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (Badge) Asset.removeCertificate(updater(qualifiedName, name));
-    }
-
-    /**
-     * Update the announcement on a Badge.
-     *
-     * @param qualifiedName of the Badge
-     * @param type type of announcement to set
-     * @param title (optional) title of the announcement to set (or null for no title)
-     * @param message (optional) message of the announcement to set (or null for no message)
-     * @return the result of the update, or null if the update failed
-     * @throws AtlanException on any API problems
-     */
-    public static Badge updateAnnouncement(
-            String qualifiedName, AtlanAnnouncementType type, String title, String message) throws AtlanException {
-        return (Badge) Asset.updateAnnouncement(builder(), TYPE_NAME, qualifiedName, type, title, message);
-    }
-
-    /**
-     * Remove the announcement from a Badge.
-     *
-     * @param qualifiedName of the Badge
-     * @param name of the Badge
-     * @return the updated Badge, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static Badge removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (Badge) Asset.removeAnnouncement(updater(qualifiedName, name));
-    }
-
-    /**
-     * Add classifications to a Badge.
-     *
-     * @param qualifiedName of the Badge
-     * @param classificationNames human-readable names of the classifications to add
-     * @throws AtlanException on any API problems, or if any of the classifications already exist on the Badge
-     */
-    public static void addClassifications(String qualifiedName, List<String> classificationNames)
-            throws AtlanException {
-        Asset.addClassifications(TYPE_NAME, qualifiedName, classificationNames);
-    }
-
-    /**
-     * Add classifications to a Badge.
-     *
-     * @param qualifiedName of the Badge
-     * @param classificationNames human-readable names of the classifications to add
-     * @param propagate whether to propagate the classification (true) or not (false)
-     * @param removePropagationsOnDelete whether to remove the propagated classifications when the classification is removed from this asset (true) or not (false)
-     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
-     * @throws AtlanException on any API problems, or if any of the classifications already exist on the Badge
-     */
-    public static void addClassifications(
-            String qualifiedName,
-            List<String> classificationNames,
-            boolean propagate,
-            boolean removePropagationsOnDelete,
-            boolean restrictLineagePropagation)
-            throws AtlanException {
-        Asset.addClassifications(
-                TYPE_NAME,
-                qualifiedName,
-                classificationNames,
-                propagate,
-                removePropagationsOnDelete,
-                restrictLineagePropagation);
-    }
-
-    /**
-     * Remove a classification from a Badge.
-     *
-     * @param qualifiedName of the Badge
-     * @param classificationName human-readable name of the classification to remove
-     * @throws AtlanException on any API problems, or if the classification does not exist on the Badge
-     */
-    public static void removeClassification(String qualifiedName, String classificationName) throws AtlanException {
-        Asset.removeClassification(TYPE_NAME, qualifiedName, classificationName);
-    }
-
-    /**
-     * Replace the terms linked to the Badge.
-     *
-     * @param qualifiedName for the Badge
-     * @param name human-readable name of the Badge
-     * @param terms the list of terms to replace on the Badge, or null to remove all terms from the Badge
-     * @return the Badge that was updated (note that it will NOT contain details of the replaced terms)
-     * @throws AtlanException on any API problems
-     */
-    public static Badge replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
-            throws AtlanException {
-        return (Badge) Asset.replaceTerms(updater(qualifiedName, name), terms);
-    }
-
-    /**
-     * Link additional terms to the Badge, without replacing existing terms linked to the Badge.
-     * Note: this operation must make two API calls — one to retrieve the Badge's existing terms,
-     * and a second to append the new terms.
-     *
-     * @param qualifiedName for the Badge
-     * @param terms the list of terms to append to the Badge
-     * @return the Badge that was updated  (note that it will NOT contain details of the appended terms)
-     * @throws AtlanException on any API problems
-     */
-    public static Badge appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (Badge) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
-    }
-
-    /**
-     * Remove terms from a Badge, without replacing all existing terms linked to the Badge.
-     * Note: this operation must make two API calls — one to retrieve the Badge's existing terms,
-     * and a second to remove the provided terms.
-     *
-     * @param qualifiedName for the Badge
-     * @param terms the list of terms to remove from the Badge, which must be referenced by GUID
-     * @return the Badge that was updated (note that it will NOT contain details of the resulting terms)
-     * @throws AtlanException on any API problems
-     */
-    public static Badge removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (Badge) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 }

@@ -6,13 +6,16 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.enums.*;
+import com.atlan.model.enums.AtlanAnnouncementType;
+import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
+import com.atlan.model.structs.KafkaTopicConsumption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * TBC
@@ -20,6 +23,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@Slf4j
 public class KafkaConsumerGroup extends Kafka {
     private static final long serialVersionUID = 2L;
 
@@ -78,40 +82,6 @@ public class KafkaConsumerGroup extends Kafka {
     }
 
     /**
-     * Builds the minimal object necessary to update a KafkaConsumerGroup.
-     *
-     * @param qualifiedName of the KafkaConsumerGroup
-     * @param name of the KafkaConsumerGroup
-     * @return the minimal request necessary to update the KafkaConsumerGroup, as a builder
-     */
-    public static KafkaConsumerGroupBuilder<?, ?> updater(String qualifiedName, String name) {
-        return KafkaConsumerGroup.builder().qualifiedName(qualifiedName).name(name);
-    }
-
-    /**
-     * Builds the minimal object necessary to apply an update to a KafkaConsumerGroup, from a potentially
-     * more-complete KafkaConsumerGroup object.
-     *
-     * @return the minimal object necessary to update the KafkaConsumerGroup, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for KafkaConsumerGroup are not found in the initial object
-     */
-    @Override
-    public KafkaConsumerGroupBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        List<String> missing = new ArrayList<>();
-        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
-            missing.add("qualifiedName");
-        }
-        if (this.getName() == null || this.getName().length() == 0) {
-            missing.add("name");
-        }
-        if (!missing.isEmpty()) {
-            throw new InvalidRequestException(
-                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "KafkaConsumerGroup", String.join(",", missing));
-        }
-        return updater(this.getQualifiedName(), this.getName());
-    }
-
-    /**
      * Retrieves a KafkaConsumerGroup by its GUID, complete with all of its relationships.
      *
      * @param guid of the KafkaConsumerGroup to retrieve
@@ -154,6 +124,40 @@ public class KafkaConsumerGroup extends Kafka {
      */
     public static boolean restore(String qualifiedName) throws AtlanException {
         return Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Builds the minimal object necessary to update a KafkaConsumerGroup.
+     *
+     * @param qualifiedName of the KafkaConsumerGroup
+     * @param name of the KafkaConsumerGroup
+     * @return the minimal request necessary to update the KafkaConsumerGroup, as a builder
+     */
+    public static KafkaConsumerGroupBuilder<?, ?> updater(String qualifiedName, String name) {
+        return KafkaConsumerGroup.builder().qualifiedName(qualifiedName).name(name);
+    }
+
+    /**
+     * Builds the minimal object necessary to apply an update to a KafkaConsumerGroup, from a potentially
+     * more-complete KafkaConsumerGroup object.
+     *
+     * @return the minimal object necessary to update the KafkaConsumerGroup, as a builder
+     * @throws InvalidRequestException if any of the minimal set of required properties for KafkaConsumerGroup are not found in the initial object
+     */
+    @Override
+    public KafkaConsumerGroupBuilder<?, ?> trimToRequired() throws InvalidRequestException {
+        List<String> missing = new ArrayList<>();
+        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
+            missing.add("qualifiedName");
+        }
+        if (this.getName() == null || this.getName().length() == 0) {
+            missing.add("name");
+        }
+        if (!missing.isEmpty()) {
+            throw new InvalidRequestException(
+                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "KafkaConsumerGroup", String.join(",", missing));
+        }
+        return updater(this.getQualifiedName(), this.getName());
     }
 
     /**
@@ -202,7 +206,7 @@ public class KafkaConsumerGroup extends Kafka {
      * @throws AtlanException on any API problems
      */
     public static KafkaConsumerGroup updateCertificate(
-            String qualifiedName, AtlanCertificateStatus certificate, String message) throws AtlanException {
+            String qualifiedName, CertificateStatus certificate, String message) throws AtlanException {
         return (KafkaConsumerGroup) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
@@ -243,6 +247,48 @@ public class KafkaConsumerGroup extends Kafka {
      */
     public static KafkaConsumerGroup removeAnnouncement(String qualifiedName, String name) throws AtlanException {
         return (KafkaConsumerGroup) Asset.removeAnnouncement(updater(qualifiedName, name));
+    }
+
+    /**
+     * Replace the terms linked to the KafkaConsumerGroup.
+     *
+     * @param qualifiedName for the KafkaConsumerGroup
+     * @param name human-readable name of the KafkaConsumerGroup
+     * @param terms the list of terms to replace on the KafkaConsumerGroup, or null to remove all terms from the KafkaConsumerGroup
+     * @return the KafkaConsumerGroup that was updated (note that it will NOT contain details of the replaced terms)
+     * @throws AtlanException on any API problems
+     */
+    public static KafkaConsumerGroup replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+            throws AtlanException {
+        return (KafkaConsumerGroup) Asset.replaceTerms(updater(qualifiedName, name), terms);
+    }
+
+    /**
+     * Link additional terms to the KafkaConsumerGroup, without replacing existing terms linked to the KafkaConsumerGroup.
+     * Note: this operation must make two API calls — one to retrieve the KafkaConsumerGroup's existing terms,
+     * and a second to append the new terms.
+     *
+     * @param qualifiedName for the KafkaConsumerGroup
+     * @param terms the list of terms to append to the KafkaConsumerGroup
+     * @return the KafkaConsumerGroup that was updated  (note that it will NOT contain details of the appended terms)
+     * @throws AtlanException on any API problems
+     */
+    public static KafkaConsumerGroup appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (KafkaConsumerGroup) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
+    }
+
+    /**
+     * Remove terms from a KafkaConsumerGroup, without replacing all existing terms linked to the KafkaConsumerGroup.
+     * Note: this operation must make two API calls — one to retrieve the KafkaConsumerGroup's existing terms,
+     * and a second to remove the provided terms.
+     *
+     * @param qualifiedName for the KafkaConsumerGroup
+     * @param terms the list of terms to remove from the KafkaConsumerGroup, which must be referenced by GUID
+     * @return the KafkaConsumerGroup that was updated (note that it will NOT contain details of the resulting terms)
+     * @throws AtlanException on any API problems
+     */
+    public static KafkaConsumerGroup removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (KafkaConsumerGroup) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 
     /**
@@ -292,47 +338,5 @@ public class KafkaConsumerGroup extends Kafka {
      */
     public static void removeClassification(String qualifiedName, String classificationName) throws AtlanException {
         Asset.removeClassification(TYPE_NAME, qualifiedName, classificationName);
-    }
-
-    /**
-     * Replace the terms linked to the KafkaConsumerGroup.
-     *
-     * @param qualifiedName for the KafkaConsumerGroup
-     * @param name human-readable name of the KafkaConsumerGroup
-     * @param terms the list of terms to replace on the KafkaConsumerGroup, or null to remove all terms from the KafkaConsumerGroup
-     * @return the KafkaConsumerGroup that was updated (note that it will NOT contain details of the replaced terms)
-     * @throws AtlanException on any API problems
-     */
-    public static KafkaConsumerGroup replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
-            throws AtlanException {
-        return (KafkaConsumerGroup) Asset.replaceTerms(updater(qualifiedName, name), terms);
-    }
-
-    /**
-     * Link additional terms to the KafkaConsumerGroup, without replacing existing terms linked to the KafkaConsumerGroup.
-     * Note: this operation must make two API calls — one to retrieve the KafkaConsumerGroup's existing terms,
-     * and a second to append the new terms.
-     *
-     * @param qualifiedName for the KafkaConsumerGroup
-     * @param terms the list of terms to append to the KafkaConsumerGroup
-     * @return the KafkaConsumerGroup that was updated  (note that it will NOT contain details of the appended terms)
-     * @throws AtlanException on any API problems
-     */
-    public static KafkaConsumerGroup appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (KafkaConsumerGroup) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
-    }
-
-    /**
-     * Remove terms from a KafkaConsumerGroup, without replacing all existing terms linked to the KafkaConsumerGroup.
-     * Note: this operation must make two API calls — one to retrieve the KafkaConsumerGroup's existing terms,
-     * and a second to remove the provided terms.
-     *
-     * @param qualifiedName for the KafkaConsumerGroup
-     * @param terms the list of terms to remove from the KafkaConsumerGroup, which must be referenced by GUID
-     * @return the KafkaConsumerGroup that was updated (note that it will NOT contain details of the resulting terms)
-     * @throws AtlanException on any API problems
-     */
-    public static KafkaConsumerGroup removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (KafkaConsumerGroup) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 }

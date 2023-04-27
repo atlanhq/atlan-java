@@ -6,13 +6,13 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.enums.*;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Instance of a README in Atlan.
@@ -20,6 +20,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@Slf4j
 public class Readme extends Resource {
     private static final long serialVersionUID = 2L;
 
@@ -60,6 +61,51 @@ public class Readme extends Resource {
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
+    }
+
+    /**
+     * Retrieves a Readme by its GUID, complete with all of its relationships.
+     *
+     * @param guid of the Readme to retrieve
+     * @return the requested full Readme, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Readme does not exist or the provided GUID is not a Readme
+     */
+    public static Readme retrieveByGuid(String guid) throws AtlanException {
+        Asset asset = Asset.retrieveFull(guid);
+        if (asset == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
+        } else if (asset instanceof Readme) {
+            return (Readme) asset;
+        } else {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "Readme");
+        }
+    }
+
+    /**
+     * Retrieves a Readme by its qualifiedName, complete with all of its relationships.
+     *
+     * @param qualifiedName of the Readme to retrieve
+     * @return the requested full Readme, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Readme does not exist
+     */
+    public static Readme retrieveByQualifiedName(String qualifiedName) throws AtlanException {
+        Asset asset = Asset.retrieveFull(TYPE_NAME, qualifiedName);
+        if (asset instanceof Readme) {
+            return (Readme) asset;
+        } else {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "Readme");
+        }
+    }
+
+    /**
+     * Restore the archived (soft-deleted) Readme to active.
+     *
+     * @param qualifiedName for the Readme
+     * @return true if the Readme is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**
@@ -130,51 +176,6 @@ public class Readme extends Resource {
      */
     private static String generateName(String assetName) {
         return assetName + " Readme";
-    }
-
-    /**
-     * Retrieves a Readme by its GUID, complete with all of its relationships.
-     *
-     * @param guid of the Readme to retrieve
-     * @return the requested full Readme, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Readme does not exist or the provided GUID is not a Readme
-     */
-    public static Readme retrieveByGuid(String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof Readme) {
-            return (Readme) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "Readme");
-        }
-    }
-
-    /**
-     * Retrieves a Readme by its qualifiedName, complete with all of its relationships.
-     *
-     * @param qualifiedName of the Readme to retrieve
-     * @return the requested full Readme, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Readme does not exist
-     */
-    public static Readme retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        Asset asset = Asset.retrieveFull(TYPE_NAME, qualifiedName);
-        if (asset instanceof Readme) {
-            return (Readme) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "Readme");
-        }
-    }
-
-    /**
-     * Restore the archived (soft-deleted) Readme to active.
-     *
-     * @param qualifiedName for the Readme
-     * @return true if the Readme is now active, and false otherwise
-     * @throws AtlanException on any API problems
-     */
-    public static boolean restore(String qualifiedName) throws AtlanException {
-        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**

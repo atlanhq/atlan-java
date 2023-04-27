@@ -5,8 +5,6 @@ package com.atlan.model.enums;
 import lombok.Getter;
 
 public enum BooleanFields implements AtlanSearchableField {
-    /** Indicates whether this asset has lineage (true) or not. */
-    HAS_LINEAGE("__hasLineage"),
     /** TBC */
     ADLS_CONTAINER_VERSION_LEVEL_IMMUTABILITY_SUPPORT("adlsContainerVersionLevelImmutabilitySupport"),
     /** TBC */
@@ -39,6 +37,8 @@ public enum BooleanFields implements AtlanSearchableField {
     GCS_REQUESTER_PAYS("gcsRequesterPays"),
     /** TBC */
     HAS_EXTRACTS("hasExtracts"),
+    /** Indicates whether this asset has lineage (true) or not. */
+    HAS_LINEAGE("__hasLineage"),
     /** Whether the connection has popularity insights (true) or not (false). */
     HAS_POPULARITY_INSIGHTS("hasPopularityInsights"),
     /** TBC */
@@ -67,7 +67,7 @@ public enum BooleanFields implements AtlanSearchableField {
     IS_INDEXED("isIndexed"),
     /** TBC */
     IS_MERGABLE("isMergable"),
-    /** When true, the values in this column can be null. */
+    /** TBC */
     IS_NULLABLE("isNullable"),
     /** TBC */
     IS_PARTITION("isPartition"),
@@ -86,16 +86,16 @@ public enum BooleanFields implements AtlanSearchableField {
     /** TBC */
     IS_PUBLISHED("isPublished"),
     /** TBC */
-    IS_QUERY_PREVIEW("isQueryPreview"),
-    /** TBC */
     IS_QUERYABLE("isQueryable"),
+    /** TBC */
+    IS_QUERY_PREVIEW("isQueryPreview"),
     /** Whether sample data can be previewed for this connection (true) or not (false). */
     IS_SAMPLE_DATA_PREVIEW_ENABLED("isSampleDataPreviewEnabled"),
     /** TBC */
     IS_SORT("isSort"),
     /** TBC */
     IS_SQL_SNIPPET("isSqlSnippet"),
-    /** Whether this view is temporary (true) or not (false). */
+    /** Whether this materialized view is temporary (true) or not (false). */
     IS_TEMPORARY("isTemporary"),
     /** TBC */
     IS_TOP_LEVEL_PROJECT("isTopLevelProject"),

@@ -6,13 +6,15 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.enums.*;
+import com.atlan.model.enums.AtlanAnnouncementType;
+import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Instance of a Looker view in Atlan.
@@ -20,6 +22,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@Slf4j
 public class LookerView extends Looker {
     private static final long serialVersionUID = 2L;
 
@@ -64,40 +67,6 @@ public class LookerView extends Looker {
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
-    }
-
-    /**
-     * Builds the minimal object necessary to update a LookerView.
-     *
-     * @param qualifiedName of the LookerView
-     * @param name of the LookerView
-     * @return the minimal request necessary to update the LookerView, as a builder
-     */
-    public static LookerViewBuilder<?, ?> updater(String qualifiedName, String name) {
-        return LookerView.builder().qualifiedName(qualifiedName).name(name);
-    }
-
-    /**
-     * Builds the minimal object necessary to apply an update to a LookerView, from a potentially
-     * more-complete LookerView object.
-     *
-     * @return the minimal object necessary to update the LookerView, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for LookerView are not found in the initial object
-     */
-    @Override
-    public LookerViewBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        List<String> missing = new ArrayList<>();
-        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
-            missing.add("qualifiedName");
-        }
-        if (this.getName() == null || this.getName().length() == 0) {
-            missing.add("name");
-        }
-        if (!missing.isEmpty()) {
-            throw new InvalidRequestException(
-                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "LookerView", String.join(",", missing));
-        }
-        return updater(this.getQualifiedName(), this.getName());
     }
 
     /**
@@ -146,6 +115,40 @@ public class LookerView extends Looker {
     }
 
     /**
+     * Builds the minimal object necessary to update a LookerView.
+     *
+     * @param qualifiedName of the LookerView
+     * @param name of the LookerView
+     * @return the minimal request necessary to update the LookerView, as a builder
+     */
+    public static LookerViewBuilder<?, ?> updater(String qualifiedName, String name) {
+        return LookerView.builder().qualifiedName(qualifiedName).name(name);
+    }
+
+    /**
+     * Builds the minimal object necessary to apply an update to a LookerView, from a potentially
+     * more-complete LookerView object.
+     *
+     * @return the minimal object necessary to update the LookerView, as a builder
+     * @throws InvalidRequestException if any of the minimal set of required properties for LookerView are not found in the initial object
+     */
+    @Override
+    public LookerViewBuilder<?, ?> trimToRequired() throws InvalidRequestException {
+        List<String> missing = new ArrayList<>();
+        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
+            missing.add("qualifiedName");
+        }
+        if (this.getName() == null || this.getName().length() == 0) {
+            missing.add("name");
+        }
+        if (!missing.isEmpty()) {
+            throw new InvalidRequestException(
+                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "LookerView", String.join(",", missing));
+        }
+        return updater(this.getQualifiedName(), this.getName());
+    }
+
+    /**
      * Remove the system description from a LookerView.
      *
      * @param qualifiedName of the LookerView
@@ -190,7 +193,7 @@ public class LookerView extends Looker {
      * @return the updated LookerView, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static LookerView updateCertificate(String qualifiedName, AtlanCertificateStatus certificate, String message)
+    public static LookerView updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (LookerView) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }
@@ -232,6 +235,48 @@ public class LookerView extends Looker {
      */
     public static LookerView removeAnnouncement(String qualifiedName, String name) throws AtlanException {
         return (LookerView) Asset.removeAnnouncement(updater(qualifiedName, name));
+    }
+
+    /**
+     * Replace the terms linked to the LookerView.
+     *
+     * @param qualifiedName for the LookerView
+     * @param name human-readable name of the LookerView
+     * @param terms the list of terms to replace on the LookerView, or null to remove all terms from the LookerView
+     * @return the LookerView that was updated (note that it will NOT contain details of the replaced terms)
+     * @throws AtlanException on any API problems
+     */
+    public static LookerView replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+            throws AtlanException {
+        return (LookerView) Asset.replaceTerms(updater(qualifiedName, name), terms);
+    }
+
+    /**
+     * Link additional terms to the LookerView, without replacing existing terms linked to the LookerView.
+     * Note: this operation must make two API calls — one to retrieve the LookerView's existing terms,
+     * and a second to append the new terms.
+     *
+     * @param qualifiedName for the LookerView
+     * @param terms the list of terms to append to the LookerView
+     * @return the LookerView that was updated  (note that it will NOT contain details of the appended terms)
+     * @throws AtlanException on any API problems
+     */
+    public static LookerView appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (LookerView) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
+    }
+
+    /**
+     * Remove terms from a LookerView, without replacing all existing terms linked to the LookerView.
+     * Note: this operation must make two API calls — one to retrieve the LookerView's existing terms,
+     * and a second to remove the provided terms.
+     *
+     * @param qualifiedName for the LookerView
+     * @param terms the list of terms to remove from the LookerView, which must be referenced by GUID
+     * @return the LookerView that was updated (note that it will NOT contain details of the resulting terms)
+     * @throws AtlanException on any API problems
+     */
+    public static LookerView removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (LookerView) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 
     /**
@@ -281,47 +326,5 @@ public class LookerView extends Looker {
      */
     public static void removeClassification(String qualifiedName, String classificationName) throws AtlanException {
         Asset.removeClassification(TYPE_NAME, qualifiedName, classificationName);
-    }
-
-    /**
-     * Replace the terms linked to the LookerView.
-     *
-     * @param qualifiedName for the LookerView
-     * @param name human-readable name of the LookerView
-     * @param terms the list of terms to replace on the LookerView, or null to remove all terms from the LookerView
-     * @return the LookerView that was updated (note that it will NOT contain details of the replaced terms)
-     * @throws AtlanException on any API problems
-     */
-    public static LookerView replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
-            throws AtlanException {
-        return (LookerView) Asset.replaceTerms(updater(qualifiedName, name), terms);
-    }
-
-    /**
-     * Link additional terms to the LookerView, without replacing existing terms linked to the LookerView.
-     * Note: this operation must make two API calls — one to retrieve the LookerView's existing terms,
-     * and a second to append the new terms.
-     *
-     * @param qualifiedName for the LookerView
-     * @param terms the list of terms to append to the LookerView
-     * @return the LookerView that was updated  (note that it will NOT contain details of the appended terms)
-     * @throws AtlanException on any API problems
-     */
-    public static LookerView appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (LookerView) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
-    }
-
-    /**
-     * Remove terms from a LookerView, without replacing all existing terms linked to the LookerView.
-     * Note: this operation must make two API calls — one to retrieve the LookerView's existing terms,
-     * and a second to remove the provided terms.
-     *
-     * @param qualifiedName for the LookerView
-     * @param terms the list of terms to remove from the LookerView, which must be referenced by GUID
-     * @return the LookerView that was updated (note that it will NOT contain details of the resulting terms)
-     * @throws AtlanException on any API problems
-     */
-    public static LookerView removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (LookerView) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 }

@@ -188,7 +188,7 @@ public class JacksonUtils {
     public static <T> T deserializeObject(JsonNode node, String path, TypeReference<T> typeReference)
             throws JsonProcessingException {
         JsonNode value = node.get(path);
-        return value == null || value.isNull() ? null : Serde.mapper.readValue(value.toString(), typeReference);
+        return value == null || value.isNull() ? null : Serde.mapper.convertValue(value, typeReference);
     }
 
     /**

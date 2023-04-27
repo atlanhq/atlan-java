@@ -6,12 +6,14 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.enums.*;
+import com.atlan.model.enums.AtlanAnnouncementType;
+import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Instance of a folder within a query collection in Atlan.
@@ -19,6 +21,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@Slf4j
 public class Folder extends Namespace {
     private static final long serialVersionUID = 2L;
 
@@ -62,40 +65,6 @@ public class Folder extends Namespace {
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
-    }
-
-    /**
-     * Builds the minimal object necessary to update a Folder.
-     *
-     * @param qualifiedName of the Folder
-     * @param name of the Folder
-     * @return the minimal request necessary to update the Folder, as a builder
-     */
-    public static FolderBuilder<?, ?> updater(String qualifiedName, String name) {
-        return Folder.builder().qualifiedName(qualifiedName).name(name);
-    }
-
-    /**
-     * Builds the minimal object necessary to apply an update to a Folder, from a potentially
-     * more-complete Folder object.
-     *
-     * @return the minimal object necessary to update the Folder, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for Folder are not found in the initial object
-     */
-    @Override
-    public FolderBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        List<String> missing = new ArrayList<>();
-        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
-            missing.add("qualifiedName");
-        }
-        if (this.getName() == null || this.getName().length() == 0) {
-            missing.add("name");
-        }
-        if (!missing.isEmpty()) {
-            throw new InvalidRequestException(
-                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "Folder", String.join(",", missing));
-        }
-        return updater(this.getQualifiedName(), this.getName());
     }
 
     /**
@@ -144,6 +113,40 @@ public class Folder extends Namespace {
     }
 
     /**
+     * Builds the minimal object necessary to update a Folder.
+     *
+     * @param qualifiedName of the Folder
+     * @param name of the Folder
+     * @return the minimal request necessary to update the Folder, as a builder
+     */
+    public static FolderBuilder<?, ?> updater(String qualifiedName, String name) {
+        return Folder.builder().qualifiedName(qualifiedName).name(name);
+    }
+
+    /**
+     * Builds the minimal object necessary to apply an update to a Folder, from a potentially
+     * more-complete Folder object.
+     *
+     * @return the minimal object necessary to update the Folder, as a builder
+     * @throws InvalidRequestException if any of the minimal set of required properties for Folder are not found in the initial object
+     */
+    @Override
+    public FolderBuilder<?, ?> trimToRequired() throws InvalidRequestException {
+        List<String> missing = new ArrayList<>();
+        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
+            missing.add("qualifiedName");
+        }
+        if (this.getName() == null || this.getName().length() == 0) {
+            missing.add("name");
+        }
+        if (!missing.isEmpty()) {
+            throw new InvalidRequestException(
+                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "Folder", String.join(",", missing));
+        }
+        return updater(this.getQualifiedName(), this.getName());
+    }
+
+    /**
      * Remove the system description from a Folder.
      *
      * @param qualifiedName of the Folder
@@ -188,7 +191,7 @@ public class Folder extends Namespace {
      * @return the updated Folder, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static Folder updateCertificate(String qualifiedName, AtlanCertificateStatus certificate, String message)
+    public static Folder updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (Folder) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }
@@ -230,6 +233,48 @@ public class Folder extends Namespace {
      */
     public static Folder removeAnnouncement(String qualifiedName, String name) throws AtlanException {
         return (Folder) Asset.removeAnnouncement(updater(qualifiedName, name));
+    }
+
+    /**
+     * Replace the terms linked to the Folder.
+     *
+     * @param qualifiedName for the Folder
+     * @param name human-readable name of the Folder
+     * @param terms the list of terms to replace on the Folder, or null to remove all terms from the Folder
+     * @return the Folder that was updated (note that it will NOT contain details of the replaced terms)
+     * @throws AtlanException on any API problems
+     */
+    public static Folder replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+            throws AtlanException {
+        return (Folder) Asset.replaceTerms(updater(qualifiedName, name), terms);
+    }
+
+    /**
+     * Link additional terms to the Folder, without replacing existing terms linked to the Folder.
+     * Note: this operation must make two API calls — one to retrieve the Folder's existing terms,
+     * and a second to append the new terms.
+     *
+     * @param qualifiedName for the Folder
+     * @param terms the list of terms to append to the Folder
+     * @return the Folder that was updated  (note that it will NOT contain details of the appended terms)
+     * @throws AtlanException on any API problems
+     */
+    public static Folder appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (Folder) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
+    }
+
+    /**
+     * Remove terms from a Folder, without replacing all existing terms linked to the Folder.
+     * Note: this operation must make two API calls — one to retrieve the Folder's existing terms,
+     * and a second to remove the provided terms.
+     *
+     * @param qualifiedName for the Folder
+     * @param terms the list of terms to remove from the Folder, which must be referenced by GUID
+     * @return the Folder that was updated (note that it will NOT contain details of the resulting terms)
+     * @throws AtlanException on any API problems
+     */
+    public static Folder removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (Folder) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 
     /**
@@ -279,47 +324,5 @@ public class Folder extends Namespace {
      */
     public static void removeClassification(String qualifiedName, String classificationName) throws AtlanException {
         Asset.removeClassification(TYPE_NAME, qualifiedName, classificationName);
-    }
-
-    /**
-     * Replace the terms linked to the Folder.
-     *
-     * @param qualifiedName for the Folder
-     * @param name human-readable name of the Folder
-     * @param terms the list of terms to replace on the Folder, or null to remove all terms from the Folder
-     * @return the Folder that was updated (note that it will NOT contain details of the replaced terms)
-     * @throws AtlanException on any API problems
-     */
-    public static Folder replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
-            throws AtlanException {
-        return (Folder) Asset.replaceTerms(updater(qualifiedName, name), terms);
-    }
-
-    /**
-     * Link additional terms to the Folder, without replacing existing terms linked to the Folder.
-     * Note: this operation must make two API calls — one to retrieve the Folder's existing terms,
-     * and a second to append the new terms.
-     *
-     * @param qualifiedName for the Folder
-     * @param terms the list of terms to append to the Folder
-     * @return the Folder that was updated  (note that it will NOT contain details of the appended terms)
-     * @throws AtlanException on any API problems
-     */
-    public static Folder appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (Folder) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
-    }
-
-    /**
-     * Remove terms from a Folder, without replacing all existing terms linked to the Folder.
-     * Note: this operation must make two API calls — one to retrieve the Folder's existing terms,
-     * and a second to remove the provided terms.
-     *
-     * @param qualifiedName for the Folder
-     * @param terms the list of terms to remove from the Folder, which must be referenced by GUID
-     * @return the Folder that was updated (note that it will NOT contain details of the resulting terms)
-     * @throws AtlanException on any API problems
-     */
-    public static Folder removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (Folder) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 }

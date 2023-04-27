@@ -2,10 +2,10 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
-import com.atlan.model.enums.*;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Base class for Metabase assets.
@@ -18,6 +18,7 @@ import lombok.experimental.SuperBuilder;
     @JsonSubTypes.Type(value = MetabaseCollection.class, name = MetabaseCollection.TYPE_NAME),
     @JsonSubTypes.Type(value = MetabaseDashboard.class, name = MetabaseDashboard.TYPE_NAME),
 })
+@Slf4j
 public abstract class Metabase extends BI {
 
     public static final String TYPE_NAME = "Metabase";

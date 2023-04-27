@@ -6,13 +6,15 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.enums.*;
+import com.atlan.model.enums.AtlanAnnouncementType;
+import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Instance of a Metabase collection in Atlan.
@@ -20,6 +22,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@Slf4j
 public class MetabaseCollection extends Metabase {
     private static final long serialVersionUID = 2L;
 
@@ -80,40 +83,6 @@ public class MetabaseCollection extends Metabase {
     }
 
     /**
-     * Builds the minimal object necessary to update a MetabaseCollection.
-     *
-     * @param qualifiedName of the MetabaseCollection
-     * @param name of the MetabaseCollection
-     * @return the minimal request necessary to update the MetabaseCollection, as a builder
-     */
-    public static MetabaseCollectionBuilder<?, ?> updater(String qualifiedName, String name) {
-        return MetabaseCollection.builder().qualifiedName(qualifiedName).name(name);
-    }
-
-    /**
-     * Builds the minimal object necessary to apply an update to a MetabaseCollection, from a potentially
-     * more-complete MetabaseCollection object.
-     *
-     * @return the minimal object necessary to update the MetabaseCollection, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for MetabaseCollection are not found in the initial object
-     */
-    @Override
-    public MetabaseCollectionBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        List<String> missing = new ArrayList<>();
-        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
-            missing.add("qualifiedName");
-        }
-        if (this.getName() == null || this.getName().length() == 0) {
-            missing.add("name");
-        }
-        if (!missing.isEmpty()) {
-            throw new InvalidRequestException(
-                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "MetabaseCollection", String.join(",", missing));
-        }
-        return updater(this.getQualifiedName(), this.getName());
-    }
-
-    /**
      * Retrieves a MetabaseCollection by its GUID, complete with all of its relationships.
      *
      * @param guid of the MetabaseCollection to retrieve
@@ -156,6 +125,40 @@ public class MetabaseCollection extends Metabase {
      */
     public static boolean restore(String qualifiedName) throws AtlanException {
         return Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Builds the minimal object necessary to update a MetabaseCollection.
+     *
+     * @param qualifiedName of the MetabaseCollection
+     * @param name of the MetabaseCollection
+     * @return the minimal request necessary to update the MetabaseCollection, as a builder
+     */
+    public static MetabaseCollectionBuilder<?, ?> updater(String qualifiedName, String name) {
+        return MetabaseCollection.builder().qualifiedName(qualifiedName).name(name);
+    }
+
+    /**
+     * Builds the minimal object necessary to apply an update to a MetabaseCollection, from a potentially
+     * more-complete MetabaseCollection object.
+     *
+     * @return the minimal object necessary to update the MetabaseCollection, as a builder
+     * @throws InvalidRequestException if any of the minimal set of required properties for MetabaseCollection are not found in the initial object
+     */
+    @Override
+    public MetabaseCollectionBuilder<?, ?> trimToRequired() throws InvalidRequestException {
+        List<String> missing = new ArrayList<>();
+        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
+            missing.add("qualifiedName");
+        }
+        if (this.getName() == null || this.getName().length() == 0) {
+            missing.add("name");
+        }
+        if (!missing.isEmpty()) {
+            throw new InvalidRequestException(
+                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "MetabaseCollection", String.join(",", missing));
+        }
+        return updater(this.getQualifiedName(), this.getName());
     }
 
     /**
@@ -204,7 +207,7 @@ public class MetabaseCollection extends Metabase {
      * @throws AtlanException on any API problems
      */
     public static MetabaseCollection updateCertificate(
-            String qualifiedName, AtlanCertificateStatus certificate, String message) throws AtlanException {
+            String qualifiedName, CertificateStatus certificate, String message) throws AtlanException {
         return (MetabaseCollection) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
@@ -245,6 +248,48 @@ public class MetabaseCollection extends Metabase {
      */
     public static MetabaseCollection removeAnnouncement(String qualifiedName, String name) throws AtlanException {
         return (MetabaseCollection) Asset.removeAnnouncement(updater(qualifiedName, name));
+    }
+
+    /**
+     * Replace the terms linked to the MetabaseCollection.
+     *
+     * @param qualifiedName for the MetabaseCollection
+     * @param name human-readable name of the MetabaseCollection
+     * @param terms the list of terms to replace on the MetabaseCollection, or null to remove all terms from the MetabaseCollection
+     * @return the MetabaseCollection that was updated (note that it will NOT contain details of the replaced terms)
+     * @throws AtlanException on any API problems
+     */
+    public static MetabaseCollection replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+            throws AtlanException {
+        return (MetabaseCollection) Asset.replaceTerms(updater(qualifiedName, name), terms);
+    }
+
+    /**
+     * Link additional terms to the MetabaseCollection, without replacing existing terms linked to the MetabaseCollection.
+     * Note: this operation must make two API calls — one to retrieve the MetabaseCollection's existing terms,
+     * and a second to append the new terms.
+     *
+     * @param qualifiedName for the MetabaseCollection
+     * @param terms the list of terms to append to the MetabaseCollection
+     * @return the MetabaseCollection that was updated  (note that it will NOT contain details of the appended terms)
+     * @throws AtlanException on any API problems
+     */
+    public static MetabaseCollection appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (MetabaseCollection) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
+    }
+
+    /**
+     * Remove terms from a MetabaseCollection, without replacing all existing terms linked to the MetabaseCollection.
+     * Note: this operation must make two API calls — one to retrieve the MetabaseCollection's existing terms,
+     * and a second to remove the provided terms.
+     *
+     * @param qualifiedName for the MetabaseCollection
+     * @param terms the list of terms to remove from the MetabaseCollection, which must be referenced by GUID
+     * @return the MetabaseCollection that was updated (note that it will NOT contain details of the resulting terms)
+     * @throws AtlanException on any API problems
+     */
+    public static MetabaseCollection removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (MetabaseCollection) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 
     /**
@@ -294,47 +339,5 @@ public class MetabaseCollection extends Metabase {
      */
     public static void removeClassification(String qualifiedName, String classificationName) throws AtlanException {
         Asset.removeClassification(TYPE_NAME, qualifiedName, classificationName);
-    }
-
-    /**
-     * Replace the terms linked to the MetabaseCollection.
-     *
-     * @param qualifiedName for the MetabaseCollection
-     * @param name human-readable name of the MetabaseCollection
-     * @param terms the list of terms to replace on the MetabaseCollection, or null to remove all terms from the MetabaseCollection
-     * @return the MetabaseCollection that was updated (note that it will NOT contain details of the replaced terms)
-     * @throws AtlanException on any API problems
-     */
-    public static MetabaseCollection replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
-            throws AtlanException {
-        return (MetabaseCollection) Asset.replaceTerms(updater(qualifiedName, name), terms);
-    }
-
-    /**
-     * Link additional terms to the MetabaseCollection, without replacing existing terms linked to the MetabaseCollection.
-     * Note: this operation must make two API calls — one to retrieve the MetabaseCollection's existing terms,
-     * and a second to append the new terms.
-     *
-     * @param qualifiedName for the MetabaseCollection
-     * @param terms the list of terms to append to the MetabaseCollection
-     * @return the MetabaseCollection that was updated  (note that it will NOT contain details of the appended terms)
-     * @throws AtlanException on any API problems
-     */
-    public static MetabaseCollection appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (MetabaseCollection) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
-    }
-
-    /**
-     * Remove terms from a MetabaseCollection, without replacing all existing terms linked to the MetabaseCollection.
-     * Note: this operation must make two API calls — one to retrieve the MetabaseCollection's existing terms,
-     * and a second to remove the provided terms.
-     *
-     * @param qualifiedName for the MetabaseCollection
-     * @param terms the list of terms to remove from the MetabaseCollection, which must be referenced by GUID
-     * @return the MetabaseCollection that was updated (note that it will NOT contain details of the resulting terms)
-     * @throws AtlanException on any API problems
-     */
-    public static MetabaseCollection removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (MetabaseCollection) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 }

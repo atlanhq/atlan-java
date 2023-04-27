@@ -7,7 +7,8 @@ import lombok.Getter;
 
 public enum GoogleDataStudioAssetType implements AtlanEnum {
     REPORT("REPORT"),
-    DATA_SOURCE("DATA_SOURCE");
+    DATA_SOURCE("DATA_SOURCE"),
+    ;
 
     @JsonValue
     @Getter(onMethod_ = {@Override})

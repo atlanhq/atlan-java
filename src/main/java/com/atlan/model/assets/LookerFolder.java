@@ -6,13 +6,15 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.enums.*;
+import com.atlan.model.enums.AtlanAnnouncementType;
+import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Instance of a Looker folder in Atlan.
@@ -20,6 +22,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@Slf4j
 public class LookerFolder extends Looker {
     private static final long serialVersionUID = 2L;
 
@@ -80,40 +83,6 @@ public class LookerFolder extends Looker {
     }
 
     /**
-     * Builds the minimal object necessary to update a LookerFolder.
-     *
-     * @param qualifiedName of the LookerFolder
-     * @param name of the LookerFolder
-     * @return the minimal request necessary to update the LookerFolder, as a builder
-     */
-    public static LookerFolderBuilder<?, ?> updater(String qualifiedName, String name) {
-        return LookerFolder.builder().qualifiedName(qualifiedName).name(name);
-    }
-
-    /**
-     * Builds the minimal object necessary to apply an update to a LookerFolder, from a potentially
-     * more-complete LookerFolder object.
-     *
-     * @return the minimal object necessary to update the LookerFolder, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for LookerFolder are not found in the initial object
-     */
-    @Override
-    public LookerFolderBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        List<String> missing = new ArrayList<>();
-        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
-            missing.add("qualifiedName");
-        }
-        if (this.getName() == null || this.getName().length() == 0) {
-            missing.add("name");
-        }
-        if (!missing.isEmpty()) {
-            throw new InvalidRequestException(
-                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "LookerFolder", String.join(",", missing));
-        }
-        return updater(this.getQualifiedName(), this.getName());
-    }
-
-    /**
      * Retrieves a LookerFolder by its GUID, complete with all of its relationships.
      *
      * @param guid of the LookerFolder to retrieve
@@ -156,6 +125,40 @@ public class LookerFolder extends Looker {
      */
     public static boolean restore(String qualifiedName) throws AtlanException {
         return Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Builds the minimal object necessary to update a LookerFolder.
+     *
+     * @param qualifiedName of the LookerFolder
+     * @param name of the LookerFolder
+     * @return the minimal request necessary to update the LookerFolder, as a builder
+     */
+    public static LookerFolderBuilder<?, ?> updater(String qualifiedName, String name) {
+        return LookerFolder.builder().qualifiedName(qualifiedName).name(name);
+    }
+
+    /**
+     * Builds the minimal object necessary to apply an update to a LookerFolder, from a potentially
+     * more-complete LookerFolder object.
+     *
+     * @return the minimal object necessary to update the LookerFolder, as a builder
+     * @throws InvalidRequestException if any of the minimal set of required properties for LookerFolder are not found in the initial object
+     */
+    @Override
+    public LookerFolderBuilder<?, ?> trimToRequired() throws InvalidRequestException {
+        List<String> missing = new ArrayList<>();
+        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
+            missing.add("qualifiedName");
+        }
+        if (this.getName() == null || this.getName().length() == 0) {
+            missing.add("name");
+        }
+        if (!missing.isEmpty()) {
+            throw new InvalidRequestException(
+                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "LookerFolder", String.join(",", missing));
+        }
+        return updater(this.getQualifiedName(), this.getName());
     }
 
     /**
@@ -203,8 +206,8 @@ public class LookerFolder extends Looker {
      * @return the updated LookerFolder, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static LookerFolder updateCertificate(
-            String qualifiedName, AtlanCertificateStatus certificate, String message) throws AtlanException {
+    public static LookerFolder updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
+            throws AtlanException {
         return (LookerFolder) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
@@ -245,6 +248,48 @@ public class LookerFolder extends Looker {
      */
     public static LookerFolder removeAnnouncement(String qualifiedName, String name) throws AtlanException {
         return (LookerFolder) Asset.removeAnnouncement(updater(qualifiedName, name));
+    }
+
+    /**
+     * Replace the terms linked to the LookerFolder.
+     *
+     * @param qualifiedName for the LookerFolder
+     * @param name human-readable name of the LookerFolder
+     * @param terms the list of terms to replace on the LookerFolder, or null to remove all terms from the LookerFolder
+     * @return the LookerFolder that was updated (note that it will NOT contain details of the replaced terms)
+     * @throws AtlanException on any API problems
+     */
+    public static LookerFolder replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+            throws AtlanException {
+        return (LookerFolder) Asset.replaceTerms(updater(qualifiedName, name), terms);
+    }
+
+    /**
+     * Link additional terms to the LookerFolder, without replacing existing terms linked to the LookerFolder.
+     * Note: this operation must make two API calls — one to retrieve the LookerFolder's existing terms,
+     * and a second to append the new terms.
+     *
+     * @param qualifiedName for the LookerFolder
+     * @param terms the list of terms to append to the LookerFolder
+     * @return the LookerFolder that was updated  (note that it will NOT contain details of the appended terms)
+     * @throws AtlanException on any API problems
+     */
+    public static LookerFolder appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (LookerFolder) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
+    }
+
+    /**
+     * Remove terms from a LookerFolder, without replacing all existing terms linked to the LookerFolder.
+     * Note: this operation must make two API calls — one to retrieve the LookerFolder's existing terms,
+     * and a second to remove the provided terms.
+     *
+     * @param qualifiedName for the LookerFolder
+     * @param terms the list of terms to remove from the LookerFolder, which must be referenced by GUID
+     * @return the LookerFolder that was updated (note that it will NOT contain details of the resulting terms)
+     * @throws AtlanException on any API problems
+     */
+    public static LookerFolder removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (LookerFolder) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 
     /**
@@ -294,47 +339,5 @@ public class LookerFolder extends Looker {
      */
     public static void removeClassification(String qualifiedName, String classificationName) throws AtlanException {
         Asset.removeClassification(TYPE_NAME, qualifiedName, classificationName);
-    }
-
-    /**
-     * Replace the terms linked to the LookerFolder.
-     *
-     * @param qualifiedName for the LookerFolder
-     * @param name human-readable name of the LookerFolder
-     * @param terms the list of terms to replace on the LookerFolder, or null to remove all terms from the LookerFolder
-     * @return the LookerFolder that was updated (note that it will NOT contain details of the replaced terms)
-     * @throws AtlanException on any API problems
-     */
-    public static LookerFolder replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
-            throws AtlanException {
-        return (LookerFolder) Asset.replaceTerms(updater(qualifiedName, name), terms);
-    }
-
-    /**
-     * Link additional terms to the LookerFolder, without replacing existing terms linked to the LookerFolder.
-     * Note: this operation must make two API calls — one to retrieve the LookerFolder's existing terms,
-     * and a second to append the new terms.
-     *
-     * @param qualifiedName for the LookerFolder
-     * @param terms the list of terms to append to the LookerFolder
-     * @return the LookerFolder that was updated  (note that it will NOT contain details of the appended terms)
-     * @throws AtlanException on any API problems
-     */
-    public static LookerFolder appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (LookerFolder) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
-    }
-
-    /**
-     * Remove terms from a LookerFolder, without replacing all existing terms linked to the LookerFolder.
-     * Note: this operation must make two API calls — one to retrieve the LookerFolder's existing terms,
-     * and a second to remove the provided terms.
-     *
-     * @param qualifiedName for the LookerFolder
-     * @param terms the list of terms to remove from the LookerFolder, which must be referenced by GUID
-     * @return the LookerFolder that was updated (note that it will NOT contain details of the resulting terms)
-     * @throws AtlanException on any API problems
-     */
-    public static LookerFolder removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (LookerFolder) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 }

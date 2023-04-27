@@ -690,7 +690,7 @@ public class GlossaryTest extends AtlanLiveTest {
         Glossary g = deleteGlossary(glossary.getGuid());
         assertEquals(g.getQualifiedName(), glossary.getQualifiedName());
         assertEquals(g.getName(), glossary.getName());
-        assertEquals(g.getCertificateStatus(), AtlanCertificateStatus.VERIFIED);
+        assertEquals(g.getCertificateStatus(), CertificateStatus.VERIFIED);
         assertEquals(g.getAnnouncementType(), AtlanAnnouncementType.INFORMATION);
         assertEquals(g.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
         assertEquals(g.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);

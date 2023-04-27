@@ -10,7 +10,8 @@ public enum ADLSLeaseState implements AtlanEnum {
     LEASED("Leased"),
     EXPIRED("Expired"),
     BREAKING("Breaking"),
-    BROKEN("Broken");
+    BROKEN("Broken"),
+    ;
 
     @JsonValue
     @Getter(onMethod_ = {@Override})

@@ -6,7 +6,9 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.enums.*;
+import com.atlan.model.enums.AtlanAnnouncementType;
+import com.atlan.model.enums.AtlanConnectorType;
+import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -16,6 +18,7 @@ import java.util.Map;
 import java.util.SortedSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Instance of a materialized view in Atlan.
@@ -23,6 +26,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@Slf4j
 @SuppressWarnings("cast")
 public class MaterializedView extends SQL {
     private static final long serialVersionUID = 2L;
@@ -50,15 +54,15 @@ public class MaterializedView extends SQL {
     @Attribute
     Long staleSinceDate;
 
-    /** Number of columns in this materialized view. */
+    /** TBC */
     @Attribute
     Long columnCount;
 
-    /** Number of rows in this materialized view. */
+    /** TBC */
     @Attribute
     Long rowCount;
 
-    /** Size of the materialized view in bytes. */
+    /** TBC */
     @Attribute
     Long sizeBytes;
 
@@ -75,20 +79,20 @@ public class MaterializedView extends SQL {
     @Attribute
     String alias;
 
-    /** Whether this materialized view is temporary (true) or not (false). */
+    /** TBC */
     @Attribute
     Boolean isTemporary;
 
-    /** Definition of the materialized view (DDL). */
+    /** TBC */
     @Attribute
     String definition;
 
-    /** Schema in which this materialized view exists. */
+    /** TBC */
     @Attribute
     @JsonProperty("atlanSchema")
     Schema schema;
 
-    /** Columns that exist within this materialized view. */
+    /** TBC */
     @Attribute
     @Singular
     SortedSet<Column> columns;
@@ -114,6 +118,51 @@ public class MaterializedView extends SQL {
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
+    }
+
+    /**
+     * Retrieves a MaterializedView by its GUID, complete with all of its relationships.
+     *
+     * @param guid of the MaterializedView to retrieve
+     * @return the requested full MaterializedView, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the MaterializedView does not exist or the provided GUID is not a MaterializedView
+     */
+    public static MaterializedView retrieveByGuid(String guid) throws AtlanException {
+        Asset asset = Asset.retrieveFull(guid);
+        if (asset == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
+        } else if (asset instanceof MaterializedView) {
+            return (MaterializedView) asset;
+        } else {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "MaterializedView");
+        }
+    }
+
+    /**
+     * Retrieves a MaterializedView by its qualifiedName, complete with all of its relationships.
+     *
+     * @param qualifiedName of the MaterializedView to retrieve
+     * @return the requested full MaterializedView, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the MaterializedView does not exist
+     */
+    public static MaterializedView retrieveByQualifiedName(String qualifiedName) throws AtlanException {
+        Asset asset = Asset.retrieveFull(TYPE_NAME, qualifiedName);
+        if (asset instanceof MaterializedView) {
+            return (MaterializedView) asset;
+        } else {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "MaterializedView");
+        }
+    }
+
+    /**
+     * Restore the archived (soft-deleted) MaterializedView to active.
+     *
+     * @param qualifiedName for the MaterializedView
+     * @return true if the MaterializedView is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**
@@ -188,51 +237,6 @@ public class MaterializedView extends SQL {
     }
 
     /**
-     * Retrieves a MaterializedView by its GUID, complete with all of its relationships.
-     *
-     * @param guid of the MaterializedView to retrieve
-     * @return the requested full MaterializedView, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the MaterializedView does not exist or the provided GUID is not a MaterializedView
-     */
-    public static MaterializedView retrieveByGuid(String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof MaterializedView) {
-            return (MaterializedView) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "MaterializedView");
-        }
-    }
-
-    /**
-     * Retrieves a MaterializedView by its qualifiedName, complete with all of its relationships.
-     *
-     * @param qualifiedName of the MaterializedView to retrieve
-     * @return the requested full MaterializedView, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the MaterializedView does not exist
-     */
-    public static MaterializedView retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        Asset asset = Asset.retrieveFull(TYPE_NAME, qualifiedName);
-        if (asset instanceof MaterializedView) {
-            return (MaterializedView) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "MaterializedView");
-        }
-    }
-
-    /**
-     * Restore the archived (soft-deleted) MaterializedView to active.
-     *
-     * @param qualifiedName for the MaterializedView
-     * @return true if the MaterializedView is now active, and false otherwise
-     * @throws AtlanException on any API problems
-     */
-    public static boolean restore(String qualifiedName) throws AtlanException {
-        return Asset.restore(TYPE_NAME, qualifiedName);
-    }
-
-    /**
      * Remove the system description from a MaterializedView.
      *
      * @param qualifiedName of the MaterializedView
@@ -278,7 +282,7 @@ public class MaterializedView extends SQL {
      * @throws AtlanException on any API problems
      */
     public static MaterializedView updateCertificate(
-            String qualifiedName, AtlanCertificateStatus certificate, String message) throws AtlanException {
+            String qualifiedName, CertificateStatus certificate, String message) throws AtlanException {
         return (MaterializedView) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
@@ -319,6 +323,48 @@ public class MaterializedView extends SQL {
      */
     public static MaterializedView removeAnnouncement(String qualifiedName, String name) throws AtlanException {
         return (MaterializedView) Asset.removeAnnouncement(updater(qualifiedName, name));
+    }
+
+    /**
+     * Replace the terms linked to the MaterializedView.
+     *
+     * @param qualifiedName for the MaterializedView
+     * @param name human-readable name of the MaterializedView
+     * @param terms the list of terms to replace on the MaterializedView, or null to remove all terms from the MaterializedView
+     * @return the MaterializedView that was updated (note that it will NOT contain details of the replaced terms)
+     * @throws AtlanException on any API problems
+     */
+    public static MaterializedView replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+            throws AtlanException {
+        return (MaterializedView) Asset.replaceTerms(updater(qualifiedName, name), terms);
+    }
+
+    /**
+     * Link additional terms to the MaterializedView, without replacing existing terms linked to the MaterializedView.
+     * Note: this operation must make two API calls — one to retrieve the MaterializedView's existing terms,
+     * and a second to append the new terms.
+     *
+     * @param qualifiedName for the MaterializedView
+     * @param terms the list of terms to append to the MaterializedView
+     * @return the MaterializedView that was updated  (note that it will NOT contain details of the appended terms)
+     * @throws AtlanException on any API problems
+     */
+    public static MaterializedView appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (MaterializedView) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
+    }
+
+    /**
+     * Remove terms from a MaterializedView, without replacing all existing terms linked to the MaterializedView.
+     * Note: this operation must make two API calls — one to retrieve the MaterializedView's existing terms,
+     * and a second to remove the provided terms.
+     *
+     * @param qualifiedName for the MaterializedView
+     * @param terms the list of terms to remove from the MaterializedView, which must be referenced by GUID
+     * @return the MaterializedView that was updated (note that it will NOT contain details of the resulting terms)
+     * @throws AtlanException on any API problems
+     */
+    public static MaterializedView removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (MaterializedView) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 
     /**
@@ -368,47 +414,5 @@ public class MaterializedView extends SQL {
      */
     public static void removeClassification(String qualifiedName, String classificationName) throws AtlanException {
         Asset.removeClassification(TYPE_NAME, qualifiedName, classificationName);
-    }
-
-    /**
-     * Replace the terms linked to the MaterializedView.
-     *
-     * @param qualifiedName for the MaterializedView
-     * @param name human-readable name of the MaterializedView
-     * @param terms the list of terms to replace on the MaterializedView, or null to remove all terms from the MaterializedView
-     * @return the MaterializedView that was updated (note that it will NOT contain details of the replaced terms)
-     * @throws AtlanException on any API problems
-     */
-    public static MaterializedView replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
-            throws AtlanException {
-        return (MaterializedView) Asset.replaceTerms(updater(qualifiedName, name), terms);
-    }
-
-    /**
-     * Link additional terms to the MaterializedView, without replacing existing terms linked to the MaterializedView.
-     * Note: this operation must make two API calls — one to retrieve the MaterializedView's existing terms,
-     * and a second to append the new terms.
-     *
-     * @param qualifiedName for the MaterializedView
-     * @param terms the list of terms to append to the MaterializedView
-     * @return the MaterializedView that was updated  (note that it will NOT contain details of the appended terms)
-     * @throws AtlanException on any API problems
-     */
-    public static MaterializedView appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (MaterializedView) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
-    }
-
-    /**
-     * Remove terms from a MaterializedView, without replacing all existing terms linked to the MaterializedView.
-     * Note: this operation must make two API calls — one to retrieve the MaterializedView's existing terms,
-     * and a second to remove the provided terms.
-     *
-     * @param qualifiedName for the MaterializedView
-     * @param terms the list of terms to remove from the MaterializedView, which must be referenced by GUID
-     * @return the MaterializedView that was updated (note that it will NOT contain details of the resulting terms)
-     * @throws AtlanException on any API problems
-     */
-    public static MaterializedView removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (MaterializedView) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 }

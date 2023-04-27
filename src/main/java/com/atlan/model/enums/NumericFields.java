@@ -31,7 +31,7 @@ public enum NumericFields implements AtlanSearchableField {
     COLUMN_AVERAGE("columnAverage"),
     /** Average length of values in a string column. */
     COLUMN_AVERAGE_LENGTH("columnAverageLength"),
-    /** Number of columns in this view. */
+    /** Number of columns in this materialized view. */
     COLUMN_COUNT("columnCount"),
     /** Number of rows that contain distinct values. */
     COLUMN_DISTINCT_VALUES_COUNT("columnDistinctValuesCount"),
@@ -63,12 +63,12 @@ public enum NumericFields implements AtlanSearchableField {
     COLUMN_STANDARD_DEVIATION("columnStandardDeviation"),
     /** Calculated sum of the values in a numeric column. */
     COLUMN_SUM("columnSum"),
+    /** Ratio indicating how unique data in the column is: 0 indicates that all values are the same, 100 indicates that all values in the column are unique. */
+    COLUMN_UNIQUENESS_PERCENTAGE("columnUniquenessPercentage"),
     /** Number of rows in which a value in this column appears only once. */
     COLUMN_UNIQUE_VALUES_COUNT("columnUniqueValuesCount"),
     /** TBC */
     COLUMN_UNIQUE_VALUES_COUNT_LONG("columnUniqueValuesCountLong"),
-    /** Ratio indicating how unique data in the column is: 0 indicates that all values are the same, 100 indicates that all values in the column are unique. */
-    COLUMN_UNIQUENESS_PERCENTAGE("columnUniquenessPercentage"),
     /** Calculated variance of the values in a numeric column. */
     COLUMN_VARIANCE("columnVariance"),
     /** TBC */
@@ -138,10 +138,10 @@ public enum NumericFields implements AtlanSearchableField {
     /** Time (epoch) at which the asset was last crawled, in milliseconds. */
     LAST_SYNC_RUN_AT("lastSyncRunAt"),
     /** TBC */
+    LOOKER_TIMES_USED("lookerTimesUsed"),
+    /** TBC */
     LOOK_ID("lookId"),
     /** TBC */
-    LOOKER_TIMES_USED("lookerTimesUsed"),
-    /** Maximum length of a value in this column. */
     MAX_LENGTH("maxLength"),
     /** TBC */
     METABASE_DASHBOARD_COUNT("metabaseDashboardCount"),
@@ -165,7 +165,7 @@ public enum NumericFields implements AtlanSearchableField {
     OPERATION_END_TIME("operationEndTime"),
     /** TBC */
     OPERATION_START_TIME("operationStartTime"),
-    /** Order (position) in which the column appears in the table (starting at 1). */
+    /** TBC */
     ORDER("order"),
     /** TBC */
     PAGE_COUNT("pageCount"),
@@ -185,7 +185,7 @@ public enum NumericFields implements AtlanSearchableField {
     POWER_BI_TABLE_COLUMN_COUNT("powerBITableColumnCount"),
     /** TBC */
     POWER_BI_TABLE_MEASURE_COUNT("powerBITableMeasureCount"),
-    /** Total number of digits allowed when the dataType is numeric. */
+    /** Total number of digits allowed. */
     PRECISION("precision"),
     /** Number of charts within the collection. */
     PRESET_DASHBOARD_CHART_COUNT("presetDashboardChartCount"),
@@ -219,13 +219,13 @@ public enum NumericFields implements AtlanSearchableField {
     QUICK_SIGHT_DASHBOARD_PUBLISHED_VERSION_NUMBER("quickSightDashboardPublishedVersionNumber"),
     /** TBC */
     QUICK_SIGHT_DATASET_COLUMN_COUNT("quickSightDatasetColumnCount"),
-    /** Number of reports linked to the dashboard in Salesforce. */
+    /** TBC */
     REPORT_COUNT("reportCount"),
     /** TBC */
     RESULT_COUNT("resultCount"),
     /** TBC */
     RESULT_MAKER_ID("resultMakerID"),
-    /** Number of rows in this view. */
+    /** Number of rows in this materialized view. */
     ROW_COUNT("rowCount"),
     /** Maximum number of rows that can be returned for the source. */
     ROW_LIMIT("rowLimit"),
@@ -237,18 +237,20 @@ public enum NumericFields implements AtlanSearchableField {
     S3OBJECT_SIZE("s3ObjectSize"),
     /** Number of schemas in this database. */
     SCHEMA_COUNT("schemaCount"),
+    /** Number of columns that exist within this dataset. */
+    SIGMA_DATASET_COLUMN_COUNT("sigmaDatasetColumnCount"),
     /** Number of data elements that exist within this page. */
     SIGMA_DATA_ELEMENT_COUNT("sigmaDataElementCount"),
     /** Number of data element fields within this data element. */
     SIGMA_DATA_ELEMENT_FIELD_COUNT("sigmaDataElementFieldCount"),
-    /** Number of columns that exist within this dataset. */
-    SIGMA_DATASET_COLUMN_COUNT("sigmaDatasetColumnCount"),
     /** Number of pages that exist within this workbook. */
     SIGMA_PAGE_COUNT("sigmaPageCount"),
-    /** Size of the view in bytes. */
+    /** Size of the materialized view in bytes. */
     SIZE_BYTES("sizeBytes"),
     /** TBC */
     SNOWFLAKE_STREAM_STALE_AFTER("snowflakeStreamStaleAfter"),
+    /** TBC */
+    SOURCELAST_UPDATER_ID("sourcelastUpdaterId"),
     /** TBC */
     SOURCE_CHILD_COUNT("sourceChildCount"),
     /** TBC */
@@ -282,8 +284,6 @@ public enum NumericFields implements AtlanSearchableField {
     /** TBC */
     SOURCE_VIEW_COUNT("sourceViewCount"),
     /** TBC */
-    SOURCELAST_UPDATER_ID("sourcelastUpdaterId"),
-    /** TBC */
     STALE_SINCE_DATE("staleSinceDate"),
     /** TBC */
     START_TIME("startTime"),
@@ -293,10 +293,10 @@ public enum NumericFields implements AtlanSearchableField {
     TILE_COUNT("tileCount"),
     /** Time (in milliseconds) when the asset was created. */
     TIMESTAMP("__timestamp"),
-    /** TBC */
-    VIEW_SCORE("viewScore"),
     /** Number of views in this schema. */
     VIEW_COUNT("viewsCount"),
+    /** TBC */
+    VIEW_SCORE("viewScore"),
     ;
 
     @Getter(onMethod_ = {@Override})

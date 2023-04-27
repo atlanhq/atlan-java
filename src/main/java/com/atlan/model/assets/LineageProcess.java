@@ -6,12 +6,21 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.enums.*;
+import com.atlan.model.enums.AtlanAnnouncementType;
+import com.atlan.model.enums.AtlanConnectorType;
+import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.SortedSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Instance of a lineage process in Atlan.
@@ -19,7 +28,13 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
-public class LineageProcess extends AbstractProcess {
+@JsonSubTypes({
+    @JsonSubTypes.Type(value = BIProcess.class, name = BIProcess.TYPE_NAME),
+    @JsonSubTypes.Type(value = DbtProcess.class, name = DbtProcess.TYPE_NAME),
+    @JsonSubTypes.Type(value = ColumnProcess.class, name = ColumnProcess.TYPE_NAME),
+})
+@Slf4j
+public class LineageProcess extends Asset {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "Process";
@@ -28,6 +43,33 @@ public class LineageProcess extends AbstractProcess {
     @Getter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<Catalog> inputs;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<Catalog> outputs;
+
+    /** TBC */
+    @Attribute
+    String code;
+
+    /** TBC */
+    @Attribute
+    String sql;
+
+    /** TBC */
+    @Attribute
+    String ast;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ColumnProcess> columnProcesses;
 
     /**
      * Reference to a LineageProcess by GUID.
@@ -50,6 +92,51 @@ public class LineageProcess extends AbstractProcess {
                 .uniqueAttributes(
                         UniqueAttributes.builder().qualifiedName(qualifiedName).build())
                 .build();
+    }
+
+    /**
+     * Retrieves a LineageProcess by its GUID, complete with all of its relationships.
+     *
+     * @param guid of the LineageProcess to retrieve
+     * @return the requested full LineageProcess, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the LineageProcess does not exist or the provided GUID is not a LineageProcess
+     */
+    public static LineageProcess retrieveByGuid(String guid) throws AtlanException {
+        Asset asset = Asset.retrieveFull(guid);
+        if (asset == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
+        } else if (asset instanceof LineageProcess) {
+            return (LineageProcess) asset;
+        } else {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "LineageProcess");
+        }
+    }
+
+    /**
+     * Retrieves a LineageProcess by its qualifiedName, complete with all of its relationships.
+     *
+     * @param qualifiedName of the LineageProcess to retrieve
+     * @return the requested full LineageProcess, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the LineageProcess does not exist
+     */
+    public static LineageProcess retrieveByQualifiedName(String qualifiedName) throws AtlanException {
+        Asset asset = Asset.retrieveFull(TYPE_NAME, qualifiedName);
+        if (asset instanceof LineageProcess) {
+            return (LineageProcess) asset;
+        } else {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "LineageProcess");
+        }
+    }
+
+    /**
+     * Restore the archived (soft-deleted) LineageProcess to active.
+     *
+     * @param qualifiedName for the LineageProcess
+     * @return true if the LineageProcess is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
     }
 
     /**
@@ -115,48 +202,74 @@ public class LineageProcess extends AbstractProcess {
     }
 
     /**
-     * Retrieves a LineageProcess by its GUID, complete with all of its relationships.
+     * Generate a unique qualifiedName for a process.
      *
-     * @param guid of the LineageProcess to retrieve
-     * @return the requested full LineageProcess, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the LineageProcess does not exist or the provided GUID is not a LineageProcess
+     * @param name of the process
+     * @param connectionQualifiedName unique name of the specific instance of the software / system that ran the process
+     * @param id (optional) unique ID of this process within the software / system that ran it (if not provided, it will be generated)
+     * @param inputs sources of data the process reads from
+     * @param outputs targets of data the process writes to
+     * @param parent (optional) parent process in which this sub-process ran
+     * @return unique name for the process
      */
-    public static LineageProcess retrieveByGuid(String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof LineageProcess) {
-            return (LineageProcess) asset;
+    public static String generateQualifiedName(
+            String name,
+            String connectionQualifiedName,
+            String id,
+            List<Catalog> inputs,
+            List<Catalog> outputs,
+            LineageProcess parent) {
+        // If an ID was provided, use that as the unique name for the process
+        if (id != null && id.length() > 0) {
+            return connectionQualifiedName + "/" + id;
         } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "LineageProcess");
+            // Otherwise, hash all the relationships to arrive at a consistent
+            // generated qualifiedName
+            StringBuilder sb = new StringBuilder();
+            sb.append(name).append(connectionQualifiedName);
+            if (parent != null) {
+                appendRelationship(sb, parent);
+            }
+            appendRelationships(sb, inputs);
+            appendRelationships(sb, outputs);
+            try {
+                MessageDigest md = MessageDigest.getInstance("MD5");
+                md.update(sb.toString().getBytes(StandardCharsets.UTF_8));
+                String hashed = String.format("%032x", new BigInteger(1, md.digest()));
+                return connectionQualifiedName + "/" + hashed;
+            } catch (NoSuchAlgorithmException e) {
+                throw new RuntimeException(
+                        "Unable to generate the qualifiedName for the process: MD5 algorithm does not exist on your platform!");
+            }
         }
     }
 
     /**
-     * Retrieves a LineageProcess by its qualifiedName, complete with all of its relationships.
-     *
-     * @param qualifiedName of the LineageProcess to retrieve
-     * @return the requested full LineageProcess, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the LineageProcess does not exist
+     * Append all the relationships into the provided string builder.
+     * @param sb into which to append
+     * @param relationships to append
      */
-    public static LineageProcess retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        Asset asset = Asset.retrieveFull(TYPE_NAME, qualifiedName);
-        if (asset instanceof LineageProcess) {
-            return (LineageProcess) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "LineageProcess");
+    private static void appendRelationships(StringBuilder sb, List<Catalog> relationships) {
+        for (Catalog relationship : relationships) {
+            appendRelationship(sb, relationship);
         }
     }
 
     /**
-     * Restore the archived (soft-deleted) LineageProcess to active.
-     *
-     * @param qualifiedName for the LineageProcess
-     * @return true if the LineageProcess is now active, and false otherwise
-     * @throws AtlanException on any API problems
+     * Append a single relationship into the provided string builder.
+     * @param sb into which to append
+     * @param relationship to append
      */
-    public static boolean restore(String qualifiedName) throws AtlanException {
-        return Asset.restore(TYPE_NAME, qualifiedName);
+    private static void appendRelationship(StringBuilder sb, Asset relationship) {
+        // TODO: if two calls are made for the same process, but one uses GUIDs for
+        //  its references and the other uses qualifiedName, we'll end up with different
+        //  hashes (duplicate processes)
+        if (relationship.getGuid() != null) {
+            sb.append(relationship.getGuid());
+        } else if (relationship.getUniqueAttributes() != null
+                && relationship.getUniqueAttributes().getQualifiedName() != null) {
+            sb.append(relationship.getUniqueAttributes().getQualifiedName());
+        }
     }
 
     /**
@@ -204,8 +317,8 @@ public class LineageProcess extends AbstractProcess {
      * @return the updated LineageProcess, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static LineageProcess updateCertificate(
-            String qualifiedName, AtlanCertificateStatus certificate, String message) throws AtlanException {
+    public static LineageProcess updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
+            throws AtlanException {
         return (LineageProcess) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
@@ -246,6 +359,48 @@ public class LineageProcess extends AbstractProcess {
      */
     public static LineageProcess removeAnnouncement(String qualifiedName, String name) throws AtlanException {
         return (LineageProcess) Asset.removeAnnouncement(updater(qualifiedName, name));
+    }
+
+    /**
+     * Replace the terms linked to the LineageProcess.
+     *
+     * @param qualifiedName for the LineageProcess
+     * @param name human-readable name of the LineageProcess
+     * @param terms the list of terms to replace on the LineageProcess, or null to remove all terms from the LineageProcess
+     * @return the LineageProcess that was updated (note that it will NOT contain details of the replaced terms)
+     * @throws AtlanException on any API problems
+     */
+    public static LineageProcess replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+            throws AtlanException {
+        return (LineageProcess) Asset.replaceTerms(updater(qualifiedName, name), terms);
+    }
+
+    /**
+     * Link additional terms to the LineageProcess, without replacing existing terms linked to the LineageProcess.
+     * Note: this operation must make two API calls — one to retrieve the LineageProcess's existing terms,
+     * and a second to append the new terms.
+     *
+     * @param qualifiedName for the LineageProcess
+     * @param terms the list of terms to append to the LineageProcess
+     * @return the LineageProcess that was updated  (note that it will NOT contain details of the appended terms)
+     * @throws AtlanException on any API problems
+     */
+    public static LineageProcess appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (LineageProcess) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
+    }
+
+    /**
+     * Remove terms from a LineageProcess, without replacing all existing terms linked to the LineageProcess.
+     * Note: this operation must make two API calls — one to retrieve the LineageProcess's existing terms,
+     * and a second to remove the provided terms.
+     *
+     * @param qualifiedName for the LineageProcess
+     * @param terms the list of terms to remove from the LineageProcess, which must be referenced by GUID
+     * @return the LineageProcess that was updated (note that it will NOT contain details of the resulting terms)
+     * @throws AtlanException on any API problems
+     */
+    public static LineageProcess removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (LineageProcess) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 
     /**
@@ -295,47 +450,5 @@ public class LineageProcess extends AbstractProcess {
      */
     public static void removeClassification(String qualifiedName, String classificationName) throws AtlanException {
         Asset.removeClassification(TYPE_NAME, qualifiedName, classificationName);
-    }
-
-    /**
-     * Replace the terms linked to the LineageProcess.
-     *
-     * @param qualifiedName for the LineageProcess
-     * @param name human-readable name of the LineageProcess
-     * @param terms the list of terms to replace on the LineageProcess, or null to remove all terms from the LineageProcess
-     * @return the LineageProcess that was updated (note that it will NOT contain details of the replaced terms)
-     * @throws AtlanException on any API problems
-     */
-    public static LineageProcess replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
-            throws AtlanException {
-        return (LineageProcess) Asset.replaceTerms(updater(qualifiedName, name), terms);
-    }
-
-    /**
-     * Link additional terms to the LineageProcess, without replacing existing terms linked to the LineageProcess.
-     * Note: this operation must make two API calls — one to retrieve the LineageProcess's existing terms,
-     * and a second to append the new terms.
-     *
-     * @param qualifiedName for the LineageProcess
-     * @param terms the list of terms to append to the LineageProcess
-     * @return the LineageProcess that was updated  (note that it will NOT contain details of the appended terms)
-     * @throws AtlanException on any API problems
-     */
-    public static LineageProcess appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (LineageProcess) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
-    }
-
-    /**
-     * Remove terms from a LineageProcess, without replacing all existing terms linked to the LineageProcess.
-     * Note: this operation must make two API calls — one to retrieve the LineageProcess's existing terms,
-     * and a second to remove the provided terms.
-     *
-     * @param qualifiedName for the LineageProcess
-     * @param terms the list of terms to remove from the LineageProcess, which must be referenced by GUID
-     * @return the LineageProcess that was updated (note that it will NOT contain details of the resulting terms)
-     * @throws AtlanException on any API problems
-     */
-    public static LineageProcess removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (LineageProcess) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 }

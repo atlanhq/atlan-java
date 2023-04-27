@@ -6,7 +6,14 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.enums.*;
+import com.atlan.model.enums.ADLSAccessTier;
+import com.atlan.model.enums.ADLSLeaseState;
+import com.atlan.model.enums.ADLSLeaseStatus;
+import com.atlan.model.enums.ADLSObjectArchiveStatus;
+import com.atlan.model.enums.ADLSObjectType;
+import com.atlan.model.enums.AtlanAnnouncementType;
+import com.atlan.model.enums.AtlanConnectorType;
+import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.StringUtils;
 import java.util.ArrayList;
@@ -14,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Instance of an Azure Data Lake Storage (ADLS) blob / object in Atlan.
@@ -21,6 +29,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@Slf4j
 @SuppressWarnings("cast")
 public class ADLSObject extends ADLS {
     private static final long serialVersionUID = 2L;
@@ -129,6 +138,51 @@ public class ADLSObject extends ADLS {
     }
 
     /**
+     * Retrieves a ADLSObject by its GUID, complete with all of its relationships.
+     *
+     * @param guid of the ADLSObject to retrieve
+     * @return the requested full ADLSObject, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ADLSObject does not exist or the provided GUID is not a ADLSObject
+     */
+    public static ADLSObject retrieveByGuid(String guid) throws AtlanException {
+        Asset asset = Asset.retrieveFull(guid);
+        if (asset == null) {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
+        } else if (asset instanceof ADLSObject) {
+            return (ADLSObject) asset;
+        } else {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "ADLSObject");
+        }
+    }
+
+    /**
+     * Retrieves a ADLSObject by its qualifiedName, complete with all of its relationships.
+     *
+     * @param qualifiedName of the ADLSObject to retrieve
+     * @return the requested full ADLSObject, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ADLSObject does not exist
+     */
+    public static ADLSObject retrieveByQualifiedName(String qualifiedName) throws AtlanException {
+        Asset asset = Asset.retrieveFull(TYPE_NAME, qualifiedName);
+        if (asset instanceof ADLSObject) {
+            return (ADLSObject) asset;
+        } else {
+            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "ADLSObject");
+        }
+    }
+
+    /**
+     * Restore the archived (soft-deleted) ADLSObject to active.
+     *
+     * @param qualifiedName for the ADLSObject
+     * @return true if the ADLSObject is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(String qualifiedName) throws AtlanException {
+        return Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
      * Builds the minimal object necessary to create a ADLSObject.
      *
      * @param name of the ADLSObject
@@ -193,51 +247,6 @@ public class ADLSObject extends ADLS {
     }
 
     /**
-     * Retrieves a ADLSObject by its GUID, complete with all of its relationships.
-     *
-     * @param guid of the ADLSObject to retrieve
-     * @return the requested full ADLSObject, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ADLSObject does not exist or the provided GUID is not a ADLSObject
-     */
-    public static ADLSObject retrieveByGuid(String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(guid);
-        if (asset == null) {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
-        } else if (asset instanceof ADLSObject) {
-            return (ADLSObject) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_TYPE_REQUESTED, guid, "ADLSObject");
-        }
-    }
-
-    /**
-     * Retrieves a ADLSObject by its qualifiedName, complete with all of its relationships.
-     *
-     * @param qualifiedName of the ADLSObject to retrieve
-     * @return the requested full ADLSObject, complete with all of its relationships
-     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ADLSObject does not exist
-     */
-    public static ADLSObject retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        Asset asset = Asset.retrieveFull(TYPE_NAME, qualifiedName);
-        if (asset instanceof ADLSObject) {
-            return (ADLSObject) asset;
-        } else {
-            throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_QN, qualifiedName, "ADLSObject");
-        }
-    }
-
-    /**
-     * Restore the archived (soft-deleted) ADLSObject to active.
-     *
-     * @param qualifiedName for the ADLSObject
-     * @return true if the ADLSObject is now active, and false otherwise
-     * @throws AtlanException on any API problems
-     */
-    public static boolean restore(String qualifiedName) throws AtlanException {
-        return Asset.restore(TYPE_NAME, qualifiedName);
-    }
-
-    /**
      * Remove the system description from a ADLSObject.
      *
      * @param qualifiedName of the ADLSObject
@@ -282,7 +291,7 @@ public class ADLSObject extends ADLS {
      * @return the updated ADLSObject, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static ADLSObject updateCertificate(String qualifiedName, AtlanCertificateStatus certificate, String message)
+    public static ADLSObject updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
         return (ADLSObject) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }
@@ -324,6 +333,48 @@ public class ADLSObject extends ADLS {
      */
     public static ADLSObject removeAnnouncement(String qualifiedName, String name) throws AtlanException {
         return (ADLSObject) Asset.removeAnnouncement(updater(qualifiedName, name));
+    }
+
+    /**
+     * Replace the terms linked to the ADLSObject.
+     *
+     * @param qualifiedName for the ADLSObject
+     * @param name human-readable name of the ADLSObject
+     * @param terms the list of terms to replace on the ADLSObject, or null to remove all terms from the ADLSObject
+     * @return the ADLSObject that was updated (note that it will NOT contain details of the replaced terms)
+     * @throws AtlanException on any API problems
+     */
+    public static ADLSObject replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+            throws AtlanException {
+        return (ADLSObject) Asset.replaceTerms(updater(qualifiedName, name), terms);
+    }
+
+    /**
+     * Link additional terms to the ADLSObject, without replacing existing terms linked to the ADLSObject.
+     * Note: this operation must make two API calls — one to retrieve the ADLSObject's existing terms,
+     * and a second to append the new terms.
+     *
+     * @param qualifiedName for the ADLSObject
+     * @param terms the list of terms to append to the ADLSObject
+     * @return the ADLSObject that was updated  (note that it will NOT contain details of the appended terms)
+     * @throws AtlanException on any API problems
+     */
+    public static ADLSObject appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (ADLSObject) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
+    }
+
+    /**
+     * Remove terms from a ADLSObject, without replacing all existing terms linked to the ADLSObject.
+     * Note: this operation must make two API calls — one to retrieve the ADLSObject's existing terms,
+     * and a second to remove the provided terms.
+     *
+     * @param qualifiedName for the ADLSObject
+     * @param terms the list of terms to remove from the ADLSObject, which must be referenced by GUID
+     * @return the ADLSObject that was updated (note that it will NOT contain details of the resulting terms)
+     * @throws AtlanException on any API problems
+     */
+    public static ADLSObject removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (ADLSObject) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 
     /**
@@ -373,47 +424,5 @@ public class ADLSObject extends ADLS {
      */
     public static void removeClassification(String qualifiedName, String classificationName) throws AtlanException {
         Asset.removeClassification(TYPE_NAME, qualifiedName, classificationName);
-    }
-
-    /**
-     * Replace the terms linked to the ADLSObject.
-     *
-     * @param qualifiedName for the ADLSObject
-     * @param name human-readable name of the ADLSObject
-     * @param terms the list of terms to replace on the ADLSObject, or null to remove all terms from the ADLSObject
-     * @return the ADLSObject that was updated (note that it will NOT contain details of the replaced terms)
-     * @throws AtlanException on any API problems
-     */
-    public static ADLSObject replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
-            throws AtlanException {
-        return (ADLSObject) Asset.replaceTerms(updater(qualifiedName, name), terms);
-    }
-
-    /**
-     * Link additional terms to the ADLSObject, without replacing existing terms linked to the ADLSObject.
-     * Note: this operation must make two API calls — one to retrieve the ADLSObject's existing terms,
-     * and a second to append the new terms.
-     *
-     * @param qualifiedName for the ADLSObject
-     * @param terms the list of terms to append to the ADLSObject
-     * @return the ADLSObject that was updated  (note that it will NOT contain details of the appended terms)
-     * @throws AtlanException on any API problems
-     */
-    public static ADLSObject appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (ADLSObject) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
-    }
-
-    /**
-     * Remove terms from a ADLSObject, without replacing all existing terms linked to the ADLSObject.
-     * Note: this operation must make two API calls — one to retrieve the ADLSObject's existing terms,
-     * and a second to remove the provided terms.
-     *
-     * @param qualifiedName for the ADLSObject
-     * @param terms the list of terms to remove from the ADLSObject, which must be referenced by GUID
-     * @return the ADLSObject that was updated (note that it will NOT contain details of the resulting terms)
-     * @throws AtlanException on any API problems
-     */
-    public static ADLSObject removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (ADLSObject) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 }

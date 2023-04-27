@@ -2,11 +2,11 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
-import com.atlan.model.enums.*;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import java.util.Map;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Base class for API assets.
@@ -18,6 +18,7 @@ import lombok.experimental.SuperBuilder;
     @JsonSubTypes.Type(value = APISpec.class, name = APISpec.TYPE_NAME),
     @JsonSubTypes.Type(value = APIPath.class, name = APIPath.TYPE_NAME),
 })
+@Slf4j
 @SuppressWarnings("cast")
 public abstract class API extends Catalog {
 

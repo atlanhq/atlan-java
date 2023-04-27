@@ -7,7 +7,8 @@ import lombok.Getter;
 
 public enum ADLSAccountStatus implements AtlanEnum {
     AVAILABLE("Available"),
-    UNAVAILABLE("Unavailable");
+    UNAVAILABLE("Unavailable"),
+    ;
 
     @JsonValue
     @Getter(onMethod_ = {@Override})

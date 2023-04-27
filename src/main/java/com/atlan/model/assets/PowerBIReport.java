@@ -6,13 +6,15 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.enums.*;
+import com.atlan.model.enums.AtlanAnnouncementType;
+import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Instance of a Power BI report in Atlan.
@@ -20,6 +22,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@Slf4j
 public class PowerBIReport extends PowerBI {
     private static final long serialVersionUID = 2L;
 
@@ -88,40 +91,6 @@ public class PowerBIReport extends PowerBI {
     }
 
     /**
-     * Builds the minimal object necessary to update a PowerBIReport.
-     *
-     * @param qualifiedName of the PowerBIReport
-     * @param name of the PowerBIReport
-     * @return the minimal request necessary to update the PowerBIReport, as a builder
-     */
-    public static PowerBIReportBuilder<?, ?> updater(String qualifiedName, String name) {
-        return PowerBIReport.builder().qualifiedName(qualifiedName).name(name);
-    }
-
-    /**
-     * Builds the minimal object necessary to apply an update to a PowerBIReport, from a potentially
-     * more-complete PowerBIReport object.
-     *
-     * @return the minimal object necessary to update the PowerBIReport, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for PowerBIReport are not found in the initial object
-     */
-    @Override
-    public PowerBIReportBuilder<?, ?> trimToRequired() throws InvalidRequestException {
-        List<String> missing = new ArrayList<>();
-        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
-            missing.add("qualifiedName");
-        }
-        if (this.getName() == null || this.getName().length() == 0) {
-            missing.add("name");
-        }
-        if (!missing.isEmpty()) {
-            throw new InvalidRequestException(
-                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "PowerBIReport", String.join(",", missing));
-        }
-        return updater(this.getQualifiedName(), this.getName());
-    }
-
-    /**
      * Retrieves a PowerBIReport by its GUID, complete with all of its relationships.
      *
      * @param guid of the PowerBIReport to retrieve
@@ -164,6 +133,40 @@ public class PowerBIReport extends PowerBI {
      */
     public static boolean restore(String qualifiedName) throws AtlanException {
         return Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Builds the minimal object necessary to update a PowerBIReport.
+     *
+     * @param qualifiedName of the PowerBIReport
+     * @param name of the PowerBIReport
+     * @return the minimal request necessary to update the PowerBIReport, as a builder
+     */
+    public static PowerBIReportBuilder<?, ?> updater(String qualifiedName, String name) {
+        return PowerBIReport.builder().qualifiedName(qualifiedName).name(name);
+    }
+
+    /**
+     * Builds the minimal object necessary to apply an update to a PowerBIReport, from a potentially
+     * more-complete PowerBIReport object.
+     *
+     * @return the minimal object necessary to update the PowerBIReport, as a builder
+     * @throws InvalidRequestException if any of the minimal set of required properties for PowerBIReport are not found in the initial object
+     */
+    @Override
+    public PowerBIReportBuilder<?, ?> trimToRequired() throws InvalidRequestException {
+        List<String> missing = new ArrayList<>();
+        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
+            missing.add("qualifiedName");
+        }
+        if (this.getName() == null || this.getName().length() == 0) {
+            missing.add("name");
+        }
+        if (!missing.isEmpty()) {
+            throw new InvalidRequestException(
+                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "PowerBIReport", String.join(",", missing));
+        }
+        return updater(this.getQualifiedName(), this.getName());
     }
 
     /**
@@ -211,8 +214,8 @@ public class PowerBIReport extends PowerBI {
      * @return the updated PowerBIReport, or null if the update failed
      * @throws AtlanException on any API problems
      */
-    public static PowerBIReport updateCertificate(
-            String qualifiedName, AtlanCertificateStatus certificate, String message) throws AtlanException {
+    public static PowerBIReport updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
+            throws AtlanException {
         return (PowerBIReport) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
@@ -253,6 +256,48 @@ public class PowerBIReport extends PowerBI {
      */
     public static PowerBIReport removeAnnouncement(String qualifiedName, String name) throws AtlanException {
         return (PowerBIReport) Asset.removeAnnouncement(updater(qualifiedName, name));
+    }
+
+    /**
+     * Replace the terms linked to the PowerBIReport.
+     *
+     * @param qualifiedName for the PowerBIReport
+     * @param name human-readable name of the PowerBIReport
+     * @param terms the list of terms to replace on the PowerBIReport, or null to remove all terms from the PowerBIReport
+     * @return the PowerBIReport that was updated (note that it will NOT contain details of the replaced terms)
+     * @throws AtlanException on any API problems
+     */
+    public static PowerBIReport replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+            throws AtlanException {
+        return (PowerBIReport) Asset.replaceTerms(updater(qualifiedName, name), terms);
+    }
+
+    /**
+     * Link additional terms to the PowerBIReport, without replacing existing terms linked to the PowerBIReport.
+     * Note: this operation must make two API calls — one to retrieve the PowerBIReport's existing terms,
+     * and a second to append the new terms.
+     *
+     * @param qualifiedName for the PowerBIReport
+     * @param terms the list of terms to append to the PowerBIReport
+     * @return the PowerBIReport that was updated  (note that it will NOT contain details of the appended terms)
+     * @throws AtlanException on any API problems
+     */
+    public static PowerBIReport appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (PowerBIReport) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
+    }
+
+    /**
+     * Remove terms from a PowerBIReport, without replacing all existing terms linked to the PowerBIReport.
+     * Note: this operation must make two API calls — one to retrieve the PowerBIReport's existing terms,
+     * and a second to remove the provided terms.
+     *
+     * @param qualifiedName for the PowerBIReport
+     * @param terms the list of terms to remove from the PowerBIReport, which must be referenced by GUID
+     * @return the PowerBIReport that was updated (note that it will NOT contain details of the resulting terms)
+     * @throws AtlanException on any API problems
+     */
+    public static PowerBIReport removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+        return (PowerBIReport) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 
     /**
@@ -302,47 +347,5 @@ public class PowerBIReport extends PowerBI {
      */
     public static void removeClassification(String qualifiedName, String classificationName) throws AtlanException {
         Asset.removeClassification(TYPE_NAME, qualifiedName, classificationName);
-    }
-
-    /**
-     * Replace the terms linked to the PowerBIReport.
-     *
-     * @param qualifiedName for the PowerBIReport
-     * @param name human-readable name of the PowerBIReport
-     * @param terms the list of terms to replace on the PowerBIReport, or null to remove all terms from the PowerBIReport
-     * @return the PowerBIReport that was updated (note that it will NOT contain details of the replaced terms)
-     * @throws AtlanException on any API problems
-     */
-    public static PowerBIReport replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
-            throws AtlanException {
-        return (PowerBIReport) Asset.replaceTerms(updater(qualifiedName, name), terms);
-    }
-
-    /**
-     * Link additional terms to the PowerBIReport, without replacing existing terms linked to the PowerBIReport.
-     * Note: this operation must make two API calls — one to retrieve the PowerBIReport's existing terms,
-     * and a second to append the new terms.
-     *
-     * @param qualifiedName for the PowerBIReport
-     * @param terms the list of terms to append to the PowerBIReport
-     * @return the PowerBIReport that was updated  (note that it will NOT contain details of the appended terms)
-     * @throws AtlanException on any API problems
-     */
-    public static PowerBIReport appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (PowerBIReport) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
-    }
-
-    /**
-     * Remove terms from a PowerBIReport, without replacing all existing terms linked to the PowerBIReport.
-     * Note: this operation must make two API calls — one to retrieve the PowerBIReport's existing terms,
-     * and a second to remove the provided terms.
-     *
-     * @param qualifiedName for the PowerBIReport
-     * @param terms the list of terms to remove from the PowerBIReport, which must be referenced by GUID
-     * @return the PowerBIReport that was updated (note that it will NOT contain details of the resulting terms)
-     * @throws AtlanException on any API problems
-     */
-    public static PowerBIReport removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (PowerBIReport) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 }
