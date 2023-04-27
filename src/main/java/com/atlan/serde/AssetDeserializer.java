@@ -608,7 +608,15 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
     private void deserializeObject(Asset.AssetBuilder<?, ?> builder, JsonNode jsonObject, Method method)
             throws IllegalAccessException, InvocationTargetException, IOException {
         Class<?> paramClass = ReflectionCache.getParameterOfMethod(method);
-        method.invoke(builder, Serde.mapper.readValue(jsonObject.toString(), paramClass));
+        if (paramClass == Map.class
+                && ReflectionCache.getParameterizedTypeOfMethod(method)
+                        .getTypeName()
+                        .equals("java.util.Map<? extends java.lang.String, ? extends java.lang.Long>")) {
+            // TODO: Unclear why this cannot be handled more generically, but nothing else seems to work
+            method.invoke(builder, Serde.mapper.convertValue(jsonObject, new TypeReference<Map<String, Long>>() {}));
+        } else {
+            method.invoke(builder, Serde.mapper.convertValue(jsonObject, paramClass));
+        }
     }
 
     /**
@@ -626,7 +634,7 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
         } else if (element.isObject()) {
             Type paramType = ReflectionCache.getParameterizedTypeOfMethod(method);
             Class<?> innerClass = ReflectionCache.getClassOfParameterizedType(paramType);
-            return Serde.mapper.readValue(element.toString(), innerClass);
+            return Serde.mapper.convertValue(element, innerClass);
         }
         return null;
     }
