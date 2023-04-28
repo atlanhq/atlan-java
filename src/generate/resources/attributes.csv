@@ -279,7 +279,7 @@ Column,Instance of a column in Atlan.,table,"Table in which this column exists, 
 Column,Instance of a column in Atlan.,columnDbtModelColumns,
 ColumnProcess,Instance of a column-level lineage process in Atlan.,process,Parent process that contains this column-level process.
 Connection,Instance of a connection in Atlan.,category,Type of connection.
-Connection,Instance of a connection in Atlan.,subCategory,
+Connection,Instance of a connection in Atlan.,subCategory,Subtype of the connection.
 Connection,Instance of a connection in Atlan.,host,Host name of the connection's source.
 Connection,Instance of a connection in Atlan.,port,Port number to the connection's source.
 Connection,Instance of a connection in Atlan.,allowQuery,"When true, allow the source to be queried."
@@ -681,7 +681,7 @@ Qlik,Base class for Qlik assets.,qlikAppQualifiedName,Unique name of the app whe
 Qlik,Base class for Qlik assets.,qlikOwnerId,Unique identifier (in Qlik) of the owner of the asset.
 Qlik,Base class for Qlik assets.,qlikIsPublished,Whether the asset is published in Qlik (true) or not (false).
 QlikApp,Instance of a Qlik App in Atlan.,qlikHasSectionAccess,Whether section access or data masking is enabled (true) or not (false).
-QlikApp,Instance of a Qlik App in Atlan.,qlikOriginAppId,
+QlikApp,Instance of a Qlik App in Atlan.,qlikOriginAppId,Origin App ID of the Qlik app.
 QlikApp,Instance of a Qlik App in Atlan.,qlikIsEncrypted,Whether the app is encrypted (true) or not (false).
 QlikApp,Instance of a Qlik App in Atlan.,qlikIsDirectQueryMode,Whether the app is in direct query mode (true) or not (false).
 QlikApp,Instance of a Qlik App in Atlan.,qlikAppStaticByteSize,Static space taken up by the app.
