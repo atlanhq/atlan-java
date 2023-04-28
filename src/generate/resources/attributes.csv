@@ -666,6 +666,8 @@ PresetWorkspace,Instance of a Preset workspace in Atlan.,presetWorkspaceDatasetC
 PresetWorkspace,Instance of a Preset workspace in Atlan.,presetDashboards,Collections within this workspace.
 Procedure,Instance of a stored procedure (routine) in Atlan.,definition,Logic of the procedure.
 Procedure,Instance of a stored procedure (routine) in Atlan.,atlanSchema,Schema in which the procedure is contained.
+Process,Instance of a lineage process in Atlan.,inputs,Assets that are inputs to this process.
+Process,Instance of a lineage process in Atlan.,outputs,Assets that are outputs from this process.
 Process,Instance of a lineage process in Atlan.,code,Code that ran within the process.
 Process,Instance of a lineage process in Atlan.,sql,SQL query that ran to produce the outputs.
 Process,Instance of a lineage process in Atlan.,ast,
@@ -714,8 +716,8 @@ Query,Instance of a query in Atlan.,collectionQualifiedName,
 Query,Instance of a query in Atlan.,isVisualQuery,
 Query,Instance of a query in Atlan.,visualBuilderSchemaBase64,
 Query,Instance of a query in Atlan.,parent,
-Query,Instance of a query in Atlan.,tables,
 Query,Instance of a query in Atlan.,columns,
+Query,Instance of a query in Atlan.,tables,
 Query,Instance of a query in Atlan.,views,
 QuickSight,Base class for QuickSight assets.,quickSightId,
 QuickSight,Base class for QuickSight assets.,quickSightSheetId,
@@ -890,9 +892,9 @@ Table,Instance of a database table in Atlan.,partitionStrategy,
 Table,Instance of a database table in Atlan.,partitionCount,
 Table,Instance of a database table in Atlan.,partitionList,
 Table,Instance of a database table in Atlan.,partitions,
-Table,Instance of a database table in Atlan.,atlanSchema,Schema in which this table exists.
 Table,Instance of a database table in Atlan.,columns,Columns that exist within this table.
 Table,Instance of a database table in Atlan.,queries,Queries that involve this table.
+Table,Instance of a database table in Atlan.,atlanSchema,Schema in which this table exists.
 TablePartition,Instance of a database table partition in Atlan.,constraint,
 TablePartition,Instance of a database table partition in Atlan.,columnCount,
 TablePartition,Instance of a database table partition in Atlan.,rowCount,
@@ -1021,9 +1023,9 @@ View,Instance of a database view in Atlan.,queryPreviewConfig,
 View,Instance of a database view in Atlan.,alias,
 View,Instance of a database view in Atlan.,isTemporary,Whether this view is temporary (true) or not (false).
 View,Instance of a database view in Atlan.,definition,Definition of the view (DDL).
-View,Instance of a database view in Atlan.,atlanSchema,Schema in which this view exists.
 View,Instance of a database view in Atlan.,columns,Columns that exist within this view.
 View,Instance of a database view in Atlan.,queries,Queries that involve this view.
+View,Instance of a database view in Atlan.,atlanSchema,Schema in which this view exists.
 AwsCloudWatchMetric,Detailed information about an AWS CloudWatch metric.,awsCloudWatchMetricName,Name of the AWS CloudWatch metric.
 AwsCloudWatchMetric,Detailed information about an AWS CloudWatch metric.,awsCloudWatchMetricScope,Scope of the AWS CloudWatch metric.
 AwsTag,Detailed information about an AWS tag.,awsTagKey,Key of the AWS tag.
