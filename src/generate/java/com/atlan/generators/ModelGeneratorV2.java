@@ -4,6 +4,7 @@ package com.atlan.generators;
 
 import com.atlan.Atlan;
 import com.atlan.api.TypeDefsEndpoint;
+import com.atlan.exception.AtlanException;
 import com.atlan.model.enums.AtlanTypeCategory;
 import com.atlan.model.typedefs.*;
 import freemarker.template.Configuration;
@@ -203,7 +204,7 @@ public class ModelGeneratorV2 {
         return uniqueRelationshipsForType.get(originalName);
     }
 
-    private static void cacheRelationshipsForInheritance(List<EntityDef> entityDefs) {
+    static void cacheRelationshipsForInheritance(List<EntityDef> entityDefs) {
         // Populate 'relationshipsForType' map so that we don't repeat inherited attributes in subtypes
         // (this seems to only be a risk for relationship attributes)
         if (!entityDefs.isEmpty()) {
