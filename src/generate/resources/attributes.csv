@@ -1,4 +1,42 @@
 Type Name,Type Description,Attribute Name,Attribute Description
+ADLS,Base class for Azure Data Lake Storage (ADLS) assets.,adlsAccountQualifiedName,Unique name of the account for this ADLS asset.
+ADLSAccount,Instance of an Azure Data Lake Storage (ADLS) account in Atlan.,adlsETag,"Entity tag for the asset. An entity tag is a hash of the object and represents changes to the contents of an object only, not its metadata."
+ADLSAccount,Instance of an Azure Data Lake Storage (ADLS) account in Atlan.,adlsEncryptionType,
+ADLSAccount,Instance of an Azure Data Lake Storage (ADLS) account in Atlan.,adlsAccountResourceGroup,
+ADLSAccount,Instance of an Azure Data Lake Storage (ADLS) account in Atlan.,adlsAccountSubscription,
+ADLSAccount,Instance of an Azure Data Lake Storage (ADLS) account in Atlan.,adlsAccountPerformance,
+ADLSAccount,Instance of an Azure Data Lake Storage (ADLS) account in Atlan.,adlsAccountReplication,
+ADLSAccount,Instance of an Azure Data Lake Storage (ADLS) account in Atlan.,adlsAccountKind,
+ADLSAccount,Instance of an Azure Data Lake Storage (ADLS) account in Atlan.,adlsPrimaryDiskState,
+ADLSAccount,Instance of an Azure Data Lake Storage (ADLS) account in Atlan.,adlsAccountProvisionState,
+ADLSAccount,Instance of an Azure Data Lake Storage (ADLS) account in Atlan.,adlsAccountAccessTier,
+ADLSAccount,Instance of an Azure Data Lake Storage (ADLS) account in Atlan.,adlsContainers,Containers that exist within this account.
+ADLSContainer,Instance of an Azure Data Lake Storage (ADLS) container in Atlan.,adlsContainerUrl,
+ADLSContainer,Instance of an Azure Data Lake Storage (ADLS) container in Atlan.,adlsContainerLeaseState,
+ADLSContainer,Instance of an Azure Data Lake Storage (ADLS) container in Atlan.,adlsContainerLeaseStatus,
+ADLSContainer,Instance of an Azure Data Lake Storage (ADLS) container in Atlan.,adlsContainerEncryptionScope,
+ADLSContainer,Instance of an Azure Data Lake Storage (ADLS) container in Atlan.,adlsContainerVersionLevelImmutabilitySupport,
+ADLSContainer,Instance of an Azure Data Lake Storage (ADLS) container in Atlan.,adlsObjectCount,Number of objects that exist within this container.
+ADLSContainer,Instance of an Azure Data Lake Storage (ADLS) container in Atlan.,adlsObjects,Objects that exist within this container.
+ADLSContainer,Instance of an Azure Data Lake Storage (ADLS) container in Atlan.,adlsAccount,Account this container exists within.
+ADLSObject,Instance of an Azure Data Lake Storage (ADLS) blob / object in Atlan.,adlsObjectUrl,
+ADLSObject,Instance of an Azure Data Lake Storage (ADLS) blob / object in Atlan.,adlsObjectVersionId,
+ADLSObject,Instance of an Azure Data Lake Storage (ADLS) blob / object in Atlan.,adlsObjectType,
+ADLSObject,Instance of an Azure Data Lake Storage (ADLS) blob / object in Atlan.,adlsObjectSize,
+ADLSObject,Instance of an Azure Data Lake Storage (ADLS) blob / object in Atlan.,adlsObjectAccessTier,
+ADLSObject,Instance of an Azure Data Lake Storage (ADLS) blob / object in Atlan.,adlsObjectAccessTierLastModifiedTime,
+ADLSObject,Instance of an Azure Data Lake Storage (ADLS) blob / object in Atlan.,adlsObjectArchiveStatus,
+ADLSObject,Instance of an Azure Data Lake Storage (ADLS) blob / object in Atlan.,adlsObjectServerEncrypted,
+ADLSObject,Instance of an Azure Data Lake Storage (ADLS) blob / object in Atlan.,adlsObjectVersionLevelImmutabilitySupport,
+ADLSObject,Instance of an Azure Data Lake Storage (ADLS) blob / object in Atlan.,adlsObjectCacheControl,
+ADLSObject,Instance of an Azure Data Lake Storage (ADLS) blob / object in Atlan.,adlsObjectContentType,
+ADLSObject,Instance of an Azure Data Lake Storage (ADLS) blob / object in Atlan.,adlsObjectContentMD5Hash,
+ADLSObject,Instance of an Azure Data Lake Storage (ADLS) blob / object in Atlan.,adlsObjectContentLanguage,
+ADLSObject,Instance of an Azure Data Lake Storage (ADLS) blob / object in Atlan.,adlsObjectLeaseStatus,
+ADLSObject,Instance of an Azure Data Lake Storage (ADLS) blob / object in Atlan.,adlsObjectLeaseState,
+ADLSObject,Instance of an Azure Data Lake Storage (ADLS) blob / object in Atlan.,adlsObjectMetadata,
+ADLSObject,Instance of an Azure Data Lake Storage (ADLS) blob / object in Atlan.,adlsContainerQualifiedName,Unique name of the container this object exists within.
+ADLSObject,Instance of an Azure Data Lake Storage (ADLS) blob / object in Atlan.,adlsContainer,Container this object exists within.
 API,Base class for API assets.,apiSpecType,
 API,Base class for API assets.,apiSpecVersion,
 API,Base class for API assets.,apiSpecName,
@@ -124,10 +162,13 @@ Asset,Base class for all assets.,assetDbtEnvironmentName,
 Asset,Base class for all assets.,assetDbtEnvironmentDbtVersion,
 Asset,Base class for all assets.,assetDbtTags,
 Asset,Base class for all assets.,assetDbtSemanticLayerProxyUrl,
+Asset,Base class for all assets.,assetDbtSourceFreshnessCriteria,
 Asset,Base class for all assets.,sampleDataUrl,
+Asset,Base class for all assets.,assetTags,
 Asset,Base class for all assets.,links,Resources that are linked to this asset.
 Asset,Base class for all assets.,metrics,
 Asset,Base class for all assets.,readme,README that is linked to this asset.
+Asset,Base class for all assets.,meanings,Glossary terms that are linked to this asset.
 AtlasGlossary,Instance of a glossary in Atlan.,shortDescription,Unused.
 AtlasGlossary,Instance of a glossary in Atlan.,longDescription,Unused.
 AtlasGlossary,Instance of a glossary in Atlan.,language,Unused.
@@ -169,6 +210,10 @@ AtlasServer,Unused,AtlasServer.displayName,
 AtlasServer,Unused,fullName,
 AtlasServer,Unused,urls,
 AtlasServer,Unused,additionalInfo,
+Azure,Base class for Azure assets.,azureResourceId,
+Azure,Base class for Azure assets.,azureLocation,
+Azure,Base class for Azure assets.,adlsAccountSecondaryLocation,
+Azure,Base class for Azure assets.,azureTags,Tags that have been applied to this Azure asset.
 Badge,Instance of a badge in Atlan.,badgeConditions,
 Badge,Instance of a badge in Atlan.,badgeMetadataAttribute,
 Catalog,Base class for catalog assets.,inputToProcesses,Processes to which this asset provides input.
@@ -223,12 +268,15 @@ Column,Instance of a column in Atlan.,columnTopValues,
 Column,Instance of a column in Atlan.,materialisedView,"Materialized view in which this column exists, or empty if the column instead exists in a table or view."
 Column,Instance of a column in Atlan.,queries,Queries that involve this column.
 Column,Instance of a column in Atlan.,metricTimestamps,
+Column,Instance of a column in Atlan.,foreignKeyTo,All the columns that refer to this column as a foreign key.
+Column,Instance of a column in Atlan.,foreignKeyFrom,Column this column refers to as a foreign key.
 Column,Instance of a column in Atlan.,dbtMetrics,
 Column,Instance of a column in Atlan.,view,"View in which this column exists, or empty if the column instead exists in a table or materialized view."
 Column,Instance of a column in Atlan.,tablePartition,
 Column,Instance of a column in Atlan.,dataQualityMetricDimensions,
 Column,Instance of a column in Atlan.,dbtModelColumns,
 Column,Instance of a column in Atlan.,table,"Table in which this column exists, or empty if the column instead exists in a view or materialized view."
+Column,Instance of a column in Atlan.,columnDbtModelColumns,
 ColumnProcess,Instance of a column-level lineage process in Atlan.,process,Parent process that contains this column-level process.
 Connection,Instance of a connection in Atlan.,category,Type of connection.
 Connection,Instance of a connection in Atlan.,subCategory,
@@ -240,6 +288,8 @@ Connection,Instance of a connection in Atlan.,queryPreviewConfig,
 Connection,Instance of a connection in Atlan.,queryConfig,
 Connection,Instance of a connection in Atlan.,credentialStrategy,
 Connection,Instance of a connection in Atlan.,previewCredentialStrategy,
+Connection,Instance of a connection in Atlan.,policyStrategy,
+Connection,Instance of a connection in Atlan.,queryUsernameStrategy,
 Connection,Instance of a connection in Atlan.,rowLimit,Maximum number of rows that can be returned for the source.
 Connection,Instance of a connection in Atlan.,defaultCredentialGuid,
 Connection,Instance of a connection in Atlan.,connectorIcon,
@@ -293,11 +343,13 @@ DbtModel,Instance of a dbt model in Atlan.,dbtModelExecutionTime,
 DbtModel,Instance of a dbt model in Atlan.,dbtModelRunGeneratedAt,
 DbtModel,Instance of a dbt model in Atlan.,dbtModelRunElapsedTime,
 DbtModel,Instance of a dbt model in Atlan.,dbtMetrics,
+DbtModel,Instance of a dbt model in Atlan.,dbtModelSqlAssets,
 DbtModel,Instance of a dbt model in Atlan.,dbtModelColumns,
 DbtModel,Instance of a dbt model in Atlan.,sqlAsset,
 DbtModelColumn,Instance of a column within a dbt model in Atlan.,dbtModelQualifiedName,
 DbtModelColumn,Instance of a column within a dbt model in Atlan.,dbtModelColumnDataType,
 DbtModelColumn,Instance of a column within a dbt model in Atlan.,dbtModelColumnOrder,
+DbtModelColumn,Instance of a column within a dbt model in Atlan.,dbtModelColumnSqlColumns,
 DbtModelColumn,Instance of a column within a dbt model in Atlan.,sqlColumn,
 DbtModelColumn,Instance of a column within a dbt model in Atlan.,dbtModel,
 DbtProcess,Instance of a lineage process for dbt in Atlan.,dbtProcessJobStatus,
@@ -305,6 +357,7 @@ DbtProcess,Instance of a lineage process for dbt in Atlan.,inputToProcesses,
 DbtProcess,Instance of a lineage process for dbt in Atlan.,outputFromProcesses,
 DbtSource,Instance of a dbt source asset in Atlan.,dbtState,
 DbtSource,Instance of a dbt source asset in Atlan.,dbtFreshnessCriteria,
+DbtSource,Instance of a dbt source asset in Atlan.,sqlAssets,
 DbtSource,Instance of a dbt source asset in Atlan.,sqlAsset,
 Folder,Instance of a folder within a query collection in Atlan.,parentQualifiedName,
 Folder,Instance of a folder within a query collection in Atlan.,collectionQualifiedName,qualifiedName of the collection in which this folder exists.
@@ -347,6 +400,20 @@ Google,Base class for Google assets.,googleLocation,
 Google,Base class for Google assets.,googleLocationType,
 Google,Base class for Google assets.,googleLabels,List of labels that have been applied to the asset in Google.
 Google,Base class for Google assets.,googleTags,List of tags that have been applied to the asset in Google.
+KafkaConsumerGroup,Instance of a Kafka ConsumerGroup in Atlan.,kafkaConsumerGroupTopicConsumptionProperties,
+KafkaConsumerGroup,Instance of a Kafka ConsumerGroup in Atlan.,kafkaConsumerGroupMemberCount,
+KafkaConsumerGroup,Instance of a Kafka ConsumerGroup in Atlan.,kafkaTopicNames,Names of the topics for this consumer group.
+KafkaConsumerGroup,Instance of a Kafka ConsumerGroup in Atlan.,kafkaTopicQualifiedNames,Unique names of the topics for this consumer group.
+KafkaConsumerGroup,Instance of a Kafka ConsumerGroup in Atlan.,kafkaTopics,Topics for this consumer group.
+KafkaTopic,Instance of a Kafka Topic in Atlan.,kafkaTopicIsInternal,
+KafkaTopic,Instance of a Kafka Topic in Atlan.,kafkaTopicCompressionType,
+KafkaTopic,Instance of a Kafka Topic in Atlan.,kafkaTopicReplicationFactor,
+KafkaTopic,Instance of a Kafka Topic in Atlan.,kafkaTopicSegmentBytes,
+KafkaTopic,Instance of a Kafka Topic in Atlan.,kafkaTopicPartitionsCount,
+KafkaTopic,Instance of a Kafka Topic in Atlan.,kafkaTopicSizeInBytes,
+KafkaTopic,Instance of a Kafka Topic in Atlan.,kafkaTopicRecordCount,Number of (unexpired) messages in this topic.
+KafkaTopic,Instance of a Kafka Topic in Atlan.,kafkaTopicCleanupPolicy,
+KafkaTopic,Instance of a Kafka Topic in Atlan.,kafkaConsumerGroups,Consumer groups subscribed to this topic.
 Link,Instance of a link in Atlan.,icon,Icon for the link.
 Link,Instance of a link in Atlan.,iconType,Type of icon for the link.
 Link,Instance of a link in Atlan.,internal,
@@ -605,6 +672,37 @@ Process,Instance of a lineage process in Atlan.,ast,
 Process,Instance of a lineage process in Atlan.,outputs,Assets that are outputs from this process.
 Process,Instance of a lineage process in Atlan.,inputs,Assets that are inputs to this process.
 Process,Instance of a lineage process in Atlan.,columnProcesses,Processes that detail column-level lineage for this process.
+Qlik,Base class for Qlik assets.,qlikId,Unique identifier of the Qlik asset in Qlik.
+Qlik,Base class for Qlik assets.,qlikQRI,QRI of the Qlik object.
+Qlik,Base class for Qlik assets.,qlikSpaceId,Unique identifier (in Qlik) of the space where the asset exists.
+Qlik,Base class for Qlik assets.,qlikSpaceQualifiedName,Unique name of the space where the Qlik asset exists.
+Qlik,Base class for Qlik assets.,qlikAppId,Unique identifier (in Qlik) of the app where the asset exists.
+Qlik,Base class for Qlik assets.,qlikAppQualifiedName,Unique name of the app where the Qlik asset exists.
+Qlik,Base class for Qlik assets.,qlikOwnerId,Unique identifier (in Qlik) of the owner of the asset.
+Qlik,Base class for Qlik assets.,qlikIsPublished,Whether the asset is published in Qlik (true) or not (false).
+QlikApp,Instance of a Qlik App in Atlan.,qlikHasSectionAccess,Whether section access or data masking is enabled (true) or not (false).
+QlikApp,Instance of a Qlik App in Atlan.,qlikOriginAppId,
+QlikApp,Instance of a Qlik App in Atlan.,qlikIsEncrypted,Whether the app is encrypted (true) or not (false).
+QlikApp,Instance of a Qlik App in Atlan.,qlikIsDirectQueryMode,Whether the app is in direct query mode (true) or not (false).
+QlikApp,Instance of a Qlik App in Atlan.,qlikAppStaticByteSize,Static space taken up by the app.
+QlikApp,Instance of a Qlik App in Atlan.,qlikSpace,Space in which the app exists.
+QlikApp,Instance of a Qlik App in Atlan.,qlikSheets,Sheets that exist within the app.
+QlikChart,Instance of a Qlick Chart in Atlan.,qlikChartSubtitle,Subtitle of the chart.
+QlikChart,Instance of a Qlick Chart in Atlan.,qlikChartFootnote,Footnote on the chart.
+QlikChart,Instance of a Qlick Chart in Atlan.,qlikChartOrientation,Orientation of the chart.
+QlikChart,Instance of a Qlick Chart in Atlan.,qlikChartType,"Subtype of the chart, for example: bar, graph, pie, etc."
+QlikChart,Instance of a Qlick Chart in Atlan.,qlikSheet,Sheet in which the chart exists.
+QlikDataset,"Instance of a Qlik Dataset, Datafile, Datastore or Dataasset in Atlan.",qlikDatasetTechnicalName,Technical name of the data asset.
+QlikDataset,"Instance of a Qlik Dataset, Datafile, Datastore or Dataasset in Atlan.",qlikDatasetType,"Type of the data asset, for example: qix-df, snowflake, etc."
+QlikDataset,"Instance of a Qlik Dataset, Datafile, Datastore or Dataasset in Atlan.",qlikDatasetUri,URI of the dataset.
+QlikDataset,"Instance of a Qlik Dataset, Datafile, Datastore or Dataasset in Atlan.",qlikDatasetSubtype,Subtype of the dataset.
+QlikDataset,"Instance of a Qlik Dataset, Datafile, Datastore or Dataasset in Atlan.",qlikSpace,Space in which the dataset exists.
+QlikSheet,Instance of a Qlik Sheet in Atlan.,qlikSheetIsApproved,Whether the sheet is approved (true) or not (false).
+QlikSheet,Instance of a Qlik Sheet in Atlan.,qlikApp,App in which the sheet exists.
+QlikSheet,Instance of a Qlik Sheet in Atlan.,qlikCharts,Charts contained within the sheet.
+QlikSpace,Instance of a Qlik Space in Atlan.,qlikSpaceType,"Type of space, for example: Private, Shared, etc."
+QlikSpace,Instance of a Qlik Space in Atlan.,qlikDatasets,Datasets contained within the space.
+QlikSpace,Instance of a Qlik Space in Atlan.,qlikApps,Apps contained within the space.
 Query,Instance of a query in Atlan.,rawQuery,
 Query,Instance of a query in Atlan.,defaultSchemaQualifiedName,
 Query,Instance of a query in Atlan.,defaultDatabaseQualifiedName,
@@ -619,6 +717,35 @@ Query,Instance of a query in Atlan.,parent,
 Query,Instance of a query in Atlan.,tables,
 Query,Instance of a query in Atlan.,columns,
 Query,Instance of a query in Atlan.,views,
+QuickSight,Base class for QuickSight assets.,quickSightId,
+QuickSight,Base class for QuickSight assets.,quickSightSheetId,
+QuickSight,Base class for QuickSight assets.,quickSightSheetName,
+QuickSightAnalysis,Instance of a QuickSight Analysis asset in Atlan.,quickSightAnalysisStatus,
+QuickSightAnalysis,Instance of a QuickSight Analysis asset in Atlan.,quickSightAnalysisCalculatedFields,
+QuickSightAnalysis,Instance of a QuickSight Analysis asset in Atlan.,quickSightAnalysisParameterDeclarations,
+QuickSightAnalysis,Instance of a QuickSight Analysis asset in Atlan.,quickSightAnalysisFilterGroups,
+QuickSightAnalysis,Instance of a QuickSight Analysis asset in Atlan.,quickSightAnalysisVisuals,
+QuickSightAnalysis,Instance of a QuickSight Analysis asset in Atlan.,quickSightAnalysisFolders,
+QuickSightAnalysisVisual,Instance of a QuickSight Analysis sheet visual in Atlan.,quickSightAnalysisQualifiedName,
+QuickSightAnalysisVisual,Instance of a QuickSight Analysis sheet visual in Atlan.,quickSightAnalysis,
+QuickSightDashboard,Instance of a QuickSight Dashboard in Atlan.,quickSightDashboardPublishedVersionNumber,
+QuickSightDashboard,Instance of a QuickSight Dashboard in Atlan.,quickSightDashboardLastPublishedTime,
+QuickSightDashboard,Instance of a QuickSight Dashboard in Atlan.,quickSightDashboardFolders,
+QuickSightDashboard,Instance of a QuickSight Dashboard in Atlan.,quickSightDashboardVisuals,
+QuickSightDashboardVisual,Instance of a QuickSight Dashboard sheet visual in Atlan.,quickSightDashboardQualifiedName,
+QuickSightDashboardVisual,Instance of a QuickSight Dashboard sheet visual in Atlan.,quickSightDashboard,
+QuickSightDataset,Instance of a QuickSight Dataset in Atlan.,quickSightDatasetImportMode,
+QuickSightDataset,Instance of a QuickSight Dataset in Atlan.,quickSightDatasetColumnCount,
+QuickSightDataset,Instance of a QuickSight Dataset in Atlan.,quickSightDatasetFolders,
+QuickSightDataset,Instance of a QuickSight Dataset in Atlan.,quickSightDatasetFields,
+QuickSightDatasetField,Instance of a QuickSight Dataset field in Atlan.,quickSightDatasetFieldType,
+QuickSightDatasetField,Instance of a QuickSight Dataset field in Atlan.,quickSightDatasetQualifiedName,
+QuickSightDatasetField,Instance of a QuickSight Dataset field in Atlan.,quickSightDataset,
+QuickSightFolder,Instance of a QuickSight Folder in Atlan.,quickSightFolderType,
+QuickSightFolder,Instance of a QuickSight Folder in Atlan.,quickSightFolderHierarchy,
+QuickSightFolder,Instance of a QuickSight Folder in Atlan.,quickSightDashboards,
+QuickSightFolder,Instance of a QuickSight Folder in Atlan.,quickSightAnalyses,
+QuickSightFolder,Instance of a QuickSight Folder in Atlan.,quickSightDatasets,
 Readme,Instance of a README in Atlan.,asset,Asset to which the README is linked.
 Readme,Instance of a README in Atlan.,seeAlso,
 ReadmeTemplate,Instance of a README template in Atlan.,icon,
@@ -662,6 +789,8 @@ SQL,Base class for SQL assets.,isProfiled,Whether the asset has been profiled (t
 SQL,Base class for SQL assets.,lastProfiledAt,"Time (epoch) at which the asset was last profiled, in milliseconds."
 SQL,Base class for SQL assets.,dbtModels,
 SQL,Base class for SQL assets.,dbtSources,
+SQL,Base class for SQL assets.,sqlDbtModels,
+SQL,Base class for SQL assets.,sqlDBTSources,
 Salesforce,Base class for Salesforce assets.,organizationQualifiedName,
 Salesforce,Base class for Salesforce assets.,apiName,
 SalesforceDashboard,Instance of a Salesforce dashboard in Atlan.,sourceId,ID of the dashboard in Salesforce.
@@ -712,6 +841,30 @@ Schema,Instance of a database schema in Atlan.,snowflakePipes,Snowflake Pipes th
 Schema,Instance of a database schema in Atlan.,snowflakeStreams,Snowflake Streams that are defined within this schema.
 Schema,Instance of a database schema in Atlan.,procedures,Stored procedures (routines) that are defined within this schema.
 Schema,Instance of a database schema in Atlan.,views,Views that exist within this schema.
+Sigma,Base class for Sigma assets.,sigmaWorkbookQualifiedName,
+Sigma,Base class for Sigma assets.,sigmaWorkbookName,
+Sigma,Base class for Sigma assets.,sigmaPageQualifiedName,
+Sigma,Base class for Sigma assets.,sigmaPageName,
+Sigma,Base class for Sigma assets.,sigmaDataElementQualifiedName,
+Sigma,Base class for Sigma assets.,sigmaDataElementName,
+SigmaDataElement,Instance of a Sigma data element in Atlan.,sigmaDataElementQuery,
+SigmaDataElement,Instance of a Sigma data element in Atlan.,sigmaDataElementType,
+SigmaDataElement,Instance of a Sigma data element in Atlan.,sigmaDataElementFieldCount,Number of data element fields within this data element.
+SigmaDataElement,Instance of a Sigma data element in Atlan.,sigmaPage,Page that contains this data element.
+SigmaDataElement,Instance of a Sigma data element in Atlan.,sigmaDataElementFields,Data element fields within this data element.
+SigmaDataElementField,Instance of a Sigma data element field in Atlan.,sigmaDataElementFieldIsHidden,
+SigmaDataElementField,Instance of a Sigma data element field in Atlan.,sigmaDataElementFieldFormula,
+SigmaDataElementField,Instance of a Sigma data element field in Atlan.,sigmaDataElement,Data element that contains this data element field.
+SigmaDataset,Instance of a Sigma dataset in Atlan.,sigmaDatasetColumnCount,Number of columns that exist within this dataset.
+SigmaDataset,Instance of a Sigma dataset in Atlan.,sigmaDatasetColumns,Columns that exist within this dataset.
+SigmaDatasetColumn,Instance of a Sigma dataset column in Atlan.,sigmaDatasetQualifiedName,Unique name of the dataset that contains this column.
+SigmaDatasetColumn,Instance of a Sigma dataset column in Atlan.,sigmaDatasetName,Human-readable name of the dataset that contains this column.
+SigmaDatasetColumn,Instance of a Sigma dataset column in Atlan.,sigmaDataset,Dataset that contains this column.
+SigmaPage,Instance of a Sigma page in Atlan.,sigmaDataElementCount,Number of data elements that exist within this page.
+SigmaPage,Instance of a Sigma page in Atlan.,sigmaDataElements,Data elements within this page.
+SigmaPage,Instance of a Sigma page in Atlan.,sigmaWorkbook,Workbook that contains this page.
+SigmaWorkbook,Instance of a Sigma workbook in Atlan.,sigmaPageCount,Number of pages that exist within this workbook.
+SigmaWorkbook,Instance of a Sigma workbook in Atlan.,sigmaPages,Pages that exist within this workbook.
 SnowflakePipe,Instance of a Snowflake Pipe in Atlan.,definition,
 SnowflakePipe,Instance of a Snowflake Pipe in Atlan.,snowflakePipeIsAutoIngestEnabled,
 SnowflakePipe,Instance of a Snowflake Pipe in Atlan.,snowflakePipeNotificationChannelName,
@@ -854,6 +1007,12 @@ TableauWorksheet,Instance of a Tableau worksheet in Atlan.,workbook,
 TableauWorksheet,Instance of a Tableau worksheet in Atlan.,datasourceFields,
 TableauWorksheet,Instance of a Tableau worksheet in Atlan.,calculatedFields,
 TableauWorksheet,Instance of a Tableau worksheet in Atlan.,dashboards,
+Thoughtspot,Base class for ThoughtSpot assets.,thoughtspotChartType,
+Thoughtspot,Base class for ThoughtSpot assets.,thoughtspotQuestionText,
+ThoughtspotDashlet,Instance of a ThoughtSpot Dashlet in Atlan.,thoughtspotLiveboardName,Name of the Liveboard in which the Dashlet exists.
+ThoughtspotDashlet,Instance of a ThoughtSpot Dashlet in Atlan.,thoughtspotLiveboardQualifiedName,Unique name of the Liveboard in which the Dashlet exists.
+ThoughtspotDashlet,Instance of a ThoughtSpot Dashlet in Atlan.,thoughtspotLiveboard,Liveboard in which the Dashlet exists.
+ThoughtspotLiveboard,Instance of a ThoughtSpot Liveboard in Atlan.,thoughtspotDashlets,Dashlets within the Liveboard.
 View,Instance of a database view in Atlan.,columnCount,Number of columns in this view.
 View,Instance of a database view in Atlan.,rowCount,Number of rows in this view.
 View,Instance of a database view in Atlan.,sizeBytes,Size of the view in bytes.
@@ -865,72 +1024,6 @@ View,Instance of a database view in Atlan.,definition,Definition of the view (DD
 View,Instance of a database view in Atlan.,atlanSchema,Schema in which this view exists.
 View,Instance of a database view in Atlan.,columns,Columns that exist within this view.
 View,Instance of a database view in Atlan.,queries,Queries that involve this view.
-ADLSAccount,Instance of an Azure Data Lake Storage (ADLS) account in Atlan.,adlsETag,"Entity tag for the asset. An entity tag is a hash of the object and represents changes to the contents of an object only, not its metadata."
-ADLSAccount,Instance of an Azure Data Lake Storage (ADLS) account in Atlan.,adlsEncryptionType,
-ADLSAccount,Instance of an Azure Data Lake Storage (ADLS) account in Atlan.,adlsAccountName,
-ADLSAccount,Instance of an Azure Data Lake Storage (ADLS) account in Atlan.,adlsAccountResourceGroup,
-ADLSAccount,Instance of an Azure Data Lake Storage (ADLS) account in Atlan.,adlsAccountSubscription,
-ADLSAccount,Instance of an Azure Data Lake Storage (ADLS) account in Atlan.,adlsAccountPerformance,
-ADLSAccount,Instance of an Azure Data Lake Storage (ADLS) account in Atlan.,adlsAccountReplication,
-ADLSAccount,Instance of an Azure Data Lake Storage (ADLS) account in Atlan.,adlsAccountKind,
-ADLSAccount,Instance of an Azure Data Lake Storage (ADLS) account in Atlan.,adlsPrimaryDiskState,
-ADLSAccount,Instance of an Azure Data Lake Storage (ADLS) account in Atlan.,adlsAccountCreationTime,
-ADLSAccount,Instance of an Azure Data Lake Storage (ADLS) account in Atlan.,adlsAccountProvisionState,
-ADLSAccount,Instance of an Azure Data Lake Storage (ADLS) account in Atlan.,adlsAccountAccessTier,
-ADLSAccount,Instance of an Azure Data Lake Storage (ADLS) account in Atlan.,adlsContainers,Containers that exist within this account.
-ADLSContainer,Instance of an Azure Data Lake Storage (ADLS) container in Atlan.,adlsContainerName,
-ADLSContainer,Instance of an Azure Data Lake Storage (ADLS) container in Atlan.,adlsContainerUrl,
-ADLSContainer,Instance of an Azure Data Lake Storage (ADLS) container in Atlan.,adlsContainerLastModifiedTime,
-ADLSContainer,Instance of an Azure Data Lake Storage (ADLS) container in Atlan.,adlsContainerLeaseState,
-ADLSContainer,Instance of an Azure Data Lake Storage (ADLS) container in Atlan.,adlsContainerLeaseStatus,
-ADLSContainer,Instance of an Azure Data Lake Storage (ADLS) container in Atlan.,adlsContainerEncryptionScope,
-ADLSContainer,Instance of an Azure Data Lake Storage (ADLS) container in Atlan.,adlsContainerVersionLevelImmutabilitySupport,
-ADLSContainer,Instance of an Azure Data Lake Storage (ADLS) container in Atlan.,adlsObjects,Objects that exist within this container.
-ADLSContainer,Instance of an Azure Data Lake Storage (ADLS) container in Atlan.,adlsAccount,Account this container exists within.
-ADLSObject,Instance of an Azure Data Lake Storage (ADLS) blob / object in Atlan.,adlsObjectName,
-ADLSObject,Instance of an Azure Data Lake Storage (ADLS) blob / object in Atlan.,adlsObjectUrl,
-ADLSObject,Instance of an Azure Data Lake Storage (ADLS) blob / object in Atlan.,adlsObjectCreationTime,
-ADLSObject,Instance of an Azure Data Lake Storage (ADLS) blob / object in Atlan.,adlsObjectLastModifiedTime,
-ADLSObject,Instance of an Azure Data Lake Storage (ADLS) blob / object in Atlan.,adlsObjectVersionId,
-ADLSObject,Instance of an Azure Data Lake Storage (ADLS) blob / object in Atlan.,adlsObjectType,
-ADLSObject,Instance of an Azure Data Lake Storage (ADLS) blob / object in Atlan.,adlsObjectSize,
-ADLSObject,Instance of an Azure Data Lake Storage (ADLS) blob / object in Atlan.,adlsObjectAccessTier,
-ADLSObject,Instance of an Azure Data Lake Storage (ADLS) blob / object in Atlan.,adlsObjectAccessTierLastModifiedTime,
-ADLSObject,Instance of an Azure Data Lake Storage (ADLS) blob / object in Atlan.,adlsObjectArchiveStatus,
-ADLSObject,Instance of an Azure Data Lake Storage (ADLS) blob / object in Atlan.,adlsObjectServerEncrypted,
-ADLSObject,Instance of an Azure Data Lake Storage (ADLS) blob / object in Atlan.,adlsObjectVersionLevelImmutabilitySupport,
-ADLSObject,Instance of an Azure Data Lake Storage (ADLS) blob / object in Atlan.,adlsObjectCacheControl,
-ADLSObject,Instance of an Azure Data Lake Storage (ADLS) blob / object in Atlan.,adlsObjectContentType,
-ADLSObject,Instance of an Azure Data Lake Storage (ADLS) blob / object in Atlan.,adlsObjectContentMD5Hash,
-ADLSObject,Instance of an Azure Data Lake Storage (ADLS) blob / object in Atlan.,adlsObjectContentLanguage,
-ADLSObject,Instance of an Azure Data Lake Storage (ADLS) blob / object in Atlan.,adlsObjectLeaseStatus,
-ADLSObject,Instance of an Azure Data Lake Storage (ADLS) blob / object in Atlan.,adlsObjectLeaseState,
-ADLSObject,Instance of an Azure Data Lake Storage (ADLS) blob / object in Atlan.,adlsObjectMetadata,
-ADLSObject,Instance of an Azure Data Lake Storage (ADLS) blob / object in Atlan.,adlsContainer,Container this object exists within.
-Sigma,Base class for Sigma assets.,sigmaWorkbookQualifiedName,
-Sigma,Base class for Sigma assets.,sigmaWorkbookName,
-Sigma,Base class for Sigma assets.,sigmaPageQualifiedName,
-Sigma,Base class for Sigma assets.,sigmaPageName,
-Sigma,Base class for Sigma assets.,sigmaDataElementQualifiedName,
-Sigma,Base class for Sigma assets.,sigmaDataElementName,
-SigmaDataElement,Instance of a Sigma data element in Atlan.,sigmaDataElementQuery,
-SigmaDataElement,Instance of a Sigma data element in Atlan.,sigmaDataElementType,
-SigmaDataElement,Instance of a Sigma data element in Atlan.,sigmaDataElementFieldCount,Number of data element fields within this data element.
-SigmaDataElement,Instance of a Sigma data element in Atlan.,sigmaPage,Page that contains this data element.
-SigmaDataElement,Instance of a Sigma data element in Atlan.,sigmaDataElementFields,Data element fields within this data element.
-SigmaDataElementField,Instance of a Sigma data element field in Atlan.,sigmaDataElementFieldIsHidden,
-SigmaDataElementField,Instance of a Sigma data element field in Atlan.,sigmaDataElementFieldFormula,
-SigmaDataElementField,Instance of a Sigma data element field in Atlan.,sigmaDataElement,Data element that contains this data element field.
-SigmaDataset,Instance of a Sigma dataset in Atlan.,sigmaDatasetColumnCount,Number of columns that exist within this dataset.
-SigmaDataset,Instance of a Sigma dataset in Atlan.,sigmaDatasetColumns,Columns that exist within this dataset.
-SigmaDatasetColumn,Instance of a Sigma dataset column in Atlan.,sigmaDatasetQualifiedName,Unique name of the dataset that contains this column.
-SigmaDatasetColumn,Instance of a Sigma dataset column in Atlan.,sigmaDatasetName,Human-readable name of the dataset that contains this column.
-SigmaDatasetColumn,Instance of a Sigma dataset column in Atlan.,sigmaDataset,Dataset that contains this column.
-SigmaPage,Instance of a Sigma page in Atlan.,sigmaDataElementCount,Number of data elements that exist within this page.
-SigmaPage,Instance of a Sigma page in Atlan.,sigmaDataElements,Data elements within this page.
-SigmaPage,Instance of a Sigma page in Atlan.,sigmaWorkbook,Workbook that contains this page.
-SigmaWorkbook,Instance of a Sigma workbook in Atlan.,sigmaPageCount,Number of pages that exist within this workbook.
-SigmaWorkbook,Instance of a Sigma workbook in Atlan.,sigmaPages,Pages that exist within this workbook.
 AwsCloudWatchMetric,Detailed information about an AWS CloudWatch metric.,awsCloudWatchMetricName,Name of the AWS CloudWatch metric.
 AwsCloudWatchMetric,Detailed information about an AWS CloudWatch metric.,awsCloudWatchMetricScope,Scope of the AWS CloudWatch metric.
 AwsTag,Detailed information about an AWS tag.,awsTagKey,Key of the AWS tag.
