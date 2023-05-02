@@ -18,7 +18,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * TBC
+ * Instance of a Kafka ConsumerGroup in Atlan.
  */
 @Getter
 @SuperBuilder(toBuilder = true)
@@ -43,17 +43,17 @@ public class KafkaConsumerGroup extends Kafka {
     @Attribute
     Long kafkaConsumerGroupMemberCount;
 
-    /** TBC */
+    /** Names of the topics for this consumer group. */
     @Attribute
     @Singular
     SortedSet<String> kafkaTopicNames;
 
-    /** TBC */
+    /** Unique names of the topics for this consumer group. */
     @Attribute
     @Singular
     SortedSet<String> kafkaTopicQualifiedNames;
 
-    /** TBC */
+    /** Topics for this consumer group. */
     @Attribute
     @Singular
     SortedSet<KafkaTopic> kafkaTopics;

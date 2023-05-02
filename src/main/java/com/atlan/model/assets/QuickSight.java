@@ -8,7 +8,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * TBC
+ * Base class for QuickSight assets.
  */
 @Getter
 @SuperBuilder(toBuilder = true)

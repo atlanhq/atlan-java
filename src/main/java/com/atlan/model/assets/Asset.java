@@ -506,7 +506,7 @@ public abstract class Asset extends Reference {
     @Attribute
     Readme readme;
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     @Attribute
     @Singular
     @JsonProperty("meanings")

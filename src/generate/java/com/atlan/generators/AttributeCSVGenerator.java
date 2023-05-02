@@ -8,7 +8,6 @@ import com.atlan.Atlan;
 import com.atlan.api.TypeDefsEndpoint;
 import com.atlan.model.enums.AtlanTypeCategory;
 import com.atlan.model.typedefs.*;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -18,7 +17,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
-
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
@@ -42,11 +40,13 @@ public class AttributeCSVGenerator {
     public static void main(String[] args) throws Exception {
         AttributeCSVCache.cacheDescriptions();
         AttributeCSVGenerator generator = new AttributeCSVGenerator();
-        List<EntityDef> entityDefs = TypeDefsEndpoint.getTypeDefs(AtlanTypeCategory.ENTITY).getEntityDefs();
+        List<EntityDef> entityDefs =
+                TypeDefsEndpoint.getTypeDefs(AtlanTypeCategory.ENTITY).getEntityDefs();
         for (EntityDef def : entityDefs) {
             entityDefCache.put(def.getName(), def);
         }
-        List<StructDef> structDefs = TypeDefsEndpoint.getTypeDefs(AtlanTypeCategory.STRUCT).getStructDefs();
+        List<StructDef> structDefs =
+                TypeDefsEndpoint.getTypeDefs(AtlanTypeCategory.STRUCT).getStructDefs();
         for (StructDef def : structDefs) {
             structDefCache.put(def.getName(), def);
         }
@@ -69,8 +69,13 @@ public class AttributeCSVGenerator {
     private void generateAttributeCSV() {
         try (CSVPrinter printer = new CSVPrinter(
                 Files.newBufferedWriter(Paths.get(DOCS_DIRECTORY + File.separator + "attributes.csv"), UTF_8),
-                CSVFormat.DEFAULT.builder().setHeader(AttributeCSVCache.CSV_HEADER).setRecordSeparator("\n").build())) {
-            List<String> sortedTypeNames = entityDefCache.keySet().stream().sorted().collect(Collectors.toList());
+                CSVFormat.DEFAULT
+                        .builder()
+                        .setHeader(AttributeCSVCache.CSV_HEADER)
+                        .setRecordSeparator("\n")
+                        .build())) {
+            List<String> sortedTypeNames =
+                    entityDefCache.keySet().stream().sorted().collect(Collectors.toList());
             for (String typeName : sortedTypeNames) {
                 addModelToCSV(printer, typeName);
             }
@@ -119,7 +124,8 @@ public class AttributeCSVGenerator {
         for (AttributeDef attribute : typeDef.getAttributeDefs()) {
             String attrName = attribute.getName();
             if (!attrName.equals("__internal")) {
-                printer.printRecord(typeName, description, attribute.getName(), getMergedDescription(typeName, attribute));
+                printer.printRecord(
+                        typeName, description, attribute.getName(), getMergedDescription(typeName, attribute));
             }
         }
         return description;
@@ -127,6 +133,8 @@ public class AttributeCSVGenerator {
 
     private String getMergedDescription(String typeName, AttributeDef attribute) {
         String attrDescription = AttributeCSVCache.getAttributeDescription(typeName, attribute.getName());
-        return attrDescription.equals(AttributeCSVCache.DEFAULT_ATTR_DESCRIPTION) ? attribute.getDescription() : attrDescription;
+        return attrDescription.equals(AttributeCSVCache.DEFAULT_ATTR_DESCRIPTION)
+                ? attribute.getDescription()
+                : attrDescription;
     }
 }

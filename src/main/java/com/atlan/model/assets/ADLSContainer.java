@@ -57,7 +57,7 @@ public class ADLSContainer extends ADLS {
     @Attribute
     Boolean adlsContainerVersionLevelImmutabilitySupport;
 
-    /** TBC */
+    /** Number of objects that exist within this container. */
     @Attribute
     Integer adlsObjectCount;
 

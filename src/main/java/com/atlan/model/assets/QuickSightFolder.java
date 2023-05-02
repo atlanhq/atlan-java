@@ -19,7 +19,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * TBC
+ * Instance of a QuickSight Folder in Atlan.
  */
 @Getter
 @SuperBuilder(toBuilder = true)

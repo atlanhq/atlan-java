@@ -7,7 +7,7 @@ import lombok.Getter;
 public enum NumericFields implements AtlanSearchableField {
     /** TBC */
     ADLS_OBJECT_ACCESS_TIER_LAST_MODIFIED_TIME("adlsObjectAccessTierLastModifiedTime"),
-    /** TBC */
+    /** Number of objects that exist within this container. */
     ADLS_OBJECT_COUNT("adlsObjectCount"),
     /** TBC */
     ADLS_OBJECT_SIZE("adlsObjectSize"),
@@ -123,7 +123,7 @@ public enum NumericFields implements AtlanSearchableField {
     KAFKA_CONSUMER_GROUP_MEMBER_COUNT("kafkaConsumerGroupMemberCount"),
     /** TBC */
     KAFKA_TOPIC_PARTITIONS_COUNT("kafkaTopicPartitionsCount"),
-    /** TBC */
+    /** Number of (unexpired) messages in this topic. */
     KAFKA_TOPIC_RECORD_COUNT("kafkaTopicRecordCount"),
     /** TBC */
     KAFKA_TOPIC_REPLICATION_FACTOR("kafkaTopicReplicationFactor"),
@@ -203,7 +203,7 @@ public enum NumericFields implements AtlanSearchableField {
     PRESET_WORKSPACE_DEPLOYMENT_ID("presetWorkspaceDeploymentId"),
     /** ID of the Preset asset's workspace. */
     PRESET_WORKSPACE_ID("presetWorkspaceId"),
-    /** TBC */
+    /** Static space taken up by the app. */
     QLIK_APP_STATIC_BYTE_SIZE("qlikAppStaticByteSize"),
     /** TBC */
     QUERY_COUNT("queryCount"),

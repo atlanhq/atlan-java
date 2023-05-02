@@ -17,7 +17,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * TBC
+ * Instance of a Qlik App in Atlan.
  */
 @Getter
 @SuperBuilder(toBuilder = true)
@@ -33,31 +33,31 @@ public class QlikApp extends Qlik {
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Whether section access or data masking is enabled (true) or not (false). */
     @Attribute
     Boolean qlikHasSectionAccess;
 
-    /** TBC */
+    /** Origin App ID of the Qlik app. */
     @Attribute
     String qlikOriginAppId;
 
-    /** TBC */
+    /** Whether the app is encrypted (true) or not (false). */
     @Attribute
     Boolean qlikIsEncrypted;
 
-    /** TBC */
+    /** Whether the app is in direct query mode (true) or not (false). */
     @Attribute
     Boolean qlikIsDirectQueryMode;
 
-    /** TBC */
+    /** Static space taken up by the app. */
     @Attribute
     Long qlikAppStaticByteSize;
 
-    /** TBC */
+    /** Space in which the app exists. */
     @Attribute
     QlikSpace qlikSpace;
 
-    /** TBC */
+    /** Sheets that exist within the app. */
     @Attribute
     @Singular
     SortedSet<QlikSheet> qlikSheets;

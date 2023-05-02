@@ -5,13 +5,13 @@ package com.atlan.model.enums;
 import lombok.Getter;
 
 public enum TextFields implements AtlanSearchableField {
-    /** TBC */
+    /** Unique name of the account for this ADLS asset. */
     ADLS_ACCOUNT_QUALIFIED_NAME("adlsAccountQualifiedName.text"),
     /** TBC */
     ADLS_ACCOUNT_RESOURCE_GROUP("adlsAccountResourceGroup"),
     /** TBC */
     ADLS_ACCOUNT_SUBSCRIPTION("adlsAccountSubscription"),
-    /** TBC */
+    /** Unique name of the container this object exists within. */
     ADLS_CONTAINER_QUALIFIED_NAME("adlsContainerQualifiedName.text"),
     /** TBC */
     ADLS_CONTAINER_URL("adlsContainerUrl"),
@@ -209,19 +209,19 @@ public enum TextFields implements AtlanSearchableField {
     PRESET_WORKSPACE_QUALIFIED_NAME("presetWorkspaceQualifiedName.text"),
     /** Region of the workspace. */
     PRESET_WORKSPACE_REGION("presetWorkspaceRegion.text"),
-    /** TBC */
+    /** Unique name of the app where the Qlik asset exists. */
     QLIK_APP_QUALIFIED_NAME("qlikAppQualifiedName.text"),
-    /** TBC */
+    /** Footnote on the chart. */
     QLIK_CHART_FOOTNOTE("qlikChartFootnote"),
-    /** TBC */
+    /** Subtitle of the chart. */
     QLIK_CHART_SUBTITLE("qlikChartSubtitle"),
-    /** TBC */
+    /** Technical name of the data asset. */
     QLIK_DATASET_TECHNICAL_NAME("qlikDatasetTechnicalName"),
-    /** TBC */
+    /** URI of the dataset. */
     QLIK_DATASET_URI("qlikDatasetUri.text"),
-    /** TBC */
+    /** QRI of the Qlik object. */
     QLIK_QRI("qlikQRI.text"),
-    /** TBC */
+    /** Unique name of the space where the Qlik asset exists. */
     QLIK_SPACE_QUALIFIED_NAME("qlikSpaceQualifiedName.text"),
     /** Unique fully-qualified name of the asset in Atlan. */
     QUALIFIED_NAME("qualifiedName.text"),
@@ -271,9 +271,9 @@ public enum TextFields implements AtlanSearchableField {
     TABLEAU_DATA_TYPE("tableauDataType.text"),
     /** Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table. */
     TABLE_NAME("tableName"),
-    /** TBC */
+    /** Name of the Liveboard in which the Dashlet exists. */
     THOUGHTSPOT_LIVEBOARD_NAME("thoughtspotLiveboardName"),
-    /** TBC */
+    /** Unique name of the Liveboard in which the Dashlet exists. */
     THOUGHTSPOT_LIVEBOARD_QUALIFIED_NAME("thoughtspotLiveboardQualifiedName.text"),
     /** TBC */
     THOUGHTSPOT_QUESTION_TEXT("thoughtspotQuestionText"),

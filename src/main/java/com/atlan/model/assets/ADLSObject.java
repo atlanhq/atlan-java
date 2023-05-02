@@ -106,7 +106,7 @@ public class ADLSObject extends ADLS {
     @Singular("putAdlsObjectMetadata")
     Map<String, String> adlsObjectMetadata;
 
-    /** TBC */
+    /** Unique name of the container this object exists within. */
     @Attribute
     String adlsContainerQualifiedName;
 

@@ -240,12 +240,12 @@ public class Column extends SQL {
     @Singular
     SortedSet<Metric> metricTimestamps;
 
-    /** TBC */
+    /** All the columns that refer to this column as a foreign key. */
     @Attribute
     @Singular("addForeignKeyTo")
     SortedSet<Column> foreignKeyTo;
 
-    /** TBC */
+    /** Column this column refers to as a foreign key. */
     @Attribute
     Column foreignKeyFrom;
 

@@ -8,7 +8,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * TBC
+ * Base class for Azure Data Lake Storage (ADLS) assets.
  */
 @Getter
 @SuperBuilder(toBuilder = true)
@@ -23,7 +23,7 @@ public abstract class ADLS extends Azure {
 
     public static final String TYPE_NAME = "ADLS";
 
-    /** TBC */
+    /** Unique name of the account for this ADLS asset. */
     @Attribute
     String adlsAccountQualifiedName;
 }

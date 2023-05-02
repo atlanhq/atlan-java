@@ -55,7 +55,7 @@ public class Connection extends Asset {
     @Attribute
     AtlanConnectionCategory category;
 
-    /** TBC */
+    /** Subtype of the connection. */
     @Attribute
     String subCategory;
 

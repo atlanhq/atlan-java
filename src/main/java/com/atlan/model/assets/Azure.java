@@ -10,7 +10,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * TBC
+ * Base class for Azure assets.
  */
 @Getter
 @SuperBuilder(toBuilder = true)
@@ -35,7 +35,7 @@ public abstract class Azure extends Catalog {
     @Attribute
     String adlsAccountSecondaryLocation;
 
-    /** TBC */
+    /** Tags that have been applied to this Azure asset. */
     @Attribute
     @Singular
     List<AzureTag> azureTags;
