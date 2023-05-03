@@ -18,7 +18,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * TBC
+ * Instance of a Redash query in Atlan.
  */
 @Getter
 @SuperBuilder(toBuilder = true)
@@ -35,32 +35,32 @@ public class RedashQuery extends Redash {
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** SQL code of the Redash query. */
     @Attribute
     String redashQuerySQL;
 
-    /** TBC */
+    /** Parameters for the Redash query. */
     @Attribute
     String redashQueryParameters;
 
-    /** TBC */
+    /** Schedule of the Redash query. */
     @Attribute
     @Singular("putRedashQuerySchedule")
     Map<String, String> redashQuerySchedule;
 
-    /** TBC */
+    /** Elapsed time of the last run of the Redash query. */
     @Attribute
     Double redashQueryLastExecutionRuntime;
 
-    /** TBC */
+    /** Time when the Redash query was last executed. */
     @Attribute
     Long redashQueryLastExecutedAt;
 
-    /** TBC */
+    /** Human-readable schedule of the Redash query. */
     @Attribute
     String redashQueryScheduleHumanized;
 
-    /** TBC */
+    /** Visualizations of this Redash query. */
     @Attribute
     @Singular
     SortedSet<RedashVisualization> redashVisualizations;

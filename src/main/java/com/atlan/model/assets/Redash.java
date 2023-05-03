@@ -8,7 +8,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * TBC
+ * Base class for Redash assets.
  */
 @Getter
 @SuperBuilder(toBuilder = true)
@@ -23,7 +23,7 @@ public abstract class Redash extends BI {
 
     public static final String TYPE_NAME = "Redash";
 
-    /** TBC */
+    /** Whether the asset is published in Redash (true) or not (false). */
     @Attribute
     Boolean redashIsPublished;
 }

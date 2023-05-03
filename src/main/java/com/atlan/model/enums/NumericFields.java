@@ -219,11 +219,11 @@ public enum NumericFields implements AtlanSearchableField {
     QUICK_SIGHT_DASHBOARD_PUBLISHED_VERSION_NUMBER("quickSightDashboardPublishedVersionNumber"),
     /** TBC */
     QUICK_SIGHT_DATASET_COLUMN_COUNT("quickSightDatasetColumnCount"),
-    /** TBC */
+    /** Number of widgets in the Redash dashboard. */
     REDASH_DASHBOARD_WIDGET_COUNT("redashDashboardWidgetCount"),
-    /** TBC */
+    /** Time when the Redash query was last executed. */
     REDASH_QUERY_LAST_EXECUTED_AT("redashQueryLastExecutedAt"),
-    /** TBC */
+    /** Elapsed time of the last run of the Redash query. */
     REDASH_QUERY_LAST_EXECUTION_RUNTIME("redashQueryLastExecutionRuntime"),
     /** TBC */
     REPORT_COUNT("reportCount"),

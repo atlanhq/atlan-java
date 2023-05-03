@@ -673,19 +673,19 @@ public enum KeywordFields implements AtlanSearchableField {
     QUICK_SIGHT_SHEET_NAME("quickSightSheetName.keyword"),
     /** TBC */
     RAW_QUERY("rawQuery"),
-    /** TBC */
+    /** Name of the query from which the visualization was created. */
     REDASH_QUERY_NAME("redashQueryName.keyword"),
-    /** TBC */
+    /** Parameters for the Redash query. */
     REDASH_QUERY_PARAMETERS("redashQueryParameters"),
-    /** TBC */
+    /** Unique name of the query from which the visualization was created. */
     REDASH_QUERY_QUALIFIED_NAME("redashQueryQualifiedName"),
-    /** TBC */
+    /** Schedule of the Redash query. */
     REDASH_QUERY_SCHEDULE("redashQuerySchedule"),
-    /** TBC */
+    /** Human-readable schedule of the Redash query. */
     REDASH_QUERY_SCHEDULE_HUMANIZED("redashQueryScheduleHumanized"),
-    /** TBC */
+    /** SQL code of the Redash query. */
     REDASH_QUERY_SQL("redashQuerySQL"),
-    /** TBC */
+    /** Type of the Redash visualization. */
     REDASH_VISUALIZATION_TYPE("redashVisualizationType"),
     /** TBC */
     REFERENCE("reference"),

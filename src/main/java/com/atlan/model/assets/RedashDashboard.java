@@ -16,7 +16,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * TBC
+ * Instance of a Redash dashboard in Atlan.
  */
 @Getter
 @SuperBuilder(toBuilder = true)
@@ -32,7 +32,7 @@ public class RedashDashboard extends Redash {
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Number of widgets in the Redash dashboard. */
     @Attribute
     Long redashDashboardWidgetCount;
 

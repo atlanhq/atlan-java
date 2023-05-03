@@ -752,6 +752,19 @@ Readme,Instance of a README in Atlan.,asset,Asset to which the README is linked.
 Readme,Instance of a README in Atlan.,seeAlso,
 ReadmeTemplate,Instance of a README template in Atlan.,icon,
 ReadmeTemplate,Instance of a README template in Atlan.,iconType,
+Redash,Base class for Redash assets.,redashIsPublished,Whether the asset is published in Redash (true) or not (false).
+RedashDashboard,Instance of a Redash dashboard in Atlan.,redashDashboardWidgetCount,Number of widgets in the Redash dashboard.
+RedashQuery,Instance of a Redash query in Atlan.,redashQuerySQL,SQL code of the Redash query.
+RedashQuery,Instance of a Redash query in Atlan.,redashQueryParameters,Parameters for the Redash query.
+RedashQuery,Instance of a Redash query in Atlan.,redashQuerySchedule,Schedule of the Redash query.
+RedashQuery,Instance of a Redash query in Atlan.,redashQueryLastExecutionRuntime,Elapsed time of the last run of the Redash query.
+RedashQuery,Instance of a Redash query in Atlan.,redashQueryLastExecutedAt,Time when the Redash query was last executed.
+RedashQuery,Instance of a Redash query in Atlan.,redashQueryScheduleHumanized,Human-readable schedule of the Redash query.
+RedashQuery,Instance of a Redash query in Atlan.,redashVisualizations,Visualizations of this Redash query.
+RedashVisualization,Instance of a Redash visualization in Atlan.,redashVisualizationType,Type of the Redash visualization.
+RedashVisualization,Instance of a Redash visualization in Atlan.,redashQueryName,Name of the query from which the visualization was created.
+RedashVisualization,Instance of a Redash visualization in Atlan.,redashQueryQualifiedName,Unique name of the query from which the visualization was created.
+RedashVisualization,Instance of a Redash visualization in Atlan.,redashQuery,Query from which the visualization was created.
 Referenceable,Base class for everything in Atlan.,qualifiedName,Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName.
 Referenceable,Base class for everything in Atlan.,replicatedFrom,Unused.
 Referenceable,Base class for everything in Atlan.,replicatedTo,Unused.

@@ -16,7 +16,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * TBC
+ * Instance of a Redash visualization in Atlan.
  */
 @Getter
 @SuperBuilder(toBuilder = true)
@@ -32,19 +32,19 @@ public class RedashVisualization extends Redash {
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Type of the Redash visualization. */
     @Attribute
     String redashVisualizationType;
 
-    /** TBC */
+    /** Name of the query from which the visualization was created. */
     @Attribute
     String redashQueryName;
 
-    /** TBC */
+    /** Unique name of the query from which the visualization was created. */
     @Attribute
     String redashQueryQualifiedName;
 
-    /** TBC */
+    /** Query from which the visualization was created. */
     @Attribute
     RedashQuery redashQuery;
 
