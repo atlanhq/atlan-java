@@ -3,6 +3,7 @@
 package com.atlan.generators;
 
 import com.atlan.generators.lombok.Singulars;
+import com.atlan.model.enums.AtlanEnum;
 import com.atlan.model.typedefs.EntityDef;
 import java.io.File;
 import java.lang.reflect.Field;
@@ -10,6 +11,8 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,8 +31,8 @@ public class AssetTestGenerator extends AssetGenerator {
     private static final String ASSET_GUID = "705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23";
     private static final String ASSET_QN = "default/snowflake/1234567890/test/qualifiedName";
 
-    private final AssetGenerator asset;
-    private final List<TestAttribute> testAttributes;
+    protected final AssetGenerator asset;
+    protected final List<TestAttribute> testAttributes;
 
     public AssetTestGenerator(AssetGenerator asset) {
         super(asset.getEntityDef());
@@ -39,34 +42,36 @@ public class AssetTestGenerator extends AssetGenerator {
 
     @Override
     public void resolveDetails() {
-        addTestAttributes(asset);
+        addTestAttributes(asset, false);
     }
 
     @Getter
+    @Builder
     public static final class TestAttribute {
-
-        private final String builderMethod;
-        private final List<String> values;
-
-        public TestAttribute(String builderMethod, List<String> values) {
-            this.builderMethod = builderMethod;
-            this.values = values;
-        }
+        private Attribute details;
+        private String builderMethod;
+        private List<String> values;
+        private List<String> rawValues;
+        private Set<SearchFieldGenerator.Field> searchFields;
+        private boolean inherited;
+        private boolean relationship;
     }
 
-    private void addTestAttributes(AssetGenerator assetGenerator) {
+    private void addTestAttributes(AssetGenerator assetGenerator, boolean fromSuperType) {
         EntityDef typeDetails = assetGenerator.getEntityDef();
         List<String> superTypes = typeDetails.getSuperTypes();
         if (superTypes != null && !superTypes.isEmpty()) {
             String singleSuperType = getSingleTypeToExtend(assetGenerator.getOriginalName(), superTypes);
             if (singleSuperType != null && !singleSuperType.equals("Reference")) {
                 // We can short-circuit when the next level up is Reference (the top)
-                addTestAttributes(ModelGeneratorV2.getCachedAssetType(singleSuperType));
+                addTestAttributes(ModelGeneratorV2.getCachedAssetType(singleSuperType), true);
             }
         }
         List<Attribute> attributes = assetGenerator.getAttributes();
         if (attributes != null) {
             for (Attribute attribute : attributes) {
+                TestAttribute.TestAttributeBuilder builder =
+                        TestAttribute.builder().details(attribute);
                 MappedType type = attribute.getType();
                 boolean multiValued = attribute.getSingular() != null;
                 String renamedAttr = attribute.getRenamed();
@@ -80,19 +85,22 @@ public class AssetTestGenerator extends AssetGenerator {
                         builderMethod = attribute.getSingular();
                     }
                 }
-                // TODO: Handle maps - possibly within the template itself (?)
+                builder.builderMethod(builderMethod)
+                        .inherited(fromSuperType)
+                        .searchFields(ModelGeneratorV2.getCachedSearchFields(
+                                assetGenerator.getOriginalName(), attribute.getOriginalName()));
                 switch (type.getType()) {
                     case PRIMITIVE:
-                        addPrimitive(builderMethod, multiValued, type.getName(), type.getContainer());
+                        addPrimitive(builder, multiValued, type.getName(), type.getContainer());
                         break;
                     case ENUM:
-                        addEnum(builderMethod, multiValued, type.getName());
+                        addEnum(builder, multiValued, type.getName());
                         break;
                     case ASSET:
-                        addAssetRef(builderMethod, multiValued, type.getName());
+                        addAssetRef(builder, multiValued, type.getName());
                         break;
                     case STRUCT:
-                        addStructRef(builderMethod, multiValued, type.getName());
+                        addStructRef(builder, multiValued, type.getName());
                         break;
                     default:
                         log.warn("Unhandled testing type {} - skipping.", type.getType());
@@ -104,16 +112,21 @@ public class AssetTestGenerator extends AssetGenerator {
         }
     }
 
-    private void addPrimitive(String builderMethod, boolean multiValued, String typeName, String containerName) {
+    private void addPrimitive(
+            TestAttribute.TestAttributeBuilder builder, boolean multiValued, String typeName, String containerName) {
+        builder.relationship(false);
         if (!multiValued) {
-            testAttributes.add(
-                    new TestAttribute(builderMethod, List.of(getPrimitiveValue(containerName, typeName, 0))));
+            testAttributes.add(builder.values(List.of(getPrimitiveValue(containerName, typeName, 0)))
+                    .rawValues(List.of(getRawPrimitiveValue(containerName, typeName, 0)))
+                    .build());
         } else {
-            testAttributes.add(new TestAttribute(
-                    builderMethod,
-                    List.of(
+            testAttributes.add(builder.values(List.of(
                             getPrimitiveValue(containerName, typeName, 0),
-                            getPrimitiveValue(containerName, typeName, 1))));
+                            getPrimitiveValue(containerName, typeName, 1)))
+                    .rawValues(List.of(
+                            getRawPrimitiveValue(containerName, typeName, 0),
+                            getRawPrimitiveValue(containerName, typeName, 1)))
+                    .build());
         }
     }
 
@@ -188,28 +201,105 @@ public class AssetTestGenerator extends AssetGenerator {
         return value;
     }
 
-    private void addEnum(String builderMethod, boolean multiValued, String typeName) {
+    private String getRawPrimitiveValue(String containerName, String typeName, int count) {
+        String value = null;
+        switch (typeName) {
+            case "String":
+            case "Boolean":
+            case "Integer":
+            case "Double":
+                value = getPrimitiveValue(containerName, typeName, count);
+                break;
+            case "Long":
+                if (Math.floorMod(count, 2) == 0) {
+                    value = "123456789";
+                } else {
+                    value = "987654321";
+                }
+                break;
+            case "String, String":
+                if (containerName.equals("List<Map<")) {
+                    if (Math.floorMod(count, 2) == 0) {
+                        value = "{\"key1\", \"value1\"}";
+                    } else {
+                        value = "{\"key2\", \"value2\"}";
+                    }
+                } else {
+                    if (Math.floorMod(count, 2) == 0) {
+                        value = "\"key1\", \"value1\"";
+                    } else {
+                        value = "\"key2\", \"value2\"";
+                    }
+                }
+                break;
+            case "String, Long":
+                if (containerName.equals("List<Map<")) {
+                    if (Math.floorMod(count, 2) == 0) {
+                        value = "{\"key1\", 123456}";
+                    } else {
+                        value = "{\"key2\", 654321}";
+                    }
+                } else {
+                    if (Math.floorMod(count, 2) == 0) {
+                        value = "\"key1\", 123456";
+                    } else {
+                        value = "\"key2\", 654321";
+                    }
+                }
+                break;
+            default:
+                log.warn("Unknown primitive type for test attribute {} - skipping.", typeName);
+                break;
+        }
+        return value;
+    }
+
+    private void addEnum(TestAttribute.TestAttributeBuilder builder, boolean multiValued, String typeName) {
+        builder.relationship(false);
         if (!multiValued) {
-            testAttributes.add(new TestAttribute(builderMethod, List.of(getEnumValue(typeName, 0))));
+            testAttributes.add(builder.values(List.of(getEnumValue(typeName, 0)))
+                    .rawValues(List.of(getRawEnumValue(typeName, 0)))
+                    .build());
         } else {
-            testAttributes.add(
-                    new TestAttribute(builderMethod, List.of(getEnumValue(typeName, 0), getEnumValue(typeName, 1))));
+            testAttributes.add(builder.values(List.of(getEnumValue(typeName, 0), getEnumValue(typeName, 1)))
+                    .rawValues(List.of(getRawEnumValue(typeName, 0), getRawEnumValue(typeName, 1)))
+                    .build());
         }
     }
 
     private String getEnumValue(String typeName, int count) {
+        Enum<?>[] values = getEnumValues(typeName);
+        if (values != null) {
+            if (values.length > count) {
+                return typeName + "." + values[count].name();
+            } else {
+                return typeName + "." + values[0].name();
+            }
+        }
+        return null;
+    }
+
+    private String getRawEnumValue(String typeName, int count) {
+        AtlanEnum[] values = (AtlanEnum[]) getEnumValues(typeName);
+        if (values != null) {
+            if (values.length > count) {
+                return "\"" + values[count].getValue() + "\"";
+            } else {
+                return "\"" + values[0].getValue() + "\"";
+            }
+        }
+        return null;
+    }
+
+    private Enum<?>[] getEnumValues(String typeName) {
+        Enum<?>[] values = null;
         try {
             // Introspect the enum to draw out actual values
             Class<?> clazz = Class.forName("com.atlan.model.enums." + typeName);
             Field f = clazz.getDeclaredField("$VALUES");
             f.setAccessible(true);
             Object o = f.get(null);
-            Enum<?>[] values = (Enum<?>[]) o;
-            if (values.length > count) {
-                return typeName + "." + values[count].name();
-            } else {
-                return typeName + "." + values[0].name();
-            }
+            values = (Enum<?>[]) o;
         } catch (ClassNotFoundException e) {
             log.error("Unable to reflectively introspect enumeration: {}", typeName, e);
         } catch (NoSuchFieldException e) {
@@ -217,15 +307,19 @@ public class AssetTestGenerator extends AssetGenerator {
         } catch (IllegalAccessException e) {
             log.error("Unable to access values in enumeration: {}", typeName, e);
         }
-        return null;
+        return values;
     }
 
-    private void addAssetRef(String builderMethod, boolean multiValued, String typeName) {
+    private void addAssetRef(TestAttribute.TestAttributeBuilder builder, boolean multiValued, String typeName) {
+        builder.relationship(true);
         if (!multiValued) {
-            testAttributes.add(new TestAttribute(builderMethod, List.of(getAssetValue(typeName, 0))));
+            testAttributes.add(builder.values(List.of(getAssetValue(typeName, 0)))
+                    .rawValues(List.of(getRawAssetValue(typeName, 0)))
+                    .build());
         } else {
-            testAttributes.add(
-                    new TestAttribute(builderMethod, List.of(getAssetValue(typeName, 0), getAssetValue(typeName, 1))));
+            testAttributes.add(builder.values(List.of(getAssetValue(typeName, 0), getAssetValue(typeName, 1)))
+                    .rawValues(List.of(getRawAssetValue(typeName, 0), getRawAssetValue(typeName, 1)))
+                    .build());
         }
     }
 
@@ -237,6 +331,18 @@ public class AssetTestGenerator extends AssetGenerator {
             return concreteType + ".refByGuid(\"" + ASSET_GUID + "\")";
         } else {
             return concreteType + ".refByQualifiedName(\"" + ASSET_QN + "\")";
+        }
+    }
+
+    private String getRawAssetValue(String typeName, int count) {
+        // Always start looking for a concrete type at 0, since we need to branch out
+        // down paths that may lead to leaves that are still abstract
+        String concreteType = traverseToConcreteType(typeName);
+        if (Math.floorMod(count, 2) == 0) {
+            return "{ \"typeName\": \"" + concreteType + "\", \"guid\": \"" + ASSET_GUID + "\" }";
+        } else {
+            return "{ \"typeName\": \"" + concreteType + "\", \"uniqueAttributes\": { \"qualifiedName\": \"" + ASSET_QN
+                    + "\" }}";
         }
     }
 
@@ -267,20 +373,22 @@ public class AssetTestGenerator extends AssetGenerator {
         return typeName;
     }
 
-    private void addStructRef(String builderMethod, boolean multiValued, String typeName) {
+    private void addStructRef(TestAttribute.TestAttributeBuilder builder, boolean multiValued, String typeName) {
         if (!multiValued) {
-            testAttributes.add(new TestAttribute(builderMethod, List.of(getStructValue(typeName, 0))));
+            testAttributes.add(builder.values(List.of(getStructValue(typeName, 0)))
+                    .rawValues(List.of(getRawStructValue(typeName, 0)))
+                    .build());
         } else {
-            testAttributes.add(new TestAttribute(
-                    builderMethod, List.of(getStructValue(typeName, 0), getStructValue(typeName, 1))));
+            testAttributes.add(builder.values(List.of(getStructValue(typeName, 0), getStructValue(typeName, 1)))
+                    .rawValues(List.of(getRawStructValue(typeName, 0), getRawStructValue(typeName, 1)))
+                    .build());
         }
     }
 
     private String getStructValue(String typeName, int count) {
-        try {
-            // Introspect the members of the struct to add all attributes to the builder
-            Class<?> clazz = Class.forName("com.atlan.model.structs." + typeName);
-            Field[] fields = clazz.getDeclaredFields();
+        // Introspect the members of the struct to add all attributes to the builder
+        Field[] fields = getFieldsForStruct(typeName);
+        if (fields != null) {
             StringBuilder sb = new StringBuilder();
             sb.append(typeName).append(".builder()");
             for (Field field : fields) {
@@ -294,13 +402,17 @@ public class AssetTestGenerator extends AssetGenerator {
                     if (generic instanceof ParameterizedType) {
                         ParameterizedType pt = (ParameterizedType) generic;
                         Type type = pt.getActualTypeArguments()[0];
-                        Class<?> embedded = Class.forName(type.getTypeName());
-                        String simpleClassName = embedded.getSimpleName();
-                        sb.append("List.of(")
-                                .append(getPrimitiveValue("List<", simpleClassName, 0))
-                                .append(", ")
-                                .append(getPrimitiveValue("List<", simpleClassName, 1))
-                                .append(")");
+                        try {
+                            Class<?> embedded = Class.forName(type.getTypeName());
+                            String simpleClassName = embedded.getSimpleName();
+                            sb.append("List.of(")
+                                    .append(getPrimitiveValue("List<", simpleClassName, 0))
+                                    .append(", ")
+                                    .append(getPrimitiveValue("List<", simpleClassName, 1))
+                                    .append(")");
+                        } catch (ClassNotFoundException e) {
+                            log.error("Unable to find embedded struct class: {}", type.getTypeName(), e);
+                        }
                     } else {
                         log.warn("Unable to reflectively identify list-wrapped type: {}", generic.getTypeName());
                     }
@@ -313,6 +425,62 @@ public class AssetTestGenerator extends AssetGenerator {
             }
             sb.append(".build()");
             return sb.toString();
+        }
+        return "";
+    }
+
+    private String getRawStructValue(String typeName, int count) {
+        // Introspect the members of the struct to add all attributes to the builder
+        Field[] fields = getFieldsForStruct(typeName);
+        if (fields != null) {
+            StringBuilder sb = new StringBuilder();
+            sb.append("{");
+            for (Field field : fields) {
+                Class<?> fieldType = field.getType();
+                sb.append("\"").append(field.getName()).append("\": ");
+                if (isPrimitive(fieldType)) {
+                    sb.append(getRawPrimitiveValue(null, fieldType.getSimpleName(), count));
+                } else if (fieldType == List.class) {
+                    // Handle non-primitive fields
+                    Type generic = field.getGenericType();
+                    if (generic instanceof ParameterizedType) {
+                        ParameterizedType pt = (ParameterizedType) generic;
+                        Type type = pt.getActualTypeArguments()[0];
+                        try {
+                            Class<?> embedded = Class.forName(type.getTypeName());
+                            String simpleClassName = embedded.getSimpleName();
+                            sb.append("[")
+                                    .append(getRawPrimitiveValue("List<", simpleClassName, 0))
+                                    .append(", ")
+                                    .append(getRawPrimitiveValue("List<", simpleClassName, 1))
+                                    .append("]");
+                        } catch (ClassNotFoundException e) {
+                            log.error("Unable to find embedded struct class: {}", type.getTypeName(), e);
+                        }
+                    } else {
+                        log.warn("Unable to reflectively identify list-wrapped type: {}", generic.getTypeName());
+                    }
+                } else if (fieldType.getCanonicalName().startsWith("com.atlan.model.enums.")) {
+                    sb.append(getRawEnumValue(fieldType.getSimpleName(), count));
+                } else {
+                    log.error("Type not yet handled for structs: {}", fieldType.getCanonicalName());
+                }
+                sb.append(", ");
+            }
+            if (sb.length() > 1) {
+                sb.deleteCharAt(sb.length() - 2); // Remove the final comma-separator
+            }
+            sb.append("}");
+            return sb.toString();
+        }
+        return "";
+    }
+
+    private Field[] getFieldsForStruct(String typeName) {
+        try {
+            // Introspect the members of the struct to add all attributes to the builder
+            Class<?> clazz = Class.forName("com.atlan.model.structs." + typeName);
+            return clazz.getDeclaredFields();
         } catch (ClassNotFoundException e) {
             log.error("Unable to reflectively introspect struct: {}", typeName, e);
         }

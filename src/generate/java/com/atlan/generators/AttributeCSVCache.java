@@ -61,7 +61,7 @@ public class AttributeCSVCache {
         }
     }
 
-    private static String getAttrQualifiedName(String typeName, String attrName) {
+    static String getAttrQualifiedName(String typeName, String attrName) {
         return typeName + "|" + attrName;
     }
 

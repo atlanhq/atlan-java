@@ -6,6 +6,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 
 import com.atlan.Atlan;
 import com.atlan.api.TypeDefsEndpoint;
+import com.atlan.exception.AtlanException;
 import com.atlan.model.enums.AtlanTypeCategory;
 import com.atlan.model.typedefs.*;
 import java.io.File;
@@ -39,6 +40,10 @@ public class AttributeCSVGenerator {
 
     public static void main(String[] args) throws Exception {
         AttributeCSVCache.cacheDescriptions();
+        generate();
+    }
+
+    public static void generate() throws AtlanException {
         AttributeCSVGenerator generator = new AttributeCSVGenerator();
         List<EntityDef> entityDefs =
                 TypeDefsEndpoint.getTypeDefs(AtlanTypeCategory.ENTITY).getEntityDefs();

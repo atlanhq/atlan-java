@@ -222,7 +222,8 @@ public class AssetGenerator extends TypeGenerator {
                 Map.entry("foreignKeyTo", "addForeignKeyTo"),
                 Map.entry("quickSightFolderHierarchy", "addQuickSightFolderHierarchy"),
                 Map.entry("columnMaxs", "addColumnMax"),
-                Map.entry("columnMins", "addColumnMin"));
+                Map.entry("columnMins", "addColumnMin"),
+                Map.entry("redashQuerySchedule", "putRedashQuerySchedule"));
 
         private static final Map<String, String> ATTRIBUTE_RENAMING = Map.ofEntries(
                 Map.entry("connectorName", "connectorType"),
