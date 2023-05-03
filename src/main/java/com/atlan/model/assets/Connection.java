@@ -262,6 +262,8 @@ public class Connection extends Asset {
             }
             adminFound = true;
             builder.adminRoles(adminRoles);
+        } else {
+            builder.nullField("adminRoles");
         }
         if (adminGroups != null && !adminGroups.isEmpty()) {
             for (String groupAlias : adminGroups) {
@@ -269,6 +271,8 @@ public class Connection extends Asset {
             }
             adminFound = true;
             builder.adminGroups(adminGroups);
+        } else {
+            builder.nullField("adminGroups");
         }
         if (adminUsers != null && !adminUsers.isEmpty()) {
             for (String userName : adminUsers) {
@@ -276,6 +280,8 @@ public class Connection extends Asset {
             }
             adminFound = true;
             builder.adminUsers(adminUsers);
+        } else {
+            builder.nullField("adminUsers");
         }
         if (adminFound) {
             return builder;
