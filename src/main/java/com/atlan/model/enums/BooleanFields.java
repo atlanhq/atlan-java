@@ -135,6 +135,8 @@ public enum BooleanFields implements AtlanSearchableField {
     QLIK_IS_PUBLISHED("qlikIsPublished"),
     /** Whether the sheet is approved (true) or not (false). */
     QLIK_SHEET_IS_APPROVED("qlikSheetIsApproved"),
+    /** TBC */
+    REDASH_IS_PUBLISHED("redashIsPublished"),
     /** Whether versioning is enabled for the bucket. */
     S3BUCKET_VERSIONING_ENABLED("s3BucketVersioningEnabled"),
     /** TBC */

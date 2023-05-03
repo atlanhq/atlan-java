@@ -220,6 +220,12 @@ public enum NumericFields implements AtlanSearchableField {
     /** TBC */
     QUICK_SIGHT_DATASET_COLUMN_COUNT("quickSightDatasetColumnCount"),
     /** TBC */
+    REDASH_DASHBOARD_WIDGET_COUNT("redashDashboardWidgetCount"),
+    /** TBC */
+    REDASH_QUERY_LAST_EXECUTED_AT("redashQueryLastExecutedAt"),
+    /** TBC */
+    REDASH_QUERY_LAST_EXECUTION_RUNTIME("redashQueryLastExecutionRuntime"),
+    /** TBC */
     REPORT_COUNT("reportCount"),
     /** TBC */
     RESULT_COUNT("resultCount"),

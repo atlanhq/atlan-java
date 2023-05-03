@@ -674,6 +674,20 @@ public enum KeywordFields implements AtlanSearchableField {
     /** TBC */
     RAW_QUERY("rawQuery"),
     /** TBC */
+    REDASH_QUERY_NAME("redashQueryName.keyword"),
+    /** TBC */
+    REDASH_QUERY_PARAMETERS("redashQueryParameters"),
+    /** TBC */
+    REDASH_QUERY_QUALIFIED_NAME("redashQueryQualifiedName"),
+    /** TBC */
+    REDASH_QUERY_SCHEDULE("redashQuerySchedule"),
+    /** TBC */
+    REDASH_QUERY_SCHEDULE_HUMANIZED("redashQueryScheduleHumanized"),
+    /** TBC */
+    REDASH_QUERY_SQL("redashQuerySQL"),
+    /** TBC */
+    REDASH_VISUALIZATION_TYPE("redashVisualizationType"),
+    /** TBC */
     REFERENCE("reference"),
     /** TBC */
     REFRESH_METHOD("refreshMethod"),

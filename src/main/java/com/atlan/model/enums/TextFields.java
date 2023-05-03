@@ -233,6 +233,12 @@ public enum TextFields implements AtlanSearchableField {
     QUICK_SIGHT_DATASET_QUALIFIED_NAME("quickSightDatasetQualifiedName.text"),
     /** TBC */
     QUICK_SIGHT_SHEET_NAME("quickSightSheetName"),
+    /** TBC */
+    REDASH_QUERY_NAME("redashQueryName"),
+    /** TBC */
+    REDASH_QUERY_QUALIFIED_NAME("redashQueryQualifiedName.text"),
+    /** TBC */
+    REDASH_QUERY_SCHEDULE_HUMANIZED("redashQueryScheduleHumanized.text"),
     /** Name of the bucket in which the object exists. */
     S3BUCKET_NAME("s3BucketName.text"),
     /** Entity tag for the asset. An entity tag is a hash of the object and represents changes to the contents of an object only, not its metadata. */
