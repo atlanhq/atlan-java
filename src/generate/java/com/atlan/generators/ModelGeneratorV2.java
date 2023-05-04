@@ -278,9 +278,13 @@ public class ModelGeneratorV2 {
                 String typeName = entityDef.getName();
                 List<String> superTypes = entityDef.getSuperTypes();
                 List<RelationshipAttributeDef> relationships = entityDef.getRelationshipAttributeDefs();
+                if (superTypes == null || superTypes.isEmpty()) {
+                    subTypeToSuperTypes.put(typeName, new ArrayList<>());
+                } else {
+                    subTypeToSuperTypes.put(typeName, superTypes);
+                }
                 if (superTypes == null || superTypes.isEmpty() || typeName.equals("Asset")) {
                     subTypeToSuperType.put(typeName, "");
-                    subTypeToSuperTypes.put(typeName, new ArrayList<>());
                     uniqueRelationshipsForType.put(
                             typeName,
                             relationships.stream()
@@ -290,7 +294,6 @@ public class ModelGeneratorV2 {
                     String singleSuperType = AssetGenerator.getSingleTypeToExtend(typeName, superTypes);
                     if (uniqueRelationshipsForType.containsKey(singleSuperType)) {
                         subTypeToSuperType.put(typeName, singleSuperType);
-                        subTypeToSuperTypes.put(typeName, superTypes);
                         Set<String> inheritedRelationships = getAllInheritedRelationships(singleSuperType);
                         Set<String> uniqueRelationships = relationships.stream()
                                 .map(RelationshipAttributeDef::getName)
@@ -332,7 +335,9 @@ public class ModelGeneratorV2 {
     static LinkedHashSet<String> getAllSuperTypesForType(String typeName) {
         List<String> next = subTypeToSuperTypes.get(typeName);
         if (next.isEmpty()) {
-            return new LinkedHashSet<>();
+            LinkedHashSet<String> root = new LinkedHashSet<>();
+            root.add(typeName);
+            return root;
         } else {
             LinkedHashSet<String> now = new LinkedHashSet<>(next);
             for (String superType : next) {

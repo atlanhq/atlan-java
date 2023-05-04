@@ -7,6 +7,7 @@ import co.elastic.clients.elasticsearch._types.FieldSort;
 import co.elastic.clients.elasticsearch._types.SortOptions;
 import co.elastic.clients.elasticsearch._types.SortOrder;
 import com.atlan.api.EntityBulkEndpoint;
+import com.atlan.cache.CustomMetadataCache;
 import com.atlan.cache.GroupCache;
 import com.atlan.cache.RoleCache;
 import com.atlan.cache.UserCache;

@@ -165,10 +165,8 @@ testing {
             }
             dependencies {
                 implementation project
-                implementation group: 'org.freemarker', name: 'freemarker', version: '2.3.32'
                 implementation group: 'org.testng', name: 'testng', version: '7.7.0'
                 implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.11'
-                implementation group: 'org.apache.commons', name: 'commons-csv', version: '1.9.0'
             }
             sources {
                 java {

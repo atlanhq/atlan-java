@@ -14,21 +14,9 @@ ${description}
 
 Following is the inheritance structure for `${originalName}`. The type structure may be simplified in some of the SDKs, but for search purposes you could still use any of the super types shown below.
 
-```mermaid
-classDiagram
-    direction LR
-<#-- TODO: inheritance hierarchy -- just one for all (using originalName)? -->
-    class Column
-    link Column "../column"
-    class Asset {
-        <<abstract>>
-    }
-    Asset <|-- Catalog : extends
-    class Catalog {
-        <<abstract>>
-    }
-    link Catalog "../catalog"
-```
+<#if originalSuperTypes?has_content>
+<@raw.diagramInheritance originalName=originalName superTypes=originalSuperTypes />
+</#if>
 
 ## Attributes
 
@@ -44,7 +32,7 @@ For detailed examples of searching these fields, see [common search fields](../.
 
         ??? type-string "typeName"
 
-            ```java title="Type of this asset."
+            ```java linenums="1" title="Type of this asset."
             ${className?uncap_first}.getTypeName(); // (1)
             QueryFactory.must(haveSuperType(Asset.TYPE_NAME)); // (2)
             QueryFactory.must(beOfType(${className}.TYPE_NAME)); // (3)
@@ -88,6 +76,7 @@ For detailed examples of searching these fields, see [common search fields](../.
 
         --8<-- "snippets/model/core-json.md"
 
+<#if inheritedProperties?has_content>
 ### Inherited properties
 
 ??? details "Expand for details on each inherited property"
@@ -110,6 +99,8 @@ For detailed examples of searching these fields, see [common search fields](../.
         --8<-- "snippets/model/raw/${superType?lower_case}-properties.md"
     </#list>
 
+</#if>
+<#if typeSpecificProperties?has_content>
 ### Type-specific properties
 
 === ":fontawesome-brands-java: Java"
@@ -124,13 +115,15 @@ For detailed examples of searching these fields, see [common search fields](../.
 
     --8<-- "snippets/model/raw/${originalName?lower_case}-properties.md"
 
+</#if>
 ## Relationships
 
 Following are all the relationships available between `${originalName}` assets and other objects in Atlan.
 
+<#if inheritedRelationships?has_content>
 ### Inherited relationships
 
-<@raw.diagramInherited originalName=originalName attributes=testAttributes />
+<@raw.diagram originalName=originalName attributes=inheritedRelationships />
 
 ??? details "Expand for details on each inherited relationship"
 
@@ -152,9 +145,11 @@ Following are all the relationships available between `${originalName}` assets a
         --8<-- "snippets/model/raw/${superType?lower_case}-relationships.md"
     </#list>
 
+</#if>
+<#if typeSpecificRelationships?has_content>
 ### Type-specific relationships
 
-<@raw.diagram originalName=originalName attributes=testAttributes />
+<@raw.diagram originalName=originalName attributes=typeSpecificRelationships />
 
 === ":fontawesome-brands-java: Java"
 
@@ -167,3 +162,4 @@ Following are all the relationships available between `${originalName}` assets a
 === ":material-code-json: Raw REST API"
 
     --8<-- "snippets/model/raw/${originalName?lower_case}-relationships.md"
+</#if>

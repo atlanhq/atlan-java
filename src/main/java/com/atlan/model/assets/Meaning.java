@@ -3,6 +3,7 @@
 package com.atlan.model.assets;
 
 import com.atlan.model.core.AtlanObject;
+import java.util.Comparator;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
@@ -14,7 +15,13 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 @SuperBuilder
 @EqualsAndHashCode(callSuper = true)
-public class Meaning extends AtlanObject {
+public class Meaning extends AtlanObject implements Comparable<Meaning> {
+    private static final long serialVersionUID = 2L;
+
+    private static final Comparator<String> stringComparator = Comparator.nullsFirst(String::compareTo);
+    private static final Comparator<Meaning> meaningComparator = Comparator.comparing(
+                    Meaning::getTermGuid, stringComparator)
+            .thenComparing(Meaning::getRelationGuid, stringComparator);
 
     /** Unique identifier (GUID) of the related term. */
     String termGuid;
@@ -27,4 +34,12 @@ public class Meaning extends AtlanObject {
 
     /** Unused. */
     Integer confidence;
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int compareTo(Meaning o) {
+        return meaningComparator.compare(this, o);
+    }
 }

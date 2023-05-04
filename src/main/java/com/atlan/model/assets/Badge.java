@@ -2,6 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
+import com.atlan.cache.CustomMetadataCache;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
@@ -106,6 +107,38 @@ public class Badge extends Asset {
      */
     public static boolean restore(String qualifiedName) throws AtlanException {
         return Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Builds the minimal object necessary to create a Badge.
+     *
+     * @param name of the Badge
+     * @param cmName human-readable name of the custom metadata for which to create the badge
+     * @param cmAttribute human-readable name of the custom metadata attribute for which to create the badge
+     * @return the minimal request necessary to update the Badge, as a builder
+     * @throws AtlanException if the specified custom metadata for the badge cannot be found
+     */
+    public static BadgeBuilder<?, ?> creator(String name, String cmName, String cmAttribute) throws AtlanException {
+        String cmId = CustomMetadataCache.getIdForName(cmName);
+        String cmAttrId = CustomMetadataCache.getAttrIdForName(cmName, cmAttribute);
+        return Badge.builder()
+                .qualifiedName(generateQualifiedName(cmName, cmAttribute))
+                .name(name)
+                .badgeMetadataAttribute(cmId + "." + cmAttrId);
+    }
+
+    /**
+     * Generate a unique name for this badge.
+     *
+     * @param cmName human-readable name of the custom metadata for which to create the badge
+     * @param cmAttribute human-readable name of the custom metadata attribute for which to create the badge
+     * @return the unique qualifiedName of the badge
+     * @throws AtlanException if the specified custom metadata cannot be found
+     */
+    public static String generateQualifiedName(String cmName, String cmAttribute) throws AtlanException {
+        String cmId = CustomMetadataCache.getIdForName(cmName);
+        String cmAttrId = CustomMetadataCache.getAttrIdForName(cmName, cmAttribute);
+        return "badges/global/" + cmId + "." + cmAttrId;
     }
 
     /**
