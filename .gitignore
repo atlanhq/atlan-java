@@ -11,3 +11,6 @@
 !gradle/**
 .gradle/
 build/
+
+# Generated markdown
+src/generate/resources/markdown/**
