@@ -57,6 +57,7 @@ public class ModelGeneratorV2 {
         generateSearchFields(cfg, entityDefs);
         generateAssetTests(cfg);
         generateAssetDocs(cfg);
+        generateFullModelDiagram(cfg);
         generateUpdatedAttributeCSV();
     }
 
@@ -229,6 +230,22 @@ public class ModelGeneratorV2 {
                     log.error("Unable to open file output: {}", filename, e);
                 }
             }
+        }
+    }
+
+    private static void generateFullModelDiagram(Configuration cfg) throws Exception {
+        Template modelTemplate = cfg.getTemplate("full_model.ftl");
+        AssetGenerator referenceable = assetCache.get("Referenceable");
+        AssetDocGenerator generator = new AssetDocGenerator(referenceable);
+        // Now that all are cached, render the inner details of the generator
+        // before processing the template
+        generator.resolveDetails();
+        String filename = AssetDocGenerator.DIRECTORY + File.separator + "index.md";
+        try (BufferedWriter fs =
+                new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filename), StandardCharsets.UTF_8))) {
+            modelTemplate.process(generator, fs);
+        } catch (IOException e) {
+            log.error("Unable to open file output: {}", filename, e);
         }
     }
 
