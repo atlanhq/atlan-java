@@ -23,10 +23,10 @@ public class AttributeCSVCache {
     private static final String CSV_ATTR_NAME = "Attribute Name";
     private static final String CSV_ATTR_DESC = "Attribute Description";
 
-    private static final String[] CSV_HEADER = {CSV_TYPE_NAME, CSV_TYPE_DESC, CSV_ATTR_NAME, CSV_ATTR_DESC};
+    public static final String[] CSV_HEADER = {CSV_TYPE_NAME, CSV_TYPE_DESC, CSV_ATTR_NAME, CSV_ATTR_DESC};
 
-    private static final String DEFAULT_ATTR_DESCRIPTION = "TBC";
-    private static final String DEFAULT_CLASS_DESCRIPTION = "TBC";
+    static final String DEFAULT_ATTR_DESCRIPTION = "TBC";
+    static final String DEFAULT_CLASS_DESCRIPTION = "TBC";
 
     private static final String DESCRIPTIONS_FILE =
             "" + "src" + File.separator + "generate" + File.separator + "resources" + File.separator + "attributes.csv";
@@ -61,7 +61,7 @@ public class AttributeCSVCache {
         }
     }
 
-    private static String getAttrQualifiedName(String typeName, String attrName) {
+    static String getAttrQualifiedName(String typeName, String attrName) {
         return typeName + "|" + attrName;
     }
 

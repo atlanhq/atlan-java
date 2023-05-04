@@ -330,6 +330,15 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
                 case ReadmeTemplate.TYPE_NAME:
                     builder = ReadmeTemplate.builder();
                     break;
+                case RedashDashboard.TYPE_NAME:
+                    builder = RedashDashboard.builder();
+                    break;
+                case RedashQuery.TYPE_NAME:
+                    builder = RedashQuery.builder();
+                    break;
+                case RedashVisualization.TYPE_NAME:
+                    builder = RedashVisualization.builder();
+                    break;
                 case S3Bucket.TYPE_NAME:
                     builder = S3Bucket.builder();
                     break;

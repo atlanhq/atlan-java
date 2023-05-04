@@ -18,7 +18,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * TBC
+ * Instance of a Qlik Space in Atlan.
  */
 @Getter
 @SuperBuilder(toBuilder = true)
@@ -37,16 +37,16 @@ public class QlikSpace extends Qlik {
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Type of space, for example: Private, Shared, etc. */
     @Attribute
     String qlikSpaceType;
 
-    /** TBC */
+    /** Datasets contained within the space. */
     @Attribute
     @Singular
     SortedSet<QlikDataset> qlikDatasets;
 
-    /** TBC */
+    /** Apps contained within the space. */
     @Attribute
     @Singular
     SortedSet<QlikApp> qlikApps;

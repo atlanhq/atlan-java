@@ -17,7 +17,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * TBC
+ * Instance of a ThoughtSpot Liveboard in Atlan.
  */
 @Getter
 @SuperBuilder(toBuilder = true)
@@ -33,7 +33,7 @@ public class ThoughtspotLiveboard extends Thoughtspot {
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Dashlets within the Liveboard. */
     @Attribute
     @Singular
     SortedSet<ThoughtspotDashlet> thoughtspotDashlets;

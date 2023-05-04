@@ -8,7 +8,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * TBC
+ * Base class for Qlik assets.
  */
 @Getter
 @SuperBuilder(toBuilder = true)
@@ -25,35 +25,35 @@ public abstract class Qlik extends BI {
 
     public static final String TYPE_NAME = "Qlik";
 
-    /** TBC */
+    /** Unique identifier of the Qlik asset in Qlik. */
     @Attribute
     String qlikId;
 
-    /** TBC */
+    /** QRI of the Qlik object. */
     @Attribute
     String qlikQRI;
 
-    /** TBC */
+    /** Unique identifier (in Qlik) of the space where the asset exists. */
     @Attribute
     String qlikSpaceId;
 
-    /** TBC */
+    /** Unique name of the space where the Qlik asset exists. */
     @Attribute
     String qlikSpaceQualifiedName;
 
-    /** TBC */
+    /** Unique identifier (in Qlik) of the app where the asset exists. */
     @Attribute
     String qlikAppId;
 
-    /** TBC */
+    /** Unique name of the app where the Qlik asset exists. */
     @Attribute
     String qlikAppQualifiedName;
 
-    /** TBC */
+    /** Unique identifier (in Qlik) of the owner of the asset. */
     @Attribute
     String qlikOwnerId;
 
-    /** TBC */
+    /** Whether the asset is published in Qlik (true) or not (false). */
     @Attribute
     Boolean qlikIsPublished;
 }

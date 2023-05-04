@@ -24,6 +24,7 @@ import lombok.extern.slf4j.Slf4j;
     @JsonSubTypes.Type(value = Qlik.class, name = Qlik.TYPE_NAME),
     @JsonSubTypes.Type(value = Tableau.class, name = Tableau.TYPE_NAME),
     @JsonSubTypes.Type(value = Looker.class, name = Looker.TYPE_NAME),
+    @JsonSubTypes.Type(value = Redash.class, name = Redash.TYPE_NAME),
 })
 @Slf4j
 public abstract class BI extends Catalog {

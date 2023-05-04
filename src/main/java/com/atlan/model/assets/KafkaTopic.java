@@ -19,7 +19,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * TBC
+ * Instance of a Kafka Topic in Atlan.
  */
 @Getter
 @SuperBuilder(toBuilder = true)
@@ -59,7 +59,7 @@ public class KafkaTopic extends Kafka {
     @Attribute
     Long kafkaTopicSizeInBytes;
 
-    /** TBC */
+    /** Number of (unexpired) messages in this topic. */
     @Attribute
     Long kafkaTopicRecordCount;
 
@@ -67,7 +67,7 @@ public class KafkaTopic extends Kafka {
     @Attribute
     KafkaTopicCleanupPolicy kafkaTopicCleanupPolicy;
 
-    /** TBC */
+    /** Consumer groups subscribed to this topic. */
     @Attribute
     @Singular
     SortedSet<KafkaConsumerGroup> kafkaConsumerGroups;

@@ -38,7 +38,7 @@ public class ${className} extends AtlanObject {
 </#list>
      * @return a ${className} with the provided information
      */
-    public static ${className} of(<#list attributes as attribute>${attribute.fullType} ${attribute.renamed}<#sep>, </#list>) {
+    public static ${className} of(<#list attributes as attribute>${attribute.fullType} ${attribute.renamed}<#sep>, </#sep></#list>) {
         return ${className}.builder()
         <#list attributes as attribute>
             .${attribute.renamed}(${attribute.renamed})

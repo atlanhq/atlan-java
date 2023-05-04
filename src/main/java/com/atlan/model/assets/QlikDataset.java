@@ -16,7 +16,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * TBC
+ * Instance of a Qlik Dataset, Datafile, Datastore or Dataasset in Atlan.
  */
 @Getter
 @SuperBuilder(toBuilder = true)
@@ -32,23 +32,23 @@ public class QlikDataset extends Qlik {
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Technical name of the data asset. */
     @Attribute
     String qlikDatasetTechnicalName;
 
-    /** TBC */
+    /** Type of the data asset, for example: qix-df, snowflake, etc. */
     @Attribute
     String qlikDatasetType;
 
-    /** TBC */
+    /** URI of the dataset. */
     @Attribute
     String qlikDatasetUri;
 
-    /** TBC */
+    /** Subtype of the dataset. */
     @Attribute
     String qlikDatasetSubtype;
 
-    /** TBC */
+    /** Space in which the dataset exists. */
     @Attribute
     QlikSpace qlikSpace;
 

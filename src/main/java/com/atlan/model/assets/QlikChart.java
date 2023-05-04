@@ -16,7 +16,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * TBC
+ * Instance of a Qlick Chart in Atlan.
  */
 @Getter
 @SuperBuilder(toBuilder = true)
@@ -32,23 +32,23 @@ public class QlikChart extends Qlik {
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Subtitle of the chart. */
     @Attribute
     String qlikChartSubtitle;
 
-    /** TBC */
+    /** Footnote on the chart. */
     @Attribute
     String qlikChartFootnote;
 
-    /** TBC */
+    /** Orientation of the chart. */
     @Attribute
     String qlikChartOrientation;
 
-    /** TBC */
+    /** Subtype of the chart, for example: bar, graph, pie, etc. */
     @Attribute
     String qlikChartType;
 
-    /** TBC */
+    /** Sheet in which the chart exists. */
     @Attribute
     QlikSheet qlikSheet;
 

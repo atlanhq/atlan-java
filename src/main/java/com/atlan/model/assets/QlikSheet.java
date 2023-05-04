@@ -17,7 +17,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * TBC
+ * Instance of a Qlik Sheet in Atlan.
  */
 @Getter
 @SuperBuilder(toBuilder = true)
@@ -33,15 +33,15 @@ public class QlikSheet extends Qlik {
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
+    /** Whether the sheet is approved (true) or not (false). */
     @Attribute
     Boolean qlikSheetIsApproved;
 
-    /** TBC */
+    /** App in which the sheet exists. */
     @Attribute
     QlikApp qlikApp;
 
-    /** TBC */
+    /** Charts contained within the sheet. */
     @Attribute
     @Singular
     SortedSet<QlikChart> qlikCharts;

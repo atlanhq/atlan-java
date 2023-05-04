@@ -19,7 +19,7 @@ public enum KeywordFields implements AtlanSearchableField {
     ADLS_ACCOUNT_PERFORMANCE("adlsAccountPerformance"),
     /** TBC */
     ADLS_ACCOUNT_PROVISION_STATE("adlsAccountProvisionState"),
-    /** TBC */
+    /** Unique name of the account for this ADLS asset. */
     ADLS_ACCOUNT_QUALIFIED_NAME("adlsAccountQualifiedName"),
     /** TBC */
     ADLS_ACCOUNT_REPLICATION("adlsAccountReplication"),
@@ -35,7 +35,7 @@ public enum KeywordFields implements AtlanSearchableField {
     ADLS_CONTAINER_LEASE_STATE("adlsContainerLeaseState"),
     /** TBC */
     ADLS_CONTAINER_LEASE_STATUS("adlsContainerLeaseStatus"),
-    /** TBC */
+    /** Unique name of the container this object exists within. */
     ADLS_CONTAINER_QUALIFIED_NAME("adlsContainerQualifiedName"),
     /** TBC */
     ADLS_CONTAINER_URL("adlsContainerUrl.keyword"),
@@ -207,7 +207,7 @@ public enum KeywordFields implements AtlanSearchableField {
     AZURE_LOCATION("azureLocation"),
     /** TBC */
     AZURE_RESOURCE_ID("azureResourceId"),
-    /** TBC */
+    /** Tags that have been applied to this Azure asset. */
     AZURE_TAGS("azureTags"),
     /** TBC */
     BADGE_CONDITIONS("badgeConditions"),
@@ -445,9 +445,9 @@ public enum KeywordFields implements AtlanSearchableField {
     KAFKA_TOPIC_CLEANUP_POLICY("kafkaTopicCleanupPolicy"),
     /** TBC */
     KAFKA_TOPIC_COMPRESSION_TYPE("kafkaTopicCompressionType"),
-    /** TBC */
+    /** Names of the topics for this consumer group. */
     KAFKA_TOPIC_NAMES("kafkaTopicNames"),
-    /** TBC */
+    /** Unique names of the topics for this consumer group. */
     KAFKA_TOPIC_QUALIFIED_NAMES("kafkaTopicQualifiedNames"),
     /** Unused. */
     LANGUAGE("language"),
@@ -603,35 +603,35 @@ public enum KeywordFields implements AtlanSearchableField {
     PROJECT_QUALIFIED_NAME("projectQualifiedName"),
     /** All propagated classifications that exist on an asset, searchable by the internal hashed-string ID of the classification. */
     PROPAGATED_TRAIT_NAMES("__propagatedTraitNames"),
-    /** TBC */
+    /** Unique identifier (in Qlik) of the app where the asset exists. */
     QLIK_APP_ID("qlikAppId"),
-    /** TBC */
+    /** Unique name of the app where the Qlik asset exists. */
     QLIK_APP_QUALIFIED_NAME("qlikAppQualifiedName"),
-    /** TBC */
+    /** Orientation of the chart. */
     QLIK_CHART_ORIENTATION("qlikChartOrientation"),
-    /** TBC */
+    /** Subtype of the chart, for example: bar, graph, pie, etc. */
     QLIK_CHART_TYPE("qlikChartType"),
-    /** TBC */
+    /** Subtype of the dataset. */
     QLIK_DATASET_SUBTYPE("qlikDatasetSubtype"),
-    /** TBC */
+    /** Technical name of the data asset. */
     QLIK_DATASET_TECHNICAL_NAME("qlikDatasetTechnicalName.keyword"),
-    /** TBC */
+    /** Type of the data asset, for example: qix-df, snowflake, etc. */
     QLIK_DATASET_TYPE("qlikDatasetType"),
-    /** TBC */
+    /** URI of the dataset. */
     QLIK_DATASET_URI("qlikDatasetUri"),
-    /** TBC */
+    /** Unique identifier of the Qlik asset in Qlik. */
     QLIK_ID("qlikId"),
-    /** TBC */
+    /** Origin App ID of the Qlik app. */
     QLIK_ORIGIN_APP_ID("qlikOriginAppId"),
-    /** TBC */
+    /** Unique identifier (in Qlik) of the owner of the asset. */
     QLIK_OWNER_ID("qlikOwnerId"),
-    /** TBC */
+    /** QRI of the Qlik object. */
     QLIK_QRI("qlikQRI"),
-    /** TBC */
+    /** Unique identifier (in Qlik) of the space where the asset exists. */
     QLIK_SPACE_ID("qlikSpaceId"),
-    /** TBC */
+    /** Unique name of the space where the Qlik asset exists. */
     QLIK_SPACE_QUALIFIED_NAME("qlikSpaceQualifiedName"),
-    /** TBC */
+    /** Type of space, for example: Private, Shared, etc. */
     QLIK_SPACE_TYPE("qlikSpaceType"),
     /** Unique fully-qualified name of the asset in Atlan. */
     QUALIFIED_NAME("qualifiedName"),
@@ -673,6 +673,20 @@ public enum KeywordFields implements AtlanSearchableField {
     QUICK_SIGHT_SHEET_NAME("quickSightSheetName.keyword"),
     /** TBC */
     RAW_QUERY("rawQuery"),
+    /** Name of the query from which the visualization was created. */
+    REDASH_QUERY_NAME("redashQueryName.keyword"),
+    /** Parameters for the Redash query. */
+    REDASH_QUERY_PARAMETERS("redashQueryParameters"),
+    /** Unique name of the query from which the visualization was created. */
+    REDASH_QUERY_QUALIFIED_NAME("redashQueryQualifiedName"),
+    /** Schedule of the Redash query. */
+    REDASH_QUERY_SCHEDULE("redashQuerySchedule"),
+    /** Human-readable schedule of the Redash query. */
+    REDASH_QUERY_SCHEDULE_HUMANIZED("redashQueryScheduleHumanized"),
+    /** SQL code of the Redash query. */
+    REDASH_QUERY_SQL("redashQuerySQL"),
+    /** Type of the Redash visualization. */
+    REDASH_VISUALIZATION_TYPE("redashVisualizationType"),
     /** TBC */
     REFERENCE("reference"),
     /** TBC */
@@ -811,7 +825,7 @@ public enum KeywordFields implements AtlanSearchableField {
     STATE("__state"),
     /** TBC */
     SUBTITLE_TEXT("subtitleText"),
-    /** TBC */
+    /** Subtype of the connection. */
     SUB_CATEGORY("subCategory"),
     /** TBC */
     SUB_DATA_TYPE("subDataType"),
@@ -841,9 +855,9 @@ public enum KeywordFields implements AtlanSearchableField {
     TENANT_ID("tenantId"),
     /** TBC */
     THOUGHTSPOT_CHART_TYPE("thoughtspotChartType"),
-    /** TBC */
+    /** Name of the Liveboard in which the Dashlet exists. */
     THOUGHTSPOT_LIVEBOARD_NAME("thoughtspotLiveboardName.keyword"),
-    /** TBC */
+    /** Unique name of the Liveboard in which the Dashlet exists. */
     THOUGHTSPOT_LIVEBOARD_QUALIFIED_NAME("thoughtspotLiveboardQualifiedName"),
     /** TBC */
     TOP_LEVEL_PROJECT_NAME("topLevelProjectName"),

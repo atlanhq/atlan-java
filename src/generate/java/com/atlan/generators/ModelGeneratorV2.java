@@ -30,9 +30,11 @@ public class ModelGeneratorV2 {
     private static final Map<String, EnumGenerator> enumCache = new HashMap<>();
     private static final Map<String, StructGenerator> structCache = new HashMap<>();
     private static final Map<String, AssetGenerator> assetCache = new HashMap<>();
+    private static final Map<String, Set<SearchFieldGenerator.Field>> searchCache = new HashMap<>();
 
     protected static final Map<String, Set<String>> uniqueRelationshipsForType = new ConcurrentHashMap<>();
     private static final Map<String, String> subTypeToSuperType = new ConcurrentHashMap<>();
+    private static final Map<String, List<String>> subTypeToSuperTypes = new ConcurrentHashMap<>();
 
     public static void main(String[] args) throws Exception {
 
@@ -54,6 +56,8 @@ public class ModelGeneratorV2 {
         generateAssets(cfg, entityDefs);
         generateSearchFields(cfg, entityDefs);
         generateAssetTests(cfg);
+        generateAssetDocs(cfg);
+        generateUpdatedAttributeCSV();
     }
 
     private static void generateEnums(Configuration cfg) throws Exception {
@@ -170,6 +174,68 @@ public class ModelGeneratorV2 {
         }
     }
 
+    private static void generateAssetDocs(Configuration cfg) throws Exception {
+        Template docTemplate = cfg.getTemplate("asset_doc.ftl");
+        Template javaPropertySnippetTemplate = cfg.getTemplate("snippet_java_properties.ftl");
+        Template javaRelationshipSnippetTemplate = cfg.getTemplate("snippet_java_relationships.ftl");
+        Template rawPropertySnippetTemplate = cfg.getTemplate("snippet_raw_properties.ftl");
+        Template rawRelationshipSnippetTemplate = cfg.getTemplate("snippet_raw_relationships.ftl");
+        for (AssetGenerator assetGen : assetCache.values()) {
+            if (!AssetGenerator.SKIP_GENERATING.contains(assetGen.getOriginalName())) {
+                AssetDocGenerator generator = new AssetDocGenerator(assetGen);
+                // Now that all are cached, render the inner details of the generator
+                // before processing the template
+                generator.resolveDetails();
+                String originalName = generator.getOriginalName().toLowerCase();
+                // First the overall asset file
+                String filename = AssetDocGenerator.DIRECTORY + File.separator + originalName + ".md";
+                try (BufferedWriter fs = new BufferedWriter(
+                        new OutputStreamWriter(new FileOutputStream(filename), StandardCharsets.UTF_8))) {
+                    docTemplate.process(generator, fs);
+                } catch (IOException e) {
+                    log.error("Unable to open file output: {}", filename, e);
+                }
+                // Then the snippets
+                filename = AssetDocGenerator.DIRECTORY + File.separator + "snippets" + File.separator + "model"
+                        + File.separator + "java" + File.separator + originalName + "-properties.md";
+                try (BufferedWriter fs = new BufferedWriter(
+                        new OutputStreamWriter(new FileOutputStream(filename), StandardCharsets.UTF_8))) {
+                    javaPropertySnippetTemplate.process(generator, fs);
+                } catch (IOException e) {
+                    log.error("Unable to open file output: {}", filename, e);
+                }
+                filename = AssetDocGenerator.DIRECTORY + File.separator + "snippets" + File.separator + "model"
+                        + File.separator + "java" + File.separator + originalName + "-relationships.md";
+                try (BufferedWriter fs = new BufferedWriter(
+                        new OutputStreamWriter(new FileOutputStream(filename), StandardCharsets.UTF_8))) {
+                    javaRelationshipSnippetTemplate.process(generator, fs);
+                } catch (IOException e) {
+                    log.error("Unable to open file output: {}", filename, e);
+                }
+                filename = AssetDocGenerator.DIRECTORY + File.separator + "snippets" + File.separator + "model"
+                        + File.separator + "raw" + File.separator + originalName + "-properties.md";
+                try (BufferedWriter fs = new BufferedWriter(
+                        new OutputStreamWriter(new FileOutputStream(filename), StandardCharsets.UTF_8))) {
+                    rawPropertySnippetTemplate.process(generator, fs);
+                } catch (IOException e) {
+                    log.error("Unable to open file output: {}", filename, e);
+                }
+                filename = AssetDocGenerator.DIRECTORY + File.separator + "snippets" + File.separator + "model"
+                        + File.separator + "raw" + File.separator + originalName + "-relationships.md";
+                try (BufferedWriter fs = new BufferedWriter(
+                        new OutputStreamWriter(new FileOutputStream(filename), StandardCharsets.UTF_8))) {
+                    rawRelationshipSnippetTemplate.process(generator, fs);
+                } catch (IOException e) {
+                    log.error("Unable to open file output: {}", filename, e);
+                }
+            }
+        }
+    }
+
+    private static void generateUpdatedAttributeCSV() throws Exception {
+        AttributeCSVGenerator.generate();
+    }
+
     public static TypeGenerator.MappedType getCachedType(String typeName) {
         if (enumCache.containsKey(typeName)) {
             return TypeGenerator.MappedType.builder()
@@ -203,7 +269,7 @@ public class ModelGeneratorV2 {
         return uniqueRelationshipsForType.get(originalName);
     }
 
-    private static void cacheRelationshipsForInheritance(List<EntityDef> entityDefs) {
+    static void cacheRelationshipsForInheritance(List<EntityDef> entityDefs) {
         // Populate 'relationshipsForType' map so that we don't repeat inherited attributes in subtypes
         // (this seems to only be a risk for relationship attributes)
         if (!entityDefs.isEmpty()) {
@@ -214,6 +280,7 @@ public class ModelGeneratorV2 {
                 List<RelationshipAttributeDef> relationships = entityDef.getRelationshipAttributeDefs();
                 if (superTypes == null || superTypes.isEmpty() || typeName.equals("Asset")) {
                     subTypeToSuperType.put(typeName, "");
+                    subTypeToSuperTypes.put(typeName, new ArrayList<>());
                     uniqueRelationshipsForType.put(
                             typeName,
                             relationships.stream()
@@ -223,6 +290,7 @@ public class ModelGeneratorV2 {
                     String singleSuperType = AssetGenerator.getSingleTypeToExtend(typeName, superTypes);
                     if (uniqueRelationshipsForType.containsKey(singleSuperType)) {
                         subTypeToSuperType.put(typeName, singleSuperType);
+                        subTypeToSuperTypes.put(typeName, superTypes);
                         Set<String> inheritedRelationships = getAllInheritedRelationships(singleSuperType);
                         Set<String> uniqueRelationships = relationships.stream()
                                 .map(RelationshipAttributeDef::getName)
@@ -246,6 +314,32 @@ public class ModelGeneratorV2 {
             Set<String> relations = new HashSet<>(uniqueRelationshipsForType.get(superTypeName));
             relations.addAll(getAllInheritedRelationships(subTypeToSuperType.get(superTypeName)));
             return relations;
+        }
+    }
+
+    static void addSearchFieldToCache(String className, String attrName, SearchFieldGenerator.Field field) {
+        String attrQName = AttributeCSVCache.getAttrQualifiedName(className, attrName);
+        if (!searchCache.containsKey(attrQName)) {
+            searchCache.put(attrQName, new TreeSet<>());
+        }
+        searchCache.get(attrQName).add(field);
+    }
+
+    static Set<SearchFieldGenerator.Field> getCachedSearchFields(String className, String attrName) {
+        return searchCache.get(AttributeCSVCache.getAttrQualifiedName(className, attrName));
+    }
+
+    static LinkedHashSet<String> getAllSuperTypesForType(String typeName) {
+        List<String> next = subTypeToSuperTypes.get(typeName);
+        if (next.isEmpty()) {
+            return new LinkedHashSet<>();
+        } else {
+            LinkedHashSet<String> now = new LinkedHashSet<>(next);
+            for (String superType : next) {
+                LinkedHashSet<String> again = getAllSuperTypesForType(superType);
+                now.addAll(again);
+            }
+            return now;
         }
     }
 }
