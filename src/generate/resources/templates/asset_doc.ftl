@@ -32,7 +32,7 @@ For detailed examples of searching these fields, see [common search fields](../.
 
         ??? type-string "typeName"
 
-            ```java title="Type of this asset."
+            ```java linenums="1" title="Type of this asset."
             ${className?uncap_first}.getTypeName(); // (1)
             QueryFactory.must(haveSuperType(Asset.TYPE_NAME)); // (2)
             QueryFactory.must(beOfType(${className}.TYPE_NAME)); // (3)
