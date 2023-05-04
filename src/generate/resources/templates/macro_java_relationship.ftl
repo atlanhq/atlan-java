@@ -5,19 +5,25 @@
 ??? reln-single "${attribute.details.renamed}"
 </#if>
 
-    ```java title="${attribute.details.description}"
+    ```java linenums="1" title="${attribute.details.description}"
+    <#if attribute.values?size == 1>
+    builder.${attribute.builderMethod}(${attribute.values?first}); // (1)
+    <#else>
     builder // (1)
     <#list attribute.values as value>
-        .${attribute.builderMethod}(${value})
-    </#list>
-    ${className?uncap_first}.get${attribute.details.renamed?cap_first}(); // (2)
-    <#if attribute.searchFields??>
-    <#list attribute.searchFields as field>
-        QueryFactory.must(have(${field.enumName}).eq(${attribute.values}));
+        .${attribute.builderMethod}(${value})<#if value?is_last>;</#if>
     </#list>
     </#if>
+    ${className?uncap_first}.get${attribute.details.renamed?cap_first}(); // (2)
     ```
 
     1. Add a `${attribute.details.renamed}` relationship<#if attribute.rawValues?size == 2>s</#if> from `${className}` to `${attribute.details.type.name}`<#if attribute.rawValues?size == 2>s</#if>.
+
+        !!! details "For more details"
+            For more information, see the asset CRUD snippets on either [creating](../../sdks/advanced-examples/create) or [updating](../../sdks/advanced-examples/update) assets.
+
     2. Retrieve the `${attribute.details.renamed}` from a `${className}`.
+
+        !!! details "For more details"
+            For more information, see the asset CRUD snippets on [retrieving](../../sdks/advanced-examples/read) assets.
 </#macro>

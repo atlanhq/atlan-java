@@ -9,7 +9,7 @@
 ??? type-${attribute.details.type.originalBase} "${attribute.details.originalName}"
 </#if>
 
-    ```json title="${attribute.details.description}"
+    ```json linenums="1" title="${attribute.details.description}"
     {
       "attributes": {
       <#if attribute.rawValues?size == 1>
@@ -26,4 +26,7 @@
     ```
 
     1. Set the `${attribute.details.originalName}` for a `${originalName}`.
+
+        !!! details "For more details"
+            For more information, see the [asset CRUD](../../sdks/advanced-examples) snippets.
 </#macro>

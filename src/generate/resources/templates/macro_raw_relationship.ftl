@@ -5,7 +5,7 @@
 ??? reln-single "${attribute.details.originalName}"
 </#if>
 
-    ```json title="${attribute.details.description}"
+    ```json linenums="1" title="${attribute.details.description}"
     {
       "relationshipAttributes": {
       <#if attribute.rawValues?size == 1>
