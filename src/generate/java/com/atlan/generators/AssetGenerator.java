@@ -66,6 +66,7 @@ public class AssetGenerator extends TypeGenerator {
     private final EntityDef entityDef;
     private String parentClassName;
     private List<Attribute> attributes;
+    private List<AssetGenerator> originalSuperTypes = null;
     private List<String> originalSubTypes = null;
     private List<String> subTypes = null;
     private List<String> mapContainers = null;
@@ -126,6 +127,16 @@ public class AssetGenerator extends TypeGenerator {
                     } else {
                         log.warn("Mapped subType was not found: {}", originalSubType);
                     }
+                }
+            }
+        }
+        List<String> superTypes = entityDef.getSuperTypes();
+        if (superTypes != null && !superTypes.isEmpty()) {
+            originalSuperTypes = new ArrayList<>();
+            for (String superType : superTypes) {
+                AssetGenerator parent = ModelGeneratorV2.getCachedAssetType(superType);
+                if (parent != null) {
+                    originalSuperTypes.add(parent);
                 }
             }
         }

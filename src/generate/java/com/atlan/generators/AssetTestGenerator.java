@@ -42,6 +42,7 @@ public class AssetTestGenerator extends AssetGenerator {
 
     @Override
     public void resolveDetails() {
+        super.resolveDetails();
         addTestAttributes(asset, false);
     }
 
@@ -218,33 +219,17 @@ public class AssetTestGenerator extends AssetGenerator {
                 }
                 break;
             case "String, String":
-                if (containerName.equals("List<Map<")) {
-                    if (Math.floorMod(count, 2) == 0) {
-                        value = "{\"key1\", \"value1\"}";
-                    } else {
-                        value = "{\"key2\", \"value2\"}";
-                    }
+                if (Math.floorMod(count, 2) == 0) {
+                    value = "{\"key1\", \"value1\"}";
                 } else {
-                    if (Math.floorMod(count, 2) == 0) {
-                        value = "\"key1\", \"value1\"";
-                    } else {
-                        value = "\"key2\", \"value2\"";
-                    }
+                    value = "{\"key2\", \"value2\"}";
                 }
                 break;
             case "String, Long":
-                if (containerName.equals("List<Map<")) {
-                    if (Math.floorMod(count, 2) == 0) {
-                        value = "{\"key1\", 123456}";
-                    } else {
-                        value = "{\"key2\", 654321}";
-                    }
+                if (Math.floorMod(count, 2) == 0) {
+                    value = "{\"key1\", 123456}";
                 } else {
-                    if (Math.floorMod(count, 2) == 0) {
-                        value = "\"key1\", 123456";
-                    } else {
-                        value = "\"key2\", 654321";
-                    }
+                    value = "{\"key2\", 654321}";
                 }
                 break;
             default:

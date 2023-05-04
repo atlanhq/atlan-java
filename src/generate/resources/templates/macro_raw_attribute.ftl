@@ -3,6 +3,8 @@
 ??? type-enum "${attribute.details.originalName}"
 <#elseif attribute.details.type.type == "STRUCT">
 ??? type-struct "${attribute.details.originalName}"
+<#elseif attribute.details.type.container?has_content && attribute.details.type.container == "Map<">
+??? type-map "${attribute.details.originalName}"
 <#else>
 ??? type-${attribute.details.type.originalBase} "${attribute.details.originalName}"
 </#if>

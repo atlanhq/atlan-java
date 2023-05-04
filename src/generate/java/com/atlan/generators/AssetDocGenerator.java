@@ -3,7 +3,9 @@
 package com.atlan.generators;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -22,5 +24,45 @@ public class AssetDocGenerator extends AssetTestGenerator {
     public AssetDocGenerator(AssetGenerator asset) {
         super(asset);
         this.superTypes = ModelGeneratorV2.getAllSuperTypesForType(getOriginalName());
+    }
+
+    public List<TestAttribute> getTypeSpecificProperties() {
+        List<TestAttribute> remaining = new ArrayList<>();
+        for (TestAttribute testAttribute : getTestAttributes()) {
+            if (!testAttribute.getRelationship() && !testAttribute.getInherited()) {
+                remaining.add(testAttribute);
+            }
+        }
+        return remaining;
+    }
+
+    public List<TestAttribute> getInheritedProperties() {
+        List<TestAttribute> remaining = new ArrayList<>();
+        for (TestAttribute testAttribute : getTestAttributes()) {
+            if (!testAttribute.getRelationship() && testAttribute.getInherited()) {
+                remaining.add(testAttribute);
+            }
+        }
+        return remaining;
+    }
+
+    public List<TestAttribute> getTypeSpecificRelationships() {
+        List<TestAttribute> remaining = new ArrayList<>();
+        for (TestAttribute testAttribute : getTestAttributes()) {
+            if (testAttribute.getRelationship() && !testAttribute.getInherited()) {
+                remaining.add(testAttribute);
+            }
+        }
+        return remaining;
+    }
+
+    public List<TestAttribute> getInheritedRelationships() {
+        List<TestAttribute> remaining = new ArrayList<>();
+        for (TestAttribute testAttribute : getTestAttributes()) {
+            if (testAttribute.getRelationship() && testAttribute.getInherited()) {
+                remaining.add(testAttribute);
+            }
+        }
+        return remaining;
     }
 }
