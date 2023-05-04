@@ -171,7 +171,7 @@ implements <a href="AtlanSearchableField.html" title="interface in com.atlan.mod
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#ADLS_OBJECT_COUNT">ADLS_OBJECT_COUNT</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Number of objects that exist within this container.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -519,7 +519,7 @@ implements <a href="AtlanSearchableField.html" title="interface in com.atlan.mod
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#KAFKA_TOPIC_RECORD_COUNT">KAFKA_TOPIC_RECORD_COUNT</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Number of (unexpired) messages in this topic.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -759,7 +759,7 @@ implements <a href="AtlanSearchableField.html" title="interface in com.atlan.mod
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#QLIK_APP_STATIC_BYTE_SIZE">QLIK_APP_STATIC_BYTE_SIZE</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Static space taken up by the app.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -805,234 +805,252 @@ implements <a href="AtlanSearchableField.html" title="interface in com.atlan.mod
 </td>
 </tr>
 <tr class="rowColor">
+<th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#REDASH_DASHBOARD_WIDGET_COUNT">REDASH_DASHBOARD_WIDGET_COUNT</a></span></code></th>
+<td class="colLast">
+<div class="block">Number of widgets in the Redash dashboard.</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#REDASH_QUERY_LAST_EXECUTED_AT">REDASH_QUERY_LAST_EXECUTED_AT</a></span></code></th>
+<td class="colLast">
+<div class="block">Time when the Redash query was last executed.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#REDASH_QUERY_LAST_EXECUTION_RUNTIME">REDASH_QUERY_LAST_EXECUTION_RUNTIME</a></span></code></th>
+<td class="colLast">
+<div class="block">Elapsed time of the last run of the Redash query.</div>
+</td>
+</tr>
+<tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#REPORT_COUNT">REPORT_COUNT</a></span></code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#RESULT_COUNT">RESULT_COUNT</a></span></code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#RESULT_MAKER_ID">RESULT_MAKER_ID</a></span></code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#ROW_COUNT">ROW_COUNT</a></span></code></th>
 <td class="colLast">
 <div class="block">Number of rows in this materialized view.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#ROW_LIMIT">ROW_LIMIT</a></span></code></th>
 <td class="colLast">
 <div class="block">Maximum number of rows that can be returned for the source.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#S3OBJECT_COUNT">S3OBJECT_COUNT</a></span></code></th>
 <td class="colLast">
 <div class="block">Number of objects within the bucket.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#S3OBJECT_LAST_MODIFIED_TIME">S3OBJECT_LAST_MODIFIED_TIME</a></span></code></th>
 <td class="colLast">
 <div class="block">Time (epoch) at which the object was last updated, in milliseconds, or when it was created if it has never been modified.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#S3OBJECT_SIZE">S3OBJECT_SIZE</a></span></code></th>
 <td class="colLast">
 <div class="block">Object size in bytes.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#SCHEMA_COUNT">SCHEMA_COUNT</a></span></code></th>
 <td class="colLast">
 <div class="block">Number of schemas in this database.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#SIGMA_DATA_ELEMENT_COUNT">SIGMA_DATA_ELEMENT_COUNT</a></span></code></th>
 <td class="colLast">
 <div class="block">Number of data elements that exist within this page.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#SIGMA_DATA_ELEMENT_FIELD_COUNT">SIGMA_DATA_ELEMENT_FIELD_COUNT</a></span></code></th>
 <td class="colLast">
 <div class="block">Number of data element fields within this data element.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#SIGMA_DATASET_COLUMN_COUNT">SIGMA_DATASET_COLUMN_COUNT</a></span></code></th>
 <td class="colLast">
 <div class="block">Number of columns that exist within this dataset.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#SIGMA_PAGE_COUNT">SIGMA_PAGE_COUNT</a></span></code></th>
 <td class="colLast">
 <div class="block">Number of pages that exist within this workbook.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#SIZE_BYTES">SIZE_BYTES</a></span></code></th>
 <td class="colLast">
 <div class="block">Size of the materialized view in bytes.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#SNOWFLAKE_STREAM_STALE_AFTER">SNOWFLAKE_STREAM_STALE_AFTER</a></span></code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#SOURCE_CHILD_COUNT">SOURCE_CHILD_COUNT</a></span></code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#SOURCE_CONTENT_METADATA_ID">SOURCE_CONTENT_METADATA_ID</a></span></code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#SOURCE_CREATED_AT">SOURCE_CREATED_AT</a></span></code></th>
 <td class="colLast">
 <div class="block">Time (epoch) at which the asset was created in the source system, in milliseconds.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#SOURCE_CREATOR_ID">SOURCE_CREATOR_ID</a></span></code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#SOURCE_LAST_ACCESSED_AT">SOURCE_LAST_ACCESSED_AT</a></span></code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#SOURCE_LAST_READ_AT">SOURCE_LAST_READ_AT</a></span></code></th>
 <td class="colLast">
 <div class="block">Timestamp of most recent read operation.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#SOURCE_LAST_VIEWED_AT">SOURCE_LAST_VIEWED_AT</a></span></code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#SOURCE_METADATA_ID">SOURCE_METADATA_ID</a></span></code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#SOURCE_PARENT_ID">SOURCE_PARENT_ID</a></span></code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#SOURCE_QUERY_ID">SOURCE_QUERY_ID</a></span></code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#SOURCE_READ_COUNT">SOURCE_READ_COUNT</a></span></code></th>
 <td class="colLast">
 <div class="block">Total count of all read operations at source.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#SOURCE_READ_USER_COUNT">SOURCE_READ_USER_COUNT</a></span></code></th>
 <td class="colLast">
 <div class="block">Total number of unique users that read data from asset.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#SOURCE_TOTAL_COST">SOURCE_TOTAL_COST</a></span></code></th>
 <td class="colLast">
 <div class="block">Total cost of all operations at source.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#SOURCE_UPDATED_AT">SOURCE_UPDATED_AT</a></span></code></th>
 <td class="colLast">
 <div class="block">Time (epoch) at which the asset was last updated in the source system, in milliseconds.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#SOURCE_USER_ID">SOURCE_USER_ID</a></span></code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#SOURCE_VIEW_COUNT">SOURCE_VIEW_COUNT</a></span></code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#SOURCELAST_UPDATER_ID">SOURCELAST_UPDATER_ID</a></span></code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#STALE_SINCE_DATE">STALE_SINCE_DATE</a></span></code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#START_TIME">START_TIME</a></span></code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#TABLE_COUNT">TABLE_COUNT</a></span></code></th>
 <td class="colLast">
 <div class="block">Number of tables in this schema.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#TILE_COUNT">TILE_COUNT</a></span></code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#TIMESTAMP">TIMESTAMP</a></span></code></th>
 <td class="colLast">
 <div class="block">Time (in milliseconds) when the asset was created.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#VIEW_COUNT">VIEW_COUNT</a></span></code></th>
 <td class="colLast">
 <div class="block">Number of views in this schema.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#VIEW_SCORE">VIEW_SCORE</a></span></code></th>
 <td class="colLast">
 <div class="block">TBC</div>
@@ -1124,7 +1142,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>ADLS_OBJECT_COUNT</h4>
 <pre>public static final&nbsp;<a href="NumericFields.html" title="enum in com.atlan.model.enums">NumericFields</a> ADLS_OBJECT_COUNT</pre>
-<div class="block">TBC</div>
+<div class="block">Number of objects that exist within this container.</div>
 </li>
 </ul>
 <a id="ADLS_OBJECT_SIZE">
@@ -1704,7 +1722,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>KAFKA_TOPIC_RECORD_COUNT</h4>
 <pre>public static final&nbsp;<a href="NumericFields.html" title="enum in com.atlan.model.enums">NumericFields</a> KAFKA_TOPIC_RECORD_COUNT</pre>
-<div class="block">TBC</div>
+<div class="block">Number of (unexpired) messages in this topic.</div>
 </li>
 </ul>
 <a id="KAFKA_TOPIC_REPLICATION_FACTOR">
@@ -2104,7 +2122,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>QLIK_APP_STATIC_BYTE_SIZE</h4>
 <pre>public static final&nbsp;<a href="NumericFields.html" title="enum in com.atlan.model.enums">NumericFields</a> QLIK_APP_STATIC_BYTE_SIZE</pre>
-<div class="block">TBC</div>
+<div class="block">Static space taken up by the app.</div>
 </li>
 </ul>
 <a id="QUERY_COUNT">
@@ -2175,6 +2193,36 @@ the order they are declared.</div>
 <h4>QUICK_SIGHT_DATASET_COLUMN_COUNT</h4>
 <pre>public static final&nbsp;<a href="NumericFields.html" title="enum in com.atlan.model.enums">NumericFields</a> QUICK_SIGHT_DATASET_COLUMN_COUNT</pre>
 <div class="block">TBC</div>
+</li>
+</ul>
+<a id="REDASH_DASHBOARD_WIDGET_COUNT">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>REDASH_DASHBOARD_WIDGET_COUNT</h4>
+<pre>public static final&nbsp;<a href="NumericFields.html" title="enum in com.atlan.model.enums">NumericFields</a> REDASH_DASHBOARD_WIDGET_COUNT</pre>
+<div class="block">Number of widgets in the Redash dashboard.</div>
+</li>
+</ul>
+<a id="REDASH_QUERY_LAST_EXECUTED_AT">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>REDASH_QUERY_LAST_EXECUTED_AT</h4>
+<pre>public static final&nbsp;<a href="NumericFields.html" title="enum in com.atlan.model.enums">NumericFields</a> REDASH_QUERY_LAST_EXECUTED_AT</pre>
+<div class="block">Time when the Redash query was last executed.</div>
+</li>
+</ul>
+<a id="REDASH_QUERY_LAST_EXECUTION_RUNTIME">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>REDASH_QUERY_LAST_EXECUTION_RUNTIME</h4>
+<pre>public static final&nbsp;<a href="NumericFields.html" title="enum in com.atlan.model.enums">NumericFields</a> REDASH_QUERY_LAST_EXECUTION_RUNTIME</pre>
+<div class="block">Elapsed time of the last run of the Redash query.</div>
 </li>
 </ul>
 <a id="REPORT_COUNT">

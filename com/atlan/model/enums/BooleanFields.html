@@ -525,52 +525,58 @@ implements <a href="AtlanSearchableField.html" title="interface in com.atlan.mod
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#QLIK_HAS_SECTION_ACCESS">QLIK_HAS_SECTION_ACCESS</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Whether section access or data masking is enabled (true) or not (false).</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#QLIK_IS_DIRECT_QUERY_MODE">QLIK_IS_DIRECT_QUERY_MODE</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Whether the app is in direct query mode (true) or not (false).</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#QLIK_IS_ENCRYPTED">QLIK_IS_ENCRYPTED</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Whether the app is encrypted (true) or not (false).</div>
 </td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#QLIK_IS_PUBLISHED">QLIK_IS_PUBLISHED</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Whether the asset is published in Qlik (true) or not (false).</div>
 </td>
 </tr>
 <tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#QLIK_SHEET_IS_APPROVED">QLIK_SHEET_IS_APPROVED</a></span></code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Whether the sheet is approved (true) or not (false).</div>
 </td>
 </tr>
 <tr class="rowColor">
+<th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#REDASH_IS_PUBLISHED">REDASH_IS_PUBLISHED</a></span></code></th>
+<td class="colLast">
+<div class="block">Whether the asset is published in Redash (true) or not (false).</div>
+</td>
+</tr>
+<tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#S3BUCKET_VERSIONING_ENABLED">S3BUCKET_VERSIONING_ENABLED</a></span></code></th>
 <td class="colLast">
 <div class="block">Whether versioning is enabled for the bucket.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#SIGMA_DATA_ELEMENT_FIELD_IS_HIDDEN">SIGMA_DATA_ELEMENT_FIELD_IS_HIDDEN</a></span></code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#SNOWFLAKE_PIPE_IS_AUTO_INGEST_ENABLED">SNOWFLAKE_PIPE_IS_AUTO_INGEST_ENABLED</a></span></code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colFirst" scope="row"><code><span class="memberNameLink"><a href="#SNOWFLAKE_STREAM_IS_STALE">SNOWFLAKE_STREAM_IS_STALE</a></span></code></th>
 <td class="colLast">
 <div class="block">TBC</div>
@@ -1252,7 +1258,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>QLIK_HAS_SECTION_ACCESS</h4>
 <pre>public static final&nbsp;<a href="BooleanFields.html" title="enum in com.atlan.model.enums">BooleanFields</a> QLIK_HAS_SECTION_ACCESS</pre>
-<div class="block">TBC</div>
+<div class="block">Whether section access or data masking is enabled (true) or not (false).</div>
 </li>
 </ul>
 <a id="QLIK_IS_DIRECT_QUERY_MODE">
@@ -1262,7 +1268,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>QLIK_IS_DIRECT_QUERY_MODE</h4>
 <pre>public static final&nbsp;<a href="BooleanFields.html" title="enum in com.atlan.model.enums">BooleanFields</a> QLIK_IS_DIRECT_QUERY_MODE</pre>
-<div class="block">TBC</div>
+<div class="block">Whether the app is in direct query mode (true) or not (false).</div>
 </li>
 </ul>
 <a id="QLIK_IS_ENCRYPTED">
@@ -1272,7 +1278,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>QLIK_IS_ENCRYPTED</h4>
 <pre>public static final&nbsp;<a href="BooleanFields.html" title="enum in com.atlan.model.enums">BooleanFields</a> QLIK_IS_ENCRYPTED</pre>
-<div class="block">TBC</div>
+<div class="block">Whether the app is encrypted (true) or not (false).</div>
 </li>
 </ul>
 <a id="QLIK_IS_PUBLISHED">
@@ -1282,7 +1288,7 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>QLIK_IS_PUBLISHED</h4>
 <pre>public static final&nbsp;<a href="BooleanFields.html" title="enum in com.atlan.model.enums">BooleanFields</a> QLIK_IS_PUBLISHED</pre>
-<div class="block">TBC</div>
+<div class="block">Whether the asset is published in Qlik (true) or not (false).</div>
 </li>
 </ul>
 <a id="QLIK_SHEET_IS_APPROVED">
@@ -1292,7 +1298,17 @@ the order they are declared.</div>
 <li class="blockList">
 <h4>QLIK_SHEET_IS_APPROVED</h4>
 <pre>public static final&nbsp;<a href="BooleanFields.html" title="enum in com.atlan.model.enums">BooleanFields</a> QLIK_SHEET_IS_APPROVED</pre>
-<div class="block">TBC</div>
+<div class="block">Whether the sheet is approved (true) or not (false).</div>
+</li>
+</ul>
+<a id="REDASH_IS_PUBLISHED">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>REDASH_IS_PUBLISHED</h4>
+<pre>public static final&nbsp;<a href="BooleanFields.html" title="enum in com.atlan.model.enums">BooleanFields</a> REDASH_IS_PUBLISHED</pre>
+<div class="block">Whether the asset is published in Redash (true) or not (false).</div>
 </li>
 </ul>
 <a id="S3BUCKET_VERSIONING_ENABLED">
