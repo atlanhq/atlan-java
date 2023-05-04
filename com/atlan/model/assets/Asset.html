@@ -674,14 +674,14 @@ extends <a href="../relations/Reference.html" title="class in com.atlan.model.re
 </td>
 </tr>
 <tr id="i59" class="rowColor">
-<td class="colFirst"><code>java.util.Set&lt;java.lang.String&gt;</code></td>
+<td class="colFirst"><code>java.util.SortedSet&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getClassificationNames()">getClassificationNames</a></span>()</code></th>
 <td class="colLast">
 <div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
 </td>
 </tr>
 <tr id="i60" class="altColor">
-<td class="colFirst"><code>java.util.Set&lt;<a href="../core/Classification.html" title="class in com.atlan.model.core">Classification</a>&gt;</code></td>
+<td class="colFirst"><code>java.util.SortedSet&lt;<a href="../core/Classification.html" title="class in com.atlan.model.core">Classification</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getClassifications()">getClassifications</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Classifications assigned to the asset.</div>
@@ -821,14 +821,14 @@ extends <a href="../relations/Reference.html" title="class in com.atlan.model.re
 </td>
 </tr>
 <tr id="i80" class="altColor">
-<td class="colFirst"><code>java.util.Set&lt;java.lang.String&gt;</code></td>
+<td class="colFirst"><code>java.util.SortedSet&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMeaningNames()">getMeaningNames</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Names of terms that have been linked to this asset.</div>
 </td>
 </tr>
 <tr id="i81" class="rowColor">
-<td class="colFirst"><code>java.util.Set&lt;<a href="Meaning.html" title="class in com.atlan.model.assets">Meaning</a>&gt;</code></td>
+<td class="colFirst"><code>java.util.SortedSet&lt;<a href="Meaning.html" title="class in com.atlan.model.assets">Meaning</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMeanings()">getMeanings</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Details of terms that have been linked to this asset.</div>
@@ -870,7 +870,7 @@ extends <a href="../relations/Reference.html" title="class in com.atlan.model.re
 </td>
 </tr>
 <tr id="i87" class="rowColor">
-<td class="colFirst"><code>java.util.Set&lt;java.lang.String&gt;</code></td>
+<td class="colFirst"><code>java.util.SortedSet&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPendingTasks()">getPendingTasks</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Unique identifiers (GUIDs) for any background tasks that are yet to operate on this asset.</div>
@@ -3038,7 +3038,7 @@ extends <a href="../relations/Reference.html" title="class in com.atlan.model.re
 <ul class="blockList">
 <li class="blockList">
 <h4>getClassifications</h4>
-<pre class="methodSignature">public&nbsp;java.util.Set&lt;<a href="../core/Classification.html" title="class in com.atlan.model.core">Classification</a>&gt;&nbsp;getClassifications()</pre>
+<pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="../core/Classification.html" title="class in com.atlan.model.core">Classification</a>&gt;&nbsp;getClassifications()</pre>
 <div class="block">Classifications assigned to the asset.</div>
 </li>
 </ul>
@@ -3121,7 +3121,7 @@ extends <a href="../relations/Reference.html" title="class in com.atlan.model.re
 <li class="blockList">
 <h4>getClassificationNames</h4>
 <pre class="methodSignature">@Deprecated
-public&nbsp;java.util.Set&lt;java.lang.String&gt;&nbsp;getClassificationNames()</pre>
+public&nbsp;java.util.SortedSet&lt;java.lang.String&gt;&nbsp;getClassificationNames()</pre>
 <div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
 <div class="block">The names of the classifications that exist on the asset. This is not always returned, even by
  full retrieval operations. It is better to depend on the detailed values in the classifications
@@ -3148,7 +3148,7 @@ public&nbsp;java.util.Set&lt;java.lang.String&gt;&nbsp;getClassificationNames()<
 <ul class="blockList">
 <li class="blockList">
 <h4>getMeaningNames</h4>
-<pre class="methodSignature">public&nbsp;java.util.Set&lt;java.lang.String&gt;&nbsp;getMeaningNames()</pre>
+<pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;java.lang.String&gt;&nbsp;getMeaningNames()</pre>
 <div class="block">Names of terms that have been linked to this asset.</div>
 </li>
 </ul>
@@ -3158,7 +3158,7 @@ public&nbsp;java.util.Set&lt;java.lang.String&gt;&nbsp;getClassificationNames()<
 <ul class="blockList">
 <li class="blockList">
 <h4>getMeanings</h4>
-<pre class="methodSignature">public&nbsp;java.util.Set&lt;<a href="Meaning.html" title="class in com.atlan.model.assets">Meaning</a>&gt;&nbsp;getMeanings()</pre>
+<pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;<a href="Meaning.html" title="class in com.atlan.model.assets">Meaning</a>&gt;&nbsp;getMeanings()</pre>
 <div class="block">Details of terms that have been linked to this asset.</div>
 </li>
 </ul>
@@ -3168,7 +3168,7 @@ public&nbsp;java.util.Set&lt;java.lang.String&gt;&nbsp;getClassificationNames()<
 <ul class="blockList">
 <li class="blockList">
 <h4>getPendingTasks</h4>
-<pre class="methodSignature">public&nbsp;java.util.Set&lt;java.lang.String&gt;&nbsp;getPendingTasks()</pre>
+<pre class="methodSignature">public&nbsp;java.util.SortedSet&lt;java.lang.String&gt;&nbsp;getPendingTasks()</pre>
 <div class="block">Unique identifiers (GUIDs) for any background tasks that are yet to operate on this asset.</div>
 </li>
 </ul>

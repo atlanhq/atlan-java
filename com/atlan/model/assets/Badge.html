@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":9,"i8":9,"i9":9,"i10":9,"i11":9,"i12":9,"i13":9,"i14":10,"i15":10,"i16":9};
+var data = {"i0":9,"i1":10,"i2":9,"i3":10,"i4":9,"i5":10,"i6":10,"i7":10,"i8":10,"i9":9,"i10":9,"i11":9,"i12":9,"i13":9,"i14":9,"i15":9,"i16":10,"i17":10,"i18":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -274,51 +274,68 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
+<td class="colFirst"><code>static <a href="Badge.BadgeBuilder.html" title="class in com.atlan.model.assets">Badge.BadgeBuilder</a>&lt;?,&#8203;?&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#creator(java.lang.String,java.lang.String,java.lang.String)">creator</a></span>&#8203;(java.lang.String&nbsp;name,
+       java.lang.String&nbsp;cmName,
+       java.lang.String&nbsp;cmAttribute)</code></th>
+<td class="colLast">
+<div class="block">Builds the minimal object necessary to create a Badge.</div>
+</td>
+</tr>
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#equals(java.lang.Object)">equals</a></span>&#8203;(java.lang.Object&nbsp;o)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i4" class="altColor">
+<td class="colFirst"><code>static java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#generateQualifiedName(java.lang.String,java.lang.String)">generateQualifiedName</a></span>&#8203;(java.lang.String&nbsp;cmName,
+                     java.lang.String&nbsp;cmAttribute)</code></th>
+<td class="colLast">
+<div class="block">Generate a unique name for this badge.</div>
+</td>
+</tr>
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>java.util.List&lt;<a href="../structs/BadgeCondition.html" title="class in com.atlan.model.structs">BadgeCondition</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getBadgeConditions()">getBadgeConditions</a></span>()</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getBadgeMetadataAttribute()">getBadgeMetadataAttribute</a></span>()</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTypeName()">getTypeName</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Fixed typeName for Badges.</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hashCode()">hashCode</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>static <a href="Badge.html" title="class in com.atlan.model.assets">Badge</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#refByGuid(java.lang.String)">refByGuid</a></span>&#8203;(java.lang.String&nbsp;guid)</code></th>
 <td class="colLast">
 <div class="block">Reference to a Badge by GUID.</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>static <a href="Badge.html" title="class in com.atlan.model.assets">Badge</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#refByQualifiedName(java.lang.String)">refByQualifiedName</a></span>&#8203;(java.lang.String&nbsp;qualifiedName)</code></th>
 <td class="colLast">
 <div class="block">Reference to a Badge by qualifiedName.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>static <a href="Badge.html" title="class in com.atlan.model.assets">Badge</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeDescription(java.lang.String,java.lang.String)">removeDescription</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                  java.lang.String&nbsp;name)</code></th>
@@ -326,7 +343,7 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 <div class="block">Remove the system description from a Badge.</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>static <a href="Badge.html" title="class in com.atlan.model.assets">Badge</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeUserDescription(java.lang.String,java.lang.String)">removeUserDescription</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
                      java.lang.String&nbsp;name)</code></th>
@@ -334,33 +351,33 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 <div class="block">Remove the user's description from a Badge.</div>
 </td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>static boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#restore(java.lang.String)">restore</a></span>&#8203;(java.lang.String&nbsp;qualifiedName)</code></th>
 <td class="colLast">
 <div class="block">Restore the archived (soft-deleted) Badge to active.</div>
 </td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>static <a href="Badge.html" title="class in com.atlan.model.assets">Badge</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#retrieveByGuid(java.lang.String)">retrieveByGuid</a></span>&#8203;(java.lang.String&nbsp;guid)</code></th>
 <td class="colLast">
 <div class="block">Retrieves a Badge by its GUID, complete with all of its relationships.</div>
 </td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code>static <a href="Badge.html" title="class in com.atlan.model.assets">Badge</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#retrieveByQualifiedName(java.lang.String)">retrieveByQualifiedName</a></span>&#8203;(java.lang.String&nbsp;qualifiedName)</code></th>
 <td class="colLast">
 <div class="block">Retrieves a Badge by its qualifiedName, complete with all of its relationships.</div>
 </td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code><a href="Badge.BadgeBuilder.html" title="class in com.atlan.model.assets">Badge.BadgeBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toBuilder()">toBuilder</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code><a href="Badge.BadgeBuilder.html" title="class in com.atlan.model.assets">Badge.BadgeBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#trimToRequired()">trimToRequired</a></span>()</code></th>
 <td class="colLast">
@@ -368,7 +385,7 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
  more-complete Badge object.</div>
 </td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i18" class="altColor">
 <td class="colFirst"><code>static <a href="Badge.BadgeBuilder.html" title="class in com.atlan.model.assets">Badge.BadgeBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updater(java.lang.String,java.lang.String)">updater</a></span>&#8203;(java.lang.String&nbsp;qualifiedName,
        java.lang.String&nbsp;name)</code></th>
@@ -549,6 +566,50 @@ extends <a href="Asset.html" title="class in com.atlan.model.assets">Asset</a></
 <dd>true if the Badge is now active, and false otherwise</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API problems</dd>
+</dl>
+</li>
+</ul>
+<a id="creator(java.lang.String,java.lang.String,java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>creator</h4>
+<pre class="methodSignature">public static&nbsp;<a href="Badge.BadgeBuilder.html" title="class in com.atlan.model.assets">Badge.BadgeBuilder</a>&lt;?,&#8203;?&gt;&nbsp;creator&#8203;(java.lang.String&nbsp;name,
+                                                    java.lang.String&nbsp;cmName,
+                                                    java.lang.String&nbsp;cmAttribute)
+                                             throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Builds the minimal object necessary to create a Badge.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>name</code> - of the Badge</dd>
+<dd><code>cmName</code> - human-readable name of the custom metadata for which to create the badge</dd>
+<dd><code>cmAttribute</code> - human-readable name of the custom metadata attribute for which to create the badge</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the minimal request necessary to update the Badge, as a builder</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - if the specified custom metadata for the badge cannot be found</dd>
+</dl>
+</li>
+</ul>
+<a id="generateQualifiedName(java.lang.String,java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>generateQualifiedName</h4>
+<pre class="methodSignature">public static&nbsp;java.lang.String&nbsp;generateQualifiedName&#8203;(java.lang.String&nbsp;cmName,
+                                                     java.lang.String&nbsp;cmAttribute)
+                                              throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Generate a unique name for this badge.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>cmName</code> - human-readable name of the custom metadata for which to create the badge</dd>
+<dd><code>cmAttribute</code> - human-readable name of the custom metadata attribute for which to create the badge</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the unique qualifiedName of the badge</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - if the specified custom metadata cannot be found</dd>
 </dl>
 </li>
 </ul>

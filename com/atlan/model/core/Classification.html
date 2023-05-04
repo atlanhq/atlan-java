@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":9,"i11":9,"i12":10};
+var data = {"i0":9,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":9,"i12":9,"i13":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -137,12 +137,12 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><code><a href="../search/AuditDetail.html" title="interface in com.atlan.model.search">AuditDetail</a></code></dd>
+<dd><code><a href="../search/AuditDetail.html" title="interface in com.atlan.model.search">AuditDetail</a></code>, <code>java.lang.Comparable&lt;<a href="Classification.html" title="class in com.atlan.model.core">Classification</a>&gt;</code></dd>
 </dl>
 <hr>
 <pre>public class <span class="typeNameLabel">Classification</span>
 extends <a href="AtlanObject.html" title="class in com.atlan.model.core">AtlanObject</a>
-implements <a href="../search/AuditDetail.html" title="interface in com.atlan.model.search">AuditDetail</a></pre>
+implements <a href="../search/AuditDetail.html" title="interface in com.atlan.model.search">AuditDetail</a>, java.lang.Comparable&lt;<a href="Classification.html" title="class in com.atlan.model.core">Classification</a>&gt;</pre>
 </li>
 </ul>
 </div>
@@ -232,25 +232,29 @@ implements <a href="../search/AuditDetail.html" title="interface in com.atlan.mo
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
+<td class="colFirst"><code>int</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#compareTo(com.atlan.model.core.Classification)">compareTo</a></span>&#8203;(<a href="Classification.html" title="class in com.atlan.model.core">Classification</a>&nbsp;o)</code></th>
+</tr>
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#equals(java.lang.Object)">equals</a></span>&#8203;(java.lang.Object&nbsp;o)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getEntityGuid()">getEntityGuid</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Unique identifier of the entity to which this classification is attached.</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="../enums/AtlanStatus.html" title="enum in com.atlan.model.enums">AtlanStatus</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getEntityStatus()">getEntityStatus</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Status of the entity.</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPropagate()">getPropagate</a></span>()</code></th>
 <td class="colLast">
@@ -258,7 +262,7 @@ implements <a href="../search/AuditDetail.html" title="interface in com.atlan.mo
  classification is attached.</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRemovePropagationsOnEntityDelete()">getRemovePropagationsOnEntityDelete</a></span>()</code></th>
 <td class="colLast">
@@ -266,7 +270,7 @@ implements <a href="../search/AuditDetail.html" title="interface in com.atlan.mo
  the classification is removed from this entity.</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>java.lang.Boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRestrictPropagationThroughLineage()">getRestrictPropagationThroughLineage</a></span>()</code></th>
 <td class="colLast">
@@ -274,26 +278,26 @@ implements <a href="../search/AuditDetail.html" title="interface in com.atlan.mo
  propagate through lineage (false).</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTypeName()">getTypeName</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Name of the classification.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hashCode()">hashCode</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>static <a href="Classification.html" title="class in com.atlan.model.core">Classification</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#of(java.lang.String)">of</a></span>&#8203;(java.lang.String&nbsp;classificationName)</code></th>
 <td class="colLast">
 <div class="block">Construct a classification assignment for an entity that is being created or updated.</div>
 </td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>static <a href="Classification.html" title="class in com.atlan.model.core">Classification</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#of(java.lang.String,java.lang.String)">of</a></span>&#8203;(java.lang.String&nbsp;classificationName,
   java.lang.String&nbsp;entityGuid)</code></th>
@@ -301,7 +305,7 @@ implements <a href="../search/AuditDetail.html" title="interface in com.atlan.mo
 <div class="block">Construct a classification assignment for a specific entity.</div>
 </td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code><a href="Classification.ClassificationBuilder.html" title="class in com.atlan.model.core">Classification.ClassificationBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toBuilder()">toBuilder</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
@@ -396,6 +400,19 @@ implements <a href="../search/AuditDetail.html" title="interface in com.atlan.mo
 <dd><code>entityGuid</code> - unique identifier (GUID) of the entity to which the classification is to be assigned</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>a classification assignment with default settings for propagation and a specific entity assignment</dd>
+</dl>
+</li>
+</ul>
+<a id="compareTo(com.atlan.model.core.Classification)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>compareTo</h4>
+<pre class="methodSignature">public&nbsp;int&nbsp;compareTo&#8203;(<a href="Classification.html" title="class in com.atlan.model.core">Classification</a>&nbsp;o)</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code>compareTo</code>&nbsp;in interface&nbsp;<code>java.lang.Comparable&lt;<a href="Classification.html" title="class in com.atlan.model.core">Classification</a>&gt;</code></dd>
 </dl>
 </li>
 </ul>
