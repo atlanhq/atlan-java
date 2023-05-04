@@ -22,7 +22,7 @@
 
     /** Classifications assigned to the asset. */
     @Singular
-    Set<Classification> classifications;
+    SortedSet<Classification> classifications;
 
     /**
      * Map of custom metadata attributes and values defined on the asset. The map is keyed by the human-readable
@@ -58,19 +58,22 @@
      */
     @Deprecated
     @Singular
-    Set<String> classificationNames;
+    SortedSet<String> classificationNames;
 
     /** Unused. */
     Boolean isIncomplete;
 
     /** Names of terms that have been linked to this asset. */
-    Set<String> meaningNames;
+    @Singular
+    SortedSet<String> meaningNames;
 
     /** Details of terms that have been linked to this asset. */
-    Set<Meaning> meanings;
+    @Singular
+    SortedSet<Meaning> meanings;
 
     /** Unique identifiers (GUIDs) for any background tasks that are yet to operate on this asset. */
-    final Set<String> pendingTasks;
+    @Singular
+    final SortedSet<String> pendingTasks;
 
     /**
      * Reduce the asset to the minimum set of properties required to update it.

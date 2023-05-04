@@ -8,6 +8,7 @@ import com.atlan.serde.ClassificationDeserializer;
 import com.atlan.serde.ClassificationSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import java.util.Comparator;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.experimental.SuperBuilder;
@@ -17,7 +18,13 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = false)
 @JsonDeserialize(using = ClassificationDeserializer.class)
 @JsonSerialize(using = ClassificationSerializer.class)
-public class Classification extends AtlanObject implements AuditDetail {
+public class Classification extends AtlanObject implements AuditDetail, Comparable<Classification> {
+    private static final long serialVersionUID = 2L;
+
+    private static final Comparator<String> stringComparator = Comparator.nullsFirst(String::compareTo);
+    private static final Comparator<Classification> classificationComparator = Comparator.comparing(
+                    Classification::getTypeName, stringComparator)
+            .thenComparing(Classification::getEntityGuid, stringComparator);
 
     /**
      * Construct a classification assignment for an entity that is being created or updated.
@@ -87,4 +94,12 @@ public class Classification extends AtlanObject implements AuditDetail {
     Boolean restrictPropagationThroughLineage;
 
     /** Unused. List<Object> attributes; List<Object> validityPeriods; */
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int compareTo(Classification o) {
+        return classificationComparator.compare(this, o);
+    }
 }
