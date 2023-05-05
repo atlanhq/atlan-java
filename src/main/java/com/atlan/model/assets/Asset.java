@@ -610,21 +610,49 @@ public abstract class Asset extends Reference {
      * @throws AtlanException on any error during the API invocation
      */
     public AssetMutationResponse upsert() throws AtlanException {
-        return EntityBulkEndpoint.upsert(this, false, false);
+        return EntityBulkEndpoint.upsert(this, false);
     }
 
     /**
      * If no asset exists, has the same behavior as the {@link #upsert()} method.
-     * If an asset does exist, optionally overwrites any classifications and / or custom metadata.
+     * If an asset does exist, optionally overwrites any classifications. Custom metadata will always
+     * be entirely ignored using this method.
      *
      * @param replaceClassifications whether to replace classifications during an update (true) or not (false)
-     * @param replaceCustomMetadata whether to replace custom metadata during an update (true) or not (false)
      * @return details of the created or updated asset
      * @throws AtlanException on any error during the API invocation
      */
-    public AssetMutationResponse upsert(boolean replaceClassifications, boolean replaceCustomMetadata)
-            throws AtlanException {
-        return EntityBulkEndpoint.upsert(this, replaceClassifications, replaceCustomMetadata);
+    public AssetMutationResponse upsert(boolean replaceClassifications) throws AtlanException {
+        return EntityBulkEndpoint.upsert(this, replaceClassifications);
+    }
+
+    /**
+     * If no asset exists, has the same behavior as the {@link #upsert()} method, while also setting
+     * any custom metadata provided.
+     * If an asset does exist, optionally overwrites any classifications.
+     * Will merge any provided custom metadata with any custom metadata that already exists on the asset.
+     *
+     * @param replaceClassifications whether to replace classifications during an update (true) or not (false)
+     * @return details of the created or updated asset
+     * @throws AtlanException on any error during the API invocation
+     */
+    public AssetMutationResponse upsertMergingCM(boolean replaceClassifications) throws AtlanException {
+        return EntityBulkEndpoint.upsertMergingCM(List.of(this), replaceClassifications);
+    }
+
+    /**
+     * If no asset exists, has the same behavior as the {@link #upsert()} method, while also setting
+     * any custom metadata provided.
+     * If an asset does exist, optionally overwrites any classifications.
+     * Will overwrite all custom metadata on any existing asset with only the custom metadata provided
+     * (wiping out any other custom metadata on an existing asset that is not provided in the request).
+     *
+     * @param replaceClassifications whether to replace classifications during an update (true) or not (false)
+     * @return details of the created or updated asset
+     * @throws AtlanException on any error during the API invocation
+     */
+    public AssetMutationResponse upsertReplacingCM(boolean replaceClassifications) throws AtlanException {
+        return EntityBulkEndpoint.upsertReplacingCM(List.of(this), replaceClassifications);
     }
 
     /**
@@ -932,7 +960,7 @@ public abstract class Asset extends Reference {
     }
 
     private static Asset updateAttributes(Asset asset) throws AtlanException {
-        AssetMutationResponse response = EntityBulkEndpoint.upsert(asset, false, false);
+        AssetMutationResponse response = EntityBulkEndpoint.upsert(asset, false);
         if (response != null && !response.getUpdatedAssets().isEmpty()) {
             return response.getUpdatedAssets().get(0);
         }
@@ -1035,7 +1063,7 @@ public abstract class Asset extends Reference {
      */
     private static boolean restore(String typeName, String qualifiedName, int retryCount)
             throws AtlanException, InterruptedException {
-        Asset existing = getExistingAsset(typeName, qualifiedName);
+        Asset existing = retrieveFull(typeName, qualifiedName);
         if (existing == null) {
             // Nothing to restore, so cannot be restored
             return false;
@@ -1088,7 +1116,7 @@ public abstract class Asset extends Reference {
      */
     protected static Asset appendTerms(String typeName, String qualifiedName, List<GlossaryTerm> terms)
             throws AtlanException {
-        Asset existing = getExistingAsset(typeName, qualifiedName);
+        Asset existing = retrieveFull(typeName, qualifiedName);
         if (terms == null) {
             return existing;
         } else if (existing != null) {
@@ -1125,7 +1153,7 @@ public abstract class Asset extends Reference {
      */
     protected static Asset removeTerms(String typeName, String qualifiedName, List<GlossaryTerm> terms)
             throws AtlanException {
-        Asset existing = getExistingAsset(typeName, qualifiedName);
+        Asset existing = retrieveFull(typeName, qualifiedName);
         if (existing != null) {
             Set<GlossaryTerm> replacementTerms = new TreeSet<>();
             Set<GlossaryTerm> existingTerms = existing.getAssignedTerms();
@@ -1174,13 +1202,9 @@ public abstract class Asset extends Reference {
         }
     }
 
-    private static Asset getExistingAsset(String typeName, String qualifiedName) throws AtlanException {
-        return retrieveFull(typeName, qualifiedName);
-    }
-
     private static Asset updateRelationships(Asset asset) throws AtlanException {
         String typeNameToUpdate = asset.getTypeName();
-        AssetMutationResponse response = EntityBulkEndpoint.upsert(asset, false, false);
+        AssetMutationResponse response = EntityBulkEndpoint.upsert(asset, false);
         if (response != null && !response.getUpdatedAssets().isEmpty()) {
             for (Asset result : response.getUpdatedAssets()) {
                 if (result.getTypeName().equals(typeNameToUpdate)) {

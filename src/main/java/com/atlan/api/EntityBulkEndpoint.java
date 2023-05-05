@@ -29,60 +29,99 @@ public class EntityBulkEndpoint extends AtlasEndpoint {
     private static final String endpoint = "/entity/bulk";
 
     /**
-     * Creates any asset, optionally overwriting an existing entity's classifications and / or
-     * custom metadata.
+     * Creates any asset, optionally overwriting an existing entity's classifications and entirely
+     * ignoring any custom metadata.
      *
      * @param value asset to upsert
      * @param replaceClassifications whether to overwrite any existing classifications (true) or not (false)
-     * @param replaceCustomMetadata whether to overwrite any existing custom metadata (true) or not (false)
      * @return the results of the upsert
      * @throws AtlanException on any API interaction problems
      */
-    public static AssetMutationResponse upsert(
-            Asset value, boolean replaceClassifications, boolean replaceCustomMetadata) throws AtlanException {
-        return upsert(Collections.singletonList(value), replaceClassifications, replaceCustomMetadata);
+    public static AssetMutationResponse upsert(Asset value, boolean replaceClassifications) throws AtlanException {
+        return upsert(Collections.singletonList(value), replaceClassifications);
     }
 
     /**
-     * Creates any assets, optionally overwriting the existing assets' classifications and / or
-     * custom metadata.
+     * Creates any assets, optionally overwriting the existing assets' classifications and entirely
+     * ignoring any custom metadata.
      *
      * @param values assets to upsert
      * @param replaceClassifications whether to overwrite any existing classifications (true) or not (false)
-     * @param replaceCustomMetadata whether to overwrite any existing custom metadata (true) or not (false)
      * @return the results of the upsert
      * @throws AtlanException on any API interaction problems
      */
-    public static AssetMutationResponse upsert(
-            List<Asset> values, boolean replaceClassifications, boolean replaceCustomMetadata) throws AtlanException {
+    public static AssetMutationResponse upsert(List<Asset> values, boolean replaceClassifications)
+            throws AtlanException {
         String url = String.format(
                 "%s%s",
                 getBaseUrl(),
                 String.format(
-                        "%s?replaceClassifications=%s&replaceBusinessAttributes=%s&overwriteBusinessAttributes=%s",
-                        endpoint, replaceClassifications, replaceCustomMetadata, replaceCustomMetadata));
+                        "%s?replaceClassifications=%s&replaceBusinessAttributes=false&overwriteBusinessAttributes=false",
+                        endpoint, replaceClassifications));
         BulkEntityRequest beq = BulkEntityRequest.builder().entities(values).build();
         return ApiResource.request(ApiResource.RequestMethod.POST, url, beq, AssetMutationResponse.class, null);
     }
 
     /**
-     * Creates any assets, optionally overwriting the existing assets' classifications and / or
-     * custom metadata.
+     * Creates any assets, optionally overwriting the existing assets' classifications and merging any
+     * provided custom metadata values (but leaving any existing custom metadata values as-is).
      *
-     * @param value connection to upsert
+     * @param values assets to upsert
      * @param replaceClassifications whether to overwrite any existing classifications (true) or not (false)
-     * @param replaceCustomMetadata whether to overwrite any existing custom metadata (true) or not (false)
      * @return the results of the upsert
      * @throws AtlanException on any API interaction problems
      */
-    public static ConnectionCreationResponse connectionUpsert(
-            Connection value, boolean replaceClassifications, boolean replaceCustomMetadata) throws AtlanException {
+    public static AssetMutationResponse upsertMergingCM(List<Asset> values, boolean replaceClassifications)
+            throws AtlanException {
         String url = String.format(
                 "%s%s",
                 getBaseUrl(),
                 String.format(
-                        "%s?replaceClassifications=%s&replaceBusinessAttributes=%s&overwriteBusinessAttributes=%s",
-                        endpoint, replaceClassifications, replaceCustomMetadata, replaceCustomMetadata));
+                        "%s?replaceClassifications=%s&replaceBusinessAttributes=true&overwriteBusinessAttributes=false",
+                        endpoint, replaceClassifications));
+        BulkEntityRequest beq = BulkEntityRequest.builder().entities(values).build();
+        return ApiResource.request(ApiResource.RequestMethod.POST, url, beq, AssetMutationResponse.class, null);
+    }
+
+    /**
+     * Creates any assets, optionally overwriting the existing assets' classifications and replacing all
+     * custom metadata values on the asset with the ones provided (wiping out any existing custom metadata
+     * on the asset that is not also provided in the request).
+     *
+     * @param values assets to upsert
+     * @param replaceClassifications whether to overwrite any existing classifications (true) or not (false)
+     * @return the results of the upsert
+     * @throws AtlanException on any API interaction problems
+     */
+    public static AssetMutationResponse upsertReplacingCM(List<Asset> values, boolean replaceClassifications)
+            throws AtlanException {
+        String url = String.format(
+                "%s%s",
+                getBaseUrl(),
+                String.format(
+                        "%s?replaceClassifications=%s&replaceBusinessAttributes=true&overwriteBusinessAttributes=true",
+                        endpoint, replaceClassifications));
+        BulkEntityRequest beq = BulkEntityRequest.builder().entities(values).build();
+        return ApiResource.request(ApiResource.RequestMethod.POST, url, beq, AssetMutationResponse.class, null);
+    }
+
+    /**
+     * Creates any assets, optionally overwriting the existing assets' classifications.
+     * Custom metadata will always be entirely ignored through this method.
+     *
+     * @param value connection to upsert
+     * @param replaceClassifications whether to overwrite any existing classifications (true) or not (false)
+     * @return the results of the upsert
+     * @throws AtlanException on any API interaction problems
+     */
+    public static ConnectionCreationResponse connectionUpsert(Connection value, boolean replaceClassifications)
+            throws AtlanException {
+        String url = String.format(
+                "%s%s",
+                getBaseUrl(),
+                String.format(
+                        "%s?replaceClassifications=%s&replaceBusinessAttributes=false&overwriteBusinessAttributes=false",
+                        endpoint, replaceClassifications));
         BulkEntityRequest beq = BulkEntityRequest.builder()
                 .entities(Collections.singletonList(value))
                 .build();

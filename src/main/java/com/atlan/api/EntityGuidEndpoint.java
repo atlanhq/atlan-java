@@ -78,16 +78,18 @@ public class EntityGuidEndpoint extends AtlasEndpoint {
     public static void replaceCustomMetadata(String guid, String cmName, CustomMetadataAttributes values)
             throws AtlanException {
         String cmId = CustomMetadataCache.getIdForName(cmName);
-        if (values != null) {
-            String url = String.format(
-                    "%s%s",
-                    getBaseUrl(),
-                    String.format(
-                            "%s%s/businessmetadata/%s",
-                            endpoint, ApiResource.urlEncodeId(guid), ApiResource.urlEncodeId(cmId)));
-            CustomMetadataUpdateRequest cmur = new CustomMetadataUpdateRequest(cmName, values.getAttributes(), false);
-            ApiResource.request(ApiResource.RequestMethod.POST, url, cmur, null, null);
+        Map<String, Object> baseMap = CustomMetadataCache.getEmptyAttributes(cmName);
+        if (values != null && !values.isEmpty()) {
+            baseMap.putAll(values.getAttributes());
         }
+        String url = String.format(
+                "%s%s",
+                getBaseUrl(),
+                String.format(
+                        "%s%s/businessmetadata/%s",
+                        endpoint, ApiResource.urlEncodeId(guid), ApiResource.urlEncodeId(cmId)));
+        CustomMetadataUpdateRequest cmur = new CustomMetadataUpdateRequest(cmName, baseMap, false);
+        ApiResource.request(ApiResource.RequestMethod.POST, url, cmur, null, null);
     }
 
     /**

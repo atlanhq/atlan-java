@@ -104,7 +104,7 @@ public class GlossaryTest extends AtlanLiveTest {
             }
             toCreate.add(one);
         }
-        AssetMutationResponse response = EntityBulkEndpoint.upsert(toCreate, false, false);
+        AssetMutationResponse response = EntityBulkEndpoint.upsert(toCreate, false);
         assertNotNull(response);
         assertEquals(response.getDeletedAssets().size(), 0);
         assertEquals(response.getCreatedAssets().size(), names.size());

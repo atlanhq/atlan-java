@@ -286,7 +286,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
                 .attribute(CM_ATTR_RACI_CONSULTED, List.of(group1.getName()))
                 .attribute(CM_ATTR_RACI_INFORMED, List.of(group1.getName(), group2.getName()))
                 .build();
-        GlossaryTerm.replaceCustomMetadata(term.getGuid(), CM_RACI, cm);
+        GlossaryTerm.updateCustomMetadataAttributes(term.getGuid(), CM_RACI, cm);
         GlossaryTerm t = GlossaryTerm.retrieveByGuid(term.getGuid());
         assertNotNull(t);
         assertTrue(t.isComplete());
@@ -308,7 +308,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
                 .attribute(CM_ATTR_IPR_DATE, 1659308400000L)
                 .attribute(CM_ATTR_IPR_URL, "https://creativecommons.org/licenses/by/2.0/")
                 .build();
-        GlossaryTerm.replaceCustomMetadata(term.getGuid(), CM_IPR, cm);
+        GlossaryTerm.updateCustomMetadataAttributes(term.getGuid(), CM_IPR, cm);
         GlossaryTerm t = GlossaryTerm.retrieveByGuid(term.getGuid());
         assertNotNull(t);
         assertTrue(t.isComplete());
@@ -368,8 +368,45 @@ public class CustomMetadataTest extends AtlanLiveTest {
     }
 
     @Test(
+            groups = {"cm.update.term.replace.raci"},
+            dependsOnGroups = {"cm.update.term.add.*", "cm.update.term.update.*"})
+    void replaceTermCMRACI() throws AtlanException {
+        CustomMetadataAttributes cm = CustomMetadataAttributes.builder()
+                .attribute(CM_ATTR_RACI_RESPONSIBLE, List.of(FIXED_USER))
+                .attribute(CM_ATTR_RACI_ACCOUNTABLE, FIXED_USER)
+                .attribute(CM_ATTR_RACI_INFORMED, List.of(group1.getName(), group2.getName()))
+                .build();
+        GlossaryTerm.replaceCustomMetadata(term.getGuid(), CM_RACI, cm);
+        GlossaryTerm t = GlossaryTerm.retrieveByGuid(term.getGuid());
+        assertNotNull(t);
+        assertTrue(t.isComplete());
+        Map<String, CustomMetadataAttributes> sets = t.getCustomMetadataSets();
+        assertNotNull(sets);
+        assertEquals(sets.size(), 3);
+        validateRACIAttributesReplacement(sets.get(CM_RACI));
+        validateIPRAttributes(sets.get(CM_IPR), false);
+        validateDQAttributes(sets.get(CM_QUALITY));
+    }
+
+    @Test(
+            groups = {"cm.update.term.replace.ipr"},
+            dependsOnGroups = {"cm.update.term.replace.raci"})
+    void replaceTermCMIPR() throws AtlanException {
+        GlossaryTerm.replaceCustomMetadata(term.getGuid(), CM_IPR, null);
+        GlossaryTerm t = GlossaryTerm.retrieveByGuid(term.getGuid());
+        assertNotNull(t);
+        assertTrue(t.isComplete());
+        Map<String, CustomMetadataAttributes> sets = t.getCustomMetadataSets();
+        assertNotNull(sets);
+        assertEquals(sets.size(), 2);
+        validateRACIAttributesReplacement(sets.get(CM_RACI));
+        validateDQAttributes(sets.get(CM_QUALITY));
+        assertNull(sets.get(CM_IPR));
+    }
+
+    @Test(
             groups = {"cm.search.term.cm"},
-            dependsOnGroups = {"cm.update.term.update.ipr"})
+            dependsOnGroups = {"cm.update.term.replace.ipr"})
     void searchByAnyAccountable() throws AtlanException, InterruptedException {
 
         Query combined = CompoundQuery.builder()
@@ -412,7 +449,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
 
     @Test(
             groups = {"cm.search.term.cm"},
-            dependsOnGroups = {"cm.update.term.update.ipr"})
+            dependsOnGroups = {"cm.update.term.replace.ipr"})
     void searchBySpecificAccountable() throws AtlanException, InterruptedException {
 
         Query combined = CompoundQuery.builder()
@@ -463,11 +500,9 @@ public class CustomMetadataTest extends AtlanLiveTest {
         assertTrue(t.isComplete());
         Map<String, CustomMetadataAttributes> sets = t.getCustomMetadataSets();
         assertNotNull(sets);
-        assertEquals(sets.size(), 2);
-        CustomMetadataAttributes attrs = sets.get(CM_IPR);
-        validateIPRAttributes(attrs, false);
-        attrs = sets.get(CM_QUALITY);
-        validateDQAttributes(attrs);
+        assertEquals(sets.size(), 1);
+        validateDQAttributes(sets.get(CM_QUALITY));
+        assertNull(sets.get(CM_IPR));
     }
 
     @Test(
@@ -481,8 +516,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
         Map<String, CustomMetadataAttributes> sets = t.getCustomMetadataSets();
         assertNotNull(sets);
         assertEquals(sets.size(), 1);
-        CustomMetadataAttributes attrs = sets.get(CM_QUALITY);
-        validateDQAttributes(attrs);
+        validateDQAttributes(sets.get(CM_QUALITY));
     }
 
     @Test(
@@ -648,7 +682,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"cm.update.term.update.raci"},
+            groups = {"cm.update.term.replaceAll.raci"},
             dependsOnGroups = {"cm.update.cm.attribute.2", "cm.update.term.remove.dq"})
     void updateTermCMRACI() throws AtlanException {
         CustomMetadataAttributes cm1 = CustomMetadataAttributes.builder()
@@ -661,7 +695,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
         GlossaryTerm toUpdate = GlossaryTerm.updater(term.getQualifiedName(), term.getName(), glossary.getGuid())
                 .customMetadata(CM_RACI, cm1)
                 .build();
-        AssetMutationResponse response = toUpdate.upsert(false, true);
+        AssetMutationResponse response = toUpdate.upsertReplacingCM(false);
         assertNotNull(response);
         assertTrue(response.getDeletedAssets().isEmpty());
         assertTrue(response.getCreatedAssets().isEmpty());
@@ -682,12 +716,12 @@ public class CustomMetadataTest extends AtlanLiveTest {
 
     @Test(
             groups = {"cm.update.term.remove.cm"},
-            dependsOnGroups = {"cm.update.term.update.raci", "cm.search.term.cm"})
+            dependsOnGroups = {"cm.update.term.replaceAll.raci", "cm.search.term.cm"})
     void removeTermCM() throws AtlanException {
         GlossaryTerm toUpdate = GlossaryTerm.updater(term.getQualifiedName(), term.getName(), glossary.getGuid())
                 .removeCustomMetadata()
                 .build();
-        AssetMutationResponse response = toUpdate.upsert(false, true);
+        AssetMutationResponse response = toUpdate.upsertReplacingCM(false);
         assertNotNull(response);
         assertTrue(response.getDeletedAssets().isEmpty());
         assertTrue(response.getCreatedAssets().isEmpty());
@@ -775,6 +809,19 @@ public class CustomMetadataTest extends AtlanLiveTest {
         assertEquals(attributes.get(CM_ATTR_RACI_INFORMED), Set.of(group1.getName(), group2.getName()));
     }
 
+    private void validateRACIAttributesReplacement(CustomMetadataAttributes cma) {
+        assertNotNull(cma);
+        validateRACIAttributesReplacement(cma.getAttributes());
+    }
+
+    private void validateRACIAttributesReplacement(Map<String, Object> attributes) {
+        assertNotNull(attributes);
+        assertEquals(attributes.get(CM_ATTR_RACI_RESPONSIBLE), Set.of(FIXED_USER));
+        assertEquals(attributes.get(CM_ATTR_RACI_ACCOUNTABLE), FIXED_USER);
+        assertNull(attributes.get(CM_ATTR_RACI_CONSULTED));
+        assertEquals(attributes.get(CM_ATTR_RACI_INFORMED), Set.of(group1.getName(), group2.getName()));
+    }
+
     private void validateIPRAttributes(CustomMetadataAttributes cma) {
         validateIPRAttributes(cma, true);
     }
@@ -792,6 +839,16 @@ public class CustomMetadataTest extends AtlanLiveTest {
         assertEquals(attributes.get(CM_ATTR_IPR_MANDATORY), value);
         assertEquals(attributes.get(CM_ATTR_IPR_DATE), 1659308400000L);
         assertEquals(attributes.get(CM_ATTR_IPR_URL), "https://creativecommons.org/licenses/by/2.0/");
+    }
+
+    private void validateIPRAttributesReplacement(CustomMetadataAttributes cma) {
+        assertNotNull(cma);
+        validateIPRAttributesReplacement(cma.getAttributes());
+    }
+
+    private void validateIPRAttributesReplacement(Map<String, Object> attributes) {
+        assertNotNull(attributes);
+        assertTrue(attributes.isEmpty());
     }
 
     private void validateDQAttributes(CustomMetadataAttributes cma) {
@@ -860,9 +917,9 @@ public class CustomMetadataTest extends AtlanLiveTest {
 
     private void validateAudits(List<EntityAudit> audits) {
         assertNotNull(audits);
-        assertEquals(audits.size(), 12);
+        assertEquals(audits.size(), 13);
 
-        EntityAudit one = audits.get(11);
+        EntityAudit one = audits.get(12);
         assertNotNull(one);
         assertEquals(one.getAction(), AuditActionType.ENTITY_CREATE);
         AuditDetail detail = one.getDetail();
@@ -874,7 +931,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
         assertNotNull(t.getAnchor());
         assertEquals(t.getAnchor().getGuid(), glossary.getGuid());
 
-        one = audits.get(10);
+        one = audits.get(11);
         assertNotNull(one);
         assertEquals(one.getAction(), AuditActionType.CUSTOM_METADATA_UPDATE);
         detail = one.getDetail();
@@ -883,7 +940,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
         assertEquals(cmad.getTypeName(), CM_RACI);
         validateRACIAttributes(cmad.getAttributes());
 
-        one = audits.get(9);
+        one = audits.get(10);
         assertNotNull(one);
         assertEquals(one.getAction(), AuditActionType.CUSTOM_METADATA_UPDATE);
         detail = one.getDetail();
@@ -892,7 +949,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
         assertEquals(cmad.getTypeName(), CM_IPR);
         validateIPRAttributes(cmad.getAttributes(), true);
 
-        one = audits.get(8);
+        one = audits.get(9);
         assertNotNull(one);
         assertEquals(one.getAction(), AuditActionType.CUSTOM_METADATA_UPDATE);
         detail = one.getDetail();
@@ -901,7 +958,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
         assertEquals(cmad.getTypeName(), CM_QUALITY);
         validateDQAttributes(cmad.getAttributes());
 
-        one = audits.get(7);
+        one = audits.get(8);
         assertNotNull(one);
         assertEquals(one.getAction(), AuditActionType.CUSTOM_METADATA_UPDATE);
         detail = one.getDetail();
@@ -914,7 +971,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
         assertTrue(attributes.containsKey(CM_ATTR_IPR_MANDATORY));
         assertEquals(attributes.get(CM_ATTR_IPR_MANDATORY), false);
 
-        one = audits.get(6);
+        one = audits.get(7);
         assertNotNull(one);
         assertEquals(one.getAction(), AuditActionType.CUSTOM_METADATA_UPDATE);
         detail = one.getDetail();
@@ -922,13 +979,13 @@ public class CustomMetadataTest extends AtlanLiveTest {
         cmad = (CustomMetadataAttributesAuditDetail) detail;
         assertEquals(cmad.getTypeName(), CM_RACI);
         attributes = cmad.getAttributes();
-        assertEquals(attributes.size(), 4);
+        assertEquals(attributes.size(), 1);
         assertNull(attributes.get(CM_ATTR_RACI_RESPONSIBLE));
         assertNull(attributes.get(CM_ATTR_RACI_ACCOUNTABLE));
         assertNull(attributes.get(CM_ATTR_RACI_CONSULTED));
         assertNull(attributes.get(CM_ATTR_RACI_INFORMED));
 
-        one = audits.get(5);
+        one = audits.get(6);
         assertNotNull(one);
         assertEquals(one.getAction(), AuditActionType.CUSTOM_METADATA_UPDATE);
         detail = one.getDetail();
@@ -942,6 +999,20 @@ public class CustomMetadataTest extends AtlanLiveTest {
         assertNull(attributes.get(CM_ATTR_IPR_DATE));
         assertNull(attributes.get(CM_ATTR_IPR_LICENSE));
         assertNull(attributes.get(CM_ATTR_IPR_VERSION));
+
+        one = audits.get(5);
+        assertNotNull(one);
+        assertEquals(one.getAction(), AuditActionType.CUSTOM_METADATA_UPDATE);
+        detail = one.getDetail();
+        assertTrue(detail instanceof CustomMetadataAttributesAuditDetail);
+        cmad = (CustomMetadataAttributesAuditDetail) detail;
+        assertEquals(cmad.getTypeName(), CM_RACI);
+        attributes = cmad.getAttributes();
+        assertEquals(attributes.size(), 4);
+        assertNull(attributes.get(CM_ATTR_RACI_RESPONSIBLE));
+        assertNull(attributes.get(CM_ATTR_RACI_ACCOUNTABLE));
+        assertNull(attributes.get(CM_ATTR_RACI_CONSULTED));
+        assertNull(attributes.get(CM_ATTR_RACI_INFORMED));
 
         one = audits.get(4);
         assertNotNull(one);
