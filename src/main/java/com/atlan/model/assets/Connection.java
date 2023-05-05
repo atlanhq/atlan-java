@@ -318,22 +318,21 @@ public class Connection extends Asset {
                 UserCache.getIdForName(userName);
             }
         }
-        return EntityBulkEndpoint.connectionUpsert(this, false, false);
+        return EntityBulkEndpoint.connectionUpsert(this, false);
     }
 
     /**
      * If no asset exists, has the same behavior as the {@link #upsert()} method.
-     * If an asset does exist, optionally overwrites any classifications and / or custom metadata.
+     * If an asset does exist, optionally overwrites any classifications. Custom metadata will always
+     * be entirely ignored using this method.
      *
      * @param replaceClassifications whether to replace classifications during an update (true) or not (false)
-     * @param replaceCustomMetadata whether to replace custom metadata during an update (true) or not (false)
      * @return details of the created or updated asset
      * @throws AtlanException on any error during the API invocation
      * @throws NotFoundException if any of the provided connection admins do not actually exist
      */
     @Override
-    public ConnectionCreationResponse upsert(boolean replaceClassifications, boolean replaceCustomMetadata)
-            throws AtlanException {
+    public ConnectionCreationResponse upsert(boolean replaceClassifications) throws AtlanException {
         // Validate the provided connection admins prior to attempting to create
         // (the cache retrievals will throw errors directly if there are any)
         if (adminRoles != null && !adminRoles.isEmpty()) {
@@ -351,7 +350,7 @@ public class Connection extends Asset {
                 UserCache.getIdForName(userName);
             }
         }
-        return EntityBulkEndpoint.connectionUpsert(this, replaceClassifications, replaceCustomMetadata);
+        return EntityBulkEndpoint.connectionUpsert(this, replaceClassifications);
     }
 
     /**

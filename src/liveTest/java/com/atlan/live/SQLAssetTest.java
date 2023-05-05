@@ -867,7 +867,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         Column toUpdate = Column.updater(column5.getQualifiedName(), COLUMN_NAME5)
                 .classification(Classification.of(CLASSIFICATION_NAME1))
                 .build();
-        AssetMutationResponse response = toUpdate.upsert(true, false);
+        AssetMutationResponse response = toUpdate.upsert(true);
         Asset one = validateSingleUpdate(response);
         assertTrue(one instanceof Column);
         Column column = (Column) one;
@@ -882,7 +882,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         Column toUpdate = Column.updater(column5.getQualifiedName(), COLUMN_NAME5)
                 .removeClassifications()
                 .build();
-        AssetMutationResponse response = toUpdate.upsert(true, false);
+        AssetMutationResponse response = toUpdate.upsert(true);
         Asset one = validateSingleUpdate(response);
         assertTrue(one instanceof Column);
         Column column = (Column) one;
@@ -1024,7 +1024,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         Column column = Column.updater(column5.getQualifiedName(), COLUMN_NAME5)
                 .removeClassifications()
                 .build();
-        AssetMutationResponse response = column.upsert(true, false);
+        AssetMutationResponse response = column.upsert(true);
         Asset one = validateSingleUpdate(response);
         assertTrue(one instanceof Column);
         column = (Column) one;
@@ -1284,6 +1284,7 @@ public class SQLAssetTest extends AtlanLiveTest {
             assertEquals(names.size(), termNames.size());
             assertEquals(names, termNames);
         }
+        /* Removed given deprecation...
         Set<Meaning> meanings = column.getMeanings();
         if (meanings != null && !meanings.isEmpty()) {
             Set<String> meaningNames =
@@ -1294,7 +1295,7 @@ public class SQLAssetTest extends AtlanLiveTest {
                     meanings.stream().map(Meaning::getTermGuid).collect(Collectors.toSet());
             assertEquals(meaningGuids.size(), termGuids.size());
             assertEquals(meaningGuids, termGuids);
-        }
+        }*/
     }
 
     @Test(

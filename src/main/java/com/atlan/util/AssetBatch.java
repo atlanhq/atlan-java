@@ -16,11 +16,17 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class AssetBatch {
 
+    enum CustomMetadataHandling {
+        IGNORE,
+        OVERWRITE,
+        MERGE
+    }
+
     private List<Asset> _batch;
     private final String typeName;
     private final int maxSize;
     private final boolean replaceClassifications;
-    private final boolean replaceCustomMetadata;
+    private final CustomMetadataHandling customMetadataHandling;
 
     /**
      * Create a new batch of assets to be bulk-upserted.
@@ -29,7 +35,7 @@ public class AssetBatch {
      * @param maxSize maximum size of each batch that should be processed (per API call)
      */
     public AssetBatch(String typeName, int maxSize) {
-        this(typeName, maxSize, false, false);
+        this(typeName, maxSize, false, CustomMetadataHandling.IGNORE);
     }
 
     /**
@@ -38,14 +44,18 @@ public class AssetBatch {
      * @param typeName name of the type of assets to batch process (used only for logging)
      * @param maxSize maximum size of each batch that should be processed (per API call)
      * @param replaceClassifications if true, all classifications on an existing asset will be overwritten; if false, all classifications will be ignored
-     * @param replaceCustomMetadata if true, all custom metadata on an existing asset will be overwritten; if false, all custom metadata will be ignored
+     * @param customMetadataHandling how to handle custom metadata (ignore it, replace it (wiping out anything pre-existing), or merge it)
      */
-    public AssetBatch(String typeName, int maxSize, boolean replaceClassifications, boolean replaceCustomMetadata) {
+    public AssetBatch(
+            String typeName,
+            int maxSize,
+            boolean replaceClassifications,
+            CustomMetadataHandling customMetadataHandling) {
         _batch = new ArrayList<>();
         this.typeName = typeName;
         this.maxSize = maxSize;
         this.replaceClassifications = replaceClassifications;
-        this.replaceCustomMetadata = replaceCustomMetadata;
+        this.customMetadataHandling = customMetadataHandling;
     }
 
     /**
@@ -84,7 +94,17 @@ public class AssetBatch {
         if (!_batch.isEmpty()) {
             try {
                 log.info("... upserting next batch of ({}) {}s...", _batch.size(), typeName);
-                response = EntityBulkEndpoint.upsert(_batch, replaceClassifications, replaceCustomMetadata);
+                switch (customMetadataHandling) {
+                    case IGNORE:
+                        response = EntityBulkEndpoint.upsert(_batch, replaceClassifications);
+                        break;
+                    case OVERWRITE:
+                        response = EntityBulkEndpoint.upsertReplacingCM(_batch, replaceClassifications);
+                        break;
+                    case MERGE:
+                        response = EntityBulkEndpoint.upsertMergingCM(_batch, replaceClassifications);
+                        break;
+                }
             } catch (AtlanException e) {
                 log.error("Unexpected exception while trying to upsert: {}", _batch, e);
             }
