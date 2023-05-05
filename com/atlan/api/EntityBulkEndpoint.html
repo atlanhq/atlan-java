@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9};
+var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -187,12 +187,10 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>static <a href="../model/core/ConnectionCreationResponse.html" title="class in com.atlan.model.core">ConnectionCreationResponse</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#connectionUpsert(com.atlan.model.assets.Connection,boolean,boolean)">connectionUpsert</a></span>&#8203;(<a href="../model/assets/Connection.html" title="class in com.atlan.model.assets">Connection</a>&nbsp;value,
-                boolean&nbsp;replaceClassifications,
-                boolean&nbsp;replaceCustomMetadata)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#connectionUpsert(com.atlan.model.assets.Connection,boolean)">connectionUpsert</a></span>&#8203;(<a href="../model/assets/Connection.html" title="class in com.atlan.model.assets">Connection</a>&nbsp;value,
+                boolean&nbsp;replaceClassifications)</code></th>
 <td class="colLast">
-<div class="block">Creates any assets, optionally overwriting the existing assets' classifications and / or
- custom metadata.</div>
+<div class="block">Creates any assets, optionally overwriting the existing assets' classifications.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
@@ -227,22 +225,39 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>static <a href="../model/core/AssetMutationResponse.html" title="class in com.atlan.model.core">AssetMutationResponse</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#upsert(com.atlan.model.assets.Asset,boolean,boolean)">upsert</a></span>&#8203;(<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;value,
-      boolean&nbsp;replaceClassifications,
-      boolean&nbsp;replaceCustomMetadata)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#upsert(com.atlan.model.assets.Asset,boolean)">upsert</a></span>&#8203;(<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;value,
+      boolean&nbsp;replaceClassifications)</code></th>
 <td class="colLast">
-<div class="block">Creates any asset, optionally overwriting an existing entity's classifications and / or
- custom metadata.</div>
+<div class="block">Creates any asset, optionally overwriting an existing entity's classifications and entirely
+ ignoring any custom metadata.</div>
 </td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>static <a href="../model/core/AssetMutationResponse.html" title="class in com.atlan.model.core">AssetMutationResponse</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#upsert(java.util.List,boolean,boolean)">upsert</a></span>&#8203;(java.util.List&lt;<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;&nbsp;values,
-      boolean&nbsp;replaceClassifications,
-      boolean&nbsp;replaceCustomMetadata)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#upsert(java.util.List,boolean)">upsert</a></span>&#8203;(java.util.List&lt;<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;&nbsp;values,
+      boolean&nbsp;replaceClassifications)</code></th>
 <td class="colLast">
-<div class="block">Creates any assets, optionally overwriting the existing assets' classifications and / or
- custom metadata.</div>
+<div class="block">Creates any assets, optionally overwriting the existing assets' classifications and entirely
+ ignoring any custom metadata.</div>
+</td>
+</tr>
+<tr id="i7" class="rowColor">
+<td class="colFirst"><code>static <a href="../model/core/AssetMutationResponse.html" title="class in com.atlan.model.core">AssetMutationResponse</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#upsertMergingCM(java.util.List,boolean)">upsertMergingCM</a></span>&#8203;(java.util.List&lt;<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;&nbsp;values,
+               boolean&nbsp;replaceClassifications)</code></th>
+<td class="colLast">
+<div class="block">Creates any assets, optionally overwriting the existing assets' classifications and merging any
+ provided custom metadata values (but leaving any existing custom metadata values as-is).</div>
+</td>
+</tr>
+<tr id="i8" class="altColor">
+<td class="colFirst"><code>static <a href="../model/core/AssetMutationResponse.html" title="class in com.atlan.model.core">AssetMutationResponse</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#upsertReplacingCM(java.util.List,boolean)">upsertReplacingCM</a></span>&#8203;(java.util.List&lt;<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;&nbsp;values,
+                 boolean&nbsp;replaceClassifications)</code></th>
+<td class="colLast">
+<div class="block">Creates any assets, optionally overwriting the existing assets' classifications and replacing all
+ custom metadata values on the asset with the ones provided (wiping out any existing custom metadata
+ on the asset that is not also provided in the request).</div>
 </td>
 </tr>
 </table>
@@ -302,23 +317,21 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a id="upsert(com.atlan.model.assets.Asset,boolean,boolean)">
+<a id="upsert(com.atlan.model.assets.Asset,boolean)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>upsert</h4>
 <pre class="methodSignature">public static&nbsp;<a href="../model/core/AssetMutationResponse.html" title="class in com.atlan.model.core">AssetMutationResponse</a>&nbsp;upsert&#8203;(<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;value,
-                                           boolean&nbsp;replaceClassifications,
-                                           boolean&nbsp;replaceCustomMetadata)
+                                           boolean&nbsp;replaceClassifications)
                                     throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
-<div class="block">Creates any asset, optionally overwriting an existing entity's classifications and / or
- custom metadata.</div>
+<div class="block">Creates any asset, optionally overwriting an existing entity's classifications and entirely
+ ignoring any custom metadata.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>value</code> - asset to upsert</dd>
 <dd><code>replaceClassifications</code> - whether to overwrite any existing classifications (true) or not (false)</dd>
-<dd><code>replaceCustomMetadata</code> - whether to overwrite any existing custom metadata (true) or not (false)</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the results of the upsert</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
@@ -326,23 +339,21 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
 </dl>
 </li>
 </ul>
-<a id="upsert(java.util.List,boolean,boolean)">
+<a id="upsert(java.util.List,boolean)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>upsert</h4>
 <pre class="methodSignature">public static&nbsp;<a href="../model/core/AssetMutationResponse.html" title="class in com.atlan.model.core">AssetMutationResponse</a>&nbsp;upsert&#8203;(java.util.List&lt;<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;&nbsp;values,
-                                           boolean&nbsp;replaceClassifications,
-                                           boolean&nbsp;replaceCustomMetadata)
+                                           boolean&nbsp;replaceClassifications)
                                     throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
-<div class="block">Creates any assets, optionally overwriting the existing assets' classifications and / or
- custom metadata.</div>
+<div class="block">Creates any assets, optionally overwriting the existing assets' classifications and entirely
+ ignoring any custom metadata.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>values</code> - assets to upsert</dd>
 <dd><code>replaceClassifications</code> - whether to overwrite any existing classifications (true) or not (false)</dd>
-<dd><code>replaceCustomMetadata</code> - whether to overwrite any existing custom metadata (true) or not (false)</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the results of the upsert</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
@@ -350,23 +361,66 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
 </dl>
 </li>
 </ul>
-<a id="connectionUpsert(com.atlan.model.assets.Connection,boolean,boolean)">
+<a id="upsertMergingCM(java.util.List,boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>upsertMergingCM</h4>
+<pre class="methodSignature">public static&nbsp;<a href="../model/core/AssetMutationResponse.html" title="class in com.atlan.model.core">AssetMutationResponse</a>&nbsp;upsertMergingCM&#8203;(java.util.List&lt;<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;&nbsp;values,
+                                                    boolean&nbsp;replaceClassifications)
+                                             throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Creates any assets, optionally overwriting the existing assets' classifications and merging any
+ provided custom metadata values (but leaving any existing custom metadata values as-is).</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>values</code> - assets to upsert</dd>
+<dd><code>replaceClassifications</code> - whether to overwrite any existing classifications (true) or not (false)</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the results of the upsert</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API interaction problems</dd>
+</dl>
+</li>
+</ul>
+<a id="upsertReplacingCM(java.util.List,boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>upsertReplacingCM</h4>
+<pre class="methodSignature">public static&nbsp;<a href="../model/core/AssetMutationResponse.html" title="class in com.atlan.model.core">AssetMutationResponse</a>&nbsp;upsertReplacingCM&#8203;(java.util.List&lt;<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;&nbsp;values,
+                                                      boolean&nbsp;replaceClassifications)
+                                               throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Creates any assets, optionally overwriting the existing assets' classifications and replacing all
+ custom metadata values on the asset with the ones provided (wiping out any existing custom metadata
+ on the asset that is not also provided in the request).</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>values</code> - assets to upsert</dd>
+<dd><code>replaceClassifications</code> - whether to overwrite any existing classifications (true) or not (false)</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the results of the upsert</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API interaction problems</dd>
+</dl>
+</li>
+</ul>
+<a id="connectionUpsert(com.atlan.model.assets.Connection,boolean)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>connectionUpsert</h4>
 <pre class="methodSignature">public static&nbsp;<a href="../model/core/ConnectionCreationResponse.html" title="class in com.atlan.model.core">ConnectionCreationResponse</a>&nbsp;connectionUpsert&#8203;(<a href="../model/assets/Connection.html" title="class in com.atlan.model.assets">Connection</a>&nbsp;value,
-                                                          boolean&nbsp;replaceClassifications,
-                                                          boolean&nbsp;replaceCustomMetadata)
+                                                          boolean&nbsp;replaceClassifications)
                                                    throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
-<div class="block">Creates any assets, optionally overwriting the existing assets' classifications and / or
- custom metadata.</div>
+<div class="block">Creates any assets, optionally overwriting the existing assets' classifications.
+ Custom metadata will always be entirely ignored through this method.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>value</code> - connection to upsert</dd>
 <dd><code>replaceClassifications</code> - whether to overwrite any existing classifications (true) or not (false)</dd>
-<dd><code>replaceCustomMetadata</code> - whether to overwrite any existing custom metadata (true) or not (false)</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the results of the upsert</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>

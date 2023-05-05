@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":9,"i2":9,"i3":10,"i4":9,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":10,"i32":10,"i33":10,"i34":10,"i35":10,"i36":10,"i37":10,"i38":10,"i39":10,"i40":10,"i41":10,"i42":10,"i43":10,"i44":10,"i45":10,"i46":10,"i47":10,"i48":10,"i49":10,"i50":10,"i51":10,"i52":10,"i53":10,"i54":10,"i55":10,"i56":10,"i57":10,"i58":10,"i59":42,"i60":10,"i61":10,"i62":10,"i63":10,"i64":10,"i65":10,"i66":10,"i67":10,"i68":10,"i69":10,"i70":10,"i71":10,"i72":10,"i73":10,"i74":10,"i75":10,"i76":10,"i77":10,"i78":10,"i79":10,"i80":10,"i81":42,"i82":10,"i83":10,"i84":10,"i85":10,"i86":10,"i87":10,"i88":10,"i89":10,"i90":10,"i91":10,"i92":10,"i93":10,"i94":10,"i95":10,"i96":10,"i97":10,"i98":10,"i99":10,"i100":10,"i101":10,"i102":10,"i103":10,"i104":10,"i105":10,"i106":10,"i107":10,"i108":10,"i109":10,"i110":10,"i111":10,"i112":10,"i113":10,"i114":10,"i115":10,"i116":10,"i117":10,"i118":10,"i119":10,"i120":10,"i121":10,"i122":10,"i123":9,"i124":9,"i125":9,"i126":9,"i127":9,"i128":9,"i129":9,"i130":9,"i131":9,"i132":9,"i133":9,"i134":9,"i135":9,"i136":9,"i137":9,"i138":9,"i139":6,"i140":9,"i141":9,"i142":9,"i143":9,"i144":9,"i145":10,"i146":10};
+var data = {"i0":9,"i1":9,"i2":9,"i3":10,"i4":9,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":10,"i32":10,"i33":10,"i34":10,"i35":10,"i36":10,"i37":10,"i38":10,"i39":10,"i40":10,"i41":10,"i42":10,"i43":10,"i44":10,"i45":10,"i46":10,"i47":10,"i48":10,"i49":10,"i50":10,"i51":10,"i52":10,"i53":10,"i54":10,"i55":10,"i56":10,"i57":10,"i58":10,"i59":42,"i60":10,"i61":10,"i62":10,"i63":10,"i64":10,"i65":10,"i66":10,"i67":10,"i68":10,"i69":10,"i70":10,"i71":10,"i72":10,"i73":10,"i74":10,"i75":10,"i76":10,"i77":10,"i78":10,"i79":10,"i80":10,"i81":42,"i82":10,"i83":10,"i84":10,"i85":10,"i86":10,"i87":10,"i88":10,"i89":10,"i90":10,"i91":10,"i92":10,"i93":10,"i94":10,"i95":10,"i96":10,"i97":10,"i98":10,"i99":10,"i100":10,"i101":10,"i102":10,"i103":10,"i104":10,"i105":10,"i106":10,"i107":10,"i108":10,"i109":10,"i110":10,"i111":10,"i112":10,"i113":10,"i114":10,"i115":10,"i116":10,"i117":10,"i118":10,"i119":10,"i120":10,"i121":10,"i122":10,"i123":9,"i124":9,"i125":9,"i126":9,"i127":9,"i128":9,"i129":9,"i130":9,"i131":9,"i132":9,"i133":9,"i134":9,"i135":9,"i136":9,"i137":9,"i138":9,"i139":6,"i140":9,"i141":9,"i142":9,"i143":9,"i144":9,"i145":10,"i146":10,"i147":10,"i148":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],8:["t4","Concrete Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -1311,10 +1311,25 @@ extends <a href="../relations/Reference.html" title="class in com.atlan.model.re
 </tr>
 <tr id="i146" class="altColor">
 <td class="colFirst"><code><a href="../core/AssetMutationResponse.html" title="class in com.atlan.model.core">AssetMutationResponse</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#upsert(boolean,boolean)">upsert</a></span>&#8203;(boolean&nbsp;replaceClassifications,
-      boolean&nbsp;replaceCustomMetadata)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#upsert(boolean)">upsert</a></span>&#8203;(boolean&nbsp;replaceClassifications)</code></th>
 <td class="colLast">
 <div class="block">If no asset exists, has the same behavior as the <a href="#upsert()"><code>upsert()</code></a> method.</div>
+</td>
+</tr>
+<tr id="i147" class="rowColor">
+<td class="colFirst"><code><a href="../core/AssetMutationResponse.html" title="class in com.atlan.model.core">AssetMutationResponse</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#upsertMergingCM(boolean)">upsertMergingCM</a></span>&#8203;(boolean&nbsp;replaceClassifications)</code></th>
+<td class="colLast">
+<div class="block">If no asset exists, has the same behavior as the <a href="#upsert()"><code>upsert()</code></a> method, while also setting
+ any custom metadata provided.</div>
+</td>
+</tr>
+<tr id="i148" class="altColor">
+<td class="colFirst"><code><a href="../core/AssetMutationResponse.html" title="class in com.atlan.model.core">AssetMutationResponse</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#upsertReplacingCM(boolean)">upsertReplacingCM</a></span>&#8203;(boolean&nbsp;replaceClassifications)</code></th>
+<td class="colLast">
+<div class="block">If no asset exists, has the same behavior as the <a href="#upsert()"><code>upsert()</code></a> method, while also setting
+ any custom metadata provided.</div>
 </td>
 </tr>
 </table>
@@ -1443,21 +1458,65 @@ extends <a href="../relations/Reference.html" title="class in com.atlan.model.re
 </dl>
 </li>
 </ul>
-<a id="upsert(boolean,boolean)">
+<a id="upsert(boolean)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>upsert</h4>
-<pre class="methodSignature">public&nbsp;<a href="../core/AssetMutationResponse.html" title="class in com.atlan.model.core">AssetMutationResponse</a>&nbsp;upsert&#8203;(boolean&nbsp;replaceClassifications,
-                                    boolean&nbsp;replaceCustomMetadata)
+<pre class="methodSignature">public&nbsp;<a href="../core/AssetMutationResponse.html" title="class in com.atlan.model.core">AssetMutationResponse</a>&nbsp;upsert&#8203;(boolean&nbsp;replaceClassifications)
                              throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
 <div class="block">If no asset exists, has the same behavior as the <a href="#upsert()"><code>upsert()</code></a> method.
- If an asset does exist, optionally overwrites any classifications and / or custom metadata.</div>
+ If an asset does exist, optionally overwrites any classifications. Custom metadata will always
+ be entirely ignored using this method.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>replaceClassifications</code> - whether to replace classifications during an update (true) or not (false)</dd>
-<dd><code>replaceCustomMetadata</code> - whether to replace custom metadata during an update (true) or not (false)</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>details of the created or updated asset</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any error during the API invocation</dd>
+</dl>
+</li>
+</ul>
+<a id="upsertMergingCM(boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>upsertMergingCM</h4>
+<pre class="methodSignature">public&nbsp;<a href="../core/AssetMutationResponse.html" title="class in com.atlan.model.core">AssetMutationResponse</a>&nbsp;upsertMergingCM&#8203;(boolean&nbsp;replaceClassifications)
+                                      throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">If no asset exists, has the same behavior as the <a href="#upsert()"><code>upsert()</code></a> method, while also setting
+ any custom metadata provided.
+ If an asset does exist, optionally overwrites any classifications.
+ Will merge any provided custom metadata with any custom metadata that already exists on the asset.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>replaceClassifications</code> - whether to replace classifications during an update (true) or not (false)</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>details of the created or updated asset</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any error during the API invocation</dd>
+</dl>
+</li>
+</ul>
+<a id="upsertReplacingCM(boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>upsertReplacingCM</h4>
+<pre class="methodSignature">public&nbsp;<a href="../core/AssetMutationResponse.html" title="class in com.atlan.model.core">AssetMutationResponse</a>&nbsp;upsertReplacingCM&#8203;(boolean&nbsp;replaceClassifications)
+                                        throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">If no asset exists, has the same behavior as the <a href="#upsert()"><code>upsert()</code></a> method, while also setting
+ any custom metadata provided.
+ If an asset does exist, optionally overwrites any classifications.
+ Will overwrite all custom metadata on any existing asset with only the custom metadata provided
+ (wiping out any other custom metadata on an existing asset that is not provided in the request).</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>replaceClassifications</code> - whether to replace classifications during an update (true) or not (false)</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>details of the created or updated asset</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>

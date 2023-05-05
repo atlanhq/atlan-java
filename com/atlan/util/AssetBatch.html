@@ -161,10 +161,10 @@ extends java.lang.Object</pre>
 </td>
 </tr>
 <tr class="rowColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.lang.String,int,boolean,boolean)">AssetBatch</a></span>&#8203;(java.lang.String&nbsp;typeName,
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.lang.String,int,boolean,com.atlan.util.AssetBatch.CustomMetadataHandling)">AssetBatch</a></span>&#8203;(java.lang.String&nbsp;typeName,
           int&nbsp;maxSize,
           boolean&nbsp;replaceClassifications,
-          boolean&nbsp;replaceCustomMetadata)</code></th>
+          com.atlan.util.AssetBatch.CustomMetadataHandling&nbsp;customMetadataHandling)</code></th>
 <td class="colLast">
 <div class="block">Create a new batch of assets to be bulk-upserted.</div>
 </td>
@@ -241,7 +241,7 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a id="&lt;init&gt;(java.lang.String,int,boolean,boolean)">
+<a id="&lt;init&gt;(java.lang.String,int,boolean,com.atlan.util.AssetBatch.CustomMetadataHandling)">
 <!--   -->
 </a>
 <ul class="blockListLast">
@@ -250,14 +250,14 @@ extends java.lang.Object</pre>
 <pre>public&nbsp;AssetBatch&#8203;(java.lang.String&nbsp;typeName,
                   int&nbsp;maxSize,
                   boolean&nbsp;replaceClassifications,
-                  boolean&nbsp;replaceCustomMetadata)</pre>
+                  com.atlan.util.AssetBatch.CustomMetadataHandling&nbsp;customMetadataHandling)</pre>
 <div class="block">Create a new batch of assets to be bulk-upserted.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>typeName</code> - name of the type of assets to batch process (used only for logging)</dd>
 <dd><code>maxSize</code> - maximum size of each batch that should be processed (per API call)</dd>
 <dd><code>replaceClassifications</code> - if true, all classifications on an existing asset will be overwritten; if false, all classifications will be ignored</dd>
-<dd><code>replaceCustomMetadata</code> - if true, all custom metadata on an existing asset will be overwritten; if false, all custom metadata will be ignored</dd>
+<dd><code>customMetadataHandling</code> - how to handle custom metadata (ignore it, replace it (wiping out anything pre-existing), or merge it)</dd>
 </dl>
 </li>
 </ul>
