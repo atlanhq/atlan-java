@@ -67,8 +67,13 @@
     @Singular
     SortedSet<String> meaningNames;
 
-    /** Details of terms that have been linked to this asset. */
+    /**
+     * Details of terms that have been linked to this asset. This is not set by all API endpoints, so cannot
+     * be relied upon in general, even when there are terms assigned to an asset.
+     * @deprecated see {@link #assignedTerms} instead
+     */
     @Singular
+    @Deprecated
     SortedSet<Meaning> meanings;
 
     /** Unique identifiers (GUIDs) for any background tasks that are yet to operate on this asset. */
