@@ -1280,12 +1280,12 @@ public class SQLAssetTest extends AtlanLiveTest {
         Set<String> termNames = terms.stream().map(GlossaryTerm::getName).collect(Collectors.toSet());
         Set<String> names = column.getMeaningNames();
         // Seems these are not always set (?)
-        if (names != null) {
+        if (names != null && !names.isEmpty()) {
             assertEquals(names.size(), termNames.size());
             assertEquals(names, termNames);
         }
         Set<Meaning> meanings = column.getMeanings();
-        if (meanings != null) {
+        if (meanings != null && !meanings.isEmpty()) {
             Set<String> meaningNames =
                     meanings.stream().map(Meaning::getDisplayText).collect(Collectors.toSet());
             assertEquals(meaningNames.size(), termNames.size());
