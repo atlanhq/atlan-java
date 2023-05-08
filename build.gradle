@@ -83,13 +83,6 @@ configurations {
 
 repositories {
     mavenCentral()
-    maven {
-        url "https://maven.pkg.github.com/numaproj/numaflow-java"
-        credentials {
-            username = System.getenv("GH_USERNAME")
-            password = System.getenv("GH_TOKEN")
-        }
-    }
 }
 
 dependencies {
