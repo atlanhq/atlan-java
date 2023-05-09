@@ -387,6 +387,9 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
                 case SnowflakeStream.TYPE_NAME:
                     builder = SnowflakeStream.builder();
                     break;
+                case SnowflakeTag.TYPE_NAME:
+                    builder = SnowflakeTag.builder();
+                    break;
                 case Table.TYPE_NAME:
                     builder = Table.builder();
                     break;

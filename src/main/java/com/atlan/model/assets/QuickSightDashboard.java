@@ -288,12 +288,58 @@ public class QuickSightDashboard extends QuickSight {
     }
 
     /**
+     * Add classifications to a QuickSightDashboard, without replacing existing classifications linked to the QuickSightDashboard.
+     * Note: this operation must make two API calls — one to retrieve the QuickSightDashboard's existing classifications,
+     * and a second to append the new classifications.
+     *
+     * @param qualifiedName of the QuickSightDashboard
+     * @param classificationNames human-readable names of the classifications to add
+     * @throws AtlanException on any API problems
+     * @return the updated QuickSightDashboard
+     */
+    public static QuickSightDashboard appendClassifications(String qualifiedName, List<String> classificationNames)
+            throws AtlanException {
+        return (QuickSightDashboard) Asset.appendClassifications(TYPE_NAME, qualifiedName, classificationNames);
+    }
+
+    /**
+     * Add classifications to a QuickSightDashboard, without replacing existing classifications linked to the QuickSightDashboard.
+     * Note: this operation must make two API calls — one to retrieve the QuickSightDashboard's existing classifications,
+     * and a second to append the new classifications.
+     *
+     * @param qualifiedName of the QuickSightDashboard
+     * @param classificationNames human-readable names of the classifications to add
+     * @param propagate whether to propagate the classification (true) or not (false)
+     * @param removePropagationsOnDelete whether to remove the propagated classifications when the classification is removed from this asset (true) or not (false)
+     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
+     * @throws AtlanException on any API problems
+     * @return the updated QuickSightDashboard
+     */
+    public static QuickSightDashboard appendClassifications(
+            String qualifiedName,
+            List<String> classificationNames,
+            boolean propagate,
+            boolean removePropagationsOnDelete,
+            boolean restrictLineagePropagation)
+            throws AtlanException {
+        return (QuickSightDashboard) Asset.appendClassifications(
+                TYPE_NAME,
+                qualifiedName,
+                classificationNames,
+                propagate,
+                removePropagationsOnDelete,
+                restrictLineagePropagation);
+    }
+
+    /**
      * Add classifications to a QuickSightDashboard.
      *
      * @param qualifiedName of the QuickSightDashboard
      * @param classificationNames human-readable names of the classifications to add
      * @throws AtlanException on any API problems, or if any of the classifications already exist on the QuickSightDashboard
+     * @deprecated see {@link #appendClassifications(String, List)} instead
      */
+    @Deprecated
     public static void addClassifications(String qualifiedName, List<String> classificationNames)
             throws AtlanException {
         Asset.addClassifications(TYPE_NAME, qualifiedName, classificationNames);
@@ -308,7 +354,9 @@ public class QuickSightDashboard extends QuickSight {
      * @param removePropagationsOnDelete whether to remove the propagated classifications when the classification is removed from this asset (true) or not (false)
      * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
      * @throws AtlanException on any API problems, or if any of the classifications already exist on the QuickSightDashboard
+     * @deprecated see {@link #appendClassifications(String, List, boolean, boolean, boolean)} instead
      */
+    @Deprecated
     public static void addClassifications(
             String qualifiedName,
             List<String> classificationNames,

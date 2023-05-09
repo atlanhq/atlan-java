@@ -11,6 +11,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.*;
 import org.testng.annotations.Test;
 
+@SuppressWarnings("deprecation")
 public class PowerBIDashboardTest {
 
     private static final PowerBIDashboard full = PowerBIDashboard.builder()

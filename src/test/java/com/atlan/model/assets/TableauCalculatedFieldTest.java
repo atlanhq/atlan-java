@@ -11,6 +11,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.*;
 import org.testng.annotations.Test;
 
+@SuppressWarnings("deprecation")
 public class TableauCalculatedFieldTest {
 
     private static final TableauCalculatedField full = TableauCalculatedField.builder()

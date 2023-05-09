@@ -11,6 +11,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.*;
 import org.testng.annotations.Test;
 
+@SuppressWarnings("deprecation")
 public class SnowflakeStreamTest {
 
     private static final SnowflakeStream full = SnowflakeStream.builder()
