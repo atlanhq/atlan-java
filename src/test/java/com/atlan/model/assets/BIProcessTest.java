@@ -11,6 +11,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.*;
 import org.testng.annotations.Test;
 
+@SuppressWarnings("deprecation")
 public class BIProcessTest {
 
     private static final BIProcess full = BIProcess.builder()

@@ -11,6 +11,7 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import lombok.Builder;
 import lombok.Getter;
@@ -400,6 +401,31 @@ public class AssetTestGenerator extends AssetGenerator {
                         }
                     } else {
                         log.warn("Unable to reflectively identify list-wrapped type: {}", generic.getTypeName());
+                    }
+                } else if (fieldType == Map.class) {
+                    // Handle non-primitive fields
+                    Type generic = field.getGenericType();
+                    if (generic instanceof ParameterizedType) {
+                        ParameterizedType pt = (ParameterizedType) generic;
+                        Type typeKey = pt.getActualTypeArguments()[0];
+                        Type typeVal = pt.getActualTypeArguments()[1];
+                        try {
+                            Class<?> embeddedKey = Class.forName(typeKey.getTypeName());
+                            String simpleClassNameKey = embeddedKey.getSimpleName();
+                            Class<?> embeddedVal = Class.forName(typeVal.getTypeName());
+                            String simpleClassNameVal = embeddedVal.getSimpleName();
+                            sb.append("Map.of(")
+                                    .append(getPrimitiveValue(
+                                            "Map<", simpleClassNameKey + ", " + simpleClassNameVal, 0))
+                                    .append(", ")
+                                    .append(getPrimitiveValue(
+                                            "Map<", simpleClassNameKey + ", " + simpleClassNameVal, 1))
+                                    .append(")");
+                        } catch (ClassNotFoundException e) {
+                            log.error("Unable to find embedded struct class: {}", pt.getActualTypeArguments(), e);
+                        }
+                    } else {
+                        log.warn("Unable to reflectively identify map-wrapped type: {}", generic.getTypeName());
                     }
                 } else if (fieldType.getCanonicalName().startsWith("com.atlan.model.enums.")) {
                     sb.append(getEnumValue(fieldType.getSimpleName(), count));

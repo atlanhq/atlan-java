@@ -277,6 +277,8 @@ public enum TextFields implements AtlanSearchableField {
     TABLEAU_DATA_TYPE("tableauDataType.text"),
     /** Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table. */
     TABLE_NAME("tableName"),
+    /** Allowed values for the tag in the source system. These are denormalized from tagAttributes for ease of querying. */
+    TAG_ALLOWED_VALUES("tagAllowedValues.text"),
     /** Name of the Liveboard in which the Dashlet exists. */
     THOUGHTSPOT_LIVEBOARD_NAME("thoughtspotLiveboardName"),
     /** Unique name of the Liveboard in which the Dashlet exists. */

@@ -298,12 +298,58 @@ public class S3Bucket extends S3 {
     }
 
     /**
+     * Add classifications to a S3Bucket, without replacing existing classifications linked to the S3Bucket.
+     * Note: this operation must make two API calls — one to retrieve the S3Bucket's existing classifications,
+     * and a second to append the new classifications.
+     *
+     * @param qualifiedName of the S3Bucket
+     * @param classificationNames human-readable names of the classifications to add
+     * @throws AtlanException on any API problems
+     * @return the updated S3Bucket
+     */
+    public static S3Bucket appendClassifications(String qualifiedName, List<String> classificationNames)
+            throws AtlanException {
+        return (S3Bucket) Asset.appendClassifications(TYPE_NAME, qualifiedName, classificationNames);
+    }
+
+    /**
+     * Add classifications to a S3Bucket, without replacing existing classifications linked to the S3Bucket.
+     * Note: this operation must make two API calls — one to retrieve the S3Bucket's existing classifications,
+     * and a second to append the new classifications.
+     *
+     * @param qualifiedName of the S3Bucket
+     * @param classificationNames human-readable names of the classifications to add
+     * @param propagate whether to propagate the classification (true) or not (false)
+     * @param removePropagationsOnDelete whether to remove the propagated classifications when the classification is removed from this asset (true) or not (false)
+     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
+     * @throws AtlanException on any API problems
+     * @return the updated S3Bucket
+     */
+    public static S3Bucket appendClassifications(
+            String qualifiedName,
+            List<String> classificationNames,
+            boolean propagate,
+            boolean removePropagationsOnDelete,
+            boolean restrictLineagePropagation)
+            throws AtlanException {
+        return (S3Bucket) Asset.appendClassifications(
+                TYPE_NAME,
+                qualifiedName,
+                classificationNames,
+                propagate,
+                removePropagationsOnDelete,
+                restrictLineagePropagation);
+    }
+
+    /**
      * Add classifications to a S3Bucket.
      *
      * @param qualifiedName of the S3Bucket
      * @param classificationNames human-readable names of the classifications to add
      * @throws AtlanException on any API problems, or if any of the classifications already exist on the S3Bucket
+     * @deprecated see {@link #appendClassifications(String, List)} instead
      */
+    @Deprecated
     public static void addClassifications(String qualifiedName, List<String> classificationNames)
             throws AtlanException {
         Asset.addClassifications(TYPE_NAME, qualifiedName, classificationNames);
@@ -318,7 +364,9 @@ public class S3Bucket extends S3 {
      * @param removePropagationsOnDelete whether to remove the propagated classifications when the classification is removed from this asset (true) or not (false)
      * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
      * @throws AtlanException on any API problems, or if any of the classifications already exist on the S3Bucket
+     * @deprecated see {@link #appendClassifications(String, List, boolean, boolean, boolean)} instead
      */
+    @Deprecated
     public static void addClassifications(
             String qualifiedName,
             List<String> classificationNames,

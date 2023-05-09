@@ -305,12 +305,58 @@ public class Database extends SQL {
     }
 
     /**
+     * Add classifications to a Database, without replacing existing classifications linked to the Database.
+     * Note: this operation must make two API calls — one to retrieve the Database's existing classifications,
+     * and a second to append the new classifications.
+     *
+     * @param qualifiedName of the Database
+     * @param classificationNames human-readable names of the classifications to add
+     * @throws AtlanException on any API problems
+     * @return the updated Database
+     */
+    public static Database appendClassifications(String qualifiedName, List<String> classificationNames)
+            throws AtlanException {
+        return (Database) Asset.appendClassifications(TYPE_NAME, qualifiedName, classificationNames);
+    }
+
+    /**
+     * Add classifications to a Database, without replacing existing classifications linked to the Database.
+     * Note: this operation must make two API calls — one to retrieve the Database's existing classifications,
+     * and a second to append the new classifications.
+     *
+     * @param qualifiedName of the Database
+     * @param classificationNames human-readable names of the classifications to add
+     * @param propagate whether to propagate the classification (true) or not (false)
+     * @param removePropagationsOnDelete whether to remove the propagated classifications when the classification is removed from this asset (true) or not (false)
+     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
+     * @throws AtlanException on any API problems
+     * @return the updated Database
+     */
+    public static Database appendClassifications(
+            String qualifiedName,
+            List<String> classificationNames,
+            boolean propagate,
+            boolean removePropagationsOnDelete,
+            boolean restrictLineagePropagation)
+            throws AtlanException {
+        return (Database) Asset.appendClassifications(
+                TYPE_NAME,
+                qualifiedName,
+                classificationNames,
+                propagate,
+                removePropagationsOnDelete,
+                restrictLineagePropagation);
+    }
+
+    /**
      * Add classifications to a Database.
      *
      * @param qualifiedName of the Database
      * @param classificationNames human-readable names of the classifications to add
      * @throws AtlanException on any API problems, or if any of the classifications already exist on the Database
+     * @deprecated see {@link #appendClassifications(String, List)} instead
      */
+    @Deprecated
     public static void addClassifications(String qualifiedName, List<String> classificationNames)
             throws AtlanException {
         Asset.addClassifications(TYPE_NAME, qualifiedName, classificationNames);
@@ -325,7 +371,9 @@ public class Database extends SQL {
      * @param removePropagationsOnDelete whether to remove the propagated classifications when the classification is removed from this asset (true) or not (false)
      * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
      * @throws AtlanException on any API problems, or if any of the classifications already exist on the Database
+     * @deprecated see {@link #appendClassifications(String, List, boolean, boolean, boolean)} instead
      */
+    @Deprecated
     public static void addClassifications(
             String qualifiedName,
             List<String> classificationNames,

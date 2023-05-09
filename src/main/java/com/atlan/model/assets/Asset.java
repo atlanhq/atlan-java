@@ -780,13 +780,88 @@ public abstract class Asset extends Reference {
     }
 
     /**
+     * Add classifications to an asset, without replacing existing classifications linked to the asset.
+     * Note: this operation must make two API calls — one to retrieve the asset's existing classifications,
+     * and a second to append the new classifications.
+     *
+     * @param typeName type of the asset
+     * @param qualifiedName of the asset
+     * @param classificationNames human-readable names of the classifications to append
+     * @return the asset that was updated
+     * @throws AtlanException on any API problems
+     */
+    protected static Asset appendClassifications(
+            String typeName, String qualifiedName, List<String> classificationNames) throws AtlanException {
+        return appendClassifications(typeName, qualifiedName, classificationNames, true, true, false);
+    }
+
+    /**
+     * Add classifications to an asset, without replacing existing classifications linked to the asset.
+     * Note: this operation must make two API calls — one to retrieve the asset's existing classifications,
+     * and a second to append the new classifications.
+     *
+     * @param typeName type of the asset
+     * @param qualifiedName of the asset
+     * @param classificationNames human-readable names of the classifications to add
+     * @param propagate whether to propagate the classification (true) or not (false)
+     * @param removePropagationsOnDelete whether to remove the propagated classifications when the classification is removed from this asset (true) or not (false)
+     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
+     * @return the asset that was updated
+     * @throws AtlanException on any API problems
+     */
+    protected static Asset appendClassifications(
+            String typeName,
+            String qualifiedName,
+            List<String> classificationNames,
+            boolean propagate,
+            boolean removePropagationsOnDelete,
+            boolean restrictLineagePropagation)
+            throws AtlanException {
+
+        Asset existing = retrieveFull(typeName, qualifiedName);
+        if (classificationNames == null) {
+            return existing;
+        } else if (existing != null) {
+            Set<Classification> replacementClassifications = new TreeSet<>();
+            Set<Classification> existingClassifications = existing.getClassifications();
+            if (existingClassifications != null) {
+                for (Classification classification : existingClassifications) {
+                    if (existing.getGuid().equals(classification.getEntityGuid())) {
+                        // Only re-include classifications that are directly assigned, and whose
+                        // propagation settings are not being overridden by this update
+                        // (Propagation overrides will be handled by the loop further below)
+                        if (!classificationNames.contains(classification.getTypeName())) {
+                            replacementClassifications.add(classification);
+                        }
+                    }
+                }
+            }
+            // Append all the extra classifications (including any propagation overrides)
+            for (String classificationName : classificationNames) {
+                replacementClassifications.add(Classification.builder()
+                        .typeName(classificationName)
+                        .propagate(propagate)
+                        .removePropagationsOnEntityDelete(removePropagationsOnDelete)
+                        .restrictPropagationThroughLineage(restrictLineagePropagation)
+                        .build());
+            }
+            AssetBuilder<?, ?> minimal = existing.trimToRequired();
+            return replaceClassifications(
+                    minimal.classifications(replacementClassifications).build());
+        }
+        return null;
+    }
+
+    /**
      * Add classifications to an asset.
      *
      * @param typeName type of the asset
      * @param qualifiedName of the asset
      * @param classificationNames human-readable names of the classifications to add
      * @throws AtlanException on any API problems, or if any of the classifications already exist on the asset
+     * @deprecated see {@link #appendClassifications(String, String, List)} instead
      */
+    @Deprecated
     protected static void addClassifications(String typeName, String qualifiedName, List<String> classificationNames)
             throws AtlanException {
         EntityUniqueAttributesEndpoint.addClassifications(typeName, qualifiedName, classificationNames);
@@ -802,7 +877,9 @@ public abstract class Asset extends Reference {
      * @param removePropagationsOnDelete whether to remove the propagated classifications when the classification is removed from this asset (true) or not (false)
      * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
      * @throws AtlanException on any API problems, or if any of the classifications already exist on the asset
+     * @deprecated see {@link #appendClassifications(String, String, List, boolean, boolean, boolean)} instead
      */
+    @Deprecated
     protected static void addClassifications(
             String typeName,
             String qualifiedName,
@@ -961,6 +1038,14 @@ public abstract class Asset extends Reference {
 
     private static Asset updateAttributes(Asset asset) throws AtlanException {
         AssetMutationResponse response = EntityBulkEndpoint.upsert(asset, false);
+        if (response != null && !response.getUpdatedAssets().isEmpty()) {
+            return response.getUpdatedAssets().get(0);
+        }
+        return null;
+    }
+
+    private static Asset replaceClassifications(Asset asset) throws AtlanException {
+        AssetMutationResponse response = EntityBulkEndpoint.upsert(asset, true);
         if (response != null && !response.getUpdatedAssets().isEmpty()) {
             return response.getUpdatedAssets().get(0);
         }

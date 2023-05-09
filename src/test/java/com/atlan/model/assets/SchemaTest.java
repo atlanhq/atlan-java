@@ -11,6 +11,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.*;
 import org.testng.annotations.Test;
 
+@SuppressWarnings("deprecation")
 public class SchemaTest {
 
     private static final Schema full = Schema.builder()
@@ -323,6 +324,8 @@ public class SchemaTest {
             .viewCount(123)
             .materializedView(MaterializedView.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .materializedView(MaterializedView.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .snowflakeTag(SnowflakeTag.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .snowflakeTag(SnowflakeTag.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .table(Table.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .table(Table.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .database(Database.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))

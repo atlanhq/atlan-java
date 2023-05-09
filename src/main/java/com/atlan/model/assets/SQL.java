@@ -27,6 +27,7 @@ import lombok.extern.slf4j.Slf4j;
     @JsonSubTypes.Type(value = Procedure.class, name = Procedure.TYPE_NAME),
     @JsonSubTypes.Type(value = View.class, name = View.TYPE_NAME),
     @JsonSubTypes.Type(value = MaterializedView.class, name = MaterializedView.TYPE_NAME),
+    @JsonSubTypes.Type(value = SnowflakeTag.class, name = SnowflakeTag.TYPE_NAME),
 })
 @Slf4j
 @SuppressWarnings("cast")

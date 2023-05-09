@@ -266,12 +266,58 @@ public class BIProcess extends LineageProcess {
     }
 
     /**
+     * Add classifications to a BIProcess, without replacing existing classifications linked to the BIProcess.
+     * Note: this operation must make two API calls — one to retrieve the BIProcess's existing classifications,
+     * and a second to append the new classifications.
+     *
+     * @param qualifiedName of the BIProcess
+     * @param classificationNames human-readable names of the classifications to add
+     * @throws AtlanException on any API problems
+     * @return the updated BIProcess
+     */
+    public static BIProcess appendClassifications(String qualifiedName, List<String> classificationNames)
+            throws AtlanException {
+        return (BIProcess) Asset.appendClassifications(TYPE_NAME, qualifiedName, classificationNames);
+    }
+
+    /**
+     * Add classifications to a BIProcess, without replacing existing classifications linked to the BIProcess.
+     * Note: this operation must make two API calls — one to retrieve the BIProcess's existing classifications,
+     * and a second to append the new classifications.
+     *
+     * @param qualifiedName of the BIProcess
+     * @param classificationNames human-readable names of the classifications to add
+     * @param propagate whether to propagate the classification (true) or not (false)
+     * @param removePropagationsOnDelete whether to remove the propagated classifications when the classification is removed from this asset (true) or not (false)
+     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
+     * @throws AtlanException on any API problems
+     * @return the updated BIProcess
+     */
+    public static BIProcess appendClassifications(
+            String qualifiedName,
+            List<String> classificationNames,
+            boolean propagate,
+            boolean removePropagationsOnDelete,
+            boolean restrictLineagePropagation)
+            throws AtlanException {
+        return (BIProcess) Asset.appendClassifications(
+                TYPE_NAME,
+                qualifiedName,
+                classificationNames,
+                propagate,
+                removePropagationsOnDelete,
+                restrictLineagePropagation);
+    }
+
+    /**
      * Add classifications to a BIProcess.
      *
      * @param qualifiedName of the BIProcess
      * @param classificationNames human-readable names of the classifications to add
      * @throws AtlanException on any API problems, or if any of the classifications already exist on the BIProcess
+     * @deprecated see {@link #appendClassifications(String, List)} instead
      */
+    @Deprecated
     public static void addClassifications(String qualifiedName, List<String> classificationNames)
             throws AtlanException {
         Asset.addClassifications(TYPE_NAME, qualifiedName, classificationNames);
@@ -286,7 +332,9 @@ public class BIProcess extends LineageProcess {
      * @param removePropagationsOnDelete whether to remove the propagated classifications when the classification is removed from this asset (true) or not (false)
      * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
      * @throws AtlanException on any API problems, or if any of the classifications already exist on the BIProcess
+     * @deprecated see {@link #appendClassifications(String, List, boolean, boolean, boolean)} instead
      */
+    @Deprecated
     public static void addClassifications(
             String qualifiedName,
             List<String> classificationNames,

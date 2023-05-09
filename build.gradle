@@ -54,6 +54,9 @@ tasks.withType(JavaCompile) {
         // This check is disabled because we're self-assuring that the enums are immutable.
         disable("ImmutableEnumChecker")
 
+        // This check is disabled as we won't use this annotation
+        disable("InlineMeSuggester")
+
         // This check is disabled because of how we have object-based inheritance setup, and the
         // inability of Lombok to generate Overrides on its generated builder-related methods.
         //disable("MissingOverride")

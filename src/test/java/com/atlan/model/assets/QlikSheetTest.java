@@ -11,6 +11,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.*;
 import org.testng.annotations.Test;
 
+@SuppressWarnings("deprecation")
 public class QlikSheetTest {
 
     private static final QlikSheet full = QlikSheet.builder()

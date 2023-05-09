@@ -467,6 +467,8 @@ public enum KeywordFields implements AtlanSearchableField {
     LOOKER_VIEW_QUALIFIED_NAME("lookerViewQualifiedName"),
     /** TBC */
     LOOKML_LINK_ID("lookmlLinkId"),
+    /** Name of the classification in Atlan that is mapped to this tag. */
+    MAPPED_CLASSIFICATION_NAME("mappedClassificationName"),
     /** TBC */
     MERGE_RESULT_ID("mergeResultId"),
     /** TBC */
@@ -849,6 +851,12 @@ public enum KeywordFields implements AtlanSearchableField {
     TABLE_NAME("tableName.keyword"),
     /** Unique name of the table in which this SQL asset exists, or empty if it does not exist within a table. */
     TABLE_QUALIFIED_NAME("tableQualifiedName"),
+    /** Allowed values for the tag in the source system. These are denormalized from tagAttributes for ease of querying. */
+    TAG_ALLOWED_VALUES("tagAllowedValues"),
+    /** Attributes associated with the tag in the source system. */
+    TAG_ATTRIBUTES("tagAttributes"),
+    /** Unique identifier of the tag in the source system. */
+    TAG_ID("tagId"),
     /** TBC */
     TARGET_SERVER_NAME("targetServerName"),
     /** Name of the Atlan workspace in which the asset exists. */

@@ -24,6 +24,7 @@ import lombok.extern.slf4j.Slf4j;
     @JsonSubTypes.Type(value = Resource.class, name = Resource.TYPE_NAME),
     @JsonSubTypes.Type(value = Insight.class, name = Insight.TYPE_NAME),
     @JsonSubTypes.Type(value = API.class, name = API.TYPE_NAME),
+    @JsonSubTypes.Type(value = Tag.class, name = Tag.TYPE_NAME),
     @JsonSubTypes.Type(value = SQL.class, name = SQL.TYPE_NAME),
 })
 @Slf4j

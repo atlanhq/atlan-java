@@ -11,6 +11,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.*;
 import org.testng.annotations.Test;
 
+@SuppressWarnings("deprecation")
 public class TablePartitionTest {
 
     private static final TablePartition full = TablePartition.builder()

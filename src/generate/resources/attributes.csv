@@ -850,6 +850,7 @@ SalesforceReport,Instance of a Salesforce report in Atlan.,dashboards,
 Schema,Instance of a database schema in Atlan.,tableCount,Number of tables in this schema.
 Schema,Instance of a database schema in Atlan.,viewsCount,Number of views in this schema.
 Schema,Instance of a database schema in Atlan.,materialisedViews,Materialized views that exist within this schema.
+Schema,Instance of a database schema in Atlan.,snowflakeTags,Tags applied to this schema in Snowflake.
 Schema,Instance of a database schema in Atlan.,tables,Tables that exist within this schema.
 Schema,Instance of a database schema in Atlan.,database,Database in which this schema exists.
 Schema,Instance of a database schema in Atlan.,snowflakePipes,Snowflake Pipes that are defined within this schema.
@@ -890,6 +891,11 @@ SnowflakeStream,Instance of a Snowflake Stream in Atlan.,snowflakeStreamMode,
 SnowflakeStream,Instance of a Snowflake Stream in Atlan.,snowflakeStreamIsStale,
 SnowflakeStream,Instance of a Snowflake Stream in Atlan.,snowflakeStreamStaleAfter,
 SnowflakeStream,Instance of a Snowflake Stream in Atlan.,atlanSchema,
+SnowflakeTag,Instance of a Snowflake Tag in Atlan.,dbtModels,dbt Models to which this tag is applied.
+SnowflakeTag,Instance of a Snowflake Tag in Atlan.,dbtSources,dbt Sources to which this tag is applied.
+SnowflakeTag,Instance of a Snowflake Tag in Atlan.,atlanSchema,Database schemas to which this tag is applied.
+SnowflakeTag,Instance of a Snowflake Tag in Atlan.,sqlDbtModels,
+SnowflakeTag,Instance of a Snowflake Tag in Atlan.,sqlDBTSources,
 Table,Instance of a database table in Atlan.,columnCount,Number of columns in this table.
 Table,Instance of a database table in Atlan.,rowCount,Number of rows in this table.
 Table,Instance of a database table in Atlan.,sizeBytes,Size of the table in bytes.
@@ -1022,6 +1028,10 @@ TableauWorksheet,Instance of a Tableau worksheet in Atlan.,workbook,
 TableauWorksheet,Instance of a Tableau worksheet in Atlan.,datasourceFields,
 TableauWorksheet,Instance of a Tableau worksheet in Atlan.,calculatedFields,
 TableauWorksheet,Instance of a Tableau worksheet in Atlan.,dashboards,
+Tag,Base class for all Tag assets.,tagId,Unique identifier of the tag in the source system.
+Tag,Base class for all Tag assets.,tagAttributes,Attributes associated with the tag in the source system.
+Tag,Base class for all Tag assets.,tagAllowedValues,Allowed values for the tag in the source system. These are denormalized from tagAttributes for ease of querying.
+Tag,Base class for all Tag assets.,mappedClassificationName,Name of the classification in Atlan that is mapped to this tag.
 Thoughtspot,Base class for ThoughtSpot assets.,thoughtspotChartType,
 Thoughtspot,Base class for ThoughtSpot assets.,thoughtspotQuestionText,
 ThoughtspotDashlet,Instance of a ThoughtSpot Dashlet in Atlan.,thoughtspotLiveboardName,Name of the Liveboard in which the Dashlet exists.
@@ -1074,3 +1084,16 @@ PopularityInsights,Detailed information about an asset's usage or popularity.,re
 PopularityInsights,Detailed information about an asset's usage or popularity.,recordComputeCostUnit,Unit of measure for recordComputeCost.
 PopularityInsights,Detailed information about an asset's usage or popularity.,recordLastTimestamp,Timestamp of last operation or query run by the user.
 PopularityInsights,Detailed information about an asset's usage or popularity.,recordWarehouse,Name of the warehouse on which the queries were run.
+SourceTagAttachment,"Detailed information about the attachment of a classification on an Atlan asset, synced from source.",sourceTagName,Name of the tag asset in Atlan.
+SourceTagAttachment,"Detailed information about the attachment of a classification on an Atlan asset, synced from source.",sourceTagQualifiedName,Unique name of the tag asset in Atlan.
+SourceTagAttachment,"Detailed information about the attachment of a classification on an Atlan asset, synced from source.",sourceTagGuid,Unique identifier of the tag asset in Atlan.
+SourceTagAttachment,"Detailed information about the attachment of a classification on an Atlan asset, synced from source.",sourceTagConnectorName,Name of the connector that is the source of the tag.
+SourceTagAttachment,"Detailed information about the attachment of a classification on an Atlan asset, synced from source.",sourceTagValue,Value of the attached tag within the source system.
+SourceTagAttachment,"Detailed information about the attachment of a classification on an Atlan asset, synced from source.",isSourceTagSynced,Whether the tag has been synced with the source (true) or not (false).
+SourceTagAttachment,"Detailed information about the attachment of a classification on an Atlan asset, synced from source.",sourceTagSyncTimestamp,Time at which the tag was sycned with the source.
+SourceTagAttachment,"Detailed information about the attachment of a classification on an Atlan asset, synced from source.",sourceTagSyncError,Error message if the tag sync with the source failed.
+SourceTagAttachmentValue,Detailed information about the value attached to a tag in a source system.,tagAttachmentKey,"Attachment key, for example ""has_pii"" or ""type_pii""."
+SourceTagAttachmentValue,Detailed information about the value attached to a tag in a source system.,tagAttachmentValue,"Attachment value, for example ""true"" or ""email""."
+SourceTagAttribute,Detailed information about an attribute attached to a tag in a source system.,tagAttributeKey,"Attribute key, for example ""allowedValues"" or ""enabled""."
+SourceTagAttribute,Detailed information about an attribute attached to a tag in a source system.,tagAttributeValue,"Attribute value, for example [""Private"", ""PII""] for allowedValues, or ""true"" for enabled."
+SourceTagAttribute,Detailed information about an attribute attached to a tag in a source system.,tagAttributeProperties,Properties associated with the attribute.

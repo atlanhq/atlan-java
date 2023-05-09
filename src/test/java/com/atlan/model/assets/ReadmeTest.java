@@ -11,6 +11,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.*;
 import org.testng.annotations.Test;
 
+@SuppressWarnings("deprecation")
 public class ReadmeTest {
 
     private static final Readme full = Readme.builder()

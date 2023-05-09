@@ -894,7 +894,7 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.update.column.addClassifications"},
             dependsOnGroups = {"asset.update.column.classification.x"})
     void updateColumnAddClassifications() throws AtlanException {
-        Column.addClassifications(column5.getQualifiedName(), List.of(CLASSIFICATION_NAME1, CLASSIFICATION_NAME2));
+        Column.appendClassifications(column5.getQualifiedName(), List.of(CLASSIFICATION_NAME1, CLASSIFICATION_NAME2));
         Column column = Column.retrieveByGuid(column5.getGuid());
         validateCompleteColumn(column);
         validateHasClassifications(column, Set.of(CLASSIFICATION_NAME1, CLASSIFICATION_NAME2));
@@ -903,6 +903,7 @@ public class SQLAssetTest extends AtlanLiveTest {
     @Test(
             groups = {"asset.update.column.addClassificationDuplicate"},
             dependsOnGroups = {"asset.update.column.addClassifications"})
+    @SuppressWarnings("deprecation")
     void updateColumnAddClassificationDuplicate() {
         assertThrows(
                 InvalidRequestException.class,
@@ -932,7 +933,7 @@ public class SQLAssetTest extends AtlanLiveTest {
             groups = {"asset.update.column.addClassifications.again"},
             dependsOnGroups = {"asset.update.column.removeClassificationNonexistent"})
     void updateColumnAddClassificationsAgain() throws AtlanException {
-        Column.addClassifications(column5.getQualifiedName(), List.of(CLASSIFICATION_NAME2));
+        Column.appendClassifications(column5.getQualifiedName(), List.of(CLASSIFICATION_NAME2));
         Column column = Column.retrieveByGuid(column5.getGuid());
         validateCompleteColumn(column);
         validateHasClassifications(column, Set.of(CLASSIFICATION_NAME1, CLASSIFICATION_NAME2));
