@@ -54,10 +54,14 @@ public class ClassificationSerializer extends StdSerializer<Classification> {
             log.debug("Attempt to serialize a null classification — skipping.");
         } else {
             String clsId;
-            try {
-                clsId = ClassificationCache.getIdForName(clsName);
-            } catch (AtlanException e) {
-                throw new IOException("Unable to find classification with name: " + clsName, e);
+            if (clsName.equals(Serde.DELETED_AUDIT_OBJECT)) {
+                clsId = Serde.DELETED_AUDIT_OBJECT;
+            } else {
+                try {
+                    clsId = ClassificationCache.getIdForName(clsName);
+                } catch (AtlanException e) {
+                    throw new IOException("Unable to find classification with name: " + clsName, e);
+                }
             }
 
             // TODO: Unfortunately, the use of ClassificationBeanSerializerModifier to avoid the direct

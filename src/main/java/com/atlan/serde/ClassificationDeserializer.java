@@ -4,6 +4,7 @@ package com.atlan.serde;
 
 import com.atlan.cache.ClassificationCache;
 import com.atlan.exception.AtlanException;
+import com.atlan.exception.NotFoundException;
 import com.atlan.model.core.Classification;
 import com.atlan.util.JacksonUtils;
 import com.fasterxml.jackson.core.JsonParser;
@@ -55,25 +56,41 @@ public class ClassificationDeserializer extends StdDeserializer<Classification> 
         if (clsId == null) {
             throw new IOException("Unable to deserialize classification from: " + root);
         }
-        String clsName;
+        String clsName = null;
         try {
             // Translate the ID-string to a human-readable name
             clsName = ClassificationCache.getNameForId(clsId);
+        } catch (NotFoundException e) {
+            // Do nothing: if not found, the classification was deleted since but the
+            // audit record remains
         } catch (AtlanException e) {
             throw new IOException("Unable to find classification with ID-string: " + clsId, e);
         }
 
-        // TODO: Unfortunately, attempts to use a ClassificationBeanDeserializerModifier to avoid the direct
-        //  deserialization below were not successful — something to investigate another time
-        return Classification.builder()
-                .typeName(clsName)
-                .entityGuid(JacksonUtils.deserializeString(root, "entityGuid"))
-                .entityStatus(JacksonUtils.deserializeObject(root, "entityStatus", new TypeReference<>() {}))
-                .propagate(JacksonUtils.deserializeBoolean(root, "propagate"))
-                .removePropagationsOnEntityDelete(
-                        JacksonUtils.deserializeBoolean(root, "removePropagationsOnEntityDelete"))
-                .restrictPropagationThroughLineage(
-                        JacksonUtils.deserializeBoolean(root, "restrictPropagationThroughLineage"))
-                .build();
+        if (clsName == null) {
+            return Classification.builder()
+                    .typeName(Serde.DELETED_AUDIT_OBJECT)
+                    .entityGuid(JacksonUtils.deserializeString(root, "entityGuid"))
+                    .entityStatus(JacksonUtils.deserializeObject(root, "entityStatus", new TypeReference<>() {}))
+                    .propagate(JacksonUtils.deserializeBoolean(root, "propagate"))
+                    .removePropagationsOnEntityDelete(
+                            JacksonUtils.deserializeBoolean(root, "removePropagationsOnEntityDelete"))
+                    .restrictPropagationThroughLineage(
+                            JacksonUtils.deserializeBoolean(root, "restrictPropagationThroughLineage"))
+                    .build();
+        } else {
+            // TODO: Unfortunately, attempts to use a ClassificationBeanDeserializerModifier to avoid the direct
+            //  deserialization below were not successful — something to investigate another time
+            return Classification.builder()
+                    .typeName(clsName)
+                    .entityGuid(JacksonUtils.deserializeString(root, "entityGuid"))
+                    .entityStatus(JacksonUtils.deserializeObject(root, "entityStatus", new TypeReference<>() {}))
+                    .propagate(JacksonUtils.deserializeBoolean(root, "propagate"))
+                    .removePropagationsOnEntityDelete(
+                            JacksonUtils.deserializeBoolean(root, "removePropagationsOnEntityDelete"))
+                    .restrictPropagationThroughLineage(
+                            JacksonUtils.deserializeBoolean(root, "restrictPropagationThroughLineage"))
+                    .build();
+        }
     }
 }

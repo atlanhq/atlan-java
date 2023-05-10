@@ -25,6 +25,9 @@ import lombok.experimental.SuperBuilder;
 public class AuditSearchRequest extends AtlanObject {
     private static final long serialVersionUID = 2L;
 
+    private static final SortOptions LATEST_FIRST =
+            SortOptions.of(s -> s.field(FieldSort.of(f -> f.field("created").order(SortOrder.Desc))));
+
     /** Parameters for the search itself. */
     IndexSearchDSL dsl;
 
@@ -49,8 +52,7 @@ public class AuditSearchRequest extends AtlanObject {
                 .dsl(IndexSearchDSL.builder()
                         .from(0)
                         .size(size)
-                        .sortOption(SortOptions.of(s ->
-                                s.field(FieldSort.of(f -> f.field("created").order(SortOrder.Desc)))))
+                        .sortOption(LATEST_FIRST)
                         .query(BoolQuery.of(b -> b.filter(
                                         TermQuery.of(t -> t.field("entityId").value(guid))
                                                 ._toQuery()))
@@ -71,13 +73,32 @@ public class AuditSearchRequest extends AtlanObject {
                 .dsl(IndexSearchDSL.builder()
                         .from(0)
                         .size(size)
-                        .sortOption(SortOptions.of(s ->
-                                s.field(FieldSort.of(f -> f.field("created").order(SortOrder.Desc)))))
+                        .sortOption(LATEST_FIRST)
                         .query(BoolQuery.of(b -> b.must(List.of(
                                         TermQuery.of(t -> t.field("entityQualifiedName")
                                                         .value(qualifiedName))
                                                 ._toQuery(),
                                         TermQuery.of(t -> t.field("typeName").value(typeName))
+                                                ._toQuery())))
+                                ._toQuery())
+                        .build());
+    }
+
+    /**
+     * Start building an audit search request for the last changes made to any assets, by a given user.
+     *
+     * @param userName the name of the user for which to look for any changes
+     * @param size number of changes to retrieve
+     * @return a request builder pre-configured with these criteria
+     */
+    public static AuditSearchRequestBuilder<?, ?> byUser(String userName, int size) {
+        return AuditSearchRequest.builder()
+                .dsl(IndexSearchDSL.builder()
+                        .from(0)
+                        .size(size)
+                        .sortOption(LATEST_FIRST)
+                        .query(BoolQuery.of(b -> b.must(List.of(
+                                        TermQuery.of(t -> t.field("user").value(userName))
                                                 ._toQuery())))
                                 ._toQuery())
                         .build());

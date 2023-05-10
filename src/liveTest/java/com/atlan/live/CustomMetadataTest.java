@@ -13,10 +13,9 @@ import com.atlan.model.admin.AtlanGroup;
 import com.atlan.model.assets.*;
 import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.core.CustomMetadataAttributes;
-import com.atlan.model.enums.AtlanCustomAttributePrimitiveType;
-import com.atlan.model.enums.AtlanTypeCategory;
-import com.atlan.model.enums.AuditActionType;
+import com.atlan.model.enums.*;
 import com.atlan.model.search.*;
+import com.atlan.model.structs.BadgeCondition;
 import com.atlan.model.typedefs.*;
 import com.atlan.net.HttpClient;
 import java.util.*;
@@ -66,6 +65,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
     private static GlossaryTerm term = null;
     private static AtlanGroup group1 = null;
     private static AtlanGroup group2 = null;
+    private static Badge badge = null;
     private static long removalEpoch;
 
     @Test(groups = {"cm.create.cm.ipr"})
@@ -262,6 +262,24 @@ public class CustomMetadataTest extends AtlanLiveTest {
         assertFalse(one.getOptions().getMultiValueSelect());
         assertEquals(one.getOptions().getPrimitiveType(), AtlanCustomAttributePrimitiveType.OPTIONS);
         assertEquals(one.getOptions().getEnumType(), CM_ENUM_DQ_TYPE);
+    }
+
+    @Test(
+            groups = {"cm.create.badges"},
+            dependsOnGroups = {"cm.create.cm.dq"})
+    void createBadges() throws AtlanException {
+        Badge toCreate = Badge.creator(CM_ATTR_QUALITY_COUNT, CM_QUALITY, CM_ATTR_QUALITY_COUNT)
+                .userDescription("How many data quality checks ran against this asset.")
+                .badgeCondition(BadgeCondition.of(BadgeComparisonOperator.GTE, "5", BadgeConditionColor.GREEN))
+                .badgeCondition(BadgeCondition.of(BadgeComparisonOperator.LT, "5", BadgeConditionColor.YELLOW))
+                .badgeCondition(BadgeCondition.of(BadgeComparisonOperator.LTE, "2", BadgeConditionColor.RED))
+                .build();
+        AssetMutationResponse response = toCreate.upsert();
+        assertNotNull(response);
+        assertEquals(response.getCreatedAssets().size(), 1);
+        assertTrue(response.getCreatedAssets().get(0) instanceof Badge);
+        badge = (Badge) response.getCreatedAssets().get(0);
+        assertNotNull(badge.getGuid());
     }
 
     @Test(groups = {"cm.create.term"})
@@ -779,8 +797,16 @@ public class CustomMetadataTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"cm.purge.cm"},
+            groups = {"cm.purge.badges"},
             dependsOnGroups = {"cm.purge.term"},
+            alwaysRun = true)
+    void purgeBadges() throws AtlanException {
+        Badge.purge(badge.getGuid());
+    }
+
+    @Test(
+            groups = {"cm.purge.cm"},
+            dependsOnGroups = {"cm.purge.badges"},
             alwaysRun = true)
     void purgeCustomMetadata() throws AtlanException {
         CustomMetadataDef.purge(CM_RACI);

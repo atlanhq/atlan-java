@@ -20,6 +20,8 @@ import java.util.Set;
  */
 public class Serde {
 
+    public static final String DELETED_AUDIT_OBJECT = "(DELETED)";
+
     private static final Set<Module> modules = createModules();
 
     /** Singular ObjectMapper through which to do Jackson-based (de-)serialization. */
