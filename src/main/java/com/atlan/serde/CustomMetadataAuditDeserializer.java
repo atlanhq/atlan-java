@@ -4,6 +4,7 @@ package com.atlan.serde;
 
 import com.atlan.cache.CustomMetadataCache;
 import com.atlan.exception.AtlanException;
+import com.atlan.exception.NotFoundException;
 import com.atlan.model.core.CustomMetadataAttributes;
 import com.atlan.model.search.CustomMetadataAttributesAuditDetail;
 import com.fasterxml.jackson.core.JsonParser;
@@ -12,12 +13,14 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fasterxml.jackson.databind.jsontype.TypeDeserializer;
 import java.io.IOException;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Custom deserialization of {@link CustomMetadataAttributesAuditDetail} objects.
  * In particular, this translates from the Atlan-internal hashed-string representation for custom metadata into
  * the human-readable names for custom metadata.
  */
+@Slf4j
 public class CustomMetadataAuditDeserializer extends StdDeserializer<CustomMetadataAttributesAuditDetail> {
     private static final long serialVersionUID = 2L;
 
@@ -57,27 +60,36 @@ public class CustomMetadataAuditDeserializer extends StdDeserializer<CustomMetad
             throw new IOException("Unable to deserialize custom metadata from: " + root);
         }
 
-        String cmName;
+        String cmName = null;
         try {
             // Translate the ID-string to a human-readable name
             cmName = CustomMetadataCache.getNameForId(cmId);
+        } catch (NotFoundException e) {
+            // Do nothing: if not found, the custom metadata was deleted since but the
+            // audit record remains
         } catch (AtlanException e) {
             throw new IOException("Unable to find custom metadata with ID-string: " + cmId, e);
         }
 
-        JsonNode attributes = root.get("attributes");
+        if (cmName == null) {
+            return CustomMetadataAttributesAuditDetail.builder()
+                    .typeName(Serde.DELETED_AUDIT_OBJECT)
+                    .build();
+        } else {
+            JsonNode attributes = root.get("attributes");
 
-        CustomMetadataAttributes cma;
-        try {
-            cma = CustomMetadataCache.getCustomMetadataAttributes(cmId, attributes);
-        } catch (AtlanException e) {
-            throw new IOException("Unable to translate custom metadata attributes: " + attributes, e);
+            CustomMetadataAttributes cma;
+            try {
+                cma = CustomMetadataCache.getCustomMetadataAttributes(cmId, attributes);
+            } catch (AtlanException e) {
+                throw new IOException("Unable to translate custom metadata attributes: " + attributes, e);
+            }
+
+            return CustomMetadataAttributesAuditDetail.builder()
+                    .typeName(cmName)
+                    .attributes(cma.getAttributes())
+                    .archivedAttributes(cma.getArchivedAttributes())
+                    .build();
         }
-
-        return CustomMetadataAttributesAuditDetail.builder()
-                .typeName(cmName)
-                .attributes(cma.getAttributes())
-                .archivedAttributes(cma.getArchivedAttributes())
-                .build();
     }
 }

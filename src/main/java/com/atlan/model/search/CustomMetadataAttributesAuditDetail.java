@@ -20,4 +20,10 @@ public class CustomMetadataAttributesAuditDetail extends CustomMetadataAttribute
 
     /** Unique name of the custom metadata set (structure). */
     String typeName;
+
+    /**
+     * Indicates whether this custom metadata audit entry is empty,
+     * typically true when the custom metadata has since been deleted from Atlan.
+     */
+    Boolean empty;
 }

@@ -57,21 +57,29 @@ public class CustomMetadataMapSerializer extends StdSerializer<Map<String, Custo
         if (cmMap != null) {
             for (Map.Entry<String, CustomMetadataAttributes> entry : cmMap.entrySet()) {
                 String cmName = entry.getKey();
-                CustomMetadataAttributes cma = entry.getValue();
-                try {
-                    String cmId = CustomMetadataCache.getIdForName(cmName);
-                    if (cma != null) {
-                        Map<String, Object> idToValue = new HashMap<>();
-                        CustomMetadataCache.getIdMapFromNameMap(cmName, cma.getAttributes(), idToValue);
-                        JacksonUtils.serializeObject(gen, cmId, idToValue);
-                    } else {
+                if (cmName != null) {
+                    CustomMetadataAttributes cma = entry.getValue();
+                    String cmId;
+                    if (cmName.equals(Serde.DELETED_AUDIT_OBJECT)) {
+                        cmId = Serde.DELETED_AUDIT_OBJECT;
                         JacksonUtils.serializeObject(gen, cmId, Collections.emptyMap());
+                    } else {
+                        try {
+                            cmId = CustomMetadataCache.getIdForName(cmName);
+                            if (cma != null) {
+                                Map<String, Object> idToValue = new HashMap<>();
+                                CustomMetadataCache.getIdMapFromNameMap(cmName, cma.getAttributes(), idToValue);
+                                JacksonUtils.serializeObject(gen, cmId, idToValue);
+                            } else {
+                                JacksonUtils.serializeObject(gen, cmId, Collections.emptyMap());
+                            }
+                        } catch (AtlanException e) {
+                            log.error(
+                                    "Unable to find custom metadata with name {}, or translate one of its attributes.",
+                                    cmName,
+                                    e);
+                        }
                     }
-                } catch (AtlanException e) {
-                    log.error(
-                            "Unable to find custom metadata with name {}, or translate one of its attributes.",
-                            cmName,
-                            e);
                 }
             }
         }
