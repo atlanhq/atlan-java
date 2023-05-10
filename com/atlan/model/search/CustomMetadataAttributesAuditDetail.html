@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10};
+var data = {"i0":9,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -245,18 +245,26 @@ implements <a href="AuditDetail.html" title="interface in com.atlan.model.search
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
+<td class="colFirst"><code>java.lang.Boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getEmpty()">getEmpty</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Indicates whether this custom metadata audit entry is empty,
+ typically true when the custom metadata has since been deleted from Atlan.</div>
+</td>
+</tr>
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTypeName()">getTypeName</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Unique name of the custom metadata set (structure).</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hashCode()">hashCode</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code><a href="CustomMetadataAttributesAuditDetail.CustomMetadataAttributesAuditDetailBuilder.html" title="class in com.atlan.model.search">CustomMetadataAttributesAuditDetail.CustomMetadataAttributesAuditDetailBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toBuilder()">toBuilder</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
@@ -352,6 +360,17 @@ implements <a href="AuditDetail.html" title="interface in com.atlan.model.search
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="AuditDetail.html#getTypeName()">getTypeName</a></code>&nbsp;in interface&nbsp;<code><a href="AuditDetail.html" title="interface in com.atlan.model.search">AuditDetail</a></code></dd>
 </dl>
+</li>
+</ul>
+<a id="getEmpty()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getEmpty</h4>
+<pre class="methodSignature">public&nbsp;java.lang.Boolean&nbsp;getEmpty()</pre>
+<div class="block">Indicates whether this custom metadata audit entry is empty,
+ typically true when the custom metadata has since been deleted from Atlan.</div>
 </li>
 </ul>
 <a id="equals(java.lang.Object)">
