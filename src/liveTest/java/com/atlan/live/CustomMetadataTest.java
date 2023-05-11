@@ -214,9 +214,9 @@ public class CustomMetadataTest extends AtlanLiveTest {
                 .attributeDef(AttributeDef.of(CM_ATTR_QUALITY_SQL, AtlanCustomAttributePrimitiveType.SQL, null, false))
                 .attributeDef(AttributeDef.of(
                         CM_ATTR_QUALITY_TYPE, AtlanCustomAttributePrimitiveType.OPTIONS, CM_ENUM_DQ_TYPE, false))
-                .options(
-                        CustomMetadataOptions.withLogoFromURL(
-                                "https://github.com/great-expectations/great_expectations/raw/develop/docs/docusaurus/static/img/gx-mark-160.png", true))
+                .options(CustomMetadataOptions.withLogoFromURL(
+                        "https://github.com/great-expectations/great_expectations/raw/develop/docs/docusaurus/static/img/gx-mark-160.png",
+                        true))
                 .build();
         CustomMetadataDef response = customMetadataDef.create();
         assertNotNull(response);
