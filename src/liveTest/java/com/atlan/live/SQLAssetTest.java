@@ -1343,9 +1343,9 @@ public class SQLAssetTest extends AtlanLiveTest {
     }
 
     private void validateAudits(List<EntityAudit> audits) {
-        assertEquals(audits.size(), 29);
+        assertEquals(audits.size(), 33);
 
-        EntityAudit one = audits.get(28);
+        EntityAudit one = audits.get(32);
         assertNotNull(one);
         assertEquals(one.getAction(), AuditActionType.ENTITY_CREATE);
         AuditDetail detail = one.getDetail();
@@ -1360,7 +1360,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertNull(column.getCertificateStatus());
         assertNull(column.getAnnouncementType());
 
-        one = audits.get(27);
+        one = audits.get(31);
         assertNotNull(one);
         assertEquals(one.getAction(), AuditActionType.ENTITY_UPDATE);
         detail = one.getDetail();
@@ -1369,7 +1369,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         validateUpdatedColumn(column);
         assertEquals(column.getOwnerGroups(), Set.of(ownerGroup.getName()));
 
-        one = audits.get(26);
+        one = audits.get(30);
         assertNotNull(one);
         assertEquals(one.getAction(), AuditActionType.ENTITY_UPDATE);
         detail = one.getDetail();
@@ -1378,7 +1378,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         validateUpdatedColumn(column);
         assertTrue(column.getOwnerGroups().isEmpty());
 
-        one = audits.get(25);
+        one = audits.get(29);
         assertNotNull(one);
         assertEquals(one.getAction(), AuditActionType.ENTITY_UPDATE);
         detail = one.getDetail();
@@ -1388,7 +1388,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertEquals(column.getCertificateStatus(), CERTIFICATE_STATUS);
         assertEquals(column.getCertificateStatusMessage(), CERTIFICATE_MESSAGE);
 
-        one = audits.get(24);
+        one = audits.get(28);
         assertNotNull(one);
         assertEquals(one.getAction(), AuditActionType.ENTITY_UPDATE);
         detail = one.getDetail();
@@ -1399,7 +1399,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertTrue(clearedFields.contains("certificateStatus"));
         assertTrue(clearedFields.contains("certificateStatusMessage"));
 
-        one = audits.get(23);
+        one = audits.get(27);
         assertNotNull(one);
         assertEquals(one.getAction(), AuditActionType.ENTITY_UPDATE);
         detail = one.getDetail();
@@ -1410,7 +1410,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertEquals(column.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
         assertEquals(column.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
 
-        one = audits.get(22);
+        one = audits.get(26);
         assertNotNull(one);
         assertEquals(one.getAction(), AuditActionType.ENTITY_UPDATE);
         detail = one.getDetail();
@@ -1422,7 +1422,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertTrue(clearedFields.contains("announcementTitle"));
         assertTrue(clearedFields.contains("announcementMessage"));
 
-        one = audits.get(21);
+        one = audits.get(25);
         assertNotNull(one);
         assertEquals(one.getAction(), AuditActionType.ENTITY_UPDATE);
         detail = one.getDetail();
@@ -1432,7 +1432,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertEquals(column.getDescription(), DESCRIPTION);
         assertEquals(column.getUserDescription(), DESCRIPTION);
 
-        one = audits.get(20);
+        one = audits.get(24);
         assertNotNull(one);
         assertEquals(one.getAction(), AuditActionType.ENTITY_UPDATE);
         detail = one.getDetail();
@@ -1442,7 +1442,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         clearedFields = column.getNullFields();
         assertTrue(clearedFields.contains("description"));
 
-        one = audits.get(19);
+        one = audits.get(23);
         assertNotNull(one);
         assertEquals(one.getAction(), AuditActionType.ENTITY_UPDATE);
         detail = one.getDetail();
@@ -1452,7 +1452,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         clearedFields = column.getNullFields();
         assertTrue(clearedFields.contains("userDescription"));
 
-        one = audits.get(18);
+        one = audits.get(22);
         assertNotNull(one);
         assertEquals(one.getAction(), AuditActionType.CLASSIFICATION_ADD);
         detail = one.getDetail();
@@ -1461,7 +1461,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertEquals(classification.getTypeName(), CLASSIFICATION_NAME1);
         assertEquals(classification.getEntityGuid(), column5.getGuid());
 
-        one = audits.get(17);
+        one = audits.get(21);
         assertNotNull(one);
         assertEquals(one.getAction(), AuditActionType.ENTITY_UPDATE);
         detail = one.getDetail();
@@ -1471,7 +1471,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertNotNull(column.getClassifications());
         assertEquals(column.getClassifications().size(), 1);
 
-        one = audits.get(16);
+        one = audits.get(20);
         assertNotNull(one);
         assertEquals(one.getAction(), AuditActionType.CLASSIFICATION_DELETE);
         detail = one.getDetail();
@@ -1479,7 +1479,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         classification = (Classification) detail;
         assertEquals(classification.getTypeName(), CLASSIFICATION_NAME1);
 
-        one = audits.get(15);
+        one = audits.get(19);
         assertNotNull(one);
         assertEquals(one.getAction(), AuditActionType.ENTITY_UPDATE);
         detail = one.getDetail();
@@ -1490,14 +1490,14 @@ public class SQLAssetTest extends AtlanLiveTest {
 
         Set<Classification> classificationsAdded = new HashSet<>();
 
-        one = audits.get(14);
+        one = audits.get(18);
         assertNotNull(one);
         assertEquals(one.getAction(), AuditActionType.CLASSIFICATION_ADD);
         detail = one.getDetail();
         assertTrue(detail instanceof Classification);
         classificationsAdded.add((Classification) detail);
 
-        one = audits.get(13);
+        one = audits.get(17);
         assertNotNull(one);
         assertEquals(one.getAction(), AuditActionType.CLASSIFICATION_ADD);
         detail = one.getDetail();
@@ -1515,24 +1515,89 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertTrue(classificationsAddedNames.contains(CLASSIFICATION_NAME1));
         assertTrue(classificationsAddedNames.contains(CLASSIFICATION_NAME2));
 
-        one = audits.get(12);
+        one = audits.get(16);
+        assertNotNull(one);
+        assertEquals(one.getAction(), AuditActionType.ENTITY_UPDATE);
+        detail = one.getDetail();
+        assertTrue(detail instanceof Column);
+        column = (Column) detail;
+        validateUpdatedColumn(column);
+        assertNotNull(column.getClassifications());
+        assertEquals(column.getClassifications().size(), 2);
+        Set<String> classificationNames = column.getClassifications().stream()
+                .map(Classification::getTypeName)
+                .collect(Collectors.toSet());
+        assertEquals(classificationNames.size(), 2);
+        assertTrue(classificationNames.contains(CLASSIFICATION_NAME1));
+        assertTrue(classificationNames.contains(CLASSIFICATION_NAME2));
+
+        Set<Classification> classificationsDeleted = new HashSet<>();
+
+        one = audits.get(15);
         assertNotNull(one);
         assertEquals(one.getAction(), AuditActionType.CLASSIFICATION_DELETE);
         detail = one.getDetail();
         assertTrue(detail instanceof Classification);
-        classification = (Classification) detail;
-        assertEquals(classification.getTypeName(), CLASSIFICATION_NAME2);
+        classificationsDeleted.add((Classification) detail);
 
-        one = audits.get(11);
+        one = audits.get(14);
+        assertNotNull(one);
+        assertEquals(one.getAction(), AuditActionType.CLASSIFICATION_DELETE);
+        detail = one.getDetail();
+        assertTrue(detail instanceof Classification);
+        classificationsDeleted.add((Classification) detail);
+
+        Set<String> classificationsDeletedNames =
+                classificationsDeleted.stream().map(Classification::getTypeName).collect(Collectors.toSet());
+        assertEquals(classificationsDeleted.size(), 2);
+        assertEquals(classificationsDeletedNames.size(), 2);
+        assertTrue(classificationsDeletedNames.contains(CLASSIFICATION_NAME1));
+        assertTrue(classificationsDeletedNames.contains(CLASSIFICATION_NAME2));
+
+        classificationsAdded = new HashSet<>();
+
+        one = audits.get(13);
         assertNotNull(one);
         assertEquals(one.getAction(), AuditActionType.CLASSIFICATION_ADD);
         detail = one.getDetail();
         assertTrue(detail instanceof Classification);
-        classification = (Classification) detail;
-        assertEquals(classification.getTypeName(), CLASSIFICATION_NAME2);
-        assertEquals(classification.getEntityGuid(), column5.getGuid());
+        classificationsAdded.add((Classification) detail);
 
-        Set<Classification> classificationsDeleted = new HashSet<>();
+        one = audits.get(12);
+        assertNotNull(one);
+        assertEquals(one.getAction(), AuditActionType.CLASSIFICATION_ADD);
+        detail = one.getDetail();
+        assertTrue(detail instanceof Classification);
+        classificationsAdded.add((Classification) detail);
+
+        classificationsAddedGuids =
+                classificationsAdded.stream().map(Classification::getEntityGuid).collect(Collectors.toSet());
+        classificationsAddedNames =
+                classificationsAdded.stream().map(Classification::getTypeName).collect(Collectors.toSet());
+        assertEquals(classificationsAdded.size(), 2);
+        assertEquals(classificationsAddedGuids.size(), 1);
+        assertTrue(classificationsAddedGuids.contains(column5.getGuid()));
+        assertEquals(classificationsAddedNames.size(), 2);
+        assertTrue(classificationsAddedNames.contains(CLASSIFICATION_NAME1));
+        assertTrue(classificationsAddedNames.contains(CLASSIFICATION_NAME2));
+
+        one = audits.get(11);
+        assertNotNull(one);
+        assertEquals(one.getAction(), AuditActionType.ENTITY_UPDATE);
+        detail = one.getDetail();
+        assertTrue(detail instanceof Column);
+        column = (Column) detail;
+        validateUpdatedColumn(column);
+        assertNotNull(column.getClassifications());
+        assertEquals(column.getClassifications().size(), 2);
+        classificationNames = column.getClassifications().stream()
+                .map(Classification::getTypeName)
+                .collect(Collectors.toSet());
+        assertEquals(classificationNames.size(), 2);
+        assertTrue(classificationNames.contains(CLASSIFICATION_NAME1));
+        assertTrue(classificationNames.contains(CLASSIFICATION_NAME2));
+
+        classificationsDeleted = new HashSet<>();
 
         one = audits.get(10);
         assertNotNull(one);
@@ -1548,7 +1613,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertTrue(detail instanceof Classification);
         classificationsDeleted.add((Classification) detail);
 
-        Set<String> classificationsDeletedNames =
+        classificationsDeletedNames =
                 classificationsDeleted.stream().map(Classification::getTypeName).collect(Collectors.toSet());
         assertEquals(classificationsDeleted.size(), 2);
         assertEquals(classificationsDeletedNames.size(), 2);
