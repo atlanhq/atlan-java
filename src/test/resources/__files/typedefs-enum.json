@@ -1,0 +1,784 @@
+{
+  "enumDefs": [
+    {
+      "category": "ENUM",
+      "guid": "ba5047f2-dfd0-4506-81a9-45118be0f693",
+      "createdBy": "service-account-atlan-argo",
+      "updatedBy": "service-account-atlan-argo",
+      "createTime": 1683546668100,
+      "updateTime": 1683546668100,
+      "version": 1,
+      "name": "ADLSEncryptionTypes",
+      "description": "ADLS Encryption Types",
+      "typeVersion": "1.1",
+      "serviceType": "atlas_core",
+      "elementDefs": [
+        {
+          "value": "Microsoft.Storage",
+          "ordinal": 0
+        },
+        {
+          "value": "Microsoft.Keyvault",
+          "ordinal": 1
+        }
+      ]
+    },
+    {
+      "category": "ENUM",
+      "guid": "5f05b79d-cfd4-4f3c-9667-cf954faf491f",
+      "createdBy": "service-account-atlan-argo",
+      "updatedBy": "service-account-atlan-argo",
+      "createTime": 1683546662633,
+      "updateTime": 1683546662633,
+      "version": 1,
+      "name": "AtlasGlossaryTermRelationshipStatus",
+      "description": "TermRelationshipStatus defines how reliable the relationship is between two glossary terms",
+      "typeVersion": "1.0",
+      "serviceType": "atlas_core",
+      "elementDefs": [
+        {
+          "value": "DRAFT",
+          "description": "DRAFT means the relationship is under development.",
+          "ordinal": 0
+        },
+        {
+          "value": "ACTIVE",
+          "description": "ACTIVE means the relationship is validated and in use.",
+          "ordinal": 1
+        },
+        {
+          "value": "DEPRECATED",
+          "description": "DEPRECATED means the the relationship is being phased out.",
+          "ordinal": 2
+        },
+        {
+          "value": "OBSOLETE",
+          "description": "OBSOLETE means that the relationship should not be used anymore.",
+          "ordinal": 3
+        },
+        {
+          "value": "OTHER",
+          "description": "OTHER means that there is another status.",
+          "ordinal": 99
+        }
+      ]
+    },
+    {
+      "category": "ENUM",
+      "guid": "ce61dd15-6272-40e1-8be3-65bf362dd9d5",
+      "createdBy": "service-account-atlan-argo",
+      "updatedBy": "service-account-atlan-argo",
+      "createTime": 1683546667852,
+      "updateTime": 1683546667852,
+      "version": 1,
+      "name": "kafka_topic_cleanup_policy",
+      "description": "Kafka topic's cleanup policy",
+      "typeVersion": "1.0",
+      "serviceType": "atlas_core",
+      "elementDefs": [
+        {
+          "value": "compact",
+          "ordinal": 0
+        },
+        {
+          "value": "delete",
+          "ordinal": 1
+        }
+      ]
+    },
+    {
+      "category": "ENUM",
+      "guid": "434494f8-4eea-4002-aed7-2cc212b2b01a",
+      "createdBy": "service-account-atlan-argo",
+      "updatedBy": "service-account-atlan-argo",
+      "createTime": 1683546663878,
+      "updateTime": 1683546663878,
+      "version": 1,
+      "name": "query_username_strategy",
+      "description": "Defines username used to override while making queries",
+      "typeVersion": "1.0",
+      "serviceType": "atlas_core",
+      "elementDefs": [
+        {
+          "value": "connectionUsername",
+          "ordinal": 0
+        },
+        {
+          "value": "atlanUsername",
+          "ordinal": 1
+        }
+      ]
+    },
+    {
+      "category": "ENUM",
+      "guid": "5bea6ca0-ff1a-4c6e-8ee4-3ab41b559686",
+      "createdBy": "service-account-atlan-argo",
+      "updatedBy": "service-account-atlan-argo",
+      "createTime": 1683546664655,
+      "updateTime": 1683546664655,
+      "version": 1,
+      "name": "quick_sight_dataset_import_mode",
+      "description": "Defines how datasource data is imported",
+      "typeVersion": "1.0",
+      "serviceType": "atlas_core",
+      "elementDefs": [
+        {
+          "value": "SPICE",
+          "ordinal": 0
+        },
+        {
+          "value": "DIRECT_QUERY",
+          "ordinal": 1
+        }
+      ]
+    },
+    {
+      "category": "ENUM",
+      "guid": "539d5ea5-f206-42da-b2af-39bb612597a4",
+      "createdBy": "service-account-atlan-argo",
+      "updatedBy": "service-account-atlan-argo",
+      "createTime": 1683546669338,
+      "updateTime": 1683546669338,
+      "version": 1,
+      "name": "ADLSStorageKind",
+      "description": "Kind of storage account",
+      "typeVersion": "1.1",
+      "serviceType": "atlas_core",
+      "elementDefs": [
+        {
+          "value": "BlobStorage",
+          "ordinal": 0
+        },
+        {
+          "value": "BlockBlobStorage",
+          "ordinal": 1
+        },
+        {
+          "value": "FileStorage",
+          "ordinal": 2
+        },
+        {
+          "value": "Storage",
+          "ordinal": 3
+        },
+        {
+          "value": "StorageV2",
+          "ordinal": 3
+        }
+      ]
+    },
+    {
+      "category": "ENUM",
+      "guid": "b929a43c-072e-4f15-982b-e96f116131bb",
+      "createdBy": "service-account-atlan-argo",
+      "updatedBy": "service-account-atlan-argo",
+      "createTime": 1683546670753,
+      "updateTime": 1683546670753,
+      "version": 1,
+      "name": "ADLSObjectType",
+      "description": "ADLS object type",
+      "typeVersion": "1.1",
+      "serviceType": "atlas_core",
+      "elementDefs": [
+        {
+          "value": "BlockBlob",
+          "ordinal": 0
+        },
+        {
+          "value": "PageBlob",
+          "ordinal": 1
+        },
+        {
+          "value": "AppendBlob",
+          "ordinal": 2
+        }
+      ]
+    },
+    {
+      "category": "ENUM",
+      "guid": "13a3cb6d-0ba8-4edd-aeee-262903391213",
+      "createdBy": "service-account-atlan-argo",
+      "updatedBy": "service-account-atlan-argo",
+      "createTime": 1683546662887,
+      "updateTime": 1683546662887,
+      "version": 1,
+      "name": "AtlasGlossaryTermAssignmentStatus",
+      "description": "TermAssignmentStatus defines how much the semantic assignment should be trusted.",
+      "typeVersion": "1.0",
+      "serviceType": "atlas_core",
+      "elementDefs": [
+        {
+          "value": "DISCOVERED",
+          "description": "DISCOVERED means that the semantic assignment was added by a discovery engine.",
+          "ordinal": 0
+        },
+        {
+          "value": "PROPOSED",
+          "description": "PROPOSED means that the semantic assignment was proposed by person - they may be a subject matter expert, or consumer of the Referenceable asset",
+          "ordinal": 1
+        },
+        {
+          "value": "IMPORTED",
+          "description": "IMPORTED means that the semantic assignment has been imported from outside of the open metadata cluster",
+          "ordinal": 2
+        },
+        {
+          "value": "VALIDATED",
+          "description": "VALIDATED means that the semantic assignment has been reviewed and is highly trusted.",
+          "ordinal": 3
+        },
+        {
+          "value": "DEPRECATED",
+          "description": "DEPRECATED means that the semantic assignment is being phased out. There may be another semantic assignment to the Referenceable that will ultimately replace this one.",
+          "ordinal": 4
+        },
+        {
+          "value": "OBSOLETE",
+          "description": "OBSOLETE means that the semantic assignment is no longer in use,",
+          "ordinal": 5
+        },
+        {
+          "value": "OTHER",
+          "description": "OTHER means that the semantic assignment value does not match any of the other Term Assignment Status values",
+          "ordinal": 6
+        }
+      ]
+    },
+    {
+      "category": "ENUM",
+      "guid": "135d1c6a-bf32-4bab-adb4-e32cd33d7ac7",
+      "createdBy": "service-account-atlan-argo",
+      "updatedBy": "service-account-atlan-argo",
+      "createTime": 1683546669222,
+      "updateTime": 1683546669222,
+      "version": 1,
+      "name": "ADLSAccountStatus",
+      "description": "ADLS Account status",
+      "typeVersion": "1.1",
+      "serviceType": "atlas_core",
+      "elementDefs": [
+        {
+          "value": "Available",
+          "ordinal": 0
+        },
+        {
+          "value": "Unavailable",
+          "ordinal": 1
+        }
+      ]
+    },
+    {
+      "category": "ENUM",
+      "guid": "aa106ecf-0d4c-478f-9fd7-f9769cdfb231",
+      "createdBy": "service-account-atlan-argo",
+      "updatedBy": "service-account-atlan-argo",
+      "createTime": 1683546670518,
+      "updateTime": 1683546670518,
+      "version": 1,
+      "name": "ADLSLeaseState",
+      "description": "ADLS Lease state",
+      "typeVersion": "1.1",
+      "serviceType": "atlas_core",
+      "elementDefs": [
+        {
+          "value": "Available",
+          "ordinal": 0
+        },
+        {
+          "value": "Leased",
+          "ordinal": 1
+        },
+        {
+          "value": "Expired",
+          "ordinal": 2
+        },
+        {
+          "value": "Breaking",
+          "ordinal": 3
+        },
+        {
+          "value": "Broken",
+          "ordinal": 4
+        }
+      ]
+    },
+    {
+      "category": "ENUM",
+      "guid": "d17b44c2-57b8-4b55-81ab-3dab64630008",
+      "createdBy": "service-account-atlan-argo",
+      "updatedBy": "service-account-atlan-argo",
+      "createTime": 1683546670893,
+      "updateTime": 1683546670893,
+      "version": 1,
+      "name": "ADLSReplicationType",
+      "description": "ADLS replication type for storage objects",
+      "typeVersion": "1.1",
+      "serviceType": "atlas_core",
+      "elementDefs": [
+        {
+          "value": "LRS",
+          "description": "Locally redundant storage",
+          "ordinal": 0
+        },
+        {
+          "value": "ZRS",
+          "description": "Zone-redundant storage",
+          "ordinal": 1
+        },
+        {
+          "value": "GRS",
+          "description": "Geo-redundant storage",
+          "ordinal": 2
+        },
+        {
+          "value": "GZRS",
+          "description": "Geo-zone-redundant storage",
+          "ordinal": 3
+        },
+        {
+          "value": "RA-GRS",
+          "description": "Read-access geo-redundant storage",
+          "ordinal": 4
+        }
+      ]
+    },
+    {
+      "category": "ENUM",
+      "guid": "6604a101-447a-47f6-af8a-f8910184456e",
+      "createdBy": "service-account-atlan-argo",
+      "updatedBy": "service-account-atlan-argo",
+      "createTime": 1683546667972,
+      "updateTime": 1683546667972,
+      "version": 1,
+      "name": "icon_type",
+      "description": "Image type: link or emoji",
+      "typeVersion": "1.0",
+      "serviceType": "atlas_core",
+      "elementDefs": [
+        {
+          "value": "image",
+          "ordinal": 0
+        },
+        {
+          "value": "emoji",
+          "ordinal": 1
+        }
+      ]
+    },
+    {
+      "category": "ENUM",
+      "guid": "fea1ede0-c841-49c8-8d3a-6aa99e61f9ae",
+      "createdBy": "root",
+      "updatedBy": "service-account-atlan-argo",
+      "createTime": 1683544744654,
+      "updateTime": 1683546873104,
+      "version": 3,
+      "name": "atlas_operation",
+      "description": "Defines audit operations in Atlas",
+      "typeVersion": "1.0",
+      "serviceType": "atlas_core",
+      "elementDefs": [
+        {
+          "value": "OTHERS",
+          "ordinal": 0
+        },
+        {
+          "value": "PURGE",
+          "ordinal": 1
+        },
+        {
+          "value": "EXPORT",
+          "ordinal": 2
+        },
+        {
+          "value": "IMPORT",
+          "ordinal": 3
+        },
+        {
+          "value": "IMPORT_DELETE_REPL",
+          "ordinal": 4
+        },
+        {
+          "value": "TYPE_DEF_CREATE",
+          "ordinal": 5
+        },
+        {
+          "value": "TYPE_DEF_UPDATE",
+          "ordinal": 6
+        },
+        {
+          "value": "TYPE_DEF_DELETE",
+          "ordinal": 7
+        },
+        {
+          "value": "SERVER_START",
+          "ordinal": 8
+        },
+        {
+          "value": "SERVER_STATE_ACTIVE",
+          "ordinal": 9
+        }
+      ]
+    },
+    {
+      "category": "ENUM",
+      "guid": "cba15056-5f19-4d73-8363-f7c3b2ff7335",
+      "createdBy": "service-account-atlan-argo",
+      "updatedBy": "service-account-atlan-argo",
+      "createTime": 1683546666956,
+      "updateTime": 1683546666956,
+      "version": 1,
+      "name": "kafka_topic_compression_type",
+      "description": "Kafka topic's compression type",
+      "typeVersion": "1.0",
+      "serviceType": "atlas_core",
+      "elementDefs": [
+        {
+          "value": "uncompressed",
+          "ordinal": 0
+        },
+        {
+          "value": "zstd",
+          "ordinal": 1
+        },
+        {
+          "value": "lz4",
+          "ordinal": 2
+        },
+        {
+          "value": "snappy",
+          "ordinal": 3
+        },
+        {
+          "value": "gzip",
+          "ordinal": 4
+        },
+        {
+          "value": "producer",
+          "ordinal": 5
+        }
+      ]
+    },
+    {
+      "category": "ENUM",
+      "guid": "f0a4aa85-4598-445a-8f2d-f1c78684c0e0",
+      "createdBy": "service-account-atlan-argo",
+      "updatedBy": "service-account-atlan-argo",
+      "createTime": 1683546670668,
+      "updateTime": 1683546670668,
+      "version": 1,
+      "name": "ADLSPerformance",
+      "description": "ADLS Performance",
+      "typeVersion": "1.1",
+      "serviceType": "atlas_core",
+      "elementDefs": [
+        {
+          "value": "Standard",
+          "ordinal": 0
+        },
+        {
+          "value": "Premium",
+          "ordinal": 1
+        }
+      ]
+    },
+    {
+      "category": "ENUM",
+      "guid": "42a98a34-ef52-40cf-b13e-e48dbea78596",
+      "createdBy": "service-account-atlan-argo",
+      "updatedBy": "service-account-atlan-argo",
+      "createTime": 1683546665671,
+      "updateTime": 1683546665671,
+      "version": 1,
+      "name": "quick_sight_folder_type",
+      "description": "Defines folder types",
+      "typeVersion": "1.0",
+      "serviceType": "atlas_core",
+      "elementDefs": [
+        {
+          "value": "SHARED",
+          "ordinal": 0
+        }
+      ]
+    },
+    {
+      "category": "ENUM",
+      "guid": "8c832eb9-cd70-4e9b-a436-2a52fb78613d",
+      "createdBy": "service-account-atlan-argo",
+      "updatedBy": "service-account-atlan-argo",
+      "createTime": 1683546671087,
+      "updateTime": 1683546671087,
+      "version": 1,
+      "name": "certificate_status",
+      "description": "Defines certificate status in Atlas",
+      "typeVersion": "1.1",
+      "serviceType": "atlas_core",
+      "elementDefs": [
+        {
+          "value": "DEPRECATED",
+          "ordinal": 0
+        },
+        {
+          "value": "DRAFT",
+          "ordinal": 1
+        },
+        {
+          "value": "VERIFIED",
+          "ordinal": 2
+        }
+      ]
+    },
+    {
+      "category": "ENUM",
+      "guid": "b7d9d971-7074-48c9-8ceb-37f593879e1b",
+      "createdBy": "service-account-atlan-argo",
+      "updatedBy": "service-account-atlan-argo",
+      "createTime": 1683546668937,
+      "updateTime": 1683546668937,
+      "version": 1,
+      "name": "ADLSAccessTier",
+      "description": "ADLS Access Tier",
+      "typeVersion": "1.1",
+      "serviceType": "atlas_core",
+      "elementDefs": [
+        {
+          "value": "Cool",
+          "ordinal": 0
+        },
+        {
+          "value": "Hot",
+          "ordinal": 1
+        },
+        {
+          "value": "Archive",
+          "ordinal": 2
+        }
+      ]
+    },
+    {
+      "category": "ENUM",
+      "guid": "a9e399c5-e921-4ecb-820e-e2ac23db24ba",
+      "createdBy": "service-account-atlan-argo",
+      "updatedBy": "service-account-atlan-argo",
+      "createTime": 1683546671223,
+      "updateTime": 1683546671223,
+      "version": 1,
+      "name": "google_datastudio_asset_type",
+      "description": "Defines the type of the asset in google data studio",
+      "typeVersion": "1.0",
+      "serviceType": "atlas_core",
+      "elementDefs": [
+        {
+          "value": "REPORT",
+          "ordinal": 0
+        },
+        {
+          "value": "DATA_SOURCE",
+          "ordinal": 1
+        }
+      ]
+    },
+    {
+      "category": "ENUM",
+      "guid": "e48e7c7b-4381-4bec-96dd-1c926d05eedf",
+      "createdBy": "service-account-atlan-argo",
+      "updatedBy": "service-account-atlan-argo",
+      "createTime": 1683546665738,
+      "updateTime": 1683546665738,
+      "version": 1,
+      "name": "quick_sight_analysis_status",
+      "description": "Defines analysis status",
+      "typeVersion": "1.0",
+      "serviceType": "atlas_core",
+      "elementDefs": [
+        {
+          "value": "CREATION_IN_PROGRESS",
+          "ordinal": 0
+        },
+        {
+          "value": "CREATION_SUCCESSFUL",
+          "ordinal": 1
+        },
+        {
+          "value": "CREATION_FAILED",
+          "ordinal": 2
+        },
+        {
+          "value": "UPDATE_IN_PROGRESS",
+          "ordinal": 3
+        },
+        {
+          "value": "UPDATE_SUCCESSFUL",
+          "ordinal": 4
+        },
+        {
+          "value": "UPDATE_FAILED",
+          "ordinal": 5
+        },
+        {
+          "value": "DELETED",
+          "ordinal": 6
+        }
+      ]
+    },
+    {
+      "category": "ENUM",
+      "guid": "62ade0e3-ff52-40bf-a39b-2f26abaa2b07",
+      "createdBy": "service-account-atlan-argo",
+      "updatedBy": "service-account-atlan-argo",
+      "createTime": 1683546669553,
+      "updateTime": 1683546669553,
+      "version": 1,
+      "name": "ADLSLeaseStatus",
+      "description": "ADLS Lease status",
+      "typeVersion": "1.1",
+      "serviceType": "atlas_core",
+      "elementDefs": [
+        {
+          "value": "Locked",
+          "ordinal": 0
+        },
+        {
+          "value": "Unlocked",
+          "ordinal": 1
+        }
+      ]
+    },
+    {
+      "category": "ENUM",
+      "guid": "3183e3dc-fc85-42c9-8998-98cf761116fe",
+      "createdBy": "service-account-atlan-argo",
+      "updatedBy": "service-account-atlan-argo",
+      "createTime": 1683546669090,
+      "updateTime": 1683546669090,
+      "version": 1,
+      "name": "ADLSObjectArchiveStatus",
+      "description": "ADLS blob object archive status",
+      "typeVersion": "1.1",
+      "serviceType": "atlas_core",
+      "elementDefs": [
+        {
+          "value": "rehydrate-pending-to-hot",
+          "ordinal": 0
+        },
+        {
+          "value": "rehydrate-pending-to-cool",
+          "ordinal": 1
+        }
+      ]
+    },
+    {
+      "category": "ENUM",
+      "guid": "576cc242-8419-49b8-a52e-806ac3bc597b",
+      "createdBy": "service-account-atlan-argo",
+      "updatedBy": "service-account-atlan-argo",
+      "createTime": 1683546671314,
+      "updateTime": 1683546671314,
+      "version": 1,
+      "name": "powerbi_endorsement",
+      "description": "Endorsement Status for PowerBI Assets",
+      "typeVersion": "1.0",
+      "serviceType": "atlas_core",
+      "elementDefs": [
+        {
+          "value": "Promoted",
+          "ordinal": 0
+        },
+        {
+          "value": "Certified",
+          "ordinal": 1
+        }
+      ]
+    },
+    {
+      "category": "ENUM",
+      "guid": "8ccacc51-076f-4750-9e27-d5027d06905c",
+      "createdBy": "service-account-atlan-argo",
+      "updatedBy": "service-account-atlan-argo",
+      "createTime": 1683546669684,
+      "updateTime": 1683546669684,
+      "version": 1,
+      "name": "ADLSProvisionState",
+      "description": "ADLS Provision state",
+      "typeVersion": "1.1",
+      "serviceType": "atlas_core",
+      "elementDefs": [
+        {
+          "value": "Creating",
+          "ordinal": 0
+        },
+        {
+          "value": "ResolvingDNS",
+          "ordinal": 1
+        },
+        {
+          "value": "Succeeded",
+          "ordinal": 2
+        }
+      ]
+    },
+    {
+      "category": "ENUM",
+      "guid": "4c35e7c9-0445-48b9-85e6-9bb40f0d0e0d",
+      "createdBy": "service-account-atlan-argo",
+      "updatedBy": "service-account-atlan-argo",
+      "createTime": 1683546660741,
+      "updateTime": 1683546660741,
+      "version": 1,
+      "name": "SourceCostUnitType",
+      "description": "Defines unit of the cost calculated for source queries",
+      "typeVersion": "1.1",
+      "serviceType": "atlas_core",
+      "elementDefs": [
+        {
+          "value": "Credits",
+          "ordinal": 0
+        },
+        {
+          "value": "bytes",
+          "ordinal": 1
+        },
+        {
+          "value": "slot-ms",
+          "ordinal": 2
+        }
+      ]
+    },
+    {
+      "category": "ENUM",
+      "guid": "0eccad55-916d-4afb-923a-4e043d24f616",
+      "createdBy": "service-account-atlan-argo",
+      "updatedBy": "service-account-atlan-argo",
+      "createTime": 1683546664755,
+      "updateTime": 1683546664755,
+      "version": 1,
+      "name": "quick_sight_dataset_field_type",
+      "description": "Defines how datasource data is imported",
+      "typeVersion": "1.0",
+      "serviceType": "atlas_core",
+      "elementDefs": [
+        {
+          "value": "STRING",
+          "ordinal": 0
+        },
+        {
+          "value": "INTEGER",
+          "ordinal": 1
+        },
+        {
+          "value": "DECIMAL",
+          "ordinal": 2
+        },
+        {
+          "value": "DATETIME",
+          "ordinal": 3
+        }
+      ]
+    }
+  ],
+  "structDefs": [],
+  "classificationDefs": [],
+  "entityDefs": [],
+  "relationshipDefs": [],
+  "businessMetadataDefs": []
+}

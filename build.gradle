@@ -99,6 +99,7 @@ dependencies {
     testImplementation group: 'org.freemarker', name: 'freemarker', version: '2.3.32'
     testImplementation group: 'org.testng', name: 'testng', version: '7.7.0'
     testImplementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.11'
+    testImplementation group: 'com.github.tomakehurst', name: 'wiremock', version: '2.27.2'
 }
 
 jar {
@@ -129,15 +130,11 @@ testing {
     suites {
         test {
             useTestNG()
-            targets {
-                all {
-                    testTask.configure {
-                        filter {
-                            excludeTestsMatching "com.atlan.live.*"
-                            excludeTestsMatching "com.atlan.experimental.*"
-                        }
-                    }
-                }
+            dependencies {
+                implementation project
+                implementation group: 'org.testng', name: 'testng', version: '7.7.0'
+                implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.11'
+                implementation group: 'com.github.tomakehurst', name: 'wiremock', version: '2.27.2'
             }
             sources {
                 java {
@@ -151,7 +148,6 @@ testing {
                 all {
                     testTask.configure {
                         filter {
-                            excludeTestsMatching "com.atlan.generators.*"
                             excludeTestsMatching "com.atlan.model.assets.*"
                             excludeTestsMatching "com.atlan.loop.*"
                         }
