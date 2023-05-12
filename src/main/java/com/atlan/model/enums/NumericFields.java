@@ -25,6 +25,8 @@ public enum NumericFields implements AtlanSearchableField {
     ASSET_DBT_JOB_LAST_RUN_UPDATED_AT("assetDbtJobLastRunUpdatedAt"),
     /** TBC */
     ASSET_DBT_JOB_NEXT_RUN("assetDbtJobNextRun"),
+    /** TBC */
+    ASSET_MC_LAST_SYNC_RUN_AT("assetMcLastSyncRunAt"),
     /** Time (epoch) at which the certification was last updated, in milliseconds. */
     CERTIFICATE_UPDATED_AT("certificateUpdatedAt"),
     /** TBC */
@@ -143,6 +145,14 @@ public enum NumericFields implements AtlanSearchableField {
     LOOK_ID("lookId"),
     /** TBC */
     MAX_LENGTH("maxLength"),
+    /** TBC */
+    MC_MONITOR_BREACH_RATE("mcMonitorBreachRate"),
+    /** Number of incidents associated with this monitor. */
+    MC_MONITOR_INCIDENT_COUNT("mcMonitorIncidentCount"),
+    /** Time at which the next execution of the rule should occur. */
+    MC_MONITOR_RULE_NEXT_EXECUTION_TIME("mcMonitorRuleNextExecutionTime"),
+    /** Time at which the previous execution of the rule occurred. */
+    MC_MONITOR_RULE_PREVIOUS_EXECUTION_TIME("mcMonitorRulePreviousExecutionTime"),
     /** TBC */
     METABASE_DASHBOARD_COUNT("metabaseDashboardCount"),
     /** TBC */

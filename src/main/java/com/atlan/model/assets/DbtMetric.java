@@ -41,12 +41,12 @@ public class DbtMetric extends Metric {
 
     /** TBC */
     @Attribute
-    @Singular
-    SortedSet<Column> dbtMetricFilterColumns;
+    DbtModel dbtModel;
 
     /** TBC */
     @Attribute
-    DbtModel dbtModel;
+    @Singular
+    SortedSet<Column> dbtMetricFilterColumns;
 
     /**
      * Reference to a DbtMetric by GUID.

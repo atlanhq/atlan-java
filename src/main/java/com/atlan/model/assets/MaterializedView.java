@@ -89,13 +89,13 @@ public class MaterializedView extends SQL {
 
     /** TBC */
     @Attribute
-    @JsonProperty("atlanSchema")
-    Schema schema;
+    @Singular
+    SortedSet<Column> columns;
 
     /** TBC */
     @Attribute
-    @Singular
-    SortedSet<Column> columns;
+    @JsonProperty("atlanSchema")
+    Schema schema;
 
     /**
      * Reference to a MaterializedView by GUID.

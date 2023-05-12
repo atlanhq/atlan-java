@@ -12,9 +12,9 @@ import java.util.*;
 import org.testng.annotations.Test;
 
 @SuppressWarnings("deprecation")
-public class PowerBIDashboardTest {
+public class MCMonitorTest {
 
-    private static final PowerBIDashboard full = PowerBIDashboard.builder()
+    private static final MCMonitor full = MCMonitor.builder()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -324,30 +324,69 @@ public class PowerBIDashboardTest {
             .inputToProcess(LineageProcess.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .outputFromProcess(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .outputFromProcess(LineageProcess.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .powerBIIsHidden(true)
-            .powerBITableQualifiedName("String0")
-            .powerBIFormatString("String0")
-            .powerBIEndorsement(PowerBIEndorsementType.PROMOTED)
-            .workspaceQualifiedName("String0")
-            .webUrl("String0")
-            .tileCount(123456789L)
-            .tile(PowerBITile.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .tile(PowerBITile.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .workspace(PowerBIWorkspace.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .mcLabel("String0")
+            .mcLabel("String1")
+            .mcAssetQualifiedName("String0")
+            .mcAssetQualifiedName("String1")
+            .mcMonitorId("String0")
+            .mcMonitorStatus("String0")
+            .mcMonitorType("String0")
+            .mcMonitorWarehouse("String0")
+            .mcMonitorScheduleType("String0")
+            .mcMonitorNamespace("String0")
+            .mcMonitorRuleType("String0")
+            .mcMonitorRuleCustomSql("String0")
+            .addMcMonitorRuleSchedule(MCRuleSchedule.builder()
+                    .mcRuleScheduleType("String0")
+                    .mcRuleScheduleIntervalInMinutes(123)
+                    .mcRuleScheduleStartTime(123456789L)
+                    .mcRuleScheduleCrontab("String0")
+                    .build())
+            .addMcMonitorRuleSchedule(MCRuleSchedule.builder()
+                    .mcRuleScheduleType("String1")
+                    .mcRuleScheduleIntervalInMinutes(456)
+                    .mcRuleScheduleStartTime(987654321L)
+                    .mcRuleScheduleCrontab("String1")
+                    .build())
+            .mcMonitorRuleScheduleConfigHumanized("String0")
+            .mcMonitorAlertCondition("String0")
+            .mcMonitorRuleNextExecutionTime(123456789L)
+            .mcMonitorRulePreviousExecutionTime(123456789L)
+            .mcMonitorRuleComparison(MCRuleComparison.builder()
+                    .mcRuleComparisonType("String0")
+                    .mcRuleComparisonField("String0")
+                    .mcRuleComparisonMetric("String0")
+                    .mcRuleComparisonOperator("String0")
+                    .mcRuleComparisonThreshold(123.456)
+                    .mcRuleComparisonIsThresholdRelative(true)
+                    .build())
+            .mcMonitorRuleComparison(MCRuleComparison.builder()
+                    .mcRuleComparisonType("String1")
+                    .mcRuleComparisonField("String1")
+                    .mcRuleComparisonMetric("String1")
+                    .mcRuleComparisonOperator("String1")
+                    .mcRuleComparisonThreshold(654.321)
+                    .mcRuleComparisonIsThresholdRelative(false)
+                    .build())
+            .mcMonitorRuleIsSnoozed(true)
+            .mcMonitorBreachRate(123.456)
+            .mcMonitorIncidentCount(123456789L)
+            .mcMonitorAsset(Connection.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .mcMonitorAsset(Connection.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .build();
 
     private static final int hash = full.hashCode();
-    private static PowerBIDashboard frodo;
+    private static MCMonitor frodo;
     private static String serialized;
 
-    @Test(groups = {"PowerBIDashboard.builderEquivalency"})
+    @Test(groups = {"MCMonitor.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"PowerBIDashboard.serialize"},
-            dependsOnGroups = {"PowerBIDashboard.builderEquivalency"})
+            groups = {"MCMonitor.serialize"},
+            dependsOnGroups = {"MCMonitor.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -356,17 +395,17 @@ public class PowerBIDashboardTest {
     }
 
     @Test(
-            groups = {"PowerBIDashboard.deserialize"},
-            dependsOnGroups = {"PowerBIDashboard.serialize"})
+            groups = {"MCMonitor.deserialize"},
+            dependsOnGroups = {"MCMonitor.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
-        frodo = Serde.mapper.readValue(serialized, PowerBIDashboard.class);
+        frodo = Serde.mapper.readValue(serialized, MCMonitor.class);
         assertNotNull(frodo);
     }
 
     @Test(
-            groups = {"PowerBIDashboard.equivalency"},
-            dependsOnGroups = {"PowerBIDashboard.serialize", "PowerBIDashboard.deserialize"})
+            groups = {"MCMonitor.equivalency"},
+            dependsOnGroups = {"MCMonitor.serialize", "MCMonitor.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -375,8 +414,8 @@ public class PowerBIDashboardTest {
     }
 
     @Test(
-            groups = {"PowerBIDashboard.equivalency"},
-            dependsOnGroups = {"PowerBIDashboard.serialize", "PowerBIDashboard.deserialize"})
+            groups = {"MCMonitor.equivalency"},
+            dependsOnGroups = {"MCMonitor.serialize", "MCMonitor.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

@@ -34,20 +34,10 @@ public class SnowflakeTag extends Tag {
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** dbt Models to which this tag is applied. */
-    @Attribute
-    @Singular
-    SortedSet<DbtModel> dbtModels;
-
     /** dbt Sources to which this tag is applied. */
     @Attribute
     @Singular
     SortedSet<DbtSource> dbtSources;
-
-    /** Database schemas to which this tag is applied. */
-    @Attribute
-    @JsonProperty("atlanSchema")
-    Schema schema;
 
     /** TBC */
     @Attribute
@@ -58,6 +48,16 @@ public class SnowflakeTag extends Tag {
     @Attribute
     @Singular
     SortedSet<DbtSource> sqlDBTSources;
+
+    /** dbt Models to which this tag is applied. */
+    @Attribute
+    @Singular
+    SortedSet<DbtModel> dbtModels;
+
+    /** Database schemas to which this tag is applied. */
+    @Attribute
+    @JsonProperty("atlanSchema")
+    Schema schema;
 
     /**
      * Reference to a SnowflakeTag by GUID.

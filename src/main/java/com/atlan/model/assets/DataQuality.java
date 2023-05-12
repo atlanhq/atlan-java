@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @JsonSubTypes({
+    @JsonSubTypes.Type(value = MonteCarlo.class, name = MonteCarlo.TYPE_NAME),
     @JsonSubTypes.Type(value = Metric.class, name = Metric.TYPE_NAME),
 })
 @Slf4j

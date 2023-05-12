@@ -54,16 +54,16 @@ public class TableauProject extends Tableau {
 
     /** TBC */
     @Attribute
+    TableauProject parentProject;
+
+    /** TBC */
+    @Attribute
     @Singular
     SortedSet<TableauWorkbook> workbooks;
 
     /** TBC */
     @Attribute
     TableauSite site;
-
-    /** TBC */
-    @Attribute
-    TableauProject parentProject;
 
     /** TBC */
     @Attribute

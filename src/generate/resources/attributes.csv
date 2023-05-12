@@ -165,6 +165,20 @@ Asset,Base class for all assets.,assetDbtSemanticLayerProxyUrl,
 Asset,Base class for all assets.,assetDbtSourceFreshnessCriteria,
 Asset,Base class for all assets.,sampleDataUrl,
 Asset,Base class for all assets.,assetTags,
+Asset,Base class for all assets.,assetMcIncidentNames,
+Asset,Base class for all assets.,assetMcIncidentQualifiedNames,
+Asset,Base class for all assets.,assetMcMonitorNames,
+Asset,Base class for all assets.,assetMcMonitorQualifiedNames,
+Asset,Base class for all assets.,assetMcMonitorStatuses,Statuses of all associated Monte Carlo monitors.
+Asset,Base class for all assets.,assetMcMonitorTypes,Types of all associated Monte Carlo monitors.
+Asset,Base class for all assets.,assetMcMonitorScheduleTypes,Schedules of all associated Monte Carlo monitors.
+Asset,Base class for all assets.,assetMcIncidentTypes,
+Asset,Base class for all assets.,assetMcIncidentSubTypes,
+Asset,Base class for all assets.,assetMcIncidentSeverities,
+Asset,Base class for all assets.,assetMcIncidentStates,
+Asset,Base class for all assets.,assetMcLastSyncRunAt,
+Asset,Base class for all assets.,mcMonitors,
+Asset,Base class for all assets.,mcIncidents,
 Asset,Base class for all assets.,links,Resources that are linked to this asset.
 Asset,Base class for all assets.,metrics,
 Asset,Base class for all assets.,readme,README that is linked to this asset.
@@ -327,8 +341,8 @@ DbtColumnProcess,Instance of a column-level dbt process in Atlan.,dbtColumnProce
 DbtColumnProcess,Instance of a column-level dbt process in Atlan.,inputToProcesses,
 DbtColumnProcess,Instance of a column-level dbt process in Atlan.,outputFromProcesses,
 DbtMetric,Instance of a dbt metric in Atlan.,dbtMetricFilters,
-DbtMetric,Instance of a dbt metric in Atlan.,dbtMetricFilterColumns,
 DbtMetric,Instance of a dbt metric in Atlan.,dbtModel,
+DbtMetric,Instance of a dbt metric in Atlan.,dbtMetricFilterColumns,
 DbtModel,Instance of a dbt model in Atlan.,dbtStatus,
 DbtModel,Instance of a dbt model in Atlan.,dbtError,
 DbtModel,Instance of a dbt model in Atlan.,dbtRawSQL,
@@ -462,17 +476,17 @@ LookerLook,Instance of a Looker look in Atlan.,sourceLastViewedAt,
 LookerLook,Instance of a Looker look in Atlan.,sourceContentMetadataId,
 LookerLook,Instance of a Looker look in Atlan.,sourceQueryId,
 LookerLook,Instance of a Looker look in Atlan.,modelName,
-LookerLook,Instance of a Looker look in Atlan.,folder,
 LookerLook,Instance of a Looker look in Atlan.,query,
+LookerLook,Instance of a Looker look in Atlan.,folder,
 LookerLook,Instance of a Looker look in Atlan.,tile,
 LookerLook,Instance of a Looker look in Atlan.,model,
 LookerLook,Instance of a Looker look in Atlan.,dashboard,
 LookerModel,Instance of a Looker model in Atlan.,projectName,
 LookerModel,Instance of a Looker model in Atlan.,explores,
 LookerModel,Instance of a Looker model in Atlan.,project,
-LookerModel,Instance of a Looker model in Atlan.,fields,
 LookerModel,Instance of a Looker model in Atlan.,look,
 LookerModel,Instance of a Looker model in Atlan.,queries,
+LookerModel,Instance of a Looker model in Atlan.,fields,
 LookerProject,Instance of a Looker project in Atlan.,models,
 LookerProject,Instance of a Looker project in Atlan.,explores,
 LookerProject,Instance of a Looker project in Atlan.,fields,
@@ -497,6 +511,32 @@ LookerTile,Instance of a Looker tile in Atlan.,dashboard,
 LookerView,Instance of a Looker view in Atlan.,projectName,
 LookerView,Instance of a Looker view in Atlan.,project,
 LookerView,Instance of a Looker view in Atlan.,fields,
+MCIncident,Instance of a Monte Carlo Incident in Atlan.,mcIncidentId,Unique identifier for the incident.
+MCIncident,Instance of a Monte Carlo Incident in Atlan.,mcIncidentType,Type of incident.
+MCIncident,Instance of a Monte Carlo Incident in Atlan.,mcIncidentSubTypes,
+MCIncident,Instance of a Monte Carlo Incident in Atlan.,mcIncidentSeverity,Severity of the incident.
+MCIncident,Instance of a Monte Carlo Incident in Atlan.,mcIncidentState,"Status of the incident, for example whether it is being investigated or is already fixed."
+MCIncident,Instance of a Monte Carlo Incident in Atlan.,mcIncidentWarehouse,Name of the warehouse in which the incident occurred.
+MCIncident,Instance of a Monte Carlo Incident in Atlan.,mcIncidentAssets,Assets impacted by the incident.
+MCIncident,Instance of a Monte Carlo Incident in Atlan.,mcMonitor,Monitor through which this incident occurred.
+MCMonitor,Instance of a Monte Carlo monitor in Atlan.,mcMonitorId,Unique identifier for the monitor.
+MCMonitor,Instance of a Monte Carlo monitor in Atlan.,mcMonitorStatus,Status of the monitor.
+MCMonitor,Instance of a Monte Carlo monitor in Atlan.,mcMonitorType,"Type of monitor, for example field health (stats) or dimension tracking (categories)."
+MCMonitor,Instance of a Monte Carlo monitor in Atlan.,mcMonitorWarehouse,Name of the warehouse for the monitor.
+MCMonitor,Instance of a Monte Carlo monitor in Atlan.,mcMonitorScheduleType,"Type of schedule for the monitor, for example fixed or dynamic."
+MCMonitor,Instance of a Monte Carlo monitor in Atlan.,mcMonitorNamespace,Namespace of the monitor.
+MCMonitor,Instance of a Monte Carlo monitor in Atlan.,mcMonitorRuleType,Type of rule for the monitor.
+MCMonitor,Instance of a Monte Carlo monitor in Atlan.,mcMonitorRuleCustomSql,SQL code for custom SQL rules.
+MCMonitor,Instance of a Monte Carlo monitor in Atlan.,mcMonitorRuleScheduleConfig,Schedule details for the rule.
+MCMonitor,Instance of a Monte Carlo monitor in Atlan.,mcMonitorRuleScheduleConfigHumanized,Readable description of the schedule for the rule.
+MCMonitor,Instance of a Monte Carlo monitor in Atlan.,mcMonitorAlertCondition,Condition on which the monitor produces an alert.
+MCMonitor,Instance of a Monte Carlo monitor in Atlan.,mcMonitorRuleNextExecutionTime,Time at which the next execution of the rule should occur.
+MCMonitor,Instance of a Monte Carlo monitor in Atlan.,mcMonitorRulePreviousExecutionTime,Time at which the previous execution of the rule occurred.
+MCMonitor,Instance of a Monte Carlo monitor in Atlan.,mcMonitorRuleComparisons,Comparison logic used for the rule.
+MCMonitor,Instance of a Monte Carlo monitor in Atlan.,mcMonitorRuleIsSnoozed,Whether the rule is currently snoozed (true) or not (false).
+MCMonitor,Instance of a Monte Carlo monitor in Atlan.,mcMonitorBreachRate,
+MCMonitor,Instance of a Monte Carlo monitor in Atlan.,mcMonitorIncidentCount,Number of incidents associated with this monitor.
+MCMonitor,Instance of a Monte Carlo monitor in Atlan.,mcMonitorAssets,Assets impacted by this monitor.
 MaterialisedView,Instance of a materialized view in Atlan.,refreshMode,
 MaterialisedView,Instance of a materialized view in Atlan.,refreshMethod,
 MaterialisedView,Instance of a materialized view in Atlan.,staleness,
@@ -509,8 +549,8 @@ MaterialisedView,Instance of a materialized view in Atlan.,queryPreviewConfig,
 MaterialisedView,Instance of a materialized view in Atlan.,alias,
 MaterialisedView,Instance of a materialized view in Atlan.,isTemporary,Whether this materialized view is temporary (true) or not (false).
 MaterialisedView,Instance of a materialized view in Atlan.,definition,Definition of the materialized view (DDL).
-MaterialisedView,Instance of a materialized view in Atlan.,atlanSchema,Schema in which this materialized view exists.
 MaterialisedView,Instance of a materialized view in Atlan.,columns,Columns that exist within this materialized view.
+MaterialisedView,Instance of a materialized view in Atlan.,atlanSchema,Schema in which this materialized view exists.
 Metabase,Base class for Metabase assets.,metabaseCollectionName,
 Metabase,Base class for Metabase assets.,metabaseCollectionQualifiedName,
 MetabaseCollection,Instance of a Metabase collection in Atlan.,metabaseSlug,
@@ -564,6 +604,8 @@ ModeReport,Instance of a Mode report in Atlan.,modeCollections,
 ModeReport,Instance of a Mode report in Atlan.,modeQueries,
 ModeWorkspace,Instance of a Mode workspace in Atlan.,modeCollectionCount,
 ModeWorkspace,Instance of a Mode workspace in Atlan.,modeCollections,
+MonteCarlo,Base class for Monte Carlo assets.,mcLabels,
+MonteCarlo,Base class for Monte Carlo assets.,mcAssetQualifiedNames,
 Namespace,Base class for query collections and folders.,childrenQueries,
 Namespace,Base class for query collections and folders.,childrenFolders,
 PowerBI,Base class for Power BI assets.,powerBIIsHidden,
@@ -589,11 +631,11 @@ PowerBIDataflow,Instance of a Power BI dataflow in Atlan.,datasets,
 PowerBIDataset,Instance of a Power BI dataset in Atlan.,workspaceQualifiedName,
 PowerBIDataset,Instance of a Power BI dataset in Atlan.,webUrl,
 PowerBIDataset,Instance of a Power BI dataset in Atlan.,reports,
-PowerBIDataset,Instance of a Power BI dataset in Atlan.,tiles,
 PowerBIDataset,Instance of a Power BI dataset in Atlan.,workspace,
+PowerBIDataset,Instance of a Power BI dataset in Atlan.,dataflows,
+PowerBIDataset,Instance of a Power BI dataset in Atlan.,tiles,
 PowerBIDataset,Instance of a Power BI dataset in Atlan.,tables,
 PowerBIDataset,Instance of a Power BI dataset in Atlan.,datasources,
-PowerBIDataset,Instance of a Power BI dataset in Atlan.,dataflows,
 PowerBIDatasource,Instance of a Power BI datasource in Atlan.,connectionDetails,
 PowerBIDatasource,Instance of a Power BI datasource in Atlan.,datasets,
 PowerBIMeasure,Instance of a Power BI measure in Atlan.,workspaceQualifiedName,
@@ -891,11 +933,11 @@ SnowflakeStream,Instance of a Snowflake Stream in Atlan.,snowflakeStreamMode,
 SnowflakeStream,Instance of a Snowflake Stream in Atlan.,snowflakeStreamIsStale,
 SnowflakeStream,Instance of a Snowflake Stream in Atlan.,snowflakeStreamStaleAfter,
 SnowflakeStream,Instance of a Snowflake Stream in Atlan.,atlanSchema,
-SnowflakeTag,Instance of a Snowflake Tag in Atlan.,dbtModels,dbt Models to which this tag is applied.
 SnowflakeTag,Instance of a Snowflake Tag in Atlan.,dbtSources,dbt Sources to which this tag is applied.
-SnowflakeTag,Instance of a Snowflake Tag in Atlan.,atlanSchema,Database schemas to which this tag is applied.
 SnowflakeTag,Instance of a Snowflake Tag in Atlan.,sqlDbtModels,
 SnowflakeTag,Instance of a Snowflake Tag in Atlan.,sqlDBTSources,
+SnowflakeTag,Instance of a Snowflake Tag in Atlan.,dbtModels,dbt Models to which this tag is applied.
+SnowflakeTag,Instance of a Snowflake Tag in Atlan.,atlanSchema,Database schemas to which this tag is applied.
 Table,Instance of a database table in Atlan.,columnCount,Number of columns in this table.
 Table,Instance of a database table in Atlan.,rowCount,Number of rows in this table.
 Table,Instance of a database table in Atlan.,sizeBytes,Size of the table in bytes.
@@ -1003,9 +1045,9 @@ TableauProject,Instance of a Tableau project in Atlan.,siteQualifiedName,
 TableauProject,Instance of a Tableau project in Atlan.,topLevelProjectQualifiedName,
 TableauProject,Instance of a Tableau project in Atlan.,isTopLevelProject,
 TableauProject,Instance of a Tableau project in Atlan.,projectHierarchy,
+TableauProject,Instance of a Tableau project in Atlan.,parentProject,
 TableauProject,Instance of a Tableau project in Atlan.,workbooks,
 TableauProject,Instance of a Tableau project in Atlan.,site,
-TableauProject,Instance of a Tableau project in Atlan.,parentProject,
 TableauProject,Instance of a Tableau project in Atlan.,datasources,
 TableauProject,Instance of a Tableau project in Atlan.,flows,
 TableauProject,Instance of a Tableau project in Atlan.,childProjects,
@@ -1074,6 +1116,16 @@ KafkaTopicConsumption,Detailed information about the consumption of a Kafka topi
 KafkaTopicConsumption,Detailed information about the consumption of a Kafka topic.,topicPartition,Partition of the Kafka topic.
 KafkaTopicConsumption,Detailed information about the consumption of a Kafka topic.,topicLag,
 KafkaTopicConsumption,Detailed information about the consumption of a Kafka topic.,topicCurrentOffset,
+MCRuleComparison,Detailed information about the comparison logic of a Monte Carlo rule.,mcRuleComparisonType,"Type of comparison, for example threshold."
+MCRuleComparison,Detailed information about the comparison logic of a Monte Carlo rule.,mcRuleComparisonField,Field being compared.
+MCRuleComparison,Detailed information about the comparison logic of a Monte Carlo rule.,mcRuleComparisonMetric,Metric being compared.
+MCRuleComparison,Detailed information about the comparison logic of a Monte Carlo rule.,mcRuleComparisonOperator,"Operator used for the comparison, for example greater than (GT)."
+MCRuleComparison,Detailed information about the comparison logic of a Monte Carlo rule.,mcRuleComparisonThreshold,Threshold being compared.
+MCRuleComparison,Detailed information about the comparison logic of a Monte Carlo rule.,mcRuleComparisonIsThresholdRelative,Whether the threshold comparison is relative (true) or absolute (false).
+MCRuleSchedule,Detailed information about the schedule for a Monte Carlo rule.,mcRuleScheduleType,"Type of schedule for the rule, for example dynamic or manual."
+MCRuleSchedule,Detailed information about the schedule for a Monte Carlo rule.,mcRuleScheduleIntervalInMinutes,"How often the monitor should run, in minutes."
+MCRuleSchedule,Detailed information about the schedule for a Monte Carlo rule.,mcRuleScheduleStartTime,When the first execution of the rule should occur (blank means immediate).
+MCRuleSchedule,Detailed information about the schedule for a Monte Carlo rule.,mcRuleScheduleCrontab,
 PopularityInsights,Detailed information about an asset's usage or popularity.,recordUser,Username or email of the user who ran the queries.
 PopularityInsights,Detailed information about an asset's usage or popularity.,recordQuery,Query run at source.
 PopularityInsights,Detailed information about an asset's usage or popularity.,recordQueryDuration,Duration for which the query ran at source.

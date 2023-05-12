@@ -70,11 +70,11 @@ public class LookerLook extends Looker {
 
     /** TBC */
     @Attribute
-    LookerFolder folder;
+    LookerQuery query;
 
     /** TBC */
     @Attribute
-    LookerQuery query;
+    LookerFolder folder;
 
     /** TBC */
     @Attribute
