@@ -172,6 +172,28 @@ public enum KeywordFields implements AtlanSearchableField {
     /** TBC */
     ASSET_DBT_UNIQUE_ID("assetDbtUniqueId.keyword"),
     /** TBC */
+    ASSET_MC_INCIDENT_NAMES("assetMcIncidentNames.keyword"),
+    /** TBC */
+    ASSET_MC_INCIDENT_QUALIFIED_NAMES("assetMcIncidentQualifiedNames"),
+    /** TBC */
+    ASSET_MC_INCIDENT_SEVERITIES("assetMcIncidentSeverities"),
+    /** TBC */
+    ASSET_MC_INCIDENT_STATES("assetMcIncidentStates"),
+    /** TBC */
+    ASSET_MC_INCIDENT_SUB_TYPES("assetMcIncidentSubTypes"),
+    /** TBC */
+    ASSET_MC_INCIDENT_TYPES("assetMcIncidentTypes"),
+    /** TBC */
+    ASSET_MC_MONITOR_NAMES("assetMcMonitorNames.keyword"),
+    /** TBC */
+    ASSET_MC_MONITOR_QUALIFIED_NAMES("assetMcMonitorQualifiedNames"),
+    /** Schedules of all associated Monte Carlo monitors. */
+    ASSET_MC_MONITOR_SCHEDULE_TYPES("assetMcMonitorScheduleTypes"),
+    /** Statuses of all associated Monte Carlo monitors. */
+    ASSET_MC_MONITOR_STATUSES("assetMcMonitorStatuses"),
+    /** Types of all associated Monte Carlo monitors. */
+    ASSET_MC_MONITOR_TYPES("assetMcMonitorTypes"),
+    /** TBC */
     ASSET_TAGS("assetTags"),
     /** All terms attached to an asset, searchable by the term's qualifiedName. */
     ASSIGNED_TERMS("__meanings"),
@@ -469,6 +491,42 @@ public enum KeywordFields implements AtlanSearchableField {
     LOOKML_LINK_ID("lookmlLinkId"),
     /** Name of the classification in Atlan that is mapped to this tag. */
     MAPPED_CLASSIFICATION_NAME("mappedClassificationName"),
+    /** TBC */
+    MC_ASSET_QUALIFIED_NAMES("mcAssetQualifiedNames"),
+    /** Unique identifier for the incident. */
+    MC_INCIDENT_ID("mcIncidentId"),
+    /** Severity of the incident. */
+    MC_INCIDENT_SEVERITY("mcIncidentSeverity"),
+    /** Status of the incident, for example whether it is being investigated or is already fixed. */
+    MC_INCIDENT_STATE("mcIncidentState"),
+    /** TBC */
+    MC_INCIDENT_SUB_TYPES("mcIncidentSubTypes"),
+    /** Type of incident. */
+    MC_INCIDENT_TYPE("mcIncidentType"),
+    /** Name of the warehouse in which the incident occurred. */
+    MC_INCIDENT_WAREHOUSE("mcIncidentWarehouse"),
+    /** TBC */
+    MC_LABELS("mcLabels"),
+    /** Unique identifier for the monitor. */
+    MC_MONITOR_ID("mcMonitorId"),
+    /** Namespace of the monitor. */
+    MC_MONITOR_NAMESPACE("mcMonitorNamespace.keyword"),
+    /** Comparison logic used for the rule. */
+    MC_MONITOR_RULE_COMPARISONS("mcMonitorRuleComparisons"),
+    /** SQL code for custom SQL rules. */
+    MC_MONITOR_RULE_CUSTOM_SQL("mcMonitorRuleCustomSql"),
+    /** Schedule details for the rule. */
+    MC_MONITOR_RULE_SCHEDULE_CONFIG("mcMonitorRuleScheduleConfig"),
+    /** Type of rule for the monitor. */
+    MC_MONITOR_RULE_TYPE("mcMonitorRuleType"),
+    /** Type of schedule for the monitor, for example fixed or dynamic. */
+    MC_MONITOR_SCHEDULE_TYPE("mcMonitorScheduleType"),
+    /** Status of the monitor. */
+    MC_MONITOR_STATUS("mcMonitorStatus"),
+    /** Type of monitor, for example field health (stats) or dimension tracking (categories). */
+    MC_MONITOR_TYPE("mcMonitorType"),
+    /** Name of the warehouse for the monitor. */
+    MC_MONITOR_WAREHOUSE("mcMonitorWarehouse"),
     /** TBC */
     MERGE_RESULT_ID("mergeResultId"),
     /** TBC */

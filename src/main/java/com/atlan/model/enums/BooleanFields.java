@@ -107,6 +107,8 @@ public enum BooleanFields implements AtlanSearchableField {
     IS_VISUAL_QUERY("isVisualQuery"),
     /** TBC */
     KAFKA_TOPIC_IS_INTERNAL("kafkaTopicIsInternal"),
+    /** Whether the rule is currently snoozed (true) or not (false). */
+    MC_MONITOR_RULE_IS_SNOOZED("mcMonitorRuleIsSnoozed"),
     /** TBC */
     METABASE_IS_PERSONAL_COLLECTION("metabaseIsPersonalCollection"),
     /** TBC */

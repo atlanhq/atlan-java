@@ -48,12 +48,17 @@ public class PowerBIDataset extends PowerBI {
 
     /** TBC */
     @Attribute
-    @Singular
-    SortedSet<PowerBITile> tiles;
+    PowerBIWorkspace workspace;
 
     /** TBC */
     @Attribute
-    PowerBIWorkspace workspace;
+    @Singular
+    SortedSet<PowerBIDataflow> dataflows;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<PowerBITile> tiles;
 
     /** TBC */
     @Attribute
@@ -64,11 +69,6 @@ public class PowerBIDataset extends PowerBI {
     @Attribute
     @Singular
     SortedSet<PowerBIDatasource> datasources;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<PowerBIDataflow> dataflows;
 
     /**
      * Reference to a PowerBIDataset by GUID.

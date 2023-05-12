@@ -492,6 +492,75 @@ public abstract class Asset extends Reference {
     @Singular
     SortedSet<String> assetTags;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<String> assetMcIncidentNames;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<String> assetMcIncidentQualifiedNames;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<String> assetMcMonitorNames;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<String> assetMcMonitorQualifiedNames;
+
+    /** Statuses of all associated Monte Carlo monitors. */
+    @Attribute
+    @Singular
+    SortedSet<String> assetMcMonitorStatuses;
+
+    /** Types of all associated Monte Carlo monitors. */
+    @Attribute
+    @Singular
+    SortedSet<String> assetMcMonitorTypes;
+
+    /** Schedules of all associated Monte Carlo monitors. */
+    @Attribute
+    @Singular
+    SortedSet<String> assetMcMonitorScheduleTypes;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<String> assetMcIncidentTypes;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<String> assetMcIncidentSubTypes;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<String> assetMcIncidentSeverities;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<String> assetMcIncidentStates;
+
+    /** TBC */
+    @Attribute
+    Long assetMcLastSyncRunAt;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<MCMonitor> mcMonitors;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<MCIncident> mcIncidents;
+
     /** Resources that are linked to this asset. */
     @Attribute
     @Singular

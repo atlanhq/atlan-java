@@ -48,17 +48,17 @@ public class LookerModel extends Looker {
 
     /** TBC */
     @Attribute
-    @Singular
-    SortedSet<LookerField> fields;
-
-    /** TBC */
-    @Attribute
     LookerLook look;
 
     /** TBC */
     @Attribute
     @Singular
     SortedSet<LookerQuery> queries;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<LookerField> fields;
 
     /**
      * Reference to a LookerModel by GUID.

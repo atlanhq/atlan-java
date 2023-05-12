@@ -72,6 +72,14 @@ public enum TextFields implements AtlanSearchableField {
     /** TBC */
     ASSET_DBT_UNIQUE_ID("assetDbtUniqueId"),
     /** TBC */
+    ASSET_MC_INCIDENT_NAMES("assetMcIncidentNames"),
+    /** TBC */
+    ASSET_MC_INCIDENT_QUALIFIED_NAMES("assetMcIncidentQualifiedNames.text"),
+    /** TBC */
+    ASSET_MC_MONITOR_NAMES("assetMcMonitorNames"),
+    /** TBC */
+    ASSET_MC_MONITOR_QUALIFIED_NAMES("assetMcMonitorQualifiedNames.text"),
+    /** TBC */
     ASSET_TAGS("assetTags.text"),
     /** Amazon Resource Name (ARN) for this asset. This uniquely identifies the asset in AWS, and thus must be unique across all AWS asset instances. */
     AWS_ARN("awsArn.text"),
@@ -149,6 +157,12 @@ public enum TextFields implements AtlanSearchableField {
     LOOKER_EXPLORE_QUALIFIED_NAME("lookerExploreQualifiedName.text"),
     /** TBC */
     LOOKER_VIEW_QUALIFIED_NAME("lookerViewQualifiedName.text"),
+    /** Condition on which the monitor produces an alert. */
+    MC_MONITOR_ALERT_CONDITION("mcMonitorAlertCondition"),
+    /** Namespace of the monitor. */
+    MC_MONITOR_NAMESPACE("mcMonitorNamespace"),
+    /** Readable description of the schedule for the rule. */
+    MC_MONITOR_RULE_SCHEDULE_CONFIG_HUMANIZED("mcMonitorRuleScheduleConfigHumanized"),
     /** All terms attached to an asset, as a single comma-separated string. */
     MEANINGS_TEXT("__meaningsText"),
     /** TBC */

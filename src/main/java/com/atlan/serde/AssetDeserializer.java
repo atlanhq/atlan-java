@@ -210,6 +210,12 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
                 case LookerView.TYPE_NAME:
                     builder = LookerView.builder();
                     break;
+                case MCIncident.TYPE_NAME:
+                    builder = MCIncident.builder();
+                    break;
+                case MCMonitor.TYPE_NAME:
+                    builder = MCMonitor.builder();
+                    break;
                 case MaterializedView.TYPE_NAME:
                     builder = MaterializedView.builder();
                     break;
