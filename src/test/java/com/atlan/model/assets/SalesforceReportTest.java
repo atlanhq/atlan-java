@@ -4,6 +4,8 @@ package com.atlan.model.assets;
 
 import static org.testng.Assert.*;
 
+import com.atlan.model.core.Classification;
+import com.atlan.model.core.CustomMetadataAttributes;
 import com.atlan.model.enums.*;
 import com.atlan.model.structs.*;
 import com.atlan.serde.Serde;
@@ -39,6 +41,25 @@ public class SalesforceReportTest {
                             .confidence(100)
                             .build()))
             .qualifiedName("qualifiedName")
+            .classification(Classification.of("String0"))
+            .classification(Classification.builder()
+                    .typeName("String1")
+                    .propagate(false)
+                    .build())
+            .customMetadata(
+                    "String0",
+                    CustomMetadataAttributes.builder()
+                            .attribute("String0", 123.456)
+                            .attribute("String1", true)
+                            .build())
+            .customMetadata(
+                    "String1",
+                    CustomMetadataAttributes.builder()
+                            // Note: for equivalency this MUST be a Long (not an Integer), as deserialization
+                            // will always produce a Long
+                            .attribute("String0", 789L)
+                            .attribute("String1", "AnotherString")
+                            .build())
             .name("String0")
             .displayName("String0")
             .description("String0")
