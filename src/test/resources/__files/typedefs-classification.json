@@ -1,0 +1,49 @@
+{
+  "enumDefs": [],
+  "structDefs": [],
+  "classificationDefs": [
+    {
+      "category": "CLASSIFICATION",
+      "guid": "9498a488-747d-4f04-849c-1cc1c5df4ea7",
+      "createdBy": "chris",
+      "updatedBy": "chris",
+      "createTime": 1683724512867,
+      "updateTime": 1683724512867,
+      "version": 1,
+      "name": "gEuT07IveLY3e5pPf8l4hA",
+      "description": "A first example classification, created by an actual user.",
+      "typeVersion": "1.0",
+      "options": {
+        "color": "Yellow"
+      },
+      "attributeDefs": [],
+      "superTypes": [],
+      "entityTypes": [],
+      "displayName": "String0",
+      "subTypes": []
+    },
+    {
+      "category": "CLASSIFICATION",
+      "guid": "692093f7-d4f1-4224-9573-089af852cf1e",
+      "createdBy": "service-account-apikey-9a4dfe09-db3e-4f28-b30f-fd315ac54247",
+      "updatedBy": "service-account-apikey-9a4dfe09-db3e-4f28-b30f-fd315ac54247",
+      "createTime": 1683555595944,
+      "updateTime": 1683555595944,
+      "version": 1,
+      "name": "tXBnZKYkQ1oLwIEQcpJbTt",
+      "description": "A second example classification, created via API token.",
+      "typeVersion": "1.0",
+      "options": {
+        "color": "Red"
+      },
+      "attributeDefs": [],
+      "superTypes": [],
+      "entityTypes": [],
+      "displayName": "String1",
+      "subTypes": []
+    }
+  ],
+  "entityDefs": [],
+  "relationshipDefs": [],
+  "businessMetadataDefs": []
+}

@@ -6,6 +6,7 @@ import com.atlan.cache.ClassificationCache;
 import com.atlan.cache.CustomMetadataCache;
 import com.atlan.cache.ReflectionCache;
 import com.atlan.exception.AtlanException;
+import com.atlan.exception.NotFoundException;
 import com.atlan.model.assets.*;
 import com.atlan.model.core.Classification;
 import com.atlan.model.core.CustomMetadataAttributes;
@@ -670,7 +671,19 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
                 Method fromValue = paramClass.getMethod("fromValue", String.class);
                 method.invoke(builder, fromValue.invoke(null, primitive.asText()));
             } else {
-                method.invoke(builder, primitive.asText());
+                if (fieldName.equals("mappedClassificationName")) {
+                    String mappedName;
+                    try {
+                        mappedName = ClassificationCache.getNameForId(primitive.asText());
+                    } catch (NotFoundException e) {
+                        mappedName = Serde.DELETED_AUDIT_OBJECT;
+                    } catch (AtlanException e) {
+                        throw new IOException("Unable to deserialize mappedClassificationName.", e);
+                    }
+                    method.invoke(builder, mappedName);
+                } else {
+                    method.invoke(builder, primitive.asText());
+                }
             }
         } else if (primitive.isBoolean()) {
             method.invoke(builder, primitive.asBoolean());

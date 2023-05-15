@@ -2,9 +2,11 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.serde;
 
+import com.atlan.cache.ClassificationCache;
 import com.atlan.cache.CustomMetadataCache;
 import com.atlan.cache.ReflectionCache;
 import com.atlan.exception.AtlanException;
+import com.atlan.exception.NotFoundException;
 import com.atlan.model.assets.Asset;
 import com.atlan.model.core.CustomMetadataAttributes;
 import com.atlan.util.StringUtils;
@@ -86,6 +88,17 @@ public class AssetSerializer extends StdSerializer<Asset> {
                         boolean skip = (attrValue instanceof Collection && ((Collection<?>) attrValue).isEmpty())
                                 || (attrValue instanceof Map && ((Map<?, ?>) attrValue).isEmpty());
                         if (!skip) {
+                            if (fieldName.equals("mappedClassificationName")) {
+                                String mappedName;
+                                try {
+                                    mappedName = ClassificationCache.getIdForName(attrValue.toString());
+                                } catch (NotFoundException e) {
+                                    mappedName = Serde.DELETED_AUDIT_OBJECT;
+                                } catch (AtlanException e) {
+                                    throw new IOException("Unable to serialize mappedClassificationName.", e);
+                                }
+                                attrValue = mappedName;
+                            }
                             // Add the value we've derived above to the attribute map for nesting
                             String serializeName = ReflectionCache.getSerializedName(clazz, fieldName);
                             attributes.put(serializeName, attrValue);
