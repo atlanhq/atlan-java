@@ -120,9 +120,27 @@ public class ModelGeneratorV2 {
                 }
             }
         }
+        // Inject all these generated assets into the AttributeDefOptions class (regenerate it)
+        Template attributeDefOptionsTemplate = cfg.getTemplate("AttributeDefOptions.ftl");
+        String filename = "src" + File.separator
+                + "main" + File.separator
+                + "java" + File.separator
+                + "com" + File.separator
+                + "atlan" + File.separator
+                + "model" + File.separator
+                + "typedefs" + File.separator
+                + "AttributeDefOptions.java";
+        try (BufferedWriter fs =
+                new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filename), StandardCharsets.UTF_8))) {
+            // Now that all are generated, output the generated switch-based deserialization
+            SerdeGenerator generator = new SerdeGenerator(assetCache.values());
+            attributeDefOptionsTemplate.process(generator, fs);
+        } catch (IOException e) {
+            log.error("Unable to open file output: {}", filename, e);
+        }
         // Finally, inject all these generated assets into the AssetDeserializer class (regenerate it)
         Template assetDeserializerTemplate = cfg.getTemplate("AssetDeserializer.ftl");
-        String filename = SerdeGenerator.DIRECTORY + File.separator + "AssetDeserializer.java";
+        filename = SerdeGenerator.DIRECTORY + File.separator + "AssetDeserializer.java";
         try (BufferedWriter fs =
                 new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filename), StandardCharsets.UTF_8))) {
             // Now that all are generated, output the generated switch-based deserialization
