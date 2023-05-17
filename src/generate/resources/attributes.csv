@@ -306,9 +306,9 @@ Connection,Instance of a connection in Atlan.,policyStrategy,
 Connection,Instance of a connection in Atlan.,queryUsernameStrategy,
 Connection,Instance of a connection in Atlan.,rowLimit,Maximum number of rows that can be returned for the source.
 Connection,Instance of a connection in Atlan.,defaultCredentialGuid,
-Connection,Instance of a connection in Atlan.,connectorIcon,
-Connection,Instance of a connection in Atlan.,connectorImage,
-Connection,Instance of a connection in Atlan.,sourceLogo,
+Connection,Instance of a connection in Atlan.,connectorIcon,"Despite the name, this is not used for anything. Only the value of connectorName impacts icons."
+Connection,Instance of a connection in Atlan.,connectorImage,"Despite the name, this is not used for anything. Only the value of connectorName impacts icons."
+Connection,Instance of a connection in Atlan.,sourceLogo,"Despite the name, this is not used for anything. Only the value of connectorName impacts icons."
 Connection,Instance of a connection in Atlan.,isSampleDataPreviewEnabled,Whether sample data can be previewed for this connection (true) or not (false).
 Connection,Instance of a connection in Atlan.,popularityInsightsTimeframe,"Number of days over which popularity is calculated, for example 30 days."
 Connection,Instance of a connection in Atlan.,hasPopularityInsights,Whether the connection has popularity insights (true) or not (false).

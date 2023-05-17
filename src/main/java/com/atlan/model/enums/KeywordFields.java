@@ -271,9 +271,9 @@ public enum KeywordFields implements AtlanSearchableField {
     CONNECTION_NAME("connectionName"),
     /** Unique name of the connection through which this asset is accessible. */
     CONNECTION_QUALIFIED_NAME("connectionQualifiedName"),
-    /** TBC */
+    /** Despite the name, this is not used for anything. Only the value of connectorName impacts icons. */
     CONNECTOR_ICON("connectorIcon"),
-    /** TBC */
+    /** Despite the name, this is not used for anything. Only the value of connectorName impacts icons. */
     CONNECTOR_IMAGE("connectorImage"),
     /** Type of the connector through which this asset is accessible. */
     CONNECTOR_TYPE("connectorName"),
@@ -847,7 +847,7 @@ public enum KeywordFields implements AtlanSearchableField {
     SOURCE_EMBED_URL("sourceEmbedURL"),
     /** ID of the report in Salesforce. */
     SOURCE_ID("sourceId"),
-    /** TBC */
+    /** Despite the name, this is not used for anything. Only the value of connectorName impacts icons. */
     SOURCE_LOGO("sourceLogo"),
     /** TBC */
     SOURCE_OWNERS("sourceOwners"),
