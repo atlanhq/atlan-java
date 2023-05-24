@@ -62,15 +62,15 @@ public class LookerField extends Looker {
 
     /** TBC */
     @Attribute
-    LookerView view;
-
-    /** TBC */
-    @Attribute
     LookerExplore explore;
 
     /** TBC */
     @Attribute
     LookerProject project;
+
+    /** TBC */
+    @Attribute
+    LookerView view;
 
     /** TBC */
     @Attribute

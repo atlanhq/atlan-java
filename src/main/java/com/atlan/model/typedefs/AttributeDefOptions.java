@@ -47,6 +47,7 @@ public class AttributeDefOptions extends AtlanObject {
             DbtModelColumn.TYPE_NAME,
             DbtProcess.TYPE_NAME,
             DbtSource.TYPE_NAME,
+            File.TYPE_NAME,
             Folder.TYPE_NAME,
             GCSBucket.TYPE_NAME,
             GCSObject.TYPE_NAME,

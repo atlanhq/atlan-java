@@ -51,12 +51,12 @@ public class PowerBIReport extends PowerBI {
 
     /** TBC */
     @Attribute
-    @Singular
-    SortedSet<PowerBITile> tiles;
+    PowerBIWorkspace workspace;
 
     /** TBC */
     @Attribute
-    PowerBIWorkspace workspace;
+    @Singular
+    SortedSet<PowerBITile> tiles;
 
     /** TBC */
     @Attribute

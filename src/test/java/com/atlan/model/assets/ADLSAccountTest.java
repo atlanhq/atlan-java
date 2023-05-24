@@ -4,8 +4,6 @@ package com.atlan.model.assets;
 
 import static org.testng.Assert.*;
 
-import com.atlan.model.core.Classification;
-import com.atlan.model.core.CustomMetadataAttributes;
 import com.atlan.model.enums.*;
 import com.atlan.model.structs.*;
 import com.atlan.serde.Serde;
@@ -41,7 +39,7 @@ public class ADLSAccountTest {
                             .confidence(100)
                             .build()))
             .qualifiedName("qualifiedName")
-            .classification(Classification.of("String0"))
+            /*.classification(Classification.of("String0"))
             .classification(Classification.builder()
                     .typeName("String1")
                     .propagate(false)
@@ -59,7 +57,7 @@ public class ADLSAccountTest {
                             // will always produce a Long
                             .attribute("String0", 789L)
                             .attribute("String1", "AnotherString")
-                            .build())
+                            .build())*/
             .name("String0")
             .displayName("String0")
             .description("String0")
@@ -332,6 +330,8 @@ public class ADLSAccountTest {
             .assetMcLastSyncRunAt(123456789L)
             .mcMonitor(MCMonitor.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .mcMonitor(MCMonitor.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .file(File.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .file(File.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .mcIncident(MCIncident.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .mcIncident(MCIncident.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .link(Link.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))

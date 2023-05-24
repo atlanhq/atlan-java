@@ -332,6 +332,8 @@ public class TableauWorkbookTest {
             .assetMcLastSyncRunAt(123456789L)
             .mcMonitor(MCMonitor.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .mcMonitor(MCMonitor.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .file(File.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .file(File.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .mcIncident(MCIncident.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .mcIncident(MCIncident.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .link(Link.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
@@ -351,13 +353,13 @@ public class TableauWorkbookTest {
             .topLevelProjectQualifiedName("String0")
             .addProjectHierarchy(Map.of("key1", "value1"))
             .addProjectHierarchy(Map.of("key2", "value2"))
+            .project(TableauProject.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .dashboard(TableauDashboard.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .dashboard(TableauDashboard.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .worksheet(TableauWorksheet.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .worksheet(TableauWorksheet.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .datasource(TableauDatasource.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .datasource(TableauDatasource.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .project(TableauProject.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .dashboard(TableauDashboard.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .dashboard(TableauDashboard.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .build();
 
     private static final int hash = full.hashCode();

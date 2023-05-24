@@ -271,6 +271,8 @@ public enum KeywordFields implements AtlanSearchableField {
     CONNECTION_NAME("connectionName"),
     /** Unique name of the connection through which this asset is accessible. */
     CONNECTION_QUALIFIED_NAME("connectionQualifiedName"),
+    /** TBC */
+    CONNECTION_SSO_CREDENTIAL_GUID("connectionSSOCredentialGuid"),
     /** Despite the name, this is not used for anything. Only the value of connectorName impacts icons. */
     CONNECTOR_ICON("connectorIcon"),
     /** Despite the name, this is not used for anything. Only the value of connectorName impacts icons. */
@@ -395,6 +397,10 @@ public enum KeywordFields implements AtlanSearchableField {
     EXTERNAL_LOCATION_REGION("externalLocationRegion"),
     /** TBC */
     FIELDS("fields"),
+    /** TBC */
+    FILE_PATH("filePath"),
+    /** TBC */
+    FILE_TYPE("fileType"),
     /** TBC */
     FOLDER_NAME("folderName"),
     /** TBC */

@@ -190,7 +190,7 @@ public class AtlanUser extends AtlanObject {
     }
 
     /**
-     * Retrieves a user based on the username. (This attemps an exact match on username rather than a
+     * Retrieves a user based on the username. (This attempts an exact match on username rather than a
      * contains search.)
      *
      * @param user the username by which to find the user

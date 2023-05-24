@@ -137,6 +137,10 @@ public class Connection extends Asset {
     @Singular
     SortedSet<String> connectionDbtEnvironments;
 
+    /** TBC */
+    @Attribute
+    String connectionSSOCredentialGuid;
+
     /**
      * Reference to a Connection by GUID.
      *

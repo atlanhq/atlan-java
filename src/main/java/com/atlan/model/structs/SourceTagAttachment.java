@@ -2,7 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.structs;
 
-import com.atlan.model.core.AtlanObject;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -15,7 +15,15 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
-public class SourceTagAttachment extends AtlanObject {
+public class SourceTagAttachment extends AtlanStruct {
+
+    public static final String TYPE_NAME = "SourceTagAttachment";
+
+    /** Fixed typeName for SourceTagAttachment. */
+    @JsonIgnore
+    @Getter(onMethod_ = {@Override})
+    @Builder.Default
+    String typeName = TYPE_NAME;
 
     /**
      * Quickly create a new SourceTagAttachment.

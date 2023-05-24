@@ -148,6 +148,9 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
                 case DbtSource.TYPE_NAME:
                     builder = DbtSource.builder();
                     break;
+                case File.TYPE_NAME:
+                    builder = File.builder();
+                    break;
                 case Folder.TYPE_NAME:
                     builder = Folder.builder();
                     break;

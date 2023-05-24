@@ -178,6 +178,7 @@ Asset,Base class for all assets.,assetMcIncidentSeverities,
 Asset,Base class for all assets.,assetMcIncidentStates,
 Asset,Base class for all assets.,assetMcLastSyncRunAt,
 Asset,Base class for all assets.,mcMonitors,
+Asset,Base class for all assets.,files,
 Asset,Base class for all assets.,mcIncidents,
 Asset,Base class for all assets.,links,Resources that are linked to this asset.
 Asset,Base class for all assets.,metrics,
@@ -279,18 +280,18 @@ Column,Instance of a column in Atlan.,columnMissingValuesPercentage,Percentage o
 Column,Instance of a column in Atlan.,columnUniquenessPercentage,"Ratio indicating how unique data in the column is: 0 indicates that all values are the same, 100 indicates that all values in the column are unique."
 Column,Instance of a column in Atlan.,columnVariance,Calculated variance of the values in a numeric column.
 Column,Instance of a column in Atlan.,columnTopValues,
+Column,Instance of a column in Atlan.,view,"View in which this column exists, or empty if the column instead exists in a table or materialized view."
+Column,Instance of a column in Atlan.,dataQualityMetricDimensions,
+Column,Instance of a column in Atlan.,dbtModelColumns,
+Column,Instance of a column in Atlan.,table,"Table in which this column exists, or empty if the column instead exists in a view or materialized view."
+Column,Instance of a column in Atlan.,columnDbtModelColumns,
 Column,Instance of a column in Atlan.,materialisedView,"Materialized view in which this column exists, or empty if the column instead exists in a table or view."
 Column,Instance of a column in Atlan.,queries,Queries that involve this column.
 Column,Instance of a column in Atlan.,metricTimestamps,
 Column,Instance of a column in Atlan.,foreignKeyTo,All the columns that refer to this column as a foreign key.
 Column,Instance of a column in Atlan.,foreignKeyFrom,Column this column refers to as a foreign key.
 Column,Instance of a column in Atlan.,dbtMetrics,
-Column,Instance of a column in Atlan.,view,"View in which this column exists, or empty if the column instead exists in a table or materialized view."
 Column,Instance of a column in Atlan.,tablePartition,
-Column,Instance of a column in Atlan.,dataQualityMetricDimensions,
-Column,Instance of a column in Atlan.,dbtModelColumns,
-Column,Instance of a column in Atlan.,table,"Table in which this column exists, or empty if the column instead exists in a view or materialized view."
-Column,Instance of a column in Atlan.,columnDbtModelColumns,
 ColumnProcess,Instance of a column-level lineage process in Atlan.,process,Parent process that contains this column-level process.
 Connection,Instance of a connection in Atlan.,category,Type of connection.
 Connection,Instance of a connection in Atlan.,subCategory,Subtype of the connection.
@@ -313,6 +314,7 @@ Connection,Instance of a connection in Atlan.,isSampleDataPreviewEnabled,Whether
 Connection,Instance of a connection in Atlan.,popularityInsightsTimeframe,"Number of days over which popularity is calculated, for example 30 days."
 Connection,Instance of a connection in Atlan.,hasPopularityInsights,Whether the connection has popularity insights (true) or not (false).
 Connection,Instance of a connection in Atlan.,connectionDbtEnvironments,
+Connection,Instance of a connection in Atlan.,connectionSSOCredentialGuid,
 DataStudioAsset,Instance of a Google Data Studio asset in Atlan.,dataStudioAssetType,Type of Google Data Studio asset.
 DataStudioAsset,Instance of a Google Data Studio asset in Atlan.,dataStudioAssetTitle,Title for the asset.
 DataStudioAsset,Instance of a Google Data Studio asset in Atlan.,dataStudioAssetOwner,Owner of the asset within Google Data Studio.
@@ -373,6 +375,9 @@ DbtSource,Instance of a dbt source asset in Atlan.,dbtState,
 DbtSource,Instance of a dbt source asset in Atlan.,dbtFreshnessCriteria,
 DbtSource,Instance of a dbt source asset in Atlan.,sqlAssets,
 DbtSource,Instance of a dbt source asset in Atlan.,sqlAsset,
+File,Static files,fileType,
+File,Static files,filePath,
+File,Static files,fileAssets,
 Folder,Instance of a folder within a query collection in Atlan.,parentQualifiedName,
 Folder,Instance of a folder within a query collection in Atlan.,collectionQualifiedName,qualifiedName of the collection in which this folder exists.
 Folder,Instance of a folder within a query collection in Atlan.,parent,Namespace in which this folder exists.
@@ -457,9 +462,9 @@ LookerField,Instance of a Looker field in Atlan.,modelName,
 LookerField,Instance of a Looker field in Atlan.,sourceDefinition,
 LookerField,Instance of a Looker field in Atlan.,lookerFieldDataType,
 LookerField,Instance of a Looker field in Atlan.,lookerTimesUsed,
-LookerField,Instance of a Looker field in Atlan.,view,
 LookerField,Instance of a Looker field in Atlan.,explore,
 LookerField,Instance of a Looker field in Atlan.,project,
+LookerField,Instance of a Looker field in Atlan.,view,
 LookerField,Instance of a Looker field in Atlan.,model,
 LookerFolder,Instance of a Looker folder in Atlan.,sourceContentMetadataId,
 LookerFolder,Instance of a Looker folder in Atlan.,sourceCreatorId,
@@ -650,8 +655,8 @@ PowerBIReport,Instance of a Power BI report in Atlan.,workspaceQualifiedName,
 PowerBIReport,Instance of a Power BI report in Atlan.,datasetQualifiedName,
 PowerBIReport,Instance of a Power BI report in Atlan.,webUrl,
 PowerBIReport,Instance of a Power BI report in Atlan.,pageCount,
-PowerBIReport,Instance of a Power BI report in Atlan.,tiles,
 PowerBIReport,Instance of a Power BI report in Atlan.,workspace,
+PowerBIReport,Instance of a Power BI report in Atlan.,tiles,
 PowerBIReport,Instance of a Power BI report in Atlan.,pages,
 PowerBIReport,Instance of a Power BI report in Atlan.,dataset,
 PowerBITable,Instance of a Power BI table in Atlan.,workspaceQualifiedName,
@@ -844,10 +849,10 @@ SQL,Base class for SQL assets.,viewName,"Simple name of the view in which this S
 SQL,Base class for SQL assets.,viewQualifiedName,"Unique name of the view in which this SQL asset exists, or empty if it does not exist within a view."
 SQL,Base class for SQL assets.,isProfiled,Whether the asset has been profiled (true) or not (false).
 SQL,Base class for SQL assets.,lastProfiledAt,"Time (epoch) at which the asset was last profiled, in milliseconds."
-SQL,Base class for SQL assets.,dbtModels,
 SQL,Base class for SQL assets.,dbtSources,
 SQL,Base class for SQL assets.,sqlDbtModels,
 SQL,Base class for SQL assets.,sqlDBTSources,
+SQL,Base class for SQL assets.,dbtModels,
 Salesforce,Base class for Salesforce assets.,organizationQualifiedName,
 Salesforce,Base class for Salesforce assets.,apiName,
 SalesforceDashboard,Instance of a Salesforce dashboard in Atlan.,sourceId,ID of the dashboard in Salesforce.
@@ -1057,10 +1062,10 @@ TableauWorkbook,Instance of a Tableau workbook in Atlan.,projectQualifiedName,
 TableauWorkbook,Instance of a Tableau workbook in Atlan.,topLevelProjectName,
 TableauWorkbook,Instance of a Tableau workbook in Atlan.,topLevelProjectQualifiedName,
 TableauWorkbook,Instance of a Tableau workbook in Atlan.,projectHierarchy,
-TableauWorkbook,Instance of a Tableau workbook in Atlan.,worksheets,
-TableauWorkbook,Instance of a Tableau workbook in Atlan.,datasources,
 TableauWorkbook,Instance of a Tableau workbook in Atlan.,project,
 TableauWorkbook,Instance of a Tableau workbook in Atlan.,dashboards,
+TableauWorkbook,Instance of a Tableau workbook in Atlan.,worksheets,
+TableauWorkbook,Instance of a Tableau workbook in Atlan.,datasources,
 TableauWorksheet,Instance of a Tableau worksheet in Atlan.,siteQualifiedName,
 TableauWorksheet,Instance of a Tableau worksheet in Atlan.,projectQualifiedName,
 TableauWorksheet,Instance of a Tableau worksheet in Atlan.,topLevelProjectQualifiedName,

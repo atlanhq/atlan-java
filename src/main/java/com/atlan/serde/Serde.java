@@ -7,10 +7,11 @@ import co.elastic.clients.elasticsearch._types.aggregations.Aggregation;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import co.elastic.clients.json.JsonpMapper;
 import co.elastic.clients.json.jackson.JacksonJsonpMapper;
+import com.atlan.model.structs.AtlanStruct;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.Module;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.deser.BeanDeserializerModifier;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -45,6 +46,19 @@ public class Serde {
                 .addSerializer(SortOptions.class, new ElasticObjectSerializer<>())
                 .addDeserializer(SortOptions.class, new ElasticSortOptionsDeserializer());
         set.add(elastic);
+        // Struct deserializers - unwrap the outer `attributes` that appears in responses
+        SimpleModule structs = new SimpleModule().setDeserializerModifier(new BeanDeserializerModifier() {
+            @Override
+            public JsonDeserializer<?> modifyDeserializer(
+                    DeserializationConfig config, BeanDescription beanDesc, JsonDeserializer<?> deserializer) {
+                Class<?> enclosing = beanDesc.getBeanClass().getEnclosingClass();
+                if (enclosing != null && enclosing.getSuperclass() == AtlanStruct.class) {
+                    return new StructDeserializer(deserializer);
+                }
+                return deserializer;
+            }
+        });
+        set.add(structs);
         return set;
     }
 

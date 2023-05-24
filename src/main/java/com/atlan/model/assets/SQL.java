@@ -95,11 +95,6 @@ public abstract class SQL extends Catalog {
     /** TBC */
     @Attribute
     @Singular
-    SortedSet<DbtModel> dbtModels;
-
-    /** TBC */
-    @Attribute
-    @Singular
     SortedSet<DbtSource> dbtSources;
 
     /** TBC */
@@ -111,4 +106,9 @@ public abstract class SQL extends Catalog {
     @Attribute
     @Singular
     SortedSet<DbtSource> sqlDBTSources;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<DbtModel> dbtModels;
 }

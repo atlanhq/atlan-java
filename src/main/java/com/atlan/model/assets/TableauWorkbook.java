@@ -58,6 +58,15 @@ public class TableauWorkbook extends Tableau {
 
     /** TBC */
     @Attribute
+    TableauProject project;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<TableauDashboard> dashboards;
+
+    /** TBC */
+    @Attribute
     @Singular
     SortedSet<TableauWorksheet> worksheets;
 
@@ -65,15 +74,6 @@ public class TableauWorkbook extends Tableau {
     @Attribute
     @Singular
     SortedSet<TableauDatasource> datasources;
-
-    /** TBC */
-    @Attribute
-    TableauProject project;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<TableauDashboard> dashboards;
 
     /**
      * Reference to a TableauWorkbook by GUID.
