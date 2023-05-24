@@ -2,7 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.structs;
 
-import com.atlan.model.core.AtlanObject;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
@@ -14,7 +14,21 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
-public class AwsCloudWatchMetric extends AtlanObject {
+public class AwsCloudWatchMetric extends AtlanStruct {
+
+    public static final String TYPE_NAME = "AwsCloudWatchMetric";
+
+    /** Fixed typeName for AwsCloudWatchMetric. */
+    @JsonIgnore
+    @Getter(onMethod_ = {@Override})
+    @Builder.Default
+    String typeName = TYPE_NAME;
+
+    /** Name of the AWS CloudWatch metric. */
+    String awsCloudWatchMetricName;
+
+    /** Scope of the AWS CloudWatch metric. */
+    String awsCloudWatchMetricScope;
 
     /**
      * Quickly create a new AwsCloudWatchMetric.
@@ -28,10 +42,4 @@ public class AwsCloudWatchMetric extends AtlanObject {
                 .awsCloudWatchMetricScope(awsCloudWatchMetricScope)
                 .build();
     }
-
-    /** Name of the AWS CloudWatch metric. */
-    String awsCloudWatchMetricName;
-
-    /** Scope of the AWS CloudWatch metric. */
-    String awsCloudWatchMetricScope;
 }

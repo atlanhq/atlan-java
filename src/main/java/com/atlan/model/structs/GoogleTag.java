@@ -2,7 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.structs;
 
-import com.atlan.model.core.AtlanObject;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
@@ -14,7 +14,21 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
-public class GoogleTag extends AtlanObject {
+public class GoogleTag extends AtlanStruct {
+
+    public static final String TYPE_NAME = "GoogleTag";
+
+    /** Fixed typeName for GoogleTag. */
+    @JsonIgnore
+    @Getter(onMethod_ = {@Override})
+    @Builder.Default
+    String typeName = TYPE_NAME;
+
+    /** Key of the Google tag. */
+    String googleTagKey;
+
+    /** Value for the Google tag. */
+    String googleTagValue;
 
     /**
      * Quickly create a new GoogleTag.
@@ -28,10 +42,4 @@ public class GoogleTag extends AtlanObject {
                 .googleTagValue(googleTagValue)
                 .build();
     }
-
-    /** Key of the Google tag. */
-    String googleTagKey;
-
-    /** Value for the Google tag. */
-    String googleTagValue;
 }

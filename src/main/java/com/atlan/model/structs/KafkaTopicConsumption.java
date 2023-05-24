@@ -2,7 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.structs;
 
-import com.atlan.model.core.AtlanObject;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
@@ -14,7 +14,27 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
-public class KafkaTopicConsumption extends AtlanObject {
+public class KafkaTopicConsumption extends AtlanStruct {
+
+    public static final String TYPE_NAME = "KafkaTopicConsumption";
+
+    /** Fixed typeName for KafkaTopicConsumption. */
+    @JsonIgnore
+    @Getter(onMethod_ = {@Override})
+    @Builder.Default
+    String typeName = TYPE_NAME;
+
+    /** Name of the Kafka topic. */
+    String topicName;
+
+    /** Partition of the Kafka topic. */
+    String topicPartition;
+
+    /** TBC */
+    Long topicLag;
+
+    /** TBC */
+    Long topicCurrentOffset;
 
     /**
      * Quickly create a new KafkaTopicConsumption.
@@ -33,16 +53,4 @@ public class KafkaTopicConsumption extends AtlanObject {
                 .topicCurrentOffset(topicCurrentOffset)
                 .build();
     }
-
-    /** Name of the Kafka topic. */
-    String topicName;
-
-    /** Partition of the Kafka topic. */
-    String topicPartition;
-
-    /** TBC */
-    Long topicLag;
-
-    /** TBC */
-    Long topicCurrentOffset;
 }

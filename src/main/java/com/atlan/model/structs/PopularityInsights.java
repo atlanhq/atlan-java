@@ -2,8 +2,8 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.structs;
 
-import com.atlan.model.core.AtlanObject;
 import com.atlan.model.enums.SourceCostUnitType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
@@ -15,7 +15,45 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
-public class PopularityInsights extends AtlanObject {
+public class PopularityInsights extends AtlanStruct {
+
+    public static final String TYPE_NAME = "PopularityInsights";
+
+    /** Fixed typeName for PopularityInsights. */
+    @JsonIgnore
+    @Getter(onMethod_ = {@Override})
+    @Builder.Default
+    String typeName = TYPE_NAME;
+
+    /** Username or email of the user who ran the queries. */
+    String recordUser;
+
+    /** Query run at source. */
+    String recordQuery;
+
+    /** Duration for which the query ran at source. */
+    Long recordQueryDuration;
+
+    /** Number of queries run by the user. */
+    Long recordQueryCount;
+
+    /** Total number of users who ran queries. */
+    Long recordTotalUserCount;
+
+    /** Total compute cost for running all queries. */
+    Double recordComputeCost;
+
+    /** Maximum compute cost across all query runs. */
+    Double recordMaxComputeCost;
+
+    /** Unit of measure for recordComputeCost. */
+    SourceCostUnitType recordComputeCostUnit;
+
+    /** Timestamp of last operation or query run by the user. */
+    Long recordLastTimestamp;
+
+    /** Name of the warehouse on which the queries were run. */
+    String recordWarehouse;
 
     /**
      * Quickly create a new PopularityInsights.
@@ -55,34 +93,4 @@ public class PopularityInsights extends AtlanObject {
                 .recordWarehouse(recordWarehouse)
                 .build();
     }
-
-    /** Username or email of the user who ran the queries. */
-    String recordUser;
-
-    /** Query run at source. */
-    String recordQuery;
-
-    /** Duration for which the query ran at source. */
-    Long recordQueryDuration;
-
-    /** Number of queries run by the user. */
-    Long recordQueryCount;
-
-    /** Total number of users who ran queries. */
-    Long recordTotalUserCount;
-
-    /** Total compute cost for running all queries. */
-    Double recordComputeCost;
-
-    /** Maximum compute cost across all query runs. */
-    Double recordMaxComputeCost;
-
-    /** Unit of measure for recordComputeCost. */
-    SourceCostUnitType recordComputeCostUnit;
-
-    /** Timestamp of last operation or query run by the user. */
-    Long recordLastTimestamp;
-
-    /** Name of the warehouse on which the queries were run. */
-    String recordWarehouse;
 }

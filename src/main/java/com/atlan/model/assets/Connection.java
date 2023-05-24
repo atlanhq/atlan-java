@@ -108,15 +108,15 @@ public class Connection extends Asset {
     @Attribute
     String defaultCredentialGuid;
 
-    /** TBC */
+    /** Despite the name, this is not used for anything. Only the value of connectorName impacts icons. */
     @Attribute
     String connectorIcon;
 
-    /** TBC */
+    /** Despite the name, this is not used for anything. Only the value of connectorName impacts icons. */
     @Attribute
     String connectorImage;
 
-    /** TBC */
+    /** Despite the name, this is not used for anything. Only the value of connectorName impacts icons. */
     @Attribute
     String sourceLogo;
 
@@ -136,6 +136,10 @@ public class Connection extends Asset {
     @Attribute
     @Singular
     SortedSet<String> connectionDbtEnvironments;
+
+    /** TBC */
+    @Attribute
+    String connectionSSOCredentialGuid;
 
     /**
      * Reference to a Connection by GUID.

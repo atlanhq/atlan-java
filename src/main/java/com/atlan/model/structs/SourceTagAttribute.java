@@ -2,7 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.structs;
 
-import com.atlan.model.core.AtlanObject;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Map;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -15,7 +15,24 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
-public class SourceTagAttribute extends AtlanObject {
+public class SourceTagAttribute extends AtlanStruct {
+
+    public static final String TYPE_NAME = "SourceTagAttribute";
+
+    /** Fixed typeName for SourceTagAttribute. */
+    @JsonIgnore
+    @Getter(onMethod_ = {@Override})
+    @Builder.Default
+    String typeName = TYPE_NAME;
+
+    /** Attribute key, for example "allowedValues" or "enabled". */
+    String tagAttributeKey;
+
+    /** Attribute value, for example ["Private", "PII"] for allowedValues, or "true" for enabled. */
+    String tagAttributeValue;
+
+    /** Properties associated with the attribute. */
+    Map<String, String> tagAttributeProperties;
 
     /**
      * Quickly create a new SourceTagAttribute.
@@ -32,13 +49,4 @@ public class SourceTagAttribute extends AtlanObject {
                 .tagAttributeProperties(tagAttributeProperties)
                 .build();
     }
-
-    /** Attribute key, for example "allowedValues" or "enabled". */
-    String tagAttributeKey;
-
-    /** Attribute value, for example ["Private", "PII"] for allowedValues, or "true" for enabled. */
-    String tagAttributeValue;
-
-    /** Properties associated with the attribute. */
-    Map<String, String> tagAttributeProperties;
 }

@@ -2,7 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.structs;
 
-import com.atlan.model.core.AtlanObject;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
@@ -14,7 +14,21 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
-public class ColumnValueFrequencyMap extends AtlanObject {
+public class ColumnValueFrequencyMap extends AtlanStruct {
+
+    public static final String TYPE_NAME = "ColumnValueFrequencyMap";
+
+    /** Fixed typeName for ColumnValueFrequencyMap. */
+    @JsonIgnore
+    @Getter(onMethod_ = {@Override})
+    @Builder.Default
+    String typeName = TYPE_NAME;
+
+    /** Value for the column. */
+    String columnValue;
+
+    /** Number of records that contain the value. */
+    Long columnValueFrequency;
 
     /**
      * Quickly create a new ColumnValueFrequencyMap.
@@ -28,10 +42,4 @@ public class ColumnValueFrequencyMap extends AtlanObject {
                 .columnValueFrequency(columnValueFrequency)
                 .build();
     }
-
-    /** Value for the column. */
-    String columnValue;
-
-    /** Number of records that contain the value. */
-    Long columnValueFrequency;
 }

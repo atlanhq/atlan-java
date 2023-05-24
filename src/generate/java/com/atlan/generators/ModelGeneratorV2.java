@@ -94,6 +94,17 @@ public class ModelGeneratorV2 {
                     log.error("Unable to open file output: {}", filename, e);
                 }
             }
+            Template abstractStructTemplate = cfg.getTemplate("AtlanStruct.ftl");
+            String filename = StructGenerator.DIRECTORY + File.separator + "AtlanStruct.java";
+            try (BufferedWriter fs = new BufferedWriter(
+                    new OutputStreamWriter(new FileOutputStream(filename), StandardCharsets.UTF_8))) {
+                List<String> structNames =
+                        structCache.keySet().stream().sorted().collect(Collectors.toList());
+                ListGenerator generator = new ListGenerator(structNames);
+                abstractStructTemplate.process(generator, fs);
+            } catch (IOException e) {
+                log.error("Unable to open file output: {}", filename, e);
+            }
         }
     }
 

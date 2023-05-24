@@ -2,7 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.structs;
 
-import com.atlan.model.core.AtlanObject;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
@@ -14,7 +14,27 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
-public class MCRuleSchedule extends AtlanObject {
+public class MCRuleSchedule extends AtlanStruct {
+
+    public static final String TYPE_NAME = "MCRuleSchedule";
+
+    /** Fixed typeName for MCRuleSchedule. */
+    @JsonIgnore
+    @Getter(onMethod_ = {@Override})
+    @Builder.Default
+    String typeName = TYPE_NAME;
+
+    /** Type of schedule for the rule, for example dynamic or manual. */
+    String mcRuleScheduleType;
+
+    /** How often the monitor should run, in minutes. */
+    Integer mcRuleScheduleIntervalInMinutes;
+
+    /** When the first execution of the rule should occur (blank means immediate). */
+    Long mcRuleScheduleStartTime;
+
+    /** TBC */
+    String mcRuleScheduleCrontab;
 
     /**
      * Quickly create a new MCRuleSchedule.
@@ -36,16 +56,4 @@ public class MCRuleSchedule extends AtlanObject {
                 .mcRuleScheduleCrontab(mcRuleScheduleCrontab)
                 .build();
     }
-
-    /** Type of schedule for the rule, for example dynamic or manual. */
-    String mcRuleScheduleType;
-
-    /** How often the monitor should run, in minutes. */
-    Integer mcRuleScheduleIntervalInMinutes;
-
-    /** When the first execution of the rule should occur (blank means immediate). */
-    Long mcRuleScheduleStartTime;
-
-    /** TBC */
-    String mcRuleScheduleCrontab;
 }

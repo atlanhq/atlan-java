@@ -2,7 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.structs;
 
-import com.atlan.model.core.AtlanObject;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
@@ -14,7 +14,21 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
-public class AwsTag extends AtlanObject {
+public class AwsTag extends AtlanStruct {
+
+    public static final String TYPE_NAME = "AwsTag";
+
+    /** Fixed typeName for AwsTag. */
+    @JsonIgnore
+    @Getter(onMethod_ = {@Override})
+    @Builder.Default
+    String typeName = TYPE_NAME;
+
+    /** Key of the AWS tag. */
+    String awsTagKey;
+
+    /** Value for the AWS tag. */
+    String awsTagValue;
 
     /**
      * Quickly create a new AwsTag.
@@ -25,10 +39,4 @@ public class AwsTag extends AtlanObject {
     public static AwsTag of(String awsTagKey, String awsTagValue) {
         return AwsTag.builder().awsTagKey(awsTagKey).awsTagValue(awsTagValue).build();
     }
-
-    /** Key of the AWS tag. */
-    String awsTagKey;
-
-    /** Value for the AWS tag. */
-    String awsTagValue;
 }

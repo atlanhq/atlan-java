@@ -332,6 +332,8 @@ public class LookerFieldTest {
             .assetMcLastSyncRunAt(123456789L)
             .mcMonitor(MCMonitor.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .mcMonitor(MCMonitor.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .file(File.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .file(File.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .mcIncident(MCIncident.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .mcIncident(MCIncident.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .link(Link.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
@@ -352,9 +354,9 @@ public class LookerFieldTest {
             .sourceDefinition("String0")
             .lookerFieldDataType("String0")
             .lookerTimesUsed(123)
-            .view(LookerView.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .explore(LookerExplore.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .project(LookerProject.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .view(LookerView.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .model(LookerModel.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .build();
 

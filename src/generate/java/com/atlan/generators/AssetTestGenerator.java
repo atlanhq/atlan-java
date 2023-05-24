@@ -379,60 +379,64 @@ public class AssetTestGenerator extends AssetGenerator {
             sb.append(typeName).append(".builder()");
             for (Field field : fields) {
                 Class<?> fieldType = field.getType();
-                sb.append(".").append(field.getName()).append("(");
-                if (isPrimitive(fieldType)) {
-                    sb.append(getPrimitiveValue(null, fieldType.getSimpleName(), count));
-                } else if (fieldType == List.class) {
-                    // Handle non-primitive fields
-                    Type generic = field.getGenericType();
-                    if (generic instanceof ParameterizedType) {
-                        ParameterizedType pt = (ParameterizedType) generic;
-                        Type type = pt.getActualTypeArguments()[0];
-                        try {
-                            Class<?> embedded = Class.forName(type.getTypeName());
-                            String simpleClassName = embedded.getSimpleName();
-                            sb.append("List.of(")
-                                    .append(getPrimitiveValue("List<", simpleClassName, 0))
-                                    .append(", ")
-                                    .append(getPrimitiveValue("List<", simpleClassName, 1))
-                                    .append(")");
-                        } catch (ClassNotFoundException e) {
-                            log.error("Unable to find embedded struct class: {}", type.getTypeName(), e);
+                String fieldName = field.getName();
+                // Exclude the embedded type details for structs used for deserialization
+                if (!fieldName.equals("TYPE_NAME") && !fieldName.equals("typeName")) {
+                    sb.append(".").append(fieldName).append("(");
+                    if (isPrimitive(fieldType)) {
+                        sb.append(getPrimitiveValue(null, fieldType.getSimpleName(), count));
+                    } else if (fieldType == List.class) {
+                        // Handle non-primitive fields
+                        Type generic = field.getGenericType();
+                        if (generic instanceof ParameterizedType) {
+                            ParameterizedType pt = (ParameterizedType) generic;
+                            Type type = pt.getActualTypeArguments()[0];
+                            try {
+                                Class<?> embedded = Class.forName(type.getTypeName());
+                                String simpleClassName = embedded.getSimpleName();
+                                sb.append("List.of(")
+                                        .append(getPrimitiveValue("List<", simpleClassName, 0))
+                                        .append(", ")
+                                        .append(getPrimitiveValue("List<", simpleClassName, 1))
+                                        .append(")");
+                            } catch (ClassNotFoundException e) {
+                                log.error("Unable to find embedded struct class: {}", type.getTypeName(), e);
+                            }
+                        } else {
+                            log.warn("Unable to reflectively identify list-wrapped type: {}", generic.getTypeName());
                         }
-                    } else {
-                        log.warn("Unable to reflectively identify list-wrapped type: {}", generic.getTypeName());
-                    }
-                } else if (fieldType == Map.class) {
-                    // Handle non-primitive fields
-                    Type generic = field.getGenericType();
-                    if (generic instanceof ParameterizedType) {
-                        ParameterizedType pt = (ParameterizedType) generic;
-                        Type typeKey = pt.getActualTypeArguments()[0];
-                        Type typeVal = pt.getActualTypeArguments()[1];
-                        try {
-                            Class<?> embeddedKey = Class.forName(typeKey.getTypeName());
-                            String simpleClassNameKey = embeddedKey.getSimpleName();
-                            Class<?> embeddedVal = Class.forName(typeVal.getTypeName());
-                            String simpleClassNameVal = embeddedVal.getSimpleName();
-                            sb.append("Map.of(")
-                                    .append(getPrimitiveValue(
-                                            "Map<", simpleClassNameKey + ", " + simpleClassNameVal, 0))
-                                    .append(", ")
-                                    .append(getPrimitiveValue(
-                                            "Map<", simpleClassNameKey + ", " + simpleClassNameVal, 1))
-                                    .append(")");
-                        } catch (ClassNotFoundException e) {
-                            log.error("Unable to find embedded struct class: {}", pt.getActualTypeArguments(), e);
+                    } else if (fieldType == Map.class) {
+                        // Handle non-primitive fields
+                        Type generic = field.getGenericType();
+                        if (generic instanceof ParameterizedType) {
+                            ParameterizedType pt = (ParameterizedType) generic;
+                            Type typeKey = pt.getActualTypeArguments()[0];
+                            Type typeVal = pt.getActualTypeArguments()[1];
+                            try {
+                                Class<?> embeddedKey = Class.forName(typeKey.getTypeName());
+                                String simpleClassNameKey = embeddedKey.getSimpleName();
+                                Class<?> embeddedVal = Class.forName(typeVal.getTypeName());
+                                String simpleClassNameVal = embeddedVal.getSimpleName();
+                                sb.append("Map.of(")
+                                        .append(getPrimitiveValue(
+                                                "Map<", simpleClassNameKey + ", " + simpleClassNameVal, 0))
+                                        .append(", ")
+                                        .append(getPrimitiveValue(
+                                                "Map<", simpleClassNameKey + ", " + simpleClassNameVal, 1))
+                                        .append(")");
+                            } catch (ClassNotFoundException e) {
+                                log.error("Unable to find embedded struct class: {}", pt.getActualTypeArguments(), e);
+                            }
+                        } else {
+                            log.warn("Unable to reflectively identify map-wrapped type: {}", generic.getTypeName());
                         }
+                    } else if (fieldType.getCanonicalName().startsWith("com.atlan.model.enums.")) {
+                        sb.append(getEnumValue(fieldType.getSimpleName(), count));
                     } else {
-                        log.warn("Unable to reflectively identify map-wrapped type: {}", generic.getTypeName());
+                        log.error("Type not yet handled for structs: {}", fieldType.getCanonicalName());
                     }
-                } else if (fieldType.getCanonicalName().startsWith("com.atlan.model.enums.")) {
-                    sb.append(getEnumValue(fieldType.getSimpleName(), count));
-                } else {
-                    log.error("Type not yet handled for structs: {}", fieldType.getCanonicalName());
+                    sb.append(")");
                 }
-                sb.append(")");
             }
             sb.append(".build()");
             return sb.toString();
@@ -448,35 +452,39 @@ public class AssetTestGenerator extends AssetGenerator {
             sb.append("{");
             for (Field field : fields) {
                 Class<?> fieldType = field.getType();
-                sb.append("\"").append(field.getName()).append("\": ");
-                if (isPrimitive(fieldType)) {
-                    sb.append(getRawPrimitiveValue(null, fieldType.getSimpleName(), count));
-                } else if (fieldType == List.class) {
-                    // Handle non-primitive fields
-                    Type generic = field.getGenericType();
-                    if (generic instanceof ParameterizedType) {
-                        ParameterizedType pt = (ParameterizedType) generic;
-                        Type type = pt.getActualTypeArguments()[0];
-                        try {
-                            Class<?> embedded = Class.forName(type.getTypeName());
-                            String simpleClassName = embedded.getSimpleName();
-                            sb.append("[")
-                                    .append(getRawPrimitiveValue("List<", simpleClassName, 0))
-                                    .append(", ")
-                                    .append(getRawPrimitiveValue("List<", simpleClassName, 1))
-                                    .append("]");
-                        } catch (ClassNotFoundException e) {
-                            log.error("Unable to find embedded struct class: {}", type.getTypeName(), e);
+                String fieldName = field.getName();
+                // Exclude the embedded type details for structs used for deserialization
+                if (!fieldName.equals("TYPE_NAME") && !fieldName.equals("typeName")) {
+                    sb.append("\"").append(fieldName).append("\": ");
+                    if (isPrimitive(fieldType)) {
+                        sb.append(getRawPrimitiveValue(null, fieldType.getSimpleName(), count));
+                    } else if (fieldType == List.class) {
+                        // Handle non-primitive fields
+                        Type generic = field.getGenericType();
+                        if (generic instanceof ParameterizedType) {
+                            ParameterizedType pt = (ParameterizedType) generic;
+                            Type type = pt.getActualTypeArguments()[0];
+                            try {
+                                Class<?> embedded = Class.forName(type.getTypeName());
+                                String simpleClassName = embedded.getSimpleName();
+                                sb.append("[")
+                                        .append(getRawPrimitiveValue("List<", simpleClassName, 0))
+                                        .append(", ")
+                                        .append(getRawPrimitiveValue("List<", simpleClassName, 1))
+                                        .append("]");
+                            } catch (ClassNotFoundException e) {
+                                log.error("Unable to find embedded struct class: {}", type.getTypeName(), e);
+                            }
+                        } else {
+                            log.warn("Unable to reflectively identify list-wrapped type: {}", generic.getTypeName());
                         }
+                    } else if (fieldType.getCanonicalName().startsWith("com.atlan.model.enums.")) {
+                        sb.append(getRawEnumValue(fieldType.getSimpleName(), count));
                     } else {
-                        log.warn("Unable to reflectively identify list-wrapped type: {}", generic.getTypeName());
+                        log.error("Type not yet handled for structs: {}", fieldType.getCanonicalName());
                     }
-                } else if (fieldType.getCanonicalName().startsWith("com.atlan.model.enums.")) {
-                    sb.append(getRawEnumValue(fieldType.getSimpleName(), count));
-                } else {
-                    log.error("Type not yet handled for structs: {}", fieldType.getCanonicalName());
+                    sb.append(", ");
                 }
-                sb.append(", ");
             }
             if (sb.length() > 1) {
                 sb.deleteCharAt(sb.length() - 2); // Remove the final comma-separator

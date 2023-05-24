@@ -17,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 @JsonSubTypes({
     @JsonSubTypes.Type(value = ReadmeTemplate.class, name = ReadmeTemplate.TYPE_NAME),
     @JsonSubTypes.Type(value = Readme.class, name = Readme.TYPE_NAME),
+    @JsonSubTypes.Type(value = File.class, name = File.TYPE_NAME),
     @JsonSubTypes.Type(value = Link.class, name = Link.TYPE_NAME),
 })
 @Slf4j

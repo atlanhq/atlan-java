@@ -203,7 +203,7 @@ public class AtlanGroup extends AtlanObject {
         /** Description of the group. */
         List<String> description;
 
-        /** TBC */
+        /** Whether this group should be auto-assigned to all new users (true) or not (false). */
         @Builder.Default
         List<String> isDefault = List.of("false");
 

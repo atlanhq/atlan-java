@@ -2,7 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.structs;
 
-import com.atlan.model.core.AtlanObject;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -15,7 +15,39 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
-public class SourceTagAttachment extends AtlanObject {
+public class SourceTagAttachment extends AtlanStruct {
+
+    public static final String TYPE_NAME = "SourceTagAttachment";
+
+    /** Fixed typeName for SourceTagAttachment. */
+    @JsonIgnore
+    @Getter(onMethod_ = {@Override})
+    @Builder.Default
+    String typeName = TYPE_NAME;
+
+    /** Name of the tag asset in Atlan. */
+    String sourceTagName;
+
+    /** Unique name of the tag asset in Atlan. */
+    String sourceTagQualifiedName;
+
+    /** Unique identifier of the tag asset in Atlan. */
+    String sourceTagGuid;
+
+    /** Name of the connector that is the source of the tag. */
+    String sourceTagConnectorName;
+
+    /** Value of the attached tag within the source system. */
+    List<SourceTagAttachmentValue> sourceTagValue;
+
+    /** Whether the tag has been synced with the source (true) or not (false). */
+    Boolean isSourceTagSynced;
+
+    /** Time at which the tag was sycned with the source. */
+    Long sourceTagSyncTimestamp;
+
+    /** Error message if the tag sync with the source failed. */
+    String sourceTagSyncError;
 
     /**
      * Quickly create a new SourceTagAttachment.
@@ -49,28 +81,4 @@ public class SourceTagAttachment extends AtlanObject {
                 .sourceTagSyncError(sourceTagSyncError)
                 .build();
     }
-
-    /** Name of the tag asset in Atlan. */
-    String sourceTagName;
-
-    /** Unique name of the tag asset in Atlan. */
-    String sourceTagQualifiedName;
-
-    /** Unique identifier of the tag asset in Atlan. */
-    String sourceTagGuid;
-
-    /** Name of the connector that is the source of the tag. */
-    String sourceTagConnectorName;
-
-    /** Value of the attached tag within the source system. */
-    List<SourceTagAttachmentValue> sourceTagValue;
-
-    /** Whether the tag has been synced with the source (true) or not (false). */
-    Boolean isSourceTagSynced;
-
-    /** Time at which the tag was sycned with the source. */
-    Long sourceTagSyncTimestamp;
-
-    /** Error message if the tag sync with the source failed. */
-    String sourceTagSyncError;
 }

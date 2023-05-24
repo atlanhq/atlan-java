@@ -2,7 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.structs;
 
-import com.atlan.model.core.AtlanObject;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
@@ -14,7 +14,21 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
-public class AzureTag extends AtlanObject {
+public class AzureTag extends AtlanStruct {
+
+    public static final String TYPE_NAME = "AzureTag";
+
+    /** Fixed typeName for AzureTag. */
+    @JsonIgnore
+    @Getter(onMethod_ = {@Override})
+    @Builder.Default
+    String typeName = TYPE_NAME;
+
+    /** Key of the Azure tag. */
+    String azureTagKey;
+
+    /** Value for the Azure tag. */
+    String azureTagValue;
 
     /**
      * Quickly create a new AzureTag.
@@ -28,10 +42,4 @@ public class AzureTag extends AtlanObject {
                 .azureTagValue(azureTagValue)
                 .build();
     }
-
-    /** Key of the Azure tag. */
-    String azureTagKey;
-
-    /** Value for the Azure tag. */
-    String azureTagValue;
 }

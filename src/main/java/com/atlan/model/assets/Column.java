@@ -225,6 +225,29 @@ public class Column extends SQL {
     @Singular
     List<ColumnValueFrequencyMap> columnTopValues;
 
+    /** View in which this column exists, or empty if the column instead exists in a table or materialized view. */
+    @Attribute
+    View view;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<Metric> dataQualityMetricDimensions;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<DbtModelColumn> dbtModelColumns;
+
+    /** Table in which this column exists, or empty if the column instead exists in a view or materialized view. */
+    @Attribute
+    Table table;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<DbtModelColumn> columnDbtModelColumns;
+
     /** Materialized view in which this column exists, or empty if the column instead exists in a table or view. */
     @Attribute
     @JsonProperty("materialisedView")
@@ -254,32 +277,9 @@ public class Column extends SQL {
     @Singular
     SortedSet<DbtMetric> dbtMetrics;
 
-    /** View in which this column exists, or empty if the column instead exists in a table or materialized view. */
-    @Attribute
-    View view;
-
     /** TBC */
     @Attribute
     TablePartition tablePartition;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<Metric> dataQualityMetricDimensions;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<DbtModelColumn> dbtModelColumns;
-
-    /** Table in which this column exists, or empty if the column instead exists in a view or materialized view. */
-    @Attribute
-    Table table;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<DbtModelColumn> columnDbtModelColumns;
 
     /**
      * Reference to a Column by GUID.

@@ -559,6 +559,11 @@ public abstract class Asset extends Reference {
     /** TBC */
     @Attribute
     @Singular
+    SortedSet<File> files;
+
+    /** TBC */
+    @Attribute
+    @Singular
     SortedSet<MCIncident> mcIncidents;
 
     /** Resources that are linked to this asset. */

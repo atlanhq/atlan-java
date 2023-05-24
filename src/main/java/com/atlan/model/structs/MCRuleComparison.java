@@ -2,7 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.structs;
 
-import com.atlan.model.core.AtlanObject;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
@@ -14,7 +14,33 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
-public class MCRuleComparison extends AtlanObject {
+public class MCRuleComparison extends AtlanStruct {
+
+    public static final String TYPE_NAME = "MCRuleComparison";
+
+    /** Fixed typeName for MCRuleComparison. */
+    @JsonIgnore
+    @Getter(onMethod_ = {@Override})
+    @Builder.Default
+    String typeName = TYPE_NAME;
+
+    /** Type of comparison, for example threshold. */
+    String mcRuleComparisonType;
+
+    /** Field being compared. */
+    String mcRuleComparisonField;
+
+    /** Metric being compared. */
+    String mcRuleComparisonMetric;
+
+    /** Operator used for the comparison, for example greater than (GT). */
+    String mcRuleComparisonOperator;
+
+    /** Threshold being compared. */
+    Double mcRuleComparisonThreshold;
+
+    /** Whether the threshold comparison is relative (true) or absolute (false). */
+    Boolean mcRuleComparisonIsThresholdRelative;
 
     /**
      * Quickly create a new MCRuleComparison.
@@ -42,22 +68,4 @@ public class MCRuleComparison extends AtlanObject {
                 .mcRuleComparisonIsThresholdRelative(mcRuleComparisonIsThresholdRelative)
                 .build();
     }
-
-    /** Type of comparison, for example threshold. */
-    String mcRuleComparisonType;
-
-    /** Field being compared. */
-    String mcRuleComparisonField;
-
-    /** Metric being compared. */
-    String mcRuleComparisonMetric;
-
-    /** Operator used for the comparison, for example greater than (GT). */
-    String mcRuleComparisonOperator;
-
-    /** Threshold being compared. */
-    Double mcRuleComparisonThreshold;
-
-    /** Whether the threshold comparison is relative (true) or absolute (false). */
-    Boolean mcRuleComparisonIsThresholdRelative;
 }
