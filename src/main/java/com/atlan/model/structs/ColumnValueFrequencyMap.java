@@ -24,6 +24,12 @@ public class ColumnValueFrequencyMap extends AtlanStruct {
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Value for the column. */
+    String columnValue;
+
+    /** Number of records that contain the value. */
+    Long columnValueFrequency;
+
     /**
      * Quickly create a new ColumnValueFrequencyMap.
      * @param columnValue Value for the column.
@@ -36,10 +42,4 @@ public class ColumnValueFrequencyMap extends AtlanStruct {
                 .columnValueFrequency(columnValueFrequency)
                 .build();
     }
-
-    /** Value for the column. */
-    String columnValue;
-
-    /** Number of records that contain the value. */
-    Long columnValueFrequency;
 }

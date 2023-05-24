@@ -24,6 +24,18 @@ public class MCRuleSchedule extends AtlanStruct {
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Type of schedule for the rule, for example dynamic or manual. */
+    String mcRuleScheduleType;
+
+    /** How often the monitor should run, in minutes. */
+    Integer mcRuleScheduleIntervalInMinutes;
+
+    /** When the first execution of the rule should occur (blank means immediate). */
+    Long mcRuleScheduleStartTime;
+
+    /** TBC */
+    String mcRuleScheduleCrontab;
+
     /**
      * Quickly create a new MCRuleSchedule.
      * @param mcRuleScheduleType Type of schedule for the rule, for example dynamic or manual.
@@ -44,16 +56,4 @@ public class MCRuleSchedule extends AtlanStruct {
                 .mcRuleScheduleCrontab(mcRuleScheduleCrontab)
                 .build();
     }
-
-    /** Type of schedule for the rule, for example dynamic or manual. */
-    String mcRuleScheduleType;
-
-    /** How often the monitor should run, in minutes. */
-    Integer mcRuleScheduleIntervalInMinutes;
-
-    /** When the first execution of the rule should occur (blank means immediate). */
-    Long mcRuleScheduleStartTime;
-
-    /** TBC */
-    String mcRuleScheduleCrontab;
 }

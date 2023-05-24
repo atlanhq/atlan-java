@@ -375,9 +375,9 @@ DbtSource,Instance of a dbt source asset in Atlan.,dbtState,
 DbtSource,Instance of a dbt source asset in Atlan.,dbtFreshnessCriteria,
 DbtSource,Instance of a dbt source asset in Atlan.,sqlAssets,
 DbtSource,Instance of a dbt source asset in Atlan.,sqlAsset,
-File,Static files,fileType,
-File,Static files,filePath,
-File,Static files,fileAssets,
+File,Instance of a file in Atlan.,fileType,
+File,Instance of a file in Atlan.,filePath,
+File,Instance of a file in Atlan.,fileAssets,
 Folder,Instance of a folder within a query collection in Atlan.,parentQualifiedName,
 Folder,Instance of a folder within a query collection in Atlan.,collectionQualifiedName,qualifiedName of the collection in which this folder exists.
 Folder,Instance of a folder within a query collection in Atlan.,parent,Namespace in which this folder exists.

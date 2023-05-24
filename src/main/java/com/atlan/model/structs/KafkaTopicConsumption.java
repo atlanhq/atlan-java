@@ -24,6 +24,18 @@ public class KafkaTopicConsumption extends AtlanStruct {
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Name of the Kafka topic. */
+    String topicName;
+
+    /** Partition of the Kafka topic. */
+    String topicPartition;
+
+    /** TBC */
+    Long topicLag;
+
+    /** TBC */
+    Long topicCurrentOffset;
+
     /**
      * Quickly create a new KafkaTopicConsumption.
      * @param topicName Name of the Kafka topic.
@@ -41,16 +53,4 @@ public class KafkaTopicConsumption extends AtlanStruct {
                 .topicCurrentOffset(topicCurrentOffset)
                 .build();
     }
-
-    /** Name of the Kafka topic. */
-    String topicName;
-
-    /** Partition of the Kafka topic. */
-    String topicPartition;
-
-    /** TBC */
-    Long topicLag;
-
-    /** TBC */
-    Long topicCurrentOffset;
 }

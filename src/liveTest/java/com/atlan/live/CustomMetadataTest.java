@@ -65,7 +65,10 @@ public class CustomMetadataTest extends AtlanLiveTest {
     private static GlossaryTerm term = null;
     private static AtlanGroup group1 = null;
     private static AtlanGroup group2 = null;
-    private static Badge badge = null;
+    private static Badge badge1 = null;
+    private static Badge badge2 = null;
+    private static Badge badge3 = null;
+    private static Badge badge4 = null;
     private static long removalEpoch;
 
     @Test(groups = {"cm.create.cm.ipr"})
@@ -259,20 +262,77 @@ public class CustomMetadataTest extends AtlanLiveTest {
 
     @Test(
             groups = {"cm.create.badges"},
-            dependsOnGroups = {"cm.create.cm.dq"})
+            dependsOnGroups = {"cm.create.cm.dq", "cm.create.cm.ipr"})
     void createBadges() throws AtlanException {
         Badge toCreate = Badge.creator(CM_ATTR_QUALITY_COUNT, CM_QUALITY, CM_ATTR_QUALITY_COUNT)
                 .userDescription("How many data quality checks ran against this asset.")
-                .badgeCondition(BadgeCondition.of(BadgeComparisonOperator.GTE, "5", BadgeConditionColor.GREEN))
-                .badgeCondition(BadgeCondition.of(BadgeComparisonOperator.LT, "5", BadgeConditionColor.YELLOW))
-                .badgeCondition(BadgeCondition.of(BadgeComparisonOperator.LTE, "2", BadgeConditionColor.RED))
+                .badgeCondition(BadgeCondition.of(BadgeComparisonOperator.GTE, 5, BadgeConditionColor.GREEN))
+                .badgeCondition(BadgeCondition.of(BadgeComparisonOperator.LT, 5, BadgeConditionColor.YELLOW))
+                .badgeCondition(BadgeCondition.of(BadgeComparisonOperator.LTE, 2, BadgeConditionColor.RED))
                 .build();
         AssetMutationResponse response = toCreate.upsert();
         assertNotNull(response);
         assertEquals(response.getCreatedAssets().size(), 1);
         assertTrue(response.getCreatedAssets().get(0) instanceof Badge);
-        badge = (Badge) response.getCreatedAssets().get(0);
-        assertNotNull(badge.getGuid());
+        badge1 = (Badge) response.getCreatedAssets().get(0);
+        assertNotNull(badge1.getGuid());
+        List<BadgeCondition> badgeConditions = badge1.getBadgeConditions();
+        assertEquals(badgeConditions.size(), 3);
+        assertEquals(badgeConditions.get(1).getBadgeConditionOperator(), BadgeComparisonOperator.LT);
+        assertEquals(badgeConditions.get(1).getBadgeConditionValue(), "5");
+        assertEquals(badgeConditions.get(1).getBadgeConditionColorhex(), BadgeConditionColor.YELLOW.getValue());
+
+        toCreate = Badge.creator(CM_ATTR_QUALITY_TYPE, CM_QUALITY, CM_ATTR_QUALITY_TYPE)
+                .userDescription("The type of quality checks used on this asset.")
+                .badgeCondition(BadgeCondition.of(BadgeComparisonOperator.EQ, "Completeness", "#001122"))
+                .badgeCondition(BadgeCondition.of(BadgeComparisonOperator.EQ, "Timeliness", "#ffeedd"))
+                .badgeCondition(BadgeCondition.of(BadgeComparisonOperator.EQ, "Accuracy", "#aabbcc"))
+                .badgeCondition(BadgeCondition.of(BadgeComparisonOperator.EQ, "Consistency", "#ccbbaa"))
+                .build();
+        response = toCreate.upsert();
+        assertNotNull(response);
+        assertEquals(response.getCreatedAssets().size(), 1);
+        assertTrue(response.getCreatedAssets().get(0) instanceof Badge);
+        badge2 = (Badge) response.getCreatedAssets().get(0);
+        assertNotNull(badge2.getGuid());
+        badgeConditions = badge2.getBadgeConditions();
+        assertEquals(badgeConditions.size(), 4);
+        assertEquals(badgeConditions.get(1).getBadgeConditionOperator(), BadgeComparisonOperator.EQ);
+        assertEquals(badgeConditions.get(1).getBadgeConditionValue(), "\"Timeliness\"");
+        assertEquals(badgeConditions.get(1).getBadgeConditionColorhex(), "#ffeedd");
+
+        toCreate = Badge.creator(CM_ATTR_IPR_LICENSE, CM_IPR, CM_ATTR_IPR_LICENSE)
+                .userDescription("License associated with this asset.")
+                .badgeCondition(BadgeCondition.of(BadgeComparisonOperator.EQ, "CC BY", BadgeConditionColor.GREEN))
+                .build();
+        response = toCreate.upsert();
+        assertNotNull(response);
+        assertEquals(response.getCreatedAssets().size(), 1);
+        assertTrue(response.getCreatedAssets().get(0) instanceof Badge);
+        badge3 = (Badge) response.getCreatedAssets().get(0);
+        assertNotNull(badge3.getGuid());
+        badgeConditions = badge3.getBadgeConditions();
+        assertEquals(badgeConditions.size(), 1);
+        assertEquals(badgeConditions.get(0).getBadgeConditionOperator(), BadgeComparisonOperator.EQ);
+        assertEquals(badgeConditions.get(0).getBadgeConditionValue(), "\"CC BY\"");
+        assertEquals(badgeConditions.get(0).getBadgeConditionColorhex(), BadgeConditionColor.GREEN.getValue());
+
+        toCreate = Badge.creator(CM_ATTR_IPR_MANDATORY, CM_IPR, CM_ATTR_IPR_MANDATORY)
+                .userDescription("Whether adherence to the associated license is mandatory or not.")
+                .badgeCondition(BadgeCondition.of(BadgeComparisonOperator.EQ, true, BadgeConditionColor.RED))
+                .badgeCondition(BadgeCondition.of(BadgeComparisonOperator.EQ, false, BadgeConditionColor.GREEN))
+                .build();
+        response = toCreate.upsert();
+        assertNotNull(response);
+        assertEquals(response.getCreatedAssets().size(), 1);
+        assertTrue(response.getCreatedAssets().get(0) instanceof Badge);
+        badge4 = (Badge) response.getCreatedAssets().get(0);
+        assertNotNull(badge4.getGuid());
+        badgeConditions = badge4.getBadgeConditions();
+        assertEquals(badgeConditions.size(), 2);
+        assertEquals(badgeConditions.get(1).getBadgeConditionOperator(), BadgeComparisonOperator.EQ);
+        assertEquals(badgeConditions.get(1).getBadgeConditionValue(), "false");
+        assertEquals(badgeConditions.get(1).getBadgeConditionColorhex(), BadgeConditionColor.GREEN.getValue());
     }
 
     @Test(groups = {"cm.create.term"})
@@ -794,7 +854,10 @@ public class CustomMetadataTest extends AtlanLiveTest {
             dependsOnGroups = {"cm.purge.term"},
             alwaysRun = true)
     void purgeBadges() throws AtlanException {
-        Badge.purge(badge.getGuid());
+        Badge.purge(badge1.getGuid());
+        Badge.purge(badge2.getGuid());
+        Badge.purge(badge3.getGuid());
+        Badge.purge(badge4.getGuid());
     }
 
     @Test(

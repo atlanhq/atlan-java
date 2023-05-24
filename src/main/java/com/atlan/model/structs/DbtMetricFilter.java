@@ -24,6 +24,18 @@ public class DbtMetricFilter extends AtlanStruct {
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Unique name of the column the metric filter applies to. */
+    String dbtMetricFilterColumnQualifiedName;
+
+    /** TBC */
+    String dbtMetricFilterField;
+
+    /** TBC */
+    String dbtMetricFilterOperator;
+
+    /** TBC */
+    String dbtMetricFilterValue;
+
     /**
      * Quickly create a new DbtMetricFilter.
      * @param dbtMetricFilterColumnQualifiedName Unique name of the column the metric filter applies to.
@@ -44,16 +56,4 @@ public class DbtMetricFilter extends AtlanStruct {
                 .dbtMetricFilterValue(dbtMetricFilterValue)
                 .build();
     }
-
-    /** Unique name of the column the metric filter applies to. */
-    String dbtMetricFilterColumnQualifiedName;
-
-    /** TBC */
-    String dbtMetricFilterField;
-
-    /** TBC */
-    String dbtMetricFilterOperator;
-
-    /** TBC */
-    String dbtMetricFilterValue;
 }

@@ -24,6 +24,12 @@ public class AzureTag extends AtlanStruct {
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Key of the Azure tag. */
+    String azureTagKey;
+
+    /** Value for the Azure tag. */
+    String azureTagValue;
+
     /**
      * Quickly create a new AzureTag.
      * @param azureTagKey Key of the Azure tag.
@@ -36,10 +42,4 @@ public class AzureTag extends AtlanStruct {
                 .azureTagValue(azureTagValue)
                 .build();
     }
-
-    /** Key of the Azure tag. */
-    String azureTagKey;
-
-    /** Value for the Azure tag. */
-    String azureTagValue;
 }

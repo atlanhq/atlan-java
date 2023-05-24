@@ -25,6 +25,12 @@ public class Histogram extends AtlanStruct {
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** TBC */
+    List<Double> boundaries;
+
+    /** TBC */
+    List<Double> frequencies;
+
     /**
      * Quickly create a new Histogram.
      * @param boundaries TBC
@@ -37,10 +43,4 @@ public class Histogram extends AtlanStruct {
                 .frequencies(frequencies)
                 .build();
     }
-
-    /** TBC */
-    List<Double> boundaries;
-
-    /** TBC */
-    List<Double> frequencies;
 }

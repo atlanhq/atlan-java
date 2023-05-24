@@ -24,6 +24,12 @@ public class SourceTagAttachmentValue extends AtlanStruct {
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Attachment key, for example "has_pii" or "type_pii". */
+    String tagAttachmentKey;
+
+    /** Attachment value, for example "true" or "email". */
+    String tagAttachmentValue;
+
     /**
      * Quickly create a new SourceTagAttachmentValue.
      * @param tagAttachmentKey Attachment key, for example "has_pii" or "type_pii".
@@ -36,10 +42,4 @@ public class SourceTagAttachmentValue extends AtlanStruct {
                 .tagAttachmentValue(tagAttachmentValue)
                 .build();
     }
-
-    /** Attachment key, for example "has_pii" or "type_pii". */
-    String tagAttachmentKey;
-
-    /** Attachment value, for example "true" or "email". */
-    String tagAttachmentValue;
 }

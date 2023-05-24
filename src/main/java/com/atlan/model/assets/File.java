@@ -17,7 +17,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Static files
+ * Instance of a file in Atlan.
  */
 @Getter
 @SuperBuilder(toBuilder = true)

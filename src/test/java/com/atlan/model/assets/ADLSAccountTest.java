@@ -4,6 +4,8 @@ package com.atlan.model.assets;
 
 import static org.testng.Assert.*;
 
+import com.atlan.model.core.Classification;
+import com.atlan.model.core.CustomMetadataAttributes;
 import com.atlan.model.enums.*;
 import com.atlan.model.structs.*;
 import com.atlan.serde.Serde;
@@ -39,7 +41,7 @@ public class ADLSAccountTest {
                             .confidence(100)
                             .build()))
             .qualifiedName("qualifiedName")
-            /*.classification(Classification.of("String0"))
+            .classification(Classification.of("String0"))
             .classification(Classification.builder()
                     .typeName("String1")
                     .propagate(false)
@@ -57,7 +59,7 @@ public class ADLSAccountTest {
                             // will always produce a Long
                             .attribute("String0", 789L)
                             .attribute("String1", "AnotherString")
-                            .build())*/
+                            .build())
             .name("String0")
             .displayName("String0")
             .description("String0")

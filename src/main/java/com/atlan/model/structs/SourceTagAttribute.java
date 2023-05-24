@@ -25,6 +25,15 @@ public class SourceTagAttribute extends AtlanStruct {
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Attribute key, for example "allowedValues" or "enabled". */
+    String tagAttributeKey;
+
+    /** Attribute value, for example ["Private", "PII"] for allowedValues, or "true" for enabled. */
+    String tagAttributeValue;
+
+    /** Properties associated with the attribute. */
+    Map<String, String> tagAttributeProperties;
+
     /**
      * Quickly create a new SourceTagAttribute.
      * @param tagAttributeKey Attribute key, for example "allowedValues" or "enabled".
@@ -40,13 +49,4 @@ public class SourceTagAttribute extends AtlanStruct {
                 .tagAttributeProperties(tagAttributeProperties)
                 .build();
     }
-
-    /** Attribute key, for example "allowedValues" or "enabled". */
-    String tagAttributeKey;
-
-    /** Attribute value, for example ["Private", "PII"] for allowedValues, or "true" for enabled. */
-    String tagAttributeValue;
-
-    /** Properties associated with the attribute. */
-    Map<String, String> tagAttributeProperties;
 }

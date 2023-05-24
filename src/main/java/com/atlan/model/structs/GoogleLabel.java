@@ -24,6 +24,12 @@ public class GoogleLabel extends AtlanStruct {
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Key of the Google label. */
+    String googleLabelKey;
+
+    /** Value for the Google label. */
+    String googleLabelValue;
+
     /**
      * Quickly create a new GoogleLabel.
      * @param googleLabelKey Key of the Google label.
@@ -36,10 +42,4 @@ public class GoogleLabel extends AtlanStruct {
                 .googleLabelValue(googleLabelValue)
                 .build();
     }
-
-    /** Key of the Google label. */
-    String googleLabelKey;
-
-    /** Value for the Google label. */
-    String googleLabelValue;
 }

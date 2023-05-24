@@ -24,6 +24,24 @@ public class MCRuleComparison extends AtlanStruct {
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Type of comparison, for example threshold. */
+    String mcRuleComparisonType;
+
+    /** Field being compared. */
+    String mcRuleComparisonField;
+
+    /** Metric being compared. */
+    String mcRuleComparisonMetric;
+
+    /** Operator used for the comparison, for example greater than (GT). */
+    String mcRuleComparisonOperator;
+
+    /** Threshold being compared. */
+    Double mcRuleComparisonThreshold;
+
+    /** Whether the threshold comparison is relative (true) or absolute (false). */
+    Boolean mcRuleComparisonIsThresholdRelative;
+
     /**
      * Quickly create a new MCRuleComparison.
      * @param mcRuleComparisonType Type of comparison, for example threshold.
@@ -50,22 +68,4 @@ public class MCRuleComparison extends AtlanStruct {
                 .mcRuleComparisonIsThresholdRelative(mcRuleComparisonIsThresholdRelative)
                 .build();
     }
-
-    /** Type of comparison, for example threshold. */
-    String mcRuleComparisonType;
-
-    /** Field being compared. */
-    String mcRuleComparisonField;
-
-    /** Metric being compared. */
-    String mcRuleComparisonMetric;
-
-    /** Operator used for the comparison, for example greater than (GT). */
-    String mcRuleComparisonOperator;
-
-    /** Threshold being compared. */
-    Double mcRuleComparisonThreshold;
-
-    /** Whether the threshold comparison is relative (true) or absolute (false). */
-    Boolean mcRuleComparisonIsThresholdRelative;
 }

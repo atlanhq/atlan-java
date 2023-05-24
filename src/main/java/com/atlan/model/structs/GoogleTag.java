@@ -24,6 +24,12 @@ public class GoogleTag extends AtlanStruct {
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Key of the Google tag. */
+    String googleTagKey;
+
+    /** Value for the Google tag. */
+    String googleTagValue;
+
     /**
      * Quickly create a new GoogleTag.
      * @param googleTagKey Key of the Google tag.
@@ -36,10 +42,4 @@ public class GoogleTag extends AtlanStruct {
                 .googleTagValue(googleTagValue)
                 .build();
     }
-
-    /** Key of the Google tag. */
-    String googleTagKey;
-
-    /** Value for the Google tag. */
-    String googleTagValue;
 }

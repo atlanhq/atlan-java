@@ -24,6 +24,12 @@ public class AwsTag extends AtlanStruct {
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Key of the AWS tag. */
+    String awsTagKey;
+
+    /** Value for the AWS tag. */
+    String awsTagValue;
+
     /**
      * Quickly create a new AwsTag.
      * @param awsTagKey Key of the AWS tag.
@@ -33,10 +39,4 @@ public class AwsTag extends AtlanStruct {
     public static AwsTag of(String awsTagKey, String awsTagValue) {
         return AwsTag.builder().awsTagKey(awsTagKey).awsTagValue(awsTagValue).build();
     }
-
-    /** Key of the AWS tag. */
-    String awsTagKey;
-
-    /** Value for the AWS tag. */
-    String awsTagValue;
 }
