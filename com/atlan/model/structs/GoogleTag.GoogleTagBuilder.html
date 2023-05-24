@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":6,"i2":10,"i3":10,"i4":6,"i5":10};
+var data = {"i0":10,"i1":6,"i2":10,"i3":10,"i4":6,"i5":10,"i6":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -126,7 +126,12 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li><a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in com.atlan.model.core">com.atlan.model.core.AtlanObject.AtlanObjectBuilder</a>&lt;C,&#8203;B&gt;</li>
 <li>
 <ul class="inheritance">
+<li><a href="AtlanStruct.AtlanStructBuilder.html" title="class in com.atlan.model.structs">com.atlan.model.structs.AtlanStruct.AtlanStructBuilder</a>&lt;C,&#8203;B&gt;</li>
+<li>
+<ul class="inheritance">
 <li>com.atlan.model.structs.GoogleTag.GoogleTagBuilder&lt;C,&#8203;B&gt;</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -141,7 +146,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dl>
 <hr>
 <pre>public abstract static class <span class="typeNameLabel">GoogleTag.GoogleTagBuilder&lt;C extends <a href="GoogleTag.html" title="class in com.atlan.model.structs">GoogleTag</a>,&#8203;B extends GoogleTag.GoogleTagBuilder&lt;C,&#8203;B&gt;&gt;</span>
-extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in com.atlan.model.core">AtlanObject.AtlanObjectBuilder</a>&lt;C,&#8203;B&gt;</pre>
+extends <a href="AtlanStruct.AtlanStructBuilder.html" title="class in com.atlan.model.structs">AtlanStruct.AtlanStructBuilder</a>&lt;C,&#8203;B&gt;</pre>
 </li>
 </ul>
 </div>
@@ -213,6 +218,11 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
+<tr id="i6" class="altColor">
+<td class="colFirst"><code><a href="GoogleTag.GoogleTagBuilder.html" title="type parameter in GoogleTag.GoogleTagBuilder">B</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#typeName(java.lang.String)">typeName</a></span>&#8203;(java.lang.String&nbsp;typeName)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
 </table>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
@@ -267,7 +277,7 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <pre class="methodSignature">protected&nbsp;<a href="GoogleTag.GoogleTagBuilder.html" title="type parameter in GoogleTag.GoogleTagBuilder">B</a>&nbsp;$fillValuesFrom&#8203;(<a href="GoogleTag.GoogleTagBuilder.html" title="type parameter in GoogleTag.GoogleTagBuilder">C</a>&nbsp;instance)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="../core/AtlanObject.AtlanObjectBuilder.html#$fillValuesFrom(C)">$fillValuesFrom</a></code>&nbsp;in class&nbsp;<code><a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in com.atlan.model.core">AtlanObject.AtlanObjectBuilder</a>&lt;<a href="GoogleTag.GoogleTagBuilder.html" title="type parameter in GoogleTag.GoogleTagBuilder">C</a> extends <a href="GoogleTag.html" title="class in com.atlan.model.structs">GoogleTag</a>,&#8203;<a href="GoogleTag.GoogleTagBuilder.html" title="type parameter in GoogleTag.GoogleTagBuilder">B</a> extends <a href="GoogleTag.GoogleTagBuilder.html" title="class in com.atlan.model.structs">GoogleTag.GoogleTagBuilder</a>&lt;<a href="GoogleTag.GoogleTagBuilder.html" title="type parameter in GoogleTag.GoogleTagBuilder">C</a>,&#8203;<a href="GoogleTag.GoogleTagBuilder.html" title="type parameter in GoogleTag.GoogleTagBuilder">B</a>&gt;&gt;</code></dd>
+<dd><code><a href="AtlanStruct.AtlanStructBuilder.html#$fillValuesFrom(C)">$fillValuesFrom</a></code>&nbsp;in class&nbsp;<code><a href="AtlanStruct.AtlanStructBuilder.html" title="class in com.atlan.model.structs">AtlanStruct.AtlanStructBuilder</a>&lt;<a href="GoogleTag.GoogleTagBuilder.html" title="type parameter in GoogleTag.GoogleTagBuilder">C</a> extends <a href="GoogleTag.html" title="class in com.atlan.model.structs">GoogleTag</a>,&#8203;<a href="GoogleTag.GoogleTagBuilder.html" title="type parameter in GoogleTag.GoogleTagBuilder">B</a> extends <a href="GoogleTag.GoogleTagBuilder.html" title="class in com.atlan.model.structs">GoogleTag.GoogleTagBuilder</a>&lt;<a href="GoogleTag.GoogleTagBuilder.html" title="type parameter in GoogleTag.GoogleTagBuilder">C</a>,&#8203;<a href="GoogleTag.GoogleTagBuilder.html" title="type parameter in GoogleTag.GoogleTagBuilder">B</a>&gt;&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -280,7 +290,7 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <pre class="methodSignature">protected abstract&nbsp;<a href="GoogleTag.GoogleTagBuilder.html" title="type parameter in GoogleTag.GoogleTagBuilder">B</a>&nbsp;self()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../core/AtlanObject.AtlanObjectBuilder.html#self()">self</a></code>&nbsp;in class&nbsp;<code><a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in com.atlan.model.core">AtlanObject.AtlanObjectBuilder</a>&lt;<a href="GoogleTag.GoogleTagBuilder.html" title="type parameter in GoogleTag.GoogleTagBuilder">C</a> extends <a href="GoogleTag.html" title="class in com.atlan.model.structs">GoogleTag</a>,&#8203;<a href="GoogleTag.GoogleTagBuilder.html" title="type parameter in GoogleTag.GoogleTagBuilder">B</a> extends <a href="GoogleTag.GoogleTagBuilder.html" title="class in com.atlan.model.structs">GoogleTag.GoogleTagBuilder</a>&lt;<a href="GoogleTag.GoogleTagBuilder.html" title="type parameter in GoogleTag.GoogleTagBuilder">C</a>,&#8203;<a href="GoogleTag.GoogleTagBuilder.html" title="type parameter in GoogleTag.GoogleTagBuilder">B</a>&gt;&gt;</code></dd>
+<dd><code><a href="AtlanStruct.AtlanStructBuilder.html#self()">self</a></code>&nbsp;in class&nbsp;<code><a href="AtlanStruct.AtlanStructBuilder.html" title="class in com.atlan.model.structs">AtlanStruct.AtlanStructBuilder</a>&lt;<a href="GoogleTag.GoogleTagBuilder.html" title="type parameter in GoogleTag.GoogleTagBuilder">C</a> extends <a href="GoogleTag.html" title="class in com.atlan.model.structs">GoogleTag</a>,&#8203;<a href="GoogleTag.GoogleTagBuilder.html" title="type parameter in GoogleTag.GoogleTagBuilder">B</a> extends <a href="GoogleTag.GoogleTagBuilder.html" title="class in com.atlan.model.structs">GoogleTag.GoogleTagBuilder</a>&lt;<a href="GoogleTag.GoogleTagBuilder.html" title="type parameter in GoogleTag.GoogleTagBuilder">C</a>,&#8203;<a href="GoogleTag.GoogleTagBuilder.html" title="type parameter in GoogleTag.GoogleTagBuilder">B</a>&gt;&gt;</code></dd>
 </dl>
 </li>
 </ul>
@@ -293,7 +303,22 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <pre class="methodSignature">public abstract&nbsp;<a href="GoogleTag.GoogleTagBuilder.html" title="type parameter in GoogleTag.GoogleTagBuilder">C</a>&nbsp;build()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../core/AtlanObject.AtlanObjectBuilder.html#build()">build</a></code>&nbsp;in class&nbsp;<code><a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in com.atlan.model.core">AtlanObject.AtlanObjectBuilder</a>&lt;<a href="GoogleTag.GoogleTagBuilder.html" title="type parameter in GoogleTag.GoogleTagBuilder">C</a> extends <a href="GoogleTag.html" title="class in com.atlan.model.structs">GoogleTag</a>,&#8203;<a href="GoogleTag.GoogleTagBuilder.html" title="type parameter in GoogleTag.GoogleTagBuilder">B</a> extends <a href="GoogleTag.GoogleTagBuilder.html" title="class in com.atlan.model.structs">GoogleTag.GoogleTagBuilder</a>&lt;<a href="GoogleTag.GoogleTagBuilder.html" title="type parameter in GoogleTag.GoogleTagBuilder">C</a>,&#8203;<a href="GoogleTag.GoogleTagBuilder.html" title="type parameter in GoogleTag.GoogleTagBuilder">B</a>&gt;&gt;</code></dd>
+<dd><code><a href="AtlanStruct.AtlanStructBuilder.html#build()">build</a></code>&nbsp;in class&nbsp;<code><a href="AtlanStruct.AtlanStructBuilder.html" title="class in com.atlan.model.structs">AtlanStruct.AtlanStructBuilder</a>&lt;<a href="GoogleTag.GoogleTagBuilder.html" title="type parameter in GoogleTag.GoogleTagBuilder">C</a> extends <a href="GoogleTag.html" title="class in com.atlan.model.structs">GoogleTag</a>,&#8203;<a href="GoogleTag.GoogleTagBuilder.html" title="type parameter in GoogleTag.GoogleTagBuilder">B</a> extends <a href="GoogleTag.GoogleTagBuilder.html" title="class in com.atlan.model.structs">GoogleTag.GoogleTagBuilder</a>&lt;<a href="GoogleTag.GoogleTagBuilder.html" title="type parameter in GoogleTag.GoogleTagBuilder">C</a>,&#8203;<a href="GoogleTag.GoogleTagBuilder.html" title="type parameter in GoogleTag.GoogleTagBuilder">B</a>&gt;&gt;</code></dd>
+</dl>
+</li>
+</ul>
+<a id="typeName(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>typeName</h4>
+<pre class="methodSignature">public&nbsp;<a href="GoogleTag.GoogleTagBuilder.html" title="type parameter in GoogleTag.GoogleTagBuilder">B</a>&nbsp;typeName&#8203;(java.lang.String&nbsp;typeName)</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
+<dd><code><a href="AtlanStruct.AtlanStructBuilder.html#typeName(java.lang.String)">typeName</a></code>&nbsp;in class&nbsp;<code><a href="AtlanStruct.AtlanStructBuilder.html" title="class in com.atlan.model.structs">AtlanStruct.AtlanStructBuilder</a>&lt;<a href="GoogleTag.GoogleTagBuilder.html" title="type parameter in GoogleTag.GoogleTagBuilder">C</a> extends <a href="GoogleTag.html" title="class in com.atlan.model.structs">GoogleTag</a>,&#8203;<a href="GoogleTag.GoogleTagBuilder.html" title="type parameter in GoogleTag.GoogleTagBuilder">B</a> extends <a href="GoogleTag.GoogleTagBuilder.html" title="class in com.atlan.model.structs">GoogleTag.GoogleTagBuilder</a>&lt;<a href="GoogleTag.GoogleTagBuilder.html" title="type parameter in GoogleTag.GoogleTagBuilder">C</a>,&#8203;<a href="GoogleTag.GoogleTagBuilder.html" title="type parameter in GoogleTag.GoogleTagBuilder">B</a>&gt;&gt;</code></dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
 </dl>
 </li>
 </ul>
@@ -332,7 +357,7 @@ extends <a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in co
 <pre class="methodSignature">public&nbsp;java.lang.String&nbsp;toString()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="../core/AtlanObject.AtlanObjectBuilder.html#toString()">toString</a></code>&nbsp;in class&nbsp;<code><a href="../core/AtlanObject.AtlanObjectBuilder.html" title="class in com.atlan.model.core">AtlanObject.AtlanObjectBuilder</a>&lt;<a href="GoogleTag.GoogleTagBuilder.html" title="type parameter in GoogleTag.GoogleTagBuilder">C</a> extends <a href="GoogleTag.html" title="class in com.atlan.model.structs">GoogleTag</a>,&#8203;<a href="GoogleTag.GoogleTagBuilder.html" title="type parameter in GoogleTag.GoogleTagBuilder">B</a> extends <a href="GoogleTag.GoogleTagBuilder.html" title="class in com.atlan.model.structs">GoogleTag.GoogleTagBuilder</a>&lt;<a href="GoogleTag.GoogleTagBuilder.html" title="type parameter in GoogleTag.GoogleTagBuilder">C</a>,&#8203;<a href="GoogleTag.GoogleTagBuilder.html" title="type parameter in GoogleTag.GoogleTagBuilder">B</a>&gt;&gt;</code></dd>
+<dd><code><a href="AtlanStruct.AtlanStructBuilder.html#toString()">toString</a></code>&nbsp;in class&nbsp;<code><a href="AtlanStruct.AtlanStructBuilder.html" title="class in com.atlan.model.structs">AtlanStruct.AtlanStructBuilder</a>&lt;<a href="GoogleTag.GoogleTagBuilder.html" title="type parameter in GoogleTag.GoogleTagBuilder">C</a> extends <a href="GoogleTag.html" title="class in com.atlan.model.structs">GoogleTag</a>,&#8203;<a href="GoogleTag.GoogleTagBuilder.html" title="type parameter in GoogleTag.GoogleTagBuilder">B</a> extends <a href="GoogleTag.GoogleTagBuilder.html" title="class in com.atlan.model.structs">GoogleTag.GoogleTagBuilder</a>&lt;<a href="GoogleTag.GoogleTagBuilder.html" title="type parameter in GoogleTag.GoogleTagBuilder">C</a>,&#8203;<a href="GoogleTag.GoogleTagBuilder.html" title="type parameter in GoogleTag.GoogleTagBuilder">B</a>&gt;&gt;</code></dd>
 </dl>
 </li>
 </ul>
