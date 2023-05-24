@@ -4,14 +4,11 @@ package com.atlan.model.packages;
 
 import com.atlan.cache.RoleCache;
 import com.atlan.exception.AtlanException;
-import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.admin.PackageParameter;
 import com.atlan.model.assets.Connection;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.workflow.*;
-import com.atlan.serde.Serde;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -43,10 +40,10 @@ public class DbtCrawler extends AbstractCrawler {
      * @param adminRoles the GUIDs of the roles that can administer this connection
      * @param adminGroups the names of the groups that can administer this connection
      * @param adminUsers the names of the users that can administer this connection
-     * @param includeAssets which assets to include when crawling (when null: all). The map should be keyed
-     *                      by dbt Cloud account ID, with the list of values being project IDs.
-     * @param excludeAssets which assets to exclude when crawling (when null: none). The map should be keyed
-     *                      by dbt Cloud account ID, with the list of values being project IDs.
+     * @param includeAssets which assets to include when crawling (when null: all). Should be a string representation
+     *                      of the map of assets to include.
+     * @param excludeAssets which assets to exclude when crawling (when null: none). Should be a string representation
+     *                      of the map of assets to exclude.
      * @param limitToConnection qualifiedName of a connection to which to limit the crawling
      * @return the minimal workflow necessary to crawl dbt
      * @throws InvalidRequestException if there is no administrator specified for the connection, or the provided filters cannot be serialized to JSON
@@ -59,8 +56,8 @@ public class DbtCrawler extends AbstractCrawler {
             List<String> adminRoles,
             List<String> adminGroups,
             List<String> adminUsers,
-            Map<String, List<String>> includeAssets,
-            Map<String, List<String>> excludeAssets,
+            String includeAssets,
+            String excludeAssets,
             String limitToConnection)
             throws AtlanException {
 
@@ -87,24 +84,14 @@ public class DbtCrawler extends AbstractCrawler {
         credentialBody.put("extra", Collections.emptyMap());
         credentialBody.put("connectorConfigName", "atlan-connectors-dbt");
 
-        Map<String, Map<String, Map<String, String>>> toInclude = buildDbtCloudFilter(includeAssets);
-        Map<String, Map<String, Map<String, String>>> toExclude = buildDbtCloudFilter(excludeAssets);
-
         WorkflowParameters.WorkflowParametersBuilder<?, ?> argsBuilder = WorkflowParameters.builder()
                 .parameter(NameValuePair.of("connection", connection.toJson()))
                 .parameter(NameValuePair.of("extraction-method", "api"))
                 .parameter(NameValuePair.of("deployment-type", "multi"))
                 .parameter(NameValuePair.of("core-extraction-method", "s3"))
-                .parameter(NameValuePair.of("api-credential-guid", "{{credentialGuid}}"));
-        try {
-            argsBuilder = argsBuilder.parameter(
-                    NameValuePair.of("include-filter", Serde.allInclusiveMapper.writeValueAsString(toInclude)));
-            argsBuilder = argsBuilder.parameter(
-                    NameValuePair.of("exclude-filter", Serde.allInclusiveMapper.writeValueAsString(toExclude)));
-        } catch (JsonProcessingException e) {
-            throw new InvalidRequestException(ErrorCode.UNABLE_TO_TRANSLATE_FILTERS, e);
-        }
-        argsBuilder = argsBuilder
+                .parameter(NameValuePair.of("api-credential-guid", "{{credentialGuid}}"))
+                .parameter(NameValuePair.of("include-filter", includeAssets))
+                .parameter(NameValuePair.of("exclude-filter", excludeAssets))
                 .parameter(NameValuePair.of("include-filter-core", "*"))
                 .parameter(NameValuePair.of("exclude-filter-core", "*"));
         if (limitToConnection != null && limitToConnection.length() > 0) {
