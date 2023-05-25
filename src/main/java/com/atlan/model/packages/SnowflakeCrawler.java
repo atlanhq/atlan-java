@@ -126,46 +126,22 @@ public class SnowflakeCrawler extends AbstractCrawler {
         Map<String, List<String>> toExclude = buildHierarchicalFilter(excludeAssets);
 
         WorkflowParameters.WorkflowParametersBuilder<?, ?> argsBuilder = WorkflowParameters.builder()
-                .parameter(NameValuePair.builder()
-                        .name("credential-guid")
-                        .value("{{credentialGuid}}")
-                        .build())
-                .parameter(NameValuePair.builder()
-                        .name("extract-strategy")
-                        .value("information-schema")
-                        .build())
-                .parameter(NameValuePair.builder()
-                        .name("account-usage-database-name")
-                        .value("SNOWFLAKE")
-                        .build())
-                .parameter(NameValuePair.builder()
-                        .name("account-usage-schema-name")
-                        .value("ACCOUNT_USAGE")
-                        .build())
-                .parameter(NameValuePair.builder()
-                        .name("control-config-strategy")
-                        .value("default")
-                        .build())
-                .parameter(NameValuePair.builder()
-                        .name("enable-lineage")
-                        .value(true)
-                        .build())
-                .parameter(NameValuePair.builder()
-                        .name("connection")
-                        .value(connection.toJson())
-                        .build());
+                .parameter(NameValuePair.of("credential-guid", "{{credentialGuid}}"))
+                .parameter(NameValuePair.of("extract-strategy", "information-schema"))
+                .parameter(NameValuePair.of("account-usage-database-name", "SNOWFLAKE"))
+                .parameter(NameValuePair.of("account-usage-schema-name", "ACCOUNT_USAGE"))
+                .parameter(NameValuePair.of("control-config-strategy", "default"))
+                .parameter(NameValuePair.of("enable-lineage", true))
+                .parameter(NameValuePair.of("enable-snowflake-tags", false))
+                .parameter(NameValuePair.of("connection", connection.toJson()));
         try {
             if (!toInclude.isEmpty()) {
-                argsBuilder = argsBuilder.parameter(NameValuePair.builder()
-                        .name("include-filter")
-                        .value(Serde.allInclusiveMapper.writeValueAsString(toInclude))
-                        .build());
+                argsBuilder = argsBuilder.parameter(
+                        NameValuePair.of("include-filter", Serde.allInclusiveMapper.writeValueAsString(toInclude)));
             }
             if (!toExclude.isEmpty()) {
-                argsBuilder = argsBuilder.parameter(NameValuePair.builder()
-                        .name("exclude-filter")
-                        .value(Serde.allInclusiveMapper.writeValueAsString(toExclude))
-                        .build());
+                argsBuilder = argsBuilder.parameter(
+                        NameValuePair.of("exclude-filter", Serde.allInclusiveMapper.writeValueAsString(toExclude)));
             }
         } catch (JsonProcessingException e) {
             throw new InvalidRequestException(ErrorCode.UNABLE_TO_TRANSLATE_FILTERS, e);
