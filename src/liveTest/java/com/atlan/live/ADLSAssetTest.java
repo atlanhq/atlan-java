@@ -29,7 +29,7 @@ import org.testng.annotations.Test;
 @Slf4j
 public class ADLSAssetTest extends AtlanLiveTest {
 
-    private static final String PREFIX = AtlanLiveTest.PREFIX + "ADLS";
+    private static final String PREFIX = makeUnique("ADLS");
 
     public static final AtlanConnectorType CONNECTOR_TYPE = AtlanConnectorType.ADLS;
     public static final String CONNECTION_NAME = PREFIX;

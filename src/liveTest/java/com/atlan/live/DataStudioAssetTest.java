@@ -27,7 +27,7 @@ import org.testng.annotations.Test;
 @Slf4j
 public class DataStudioAssetTest extends AtlanLiveTest {
 
-    private static final String PREFIX = AtlanLiveTest.PREFIX + "DataStudio";
+    private static final String PREFIX = makeUnique("DataStudio");
 
     public static final AtlanConnectorType CONNECTOR_TYPE = AtlanConnectorType.DATASTUDIO;
     public static final String CONNECTION_NAME = PREFIX;

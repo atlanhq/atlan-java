@@ -28,16 +28,16 @@ import org.testng.annotations.Test;
 @Slf4j
 public class CustomMetadataTest extends AtlanLiveTest {
 
-    private static final String PREFIX = AtlanLiveTest.PREFIX + "CM";
+    private static final String PREFIX = makeUnique("CM");
 
     // TODO: This cannot be dynamic because a user must first be verified
     //  before they can be linked — so we must use a hard-coded value for
     //  a username that we know is verified and active in the environment
     public static final String FIXED_USER = "chris";
 
-    private static final String CM_RACI = AtlanLiveTest.PREFIX + "RACI";
-    private static final String CM_IPR = AtlanLiveTest.PREFIX + "IPR";
-    private static final String CM_QUALITY = AtlanLiveTest.PREFIX + "DQ";
+    private static final String CM_RACI = makeUnique("RACI");
+    private static final String CM_IPR = makeUnique("IPR");
+    private static final String CM_QUALITY = makeUnique("DQ");
 
     private static final String CM_ATTR_RACI_RESPONSIBLE = "Responsible"; // user
     private static final String CM_ATTR_RACI_ACCOUNTABLE = "Accountable"; // user
@@ -54,7 +54,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
     private static final String CM_ATTR_QUALITY_COUNT = "Count"; // integer
     private static final String CM_ATTR_QUALITY_SQL = "SQL"; // sql
     private static final String CM_ATTR_QUALITY_TYPE = "Type"; // options
-    private static final String CM_ENUM_DQ_TYPE = AtlanLiveTest.PREFIX.replace("-", "_") + "DataQualityType";
+    private static final String CM_ENUM_DQ_TYPE = makeUnique("DataQualityType");
     private static final List<String> DQ_TYPE_LIST =
             List.of("Accuracy", "Completeness", "Consistency", "Timeliness", "Validity", "Uniqueness");
 

@@ -20,7 +20,7 @@ import org.testng.annotations.Test;
  */
 public class AdminTest extends AtlanLiveTest {
 
-    private static final String PREFIX = AtlanLiveTest.PREFIX + "Admin";
+    private static final String PREFIX = makeUnique("Admin");
     private static final String GROUP_NAME1 = PREFIX + "1";
     private static final String GROUP_NAME2 = PREFIX + "2";
 
@@ -221,7 +221,7 @@ public class AdminTest extends AtlanLiveTest {
         assertNotNull(one);
         assertEquals(one.getId(), user1.getId());
         assertEquals(one.getGroupCount().longValue(), 1 + defaultGroupCount);
-        AtlanUser guest = AtlanUser.retrieveByUsername("jsdk-admin1");
+        AtlanUser guest = AtlanUser.retrieveByUsername(GROUP_NAME1.toLowerCase());
         assertEquals(guest, one);
     }
 

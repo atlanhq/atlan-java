@@ -9,13 +9,21 @@ import com.atlan.model.assets.Asset;
 import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
+import com.aventrix.jnanoid.jnanoid.NanoIdUtils;
+import java.util.Random;
 
 /**
  * Base class with utility methods and constants for live (integration) tests.
  */
 public abstract class AtlanLiveTest {
 
-    protected static final String PREFIX = "jsdk-";
+    private static final char[] ALPHABET = {
+        '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l',
+        'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H',
+        'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
+    };
+    private static final String NANO_ID = NanoIdUtils.randomNanoId(new Random(), ALPHABET, 5);
+    private static final String PREFIX = "jsdk_";
 
     private static final String TESTING_STRING = "Automated testing of the Java SDK.";
 
@@ -32,6 +40,10 @@ public abstract class AtlanLiveTest {
         Atlan.setApiToken(System.getenv("ATLAN_API_KEY"));
         Atlan.setBaseUrl(System.getenv("ATLAN_BASE_URL"));
         Atlan.setMaxNetworkRetries(20);
+    }
+
+    protected static String makeUnique(String input) {
+        return PREFIX + input + "_" + NANO_ID;
     }
 
     /**

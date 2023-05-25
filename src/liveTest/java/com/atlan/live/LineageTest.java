@@ -32,7 +32,7 @@ import org.testng.annotations.Test;
 @Slf4j
 public class LineageTest extends AtlanLiveTest {
 
-    private static final String PREFIX = AtlanLiveTest.PREFIX + "Lineage";
+    private static final String PREFIX = makeUnique("Lineage");
 
     public static final AtlanConnectorType CONNECTOR_TYPE = AtlanConnectorType.VERTICA;
     public static final String CONNECTION_NAME = PREFIX;
