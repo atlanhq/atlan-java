@@ -22,7 +22,7 @@ public abstract class Atlan {
     public static final int DEFAULT_CONNECT_TIMEOUT = 30 * 1000;
     public static final int DEFAULT_READ_TIMEOUT = 80 * 1000;
 
-    public static final String VERSION = "0.6.0-SNAPSHOT";
+    public static final String VERSION = "0.6.0";
 
     public static volatile String clientId;
     public static volatile boolean enableTelemetry = true;
