@@ -29,15 +29,15 @@ import org.testng.annotations.Test;
 @Slf4j
 public class S3AssetTest extends AtlanLiveTest {
 
-    private static final String PREFIX = AtlanLiveTest.PREFIX + "S3";
+    private static final String PREFIX = makeUnique("S3");
 
     public static final AtlanConnectorType CONNECTOR_TYPE = AtlanConnectorType.S3;
     public static final String CONNECTION_NAME = PREFIX;
 
-    private static final String BUCKET_NAME = "mybucket";
-    private static final String BUCKET_ARN = AtlanLiveTest.PREFIX + "arn:aws:s3:::mybucket";
-    private static final String OBJECT_NAME = "myobject.csv";
-    private static final String OBJECT_ARN = AtlanLiveTest.PREFIX + "arn:aws:s3:::mybucket/prefix/myobject.csv";
+    private static final String BUCKET_NAME = makeUnique("mybucket");
+    private static final String BUCKET_ARN = "arn:aws:s3:::" + BUCKET_NAME;
+    private static final String OBJECT_NAME = makeUnique("myobject") + ".csv";
+    private static final String OBJECT_ARN = "arn:aws:s3:::" + BUCKET_NAME + "/prefix/" + OBJECT_NAME;
 
     private static Connection connection = null;
     private static S3Bucket bucket = null;

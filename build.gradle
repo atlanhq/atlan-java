@@ -96,6 +96,7 @@ dependencies {
     api group: "co.elastic.clients", name: "elasticsearch-java", version: "8.5.1"
     numaflow group: "io.numaproj.numaflow", name: "numaflow-java", version: "+"
     numaflow "io.netty:netty-transport-native-epoll:4.1.79.Final:linux-x86_64"
+    testImplementation group: 'com.aventrix.jnanoid', name: 'jnanoid', version: '2.0.0'
     testImplementation group: 'org.freemarker', name: 'freemarker', version: '2.3.32'
     testImplementation group: 'org.testng', name: 'testng', version: '7.7.0'
     testImplementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.11'
@@ -157,6 +158,7 @@ testing {
             }
             dependencies {
                 implementation project
+                implementation group: 'com.aventrix.jnanoid', name: 'jnanoid', version: '2.0.0'
                 implementation group: 'org.testng', name: 'testng', version: '7.7.0'
                 implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.11'
             }

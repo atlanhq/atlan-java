@@ -32,7 +32,7 @@ import org.testng.annotations.Test;
 @Slf4j
 public class SQLAssetTest extends AtlanLiveTest {
 
-    private static final String PREFIX = AtlanLiveTest.PREFIX + "SQL";
+    private static final String PREFIX = makeUnique("SQL");
 
     public static final AtlanConnectorType CONNECTOR_TYPE = AtlanConnectorType.CLICKHOUSE;
     public static final String CONNECTION_NAME = PREFIX;

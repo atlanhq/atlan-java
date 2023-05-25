@@ -24,7 +24,7 @@ import org.testng.annotations.Test;
 @Slf4j
 public class APIAssetTest extends AtlanLiveTest {
 
-    private static final String PREFIX = AtlanLiveTest.PREFIX + "API";
+    private static final String PREFIX = makeUnique("API");
 
     public static final AtlanConnectorType CONNECTOR_TYPE = AtlanConnectorType.API;
     public static final String CONNECTION_NAME = PREFIX;
