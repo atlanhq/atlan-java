@@ -41,4 +41,15 @@ public class QueryParserRequest extends AtlanObject {
     /** TBC */
     @Builder.Default
     Boolean ignoreCoordinate = true;
+
+    /**
+     * Builds the minimal object necessary to parse a query.
+     *
+     * @param sql the SQL code to parse
+     * @param source type of data store for the SQL code
+     * @return the minimal request necessary to parse a query, as a builder
+     */
+    public static QueryParserRequestBuilder<?, ?> creator(String sql, QueryParserSourceType source) {
+        return QueryParserRequest.builder().sql(sql).source(source);
+    }
 }
