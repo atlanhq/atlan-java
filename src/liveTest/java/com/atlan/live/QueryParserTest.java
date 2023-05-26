@@ -18,10 +18,9 @@ public class QueryParserTest extends AtlanLiveTest {
 
     @Test(groups = {"query.parse.valid"})
     void parseValidQuery() throws AtlanException {
-        QueryParserRequest request = QueryParserRequest.builder()
-                .sql(
-                        "INSERT INTO orders (order_name, customer_id, product_id) VALUES(SELECT 'test_order', id, 21 FROM customers)")
-                .source(QueryParserSourceType.SNOWFLAKE)
+        QueryParserRequest request = QueryParserRequest.creator(
+                        "INSERT INTO orders (order_name, customer_id, product_id) VALUES(SELECT 'test_order', id, 21 FROM customers)",
+                        QueryParserSourceType.SNOWFLAKE)
                 .defaultDatabase("ORDERS")
                 .defaultSchema("PRODUCTION")
                 .build();
@@ -34,10 +33,9 @@ public class QueryParserTest extends AtlanLiveTest {
 
     @Test(groups = {"query.parse.invalid"})
     void parseInvalidQuery() throws AtlanException {
-        QueryParserRequest request = QueryParserRequest.builder()
-                .sql(
-                        "INSERT INTO orders (order_name, customer_id, product_id) VALUES(SELECT 'test_order', id, 21 FROM customers) with some extra")
-                .source(QueryParserSourceType.SNOWFLAKE)
+        QueryParserRequest request = QueryParserRequest.creator(
+                        "INSERT INTO orders (order_name, customer_id, product_id) VALUES(SELECT 'test_order', id, 21 FROM customers) with some extra",
+                        QueryParserSourceType.SNOWFLAKE)
                 .defaultDatabase("ORDERS")
                 .defaultSchema("PRODUCTION")
                 .build();
