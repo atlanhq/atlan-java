@@ -1311,7 +1311,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertNotNull(response);
 
         int count = 0;
-        while (response.getCount() < 29L && count < Atlan.getMaxNetworkRetries()) {
+        while (response.getCount() < 33L && count < Atlan.getMaxNetworkRetries()) {
             Thread.sleep(HttpClient.waitTime(count).toMillis());
             response = request.search();
             count++;
@@ -1333,7 +1333,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertNotNull(response);
 
         int count = 0;
-        while (response.getCount() < 29L && count < Atlan.getMaxNetworkRetries()) {
+        while (response.getCount() < 33L && count < Atlan.getMaxNetworkRetries()) {
             Thread.sleep(HttpClient.waitTime(count).toMillis());
             response = request.search();
             count++;

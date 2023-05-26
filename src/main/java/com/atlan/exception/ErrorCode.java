@@ -186,6 +186,11 @@ public enum ErrorCode implements ExceptionMessageSet {
             "ATLAN-JAVA-400-033",
             "No displayName was provided when attempting to update the API token.",
             "You must provide a displayName for the API token when attempting to update it."),
+    INVALID_LINEAGE_DIRECTION(
+            400,
+            "ATLAN-JAVA-400-034",
+            "Can only request upstream or downstream lineage (not both) through the lineage list API.",
+            "Change your provided 'direction' parameter to either upstream or downstream."),
 
     AUTHENTICATION_PASSTHROUGH(
             401,
