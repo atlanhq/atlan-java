@@ -811,23 +811,39 @@ public class CustomMetadataTest extends AtlanLiveTest {
     @Test(
             groups = {"cm.read.term.audit"},
             dependsOnGroups = {"cm.update.term.remove.cm"})
-    void readTermAuditByGuid() throws AtlanException {
+    void readTermAuditByGuid() throws AtlanException, InterruptedException {
         AuditSearchRequest request =
                 AuditSearchRequest.byGuid(term.getGuid(), 40).build();
         AuditSearchResponse response = request.search();
         assertNotNull(response);
+
+        int count = 0;
+        while (response.getCount() < 13L && count < Atlan.getMaxNetworkRetries()) {
+            Thread.sleep(HttpClient.waitTime(count).toMillis());
+            response = request.search();
+            count++;
+        }
+
         validateAudits(response.getEntityAudits());
     }
 
     @Test(
             groups = {"cm.read.term.audit"},
             dependsOnGroups = {"cm.update.term.remove.cm"})
-    void readTermAuditByQN() throws AtlanException {
+    void readTermAuditByQN() throws AtlanException, InterruptedException {
         AuditSearchRequest request = AuditSearchRequest.byQualifiedName(
                         GlossaryTerm.TYPE_NAME, term.getQualifiedName(), 40)
                 .build();
         AuditSearchResponse response = request.search();
         assertNotNull(response);
+
+        int count = 0;
+        while (response.getCount() < 13L && count < Atlan.getMaxNetworkRetries()) {
+            Thread.sleep(HttpClient.waitTime(count).toMillis());
+            response = request.search();
+            count++;
+        }
+
         validateAudits(response.getEntityAudits());
     }
 
