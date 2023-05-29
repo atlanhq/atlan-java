@@ -24,27 +24,23 @@ public class LineageListRequest extends AtlanObject {
 
     /**
      * Number of degrees of separation (hops) across which lineage should be fetched.
-     * A depth of {@code 1} will fetch the immediate upstream and/or downstream assets,
-     * while {@code 2} will also fetch the immediate upstream and/or downstream assets
+     * A depth of {@code 1} will fetch the immediate upstream or downstream assets,
+     * while {@code 2} will also fetch the immediate upstream or downstream assets
      * of those assets, and so on. A large integer value (for example, 1000000) will
-     * therefore in effect fetch <em>all</em> upstream and/or downstream assets.
+     * therefore in effect fetch <em>all</em> upstream or downstream assets.
      * (BEWARE! This could take a long time and result in a very large response payload.)
      */
     @Builder.Default
     Integer depth = 1000000;
 
     /**
-     * Indicates whether to fetch upstream lineage only, downstream lineage only, or both.
+     * Indicates whether to fetch upstream lineage only, or downstream lineage only.
+     * Note that you cannot fetch both upstream and downstream at the same time.
      */
     @Builder.Default
     AtlanLineageDirection direction = AtlanLineageDirection.DOWNSTREAM;
 
-    /**
-     * Filters to apply on entities.
-     * Note that if the values in the properties of {@code entityFilters} are not valid, then the
-     * filter will not be applied and you will receive all values in the response. If your filter
-     * seems to be ignored, check that it is valid (if it is invalid it WILL be ignored).
-     */
+    /** Filters to apply on entities. */
     FilterList entityFilters;
 
     /**
