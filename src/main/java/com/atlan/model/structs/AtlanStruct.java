@@ -21,6 +21,8 @@ import lombok.extern.slf4j.Slf4j;
 @JsonDeserialize(using = StructDeserializer.class)
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.EXISTING_PROPERTY, property = "typeName")
 @JsonSubTypes({
+    @JsonSubTypes.Type(value = AuthPolicyCondition.class, name = AuthPolicyCondition.TYPE_NAME),
+    @JsonSubTypes.Type(value = AuthPolicyValiditySchedule.class, name = AuthPolicyValiditySchedule.TYPE_NAME),
     @JsonSubTypes.Type(value = AwsCloudWatchMetric.class, name = AwsCloudWatchMetric.TYPE_NAME),
     @JsonSubTypes.Type(value = AwsTag.class, name = AwsTag.TYPE_NAME),
     @JsonSubTypes.Type(value = AzureTag.class, name = AzureTag.TYPE_NAME),

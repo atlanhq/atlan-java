@@ -109,6 +109,12 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
                 case AtlanQuery.TYPE_NAME:
                     builder = AtlanQuery.builder();
                     break;
+                case AuthPolicy.TYPE_NAME:
+                    builder = AuthPolicy.builder();
+                    break;
+                case AuthService.TYPE_NAME:
+                    builder = AuthService.builder();
+                    break;
                 case BIProcess.TYPE_NAME:
                     builder = BIProcess.builder();
                     break;
@@ -247,6 +253,9 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
                 case ModeWorkspace.TYPE_NAME:
                     builder = ModeWorkspace.builder();
                     break;
+                case Persona.TYPE_NAME:
+                    builder = Persona.builder();
+                    break;
                 case PowerBIColumn.TYPE_NAME:
                     builder = PowerBIColumn.builder();
                     break;
@@ -294,6 +303,9 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
                     break;
                 case Procedure.TYPE_NAME:
                     builder = Procedure.builder();
+                    break;
+                case Purpose.TYPE_NAME:
+                    builder = Purpose.builder();
                     break;
                 case QlikApp.TYPE_NAME:
                     builder = QlikApp.builder();

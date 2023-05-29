@@ -14,9 +14,9 @@ import java.util.*;
 import org.testng.annotations.Test;
 
 @SuppressWarnings("deprecation")
-public class TableTest {
+public class AuthPolicyTest {
 
-    private static final Table full = Table.builder()
+    private static final AuthPolicy full = AuthPolicy.builder()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -343,73 +343,59 @@ public class TableTest {
             .readme(Readme.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .assignedTerm(GlossaryTerm.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .assignedTerm(GlossaryTerm.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .inputToProcess(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .inputToProcess(LineageProcess.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .outputFromProcess(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .outputFromProcess(LineageProcess.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .queryCount(123456789L)
-            .queryUserCount(123456789L)
-            .putQueryUserMap("key1", 123456L)
-            .putQueryUserMap("key2", 654321L)
-            .queryCountUpdatedAt(123456789L)
-            .databaseName("String0")
-            .databaseQualifiedName("String0")
-            .schemaName("String0")
-            .schemaQualifiedName("String0")
-            .tableName("String0")
-            .tableQualifiedName("String0")
-            .viewName("String0")
-            .viewQualifiedName("String0")
-            .isProfiled(true)
-            .lastProfiledAt(123456789L)
-            .dbtSource(DbtSource.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .dbtSource(DbtSource.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .sqlDbtModel(DbtModel.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .sqlDbtModel(DbtModel.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .sqlDBTSource(DbtSource.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .sqlDBTSource(DbtSource.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .dbtModel(DbtModel.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .dbtModel(DbtModel.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .columnCount(123456789L)
-            .rowCount(123456789L)
-            .sizeBytes(123456789L)
-            .alias("String0")
-            .isTemporary(true)
-            .isQueryPreview(true)
-            .putQueryPreviewConfig("key1", "value1")
-            .putQueryPreviewConfig("key2", "value2")
-            .externalLocation("String0")
-            .externalLocationRegion("String0")
-            .externalLocationFormat("String0")
-            .isPartitioned(true)
-            .partitionStrategy("String0")
-            .partitionCount(123456789L)
-            .partitionList("String0")
-            .partition(TablePartition.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .partition(TablePartition.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .column(Column.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .column(Column.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .fact(Table.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .fact(Table.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .query(AtlanQuery.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .query(AtlanQuery.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .schema(Schema.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .dimension(Table.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .dimension(Table.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .policyType(AuthPolicyType.ALLOW)
+            .policyServiceName("String0")
+            .policyCategory("String0")
+            .policySubCategory("String0")
+            .policyUser("String0")
+            .policyUser("String1")
+            .policyGroup("String0")
+            .policyGroup("String1")
+            .policyRole("String0")
+            .policyRole("String1")
+            .policyAction("String0")
+            .policyAction("String1")
+            .policyResource("String0")
+            .policyResource("String1")
+            .policyResourceCategory("String0")
+            .policyPriority(123)
+            .isPolicyEnabled(true)
+            .policyMaskType("String0")
+            .addPolicyValiditySchedule(AuthPolicyValiditySchedule.builder()
+                    .policyValidityScheduleStartTime("String0")
+                    .policyValidityScheduleEndTime("String0")
+                    .policyValidityScheduleTimezone("String0")
+                    .build())
+            .addPolicyValiditySchedule(AuthPolicyValiditySchedule.builder()
+                    .policyValidityScheduleStartTime("String1")
+                    .policyValidityScheduleEndTime("String1")
+                    .policyValidityScheduleTimezone("String1")
+                    .build())
+            .policyResourceSignature("String0")
+            .policyDelegateAdmin(true)
+            .policyCondition(AuthPolicyCondition.builder()
+                    .policyConditionType("String0")
+                    .policyConditionValues(List.of("String0", "String1"))
+                    .build())
+            .policyCondition(AuthPolicyCondition.builder()
+                    .policyConditionType("String1")
+                    .policyConditionValues(List.of("String0", "String1"))
+                    .build())
+            .accessControl(Persona.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .build();
 
     private static final int hash = full.hashCode();
-    private static Table frodo;
+    private static AuthPolicy frodo;
     private static String serialized;
 
-    @Test(groups = {"Table.builderEquivalency"})
+    @Test(groups = {"AuthPolicy.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"Table.serialize"},
-            dependsOnGroups = {"Table.builderEquivalency"})
+            groups = {"AuthPolicy.serialize"},
+            dependsOnGroups = {"AuthPolicy.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -418,17 +404,17 @@ public class TableTest {
     }
 
     @Test(
-            groups = {"Table.deserialize"},
-            dependsOnGroups = {"Table.serialize"})
+            groups = {"AuthPolicy.deserialize"},
+            dependsOnGroups = {"AuthPolicy.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
-        frodo = Serde.mapper.readValue(serialized, Table.class);
+        frodo = Serde.mapper.readValue(serialized, AuthPolicy.class);
         assertNotNull(frodo);
     }
 
     @Test(
-            groups = {"Table.equivalency"},
-            dependsOnGroups = {"Table.serialize", "Table.deserialize"})
+            groups = {"AuthPolicy.equivalency"},
+            dependsOnGroups = {"AuthPolicy.serialize", "AuthPolicy.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -437,8 +423,8 @@ public class TableTest {
     }
 
     @Test(
-            groups = {"Table.equivalency"},
-            dependsOnGroups = {"Table.serialize", "Table.deserialize"})
+            groups = {"AuthPolicy.equivalency"},
+            dependsOnGroups = {"AuthPolicy.serialize", "AuthPolicy.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

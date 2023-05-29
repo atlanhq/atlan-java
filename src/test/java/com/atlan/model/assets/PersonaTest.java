@@ -14,9 +14,9 @@ import java.util.*;
 import org.testng.annotations.Test;
 
 @SuppressWarnings("deprecation")
-public class TableTest {
+public class PersonaTest {
 
-    private static final Table full = Table.builder()
+    private static final Persona full = Persona.builder()
             .guid("guid")
             .displayText("displayText")
             .status(AtlanStatus.ACTIVE)
@@ -343,73 +343,33 @@ public class TableTest {
             .readme(Readme.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .assignedTerm(GlossaryTerm.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .assignedTerm(GlossaryTerm.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .inputToProcess(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .inputToProcess(LineageProcess.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .outputFromProcess(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .outputFromProcess(LineageProcess.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .queryCount(123456789L)
-            .queryUserCount(123456789L)
-            .putQueryUserMap("key1", 123456L)
-            .putQueryUserMap("key2", 654321L)
-            .queryCountUpdatedAt(123456789L)
-            .databaseName("String0")
-            .databaseQualifiedName("String0")
-            .schemaName("String0")
-            .schemaQualifiedName("String0")
-            .tableName("String0")
-            .tableQualifiedName("String0")
-            .viewName("String0")
-            .viewQualifiedName("String0")
-            .isProfiled(true)
-            .lastProfiledAt(123456789L)
-            .dbtSource(DbtSource.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .dbtSource(DbtSource.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .sqlDbtModel(DbtModel.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .sqlDbtModel(DbtModel.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .sqlDBTSource(DbtSource.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .sqlDBTSource(DbtSource.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .dbtModel(DbtModel.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .dbtModel(DbtModel.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .columnCount(123456789L)
-            .rowCount(123456789L)
-            .sizeBytes(123456789L)
-            .alias("String0")
-            .isTemporary(true)
-            .isQueryPreview(true)
-            .putQueryPreviewConfig("key1", "value1")
-            .putQueryPreviewConfig("key2", "value2")
-            .externalLocation("String0")
-            .externalLocationRegion("String0")
-            .externalLocationFormat("String0")
-            .isPartitioned(true)
-            .partitionStrategy("String0")
-            .partitionCount(123456789L)
-            .partitionList("String0")
-            .partition(TablePartition.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .partition(TablePartition.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .column(Column.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .column(Column.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .fact(Table.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .fact(Table.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .query(AtlanQuery.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .query(AtlanQuery.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .schema(Schema.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .dimension(Table.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .dimension(Table.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .isAccessControlEnabled(true)
+            .denyCustomMetadataGuid("String0")
+            .denyCustomMetadataGuid("String1")
+            .denyAssetTab("String0")
+            .denyAssetTab("String1")
+            .channelLink("String0")
+            .policy(AuthPolicy.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .policy(AuthPolicy.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .personaGroup("String0")
+            .personaGroup("String1")
+            .personaUser("String0")
+            .personaUser("String1")
+            .roleId("String0")
             .build();
 
     private static final int hash = full.hashCode();
-    private static Table frodo;
+    private static Persona frodo;
     private static String serialized;
 
-    @Test(groups = {"Table.builderEquivalency"})
+    @Test(groups = {"Persona.builderEquivalency"})
     void builderEquivalency() {
         assertEquals(full.toBuilder().build(), full);
     }
 
     @Test(
-            groups = {"Table.serialize"},
-            dependsOnGroups = {"Table.builderEquivalency"})
+            groups = {"Persona.serialize"},
+            dependsOnGroups = {"Persona.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
         serialized = full.toJson();
@@ -418,17 +378,17 @@ public class TableTest {
     }
 
     @Test(
-            groups = {"Table.deserialize"},
-            dependsOnGroups = {"Table.serialize"})
+            groups = {"Persona.deserialize"},
+            dependsOnGroups = {"Persona.serialize"})
     void deserialization() throws JsonProcessingException {
         assertNotNull(serialized);
-        frodo = Serde.mapper.readValue(serialized, Table.class);
+        frodo = Serde.mapper.readValue(serialized, Persona.class);
         assertNotNull(frodo);
     }
 
     @Test(
-            groups = {"Table.equivalency"},
-            dependsOnGroups = {"Table.serialize", "Table.deserialize"})
+            groups = {"Persona.equivalency"},
+            dependsOnGroups = {"Persona.serialize", "Persona.deserialize"})
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
@@ -437,8 +397,8 @@ public class TableTest {
     }
 
     @Test(
-            groups = {"Table.equivalency"},
-            dependsOnGroups = {"Table.serialize", "Table.deserialize"})
+            groups = {"Persona.equivalency"},
+            dependsOnGroups = {"Persona.serialize", "Persona.deserialize"})
     void deserializedEquivalency() {
         assertNotNull(full);
         assertNotNull(frodo);

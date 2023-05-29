@@ -68,6 +68,11 @@ AWS,Base class for AWS assets.,awsResourceId,Unique resource ID assigned when a 
 AWS,Base class for AWS assets.,awsOwnerName,Root user's name.
 AWS,Base class for AWS assets.,awsOwnerId,Root user's ID.
 AWS,Base class for AWS assets.,awsTags,List of tags that have been applied to the asset in AWS.
+AccessControl,Base class for Atlan access control assets.,isAccessControlEnabled,
+AccessControl,Base class for Atlan access control assets.,denyCustomMetadataGuids,Unique identifiers (GUIDs) of custom metadata that should be hidden from this access control object.
+AccessControl,Base class for Atlan access control assets.,denyAssetTabs,Asset sidebar tabs that should be hidden from this access control object.
+AccessControl,Base class for Atlan access control assets.,channelLink,
+AccessControl,Base class for Atlan access control assets.,policies,Policies associated with this access control object.
 Asset,Base class for all assets.,name,Human-readable name of the asset.
 Asset,Base class for all assets.,displayName,Name used for display purposes (in user interfaces).
 Asset,Base class for all assets.,description,"Description of the asset, as crawled from a source."
@@ -225,6 +230,29 @@ AtlasServer,Unused,AtlasServer.displayName,
 AtlasServer,Unused,fullName,
 AtlasServer,Unused,urls,
 AtlasServer,Unused,additionalInfo,
+AuthPolicy,Instance of an access control policy in Atlan.,policyType,"Kind of policy (for example, allow vs deny)."
+AuthPolicy,Instance of an access control policy in Atlan.,policyServiceName,
+AuthPolicy,Instance of an access control policy in Atlan.,policyCategory,
+AuthPolicy,Instance of an access control policy in Atlan.,policySubCategory,
+AuthPolicy,Instance of an access control policy in Atlan.,policyUsers,Users to whom the policy applies.
+AuthPolicy,Instance of an access control policy in Atlan.,policyGroups,Groups to whom the policy applies.
+AuthPolicy,Instance of an access control policy in Atlan.,policyRoles,Roles to whom the policy applies.
+AuthPolicy,Instance of an access control policy in Atlan.,policyActions,
+AuthPolicy,Instance of an access control policy in Atlan.,policyResources,
+AuthPolicy,Instance of an access control policy in Atlan.,policyResourceCategory,
+AuthPolicy,Instance of an access control policy in Atlan.,policyPriority,
+AuthPolicy,Instance of an access control policy in Atlan.,isPolicyEnabled,
+AuthPolicy,Instance of an access control policy in Atlan.,policyMaskType,
+AuthPolicy,Instance of an access control policy in Atlan.,policyValiditySchedule,
+AuthPolicy,Instance of an access control policy in Atlan.,policyResourceSignature,
+AuthPolicy,Instance of an access control policy in Atlan.,policyDelegateAdmin,
+AuthPolicy,Instance of an access control policy in Atlan.,policyConditions,
+AuthPolicy,Instance of an access control policy in Atlan.,accessControl,Access control object to which this policy belongs.
+AuthService,Instance of an authorization service in Atlan.,authServiceType,
+AuthService,Instance of an authorization service in Atlan.,tagService,
+AuthService,Instance of an authorization service in Atlan.,authServiceIsEnabled,
+AuthService,Instance of an authorization service in Atlan.,authServiceConfig,
+AuthService,Instance of an authorization service in Atlan.,authServicePolicyLastSync,
 Azure,Base class for Azure assets.,azureResourceId,
 Azure,Base class for Azure assets.,azureLocation,
 Azure,Base class for Azure assets.,adlsAccountSecondaryLocation,
@@ -613,6 +641,9 @@ MonteCarlo,Base class for Monte Carlo assets.,mcLabels,
 MonteCarlo,Base class for Monte Carlo assets.,mcAssetQualifiedNames,
 Namespace,Base class for query collections and folders.,childrenQueries,
 Namespace,Base class for query collections and folders.,childrenFolders,
+Persona,Instance of a Persona access control object in Atlan.,personaGroups,Groups for whom this persona is accessible.
+Persona,Instance of a Persona access control object in Atlan.,personaUsers,Users for whom this persona is accessible.
+Persona,Instance of a Persona access control object in Atlan.,roleId,
 PowerBI,Base class for Power BI assets.,powerBIIsHidden,
 PowerBI,Base class for Power BI assets.,powerBITableQualifiedName,
 PowerBI,Base class for Power BI assets.,powerBIFormatString,
@@ -721,6 +752,7 @@ Process,Instance of a lineage process in Atlan.,ast,
 Process,Instance of a lineage process in Atlan.,outputs,Assets that are outputs from this process.
 Process,Instance of a lineage process in Atlan.,inputs,Assets that are inputs to this process.
 Process,Instance of a lineage process in Atlan.,columnProcesses,Processes that detail column-level lineage for this process.
+Purpose,Instance of a Purpose access control object in Atlan.,purposeClassifications,Tags on which this purpose is applied.
 Qlik,Base class for Qlik assets.,qlikId,Unique identifier of the Qlik asset in Qlik.
 Qlik,Base class for Qlik assets.,qlikQRI,QRI of the Qlik object.
 Qlik,Base class for Qlik assets.,qlikSpaceId,Unique identifier (in Qlik) of the space where the asset exists.
@@ -959,8 +991,10 @@ Table,Instance of a database table in Atlan.,partitionCount,
 Table,Instance of a database table in Atlan.,partitionList,
 Table,Instance of a database table in Atlan.,partitions,
 Table,Instance of a database table in Atlan.,columns,Columns that exist within this table.
+Table,Instance of a database table in Atlan.,facts,
 Table,Instance of a database table in Atlan.,queries,Queries that involve this table.
 Table,Instance of a database table in Atlan.,atlanSchema,Schema in which this table exists.
+Table,Instance of a database table in Atlan.,dimensions,
 TablePartition,Instance of a database table partition in Atlan.,constraint,
 TablePartition,Instance of a database table partition in Atlan.,columnCount,
 TablePartition,Instance of a database table partition in Atlan.,rowCount,
@@ -1096,6 +1130,11 @@ View,Instance of a database view in Atlan.,definition,Definition of the view (DD
 View,Instance of a database view in Atlan.,columns,Columns that exist within this view.
 View,Instance of a database view in Atlan.,queries,Queries that involve this view.
 View,Instance of a database view in Atlan.,atlanSchema,Schema in which this view exists.
+AuthPolicyCondition,Detailed information about the conditions for a policy.,policyConditionType,
+AuthPolicyCondition,Detailed information about the conditions for a policy.,policyConditionValues,
+AuthPolicyValiditySchedule,Detailed information about the validity schedule for a policy.,policyValidityScheduleStartTime,
+AuthPolicyValiditySchedule,Detailed information about the validity schedule for a policy.,policyValidityScheduleEndTime,
+AuthPolicyValiditySchedule,Detailed information about the validity schedule for a policy.,policyValidityScheduleTimezone,
 AwsCloudWatchMetric,Detailed information about an AWS CloudWatch metric.,awsCloudWatchMetricName,Name of the AWS CloudWatch metric.
 AwsCloudWatchMetric,Detailed information about an AWS CloudWatch metric.,awsCloudWatchMetricScope,Scope of the AWS CloudWatch metric.
 AwsTag,Detailed information about an AWS tag.,awsTagKey,Key of the AWS tag.

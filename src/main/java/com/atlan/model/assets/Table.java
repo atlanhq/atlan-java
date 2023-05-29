@@ -105,6 +105,11 @@ public class Table extends SQL {
     @Singular
     SortedSet<Column> columns;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<Table> facts;
+
     /** Queries that involve this table. */
     @Attribute
     @Singular
@@ -114,6 +119,11 @@ public class Table extends SQL {
     @Attribute
     @JsonProperty("atlanSchema")
     Schema schema;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<Table> dimensions;
 
     /**
      * Reference to a Table by GUID.

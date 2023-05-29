@@ -59,15 +59,18 @@ import lombok.extern.slf4j.Slf4j;
         property = "typeName",
         defaultImpl = IndistinctAsset.class)
 @JsonSubTypes({
-    @JsonSubTypes.Type(value = Glossary.class, name = Glossary.TYPE_NAME),
-    @JsonSubTypes.Type(value = GlossaryTerm.class, name = GlossaryTerm.TYPE_NAME),
-    @JsonSubTypes.Type(value = Cloud.class, name = Cloud.TYPE_NAME),
     @JsonSubTypes.Type(value = Connection.class, name = Connection.TYPE_NAME),
     @JsonSubTypes.Type(value = LineageProcess.class, name = LineageProcess.TYPE_NAME),
     @JsonSubTypes.Type(value = GlossaryCategory.class, name = GlossaryCategory.TYPE_NAME),
     @JsonSubTypes.Type(value = Badge.class, name = Badge.TYPE_NAME),
+    @JsonSubTypes.Type(value = AccessControl.class, name = AccessControl.TYPE_NAME),
     @JsonSubTypes.Type(value = Namespace.class, name = Namespace.TYPE_NAME),
     @JsonSubTypes.Type(value = Catalog.class, name = Catalog.TYPE_NAME),
+    @JsonSubTypes.Type(value = Glossary.class, name = Glossary.TYPE_NAME),
+    @JsonSubTypes.Type(value = AuthPolicy.class, name = AuthPolicy.TYPE_NAME),
+    @JsonSubTypes.Type(value = GlossaryTerm.class, name = GlossaryTerm.TYPE_NAME),
+    @JsonSubTypes.Type(value = AuthService.class, name = AuthService.TYPE_NAME),
+    @JsonSubTypes.Type(value = Cloud.class, name = Cloud.TYPE_NAME),
 })
 @Slf4j
 @SuppressWarnings("cast")

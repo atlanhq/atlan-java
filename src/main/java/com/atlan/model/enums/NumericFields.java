@@ -27,6 +27,8 @@ public enum NumericFields implements AtlanSearchableField {
     ASSET_DBT_JOB_NEXT_RUN("assetDbtJobNextRun"),
     /** TBC */
     ASSET_MC_LAST_SYNC_RUN_AT("assetMcLastSyncRunAt"),
+    /** TBC */
+    AUTH_SERVICE_POLICY_LAST_SYNC("authServicePolicyLastSync"),
     /** Time (epoch) at which the certification was last updated, in milliseconds. */
     CERTIFICATE_UPDATED_AT("certificateUpdatedAt"),
     /** TBC */
@@ -185,6 +187,8 @@ public enum NumericFields implements AtlanSearchableField {
     PARTITION_ORDER("partitionOrder"),
     /** TBC */
     PINNED_AT("pinnedAt"),
+    /** TBC */
+    POLICY_PRIORITY("policyPriority"),
     /** Number of days over which popularity is calculated, for example 30 days. */
     POPULARITY_INSIGHTS_TIMEFRAME("popularityInsightsTimeframe"),
     /** TBC */

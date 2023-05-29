@@ -241,7 +241,9 @@ public class AssetGenerator extends TypeGenerator {
                 Map.entry("columnMaxs", "addColumnMax"),
                 Map.entry("columnMins", "addColumnMin"),
                 Map.entry("redashQuerySchedule", "putRedashQuerySchedule"),
-                Map.entry("mcMonitorRuleScheduleConfig", "addMcMonitorRuleSchedule"));
+                Map.entry("mcMonitorRuleScheduleConfig", "addMcMonitorRuleSchedule"),
+                Map.entry("authServiceConfig", "addAuthServiceConfig"),
+                Map.entry("policyValiditySchedule", "addPolicyValiditySchedule"));
 
         private static final Map<String, String> ATTRIBUTE_RENAMING = Map.ofEntries(
                 Map.entry("connectorName", "connectorType"),
