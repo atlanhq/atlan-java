@@ -5,7 +5,7 @@ package com.atlan.model.enums;
 import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 
-public enum AtlanClassificationColor implements AtlanEnum {
+public enum AtlanTagColor implements AtlanEnum {
     GREEN("Green"),
     YELLOW("Yellow"),
     RED("Red");
@@ -14,12 +14,12 @@ public enum AtlanClassificationColor implements AtlanEnum {
     @Getter(onMethod_ = {@Override})
     private final String value;
 
-    AtlanClassificationColor(String value) {
+    AtlanTagColor(String value) {
         this.value = value;
     }
 
-    public static AtlanClassificationColor fromValue(String value) {
-        for (AtlanClassificationColor b : AtlanClassificationColor.values()) {
+    public static AtlanTagColor fromValue(String value) {
+        for (AtlanTagColor b : AtlanTagColor.values()) {
             if (b.value.equals(value)) {
                 return b;
             }

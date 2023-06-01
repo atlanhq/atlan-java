@@ -20,8 +20,8 @@ import lombok.experimental.SuperBuilder;
     @JsonSubTypes.Type(value = AssetUpdatePayload.class, name = AssetUpdatePayload.TYPE_NAME),
     @JsonSubTypes.Type(value = AssetDeletePayload.class, name = AssetDeletePayload.TYPE_NAME),
     @JsonSubTypes.Type(value = CustomMetadataUpdatePayload.class, name = CustomMetadataUpdatePayload.TYPE_NAME),
-    @JsonSubTypes.Type(value = ClassificationAddPayload.class, name = ClassificationAddPayload.TYPE_NAME),
-    @JsonSubTypes.Type(value = ClassificationDeletePayload.class, name = ClassificationDeletePayload.TYPE_NAME),
+    @JsonSubTypes.Type(value = AtlanTagAddPayload.class, name = AtlanTagAddPayload.TYPE_NAME),
+    @JsonSubTypes.Type(value = AtlanTagDeletePayload.class, name = AtlanTagDeletePayload.TYPE_NAME),
 })
 public abstract class AtlanEventPayload extends AtlanObject {
     /** Type of the event payload. */

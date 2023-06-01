@@ -55,7 +55,7 @@ public class EntityAudit extends AtlanObject {
 
     /**
      * Details of the activity.
-     * In practice this will either be details about a classification (for classification-
+     * In practice this will either be details about an Atlan tag (for Atlan tag-
      * related actions) or an asset (for other actions).
      */
     final AuditDetail detail;

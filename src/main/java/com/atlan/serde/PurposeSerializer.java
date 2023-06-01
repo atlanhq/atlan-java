@@ -2,7 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.serde;
 
-import com.atlan.cache.ClassificationCache;
+import com.atlan.cache.AtlanTagCache;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.admin.Purpose;
 import com.atlan.util.JacksonUtils;
@@ -19,7 +19,7 @@ import java.util.TreeSet;
 /**
  * Custom serialization of {@link Purpose} objects.
  * In particular, this translates from the human-readable name into the Atlan-internal hashed-string representation for
- * a classification.
+ * an Atlan tag.
  */
 public class PurposeSerializer extends StdSerializer<Purpose> {
     private static final long serialVersionUID = 2L;
@@ -54,10 +54,10 @@ public class PurposeSerializer extends StdSerializer<Purpose> {
         for (String tag : tags) {
             if (tag != null) {
                 try {
-                    String id = ClassificationCache.getIdForName(tag);
+                    String id = AtlanTagCache.getIdForName(tag);
                     tagIds.add(id);
                 } catch (AtlanException e) {
-                    throw new IOException("Unable to find classification with name: " + tag, e);
+                    throw new IOException("Unable to find Atlan tag with name: " + tag, e);
                 }
             }
         }

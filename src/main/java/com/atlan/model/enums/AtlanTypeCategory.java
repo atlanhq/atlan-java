@@ -8,7 +8,7 @@ import lombok.Getter;
 public enum AtlanTypeCategory implements AtlanEnum {
     ENUM("ENUM"),
     STRUCT("STRUCT"),
-    CLASSIFICATION("CLASSIFICATION"),
+    ATLAN_TAG("CLASSIFICATION"),
     ENTITY("ENTITY"),
     RELATIONSHIP("RELATIONSHIP"),
     CUSTOM_METADATA("BUSINESS_METADATA");

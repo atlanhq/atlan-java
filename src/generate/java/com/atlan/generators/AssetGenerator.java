@@ -241,7 +241,9 @@ public class AssetGenerator extends TypeGenerator {
                 Map.entry("columnMaxs", "addColumnMax"),
                 Map.entry("columnMins", "addColumnMin"),
                 Map.entry("redashQuerySchedule", "putRedashQuerySchedule"),
-                Map.entry("mcMonitorRuleScheduleConfig", "addMcMonitorRuleSchedule"));
+                Map.entry("mcMonitorRuleScheduleConfig", "addMcMonitorRuleSchedule"),
+                Map.entry("policyValiditySchedule", "addPolicyValiditySchedule"),
+                Map.entry("authServiceConfig", "putAuthServiceConfig"));
 
         private static final Map<String, String> ATTRIBUTE_RENAMING = Map.ofEntries(
                 Map.entry("connectorName", "connectorType"),
@@ -260,7 +262,9 @@ public class AssetGenerator extends TypeGenerator {
                 Map.entry("sourceReadSlowQueryRecordList", "sourceReadSlowQueryRecords"),
                 Map.entry("sourceQueryComputeCostRecordList", "sourceQueryComputeCostRecords"),
                 Map.entry("meanings", "assignedTerms"),
-                Map.entry("sqlAsset", "primarySqlAsset"));
+                Map.entry("sqlAsset", "primarySqlAsset"),
+                Map.entry("mappedClassificationName", "mappedAtlanTagName"),
+                Map.entry("purposeClassifications", "purposeAtlanTags"));
 
         private static final Map<String, String> TYPE_OVERRIDES = Map.ofEntries(
                 Map.entry("announcementType", "AtlanAnnouncementType"),

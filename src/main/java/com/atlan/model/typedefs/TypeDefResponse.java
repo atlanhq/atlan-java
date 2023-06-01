@@ -26,8 +26,9 @@ public class TypeDefResponse extends ApiResource {
     /** List of struct type definitions. */
     List<StructDef> structDefs;
 
-    /** List of classification type definitions. */
-    List<ClassificationDef> classificationDefs;
+    /** List of Atlan tag type definitions. */
+    @JsonProperty("classificationDefs")
+    List<AtlanTagDef> atlanTagDefs;
 
     /** List of entity type definitions. */
     List<EntityDef> entityDefs;

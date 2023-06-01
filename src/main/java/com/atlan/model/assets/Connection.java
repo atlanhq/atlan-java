@@ -296,7 +296,7 @@ public class Connection extends Asset {
 
     /**
      * If an asset with the same qualifiedName exists, updates the existing asset. Otherwise, creates the asset.
-     * No classifications or custom metadata will be changed if updating an existing asset, irrespective of what
+     * No Atlan tags or custom metadata will be changed if updating an existing asset, irrespective of what
      * is included in the asset itself when the method is called.
      *
      * @return details of the created or updated asset
@@ -327,16 +327,16 @@ public class Connection extends Asset {
 
     /**
      * If no asset exists, has the same behavior as the {@link #upsert()} method.
-     * If an asset does exist, optionally overwrites any classifications. Custom metadata will always
+     * If an asset does exist, optionally overwrites any Atlan tags. Custom metadata will always
      * be entirely ignored using this method.
      *
-     * @param replaceClassifications whether to replace classifications during an update (true) or not (false)
+     * @param replaceAtlanTags whether to replace Atlan tags during an update (true) or not (false)
      * @return details of the created or updated asset
      * @throws AtlanException on any error during the API invocation
      * @throws NotFoundException if any of the provided connection admins do not actually exist
      */
     @Override
-    public ConnectionCreationResponse upsert(boolean replaceClassifications) throws AtlanException {
+    public ConnectionCreationResponse upsert(boolean replaceAtlanTags) throws AtlanException {
         // Validate the provided connection admins prior to attempting to create
         // (the cache retrievals will throw errors directly if there are any)
         if (adminRoles != null && !adminRoles.isEmpty()) {
@@ -354,7 +354,7 @@ public class Connection extends Asset {
                 UserCache.getIdForName(userName);
             }
         }
-        return EntityBulkEndpoint.connectionUpsert(this, replaceClassifications);
+        return EntityBulkEndpoint.connectionUpsert(this, replaceAtlanTags);
     }
 
     /**
@@ -591,99 +591,97 @@ public class Connection extends Asset {
     }
 
     /**
-     * Add classifications to a Connection, without replacing existing classifications linked to the Connection.
-     * Note: this operation must make two API calls — one to retrieve the Connection's existing classifications,
-     * and a second to append the new classifications.
+     * Add Atlan tags to a Connection, without replacing existing Atlan tags linked to the Connection.
+     * Note: this operation must make two API calls — one to retrieve the Connection's existing Atlan tags,
+     * and a second to append the new Atlan tags.
      *
      * @param qualifiedName of the Connection
-     * @param classificationNames human-readable names of the classifications to add
+     * @param atlanTagNames human-readable names of the Atlan tags to add
      * @throws AtlanException on any API problems
      * @return the updated Connection
      */
-    public static Connection appendClassifications(String qualifiedName, List<String> classificationNames)
-            throws AtlanException {
-        return (Connection) Asset.appendClassifications(TYPE_NAME, qualifiedName, classificationNames);
+    public static Connection appendAtlanTags(String qualifiedName, List<String> atlanTagNames) throws AtlanException {
+        return (Connection) Asset.appendAtlanTags(TYPE_NAME, qualifiedName, atlanTagNames);
     }
 
     /**
-     * Add classifications to a Connection, without replacing existing classifications linked to the Connection.
-     * Note: this operation must make two API calls — one to retrieve the Connection's existing classifications,
-     * and a second to append the new classifications.
+     * Add Atlan tags to a Connection, without replacing existing Atlan tags linked to the Connection.
+     * Note: this operation must make two API calls — one to retrieve the Connection's existing Atlan tags,
+     * and a second to append the new Atlan tags.
      *
      * @param qualifiedName of the Connection
-     * @param classificationNames human-readable names of the classifications to add
-     * @param propagate whether to propagate the classification (true) or not (false)
-     * @param removePropagationsOnDelete whether to remove the propagated classifications when the classification is removed from this asset (true) or not (false)
+     * @param atlanTagNames human-readable names of the Atlan tags to add
+     * @param propagate whether to propagate the Atlan tag (true) or not (false)
+     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
      * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
      * @throws AtlanException on any API problems
      * @return the updated Connection
      */
-    public static Connection appendClassifications(
+    public static Connection appendAtlanTags(
             String qualifiedName,
-            List<String> classificationNames,
+            List<String> atlanTagNames,
             boolean propagate,
             boolean removePropagationsOnDelete,
             boolean restrictLineagePropagation)
             throws AtlanException {
-        return (Connection) Asset.appendClassifications(
+        return (Connection) Asset.appendAtlanTags(
                 TYPE_NAME,
                 qualifiedName,
-                classificationNames,
+                atlanTagNames,
                 propagate,
                 removePropagationsOnDelete,
                 restrictLineagePropagation);
     }
 
     /**
-     * Add classifications to a Connection.
+     * Add Atlan tags to a Connection.
      *
      * @param qualifiedName of the Connection
-     * @param classificationNames human-readable names of the classifications to add
-     * @throws AtlanException on any API problems, or if any of the classifications already exist on the Connection
-     * @deprecated see {@link #appendClassifications(String, List)} instead
+     * @param atlanTagNames human-readable names of the Atlan tags to add
+     * @throws AtlanException on any API problems, or if any of the Atlan tags already exist on the Connection
+     * @deprecated see {@link #appendAtlanTags(String, List)} instead
      */
     @Deprecated
-    public static void addClassifications(String qualifiedName, List<String> classificationNames)
-            throws AtlanException {
-        Asset.addClassifications(TYPE_NAME, qualifiedName, classificationNames);
+    public static void addAtlanTags(String qualifiedName, List<String> atlanTagNames) throws AtlanException {
+        Asset.addAtlanTags(TYPE_NAME, qualifiedName, atlanTagNames);
     }
 
     /**
-     * Add classifications to a Connection.
+     * Add Atlan tags to a Connection.
      *
      * @param qualifiedName of the Connection
-     * @param classificationNames human-readable names of the classifications to add
-     * @param propagate whether to propagate the classification (true) or not (false)
-     * @param removePropagationsOnDelete whether to remove the propagated classifications when the classification is removed from this asset (true) or not (false)
+     * @param atlanTagNames human-readable names of the Atlan tags to add
+     * @param propagate whether to propagate the Atlan tag (true) or not (false)
+     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
      * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
-     * @throws AtlanException on any API problems, or if any of the classifications already exist on the Connection
-     * @deprecated see {@link #appendClassifications(String, List, boolean, boolean, boolean)} instead
+     * @throws AtlanException on any API problems, or if any of the Atlan tags already exist on the Connection
+     * @deprecated see {@link #appendAtlanTags(String, List, boolean, boolean, boolean)} instead
      */
     @Deprecated
-    public static void addClassifications(
+    public static void addAtlanTags(
             String qualifiedName,
-            List<String> classificationNames,
+            List<String> atlanTagNames,
             boolean propagate,
             boolean removePropagationsOnDelete,
             boolean restrictLineagePropagation)
             throws AtlanException {
-        Asset.addClassifications(
+        Asset.addAtlanTags(
                 TYPE_NAME,
                 qualifiedName,
-                classificationNames,
+                atlanTagNames,
                 propagate,
                 removePropagationsOnDelete,
                 restrictLineagePropagation);
     }
 
     /**
-     * Remove a classification from a Connection.
+     * Remove an Atlan tag from a Connection.
      *
      * @param qualifiedName of the Connection
-     * @param classificationName human-readable name of the classification to remove
-     * @throws AtlanException on any API problems, or if the classification does not exist on the Connection
+     * @param atlanTagName human-readable name of the Atlan tag to remove
+     * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the Connection
      */
-    public static void removeClassification(String qualifiedName, String classificationName) throws AtlanException {
-        Asset.removeClassification(TYPE_NAME, qualifiedName, classificationName);
+    public static void removeAtlanTag(String qualifiedName, String atlanTagName) throws AtlanException {
+        Asset.removeAtlanTag(TYPE_NAME, qualifiedName, atlanTagName);
     }
 }

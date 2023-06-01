@@ -10,7 +10,7 @@ import com.atlan.exception.AtlanException;
 import com.atlan.model.admin.*;
 import com.atlan.model.assets.*;
 import com.atlan.model.core.AssetMutationResponse;
-import com.atlan.model.core.Classification;
+import com.atlan.model.core.AtlanTag;
 import com.atlan.model.enums.AtlanConnectorType;
 import java.util.ArrayList;
 import java.util.Set;
@@ -27,7 +27,7 @@ public class RequestsTest extends AtlanLiveTest {
     private static final String API_TOKEN_NAME = PREFIX;
     private static final String GLOSSARY_NAME = PREFIX;
     private static final AtlanConnectorType CONNECTOR_TYPE = AtlanConnectorType.AIRFLOW;
-    private static final String CLASSIFICATION_NAME = PREFIX;
+    private static final String ATLAN_TAG_NAME = PREFIX;
     private static final String TERM_NAME = PREFIX + " term";
 
     private static final String ATTR_VALUE_DESCRIPTION = "A new description, as requested.";
@@ -41,7 +41,7 @@ public class RequestsTest extends AtlanLiveTest {
     private static Database database = null;
     private static String attributeRequestGuid = null;
     private static String termLinkRequestGuid = null;
-    private static String classificationRequestGuid = null;
+    private static String atlanTagRequestGuid = null;
 
     /**
      * Create a new API token with a unique name.
@@ -76,10 +76,10 @@ public class RequestsTest extends AtlanLiveTest {
         term = GlossaryTest.createTerm(TERM_NAME, glossary.getGuid());
     }
 
-    @Test(groups = {"request.create.classification"})
-    void createClassification() throws AtlanException {
+    @Test(groups = {"request.create.atlantag"})
+    void createAtlanTag() throws AtlanException {
         Atlan.setApiToken(originalToken);
-        ClassificationTest.createClassification(CLASSIFICATION_NAME);
+        AtlanTagTest.createAtlanTag(ATLAN_TAG_NAME);
     }
 
     @Test(groups = {"request.create.connection"})
@@ -181,13 +181,13 @@ public class RequestsTest extends AtlanLiveTest {
     @Test(
             groups = {"request.create.request"},
             dependsOnGroups = {"request.read.token", "request.create.glossary"})
-    void createClassificationRequest() throws AtlanException {
+    void createAtlanTagRequest() throws AtlanException {
         Atlan.setApiToken(requestsToken);
-        ClassificationRequest toCreate = ClassificationRequest.creator(
+        AtlanTagRequest toCreate = AtlanTagRequest.creator(
                         term.getGuid(),
                         term.getQualifiedName(),
                         GlossaryTerm.TYPE_NAME,
-                        ClassificationPayload.of(CLASSIFICATION_NAME))
+                        AtlanTagPayload.of(ATLAN_TAG_NAME))
                 .build();
         toCreate.create();
     }
@@ -212,11 +212,11 @@ public class RequestsTest extends AtlanLiveTest {
                         && term.getGuid().equals(request.getSourceGuid())) {
                     termLinkRequestGuid = request.getId();
                 }
-            } else if (request instanceof ClassificationRequest) {
+            } else if (request instanceof AtlanTagRequest) {
                 if (term.getGuid().equals(request.getDestinationGuid())) {
-                    ClassificationPayload payload = ((ClassificationRequest) request).getPayload();
-                    if (CLASSIFICATION_NAME.equals(payload.getTypeName())) {
-                        classificationRequestGuid = request.getId();
+                    AtlanTagPayload payload = ((AtlanTagRequest) request).getPayload();
+                    if (ATLAN_TAG_NAME.equals(payload.getTypeName())) {
+                        atlanTagRequestGuid = request.getId();
                     }
                 }
             }
@@ -231,8 +231,8 @@ public class RequestsTest extends AtlanLiveTest {
         Atlan.setApiToken(originalToken);
         AtlanRequest response = AtlanRequest.retrieveByGuid(attributeRequestGuid);
         assertTrue(response instanceof AttributeRequest);
-        response = AtlanRequest.retrieveByGuid(classificationRequestGuid);
-        assertTrue(response instanceof ClassificationRequest);
+        response = AtlanRequest.retrieveByGuid(atlanTagRequestGuid);
+        assertTrue(response instanceof AtlanTagRequest);
         response = AtlanRequest.retrieveByGuid(termLinkRequestGuid);
         assertTrue(response instanceof TermLinkRequest);
     }
@@ -250,9 +250,9 @@ public class RequestsTest extends AtlanLiveTest {
             groups = {"request.approve.request"},
             dependsOnGroups = {"request.read.request"},
             alwaysRun = true)
-    void approveClassificationRequest() throws AtlanException {
+    void approveAtlanTagRequest() throws AtlanException {
         Atlan.setApiToken(originalToken);
-        assertTrue(AtlanRequest.approve(classificationRequestGuid, "Classification approved!"));
+        assertTrue(AtlanRequest.approve(atlanTagRequestGuid, "Atlan tag approved!"));
     }
 
     @Test(
@@ -273,10 +273,10 @@ public class RequestsTest extends AtlanLiveTest {
         GlossaryTerm revised = GlossaryTerm.retrieveByGuid(term.getGuid());
         assertNotNull(revised);
         assertEquals(revised.getUserDescription(), ATTR_VALUE_DESCRIPTION);
-        assertNotNull(revised.getClassifications());
-        assertEquals(revised.getClassifications().size(), 1);
-        Classification only = new ArrayList<>(revised.getClassifications()).get(0);
-        assertEquals(only.getTypeName(), CLASSIFICATION_NAME);
+        assertNotNull(revised.getAtlanTags());
+        assertEquals(revised.getAtlanTags().size(), 1);
+        AtlanTag only = new ArrayList<>(revised.getAtlanTags()).get(0);
+        assertEquals(only.getTypeName(), ATLAN_TAG_NAME);
         assertTrue(only.getPropagate());
         assertFalse(only.getRemovePropagationsOnEntityDelete());
         assertEquals(only.getEntityGuid(), term.getGuid());
@@ -316,7 +316,7 @@ public class RequestsTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"request.purge.classification"},
+            groups = {"request.purge.atlantag"},
             dependsOnGroups = {
                 "request.create.*",
                 "request.read.*",
@@ -325,8 +325,8 @@ public class RequestsTest extends AtlanLiveTest {
                 "request.purge.connection"
             },
             alwaysRun = true)
-    void purgeClassification() throws AtlanException {
+    void purgeAtlanTag() throws AtlanException {
         Atlan.setApiToken(originalToken);
-        ClassificationTest.deleteClassification(CLASSIFICATION_NAME);
+        AtlanTagTest.deleteAtlanTag(ATLAN_TAG_NAME);
     }
 }

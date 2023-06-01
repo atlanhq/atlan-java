@@ -2,7 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.serde;
 
-import com.atlan.cache.ClassificationCache;
+import com.atlan.cache.AtlanTagCache;
 import com.atlan.cache.CustomMetadataCache;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.NotFoundException;
@@ -67,28 +67,28 @@ public class AtlanRequestDeserializer extends StdDeserializer<AtlanRequest> {
             }
             if (type != null) {
                 switch (type) {
-                    case ClassificationRequest.REQUEST_TYPE:
+                    case AtlanTagRequest.REQUEST_TYPE:
                         String typeName = JacksonUtils.deserializeString(jsonPayload, "typeName");
                         Boolean propagate = JacksonUtils.deserializeBoolean(jsonPayload, "propagate");
                         Boolean removeOnDelete =
                                 JacksonUtils.deserializeBoolean(jsonPayload, "removePropagationsOnEntityDelete");
-                        String humanReadableClassification;
+                        String humanReadableAtlanTag;
                         try {
-                            humanReadableClassification = ClassificationCache.getNameForId(typeName);
+                            humanReadableAtlanTag = AtlanTagCache.getNameForId(typeName);
                         } catch (NotFoundException e) {
-                            humanReadableClassification = AtlanRequestSerializer.DELETED;
+                            humanReadableAtlanTag = AtlanRequestSerializer.DELETED;
                         } catch (AtlanException e) {
-                            throw new IOException("Unable to translate classification with the ID: " + typeName, e);
+                            throw new IOException("Unable to translate Atlan tag with the ID: " + typeName, e);
                         }
-                        ClassificationPayload.ClassificationPayloadBuilder payloadBuilder =
-                                ClassificationPayload.builder().typeName(humanReadableClassification);
+                        AtlanTagPayload.AtlanTagPayloadBuilder payloadBuilder =
+                                AtlanTagPayload.builder().typeName(humanReadableAtlanTag);
                         if (propagate != null) {
                             payloadBuilder = payloadBuilder.propagate(propagate);
                         }
                         if (removeOnDelete != null) {
                             payloadBuilder = payloadBuilder.removePropagationsOnEntityDelete(removeOnDelete);
                         }
-                        builder = ClassificationRequest.builder().payload(payloadBuilder.build());
+                        builder = AtlanTagRequest.builder().payload(payloadBuilder.build());
                         break;
                     case CustomMetadataRequest.REQUEST_TYPE:
                         String cmId = destinationAttribute;

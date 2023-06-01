@@ -3,6 +3,7 @@
 package com.atlan.model.assets;
 
 import com.atlan.model.structs.SourceTagAttribute;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import java.util.List;
 import java.util.SortedSet;
@@ -40,5 +41,6 @@ public abstract class Tag extends Catalog {
 
     /** Name of the classification in Atlan that is mapped to this tag. */
     @Attribute
-    String mappedClassificationName;
+    @JsonProperty("mappedClassificationName")
+    String mappedAtlanTagName;
 }

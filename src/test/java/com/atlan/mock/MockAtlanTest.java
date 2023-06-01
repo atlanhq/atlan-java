@@ -32,10 +32,10 @@ public class MockAtlanTest {
                         .withBodyFile("typedefs-custom-metadata.json")
                         .withStatus(200)));
         server.stubFor(get(urlEqualTo("/api/meta/types/typedefs?type="
-                        + AtlanTypeCategory.CLASSIFICATION.getValue().toLowerCase()))
+                        + AtlanTypeCategory.ATLAN_TAG.getValue().toLowerCase()))
                 .willReturn(aResponse()
                         .withHeader("Content-Type", "application/json")
-                        .withBodyFile("typedefs-classification.json")
+                        .withBodyFile("typedefs-atlan-tags.json")
                         .withStatus(200)));
         server.stubFor(get(urlEqualTo("/api/meta/types/typedefs?type="
                         + AtlanTypeCategory.ENUM.getValue().toLowerCase()))

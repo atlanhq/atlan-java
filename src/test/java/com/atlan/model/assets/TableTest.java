@@ -4,7 +4,7 @@ package com.atlan.model.assets;
 
 import static org.testng.Assert.*;
 
-import com.atlan.model.core.Classification;
+import com.atlan.model.core.AtlanTag;
 import com.atlan.model.core.CustomMetadataAttributes;
 import com.atlan.model.enums.*;
 import com.atlan.model.structs.*;
@@ -41,11 +41,8 @@ public class TableTest {
                             .confidence(100)
                             .build()))
             .qualifiedName("qualifiedName")
-            .classification(Classification.of("String0"))
-            .classification(Classification.builder()
-                    .typeName("String1")
-                    .propagate(false)
-                    .build())
+            .atlanTag(AtlanTag.of("String0"))
+            .atlanTag(AtlanTag.builder().typeName("String1").propagate(false).build())
             .customMetadata(
                     "String0",
                     CustomMetadataAttributes.builder()
@@ -389,9 +386,13 @@ public class TableTest {
             .partition(TablePartition.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .column(Column.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .column(Column.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .fact(Table.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .fact(Table.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .query(AtlanQuery.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .query(AtlanQuery.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .schema(Schema.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .dimension(Table.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .dimension(Table.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .build();
 
     private static final int hash = full.hashCode();

@@ -20,9 +20,10 @@
         return Collections.unmodifiableSet(nullFields);
     }
 
-    /** Classifications assigned to the asset. */
+    /** Atlan tags assigned to the asset. */
     @Singular
-    SortedSet<Classification> classifications;
+    @JsonProperty("classifications")
+    SortedSet<AtlanTag> atlanTags;
 
     /**
      * Map of custom metadata attributes and values defined on the asset. The map is keyed by the human-readable
@@ -51,14 +52,15 @@
     final String deleteHandler;
 
     /**
-     * The names of the classifications that exist on the asset. This is not always returned, even by
-     * full retrieval operations. It is better to depend on the detailed values in the classifications
+     * The names of the Atlan tags that exist on the asset. This is not always returned, even by
+     * full retrieval operations. It is better to depend on the detailed values in the Atlan tags
      * property.
-     * @see #classifications
+     * @see #atlanTags
      */
     @Deprecated
     @Singular
-    SortedSet<String> classificationNames;
+    @JsonProperty("classificationNames")
+    SortedSet<String> atlanTagNames;
 
     /** Unused. */
     Boolean isIncomplete;
@@ -90,7 +92,7 @@
 
     /**
      * If an asset with the same qualifiedName exists, updates the existing asset. Otherwise, creates the asset.
-     * No classifications or custom metadata will be changed if updating an existing asset, irrespective of what
+     * No Atlan tags or custom metadata will be changed if updating an existing asset, irrespective of what
      * is included in the asset itself when the method is called.
      *
      * @return details of the created or updated asset
@@ -102,47 +104,47 @@
 
     /**
      * If no asset exists, has the same behavior as the {@link #upsert()} method.
-     * If an asset does exist, optionally overwrites any classifications. Custom metadata will always
+     * If an asset does exist, optionally overwrites any Atlan tags. Custom metadata will always
      * be entirely ignored using this method.
      *
-     * @param replaceClassifications whether to replace classifications during an update (true) or not (false)
+     * @param replaceAtlanTags whether to replace Atlan tags during an update (true) or not (false)
      * @return details of the created or updated asset
      * @throws AtlanException on any error during the API invocation
      */
-    public AssetMutationResponse upsert(boolean replaceClassifications)
+    public AssetMutationResponse upsert(boolean replaceAtlanTags)
             throws AtlanException {
-        return EntityBulkEndpoint.upsert(this, replaceClassifications);
+        return EntityBulkEndpoint.upsert(this, replaceAtlanTags);
     }
 
     /**
      * If no asset exists, has the same behavior as the {@link #upsert()} method, while also setting
      * any custom metadata provided.
-     * If an asset does exist, optionally overwrites any classifications.
+     * If an asset does exist, optionally overwrites any Atlan tags.
      * Will merge any provided custom metadata with any custom metadata that already exists on the asset.
      *
-     * @param replaceClassifications whether to replace classifications during an update (true) or not (false)
+     * @param replaceAtlanTags whether to replace AtlanTags during an update (true) or not (false)
      * @return details of the created or updated asset
      * @throws AtlanException on any error during the API invocation
      */
-    public AssetMutationResponse upsertMergingCM(boolean replaceClassifications)
+    public AssetMutationResponse upsertMergingCM(boolean replaceAtlanTags)
             throws AtlanException {
-        return EntityBulkEndpoint.upsertMergingCM(List.of(this), replaceClassifications);
+        return EntityBulkEndpoint.upsertMergingCM(List.of(this), replaceAtlanTags);
     }
 
     /**
      * If no asset exists, has the same behavior as the {@link #upsert()} method, while also setting
      * any custom metadata provided.
-     * If an asset does exist, optionally overwrites any classifications.
+     * If an asset does exist, optionally overwrites any Atlan tags.
      * Will overwrite all custom metadata on any existing asset with only the custom metadata provided
      * (wiping out any other custom metadata on an existing asset that is not provided in the request).
      *
-     * @param replaceClassifications whether to replace classifications during an update (true) or not (false)
+     * @param replaceAtlanTags whether to replace Atlan tags during an update (true) or not (false)
      * @return details of the created or updated asset
      * @throws AtlanException on any error during the API invocation
      */
-    public AssetMutationResponse upsertReplacingCM(boolean replaceClassifications)
+    public AssetMutationResponse upsertReplacingCM(boolean replaceAtlanTags)
             throws AtlanException {
-        return EntityBulkEndpoint.upsertReplacingCM(List.of(this), replaceClassifications);
+        return EntityBulkEndpoint.upsertReplacingCM(List.of(this), replaceAtlanTags);
     }
 
     /**
@@ -270,134 +272,134 @@
     }
 
     /**
-     * Add classifications to an asset, without replacing existing classifications linked to the asset.
-     * Note: this operation must make two API calls — one to retrieve the asset's existing classifications,
-     * and a second to append the new classifications.
+     * Add Atlan tags to an asset, without replacing existing Atlan tags linked to the asset.
+     * Note: this operation must make two API calls — one to retrieve the asset's existing Atlan tags,
+     * and a second to append the new Atlan tags.
      *
      * @param typeName type of the asset
      * @param qualifiedName of the asset
-     * @param classificationNames human-readable names of the classifications to append
+     * @param atlanTagNames human-readable names of the Atlan tags to append
      * @return the asset that was updated
      * @throws AtlanException on any API problems
      */
-    protected static Asset appendClassifications(
-            String typeName, String qualifiedName, List<String> classificationNames) throws AtlanException {
-        return appendClassifications(typeName, qualifiedName, classificationNames, true, true, false);
+    protected static Asset appendAtlanTags(
+            String typeName, String qualifiedName, List<String> atlanTagNames) throws AtlanException {
+        return appendAtlanTags(typeName, qualifiedName, atlanTagNames, true, true, false);
     }
 
     /**
-     * Add classifications to an asset, without replacing existing classifications linked to the asset.
-     * Note: this operation must make two API calls — one to retrieve the asset's existing classifications,
-     * and a second to append the new classifications.
+     * Add Atlan tags to an asset, without replacing existing Atlan tags linked to the asset.
+     * Note: this operation must make two API calls — one to retrieve the asset's existing Atlan tags,
+     * and a second to append the new Atlan tags.
      *
      * @param typeName type of the asset
      * @param qualifiedName of the asset
-     * @param classificationNames human-readable names of the classifications to add
-     * @param propagate whether to propagate the classification (true) or not (false)
-     * @param removePropagationsOnDelete whether to remove the propagated classifications when the classification is removed from this asset (true) or not (false)
+     * @param atlanTagNames human-readable names of the Atlan tags to add
+     * @param propagate whether to propagate the Atlan tag (true) or not (false)
+     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
      * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
      * @return the asset that was updated
      * @throws AtlanException on any API problems
      */
-    protected static Asset appendClassifications(
+    protected static Asset appendAtlanTags(
             String typeName,
             String qualifiedName,
-            List<String> classificationNames,
+            List<String> atlanTagNames,
             boolean propagate,
             boolean removePropagationsOnDelete,
             boolean restrictLineagePropagation)
             throws AtlanException {
 
         Asset existing = retrieveFull(typeName, qualifiedName);
-        if (classificationNames == null) {
+        if (atlanTagNames == null) {
             return existing;
         } else if (existing != null) {
-            Set<Classification> replacementClassifications = new TreeSet<>();
-            Set<Classification> existingClassifications = existing.getClassifications();
-            if (existingClassifications != null) {
-                for (Classification classification : existingClassifications) {
-                    if (existing.getGuid().equals(classification.getEntityGuid())) {
-                        // Only re-include classifications that are directly assigned, and whose
+            Set<AtlanTag> replacementAtlanTags = new TreeSet<>();
+            Set<AtlanTag> existingAtlanTags = existing.getAtlanTags();
+            if (existingAtlanTags != null) {
+                for (AtlanTag atlanTag : existingAtlanTags) {
+                    if (existing.getGuid().equals(atlanTag.getEntityGuid())) {
+                        // Only re-include Atlan tags that are directly assigned, and whose
                         // propagation settings are not being overridden by this update
                         // (Propagation overrides will be handled by the loop further below)
-                        if (!classificationNames.contains(classification.getTypeName())) {
-                            replacementClassifications.add(classification);
+                        if (!atlanTagNames.contains(atlanTag.getTypeName())) {
+                            replacementAtlanTags.add(atlanTag);
                         }
                     }
                 }
             }
-            // Append all the extra classifications (including any propagation overrides)
-            for (String classificationName : classificationNames) {
-                replacementClassifications.add(Classification.builder()
-                        .typeName(classificationName)
+            // Append all the extra Atlan tags (including any propagation overrides)
+            for (String atlanTagName : atlanTagNames) {
+                replacementAtlanTags.add(AtlanTag.builder()
+                        .typeName(atlanTagName)
                         .propagate(propagate)
                         .removePropagationsOnEntityDelete(removePropagationsOnDelete)
                         .restrictPropagationThroughLineage(restrictLineagePropagation)
                         .build());
             }
             AssetBuilder<?, ?> minimal = existing.trimToRequired();
-            return replaceClassifications(
-                    minimal.classifications(replacementClassifications).build());
+            return replaceAtlanTags(
+                    minimal.atlanTags(replacementAtlanTags).build());
         }
         return null;
     }
 
     /**
-     * Add classifications to an asset.
+     * Add Atlan tags to an asset.
      *
      * @param typeName type of the asset
      * @param qualifiedName of the asset
-     * @param classificationNames human-readable names of the classifications to add
-     * @throws AtlanException on any API problems, or if any of the classifications already exist on the asset
-     * @deprecated see {@link #appendClassifications(String, String, List)} instead
+     * @param atlanTagNames human-readable names of the Atlan tags to add
+     * @throws AtlanException on any API problems, or if any of the Atlan tags already exist on the asset
+     * @deprecated see {@link #appendAtlanTags(String, String, List)} instead
      */
     @Deprecated
-    protected static void addClassifications(String typeName, String qualifiedName, List<String> classificationNames)
+    protected static void addAtlanTags(String typeName, String qualifiedName, List<String> atlanTagNames)
             throws AtlanException {
-        EntityUniqueAttributesEndpoint.addClassifications(typeName, qualifiedName, classificationNames);
+        EntityUniqueAttributesEndpoint.addAtlanTags(typeName, qualifiedName, atlanTagNames);
     }
 
     /**
-     * Add classifications to an asset.
+     * Add Atlan tags to an asset.
      *
      * @param typeName type of the asset
      * @param qualifiedName of the asset
-     * @param classificationNames human-readable names of the classifications to add
-     * @param propagate whether to propagate the classification (true) or not (false)
-     * @param removePropagationsOnDelete whether to remove the propagated classifications when the classification is removed from this asset (true) or not (false)
+     * @param atlanTagNames human-readable names of the Atlan tags to add
+     * @param propagate whether to propagate the Atlan tag (true) or not (false)
+     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
      * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
-     * @throws AtlanException on any API problems, or if any of the classifications already exist on the asset
-     * @deprecated see {@link #appendClassifications(String, String, List, boolean, boolean, boolean)} instead
+     * @throws AtlanException on any API problems, or if any of the Atlan tags already exist on the asset
+     * @deprecated see {@link #appendAtlanTags(String, String, List, boolean, boolean, boolean)} instead
      */
     @Deprecated
-    protected static void addClassifications(
+    protected static void addAtlanTags(
             String typeName,
             String qualifiedName,
-            List<String> classificationNames,
+            List<String> atlanTagNames,
             boolean propagate,
             boolean removePropagationsOnDelete,
             boolean restrictLineagePropagation)
             throws AtlanException {
-        EntityUniqueAttributesEndpoint.addClassifications(
+        EntityUniqueAttributesEndpoint.addAtlanTags(
                 typeName,
                 qualifiedName,
-                classificationNames,
+                atlanTagNames,
                 propagate,
                 removePropagationsOnDelete,
                 restrictLineagePropagation);
     }
 
     /**
-     * Remove a classification from an asset.
+     * Remove an Atlan tag from an asset.
      *
      * @param typeName type of the asset
      * @param qualifiedName of the asset
-     * @param classificationName human-readable name of the classifications to remove
-     * @throws AtlanException on any API problems, or if any of the classification does not exist on the asset
+     * @param atlanTagName human-readable name of the Atlan tags to remove
+     * @throws AtlanException on any API problems, or if any of the Atlan tag does not exist on the asset
      */
-    protected static void removeClassification(String typeName, String qualifiedName, String classificationName)
+    protected static void removeAtlanTag(String typeName, String qualifiedName, String atlanTagName)
             throws AtlanException {
-        EntityUniqueAttributesEndpoint.removeClassification(typeName, qualifiedName, classificationName, true);
+        EntityUniqueAttributesEndpoint.removeAtlanTag(typeName, qualifiedName, atlanTagName, true);
     }
 
     /**
@@ -534,7 +536,7 @@
         return null;
     }
 
-    private static Asset replaceClassifications(Asset asset) throws AtlanException {
+    private static Asset replaceAtlanTags(Asset asset) throws AtlanException {
         AssetMutationResponse response = EntityBulkEndpoint.upsert(asset, true);
         if (response != null && !response.getUpdatedAssets().isEmpty()) {
             return response.getUpdatedAssets().get(0);
@@ -824,13 +826,13 @@
             return self();
         }
 
-        /** Remove the classifications from the asset, if the asset is classified with any. */
-        public B removeClassifications() {
-            // It is sufficient to simply exclude classifications from a request in order
-            // for them to be removed, as long as the "replaceClassifications" flag is set to
-            // true (which it must be for any update to work to classifications anyway)
-            clearClassifications();
-            clearClassificationNames();
+        /** Remove the Atlan tags from the asset, if the asset is classified with any. */
+        public B removeAtlanTags() {
+            // It is sufficient to simply exclude Atlan tags from a request in order
+            // for them to be removed, as long as the "replaceAtlanTags" flag is set to
+            // true (which it must be for any update to work to Atlan tags anyway)
+            clearAtlanTags();
+            clearAtlanTagNames();
             return self();
         }
 

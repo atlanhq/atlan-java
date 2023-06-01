@@ -7,7 +7,7 @@ import lombok.Getter;
 
 public enum PlaybookActionType implements AtlanEnum {
     METADATA_UPDATE("metadata-update"),
-    BULK_CLASSIFICATION("bulk-classification");
+    BULK_ATLAN_TAG("bulk-classification");
 
     @JsonValue
     @Getter(onMethod_ = {@Override})

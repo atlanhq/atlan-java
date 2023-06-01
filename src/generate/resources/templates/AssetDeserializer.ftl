@@ -2,13 +2,13 @@
 /* Copyright 2022- Atlan Pte. Ltd. */
 package com.atlan.serde;
 
-import com.atlan.cache.ClassificationCache;
+import com.atlan.cache.AtlanTagCache;
 import com.atlan.cache.CustomMetadataCache;
 import com.atlan.cache.ReflectionCache;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.assets.*;
-import com.atlan.model.core.Classification;
+import com.atlan.model.core.AtlanTag;
 import com.atlan.model.core.CustomMetadataAttributes;
 import com.atlan.util.JacksonUtils;
 import com.atlan.util.StringUtils;
@@ -69,7 +69,7 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
      * @return the deserialized asset
      * @throws IOException on any issues parsing the JSON
      */
-    @SuppressWarnings("deprecation") // Suppress deprecation notice on use of classificationNames builder
+    @SuppressWarnings("deprecation") // Suppress deprecation notice on use of atlanTagNames builder
     Asset deserialize(JsonNode root) throws IOException {
 
         JsonNode attributes = root.get("attributes");
@@ -117,10 +117,10 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
                 .updateTime(JacksonUtils.deserializeLong(root, "updateTime"))
                 .deleteHandler(JacksonUtils.deserializeString(root, "deleteHandler"))
                 .isIncomplete(JacksonUtils.deserializeBoolean(root, "isIncomplete"));
-        Set<Classification> classifications =
+        Set<AtlanTag> atlanTags =
                 JacksonUtils.deserializeObject(root, "classifications", new TypeReference<>() {});
-        if (classifications != null) {
-            builder.classifications(classifications);
+        if (atlanTags != null) {
+            builder.atlanTags(atlanTags);
         }
         TreeSet<String> meaningNames = JacksonUtils.deserializeObject(root, "meaningNames", new TypeReference<>() {});
         if (meaningNames != null) {
@@ -224,11 +224,11 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
             // Translate these IDs in to human-readable names
             try {
                 for (JsonNode element : classificationNames) {
-                    String name = ClassificationCache.getNameForId(element.asText());
+                    String name = AtlanTagCache.getNameForId(element.asText());
                     clsNames.add(name);
                 }
             } catch (AtlanException e) {
-                throw new IOException("Unable to deserialize classification name.", e);
+                throw new IOException("Unable to deserialize Atlan tag name.", e);
             }
         }
 
@@ -242,7 +242,7 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
             builder.customMetadataSets(cm);
         }
         if (clsNames != null) {
-            builder.classificationNames(clsNames);
+            builder.atlanTagNames(clsNames);
         }
 
         return builder.build();
@@ -319,14 +319,14 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
                 Method fromValue = paramClass.getMethod("fromValue", String.class);
                 method.invoke(builder, fromValue.invoke(null, primitive.asText()));
             } else {
-                if (fieldName.equals("mappedClassificationName")) {
+                if (fieldName.equals("mappedAtlanTagName")) {
                     String mappedName;
                     try {
-                        mappedName = ClassificationCache.getNameForId(primitive.asText());
+                        mappedName = AtlanTagCache.getNameForId(primitive.asText());
                     } catch (NotFoundException e) {
                         mappedName = Serde.DELETED_AUDIT_OBJECT;
                     } catch (AtlanException e) {
-                        throw new IOException("Unable to deserialize mappedClassificationName.", e);
+                        throw new IOException("Unable to deserialize mappedAtlanTagName.", e);
                     }
                     method.invoke(builder, mappedName);
                 } else {

@@ -41,7 +41,7 @@ public class Purpose extends AtlanObject {
     /** Description of the purpose. */
     String description;
 
-    /** Unique identifiers (internal hashed-strings) of classifications that are associated with the purpose. */
+    /** Unique identifiers (internal hashed-strings) of Atlan tags that are associated with the purpose. */
     @Singular
     @JsonInclude(JsonInclude.Include.ALWAYS)
     SortedSet<String> tags;
@@ -94,21 +94,20 @@ public class Purpose extends AtlanObject {
      * Builds the minimal object necessary to create a purpose.
      *
      * @param name of the purpose, as it should appear in the UI
-     * @param classifications list of human-readable classification names to include in the purpose (must be at least one)
+     * @param atlanTags list of human-readable Atlan tag names to include in the purpose (must be at least one)
      * @return the minimal request necessary to update the purpose, as a builder
-     * @throws InvalidRequestException if no classifications have been provided for the purpose
+     * @throws InvalidRequestException if no Atlan tags have been provided for the purpose
      */
-    public static PurposeBuilder<?, ?> creator(String name, List<String> classifications)
-            throws InvalidRequestException {
-        if (classifications == null || classifications.isEmpty()) {
-            throw new InvalidRequestException(ErrorCode.NO_CLASSIFICATION_FOR_PURPOSE);
+    public static PurposeBuilder<?, ?> creator(String name, List<String> atlanTags) throws InvalidRequestException {
+        if (atlanTags == null || atlanTags.isEmpty()) {
+            throw new InvalidRequestException(ErrorCode.NO_ATLAN_TAG_FOR_PURPOSE);
         }
         return Purpose.builder()
                 .id(UUID.randomUUID().toString())
                 .name(name)
                 .displayName(name)
                 .description("")
-                .tags(classifications);
+                .tags(atlanTags);
     }
 
     /**
@@ -134,7 +133,7 @@ public class Purpose extends AtlanObject {
             throw new InvalidRequestException(ErrorCode.MISSING_PURPOSE_ID);
         }
         if (this.tags == null || this.tags.isEmpty()) {
-            throw new InvalidRequestException(ErrorCode.NO_CLASSIFICATION_FOR_PURPOSE);
+            throw new InvalidRequestException(ErrorCode.NO_ATLAN_TAG_FOR_PURPOSE);
         }
         validatePolicySubjects();
         // TODO: validate policies refer to users / groups that exist

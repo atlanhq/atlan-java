@@ -5,6 +5,7 @@ package com.atlan.model.search;
 import com.atlan.api.IndexSearchEndpoint;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.core.AtlanObject;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -43,9 +44,10 @@ public class IndexSearchRequest extends AtlanObject {
     @Builder.Default
     Boolean excludeMeanings = false;
 
-    /** Whether to include classifications for assets (false) or not (true). */
+    /** Whether to include Atlan tags for assets (false) or not (true). */
     @Builder.Default
-    Boolean excludeClassifications = false;
+    @JsonProperty("excludeClassifications")
+    Boolean excludeAtlanTags = false;
 
     /** Run the search. */
     public IndexSearchResponse search() throws AtlanException {

@@ -15,12 +15,12 @@ public class CustomMetadataRequest extends AtlanRequest {
     public static final String REQUEST_TYPE = "bm_attribute";
     public static final String SOURCE_TYPE = "static";
 
-    /** Fixed requestType for classifications. */
+    /** Fixed requestType for custom metadata. */
     @Getter(onMethod_ = {@Override})
     @Builder.Default
     String requestType = REQUEST_TYPE;
 
-    /** Fixed sourceType for classifications. */
+    /** Fixed sourceType for custom metadata. */
     @Getter(onMethod_ = {@Override})
     @Builder.Default
     String sourceType = SOURCE_TYPE;

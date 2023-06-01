@@ -3,6 +3,7 @@
 package com.atlan.model.search;
 
 import com.atlan.model.core.AtlanObject;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -29,8 +30,9 @@ public class SearchParameters extends AtlanObject {
     /** Whether the term relationships for assets are excluded from the results (true) or not (false). */
     Boolean excludeMeanings;
 
-    /** Whether the classifications of assets are excluded from the results (true) or not (false). */
-    Boolean excludeClassifications;
+    /** Whether the Atlan tags of assets are excluded from the results (true) or not (false). */
+    @JsonProperty("excludeClassifications")
+    Boolean excludeAtlanTags;
 
     /** TBC */
     Boolean allowDeletedRelations;

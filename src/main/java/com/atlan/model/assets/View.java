@@ -356,99 +356,97 @@ public class View extends SQL {
     }
 
     /**
-     * Add classifications to a View, without replacing existing classifications linked to the View.
-     * Note: this operation must make two API calls — one to retrieve the View's existing classifications,
-     * and a second to append the new classifications.
+     * Add Atlan tags to a View, without replacing existing Atlan tags linked to the View.
+     * Note: this operation must make two API calls — one to retrieve the View's existing Atlan tags,
+     * and a second to append the new Atlan tags.
      *
      * @param qualifiedName of the View
-     * @param classificationNames human-readable names of the classifications to add
+     * @param atlanTagNames human-readable names of the Atlan tags to add
      * @throws AtlanException on any API problems
      * @return the updated View
      */
-    public static View appendClassifications(String qualifiedName, List<String> classificationNames)
-            throws AtlanException {
-        return (View) Asset.appendClassifications(TYPE_NAME, qualifiedName, classificationNames);
+    public static View appendAtlanTags(String qualifiedName, List<String> atlanTagNames) throws AtlanException {
+        return (View) Asset.appendAtlanTags(TYPE_NAME, qualifiedName, atlanTagNames);
     }
 
     /**
-     * Add classifications to a View, without replacing existing classifications linked to the View.
-     * Note: this operation must make two API calls — one to retrieve the View's existing classifications,
-     * and a second to append the new classifications.
+     * Add Atlan tags to a View, without replacing existing Atlan tags linked to the View.
+     * Note: this operation must make two API calls — one to retrieve the View's existing Atlan tags,
+     * and a second to append the new Atlan tags.
      *
      * @param qualifiedName of the View
-     * @param classificationNames human-readable names of the classifications to add
-     * @param propagate whether to propagate the classification (true) or not (false)
-     * @param removePropagationsOnDelete whether to remove the propagated classifications when the classification is removed from this asset (true) or not (false)
+     * @param atlanTagNames human-readable names of the Atlan tags to add
+     * @param propagate whether to propagate the Atlan tag (true) or not (false)
+     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
      * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
      * @throws AtlanException on any API problems
      * @return the updated View
      */
-    public static View appendClassifications(
+    public static View appendAtlanTags(
             String qualifiedName,
-            List<String> classificationNames,
+            List<String> atlanTagNames,
             boolean propagate,
             boolean removePropagationsOnDelete,
             boolean restrictLineagePropagation)
             throws AtlanException {
-        return (View) Asset.appendClassifications(
+        return (View) Asset.appendAtlanTags(
                 TYPE_NAME,
                 qualifiedName,
-                classificationNames,
+                atlanTagNames,
                 propagate,
                 removePropagationsOnDelete,
                 restrictLineagePropagation);
     }
 
     /**
-     * Add classifications to a View.
+     * Add Atlan tags to a View.
      *
      * @param qualifiedName of the View
-     * @param classificationNames human-readable names of the classifications to add
-     * @throws AtlanException on any API problems, or if any of the classifications already exist on the View
-     * @deprecated see {@link #appendClassifications(String, List)} instead
+     * @param atlanTagNames human-readable names of the Atlan tags to add
+     * @throws AtlanException on any API problems, or if any of the Atlan tags already exist on the View
+     * @deprecated see {@link #appendAtlanTags(String, List)} instead
      */
     @Deprecated
-    public static void addClassifications(String qualifiedName, List<String> classificationNames)
-            throws AtlanException {
-        Asset.addClassifications(TYPE_NAME, qualifiedName, classificationNames);
+    public static void addAtlanTags(String qualifiedName, List<String> atlanTagNames) throws AtlanException {
+        Asset.addAtlanTags(TYPE_NAME, qualifiedName, atlanTagNames);
     }
 
     /**
-     * Add classifications to a View.
+     * Add Atlan tags to a View.
      *
      * @param qualifiedName of the View
-     * @param classificationNames human-readable names of the classifications to add
-     * @param propagate whether to propagate the classification (true) or not (false)
-     * @param removePropagationsOnDelete whether to remove the propagated classifications when the classification is removed from this asset (true) or not (false)
+     * @param atlanTagNames human-readable names of the Atlan tags to add
+     * @param propagate whether to propagate the Atlan tag (true) or not (false)
+     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
      * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
-     * @throws AtlanException on any API problems, or if any of the classifications already exist on the View
-     * @deprecated see {@link #appendClassifications(String, List, boolean, boolean, boolean)} instead
+     * @throws AtlanException on any API problems, or if any of the Atlan tags already exist on the View
+     * @deprecated see {@link #appendAtlanTags(String, List, boolean, boolean, boolean)} instead
      */
     @Deprecated
-    public static void addClassifications(
+    public static void addAtlanTags(
             String qualifiedName,
-            List<String> classificationNames,
+            List<String> atlanTagNames,
             boolean propagate,
             boolean removePropagationsOnDelete,
             boolean restrictLineagePropagation)
             throws AtlanException {
-        Asset.addClassifications(
+        Asset.addAtlanTags(
                 TYPE_NAME,
                 qualifiedName,
-                classificationNames,
+                atlanTagNames,
                 propagate,
                 removePropagationsOnDelete,
                 restrictLineagePropagation);
     }
 
     /**
-     * Remove a classification from a View.
+     * Remove an Atlan tag from a View.
      *
      * @param qualifiedName of the View
-     * @param classificationName human-readable name of the classification to remove
-     * @throws AtlanException on any API problems, or if the classification does not exist on the View
+     * @param atlanTagName human-readable name of the Atlan tag to remove
+     * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the View
      */
-    public static void removeClassification(String qualifiedName, String classificationName) throws AtlanException {
-        Asset.removeClassification(TYPE_NAME, qualifiedName, classificationName);
+    public static void removeAtlanTag(String qualifiedName, String atlanTagName) throws AtlanException {
+        Asset.removeAtlanTag(TYPE_NAME, qualifiedName, atlanTagName);
     }
 }

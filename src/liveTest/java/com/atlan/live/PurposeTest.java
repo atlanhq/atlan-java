@@ -8,7 +8,7 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.admin.*;
 import com.atlan.model.enums.*;
-import com.atlan.model.typedefs.ClassificationDef;
+import com.atlan.model.typedefs.AtlanTagDef;
 import java.util.List;
 import java.util.Set;
 import org.testng.annotations.Test;
@@ -19,7 +19,7 @@ public class PurposeTest extends AtlanLiveTest {
 
     public static final String PURPOSE_NAME = PREFIX;
 
-    public static final String CLS_NAME = PREFIX;
+    public static final String ATLAN_TAG_NAME = PREFIX;
 
     public static String purposeGuid = null;
 
@@ -30,19 +30,19 @@ public class PurposeTest extends AtlanLiveTest {
                 () -> Purpose.creator(PURPOSE_NAME, null).build().create());
     }
 
-    @Test(groups = {"purpose.create.classification"})
-    void createClassification() throws AtlanException {
-        ClassificationDef cls = ClassificationDef.creator(CLS_NAME, AtlanClassificationColor.GREEN)
-                .build();
-        ClassificationDef response = cls.create();
+    @Test(groups = {"purpose.create.atlantag"})
+    void createAtlanTag() throws AtlanException {
+        AtlanTagDef cls =
+                AtlanTagDef.creator(ATLAN_TAG_NAME, AtlanTagColor.GREEN).build();
+        AtlanTagDef response = cls.create();
         assertNotNull(response);
     }
 
     @Test(
             groups = {"purpose.create.purposes"},
-            dependsOnGroups = {"purpose.create.classification"})
+            dependsOnGroups = {"purpose.create.atlantag"})
     void createPurposes() throws AtlanException {
-        Purpose purpose = Purpose.creator(PURPOSE_NAME, List.of(CLS_NAME))
+        Purpose purpose = Purpose.creator(PURPOSE_NAME, List.of(ATLAN_TAG_NAME))
                 .description("Example purpose for testing purposes.")
                 .build();
         Purpose result = purpose.create();
@@ -64,7 +64,7 @@ public class PurposeTest extends AtlanLiveTest {
         assertEquals(one.getId(), purposeGuid);
         assertNotNull(one.getTags());
         assertEquals(one.getTags().size(), 1);
-        assertTrue(one.getTags().contains(CLS_NAME));
+        assertTrue(one.getTags().contains(ATLAN_TAG_NAME));
     }
 
     @Test(
@@ -141,10 +141,10 @@ public class PurposeTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"purpose.purge.classifications"},
+            groups = {"purpose.purge.atlantags"},
             dependsOnGroups = {"purpose.create.*", "purpose.update.*", "purpose.read.*", "purpose.purge.purposes"},
             alwaysRun = true)
-    void purgeClassifications() throws AtlanException {
-        ClassificationDef.purge(CLS_NAME);
+    void purgeAtlanTags() throws AtlanException {
+        AtlanTagDef.purge(ATLAN_TAG_NAME);
     }
 }

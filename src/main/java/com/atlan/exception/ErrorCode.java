@@ -46,16 +46,16 @@ public enum ErrorCode implements ExceptionMessageSet {
             "ATLAN-JAVA-400-005",
             "No ID was provided when attempting to retrieve a role.",
             "You must provide an ID of a role when attempting to retrieve one."),
-    MISSING_CLASSIFICATION_NAME(
+    MISSING_ATLAN_TAG_NAME(
             400,
             "ATLAN-JAVA-400-006",
-            "No name was provided when attempting to retrieve a classification.",
-            "You must provide a name of a classification when attempting to retrieve one."),
-    MISSING_CLASSIFICATION_ID(
+            "No name was provided when attempting to retrieve an Atlan tag.",
+            "You must provide a name of an Atlan tag when attempting to retrieve one."),
+    MISSING_ATLAN_TAG_ID(
             400,
             "ATLAN-JAVA-400-007",
-            "No ID was provided when attempting to retrieve a classification.",
-            "You must provide an ID of a classification when attempting to retrieve one."),
+            "No ID was provided when attempting to retrieve an Atlan tag.",
+            "You must provide an ID of an Atlan tag when attempting to retrieve one."),
     MISSING_CM_NAME(
             400,
             "ATLAN-JAVA-400-008",
@@ -95,12 +95,12 @@ public enum ErrorCode implements ExceptionMessageSet {
             400,
             "ATLAN-JAVA-400-015",
             "Unable to create new type definitions of category: {0}.",
-            "Atlan currently only allows you to create type definitions for new custom metadata, enumerations and classifications."),
+            "Atlan currently only allows you to create type definitions for new custom metadata, enumerations and Atlan tags."),
     UNABLE_TO_UPDATE_TYPEDEF_CATEGORY(
             400,
             "ATLAN-JAVA-400-016",
             "Unable to update type definitions of category: {0}.",
-            "Atlan currently only allows you to update type definitions for custom metadata, enumerations and classifications."),
+            "Atlan currently only allows you to update type definitions for custom metadata, enumerations and Atlan tags."),
     MISSING_GUID_FOR_DELETE(
             400,
             "ATLAN-JAVA-400-017",
@@ -141,11 +141,11 @@ public enum ErrorCode implements ExceptionMessageSet {
             "ATLAN-JAVA-400-024",
             "No ID was provided when attempting to update the purpose.",
             "You must provide an ID when attempting to update a purpose."),
-    NO_CLASSIFICATION_FOR_PURPOSE(
+    NO_ATLAN_TAG_FOR_PURPOSE(
             400,
             "ATLAN-JAVA-400-025",
-            "No classifications provided for the purpose.",
-            "You must specify at least one classification to create a new purpose."),
+            "No Atlan tags provided for the purpose.",
+            "You must specify at least one Atlan tag to create a new purpose."),
     NO_USERS_FOR_POLICY(
             400,
             "ATLAN-JAVA-400-026",
@@ -256,16 +256,16 @@ public enum ErrorCode implements ExceptionMessageSet {
             "ATLAN-JAVA-404-005",
             "Role with GUID {0} does not exist.",
             "Verify the role GUID provided is a valid role GUID."),
-    CLASSIFICATION_NOT_FOUND_BY_NAME(
+    ATLAN_TAG_NOT_FOUND_BY_NAME(
             404,
             "ATLAN-JAVA-404-006",
-            "Classification with name {0} does not exist.",
-            "Verify the classification name provided is a valid classification name. This should be the human-readable name of the classification."),
-    CLASSIFICATION_NOT_FOUND_BY_ID(
+            "Atlan tag with name {0} does not exist.",
+            "Verify the Atlan tag name provided is a valid Atlan tag name. This should be the human-readable name of the Atlan tag."),
+    ATLAN_TAG_NOT_FOUND_BY_ID(
             404,
             "ATLAN-JAVA-404-007",
-            "Classification with ID {0} does not exist.",
-            "Verify the classification ID provided is a valid classification ID. This should be the Atlan-internal hashed string representation."),
+            "Atlan tag with ID {0} does not exist.",
+            "Verify the Atlan tag ID provided is a valid Atlan tag ID. This should be the Atlan-internal hashed string representation."),
     CM_NOT_FOUND_BY_NAME(
             404,
             "ATLAN-JAVA-404-008",

@@ -14,7 +14,7 @@ import com.atlan.exception.NotFoundException;
 import com.atlan.model.admin.AtlanGroup;
 import com.atlan.model.assets.*;
 import com.atlan.model.core.AssetMutationResponse;
-import com.atlan.model.core.Classification;
+import com.atlan.model.core.AtlanTag;
 import com.atlan.model.enums.*;
 import com.atlan.model.search.*;
 import com.atlan.net.HttpClient;
@@ -53,8 +53,8 @@ public class SQLAssetTest extends AtlanLiveTest {
     public static final String COLUMN_NAME7 = PREFIX + "_col7";
     public static final String COLUMN_NAME8 = PREFIX + "_col8";
 
-    private static final String CLASSIFICATION_NAME1 = PREFIX + "1";
-    private static final String CLASSIFICATION_NAME2 = PREFIX + "2";
+    private static final String ATLAN_TAG_NAME1 = PREFIX + "1";
+    private static final String ATLAN_TAG_NAME2 = PREFIX + "2";
     private static final String TERM_NAME1 = PREFIX + "1";
     private static final String TERM_NAME2 = PREFIX + "2";
 
@@ -854,100 +854,100 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertNull(cleared.getUserDescription());
     }
 
-    @Test(groups = {"asset.create.classifications"})
-    void createClassifications() throws AtlanException {
-        ClassificationTest.createClassification(CLASSIFICATION_NAME1);
-        ClassificationTest.createClassification(CLASSIFICATION_NAME2);
+    @Test(groups = {"asset.create.atlantags"})
+    void createAtlanTags() throws AtlanException {
+        AtlanTagTest.createAtlanTag(ATLAN_TAG_NAME1);
+        AtlanTagTest.createAtlanTag(ATLAN_TAG_NAME2);
     }
 
     @Test(
-            groups = {"asset.update.column.classification"},
-            dependsOnGroups = {"asset.create.classifications", "asset.update.column.userDescription.x"})
-    void updateClassification() throws AtlanException {
+            groups = {"asset.update.column.atlantag"},
+            dependsOnGroups = {"asset.create.atlantags", "asset.update.column.userDescription.x"})
+    void updateAtlanTag() throws AtlanException {
         Column toUpdate = Column.updater(column5.getQualifiedName(), COLUMN_NAME5)
-                .classification(Classification.of(CLASSIFICATION_NAME1))
+                .atlanTag(AtlanTag.of(ATLAN_TAG_NAME1))
                 .build();
         AssetMutationResponse response = toUpdate.upsert(true);
         Asset one = validateSingleUpdate(response);
         assertTrue(one instanceof Column);
         Column column = (Column) one;
         validateUpdatedColumn(column);
-        validateHasClassifications(column, Set.of(CLASSIFICATION_NAME1));
+        validateHasAtlanTags(column, Set.of(ATLAN_TAG_NAME1));
     }
 
     @Test(
-            groups = {"asset.update.column.classification.x"},
-            dependsOnGroups = {"asset.update.column.classification"})
-    void updateClassificationX() throws AtlanException {
+            groups = {"asset.update.column.atlantag.x"},
+            dependsOnGroups = {"asset.update.column.atlantag"})
+    void updateAtlanTagX() throws AtlanException {
         Column toUpdate = Column.updater(column5.getQualifiedName(), COLUMN_NAME5)
-                .removeClassifications()
+                .removeAtlanTags()
                 .build();
         AssetMutationResponse response = toUpdate.upsert(true);
         Asset one = validateSingleUpdate(response);
         assertTrue(one instanceof Column);
         Column column = (Column) one;
         validateUpdatedColumn(column);
-        validateHasClassifications(column, Collections.emptySet());
+        validateHasAtlanTags(column, Collections.emptySet());
     }
 
     @Test(
-            groups = {"asset.update.column.addClassifications"},
-            dependsOnGroups = {"asset.update.column.classification.x"})
-    void updateColumnAddClassifications() throws AtlanException {
-        Column.appendClassifications(column5.getQualifiedName(), List.of(CLASSIFICATION_NAME1, CLASSIFICATION_NAME2));
+            groups = {"asset.update.column.addAtlanTags"},
+            dependsOnGroups = {"asset.update.column.atlantag.x"})
+    void updateColumnAddAtlanTags() throws AtlanException {
+        Column.appendAtlanTags(column5.getQualifiedName(), List.of(ATLAN_TAG_NAME1, ATLAN_TAG_NAME2));
         Column column = Column.retrieveByGuid(column5.getGuid());
         validateCompleteColumn(column);
-        validateHasClassifications(column, Set.of(CLASSIFICATION_NAME1, CLASSIFICATION_NAME2));
+        validateHasAtlanTags(column, Set.of(ATLAN_TAG_NAME1, ATLAN_TAG_NAME2));
     }
 
     @Test(
-            groups = {"asset.update.column.addClassificationDuplicate"},
-            dependsOnGroups = {"asset.update.column.addClassifications"})
+            groups = {"asset.update.column.addAtlanTagDuplicate"},
+            dependsOnGroups = {"asset.update.column.addAtlanTags"})
     @SuppressWarnings("deprecation")
-    void updateColumnAddClassificationDuplicate() {
+    void updateColumnAddAtlanTagDuplicate() {
         assertThrows(
                 InvalidRequestException.class,
-                () -> Column.addClassifications(column5.getQualifiedName(), List.of(CLASSIFICATION_NAME1)));
+                () -> Column.addAtlanTags(column5.getQualifiedName(), List.of(ATLAN_TAG_NAME1)));
     }
 
     @Test(
-            groups = {"asset.update.column.removeClassification"},
-            dependsOnGroups = {"asset.update.column.addClassificationDuplicate"})
-    void updateColumnRemoveClassification() throws AtlanException {
-        Column.removeClassification(column5.getQualifiedName(), CLASSIFICATION_NAME2);
+            groups = {"asset.update.column.removeAtlanTag"},
+            dependsOnGroups = {"asset.update.column.addAtlanTagDuplicate"})
+    void updateColumnRemoveAtlanTag() throws AtlanException {
+        Column.removeAtlanTag(column5.getQualifiedName(), ATLAN_TAG_NAME2);
         Column column = Column.retrieveByGuid(column5.getGuid());
         validateCompleteColumn(column);
-        validateHasClassifications(column, Set.of(CLASSIFICATION_NAME1));
+        validateHasAtlanTags(column, Set.of(ATLAN_TAG_NAME1));
     }
 
     @Test(
-            groups = {"asset.update.column.removeClassificationNonexistent"},
-            dependsOnGroups = {"asset.update.column.removeClassification"})
-    void updateColumnRemoveClassificationNonexistent() {
+            groups = {"asset.update.column.removeAtlanTagNonexistent"},
+            dependsOnGroups = {"asset.update.column.removeAtlanTag"})
+    void updateColumnRemoveAtlanTagNonexistent() {
         assertThrows(
                 InvalidRequestException.class,
-                () -> Column.removeClassification(column5.getQualifiedName(), CLASSIFICATION_NAME2));
+                () -> Column.removeAtlanTag(column5.getQualifiedName(), ATLAN_TAG_NAME2));
     }
 
     @Test(
-            groups = {"asset.update.column.addClassifications.again"},
-            dependsOnGroups = {"asset.update.column.removeClassificationNonexistent"})
-    void updateColumnAddClassificationsAgain() throws AtlanException {
-        Column.appendClassifications(column5.getQualifiedName(), List.of(CLASSIFICATION_NAME2));
+            groups = {"asset.update.column.addAtlanTags.again"},
+            dependsOnGroups = {"asset.update.column.removeAtlanTagNonexistent"})
+    void updateColumnAddAtlanTagsAgain() throws AtlanException {
+        Column.appendAtlanTags(column5.getQualifiedName(), List.of(ATLAN_TAG_NAME2));
         Column column = Column.retrieveByGuid(column5.getGuid());
         validateCompleteColumn(column);
-        validateHasClassifications(column, Set.of(CLASSIFICATION_NAME1, CLASSIFICATION_NAME2));
+        validateHasAtlanTags(column, Set.of(ATLAN_TAG_NAME1, ATLAN_TAG_NAME2));
     }
 
     @Test(
-            groups = {"asset.search.byClassification"},
-            dependsOnGroups = {"asset.update.column.addClassifications.again"})
-    void searchByAnyClassification() throws AtlanException, InterruptedException {
+            groups = {"asset.search.byAtlanTag"},
+            dependsOnGroups = {"asset.update.column.addAtlanTags.again"})
+    void searchByAnyAtlanTag() throws AtlanException, InterruptedException {
         Query combined = CompoundQuery.builder()
                 .must(beActive())
                 .must(beOfType(Column.TYPE_NAME))
                 .must(have(KeywordFields.QUALIFIED_NAME).startingWith(connection.getQualifiedName()))
-                .must(beDirectlyClassified())
+                .must(beDirectlyTagged())
                 .build()
                 ._toQuery();
 
@@ -981,13 +981,13 @@ public class SQLAssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"asset.search.byClassification"},
-            dependsOnGroups = {"asset.update.column.addClassifications.again"})
-    void searchBySpecificClassification() throws AtlanException, InterruptedException {
+            groups = {"asset.search.byAtlanTag"},
+            dependsOnGroups = {"asset.update.column.addAtlanTags.again"})
+    void searchBySpecificAtlanTag() throws AtlanException, InterruptedException {
         Query combined = CompoundQuery.builder()
                 .must(beActive())
                 .must(beOfType(Column.TYPE_NAME))
-                .must(beClassifiedByAtLeastOneOf(List.of(CLASSIFICATION_NAME1, CLASSIFICATION_NAME2)))
+                .must(beTaggedByAtLeastOneOf(List.of(ATLAN_TAG_NAME1, ATLAN_TAG_NAME2)))
                 .build()
                 ._toQuery();
 
@@ -1019,26 +1019,25 @@ public class SQLAssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"asset.update.column.removeClassifications"},
-            dependsOnGroups = {"asset.search.byClassification"})
-    void updateColumnRemoveClassifications() throws AtlanException {
+            groups = {"asset.update.column.removeAtlanTags"},
+            dependsOnGroups = {"asset.search.byAtlanTag"})
+    void updateColumnRemoveAtlanTags() throws AtlanException {
         Column column = Column.updater(column5.getQualifiedName(), COLUMN_NAME5)
-                .removeClassifications()
+                .removeAtlanTags()
                 .build();
         AssetMutationResponse response = column.upsert(true);
         Asset one = validateSingleUpdate(response);
         assertTrue(one instanceof Column);
         column = (Column) one;
         validateUpdatedColumn(column);
-        validateHasClassifications(column, Collections.emptySet());
+        validateHasAtlanTags(column, Collections.emptySet());
     }
 
-    private void validateHasClassifications(Column column, Set<String> names) {
-        Set<Classification> classifications = column.getClassifications();
-        assertNotNull(classifications);
-        assertEquals(classifications.size(), names.size());
-        Set<String> typeNames =
-                classifications.stream().map(Classification::getTypeName).collect(Collectors.toSet());
+    private void validateHasAtlanTags(Column column, Set<String> names) {
+        Set<AtlanTag> tags = column.getAtlanTags();
+        assertNotNull(tags);
+        assertEquals(tags.size(), names.size());
+        Set<String> typeNames = tags.stream().map(AtlanTag::getTypeName).collect(Collectors.toSet());
         assertNotNull(typeNames);
         assertEquals(typeNames, names);
     }
@@ -1052,7 +1051,7 @@ public class SQLAssetTest extends AtlanLiveTest {
 
     @Test(
             groups = {"asset.update.column.assignedTerms"},
-            dependsOnGroups = {"asset.create.glossary", "asset.update.column.removeClassifications"})
+            dependsOnGroups = {"asset.create.glossary", "asset.update.column.removeAtlanTags"})
     void updateAssignedTerm() throws AtlanException {
         Column toUpdate = Column.updater(column5.getQualifiedName(), COLUMN_NAME5)
                 .assignedTerm(GlossaryTerm.refByGuid(term1.getGuid()))
@@ -1454,12 +1453,12 @@ public class SQLAssetTest extends AtlanLiveTest {
 
         one = audits.get(22);
         assertNotNull(one);
-        assertEquals(one.getAction(), AuditActionType.CLASSIFICATION_ADD);
+        assertEquals(one.getAction(), AuditActionType.ATLAN_TAG_ADD);
         detail = one.getDetail();
-        assertTrue(detail instanceof Classification);
-        Classification classification = (Classification) detail;
-        assertEquals(classification.getTypeName(), CLASSIFICATION_NAME1);
-        assertEquals(classification.getEntityGuid(), column5.getGuid());
+        assertTrue(detail instanceof AtlanTag);
+        AtlanTag tag = (AtlanTag) detail;
+        assertEquals(tag.getTypeName(), ATLAN_TAG_NAME1);
+        assertEquals(tag.getEntityGuid(), column5.getGuid());
 
         one = audits.get(21);
         assertNotNull(one);
@@ -1468,16 +1467,16 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertTrue(detail instanceof Column);
         column = (Column) detail;
         validateUpdatedColumn(column);
-        assertNotNull(column.getClassifications());
-        assertEquals(column.getClassifications().size(), 1);
+        assertNotNull(column.getAtlanTags());
+        assertEquals(column.getAtlanTags().size(), 1);
 
         one = audits.get(20);
         assertNotNull(one);
-        assertEquals(one.getAction(), AuditActionType.CLASSIFICATION_DELETE);
+        assertEquals(one.getAction(), AuditActionType.ATLAN_TAG_DELETE);
         detail = one.getDetail();
-        assertTrue(detail instanceof Classification);
-        classification = (Classification) detail;
-        assertEquals(classification.getTypeName(), CLASSIFICATION_NAME1);
+        assertTrue(detail instanceof AtlanTag);
+        tag = (AtlanTag) detail;
+        assertEquals(tag.getTypeName(), ATLAN_TAG_NAME1);
 
         one = audits.get(19);
         assertNotNull(one);
@@ -1486,34 +1485,34 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertTrue(detail instanceof Column);
         column = (Column) detail;
         validateUpdatedColumn(column);
-        assertTrue(column.getClassifications().isEmpty());
+        assertTrue(column.getAtlanTags().isEmpty());
 
-        Set<Classification> classificationsAdded = new HashSet<>();
+        Set<AtlanTag> tagsAdded = new HashSet<>();
 
         one = audits.get(18);
         assertNotNull(one);
-        assertEquals(one.getAction(), AuditActionType.CLASSIFICATION_ADD);
+        assertEquals(one.getAction(), AuditActionType.ATLAN_TAG_ADD);
         detail = one.getDetail();
-        assertTrue(detail instanceof Classification);
-        classificationsAdded.add((Classification) detail);
+        assertTrue(detail instanceof AtlanTag);
+        tagsAdded.add((AtlanTag) detail);
 
         one = audits.get(17);
         assertNotNull(one);
-        assertEquals(one.getAction(), AuditActionType.CLASSIFICATION_ADD);
+        assertEquals(one.getAction(), AuditActionType.ATLAN_TAG_ADD);
         detail = one.getDetail();
-        assertTrue(detail instanceof Classification);
-        classificationsAdded.add((Classification) detail);
+        assertTrue(detail instanceof AtlanTag);
+        tagsAdded.add((AtlanTag) detail);
 
-        Set<String> classificationsAddedGuids =
-                classificationsAdded.stream().map(Classification::getEntityGuid).collect(Collectors.toSet());
-        Set<String> classificationsAddedNames =
-                classificationsAdded.stream().map(Classification::getTypeName).collect(Collectors.toSet());
-        assertEquals(classificationsAdded.size(), 2);
-        assertEquals(classificationsAddedGuids.size(), 1);
-        assertTrue(classificationsAddedGuids.contains(column5.getGuid()));
-        assertEquals(classificationsAddedNames.size(), 2);
-        assertTrue(classificationsAddedNames.contains(CLASSIFICATION_NAME1));
-        assertTrue(classificationsAddedNames.contains(CLASSIFICATION_NAME2));
+        Set<String> tagsAddedGuids =
+                tagsAdded.stream().map(AtlanTag::getEntityGuid).collect(Collectors.toSet());
+        Set<String> tagsAddedNames =
+                tagsAdded.stream().map(AtlanTag::getTypeName).collect(Collectors.toSet());
+        assertEquals(tagsAdded.size(), 2);
+        assertEquals(tagsAddedGuids.size(), 1);
+        assertTrue(tagsAddedGuids.contains(column5.getGuid()));
+        assertEquals(tagsAddedNames.size(), 2);
+        assertTrue(tagsAddedNames.contains(ATLAN_TAG_NAME1));
+        assertTrue(tagsAddedNames.contains(ATLAN_TAG_NAME2));
 
         one = audits.get(16);
         assertNotNull(one);
@@ -1522,64 +1521,61 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertTrue(detail instanceof Column);
         column = (Column) detail;
         validateUpdatedColumn(column);
-        assertNotNull(column.getClassifications());
-        assertEquals(column.getClassifications().size(), 2);
-        Set<String> classificationNames = column.getClassifications().stream()
-                .map(Classification::getTypeName)
-                .collect(Collectors.toSet());
-        assertEquals(classificationNames.size(), 2);
-        assertTrue(classificationNames.contains(CLASSIFICATION_NAME1));
-        assertTrue(classificationNames.contains(CLASSIFICATION_NAME2));
+        assertNotNull(column.getAtlanTags());
+        assertEquals(column.getAtlanTags().size(), 2);
+        Set<String> tagNames =
+                column.getAtlanTags().stream().map(AtlanTag::getTypeName).collect(Collectors.toSet());
+        assertEquals(tagNames.size(), 2);
+        assertTrue(tagNames.contains(ATLAN_TAG_NAME1));
+        assertTrue(tagNames.contains(ATLAN_TAG_NAME2));
 
-        Set<Classification> classificationsDeleted = new HashSet<>();
+        Set<AtlanTag> tagsDeleted = new HashSet<>();
 
         one = audits.get(15);
         assertNotNull(one);
-        assertEquals(one.getAction(), AuditActionType.CLASSIFICATION_DELETE);
+        assertEquals(one.getAction(), AuditActionType.ATLAN_TAG_DELETE);
         detail = one.getDetail();
-        assertTrue(detail instanceof Classification);
-        classificationsDeleted.add((Classification) detail);
+        assertTrue(detail instanceof AtlanTag);
+        tagsDeleted.add((AtlanTag) detail);
 
         one = audits.get(14);
         assertNotNull(one);
-        assertEquals(one.getAction(), AuditActionType.CLASSIFICATION_DELETE);
+        assertEquals(one.getAction(), AuditActionType.ATLAN_TAG_DELETE);
         detail = one.getDetail();
-        assertTrue(detail instanceof Classification);
-        classificationsDeleted.add((Classification) detail);
+        assertTrue(detail instanceof AtlanTag);
+        tagsDeleted.add((AtlanTag) detail);
 
-        Set<String> classificationsDeletedNames =
-                classificationsDeleted.stream().map(Classification::getTypeName).collect(Collectors.toSet());
-        assertEquals(classificationsDeleted.size(), 2);
-        assertEquals(classificationsDeletedNames.size(), 2);
-        assertTrue(classificationsDeletedNames.contains(CLASSIFICATION_NAME1));
-        assertTrue(classificationsDeletedNames.contains(CLASSIFICATION_NAME2));
+        Set<String> tagsDeletedNames =
+                tagsDeleted.stream().map(AtlanTag::getTypeName).collect(Collectors.toSet());
+        assertEquals(tagsDeleted.size(), 2);
+        assertEquals(tagsDeletedNames.size(), 2);
+        assertTrue(tagsDeletedNames.contains(ATLAN_TAG_NAME1));
+        assertTrue(tagsDeletedNames.contains(ATLAN_TAG_NAME2));
 
-        classificationsAdded = new HashSet<>();
+        tagsAdded = new HashSet<>();
 
         one = audits.get(13);
         assertNotNull(one);
-        assertEquals(one.getAction(), AuditActionType.CLASSIFICATION_ADD);
+        assertEquals(one.getAction(), AuditActionType.ATLAN_TAG_ADD);
         detail = one.getDetail();
-        assertTrue(detail instanceof Classification);
-        classificationsAdded.add((Classification) detail);
+        assertTrue(detail instanceof AtlanTag);
+        tagsAdded.add((AtlanTag) detail);
 
         one = audits.get(12);
         assertNotNull(one);
-        assertEquals(one.getAction(), AuditActionType.CLASSIFICATION_ADD);
+        assertEquals(one.getAction(), AuditActionType.ATLAN_TAG_ADD);
         detail = one.getDetail();
-        assertTrue(detail instanceof Classification);
-        classificationsAdded.add((Classification) detail);
+        assertTrue(detail instanceof AtlanTag);
+        tagsAdded.add((AtlanTag) detail);
 
-        classificationsAddedGuids =
-                classificationsAdded.stream().map(Classification::getEntityGuid).collect(Collectors.toSet());
-        classificationsAddedNames =
-                classificationsAdded.stream().map(Classification::getTypeName).collect(Collectors.toSet());
-        assertEquals(classificationsAdded.size(), 2);
-        assertEquals(classificationsAddedGuids.size(), 1);
-        assertTrue(classificationsAddedGuids.contains(column5.getGuid()));
-        assertEquals(classificationsAddedNames.size(), 2);
-        assertTrue(classificationsAddedNames.contains(CLASSIFICATION_NAME1));
-        assertTrue(classificationsAddedNames.contains(CLASSIFICATION_NAME2));
+        tagsAddedGuids = tagsAdded.stream().map(AtlanTag::getEntityGuid).collect(Collectors.toSet());
+        tagsAddedNames = tagsAdded.stream().map(AtlanTag::getTypeName).collect(Collectors.toSet());
+        assertEquals(tagsAdded.size(), 2);
+        assertEquals(tagsAddedGuids.size(), 1);
+        assertTrue(tagsAddedGuids.contains(column5.getGuid()));
+        assertEquals(tagsAddedNames.size(), 2);
+        assertTrue(tagsAddedNames.contains(ATLAN_TAG_NAME1));
+        assertTrue(tagsAddedNames.contains(ATLAN_TAG_NAME2));
 
         one = audits.get(11);
         assertNotNull(one);
@@ -1588,37 +1584,34 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertTrue(detail instanceof Column);
         column = (Column) detail;
         validateUpdatedColumn(column);
-        assertNotNull(column.getClassifications());
-        assertEquals(column.getClassifications().size(), 2);
-        classificationNames = column.getClassifications().stream()
-                .map(Classification::getTypeName)
-                .collect(Collectors.toSet());
-        assertEquals(classificationNames.size(), 2);
-        assertTrue(classificationNames.contains(CLASSIFICATION_NAME1));
-        assertTrue(classificationNames.contains(CLASSIFICATION_NAME2));
+        assertNotNull(column.getAtlanTags());
+        assertEquals(column.getAtlanTags().size(), 2);
+        tagNames = column.getAtlanTags().stream().map(AtlanTag::getTypeName).collect(Collectors.toSet());
+        assertEquals(tagNames.size(), 2);
+        assertTrue(tagNames.contains(ATLAN_TAG_NAME1));
+        assertTrue(tagNames.contains(ATLAN_TAG_NAME2));
 
-        classificationsDeleted = new HashSet<>();
+        tagsDeleted = new HashSet<>();
 
         one = audits.get(10);
         assertNotNull(one);
-        assertEquals(one.getAction(), AuditActionType.CLASSIFICATION_DELETE);
+        assertEquals(one.getAction(), AuditActionType.ATLAN_TAG_DELETE);
         detail = one.getDetail();
-        assertTrue(detail instanceof Classification);
-        classificationsDeleted.add((Classification) detail);
+        assertTrue(detail instanceof AtlanTag);
+        tagsDeleted.add((AtlanTag) detail);
 
         one = audits.get(9);
         assertNotNull(one);
-        assertEquals(one.getAction(), AuditActionType.CLASSIFICATION_DELETE);
+        assertEquals(one.getAction(), AuditActionType.ATLAN_TAG_DELETE);
         detail = one.getDetail();
-        assertTrue(detail instanceof Classification);
-        classificationsDeleted.add((Classification) detail);
+        assertTrue(detail instanceof AtlanTag);
+        tagsDeleted.add((AtlanTag) detail);
 
-        classificationsDeletedNames =
-                classificationsDeleted.stream().map(Classification::getTypeName).collect(Collectors.toSet());
-        assertEquals(classificationsDeleted.size(), 2);
-        assertEquals(classificationsDeletedNames.size(), 2);
-        assertTrue(classificationsDeletedNames.contains(CLASSIFICATION_NAME1));
-        assertTrue(classificationsDeletedNames.contains(CLASSIFICATION_NAME2));
+        tagsDeletedNames = tagsDeleted.stream().map(AtlanTag::getTypeName).collect(Collectors.toSet());
+        assertEquals(tagsDeleted.size(), 2);
+        assertEquals(tagsDeletedNames.size(), 2);
+        assertTrue(tagsDeletedNames.contains(ATLAN_TAG_NAME1));
+        assertTrue(tagsDeletedNames.contains(ATLAN_TAG_NAME2));
 
         one = audits.get(8);
         assertNotNull(one);
@@ -1627,7 +1620,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertTrue(detail instanceof Column);
         column = (Column) detail;
         validateUpdatedColumn(column);
-        assertTrue(column.getClassifications().isEmpty());
+        assertTrue(column.getAtlanTags().isEmpty());
 
         one = audits.get(7);
         assertNotNull(one);
@@ -1805,12 +1798,12 @@ public class SQLAssetTest extends AtlanLiveTest {
     }
 
     @Test(
-            groups = {"asset.purge.classifications"},
+            groups = {"asset.purge.atlantags"},
             dependsOnGroups = {"asset.purge.connection"},
             alwaysRun = true)
-    void purgeClassifications() throws AtlanException {
-        ClassificationTest.deleteClassification(CLASSIFICATION_NAME1);
-        ClassificationTest.deleteClassification(CLASSIFICATION_NAME2);
+    void purgeAtlanTags() throws AtlanException {
+        AtlanTagTest.deleteAtlanTag(ATLAN_TAG_NAME1);
+        AtlanTagTest.deleteAtlanTag(ATLAN_TAG_NAME2);
     }
 
     @Test(

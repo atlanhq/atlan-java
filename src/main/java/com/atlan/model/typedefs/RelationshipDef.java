@@ -35,7 +35,7 @@ public class RelationshipDef extends TypeDef {
     /** Style of relationship in regard to containment and lifecycle. */
     RelationshipCategory relationshipCategory;
 
-    /** Whether classifications should propagate through this relationship, and if so in which direction(s). */
+    /** Whether Atlan tags should propagate through this relationship, and if so in which direction(s). */
     PropagateTags propagateTags;
 
     /** Definition for the first endpoint of the relationship. */

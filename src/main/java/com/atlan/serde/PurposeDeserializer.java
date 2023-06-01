@@ -2,7 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.serde;
 
-import com.atlan.cache.ClassificationCache;
+import com.atlan.cache.AtlanTagCache;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.admin.Purpose;
 import com.atlan.util.JacksonUtils;
@@ -19,8 +19,8 @@ import java.util.TreeSet;
 
 /**
  * Custom deserialization of {@link Purpose} objects.
- * In particular, this translates from the Atlan-internal hashed-string representation for a classification into
- * the human-readable name for a classification.
+ * In particular, this translates from the Atlan-internal hashed-string representation for an Atlan tag into
+ * the human-readable name for an Atlan tag.
  */
 public class PurposeDeserializer extends StdDeserializer<Purpose> {
     private static final long serialVersionUID = 2L;
@@ -63,10 +63,10 @@ public class PurposeDeserializer extends StdDeserializer<Purpose> {
         for (int i = 0; i < tagsList.size(); i++) {
             String tagId = tagsList.get(i).asText();
             try {
-                String tagName = ClassificationCache.getNameForId(tagId);
+                String tagName = AtlanTagCache.getNameForId(tagId);
                 clsNames.add(tagName);
             } catch (AtlanException e) {
-                throw new IOException("Unable to find classification with ID-string: " + tagId, e);
+                throw new IOException("Unable to find Atlan tag with ID-string: " + tagId, e);
             }
         }
 
