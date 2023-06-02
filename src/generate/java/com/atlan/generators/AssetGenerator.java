@@ -269,12 +269,23 @@ public class AssetGenerator extends TypeGenerator {
         private static final Map<String, String> TYPE_OVERRIDES = Map.ofEntries(
                 Map.entry("announcementType", "AtlanAnnouncementType"),
                 Map.entry("connectorName", "AtlanConnectorType"),
-                Map.entry("category", "AtlanConnectionCategory"));
+                Map.entry("category", "AtlanConnectionCategory"),
+                Map.entry("policyCategory", "AuthPolicyCategory"),
+                Map.entry("policyResourceCategory", "AuthPolicyResourceCategory"),
+                Map.entry("policyActions", "AtlanPolicyAction"),
+                Map.entry("denyAssetTabs", "AssetSidebarTab"));
+
+        // Override these properties that would normally be SortedSet<> with List<>,
+        // as ordering is crucial to their proper operation.
+        private static final Set<String> LIST_OVERRIDES = Set.of("policyResources");
 
         protected Attribute() {}
 
         public Attribute(String className, AttributeDef attributeDef) {
             super(className, attributeDef);
+            if (LIST_OVERRIDES.contains(attributeDef.getName())) {
+                setType(getType().toBuilder().container("List<").build());
+            }
         }
 
         @Override

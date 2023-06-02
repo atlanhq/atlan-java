@@ -68,10 +68,10 @@ AWS,Base class for AWS assets.,awsResourceId,Unique resource ID assigned when a 
 AWS,Base class for AWS assets.,awsOwnerName,Root user's name.
 AWS,Base class for AWS assets.,awsOwnerId,Root user's ID.
 AWS,Base class for AWS assets.,awsTags,List of tags that have been applied to the asset in AWS.
-AccessControl,Base class for Atlan access control assets.,isAccessControlEnabled,
+AccessControl,Base class for Atlan access control assets.,isAccessControlEnabled,Whether the access object is activated (true) or deactivated (false).
 AccessControl,Base class for Atlan access control assets.,denyCustomMetadataGuids,Unique identifiers (GUIDs) of custom metadata that should be hidden from this access control object.
 AccessControl,Base class for Atlan access control assets.,denyAssetTabs,Asset sidebar tabs that should be hidden from this access control object.
-AccessControl,Base class for Atlan access control assets.,channelLink,
+AccessControl,Base class for Atlan access control assets.,channelLink,Link to a Slack channel that is used to discuss this access control object.
 AccessControl,Base class for Atlan access control assets.,policies,Policies associated with this access control object.
 Asset,Base class for all assets.,name,Human-readable name of the asset.
 Asset,Base class for all assets.,displayName,Name used for display purposes (in user interfaces).
@@ -231,17 +231,17 @@ AtlasServer,Unused,fullName,
 AtlasServer,Unused,urls,
 AtlasServer,Unused,additionalInfo,
 AuthPolicy,Instance of an access control policy in Atlan.,policyType,"Kind of policy (for example, allow vs deny)."
-AuthPolicy,Instance of an access control policy in Atlan.,policyServiceName,
-AuthPolicy,Instance of an access control policy in Atlan.,policyCategory,
-AuthPolicy,Instance of an access control policy in Atlan.,policySubCategory,
+AuthPolicy,Instance of an access control policy in Atlan.,policyServiceName,"Service that handles the policy (for example, atlas vs heka)."
+AuthPolicy,Instance of an access control policy in Atlan.,policyCategory,"Category of access control object for the policy (for example, persona vs purpose)."
+AuthPolicy,Instance of an access control policy in Atlan.,policySubCategory,"Underlying kind of policy (for example, metadata vs data vs glossary)."
 AuthPolicy,Instance of an access control policy in Atlan.,policyUsers,Users to whom the policy applies.
 AuthPolicy,Instance of an access control policy in Atlan.,policyGroups,Groups to whom the policy applies.
 AuthPolicy,Instance of an access control policy in Atlan.,policyRoles,Roles to whom the policy applies.
-AuthPolicy,Instance of an access control policy in Atlan.,policyActions,
-AuthPolicy,Instance of an access control policy in Atlan.,policyResources,
+AuthPolicy,Instance of an access control policy in Atlan.,policyActions,Actions included in the policy.
+AuthPolicy,Instance of an access control policy in Atlan.,policyResources,Resources against which to apply the policy.
 AuthPolicy,Instance of an access control policy in Atlan.,policyResourceCategory,
 AuthPolicy,Instance of an access control policy in Atlan.,policyPriority,
-AuthPolicy,Instance of an access control policy in Atlan.,isPolicyEnabled,
+AuthPolicy,Instance of an access control policy in Atlan.,isPolicyEnabled,Whether the policy is activated (true) or deactivated (false).
 AuthPolicy,Instance of an access control policy in Atlan.,policyMaskType,
 AuthPolicy,Instance of an access control policy in Atlan.,policyValiditySchedule,
 AuthPolicy,Instance of an access control policy in Atlan.,policyResourceSignature,

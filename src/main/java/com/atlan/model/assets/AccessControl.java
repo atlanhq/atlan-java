@@ -2,6 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
+import com.atlan.model.enums.AssetSidebarTab;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import java.util.SortedSet;
 import lombok.*;
@@ -23,7 +24,7 @@ public abstract class AccessControl extends Asset {
 
     public static final String TYPE_NAME = "AccessControl";
 
-    /** TBC */
+    /** Whether the access object is activated (true) or deactivated (false). */
     @Attribute
     Boolean isAccessControlEnabled;
 
@@ -35,9 +36,9 @@ public abstract class AccessControl extends Asset {
     /** Asset sidebar tabs that should be hidden from this access control object. */
     @Attribute
     @Singular
-    SortedSet<String> denyAssetTabs;
+    SortedSet<AssetSidebarTab> denyAssetTabs;
 
-    /** TBC */
+    /** Link to a Slack channel that is used to discuss this access control object. */
     @Attribute
     String channelLink;
 

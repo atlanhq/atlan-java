@@ -341,6 +341,11 @@ public enum ErrorCode implements ExceptionMessageSet {
             "ATLAN-JAVA-404-022",
             "Group with alias {0} does not exist.",
             "Verify the group alias provided is a valid group alias."),
+    PERSONA_NOT_FOUND_BY_NAME(
+            404,
+            "ATLAN-JAVA-404-023",
+            "Unable to find a persona with the name: {0}.",
+            "Verify the requested persona exists in your Atlan environment."),
 
     CONFLICT_PASSTHROUGH(
             409,

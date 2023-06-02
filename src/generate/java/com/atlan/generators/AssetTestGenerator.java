@@ -242,6 +242,10 @@ public class AssetTestGenerator extends AssetGenerator {
 
     private void addEnum(TestAttribute.TestAttributeBuilder builder, boolean multiValued, String typeName) {
         builder.relationship(false);
+        if (typeName.equals("AtlanPolicyAction")) {
+            // Set a concrete type if it's a policy action interface
+            typeName = "PersonaMetadataAction";
+        }
         if (!multiValued) {
             testAttributes.add(builder.values(List.of(getEnumValue(typeName, 0)))
                     .rawValues(List.of(getRawEnumValue(typeName, 0)))

@@ -2,14 +2,25 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
+import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.CertificateStatus;
+import com.atlan.model.enums.AuthPolicyCategory;
+import com.atlan.model.enums.AuthPolicyResourceCategory;
+import com.atlan.model.enums.AuthPolicyType;
+import com.atlan.model.enums.DataAction;
+import com.atlan.model.enums.KeywordFields;
+import com.atlan.model.enums.PersonaGlossaryAction;
+import com.atlan.model.enums.PersonaMetadataAction;
 import com.atlan.model.relations.UniqueAttributes;
+import com.atlan.model.search.IndexSearchDSL;
+import com.atlan.model.search.IndexSearchRequest;
+import com.atlan.model.search.IndexSearchResponse;
+import com.atlan.util.QueryFactory;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.SortedSet;
 import lombok.*;
@@ -116,14 +127,30 @@ public class Persona extends AccessControl {
     }
 
     /**
+     * Builds the minimal object necessary to create a Persona.
+     *
+     * @param name of the Persona
+     * @return the minimal request necessary to create the Persona, as a builder
+     */
+    public static PersonaBuilder<?, ?> creator(String name) {
+        return Persona.builder()
+                .qualifiedName(name)
+                .name(name)
+                .displayName(name)
+                .isAccessControlEnabled(true)
+                .description("");
+    }
+
+    /**
      * Builds the minimal object necessary to update a Persona.
      *
      * @param qualifiedName of the Persona
      * @param name of the Persona
+     * @param isEnabled whether the Persona should be activated (true) or deactivated (false)
      * @return the minimal request necessary to update the Persona, as a builder
      */
-    public static PersonaBuilder<?, ?> updater(String qualifiedName, String name) {
-        return Persona.builder().qualifiedName(qualifiedName).name(name);
+    public static PersonaBuilder<?, ?> updater(String qualifiedName, String name, boolean isEnabled) {
+        return Persona.builder().qualifiedName(qualifiedName).name(name).isAccessControlEnabled(isEnabled);
     }
 
     /**
@@ -142,11 +169,134 @@ public class Persona extends AccessControl {
         if (this.getName() == null || this.getName().length() == 0) {
             missing.add("name");
         }
+        if (this.getIsAccessControlEnabled() == null) {
+            missing.add("isAccessControlEnabled");
+        }
         if (!missing.isEmpty()) {
             throw new InvalidRequestException(
                     ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "Persona", String.join(",", missing));
         }
-        return updater(this.getQualifiedName(), this.getName());
+        return updater(this.getQualifiedName(), this.getName(), this.getIsAccessControlEnabled());
+    }
+
+    /**
+     * Find a Persona by its human-readable name.
+     *
+     * @param name of the Persona
+     * @param attributes an optional collection of attributes to retrieve for the Persona
+     * @return all Personas with that name, if found
+     * @throws AtlanException on any API problems
+     * @throws NotFoundException if the Persona does not exist
+     */
+    public static List<Persona> findByName(String name, Collection<String> attributes) throws AtlanException {
+        Query filter = QueryFactory.CompoundQuery.builder()
+                .must(QueryFactory.beActive())
+                .must(QueryFactory.beOfType(TYPE_NAME))
+                .must(QueryFactory.have(KeywordFields.NAME).eq(name))
+                .build()
+                ._toQuery();
+        IndexSearchRequest.IndexSearchRequestBuilder<?, ?> builder = IndexSearchRequest.builder()
+                .dsl(IndexSearchDSL.builder().query(filter).build());
+        if (attributes != null && !attributes.isEmpty()) {
+            builder.attributes(attributes);
+        }
+        IndexSearchRequest request = builder.build();
+        IndexSearchResponse response = request.search();
+        List<Persona> personas = new ArrayList<>();
+        if (response != null) {
+            List<Asset> results = response.getAssets();
+            while (results != null) {
+                for (Asset result : results) {
+                    if (result instanceof Persona) {
+                        personas.add((Persona) result);
+                    }
+                }
+                response = response.getNextPage();
+                results = response.getAssets();
+            }
+        }
+        if (personas.isEmpty()) {
+            throw new NotFoundException(ErrorCode.PERSONA_NOT_FOUND_BY_NAME, name);
+        } else {
+            return personas;
+        }
+    }
+
+    /**
+     * Builds the minimal object necessary to create a metadata policy for a Persona.
+     *
+     * @param name of the policy
+     * @param personaId unique identifier (GUID) of the persona for which to create this metadata policy
+     * @param policyType type of policy (for example allow vs deny)
+     * @param actions to include in the policy
+     * @param resources against which to apply the policy, given in the form {@code entity:qualifiedNamePrefix}
+     * @return the minimal request necessary to create the metadata policy for the Persona, as a builder
+     */
+    public static AuthPolicy.AuthPolicyBuilder<?, ?> createMetadataPolicy(
+            String name,
+            String personaId,
+            AuthPolicyType policyType,
+            Collection<PersonaMetadataAction> actions,
+            Collection<String> resources) {
+        return AuthPolicy.creator(name)
+                .policyActions(actions)
+                .policyCategory(AuthPolicyCategory.PERSONA)
+                .policyType(policyType)
+                .policyResources(resources)
+                .policyResourceCategory(AuthPolicyResourceCategory.CUSTOM)
+                .policyServiceName("atlas")
+                .policySubCategory("metadata")
+                .accessControl(Persona.refByGuid(personaId));
+    }
+
+    /**
+     * Builds the minimal object necessary to create a data policy for a Persona.
+     *
+     * @param name of the policy
+     * @param personaId unique identifier (GUID) of the persona for which to create this data policy
+     * @param policyType type of policy (for example allow vs deny)
+     * @param resources against which to apply the policy, given in the form {@code entity:qualifiedNamePrefix}
+     * @return the minimal request necessary to create the data policy for the Persona, as a builder
+     */
+    public static AuthPolicy.AuthPolicyBuilder<?, ?> createDataPolicy(
+            String name, String personaId, AuthPolicyType policyType, Collection<String> resources) {
+        return AuthPolicy.creator(name)
+                .policyAction(DataAction.SELECT)
+                .policyCategory(AuthPolicyCategory.PERSONA)
+                .policyType(policyType)
+                .policyResources(resources)
+                .policyResource("entity-type:*")
+                .policyResourceCategory(AuthPolicyResourceCategory.ENTITY)
+                .policyServiceName("heka")
+                .policySubCategory("data")
+                .accessControl(Persona.refByGuid(personaId));
+    }
+
+    /**
+     * Builds the minimal object necessary to create a glossary policy for a Persona.
+     *
+     * @param name of the policy
+     * @param personaId unique identifier (GUID) of the persona for which to create this glossary policy
+     * @param policyType type of policy (for example allow vs deny)
+     * @param actions to include in the policy
+     * @param resources against which to apply the policy, given in the form {@code entity:qualifiedName} of the glossary
+     * @return the minimal request necessary to create the glossary policy for the Persona, as a builder
+     */
+    public static AuthPolicy.AuthPolicyBuilder<?, ?> createGlossaryPolicy(
+            String name,
+            String personaId,
+            AuthPolicyType policyType,
+            Collection<PersonaGlossaryAction> actions,
+            Collection<String> resources) {
+        return AuthPolicy.creator(name)
+                .policyActions(actions)
+                .policyCategory(AuthPolicyCategory.PERSONA)
+                .policyType(policyType)
+                .policyResources(resources)
+                .policyResourceCategory(AuthPolicyResourceCategory.CUSTOM)
+                .policyServiceName("atlas")
+                .policySubCategory("glossary")
+                .accessControl(Persona.refByGuid(personaId));
     }
 
     /**
@@ -154,11 +304,13 @@ public class Persona extends AccessControl {
      *
      * @param qualifiedName of the Persona
      * @param name of the Persona
+     * @param isEnabled whether the Persona should be activated (true) or deactivated (false)
      * @return the updated Persona, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static Persona removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (Persona) Asset.removeDescription(updater(qualifiedName, name));
+    public static Persona removeDescription(String qualifiedName, String name, boolean isEnabled)
+            throws AtlanException {
+        return (Persona) Asset.removeDescription(updater(qualifiedName, name, isEnabled));
     }
 
     /**
@@ -166,118 +318,13 @@ public class Persona extends AccessControl {
      *
      * @param qualifiedName of the Persona
      * @param name of the Persona
+     * @param isEnabled whether the Persona should be activated (true) or deactivated (false)
      * @return the updated Persona, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static Persona removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (Persona) Asset.removeUserDescription(updater(qualifiedName, name));
-    }
-
-    /**
-     * Remove the owners from a Persona.
-     *
-     * @param qualifiedName of the Persona
-     * @param name of the Persona
-     * @return the updated Persona, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static Persona removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (Persona) Asset.removeOwners(updater(qualifiedName, name));
-    }
-
-    /**
-     * Update the certificate on a Persona.
-     *
-     * @param qualifiedName of the Persona
-     * @param certificate to use
-     * @param message (optional) message, or null if no message
-     * @return the updated Persona, or null if the update failed
-     * @throws AtlanException on any API problems
-     */
-    public static Persona updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
+    public static Persona removeUserDescription(String qualifiedName, String name, boolean isEnabled)
             throws AtlanException {
-        return (Persona) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
-    }
-
-    /**
-     * Remove the certificate from a Persona.
-     *
-     * @param qualifiedName of the Persona
-     * @param name of the Persona
-     * @return the updated Persona, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static Persona removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (Persona) Asset.removeCertificate(updater(qualifiedName, name));
-    }
-
-    /**
-     * Update the announcement on a Persona.
-     *
-     * @param qualifiedName of the Persona
-     * @param type type of announcement to set
-     * @param title (optional) title of the announcement to set (or null for no title)
-     * @param message (optional) message of the announcement to set (or null for no message)
-     * @return the result of the update, or null if the update failed
-     * @throws AtlanException on any API problems
-     */
-    public static Persona updateAnnouncement(
-            String qualifiedName, AtlanAnnouncementType type, String title, String message) throws AtlanException {
-        return (Persona) Asset.updateAnnouncement(builder(), TYPE_NAME, qualifiedName, type, title, message);
-    }
-
-    /**
-     * Remove the announcement from a Persona.
-     *
-     * @param qualifiedName of the Persona
-     * @param name of the Persona
-     * @return the updated Persona, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static Persona removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (Persona) Asset.removeAnnouncement(updater(qualifiedName, name));
-    }
-
-    /**
-     * Replace the terms linked to the Persona.
-     *
-     * @param qualifiedName for the Persona
-     * @param name human-readable name of the Persona
-     * @param terms the list of terms to replace on the Persona, or null to remove all terms from the Persona
-     * @return the Persona that was updated (note that it will NOT contain details of the replaced terms)
-     * @throws AtlanException on any API problems
-     */
-    public static Persona replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
-            throws AtlanException {
-        return (Persona) Asset.replaceTerms(updater(qualifiedName, name), terms);
-    }
-
-    /**
-     * Link additional terms to the Persona, without replacing existing terms linked to the Persona.
-     * Note: this operation must make two API calls — one to retrieve the Persona's existing terms,
-     * and a second to append the new terms.
-     *
-     * @param qualifiedName for the Persona
-     * @param terms the list of terms to append to the Persona
-     * @return the Persona that was updated  (note that it will NOT contain details of the appended terms)
-     * @throws AtlanException on any API problems
-     */
-    public static Persona appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (Persona) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
-    }
-
-    /**
-     * Remove terms from a Persona, without replacing all existing terms linked to the Persona.
-     * Note: this operation must make two API calls — one to retrieve the Persona's existing terms,
-     * and a second to remove the provided terms.
-     *
-     * @param qualifiedName for the Persona
-     * @param terms the list of terms to remove from the Persona, which must be referenced by GUID
-     * @return the Persona that was updated (note that it will NOT contain details of the resulting terms)
-     * @throws AtlanException on any API problems
-     */
-    public static Persona removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (Persona) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
+        return (Persona) Asset.removeUserDescription(updater(qualifiedName, name, isEnabled));
     }
 
     /**

@@ -7,6 +7,9 @@ import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.AtlanAnnouncementType;
+import com.atlan.model.enums.AtlanPolicyAction;
+import com.atlan.model.enums.AuthPolicyCategory;
+import com.atlan.model.enums.AuthPolicyResourceCategory;
 import com.atlan.model.enums.AuthPolicyType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
@@ -40,15 +43,15 @@ public class AuthPolicy extends Asset {
     @Attribute
     AuthPolicyType policyType;
 
-    /** TBC */
+    /** Service that handles the policy (for example, atlas vs heka). */
     @Attribute
     String policyServiceName;
 
-    /** TBC */
+    /** Category of access control object for the policy (for example, persona vs purpose). */
     @Attribute
-    String policyCategory;
+    AuthPolicyCategory policyCategory;
 
-    /** TBC */
+    /** Underlying kind of policy (for example, metadata vs data vs glossary). */
     @Attribute
     String policySubCategory;
 
@@ -67,25 +70,25 @@ public class AuthPolicy extends Asset {
     @Singular
     SortedSet<String> policyRoles;
 
-    /** TBC */
+    /** Actions included in the policy. */
     @Attribute
     @Singular
-    SortedSet<String> policyActions;
+    SortedSet<AtlanPolicyAction> policyActions;
+
+    /** Resources against which to apply the policy. */
+    @Attribute
+    @Singular
+    List<String> policyResources;
 
     /** TBC */
     @Attribute
-    @Singular
-    SortedSet<String> policyResources;
-
-    /** TBC */
-    @Attribute
-    String policyResourceCategory;
+    AuthPolicyResourceCategory policyResourceCategory;
 
     /** TBC */
     @Attribute
     Integer policyPriority;
 
-    /** TBC */
+    /** Whether the policy is activated (true) or deactivated (false). */
     @Attribute
     Boolean isPolicyEnabled;
 
@@ -184,7 +187,17 @@ public class AuthPolicy extends Asset {
     }
 
     /**
-     * Builds the minimal object necessary to update a AuthPolicy.
+     * Builds the minimal object necessary to create an AuthPolicy.
+     *
+     * @param name of the AuthPolicy
+     * @return the minimal request necessary to create the AuthPolicy, as a builder
+     */
+    static AuthPolicyBuilder<?, ?> creator(String name) {
+        return AuthPolicy.builder().qualifiedName(name).name(name).displayName("");
+    }
+
+    /**
+     * Builds the minimal object necessary to update an AuthPolicy.
      *
      * @param qualifiedName of the AuthPolicy
      * @param name of the AuthPolicy
@@ -195,7 +208,7 @@ public class AuthPolicy extends Asset {
     }
 
     /**
-     * Builds the minimal object necessary to apply an update to a AuthPolicy, from a potentially
+     * Builds the minimal object necessary to apply an update to an AuthPolicy, from a potentially
      * more-complete AuthPolicy object.
      *
      * @return the minimal object necessary to update the AuthPolicy, as a builder

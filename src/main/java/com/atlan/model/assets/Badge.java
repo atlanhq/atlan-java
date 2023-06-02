@@ -115,7 +115,7 @@ public class Badge extends Asset {
      * @param name of the Badge
      * @param cmName human-readable name of the custom metadata for which to create the badge
      * @param cmAttribute human-readable name of the custom metadata attribute for which to create the badge
-     * @return the minimal request necessary to update the Badge, as a builder
+     * @return the minimal request necessary to create the Badge, as a builder
      * @throws AtlanException if the specified custom metadata for the badge cannot be found
      */
     public static BadgeBuilder<?, ?> creator(String name, String cmName, String cmAttribute) throws AtlanException {

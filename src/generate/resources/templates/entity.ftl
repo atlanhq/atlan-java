@@ -28,6 +28,13 @@ import com.atlan.model.enums.AtlanConnectionCategory;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanDeleteType;
 import com.atlan.model.enums.AtlanStatus;
+import com.atlan.model.enums.AtlanPolicyAction;
+import com.atlan.model.enums.AuthPolicyCategory;
+import com.atlan.model.enums.AuthPolicyResourceCategory;
+import com.atlan.model.enums.AuthPolicyType;
+import com.atlan.model.enums.PersonaMetadataAction;
+import com.atlan.model.enums.PersonaGlossaryAction;
+import com.atlan.model.enums.DataAction;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.KeywordFields;
 import com.atlan.model.relations.UniqueAttributes;
@@ -238,7 +245,7 @@ public <#if abstract>abstract</#if> class ${className} extends ${parentClassName
 </#if>
 
 <#if !abstract>
-<#if className != "Glossary" && className != "GlossaryCategory" && className != "GlossaryTerm">
+<#if className != "Glossary" && className != "GlossaryCategory" && className != "GlossaryTerm" && className != "Persona">
     /**
      * Remove the system description from a ${className}.
      *

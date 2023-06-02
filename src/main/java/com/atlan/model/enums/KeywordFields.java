@@ -207,6 +207,10 @@ public enum KeywordFields implements AtlanSearchableField {
     ATLAS_USER_PROFILE_NAME("__AtlasUserProfile.name"),
     /** TBC */
     ATLAS_USER_SAVED_SEARCH_NAME("__AtlasUserSavedSearch.name"),
+    /** TBC */
+    AUTH_SERVICE_CONFIG("authServiceConfig"),
+    /** TBC */
+    AUTH_SERVICE_TYPE("authServiceType"),
     /** 12-digit number that uniquely identifies an AWS account. */
     AWS_ACCOUNT_ID("awsAccountId"),
     /** Amazon Resource Name (ARN) for this asset. This uniquely identifies the asset in AWS, and thus must be unique across all AWS asset instances. */
@@ -249,6 +253,8 @@ public enum KeywordFields implements AtlanSearchableField {
     CERTIFIER("certifier"),
     /** TBC */
     CERTIFIER_DISPLAY_NAME("certifierDisplayName"),
+    /** Link to a Slack channel that is used to discuss this access control object. */
+    CHANNEL_LINK("channelLink"),
     /** TBC */
     CLIENT_ID("clientId"),
     /** Code that ran within the process. */
@@ -381,6 +387,10 @@ public enum KeywordFields implements AtlanSearchableField {
     DEFAULT_VALUE_FORMULA("defaultValueFormula"),
     /** Definition of the materialized view (DDL). */
     DEFINITION("definition"),
+    /** Asset sidebar tabs that should be hidden from this access control object. */
+    DENY_ASSET_TABS("denyAssetTabs"),
+    /** Unique identifiers (GUIDs) of custom metadata that should be hidden from this access control object. */
+    DENY_CUSTOM_METADATA_GUIDS("denyCustomMetadataGuids"),
     /** Description of the asset, as crawled from a source. */
     DESCRIPTION("description.keyword"),
     /** List of column names on the report. */
@@ -496,7 +506,7 @@ public enum KeywordFields implements AtlanSearchableField {
     /** TBC */
     LOOKML_LINK_ID("lookmlLinkId"),
     /** Name of the classification in Atlan that is mapped to this tag. */
-    MAPPED_CLASSIFICATION_NAME("mappedClassificationName"),
+    MAPPED_ATLAN_TAG_NAME("mappedClassificationName"),
     /** TBC */
     MC_ASSET_QUALIFIED_NAMES("mcAssetQualifiedNames"),
     /** Unique identifier for the incident. */
@@ -615,12 +625,44 @@ public enum KeywordFields implements AtlanSearchableField {
     PARTITION_LIST("partitionList"),
     /** TBC */
     PARTITION_STRATEGY("partitionStrategy"),
+    /** Groups for whom this persona is accessible. */
+    PERSONA_GROUPS("personaGroups"),
+    /** Users for whom this persona is accessible. */
+    PERSONA_USERS("personaUsers"),
     /** List of values from which a user can pick while adding a record. */
     PICKLIST_VALUES("picklistValues"),
     /** TBC */
     PINNED_BY("pinnedBy"),
+    /** Actions included in the policy. */
+    POLICY_ACTIONS("policyActions"),
+    /** Category of access control object for the policy (for example, persona vs purpose). */
+    POLICY_CATEGORY("policyCategory"),
+    /** TBC */
+    POLICY_CONDITIONS("policyConditions"),
+    /** Groups to whom the policy applies. */
+    POLICY_GROUPS("policyGroups"),
+    /** TBC */
+    POLICY_MASK_TYPE("policyMaskType"),
+    /** Resources against which to apply the policy. */
+    POLICY_RESOURCES("policyResources"),
+    /** TBC */
+    POLICY_RESOURCE_CATEGORY("policyResourceCategory"),
+    /** TBC */
+    POLICY_RESOURCE_SIGNATURE("policyResourceSignature"),
+    /** Roles to whom the policy applies. */
+    POLICY_ROLES("policyRoles"),
+    /** Service that handles the policy (for example, atlas vs heka). */
+    POLICY_SERVICE_NAME("policyServiceName"),
     /** TBC */
     POLICY_STRATEGY("policyStrategy"),
+    /** Underlying kind of policy (for example, metadata vs data vs glossary). */
+    POLICY_SUB_CATEGORY("policySubCategory"),
+    /** Kind of policy (for example, allow vs deny). */
+    POLICY_TYPE("policyType"),
+    /** Users to whom the policy applies. */
+    POLICY_USERS("policyUsers"),
+    /** TBC */
+    POLICY_VALIDITY_SCHEDULE("policyValiditySchedule"),
     /** TBC */
     POWER_BI_COLUMN_DATA_CATEGORY("powerBIColumnDataCategory"),
     /** TBC */
@@ -667,8 +709,10 @@ public enum KeywordFields implements AtlanSearchableField {
     PROJECT_NAME("projectName"),
     /** TBC */
     PROJECT_QUALIFIED_NAME("projectQualifiedName"),
-    /** All propagated classifications that exist on an asset, searchable by the internal hashed-string ID of the classification. */
+    /** All propagated Atlan tags that exist on an asset, searchable by the internal hashed-string ID of the Atlan tag. */
     PROPAGATED_TRAIT_NAMES("__propagatedTraitNames"),
+    /** Tags on which this purpose is applied. */
+    PURPOSE_ATLAN_TAGS("purposeClassifications"),
     /** Unique identifier (in Qlik) of the app where the asset exists. */
     QLIK_APP_ID("qlikAppId"),
     /** Unique name of the app where the Qlik asset exists. */
@@ -775,6 +819,8 @@ public enum KeywordFields implements AtlanSearchableField {
     RESULT_SUMMARY("resultSummary"),
     /** TBC */
     ROLE("role"),
+    /** TBC */
+    ROLE_ID("roleId"),
     /** Name of the bucket in which the object exists. */
     S3BUCKET_NAME("s3BucketName"),
     /** qualifiedName of the bucket in which the object exists. */
@@ -922,6 +968,8 @@ public enum KeywordFields implements AtlanSearchableField {
     /** Unique identifier of the tag in the source system. */
     TAG_ID("tagId"),
     /** TBC */
+    TAG_SERVICE("tagService"),
+    /** TBC */
     TARGET_SERVER_NAME("targetServerName"),
     /** Name of the Atlan workspace in which the asset exists. */
     TENANT_ID("tenantId"),
@@ -935,7 +983,7 @@ public enum KeywordFields implements AtlanSearchableField {
     TOP_LEVEL_PROJECT_NAME("topLevelProjectName"),
     /** TBC */
     TOP_LEVEL_PROJECT_QUALIFIED_NAME("topLevelProjectQualifiedName"),
-    /** All directly-assigned classifications that exist on an asset, searchable by the internal hashed-string ID of the classification. */
+    /** All directly-assigned Atlan tags that exist on an asset, searchable by the internal hashed-string ID of the Atlan tag. */
     TRAIT_NAMES("__traitNames"),
     /** Type of the asset. For example Table, Column, and so on. */
     TYPE_NAME("__typeName.keyword"),

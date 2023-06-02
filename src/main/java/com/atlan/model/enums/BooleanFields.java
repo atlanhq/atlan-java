@@ -30,6 +30,8 @@ public enum BooleanFields implements AtlanSearchableField {
     /** TBC */
     ASSET_DBT_JOB_LAST_RUN_NOTIFICATIONS_SENT("assetDbtJobLastRunNotificationsSent"),
     /** TBC */
+    AUTH_SERVICE_IS_ENABLED("authServiceIsEnabled"),
+    /** TBC */
     GCS_BUCKET_RETENTION_LOCKED("gcsBucketRetentionLocked"),
     /** TBC */
     GCS_BUCKET_VERSIONING_ENABLED("gcsBucketVersioningEnabled"),
@@ -41,6 +43,8 @@ public enum BooleanFields implements AtlanSearchableField {
     HAS_LINEAGE("__hasLineage"),
     /** Whether the connection has popularity insights (true) or not (false). */
     HAS_POPULARITY_INSIGHTS("hasPopularityInsights"),
+    /** Whether the access object is activated (true) or deactivated (false). */
+    IS_ACCESS_CONTROL_ENABLED("isAccessControlEnabled"),
     /** TBC */
     IS_CALCULATED("isCalculated"),
     /** TBC */
@@ -75,6 +79,8 @@ public enum BooleanFields implements AtlanSearchableField {
     IS_PARTITIONED("isPartitioned"),
     /** TBC */
     IS_PINNED("isPinned"),
+    /** Whether the policy is activated (true) or deactivated (false). */
+    IS_POLICY_ENABLED("isPolicyEnabled"),
     /** Whether the field references a record of multiple objects (true) or not (false). */
     IS_POLYMORPHIC_FOREIGN_KEY("isPolymorphicForeignKey"),
     /** When true, this column is the primary key for the table. */
@@ -115,6 +121,8 @@ public enum BooleanFields implements AtlanSearchableField {
     MODE_IS_PUBLIC("modeIsPublic"),
     /** TBC */
     MODE_IS_SHARED("modeIsShared"),
+    /** TBC */
+    POLICY_DELEGATE_ADMIN("policyDelegateAdmin"),
     /** TBC */
     POWER_BI_IS_EXTERNAL_MEASURE("powerBIIsExternalMeasure"),
     /** TBC */

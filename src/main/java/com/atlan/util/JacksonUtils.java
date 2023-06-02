@@ -2,12 +2,16 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.util;
 
+import com.atlan.cache.ReflectionCache;
+import com.atlan.model.enums.AtlanPolicyAction;
+import com.atlan.serde.AtlanPolicyActionDeserializer;
 import com.atlan.serde.Serde;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 
@@ -24,8 +28,35 @@ public class JacksonUtils {
      * @return the deserialized value
      * @throws IOException if the setter method to deserialize through does not take exactly one argument, or uses an unhandled numeric type
      */
-    public static Object deserializePrimitive(JsonNode primitive, Method method) throws IOException {
-        if (primitive.isTextual()) {
+    public static Object deserializePrimitive(JsonNode primitive, Method method)
+            throws IllegalAccessException, InvocationTargetException, NoSuchMethodException, IOException {
+        return deserializePrimitive(primitive, method, null);
+    }
+
+    /**
+     * Deserialize a primitive JSON value to an object.
+     *
+     * @param primitive value to deserialize
+     * @param method through which the deserialized value will be set on the object
+     * @param singularClass class of the first argument (parameter) to the setter method, singularized
+     * @return the deserialized value
+     * @throws IOException if the setter method to deserialize through does not take exactly one argument, or uses an unhandled numeric type
+     */
+    public static Object deserializePrimitive(JsonNode primitive, Method method, Class<?> singularClass)
+            throws IllegalAccessException, InvocationTargetException, NoSuchMethodException, IOException {
+        if (singularClass == null) {
+            // If no separate singular class has been specified, fallback to retrieving it
+            // from the method itself
+            singularClass = ReflectionCache.getParameterOfMethod(method);
+        }
+        // AtlanPolicyAction is a special case, since it is an abstract enum
+        // (and there's no concept of such a thing in Java)
+        if (singularClass == AtlanPolicyAction.class) {
+            return AtlanPolicyActionDeserializer.deserialize(primitive.asText());
+        } else if (singularClass.isEnum()) {
+            Method fromValue = singularClass.getMethod("fromValue", String.class);
+            return fromValue.invoke(null, primitive.asText());
+        } else if (primitive.isTextual()) {
             return primitive.asText();
         } else if (primitive.isBoolean()) {
             return primitive.asBoolean();
