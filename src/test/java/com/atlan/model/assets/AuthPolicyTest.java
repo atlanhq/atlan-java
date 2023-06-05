@@ -357,7 +357,7 @@ public class AuthPolicyTest {
             .policyResourceCategory(AuthPolicyResourceCategory.ENTITY)
             .policyPriority(123)
             .isPolicyEnabled(true)
-            .policyMaskType("String0")
+            .policyMaskType(DataMaskingType.SHOW_FIRST_4)
             .addPolicyValiditySchedule(AuthPolicyValiditySchedule.builder()
                     .policyValidityScheduleStartTime("String0")
                     .policyValidityScheduleEndTime("String0")
