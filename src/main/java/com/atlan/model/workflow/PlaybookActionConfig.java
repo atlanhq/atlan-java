@@ -11,7 +11,7 @@ import lombok.extern.jackson.Jacksonized;
 
 // TODO: split this class into different subclasses with custom serde,
 //  - metadata updates (first 4 properties)
-//  - bulk classifications (classificationsConfig property)
+//  - bulk Atlan tags (atlanTagsConfig property)
 //  - others?
 @Getter
 @Jacksonized
@@ -20,9 +20,9 @@ import lombok.extern.jackson.Jacksonized;
 public class PlaybookActionConfig extends AtlanObject {
     private static final long serialVersionUID = 2L;
 
-    /** Whether to replace all classifications (true) or none (false). */
+    /** Whether to replace all Atlan tags (true) or none (false). */
     @JsonProperty("replace_classifications")
-    Boolean replaceClassifications;
+    Boolean replaceAtlanTags;
 
     /** Whether to replace all custom metadata (true) or none (false). */
     @JsonProperty("replace_bms")
@@ -35,8 +35,8 @@ public class PlaybookActionConfig extends AtlanObject {
     /** Base64-encoded jinja template detailing the action. */
     String template;
 
-    /** Details of the classification(s) to apply, for bulk-classification actions. */
+    /** Details of the Atlan tag(s) to apply, for bulk-Atlan tag actions. */
     // TODO: further (de)serialize this stringified value
     @JsonProperty("classifications-config")
-    String classificationsConfig;
+    String atlanTagsConfig;
 }

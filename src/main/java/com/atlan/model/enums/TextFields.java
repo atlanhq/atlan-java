@@ -81,6 +81,8 @@ public enum TextFields implements AtlanSearchableField {
     ASSET_MC_MONITOR_QUALIFIED_NAMES("assetMcMonitorQualifiedNames.text"),
     /** TBC */
     ASSET_TAGS("assetTags.text"),
+    /** All Atlan tags that exist on an asset, whether directly assigned or propagated, searchable by the internal hashed-string ID of the Atlan tag. */
+    ATLAN_TAGS_TEXT("__classificationsText"),
     /** Amazon Resource Name (ARN) for this asset. This uniquely identifies the asset in AWS, and thus must be unique across all AWS asset instances. */
     AWS_ARN("awsArn.text"),
     /** Root user's name. */
@@ -89,8 +91,6 @@ public enum TextFields implements AtlanSearchableField {
     AZURE_RESOURCE_ID("azureResourceId.text"),
     /** Status of the asset's certification. */
     CERTIFICATE_STATUS("certificateStatus.text"),
-    /** All classifications that exist on an asset, whether directly assigned or propagated, searchable by the internal hashed-string ID of the classification. */
-    CLASSIFICATIONS_TEXT("__classificationsText"),
     /** TBC */
     COLLECTION_QUALIFIED_NAME("collectionQualifiedName.text"),
     /** TBC */

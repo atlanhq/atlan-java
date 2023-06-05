@@ -37,7 +37,7 @@ public class TypeDefsEndpoint extends AtlasEndpoint {
 
     /**
      * Create a new type definition in Atlan.
-     * Note: only custom metadata, enumerations, and classification type definitions are currently supported.
+     * Note: only custom metadata, enumerations, and Atlan tag type definitions are currently supported.
      *
      * @param typeDef to create
      * @return the resulting type definition that was created
@@ -47,8 +47,8 @@ public class TypeDefsEndpoint extends AtlasEndpoint {
         TypeDefResponse.TypeDefResponseBuilder builder = TypeDefResponse.builder();
         if (typeDef != null) {
             switch (typeDef.getCategory()) {
-                case CLASSIFICATION:
-                    builder.classificationDefs(List.of((ClassificationDef) typeDef));
+                case ATLAN_TAG:
+                    builder.atlanTagDefs(List.of((AtlanTagDef) typeDef));
                     break;
                 case CUSTOM_METADATA:
                     builder.customMetadataDefs(List.of((CustomMetadataDef) typeDef));
@@ -71,7 +71,7 @@ public class TypeDefsEndpoint extends AtlasEndpoint {
 
     /**
      * Update an existing type definition in Atlan.
-     * Note: only custom metadata and classification type definitions are currently supported.
+     * Note: only custom metadata and Atlan tag type definitions are currently supported.
      *
      * @param typeDef to update
      * @return the resulting type definition that was updated
@@ -81,8 +81,8 @@ public class TypeDefsEndpoint extends AtlasEndpoint {
         TypeDefResponse.TypeDefResponseBuilder builder = TypeDefResponse.builder();
         if (typeDef != null) {
             switch (typeDef.getCategory()) {
-                case CLASSIFICATION:
-                    builder.classificationDefs(List.of((ClassificationDef) typeDef));
+                case ATLAN_TAG:
+                    builder.atlanTagDefs(List.of((AtlanTagDef) typeDef));
                     break;
                 case CUSTOM_METADATA:
                     builder.customMetadataDefs(List.of((CustomMetadataDef) typeDef));

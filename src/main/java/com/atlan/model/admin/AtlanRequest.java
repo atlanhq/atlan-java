@@ -27,7 +27,7 @@ import lombok.experimental.SuperBuilder;
 @JsonSubTypes({
     @JsonSubTypes.Type(value = AttributeRequest.class, name = AttributeRequest.REQUEST_TYPE),
     @JsonSubTypes.Type(value = TermLinkRequest.class, name = TermLinkRequest.REQUEST_TYPE),
-    @JsonSubTypes.Type(value = ClassificationRequest.class, name = ClassificationRequest.REQUEST_TYPE),
+    @JsonSubTypes.Type(value = AtlanTagRequest.class, name = AtlanTagRequest.REQUEST_TYPE),
     @JsonSubTypes.Type(value = CustomMetadataRequest.class, name = CustomMetadataRequest.REQUEST_TYPE),
 })
 public abstract class AtlanRequest extends AtlanObject {

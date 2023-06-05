@@ -86,7 +86,7 @@
 
     /**
      * If an asset with the same qualifiedName exists, updates the existing asset. Otherwise, creates the asset.
-     * No classifications or custom metadata will be changed if updating an existing asset, irrespective of what
+     * No Atlan tags or custom metadata will be changed if updating an existing asset, irrespective of what
      * is included in the asset itself when the method is called.
      *
      * @return details of the created or updated asset
@@ -117,16 +117,16 @@
 
     /**
      * If no asset exists, has the same behavior as the {@link #upsert()} method.
-     * If an asset does exist, optionally overwrites any classifications. Custom metadata will always
+     * If an asset does exist, optionally overwrites any Atlan tags. Custom metadata will always
      * be entirely ignored using this method.
      *
-     * @param replaceClassifications whether to replace classifications during an update (true) or not (false)
+     * @param replaceAtlanTags whether to replace Atlan tags during an update (true) or not (false)
      * @return details of the created or updated asset
      * @throws AtlanException on any error during the API invocation
      * @throws NotFoundException if any of the provided connection admins do not actually exist
      */
     @Override
-    public ConnectionCreationResponse upsert(boolean replaceClassifications)
+    public ConnectionCreationResponse upsert(boolean replaceAtlanTags)
             throws AtlanException {
         // Validate the provided connection admins prior to attempting to create
         // (the cache retrievals will throw errors directly if there are any)
@@ -145,7 +145,7 @@
                 UserCache.getIdForName(userName);
             }
         }
-        return EntityBulkEndpoint.connectionUpsert(this, replaceClassifications);
+        return EntityBulkEndpoint.connectionUpsert(this, replaceAtlanTags);
     }
 
     /**

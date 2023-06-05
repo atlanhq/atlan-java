@@ -11,43 +11,40 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
-public class ClassificationRequest extends AtlanRequest {
+public class AtlanTagRequest extends AtlanRequest {
 
     public static final String REQUEST_TYPE = "attach_classification";
     public static final String SOURCE_TYPE = "atlas";
 
-    /** Fixed requestType for classifications. */
+    /** Fixed requestType for Atlan tags. */
     @Getter(onMethod_ = {@Override})
     @Builder.Default
     String requestType = REQUEST_TYPE;
 
-    /** Fixed sourceType for classifications. */
+    /** Fixed sourceType for Atlan tags. */
     @Getter(onMethod_ = {@Override})
     @Builder.Default
     String sourceType = SOURCE_TYPE;
 
-    /** Details of the requested classification. */
-    ClassificationPayload payload;
+    /** Details of the requested Atlan tag. */
+    AtlanTagPayload payload;
 
     /**
-     * Create a new request to attach a classification to an asset.
+     * Create a new request to attach an Atlan tag to an asset.
      *
      * @param assetGuid unique identifier (GUID) of the asset to classify
      * @param assetQualifiedName qualifiedName of the asset to classify
      * @param assetType type of the asset to classify
-     * @param classificationDetails details of the requested classification
+     * @param atlanTagDetails details of the requested Atlan tag
      * @return a builder for the request with these details
      */
-    public static ClassificationRequestBuilder<?, ?> creator(
-            String assetGuid,
-            String assetQualifiedName,
-            String assetType,
-            ClassificationPayload classificationDetails) {
-        return ClassificationRequest.builder()
+    public static AtlanTagRequestBuilder<?, ?> creator(
+            String assetGuid, String assetQualifiedName, String assetType, AtlanTagPayload atlanTagDetails) {
+        return AtlanTagRequest.builder()
                 .id(UUID.randomUUID().toString())
                 .destinationGuid(assetGuid)
                 .destinationQualifiedName(assetQualifiedName)
                 .entityType(assetType)
-                .payload(classificationDetails);
+                .payload(atlanTagDetails);
     }
 }

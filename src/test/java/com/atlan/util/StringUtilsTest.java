@@ -32,9 +32,9 @@ public class StringUtilsTest {
 
     @Test
     void getFieldNameFromMethodName() {
-        String t1 = "getClassifications";
+        String t1 = "getAtlanTags";
         String t2 = "setQualifiedName";
-        assertEquals(StringUtils.getFieldNameFromMethodName(t1), "classifications");
+        assertEquals(StringUtils.getFieldNameFromMethodName(t1), "atlanTags");
         assertEquals(StringUtils.getFieldNameFromMethodName(t2), "qualifiedName");
     }
 

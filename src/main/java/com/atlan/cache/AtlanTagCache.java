@@ -8,7 +8,7 @@ import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.AtlanTypeCategory;
-import com.atlan.model.typedefs.ClassificationDef;
+import com.atlan.model.typedefs.AtlanTagDef;
 import com.atlan.model.typedefs.TypeDefResponse;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -16,30 +16,30 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * Lazily-loaded cache for translating between Atlan-internal ID strings and human-readable names for
- * classifications.
+ * Atlan tags.
  */
 @Slf4j
-public class ClassificationCache {
+public class AtlanTagCache {
 
-    private static Map<String, ClassificationDef> cacheById = new ConcurrentHashMap<>();
+    private static Map<String, AtlanTagDef> cacheById = new ConcurrentHashMap<>();
     private static Map<String, String> mapIdToName = new ConcurrentHashMap<>();
     private static Map<String, String> mapNameToId = new ConcurrentHashMap<>();
     private static Set<String> deletedIds = ConcurrentHashMap.newKeySet();
     private static Set<String> deletedNames = ConcurrentHashMap.newKeySet();
 
     public static synchronized void refreshCache() throws AtlanException {
-        log.debug("Refreshing cache of classifications...");
-        TypeDefResponse response = TypeDefsEndpoint.getTypeDefs(AtlanTypeCategory.CLASSIFICATION);
-        List<ClassificationDef> classifications;
+        log.debug("Refreshing cache of Atlan tags...");
+        TypeDefResponse response = TypeDefsEndpoint.getTypeDefs(AtlanTypeCategory.ATLAN_TAG);
+        List<AtlanTagDef> tags;
         if (response != null) {
-            classifications = response.getClassificationDefs();
+            tags = response.getAtlanTagDefs();
         } else {
-            classifications = Collections.emptyList();
+            tags = Collections.emptyList();
         }
         cacheById = new ConcurrentHashMap<>();
         mapIdToName = new ConcurrentHashMap<>();
         mapNameToId = new ConcurrentHashMap<>();
-        for (ClassificationDef clsDef : classifications) {
+        for (AtlanTagDef clsDef : tags) {
             String typeId = clsDef.getName();
             cacheById.put(typeId, clsDef);
             mapIdToName.put(typeId, clsDef.getDisplayName());
@@ -48,13 +48,13 @@ public class ClassificationCache {
     }
 
     /**
-     * Translate the provided human-readable classification name to the Atlan-internal ID string.
+     * Translate the provided human-readable Atlan tag name to the Atlan-internal ID string.
      *
-     * @param name human-readable name of the classification
-     * @return Atlan-internal ID string of the classification
+     * @param name human-readable name of the Atlan tag
+     * @return Atlan-internal ID string of the Atlan tag
      * @throws AtlanException on any API communication problem if the cache needs to be refreshed
-     * @throws NotFoundException if the classification cannot be found (does not exist) in Atlan
-     * @throws InvalidRequestException if no name was provided for the classification to retrieve
+     * @throws NotFoundException if the Atlan tag cannot be found (does not exist) in Atlan
+     * @throws InvalidRequestException if no name was provided for the Atlan tag to retrieve
      */
     public static String getIdForName(String name) throws AtlanException {
         if (name != null && name.length() > 0) {
@@ -66,23 +66,23 @@ public class ClassificationCache {
                 if (cmId == null) {
                     // If it's still not found after the refresh, mark it as deleted
                     deletedNames.add(name);
-                    throw new NotFoundException(ErrorCode.CLASSIFICATION_NOT_FOUND_BY_NAME, name);
+                    throw new NotFoundException(ErrorCode.ATLAN_TAG_NOT_FOUND_BY_NAME, name);
                 }
             }
             return cmId;
         } else {
-            throw new InvalidRequestException(ErrorCode.MISSING_CLASSIFICATION_NAME);
+            throw new InvalidRequestException(ErrorCode.MISSING_ATLAN_TAG_NAME);
         }
     }
 
     /**
-     * Translate the provided Atlan-internal classification ID string to the human-readable classification name.
+     * Translate the provided Atlan-internal Atlan tag ID string to the human-readable Atlan tag name.
      *
-     * @param id Atlan-internal ID string of the classification
-     * @return human-readable name of the classification
+     * @param id Atlan-internal ID string of the Atlan tag
+     * @return human-readable name of the Atlan tag
      * @throws AtlanException on any API communication problem if the cache needs to be refreshed
-     * @throws NotFoundException if the classification cannot be found (does not exist) in Atlan
-     * @throws InvalidRequestException if no ID was provided for the classification to retrieve
+     * @throws NotFoundException if the Atlan tag cannot be found (does not exist) in Atlan
+     * @throws InvalidRequestException if no ID was provided for the Atlan tag to retrieve
      */
     public static String getNameForId(String id) throws AtlanException {
         if (id != null && id.length() > 0) {
@@ -94,12 +94,12 @@ public class ClassificationCache {
                 if (cmName == null) {
                     // If it's still not found after the refresh, mark it as deleted
                     deletedIds.add(id);
-                    throw new NotFoundException(ErrorCode.CLASSIFICATION_NOT_FOUND_BY_ID, id);
+                    throw new NotFoundException(ErrorCode.ATLAN_TAG_NOT_FOUND_BY_ID, id);
                 }
             }
             return cmName;
         } else {
-            throw new InvalidRequestException(ErrorCode.MISSING_CLASSIFICATION_ID);
+            throw new InvalidRequestException(ErrorCode.MISSING_ATLAN_TAG_ID);
         }
     }
 }

@@ -11,8 +11,8 @@ public enum GlossaryPolicyAction implements AtlanEnum {
     DELETE("entity-delete"),
     LINK_ASSETS("link-assets"),
     UPDATE_CUSTOM_METADATA("entity-update-business-metadata"),
-    ADD_CLASSIFICATION("entity-add-classification"),
-    REMOVE_CLASSIFICATION("entity-remove-classification");
+    ADD_ATLAN_TAG("entity-add-classification"),
+    REMOVE_ATLAN_TAG("entity-remove-classification");
 
     @JsonValue
     @Getter(onMethod_ = {@Override})

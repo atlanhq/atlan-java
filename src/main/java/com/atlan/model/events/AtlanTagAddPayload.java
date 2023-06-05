@@ -2,7 +2,7 @@
 /* Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.events;
 
-import com.atlan.model.core.Classification;
+import com.atlan.model.core.AtlanTag;
 import java.util.Set;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -14,7 +14,7 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
-public class ClassificationAddPayload extends AtlanEventPayload {
+public class AtlanTagAddPayload extends AtlanEventPayload {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "CLASSIFICATION_ADD";
@@ -24,11 +24,11 @@ public class ClassificationAddPayload extends AtlanEventPayload {
     @Builder.Default
     String type = "ENTITY_NOTIFICATION_V2";
 
-    /** Fixed operation for classification addition payloads. */
+    /** Fixed operation for Atlan tag addition payloads. */
     @Getter(onMethod_ = {@Override})
     @Builder.Default
     String operationType = TYPE_NAME;
 
-    /** Classifications that were added to the asset by this event. */
-    Set<Classification> mutatedDetails;
+    /** Atlan tags that were added to the asset by this event. */
+    Set<AtlanTag> mutatedDetails;
 }

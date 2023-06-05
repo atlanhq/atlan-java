@@ -8,6 +8,7 @@ import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.core.AtlanObject;
 import com.atlan.model.enums.AtlanLineageDirection;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -77,9 +78,10 @@ public class LineageListRequest extends AtlanObject {
     @Builder.Default
     Boolean excludeMeanings = true;
 
-    /** Whether to include classifications for assets (false) or not (true). */
+    /** Whether to include Atlan tags for assets (false) or not (true). */
     @Builder.Default
-    Boolean excludeClassifications = true;
+    @JsonProperty("excludeClassifications")
+    Boolean excludeAtlanTags = true;
 
     /** Fetch the lineage defined by this object. */
     public LineageListResponse fetch() throws AtlanException {

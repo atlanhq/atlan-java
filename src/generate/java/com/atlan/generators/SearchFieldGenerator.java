@@ -47,12 +47,12 @@ public class SearchFieldGenerator extends TypeGenerator {
             new Field(
                     "TRAIT_NAMES",
                     "__traitNames",
-                    "All directly-assigned classifications that exist on an asset, searchable by the internal hashed-string ID of the classification.",
+                    "All directly-assigned Atlan tags that exist on an asset, searchable by the internal hashed-string ID of the Atlan tag.",
                     IndexType.KEYWORD),
             new Field(
                     "PROPAGATED_TRAIT_NAMES",
                     "__propagatedTraitNames",
-                    "All propagated classifications that exist on an asset, searchable by the internal hashed-string ID of the classification.",
+                    "All propagated Atlan tags that exist on an asset, searchable by the internal hashed-string ID of the Atlan tag.",
                     IndexType.KEYWORD),
             new Field(
                     "ASSIGNED_TERMS",
@@ -79,9 +79,9 @@ public class SearchFieldGenerator extends TypeGenerator {
 
     private static final List<Field> COMMON_TEXT = List.of(
             new Field(
-                    "CLASSIFICATIONS_TEXT",
+                    "ATLAN_TAGS_TEXT",
                     "__classificationsText",
-                    "All classifications that exist on an asset, whether directly assigned or propagated, searchable by the internal hashed-string ID of the classification.",
+                    "All Atlan tags that exist on an asset, whether directly assigned or propagated, searchable by the internal hashed-string ID of the Atlan tag.",
                     IndexType.TEXT),
             new Field(
                     "MEANINGS_TEXT",

@@ -4,7 +4,7 @@ package com.atlan.model.assets;
 
 import static org.testng.Assert.*;
 
-import com.atlan.model.core.Classification;
+import com.atlan.model.core.AtlanTag;
 import com.atlan.model.core.CustomMetadataAttributes;
 import com.atlan.model.enums.*;
 import com.atlan.model.structs.*;
@@ -41,11 +41,8 @@ public class GlossaryTermTest {
                             .confidence(100)
                             .build()))
             .qualifiedName("qualifiedName")
-            .classification(Classification.of("String0"))
-            .classification(Classification.builder()
-                    .typeName("String1")
-                    .propagate(false)
-                    .build())
+            .atlanTag(AtlanTag.of("String0"))
+            .atlanTag(AtlanTag.builder().typeName("String1").propagate(false).build())
             .customMetadata(
                     "String0",
                     CustomMetadataAttributes.builder()

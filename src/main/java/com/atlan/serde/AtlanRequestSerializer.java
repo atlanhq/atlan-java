@@ -2,7 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.serde;
 
-import com.atlan.cache.ClassificationCache;
+import com.atlan.cache.AtlanTagCache;
 import com.atlan.cache.CustomMetadataCache;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.NotFoundException;
@@ -22,7 +22,7 @@ import java.util.Map;
  * Serialization of all {@link AtlanRequest} objects.
  * This custom serialization is necessary to create some specific aspects of complexity in Atlan's payloads:
  * <ul>
- *     <li>The nested <code>payload</code> structures, which varies depending on classification and custom metadata details.</li>
+ *     <li>The nested <code>payload</code> structures, which varies depending on Atlan tag and custom metadata details.</li>
  * </ul>
  */
 public class AtlanRequestSerializer extends StdSerializer<AtlanRequest> {
@@ -57,16 +57,16 @@ public class AtlanRequestSerializer extends StdSerializer<AtlanRequest> {
         String destinationAttribute = request.getDestinationAttribute();
         Object translatedPayload = null;
 
-        if (request instanceof ClassificationRequest) {
-            ClassificationPayload cls = ((ClassificationRequest) request).getPayload();
+        if (request instanceof AtlanTagRequest) {
+            AtlanTagPayload cls = ((AtlanTagRequest) request).getPayload();
             String clsName = cls.getTypeName();
             String clsId;
             try {
-                clsId = ClassificationCache.getIdForName(clsName);
+                clsId = AtlanTagCache.getIdForName(clsName);
             } catch (NotFoundException e) {
                 clsId = DELETED;
             } catch (AtlanException e) {
-                throw new IOException("Unable to translate classification with name: " + clsName, e);
+                throw new IOException("Unable to translate Atlan tag with name: " + clsName, e);
             }
             translatedPayload = cls.toBuilder().typeName(clsId).build();
         } else if (request instanceof CustomMetadataRequest) {

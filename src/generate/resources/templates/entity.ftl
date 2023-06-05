@@ -20,7 +20,7 @@ import com.atlan.exception.NotFoundException;
 import com.atlan.model.core.AssetDeletionResponse;
 import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.core.AssetResponse;
-import com.atlan.model.core.Classification;
+import com.atlan.model.core.AtlanTag;
 import com.atlan.model.core.ConnectionCreationResponse;
 import com.atlan.model.core.CustomMetadataAttributes;
 import com.atlan.model.enums.AtlanAnnouncementType;
@@ -28,6 +28,14 @@ import com.atlan.model.enums.AtlanConnectionCategory;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanDeleteType;
 import com.atlan.model.enums.AtlanStatus;
+import com.atlan.model.enums.AtlanPolicyAction;
+import com.atlan.model.enums.AuthPolicyCategory;
+import com.atlan.model.enums.AuthPolicyResourceCategory;
+import com.atlan.model.enums.AuthPolicyType;
+import com.atlan.model.enums.PersonaMetadataAction;
+import com.atlan.model.enums.PersonaGlossaryAction;
+import com.atlan.model.enums.PurposeMetadataAction;
+import com.atlan.model.enums.DataAction;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.KeywordFields;
 import com.atlan.model.relations.UniqueAttributes;
@@ -238,7 +246,7 @@ public <#if abstract>abstract</#if> class ${className} extends ${parentClassName
 </#if>
 
 <#if !abstract>
-<#if className != "Glossary" && className != "GlossaryCategory" && className != "GlossaryTerm">
+<#if className != "Glossary" && className != "GlossaryCategory" && className != "GlossaryTerm" && className != "Persona" && className != "Purpose">
     /**
      * Remove the system description from a ${className}.
      *
@@ -375,100 +383,100 @@ public <#if abstract>abstract</#if> class ${className} extends ${parentClassName
 
 <#if className != "Readme" && className != "Link" && className != "ReadmeTemplate" && className != "Badge">
     /**
-     * Add classifications to a ${className}, without replacing existing classifications linked to the ${className}.
-     * Note: this operation must make two API calls — one to retrieve the ${className}'s existing classifications,
-     * and a second to append the new classifications.
+     * Add Atlan tags to a ${className}, without replacing existing Atlan tags linked to the ${className}.
+     * Note: this operation must make two API calls — one to retrieve the ${className}'s existing Atlan tags,
+     * and a second to append the new Atlan tags.
      *
      * @param qualifiedName of the ${className}
-     * @param classificationNames human-readable names of the classifications to add
+     * @param atlanTagNames human-readable names of the Atlan tags to add
      * @throws AtlanException on any API problems
      * @return the updated ${className}
      */
-    public static ${className} appendClassifications(String qualifiedName, List<String> classificationNames)
+    public static ${className} appendAtlanTags(String qualifiedName, List<String> atlanTagNames)
             throws AtlanException {
-        return (${className}) Asset.appendClassifications(TYPE_NAME, qualifiedName, classificationNames);
+        return (${className}) Asset.appendAtlanTags(TYPE_NAME, qualifiedName, atlanTagNames);
     }
 
     /**
-     * Add classifications to a ${className}, without replacing existing classifications linked to the ${className}.
-     * Note: this operation must make two API calls — one to retrieve the ${className}'s existing classifications,
-     * and a second to append the new classifications.
+     * Add Atlan tags to a ${className}, without replacing existing Atlan tags linked to the ${className}.
+     * Note: this operation must make two API calls — one to retrieve the ${className}'s existing Atlan tags,
+     * and a second to append the new Atlan tags.
      *
      * @param qualifiedName of the ${className}
-     * @param classificationNames human-readable names of the classifications to add
-     * @param propagate whether to propagate the classification (true) or not (false)
-     * @param removePropagationsOnDelete whether to remove the propagated classifications when the classification is removed from this asset (true) or not (false)
+     * @param atlanTagNames human-readable names of the Atlan tags to add
+     * @param propagate whether to propagate the Atlan tag (true) or not (false)
+     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
      * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
      * @throws AtlanException on any API problems
      * @return the updated ${className}
      */
-    public static ${className} appendClassifications(
+    public static ${className} appendAtlanTags(
             String qualifiedName,
-            List<String> classificationNames,
+            List<String> atlanTagNames,
             boolean propagate,
             boolean removePropagationsOnDelete,
             boolean restrictLineagePropagation)
             throws AtlanException {
-        return (${className}) Asset.appendClassifications(
+        return (${className}) Asset.appendAtlanTags(
             TYPE_NAME,
             qualifiedName,
-            classificationNames,
+            atlanTagNames,
             propagate,
             removePropagationsOnDelete,
             restrictLineagePropagation);
     }
 
     /**
-     * Add classifications to a ${className}.
+     * Add Atlan tags to a ${className}.
      *
      * @param qualifiedName of the ${className}
-     * @param classificationNames human-readable names of the classifications to add
-     * @throws AtlanException on any API problems, or if any of the classifications already exist on the ${className}
-     * @deprecated see {@link #appendClassifications(String, List)} instead
+     * @param atlanTagNames human-readable names of the Atlan tags to add
+     * @throws AtlanException on any API problems, or if any of the Atlan tags already exist on the ${className}
+     * @deprecated see {@link #appendAtlanTags(String, List)} instead
      */
     @Deprecated
-    public static void addClassifications(String qualifiedName, List<String> classificationNames)
+    public static void addAtlanTags(String qualifiedName, List<String> atlanTagNames)
             throws AtlanException {
-        Asset.addClassifications(TYPE_NAME, qualifiedName, classificationNames);
+        Asset.addAtlanTags(TYPE_NAME, qualifiedName, atlanTagNames);
     }
 
     /**
-     * Add classifications to a ${className}.
+     * Add Atlan tags to a ${className}.
      *
      * @param qualifiedName of the ${className}
-     * @param classificationNames human-readable names of the classifications to add
-     * @param propagate whether to propagate the classification (true) or not (false)
-     * @param removePropagationsOnDelete whether to remove the propagated classifications when the classification is removed from this asset (true) or not (false)
+     * @param atlanTagNames human-readable names of the Atlan tags to add
+     * @param propagate whether to propagate the Atlan tag (true) or not (false)
+     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
      * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
-     * @throws AtlanException on any API problems, or if any of the classifications already exist on the ${className}
-     * @deprecated see {@link #appendClassifications(String, List, boolean, boolean, boolean)} instead
+     * @throws AtlanException on any API problems, or if any of the Atlan tags already exist on the ${className}
+     * @deprecated see {@link #appendAtlanTags(String, List, boolean, boolean, boolean)} instead
      */
     @Deprecated
-    public static void addClassifications(
+    public static void addAtlanTags(
             String qualifiedName,
-            List<String> classificationNames,
+            List<String> atlanTagNames,
             boolean propagate,
             boolean removePropagationsOnDelete,
             boolean restrictLineagePropagation)
             throws AtlanException {
-        Asset.addClassifications(
+        Asset.addAtlanTags(
                 TYPE_NAME,
                 qualifiedName,
-                classificationNames,
+                atlanTagNames,
                 propagate,
                 removePropagationsOnDelete,
                 restrictLineagePropagation);
     }
 
     /**
-     * Remove a classification from a ${className}.
+     * Remove an Atlan tag from a ${className}.
      *
      * @param qualifiedName of the ${className}
-     * @param classificationName human-readable name of the classification to remove
-     * @throws AtlanException on any API problems, or if the classification does not exist on the ${className}
+     * @param atlanTagName human-readable name of the Atlan tag to remove
+     * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the ${className}
      */
-    public static void removeClassification(String qualifiedName, String classificationName) throws AtlanException {
-        Asset.removeClassification(TYPE_NAME, qualifiedName, classificationName);
+    public static void removeAtlanTag(String qualifiedName, String atlanTagName) throws AtlanException {
+        Asset.removeAtlanTag(TYPE_NAME, qualifiedName, atlanTagName);
     }
 </#if>
 </#if>

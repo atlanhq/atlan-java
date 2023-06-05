@@ -76,10 +76,10 @@ public class LineageTest extends AtlanLiveTest {
     }
 
     // TODO: column-level lineage
-    // TODO: classification propagation through lineage
-    // TODO: classification propagation through parent-child
-    // TODO: classification propagation through term-asset
-    // TODO: classification propagation through term-asset-child-lineage
+    // TODO: Atlan tag propagation through lineage
+    // TODO: Atlan tag propagation through parent-child
+    // TODO: Atlan tag propagation through term-asset
+    // TODO: Atlan tag propagation through term-asset-child-lineage
 
     @Test(
             groups = {"lineage.create.lineage.start"},

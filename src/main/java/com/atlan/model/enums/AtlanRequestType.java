@@ -8,7 +8,7 @@ import lombok.Getter;
 public enum AtlanRequestType implements AtlanEnum {
     ATTRIBUTE("attribute"),
     TERM_LINK("term_link"),
-    CLASSIFICATION("attach_classification"),
+    ATLAN_TAG("attach_classification"),
     CUSTOM_METADATA("bm_attribute");
 
     @JsonValue

@@ -4,10 +4,10 @@ package com.atlan.live;
 
 import static org.testng.Assert.*;
 
+import com.atlan.api.EntityBulkEndpoint;
 import com.atlan.exception.AtlanException;
-import com.atlan.model.admin.*;
-import com.atlan.model.assets.Connection;
-import com.atlan.model.assets.Glossary;
+import com.atlan.model.assets.*;
+import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.enums.*;
 import java.util.List;
 import java.util.Set;
@@ -24,7 +24,7 @@ public class PersonaTest extends AtlanLiveTest {
     public static final AtlanConnectorType CONNECTOR_TYPE = AtlanConnectorType.GCS;
     private static final String GLOSSARY_NAME = PREFIX;
 
-    private static String personaGuid = null;
+    private static Persona persona = null;
 
     private static Connection connection = null;
     private static Glossary glossary = null;
@@ -41,94 +41,142 @@ public class PersonaTest extends AtlanLiveTest {
 
     @Test(groups = {"persona.create.personas"})
     void createPersonas() throws AtlanException {
-        Persona persona = Persona.creator(PERSONA_NAME).build();
-        Persona result = persona.create();
-        assertNotNull(result);
-        personaGuid = result.getId();
-        assertNotNull(personaGuid);
-        assertEquals(result.getDisplayName(), PERSONA_NAME);
-    }
-
-    @Test(
-            groups = {"persona.read.personas.1"},
-            dependsOnGroups = {"persona.create.personas"})
-    void retrievePersonas1() throws AtlanException {
-        List<Persona> personas = Persona.retrieveAll();
-        assertNotNull(personas);
-        assertTrue(personas.size() >= 1);
-        Persona one = Persona.retrieveByName(PERSONA_NAME);
-        assertNotNull(one);
-        assertEquals(one.getId(), personaGuid);
+        Persona toCreate = Persona.creator(PERSONA_NAME).build();
+        AssetMutationResponse response = toCreate.upsert();
+        assertNotNull(response);
+        assertTrue(response.getDeletedAssets().isEmpty());
+        assertTrue(response.getUpdatedAssets().isEmpty());
+        assertEquals(response.getCreatedAssets().size(), 1);
+        Asset one = response.getCreatedAssets().get(0);
+        assertTrue(one instanceof Persona);
+        persona = (Persona) one;
+        assertNotNull(persona.getGuid());
+        assertNotNull(persona.getQualifiedName());
+        assertEquals(persona.getName(), PERSONA_NAME);
+        assertEquals(persona.getDisplayName(), PERSONA_NAME);
+        assertNotEquals(persona.getQualifiedName(), PERSONA_NAME);
     }
 
     @Test(
             groups = {"persona.update.personas"},
             dependsOnGroups = {"persona.create.personas"})
     void updatePersonas() throws AtlanException {
-        Persona persona = Persona.retrieveByName(PERSONA_NAME).toBuilder()
+        Persona toUpdate = Persona.updater(persona.getQualifiedName(), persona.getName(), true)
                 .description("Now with a description!")
-                .attributes(Persona.PersonaAttributes.builder()
-                        .preferences(Persona.PersonaPreferences.builder()
-                                .assetTabDeny(AssetSidebarTab.LINEAGE)
-                                .assetTabDeny(AssetSidebarTab.RELATIONS)
-                                .assetTabDeny(AssetSidebarTab.QUERIES)
-                                .build())
-                        .build())
+                .denyAssetTab(AssetSidebarTab.LINEAGE)
+                .denyAssetTab(AssetSidebarTab.RELATIONS)
+                .denyAssetTab(AssetSidebarTab.QUERIES)
                 .build();
-        persona.update();
+        AssetMutationResponse response = toUpdate.upsert();
+        assertNotNull(response);
+        assertEquals(response.getUpdatedAssets().size(), 1);
+        Asset one = response.getUpdatedAssets().get(0);
+        assertTrue(one instanceof Persona);
+        Persona found = (Persona) one;
+        assertEquals(found.getGuid(), persona.getGuid());
+        assertEquals(found.getDescription(), "Now with a description!");
+        assertEquals(found.getDenyAssetTabs().size(), 3);
+    }
+
+    @Test(
+            groups = {"persona.read.personas.1"},
+            dependsOnGroups = {"persona.update.personas"})
+    void findPersonaByName() throws AtlanException {
+        List<Persona> list = Persona.findByName(PERSONA_NAME, null);
+        assertNotNull(list);
+        assertEquals(list.size(), 1);
+        assertEquals(list.get(0).getGuid(), persona.getGuid());
     }
 
     @Test(
             groups = {"persona.update.personas.policy"},
             dependsOnGroups = {"persona.update.personas", "persona.create.connection", "persona.create.glossary"})
     void addPoliciesToPersona() throws AtlanException {
-        Persona persona = Persona.retrieveByName(PERSONA_NAME);
-        PersonaMetadataPolicy metadata = PersonaMetadataPolicy.creator(
+        AuthPolicy metadata = Persona.createMetadataPolicy(
                         "Simple read access",
-                        connection.getGuid(),
-                        Set.of(connection.getQualifiedName()),
-                        Set.of(PersonaMetadataPolicyAction.READ),
-                        true)
+                        persona.getGuid(),
+                        AuthPolicyType.ALLOW,
+                        Set.of(PersonaMetadataAction.READ),
+                        Set.of("entity:" + connection.getQualifiedName()))
                 .build();
-        AbstractPolicy policy = persona.addPolicy(metadata);
-        assertTrue(policy instanceof PersonaMetadataPolicy);
-        PersonaDataPolicy data = PersonaDataPolicy.creator(
+        AuthPolicy data = Persona.createDataPolicy(
                         "Allow access to data",
-                        connection.getGuid(),
-                        Set.of(connection.getQualifiedName()),
-                        Set.of(DataPolicyAction.SELECT),
-                        true)
+                        persona.getGuid(),
+                        AuthPolicyType.ALLOW,
+                        Set.of("entity:" + connection.getQualifiedName()))
                 .build();
-        policy = persona.addPolicy(data);
-        assertTrue(policy instanceof PersonaDataPolicy);
-        GlossaryPolicy glossaryPolicy = GlossaryPolicy.creator(
+        AuthPolicy glossaryPolicy = Persona.createGlossaryPolicy(
                         "All glossaries",
-                        Set.of(glossary.getQualifiedName()),
-                        Set.of(GlossaryPolicyAction.CREATE, GlossaryPolicyAction.UPDATE),
-                        true)
+                        persona.getGuid(),
+                        AuthPolicyType.ALLOW,
+                        Set.of(PersonaGlossaryAction.CREATE, PersonaGlossaryAction.UPDATE),
+                        Set.of("entity:" + glossary.getQualifiedName()))
                 .build();
-        policy = persona.addPolicy(glossaryPolicy);
-        assertTrue(policy instanceof GlossaryPolicy);
+        AssetMutationResponse response = EntityBulkEndpoint.upsert(List.of(metadata, data, glossaryPolicy), false);
+        assertNotNull(response);
+        assertEquals(response.getUpdatedAssets().size(), 1);
+        Asset one = response.getUpdatedAssets().get(0);
+        assertTrue(one instanceof Persona);
+        Persona found = (Persona) one;
+        assertEquals(found.getGuid(), persona.getGuid());
+        assertEquals(response.getCreatedAssets().size(), 3);
+        one = response.getCreatedAssets().get(0);
+        assertTrue(one instanceof AuthPolicy);
+        one = response.getCreatedAssets().get(1);
+        assertTrue(one instanceof AuthPolicy);
+        one = response.getCreatedAssets().get(2);
+        assertTrue(one instanceof AuthPolicy);
     }
 
     @Test(
             groups = {"persona.read.personas.2"},
             dependsOnGroups = {"persona.update.personas.*"})
     void retrievePersonas2() throws AtlanException {
-        Persona one = Persona.retrieveByName(PERSONA_NAME);
+        Persona one = Persona.retrieveByQualifiedName(persona.getQualifiedName());
         assertNotNull(one);
-        assertEquals(one.getId(), personaGuid);
+        assertEquals(one.getGuid(), persona.getGuid());
         assertEquals(one.getDescription(), "Now with a description!");
-        assertNotNull(one.getAttributes());
-        assertNotNull(one.getAttributes().getPreferences());
-        Set<AssetSidebarTab> denied = one.getAttributes().getPreferences().getAssetTabsDenyList();
+        Set<AssetSidebarTab> denied = one.getDenyAssetTabs();
         assertEquals(denied.size(), 3);
         assertTrue(denied.contains(AssetSidebarTab.LINEAGE));
         assertTrue(denied.contains(AssetSidebarTab.RELATIONS));
         assertTrue(denied.contains(AssetSidebarTab.QUERIES));
-        assertEquals(one.getMetadataPolicies().size(), 1);
-        assertEquals(one.getDataPolicies().size(), 1);
-        assertEquals(one.getGlossaryPolicies().size(), 1);
+        Set<AuthPolicy> policies = one.getPolicies();
+        assertEquals(policies.size(), 3);
+        for (AuthPolicy policy : policies) {
+            // Need to retrieve the full policy if we want to see any info about it
+            // (what comes back on the Persona itself are just policy references)
+            AuthPolicy full = AuthPolicy.retrieveByGuid(policy.getGuid());
+            assertNotNull(full);
+            String subCat = full.getPolicySubCategory();
+            assertNotNull(subCat);
+            assertTrue(Set.of("metadata", "data", "glossary").contains(subCat));
+            assertEquals(full.getPolicyType(), AuthPolicyType.ALLOW);
+            switch (subCat) {
+                case "metadata":
+                    assertNotNull(full.getPolicyActions());
+                    assertEquals(full.getPolicyActions().size(), 1);
+                    assertTrue(full.getPolicyActions().contains(PersonaMetadataAction.READ));
+                    assertNotNull(full.getPolicyResources());
+                    assertTrue(full.getPolicyResources().contains("entity:" + connection.getQualifiedName()));
+                    break;
+                case "data":
+                    assertNotNull(full.getPolicyActions());
+                    assertEquals(full.getPolicyActions().size(), 1);
+                    assertTrue(full.getPolicyActions().contains(DataAction.SELECT));
+                    assertNotNull(full.getPolicyResources());
+                    assertTrue(full.getPolicyResources().contains("entity:" + connection.getQualifiedName()));
+                    break;
+                case "glossary":
+                    assertNotNull(full.getPolicyActions());
+                    assertEquals(full.getPolicyActions().size(), 2);
+                    assertTrue(full.getPolicyActions().contains(PersonaGlossaryAction.CREATE));
+                    assertTrue(full.getPolicyActions().contains(PersonaGlossaryAction.UPDATE));
+                    assertNotNull(full.getPolicyResources());
+                    assertTrue(full.getPolicyResources().contains("entity:" + glossary.getQualifiedName()));
+                    break;
+            }
+        }
     }
 
     @Test(
@@ -136,7 +184,7 @@ public class PersonaTest extends AtlanLiveTest {
             dependsOnGroups = {"persona.create.*", "persona.update.*", "persona.read.*"},
             alwaysRun = true)
     void purgePersonas() throws AtlanException {
-        Persona.delete(personaGuid);
+        Persona.purge(persona.getGuid());
     }
 
     @Test(

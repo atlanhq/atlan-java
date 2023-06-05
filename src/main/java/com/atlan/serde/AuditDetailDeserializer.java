@@ -12,7 +12,7 @@ import java.io.IOException;
 
 /**
  * Deserialization of all {@link AuditDetail} objects, down through the entire inheritance hierarchy.
- * This custom deserialization is necessary to distinguish between Classification and Entity objects.
+ * This custom deserialization is necessary to distinguish between Atlan tag and Entity objects.
  */
 public class AuditDetailDeserializer extends StdDeserializer<AuditDetail> {
 
@@ -52,9 +52,9 @@ public class AuditDetailDeserializer extends StdDeserializer<AuditDetail> {
             CustomMetadataAuditDeserializer cm = new CustomMetadataAuditDeserializer();
             return cm.deserialize(root);
         } else {
-            // Delegate to classification deserialization
-            ClassificationDeserializer classification = new ClassificationDeserializer();
-            return classification.deserialize(root);
+            // Delegate to Atlan tag deserialization
+            AtlanTagDeserializer atlanTag = new AtlanTagDeserializer();
+            return atlanTag.deserialize(root);
         }
     }
 }

@@ -27,7 +27,7 @@ import lombok.extern.jackson.Jacksonized;
 public class EnumDef extends TypeDef {
     private static final long serialVersionUID = 2L;
 
-    /** Fixed category for classification typedefs. */
+    /** Fixed category for enum typedefs. */
     @Getter(onMethod_ = {@Override})
     @Builder.Default
     AtlanTypeCategory category = AtlanTypeCategory.ENUM;

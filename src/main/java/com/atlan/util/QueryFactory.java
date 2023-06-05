@@ -9,7 +9,7 @@ import co.elastic.clients.elasticsearch._types.SortOrder;
 import co.elastic.clients.elasticsearch._types.aggregations.Aggregation;
 import co.elastic.clients.elasticsearch._types.query_dsl.*;
 import co.elastic.clients.json.JsonData;
-import com.atlan.cache.ClassificationCache;
+import com.atlan.cache.AtlanTagCache;
 import com.atlan.cache.CustomMetadataCache;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
@@ -86,33 +86,33 @@ public class QueryFactory {
     }
 
     /**
-     * Returns a query that will only match assets that have at least one of the classifications
-     * provided. This will match irrespective of the classification being directly applied to the
+     * Returns a query that will only match assets that have at least one of the Atlan tags
+     * provided. This will match irrespective of the Atlan tag being directly applied to the
      * asset, or if it was propagated to the asset.
      *
-     * @param classificationNames human-readable names of the classifications
-     * @return a query that will only match assets that have at least one of the classifications provided
-     * @throws AtlanException on any error communicating with the API to refresh the classification cache
+     * @param atlanTagNames human-readable names of the Atlan tags
+     * @return a query that will only match assets that have at least one of the Atlan tags provided
+     * @throws AtlanException on any error communicating with the API to refresh the Atlan tag cache
      */
-    public static Query beClassifiedByAtLeastOneOf(Collection<String> classificationNames) throws AtlanException {
+    public static Query beTaggedByAtLeastOneOf(Collection<String> atlanTagNames) throws AtlanException {
         List<String> values = new ArrayList<>();
-        for (String name : classificationNames) {
-            values.add(ClassificationCache.getIdForName(name));
+        for (String name : atlanTagNames) {
+            values.add(AtlanTagCache.getIdForName(name));
         }
         return CompoundQuery.builder()
-                .should(have(KeywordFields.TRAIT_NAMES).beOneOf(values)) // direct classifications
-                .should(have(KeywordFields.PROPAGATED_TRAIT_NAMES).beOneOf(values)) // propagated classifications
+                .should(have(KeywordFields.TRAIT_NAMES).beOneOf(values)) // direct Atlan tags
+                .should(have(KeywordFields.PROPAGATED_TRAIT_NAMES).beOneOf(values)) // propagated Atlan tags
                 .minimum(1)
                 .build()
                 ._toQuery();
     }
 
     /**
-     * Returns a query that will only match assets that have at least one classification directly assigned.
+     * Returns a query that will only match assets that have at least one Atlan tag directly assigned.
      *
-     * @return a query that will only match assets that have at least one classification directly assigned
+     * @return a query that will only match assets that have at least one Atlan tag directly assigned
      */
-    public static Query beDirectlyClassified() {
+    public static Query beDirectlyTagged() {
         return have(KeywordFields.TRAIT_NAMES).present();
     }
 

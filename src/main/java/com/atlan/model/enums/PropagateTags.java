@@ -17,8 +17,8 @@ import lombok.Getter;
  *
  * Care needs to be taken when specifying. The use cases we are aware of where this flag is useful:
  *
- * - propagating confidentiality classifications from a table to columns - ONE_TO_TWO could be used here
- * - propagating classifications around Glossary synonyms - BOTH could be used here.
+ * - propagating confidentiality Atlan tags from a table to columns - ONE_TO_TWO could be used here
+ * - propagating Atlan tags around Glossary synonyms - BOTH could be used here.
  *
  * There is an expectation that further enhancements will allow more granular control of tag propagation and will address how to resolve conflicts.
  */

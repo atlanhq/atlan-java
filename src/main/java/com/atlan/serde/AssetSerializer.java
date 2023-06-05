@@ -2,7 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.serde;
 
-import com.atlan.cache.ClassificationCache;
+import com.atlan.cache.AtlanTagCache;
 import com.atlan.cache.CustomMetadataCache;
 import com.atlan.cache.ReflectionCache;
 import com.atlan.exception.AtlanException;
@@ -88,16 +88,28 @@ public class AssetSerializer extends StdSerializer<Asset> {
                         boolean skip = (attrValue instanceof Collection && ((Collection<?>) attrValue).isEmpty())
                                 || (attrValue instanceof Map && ((Map<?, ?>) attrValue).isEmpty());
                         if (!skip) {
-                            if (fieldName.equals("mappedClassificationName")) {
+                            if (fieldName.equals("mappedAtlanTagName")) {
                                 String mappedName;
                                 try {
-                                    mappedName = ClassificationCache.getIdForName(attrValue.toString());
+                                    mappedName = AtlanTagCache.getIdForName(attrValue.toString());
                                 } catch (NotFoundException e) {
                                     mappedName = Serde.DELETED_AUDIT_OBJECT;
                                 } catch (AtlanException e) {
-                                    throw new IOException("Unable to serialize mappedClassificationName.", e);
+                                    throw new IOException("Unable to serialize mappedAtlanTagName.", e);
                                 }
                                 attrValue = mappedName;
+                            } else if (fieldName.equals("purposeAtlanTags") && attrValue instanceof Collection) {
+                                List<String> mappedNames = new ArrayList<>();
+                                for (Object one : (Collection<?>) attrValue) {
+                                    try {
+                                        mappedNames.add(AtlanTagCache.getIdForName(one.toString()));
+                                    } catch (NotFoundException e) {
+                                        mappedNames.add(Serde.DELETED_AUDIT_OBJECT);
+                                    } catch (AtlanException e) {
+                                        throw new IOException("Unable to serialize purposeAtlanTags.", e);
+                                    }
+                                }
+                                attrValue = mappedNames;
                             }
                             // Add the value we've derived above to the attribute map for nesting
                             String serializeName = ReflectionCache.getSerializedName(clazz, fieldName);
