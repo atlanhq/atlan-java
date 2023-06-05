@@ -51,13 +51,15 @@ public class JacksonUtils {
         }
         // AtlanPolicyAction is a special case, since it is an abstract enum
         // (and there's no concept of such a thing in Java)
-        if (singularClass == AtlanPolicyAction.class) {
-            return AtlanPolicyActionDeserializer.deserialize(primitive.asText());
-        } else if (singularClass.isEnum()) {
-            Method fromValue = singularClass.getMethod("fromValue", String.class);
-            return fromValue.invoke(null, primitive.asText());
-        } else if (primitive.isTextual()) {
-            return primitive.asText();
+        if (primitive.isTextual()) {
+            if (singularClass == AtlanPolicyAction.class) {
+                return AtlanPolicyActionDeserializer.deserialize(primitive.asText());
+            } else if (singularClass.isEnum()) {
+                Method fromValue = singularClass.getMethod("fromValue", String.class);
+                return fromValue.invoke(null, primitive.asText());
+            } else {
+                return primitive.asText();
+            }
         } else if (primitive.isBoolean()) {
             return primitive.asBoolean();
         } else if (primitive.isNumber()) {

@@ -98,6 +98,18 @@ public class AssetSerializer extends StdSerializer<Asset> {
                                     throw new IOException("Unable to serialize mappedAtlanTagName.", e);
                                 }
                                 attrValue = mappedName;
+                            } else if (fieldName.equals("purposeAtlanTags") && attrValue instanceof Collection) {
+                                List<String> mappedNames = new ArrayList<>();
+                                for (Object one : (Collection<?>) attrValue) {
+                                    try {
+                                        mappedNames.add(AtlanTagCache.getIdForName(one.toString()));
+                                    } catch (NotFoundException e) {
+                                        mappedNames.add(Serde.DELETED_AUDIT_OBJECT);
+                                    } catch (AtlanException e) {
+                                        throw new IOException("Unable to serialize purposeAtlanTags.", e);
+                                    }
+                                }
+                                attrValue = mappedNames;
                             }
                             // Add the value we've derived above to the attribute map for nesting
                             String serializeName = ReflectionCache.getSerializedName(clazz, fieldName);

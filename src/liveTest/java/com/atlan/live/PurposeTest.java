@@ -4,9 +4,13 @@ package com.atlan.live;
 
 import static org.testng.Assert.*;
 
+import com.atlan.api.EntityBulkEndpoint;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.InvalidRequestException;
-import com.atlan.model.admin.*;
+import com.atlan.model.assets.Asset;
+import com.atlan.model.assets.AuthPolicy;
+import com.atlan.model.assets.Purpose;
+import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.enums.*;
 import com.atlan.model.typedefs.AtlanTagDef;
 import java.util.List;
@@ -21,13 +25,12 @@ public class PurposeTest extends AtlanLiveTest {
 
     public static final String ATLAN_TAG_NAME = PREFIX;
 
-    public static String purposeGuid = null;
+    public static Purpose purpose = null;
 
     @Test(groups = {"purpose.invalid.purpose"})
     void createInvalidPurpose() {
-        assertThrows(
-                InvalidRequestException.class,
-                () -> Purpose.creator(PURPOSE_NAME, null).build().create());
+        assertThrows(InvalidRequestException.class, () -> Purpose.creator(PURPOSE_NAME, null)
+                .build());
     }
 
     @Test(groups = {"purpose.create.atlantag"})
@@ -42,94 +45,122 @@ public class PurposeTest extends AtlanLiveTest {
             groups = {"purpose.create.purposes"},
             dependsOnGroups = {"purpose.create.atlantag"})
     void createPurposes() throws AtlanException {
-        Purpose purpose = Purpose.creator(PURPOSE_NAME, List.of(ATLAN_TAG_NAME))
+        Purpose toCreate = Purpose.creator(PURPOSE_NAME, List.of(ATLAN_TAG_NAME))
                 .description("Example purpose for testing purposes.")
                 .build();
-        Purpose result = purpose.create();
-        assertNotNull(result);
-        purposeGuid = result.getId();
-        assertNotNull(purposeGuid);
-        assertEquals(result.getDisplayName(), PURPOSE_NAME);
-    }
-
-    @Test(
-            groups = {"purpose.read.purposes.1"},
-            dependsOnGroups = {"purpose.create.purposes"})
-    void retrievePurposes1() throws AtlanException {
-        List<Purpose> purposes = Purpose.retrieveAll();
-        assertNotNull(purposes);
-        assertTrue(purposes.size() >= 1);
-        Purpose one = Purpose.retrieveByName(PURPOSE_NAME);
-        assertNotNull(one);
-        assertEquals(one.getId(), purposeGuid);
-        assertNotNull(one.getTags());
-        assertEquals(one.getTags().size(), 1);
-        assertTrue(one.getTags().contains(ATLAN_TAG_NAME));
+        AssetMutationResponse response = toCreate.upsert();
+        assertNotNull(response);
+        assertEquals(response.getDeletedAssets().size(), 0);
+        assertEquals(response.getUpdatedAssets().size(), 0);
+        assertEquals(response.getCreatedAssets().size(), 1);
+        assertTrue(response.getCreatedAssets().get(0) instanceof Purpose);
+        purpose = (Purpose) response.getCreatedAssets().get(0);
+        assertNotNull(purpose);
+        assertNotNull(purpose.getGuid());
+        assertEquals(purpose.getDisplayName(), PURPOSE_NAME);
     }
 
     @Test(
             groups = {"purpose.update.purposes"},
             dependsOnGroups = {"purpose.create.purposes"})
     void updatePurposes() throws AtlanException {
-        Purpose purpose = Purpose.retrieveByName(PURPOSE_NAME);
-        assertNotNull(purpose);
-        purpose = purpose.toBuilder()
+        Purpose toUpdate = Purpose.updater(purpose.getQualifiedName(), purpose.getName(), true)
                 .description("Now with a description!")
-                .attributes(Purpose.PurposeAttributes.builder()
-                        .preferences(Purpose.PurposePreferences.builder()
-                                .assetTabDeny(AssetSidebarTab.LINEAGE)
-                                .assetTabDeny(AssetSidebarTab.RELATIONS)
-                                .assetTabDeny(AssetSidebarTab.QUERIES)
-                                .build())
-                        .build())
+                .denyAssetTab(AssetSidebarTab.LINEAGE)
+                .denyAssetTab(AssetSidebarTab.RELATIONS)
+                .denyAssetTab(AssetSidebarTab.QUERIES)
                 .build();
-        purpose.update();
+        AssetMutationResponse response = toUpdate.upsert();
+        assertNotNull(response);
+        assertEquals(response.getUpdatedAssets().size(), 1);
+        Asset one = response.getUpdatedAssets().get(0);
+        assertTrue(one instanceof Purpose);
+        Purpose found = (Purpose) one;
+        assertEquals(found.getGuid(), purpose.getGuid());
+        assertEquals(found.getDescription(), "Now with a description!");
+        assertEquals(found.getDenyAssetTabs().size(), 3);
+    }
+
+    @Test(
+            groups = {"purpose.read.purposes.1"},
+            dependsOnGroups = {"purpose.update.purposes"})
+    void findPurposeByName() throws AtlanException {
+        List<Purpose> purposes = Purpose.findByName(PURPOSE_NAME, null);
+        assertNotNull(purposes);
+        assertEquals(purposes.size(), 1);
+        assertEquals(purposes.get(0).getGuid(), purpose.getGuid());
     }
 
     @Test(
             groups = {"purpose.update.purposes.policy"},
             dependsOnGroups = {"purpose.update.purposes"})
     void addPoliciesToPurpose() throws AtlanException {
-        Purpose purpose = Purpose.retrieveByName(PURPOSE_NAME).toBuilder()
-                .metadataPolicy(PurposeMetadataPolicy.creator(
-                                "Simple read access", null, null, true, Set.of(PurposeMetadataPolicyAction.READ), true)
-                        .build())
-                .dataPolicy(PurposeDataPolicy.creator(
-                                "Mask the data",
-                                null,
-                                null,
-                                true,
-                                Set.of(DataPolicyAction.SELECT),
-                                DataPolicyType.MASKING,
-                                true)
-                        .mask(MaskingType.HASH)
-                        .build())
+        AuthPolicy metadata = Purpose.createMetadataPolicy(
+                        "Simple read access",
+                        purpose.getGuid(),
+                        AuthPolicyType.ALLOW,
+                        Set.of(PurposeMetadataAction.READ),
+                        null,
+                        null,
+                        true)
                 .build();
-        Purpose result = purpose.update();
-        assertNotNull(result);
-        assertNotNull(result.getMetadataPolicies());
-        assertEquals(result.getMetadataPolicies().size(), 1);
-        assertNotNull(result.getDataPolicies());
-        assertEquals(result.getDataPolicies().size(), 1);
+        AuthPolicy data = Purpose.createDataPolicy(
+                        "Mask the data", purpose.getGuid(), AuthPolicyType.DATA_MASK, null, null, true)
+                .policyMaskType(DataMaskingType.HASH)
+                .build();
+        AssetMutationResponse response = EntityBulkEndpoint.upsert(List.of(metadata, data), false);
+        assertNotNull(response);
+        assertEquals(response.getUpdatedAssets().size(), 1);
+        Asset one = response.getUpdatedAssets().get(0);
+        assertTrue(one instanceof Purpose);
+        assertEquals(one.getGuid(), purpose.getGuid());
+        assertEquals(response.getCreatedAssets().size(), 2);
+        one = response.getCreatedAssets().get(0);
+        assertTrue(one instanceof AuthPolicy);
+        one = response.getCreatedAssets().get(1);
+        assertTrue(one instanceof AuthPolicy);
     }
 
     @Test(
             groups = {"purpose.read.purposes.2"},
             dependsOnGroups = {"purpose.update.purposes.policy"})
     void retrievePurposes2() throws AtlanException {
-        Purpose one = Purpose.retrieveByName(PURPOSE_NAME);
+        Purpose one = Purpose.retrieveByQualifiedName(purpose.getQualifiedName());
         assertNotNull(one);
-        assertEquals(one.getId(), purposeGuid);
+        assertEquals(one.getGuid(), purpose.getGuid());
         assertEquals(one.getDescription(), "Now with a description!");
-        assertNotNull(one.getAttributes());
-        assertNotNull(one.getAttributes().getPreferences());
-        Set<AssetSidebarTab> denied = one.getAttributes().getPreferences().getAssetTabsDenyList();
+        Set<AssetSidebarTab> denied = one.getDenyAssetTabs();
         assertEquals(denied.size(), 3);
         assertTrue(denied.contains(AssetSidebarTab.LINEAGE));
         assertTrue(denied.contains(AssetSidebarTab.RELATIONS));
         assertTrue(denied.contains(AssetSidebarTab.QUERIES));
-        assertEquals(one.getMetadataPolicies().size(), 1);
-        assertEquals(one.getDataPolicies().size(), 1);
+        Set<AuthPolicy> policies = one.getPolicies();
+        assertEquals(policies.size(), 2);
+        for (AuthPolicy policy : policies) {
+            // Need to retrieve the full policy if we want to see any info about it
+            // (what comes back on the Purpose itself are just policy references)
+            AuthPolicy full = AuthPolicy.retrieveByGuid(policy.getGuid());
+            assertNotNull(full);
+            String subCat = full.getPolicySubCategory();
+            assertNotNull(subCat);
+            assertTrue(Set.of("metadata", "data").contains(subCat));
+            switch (subCat) {
+                case "metadata":
+                    assertNotNull(full.getPolicyActions());
+                    assertEquals(full.getPolicyActions().size(), 1);
+                    assertTrue(full.getPolicyActions().contains(PurposeMetadataAction.READ));
+                    assertEquals(full.getPolicyType(), AuthPolicyType.ALLOW);
+                    break;
+                case "data":
+                    assertNotNull(full.getPolicyActions());
+                    assertEquals(full.getPolicyActions().size(), 1);
+                    assertTrue(full.getPolicyActions().contains(DataAction.SELECT));
+                    assertEquals(full.getPolicyType(), AuthPolicyType.DATA_MASK);
+                    assertNotNull(full.getPolicyMaskType());
+                    assertEquals(full.getPolicyMaskType(), DataMaskingType.HASH);
+                    break;
+            }
+        }
     }
 
     @Test(
@@ -137,7 +168,7 @@ public class PurposeTest extends AtlanLiveTest {
             dependsOnGroups = {"purpose.create.*", "purpose.update.*", "purpose.read.*"},
             alwaysRun = true)
     void purgePurposes() throws AtlanException {
-        Purpose.delete(purposeGuid);
+        Purpose.purge(purpose.getGuid());
     }
 
     @Test(

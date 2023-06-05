@@ -253,18 +253,18 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
         if (jsonNode.isValueNode()) {
             deserializePrimitive(builder, jsonNode, method, fieldName);
         } else if (jsonNode.isArray()) {
-            deserializeList(builder, (ArrayNode) jsonNode, method);
+            deserializeList(builder, (ArrayNode) jsonNode, method, fieldName);
         } else if (jsonNode.isObject()) {
             deserializeObject(builder, jsonNode, method);
         }
     }
 
-    private void deserializeList(Asset.AssetBuilder<?, ?> builder, ArrayNode array, Method method)
+    private void deserializeList(Asset.AssetBuilder<?, ?> builder, ArrayNode array, Method method, String fieldName)
             throws IllegalAccessException, InvocationTargetException, NoSuchMethodException, IOException {
         Class<?> paramClass = ReflectionCache.getParameterOfMethod(method);
         List<Object> list = new ArrayList<>();
         for (JsonNode element : array) {
-            Object deserialized = deserializeElement(element, method);
+            Object deserialized = deserializeElement(element, method, fieldName);
             list.add(deserialized);
         }
         if (paramClass == Collection.class || paramClass == List.class) {
@@ -294,14 +294,26 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
      * Deserialize a value direct to an object.
      * @param element to deserialize
      * @param method to which the deserialized value will be built into an asset
+     * @param fieldName name of the field into which the value is being deserialized
      * @return the deserialized object
      * @throws IOException if an array is found nested directly within another array (unsupported)
      */
-    private Object deserializeElement(JsonNode element, Method method)
+    private Object deserializeElement(JsonNode element, Method method, String fieldName)
             throws IllegalAccessException, InvocationTargetException, NoSuchMethodException, IOException {
         Type paramType = ReflectionCache.getParameterizedTypeOfMethod(method);
         Class<?> innerClass = ReflectionCache.getClassOfParameterizedType(paramType);
         if (element.isValueNode()) {
+            if (fieldName.equals("purposeAtlanTags")) {
+                String value;
+                try {
+                    value = AtlanTagCache.getNameForId(element.asText());
+                } catch (NotFoundException e) {
+                    value = Serde.DELETED_AUDIT_OBJECT;
+                } catch (AtlanException e) {
+                    throw new IOException("Unable to deserialize purposeAtlanTags.", e);
+                }
+                return value;
+            }
             return JacksonUtils.deserializePrimitive(element, method, innerClass);
         } else if (element.isArray()) {
             throw new IOException("Directly-nested arrays are not supported.");

@@ -2,15 +2,27 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
+import co.elastic.clients.elasticsearch._types.query_dsl.Query;
+import com.atlan.cache.GroupCache;
+import com.atlan.cache.UserCache;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
-import com.atlan.model.enums.AtlanAnnouncementType;
-import com.atlan.model.enums.CertificateStatus;
+import com.atlan.model.enums.AuthPolicyCategory;
+import com.atlan.model.enums.AuthPolicyResourceCategory;
+import com.atlan.model.enums.AuthPolicyType;
+import com.atlan.model.enums.DataAction;
+import com.atlan.model.enums.KeywordFields;
+import com.atlan.model.enums.PurposeMetadataAction;
 import com.atlan.model.relations.UniqueAttributes;
+import com.atlan.model.search.IndexSearchDSL;
+import com.atlan.model.search.IndexSearchRequest;
+import com.atlan.model.search.IndexSearchResponse;
+import com.atlan.util.QueryFactory;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.SortedSet;
 import lombok.*;
@@ -109,14 +121,37 @@ public class Purpose extends AccessControl {
     }
 
     /**
+     * Builds the minimal object necessary to create a Purpose.
+     *
+     * @param name of the Purpose
+     * @param atlanTags Atlan tags on which this purpose should be applied
+     * @return the minimal request necessary to create the Purpose, as a builder
+     * @throws InvalidRequestException if at least one Atlan tag is not specified
+     */
+    public static PurposeBuilder<?, ?> creator(String name, Collection<String> atlanTags)
+            throws InvalidRequestException {
+        if (atlanTags == null || atlanTags.isEmpty()) {
+            throw new InvalidRequestException(ErrorCode.NO_ATLAN_TAG_FOR_PURPOSE);
+        }
+        return Purpose.builder()
+                .qualifiedName(name)
+                .name(name)
+                .displayName(name)
+                .isAccessControlEnabled(true)
+                .description("")
+                .purposeAtlanTags(atlanTags);
+    }
+
+    /**
      * Builds the minimal object necessary to update a Purpose.
      *
      * @param qualifiedName of the Purpose
      * @param name of the Purpose
+     * @param isEnabled whether the Purpose should be activated (true) or deactivated (false)
      * @return the minimal request necessary to update the Purpose, as a builder
      */
-    public static PurposeBuilder<?, ?> updater(String qualifiedName, String name) {
-        return Purpose.builder().qualifiedName(qualifiedName).name(name);
+    public static PurposeBuilder<?, ?> updater(String qualifiedName, String name, boolean isEnabled) {
+        return Purpose.builder().qualifiedName(qualifiedName).name(name).isAccessControlEnabled(isEnabled);
     }
 
     /**
@@ -135,11 +170,177 @@ public class Purpose extends AccessControl {
         if (this.getName() == null || this.getName().length() == 0) {
             missing.add("name");
         }
+        if (this.getIsAccessControlEnabled() == null) {
+            missing.add("isAccessControlEnabled");
+        }
         if (!missing.isEmpty()) {
             throw new InvalidRequestException(
                     ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "Purpose", String.join(",", missing));
         }
-        return updater(this.getQualifiedName(), this.getName());
+        return updater(this.getQualifiedName(), this.getName(), this.getIsAccessControlEnabled());
+    }
+
+    /**
+     * Find a Purpose by its human-readable name.
+     *
+     * @param name of the Purpose
+     * @param attributes an optional collection of attributes to retrieve for the Purpose
+     * @return all Purposes with that name, if found
+     * @throws AtlanException on any API problems
+     * @throws NotFoundException if the Purpose does not exist
+     */
+    public static List<Purpose> findByName(String name, Collection<String> attributes) throws AtlanException {
+        Query filter = QueryFactory.CompoundQuery.builder()
+                .must(QueryFactory.beActive())
+                .must(QueryFactory.beOfType(TYPE_NAME))
+                .must(QueryFactory.have(KeywordFields.NAME).eq(name))
+                .build()
+                ._toQuery();
+        IndexSearchRequest.IndexSearchRequestBuilder<?, ?> builder = IndexSearchRequest.builder()
+                .dsl(IndexSearchDSL.builder().query(filter).build());
+        if (attributes != null && !attributes.isEmpty()) {
+            builder.attributes(attributes);
+        }
+        IndexSearchRequest request = builder.build();
+        IndexSearchResponse response = request.search();
+        List<Purpose> purposes = new ArrayList<>();
+        if (response != null) {
+            List<Asset> results = response.getAssets();
+            while (results != null) {
+                for (Asset result : results) {
+                    if (result instanceof Purpose) {
+                        purposes.add((Purpose) result);
+                    }
+                }
+                response = response.getNextPage();
+                results = response.getAssets();
+            }
+        }
+        if (purposes.isEmpty()) {
+            throw new NotFoundException(ErrorCode.PURPOSE_NOT_FOUND_BY_NAME, name);
+        } else {
+            return purposes;
+        }
+    }
+
+    /**
+     * Builds the minimal object necessary to create a metadata policy for a Purpose.
+     *
+     * @param name of the policy
+     * @param purposeId unique identifier (GUID) of the purpose for which to create this metadata policy
+     * @param policyType type of policy (for example allow vs deny)
+     * @param actions to include in the policy
+     * @param policyGroups groups to whom this policy applies, given as internal group names (at least one of these or policyUsers must be specified)
+     * @param policyUsers users to whom this policy applies, given as usernames (at least one of these or policyGroups must be specified)
+     * @param allUsers whether to apply this policy to all users (true) or not (false). If true this will override the other users and groups parameters.
+     * @return the minimal request necessary to create the metadata policy for the Purpose, as a builder
+     * @throws AtlanException on any other error related to the request, such as an inability to find the specified users or groups
+     */
+    public static AuthPolicy.AuthPolicyBuilder<?, ?> createMetadataPolicy(
+            String name,
+            String purposeId,
+            AuthPolicyType policyType,
+            Collection<PurposeMetadataAction> actions,
+            Collection<String> policyGroups,
+            Collection<String> policyUsers,
+            boolean allUsers)
+            throws AtlanException {
+        boolean targetFound = false;
+        AuthPolicy.AuthPolicyBuilder<?, ?> builder = AuthPolicy.creator(name)
+                .policyActions(actions)
+                .policyCategory(AuthPolicyCategory.PURPOSE)
+                .policyType(policyType)
+                .policyResourceCategory(AuthPolicyResourceCategory.TAG)
+                .policyServiceName("atlas_tag")
+                .policySubCategory("metadata")
+                .accessControl(Purpose.refByGuid(purposeId));
+        if (allUsers) {
+            targetFound = true;
+            builder.policyGroup("public");
+        } else {
+            if (policyGroups != null && !policyGroups.isEmpty()) {
+                for (String groupAlias : policyGroups) {
+                    GroupCache.getIdForAlias(groupAlias);
+                }
+                targetFound = true;
+                builder.policyGroups(policyGroups);
+            } else {
+                builder.nullField("policyGroups");
+            }
+            if (policyUsers != null && !policyUsers.isEmpty()) {
+                for (String userName : policyUsers) {
+                    UserCache.getIdForName(userName);
+                }
+                targetFound = true;
+                builder.policyUsers(policyUsers);
+            } else {
+                builder.nullField("policyUsers");
+            }
+        }
+        if (targetFound) {
+            return builder;
+        } else {
+            throw new InvalidRequestException(ErrorCode.NO_USERS_FOR_POLICY);
+        }
+    }
+
+    /**
+     * Builds the minimal object necessary to create a data policy for a Purpose.
+     *
+     * @param name of the policy
+     * @param purposeId unique identifier (GUID) of the purpose for which to create this data policy
+     * @param policyType type of policy (for example allow vs deny)
+     * @param policyGroups groups to whom this policy applies, given as internal group names (at least one of these or policyUsers must be specified)
+     * @param policyUsers users to whom this policy applies, given as usernames (at least one of these or policyGroups must be specified)
+     * @param allUsers whether to apply this policy to all users (true) or not (false). If true this will override the other users and groups parameters.
+     * @return the minimal request necessary to create the data policy for the Purpose, as a builder
+     * @throws AtlanException on any other error related to the request, such as an inability to find the specified users or groups
+     */
+    public static AuthPolicy.AuthPolicyBuilder<?, ?> createDataPolicy(
+            String name,
+            String purposeId,
+            AuthPolicyType policyType,
+            Collection<String> policyGroups,
+            Collection<String> policyUsers,
+            boolean allUsers)
+            throws AtlanException {
+        boolean targetFound = false;
+        AuthPolicy.AuthPolicyBuilder<?, ?> builder = AuthPolicy.creator(name)
+                .policyAction(DataAction.SELECT)
+                .policyCategory(AuthPolicyCategory.PURPOSE)
+                .policyType(policyType)
+                .policyResourceCategory(AuthPolicyResourceCategory.TAG)
+                .policyServiceName("atlas_tag")
+                .policySubCategory("data")
+                .accessControl(Purpose.refByGuid(purposeId));
+        if (allUsers) {
+            targetFound = true;
+            builder.policyGroup("public");
+        } else {
+            if (policyGroups != null && !policyGroups.isEmpty()) {
+                for (String groupAlias : policyGroups) {
+                    GroupCache.getIdForAlias(groupAlias);
+                }
+                targetFound = true;
+                builder.policyGroups(policyGroups);
+            } else {
+                builder.nullField("policyGroups");
+            }
+            if (policyUsers != null && !policyUsers.isEmpty()) {
+                for (String userName : policyUsers) {
+                    UserCache.getIdForName(userName);
+                }
+                targetFound = true;
+                builder.policyUsers(policyUsers);
+            } else {
+                builder.nullField("policyUsers");
+            }
+        }
+        if (targetFound) {
+            return builder;
+        } else {
+            throw new InvalidRequestException(ErrorCode.NO_USERS_FOR_POLICY);
+        }
     }
 
     /**
@@ -147,11 +348,13 @@ public class Purpose extends AccessControl {
      *
      * @param qualifiedName of the Purpose
      * @param name of the Purpose
+     * @param isEnabled whether the Purpose should be activated (true) or deactivated (false)
      * @return the updated Purpose, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static Purpose removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (Purpose) Asset.removeDescription(updater(qualifiedName, name));
+    public static Purpose removeDescription(String qualifiedName, String name, boolean isEnabled)
+            throws AtlanException {
+        return (Purpose) Asset.removeDescription(updater(qualifiedName, name, isEnabled));
     }
 
     /**
@@ -159,118 +362,13 @@ public class Purpose extends AccessControl {
      *
      * @param qualifiedName of the Purpose
      * @param name of the Purpose
+     * @param isEnabled whether the Purpose should be activated (true) or deactivated (false)
      * @return the updated Purpose, or null if the removal failed
      * @throws AtlanException on any API problems
      */
-    public static Purpose removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (Purpose) Asset.removeUserDescription(updater(qualifiedName, name));
-    }
-
-    /**
-     * Remove the owners from a Purpose.
-     *
-     * @param qualifiedName of the Purpose
-     * @param name of the Purpose
-     * @return the updated Purpose, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static Purpose removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (Purpose) Asset.removeOwners(updater(qualifiedName, name));
-    }
-
-    /**
-     * Update the certificate on a Purpose.
-     *
-     * @param qualifiedName of the Purpose
-     * @param certificate to use
-     * @param message (optional) message, or null if no message
-     * @return the updated Purpose, or null if the update failed
-     * @throws AtlanException on any API problems
-     */
-    public static Purpose updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
+    public static Purpose removeUserDescription(String qualifiedName, String name, boolean isEnabled)
             throws AtlanException {
-        return (Purpose) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
-    }
-
-    /**
-     * Remove the certificate from a Purpose.
-     *
-     * @param qualifiedName of the Purpose
-     * @param name of the Purpose
-     * @return the updated Purpose, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static Purpose removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (Purpose) Asset.removeCertificate(updater(qualifiedName, name));
-    }
-
-    /**
-     * Update the announcement on a Purpose.
-     *
-     * @param qualifiedName of the Purpose
-     * @param type type of announcement to set
-     * @param title (optional) title of the announcement to set (or null for no title)
-     * @param message (optional) message of the announcement to set (or null for no message)
-     * @return the result of the update, or null if the update failed
-     * @throws AtlanException on any API problems
-     */
-    public static Purpose updateAnnouncement(
-            String qualifiedName, AtlanAnnouncementType type, String title, String message) throws AtlanException {
-        return (Purpose) Asset.updateAnnouncement(builder(), TYPE_NAME, qualifiedName, type, title, message);
-    }
-
-    /**
-     * Remove the announcement from a Purpose.
-     *
-     * @param qualifiedName of the Purpose
-     * @param name of the Purpose
-     * @return the updated Purpose, or null if the removal failed
-     * @throws AtlanException on any API problems
-     */
-    public static Purpose removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (Purpose) Asset.removeAnnouncement(updater(qualifiedName, name));
-    }
-
-    /**
-     * Replace the terms linked to the Purpose.
-     *
-     * @param qualifiedName for the Purpose
-     * @param name human-readable name of the Purpose
-     * @param terms the list of terms to replace on the Purpose, or null to remove all terms from the Purpose
-     * @return the Purpose that was updated (note that it will NOT contain details of the replaced terms)
-     * @throws AtlanException on any API problems
-     */
-    public static Purpose replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
-            throws AtlanException {
-        return (Purpose) Asset.replaceTerms(updater(qualifiedName, name), terms);
-    }
-
-    /**
-     * Link additional terms to the Purpose, without replacing existing terms linked to the Purpose.
-     * Note: this operation must make two API calls — one to retrieve the Purpose's existing terms,
-     * and a second to append the new terms.
-     *
-     * @param qualifiedName for the Purpose
-     * @param terms the list of terms to append to the Purpose
-     * @return the Purpose that was updated  (note that it will NOT contain details of the appended terms)
-     * @throws AtlanException on any API problems
-     */
-    public static Purpose appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (Purpose) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
-    }
-
-    /**
-     * Remove terms from a Purpose, without replacing all existing terms linked to the Purpose.
-     * Note: this operation must make two API calls — one to retrieve the Purpose's existing terms,
-     * and a second to remove the provided terms.
-     *
-     * @param qualifiedName for the Purpose
-     * @param terms the list of terms to remove from the Purpose, which must be referenced by GUID
-     * @return the Purpose that was updated (note that it will NOT contain details of the resulting terms)
-     * @throws AtlanException on any API problems
-     */
-    public static Purpose removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
-        return (Purpose) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
+        return (Purpose) Asset.removeUserDescription(updater(qualifiedName, name, isEnabled));
     }
 
     /**

@@ -150,7 +150,7 @@ public enum ErrorCode implements ExceptionMessageSet {
             400,
             "ATLAN-JAVA-400-026",
             "No user or group specified for the policy.",
-            "You must specify at least one user, group or allUsers to whom the policy in a purpose will be applied."),
+            "You must specify at least one user or group to whom the policy in a purpose will be applied."),
     MISSING_GROUP_NAME(
             400,
             "ATLAN-JAVA-400-027",
@@ -346,6 +346,11 @@ public enum ErrorCode implements ExceptionMessageSet {
             "ATLAN-JAVA-404-023",
             "Unable to find a persona with the name: {0}.",
             "Verify the requested persona exists in your Atlan environment."),
+    PURPOSE_NOT_FOUND_BY_NAME(
+            404,
+            "ATLAN-JAVA-404-024",
+            "Unable to find a purpose with the name: {0}.",
+            "Verify the requested purpose exists in your Atlan environment."),
 
     CONFLICT_PASSTHROUGH(
             409,

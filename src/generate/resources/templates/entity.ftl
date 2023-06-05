@@ -34,6 +34,7 @@ import com.atlan.model.enums.AuthPolicyResourceCategory;
 import com.atlan.model.enums.AuthPolicyType;
 import com.atlan.model.enums.PersonaMetadataAction;
 import com.atlan.model.enums.PersonaGlossaryAction;
+import com.atlan.model.enums.PurposeMetadataAction;
 import com.atlan.model.enums.DataAction;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.KeywordFields;
@@ -245,7 +246,7 @@ public <#if abstract>abstract</#if> class ${className} extends ${parentClassName
 </#if>
 
 <#if !abstract>
-<#if className != "Glossary" && className != "GlossaryCategory" && className != "GlossaryTerm" && className != "Persona">
+<#if className != "Glossary" && className != "GlossaryCategory" && className != "GlossaryTerm" && className != "Persona" && className != "Purpose">
     /**
      * Remove the system description from a ${className}.
      *

@@ -12,6 +12,7 @@ import com.atlan.model.enums.AuthPolicyCategory;
 import com.atlan.model.enums.AuthPolicyResourceCategory;
 import com.atlan.model.enums.AuthPolicyType;
 import com.atlan.model.enums.CertificateStatus;
+import com.atlan.model.enums.DataMaskingType;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.AuthPolicyCondition;
 import com.atlan.model.structs.AuthPolicyValiditySchedule;
@@ -94,7 +95,7 @@ public class AuthPolicy extends Asset {
 
     /** TBC */
     @Attribute
-    String policyMaskType;
+    DataMaskingType policyMaskType;
 
     /** TBC */
     @Attribute

@@ -273,7 +273,8 @@ public class AssetGenerator extends TypeGenerator {
                 Map.entry("policyCategory", "AuthPolicyCategory"),
                 Map.entry("policyResourceCategory", "AuthPolicyResourceCategory"),
                 Map.entry("policyActions", "AtlanPolicyAction"),
-                Map.entry("denyAssetTabs", "AssetSidebarTab"));
+                Map.entry("denyAssetTabs", "AssetSidebarTab"),
+                Map.entry("policyMaskType", "DataMaskingType"));
 
         // Override these properties that would normally be SortedSet<> with List<>,
         // as ordering is crucial to their proper operation.
