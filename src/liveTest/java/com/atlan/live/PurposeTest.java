@@ -4,6 +4,7 @@ package com.atlan.live;
 
 import static org.testng.Assert.*;
 
+import com.atlan.Atlan;
 import com.atlan.api.EntityBulkEndpoint;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.InvalidRequestException;
@@ -13,6 +14,7 @@ import com.atlan.model.assets.Purpose;
 import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.enums.*;
 import com.atlan.model.typedefs.AtlanTagDef;
+import com.atlan.net.HttpClient;
 import java.util.List;
 import java.util.Set;
 import org.testng.annotations.Test;
@@ -84,8 +86,14 @@ public class PurposeTest extends AtlanLiveTest {
     @Test(
             groups = {"purpose.read.purposes.1"},
             dependsOnGroups = {"purpose.update.purposes"})
-    void findPurposeByName() throws AtlanException {
+    void findPurposeByName() throws AtlanException, InterruptedException {
         List<Purpose> purposes = Purpose.findByName(PURPOSE_NAME, null);
+        int count = 0;
+        while (purposes.isEmpty() && count < Atlan.getMaxNetworkRetries()) {
+            Thread.sleep(HttpClient.waitTime(count).toMillis());
+            purposes = Purpose.findByName(PURPOSE_NAME, null);
+            count++;
+        }
         assertNotNull(purposes);
         assertEquals(purposes.size(), 1);
         assertEquals(purposes.get(0).getGuid(), purpose.getGuid());

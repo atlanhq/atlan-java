@@ -4,11 +4,13 @@ package com.atlan.live;
 
 import static org.testng.Assert.*;
 
+import com.atlan.Atlan;
 import com.atlan.api.EntityBulkEndpoint;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.assets.*;
 import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.enums.*;
+import com.atlan.net.HttpClient;
 import java.util.List;
 import java.util.Set;
 import lombok.extern.slf4j.Slf4j;
@@ -81,8 +83,14 @@ public class PersonaTest extends AtlanLiveTest {
     @Test(
             groups = {"persona.read.personas.1"},
             dependsOnGroups = {"persona.update.personas"})
-    void findPersonaByName() throws AtlanException {
+    void findPersonaByName() throws AtlanException, InterruptedException {
         List<Persona> list = Persona.findByName(PERSONA_NAME, null);
+        int count = 0;
+        while (list.isEmpty() && count < Atlan.getMaxNetworkRetries()) {
+            Thread.sleep(HttpClient.waitTime(count).toMillis());
+            list = Persona.findByName(PERSONA_NAME, null);
+            count++;
+        }
         assertNotNull(list);
         assertEquals(list.size(), 1);
         assertEquals(list.get(0).getGuid(), persona.getGuid());
