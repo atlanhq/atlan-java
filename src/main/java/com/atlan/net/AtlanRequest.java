@@ -10,6 +10,7 @@ import com.atlan.exception.AuthenticationException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.util.StringUtils;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -37,7 +38,7 @@ public class AtlanRequest {
 
     /**
      * The body of the request. For POST requests, this will be either a {@code application/json}
-     * payload. For GET requests, this will be {@code null}.
+     * payload or a multi-part form upload (for files). For GET requests, this will be {@code null}.
      */
     HttpContent content;
 
@@ -54,7 +55,7 @@ public class AtlanRequest {
     RequestOptions options;
 
     /**
-     * Initializes a new instance of the {@link AtlanRequest} class.
+     * Initializes a new instance of the {@link AtlanRequest} class, used for the majority of requests.
      *
      * @param method the HTTP method
      * @param url the URL of the request
@@ -70,6 +71,32 @@ public class AtlanRequest {
             this.method = method;
             this.url = new URL(url);
             this.content = (body == null || body.length() == 0) ? null : HttpContent.buildJSONEncodedContent(body);
+            this.headers = buildHeaders(method, this.options);
+        } catch (IOException e) {
+            throw new ApiConnectionException(ErrorCode.CONNECTION_ERROR, e, Atlan.getBaseUrlSafe());
+        }
+    }
+
+    /**
+     * Initializes a new instance of the {@link AtlanRequest} class, used specifically for uploading files (images).
+     *
+     * @param method the HTTP method
+     * @param url the URL of the request
+     * @param file the file to be uploaded through the request
+     * @param filename name of the file the InputStream is reading
+     * @param options the special modifiers of the request
+     * @throws AtlanException if the request cannot be initialized for any reason
+     */
+    public AtlanRequest(
+            ApiResource.RequestMethod method, String url, InputStream file, String filename, RequestOptions options)
+            throws AtlanException {
+        try {
+            this.body = null;
+            this.options = (options != null) ? options : RequestOptions.getDefault();
+            this.method = method;
+            this.url = new URL(url);
+            this.content =
+                    HttpContent.buildMultipartFormDataContent(List.of(new KeyValuePair<>("file", file)), filename);
             this.headers = buildHeaders(method, this.options);
         } catch (IOException e) {
             throw new ApiConnectionException(ErrorCode.CONNECTION_ERROR, e, Atlan.getBaseUrlSafe());
