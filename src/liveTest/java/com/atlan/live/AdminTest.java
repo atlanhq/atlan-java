@@ -24,7 +24,7 @@ public class AdminTest extends AtlanLiveTest {
     private static final String GROUP_NAME1 = PREFIX + "1";
     private static final String GROUP_NAME2 = PREFIX + "2";
 
-    private static final String EMAIL_DOMAIN = "@example.com";
+    private static final String EMAIL_DOMAIN = "@" + makeUnique("example").replace("_", "") + ".com";
     private static final String USER_EMAIL1 = GROUP_NAME1 + EMAIL_DOMAIN;
     private static final String USER_EMAIL2 = GROUP_NAME2 + EMAIL_DOMAIN;
     private static final String USER_EMAIL3 = PREFIX + "3" + EMAIL_DOMAIN;
