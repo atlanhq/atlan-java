@@ -8,6 +8,7 @@ import com.atlan.model.core.AtlanError;
 import com.atlan.model.core.AtlanResponseInterface;
 import com.atlan.serde.Serde;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import java.io.InputStream;
 
 /**
  * Class that wraps the API request and response handling, such as detecting errors from specific response codes.
@@ -49,6 +50,45 @@ public class LiveAtlanResponseGetter implements AtlanResponseGetter {
             ApiResource.RequestMethod method, String url, String body, Class<T> clazz, RequestOptions options)
             throws AtlanException {
         AtlanRequest request = new AtlanRequest(method, url, body, options);
+        return request(request, clazz);
+    }
+
+    /**
+     * Makes a request to Atlan's API, to upload a file.
+     *
+     * @param method to use for the request
+     * @param url of the endpoint (with all path and query parameters) for the request
+     * @param upload file to be uploaded
+     * @param filename name of the file the InputStream is reading
+     * @param clazz the expected response object type from the request
+     * @param options any alternative options to use for the request, or null to use default options
+     * @return the response of the request
+     * @param <T> the type of the response of the request
+     * @throws AtlanException on any API interaction problems, indicating the type of problem encountered
+     */
+    @Override
+    public <T extends AtlanResponseInterface> T request(
+            ApiResource.RequestMethod method,
+            String url,
+            InputStream upload,
+            String filename,
+            Class<T> clazz,
+            RequestOptions options)
+            throws AtlanException {
+        AtlanRequest request = new AtlanRequest(method, url, upload, filename, options);
+        return request(request, clazz);
+    }
+
+    /**
+     * Makes a request to Atlan's API.
+     *
+     * @param request bundled details of the request to make
+     * @param clazz the expected response object type from the request
+     * @return the response of the request
+     * @param <T> the type of the response of the request
+     * @throws AtlanException on any API interaction problem, indicating the type of problem encountered
+     */
+    private <T extends AtlanResponseInterface> T request(AtlanRequest request, Class<T> clazz) throws AtlanException {
         AtlanResponse response = httpClient.requestWithRetries(request);
 
         int responseCode = response.code();

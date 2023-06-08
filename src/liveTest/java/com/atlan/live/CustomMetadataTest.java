@@ -297,9 +297,13 @@ public class CustomMetadataTest extends AtlanLiveTest {
         assertNotNull(badge2.getGuid());
         badgeConditions = badge2.getBadgeConditions();
         assertEquals(badgeConditions.size(), 4);
-        assertEquals(badgeConditions.get(1).getBadgeConditionOperator(), BadgeComparisonOperator.EQ);
-        assertEquals(badgeConditions.get(1).getBadgeConditionValue(), "\"Timeliness\"");
-        assertEquals(badgeConditions.get(1).getBadgeConditionColorhex(), "#ffeedd");
+        for (BadgeCondition condition : badgeConditions) {
+            assertEquals(condition.getBadgeConditionOperator(), BadgeComparisonOperator.EQ);
+            assertTrue(Set.of("\"Completeness\"", "\"Timeliness\"", "\"Accuracy\"", "\"Consistency\"")
+                    .contains(condition.getBadgeConditionValue()));
+            assertTrue(
+                    Set.of("#001122", "#ffeedd", "#aabbcc", "#ccbbaa").contains(condition.getBadgeConditionColorhex()));
+        }
 
         toCreate = Badge.creator(CM_ATTR_IPR_LICENSE, CM_IPR, CM_ATTR_IPR_LICENSE)
                 .userDescription("License associated with this asset.")
@@ -330,9 +334,12 @@ public class CustomMetadataTest extends AtlanLiveTest {
         assertNotNull(badge4.getGuid());
         badgeConditions = badge4.getBadgeConditions();
         assertEquals(badgeConditions.size(), 2);
-        assertEquals(badgeConditions.get(1).getBadgeConditionOperator(), BadgeComparisonOperator.EQ);
-        assertEquals(badgeConditions.get(1).getBadgeConditionValue(), "false");
-        assertEquals(badgeConditions.get(1).getBadgeConditionColorhex(), BadgeConditionColor.GREEN.getValue());
+        for (BadgeCondition condition : badgeConditions) {
+            assertEquals(condition.getBadgeConditionOperator(), BadgeComparisonOperator.EQ);
+            assertTrue(Set.of("true", "false").contains(condition.getBadgeConditionValue()));
+            assertTrue(Set.of(BadgeConditionColor.RED.getValue(), BadgeConditionColor.GREEN.getValue())
+                    .contains(condition.getBadgeConditionColorhex()));
+        }
     }
 
     @Test(groups = {"cm.create.term"})

@@ -191,6 +191,16 @@ public enum ErrorCode implements ExceptionMessageSet {
             "ATLAN-JAVA-400-034",
             "Can only request upstream or downstream lineage (not both) through the lineage list API.",
             "Change your provided 'direction' parameter to either upstream or downstream."),
+    INVALID_URL(
+            400,
+            "ATLAN-JAVA-400-035",
+            "The URL provided for uploading a file was invalid.",
+            "Check the provided URL and attempt to upload again."),
+    INACCESSIBLE_URL(
+            400,
+            "ATLAN-JAVA-400-036",
+            "The URL provided could not be accessed.",
+            "Check the provided URL and attempt to upload again."),
 
     AUTHENTICATION_PASSTHROUGH(
             401,

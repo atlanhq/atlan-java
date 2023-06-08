@@ -56,13 +56,14 @@ public class HttpContent {
      * type.
      *
      * @param nameValueCollection the collection of name/value tuples to encode
+     * @param filename name of the file read via an InputStream (for non-InputStream args can be null)
      * @return the encoded HttpContent instance
      * @throws IllegalArgumentException if nameValueCollection is null
      */
     public static HttpContent buildMultipartFormDataContent(
-            Collection<KeyValuePair<String, Object>> nameValueCollection) throws IOException {
+            Collection<KeyValuePair<String, Object>> nameValueCollection, String filename) throws IOException {
         String boundary = UUID.randomUUID().toString();
-        return buildMultipartFormDataContent(nameValueCollection, boundary);
+        return buildMultipartFormDataContent(nameValueCollection, boundary, filename);
     }
 
     /**
@@ -71,11 +72,13 @@ public class HttpContent {
      *
      * @param nameValueCollection the collection of name/value tuples to encode
      * @param boundary the boundary
+     * @param filename name of the file read via an InputStream (for non-InputStream args can be null)
      * @return the encoded HttpContent instance
      * @throws IllegalArgumentException if nameValueCollection is null
      */
     public static HttpContent buildMultipartFormDataContent(
-            Collection<KeyValuePair<String, Object>> nameValueCollection, String boundary) throws IOException {
+            Collection<KeyValuePair<String, Object>> nameValueCollection, String boundary, String filename)
+            throws IOException {
         requireNonNull(nameValueCollection);
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -91,7 +94,7 @@ public class HttpContent {
                     File file = (File) value;
                     multipartProcessor.addFileField(key, file.getName(), new FileInputStream(file));
                 } else if (value instanceof InputStream) {
-                    multipartProcessor.addFileField(key, "blob", (InputStream) value);
+                    multipartProcessor.addFileField(key, filename, (InputStream) value);
                 } else {
                     multipartProcessor.addFormField(key, (String) value);
                 }

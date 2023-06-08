@@ -2,8 +2,18 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.typedefs;
 
+import com.atlan.api.ImagesEndpoint;
+import com.atlan.exception.ApiException;
+import com.atlan.exception.AtlanException;
+import com.atlan.exception.ErrorCode;
+import com.atlan.exception.InvalidRequestException;
+import com.atlan.model.admin.AtlanImage;
 import com.atlan.model.core.AtlanObject;
+import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanTagColor;
+import com.atlan.model.enums.IconType;
+import java.io.IOException;
+import java.net.MalformedURLException;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.experimental.SuperBuilder;
@@ -20,18 +30,63 @@ public class AtlanTagOptions extends AtlanObject {
     private static final long serialVersionUID = 2L;
 
     /**
-     * Instantiate a new set of Atlan tag options from the provided parameters.
-     * @param color for the Atlan tag
-     * @return the Atlan tag options
+     * Provide Atlan tag options that set the color for the tag, using the default tag icon.
+     *
+     * @param color to use to represent the Atlan tag
+     * @return the necessary options for setting this color for the Atlan tag
      */
     public static AtlanTagOptions of(AtlanTagColor color) {
-        return new AtlanTagOptions(color);
+        return withIcon(AtlanIcon.ATLAN_TAG, color);
     }
 
-    private AtlanTagOptions(AtlanTagColor color) {
-        this.color = color;
+    /**
+     * Provide Atlan tag options that set the icon and color for the tag, using a built-in icon.
+     *
+     * @param icon to use to represent the Atlan tag
+     * @param color to use to represent the Atlan tag
+     * @return the necessary options for setting this icon and color for the Atlan tag
+     */
+    public static AtlanTagOptions withIcon(AtlanIcon icon, AtlanTagColor color) {
+        return AtlanTagOptions.builder()
+                .color(color)
+                .iconName(icon)
+                .iconType(IconType.ICON)
+                .imageID("")
+                .build();
+    }
+
+    /**
+     * Provide Atlan tag options that set the image and color for the tag, using an uploaded image.
+     *
+     * @param url URL to the image to use for the Atlan tag
+     * @param color to use to represent the Atlan tag
+     * @return the necessary options for setting this image and color for the Atlan tag
+     * @throws AtlanException on any API communication issues trying to upload the image
+     */
+    public static AtlanTagOptions withImage(String url, AtlanTagColor color) throws AtlanException {
+        try {
+            AtlanImage result = ImagesEndpoint.uploadImage(url);
+            return AtlanTagOptions.builder()
+                    .color(color)
+                    .iconType(IconType.IMAGE)
+                    .imageID(result.getId())
+                    .build();
+        } catch (MalformedURLException e) {
+            throw new InvalidRequestException(ErrorCode.INVALID_URL, e);
+        } catch (IOException e) {
+            throw new ApiException(ErrorCode.INACCESSIBLE_URL, e);
+        }
     }
 
     /** Color to use for the Atlan tag. */
     AtlanTagColor color;
+
+    /** Name of icon to use to represent the tag visually. */
+    AtlanIcon iconName;
+
+    /** Type of icon to use for representing the tag visually. */
+    IconType iconType;
+
+    /** Unique identifier (GUID) of an image to use for the tag. */
+    String imageID;
 }

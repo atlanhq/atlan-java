@@ -12,6 +12,7 @@ import com.atlan.model.core.AtlanResponseInterface;
 import com.atlan.serde.Serde;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
+import java.io.InputStream;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -141,6 +142,36 @@ public abstract class ApiResource extends AtlanObject implements AtlanResponseIn
             throws AtlanException {
         log.debug("({}) {} with: {}", method, url, body);
         T response = ApiResource.atlanResponseGetter.request(method, url, body, clazz, options);
+        if (log.isDebugEnabled()) {
+            if (response != null) {
+                if (Atlan.enableTelemetry) {
+                    log.debug(
+                            " ... response ({}): {}",
+                            response.getLastResponse().metrics(),
+                            response.getRawJsonObject());
+                } else {
+                    log.debug(" ... response: {}", response.getRawJsonObject());
+                }
+            } else {
+                log.debug(" ... empty response.");
+            }
+        }
+        return response;
+    }
+
+    public static <T extends ApiResource> T request(
+            ApiResource.RequestMethod method,
+            String url,
+            InputStream payload,
+            String filename,
+            Class<T> clazz,
+            RequestOptions options)
+            throws AtlanException {
+        if (payload == null) {
+            throw new IllegalArgumentException(String.format("Found null input stream for %s.", url));
+        }
+        log.debug("({}) {} with: {}", method, url, filename);
+        T response = ApiResource.atlanResponseGetter.request(method, url, payload, filename, clazz, options);
         if (log.isDebugEnabled()) {
             if (response != null) {
                 if (Atlan.enableTelemetry) {

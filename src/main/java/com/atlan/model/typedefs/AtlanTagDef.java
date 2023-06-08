@@ -5,6 +5,7 @@ package com.atlan.model.typedefs;
 import com.atlan.api.TypeDefsEndpoint;
 import com.atlan.cache.AtlanTagCache;
 import com.atlan.exception.AtlanException;
+import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanTagColor;
 import com.atlan.model.enums.AtlanTypeCategory;
 import java.util.List;
@@ -46,7 +47,7 @@ public class AtlanTagDef extends TypeDef {
     Boolean skipDisplayNameUniquenessCheck = false;
 
     /**
-     * Builds the minimal object necessary to create an Atlan tag definition.
+     * Builds the minimal object necessary to create an Atlan tag definition, using the default tag icon.
      *
      * @param displayName the human-readable name for the Atlan tag
      * @param color the color to use for the Atlan tag
@@ -54,6 +55,38 @@ public class AtlanTagDef extends TypeDef {
      */
     public static AtlanTagDefBuilder<?, ?> creator(String displayName, AtlanTagColor color) {
         return AtlanTagDef.builder().name(displayName).displayName(displayName).options(AtlanTagOptions.of(color));
+    }
+
+    /**
+     * Builds the minimal object necessary to create an Atlan tag definition.
+     *
+     * @param displayName the human-readable name for the Atlan tag
+     * @param icon the built-in icon to use for the Atlan tag
+     * @param color the color to use for the Atlan tag
+     * @return the minimal request necessary to create the Atlan tag typedef, as a builder
+     */
+    public static AtlanTagDefBuilder<?, ?> creator(String displayName, AtlanIcon icon, AtlanTagColor color) {
+        return AtlanTagDef.builder()
+                .name(displayName)
+                .displayName(displayName)
+                .options(AtlanTagOptions.withIcon(icon, color));
+    }
+
+    /**
+     * Builds the minimal object necessary to create an Atlan tag definition.
+     *
+     * @param displayName the human-readable name for the Atlan tag
+     * @param url URL to an image to use for the Atlan tag
+     * @param color the color to use for the Atlan tag
+     * @return the minimal request necessary to create the Atlan tag typedef, as a builder
+     * @throws AtlanException on any issues uploading the image from the provided URL
+     */
+    public static AtlanTagDefBuilder<?, ?> creator(String displayName, String url, AtlanTagColor color)
+            throws AtlanException {
+        return AtlanTagDef.builder()
+                .name(displayName)
+                .displayName(displayName)
+                .options(AtlanTagOptions.withImage(url, color));
     }
 
     /**
