@@ -119,6 +119,7 @@ Asset,Base class for all assets.,sourceLastReadAt,Timestamp of most recent read 
 Asset,Base class for all assets.,lastRowChangedAt,"Timestamp of last operation that inserted, updated, or deleted rows."
 Asset,Base class for all assets.,sourceTotalCost,Total cost of all operations at source.
 Asset,Base class for all assets.,sourceCostUnit,The unit of measure for sourceTotalCost.
+Asset,Base class for all assets.,sourceReadQueryCost,Total cost of read queries at source.
 Asset,Base class for all assets.,sourceReadRecentUserList,List of usernames of the most recent users who read the asset.
 Asset,Base class for all assets.,sourceReadRecentUserRecordList,List of usernames with extra insights for the most recent users who read the asset.
 Asset,Base class for all assets.,sourceReadTopUserList,List of usernames of the users who read the asset the most.
@@ -221,8 +222,8 @@ AtlasGlossaryTerm,Instance of a term in Atlan.,isA,TBC (Other direction is class
 AtlasGlossaryTerm,Instance of a term in Atlan.,anchor,Glossary in which this term is contained.
 AtlasGlossaryTerm,Instance of a term in Atlan.,antonyms,Terms that have the opposite (or near opposite) meaning in the same language.
 AtlasGlossaryTerm,Instance of a term in Atlan.,assignedEntities,"Assets that are attached to this term. Note: this should ONLY be used to view such relationships, never to set such relationships. Only set such relationships in the other direction."
-AtlasGlossaryTerm,Instance of a term in Atlan.,categories,Categories within which this term is organized.
 AtlasGlossaryTerm,Instance of a term in Atlan.,classifies,TBC (Other direction is isA.)
+AtlasGlossaryTerm,Instance of a term in Atlan.,categories,Categories within which this term is organized.
 AtlasGlossaryTerm,Instance of a term in Atlan.,preferredToTerms,Other terms that are less common or less preferred than this term. (Other direction is preferredTerms.)
 AtlasGlossaryTerm,Instance of a term in Atlan.,preferredTerms,Preferred terms to use instead of this term. (Other direction is preferredToTerms.)
 AtlasServer,Unused,AtlasServer.name,
@@ -607,6 +608,64 @@ Metric,Base class for metrics assets.,metricTimeGrains,
 Metric,Base class for metrics assets.,assets,
 Metric,Base class for metrics assets.,metricDimensionColumns,
 Metric,Base class for metrics assets.,metricTimestampColumn,
+MicroStrategy,Base class for MicroStrategy assets.,microStrategyProjectQualifiedName,Unique name of the related MicroStrategy project.
+MicroStrategy,Base class for MicroStrategy assets.,microStrategyProjectName,Simple name of the related MicroStrategy project.
+MicroStrategy,Base class for MicroStrategy assets.,microStrategyCubeQualifiedNames,Unique names of the related MicroStrategy cubes.
+MicroStrategy,Base class for MicroStrategy assets.,microStrategyCubeNames,Simple names of the related MicroStrategy cubes.
+MicroStrategy,Base class for MicroStrategy assets.,microStrategyReportQualifiedNames,Unique names of the related MicroStrategy reports.
+MicroStrategy,Base class for MicroStrategy assets.,microStrategyReportNames,Simple names of the related MicroStrategy reports.
+MicroStrategy,Base class for MicroStrategy assets.,microStrategyIsCertified,Whether the asset is certified in MicroStrategy (true) or not (false).
+MicroStrategy,Base class for MicroStrategy assets.,microStrategyCertifiedBy,User who certified the asset in MicroStrategy.
+MicroStrategy,Base class for MicroStrategy assets.,microStrategyCertifiedAt,Date when the asset was certified in MicroStrategy.
+MicroStrategy,Base class for MicroStrategy assets.,microStrategyLocation,Location of the asset within MicroStrategy.
+MicroStrategyAttribute,Instance of a MicroStrategy attribute in Atlan.,microStrategyAttributeForms,"Attribute form name, description, display format and expression as a JSON string."
+MicroStrategyAttribute,Instance of a MicroStrategy attribute in Atlan.,microStrategyReports,Reports where the attribute is used.
+MicroStrategyAttribute,Instance of a MicroStrategy attribute in Atlan.,microStrategyMetrics,Metrics where the attribute is used.
+MicroStrategyAttribute,Instance of a MicroStrategy attribute in Atlan.,microStrategyCubes,Cubes where the attribute is used.
+MicroStrategyAttribute,Instance of a MicroStrategy attribute in Atlan.,microStrategyProject,Project containing the attribute.
+MicroStrategyCube,Instance of a MicroStrategy cube in Atlan.,microStrategyCubeType,Whether the cube is an OLAP or MTDI cube.
+MicroStrategyCube,Instance of a MicroStrategy cube in Atlan.,microStrategyCubeQuery,Query used to create the cube.
+MicroStrategyCube,Instance of a MicroStrategy cube in Atlan.,microStrategyMetrics,Metrics where the cube is used.
+MicroStrategyCube,Instance of a MicroStrategy cube in Atlan.,microStrategyProject,Project containing the cube.
+MicroStrategyCube,Instance of a MicroStrategy cube in Atlan.,microStrategyAttributes,Attributes used by the cube.
+MicroStrategyDocument,Instance of a MicroStrategy document in Atlan.,microStrategyProject,Project containing the document.
+MicroStrategyDossier,Instance of a MicroStrategy dossier in Atlan.,microStrategyDossierChapterNames,List of names of the dossier chapters.
+MicroStrategyDossier,Instance of a MicroStrategy dossier in Atlan.,microStrategyProject,Project containing the dossier.
+MicroStrategyDossier,Instance of a MicroStrategy dossier in Atlan.,microStrategyVisualizations,Visualizations used within the dossier.
+MicroStrategyFact,Instance of a MicroStrategy fact in Atlan.,microStrategyFactExpressions,List of expressions for the fact.
+MicroStrategyFact,Instance of a MicroStrategy fact in Atlan.,microStrategyMetrics,Metrics where the fact is used.
+MicroStrategyFact,Instance of a MicroStrategy fact in Atlan.,microStrategyProject,Project containing the fact.
+MicroStrategyMetric,Instance of a MicroStrategy metric in Atlan.,microStrategyMetricExpression,Expression that defines the metric.
+MicroStrategyMetric,Instance of a MicroStrategy metric in Atlan.,microStrategyAttributeQualifiedNames,Unique names of the related MicroStrategy attributes.
+MicroStrategyMetric,Instance of a MicroStrategy metric in Atlan.,microStrategyAttributeNames,Simple names of the related MicroStrategy attributes.
+MicroStrategyMetric,Instance of a MicroStrategy metric in Atlan.,microStrategyFactQualifiedNames,Unique names of the related MicroStrategy facts.
+MicroStrategyMetric,Instance of a MicroStrategy metric in Atlan.,microStrategyFactNames,Simple names of the related MicroStrategy facts.
+MicroStrategyMetric,Instance of a MicroStrategy metric in Atlan.,microStrategyMetricParentQualifiedNames,Unique names of the parent MicroStrategy metrics.
+MicroStrategyMetric,Instance of a MicroStrategy metric in Atlan.,microStrategyMetricParentNames,Simple names of the parent MicroStrategy metrics.
+MicroStrategyMetric,Instance of a MicroStrategy metric in Atlan.,microStrategyMetricParents,Metrics that are parents of this metric.
+MicroStrategyMetric,Instance of a MicroStrategy metric in Atlan.,microStrategyFacts,Facts related to this metric.
+MicroStrategyMetric,Instance of a MicroStrategy metric in Atlan.,microStrategyReports,Reports related to this metric.
+MicroStrategyMetric,Instance of a MicroStrategy metric in Atlan.,microStrategyCubes,Cubes related to this metric.
+MicroStrategyMetric,Instance of a MicroStrategy metric in Atlan.,microStrategyMetricChildren,Metrics that are children of this metric.
+MicroStrategyMetric,Instance of a MicroStrategy metric in Atlan.,microStrategyProject,Project containing the metric.
+MicroStrategyMetric,Instance of a MicroStrategy metric in Atlan.,microStrategyAttributes,Attributes related to this metric.
+MicroStrategyProject,Instance of a MicroStrategy project in Atlan.,microStrategyReports,Reports contained within the project.
+MicroStrategyProject,Instance of a MicroStrategy project in Atlan.,microStrategyFacts,Facts contained within the project.
+MicroStrategyProject,Instance of a MicroStrategy project in Atlan.,microStrategyMetrics,Metrics contained within the project.
+MicroStrategyProject,Instance of a MicroStrategy project in Atlan.,microStrategyVisualizations,Visualizations contained within the project.
+MicroStrategyProject,Instance of a MicroStrategy project in Atlan.,microStrategyDocuments,Documents contained within the project.
+MicroStrategyProject,Instance of a MicroStrategy project in Atlan.,microStrategyCubes,Cubes contained within the project.
+MicroStrategyProject,Instance of a MicroStrategy project in Atlan.,microStrategyDossiers,Dossiers contained within the project.
+MicroStrategyProject,Instance of a MicroStrategy project in Atlan.,microStrategyAttributes,Attributes contained within the project.
+MicroStrategyReport,Instance of a MicroStrategy report in Atlan.,microStrategyReportType,Whether the report is a Grid or Chart.
+MicroStrategyReport,Instance of a MicroStrategy report in Atlan.,microStrategyMetrics,Metrics used within the report.
+MicroStrategyReport,Instance of a MicroStrategy report in Atlan.,microStrategyProject,Project containing the report.
+MicroStrategyReport,Instance of a MicroStrategy report in Atlan.,microStrategyAttributes,Attributes related to this report.
+MicroStrategyVisualization,Instance of a MicroStrategy visualization in Atlan.,microStrategyVisualizationType,Type of visualization.
+MicroStrategyVisualization,Instance of a MicroStrategy visualization in Atlan.,microStrategyDossierQualifiedName,Unique name of the dossier containing this visualization.
+MicroStrategyVisualization,Instance of a MicroStrategy visualization in Atlan.,microStrategyDossierName,Simple name of the dossier containing this visualization.
+MicroStrategyVisualization,Instance of a MicroStrategy visualization in Atlan.,microStrategyDossier,Dossier containing the visualization.
+MicroStrategyVisualization,Instance of a MicroStrategy visualization in Atlan.,microStrategyProject,Project containing the visualization.
 Mode,Base class for Mode assets.,modeId,
 Mode,Base class for Mode assets.,modeToken,
 Mode,Base class for Mode assets.,modeWorkspaceName,
@@ -928,8 +987,8 @@ SalesforceReport,Instance of a Salesforce report in Atlan.,organization,
 SalesforceReport,Instance of a Salesforce report in Atlan.,dashboards,
 Schema,Instance of a database schema in Atlan.,tableCount,Number of tables in this schema.
 Schema,Instance of a database schema in Atlan.,viewsCount,Number of views in this schema.
-Schema,Instance of a database schema in Atlan.,materialisedViews,Materialized views that exist within this schema.
 Schema,Instance of a database schema in Atlan.,snowflakeTags,Tags applied to this schema in Snowflake.
+Schema,Instance of a database schema in Atlan.,materialisedViews,Materialized views that exist within this schema.
 Schema,Instance of a database schema in Atlan.,tables,Tables that exist within this schema.
 Schema,Instance of a database schema in Atlan.,database,Database in which this schema exists.
 Schema,Instance of a database schema in Atlan.,snowflakePipes,Snowflake Pipes that are defined within this schema.
@@ -991,8 +1050,8 @@ Table,Instance of a database table in Atlan.,partitionCount,
 Table,Instance of a database table in Atlan.,partitionList,
 Table,Instance of a database table in Atlan.,partitions,
 Table,Instance of a database table in Atlan.,columns,Columns that exist within this table.
-Table,Instance of a database table in Atlan.,facts,
 Table,Instance of a database table in Atlan.,queries,Queries that involve this table.
+Table,Instance of a database table in Atlan.,facts,
 Table,Instance of a database table in Atlan.,atlanSchema,Schema in which this table exists.
 Table,Instance of a database table in Atlan.,dimensions,
 TablePartition,Instance of a database table partition in Atlan.,constraint,

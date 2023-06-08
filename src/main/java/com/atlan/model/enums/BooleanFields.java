@@ -117,6 +117,8 @@ public enum BooleanFields implements AtlanSearchableField {
     MC_MONITOR_RULE_IS_SNOOZED("mcMonitorRuleIsSnoozed"),
     /** TBC */
     METABASE_IS_PERSONAL_COLLECTION("metabaseIsPersonalCollection"),
+    /** Whether the asset is certified in MicroStrategy (true) or not (false). */
+    MICRO_STRATEGY_IS_CERTIFIED("microStrategyIsCertified"),
     /** TBC */
     MODE_IS_PUBLIC("modeIsPublic"),
     /** TBC */

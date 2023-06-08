@@ -238,6 +238,33 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
                 case MetabaseQuestion.TYPE_NAME:
                     builder = MetabaseQuestion.builder();
                     break;
+                case MicroStrategyAttribute.TYPE_NAME:
+                    builder = MicroStrategyAttribute.builder();
+                    break;
+                case MicroStrategyCube.TYPE_NAME:
+                    builder = MicroStrategyCube.builder();
+                    break;
+                case MicroStrategyDocument.TYPE_NAME:
+                    builder = MicroStrategyDocument.builder();
+                    break;
+                case MicroStrategyDossier.TYPE_NAME:
+                    builder = MicroStrategyDossier.builder();
+                    break;
+                case MicroStrategyFact.TYPE_NAME:
+                    builder = MicroStrategyFact.builder();
+                    break;
+                case MicroStrategyMetric.TYPE_NAME:
+                    builder = MicroStrategyMetric.builder();
+                    break;
+                case MicroStrategyProject.TYPE_NAME:
+                    builder = MicroStrategyProject.builder();
+                    break;
+                case MicroStrategyReport.TYPE_NAME:
+                    builder = MicroStrategyReport.builder();
+                    break;
+                case MicroStrategyVisualization.TYPE_NAME:
+                    builder = MicroStrategyVisualization.builder();
+                    break;
                 case ModeChart.TYPE_NAME:
                     builder = ModeChart.builder();
                     break;

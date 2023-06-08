@@ -159,6 +159,8 @@ public enum NumericFields implements AtlanSearchableField {
     METABASE_DASHBOARD_COUNT("metabaseDashboardCount"),
     /** TBC */
     METABASE_QUESTION_COUNT("metabaseQuestionCount"),
+    /** Date when the asset was certified in MicroStrategy. */
+    MICRO_STRATEGY_CERTIFIED_AT("microStrategyCertifiedAt"),
     /** TBC */
     MODE_CHART_COUNT("modeChartCount"),
     /** TBC */
@@ -293,6 +295,8 @@ public enum NumericFields implements AtlanSearchableField {
     SOURCE_QUERY_ID("sourceQueryId"),
     /** Total count of all read operations at source. */
     SOURCE_READ_COUNT("sourceReadCount"),
+    /** Total cost of read queries at source. */
+    SOURCE_READ_QUERY_COST("sourceReadQueryCost"),
     /** Total number of unique users that read data from asset. */
     SOURCE_READ_USER_COUNT("sourceReadUserCount"),
     /** Total cost of all operations at source. */

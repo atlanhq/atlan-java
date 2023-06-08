@@ -563,6 +563,54 @@ public enum KeywordFields implements AtlanSearchableField {
     METRIC_SQL("metricSQL"),
     /** TBC */
     METRIC_TYPE("metricType"),
+    /** Attribute form name, description, display format and expression as a JSON string. */
+    MICRO_STRATEGY_ATTRIBUTE_FORMS("microStrategyAttributeForms"),
+    /** Simple names of the related MicroStrategy attributes. */
+    MICRO_STRATEGY_ATTRIBUTE_NAMES("microStrategyAttributeNames.keyword"),
+    /** Unique names of the related MicroStrategy attributes. */
+    MICRO_STRATEGY_ATTRIBUTE_QUALIFIED_NAMES("microStrategyAttributeQualifiedNames"),
+    /** User who certified the asset in MicroStrategy. */
+    MICRO_STRATEGY_CERTIFIED_BY("microStrategyCertifiedBy"),
+    /** Simple names of the related MicroStrategy cubes. */
+    MICRO_STRATEGY_CUBE_NAMES("microStrategyCubeNames.keyword"),
+    /** Unique names of the related MicroStrategy cubes. */
+    MICRO_STRATEGY_CUBE_QUALIFIED_NAMES("microStrategyCubeQualifiedNames"),
+    /** Query used to create the cube. */
+    MICRO_STRATEGY_CUBE_QUERY("microStrategyCubeQuery"),
+    /** Whether the cube is an OLAP or MTDI cube. */
+    MICRO_STRATEGY_CUBE_TYPE("microStrategyCubeType"),
+    /** List of names of the dossier chapters. */
+    MICRO_STRATEGY_DOSSIER_CHAPTER_NAMES("microStrategyDossierChapterNames"),
+    /** Simple name of the dossier containing this visualization. */
+    MICRO_STRATEGY_DOSSIER_NAME("microStrategyDossierName.keyword"),
+    /** Unique name of the dossier containing this visualization. */
+    MICRO_STRATEGY_DOSSIER_QUALIFIED_NAME("microStrategyDossierQualifiedName"),
+    /** List of expressions for the fact. */
+    MICRO_STRATEGY_FACT_EXPRESSIONS("microStrategyFactExpressions"),
+    /** Simple names of the related MicroStrategy facts. */
+    MICRO_STRATEGY_FACT_NAMES("microStrategyFactNames.keyword"),
+    /** Unique names of the related MicroStrategy facts. */
+    MICRO_STRATEGY_FACT_QUALIFIED_NAMES("microStrategyFactQualifiedNames"),
+    /** Location of the asset within MicroStrategy. */
+    MICRO_STRATEGY_LOCATION("microStrategyLocation"),
+    /** Expression that defines the metric. */
+    MICRO_STRATEGY_METRIC_EXPRESSION("microStrategyMetricExpression"),
+    /** Simple names of the parent MicroStrategy metrics. */
+    MICRO_STRATEGY_METRIC_PARENT_NAMES("microStrategyMetricParentNames.keyword"),
+    /** Unique names of the parent MicroStrategy metrics. */
+    MICRO_STRATEGY_METRIC_PARENT_QUALIFIED_NAMES("microStrategyMetricParentQualifiedNames"),
+    /** Simple name of the related MicroStrategy project. */
+    MICRO_STRATEGY_PROJECT_NAME("microStrategyProjectName.keyword"),
+    /** Unique name of the related MicroStrategy project. */
+    MICRO_STRATEGY_PROJECT_QUALIFIED_NAME("microStrategyProjectQualifiedName"),
+    /** Simple names of the related MicroStrategy reports. */
+    MICRO_STRATEGY_REPORT_NAMES("microStrategyReportNames.keyword"),
+    /** Unique names of the related MicroStrategy reports. */
+    MICRO_STRATEGY_REPORT_QUALIFIED_NAMES("microStrategyReportQualifiedNames"),
+    /** Whether the report is a Grid or Chart. */
+    MICRO_STRATEGY_REPORT_TYPE("microStrategyReportType"),
+    /** Type of visualization. */
+    MICRO_STRATEGY_VISUALIZATION_TYPE("microStrategyVisualizationType"),
     /** TBC */
     MODEL_NAME("modelName"),
     /** TBC */

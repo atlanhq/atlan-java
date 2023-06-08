@@ -16,9 +16,9 @@ import lombok.extern.slf4j.Slf4j;
 @JsonSubTypes({
     @JsonSubTypes.Type(value = QuickSightFolder.class, name = QuickSightFolder.TYPE_NAME),
     @JsonSubTypes.Type(value = QuickSightDashboardVisual.class, name = QuickSightDashboardVisual.TYPE_NAME),
-    @JsonSubTypes.Type(value = QuickSightAnalysis.class, name = QuickSightAnalysis.TYPE_NAME),
     @JsonSubTypes.Type(value = QuickSightAnalysisVisual.class, name = QuickSightAnalysisVisual.TYPE_NAME),
     @JsonSubTypes.Type(value = QuickSightDatasetField.class, name = QuickSightDatasetField.TYPE_NAME),
+    @JsonSubTypes.Type(value = QuickSightAnalysis.class, name = QuickSightAnalysis.TYPE_NAME),
     @JsonSubTypes.Type(value = QuickSightDashboard.class, name = QuickSightDashboard.TYPE_NAME),
     @JsonSubTypes.Type(value = QuickSightDataset.class, name = QuickSightDataset.TYPE_NAME),
 })

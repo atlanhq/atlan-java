@@ -131,12 +131,12 @@ public class GlossaryTerm extends Asset {
     /** TBC */
     @Attribute
     @Singular
-    SortedSet<GlossaryCategory> categories;
+    SortedSet<GlossaryTerm> classifies;
 
     /** TBC */
     @Attribute
     @Singular
-    SortedSet<GlossaryTerm> classifies;
+    SortedSet<GlossaryCategory> categories;
 
     /** TBC */
     @Attribute

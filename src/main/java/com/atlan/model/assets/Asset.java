@@ -271,6 +271,10 @@ public abstract class Asset extends Reference {
     @Attribute
     SourceCostUnitType sourceCostUnit;
 
+    /** Total cost of read queries at source. */
+    @Attribute
+    Double sourceReadQueryCost;
+
     /** List of usernames of the most recent users who read the asset. */
     @Attribute
     @Singular
