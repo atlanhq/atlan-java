@@ -165,7 +165,8 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>static <a href="HttpContent.html" title="class in com.atlan.net">HttpContent</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#buildMultipartFormDataContent(java.util.Collection)">buildMultipartFormDataContent</a></span>&#8203;(java.util.Collection&lt;<a href="KeyValuePair.html" title="class in com.atlan.net">KeyValuePair</a>&lt;java.lang.String,&#8203;java.lang.Object&gt;&gt;&nbsp;nameValueCollection)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#buildMultipartFormDataContent(java.util.Collection,java.lang.String)">buildMultipartFormDataContent</a></span>&#8203;(java.util.Collection&lt;<a href="KeyValuePair.html" title="class in com.atlan.net">KeyValuePair</a>&lt;java.lang.String,&#8203;java.lang.Object&gt;&gt;&nbsp;nameValueCollection,
+                             java.lang.String&nbsp;filename)</code></th>
 <td class="colLast">
 <div class="block">Builds a new HttpContent for name/value tuples encoded using <code>multipart/form-data</code> MIME
  type.</div>
@@ -173,8 +174,9 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>static <a href="HttpContent.html" title="class in com.atlan.net">HttpContent</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#buildMultipartFormDataContent(java.util.Collection,java.lang.String)">buildMultipartFormDataContent</a></span>&#8203;(java.util.Collection&lt;<a href="KeyValuePair.html" title="class in com.atlan.net">KeyValuePair</a>&lt;java.lang.String,&#8203;java.lang.Object&gt;&gt;&nbsp;nameValueCollection,
-                             java.lang.String&nbsp;boundary)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#buildMultipartFormDataContent(java.util.Collection,java.lang.String,java.lang.String)">buildMultipartFormDataContent</a></span>&#8203;(java.util.Collection&lt;<a href="KeyValuePair.html" title="class in com.atlan.net">KeyValuePair</a>&lt;java.lang.String,&#8203;java.lang.Object&gt;&gt;&nbsp;nameValueCollection,
+                             java.lang.String&nbsp;boundary,
+                             java.lang.String&nbsp;filename)</code></th>
 <td class="colLast">
 <div class="block">Builds a new HttpContent for name/value tuples encoded using <code>multipart/form-data</code> MIME
  type.</div>
@@ -266,19 +268,21 @@ extends java.lang.Object</pre>
 <div class="block">The request's content, as a string.</div>
 </li>
 </ul>
-<a id="buildMultipartFormDataContent(java.util.Collection)">
+<a id="buildMultipartFormDataContent(java.util.Collection,java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>buildMultipartFormDataContent</h4>
-<pre class="methodSignature">public static&nbsp;<a href="HttpContent.html" title="class in com.atlan.net">HttpContent</a>&nbsp;buildMultipartFormDataContent&#8203;(java.util.Collection&lt;<a href="KeyValuePair.html" title="class in com.atlan.net">KeyValuePair</a>&lt;java.lang.String,&#8203;java.lang.Object&gt;&gt;&nbsp;nameValueCollection)
+<pre class="methodSignature">public static&nbsp;<a href="HttpContent.html" title="class in com.atlan.net">HttpContent</a>&nbsp;buildMultipartFormDataContent&#8203;(java.util.Collection&lt;<a href="KeyValuePair.html" title="class in com.atlan.net">KeyValuePair</a>&lt;java.lang.String,&#8203;java.lang.Object&gt;&gt;&nbsp;nameValueCollection,
+                                                        java.lang.String&nbsp;filename)
                                                  throws java.io.IOException</pre>
 <div class="block">Builds a new HttpContent for name/value tuples encoded using <code>multipart/form-data</code> MIME
  type.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>nameValueCollection</code> - the collection of name/value tuples to encode</dd>
+<dd><code>filename</code> - name of the file read via an InputStream (for non-InputStream args can be null)</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the encoded HttpContent instance</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
@@ -287,14 +291,15 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a id="buildMultipartFormDataContent(java.util.Collection,java.lang.String)">
+<a id="buildMultipartFormDataContent(java.util.Collection,java.lang.String,java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>buildMultipartFormDataContent</h4>
 <pre class="methodSignature">public static&nbsp;<a href="HttpContent.html" title="class in com.atlan.net">HttpContent</a>&nbsp;buildMultipartFormDataContent&#8203;(java.util.Collection&lt;<a href="KeyValuePair.html" title="class in com.atlan.net">KeyValuePair</a>&lt;java.lang.String,&#8203;java.lang.Object&gt;&gt;&nbsp;nameValueCollection,
-                                                        java.lang.String&nbsp;boundary)
+                                                        java.lang.String&nbsp;boundary,
+                                                        java.lang.String&nbsp;filename)
                                                  throws java.io.IOException</pre>
 <div class="block">Builds a new HttpContent for name/value tuples encoded using <code>multipart/form-data</code> MIME
  type.</div>
@@ -302,6 +307,7 @@ extends java.lang.Object</pre>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>nameValueCollection</code> - the collection of name/value tuples to encode</dd>
 <dd><code>boundary</code> - the boundary</dd>
+<dd><code>filename</code> - name of the file read via an InputStream (for non-InputStream args can be null)</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the encoded HttpContent instance</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>

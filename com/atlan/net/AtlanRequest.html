@@ -156,15 +156,26 @@ extends java.lang.Object</pre>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>&nbsp;</code></td>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.atlan.net.ApiResource.RequestMethod,java.lang.String,java.io.InputStream,java.lang.String,com.atlan.net.RequestOptions)">AtlanRequest</a></span>&#8203;(<a href="ApiResource.RequestMethod.html" title="enum in com.atlan.net">ApiResource.RequestMethod</a>&nbsp;method,
+            java.lang.String&nbsp;url,
+            java.io.InputStream&nbsp;file,
+            java.lang.String&nbsp;filename,
+            <a href="RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options)</code></th>
+<td class="colLast">
+<div class="block">Initializes a new instance of the <a href="AtlanRequest.html" title="class in com.atlan.net"><code>AtlanRequest</code></a> class, used specifically for uploading files (images).</div>
+</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>&nbsp;</code></td>
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.atlan.net.ApiResource.RequestMethod,java.lang.String,java.lang.String,com.atlan.net.RequestOptions)">AtlanRequest</a></span>&#8203;(<a href="ApiResource.RequestMethod.html" title="enum in com.atlan.net">ApiResource.RequestMethod</a>&nbsp;method,
             java.lang.String&nbsp;url,
             java.lang.String&nbsp;body,
             <a href="RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options)</code></th>
 <td class="colLast">
-<div class="block">Initializes a new instance of the <a href="AtlanRequest.html" title="class in com.atlan.net"><code>AtlanRequest</code></a> class.</div>
+<div class="block">Initializes a new instance of the <a href="AtlanRequest.html" title="class in com.atlan.net"><code>AtlanRequest</code></a> class, used for the majority of requests.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>protected </code></td>
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.atlan.net.ApiResource.RequestMethod,java.net.URL,com.atlan.net.HttpContent,com.atlan.net.HttpHeaders,java.lang.String,com.atlan.net.RequestOptions)">AtlanRequest</a></span>&#8203;(<a href="ApiResource.RequestMethod.html" title="enum in com.atlan.net">ApiResource.RequestMethod</a>&nbsp;method,
             java.net.URL&nbsp;url,
@@ -293,12 +304,37 @@ extends java.lang.Object</pre>
                     java.lang.String&nbsp;body,
                     <a href="RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options)
              throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
-<div class="block">Initializes a new instance of the <a href="AtlanRequest.html" title="class in com.atlan.net"><code>AtlanRequest</code></a> class.</div>
+<div class="block">Initializes a new instance of the <a href="AtlanRequest.html" title="class in com.atlan.net"><code>AtlanRequest</code></a> class, used for the majority of requests.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>method</code> - the HTTP method</dd>
 <dd><code>url</code> - the URL of the request</dd>
 <dd><code>body</code> - the body of the request</dd>
+<dd><code>options</code> - the special modifiers of the request</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - if the request cannot be initialized for any reason</dd>
+</dl>
+</li>
+</ul>
+<a id="&lt;init&gt;(com.atlan.net.ApiResource.RequestMethod,java.lang.String,java.io.InputStream,java.lang.String,com.atlan.net.RequestOptions)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>AtlanRequest</h4>
+<pre>public&nbsp;AtlanRequest&#8203;(<a href="ApiResource.RequestMethod.html" title="enum in com.atlan.net">ApiResource.RequestMethod</a>&nbsp;method,
+                    java.lang.String&nbsp;url,
+                    java.io.InputStream&nbsp;file,
+                    java.lang.String&nbsp;filename,
+                    <a href="RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options)
+             throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Initializes a new instance of the <a href="AtlanRequest.html" title="class in com.atlan.net"><code>AtlanRequest</code></a> class, used specifically for uploading files (images).</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>method</code> - the HTTP method</dd>
+<dd><code>url</code> - the URL of the request</dd>
+<dd><code>file</code> - the file to be uploaded through the request</dd>
+<dd><code>filename</code> - name of the file the InputStream is reading</dd>
 <dd><code>options</code> - the special modifiers of the request</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - if the request cannot be initialized for any reason</dd>
@@ -376,7 +412,7 @@ extends java.lang.Object</pre>
 <h4>content</h4>
 <pre class="methodSignature">public&nbsp;<a href="HttpContent.html" title="class in com.atlan.net">HttpContent</a>&nbsp;content()</pre>
 <div class="block">The body of the request. For POST requests, this will be either a <code>application/json</code>
- payload. For GET requests, this will be <code>null</code>.</div>
+ payload or a multi-part form upload (for files). For GET requests, this will be <code>null</code>.</div>
 </li>
 </ul>
 <a id="headers()">

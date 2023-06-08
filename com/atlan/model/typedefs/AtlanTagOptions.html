@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":10,"i2":10,"i3":10,"i4":10,"i5":9,"i6":10};
+var data = {"i0":9,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":9,"i9":10,"i10":9,"i11":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -235,21 +235,58 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 </td>
 </tr>
 <tr id="i4" class="altColor">
+<td class="colFirst"><code><a href="../enums/AtlanIcon.html" title="enum in com.atlan.model.enums">AtlanIcon</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIconName()">getIconName</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Name of icon to use to represent the tag visually.</div>
+</td>
+</tr>
+<tr id="i5" class="rowColor">
+<td class="colFirst"><code><a href="../enums/IconType.html" title="enum in com.atlan.model.enums">IconType</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIconType()">getIconType</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Type of icon to use for representing the tag visually.</div>
+</td>
+</tr>
+<tr id="i6" class="altColor">
+<td class="colFirst"><code>java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getImageID()">getImageID</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Unique identifier (GUID) of an image to use for the tag.</div>
+</td>
+</tr>
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hashCode()">hashCode</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>static <a href="AtlanTagOptions.html" title="class in com.atlan.model.typedefs">AtlanTagOptions</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#of(com.atlan.model.enums.AtlanTagColor)">of</a></span>&#8203;(<a href="../enums/AtlanTagColor.html" title="enum in com.atlan.model.enums">AtlanTagColor</a>&nbsp;color)</code></th>
 <td class="colLast">
-<div class="block">Instantiate a new set of Atlan tag options from the provided parameters.</div>
+<div class="block">Provide Atlan tag options that set the color for the tag, using the default tag icon.</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code><a href="AtlanTagOptions.AtlanTagOptionsBuilder.html" title="class in com.atlan.model.typedefs">AtlanTagOptions.AtlanTagOptionsBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toBuilder()">toBuilder</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i10" class="altColor">
+<td class="colFirst"><code>static <a href="AtlanTagOptions.html" title="class in com.atlan.model.typedefs">AtlanTagOptions</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#withIcon(com.atlan.model.enums.AtlanIcon,com.atlan.model.enums.AtlanTagColor)">withIcon</a></span>&#8203;(<a href="../enums/AtlanIcon.html" title="enum in com.atlan.model.enums">AtlanIcon</a>&nbsp;icon,
+        <a href="../enums/AtlanTagColor.html" title="enum in com.atlan.model.enums">AtlanTagColor</a>&nbsp;color)</code></th>
+<td class="colLast">
+<div class="block">Provide Atlan tag options that set the icon and color for the tag, using a built-in icon.</div>
+</td>
+</tr>
+<tr id="i11" class="rowColor">
+<td class="colFirst"><code>static <a href="AtlanTagOptions.html" title="class in com.atlan.model.typedefs">AtlanTagOptions</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#withImage(java.lang.String,com.atlan.model.enums.AtlanTagColor)">withImage</a></span>&#8203;(java.lang.String&nbsp;url,
+         <a href="../enums/AtlanTagColor.html" title="enum in com.atlan.model.enums">AtlanTagColor</a>&nbsp;color)</code></th>
+<td class="colLast">
+<div class="block">Provide Atlan tag options that set the image and color for the tag, using an uploaded image.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -308,12 +345,51 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <li class="blockList">
 <h4>of</h4>
 <pre class="methodSignature">public static&nbsp;<a href="AtlanTagOptions.html" title="class in com.atlan.model.typedefs">AtlanTagOptions</a>&nbsp;of&#8203;(<a href="../enums/AtlanTagColor.html" title="enum in com.atlan.model.enums">AtlanTagColor</a>&nbsp;color)</pre>
-<div class="block">Instantiate a new set of Atlan tag options from the provided parameters.</div>
+<div class="block">Provide Atlan tag options that set the color for the tag, using the default tag icon.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>color</code> - for the Atlan tag</dd>
+<dd><code>color</code> - to use to represent the Atlan tag</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the Atlan tag options</dd>
+<dd>the necessary options for setting this color for the Atlan tag</dd>
+</dl>
+</li>
+</ul>
+<a id="withIcon(com.atlan.model.enums.AtlanIcon,com.atlan.model.enums.AtlanTagColor)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>withIcon</h4>
+<pre class="methodSignature">public static&nbsp;<a href="AtlanTagOptions.html" title="class in com.atlan.model.typedefs">AtlanTagOptions</a>&nbsp;withIcon&#8203;(<a href="../enums/AtlanIcon.html" title="enum in com.atlan.model.enums">AtlanIcon</a>&nbsp;icon,
+                                       <a href="../enums/AtlanTagColor.html" title="enum in com.atlan.model.enums">AtlanTagColor</a>&nbsp;color)</pre>
+<div class="block">Provide Atlan tag options that set the icon and color for the tag, using a built-in icon.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>icon</code> - to use to represent the Atlan tag</dd>
+<dd><code>color</code> - to use to represent the Atlan tag</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the necessary options for setting this icon and color for the Atlan tag</dd>
+</dl>
+</li>
+</ul>
+<a id="withImage(java.lang.String,com.atlan.model.enums.AtlanTagColor)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>withImage</h4>
+<pre class="methodSignature">public static&nbsp;<a href="AtlanTagOptions.html" title="class in com.atlan.model.typedefs">AtlanTagOptions</a>&nbsp;withImage&#8203;(java.lang.String&nbsp;url,
+                                        <a href="../enums/AtlanTagColor.html" title="enum in com.atlan.model.enums">AtlanTagColor</a>&nbsp;color)
+                                 throws <a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Provide Atlan tag options that set the image and color for the tag, using an uploaded image.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>url</code> - URL to the image to use for the Atlan tag</dd>
+<dd><code>color</code> - to use to represent the Atlan tag</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the necessary options for setting this image and color for the Atlan tag</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication issues trying to upload the image</dd>
 </dl>
 </li>
 </ul>
@@ -343,6 +419,36 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <h4>getColor</h4>
 <pre class="methodSignature">public&nbsp;<a href="../enums/AtlanTagColor.html" title="enum in com.atlan.model.enums">AtlanTagColor</a>&nbsp;getColor()</pre>
 <div class="block">Color to use for the Atlan tag.</div>
+</li>
+</ul>
+<a id="getIconName()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getIconName</h4>
+<pre class="methodSignature">public&nbsp;<a href="../enums/AtlanIcon.html" title="enum in com.atlan.model.enums">AtlanIcon</a>&nbsp;getIconName()</pre>
+<div class="block">Name of icon to use to represent the tag visually.</div>
+</li>
+</ul>
+<a id="getIconType()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getIconType</h4>
+<pre class="methodSignature">public&nbsp;<a href="../enums/IconType.html" title="enum in com.atlan.model.enums">IconType</a>&nbsp;getIconType()</pre>
+<div class="block">Type of icon to use for representing the tag visually.</div>
+</li>
+</ul>
+<a id="getImageID()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getImageID</h4>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getImageID()</pre>
+<div class="block">Unique identifier (GUID) of an image to use for the tag.</div>
 </li>
 </ul>
 <a id="equals(java.lang.Object)">
