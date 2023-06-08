@@ -181,6 +181,34 @@ public enum TextFields implements AtlanSearchableField {
     METRIC_FILTERS("metricFilters"),
     /** TBC */
     METRIC_TIME_GRAINS("metricTimeGrains"),
+    /** Simple names of the related MicroStrategy attributes. */
+    MICRO_STRATEGY_ATTRIBUTE_NAMES("microStrategyAttributeNames"),
+    /** Unique names of the related MicroStrategy attributes. */
+    MICRO_STRATEGY_ATTRIBUTE_QUALIFIED_NAMES("microStrategyAttributeQualifiedNames.text"),
+    /** Simple names of the related MicroStrategy cubes. */
+    MICRO_STRATEGY_CUBE_NAMES("microStrategyCubeNames"),
+    /** Unique names of the related MicroStrategy cubes. */
+    MICRO_STRATEGY_CUBE_QUALIFIED_NAMES("microStrategyCubeQualifiedNames.text"),
+    /** Simple name of the dossier containing this visualization. */
+    MICRO_STRATEGY_DOSSIER_NAME("microStrategyDossierName"),
+    /** Unique name of the dossier containing this visualization. */
+    MICRO_STRATEGY_DOSSIER_QUALIFIED_NAME("microStrategyDossierQualifiedName.text"),
+    /** Simple names of the related MicroStrategy facts. */
+    MICRO_STRATEGY_FACT_NAMES("microStrategyFactNames"),
+    /** Unique names of the related MicroStrategy facts. */
+    MICRO_STRATEGY_FACT_QUALIFIED_NAMES("microStrategyFactQualifiedNames.text"),
+    /** Simple names of the parent MicroStrategy metrics. */
+    MICRO_STRATEGY_METRIC_PARENT_NAMES("microStrategyMetricParentNames"),
+    /** Unique names of the parent MicroStrategy metrics. */
+    MICRO_STRATEGY_METRIC_PARENT_QUALIFIED_NAMES("microStrategyMetricParentQualifiedNames.text"),
+    /** Simple name of the related MicroStrategy project. */
+    MICRO_STRATEGY_PROJECT_NAME("microStrategyProjectName"),
+    /** Unique name of the related MicroStrategy project. */
+    MICRO_STRATEGY_PROJECT_QUALIFIED_NAME("microStrategyProjectQualifiedName.text"),
+    /** Simple names of the related MicroStrategy reports. */
+    MICRO_STRATEGY_REPORT_NAMES("microStrategyReportNames"),
+    /** Unique names of the related MicroStrategy reports. */
+    MICRO_STRATEGY_REPORT_QUALIFIED_NAMES("microStrategyReportQualifiedNames.text"),
     /** TBC */
     MODE_QUERY_NAME("modeQueryName"),
     /** TBC */

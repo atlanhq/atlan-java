@@ -110,6 +110,7 @@ public class ViewTest {
             .lastRowChangedAt(123456789L)
             .sourceTotalCost(123.456)
             .sourceCostUnit(SourceCostUnitType.CREDITS)
+            .sourceReadQueryCost(123.456)
             .sourceReadRecentUser("String0")
             .sourceReadRecentUser("String1")
             .sourceReadRecentUserRecord(PopularityInsights.builder()

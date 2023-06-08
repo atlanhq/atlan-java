@@ -45,16 +45,16 @@ public class Schema extends SQL {
     @JsonProperty("viewsCount")
     Integer viewCount;
 
+    /** Tags applied to this schema in Snowflake. */
+    @Attribute
+    @Singular
+    SortedSet<SnowflakeTag> snowflakeTags;
+
     /** Materialized views that exist within this schema. */
     @Attribute
     @Singular
     @JsonProperty("materialisedViews")
     SortedSet<MaterializedView> materializedViews;
-
-    /** Tags applied to this schema in Snowflake. */
-    @Attribute
-    @Singular
-    SortedSet<SnowflakeTag> snowflakeTags;
 
     /** Tables that exist within this schema. */
     @Attribute

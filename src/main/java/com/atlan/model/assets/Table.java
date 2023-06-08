@@ -105,15 +105,15 @@ public class Table extends SQL {
     @Singular
     SortedSet<Column> columns;
 
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<Table> facts;
-
     /** Queries that involve this table. */
     @Attribute
     @Singular
     SortedSet<AtlanQuery> queries;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<Table> facts;
 
     /** Schema in which this table exists. */
     @Attribute
