@@ -81,7 +81,7 @@ public class AttributeDef extends AtlanObject {
      * @return a builder for an attribute definition
      */
     public static AttributeDefBuilder<?, ?> creator(String name, AtlanAttributeType type) {
-        return creator(name, type, null);
+        return creator(name, type, null, AtlanCustomAttributeCardinality.SINGLE);
     }
 
     /**
@@ -91,9 +91,14 @@ public class AttributeDef extends AtlanObject {
      * @param name name of the attribute
      * @param type type of the attribute
      * @param relatedObjectType name of the enumeration or struct, if the attribute type is an enumeration or struct (can be null otherwise)
+     * @param cardinality whether the attribute is single or multivalued
      * @return a builder for an attribute definition
      */
-    public static AttributeDefBuilder<?, ?> creator(String name, AtlanAttributeType type, String relatedObjectType) {
+    public static AttributeDefBuilder<?, ?> creator(
+            String name,
+            AtlanAttributeType type,
+            String relatedObjectType,
+            AtlanCustomAttributeCardinality cardinality) {
         String typeName;
         switch (type) {
             case ENUM:
@@ -104,7 +109,10 @@ public class AttributeDef extends AtlanObject {
                 typeName = type.getValue();
                 break;
         }
-        return AttributeDef.builder().name(name).typeName(typeName);
+        if (cardinality != AtlanCustomAttributeCardinality.SINGLE) {
+            typeName = "array<" + typeName + ">";
+        }
+        return AttributeDef.builder().name(name).typeName(typeName).cardinality(cardinality);
     }
 
     /** Internal hashed-string name for the attribute. */
