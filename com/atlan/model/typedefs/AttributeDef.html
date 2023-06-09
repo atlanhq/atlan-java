@@ -236,9 +236,10 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>static <a href="AttributeDef.AttributeDefBuilder.html" title="class in com.atlan.model.typedefs">AttributeDef.AttributeDefBuilder</a>&lt;?,&#8203;?&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#creator(java.lang.String,com.atlan.model.enums.AtlanAttributeType,java.lang.String)">creator</a></span>&#8203;(java.lang.String&nbsp;name,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#creator(java.lang.String,com.atlan.model.enums.AtlanAttributeType,java.lang.String,com.atlan.model.enums.AtlanCustomAttributeCardinality)">creator</a></span>&#8203;(java.lang.String&nbsp;name,
        <a href="../enums/AtlanAttributeType.html" title="enum in com.atlan.model.enums">AtlanAttributeType</a>&nbsp;type,
-       java.lang.String&nbsp;relatedObjectType)</code></th>
+       java.lang.String&nbsp;relatedObjectType,
+       <a href="../enums/AtlanCustomAttributeCardinality.html" title="enum in com.atlan.model.enums">AtlanCustomAttributeCardinality</a>&nbsp;cardinality)</code></th>
 <td class="colLast">
 <div class="block">Build up an attribute definition from the provided parameters and default settings for all other parameters.</div>
 </td>
@@ -530,7 +531,7 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 </dl>
 </li>
 </ul>
-<a id="creator(java.lang.String,com.atlan.model.enums.AtlanAttributeType,java.lang.String)">
+<a id="creator(java.lang.String,com.atlan.model.enums.AtlanAttributeType,java.lang.String,com.atlan.model.enums.AtlanCustomAttributeCardinality)">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -538,7 +539,8 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <h4>creator</h4>
 <pre class="methodSignature">public static&nbsp;<a href="AttributeDef.AttributeDefBuilder.html" title="class in com.atlan.model.typedefs">AttributeDef.AttributeDefBuilder</a>&lt;?,&#8203;?&gt;&nbsp;creator&#8203;(java.lang.String&nbsp;name,
                                                                   <a href="../enums/AtlanAttributeType.html" title="enum in com.atlan.model.enums">AtlanAttributeType</a>&nbsp;type,
-                                                                  java.lang.String&nbsp;relatedObjectType)</pre>
+                                                                  java.lang.String&nbsp;relatedObjectType,
+                                                                  <a href="../enums/AtlanCustomAttributeCardinality.html" title="enum in com.atlan.model.enums">AtlanCustomAttributeCardinality</a>&nbsp;cardinality)</pre>
 <div class="block">Build up an attribute definition from the provided parameters and default settings for all other parameters.
  NOTE: INTERNAL USE ONLY.</div>
 <dl>
@@ -546,6 +548,7 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <dd><code>name</code> - name of the attribute</dd>
 <dd><code>type</code> - type of the attribute</dd>
 <dd><code>relatedObjectType</code> - name of the enumeration or struct, if the attribute type is an enumeration or struct (can be null otherwise)</dd>
+<dd><code>cardinality</code> - whether the attribute is single or multivalued</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>a builder for an attribute definition</dd>
 </dl>

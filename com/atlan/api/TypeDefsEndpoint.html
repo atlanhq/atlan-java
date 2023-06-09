@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":9,"i2":9,"i3":9};
+var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -187,26 +187,33 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>static <a href="../model/typedefs/TypeDefResponse.html" title="class in com.atlan.model.typedefs">TypeDefResponse</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createTypeDef(com.atlan.model.typedefs.TypeDef)">createTypeDef</a></span>&#8203;(<a href="../model/typedefs/TypeDef.html" title="class in com.atlan.model.typedefs">TypeDef</a>&nbsp;typeDef)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createInternal(com.atlan.model.typedefs.TypeDef)">createInternal</a></span>&#8203;(<a href="../model/typedefs/TypeDef.html" title="class in com.atlan.model.typedefs">TypeDef</a>&nbsp;typeDef)</code></th>
 <td class="colLast">
 <div class="block">Create a new type definition in Atlan.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>static <a href="../model/typedefs/TypeDefResponse.html" title="class in com.atlan.model.typedefs">TypeDefResponse</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createTypeDef(com.atlan.model.typedefs.TypeDef)">createTypeDef</a></span>&#8203;(<a href="../model/typedefs/TypeDef.html" title="class in com.atlan.model.typedefs">TypeDef</a>&nbsp;typeDef)</code></th>
+<td class="colLast">
+<div class="block">Create a new type definition in Atlan.</div>
+</td>
+</tr>
+<tr id="i2" class="altColor">
+<td class="colFirst"><code>static <a href="../model/typedefs/TypeDefResponse.html" title="class in com.atlan.model.typedefs">TypeDefResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTypeDefs(com.atlan.model.enums.AtlanTypeCategory)">getTypeDefs</a></span>&#8203;(<a href="../model/enums/AtlanTypeCategory.html" title="enum in com.atlan.model.enums">AtlanTypeCategory</a>&nbsp;category)</code></th>
 <td class="colLast">
 <div class="block">Retrieves a list of the type definitions in Atlan.</div>
 </td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>static void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#purgeTypeDef(java.lang.String)">purgeTypeDef</a></span>&#8203;(java.lang.String&nbsp;internalName)</code></th>
 <td class="colLast">
 <div class="block">Delete the type definition.</div>
 </td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>static <a href="../model/typedefs/TypeDefResponse.html" title="class in com.atlan.model.typedefs">TypeDefResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateTypeDef(com.atlan.model.typedefs.TypeDef)">updateTypeDef</a></span>&#8203;(<a href="../model/typedefs/TypeDef.html" title="class in com.atlan.model.typedefs">TypeDef</a>&nbsp;typeDef)</code></th>
 <td class="colLast">
@@ -306,6 +313,28 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
 <dd>the resulting type definition that was created</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication issue</dd>
+</dl>
+</li>
+</ul>
+<a id="createInternal(com.atlan.model.typedefs.TypeDef)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>createInternal</h4>
+<pre class="methodSignature">public static&nbsp;<a href="../model/typedefs/TypeDefResponse.html" title="class in com.atlan.model.typedefs">TypeDefResponse</a>&nbsp;createInternal&#8203;(<a href="../model/typedefs/TypeDef.html" title="class in com.atlan.model.typedefs">TypeDef</a>&nbsp;typeDef)
+                                      throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Create a new type definition in Atlan.
+ NOTE: INTERNAL USE ONLY. This will NOT work without specially-configured policies - use createTypeDef instead.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>typeDef</code> - to create</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the resulting type definition that was created</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication issue</dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="#createTypeDef(com.atlan.model.typedefs.TypeDef)"><code>createTypeDef(TypeDef)</code></a></dd>
 </dl>
 </li>
 </ul>
