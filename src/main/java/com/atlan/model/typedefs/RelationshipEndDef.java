@@ -35,4 +35,23 @@ public class RelationshipEndDef extends AttributeDef {
 
     /** Cardinality of this end of the relationship. */
     AtlanCustomAttributeCardinality cardinality;
+
+    /**
+     * Builds the minimal object necessary to construct a relationship end definition.
+     * NOTE: INTERNAL USE ONLY.
+     *
+     * @param name of the attribute that represents this end of the relationship
+     * @param type name of the entity definition for the other end of the relationship
+     * @param isContainer whether this end of the relationship "owns" the other end's assets
+     * @param cardinality of this end of the relationship
+     * @return builder containing minimal information necessary to define a new relationship end
+     */
+    public static RelationshipEndDefBuilder<?, ?> creator(
+            String name, String type, boolean isContainer, AtlanCustomAttributeCardinality cardinality) {
+        return RelationshipEndDef.builder()
+                .name(name)
+                .type(type)
+                .isContainer(isContainer)
+                .cardinality(cardinality);
+    }
 }

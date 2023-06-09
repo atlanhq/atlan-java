@@ -5,6 +5,7 @@ package com.atlan.model.typedefs;
 import com.atlan.cache.EnumCache;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.core.AtlanObject;
+import com.atlan.model.enums.AtlanAttributeType;
 import com.atlan.model.enums.AtlanCustomAttributeCardinality;
 import com.atlan.model.enums.AtlanCustomAttributePrimitiveType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -69,6 +70,41 @@ public class AttributeDef extends AtlanObject {
             builder.enumValues(EnumCache.getByName(optionsName).getValidValues());
         }
         return builder.build();
+    }
+
+    /**
+     * Build up an attribute definition from the provided parameters and default settings for all other parameters.
+     * NOTE: INTERNAL USE ONLY.
+     *
+     * @param name name of the attribute
+     * @param type primitive type of the attribute (non-enum, non-struct)
+     * @return a builder for an attribute definition
+     */
+    public static AttributeDefBuilder<?, ?> creator(String name, AtlanAttributeType type) {
+        return creator(name, type, null);
+    }
+
+    /**
+     * Build up an attribute definition from the provided parameters and default settings for all other parameters.
+     * NOTE: INTERNAL USE ONLY.
+     *
+     * @param name name of the attribute
+     * @param type type of the attribute
+     * @param relatedObjectType name of the enumeration or struct, if the attribute type is an enumeration or struct (can be null otherwise)
+     * @return a builder for an attribute definition
+     */
+    public static AttributeDefBuilder<?, ?> creator(String name, AtlanAttributeType type, String relatedObjectType) {
+        String typeName;
+        switch (type) {
+            case ENUM:
+            case STRUCT:
+                typeName = relatedObjectType;
+                break;
+            default:
+                typeName = type.getValue();
+                break;
+        }
+        return AttributeDef.builder().name(name).typeName(typeName);
     }
 
     /** Internal hashed-string name for the attribute. */
