@@ -33,10 +33,12 @@ public class RelationshipDef extends TypeDef {
     String relationshipLabel;
 
     /** Style of relationship in regard to containment and lifecycle. */
-    RelationshipCategory relationshipCategory;
+    @Builder.Default
+    RelationshipCategory relationshipCategory = RelationshipCategory.ASSOCIATION;
 
     /** Whether Atlan tags should propagate through this relationship, and if so in which direction(s). */
-    PropagateTags propagateTags;
+    @Builder.Default
+    PropagateTags propagateTags = PropagateTags.NONE;
 
     /** Definition for the first endpoint of the relationship. */
     RelationshipEndDef endDef1;
@@ -56,4 +58,38 @@ public class RelationshipDef extends TypeDef {
     /** Unused. */
     @JsonIgnore
     Map<String, Object> businessAttributeDefs;
+
+    /**
+     * Build up a relationship definition from the provided parameters and default settings for all other parameters.
+     * NOTE: INTERNAL USE ONLY.
+     *
+     * @param name name of the relationship definition
+     * @param end1 definition of the first endpoint of the relationship
+     * @param end2 definition of the second endpoint of the relationship
+     * @return a builder for a relationship definition
+     */
+    public RelationshipDefBuilder<?, ?> creator(String name, RelationshipEndDef end1, RelationshipEndDef end2) {
+        return creator(name, end1, end2, null);
+    }
+
+    /**
+     * Build up a relationship definition from the provided parameters and default settings for all other parameters.
+     * NOTE: INTERNAL USE ONLY.
+     *
+     * @param name name of the relationship definition
+     * @param end1 definition of the first endpoint of the relationship
+     * @param end2 definition of the second endpoint of the relationship
+     * @param attributes definitions for each attribute within the relationship definition
+     * @return a builder for a relationship definition
+     */
+    public RelationshipDefBuilder<?, ?> creator(
+            String name, RelationshipEndDef end1, RelationshipEndDef end2, List<AttributeDef> attributes) {
+        return RelationshipDef.builder()
+                .name(name)
+                .serviceType("custom_extension")
+                .typeVersion("1.0")
+                .endDef1(end1)
+                .endDef2(end2)
+                .attributeDefs(attributes);
+    }
 }

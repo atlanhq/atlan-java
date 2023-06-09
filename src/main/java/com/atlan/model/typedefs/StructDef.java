@@ -3,6 +3,7 @@
 package com.atlan.model.typedefs;
 
 import com.atlan.model.enums.AtlanTypeCategory;
+import java.util.List;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -23,4 +24,20 @@ public class StructDef extends TypeDef {
     @Getter(onMethod_ = {@Override})
     @Builder.Default
     AtlanTypeCategory category = AtlanTypeCategory.STRUCT;
+
+    /**
+     * Build up a struct definition from the provided parameters and default settings for all other parameters.
+     * NOTE: INTERNAL USE ONLY.
+     *
+     * @param name name of the struct definition
+     * @param attributes definitions for each attribute within the struct definition
+     * @return a builder for a struct definition
+     */
+    public StructDefBuilder<?, ?> creator(String name, List<AttributeDef> attributes) {
+        return StructDef.builder()
+                .name(name)
+                .serviceType("custom_extension")
+                .typeVersion("1.0")
+                .attributeDefs(attributes);
+    }
 }

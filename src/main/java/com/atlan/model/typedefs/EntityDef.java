@@ -2,6 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.typedefs;
 
+import com.atlan.model.assets.Asset;
 import com.atlan.model.enums.AtlanTypeCategory;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;
@@ -39,4 +40,34 @@ public class EntityDef extends TypeDef {
     /** Unused. */
     @JsonIgnore
     Map<String, Object> businessAttributeDefs;
+
+    /**
+     * Build up an entity definition from the provided parameters and default settings for all other parameters.
+     * NOTE: INTERNAL USE ONLY.
+     *
+     * @param name name of the entity definition
+     * @param attributes definitions for each attribute within the entity definition
+     * @return a builder for an entity definition
+     */
+    public EntityDefBuilder<?, ?> creator(String name, List<AttributeDef> attributes) {
+        return creator(name, attributes, List.of(Asset.TYPE_NAME));
+    }
+
+    /**
+     * Build up an entity definition from the provided parameters and default settings for all other parameters.
+     * NOTE: INTERNAL USE ONLY.
+     *
+     * @param name name of the entity definition
+     * @param attributes definitions for each attribute within the entity definition
+     * @param superTypes names of the types that this entity definition should inherit from
+     * @return a builder for an entity definition
+     */
+    public EntityDefBuilder<?, ?> creator(String name, List<AttributeDef> attributes, List<String> superTypes) {
+        return EntityDef.builder()
+                .name(name)
+                .serviceType("custom_extension")
+                .typeVersion("1.0")
+                .attributeDefs(attributes)
+                .superTypes(superTypes);
+    }
 }
