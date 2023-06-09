@@ -33,7 +33,7 @@ public class StructDef extends TypeDef {
      * @param attributes definitions for each attribute within the struct definition
      * @return a builder for a struct definition
      */
-    public StructDefBuilder<?, ?> creator(String name, List<AttributeDef> attributes) {
+    public static StructDefBuilder<?, ?> creator(String name, List<AttributeDef> attributes) {
         return StructDef.builder()
                 .name(name)
                 .serviceType("custom_extension")

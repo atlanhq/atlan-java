@@ -68,7 +68,7 @@ public class RelationshipDef extends TypeDef {
      * @param end2 definition of the second endpoint of the relationship
      * @return a builder for a relationship definition
      */
-    public RelationshipDefBuilder<?, ?> creator(String name, RelationshipEndDef end1, RelationshipEndDef end2) {
+    public static RelationshipDefBuilder<?, ?> creator(String name, RelationshipEndDef end1, RelationshipEndDef end2) {
         return creator(name, end1, end2, null);
     }
 
@@ -82,7 +82,7 @@ public class RelationshipDef extends TypeDef {
      * @param attributes definitions for each attribute within the relationship definition
      * @return a builder for a relationship definition
      */
-    public RelationshipDefBuilder<?, ?> creator(
+    public static RelationshipDefBuilder<?, ?> creator(
             String name, RelationshipEndDef end1, RelationshipEndDef end2, List<AttributeDef> attributes) {
         return RelationshipDef.builder()
                 .name(name)
