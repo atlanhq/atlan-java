@@ -61,6 +61,8 @@ public class AtlanPolicyActionDeserializer extends StdDeserializer<AtlanPolicyAc
             }
         } else if (value.equals("select")) {
             return DataAction.fromValue(value);
+        } else if (value.startsWith("type-") || value.endsWith("-label") || value.endsWith("-relationship")) {
+            return TypeDefAction.fromValue(value);
         } else {
             return PurposeMetadataAction.fromValue(value);
         }
