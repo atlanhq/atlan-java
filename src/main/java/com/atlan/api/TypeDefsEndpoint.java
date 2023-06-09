@@ -44,6 +44,33 @@ public class TypeDefsEndpoint extends AtlasEndpoint {
      * @throws AtlanException on any API communication issue
      */
     public static TypeDefResponse createTypeDef(TypeDef typeDef) throws AtlanException {
+        TypeDefResponse response = null;
+        if (typeDef != null) {
+            switch (typeDef.getCategory()) {
+                case ATLAN_TAG:
+                case CUSTOM_METADATA:
+                case ENUM:
+                    response = createInternal(typeDef);
+                    break;
+                default:
+                    throw new InvalidRequestException(
+                            ErrorCode.UNABLE_TO_CREATE_TYPEDEF_CATEGORY,
+                            typeDef.getCategory().getValue());
+            }
+        }
+        return response;
+    }
+
+    /**
+     * Create a new type definition in Atlan.
+     * NOTE: INTERNAL USE ONLY. This will NOT work without specially-configured policies - use createTypeDef instead.
+     *
+     * @param typeDef to create
+     * @return the resulting type definition that was created
+     * @throws AtlanException on any API communication issue
+     * @see #createTypeDef(TypeDef)
+     */
+    public static TypeDefResponse createInternal(TypeDef typeDef) throws AtlanException {
         TypeDefResponse.TypeDefResponseBuilder builder = TypeDefResponse.builder();
         if (typeDef != null) {
             switch (typeDef.getCategory()) {
@@ -56,17 +83,26 @@ public class TypeDefsEndpoint extends AtlasEndpoint {
                 case ENUM:
                     builder.enumDefs(List.of((EnumDef) typeDef));
                     break;
-                default:
-                    throw new InvalidRequestException(
-                            ErrorCode.UNABLE_TO_CREATE_TYPEDEF_CATEGORY,
-                            typeDef.getCategory().getValue());
+                case STRUCT:
+                    builder.structDefs(List.of((StructDef) typeDef));
+                    break;
+                case ENTITY:
+                    builder.entityDefs(List.of((EntityDef) typeDef));
+                    break;
+                case RELATIONSHIP:
+                    builder.relationshipDefs(List.of((RelationshipDef) typeDef));
+                    break;
             }
-            String url = String.format("%s%s", getBaseUrl(), endpoint);
-            return ApiResource.request(
-                    ApiResource.RequestMethod.POST, url, builder.build(), TypeDefResponse.class, null);
+            return createInternal(builder);
         }
         // If there was no typedef provided, just return an empty response (noop)
         return builder.build();
+    }
+
+    private static TypeDefResponse createInternal(TypeDefResponse.TypeDefResponseBuilder builder)
+            throws AtlanException {
+        String url = String.format("%s%s", getBaseUrl(), endpoint);
+        return ApiResource.request(ApiResource.RequestMethod.POST, url, builder.build(), TypeDefResponse.class, null);
     }
 
     /**
