@@ -49,7 +49,7 @@ public class EntityDef extends TypeDef {
      * @param attributes definitions for each attribute within the entity definition
      * @return a builder for an entity definition
      */
-    public EntityDefBuilder<?, ?> creator(String name, List<AttributeDef> attributes) {
+    public static EntityDefBuilder<?, ?> creator(String name, List<AttributeDef> attributes) {
         return creator(name, attributes, List.of(Asset.TYPE_NAME));
     }
 
@@ -62,7 +62,7 @@ public class EntityDef extends TypeDef {
      * @param superTypes names of the types that this entity definition should inherit from
      * @return a builder for an entity definition
      */
-    public EntityDefBuilder<?, ?> creator(String name, List<AttributeDef> attributes, List<String> superTypes) {
+    public static EntityDefBuilder<?, ?> creator(String name, List<AttributeDef> attributes, List<String> superTypes) {
         return EntityDef.builder()
                 .name(name)
                 .serviceType("custom_extension")
