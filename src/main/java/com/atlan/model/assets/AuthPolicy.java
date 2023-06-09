@@ -17,6 +17,7 @@ import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.AuthPolicyCondition;
 import com.atlan.model.structs.AuthPolicyValiditySchedule;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.SortedSet;
 import lombok.*;
@@ -189,11 +190,18 @@ public class AuthPolicy extends Asset {
 
     /**
      * Builds the minimal object necessary to create an AuthPolicy.
+     * Note: this method is only for internal use; for creating policies specific to a persona
+     * or purpose, use the helper methods from those classes.
      *
      * @param name of the AuthPolicy
      * @return the minimal request necessary to create the AuthPolicy, as a builder
+     * @see Persona#createMetadataPolicy(String, String, AuthPolicyType, Collection, Collection)
+     * @see Persona#createDataPolicy(String, String, AuthPolicyType, Collection)
+     * @see Persona#createGlossaryPolicy(String, String, AuthPolicyType, Collection, Collection)
+     * @see Purpose#createMetadataPolicy(String, String, AuthPolicyType, Collection, Collection, Collection, boolean)
+     * @see Purpose#createDataPolicy(String, String, AuthPolicyType, Collection, Collection, boolean)
      */
-    static AuthPolicyBuilder<?, ?> creator(String name) {
+    public static AuthPolicyBuilder<?, ?> creator(String name) {
         return AuthPolicy.builder().qualifiedName(name).name(name).displayName("");
     }
 

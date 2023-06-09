@@ -1,11 +1,18 @@
 <#macro all>
     /**
      * Builds the minimal object necessary to create an AuthPolicy.
+     * Note: this method is only for internal use; for creating policies specific to a persona
+     * or purpose, use the helper methods from those classes.
      *
      * @param name of the AuthPolicy
      * @return the minimal request necessary to create the AuthPolicy, as a builder
+     * @see Persona#createMetadataPolicy(String, String, AuthPolicyType, Collection, Collection)
+     * @see Persona#createDataPolicy(String, String, AuthPolicyType, Collection)
+     * @see Persona#createGlossaryPolicy(String, String, AuthPolicyType, Collection, Collection)
+     * @see Purpose#createMetadataPolicy(String, String, AuthPolicyType, Collection, Collection, Collection, boolean)
+     * @see Purpose#createDataPolicy(String, String, AuthPolicyType, Collection, Collection, boolean)
      */
-    static AuthPolicyBuilder<?, ?> creator(String name) {
+    public static AuthPolicyBuilder<?, ?> creator(String name) {
         return AuthPolicy.builder()
                 .qualifiedName(name)
                 .name(name)
