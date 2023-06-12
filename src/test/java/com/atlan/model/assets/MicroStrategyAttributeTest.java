@@ -358,8 +358,8 @@ public class MicroStrategyAttributeTest {
             .microStrategyIsCertified(true)
             .microStrategyCertifiedBy("String0")
             .microStrategyCertifiedAt(123456789L)
-            .putMicroStrategyLocation(Map.of("key1", "value1"))
-            .putMicroStrategyLocation(Map.of("key2", "value2"))
+            .addMicroStrategyLocation(Map.of("key1", "value1"))
+            .addMicroStrategyLocation(Map.of("key2", "value2"))
             .microStrategyAttributeForms("String0")
             .microStrategyReport(MicroStrategyReport.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .microStrategyReport(

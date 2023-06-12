@@ -16,9 +16,6 @@ public class AssetDocGenerator extends AssetTestGenerator {
     public static final String DIRECTORY =
             "src" + File.separator + "main" + File.separator + "resources" + File.separator + "markdown";
 
-    private static final String ASSET_GUID = "705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23";
-    private static final String ASSET_QN = "default/snowflake/1234567890/test/qualifiedName";
-
     private final LinkedHashSet<String> superTypes;
 
     public AssetDocGenerator(AssetGenerator asset) {

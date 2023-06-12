@@ -75,6 +75,6 @@ public abstract class MicroStrategy extends BI {
 
     /** Location of the asset within MicroStrategy. */
     @Attribute
-    @Singular("putMicroStrategyLocation")
+    @Singular("addMicroStrategyLocation")
     List<Map<String, String>> microStrategyLocation;
 }

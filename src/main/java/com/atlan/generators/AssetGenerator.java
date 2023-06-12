@@ -244,7 +244,7 @@ public class AssetGenerator extends TypeGenerator {
                 Map.entry("mcMonitorRuleScheduleConfig", "addMcMonitorRuleSchedule"),
                 Map.entry("policyValiditySchedule", "addPolicyValiditySchedule"),
                 Map.entry("authServiceConfig", "putAuthServiceConfig"),
-                Map.entry("microStrategyLocation", "putMicroStrategyLocation"));
+                Map.entry("microStrategyLocation", "addMicroStrategyLocation"));
 
         private static final Map<String, String> ATTRIBUTE_RENAMING = Map.ofEntries(
                 Map.entry("connectorName", "connectorType"),

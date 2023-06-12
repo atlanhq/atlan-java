@@ -5,21 +5,21 @@ package com.atlan.model.enums;
 import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 
-public enum IconType implements AtlanEnum {
+public enum TagIconType implements AtlanEnum {
     IMAGE("image"),
-    EMOJI("emoji"),
+    ICON("icon"),
     ;
 
     @JsonValue
     @Getter(onMethod_ = {@Override})
     private final String value;
 
-    IconType(String value) {
+    TagIconType(String value) {
         this.value = value;
     }
 
-    public static IconType fromValue(String value) {
-        for (IconType b : IconType.values()) {
+    public static TagIconType fromValue(String value) {
+        for (TagIconType b : TagIconType.values()) {
             if (b.value.equals(value)) {
                 return b;
             }
