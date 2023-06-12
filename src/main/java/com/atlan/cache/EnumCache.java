@@ -22,7 +22,7 @@ public class EnumCache {
 
     private static Map<String, EnumDef> cacheById = new ConcurrentHashMap<>();
 
-    private static synchronized void refreshCache() throws AtlanException {
+    public static synchronized void refreshCache() throws AtlanException {
         log.debug("Refreshing cache of enumerations...");
         TypeDefResponse response = TypeDefsEndpoint.getTypeDefs(AtlanTypeCategory.ENUM);
         List<EnumDef> enumerations;

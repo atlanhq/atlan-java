@@ -367,6 +367,11 @@ public enum ErrorCode implements ExceptionMessageSet {
             "ATLAN-JAVA-409-000",
             "Server responded with {0}: {1}",
             "Check the details of the server's message to correct your request."),
+    RESERVED_SERVICE_TYPE(
+            409,
+            "ATLAN-JAVA-409-001",
+            "Provided service type is reserved for internal Atlan use only: {0}",
+            "You cannot create, update or remove any type definitions using this service type, it is reserved for Atlan use only."),
 
     RATE_LIMIT_PASSTHROUGH(
             429,

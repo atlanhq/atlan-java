@@ -3,6 +3,7 @@
 package com.atlan.model.typedefs;
 
 import com.atlan.api.TypeDefsEndpoint;
+import com.atlan.cache.EnumCache;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.core.AtlanObject;
 import com.atlan.model.enums.AtlanTypeCategory;
@@ -83,6 +84,7 @@ public class EnumDef extends TypeDef {
      */
     public static void purge(String displayName) throws AtlanException {
         TypeDefsEndpoint.purgeTypeDef(displayName);
+        EnumCache.refreshCache();
     }
 
     /**
