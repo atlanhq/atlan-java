@@ -33,7 +33,7 @@ public class AttributeCSVGenerator {
         Atlan.setApiToken(System.getenv("ATLAN_API_KEY"));
     }
 
-    private static final String DOCS_DIRECTORY = "src" + File.separator + "generate" + File.separator + "resources";
+    private static final String DOCS_DIRECTORY = "src" + File.separator + "main" + File.separator + "resources";
 
     private static final Map<String, EntityDef> entityDefCache = new HashMap<>();
     private static final Map<String, StructDef> structDefCache = new HashMap<>();

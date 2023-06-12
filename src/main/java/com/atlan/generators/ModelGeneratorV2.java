@@ -25,7 +25,7 @@ public class ModelGeneratorV2 {
     }
 
     private static final String TEMPLATES_DIRECTORY =
-            "src" + File.separator + "generate" + File.separator + "resources" + File.separator + "templates";
+            "src" + File.separator + "main" + File.separator + "resources" + File.separator + "templates";
 
     private static final Map<String, EnumGenerator> enumCache = new HashMap<>();
     private static final Map<String, StructGenerator> structCache = new HashMap<>();
