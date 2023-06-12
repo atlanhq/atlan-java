@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9};
+var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -200,20 +200,34 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
 </td>
 </tr>
 <tr id="i2" class="altColor">
+<td class="colFirst"><code>static <a href="../model/typedefs/TypeDef.html" title="class in com.atlan.model.typedefs">TypeDef</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTypeDefByName(java.lang.String)">getTypeDefByName</a></span>&#8203;(java.lang.String&nbsp;internalName)</code></th>
+<td class="colLast">
+<div class="block">Retrieves a specific type definition from Atlan.</div>
+</td>
+</tr>
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>static <a href="../model/typedefs/TypeDefResponse.html" title="class in com.atlan.model.typedefs">TypeDefResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTypeDefs(com.atlan.model.enums.AtlanTypeCategory)">getTypeDefs</a></span>&#8203;(<a href="../model/enums/AtlanTypeCategory.html" title="enum in com.atlan.model.enums">AtlanTypeCategory</a>&nbsp;category)</code></th>
 <td class="colLast">
 <div class="block">Retrieves a list of the type definitions in Atlan.</div>
 </td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>static void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#purgeTypeDef(java.lang.String)">purgeTypeDef</a></span>&#8203;(java.lang.String&nbsp;internalName)</code></th>
 <td class="colLast">
 <div class="block">Delete the type definition.</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i5" class="rowColor">
+<td class="colFirst"><code>static <a href="../model/typedefs/TypeDefResponse.html" title="class in com.atlan.model.typedefs">TypeDefResponse</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateInternal(com.atlan.model.typedefs.TypeDef)">updateInternal</a></span>&#8203;(<a href="../model/typedefs/TypeDef.html" title="class in com.atlan.model.typedefs">TypeDef</a>&nbsp;typeDef)</code></th>
+<td class="colLast">
+<div class="block">Update an existing type definition in Atlan.</div>
+</td>
+</tr>
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>static <a href="../model/typedefs/TypeDefResponse.html" title="class in com.atlan.model.typedefs">TypeDefResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateTypeDef(com.atlan.model.typedefs.TypeDef)">updateTypeDef</a></span>&#8203;(<a href="../model/typedefs/TypeDef.html" title="class in com.atlan.model.typedefs">TypeDef</a>&nbsp;typeDef)</code></th>
 <td class="colLast">
@@ -296,6 +310,25 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
 </dl>
 </li>
 </ul>
+<a id="getTypeDefByName(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getTypeDefByName</h4>
+<pre class="methodSignature">public static&nbsp;<a href="../model/typedefs/TypeDef.html" title="class in com.atlan.model.typedefs">TypeDef</a>&nbsp;getTypeDefByName&#8203;(java.lang.String&nbsp;internalName)
+                                throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Retrieves a specific type definition from Atlan.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>internalName</code> - the internal (hashed-string, if used) name of the type definition</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>details of that specific type definition</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication issue</dd>
+</dl>
+</li>
+</ul>
 <a id="createTypeDef(com.atlan.model.typedefs.TypeDef)">
 <!--   -->
 </a>
@@ -346,6 +379,26 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
 <h4>updateTypeDef</h4>
 <pre class="methodSignature">public static&nbsp;<a href="../model/typedefs/TypeDefResponse.html" title="class in com.atlan.model.typedefs">TypeDefResponse</a>&nbsp;updateTypeDef&#8203;(<a href="../model/typedefs/TypeDef.html" title="class in com.atlan.model.typedefs">TypeDef</a>&nbsp;typeDef)
                                      throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Update an existing type definition in Atlan.
+ Note: only custom metadata and Atlan tag type definitions are currently supported.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>typeDef</code> - to update</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>the resulting type definition that was updated</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication issue</dd>
+</dl>
+</li>
+</ul>
+<a id="updateInternal(com.atlan.model.typedefs.TypeDef)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>updateInternal</h4>
+<pre class="methodSignature">public static&nbsp;<a href="../model/typedefs/TypeDefResponse.html" title="class in com.atlan.model.typedefs">TypeDefResponse</a>&nbsp;updateInternal&#8203;(<a href="../model/typedefs/TypeDef.html" title="class in com.atlan.model.typedefs">TypeDef</a>&nbsp;typeDef)
+                                      throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
 <div class="block">Update an existing type definition in Atlan.
  Note: only custom metadata and Atlan tag type definitions are currently supported.</div>
 <dl>
