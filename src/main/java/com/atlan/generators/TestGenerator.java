@@ -25,18 +25,20 @@ public class TestGenerator extends AbstractGenerator {
         for (EntityDef entityDef : cache.getEntityDefCache().values()) {
             if (cfg.includeTypedef(entityDef)) {
                 AssetGenerator assetGen = cache.getAssetGenerator(entityDef.getName());
-                AssetTestGenerator generator = new AssetTestGenerator(assetGen, cfg);
-                createDirectoryIdempotent(AssetTestGenerator.DIRECTORY);
-                String filename =
-                        AssetTestGenerator.DIRECTORY + File.separator + generator.getClassName() + "Test.java";
-                try (BufferedWriter fs = new BufferedWriter(
-                        new OutputStreamWriter(new FileOutputStream(filename), StandardCharsets.UTF_8))) {
-                    // Now that all are cached, render the inner details of the generator
-                    // before processing the template
-                    generator.resolveDetails();
-                    testTemplate.process(generator, fs);
-                } catch (IOException e) {
-                    log.error("Unable to open file output: {}", filename, e);
+                if (!assetGen.isAbstract()) {
+                    AssetTestGenerator generator = new AssetTestGenerator(assetGen, cfg);
+                    createDirectoryIdempotent(AssetTestGenerator.DIRECTORY);
+                    String filename =
+                            AssetTestGenerator.DIRECTORY + File.separator + generator.getClassName() + "Test.java";
+                    try (BufferedWriter fs = new BufferedWriter(
+                            new OutputStreamWriter(new FileOutputStream(filename), StandardCharsets.UTF_8))) {
+                        // Now that all are cached, render the inner details of the generator
+                        // before processing the template
+                        generator.resolveDetails();
+                        testTemplate.process(generator, fs);
+                    } catch (IOException e) {
+                        log.error("Unable to open file output: {}", filename, e);
+                    }
                 }
             }
         }
