@@ -4,11 +4,14 @@ package ${packageRoot}.assets;
 
 import static org.testng.Assert.*;
 
+import com.atlan.model.assets.Meaning;
 import com.atlan.model.core.AtlanTag;
 import com.atlan.model.core.CustomMetadataAttributes;
 import com.atlan.model.enums.*;
 import com.atlan.model.structs.*;
 import com.atlan.serde.Serde;
+import ${packageRoot}.enums.*;
+import ${packageRoot}.structs.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.*;
 import org.testng.annotations.Test;

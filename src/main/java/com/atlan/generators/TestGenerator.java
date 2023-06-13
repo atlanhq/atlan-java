@@ -27,9 +27,9 @@ public class TestGenerator extends AbstractGenerator {
                 AssetGenerator assetGen = cache.getAssetGenerator(entityDef.getName());
                 if (!assetGen.isAbstract()) {
                     AssetTestGenerator generator = new AssetTestGenerator(assetGen, cfg);
-                    createDirectoryIdempotent(AssetTestGenerator.DIRECTORY);
-                    String filename =
-                            AssetTestGenerator.DIRECTORY + File.separator + generator.getClassName() + "Test.java";
+                    createDirectoryIdempotent(cfg.getTestPath() + File.separator + AssetTestGenerator.DIRECTORY);
+                    String filename = cfg.getTestPath() + File.separator + AssetTestGenerator.DIRECTORY + File.separator
+                            + generator.getClassName() + "Test.java";
                     try (BufferedWriter fs = new BufferedWriter(
                             new OutputStreamWriter(new FileOutputStream(filename), StandardCharsets.UTF_8))) {
                         // Now that all are cached, render the inner details of the generator

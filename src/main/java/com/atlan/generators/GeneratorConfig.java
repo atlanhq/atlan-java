@@ -36,6 +36,9 @@ public class GeneratorConfig {
     private String packagePath;
 
     @Getter
+    private String testPath;
+
+    @Getter
     private String generatorName;
 
     @Getter
@@ -118,7 +121,8 @@ public class GeneratorConfig {
                 .generatorName(generatorClass.getCanonicalName())
                 .packageRoot(packageRoot)
                 .freemarkerConfig(createConfig(directoryForTemplateLoading))
-                .packagePath(createPackagePath(packageRoot));
+                .packagePath(createPackagePath(packageRoot))
+                .testPath(createTestPath(packageRoot));
     }
 
     /**
@@ -132,7 +136,8 @@ public class GeneratorConfig {
                 .generatorName(generatorClass.getCanonicalName())
                 .packageRoot(packageRoot)
                 .freemarkerConfig(createConfig())
-                .packagePath(createPackagePath(packageRoot));
+                .packagePath(createPackagePath(packageRoot))
+                .testPath(createTestPath(packageRoot));
     }
 
     /**
@@ -403,9 +408,14 @@ public class GeneratorConfig {
     }
 
     private static String createPackagePath(String packageRoot) {
-        return "src" + File.separator
-                + "main" + File.separator
-                + "java" + File.separator
-                + packageRoot.replaceAll("\\.", File.separator);
+        return createPath("src" + File.separator + "main" + File.separator + "java" + File.separator, packageRoot);
+    }
+
+    private static String createTestPath(String packageRoot) {
+        return createPath("src" + File.separator + "test" + File.separator + "java" + File.separator, packageRoot);
+    }
+
+    private static String createPath(String prefix, String packageRoot) {
+        return prefix + File.separator + packageRoot.replaceAll("\\.", File.separator);
     }
 }
