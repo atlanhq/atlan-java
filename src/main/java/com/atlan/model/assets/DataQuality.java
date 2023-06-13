@@ -9,7 +9,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * TBC
+ * Data Quality Assets
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter

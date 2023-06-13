@@ -17,7 +17,7 @@ import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * TBC
+ * Atlan Qlik Stream Asset. This is analogus to Space.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
