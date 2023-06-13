@@ -24,6 +24,9 @@ public class ModelCache {
     @Getter
     private final Map<String, EntityDef> entityDefCache;
 
+    @Getter
+    private final Map<String, RelationshipDef> relationshipDefCache;
+
     private final Map<String, EnumGenerator> enumCache = new HashMap<>();
     private final Map<String, StructGenerator> structCache = new HashMap<>();
     private final Map<String, AssetGenerator> assetCache = new HashMap<>();
@@ -51,6 +54,11 @@ public class ModelCache {
         for (EntityDef entityDef :
                 TypeDefsEndpoint.getTypeDefs(AtlanTypeCategory.ENTITY).getEntityDefs()) {
             entityDefCache.put(entityDef.getName(), entityDef);
+        }
+        relationshipDefCache = new ConcurrentHashMap<>();
+        for (RelationshipDef relationshipDef :
+                TypeDefsEndpoint.getTypeDefs(AtlanTypeCategory.RELATIONSHIP).getRelationshipDefs()) {
+            relationshipDefCache.put(relationshipDef.getName(), relationshipDef);
         }
     }
 
@@ -160,9 +168,16 @@ public class ModelCache {
             }
             if (fromTypeDef == null && def instanceof EntityDef) {
                 for (RelationshipAttributeDef attr : ((EntityDef) def).getRelationshipAttributeDefs()) {
-                    if (attrName.equals(attr.getName())) {
-                        fromTypeDef = attr.getDescription();
-                        break;
+                    String relnDefName = attr.getRelationshipTypeName();
+                    RelationshipDef relnDef = relationshipDefCache.get(relnDefName);
+                    if (relnDef != null) {
+                        if (attrName.equals(relnDef.getEndDef1().getName())) {
+                            fromTypeDef = relnDef.getEndDef1().getDescription();
+                            break;
+                        } else if (attrName.equals(relnDef.getEndDef2().getName())) {
+                            fromTypeDef = relnDef.getEndDef2().getDescription();
+                            break;
+                        }
                     }
                 }
             }
