@@ -2,6 +2,7 @@
 /* Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.generators;
 
+import com.atlan.api.TypeDefsEndpoint;
 import com.atlan.model.typedefs.AttributeDef;
 import com.atlan.model.typedefs.EntityDef;
 import com.atlan.model.typedefs.RelationshipAttributeDef;
@@ -27,6 +28,7 @@ public class AssetGenerator extends TypeGenerator {
     private List<String> originalSubTypes = null;
     private List<String> subTypes = null;
     private List<String> mapContainers = null;
+    private boolean hasBuiltInParent = false;
 
     public AssetGenerator(EntityDef entityDef, GeneratorConfig cfg) {
         super(entityDef, cfg);
@@ -64,6 +66,10 @@ public class AssetGenerator extends TypeGenerator {
 
     public void resolveParentClassName() {
         String parentOriginalName = cfg.getSingleTypeToExtend(originalName, entityDef.getSuperTypes());
+        EntityDef parent = cache.getEntityDefCache().get(parentOriginalName);
+        this.hasBuiltInParent = (parent != null
+                && parent.getServiceType() != null
+                && TypeDefsEndpoint.RESERVED_SERVICE_TYPES.contains(parent.getServiceType()));
         this.parentClassName = cfg.resolveClassName(parentOriginalName);
     }
 

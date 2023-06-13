@@ -89,6 +89,13 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
+import com.atlan.model.assets.Attribute;
+import com.atlan.model.assets.Asset;
+import com.atlan.model.assets.GlossaryTerm;
+<#if hasBuiltInParent>
+import com.atlan.model.assets.${parentClassName};
+</#if>
+
 import javax.annotation.processing.Generated;
 
 /**
