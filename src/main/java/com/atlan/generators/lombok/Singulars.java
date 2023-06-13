@@ -22,7 +22,7 @@ public class Singulars {
     private static final List<String> SINGULAR_STORE; // intended to be immutable.
 
     private static final String SINGULARS_FILE =
-            "src" + File.separator + "generate" + File.separator + "resources" + File.separator + "singulars.txt";
+            "src" + File.separator + "main" + File.separator + "resources" + File.separator + "singulars.txt";
 
     static {
         SINGULAR_STORE = new ArrayList<>();

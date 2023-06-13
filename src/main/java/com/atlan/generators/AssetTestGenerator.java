@@ -35,8 +35,8 @@ public class AssetTestGenerator extends AssetGenerator {
     protected final AssetGenerator asset;
     protected final List<TestAttribute> testAttributes;
 
-    public AssetTestGenerator(AssetGenerator asset) {
-        super(asset.getEntityDef());
+    public AssetTestGenerator(AssetGenerator asset, GeneratorConfig cfg) {
+        super(asset.getEntityDef(), cfg);
         this.asset = asset;
         this.testAttributes = new ArrayList<>();
     }
@@ -63,10 +63,10 @@ public class AssetTestGenerator extends AssetGenerator {
         EntityDef typeDetails = assetGenerator.getEntityDef();
         List<String> superTypes = typeDetails.getSuperTypes();
         if (superTypes != null && !superTypes.isEmpty()) {
-            String singleSuperType = getSingleTypeToExtend(assetGenerator.getOriginalName(), superTypes);
+            String singleSuperType = cfg.getSingleTypeToExtend(assetGenerator.getOriginalName(), superTypes);
             if (singleSuperType != null && !singleSuperType.equals("Reference")) {
                 // We can short-circuit when the next level up is Reference (the top)
-                addTestAttributes(ModelGeneratorV2.getCachedAssetType(singleSuperType), true);
+                addTestAttributes(cache.getCachedAssetType(singleSuperType), true);
             }
         }
         List<Attribute> attributes = assetGenerator.getAttributes();
@@ -89,7 +89,7 @@ public class AssetTestGenerator extends AssetGenerator {
                 }
                 builder.builderMethod(builderMethod)
                         .inherited(fromSuperType)
-                        .searchFields(ModelGeneratorV2.getCachedSearchFields(
+                        .searchFields(cache.getCachedSearchFields(
                                 assetGenerator.getOriginalName(), attribute.getOriginalName()));
                 switch (type.getType()) {
                     case PRIMITIVE:
@@ -340,7 +340,7 @@ public class AssetTestGenerator extends AssetGenerator {
         // TODO: Note that the lookup below is on the renamed class (will only get a hit if
         //  the class is NOT renamed but reuses the out-of-the-box name). Today this works
         //  for all classes, but may not always be the case in the future.
-        AssetGenerator assetGen = ModelGeneratorV2.getCachedAssetType(typeName);
+        AssetGenerator assetGen = cache.getCachedAssetType(typeName);
         if (assetGen != null) {
             if (!assetGen.isAbstract()) {
                 // If we arrive at a concrete class, return it
@@ -350,7 +350,7 @@ public class AssetTestGenerator extends AssetGenerator {
                 if (subTypes != null && !subTypes.isEmpty()) {
                     for (String subType : subTypes) {
                         String candidate = traverseToConcreteType(subType);
-                        AssetGenerator candidateGen = ModelGeneratorV2.getCachedAssetType(candidate);
+                        AssetGenerator candidateGen = cache.getCachedAssetType(candidate);
                         if (candidateGen != null && !candidateGen.isAbstract()) {
                             // If we hit a leaf, short-circuit out, otherwise continue on with
                             // the recursive loop

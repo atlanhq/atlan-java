@@ -31,7 +31,7 @@ public class AttributeGenerator extends TypeGenerator {
     }
 
     protected void resolveName() {
-        this.renamed = getLowerCamelCase(originalName);
+        this.renamed = GeneratorConfig.getLowerCamelCase(getOriginalName());
     }
 
     protected void resolveType(AttributeDef attributeDef) {

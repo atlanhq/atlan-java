@@ -33,7 +33,7 @@ import lombok.Getter;
  */
 public class TypeDefsEndpoint extends AtlasEndpoint {
 
-    private static final Set<String> RESERVED_SERVICE_TYPES =
+    public static final Set<String> RESERVED_SERVICE_TYPES =
             Set.of("atlas_core", "atlan", "aws", "azure", "gcp", "google");
     private static final String endpoint = "/types/typedefs";
     private static final String endpoint_singular = "/types/typedef";

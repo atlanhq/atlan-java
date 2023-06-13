@@ -23,44 +23,22 @@ public abstract class TypeGenerator {
     protected String originalName;
     protected String className;
     protected String description;
+    protected GeneratorConfig cfg;
+    protected ModelCache cache;
 
     protected TypeGenerator() {
         // Do nothing...
     }
 
-    protected TypeGenerator(TypeDef typeDef) {
+    protected TypeGenerator(TypeDef typeDef, GeneratorConfig cfg) {
         this.originalName = typeDef.getDisplayName() == null ? typeDef.getName() : typeDef.getDisplayName();
+        this.cfg = cfg;
+        this.cache = ModelCache.getInstance(cfg);
     }
 
     protected abstract void resolveClassName();
 
-    protected static String getUpperCamelCase(String text) {
-        String[] words = text.split("[\\W_]+");
-        StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < words.length; i++) {
-            String word = words[i];
-            word = word.isEmpty() ? word : Character.toUpperCase(word.charAt(0)) + word.substring(1);
-            builder.append(word);
-        }
-        return builder.toString();
-    }
-
-    protected static String getLowerCamelCase(String text) {
-        String[] words = text.split("[\\W_]+");
-        StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < words.length; i++) {
-            String word = words[i];
-            if (i == 0) {
-                word = word.isEmpty() ? word : Character.toLowerCase(word.charAt(0)) + word.substring(1);
-            } else {
-                word = word.isEmpty() ? word : Character.toUpperCase(word.charAt(0)) + word.substring(1);
-            }
-            builder.append(word);
-        }
-        return builder.toString();
-    }
-
-    protected static MappedType getMappedType(String type) {
+    protected MappedType getMappedType(String type) {
         // First look for contained types...
         String baseType = type;
         String container = null;
@@ -85,7 +63,7 @@ public abstract class TypeGenerator {
             builder.type(MappedType.Type.PRIMITIVE).name(primitiveName);
         } else {
             // Failing that, attempt to map to a cached type (enum, struct, etc)
-            MappedType mappedType = ModelGeneratorV2.getCachedType(baseType);
+            MappedType mappedType = cache.getCachedType(baseType);
             if (mappedType == null) {
                 // Failing that, fall-back to just the name of the object
                 builder.type(MappedType.Type.ASSET).name(baseType);

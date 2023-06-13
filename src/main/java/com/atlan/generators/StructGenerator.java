@@ -4,10 +4,8 @@ package com.atlan.generators;
 
 import com.atlan.model.typedefs.AttributeDef;
 import com.atlan.model.typedefs.StructDef;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -15,22 +13,13 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class StructGenerator extends TypeGenerator {
 
-    public static final String DIRECTORY = ""
-            + "src" + File.separator
-            + "main" + File.separator
-            + "java" + File.separator
-            + "com" + File.separator
-            + "atlan" + File.separator
-            + "model" + File.separator
-            + "structs";
-
-    private static final Map<String, String> CLASS_RENAMING = Map.ofEntries();
+    public static final String DIRECTORY = "structs";
 
     private final StructDef structDef;
     private List<Attribute> attributes;
 
-    public StructGenerator(StructDef structDef) {
-        super(structDef);
+    public StructGenerator(StructDef structDef, GeneratorConfig cfg) {
+        super(structDef, cfg);
         this.structDef = structDef;
         resolveClassName();
         super.description = AttributeCSVCache.getTypeDescription(originalName);
@@ -39,9 +28,7 @@ public class StructGenerator extends TypeGenerator {
 
     @Override
     protected void resolveClassName() {
-        super.className = CLASS_RENAMING.containsKey(originalName)
-                ? CLASS_RENAMING.get(originalName)
-                : getUpperCamelCase(originalName);
+        super.className = cfg.resolveClassName(getOriginalName());
     }
 
     private void resolveAttributes() {
