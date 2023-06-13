@@ -160,10 +160,7 @@ public class DocGenerator extends AbstractGenerator {
 
     private String addAttributesToCSV(CSVPrinter printer, TypeDef typeDef) throws IOException {
         String typeName = typeDef.getName();
-        String description = AttributeCSVCache.getTypeDescription(typeName);
-        if (description.equals(AttributeCSVCache.DEFAULT_CLASS_DESCRIPTION)) {
-            description = typeDef.getDescription();
-        }
+        String description = cache.getTypeDescription(typeName);
         // Add all the plain attributes first
         for (AttributeDef attribute : typeDef.getAttributeDefs()) {
             String attrName = attribute.getName();
@@ -176,9 +173,6 @@ public class DocGenerator extends AbstractGenerator {
     }
 
     private String getMergedDescription(String typeName, AttributeDef attribute) {
-        String attrDescription = AttributeCSVCache.getAttributeDescription(typeName, attribute.getName());
-        return attrDescription.equals(AttributeCSVCache.DEFAULT_ATTR_DESCRIPTION)
-                ? attribute.getDescription()
-                : attrDescription;
+        return cache.getAttributeDescription(typeName, attribute.getName());
     }
 }

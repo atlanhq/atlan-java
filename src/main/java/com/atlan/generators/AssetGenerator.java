@@ -34,7 +34,7 @@ public class AssetGenerator extends TypeGenerator {
         super(entityDef, cfg);
         this.entityDef = entityDef;
         resolveClassName();
-        super.description = AttributeCSVCache.getTypeDescription(originalName);
+        super.description = cache.getTypeDescription(originalName);
     }
 
     @Override

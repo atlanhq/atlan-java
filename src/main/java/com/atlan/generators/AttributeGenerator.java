@@ -23,7 +23,7 @@ public class AttributeGenerator extends TypeGenerator {
         super.className = className;
         this.originalName =
                 attributeDef.getDisplayName() == null ? attributeDef.getName() : attributeDef.getDisplayName();
-        this.description = AttributeCSVCache.getAttributeDescription(className, originalName);
+        this.description = cache.getAttributeDescription(className, originalName);
         resolveName();
         resolveType(attributeDef);
     }

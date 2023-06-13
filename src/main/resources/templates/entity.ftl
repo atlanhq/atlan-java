@@ -41,9 +41,9 @@ import com.atlan.model.enums.KeywordFields;
 import com.atlan.model.relations.UniqueAttributes;
 <#list attributes as attribute>
 <#if attribute.type.type == "ENUM">
-import com.atlan.model.enums.${attribute.type.name};
+import ${packageRoot}.enums.${attribute.type.name};
 <#elseif attribute.type.type == "STRUCT">
-import com.atlan.model.structs.${attribute.type.name};
+import ${packageRoot}.structs.${attribute.type.name};
 </#if>
 </#list>
 import com.atlan.model.search.IndexSearchDSL;
