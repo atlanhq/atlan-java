@@ -5,7 +5,6 @@ package com.atlan.generators;
 import com.atlan.generators.lombok.Singulars;
 import com.atlan.model.enums.AtlanEnum;
 import com.atlan.model.typedefs.EntityDef;
-import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -21,13 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class AssetTestGenerator extends AssetGenerator {
 
-    public static final String DIRECTORY = "src" + File.separator
-            + "test" + File.separator
-            + "java" + File.separator
-            + "com" + File.separator
-            + "atlan" + File.separator
-            + "model" + File.separator
-            + "assets";
+    public static final String DIRECTORY = "assets";
 
     private static final String ASSET_GUID = "705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23";
     private static final String ASSET_QN = "default/snowflake/1234567890/test/qualifiedName";
