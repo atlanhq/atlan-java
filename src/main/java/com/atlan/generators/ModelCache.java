@@ -125,6 +125,64 @@ public class ModelCache {
         return uniqueRelationshipsForType.get(originalName);
     }
 
+    public String getTypeDescription(String originalName) {
+        String fromTypeDef = null;
+        String fromCSV = AttributeCSVCache.getTypeDescription(originalName);
+        TypeDef def = enumDefCache.getOrDefault(originalName, null);
+        if (def == null) {
+            def = structDefCache.getOrDefault(originalName, null);
+        }
+        if (def == null) {
+            def = entityDefCache.getOrDefault(originalName, null);
+        }
+        if (def != null) {
+            fromTypeDef = def.getDescription();
+        }
+        return getPreferredDescription(fromTypeDef, fromCSV, AttributeCSVCache.DEFAULT_CLASS_DESCRIPTION);
+    }
+
+    public String getAttributeDescription(String objectName, String attrName) {
+        String fromTypeDef = null;
+        String fromCSV = AttributeCSVCache.getAttributeDescription(objectName, attrName);
+        TypeDef def = enumDefCache.getOrDefault(objectName, null);
+        if (def == null) {
+            def = structDefCache.getOrDefault(objectName, null);
+        }
+        if (def == null) {
+            def = entityDefCache.getOrDefault(objectName, null);
+        }
+        if (def != null) {
+            for (AttributeDef attr : def.getAttributeDefs()) {
+                if (attrName.equals(attr.getName())) {
+                    fromTypeDef = attr.getDescription();
+                    break;
+                }
+            }
+            if (fromTypeDef == null && def instanceof EntityDef) {
+                for (RelationshipAttributeDef attr : ((EntityDef) def).getRelationshipAttributeDefs()) {
+                    if (attrName.equals(attr.getName())) {
+                        fromTypeDef = attr.getDescription();
+                        break;
+                    }
+                }
+            }
+        }
+        return getPreferredDescription(fromTypeDef, fromCSV, AttributeCSVCache.DEFAULT_ATTR_DESCRIPTION);
+    }
+
+    private String getPreferredDescription(String fromTypeDef, String fromCSV, String fallback) {
+        final String typeDefIfExists = (fromTypeDef != null && fromTypeDef.length() > 0) ? fromTypeDef : fromCSV;
+        if (config.getPreferTypeDefDescriptions()) {
+            return typeDefIfExists;
+        } else {
+            if (!fromCSV.equals(fallback)) {
+                return fromCSV;
+            } else {
+                return typeDefIfExists;
+            }
+        }
+    }
+
     private void cacheRelationshipsForInheritance(Collection<EntityDef> toCache) {
         // Populate 'relationshipsForType' map so that we don't repeat inherited attributes in subtypes
         // (this seems to only be a risk for relationship attributes)

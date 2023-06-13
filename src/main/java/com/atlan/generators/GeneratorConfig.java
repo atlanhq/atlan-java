@@ -38,6 +38,10 @@ public class GeneratorConfig {
     @Getter
     private String generatorName;
 
+    @Getter
+    @Builder.Default
+    private boolean preferTypeDefDescriptions = true;
+
     /**
      * Type definition serviceTypes for which to generate model POJOs.
      */
@@ -140,6 +144,7 @@ public class GeneratorConfig {
     public static GeneratorConfigBuilder getDefault(Class<?> generatorClass) {
         return GeneratorConfig.creator(generatorClass, "com.atlan.model")
                 .serviceTypes(TypeDefsEndpoint.RESERVED_SERVICE_TYPES)
+                .preferTypeDefDescriptions(false)
                 .renameClass("google_datastudio_asset_type", "GoogleDataStudioAssetType")
                 .renameClass("powerbi_endorsement", "PowerBIEndorsementType")
                 .renameClass("Referenceable", "Asset")

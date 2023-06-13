@@ -21,7 +21,7 @@ public class EnumGenerator extends TypeGenerator {
         super(enumDef, cfg);
         this.enumDef = enumDef;
         resolveClassName();
-        super.description = AttributeCSVCache.getTypeDescription(className);
+        super.description = cache.getTypeDescription(className);
         resolveValues();
     }
 

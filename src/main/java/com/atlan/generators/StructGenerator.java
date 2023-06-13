@@ -22,7 +22,7 @@ public class StructGenerator extends TypeGenerator {
         super(structDef, cfg);
         this.structDef = structDef;
         resolveClassName();
-        super.description = AttributeCSVCache.getTypeDescription(originalName);
+        super.description = cache.getTypeDescription(originalName);
         resolveAttributes();
     }
 

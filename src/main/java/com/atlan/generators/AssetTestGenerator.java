@@ -285,7 +285,7 @@ public class AssetTestGenerator extends AssetGenerator {
         Enum<?>[] values = null;
         try {
             // Introspect the enum to draw out actual values
-            Class<?> clazz = Class.forName("com.atlan.model.enums." + typeName);
+            Class<?> clazz = Class.forName(getPackageRoot() + ".enums." + typeName);
             Field f = clazz.getDeclaredField("$VALUES");
             f.setAccessible(true);
             Object o = f.get(null);
@@ -502,7 +502,7 @@ public class AssetTestGenerator extends AssetGenerator {
     private Field[] getFieldsForStruct(String typeName) {
         try {
             // Introspect the members of the struct to add all attributes to the builder
-            Class<?> clazz = Class.forName("com.atlan.model.structs." + typeName);
+            Class<?> clazz = Class.forName(getPackageRoot() + ".structs." + typeName);
             return clazz.getDeclaredFields();
         } catch (ClassNotFoundException e) {
             log.error("Unable to reflectively introspect struct: {}", typeName, e);

@@ -222,7 +222,7 @@ public class SearchFieldGenerator extends TypeGenerator {
             super(className, attributeDef, cfg);
             this.toFilter = toFilter;
             resolveSearchDetails(attributeDef);
-            this.description = AttributeCSVCache.getAttributeDescription(entityName, getOriginalName());
+            this.description = cache.getAttributeDescription(entityName, getOriginalName());
         }
 
         private void resolveSearchDetails(AttributeDef attributeDef) {
