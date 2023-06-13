@@ -32,83 +32,107 @@ public class SearchFieldGenerator extends TypeGenerator {
         }
     }
 
-    private static final List<Field> COMMON_KEYWORDS = List.of(
-            new Field("GUID", "__guid", "Globally unique identifier (GUID) of any object in Atlan.", IndexType.KEYWORD),
-            new Field("CREATED_BY", "__createdBy", "Atlan user who created this asset.", IndexType.KEYWORD),
-            new Field("MODIFIED_BY", "__modifiedBy", "Atlan user who last updated the asset.", IndexType.KEYWORD),
-            new Field("STATE", "__state", "Asset status in Atlan (active vs deleted).", IndexType.KEYWORD),
-            new Field(
+    private final IndexType toGenerate;
+    private SortedSet<Field> fields;
+
+    private static final List<FieldDetails> COMMON_KEYWORDS = List.of(
+            new FieldDetails(
+                    "GUID",
+                    "__guid",
+                    "Globally unique identifier (GUID) of any object in Atlan.",
+                    SearchFieldGenerator.IndexType.KEYWORD),
+            new FieldDetails(
+                    "CREATED_BY",
+                    "__createdBy",
+                    "Atlan user who created this asset.",
+                    SearchFieldGenerator.IndexType.KEYWORD),
+            new FieldDetails(
+                    "MODIFIED_BY",
+                    "__modifiedBy",
+                    "Atlan user who last updated the asset.",
+                    SearchFieldGenerator.IndexType.KEYWORD),
+            new FieldDetails(
+                    "STATE",
+                    "__state",
+                    "Asset status in Atlan (active vs deleted).",
+                    SearchFieldGenerator.IndexType.KEYWORD),
+            new FieldDetails(
                     "TRAIT_NAMES",
                     "__traitNames",
                     "All directly-assigned Atlan tags that exist on an asset, searchable by the internal hashed-string ID of the Atlan tag.",
                     IndexType.KEYWORD),
-            new Field(
+            new FieldDetails(
                     "PROPAGATED_TRAIT_NAMES",
                     "__propagatedTraitNames",
                     "All propagated Atlan tags that exist on an asset, searchable by the internal hashed-string ID of the Atlan tag.",
                     IndexType.KEYWORD),
-            new Field(
+            new FieldDetails(
                     "ASSIGNED_TERMS",
                     "__meanings",
                     "All terms attached to an asset, searchable by the term's qualifiedName.",
                     IndexType.KEYWORD),
-            new Field(
+            new FieldDetails(
                     "TYPE_NAME",
                     "__typeName.keyword",
                     "Type of the asset. For example Table, Column, and so on.",
                     IndexType.KEYWORD),
-            new Field(
-                    "SUPER_TYPE_NAMES", "__superTypeNames.keyword", "All super types of an asset.", IndexType.KEYWORD),
-            new Field(
+            new FieldDetails(
+                    "SUPER_TYPE_NAMES",
+                    "__superTypeNames.keyword",
+                    "All super types of an asset.",
+                    SearchFieldGenerator.IndexType.KEYWORD),
+            new FieldDetails(
                     "QUALIFIED_NAME",
                     "qualifiedName",
                     "Unique fully-qualified name of the asset in Atlan.",
                     IndexType.KEYWORD),
-            new Field(
+            new FieldDetails(
                     "GLOSSARY",
                     "__glossary",
                     "Glossary in which the asset is contained, searchable by the qualifiedName of the glossary.",
                     IndexType.KEYWORD));
 
-    private static final List<Field> COMMON_TEXT = List.of(
-            new Field(
+    private static final List<FieldDetails> COMMON_TEXT = List.of(
+            new FieldDetails(
                     "ATLAN_TAGS_TEXT",
                     "__classificationsText",
                     "All Atlan tags that exist on an asset, whether directly assigned or propagated, searchable by the internal hashed-string ID of the Atlan tag.",
                     IndexType.TEXT),
-            new Field(
+            new FieldDetails(
                     "MEANINGS_TEXT",
                     "__meaningsText",
                     "All terms attached to an asset, as a single comma-separated string.",
                     IndexType.TEXT),
-            new Field(
+            new FieldDetails(
                     "TYPE_NAME",
                     "__typeName",
                     "Type of the asset. For example Table, Column, and so on.",
                     IndexType.TEXT),
-            new Field("SUPER_TYPE_NAMES", "__superTypeNames", "All super types of an asset.", IndexType.TEXT),
-            new Field(
+            new FieldDetails(
+                    "SUPER_TYPE_NAMES",
+                    "__superTypeNames",
+                    "All super types of an asset.",
+                    SearchFieldGenerator.IndexType.TEXT),
+            new FieldDetails(
                     "QUALIFIED_NAME",
                     "qualifiedName.text",
                     "Unique fully-qualified name of the asset in Atlan.",
                     IndexType.TEXT));
 
-    private static final List<Field> COMMON_NUMERICS = List.of(
-            new Field(
+    private static final List<FieldDetails> COMMON_NUMERICS = List.of(
+            new FieldDetails(
                     "TIMESTAMP",
                     "__timestamp",
                     "Time (in milliseconds) when the asset was created.",
                     IndexType.NUMERIC),
-            new Field(
+            new FieldDetails(
                     "MODIFICATION_TIMESTAMP",
                     "__modificationTimestamp",
                     "Time (in milliseconds) when the asset was last updated.",
                     IndexType.NUMERIC));
 
-    private final IndexType toGenerate;
-    private SortedSet<Field> fields;
-
-    public SearchFieldGenerator(Collection<EntityDef> entityDefs, IndexType toGenerate) {
+    public SearchFieldGenerator(Collection<EntityDef> entityDefs, IndexType toGenerate, GeneratorConfig cfg) {
+        super(cfg);
         this.toGenerate = toGenerate;
         resolveClassName();
         resolveFields(entityDefs);
@@ -120,23 +144,30 @@ public class SearchFieldGenerator extends TypeGenerator {
     }
 
     private void resolveFields(Collection<EntityDef> entityDefs) {
+        fields = new TreeSet<>();
         switch (toGenerate) {
             case KEYWORD:
-                fields = new TreeSet<>(COMMON_KEYWORDS);
+                for (FieldDetails details : COMMON_KEYWORDS) {
+                    fields.add(new Field(details, cfg));
+                }
                 break;
             case TEXT:
-                fields = new TreeSet<>(COMMON_TEXT);
+                for (FieldDetails details : COMMON_TEXT) {
+                    fields.add(new Field(details, cfg));
+                }
                 break;
             case NUMERIC:
-                fields = new TreeSet<>(COMMON_NUMERICS);
+                for (FieldDetails details : COMMON_NUMERICS) {
+                    fields.add(new Field(details, cfg));
+                }
                 break;
             default:
-                fields = new TreeSet<>();
+                // Do nothing, no defaults to set up...
                 break;
         }
         for (EntityDef entityDef : entityDefs) {
             for (AttributeDef attributeDef : entityDef.getAttributeDefs()) {
-                Field field = new Field(getClassName(), entityDef.getName(), attributeDef, toGenerate);
+                Field field = new Field(getClassName(), entityDef.getName(), attributeDef, toGenerate, cfg);
                 if (!field.getType().getName().equals("Internal") && field.getSearchFieldName() != null) {
                     if (!fields.add(field)) {
                         log.warn(
@@ -145,6 +176,21 @@ public class SearchFieldGenerator extends TypeGenerator {
                     cache.addSearchFieldToCache(entityDef.getName(), attributeDef.getName(), field);
                 }
             }
+        }
+    }
+
+    @Getter
+    private static class FieldDetails {
+        private final String enumName;
+        private final String searchFieldName;
+        private final String description;
+        private final IndexType toFilter;
+
+        private FieldDetails(String enumName, String searchFieldName, String description, IndexType toFilter) {
+            this.enumName = enumName;
+            this.searchFieldName = searchFieldName;
+            this.description = description;
+            this.toFilter = toFilter;
         }
     }
 
@@ -159,15 +205,21 @@ public class SearchFieldGenerator extends TypeGenerator {
         private String enumName;
         private final IndexType toFilter;
 
-        private Field(String enumName, String searchFieldName, String description, IndexType toFilter) {
-            this.enumName = enumName;
-            this.searchFieldName = searchFieldName;
-            super.description = description;
-            this.toFilter = toFilter;
+        private Field(FieldDetails details, GeneratorConfig cfg) {
+            super(cfg);
+            this.enumName = details.getEnumName();
+            this.searchFieldName = details.getSearchFieldName();
+            super.description = details.getDescription();
+            this.toFilter = details.getToFilter();
         }
 
-        public Field(String className, String entityName, AttributeDef attributeDef, IndexType toFilter) {
-            super(className, attributeDef);
+        public Field(
+                String className,
+                String entityName,
+                AttributeDef attributeDef,
+                IndexType toFilter,
+                GeneratorConfig cfg) {
+            super(className, attributeDef, cfg);
             this.toFilter = toFilter;
             resolveSearchDetails(attributeDef);
             this.description = AttributeCSVCache.getAttributeDescription(entityName, getOriginalName());

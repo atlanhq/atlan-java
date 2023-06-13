@@ -14,9 +14,12 @@ public class AttributeGenerator extends TypeGenerator {
     private MappedType type;
     private String renamed;
 
-    protected AttributeGenerator() {}
+    protected AttributeGenerator(GeneratorConfig cfg) {
+        super(cfg);
+    }
 
-    public AttributeGenerator(String className, AttributeDef attributeDef) {
+    public AttributeGenerator(String className, AttributeDef attributeDef, GeneratorConfig cfg) {
+        super(cfg);
         super.className = className;
         this.originalName =
                 attributeDef.getDisplayName() == null ? attributeDef.getName() : attributeDef.getDisplayName();

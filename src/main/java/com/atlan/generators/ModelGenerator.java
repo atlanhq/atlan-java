@@ -154,7 +154,7 @@ public class ModelGenerator extends AbstractGenerator {
         for (SearchFieldGenerator.IndexType toGenerate : enumsToGenerate) {
             log.info("Generating for: {}", toGenerate);
             SearchFieldGenerator generator =
-                    new SearchFieldGenerator(cache.getEntityDefCache().values(), toGenerate);
+                    new SearchFieldGenerator(cache.getEntityDefCache().values(), toGenerate, cfg);
             createDirectoryIdempotent(cfg.getPackagePath() + File.separator + SearchFieldGenerator.DIRECTORY);
             String filename = cfg.getPackagePath() + File.separator + SearchFieldGenerator.DIRECTORY + File.separator
                     + generator.getClassName() + ".java";

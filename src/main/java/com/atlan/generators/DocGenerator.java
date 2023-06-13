@@ -20,9 +20,6 @@ import org.apache.commons.csv.CSVPrinter;
 @Slf4j
 public class DocGenerator extends AbstractGenerator {
 
-    private static final String ATTRIBUTES_CSV =
-            "src" + File.separator + "main" + File.separator + "resources" + File.separator + "attributes.csv";
-
     public DocGenerator(GeneratorConfig cfg) {
         super(cfg);
     }
@@ -115,7 +112,7 @@ public class DocGenerator extends AbstractGenerator {
 
     private void generateAttributeCSV() {
         try (CSVPrinter printer = new CSVPrinter(
-                Files.newBufferedWriter(Paths.get(ATTRIBUTES_CSV), UTF_8),
+                Files.newBufferedWriter(Paths.get(AttributeCSVCache.DESCRIPTIONS_FILE), UTF_8),
                 CSVFormat.DEFAULT
                         .builder()
                         .setHeader(AttributeCSVCache.CSV_HEADER)

@@ -26,8 +26,9 @@ public abstract class TypeGenerator {
     protected GeneratorConfig cfg;
     protected ModelCache cache;
 
-    protected TypeGenerator() {
-        // Do nothing...
+    protected TypeGenerator(GeneratorConfig cfg) {
+        this.cfg = cfg;
+        this.cache = ModelCache.getInstance(cfg);
     }
 
     protected TypeGenerator(TypeDef typeDef, GeneratorConfig cfg) {
