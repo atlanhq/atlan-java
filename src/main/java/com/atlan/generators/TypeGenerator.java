@@ -20,6 +20,8 @@ public abstract class TypeGenerator {
             Map.entry("string,string", "String, String"),
             Map.entry("string,long", "String, Long"));
 
+    protected String generatorName;
+    protected String packageRoot;
     protected String originalName;
     protected String className;
     protected String description;
@@ -29,12 +31,16 @@ public abstract class TypeGenerator {
     protected TypeGenerator(GeneratorConfig cfg) {
         this.cfg = cfg;
         this.cache = ModelCache.getInstance(cfg);
+        this.packageRoot = cfg.getPackageRoot();
+        this.generatorName = cfg.getGeneratorName();
     }
 
     protected TypeGenerator(TypeDef typeDef, GeneratorConfig cfg) {
         this.originalName = typeDef.getDisplayName() == null ? typeDef.getName() : typeDef.getDisplayName();
         this.cfg = cfg;
         this.cache = ModelCache.getInstance(cfg);
+        this.packageRoot = cfg.getPackageRoot();
+        this.generatorName = cfg.getGeneratorName();
     }
 
     protected abstract void resolveClassName();

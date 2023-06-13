@@ -3,6 +3,7 @@
 package com.atlan.model.structs;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
@@ -10,6 +11,7 @@ import lombok.extern.jackson.Jacksonized;
 /**
  * Detailed information about a Google tag.
  */
+@Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
 @Jacksonized
 @SuperBuilder(toBuilder = true)

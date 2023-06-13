@@ -12,9 +12,12 @@ import lombok.Getter;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
+import javax.annotation.processing.Generated;
+
 /**
  * Base class for all structs.
  */
+@Generated(value="${generatorName}")
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)

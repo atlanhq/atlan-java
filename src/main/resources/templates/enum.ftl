@@ -1,10 +1,14 @@
 /* SPDX-License-Identifier: Apache-2.0 */
 /* Copyright 2022 Atlan Pte. Ltd. */
-package com.atlan.model.enums;
+package ${packageRoot}.enums;
 
+import com.atlan.model.enums.AtlanEnum;
 import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 
+import javax.annotation.processing.Generated;
+
+@Generated(value="${generatorName}")
 public enum ${className} implements AtlanEnum {
 <#list values as value>
     ${value.enumeratedValue}("${value.actualValue}"),

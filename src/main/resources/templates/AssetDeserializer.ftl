@@ -23,6 +23,8 @@ import java.io.IOException;
 import java.lang.reflect.*;
 import java.util.*;
 
+import javax.annotation.processing.Generated;
+
 /**
  * Deserialization of all {@link Asset} objects, down through the entire inheritance hierarchy.
  * This custom deserialization is necessary to flatten some specific aspects of complexity in Atlan's payloads:
@@ -33,6 +35,7 @@ import java.util.*;
  *     <li>Automatically translating the nested <code>businessAttributes</code> structure into custom metadata, including translating from Atlan's internal hashed-string representations into human-readable names.</li>
  * </ul>
  */
+@Generated(value="${generatorName}")
 public class AssetDeserializer extends StdDeserializer<Asset> {
 
     private static final long serialVersionUID = 2L;

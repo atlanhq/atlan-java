@@ -5,6 +5,7 @@ package com.atlan.model.assets;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import java.util.Map;
 import java.util.SortedSet;
+import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * Base class for SQL assets.
  */
+@Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
@@ -27,7 +29,6 @@ import lombok.extern.slf4j.Slf4j;
     @JsonSubTypes.Type(value = Procedure.class, name = Procedure.TYPE_NAME),
     @JsonSubTypes.Type(value = View.class, name = View.TYPE_NAME),
     @JsonSubTypes.Type(value = MaterializedView.class, name = MaterializedView.TYPE_NAME),
-    @JsonSubTypes.Type(value = SnowflakeTag.class, name = SnowflakeTag.TYPE_NAME),
 })
 @Slf4j
 @SuppressWarnings("cast")

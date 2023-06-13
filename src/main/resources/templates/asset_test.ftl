@@ -1,6 +1,6 @@
 /* SPDX-License-Identifier: Apache-2.0 */
 /* Copyright 2022- Atlan Pte. Ltd. */
-package com.atlan.model.assets;
+package ${packageRoot}.assets;
 
 import static org.testng.Assert.*;
 
@@ -13,6 +13,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.*;
 import org.testng.annotations.Test;
 
+import javax.annotation.processing.Generated;
+
+@Generated(value="${generatorName}")
 @SuppressWarnings("deprecation")
 public class ${className}Test {
 

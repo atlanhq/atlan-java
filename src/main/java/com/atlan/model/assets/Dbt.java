@@ -4,6 +4,7 @@ package com.atlan.model.assets;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import java.util.SortedSet;
+import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * Base class for dbt assets.
  */
+@Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)

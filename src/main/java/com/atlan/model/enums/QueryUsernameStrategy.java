@@ -3,8 +3,10 @@
 package com.atlan.model.enums;
 
 import com.fasterxml.jackson.annotation.JsonValue;
+import javax.annotation.processing.Generated;
 import lombok.Getter;
 
+@Generated(value = "com.atlan.generators.ModelGeneratorV2")
 public enum QueryUsernameStrategy implements AtlanEnum {
     CONNECTION_USERNAME("connectionUsername"),
     ATLAN_USERNAME("atlanUsername"),

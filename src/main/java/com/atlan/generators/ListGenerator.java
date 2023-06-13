@@ -9,8 +9,10 @@ import lombok.Getter;
 public class ListGenerator {
 
     private final List<String> items;
+    private final String generatorName;
 
-    public ListGenerator(List<String> items) {
+    public ListGenerator(List<String> items, String generatorName) {
         this.items = items;
+        this.generatorName = generatorName;
     }
 }

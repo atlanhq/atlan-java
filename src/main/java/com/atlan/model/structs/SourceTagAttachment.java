@@ -4,6 +4,7 @@ package com.atlan.model.structs;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;
+import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
@@ -11,6 +12,7 @@ import lombok.extern.jackson.Jacksonized;
 /**
  * Detailed information about the attachment of a classification on an Atlan asset, synced from source.
  */
+@Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
 @Jacksonized
 @SuperBuilder(toBuilder = true)

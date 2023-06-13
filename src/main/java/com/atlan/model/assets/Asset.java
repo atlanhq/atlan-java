@@ -41,6 +41,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
@@ -48,6 +49,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * Base class for all assets.
  */
+@Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)

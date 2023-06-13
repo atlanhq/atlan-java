@@ -1,7 +1,8 @@
 /* SPDX-License-Identifier: Apache-2.0 */
 /* Copyright 2022 Atlan Pte. Ltd. */
-package com.atlan.model.structs;
+package ${packageRoot}.structs;
 
+import com.atlan.model.structs.AtlanStruct;
 <#if className == "BadgeCondition">
 import com.atlan.model.enums.BadgeComparisonOperator;
 import com.atlan.model.enums.BadgeConditionColor;
@@ -22,9 +23,12 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 
+import javax.annotation.processing.Generated;
+
 /**
  * ${description}
  */
+@Generated(value="${generatorName}")
 @Getter
 @Jacksonized
 @SuperBuilder(toBuilder = true)

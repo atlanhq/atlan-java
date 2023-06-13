@@ -11,8 +11,10 @@ import com.atlan.model.structs.*;
 import com.atlan.serde.Serde;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.*;
+import javax.annotation.processing.Generated;
 import org.testng.annotations.Test;
 
+@Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @SuppressWarnings("deprecation")
 public class PowerBIDatasourceTest {
 

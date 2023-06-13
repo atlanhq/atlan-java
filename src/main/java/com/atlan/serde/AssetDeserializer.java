@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import java.io.IOException;
 import java.lang.reflect.*;
 import java.util.*;
+import javax.annotation.processing.Generated;
 
 /**
  * Deserialization of all {@link Asset} objects, down through the entire inheritance hierarchy.
@@ -33,6 +34,7 @@ import java.util.*;
  *     <li>Automatically translating the nested <code>businessAttributes</code> structure into custom metadata, including translating from Atlan's internal hashed-string representations into human-readable names.</li>
  * </ul>
  */
+@Generated(value = "com.atlan.generators.ModelGeneratorV2")
 public class AssetDeserializer extends StdDeserializer<Asset> {
 
     private static final long serialVersionUID = 2L;
