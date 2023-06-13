@@ -4,7 +4,6 @@ package com.atlan.generators;
 
 import com.atlan.model.typedefs.AttributeDef;
 import com.atlan.model.typedefs.EntityDef;
-import java.io.File;
 import java.util.*;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -13,13 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class SearchFieldGenerator extends TypeGenerator {
 
-    public static final String DIRECTORY = "src" + File.separator
-            + "main" + File.separator
-            + "java" + File.separator
-            + "com" + File.separator
-            + "atlan" + File.separator
-            + "model" + File.separator
-            + "enums";
+    public static final String DIRECTORY = "enums";
 
     enum IndexType {
         KEYWORD("KeywordFields"),
@@ -115,7 +108,7 @@ public class SearchFieldGenerator extends TypeGenerator {
     private final IndexType toGenerate;
     private SortedSet<Field> fields;
 
-    public SearchFieldGenerator(List<EntityDef> entityDefs, IndexType toGenerate) {
+    public SearchFieldGenerator(Collection<EntityDef> entityDefs, IndexType toGenerate) {
         this.toGenerate = toGenerate;
         resolveClassName();
         resolveFields(entityDefs);
@@ -126,7 +119,7 @@ public class SearchFieldGenerator extends TypeGenerator {
         super.className = toGenerate.getClassName();
     }
 
-    private void resolveFields(List<EntityDef> entityDefs) {
+    private void resolveFields(Collection<EntityDef> entityDefs) {
         switch (toGenerate) {
             case KEYWORD:
                 fields = new TreeSet<>(COMMON_KEYWORDS);
@@ -149,7 +142,7 @@ public class SearchFieldGenerator extends TypeGenerator {
                         log.warn(
                                 "Skipping duplicate field {}, from asset {}", field.getEnumName(), entityDef.getName());
                     }
-                    ModelGeneratorV2.addSearchFieldToCache(entityDef.getName(), attributeDef.getName(), field);
+                    cache.addSearchFieldToCache(entityDef.getName(), attributeDef.getName(), field);
                 }
             }
         }

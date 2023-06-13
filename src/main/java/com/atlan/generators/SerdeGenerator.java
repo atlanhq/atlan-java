@@ -20,10 +20,10 @@ public class SerdeGenerator {
 
     private final SortedSet<String> assetTypes;
 
-    public SerdeGenerator(Collection<AssetGenerator> assetCache) {
+    public SerdeGenerator(Collection<AssetGenerator> assetCache, GeneratorConfig cfg) {
         assetTypes = new TreeSet<>();
         for (AssetGenerator generator : assetCache) {
-            if (!generator.isAbstract() && !AssetGenerator.SKIP_GENERATING.contains(generator.getOriginalName())) {
+            if (!generator.isAbstract() && cfg.includeTypedef(generator.getEntityDef())) {
                 assetTypes.add(generator.getClassName());
             }
         }

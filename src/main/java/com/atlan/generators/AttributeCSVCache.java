@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import lombok.extern.slf4j.Slf4j;
@@ -23,13 +24,14 @@ public class AttributeCSVCache {
     private static final String CSV_ATTR_NAME = "Attribute Name";
     private static final String CSV_ATTR_DESC = "Attribute Description";
 
-    public static final String[] CSV_HEADER = {CSV_TYPE_NAME, CSV_TYPE_DESC, CSV_ATTR_NAME, CSV_ATTR_DESC};
+    public static final String[] CSV_HEADER =
+            List.of(CSV_TYPE_NAME, CSV_TYPE_DESC, CSV_ATTR_NAME, CSV_ATTR_DESC).toArray(new String[] {});
 
     static final String DEFAULT_ATTR_DESCRIPTION = "TBC";
     static final String DEFAULT_CLASS_DESCRIPTION = "TBC";
 
     private static final String DESCRIPTIONS_FILE =
-            "" + "src" + File.separator + "generate" + File.separator + "resources" + File.separator + "attributes.csv";
+            "src" + File.separator + "generate" + File.separator + "resources" + File.separator + "attributes.csv";
 
     private static final Map<String, String> qualifiedAttrToDescription = new ConcurrentHashMap<>();
     private static final Map<String, String> typeNameToDescription = new ConcurrentHashMap<>();
