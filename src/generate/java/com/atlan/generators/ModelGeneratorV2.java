@@ -12,9 +12,6 @@ public class ModelGeneratorV2 {
         Atlan.setApiToken(System.getenv("ATLAN_API_KEY"));
     }
 
-    /*private static final String TEMPLATES_DIRECTORY =
-    "src" + File.separator + "main" + File.separator + "resources" + File.separator + "templates";*/
-
     public static void main(String[] args) throws Exception {
         GeneratorConfig cfg = GeneratorConfig.getDefault().build();
         new ModelGenerator(cfg).generate();
