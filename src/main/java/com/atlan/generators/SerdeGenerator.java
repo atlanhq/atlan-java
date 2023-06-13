@@ -19,8 +19,10 @@ public class SerdeGenerator {
             + "serde";
 
     private final SortedSet<String> assetTypes;
+    private final String generatorName;
 
     public SerdeGenerator(Collection<AssetGenerator> assetCache, GeneratorConfig cfg) {
+        this.generatorName = cfg.getGeneratorName();
         assetTypes = new TreeSet<>();
         for (AssetGenerator generator : assetCache) {
             if (!generator.isAbstract() && cfg.includeTypedef(generator.getEntityDef())) {

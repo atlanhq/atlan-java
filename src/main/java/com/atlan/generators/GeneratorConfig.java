@@ -35,6 +35,9 @@ public class GeneratorConfig {
     @Getter
     private String packagePath;
 
+    @Getter
+    private String generatorName;
+
     /**
      * Type definition serviceTypes for which to generate model POJOs.
      */
@@ -100,13 +103,15 @@ public class GeneratorConfig {
     /**
      * Configuration for generating using local directory for templates.
      *
+     * @param generatorClass top-level class that is used to generate the code
      * @param directoryForTemplateLoading directory containing the Freemarker templates
      * @param packageRoot root Java package location for the generated models
      * @throws IOException if the directory cannot be accessed
      */
-    public static GeneratorConfigBuilder creator(File directoryForTemplateLoading, String packageRoot)
-            throws IOException {
+    public static GeneratorConfigBuilder creator(
+            Class<?> generatorClass, File directoryForTemplateLoading, String packageRoot) throws IOException {
         return GeneratorConfig.builder()
+                .generatorName(generatorClass.getCanonicalName())
                 .packageRoot(packageRoot)
                 .freemarkerConfig(createConfig(directoryForTemplateLoading))
                 .packagePath(createPackagePath(packageRoot));
@@ -115,10 +120,12 @@ public class GeneratorConfig {
     /**
      * Configuration for generating using embedded templates in a jar file.
      *
+     * @param generatorClass top-level class that is used to generate the code
      * @param packageRoot root Java package location for the generated models
      */
-    public static GeneratorConfigBuilder creator(String packageRoot) {
+    public static GeneratorConfigBuilder creator(Class<?> generatorClass, String packageRoot) {
         return GeneratorConfig.builder()
+                .generatorName(generatorClass.getCanonicalName())
                 .packageRoot(packageRoot)
                 .freemarkerConfig(createConfig())
                 .packagePath(createPackagePath(packageRoot));
@@ -127,10 +134,11 @@ public class GeneratorConfig {
     /**
      * Get the default configuration for the out-of-the-box Atlan model and SDK.
      *
+     * @param generatorClass top-level class that is used to generate the code
      * @return default configuration
      */
-    public static GeneratorConfigBuilder getDefault() {
-        return GeneratorConfig.creator("com.atlan.model")
+    public static GeneratorConfigBuilder getDefault(Class<?> generatorClass) {
+        return GeneratorConfig.creator(generatorClass, "com.atlan.model")
                 .serviceTypes(TypeDefsEndpoint.RESERVED_SERVICE_TYPES)
                 .renameClass("google_datastudio_asset_type", "GoogleDataStudioAssetType")
                 .renameClass("powerbi_endorsement", "PowerBIEndorsementType")

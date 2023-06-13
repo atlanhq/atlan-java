@@ -2,8 +2,10 @@
 /* Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.enums;
 
+import javax.annotation.processing.Generated;
 import lombok.Getter;
 
+@Generated(value = "com.atlan.generators.ModelGeneratorV2")
 public enum NumericFields implements AtlanSearchableField {
     /** TBC */
     ADLS_OBJECT_ACCESS_TIER_LAST_MODIFIED_TIME("adlsObjectAccessTierLastModifiedTime"),

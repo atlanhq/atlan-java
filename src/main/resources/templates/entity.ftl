@@ -1,6 +1,6 @@
 /* SPDX-License-Identifier: Apache-2.0 */
 /* Copyright 2022- Atlan Pte. Ltd. */
-package com.atlan.model.assets;
+package ${packageRoot}.assets;
 
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import co.elastic.clients.elasticsearch._types.FieldSort;
@@ -89,9 +89,12 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
+import javax.annotation.processing.Generated;
+
 /**
  * ${description}
  */
+@Generated(value="${generatorName}")
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)

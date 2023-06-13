@@ -3,8 +3,10 @@
 package com.atlan.model.enums;
 
 import com.fasterxml.jackson.annotation.JsonValue;
+import javax.annotation.processing.Generated;
 import lombok.Getter;
 
+@Generated(value = "com.atlan.generators.ModelGeneratorV2")
 public enum ADLSObjectArchiveStatus implements AtlanEnum {
     REHYDRATE_PENDING_TO_HOT("rehydrate-pending-to-hot"),
     REHYDRATE_PENDING_TO_COOL("rehydrate-pending-to-cool"),

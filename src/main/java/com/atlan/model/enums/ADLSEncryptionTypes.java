@@ -3,8 +3,10 @@
 package com.atlan.model.enums;
 
 import com.fasterxml.jackson.annotation.JsonValue;
+import javax.annotation.processing.Generated;
 import lombok.Getter;
 
+@Generated(value = "com.atlan.generators.ModelGeneratorV2")
 public enum ADLSEncryptionTypes implements AtlanEnum {
     MICROSOFT_STORAGE("Microsoft.Storage"),
     MICROSOFT_KEYVAULT("Microsoft.Keyvault"),

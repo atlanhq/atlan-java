@@ -73,7 +73,7 @@ public class ModelGenerator extends AbstractGenerator {
                     + "AtlanStruct.java";
             try (BufferedWriter fs = new BufferedWriter(
                     new OutputStreamWriter(new FileOutputStream(filename), StandardCharsets.UTF_8))) {
-                ListGenerator generator = new ListGenerator(cache.getStructNames());
+                ListGenerator generator = new ListGenerator(cache.getStructNames(), cfg.getGeneratorName());
                 abstractStructTemplate.process(generator, fs);
             } catch (IOException e) {
                 log.error("Unable to open file output: {}", filename, e);

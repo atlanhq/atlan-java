@@ -13,7 +13,7 @@ public class ModelGeneratorV2 {
     }
 
     public static void main(String[] args) throws Exception {
-        GeneratorConfig cfg = GeneratorConfig.getDefault().build();
+        GeneratorConfig cfg = GeneratorConfig.getDefault(ModelGeneratorV2.class).build();
         new ModelGenerator(cfg).generate();
         new TestGenerator(cfg).generate();
         new DocGenerator(cfg).generate();
