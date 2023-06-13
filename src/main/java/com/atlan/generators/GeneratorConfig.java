@@ -124,6 +124,11 @@ public class GeneratorConfig {
                 .packagePath(createPackagePath(packageRoot));
     }
 
+    /**
+     * Get the default configuration for the out-of-the-box Atlan model and SDK.
+     *
+     * @return default configuration
+     */
     public static GeneratorConfigBuilder getDefault() {
         return GeneratorConfig.creator("com.atlan.model")
                 .serviceTypes(TypeDefsEndpoint.RESERVED_SERVICE_TYPES)

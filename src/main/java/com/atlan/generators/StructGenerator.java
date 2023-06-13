@@ -34,7 +34,7 @@ public class StructGenerator extends TypeGenerator {
     private void resolveAttributes() {
         attributes = new ArrayList<>();
         for (AttributeDef attributeDef : structDef.getAttributeDefs()) {
-            Attribute attribute = new Attribute(className, attributeDef);
+            Attribute attribute = new Attribute(className, attributeDef, cfg);
             if (className.equals("BadgeCondition") && attribute.getRenamed().equals("badgeConditionOperator")) {
                 attribute.setType(MappedType.builder()
                         .type(MappedType.Type.ENUM)
@@ -48,8 +48,8 @@ public class StructGenerator extends TypeGenerator {
     @Getter
     public static final class Attribute extends AttributeGenerator {
 
-        public Attribute(String className, AttributeDef attributeDef) {
-            super(className, attributeDef);
+        public Attribute(String className, AttributeDef attributeDef, GeneratorConfig cfg) {
+            super(className, attributeDef, cfg);
         }
 
         @Override

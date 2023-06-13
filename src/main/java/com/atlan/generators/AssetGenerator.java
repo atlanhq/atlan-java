@@ -108,7 +108,7 @@ public class AssetGenerator extends TypeGenerator {
     private void resolveAttributes() {
         attributes = new ArrayList<>();
         for (AttributeDef attributeDef : entityDef.getAttributeDefs()) {
-            Attribute attribute = new Attribute(className, attributeDef);
+            Attribute attribute = new Attribute(className, attributeDef, cfg);
             if (!attribute.getType().getName().equals("Internal")) {
                 attributes.add(attribute);
                 checkAndAddMapContainer(attribute);
@@ -119,7 +119,7 @@ public class AssetGenerator extends TypeGenerator {
     private void resolveRelationships() {
         Set<String> uniqueRelationships = cache.getUniqueRelationshipsForType(getOriginalName());
         for (RelationshipAttributeDef relationshipAttributeDef : entityDef.getRelationshipAttributeDefs()) {
-            Attribute attribute = new Attribute(className, relationshipAttributeDef);
+            Attribute attribute = new Attribute(className, relationshipAttributeDef, cfg);
             if (uniqueRelationships.contains(attribute.getOriginalName())
                     && !attribute.getType().getName().equals("Internal")) {
                 boolean duplicate = false;
@@ -160,10 +160,12 @@ public class AssetGenerator extends TypeGenerator {
         // as ordering is crucial to their proper operation.
         private static final Set<String> LIST_OVERRIDES = Set.of("policyResources");
 
-        protected Attribute() {}
+        protected Attribute(GeneratorConfig cfg) {
+            super(cfg);
+        }
 
-        public Attribute(String className, AttributeDef attributeDef) {
-            super(className, attributeDef);
+        public Attribute(String className, AttributeDef attributeDef, GeneratorConfig cfg) {
+            super(className, attributeDef, cfg);
             if (LIST_OVERRIDES.contains(attributeDef.getName())) {
                 setType(getType().toBuilder().container("List<").build());
             }
