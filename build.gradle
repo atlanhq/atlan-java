@@ -94,7 +94,7 @@ repositories {
 dependencies {
     errorprone group: "com.google.errorprone", name: "error_prone_core", version: "2.14.0"
     errorproneJavac group: "com.google.errorprone", name: "javac", version:"9+181-r4173-1"
-    api group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.14.1"
+    api group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.15.2"
     api group: "org.slf4j", name: "slf4j-api", version: "1.7.32"
     api group: "co.elastic.clients", name: "elasticsearch-java", version: "8.5.1"
     api group: 'org.freemarker', name: 'freemarker', version: '2.3.32'

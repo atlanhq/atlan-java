@@ -4,11 +4,10 @@ package com.atlan.serde;
 
 import com.atlan.model.structs.AtlanStruct;
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.TreeNode;
-import com.fasterxml.jackson.core.util.JsonParserSequence;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.ResolvableDeserializer;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fasterxml.jackson.databind.jsontype.TypeDeserializer;
@@ -46,19 +45,18 @@ public class StructDeserializer extends StdDeserializer<AtlanStruct> implements 
      */
     @Override
     public AtlanStruct deserialize(JsonParser parser, DeserializationContext context) throws IOException {
-        TreeNode root = parser.readValueAsTree();
+        JsonNode root = parser.readValueAsTree();
         if (root != null) {
-            TreeNode attributes = root.get("attributes");
+            JsonNode attributes = root.get("attributes");
             if (attributes != null && attributes.isObject()) {
                 // If there is an `attributes` key in the object, it's nested, so deserialize the nested content
                 try (JsonParser nested = attributes.traverse(parser.getCodec())) {
                     return deserializeNested(nested, context);
                 }
             } else {
-                // Otherwise, reset the parser back to the start of the sequence and deserialize it
-                try (JsonParser restart =
-                        JsonParserSequence.createFlattened(true, root.traverse(parser.getCodec()), parser)) {
-                    return deserializeNested(restart, context);
+                // Otherwise, deserialize it as-is
+                try (JsonParser notNested = root.traverse(parser.getCodec())) {
+                    return deserializeNested(notNested, context);
                 }
             }
         }
@@ -74,7 +72,7 @@ public class StructDeserializer extends StdDeserializer<AtlanStruct> implements 
     }
 
     private AtlanStruct deserializeNested(JsonParser nested, DeserializationContext context) throws IOException {
-        nested.nextToken(); // Consume the opening of the nested object
+        nested.nextToken(); // Prepare parser for deserialization
         return (AtlanStruct) defaultDeserializer.deserialize(nested, context);
     }
 }

@@ -2,18 +2,31 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.relations;
 
+import com.atlan.model.assets.Asset;
+import com.atlan.model.assets.IndistinctAsset;
 import com.atlan.model.core.AtlanObject;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.search.AuditDetail;
+import com.atlan.serde.AssetDeserializerV2;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.Comparator;
 import java.util.Map;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import lombok.extern.jackson.Jacksonized;
 
 @Getter
-@Jacksonized
+@JsonDeserialize(using = AssetDeserializerV2.class)
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.EXISTING_PROPERTY,
+        property = "typeName",
+        defaultImpl = Asset.class)
+@JsonSubTypes({
+    @JsonSubTypes.Type(value = Asset.class, name = Asset.TYPE_NAME),
+})
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = false)
 public class Reference extends AtlanObject implements Comparable<Reference>, AuditDetail {

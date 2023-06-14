@@ -87,6 +87,7 @@ import java.util.TreeSet;
 import java.util.UUID;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.jackson.Jacksonized;
 import lombok.extern.slf4j.Slf4j;
 
 import com.atlan.model.assets.Attribute;
@@ -103,16 +104,11 @@ import javax.annotation.processing.Generated;
  */
 @Generated(value="${generatorName}")
 @Getter
+@Jacksonized
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 <#if className == "Asset">
 @JsonSerialize(using = AssetSerializer.class)
-@JsonDeserialize(using = AssetDeserializer.class)
-@JsonTypeInfo(
-        use = JsonTypeInfo.Id.NAME,
-        include = JsonTypeInfo.As.EXISTING_PROPERTY,
-        property = "typeName",
-        defaultImpl = IndistinctAsset.class)
 </#if>
 <#if subTypes??>
 @JsonSubTypes({
@@ -123,8 +119,8 @@ import javax.annotation.processing.Generated;
 </#if>
 @Slf4j
 <#if mapContainers?? || className == "Asset">@SuppressWarnings("cast")</#if>
-public <#if abstract>abstract</#if> class ${className} extends ${parentClassName} {
-<#if !abstract>    private static final long serialVersionUID = 2L;</#if>
+public class ${className} extends ${parentClassName} {
+    private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "${originalName}";
 
@@ -252,6 +248,19 @@ public <#if abstract>abstract</#if> class ${className} extends ${parentClassName
                     ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "${className}", String.join(",", missing));
         }
         return updater(this.getQualifiedName(), this.getName());
+    }
+<#else>
+    /**
+     * Builds the minimal object necessary to apply an update to a ${className}, from a potentially
+     * more-complete ${className} object.
+     * NOTE: This is unimplemented for classes that should not be directly instantiated!
+     *
+     * @return the minimal object necessary to update the ${className}, as a builder
+     * @throws InvalidRequestException if any of the minimal set of required properties for ${className} are not found in the initial object
+     */
+    @Override
+    public ${className}Builder<?, ?> trimToRequired() throws InvalidRequestException {
+        throw new InvalidRequestException(ErrorCode.UNIMPLEMENTED_ABSTRACT, "trimToRequired");
     }
 </#if>
 

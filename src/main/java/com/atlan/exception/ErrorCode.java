@@ -201,6 +201,11 @@ public enum ErrorCode implements ExceptionMessageSet {
             "ATLAN-JAVA-400-036",
             "The URL provided could not be accessed.",
             "Check the provided URL and attempt to upload again."),
+    UNIMPLEMENTED_ABSTRACT(
+            400,
+            "ATLAN-JAVA-400-037",
+            "Cannot do this operation on an otherwise abstract class: {0}",
+            "Use a more specific (concrete) type to carry out your desired functionality."),
 
     AUTHENTICATION_PASSTHROUGH(
             401,
