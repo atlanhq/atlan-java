@@ -94,6 +94,7 @@ dependencies {
     api group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.14.1"
     api group: "org.slf4j", name: "slf4j-api", version: "1.7.32"
     api group: "co.elastic.clients", name: "elasticsearch-java", version: "8.5.1"
+    implementation group: "io.github.classgraph", name: "classgraph", version: "4.8.160"
     numaflow group: "io.numaproj.numaflow", name: "numaflow-java", version: "+"
     numaflow "io.netty:netty-transport-native-epoll:4.1.79.Final:linux-x86_64"
     testImplementation group: 'com.aventrix.jnanoid', name: 'jnanoid', version: '2.0.0'
