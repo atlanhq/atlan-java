@@ -100,6 +100,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li><a href="com/atlan/api/package-tree.html">com.atlan.api</a>, </li>
 <li><a href="com/atlan/cache/package-tree.html">com.atlan.cache</a>, </li>
 <li><a href="com/atlan/exception/package-tree.html">com.atlan.exception</a>, </li>
+<li><a href="com/atlan/generators/package-tree.html">com.atlan.generators</a>, </li>
+<li><a href="com/atlan/generators/lombok/package-tree.html">com.atlan.generators.lombok</a>, </li>
 <li><a href="com/atlan/model/admin/package-tree.html">com.atlan.model.admin</a>, </li>
 <li><a href="com/atlan/model/assets/package-tree.html">com.atlan.model.assets</a>, </li>
 <li><a href="com/atlan/model/core/package-tree.html">com.atlan.model.core</a>, </li>
@@ -174,6 +176,13 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </li>
 </ul>
 </li>
+<li class="circle">com.atlan.generators.<a href="com/atlan/generators/AbstractGenerator.html" title="class in com.atlan.generators"><span class="typeNameLink">AbstractGenerator</span></a>
+<ul>
+<li class="circle">com.atlan.generators.<a href="com/atlan/generators/DocGenerator.html" title="class in com.atlan.generators"><span class="typeNameLink">DocGenerator</span></a></li>
+<li class="circle">com.atlan.generators.<a href="com/atlan/generators/ModelGenerator.html" title="class in com.atlan.generators"><span class="typeNameLink">ModelGenerator</span></a></li>
+<li class="circle">com.atlan.generators.<a href="com/atlan/generators/TestGenerator.html" title="class in com.atlan.generators"><span class="typeNameLink">TestGenerator</span></a></li>
+</ul>
+</li>
 <li class="circle">java.util.AbstractMap&lt;K,&#8203;V&gt; (implements java.util.Map&lt;K,&#8203;V&gt;)
 <ul>
 <li class="circle">com.atlan.util.<a href="com/atlan/util/CaseInsensitiveMap.html" title="class in com.atlan.util"><span class="typeNameLink">CaseInsensitiveMap</span></a>&lt;V&gt; (implements java.lang.Cloneable, java.util.Map&lt;K,&#8203;V&gt;, java.io.Serializable)</li>
@@ -194,6 +203,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="circle">com.atlan.model.admin.<a href="com/atlan/model/admin/ApiToken.ApiTokenAttributes.ApiTokenAttributesBuilder.html" title="class in com.atlan.model.admin"><span class="typeNameLink">ApiToken.ApiTokenAttributes.ApiTokenAttributesBuilder</span></a></li>
 <li class="circle">com.atlan.model.admin.<a href="com/atlan/model/admin/ApiToken.ApiTokenPersona.ApiTokenPersonaBuilder.html" title="class in com.atlan.model.admin"><span class="typeNameLink">ApiToken.ApiTokenPersona.ApiTokenPersonaBuilder</span></a></li>
 <li class="circle">com.atlan.util.<a href="com/atlan/util/AssetBatch.html" title="class in com.atlan.util"><span class="typeNameLink">AssetBatch</span></a></li>
+<li class="circle">com.atlan.generators.<a href="com/atlan/generators/AssetTestGenerator.TestAttribute.html" title="class in com.atlan.generators"><span class="typeNameLink">AssetTestGenerator.TestAttribute</span></a></li>
+<li class="circle">com.atlan.generators.<a href="com/atlan/generators/AssetTestGenerator.TestAttribute.TestAttributeBuilder.html" title="class in com.atlan.generators"><span class="typeNameLink">AssetTestGenerator.TestAttribute.TestAttributeBuilder</span></a></li>
 <li class="circle">com.atlan.<a href="com/atlan/Atlan.html" title="class in com.atlan"><span class="typeNameLink">Atlan</span></a></li>
 <li class="circle">com.atlan.model.admin.<a href="com/atlan/model/admin/AtlanImage.AtlanImageBuilder.html" title="class in com.atlan.model.admin"><span class="typeNameLink">AtlanImage.AtlanImageBuilder</span></a></li>
 <li class="circle">com.atlan.model.core.<a href="com/atlan/model/core/AtlanObject.html" title="class in com.atlan.model.core"><span class="typeNameLink">AtlanObject</span></a>
@@ -1121,13 +1132,17 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="circle">com.atlan.net.<a href="com/atlan/net/AtlanResponseStream.html" title="class in com.atlan.net"><span class="typeNameLink">AtlanResponseStream</span></a></li>
 <li class="circle">com.atlan.cache.<a href="com/atlan/cache/AtlanTagCache.html" title="class in com.atlan.cache"><span class="typeNameLink">AtlanTagCache</span></a></li>
 <li class="circle">com.atlan.model.admin.<a href="com/atlan/model/admin/AtlanTagPayload.AtlanTagPayloadBuilder.html" title="class in com.atlan.model.admin"><span class="typeNameLink">AtlanTagPayload.AtlanTagPayloadBuilder</span></a></li>
+<li class="circle">com.atlan.generators.<a href="com/atlan/generators/AttributeCSVCache.html" title="class in com.atlan.generators"><span class="typeNameLink">AttributeCSVCache</span></a></li>
 <li class="circle">com.atlan.model.packages.<a href="com/atlan/model/packages/ConnectionDelete.html" title="class in com.atlan.model.packages"><span class="typeNameLink">ConnectionDelete</span></a></li>
 <li class="circle">com.atlan.model.admin.<a href="com/atlan/model/admin/CreateGroupResponse.CreateGroupResponseBuilder.html" title="class in com.atlan.model.admin"><span class="typeNameLink">CreateGroupResponse.CreateGroupResponseBuilder</span></a></li>
 <li class="circle">com.atlan.cache.<a href="com/atlan/cache/CustomMetadataCache.html" title="class in com.atlan.cache"><span class="typeNameLink">CustomMetadataCache</span></a></li>
 <li class="circle">com.atlan.model.admin.<a href="com/atlan/model/admin/CustomMetadataPayload.CustomMetadataPayloadBuilder.html" title="class in com.atlan.model.admin"><span class="typeNameLink">CustomMetadataPayload.CustomMetadataPayloadBuilder</span></a></li>
 <li class="circle">com.atlan.cache.<a href="com/atlan/cache/EnumCache.html" title="class in com.atlan.cache"><span class="typeNameLink">EnumCache</span></a></li>
+<li class="circle">com.atlan.generators.<a href="com/atlan/generators/EnumGenerator.ValidValue.html" title="class in com.atlan.generators"><span class="typeNameLink">EnumGenerator.ValidValue</span></a></li>
 <li class="circle">com.atlan.exception.<a href="com/atlan/exception/ExceptionMessageDefinition.html" title="class in com.atlan.exception"><span class="typeNameLink">ExceptionMessageDefinition</span></a></li>
 <li class="circle">com.atlan.exception.<a href="com/atlan/exception/ExceptionMessageDefinition.ExceptionMessageDefinitionBuilder.html" title="class in com.atlan.exception"><span class="typeNameLink">ExceptionMessageDefinition.ExceptionMessageDefinitionBuilder</span></a></li>
+<li class="circle">com.atlan.generators.<a href="com/atlan/generators/GeneratorConfig.html" title="class in com.atlan.generators"><span class="typeNameLink">GeneratorConfig</span></a></li>
+<li class="circle">com.atlan.generators.<a href="com/atlan/generators/GeneratorConfig.GeneratorConfigBuilder.html" title="class in com.atlan.generators"><span class="typeNameLink">GeneratorConfig.GeneratorConfigBuilder</span></a></li>
 <li class="circle">com.atlan.model.assets.<a href="com/atlan/model/assets/Glossary.CategoryHierarchy.html" title="class in com.atlan.model.assets"><span class="typeNameLink">Glossary.CategoryHierarchy</span></a></li>
 <li class="circle">com.atlan.cache.<a href="com/atlan/cache/GroupCache.html" title="class in com.atlan.cache"><span class="typeNameLink">GroupCache</span></a></li>
 <li class="circle">com.atlan.net.<a href="com/atlan/net/HttpClient.html" title="class in com.atlan.net"><span class="typeNameLink">HttpClient</span></a>
@@ -1183,7 +1198,9 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="circle">com.atlan.model.lineage.<a href="com/atlan/model/lineage/LineageRelation.html" title="class in com.atlan.model.lineage"><span class="typeNameLink">LineageRelation</span></a></li>
 <li class="circle">com.atlan.model.lineage.<a href="com/atlan/model/lineage/LineageRelation.LineageRelationBuilder.html" title="class in com.atlan.model.lineage"><span class="typeNameLink">LineageRelation.LineageRelationBuilder</span></a></li>
 <li class="circle">com.atlan.model.lineage.<a href="com/atlan/model/lineage/LineageResponse.LineageResponseBuilder.html" title="class in com.atlan.model.lineage"><span class="typeNameLink">LineageResponse.LineageResponseBuilder</span></a></li>
+<li class="circle">com.atlan.generators.<a href="com/atlan/generators/ListGenerator.html" title="class in com.atlan.generators"><span class="typeNameLink">ListGenerator</span></a></li>
 <li class="circle">com.atlan.net.<a href="com/atlan/net/LiveAtlanResponseGetter.html" title="class in com.atlan.net"><span class="typeNameLink">LiveAtlanResponseGetter</span></a> (implements com.atlan.net.<a href="com/atlan/net/AtlanResponseGetter.html" title="interface in com.atlan.net">AtlanResponseGetter</a>)</li>
+<li class="circle">com.atlan.generators.<a href="com/atlan/generators/ModelCache.html" title="class in com.atlan.generators"><span class="typeNameLink">ModelCache</span></a></li>
 <li class="circle">com.atlan.net.<a href="com/atlan/net/MultipartProcessor.html" title="class in com.atlan.net"><span class="typeNameLink">MultipartProcessor</span></a></li>
 <li class="circle">com.atlan.model.admin.<a href="com/atlan/model/admin/PackageParameter.html" title="class in com.atlan.model.admin"><span class="typeNameLink">PackageParameter</span></a></li>
 <li class="circle">com.atlan.model.admin.<a href="com/atlan/model/admin/PackageParameter.PackageParameterBuilder.html" title="class in com.atlan.model.admin"><span class="typeNameLink">PackageParameter.PackageParameterBuilder</span></a></li>
@@ -1202,6 +1219,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="circle">com.atlan.net.<a href="com/atlan/net/RequestOptions.RequestOptionsBuilder.html" title="class in com.atlan.net"><span class="typeNameLink">RequestOptions.RequestOptionsBuilder</span></a></li>
 <li class="circle">com.atlan.cache.<a href="com/atlan/cache/RoleCache.html" title="class in com.atlan.cache"><span class="typeNameLink">RoleCache</span></a></li>
 <li class="circle">com.atlan.serde.<a href="com/atlan/serde/Serde.html" title="class in com.atlan.serde"><span class="typeNameLink">Serde</span></a></li>
+<li class="circle">com.atlan.generators.<a href="com/atlan/generators/SerdeGenerator.html" title="class in com.atlan.generators"><span class="typeNameLink">SerdeGenerator</span></a></li>
+<li class="circle">com.atlan.generators.lombok.<a href="com/atlan/generators/lombok/Singulars.html" title="class in com.atlan.generators.lombok"><span class="typeNameLink">Singulars</span></a></li>
 <li class="circle">com.atlan.util.<a href="com/atlan/util/Stopwatch.html" title="class in com.atlan.util"><span class="typeNameLink">Stopwatch</span></a></li>
 <li class="circle">com.atlan.util.<a href="com/atlan/util/StreamUtils.html" title="class in com.atlan.util"><span class="typeNameLink">StreamUtils</span></a></li>
 <li class="circle">com.atlan.util.<a href="com/atlan/util/StringUtils.html" title="class in com.atlan.util"><span class="typeNameLink">StringUtils</span></a></li>
@@ -1238,6 +1257,34 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </ul>
 </li>
 <li class="circle">com.atlan.model.typedefs.<a href="com/atlan/model/typedefs/TypeDefResponse.TypeDefResponseBuilder.html" title="class in com.atlan.model.typedefs"><span class="typeNameLink">TypeDefResponse.TypeDefResponseBuilder</span></a></li>
+<li class="circle">com.atlan.generators.<a href="com/atlan/generators/TypeGenerator.html" title="class in com.atlan.generators"><span class="typeNameLink">TypeGenerator</span></a>
+<ul>
+<li class="circle">com.atlan.generators.<a href="com/atlan/generators/AssetGenerator.html" title="class in com.atlan.generators"><span class="typeNameLink">AssetGenerator</span></a>
+<ul>
+<li class="circle">com.atlan.generators.<a href="com/atlan/generators/AssetTestGenerator.html" title="class in com.atlan.generators"><span class="typeNameLink">AssetTestGenerator</span></a>
+<ul>
+<li class="circle">com.atlan.generators.<a href="com/atlan/generators/AssetDocGenerator.html" title="class in com.atlan.generators"><span class="typeNameLink">AssetDocGenerator</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="circle">com.atlan.generators.<a href="com/atlan/generators/AttributeGenerator.html" title="class in com.atlan.generators"><span class="typeNameLink">AttributeGenerator</span></a>
+<ul>
+<li class="circle">com.atlan.generators.<a href="com/atlan/generators/AssetGenerator.Attribute.html" title="class in com.atlan.generators"><span class="typeNameLink">AssetGenerator.Attribute</span></a>
+<ul>
+<li class="circle">com.atlan.generators.<a href="com/atlan/generators/SearchFieldGenerator.Field.html" title="class in com.atlan.generators"><span class="typeNameLink">SearchFieldGenerator.Field</span></a> (implements java.lang.Comparable&lt;T&gt;)</li>
+</ul>
+</li>
+<li class="circle">com.atlan.generators.<a href="com/atlan/generators/StructGenerator.Attribute.html" title="class in com.atlan.generators"><span class="typeNameLink">StructGenerator.Attribute</span></a></li>
+</ul>
+</li>
+<li class="circle">com.atlan.generators.<a href="com/atlan/generators/EnumGenerator.html" title="class in com.atlan.generators"><span class="typeNameLink">EnumGenerator</span></a></li>
+<li class="circle">com.atlan.generators.<a href="com/atlan/generators/SearchFieldGenerator.html" title="class in com.atlan.generators"><span class="typeNameLink">SearchFieldGenerator</span></a></li>
+<li class="circle">com.atlan.generators.<a href="com/atlan/generators/StructGenerator.html" title="class in com.atlan.generators"><span class="typeNameLink">StructGenerator</span></a></li>
+</ul>
+</li>
+<li class="circle">com.atlan.generators.<a href="com/atlan/generators/TypeGenerator.MappedType.html" title="class in com.atlan.generators"><span class="typeNameLink">TypeGenerator.MappedType</span></a></li>
+<li class="circle">com.atlan.generators.<a href="com/atlan/generators/TypeGenerator.MappedType.MappedTypeBuilder.html" title="class in com.atlan.generators"><span class="typeNameLink">TypeGenerator.MappedType.MappedTypeBuilder</span></a></li>
 <li class="circle">com.atlan.cache.<a href="com/atlan/cache/UserCache.html" title="class in com.atlan.cache"><span class="typeNameLink">UserCache</span></a></li>
 </ul>
 </li>
@@ -1346,8 +1393,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="circle">com.atlan.serde.<a href="com/atlan/serde/Removable.TYPE.html" title="enum in com.atlan.serde"><span class="typeNameLink">Removable.TYPE</span></a></li>
 <li class="circle">com.atlan.model.enums.<a href="com/atlan/model/enums/SourceCostUnitType.html" title="enum in com.atlan.model.enums"><span class="typeNameLink">SourceCostUnitType</span></a> (implements com.atlan.model.enums.<a href="com/atlan/model/enums/AtlanEnum.html" title="interface in com.atlan.model.enums">AtlanEnum</a>)</li>
 <li class="circle">com.atlan.model.enums.<a href="com/atlan/model/enums/StemmedFields.html" title="enum in com.atlan.model.enums"><span class="typeNameLink">StemmedFields</span></a> (implements com.atlan.model.enums.<a href="com/atlan/model/enums/AtlanSearchableField.html" title="interface in com.atlan.model.enums">AtlanSearchableField</a>)</li>
+<li class="circle">com.atlan.model.enums.<a href="com/atlan/model/enums/TagIconType.html" title="enum in com.atlan.model.enums"><span class="typeNameLink">TagIconType</span></a> (implements com.atlan.model.enums.<a href="com/atlan/model/enums/AtlanEnum.html" title="interface in com.atlan.model.enums">AtlanEnum</a>)</li>
 <li class="circle">com.atlan.model.enums.<a href="com/atlan/model/enums/TextFields.html" title="enum in com.atlan.model.enums"><span class="typeNameLink">TextFields</span></a> (implements com.atlan.model.enums.<a href="com/atlan/model/enums/AtlanSearchableField.html" title="interface in com.atlan.model.enums">AtlanSearchableField</a>)</li>
 <li class="circle">com.atlan.model.enums.<a href="com/atlan/model/enums/TypeDefAction.html" title="enum in com.atlan.model.enums"><span class="typeNameLink">TypeDefAction</span></a> (implements com.atlan.model.enums.<a href="com/atlan/model/enums/AtlanEnum.html" title="interface in com.atlan.model.enums">AtlanEnum</a>, com.atlan.model.enums.<a href="com/atlan/model/enums/AtlanPolicyAction.html" title="interface in com.atlan.model.enums">AtlanPolicyAction</a>)</li>
+<li class="circle">com.atlan.generators.<a href="com/atlan/generators/TypeGenerator.MappedType.Type.html" title="enum in com.atlan.generators"><span class="typeNameLink">TypeGenerator.MappedType.Type</span></a></li>
 </ul>
 </li>
 </ul>
