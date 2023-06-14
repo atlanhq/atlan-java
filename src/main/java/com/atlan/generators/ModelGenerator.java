@@ -127,18 +127,6 @@ public class ModelGenerator extends AbstractGenerator {
             } catch (IOException e) {
                 log.error("Unable to open file output: {}", filename, e);
             }
-            // Finally, inject all these generated assets into the AssetDeserializer class (regenerate it)
-            Template assetDeserializerTemplate = ftl.getTemplate("AssetDeserializer.ftl");
-            createDirectoryIdempotent(SerdeGenerator.DIRECTORY);
-            filename = SerdeGenerator.DIRECTORY + File.separator + "AssetDeserializer.java";
-            try (BufferedWriter fs = new BufferedWriter(
-                    new OutputStreamWriter(new FileOutputStream(filename), StandardCharsets.UTF_8))) {
-                // Now that all are generated, output the generated switch-based deserialization
-                SerdeGenerator generator = new SerdeGenerator(cache.getAssetGenerators(), cfg);
-                assetDeserializerTemplate.process(generator, fs);
-            } catch (IOException e) {
-                log.error("Unable to open file output: {}", filename, e);
-            }
         }
     }
 
