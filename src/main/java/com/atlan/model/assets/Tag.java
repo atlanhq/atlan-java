@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import java.util.List;
 import java.util.SortedSet;
+import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * Base class for all Tag assets.
  */
+@Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)

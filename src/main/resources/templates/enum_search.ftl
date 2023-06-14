@@ -1,9 +1,12 @@
 /* SPDX-License-Identifier: Apache-2.0 */
 /* Copyright 2023- Atlan Pte. Ltd. */
-package com.atlan.model.enums;
+package ${packageRoot}.enums;
 
+import com.atlan.model.enums.AtlanSearchableField;
 import lombok.Getter;
+import javax.annotation.processing.Generated;
 
+@Generated(value="${generatorName}")
 public enum ${className} implements AtlanSearchableField {
 <#list fields as field>
     /** ${field.description} */

@@ -10,6 +10,7 @@ import com.atlan.serde.StringToSetDeserializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.Set;
+import javax.annotation.processing.Generated;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -19,6 +20,7 @@ import lombok.extern.jackson.Jacksonized;
 /**
  * Options that can be set on each attribute within a type definition.
  */
+@Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
 @Jacksonized
 @SuperBuilder(toBuilder = true)

@@ -14,13 +14,16 @@ public class AttributeGenerator extends TypeGenerator {
     private MappedType type;
     private String renamed;
 
-    protected AttributeGenerator() {}
+    protected AttributeGenerator(GeneratorConfig cfg) {
+        super(cfg);
+    }
 
-    public AttributeGenerator(String className, AttributeDef attributeDef) {
+    public AttributeGenerator(String className, AttributeDef attributeDef, GeneratorConfig cfg) {
+        super(cfg);
         super.className = className;
         this.originalName =
                 attributeDef.getDisplayName() == null ? attributeDef.getName() : attributeDef.getDisplayName();
-        this.description = AttributeCSVCache.getAttributeDescription(className, originalName);
+        this.description = cache.getAttributeDescription(className, originalName);
         resolveName();
         resolveType(attributeDef);
     }
@@ -31,7 +34,7 @@ public class AttributeGenerator extends TypeGenerator {
     }
 
     protected void resolveName() {
-        this.renamed = getLowerCamelCase(originalName);
+        this.renamed = GeneratorConfig.getLowerCamelCase(getOriginalName());
     }
 
     protected void resolveType(AttributeDef attributeDef) {

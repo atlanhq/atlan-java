@@ -5,6 +5,7 @@ package com.atlan.model.structs;
 import com.atlan.model.enums.BadgeComparisonOperator;
 import com.atlan.model.enums.BadgeConditionColor;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
@@ -12,6 +13,7 @@ import lombok.extern.jackson.Jacksonized;
 /**
  * Detailed information about a condition used in coloring a custom metadata badge in Atlan.
  */
+@Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
 @Jacksonized
 @SuperBuilder(toBuilder = true)

@@ -11,7 +11,7 @@ import com.atlan.model.admin.AtlanImage;
 import com.atlan.model.core.AtlanObject;
 import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanTagColor;
-import com.atlan.model.enums.IconType;
+import com.atlan.model.enums.TagIconType;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import lombok.EqualsAndHashCode;
@@ -50,7 +50,7 @@ public class AtlanTagOptions extends AtlanObject {
         return AtlanTagOptions.builder()
                 .color(color)
                 .iconName(icon)
-                .iconType(IconType.ICON)
+                .iconType(TagIconType.ICON)
                 .imageID("")
                 .build();
     }
@@ -68,7 +68,7 @@ public class AtlanTagOptions extends AtlanObject {
             AtlanImage result = ImagesEndpoint.uploadImage(url);
             return AtlanTagOptions.builder()
                     .color(color)
-                    .iconType(IconType.IMAGE)
+                    .iconType(TagIconType.IMAGE)
                     .imageID(result.getId())
                     .build();
         } catch (MalformedURLException e) {
@@ -85,7 +85,7 @@ public class AtlanTagOptions extends AtlanObject {
     AtlanIcon iconName;
 
     /** Type of icon to use for representing the tag visually. */
-    IconType iconType;
+    TagIconType iconType;
 
     /** Unique identifier (GUID) of an image to use for the tag. */
     String imageID;

@@ -5,10 +5,7 @@ package com.atlan.live;
 import static org.testng.Assert.*;
 
 import com.atlan.exception.AtlanException;
-import com.atlan.model.enums.AtlanIcon;
-import com.atlan.model.enums.AtlanTagColor;
-import com.atlan.model.enums.AtlanTypeCategory;
-import com.atlan.model.enums.IconType;
+import com.atlan.model.enums.*;
 import com.atlan.model.typedefs.AtlanTagDef;
 import org.testng.annotations.Test;
 
@@ -66,7 +63,7 @@ public class AtlanTagTest extends AtlanLiveTest {
         assertEquals(response.getDisplayName(), TAG_WITH_IMAGE);
         assertNotNull(response.getOptions());
         assertNotNull(response.getOptions().getImageID());
-        assertEquals(response.getOptions().getIconType(), IconType.IMAGE);
+        assertEquals(response.getOptions().getIconType(), TagIconType.IMAGE);
     }
 
     @Test(groups = {"tag.create.icon"})
@@ -81,7 +78,7 @@ public class AtlanTagTest extends AtlanLiveTest {
         assertNotEquals(uniqueName, TAG_WITH_ICON);
         assertNotNull(response.getGuid());
         assertEquals(response.getDisplayName(), TAG_WITH_ICON);
-        assertEquals(response.getOptions().getIconType(), IconType.ICON);
+        assertEquals(response.getOptions().getIconType(), TagIconType.ICON);
     }
 
     @Test(

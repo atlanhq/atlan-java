@@ -6,6 +6,7 @@ import com.atlan.model.structs.GoogleLabel;
 import com.atlan.model.structs.GoogleTag;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import java.util.List;
+import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
@@ -13,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 /**
  * Base class for Google assets.
  */
+@Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)

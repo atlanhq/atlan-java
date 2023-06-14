@@ -16,9 +16,12 @@ import lombok.Getter;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 
+import javax.annotation.processing.Generated;
+
 /**
  * Options that can be set on each attribute within a type definition.
  */
+@Generated(value="${generatorName}")
 @Getter
 @Jacksonized
 @SuperBuilder(toBuilder = true)

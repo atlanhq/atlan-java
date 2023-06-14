@@ -5,22 +5,20 @@ package com.atlan.model.enums;
 import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 
-public enum ${className} implements AtlanEnum {
-<#list values as value>
-    ${value.enumeratedValue}("${value.actualValue}"),
-</#list>
-;
+public enum TagIconType implements AtlanEnum {
+    IMAGE("image"),
+    ICON("icon");
 
     @JsonValue
     @Getter(onMethod_ = {@Override})
     private final String value;
 
-    ${className}(String value) {
+    TagIconType(String value) {
         this.value = value;
     }
 
-    public static ${className} fromValue(String value) {
-        for (${className} b : ${className}.values()) {
+    public static TagIconType fromValue(String value) {
+        for (TagIconType b : TagIconType.values()) {
             if (b.value.equals(value)) {
                 return b;
             }

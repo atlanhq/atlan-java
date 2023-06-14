@@ -8,7 +8,8 @@ import lombok.Getter;
 public enum AtlanTagColor implements AtlanEnum {
     GREEN("Green"),
     YELLOW("Yellow"),
-    RED("Red");
+    RED("Red"),
+    GRAY("Gray");
 
     @JsonValue
     @Getter(onMethod_ = {@Override})

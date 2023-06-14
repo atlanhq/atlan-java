@@ -4,10 +4,8 @@ package com.atlan.generators;
 
 import com.atlan.model.typedefs.AttributeDef;
 import com.atlan.model.typedefs.StructDef;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -15,39 +13,28 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class StructGenerator extends TypeGenerator {
 
-    public static final String DIRECTORY = ""
-            + "src" + File.separator
-            + "main" + File.separator
-            + "java" + File.separator
-            + "com" + File.separator
-            + "atlan" + File.separator
-            + "model" + File.separator
-            + "structs";
-
-    private static final Map<String, String> CLASS_RENAMING = Map.ofEntries();
+    public static final String DIRECTORY = "structs";
 
     private final StructDef structDef;
     private List<Attribute> attributes;
 
-    public StructGenerator(StructDef structDef) {
-        super(structDef);
+    public StructGenerator(StructDef structDef, GeneratorConfig cfg) {
+        super(structDef, cfg);
         this.structDef = structDef;
         resolveClassName();
-        super.description = AttributeCSVCache.getTypeDescription(originalName);
+        super.description = cache.getTypeDescription(originalName);
         resolveAttributes();
     }
 
     @Override
     protected void resolveClassName() {
-        super.className = CLASS_RENAMING.containsKey(originalName)
-                ? CLASS_RENAMING.get(originalName)
-                : getUpperCamelCase(originalName);
+        super.className = cfg.resolveClassName(getOriginalName());
     }
 
     private void resolveAttributes() {
         attributes = new ArrayList<>();
         for (AttributeDef attributeDef : structDef.getAttributeDefs()) {
-            Attribute attribute = new Attribute(className, attributeDef);
+            Attribute attribute = new Attribute(className, attributeDef, cfg);
             if (className.equals("BadgeCondition") && attribute.getRenamed().equals("badgeConditionOperator")) {
                 attribute.setType(MappedType.builder()
                         .type(MappedType.Type.ENUM)
@@ -61,8 +48,8 @@ public class StructGenerator extends TypeGenerator {
     @Getter
     public static final class Attribute extends AttributeGenerator {
 
-        public Attribute(String className, AttributeDef attributeDef) {
-            super(className, attributeDef);
+        public Attribute(String className, AttributeDef attributeDef, GeneratorConfig cfg) {
+            super(className, attributeDef, cfg);
         }
 
         @Override

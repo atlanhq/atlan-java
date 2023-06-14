@@ -33,7 +33,7 @@ import lombok.Getter;
  */
 public class TypeDefsEndpoint extends AtlasEndpoint {
 
-    private static final Set<String> RESERVED_SERVICE_TYPES =
+    public static final Set<String> RESERVED_SERVICE_TYPES =
             Set.of("atlas_core", "atlan", "aws", "azure", "gcp", "google");
     private static final String endpoint = "/types/typedefs";
     private static final String endpoint_singular = "/types/typedef";
@@ -107,32 +107,30 @@ public class TypeDefsEndpoint extends AtlasEndpoint {
         TypeDefResponse.TypeDefResponseBuilder builder = TypeDefResponse.builder();
         if (typeDef != null) {
             String serviceType = typeDef.getServiceType();
-            if (serviceType != null) {
-                if (RESERVED_SERVICE_TYPES.contains(serviceType)) {
-                    throw new ConflictException(ErrorCode.RESERVED_SERVICE_TYPE, serviceType);
-                }
-                switch (typeDef.getCategory()) {
-                    case ATLAN_TAG:
-                        builder.atlanTagDefs(List.of((AtlanTagDef) typeDef));
-                        break;
-                    case CUSTOM_METADATA:
-                        builder.customMetadataDefs(List.of((CustomMetadataDef) typeDef));
-                        break;
-                    case ENUM:
-                        builder.enumDefs(List.of((EnumDef) typeDef));
-                        break;
-                    case STRUCT:
-                        builder.structDefs(List.of((StructDef) typeDef));
-                        break;
-                    case ENTITY:
-                        builder.entityDefs(List.of((EntityDef) typeDef));
-                        break;
-                    case RELATIONSHIP:
-                        builder.relationshipDefs(List.of((RelationshipDef) typeDef));
-                        break;
-                }
-                return createInternal(builder);
+            if (serviceType != null && RESERVED_SERVICE_TYPES.contains(serviceType)) {
+                throw new ConflictException(ErrorCode.RESERVED_SERVICE_TYPE, serviceType);
             }
+            switch (typeDef.getCategory()) {
+                case ATLAN_TAG:
+                    builder.atlanTagDefs(List.of((AtlanTagDef) typeDef));
+                    break;
+                case CUSTOM_METADATA:
+                    builder.customMetadataDefs(List.of((CustomMetadataDef) typeDef));
+                    break;
+                case ENUM:
+                    builder.enumDefs(List.of((EnumDef) typeDef));
+                    break;
+                case STRUCT:
+                    builder.structDefs(List.of((StructDef) typeDef));
+                    break;
+                case ENTITY:
+                    builder.entityDefs(List.of((EntityDef) typeDef));
+                    break;
+                case RELATIONSHIP:
+                    builder.relationshipDefs(List.of((RelationshipDef) typeDef));
+                    break;
+            }
+            return createInternal(builder);
         }
         // If there was no typedef provided, just return an empty response (noop)
         return builder.build();
@@ -182,32 +180,30 @@ public class TypeDefsEndpoint extends AtlasEndpoint {
         TypeDefResponse.TypeDefResponseBuilder builder = TypeDefResponse.builder();
         if (typeDef != null) {
             String serviceType = typeDef.getServiceType();
-            if (serviceType != null) {
-                if (RESERVED_SERVICE_TYPES.contains(serviceType)) {
-                    throw new ConflictException(ErrorCode.RESERVED_SERVICE_TYPE, serviceType);
-                }
-                switch (typeDef.getCategory()) {
-                    case ATLAN_TAG:
-                        builder.atlanTagDefs(List.of((AtlanTagDef) typeDef));
-                        break;
-                    case CUSTOM_METADATA:
-                        builder.customMetadataDefs(List.of((CustomMetadataDef) typeDef));
-                        break;
-                    case ENUM:
-                        builder.enumDefs(List.of((EnumDef) typeDef));
-                        break;
-                    case STRUCT:
-                        builder.structDefs(List.of((StructDef) typeDef));
-                        break;
-                    case ENTITY:
-                        builder.entityDefs(List.of((EntityDef) typeDef));
-                        break;
-                    case RELATIONSHIP:
-                        builder.relationshipDefs(List.of((RelationshipDef) typeDef));
-                        break;
-                }
-                return updateInternal(builder);
+            if (serviceType != null && RESERVED_SERVICE_TYPES.contains(serviceType)) {
+                throw new ConflictException(ErrorCode.RESERVED_SERVICE_TYPE, serviceType);
             }
+            switch (typeDef.getCategory()) {
+                case ATLAN_TAG:
+                    builder.atlanTagDefs(List.of((AtlanTagDef) typeDef));
+                    break;
+                case CUSTOM_METADATA:
+                    builder.customMetadataDefs(List.of((CustomMetadataDef) typeDef));
+                    break;
+                case ENUM:
+                    builder.enumDefs(List.of((EnumDef) typeDef));
+                    break;
+                case STRUCT:
+                    builder.structDefs(List.of((StructDef) typeDef));
+                    break;
+                case ENTITY:
+                    builder.entityDefs(List.of((EntityDef) typeDef));
+                    break;
+                case RELATIONSHIP:
+                    builder.relationshipDefs(List.of((RelationshipDef) typeDef));
+                    break;
+            }
+            return updateInternal(builder);
         }
         // If there was no typedef provided, just return an empty response (noop)
         return builder.build();
@@ -228,16 +224,13 @@ public class TypeDefsEndpoint extends AtlasEndpoint {
     public static void purgeTypeDef(String internalName) throws AtlanException {
         TypeDef typeDef = getTypeDefByName(internalName);
         String serviceType = typeDef.getServiceType();
-        if (serviceType != null) {
-            if (RESERVED_SERVICE_TYPES.contains(serviceType)) {
-                throw new ConflictException(ErrorCode.RESERVED_SERVICE_TYPE, serviceType);
-            }
-            String url = String.format(
-                    "%s%s",
-                    getBaseUrl(),
-                    String.format("%s/name/%s", endpoint_singular, StringUtils.encodeContent(internalName)));
-            ApiResource.request(ApiResource.RequestMethod.DELETE, url, "", null, null);
+        if (serviceType != null && RESERVED_SERVICE_TYPES.contains(serviceType)) {
+            throw new ConflictException(ErrorCode.RESERVED_SERVICE_TYPE, serviceType);
         }
+        String url = String.format(
+                "%s%s",
+                getBaseUrl(), String.format("%s/name/%s", endpoint_singular, StringUtils.encodeContent(internalName)));
+        ApiResource.request(ApiResource.RequestMethod.DELETE, url, "", null, null);
     }
 
     /**

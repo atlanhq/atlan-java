@@ -5,8 +5,6 @@ package com.atlan.generators.lombok;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,13 +19,13 @@ import java.util.List;
 public class Singulars {
     private static final List<String> SINGULAR_STORE; // intended to be immutable.
 
-    private static final String SINGULARS_FILE =
-            "src" + File.separator + "generate" + File.separator + "resources" + File.separator + "singulars.txt";
+    private static final String SINGULARS_FILE = "singulars.txt";
 
     static {
         SINGULAR_STORE = new ArrayList<>();
 
-        try (BufferedReader br = Files.newBufferedReader(Paths.get(SINGULARS_FILE), UTF_8)) {
+        try (BufferedReader br = new BufferedReader(
+                new InputStreamReader(Singulars.class.getClassLoader().getResourceAsStream(SINGULARS_FILE), UTF_8))) {
             for (String line = br.readLine(); line != null; line = br.readLine()) {
                 line = line.trim();
                 if (line.startsWith("#") || line.isEmpty()) continue;

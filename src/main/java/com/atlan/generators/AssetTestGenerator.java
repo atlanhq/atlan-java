@@ -5,7 +5,6 @@ package com.atlan.generators;
 import com.atlan.generators.lombok.Singulars;
 import com.atlan.model.enums.AtlanEnum;
 import com.atlan.model.typedefs.EntityDef;
-import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -21,13 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class AssetTestGenerator extends AssetGenerator {
 
-    public static final String DIRECTORY = "src" + File.separator
-            + "test" + File.separator
-            + "java" + File.separator
-            + "com" + File.separator
-            + "atlan" + File.separator
-            + "model" + File.separator
-            + "assets";
+    public static final String DIRECTORY = "assets";
 
     private static final String ASSET_GUID = "705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23";
     private static final String ASSET_QN = "default/snowflake/1234567890/test/qualifiedName";
@@ -35,8 +28,8 @@ public class AssetTestGenerator extends AssetGenerator {
     protected final AssetGenerator asset;
     protected final List<TestAttribute> testAttributes;
 
-    public AssetTestGenerator(AssetGenerator asset) {
-        super(asset.getEntityDef());
+    public AssetTestGenerator(AssetGenerator asset, GeneratorConfig cfg) {
+        super(asset.getEntityDef(), cfg);
         this.asset = asset;
         this.testAttributes = new ArrayList<>();
     }
@@ -63,10 +56,10 @@ public class AssetTestGenerator extends AssetGenerator {
         EntityDef typeDetails = assetGenerator.getEntityDef();
         List<String> superTypes = typeDetails.getSuperTypes();
         if (superTypes != null && !superTypes.isEmpty()) {
-            String singleSuperType = getSingleTypeToExtend(assetGenerator.getOriginalName(), superTypes);
+            String singleSuperType = cfg.getSingleTypeToExtend(assetGenerator.getOriginalName(), superTypes);
             if (singleSuperType != null && !singleSuperType.equals("Reference")) {
                 // We can short-circuit when the next level up is Reference (the top)
-                addTestAttributes(ModelGeneratorV2.getCachedAssetType(singleSuperType), true);
+                addTestAttributes(cache.getCachedAssetType(singleSuperType), true);
             }
         }
         List<Attribute> attributes = assetGenerator.getAttributes();
@@ -89,7 +82,7 @@ public class AssetTestGenerator extends AssetGenerator {
                 }
                 builder.builderMethod(builderMethod)
                         .inherited(fromSuperType)
-                        .searchFields(ModelGeneratorV2.getCachedSearchFields(
+                        .searchFields(cache.getCachedSearchFields(
                                 assetGenerator.getOriginalName(), attribute.getOriginalName()));
                 switch (type.getType()) {
                     case PRIMITIVE:
@@ -285,7 +278,7 @@ public class AssetTestGenerator extends AssetGenerator {
         Enum<?>[] values = null;
         try {
             // Introspect the enum to draw out actual values
-            Class<?> clazz = Class.forName("com.atlan.model.enums." + typeName);
+            Class<?> clazz = Class.forName(getPackageRoot() + ".enums." + typeName);
             Field f = clazz.getDeclaredField("$VALUES");
             f.setAccessible(true);
             Object o = f.get(null);
@@ -340,7 +333,7 @@ public class AssetTestGenerator extends AssetGenerator {
         // TODO: Note that the lookup below is on the renamed class (will only get a hit if
         //  the class is NOT renamed but reuses the out-of-the-box name). Today this works
         //  for all classes, but may not always be the case in the future.
-        AssetGenerator assetGen = ModelGeneratorV2.getCachedAssetType(typeName);
+        AssetGenerator assetGen = cache.getCachedAssetType(typeName);
         if (assetGen != null) {
             if (!assetGen.isAbstract()) {
                 // If we arrive at a concrete class, return it
@@ -350,7 +343,7 @@ public class AssetTestGenerator extends AssetGenerator {
                 if (subTypes != null && !subTypes.isEmpty()) {
                     for (String subType : subTypes) {
                         String candidate = traverseToConcreteType(subType);
-                        AssetGenerator candidateGen = ModelGeneratorV2.getCachedAssetType(candidate);
+                        AssetGenerator candidateGen = cache.getCachedAssetType(candidate);
                         if (candidateGen != null && !candidateGen.isAbstract()) {
                             // If we hit a leaf, short-circuit out, otherwise continue on with
                             // the recursive loop
@@ -502,7 +495,7 @@ public class AssetTestGenerator extends AssetGenerator {
     private Field[] getFieldsForStruct(String typeName) {
         try {
             // Introspect the members of the struct to add all attributes to the builder
-            Class<?> clazz = Class.forName("com.atlan.model.structs." + typeName);
+            Class<?> clazz = Class.forName(getPackageRoot() + ".structs." + typeName);
             return clazz.getDeclaredFields();
         } catch (ClassNotFoundException e) {
             log.error("Unable to reflectively introspect struct: {}", typeName, e);

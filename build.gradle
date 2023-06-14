@@ -57,6 +57,9 @@ tasks.withType(JavaCompile) {
         // This check is disabled as we won't use this annotation
         disable("InlineMeSuggester")
 
+        // Disabled as we know how it works and it does what we want
+        disable("StringSplitter")
+
         // This check is disabled because of how we have object-based inheritance setup, and the
         // inability of Lombok to generate Overrides on its generated builder-related methods.
         //disable("MissingOverride")
@@ -94,10 +97,12 @@ dependencies {
     api group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.14.1"
     api group: "org.slf4j", name: "slf4j-api", version: "1.7.32"
     api group: "co.elastic.clients", name: "elasticsearch-java", version: "8.5.1"
+    api group: 'org.freemarker', name: 'freemarker', version: '2.3.32'
+    api group: 'org.apache.commons', name: 'commons-csv', version: '1.9.0'
+    implementation group: "io.github.classgraph", name: "classgraph", version: "4.8.160"
     numaflow group: "io.numaproj.numaflow", name: "numaflow-java", version: "+"
     numaflow "io.netty:netty-transport-native-epoll:4.1.79.Final:linux-x86_64"
     testImplementation group: 'com.aventrix.jnanoid', name: 'jnanoid', version: '2.0.0'
-    testImplementation group: 'org.freemarker', name: 'freemarker', version: '2.3.32'
     testImplementation group: 'org.testng', name: 'testng', version: '7.7.0'
     testImplementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.11'
     testImplementation group: 'com.github.tomakehurst', name: 'wiremock', version: '2.27.2'
@@ -179,10 +184,8 @@ testing {
             }
             dependencies {
                 implementation project
-                implementation group: 'org.freemarker', name: 'freemarker', version: '2.3.32'
                 implementation group: 'org.testng', name: 'testng', version: '7.7.0'
                 implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.11'
-                implementation group: 'org.apache.commons', name: 'commons-csv', version: '1.9.0'
             }
             sources {
                 java {

@@ -2,8 +2,10 @@
 /* Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.enums;
 
+import javax.annotation.processing.Generated;
 import lombok.Getter;
 
+@Generated(value = "com.atlan.generators.ModelGeneratorV2")
 public enum StemmedFields implements AtlanSearchableField {
     /** Title for the asset. */
     DATA_STUDIO_ASSET_TITLE("dataStudioAssetTitle.stemmed"),
