@@ -211,6 +211,7 @@ public class GeneratorConfig {
                 .singularForAttribute("policyValiditySchedule", "addPolicyValiditySchedule")
                 .singularForAttribute("authServiceConfig", "putAuthServiceConfig")
                 .singularForAttribute("microStrategyLocation", "putMicroStrategyLocation")
+                .singularForAttribute("starredBy", "addStarredBy")
                 .renameAttribute("connectorName", "connectorType")
                 .renameAttribute("__hasLineage", "hasLineage")
                 .renameAttribute("viewsCount", "viewCount")

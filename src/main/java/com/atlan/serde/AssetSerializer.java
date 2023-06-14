@@ -113,6 +113,10 @@ public class AssetSerializer extends StdSerializer<Asset> {
                             }
                             // Add the value we've derived above to the attribute map for nesting
                             String serializeName = ReflectionCache.getSerializedName(clazz, fieldName);
+                            // Override meanings / assignedTerms explicitly, as they collide otherwise
+                            if (serializeName.equals("assignedTerms")) {
+                                serializeName = "meanings";
+                            }
                             attributes.put(serializeName, attrValue);
                         }
                     }

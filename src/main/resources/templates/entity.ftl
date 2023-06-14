@@ -58,8 +58,8 @@ import com.atlan.api.EntityGuidEndpoint;
 import com.atlan.api.EntityUniqueAttributesEndpoint;
 import com.atlan.model.relations.Reference;
 import com.atlan.net.HttpClient;
-import com.atlan.serde.AssetDeserializer;
 import com.atlan.serde.AssetSerializer;
+import com.atlan.serde.CustomMetadataMapDeserializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 </#if>
@@ -137,7 +137,9 @@ public class ${className} extends ${parentClassName} {
     <#if attribute.singular??>@Singular<#if attribute.singular?has_content>("${attribute.singular}")</#if></#if>
     <#if className == "GlossaryCategory" && attribute.renamed == "childrenCategories">@Setter(AccessLevel.PACKAGE)</#if>
     <#if attribute.renamed != attribute.originalName>
+    <#if attribute.renamed != "assignedTerms">
     @JsonProperty("${attribute.originalName}")
+    </#if>
     </#if>
     ${attribute.fullType} ${attribute.renamed};
 
@@ -248,19 +250,6 @@ public class ${className} extends ${parentClassName} {
                     ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "${className}", String.join(",", missing));
         }
         return updater(this.getQualifiedName(), this.getName());
-    }
-<#else>
-    /**
-     * Builds the minimal object necessary to apply an update to a ${className}, from a potentially
-     * more-complete ${className} object.
-     * NOTE: This is unimplemented for classes that should not be directly instantiated!
-     *
-     * @return the minimal object necessary to update the ${className}, as a builder
-     * @throws InvalidRequestException if any of the minimal set of required properties for ${className} are not found in the initial object
-     */
-    @Override
-    public ${className}Builder<?, ?> trimToRequired() throws InvalidRequestException {
-        throw new InvalidRequestException(ErrorCode.UNIMPLEMENTED_ABSTRACT, "trimToRequired");
     }
 </#if>
 

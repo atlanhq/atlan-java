@@ -14,6 +14,7 @@
         return Badge.builder()
                 .qualifiedName(generateQualifiedName(cmName, cmAttribute))
                 .name(name)
+                .status(AtlanStatus.ACTIVE)
                 .badgeMetadataAttribute(cmId + "." + cmAttrId);
     }
 

@@ -4,7 +4,6 @@ package com.atlan.model.structs;
 
 import com.atlan.model.enums.BadgeComparisonOperator;
 import com.atlan.model.enums.BadgeConditionColor;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -23,7 +22,6 @@ public class BadgeCondition extends AtlanStruct {
     public static final String TYPE_NAME = "BadgeCondition";
 
     /** Fixed typeName for BadgeCondition. */
-    @JsonIgnore
     @Getter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;

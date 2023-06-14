@@ -7,6 +7,7 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
+import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.BadgeCondition;
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import java.util.List;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.jackson.Jacksonized;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -21,6 +23,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
+@Jacksonized
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
@@ -126,6 +129,7 @@ public class Badge extends Asset {
         return Badge.builder()
                 .qualifiedName(generateQualifiedName(cmName, cmAttribute))
                 .name(name)
+                .status(AtlanStatus.ACTIVE)
                 .badgeMetadataAttribute(cmId + "." + cmAttrId);
     }
 

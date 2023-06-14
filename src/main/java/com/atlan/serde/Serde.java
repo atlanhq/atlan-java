@@ -7,6 +7,7 @@ import co.elastic.clients.elasticsearch._types.aggregations.Aggregation;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import co.elastic.clients.json.JsonpMapper;
 import co.elastic.clients.json.jackson.JacksonJsonpMapper;
+import com.atlan.model.assets.Asset;
 import com.atlan.model.structs.AtlanStruct;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.*;
@@ -14,11 +15,15 @@ import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.deser.BeanDeserializerModifier;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import java.util.LinkedHashSet;
+import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Utility class for static objects used for serialization and deserialization.
  */
+@Slf4j
 public class Serde {
 
     public static final String DELETED_AUDIT_OBJECT = "(DELETED)";
@@ -34,6 +39,8 @@ public class Serde {
 
     /** JSONP mapper through which to do Jackson-based (de-)serialization of Elastic objects. */
     static final JsonpMapper jsonpMapper = new JacksonJsonpMapper();
+
+    private static final Map<String, JsonDeserializer<?>> deserializerCache = new ConcurrentHashMap<>();
 
     private static Set<Module> createModules() {
         Set<Module> set = new LinkedHashSet<>();
@@ -53,12 +60,35 @@ public class Serde {
                     DeserializationConfig config, BeanDescription beanDesc, JsonDeserializer<?> deserializer) {
                 Class<?> enclosing = beanDesc.getBeanClass().getEnclosingClass();
                 if (enclosing != null && enclosing.getSuperclass() == AtlanStruct.class) {
-                    return new StructDeserializer(deserializer);
+                    if (!deserializerCache.containsKey(beanDesc.getBeanClass().getCanonicalName())) {
+                        log.info("Caching new struct deserializer for: {}", enclosing.getCanonicalName());
+                        deserializerCache.put(
+                                beanDesc.getBeanClass().getCanonicalName(), new StructDeserializer(deserializer));
+                    }
+                    return deserializerCache.get(beanDesc.getBeanClass().getCanonicalName());
                 }
                 return deserializer;
             }
         });
         set.add(structs);
+        SimpleModule assets = new SimpleModule().setDeserializerModifier(new BeanDeserializerModifier() {
+            @Override
+            public JsonDeserializer<?> modifyDeserializer(
+                    DeserializationConfig config, BeanDescription beanDesc, JsonDeserializer<?> deserializer) {
+                Class<?> enclosing = beanDesc.getBeanClass().getEnclosingClass();
+                // Enclosing class because it's actually the (embedded) builder we'll see
+                if (inheritsFromAsset(enclosing)) {
+                    if (!deserializerCache.containsKey(beanDesc.getBeanClass().getCanonicalName())) {
+                        log.info("Caching new asset deserializer for: {}", enclosing.getCanonicalName());
+                        deserializerCache.put(
+                                beanDesc.getBeanClass().getCanonicalName(), new AssetDeserializerV2(deserializer));
+                    }
+                    return deserializerCache.get(beanDesc.getBeanClass().getCanonicalName());
+                }
+                return deserializer;
+            }
+        });
+        set.add(assets);
         return set;
     }
 
@@ -70,5 +100,15 @@ public class Serde {
             om.registerModule(m);
         }
         return om;
+    }
+
+    private static boolean inheritsFromAsset(Class<?> clazz) {
+        if (clazz == null) {
+            return false;
+        } else if (clazz == Asset.class) {
+            return true;
+        } else {
+            return inheritsFromAsset(clazz.getSuperclass());
+        }
     }
 }

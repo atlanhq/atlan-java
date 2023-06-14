@@ -983,6 +983,8 @@ public enum KeywordFields implements AtlanSearchableField {
     SQL_TABLE_NAME("sqlTableName"),
     /** TBC */
     STALENESS("staleness"),
+    /** TBC */
+    STARRED_BY("starredBy"),
     /** Asset status in Atlan (active vs deleted). */
     STATE("__state"),
     /** TBC */

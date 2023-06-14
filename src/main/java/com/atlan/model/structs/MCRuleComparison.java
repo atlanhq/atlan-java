@@ -2,7 +2,6 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.structs;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -21,7 +20,6 @@ public class MCRuleComparison extends AtlanStruct {
     public static final String TYPE_NAME = "MCRuleComparison";
 
     /** Fixed typeName for MCRuleComparison. */
-    @JsonIgnore
     @Getter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;

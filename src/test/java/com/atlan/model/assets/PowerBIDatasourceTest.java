@@ -330,6 +330,8 @@ public class PowerBIDatasourceTest {
             .assetMcIncidentState("String0")
             .assetMcIncidentState("String1")
             .assetMcLastSyncRunAt(123456789L)
+            .addStarredBy("String0")
+            .addStarredBy("String1")
             .mcMonitor(MCMonitor.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .mcMonitor(MCMonitor.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .file(File.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))

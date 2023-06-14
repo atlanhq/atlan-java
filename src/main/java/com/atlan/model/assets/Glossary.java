@@ -33,6 +33,7 @@ import java.util.TreeSet;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.jackson.Jacksonized;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -40,6 +41,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
+@Jacksonized
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j

@@ -2,7 +2,6 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.structs;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;
 import javax.annotation.processing.Generated;
 import lombok.*;
@@ -22,7 +21,6 @@ public class AuthPolicyCondition extends AtlanStruct {
     public static final String TYPE_NAME = "AuthPolicyCondition";
 
     /** Fixed typeName for AuthPolicyCondition. */
-    @JsonIgnore
     @Getter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;

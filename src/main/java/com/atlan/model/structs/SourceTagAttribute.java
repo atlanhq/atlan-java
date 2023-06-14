@@ -2,7 +2,6 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.structs;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Map;
 import javax.annotation.processing.Generated;
 import lombok.*;
@@ -22,7 +21,6 @@ public class SourceTagAttribute extends AtlanStruct {
     public static final String TYPE_NAME = "SourceTagAttribute";
 
     /** Fixed typeName for SourceTagAttribute. */
-    @JsonIgnore
     @Getter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;

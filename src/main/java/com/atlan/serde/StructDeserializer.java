@@ -45,7 +45,7 @@ public class StructDeserializer extends StdDeserializer<AtlanStruct> implements 
      */
     @Override
     public AtlanStruct deserialize(JsonParser parser, DeserializationContext context) throws IOException {
-        JsonNode root = parser.readValueAsTree();
+        JsonNode root = parser.getCodec().readTree(parser);
         if (root != null) {
             JsonNode attributes = root.get("attributes");
             if (attributes != null && attributes.isObject()) {

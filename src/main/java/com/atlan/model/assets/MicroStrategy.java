@@ -9,6 +9,7 @@ import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.jackson.Jacksonized;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -16,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
+@Jacksonized
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @JsonSubTypes({
@@ -31,7 +33,8 @@ import lombok.extern.slf4j.Slf4j;
 })
 @Slf4j
 @SuppressWarnings("cast")
-public abstract class MicroStrategy extends BI {
+public class MicroStrategy extends BI {
+    private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "MicroStrategy";
 

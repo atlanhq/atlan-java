@@ -8,6 +8,7 @@ import java.util.List;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.jackson.Jacksonized;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -15,13 +16,15 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
+@Jacksonized
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @JsonSubTypes({
     @JsonSubTypes.Type(value = ADLS.class, name = ADLS.TYPE_NAME),
 })
 @Slf4j
-public abstract class Azure extends Catalog {
+public class Azure extends Catalog {
+    private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "Azure";
 

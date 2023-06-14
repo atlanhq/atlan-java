@@ -3,7 +3,6 @@
 package com.atlan.model.structs;
 
 import com.atlan.model.enums.SourceCostUnitType;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -22,7 +21,6 @@ public class PopularityInsights extends AtlanStruct {
     public static final String TYPE_NAME = "PopularityInsights";
 
     /** Fixed typeName for PopularityInsights. */
-    @JsonIgnore
     @Getter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;

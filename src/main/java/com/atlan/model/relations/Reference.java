@@ -3,7 +3,6 @@
 package com.atlan.model.relations;
 
 import com.atlan.model.assets.Asset;
-import com.atlan.model.assets.IndistinctAsset;
 import com.atlan.model.core.AtlanObject;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.search.AuditDetail;

@@ -24,12 +24,11 @@ import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.relations.Reference;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.net.HttpClient;
-import com.atlan.serde.AssetDeserializer;
 import com.atlan.serde.AssetSerializer;
+import com.atlan.serde.CustomMetadataMapDeserializer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.Collection;
@@ -44,6 +43,7 @@ import java.util.TreeSet;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.jackson.Jacksonized;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -51,15 +51,10 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
+@Jacksonized
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @JsonSerialize(using = AssetSerializer.class)
-@JsonDeserialize(using = AssetDeserializer.class)
-@JsonTypeInfo(
-        use = JsonTypeInfo.Id.NAME,
-        include = JsonTypeInfo.As.EXISTING_PROPERTY,
-        property = "typeName",
-        defaultImpl = IndistinctAsset.class)
 @JsonSubTypes({
     @JsonSubTypes.Type(value = Connection.class, name = Connection.TYPE_NAME),
     @JsonSubTypes.Type(value = LineageProcess.class, name = LineageProcess.TYPE_NAME),
@@ -76,7 +71,8 @@ import lombok.extern.slf4j.Slf4j;
 })
 @Slf4j
 @SuppressWarnings("cast")
-public abstract class Asset extends Reference {
+public class Asset extends Reference {
+    private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "Asset";
 
@@ -562,6 +558,11 @@ public abstract class Asset extends Reference {
 
     /** TBC */
     @Attribute
+    @Singular("addStarredBy")
+    SortedSet<String> starredBy;
+
+    /** TBC */
+    @Attribute
     @Singular
     SortedSet<MCMonitor> mcMonitors;
 
@@ -592,7 +593,6 @@ public abstract class Asset extends Reference {
     /** Glossary terms that are linked to this asset. */
     @Attribute
     @Singular
-    @JsonProperty("meanings")
     SortedSet<GlossaryTerm> assignedTerms;
 
     /**
@@ -627,6 +627,7 @@ public abstract class Asset extends Reference {
      * to the value for that attribute on this asset.
      */
     @Singular("customMetadata")
+    @JsonDeserialize(using = CustomMetadataMapDeserializer.class)
     Map<String, CustomMetadataAttributes> customMetadataSets;
 
     /** Status of the asset. */
@@ -679,12 +680,16 @@ public abstract class Asset extends Reference {
     final SortedSet<String> pendingTasks;
 
     /**
-     * Reduce the asset to the minimum set of properties required to update it.
+     * Builds the minimal object necessary to apply an update to an asset, from a potentially
+     * more-complete asset.
+     * NOTE: This is unimplemented for classes that should not be directly instantiated!
      *
-     * @return a builder containing the minimal set of properties required to update this asset
-     * @throws InvalidRequestException if any of the minimal set of required properties are not found in the initial object
+     * @return the minimal object necessary to update the asset, as a builder
+     * @throws InvalidRequestException if any of the minimal set of required properties for the asset are not found in the initial object
      */
-    public abstract AssetBuilder<?, ?> trimToRequired() throws InvalidRequestException;
+    public AssetBuilder<?, ?> trimToRequired() throws InvalidRequestException {
+        throw new InvalidRequestException(ErrorCode.UNIMPLEMENTED_ABSTRACT, "trimToRequired");
+    }
 
     /**
      * If an asset with the same qualifiedName exists, updates the existing asset. Otherwise, creates the asset.

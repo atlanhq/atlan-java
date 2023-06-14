@@ -31,6 +31,7 @@
      * to the value for that attribute on this asset.
      */
     @Singular("customMetadata")
+    @JsonDeserialize(using = CustomMetadataMapDeserializer.class)
     Map<String, CustomMetadataAttributes> customMetadataSets;
 
     /** Status of the asset. */
@@ -83,12 +84,16 @@
     final SortedSet<String> pendingTasks;
 
     /**
-     * Reduce the asset to the minimum set of properties required to update it.
+     * Builds the minimal object necessary to apply an update to an asset, from a potentially
+     * more-complete asset.
+     * NOTE: This is unimplemented for classes that should not be directly instantiated!
      *
-     * @return a builder containing the minimal set of properties required to update this asset
-     * @throws InvalidRequestException if any of the minimal set of required properties are not found in the initial object
+     * @return the minimal object necessary to update the asset, as a builder
+     * @throws InvalidRequestException if any of the minimal set of required properties for the asset are not found in the initial object
      */
-    public abstract AssetBuilder<?, ?> trimToRequired() throws InvalidRequestException;
+    public AssetBuilder<?, ?> trimToRequired() throws InvalidRequestException {
+        throw new InvalidRequestException(ErrorCode.UNIMPLEMENTED_ABSTRACT, "trimToRequired");
+    }
 
     /**
      * If an asset with the same qualifiedName exists, updates the existing asset. Otherwise, creates the asset.

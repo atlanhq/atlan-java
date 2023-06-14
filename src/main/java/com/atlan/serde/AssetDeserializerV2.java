@@ -19,7 +19,6 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.IOException;
 import java.util.*;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * Deserialization of all {@link Asset} objects, down through the entire inheritance hierarchy.
@@ -31,7 +30,6 @@ import lombok.extern.slf4j.Slf4j;
  *     <li>Automatically translating the nested <code>businessAttributes</code> structure into custom metadata, including translating from Atlan's internal hashed-string representations into human-readable names.</li>
  * </ul>
  */
-@Slf4j
 public class AssetDeserializerV2 extends StdDeserializer<Asset> implements ResolvableDeserializer {
 
     private static final long serialVersionUID = 2L;
@@ -64,7 +62,7 @@ public class AssetDeserializerV2 extends StdDeserializer<Asset> implements Resol
      */
     @Override
     public Asset deserialize(JsonParser parser, DeserializationContext context) throws IOException {
-        JsonNode root = parser.readValueAsTree();
+        JsonNode root = parser.getCodec().readTree(parser);
         if (root != null) {
             //  1. Create a revised structure that mirrors what the POJOs will expect
             JsonNode revised = revisePayload(root);
@@ -89,13 +87,6 @@ public class AssetDeserializerV2 extends StdDeserializer<Asset> implements Resol
         // copy of the same
         Set<String> processedAttributes = new HashSet<>();
 
-        // First, move the 'meanings' out of the way (or they'll be clobbered)
-        JsonNode meanings = root.get("meanings");
-        if (meanings != null && !meanings.isNull()) {
-            ((ObjectNode) root).set("deprecatedMeanings", meanings);
-        }
-        ((ObjectNode) root).remove("meanings");
-
         // Only process relationshipAttributes if this is a full asset, not a relationship
         // reference. (If it is a relationship reference, the relationshipGuid will be non-null.)
         if (relationshipGuid == null || relationshipGuid.isNull()) {
@@ -103,11 +94,7 @@ public class AssetDeserializerV2 extends StdDeserializer<Asset> implements Resol
                 Iterator<String> itr = relationshipAttributes.fieldNames();
                 while (itr.hasNext()) {
                     String relnKey = itr.next();
-                    if (relnKey.equals("meanings")) {
-                        ((ObjectNode) root).set("assignedTerms", relationshipAttributes.get(relnKey));
-                    } else {
-                        ((ObjectNode) root).set(relnKey, relationshipAttributes.get(relnKey));
-                    }
+                    ((ObjectNode) root).set(relnKey, relationshipAttributes.get(relnKey));
                     processedAttributes.add(relnKey);
                 }
             }
@@ -122,6 +109,7 @@ public class AssetDeserializerV2 extends StdDeserializer<Asset> implements Resol
                 // it was not already deserialized as a more complete relationship (above)
                 if (!processedAttributes.contains(attrKey)) {
                     if (attrKey.equals("meanings")) {
+                        // Override meanings / assignedTerms explicitly, as they collide otherwise
                         ((ObjectNode) root).set("assignedTerms", attributes.get(attrKey));
                     } else if (!attrKey.contains(".")) {
                         // TODO: Confirm this is a long-term reliable mechanism to detect custom metadata,
@@ -137,17 +125,12 @@ public class AssetDeserializerV2 extends StdDeserializer<Asset> implements Resol
         }
         ((ObjectNode) root).remove("attributes");
 
-        log.info("Left-overs: {}", leftOverAttributes);
-
         // Custom attributes can come from either of two places (should be mutually-exclusive)...
-        // 0. Initialize their target location in the JSON...
-        ObjectNode customMetadata = ((ObjectNode) root).putObject("customMetadataSets");
-
         // 1. For search results, they're embedded in `attributes` in the form <cmId>.<attrId>
-        getCustomMetadataFromSearchResult(customMetadata, leftOverAttributes);
+        getCustomMetadataFromSearchResult(root, leftOverAttributes);
 
         // 2. For asset retrievals, they're all in a `businessAttributes` dict
-        consolidateCustomMetadata(customMetadata, businessAttributes);
+        consolidateCustomMetadata(root, businessAttributes);
 
         // Translate hashed-string classifications into human-readable names
         ArrayNode clsNames = null;
@@ -178,36 +161,39 @@ public class AssetDeserializerV2 extends StdDeserializer<Asset> implements Resol
         return root;
     }
 
-    private JsonNode getCustomMetadataFromSearchResult(ObjectNode customMetadata, Map<String, JsonNode> searchResults) {
+    private void getCustomMetadataFromSearchResult(JsonNode root, Map<String, JsonNode> searchResults) {
         // Build-up a businessAttributes JsonNode combining all {cmId: { attrId: ... }}
-        ObjectNode builder = JsonNodeFactory.instance.objectNode();
-        for (Map.Entry<String, JsonNode> entry : searchResults.entrySet()) {
-            String compositeId = entry.getKey();
-            int indexOfDot = compositeId.indexOf(".");
-            if (indexOfDot > 0) {
-                String cmId = compositeId.substring(0, indexOfDot);
-                ObjectNode cmObj;
-                if (!builder.has(cmId)) {
-                    cmObj = builder.putObject(cmId);
-                } else {
-                    cmObj = (ObjectNode) builder.get(cmId);
+        if (searchResults != null && !searchResults.isEmpty()) {
+            ObjectNode builder = JsonNodeFactory.instance.objectNode();
+            for (Map.Entry<String, JsonNode> entry : searchResults.entrySet()) {
+                String compositeId = entry.getKey();
+                int indexOfDot = compositeId.indexOf(".");
+                if (indexOfDot > 0) {
+                    String cmId = compositeId.substring(0, indexOfDot);
+                    ObjectNode cmObj;
+                    if (!builder.has(cmId)) {
+                        cmObj = builder.putObject(cmId);
+                    } else {
+                        cmObj = (ObjectNode) builder.get(cmId);
+                    }
+                    String attrId = compositeId.substring(indexOfDot + 1);
+                    cmObj.set(attrId, entry.getValue());
                 }
-                String attrId = compositeId.substring(indexOfDot + 1);
-                cmObj.set(attrId, entry.getValue());
             }
+            consolidateCustomMetadata(root, builder);
         }
-        return consolidateCustomMetadata(customMetadata, builder);
     }
 
-    private JsonNode consolidateCustomMetadata(ObjectNode customMetadata, JsonNode businessAttributes) {
-        if (businessAttributes != null) {
+    private void consolidateCustomMetadata(JsonNode root, JsonNode businessAttributes) {
+        if (businessAttributes != null && !businessAttributes.isNull()) {
+            // Initialize their target location in the JSON...
+            ObjectNode customMetadata = ((ObjectNode) root).putObject("customMetadataSets");
             Iterator<String> itrCM = businessAttributes.fieldNames();
             while (itrCM.hasNext()) {
                 String cmId = itrCM.next();
                 customMetadata.set(cmId, businessAttributes.get(cmId));
             }
         }
-        return customMetadata;
     }
 
     private Asset deserializeRevised(JsonParser revised, DeserializationContext context) throws IOException {

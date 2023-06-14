@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.jackson.Jacksonized;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -13,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @Getter
+@Jacksonized
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @JsonSubTypes({
@@ -21,7 +23,8 @@ import lombok.extern.slf4j.Slf4j;
     @JsonSubTypes.Type(value = ADLSObject.class, name = ADLSObject.TYPE_NAME),
 })
 @Slf4j
-public abstract class ADLS extends Azure {
+public class ADLS extends Azure {
+    private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "ADLS";
 
