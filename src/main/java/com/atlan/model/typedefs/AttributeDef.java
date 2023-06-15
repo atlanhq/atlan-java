@@ -11,6 +11,7 @@ import com.atlan.model.enums.AtlanCustomAttributePrimitiveType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import java.time.Instant;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import lombok.*;
@@ -24,8 +25,14 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = false)
-public class AttributeDef extends AtlanObject {
+public class AttributeDef extends AtlanObject implements Comparable<AttributeDef> {
     private static final long serialVersionUID = 2L;
+
+    // Sort attribute definitions in a set based purely on their name (two attributes
+    // in the same set with the same name should be a conflict / duplicate)
+    private static final Comparator<String> stringComparator = Comparator.nullsFirst(String::compareTo);
+    private static final Comparator<AttributeDef> attributeDefComparator =
+            Comparator.comparing(AttributeDef::getName, stringComparator);
 
     /**
      * Instantiate an attribute definition from the provided parameters.
@@ -212,6 +219,12 @@ public class AttributeDef extends AtlanObject {
     @JsonIgnore
     public boolean isArchived() {
         return options != null && options.getIsArchived() != null && options.getIsArchived();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public int compareTo(AttributeDef o) {
+        return attributeDefComparator.compare(this, o);
     }
 
     public abstract static class AttributeDefBuilder<

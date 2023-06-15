@@ -89,21 +89,34 @@ public class ModelGenerator extends AbstractGenerator {
             AssetGenerator generator = new AssetGenerator(entityDef, cfg);
             cache.addAssetGenerator(entityDef.getName(), generator);
         }
+        // Then create an interface and class for every asset type
+        Template interfaceTemplate = ftl.getTemplate("entity_interface.ftl");
         Template entityTemplate = ftl.getTemplate("entity.ftl");
         for (EntityDef entityDef : cache.getEntityDefCache().values()) {
             if (cfg.includeTypedef(entityDef)) {
                 AssetGenerator generator = cache.getAssetGenerator(entityDef.getName());
                 createDirectoryIdempotent(cfg.getPackagePath() + File.separator + AssetGenerator.DIRECTORY);
-                String filename = cfg.getPackagePath() + File.separator + AssetGenerator.DIRECTORY + File.separator
+                String fInterface = cfg.getPackagePath() + File.separator + AssetGenerator.DIRECTORY + File.separator
+                        + "I" + generator.getClassName() + ".java";
+                try (BufferedWriter fs = new BufferedWriter(
+                        new OutputStreamWriter(new FileOutputStream(fInterface), StandardCharsets.UTF_8))) {
+                    // Now that all are cached, render the inner details of the generator
+                    // before processing the template
+                    generator.resolveDetails();
+                    interfaceTemplate.process(generator, fs);
+                } catch (IOException e) {
+                    log.error("Unable to open file output: {}", fInterface, e);
+                }
+                String fClass = cfg.getPackagePath() + File.separator + AssetGenerator.DIRECTORY + File.separator
                         + generator.getClassName() + ".java";
                 try (BufferedWriter fs = new BufferedWriter(
-                        new OutputStreamWriter(new FileOutputStream(filename), StandardCharsets.UTF_8))) {
+                        new OutputStreamWriter(new FileOutputStream(fClass), StandardCharsets.UTF_8))) {
                     // Now that all are cached, render the inner details of the generator
                     // before processing the template
                     generator.resolveDetails();
                     entityTemplate.process(generator, fs);
                 } catch (IOException e) {
-                    log.error("Unable to open file output: {}", filename, e);
+                    log.error("Unable to open file output: {}", fClass, e);
                 }
             }
         }

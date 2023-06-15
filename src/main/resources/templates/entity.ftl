@@ -92,9 +92,11 @@ import lombok.extern.slf4j.Slf4j;
 import com.atlan.model.assets.Attribute;
 import com.atlan.model.assets.Asset;
 import com.atlan.model.assets.GlossaryTerm;
-<#if hasBuiltInParent>
-import com.atlan.model.assets.${parentClassName};
+<#list superTypes as parent>
+<#if isBuiltIn(parent)>
+import com.atlan.model.assets.I${parent};
 </#if>
+</#list>
 
 import javax.annotation.processing.Generated;
 
@@ -123,7 +125,7 @@ import javax.annotation.processing.Generated;
 </#if>
 @Slf4j
 <#if mapContainers?? || className == "Asset">@SuppressWarnings("cast")</#if>
-public <#if abstract>abstract</#if> class ${className} extends ${parentClassName} {
+public <#if abstract>abstract</#if> class ${className} extends ${parentClassName} implements <#list superTypes as parent>I${parent}<#sep>, </#sep></#list> {
 <#if !abstract>    private static final long serialVersionUID = 2L;</#if>
 
     public static final String TYPE_NAME = "${originalName}";
