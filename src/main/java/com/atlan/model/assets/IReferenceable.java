@@ -1,9 +1,10 @@
+/* SPDX-License-Identifier: Apache-2.0 */
+/* Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
 import com.atlan.model.core.AtlanTag;
 import com.atlan.model.core.CustomMetadataAttributes;
 import com.atlan.model.enums.AtlanStatus;
-
 import java.util.Map;
 import java.util.SortedSet;
 
@@ -58,6 +59,7 @@ public interface IReferenceable {
      * property.
      * @deprecated see {@link #getAtlanTags} instead
      */
+    @Deprecated
     SortedSet<String> getAtlanTagNames();
 
     /** Unused. */
@@ -76,5 +78,4 @@ public interface IReferenceable {
 
     /** Unique identifiers (GUIDs) for any background tasks that are yet to operate on this asset. */
     SortedSet<String> getPendingTasks();
-
 }
