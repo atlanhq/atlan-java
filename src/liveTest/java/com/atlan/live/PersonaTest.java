@@ -149,9 +149,9 @@ public class PersonaTest extends AtlanLiveTest {
         assertTrue(denied.contains(AssetSidebarTab.LINEAGE));
         assertTrue(denied.contains(AssetSidebarTab.RELATIONS));
         assertTrue(denied.contains(AssetSidebarTab.QUERIES));
-        Set<AuthPolicy> policies = one.getPolicies();
+        Set<IAuthPolicy> policies = one.getPolicies();
         assertEquals(policies.size(), 3);
-        for (AuthPolicy policy : policies) {
+        for (IAuthPolicy policy : policies) {
             // Need to retrieve the full policy if we want to see any info about it
             // (what comes back on the Persona itself are just policy references)
             AuthPolicy full = AuthPolicy.retrieveByGuid(policy.getGuid());

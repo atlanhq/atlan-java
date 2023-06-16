@@ -520,7 +520,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
         GlossaryTerm t = (GlossaryTerm) one;
         assertEquals(t.getGuid(), term.getGuid());
         assertEquals(t.getQualifiedName(), term.getQualifiedName());
-        Glossary anchor = t.getAnchor();
+        IGlossary anchor = t.getAnchor();
         assertNotNull(anchor);
         assertEquals(anchor.getName(), glossary.getName());
     }
@@ -563,7 +563,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
         GlossaryTerm t = (GlossaryTerm) one;
         assertEquals(t.getGuid(), term.getGuid());
         assertEquals(t.getQualifiedName(), term.getQualifiedName());
-        Glossary anchor = t.getAnchor();
+        IGlossary anchor = t.getAnchor();
         assertNotNull(anchor);
         assertEquals(anchor.getName(), glossary.getName());
     }

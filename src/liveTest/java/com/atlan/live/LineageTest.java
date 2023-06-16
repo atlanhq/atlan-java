@@ -105,14 +105,14 @@ public class LineageTest extends AtlanLiveTest {
         assertEquals(start.getName(), processName);
         assertNotNull(start.getInputs());
         assertEquals(start.getInputs().size(), 1);
-        for (Catalog input : start.getInputs()) {
+        for (ICatalog input : start.getInputs()) {
             assertNotNull(input);
             assertEquals(input.getTypeName(), Table.TYPE_NAME);
             assertEquals(input.getGuid(), table.getGuid());
         }
         assertNotNull(start.getOutputs());
         assertEquals(start.getOutputs().size(), 1);
-        for (Catalog output : start.getOutputs()) {
+        for (ICatalog output : start.getOutputs()) {
             assertNotNull(output);
             assertEquals(output.getTypeName(), MaterializedView.TYPE_NAME);
             assertEquals(output.getGuid(), mview.getGuid());
@@ -154,14 +154,14 @@ public class LineageTest extends AtlanLiveTest {
         assertEquals(end.getName(), processName);
         assertNotNull(end.getInputs());
         assertEquals(end.getInputs().size(), 1);
-        for (Catalog input : end.getInputs()) {
+        for (ICatalog input : end.getInputs()) {
             assertNotNull(input);
             assertEquals(input.getTypeName(), MaterializedView.TYPE_NAME);
             assertEquals(input.getGuid(), mview.getGuid());
         }
         assertNotNull(end.getOutputs());
         assertEquals(end.getOutputs().size(), 1);
-        for (Catalog output : end.getOutputs()) {
+        for (ICatalog output : end.getOutputs()) {
             assertNotNull(output);
             assertEquals(output.getTypeName(), View.TYPE_NAME);
             assertEquals(output.getGuid(), view.getGuid());

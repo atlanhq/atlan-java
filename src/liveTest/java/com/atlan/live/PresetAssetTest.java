@@ -181,19 +181,19 @@ public class PresetAssetTest extends AtlanLiveTest {
         assertNotNull(c.getPresetCharts());
         assertEquals(c.getPresetCharts().size(), 1);
         Set<String> types =
-                c.getPresetCharts().stream().map(PresetChart::getTypeName).collect(Collectors.toSet());
+                c.getPresetCharts().stream().map(IPresetChart::getTypeName).collect(Collectors.toSet());
         assertEquals(types.size(), 1);
         assertTrue(types.contains(PresetChart.TYPE_NAME));
         Set<String> guids =
-                c.getPresetCharts().stream().map(PresetChart::getGuid).collect(Collectors.toSet());
+                c.getPresetCharts().stream().map(IPresetChart::getGuid).collect(Collectors.toSet());
         assertEquals(guids.size(), 1);
         assertTrue(guids.contains(chart.getGuid()));
         assertNotNull(c.getPresetDatasets());
         assertEquals(c.getPresetDatasets().size(), 1);
-        types = c.getPresetDatasets().stream().map(PresetDataset::getTypeName).collect(Collectors.toSet());
+        types = c.getPresetDatasets().stream().map(IPresetDataset::getTypeName).collect(Collectors.toSet());
         assertEquals(types.size(), 1);
         assertTrue(types.contains(PresetDataset.TYPE_NAME));
-        guids = c.getPresetDatasets().stream().map(PresetDataset::getGuid).collect(Collectors.toSet());
+        guids = c.getPresetDatasets().stream().map(IPresetDataset::getGuid).collect(Collectors.toSet());
         assertEquals(guids.size(), 1);
         assertTrue(guids.contains(dataset.getGuid()));
     }
