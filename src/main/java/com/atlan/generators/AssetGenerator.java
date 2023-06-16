@@ -210,19 +210,12 @@ public class AssetGenerator extends TypeGenerator {
         private static final Comparator<Attribute<?>> attributeComparator =
                 Comparator.comparing(Attribute::getRenamed, stringComparator);
 
-        // Override these properties that would normally be SortedSet<> with List<>,
-        // as ordering is crucial to their proper operation.
-        private static final Set<String> LIST_OVERRIDES = Set.of("policyResources");
-
         protected Attribute(GeneratorConfig cfg) {
             super(cfg);
         }
 
         public Attribute(String className, AttributeDef attributeDef, GeneratorConfig cfg) {
             super(className, attributeDef, cfg);
-            if (LIST_OVERRIDES.contains(attributeDef.getName())) {
-                setType(getType().toBuilder().container("List<").build());
-            }
         }
 
         @Override

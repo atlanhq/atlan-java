@@ -93,7 +93,7 @@ public class AuthPolicy extends Asset implements IAuthPolicy, IAsset, IReference
     /** Resources against which to apply the policy. */
     @Attribute
     @Singular
-    List<String> policyResources;
+    SortedSet<String> policyResources;
 
     /** Roles to whom the policy applies. */
     @Attribute

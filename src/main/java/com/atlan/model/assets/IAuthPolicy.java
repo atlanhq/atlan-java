@@ -325,7 +325,7 @@ public interface IAuthPolicy {
     String getPolicyResourceSignature();
 
     /** Resources against which to apply the policy. */
-    List<String> getPolicyResources();
+    SortedSet<String> getPolicyResources();
 
     /** Roles to whom the policy applies. */
     SortedSet<String> getPolicyRoles();
