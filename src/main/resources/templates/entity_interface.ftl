@@ -20,9 +20,23 @@ import com.atlan.model.enums.KeywordFields;
 import com.atlan.model.relations.UniqueAttributes;
 <#list interfaceAttributes as attribute>
 <#if attribute.type.type == "ENUM">
+<#if isBuiltIn(attribute.type.originalBase, attribute.type.name)>
+import com.atlan.model.enums.${attribute.type.name};
+<#else>
 import ${packageRoot}.enums.${attribute.type.name};
+</#if>
 <#elseif attribute.type.type == "STRUCT">
+<#if isBuiltIn(attribute.type.originalBase, attribute.type.name)>
+import com.atlan.model.structs.${attribute.type.name};
+<#else>
 import ${packageRoot}.structs.${attribute.type.name};
+</#if>
+<#elseif attribute.type.type == "ASSET">
+<#if isBuiltIn(attribute.type.originalBase, attribute.type.name)>
+import com.atlan.model.assets.I${attribute.type.name};
+<#else>
+import ${packageRoot}.assets.I${attribute.type.name};
+</#if>
 </#if>
 </#list>
 import com.atlan.serde.AssetDeserializer;

@@ -41,9 +41,23 @@ import com.atlan.model.enums.KeywordFields;
 import com.atlan.model.relations.UniqueAttributes;
 <#list classAttributes as attribute>
 <#if attribute.type.type == "ENUM">
+<#if isBuiltIn(attribute.type.originalBase, attribute.type.name)>
+import com.atlan.model.enums.${attribute.type.name};
+<#else>
 import ${packageRoot}.enums.${attribute.type.name};
+</#if>
 <#elseif attribute.type.type == "STRUCT">
+<#if isBuiltIn(attribute.type.originalBase, attribute.type.name)>
+import com.atlan.model.structs.${attribute.type.name};
+<#else>
 import ${packageRoot}.structs.${attribute.type.name};
+</#if>
+<#elseif attribute.type.type == "ASSET">
+<#if isBuiltIn(attribute.type.originalBase, attribute.type.name)>
+import com.atlan.model.assets.I${attribute.type.name};
+<#else>
+import ${packageRoot}.assets.I${attribute.type.name};
+</#if>
 </#if>
 </#list>
 import com.atlan.model.search.IndexSearchDSL;
@@ -91,10 +105,9 @@ import lombok.extern.slf4j.Slf4j;
 
 import com.atlan.model.assets.Attribute;
 import com.atlan.model.assets.Asset;
-import com.atlan.model.assets.GlossaryTerm;
 import com.atlan.model.assets.IGlossaryTerm;
 <#list superTypes as parent>
-<#if isBuiltIn(parent)>
+<#if isBuiltIn(parent, parent)>
 import com.atlan.model.assets.I${resolveSuperTypeName(parent)};
 </#if>
 </#list>

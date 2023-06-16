@@ -3,9 +3,7 @@
 package com.atlan.generators;
 
 import com.atlan.api.TypeDefsEndpoint;
-import com.atlan.model.typedefs.AttributeDef;
-import com.atlan.model.typedefs.EntityDef;
-import com.atlan.model.typedefs.RelationshipAttributeDef;
+import com.atlan.model.typedefs.*;
 import freemarker.template.TemplateNotFoundException;
 import java.io.IOException;
 import java.util.*;
@@ -69,12 +67,27 @@ public class AssetGenerator extends TypeGenerator {
         return null;
     }
 
-    public boolean isBuiltIn(String className) {
-        if (className != null) {
-            EntityDef entity = cache.getEntityDefCache().get(className);
-            return (entity != null
-                    && entity.getServiceType() != null
-                    && TypeDefsEndpoint.RESERVED_SERVICE_TYPES.contains(entity.getServiceType()));
+    public boolean isBuiltIn(String orgName, String reTyped) {
+        if (orgName != null) {
+            EntityDef entity = cache.getEntityDefCache().get(orgName);
+            if (entity != null) {
+                return (entity.getServiceType() != null
+                        && TypeDefsEndpoint.RESERVED_SERVICE_TYPES.contains(entity.getServiceType()));
+            } else {
+                StructDef struct = cache.getStructDefCache().get(orgName);
+                if (struct != null) {
+                    return (struct.getServiceType() != null
+                                    && TypeDefsEndpoint.RESERVED_SERVICE_TYPES.contains(struct.getServiceType()))
+                            || GeneratorConfig.BUILT_IN_STRUCTS.contains(orgName);
+                } else {
+                    EnumDef enumDef = cache.getEnumDefCache().get(orgName);
+                    return (enumDef != null
+                                    && enumDef.getServiceType() != null
+                                    && TypeDefsEndpoint.RESERVED_SERVICE_TYPES.contains(enumDef.getServiceType()))
+                            || GeneratorConfig.BUILT_IN_ENUMS.contains(orgName)
+                            || (orgName.equals("string") && GeneratorConfig.BUILT_IN_ENUMS.contains(reTyped));
+                }
+            }
         }
         return false;
     }
