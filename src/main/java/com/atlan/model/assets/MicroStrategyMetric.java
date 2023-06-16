@@ -11,6 +11,7 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 import lombok.*;
@@ -25,7 +26,9 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class MicroStrategyMetric extends MicroStrategy {
+@SuppressWarnings("cast")
+public class MicroStrategyMetric extends Asset
+        implements IMicroStrategyMetric, IMicroStrategy, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "MicroStrategyMetric";
@@ -35,73 +38,128 @@ public class MicroStrategyMetric extends MicroStrategy {
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Expression that defines the metric. */
+    /** Simple names of the related MicroStrategy attributes. */
     @Attribute
-    String microStrategyMetricExpression;
+    @Singular
+    SortedSet<String> microStrategyAttributeNames;
 
     /** Unique names of the related MicroStrategy attributes. */
     @Attribute
     @Singular
     SortedSet<String> microStrategyAttributeQualifiedNames;
 
-    /** Simple names of the related MicroStrategy attributes. */
+    /** TBC */
     @Attribute
-    @Singular
-    SortedSet<String> microStrategyAttributeNames;
+    Long microStrategyCertifiedAt;
 
-    /** Unique names of the related MicroStrategy facts. */
+    /** TBC */
+    @Attribute
+    String microStrategyCertifiedBy;
+
+    /** TBC */
     @Attribute
     @Singular
-    SortedSet<String> microStrategyFactQualifiedNames;
+    SortedSet<String> microStrategyCubeNames;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<String> microStrategyCubeQualifiedNames;
 
     /** Simple names of the related MicroStrategy facts. */
     @Attribute
     @Singular
     SortedSet<String> microStrategyFactNames;
 
-    /** Unique names of the parent MicroStrategy metrics. */
+    /** Unique names of the related MicroStrategy facts. */
     @Attribute
     @Singular
-    SortedSet<String> microStrategyMetricParentQualifiedNames;
+    SortedSet<String> microStrategyFactQualifiedNames;
+
+    /** TBC */
+    @Attribute
+    Boolean microStrategyIsCertified;
+
+    /** TBC */
+    @Attribute
+    @Singular("putMicroStrategyLocation")
+    List<Map<String, String>> microStrategyLocation;
+
+    /** Expression that defines the metric. */
+    @Attribute
+    String microStrategyMetricExpression;
 
     /** Simple names of the parent MicroStrategy metrics. */
     @Attribute
     @Singular
     SortedSet<String> microStrategyMetricParentNames;
 
-    /** Metrics that are parents of this metric. */
+    /** Unique names of the parent MicroStrategy metrics. */
     @Attribute
     @Singular
-    SortedSet<MicroStrategyMetric> microStrategyMetricParents;
+    SortedSet<String> microStrategyMetricParentQualifiedNames;
 
-    /** Facts related to this metric. */
+    /** TBC */
+    @Attribute
+    String microStrategyProjectName;
+
+    /** TBC */
+    @Attribute
+    String microStrategyProjectQualifiedName;
+
+    /** TBC */
     @Attribute
     @Singular
-    SortedSet<MicroStrategyFact> microStrategyFacts;
+    SortedSet<String> microStrategyReportNames;
 
-    /** Reports related to this metric. */
+    /** TBC */
     @Attribute
     @Singular
-    SortedSet<MicroStrategyReport> microStrategyReports;
+    SortedSet<String> microStrategyReportQualifiedNames;
 
-    /** Cubes related to this metric. */
+    /** TBC */
     @Attribute
     @Singular
-    SortedSet<MicroStrategyCube> microStrategyCubes;
-
-    /** Metrics that are children of this metric. */
-    @Attribute
-    @Singular
-    SortedSet<MicroStrategyMetric> microStrategyMetricChildren;
-
-    /** Project containing the metric. */
-    @Attribute
-    MicroStrategyProject microStrategyProject;
+    SortedSet<ILineageProcess> inputToProcesses;
 
     /** Attributes related to this metric. */
     @Attribute
     @Singular
-    SortedSet<MicroStrategyAttribute> microStrategyAttributes;
+    SortedSet<IMicroStrategyAttribute> microStrategyAttributes;
+
+    /** Cubes related to this metric. */
+    @Attribute
+    @Singular
+    SortedSet<IMicroStrategyCube> microStrategyCubes;
+
+    /** Facts related to this metric. */
+    @Attribute
+    @Singular
+    SortedSet<IMicroStrategyFact> microStrategyFacts;
+
+    /** Metrics that are children of this metric. */
+    @Attribute
+    @Singular
+    SortedSet<IMicroStrategyMetric> microStrategyMetricChildren;
+
+    /** Metrics that are parents of this metric. */
+    @Attribute
+    @Singular
+    SortedSet<IMicroStrategyMetric> microStrategyMetricParents;
+
+    /** Project containing the metric. */
+    @Attribute
+    IMicroStrategyProject microStrategyProject;
+
+    /** Reports related to this metric. */
+    @Attribute
+    @Singular
+    SortedSet<IMicroStrategyReport> microStrategyReports;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 
     /**
      * Reference to a MicroStrategyMetric by GUID.
@@ -304,7 +362,7 @@ public class MicroStrategyMetric extends MicroStrategy {
      * @return the MicroStrategyMetric that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static MicroStrategyMetric replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static MicroStrategyMetric replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (MicroStrategyMetric) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -319,7 +377,7 @@ public class MicroStrategyMetric extends MicroStrategy {
      * @return the MicroStrategyMetric that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static MicroStrategyMetric appendTerms(String qualifiedName, List<GlossaryTerm> terms)
+    public static MicroStrategyMetric appendTerms(String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (MicroStrategyMetric) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
@@ -334,7 +392,7 @@ public class MicroStrategyMetric extends MicroStrategy {
      * @return the MicroStrategyMetric that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static MicroStrategyMetric removeTerms(String qualifiedName, List<GlossaryTerm> terms)
+    public static MicroStrategyMetric removeTerms(String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (MicroStrategyMetric) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }

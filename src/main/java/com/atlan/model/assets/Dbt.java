@@ -19,24 +19,15 @@ import lombok.extern.slf4j.Slf4j;
 @JsonSubTypes({
     @JsonSubTypes.Type(value = DbtModelColumn.class, name = DbtModelColumn.TYPE_NAME),
     @JsonSubTypes.Type(value = DbtModel.class, name = DbtModel.TYPE_NAME),
+    @JsonSubTypes.Type(value = DbtColumnProcess.class, name = DbtColumnProcess.TYPE_NAME),
+    @JsonSubTypes.Type(value = DbtMetric.class, name = DbtMetric.TYPE_NAME),
     @JsonSubTypes.Type(value = DbtSource.class, name = DbtSource.TYPE_NAME),
+    @JsonSubTypes.Type(value = DbtProcess.class, name = DbtProcess.TYPE_NAME),
 })
 @Slf4j
-public abstract class Dbt extends Catalog {
+public abstract class Dbt extends Asset implements IDbt, ICatalog, IAsset, IReferenceable {
 
     public static final String TYPE_NAME = "Dbt";
-
-    /** TBC */
-    @Attribute
-    String dbtAlias;
-
-    /** TBC */
-    @Attribute
-    String dbtMeta;
-
-    /** TBC */
-    @Attribute
-    String dbtUniqueId;
 
     /** TBC */
     @Attribute
@@ -44,31 +35,27 @@ public abstract class Dbt extends Catalog {
 
     /** TBC */
     @Attribute
-    String dbtProjectName;
+    String dbtAlias;
 
     /** TBC */
     @Attribute
-    String dbtPackageName;
+    String dbtConnectionContext;
 
     /** TBC */
     @Attribute
-    String dbtJobName;
+    String dbtEnvironmentDbtVersion;
 
     /** TBC */
     @Attribute
-    String dbtJobSchedule;
-
-    /** TBC */
-    @Attribute
-    String dbtJobStatus;
-
-    /** TBC */
-    @Attribute
-    String dbtJobScheduleCronHumanized;
+    String dbtEnvironmentName;
 
     /** TBC */
     @Attribute
     Long dbtJobLastRun;
+
+    /** TBC */
+    @Attribute
+    String dbtJobName;
 
     /** TBC */
     @Attribute
@@ -80,11 +67,31 @@ public abstract class Dbt extends Catalog {
 
     /** TBC */
     @Attribute
-    String dbtEnvironmentName;
+    String dbtJobSchedule;
 
     /** TBC */
     @Attribute
-    String dbtEnvironmentDbtVersion;
+    String dbtJobScheduleCronHumanized;
+
+    /** TBC */
+    @Attribute
+    String dbtJobStatus;
+
+    /** TBC */
+    @Attribute
+    String dbtMeta;
+
+    /** TBC */
+    @Attribute
+    String dbtPackageName;
+
+    /** TBC */
+    @Attribute
+    String dbtProjectName;
+
+    /** TBC */
+    @Attribute
+    String dbtSemanticLayerProxyUrl;
 
     /** TBC */
     @Attribute
@@ -93,9 +100,15 @@ public abstract class Dbt extends Catalog {
 
     /** TBC */
     @Attribute
-    String dbtConnectionContext;
+    String dbtUniqueId;
 
     /** TBC */
     @Attribute
-    String dbtSemanticLayerProxyUrl;
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 }

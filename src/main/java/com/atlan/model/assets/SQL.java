@@ -29,16 +29,37 @@ import lombok.extern.slf4j.Slf4j;
     @JsonSubTypes.Type(value = Procedure.class, name = Procedure.TYPE_NAME),
     @JsonSubTypes.Type(value = View.class, name = View.TYPE_NAME),
     @JsonSubTypes.Type(value = MaterializedView.class, name = MaterializedView.TYPE_NAME),
+    @JsonSubTypes.Type(value = SnowflakeTag.class, name = SnowflakeTag.TYPE_NAME),
 })
 @Slf4j
 @SuppressWarnings("cast")
-public abstract class SQL extends Catalog {
+public abstract class SQL extends Asset implements ISQL, ICatalog, IAsset, IReferenceable {
 
     public static final String TYPE_NAME = "SQL";
+
+    /** Simple name of the database in which this SQL asset exists, or empty if it does not exist within a database. */
+    @Attribute
+    String databaseName;
+
+    /** Unique name of the database in which this SQL asset exists, or empty if it does not exist within a database. */
+    @Attribute
+    String databaseQualifiedName;
+
+    /** Whether the asset has been profiled (true) or not (false). */
+    @Attribute
+    Boolean isProfiled;
+
+    /** Time (epoch) at which the asset was last profiled, in milliseconds. */
+    @Attribute
+    Long lastProfiledAt;
 
     /** TBC */
     @Attribute
     Long queryCount;
+
+    /** Time (epoch) at which the query count was last updated, in milliseconds. */
+    @Attribute
+    Long queryCountUpdatedAt;
 
     /** TBC */
     @Attribute
@@ -48,18 +69,6 @@ public abstract class SQL extends Catalog {
     @Attribute
     @Singular("putQueryUserMap")
     Map<String, Long> queryUserMap;
-
-    /** Time (epoch) at which the query count was last updated, in milliseconds. */
-    @Attribute
-    Long queryCountUpdatedAt;
-
-    /** Simple name of the database in which this SQL asset exists, or empty if it does not exist within a database. */
-    @Attribute
-    String databaseName;
-
-    /** Unique name of the database in which this SQL asset exists, or empty if it does not exist within a database. */
-    @Attribute
-    String databaseQualifiedName;
 
     /** Simple name of the schema in which this SQL asset exists, or empty if it does not exist within a schema. */
     @Attribute
@@ -85,31 +94,33 @@ public abstract class SQL extends Catalog {
     @Attribute
     String viewQualifiedName;
 
-    /** Whether the asset has been profiled (true) or not (false). */
+    /** TBC */
     @Attribute
-    Boolean isProfiled;
-
-    /** Time (epoch) at which the asset was last profiled, in milliseconds. */
-    @Attribute
-    Long lastProfiledAt;
+    @Singular
+    SortedSet<IDbtModel> dbtModels;
 
     /** TBC */
     @Attribute
     @Singular
-    SortedSet<DbtSource> dbtSources;
+    SortedSet<IDbtSource> dbtSources;
 
     /** TBC */
     @Attribute
     @Singular
-    SortedSet<DbtModel> sqlDbtModels;
+    SortedSet<ILineageProcess> inputToProcesses;
 
     /** TBC */
     @Attribute
     @Singular
-    SortedSet<DbtSource> sqlDBTSources;
+    SortedSet<ILineageProcess> outputFromProcesses;
 
     /** TBC */
     @Attribute
     @Singular
-    SortedSet<DbtModel> dbtModels;
+    SortedSet<IDbtSource> sqlDBTSources;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtModel> sqlDbtModels;
 }

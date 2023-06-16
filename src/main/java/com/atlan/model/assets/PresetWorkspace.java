@@ -26,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class PresetWorkspace extends Preset {
+public class PresetWorkspace extends Asset implements IPresetWorkspace, IPreset, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "PresetWorkspace";
@@ -36,33 +36,17 @@ public class PresetWorkspace extends Preset {
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Whether public collections are allowed in the workspace (true) or not (false). */
+    /** TBC */
     @Attribute
-    Boolean presetWorkspacePublicDashboardsAllowed;
+    Long presetDashboardId;
+
+    /** TBC */
+    @Attribute
+    String presetDashboardQualifiedName;
 
     /** ID of the cluster for the Preset workspace. */
     @Attribute
     Long presetWorkspaceClusterId;
-
-    /** Hostname of the Preset workspace. */
-    @Attribute
-    String presetWorkspaceHostname;
-
-    /** Whether the workspace is in maintenance mode (true) or not (false). */
-    @Attribute
-    Boolean presetWorkspaceIsInMaintenanceMode;
-
-    /** Region of the workspace. */
-    @Attribute
-    String presetWorkspaceRegion;
-
-    /** Status of the workspace. */
-    @Attribute
-    String presetWorkspaceStatus;
-
-    /** ID of the deployment for the Preset workspace. */
-    @Attribute
-    Long presetWorkspaceDeploymentId;
 
     /** Number of collections in the workspace. */
     @Attribute
@@ -72,10 +56,52 @@ public class PresetWorkspace extends Preset {
     @Attribute
     Long presetWorkspaceDatasetCount;
 
+    /** ID of the deployment for the Preset workspace. */
+    @Attribute
+    Long presetWorkspaceDeploymentId;
+
+    /** Hostname of the Preset workspace. */
+    @Attribute
+    String presetWorkspaceHostname;
+
+    /** TBC */
+    @Attribute
+    Long presetWorkspaceId;
+
+    /** Whether the workspace is in maintenance mode (true) or not (false). */
+    @Attribute
+    Boolean presetWorkspaceIsInMaintenanceMode;
+
+    /** Whether public collections are allowed in the workspace (true) or not (false). */
+    @Attribute
+    Boolean presetWorkspacePublicDashboardsAllowed;
+
+    /** TBC */
+    @Attribute
+    String presetWorkspaceQualifiedName;
+
+    /** Region of the workspace. */
+    @Attribute
+    String presetWorkspaceRegion;
+
+    /** Status of the workspace. */
+    @Attribute
+    String presetWorkspaceStatus;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
     /** Collections within this workspace. */
     @Attribute
     @Singular
-    SortedSet<PresetDashboard> presetDashboards;
+    SortedSet<IPresetDashboard> presetDashboards;
 
     /**
      * Reference to a PresetWorkspace by GUID.
@@ -303,7 +329,7 @@ public class PresetWorkspace extends Preset {
      * @return the PresetWorkspace that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static PresetWorkspace replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static PresetWorkspace replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (PresetWorkspace) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -318,7 +344,7 @@ public class PresetWorkspace extends Preset {
      * @return the PresetWorkspace that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static PresetWorkspace appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static PresetWorkspace appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (PresetWorkspace) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -332,7 +358,7 @@ public class PresetWorkspace extends Preset {
      * @return the PresetWorkspace that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static PresetWorkspace removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static PresetWorkspace removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (PresetWorkspace) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

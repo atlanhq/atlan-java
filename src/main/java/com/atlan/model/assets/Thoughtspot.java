@@ -3,6 +3,7 @@
 package com.atlan.model.assets;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
+import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -21,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
     @JsonSubTypes.Type(value = ThoughtspotAnswer.class, name = ThoughtspotAnswer.TYPE_NAME),
 })
 @Slf4j
-public abstract class Thoughtspot extends BI {
+public abstract class Thoughtspot extends Asset implements IThoughtspot, IBI, ICatalog, IAsset, IReferenceable {
 
     public static final String TYPE_NAME = "Thoughtspot";
 
@@ -32,4 +33,14 @@ public abstract class Thoughtspot extends BI {
     /** TBC */
     @Attribute
     String thoughtspotQuestionText;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 }

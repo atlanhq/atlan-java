@@ -26,7 +26,8 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class DbtMetric extends Metric {
+public class DbtMetric extends Asset
+        implements IDbtMetric, IDbt, IMetric, ICatalog, IAsset, IReferenceable, IDataQuality {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "DbtMetric";
@@ -38,17 +39,131 @@ public class DbtMetric extends Metric {
 
     /** TBC */
     @Attribute
+    String dbtAccountName;
+
+    /** TBC */
+    @Attribute
+    String dbtAlias;
+
+    /** TBC */
+    @Attribute
+    String dbtConnectionContext;
+
+    /** TBC */
+    @Attribute
+    String dbtEnvironmentDbtVersion;
+
+    /** TBC */
+    @Attribute
+    String dbtEnvironmentName;
+
+    /** TBC */
+    @Attribute
+    Long dbtJobLastRun;
+
+    /** TBC */
+    @Attribute
+    String dbtJobName;
+
+    /** TBC */
+    @Attribute
+    Long dbtJobNextRun;
+
+    /** TBC */
+    @Attribute
+    String dbtJobNextRunHumanized;
+
+    /** TBC */
+    @Attribute
+    String dbtJobSchedule;
+
+    /** TBC */
+    @Attribute
+    String dbtJobScheduleCronHumanized;
+
+    /** TBC */
+    @Attribute
+    String dbtJobStatus;
+
+    /** TBC */
+    @Attribute
+    String dbtMeta;
+
+    /** TBC */
+    @Attribute
     @Singular
     List<DbtMetricFilter> dbtMetricFilters;
 
     /** TBC */
     @Attribute
-    DbtModel dbtModel;
+    String dbtPackageName;
+
+    /** TBC */
+    @Attribute
+    String dbtProjectName;
+
+    /** TBC */
+    @Attribute
+    String dbtSemanticLayerProxyUrl;
 
     /** TBC */
     @Attribute
     @Singular
-    SortedSet<Column> dbtMetricFilterColumns;
+    SortedSet<String> dbtTags;
+
+    /** TBC */
+    @Attribute
+    String dbtUniqueId;
+
+    /** TBC */
+    @Attribute
+    String metricFilters;
+
+    /** TBC */
+    @Attribute
+    String metricSQL;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<String> metricTimeGrains;
+
+    /** TBC */
+    @Attribute
+    String metricType;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IAsset> assets;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IColumn> dbtMetricFilterColumns;
+
+    /** TBC */
+    @Attribute
+    IDbtModel dbtModel;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IColumn> metricDimensionColumns;
+
+    /** TBC */
+    @Attribute
+    IColumn metricTimestampColumn;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 
     /**
      * Reference to a DbtMetric by GUID.
@@ -250,7 +365,7 @@ public class DbtMetric extends Metric {
      * @return the DbtMetric that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static DbtMetric replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static DbtMetric replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (DbtMetric) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -265,7 +380,7 @@ public class DbtMetric extends Metric {
      * @return the DbtMetric that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static DbtMetric appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static DbtMetric appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (DbtMetric) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -279,7 +394,7 @@ public class DbtMetric extends Metric {
      * @return the DbtMetric that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static DbtMetric removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static DbtMetric removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (DbtMetric) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

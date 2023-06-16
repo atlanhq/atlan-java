@@ -31,52 +31,62 @@ import lombok.extern.slf4j.Slf4j;
 })
 @Slf4j
 @SuppressWarnings("cast")
-public abstract class MicroStrategy extends BI {
+public abstract class MicroStrategy extends Asset implements IMicroStrategy, IBI, ICatalog, IAsset, IReferenceable {
 
     public static final String TYPE_NAME = "MicroStrategy";
 
-    /** Unique name of the related MicroStrategy project. */
+    /** Date when the asset was certified in MicroStrategy. */
     @Attribute
-    String microStrategyProjectQualifiedName;
+    Long microStrategyCertifiedAt;
 
-    /** Simple name of the related MicroStrategy project. */
+    /** User who certified the asset in MicroStrategy. */
     @Attribute
-    String microStrategyProjectName;
-
-    /** Unique names of the related MicroStrategy cubes. */
-    @Attribute
-    @Singular
-    SortedSet<String> microStrategyCubeQualifiedNames;
+    String microStrategyCertifiedBy;
 
     /** Simple names of the related MicroStrategy cubes. */
     @Attribute
     @Singular
     SortedSet<String> microStrategyCubeNames;
 
-    /** Unique names of the related MicroStrategy reports. */
+    /** Unique names of the related MicroStrategy cubes. */
     @Attribute
     @Singular
-    SortedSet<String> microStrategyReportQualifiedNames;
+    SortedSet<String> microStrategyCubeQualifiedNames;
+
+    /** Whether the asset is certified in MicroStrategy (true) or not (false). */
+    @Attribute
+    Boolean microStrategyIsCertified;
+
+    /** Location of the asset within MicroStrategy. */
+    @Attribute
+    @Singular("putMicroStrategyLocation")
+    List<Map<String, String>> microStrategyLocation;
+
+    /** Simple name of the related MicroStrategy project. */
+    @Attribute
+    String microStrategyProjectName;
+
+    /** Unique name of the related MicroStrategy project. */
+    @Attribute
+    String microStrategyProjectQualifiedName;
 
     /** Simple names of the related MicroStrategy reports. */
     @Attribute
     @Singular
     SortedSet<String> microStrategyReportNames;
 
-    /** Whether the asset is certified in MicroStrategy (true) or not (false). */
+    /** Unique names of the related MicroStrategy reports. */
     @Attribute
-    Boolean microStrategyIsCertified;
+    @Singular
+    SortedSet<String> microStrategyReportQualifiedNames;
 
-    /** User who certified the asset in MicroStrategy. */
+    /** TBC */
     @Attribute
-    String microStrategyCertifiedBy;
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
 
-    /** Date when the asset was certified in MicroStrategy. */
+    /** TBC */
     @Attribute
-    Long microStrategyCertifiedAt;
-
-    /** Location of the asset within MicroStrategy. */
-    @Attribute
-    @Singular("putMicroStrategyLocation")
-    List<Map<String, String>> microStrategyLocation;
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 }

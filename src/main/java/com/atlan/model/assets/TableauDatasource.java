@@ -27,7 +27,8 @@ import lombok.extern.slf4j.Slf4j;
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
 @SuppressWarnings("cast")
-public class TableauDatasource extends Tableau {
+public class TableauDatasource extends Asset
+        implements ITableauDatasource, ITableau, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "TableauDatasource";
@@ -39,28 +40,16 @@ public class TableauDatasource extends Tableau {
 
     /** TBC */
     @Attribute
-    String siteQualifiedName;
+    String certificationNote;
 
     /** TBC */
     @Attribute
-    String projectQualifiedName;
+    @Singular("putCertifier")
+    Map<String, String> certifier;
 
     /** TBC */
     @Attribute
-    String topLevelProjectQualifiedName;
-
-    /** TBC */
-    @Attribute
-    String workbookQualifiedName;
-
-    /** TBC */
-    @Attribute
-    @Singular("addProjectHierarchy")
-    List<Map<String, String>> projectHierarchy;
-
-    /** TBC */
-    @Attribute
-    Boolean isPublished;
+    String certifierDisplayName;
 
     /** TBC */
     @Attribute
@@ -72,21 +61,24 @@ public class TableauDatasource extends Tableau {
 
     /** TBC */
     @Attribute
-    @Singular("putCertifier")
-    Map<String, String> certifier;
+    Boolean isPublished;
 
     /** TBC */
     @Attribute
-    String certificationNote;
+    @Singular("addProjectHierarchy")
+    List<Map<String, String>> projectHierarchy;
 
     /** TBC */
     @Attribute
-    String certifierDisplayName;
+    String projectQualifiedName;
 
     /** TBC */
     @Attribute
-    @Singular
-    List<Map<String, String>> upstreamTables;
+    String siteQualifiedName;
+
+    /** TBC */
+    @Attribute
+    String topLevelProjectQualifiedName;
 
     /** TBC */
     @Attribute
@@ -95,16 +87,35 @@ public class TableauDatasource extends Tableau {
 
     /** TBC */
     @Attribute
-    TableauWorkbook workbook;
+    @Singular
+    List<Map<String, String>> upstreamTables;
 
     /** TBC */
     @Attribute
-    TableauProject project;
+    String workbookQualifiedName;
 
     /** TBC */
     @Attribute
     @Singular
-    SortedSet<TableauCalculatedField> fields;
+    SortedSet<ITableauCalculatedField> fields;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    ITableauProject project;
+
+    /** TBC */
+    @Attribute
+    ITableauWorkbook workbook;
 
     /**
      * Reference to a TableauDatasource by GUID.
@@ -306,7 +317,7 @@ public class TableauDatasource extends Tableau {
      * @return the TableauDatasource that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static TableauDatasource replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static TableauDatasource replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (TableauDatasource) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -321,7 +332,7 @@ public class TableauDatasource extends Tableau {
      * @return the TableauDatasource that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static TableauDatasource appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static TableauDatasource appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (TableauDatasource) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -335,7 +346,7 @@ public class TableauDatasource extends Tableau {
      * @return the TableauDatasource that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static TableauDatasource removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static TableauDatasource removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (TableauDatasource) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

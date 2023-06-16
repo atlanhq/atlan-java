@@ -25,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class DbtModelColumn extends Dbt {
+public class DbtModelColumn extends Asset implements IDbtModelColumn, IDbt, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "DbtModelColumn";
@@ -37,7 +37,55 @@ public class DbtModelColumn extends Dbt {
 
     /** TBC */
     @Attribute
-    String dbtModelQualifiedName;
+    String dbtAccountName;
+
+    /** TBC */
+    @Attribute
+    String dbtAlias;
+
+    /** TBC */
+    @Attribute
+    String dbtConnectionContext;
+
+    /** TBC */
+    @Attribute
+    String dbtEnvironmentDbtVersion;
+
+    /** TBC */
+    @Attribute
+    String dbtEnvironmentName;
+
+    /** TBC */
+    @Attribute
+    Long dbtJobLastRun;
+
+    /** TBC */
+    @Attribute
+    String dbtJobName;
+
+    /** TBC */
+    @Attribute
+    Long dbtJobNextRun;
+
+    /** TBC */
+    @Attribute
+    String dbtJobNextRunHumanized;
+
+    /** TBC */
+    @Attribute
+    String dbtJobSchedule;
+
+    /** TBC */
+    @Attribute
+    String dbtJobScheduleCronHumanized;
+
+    /** TBC */
+    @Attribute
+    String dbtJobStatus;
+
+    /** TBC */
+    @Attribute
+    String dbtMeta;
 
     /** TBC */
     @Attribute
@@ -49,16 +97,51 @@ public class DbtModelColumn extends Dbt {
 
     /** TBC */
     @Attribute
+    String dbtModelQualifiedName;
+
+    /** TBC */
+    @Attribute
+    String dbtPackageName;
+
+    /** TBC */
+    @Attribute
+    String dbtProjectName;
+
+    /** TBC */
+    @Attribute
+    String dbtSemanticLayerProxyUrl;
+
+    /** TBC */
+    @Attribute
     @Singular
-    SortedSet<Column> dbtModelColumnSqlColumns;
+    SortedSet<String> dbtTags;
 
     /** TBC */
     @Attribute
-    Column sqlColumn;
+    String dbtUniqueId;
 
     /** TBC */
     @Attribute
-    DbtModel dbtModel;
+    IDbtModel dbtModel;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IColumn> dbtModelColumnSqlColumns;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    IColumn sqlColumn;
 
     /**
      * Reference to a DbtModelColumn by GUID.
@@ -260,7 +343,7 @@ public class DbtModelColumn extends Dbt {
      * @return the DbtModelColumn that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static DbtModelColumn replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static DbtModelColumn replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (DbtModelColumn) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -275,7 +358,7 @@ public class DbtModelColumn extends Dbt {
      * @return the DbtModelColumn that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static DbtModelColumn appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static DbtModelColumn appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (DbtModelColumn) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -289,7 +372,7 @@ public class DbtModelColumn extends Dbt {
      * @return the DbtModelColumn that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static DbtModelColumn removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static DbtModelColumn removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (DbtModelColumn) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

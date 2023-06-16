@@ -101,7 +101,7 @@ public class AssetTestGenerator extends AssetGenerator {
                 }
             }
         } else {
-            log.warn("No attributes found for {}, skipping any test inclusion.", assetGenerator.getClassName());
+            log.warn("No attributes found for {}, skipping any test inclusion.", assetGenerator.getOriginalName());
         }
     }
 

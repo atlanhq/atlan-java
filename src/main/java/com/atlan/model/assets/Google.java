@@ -19,29 +19,19 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @JsonSubTypes({
+    @JsonSubTypes.Type(value = DataStudio.class, name = DataStudio.TYPE_NAME),
     @JsonSubTypes.Type(value = GCS.class, name = GCS.TYPE_NAME),
     @JsonSubTypes.Type(value = DataStudioAsset.class, name = DataStudioAsset.TYPE_NAME),
 })
 @Slf4j
-public abstract class Google extends Catalog {
+public abstract class Google extends Asset implements IGoogle, ICloud, IAsset, IReferenceable {
 
     public static final String TYPE_NAME = "Google";
 
-    /** Service in Google in which the asset exists. */
+    /** List of labels that have been applied to the asset in Google. */
     @Attribute
-    String googleService;
-
-    /** Name of the project in which the asset exists. */
-    @Attribute
-    String googleProjectName;
-
-    /** ID of the project in which the asset exists. */
-    @Attribute
-    String googleProjectId;
-
-    /** TBC */
-    @Attribute
-    Long googleProjectNumber;
+    @Singular
+    List<GoogleLabel> googleLabels;
 
     /** TBC */
     @Attribute
@@ -51,10 +41,21 @@ public abstract class Google extends Catalog {
     @Attribute
     String googleLocationType;
 
-    /** List of labels that have been applied to the asset in Google. */
+    /** ID of the project in which the asset exists. */
     @Attribute
-    @Singular
-    List<GoogleLabel> googleLabels;
+    String googleProjectId;
+
+    /** Name of the project in which the asset exists. */
+    @Attribute
+    String googleProjectName;
+
+    /** TBC */
+    @Attribute
+    Long googleProjectNumber;
+
+    /** Service in Google in which the asset exists. */
+    @Attribute
+    String googleService;
 
     /** List of tags that have been applied to the asset in Google. */
     @Attribute

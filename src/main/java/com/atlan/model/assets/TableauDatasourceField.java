@@ -27,7 +27,8 @@ import lombok.extern.slf4j.Slf4j;
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
 @SuppressWarnings("cast")
-public class TableauDatasourceField extends Tableau {
+public class TableauDatasourceField extends Asset
+        implements ITableauDatasourceField, ITableau, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "TableauDatasourceField";
@@ -39,23 +40,15 @@ public class TableauDatasourceField extends Tableau {
 
     /** TBC */
     @Attribute
-    String siteQualifiedName;
-
-    /** TBC */
-    @Attribute
-    String projectQualifiedName;
-
-    /** TBC */
-    @Attribute
-    String topLevelProjectQualifiedName;
-
-    /** TBC */
-    @Attribute
-    String workbookQualifiedName;
+    String datasourceFieldType;
 
     /** TBC */
     @Attribute
     String datasourceQualifiedName;
+
+    /** TBC */
+    @Attribute
+    String fullyQualifiedName;
 
     /** TBC */
     @Attribute
@@ -64,7 +57,15 @@ public class TableauDatasourceField extends Tableau {
 
     /** TBC */
     @Attribute
-    String fullyQualifiedName;
+    String projectQualifiedName;
+
+    /** TBC */
+    @Attribute
+    String siteQualifiedName;
+
+    /** TBC */
+    @Attribute
+    String tableauDatasourceFieldBinSize;
 
     /** TBC */
     @Attribute
@@ -72,16 +73,7 @@ public class TableauDatasourceField extends Tableau {
 
     /** TBC */
     @Attribute
-    String tableauDatasourceFieldRole;
-
-    /** TBC */
-    @Attribute
     String tableauDatasourceFieldDataType;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    List<Map<String, String>> upstreamTables;
 
     /** TBC */
     @Attribute
@@ -89,7 +81,11 @@ public class TableauDatasourceField extends Tableau {
 
     /** TBC */
     @Attribute
-    String tableauDatasourceFieldBinSize;
+    String tableauDatasourceFieldRole;
+
+    /** TBC */
+    @Attribute
+    String topLevelProjectQualifiedName;
 
     /** TBC */
     @Attribute
@@ -103,16 +99,31 @@ public class TableauDatasourceField extends Tableau {
 
     /** TBC */
     @Attribute
-    String datasourceFieldType;
+    @Singular
+    List<Map<String, String>> upstreamTables;
+
+    /** TBC */
+    @Attribute
+    String workbookQualifiedName;
+
+    /** TBC */
+    @Attribute
+    ITableauDatasource datasource;
 
     /** TBC */
     @Attribute
     @Singular
-    SortedSet<TableauWorksheet> worksheets;
+    SortedSet<ILineageProcess> inputToProcesses;
 
     /** TBC */
     @Attribute
-    TableauDatasource datasource;
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ITableauWorksheet> worksheets;
 
     /**
      * Reference to a TableauDatasourceField by GUID.
@@ -317,7 +328,7 @@ public class TableauDatasourceField extends Tableau {
      * @return the TableauDatasourceField that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static TableauDatasourceField replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static TableauDatasourceField replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (TableauDatasourceField) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -332,7 +343,7 @@ public class TableauDatasourceField extends Tableau {
      * @return the TableauDatasourceField that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static TableauDatasourceField appendTerms(String qualifiedName, List<GlossaryTerm> terms)
+    public static TableauDatasourceField appendTerms(String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (TableauDatasourceField) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
@@ -347,7 +358,7 @@ public class TableauDatasourceField extends Tableau {
      * @return the TableauDatasourceField that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static TableauDatasourceField removeTerms(String qualifiedName, List<GlossaryTerm> terms)
+    public static TableauDatasourceField removeTerms(String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (TableauDatasourceField) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }

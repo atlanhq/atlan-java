@@ -11,6 +11,7 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 import lombok.*;
@@ -25,7 +26,9 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class MicroStrategyReport extends MicroStrategy {
+@SuppressWarnings("cast")
+public class MicroStrategyReport extends Asset
+        implements IMicroStrategyReport, IMicroStrategy, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "MicroStrategyReport";
@@ -35,23 +38,78 @@ public class MicroStrategyReport extends MicroStrategy {
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** TBC */
+    @Attribute
+    Long microStrategyCertifiedAt;
+
+    /** TBC */
+    @Attribute
+    String microStrategyCertifiedBy;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<String> microStrategyCubeNames;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<String> microStrategyCubeQualifiedNames;
+
+    /** TBC */
+    @Attribute
+    Boolean microStrategyIsCertified;
+
+    /** TBC */
+    @Attribute
+    @Singular("putMicroStrategyLocation")
+    List<Map<String, String>> microStrategyLocation;
+
+    /** TBC */
+    @Attribute
+    String microStrategyProjectName;
+
+    /** TBC */
+    @Attribute
+    String microStrategyProjectQualifiedName;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<String> microStrategyReportNames;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<String> microStrategyReportQualifiedNames;
+
     /** Whether the report is a Grid or Chart. */
     @Attribute
     String microStrategyReportType;
 
-    /** Metrics used within the report. */
+    /** TBC */
     @Attribute
     @Singular
-    SortedSet<MicroStrategyMetric> microStrategyMetrics;
-
-    /** Project containing the report. */
-    @Attribute
-    MicroStrategyProject microStrategyProject;
+    SortedSet<ILineageProcess> inputToProcesses;
 
     /** Attributes related to this report. */
     @Attribute
     @Singular
-    SortedSet<MicroStrategyAttribute> microStrategyAttributes;
+    SortedSet<IMicroStrategyAttribute> microStrategyAttributes;
+
+    /** Metrics used within the report. */
+    @Attribute
+    @Singular
+    SortedSet<IMicroStrategyMetric> microStrategyMetrics;
+
+    /** Project containing the report. */
+    @Attribute
+    IMicroStrategyProject microStrategyProject;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 
     /**
      * Reference to a MicroStrategyReport by GUID.
@@ -254,7 +312,7 @@ public class MicroStrategyReport extends MicroStrategy {
      * @return the MicroStrategyReport that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static MicroStrategyReport replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static MicroStrategyReport replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (MicroStrategyReport) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -269,7 +327,7 @@ public class MicroStrategyReport extends MicroStrategy {
      * @return the MicroStrategyReport that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static MicroStrategyReport appendTerms(String qualifiedName, List<GlossaryTerm> terms)
+    public static MicroStrategyReport appendTerms(String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (MicroStrategyReport) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
@@ -284,7 +342,7 @@ public class MicroStrategyReport extends MicroStrategy {
      * @return the MicroStrategyReport that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static MicroStrategyReport removeTerms(String qualifiedName, List<GlossaryTerm> terms)
+    public static MicroStrategyReport removeTerms(String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (MicroStrategyReport) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }

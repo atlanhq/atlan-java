@@ -11,6 +11,7 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -24,7 +25,8 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class SigmaDataElementField extends Sigma {
+public class SigmaDataElementField extends Asset
+        implements ISigmaDataElementField, ISigma, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "SigmaDataElementField";
@@ -36,15 +38,49 @@ public class SigmaDataElementField extends Sigma {
 
     /** TBC */
     @Attribute
+    String sigmaDataElementFieldFormula;
+
+    /** TBC */
+    @Attribute
     Boolean sigmaDataElementFieldIsHidden;
 
     /** TBC */
     @Attribute
-    String sigmaDataElementFieldFormula;
+    String sigmaDataElementName;
+
+    /** TBC */
+    @Attribute
+    String sigmaDataElementQualifiedName;
+
+    /** TBC */
+    @Attribute
+    String sigmaPageName;
+
+    /** TBC */
+    @Attribute
+    String sigmaPageQualifiedName;
+
+    /** TBC */
+    @Attribute
+    String sigmaWorkbookName;
+
+    /** TBC */
+    @Attribute
+    String sigmaWorkbookQualifiedName;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 
     /** Data element that contains this data element field. */
     @Attribute
-    SigmaDataElement sigmaDataElement;
+    ISigmaDataElement sigmaDataElement;
 
     /**
      * Reference to a SigmaDataElementField by GUID.
@@ -248,7 +284,7 @@ public class SigmaDataElementField extends Sigma {
      * @return the SigmaDataElementField that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static SigmaDataElementField replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static SigmaDataElementField replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (SigmaDataElementField) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -263,7 +299,7 @@ public class SigmaDataElementField extends Sigma {
      * @return the SigmaDataElementField that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static SigmaDataElementField appendTerms(String qualifiedName, List<GlossaryTerm> terms)
+    public static SigmaDataElementField appendTerms(String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (SigmaDataElementField) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
@@ -278,7 +314,7 @@ public class SigmaDataElementField extends Sigma {
      * @return the SigmaDataElementField that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static SigmaDataElementField removeTerms(String qualifiedName, List<GlossaryTerm> terms)
+    public static SigmaDataElementField removeTerms(String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (SigmaDataElementField) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }

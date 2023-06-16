@@ -35,7 +35,7 @@ import lombok.extern.slf4j.Slf4j;
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
 @SuppressWarnings("cast")
-public class GlossaryCategory extends Asset {
+public class GlossaryCategory extends Asset implements IGlossaryCategory, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "AtlasGlossaryCategory";
@@ -47,7 +47,8 @@ public class GlossaryCategory extends Asset {
 
     /** TBC */
     @Attribute
-    String shortDescription;
+    @Singular
+    Map<String, String> additionalAttributes;
 
     /** TBC */
     @Attribute
@@ -55,27 +56,26 @@ public class GlossaryCategory extends Asset {
 
     /** TBC */
     @Attribute
-    @Singular
-    Map<String, String> additionalAttributes;
+    String shortDescription;
 
     /** TBC */
     @Attribute
-    @Singular
-    SortedSet<GlossaryTerm> terms;
-
-    /** TBC */
-    @Attribute
-    Glossary anchor;
-
-    /** TBC */
-    @Attribute
-    GlossaryCategory parentCategory;
+    IGlossary anchor;
 
     /** TBC */
     @Attribute
     @Singular("childCategory")
     @Setter(AccessLevel.PACKAGE)
-    SortedSet<GlossaryCategory> childrenCategories;
+    SortedSet<IGlossaryCategory> childrenCategories;
+
+    /** TBC */
+    @Attribute
+    IGlossaryCategory parentCategory;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IGlossaryTerm> terms;
 
     /**
      * Reference to a GlossaryCategory by GUID.

@@ -8,6 +8,7 @@ import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
+import com.atlan.model.enums.PowerBIEndorsementType;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +28,8 @@ import lombok.extern.slf4j.Slf4j;
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
 @SuppressWarnings("cast")
-public class PowerBIDatasource extends PowerBI {
+public class PowerBIDatasource extends Asset
+        implements IPowerBIDatasource, IPowerBI, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "PowerBIDatasource";
@@ -44,8 +46,34 @@ public class PowerBIDatasource extends PowerBI {
 
     /** TBC */
     @Attribute
+    PowerBIEndorsementType powerBIEndorsement;
+
+    /** TBC */
+    @Attribute
+    String powerBIFormatString;
+
+    /** TBC */
+    @Attribute
+    Boolean powerBIIsHidden;
+
+    /** TBC */
+    @Attribute
+    String powerBITableQualifiedName;
+
+    /** TBC */
+    @Attribute
     @Singular
-    SortedSet<PowerBIDataset> datasets;
+    SortedSet<IPowerBIDataset> datasets;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 
     /**
      * Reference to a PowerBIDatasource by GUID.
@@ -247,7 +275,7 @@ public class PowerBIDatasource extends PowerBI {
      * @return the PowerBIDatasource that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static PowerBIDatasource replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static PowerBIDatasource replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (PowerBIDatasource) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -262,7 +290,7 @@ public class PowerBIDatasource extends PowerBI {
      * @return the PowerBIDatasource that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static PowerBIDatasource appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static PowerBIDatasource appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (PowerBIDatasource) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -276,7 +304,7 @@ public class PowerBIDatasource extends PowerBI {
      * @return the PowerBIDatasource that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static PowerBIDatasource removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static PowerBIDatasource removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (PowerBIDatasource) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

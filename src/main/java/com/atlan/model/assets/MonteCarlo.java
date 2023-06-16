@@ -21,9 +21,14 @@ import lombok.extern.slf4j.Slf4j;
     @JsonSubTypes.Type(value = MCMonitor.class, name = MCMonitor.TYPE_NAME),
 })
 @Slf4j
-public abstract class MonteCarlo extends DataQuality {
+public abstract class MonteCarlo extends Asset implements IMonteCarlo, IDataQuality, ICatalog, IAsset, IReferenceable {
 
     public static final String TYPE_NAME = "MonteCarlo";
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<String> mcAssetQualifiedNames;
 
     /** TBC */
     @Attribute
@@ -33,5 +38,10 @@ public abstract class MonteCarlo extends DataQuality {
     /** TBC */
     @Attribute
     @Singular
-    SortedSet<String> mcAssetQualifiedNames;
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 }

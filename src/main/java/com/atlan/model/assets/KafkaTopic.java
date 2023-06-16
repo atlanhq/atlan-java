@@ -27,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class KafkaTopic extends Kafka {
+public class KafkaTopic extends Asset implements IKafkaTopic, IKafka, IEventStore, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "KafkaTopic";
@@ -39,11 +39,23 @@ public class KafkaTopic extends Kafka {
 
     /** TBC */
     @Attribute
-    Boolean kafkaTopicIsInternal;
+    KafkaTopicCleanupPolicy kafkaTopicCleanupPolicy;
 
     /** TBC */
     @Attribute
     KafkaTopicCompressionType kafkaTopicCompressionType;
+
+    /** TBC */
+    @Attribute
+    Boolean kafkaTopicIsInternal;
+
+    /** TBC */
+    @Attribute
+    Long kafkaTopicPartitionsCount;
+
+    /** Number of (unexpired) messages in this topic. */
+    @Attribute
+    Long kafkaTopicRecordCount;
 
     /** TBC */
     @Attribute
@@ -55,24 +67,22 @@ public class KafkaTopic extends Kafka {
 
     /** TBC */
     @Attribute
-    Long kafkaTopicPartitionsCount;
-
-    /** TBC */
-    @Attribute
     Long kafkaTopicSizeInBytes;
 
-    /** Number of (unexpired) messages in this topic. */
-    @Attribute
-    Long kafkaTopicRecordCount;
-
     /** TBC */
     @Attribute
-    KafkaTopicCleanupPolicy kafkaTopicCleanupPolicy;
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
 
     /** Consumer groups subscribed to this topic. */
     @Attribute
     @Singular
-    SortedSet<KafkaConsumerGroup> kafkaConsumerGroups;
+    SortedSet<IKafkaConsumerGroup> kafkaConsumerGroups;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 
     /**
      * Reference to a KafkaTopic by GUID.
@@ -274,7 +284,7 @@ public class KafkaTopic extends Kafka {
      * @return the KafkaTopic that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static KafkaTopic replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static KafkaTopic replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (KafkaTopic) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -289,7 +299,7 @@ public class KafkaTopic extends Kafka {
      * @return the KafkaTopic that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static KafkaTopic appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static KafkaTopic appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (KafkaTopic) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -303,7 +313,7 @@ public class KafkaTopic extends Kafka {
      * @return the KafkaTopic that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static KafkaTopic removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static KafkaTopic removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (KafkaTopic) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

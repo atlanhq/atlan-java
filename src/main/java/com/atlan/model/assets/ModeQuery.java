@@ -25,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class ModeQuery extends Mode {
+public class ModeQuery extends Asset implements IModeQuery, IMode, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "ModeQuery";
@@ -37,6 +37,18 @@ public class ModeQuery extends Mode {
 
     /** TBC */
     @Attribute
+    String modeId;
+
+    /** TBC */
+    @Attribute
+    String modeQueryName;
+
+    /** TBC */
+    @Attribute
+    String modeQueryQualifiedName;
+
+    /** TBC */
+    @Attribute
     String modeRawQuery;
 
     /** TBC */
@@ -45,12 +57,46 @@ public class ModeQuery extends Mode {
 
     /** TBC */
     @Attribute
-    @Singular
-    SortedSet<ModeChart> modeCharts;
+    String modeReportName;
 
     /** TBC */
     @Attribute
-    ModeReport modeReport;
+    String modeReportQualifiedName;
+
+    /** TBC */
+    @Attribute
+    String modeToken;
+
+    /** TBC */
+    @Attribute
+    String modeWorkspaceName;
+
+    /** TBC */
+    @Attribute
+    String modeWorkspaceQualifiedName;
+
+    /** TBC */
+    @Attribute
+    String modeWorkspaceUsername;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IModeChart> modeCharts;
+
+    /** TBC */
+    @Attribute
+    IModeReport modeReport;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 
     /**
      * Reference to a ModeQuery by GUID.
@@ -252,7 +298,7 @@ public class ModeQuery extends Mode {
      * @return the ModeQuery that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static ModeQuery replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static ModeQuery replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (ModeQuery) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -267,7 +313,7 @@ public class ModeQuery extends Mode {
      * @return the ModeQuery that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static ModeQuery appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static ModeQuery appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (ModeQuery) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -281,7 +327,7 @@ public class ModeQuery extends Mode {
      * @return the ModeQuery that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static ModeQuery removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static ModeQuery removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (ModeQuery) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

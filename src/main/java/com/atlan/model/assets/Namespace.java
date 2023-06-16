@@ -21,17 +21,17 @@ import lombok.extern.slf4j.Slf4j;
     @JsonSubTypes.Type(value = Folder.class, name = Folder.TYPE_NAME),
 })
 @Slf4j
-public abstract class Namespace extends Asset {
+public abstract class Namespace extends Asset implements INamespace, IAsset, IReferenceable {
 
     public static final String TYPE_NAME = "Namespace";
 
     /** TBC */
     @Attribute
     @Singular
-    SortedSet<AtlanQuery> childrenQueries;
+    SortedSet<IFolder> childrenFolders;
 
     /** TBC */
     @Attribute
     @Singular
-    SortedSet<Folder> childrenFolders;
+    SortedSet<IAtlanQuery> childrenQueries;
 }

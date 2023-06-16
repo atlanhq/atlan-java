@@ -3,6 +3,7 @@
 package com.atlan.model.assets;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
+import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -23,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
     @JsonSubTypes.Type(value = ModeCollection.class, name = ModeCollection.TYPE_NAME),
 })
 @Slf4j
-public abstract class Mode extends BI {
+public abstract class Mode extends Asset implements IMode, IBI, ICatalog, IAsset, IReferenceable {
 
     public static final String TYPE_NAME = "Mode";
 
@@ -33,19 +34,11 @@ public abstract class Mode extends BI {
 
     /** TBC */
     @Attribute
-    String modeToken;
+    String modeQueryName;
 
     /** TBC */
     @Attribute
-    String modeWorkspaceName;
-
-    /** TBC */
-    @Attribute
-    String modeWorkspaceUsername;
-
-    /** TBC */
-    @Attribute
-    String modeWorkspaceQualifiedName;
+    String modeQueryQualifiedName;
 
     /** TBC */
     @Attribute
@@ -57,9 +50,27 @@ public abstract class Mode extends BI {
 
     /** TBC */
     @Attribute
-    String modeQueryName;
+    String modeToken;
 
     /** TBC */
     @Attribute
-    String modeQueryQualifiedName;
+    String modeWorkspaceName;
+
+    /** TBC */
+    @Attribute
+    String modeWorkspaceQualifiedName;
+
+    /** TBC */
+    @Attribute
+    String modeWorkspaceUsername;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 }

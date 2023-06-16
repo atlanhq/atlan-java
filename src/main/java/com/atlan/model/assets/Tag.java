@@ -23,26 +23,36 @@ import lombok.extern.slf4j.Slf4j;
     @JsonSubTypes.Type(value = SnowflakeTag.class, name = SnowflakeTag.TYPE_NAME),
 })
 @Slf4j
-public abstract class Tag extends Catalog {
+public abstract class Tag extends Asset implements ITag, ICatalog, IAsset, IReferenceable {
 
     public static final String TYPE_NAME = "Tag";
 
-    /** Unique identifier of the tag in the source system. */
+    /** Name of the classification in Atlan that is mapped to this tag. */
     @Attribute
-    String tagId;
-
-    /** Attributes associated with the tag in the source system. */
-    @Attribute
-    @Singular
-    List<SourceTagAttribute> tagAttributes;
+    @JsonProperty("mappedClassificationName")
+    String mappedAtlanTagName;
 
     /** Allowed values for the tag in the source system. These are denormalized from tagAttributes for ease of querying. */
     @Attribute
     @Singular
     SortedSet<String> tagAllowedValues;
 
-    /** Name of the classification in Atlan that is mapped to this tag. */
+    /** Attributes associated with the tag in the source system. */
     @Attribute
-    @JsonProperty("mappedClassificationName")
-    String mappedAtlanTagName;
+    @Singular
+    List<SourceTagAttribute> tagAttributes;
+
+    /** Unique identifier of the tag in the source system. */
+    @Attribute
+    String tagId;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 }

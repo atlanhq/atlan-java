@@ -33,7 +33,7 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class AuthPolicy extends Asset {
+public class AuthPolicy extends Asset implements IAuthPolicy, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "AuthPolicy";
@@ -43,58 +43,32 @@ public class AuthPolicy extends Asset {
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Kind of policy (for example, allow vs deny). */
+    /** Whether the policy is activated (true) or deactivated (false). */
     @Attribute
-    AuthPolicyType policyType;
-
-    /** Service that handles the policy (for example, atlas vs heka). */
-    @Attribute
-    String policyServiceName;
-
-    /** Category of access control object for the policy (for example, persona vs purpose). */
-    @Attribute
-    AuthPolicyCategory policyCategory;
-
-    /** Underlying kind of policy (for example, metadata vs data vs glossary). */
-    @Attribute
-    String policySubCategory;
-
-    /** Users to whom the policy applies. */
-    @Attribute
-    @Singular
-    SortedSet<String> policyUsers;
-
-    /** Groups to whom the policy applies. */
-    @Attribute
-    @Singular
-    SortedSet<String> policyGroups;
-
-    /** Roles to whom the policy applies. */
-    @Attribute
-    @Singular
-    SortedSet<String> policyRoles;
+    Boolean isPolicyEnabled;
 
     /** Actions included in the policy. */
     @Attribute
     @Singular
     SortedSet<AtlanPolicyAction> policyActions;
 
-    /** Resources against which to apply the policy. */
+    /** Category of access control object for the policy (for example, persona vs purpose). */
+    @Attribute
+    AuthPolicyCategory policyCategory;
+
+    /** TBC */
     @Attribute
     @Singular
-    List<String> policyResources;
+    List<AuthPolicyCondition> policyConditions;
 
     /** TBC */
     @Attribute
-    AuthPolicyResourceCategory policyResourceCategory;
+    Boolean policyDelegateAdmin;
 
-    /** TBC */
+    /** Groups to whom the policy applies. */
     @Attribute
-    Integer policyPriority;
-
-    /** Whether the policy is activated (true) or deactivated (false). */
-    @Attribute
-    Boolean isPolicyEnabled;
+    @Singular
+    SortedSet<String> policyGroups;
 
     /** TBC */
     @Attribute
@@ -102,25 +76,51 @@ public class AuthPolicy extends Asset {
 
     /** TBC */
     @Attribute
-    @Singular("addPolicyValiditySchedule")
-    List<AuthPolicyValiditySchedule> policyValiditySchedule;
+    Integer policyPriority;
+
+    /** TBC */
+    @Attribute
+    AuthPolicyResourceCategory policyResourceCategory;
 
     /** TBC */
     @Attribute
     String policyResourceSignature;
 
-    /** TBC */
+    /** Resources against which to apply the policy. */
     @Attribute
-    Boolean policyDelegateAdmin;
+    @Singular
+    List<String> policyResources;
+
+    /** Roles to whom the policy applies. */
+    @Attribute
+    @Singular
+    SortedSet<String> policyRoles;
+
+    /** Service that handles the policy (for example, atlas vs heka). */
+    @Attribute
+    String policyServiceName;
+
+    /** Underlying kind of policy (for example, metadata vs data vs glossary). */
+    @Attribute
+    String policySubCategory;
+
+    /** Kind of policy (for example, allow vs deny). */
+    @Attribute
+    AuthPolicyType policyType;
+
+    /** Users to whom the policy applies. */
+    @Attribute
+    @Singular
+    SortedSet<String> policyUsers;
 
     /** TBC */
     @Attribute
-    @Singular
-    List<AuthPolicyCondition> policyConditions;
+    @Singular("addPolicyValiditySchedule")
+    List<AuthPolicyValiditySchedule> policyValiditySchedule;
 
     /** Access control object to which this policy belongs. */
     @Attribute
-    AccessControl accessControl;
+    IAccessControl accessControl;
 
     /**
      * Reference to a AuthPolicy by GUID.
@@ -339,7 +339,7 @@ public class AuthPolicy extends Asset {
      * @return the AuthPolicy that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static AuthPolicy replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static AuthPolicy replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (AuthPolicy) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -354,7 +354,7 @@ public class AuthPolicy extends Asset {
      * @return the AuthPolicy that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static AuthPolicy appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static AuthPolicy appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (AuthPolicy) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -368,7 +368,7 @@ public class AuthPolicy extends Asset {
      * @return the AuthPolicy that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static AuthPolicy removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static AuthPolicy removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (AuthPolicy) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

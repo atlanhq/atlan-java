@@ -3,6 +3,7 @@
 package com.atlan.model.assets;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
+import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -22,9 +23,17 @@ import lombok.extern.slf4j.Slf4j;
     @JsonSubTypes.Type(value = PresetWorkspace.class, name = PresetWorkspace.TYPE_NAME),
 })
 @Slf4j
-public abstract class Preset extends BI {
+public abstract class Preset extends Asset implements IPreset, IBI, ICatalog, IAsset, IReferenceable {
 
     public static final String TYPE_NAME = "Preset";
+
+    /** ID of the Preset asset's collection. */
+    @Attribute
+    Long presetDashboardId;
+
+    /** qualifiedName of the Preset asset's collection. */
+    @Attribute
+    String presetDashboardQualifiedName;
 
     /** ID of the Preset asset's workspace. */
     @Attribute
@@ -34,11 +43,13 @@ public abstract class Preset extends BI {
     @Attribute
     String presetWorkspaceQualifiedName;
 
-    /** ID of the Preset asset's collection. */
+    /** TBC */
     @Attribute
-    Long presetDashboardId;
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
 
-    /** qualifiedName of the Preset asset's collection. */
+    /** TBC */
     @Attribute
-    String presetDashboardQualifiedName;
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 }

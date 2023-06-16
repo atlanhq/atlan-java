@@ -3,6 +3,7 @@
 package com.atlan.model.assets;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
+import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -22,6 +23,7 @@ import lombok.extern.slf4j.Slf4j;
     @JsonSubTypes.Type(value = Tableau.class, name = Tableau.TYPE_NAME),
     @JsonSubTypes.Type(value = Looker.class, name = Looker.TYPE_NAME),
     @JsonSubTypes.Type(value = Redash.class, name = Redash.TYPE_NAME),
+    @JsonSubTypes.Type(value = DataStudio.class, name = DataStudio.TYPE_NAME),
     @JsonSubTypes.Type(value = Metabase.class, name = Metabase.TYPE_NAME),
     @JsonSubTypes.Type(value = QuickSight.class, name = QuickSight.TYPE_NAME),
     @JsonSubTypes.Type(value = Thoughtspot.class, name = Thoughtspot.TYPE_NAME),
@@ -30,7 +32,17 @@ import lombok.extern.slf4j.Slf4j;
     @JsonSubTypes.Type(value = Qlik.class, name = Qlik.TYPE_NAME),
 })
 @Slf4j
-public abstract class BI extends Catalog {
+public abstract class BI extends Asset implements IBI, ICatalog, IAsset, IReferenceable {
 
     public static final String TYPE_NAME = "BI";
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 }

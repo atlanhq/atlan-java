@@ -26,7 +26,8 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class KafkaConsumerGroup extends Kafka {
+public class KafkaConsumerGroup extends Asset
+        implements IKafkaConsumerGroup, IKafka, IEventStore, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "KafkaConsumerGroup";
@@ -38,12 +39,12 @@ public class KafkaConsumerGroup extends Kafka {
 
     /** TBC */
     @Attribute
-    @Singular
-    List<KafkaTopicConsumption> kafkaConsumerGroupTopicConsumptionProperties;
+    Long kafkaConsumerGroupMemberCount;
 
     /** TBC */
     @Attribute
-    Long kafkaConsumerGroupMemberCount;
+    @Singular
+    List<KafkaTopicConsumption> kafkaConsumerGroupTopicConsumptionProperties;
 
     /** Names of the topics for this consumer group. */
     @Attribute
@@ -55,10 +56,20 @@ public class KafkaConsumerGroup extends Kafka {
     @Singular
     SortedSet<String> kafkaTopicQualifiedNames;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
     /** Topics for this consumer group. */
     @Attribute
     @Singular
-    SortedSet<KafkaTopic> kafkaTopics;
+    SortedSet<IKafkaTopic> kafkaTopics;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 
     /**
      * Reference to a KafkaConsumerGroup by GUID.
@@ -260,7 +271,7 @@ public class KafkaConsumerGroup extends Kafka {
      * @return the KafkaConsumerGroup that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static KafkaConsumerGroup replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static KafkaConsumerGroup replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (KafkaConsumerGroup) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -275,7 +286,8 @@ public class KafkaConsumerGroup extends Kafka {
      * @return the KafkaConsumerGroup that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static KafkaConsumerGroup appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static KafkaConsumerGroup appendTerms(String qualifiedName, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (KafkaConsumerGroup) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -289,7 +301,8 @@ public class KafkaConsumerGroup extends Kafka {
      * @return the KafkaConsumerGroup that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static KafkaConsumerGroup removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static KafkaConsumerGroup removeTerms(String qualifiedName, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (KafkaConsumerGroup) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

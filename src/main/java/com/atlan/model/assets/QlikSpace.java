@@ -29,7 +29,7 @@ import lombok.extern.slf4j.Slf4j;
     @JsonSubTypes.Type(value = QlikStream.class, name = QlikStream.TYPE_NAME),
 })
 @Slf4j
-public class QlikSpace extends Qlik {
+public class QlikSpace extends Asset implements IQlikSpace, IQlik, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "QlikSpace";
@@ -39,19 +39,61 @@ public class QlikSpace extends Qlik {
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** TBC */
+    @Attribute
+    String qlikAppId;
+
+    /** TBC */
+    @Attribute
+    String qlikAppQualifiedName;
+
+    /** TBC */
+    @Attribute
+    String qlikId;
+
+    /** TBC */
+    @Attribute
+    Boolean qlikIsPublished;
+
+    /** TBC */
+    @Attribute
+    String qlikOwnerId;
+
+    /** TBC */
+    @Attribute
+    String qlikQRI;
+
+    /** TBC */
+    @Attribute
+    String qlikSpaceId;
+
+    /** TBC */
+    @Attribute
+    String qlikSpaceQualifiedName;
+
     /** Type of space, for example: Private, Shared, etc. */
     @Attribute
     String qlikSpaceType;
 
-    /** Datasets contained within the space. */
+    /** TBC */
     @Attribute
     @Singular
-    SortedSet<QlikDataset> qlikDatasets;
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 
     /** Apps contained within the space. */
     @Attribute
     @Singular
-    SortedSet<QlikApp> qlikApps;
+    SortedSet<IQlikApp> qlikApps;
+
+    /** Datasets contained within the space. */
+    @Attribute
+    @Singular
+    SortedSet<IQlikDataset> qlikDatasets;
 
     /**
      * Reference to a QlikSpace by GUID.
@@ -253,7 +295,7 @@ public class QlikSpace extends Qlik {
      * @return the QlikSpace that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static QlikSpace replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static QlikSpace replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (QlikSpace) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -268,7 +310,7 @@ public class QlikSpace extends Qlik {
      * @return the QlikSpace that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static QlikSpace appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static QlikSpace appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (QlikSpace) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -282,7 +324,7 @@ public class QlikSpace extends Qlik {
      * @return the QlikSpace that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static QlikSpace removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static QlikSpace removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (QlikSpace) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

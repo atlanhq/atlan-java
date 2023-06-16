@@ -36,7 +36,7 @@ import lombok.extern.slf4j.Slf4j;
     @JsonSubTypes.Type(value = ColumnProcess.class, name = ColumnProcess.TYPE_NAME),
 })
 @Slf4j
-public class LineageProcess extends Asset {
+public class LineageProcess extends Asset implements ILineageProcess, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "Process";
@@ -48,13 +48,7 @@ public class LineageProcess extends Asset {
 
     /** TBC */
     @Attribute
-    @Singular
-    SortedSet<Catalog> inputs;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<Catalog> outputs;
+    String ast;
 
     /** TBC */
     @Attribute
@@ -66,12 +60,18 @@ public class LineageProcess extends Asset {
 
     /** TBC */
     @Attribute
-    String ast;
+    @Singular
+    SortedSet<IColumnProcess> columnProcesses;
 
     /** TBC */
     @Attribute
     @Singular
-    SortedSet<ColumnProcess> columnProcesses;
+    SortedSet<ICatalog> inputs;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ICatalog> outputs;
 
     /**
      * Reference to a LineageProcess by GUID.
@@ -372,7 +372,7 @@ public class LineageProcess extends Asset {
      * @return the LineageProcess that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static LineageProcess replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static LineageProcess replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (LineageProcess) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -387,7 +387,7 @@ public class LineageProcess extends Asset {
      * @return the LineageProcess that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static LineageProcess appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static LineageProcess appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (LineageProcess) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -401,7 +401,7 @@ public class LineageProcess extends Asset {
      * @return the LineageProcess that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static LineageProcess removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static LineageProcess removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (LineageProcess) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

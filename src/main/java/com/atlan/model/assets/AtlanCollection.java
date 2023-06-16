@@ -12,6 +12,7 @@ import com.atlan.model.enums.IconType;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -25,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class AtlanCollection extends Namespace {
+public class AtlanCollection extends Asset implements IAtlanCollection, INamespace, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "Collection";
@@ -42,6 +43,16 @@ public class AtlanCollection extends Namespace {
     /** TBC */
     @Attribute
     IconType iconType;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IFolder> childrenFolders;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IAtlanQuery> childrenQueries;
 
     /**
      * Reference to a AtlanCollection by GUID.
@@ -243,7 +254,7 @@ public class AtlanCollection extends Namespace {
      * @return the AtlanCollection that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static AtlanCollection replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static AtlanCollection replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (AtlanCollection) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -258,7 +269,7 @@ public class AtlanCollection extends Namespace {
      * @return the AtlanCollection that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static AtlanCollection appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static AtlanCollection appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (AtlanCollection) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -272,7 +283,7 @@ public class AtlanCollection extends Namespace {
      * @return the AtlanCollection that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static AtlanCollection removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static AtlanCollection removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (AtlanCollection) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

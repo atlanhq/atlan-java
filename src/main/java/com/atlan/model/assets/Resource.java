@@ -4,6 +4,7 @@ package com.atlan.model.assets;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import java.util.Map;
+import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -24,17 +25,17 @@ import lombok.extern.slf4j.Slf4j;
 })
 @Slf4j
 @SuppressWarnings("cast")
-public abstract class Resource extends Catalog {
+public abstract class Resource extends Asset implements IResource, ICatalog, IAsset, IReferenceable {
 
     public static final String TYPE_NAME = "Resource";
 
     /** TBC */
     @Attribute
-    String link;
+    Boolean isGlobal;
 
     /** TBC */
     @Attribute
-    Boolean isGlobal;
+    String link;
 
     /** TBC */
     @Attribute
@@ -44,4 +45,14 @@ public abstract class Resource extends Catalog {
     @Attribute
     @Singular("putResourceMetadata")
     Map<String, String> resourceMetadata;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 }

@@ -14,6 +14,7 @@ import com.atlan.util.StringUtils;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -28,7 +29,7 @@ import lombok.extern.slf4j.Slf4j;
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
 @SuppressWarnings("cast")
-public class PresetChart extends Preset {
+public class PresetChart extends Asset implements IPresetChart, IPreset, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "PresetChart";
@@ -47,9 +48,35 @@ public class PresetChart extends Preset {
     @Singular("putPresetChartFormData")
     Map<String, String> presetChartFormData;
 
+    /** TBC */
+    @Attribute
+    Long presetDashboardId;
+
+    /** TBC */
+    @Attribute
+    String presetDashboardQualifiedName;
+
+    /** TBC */
+    @Attribute
+    Long presetWorkspaceId;
+
+    /** TBC */
+    @Attribute
+    String presetWorkspaceQualifiedName;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
     /** Collection in which the chart exists. */
     @Attribute
-    PresetDashboard presetDashboard;
+    IPresetDashboard presetDashboard;
 
     /**
      * Reference to a PresetChart by GUID.
@@ -273,7 +300,7 @@ public class PresetChart extends Preset {
      * @return the PresetChart that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static PresetChart replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static PresetChart replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (PresetChart) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -288,7 +315,7 @@ public class PresetChart extends Preset {
      * @return the PresetChart that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static PresetChart appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static PresetChart appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (PresetChart) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -302,7 +329,7 @@ public class PresetChart extends Preset {
      * @return the PresetChart that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static PresetChart removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static PresetChart removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (PresetChart) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

@@ -25,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class ModeWorkspace extends Mode {
+public class ModeWorkspace extends Asset implements IModeWorkspace, IMode, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "ModeWorkspace";
@@ -41,8 +41,54 @@ public class ModeWorkspace extends Mode {
 
     /** TBC */
     @Attribute
+    String modeId;
+
+    /** TBC */
+    @Attribute
+    String modeQueryName;
+
+    /** TBC */
+    @Attribute
+    String modeQueryQualifiedName;
+
+    /** TBC */
+    @Attribute
+    String modeReportName;
+
+    /** TBC */
+    @Attribute
+    String modeReportQualifiedName;
+
+    /** TBC */
+    @Attribute
+    String modeToken;
+
+    /** TBC */
+    @Attribute
+    String modeWorkspaceName;
+
+    /** TBC */
+    @Attribute
+    String modeWorkspaceQualifiedName;
+
+    /** TBC */
+    @Attribute
+    String modeWorkspaceUsername;
+
+    /** TBC */
+    @Attribute
     @Singular
-    SortedSet<ModeCollection> modeCollections;
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IModeCollection> modeCollections;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 
     /**
      * Reference to a ModeWorkspace by GUID.
@@ -244,7 +290,7 @@ public class ModeWorkspace extends Mode {
      * @return the ModeWorkspace that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static ModeWorkspace replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static ModeWorkspace replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (ModeWorkspace) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -259,7 +305,7 @@ public class ModeWorkspace extends Mode {
      * @return the ModeWorkspace that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static ModeWorkspace appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static ModeWorkspace appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (ModeWorkspace) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -273,7 +319,7 @@ public class ModeWorkspace extends Mode {
      * @return the ModeWorkspace that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static ModeWorkspace removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static ModeWorkspace removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (ModeWorkspace) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

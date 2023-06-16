@@ -3,6 +3,7 @@
 package com.atlan.model.assets;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
+import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -23,13 +24,29 @@ import lombok.extern.slf4j.Slf4j;
     @JsonSubTypes.Type(value = QlikSheet.class, name = QlikSheet.TYPE_NAME),
 })
 @Slf4j
-public abstract class Qlik extends BI {
+public abstract class Qlik extends Asset implements IQlik, IBI, ICatalog, IAsset, IReferenceable {
 
     public static final String TYPE_NAME = "Qlik";
+
+    /** Unique identifier (in Qlik) of the app where the asset exists. */
+    @Attribute
+    String qlikAppId;
+
+    /** Unique name of the app where the Qlik asset exists. */
+    @Attribute
+    String qlikAppQualifiedName;
 
     /** Unique identifier of the Qlik asset in Qlik. */
     @Attribute
     String qlikId;
+
+    /** Whether the asset is published in Qlik (true) or not (false). */
+    @Attribute
+    Boolean qlikIsPublished;
+
+    /** Unique identifier (in Qlik) of the owner of the asset. */
+    @Attribute
+    String qlikOwnerId;
 
     /** QRI of the Qlik object. */
     @Attribute
@@ -43,19 +60,13 @@ public abstract class Qlik extends BI {
     @Attribute
     String qlikSpaceQualifiedName;
 
-    /** Unique identifier (in Qlik) of the app where the asset exists. */
+    /** TBC */
     @Attribute
-    String qlikAppId;
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
 
-    /** Unique name of the app where the Qlik asset exists. */
+    /** TBC */
     @Attribute
-    String qlikAppQualifiedName;
-
-    /** Unique identifier (in Qlik) of the owner of the asset. */
-    @Attribute
-    String qlikOwnerId;
-
-    /** Whether the asset is published in Qlik (true) or not (false). */
-    @Attribute
-    Boolean qlikIsPublished;
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 }

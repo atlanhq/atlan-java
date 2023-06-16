@@ -280,8 +280,15 @@ public class ModelCache {
 
     SortedSet<AttributeDef> getAllAttributesForType(String originalName) {
         if (originalName.equals("Referenceable")) {
-            // Skip attributes from Referenceable, these are directly-managed rather than generated
-            return new TreeSet<>();
+            // Retain only the 'qualifiedName' attribute from Referenceable
+            SortedSet<AttributeDef> retained = new TreeSet<>();
+            List<AttributeDef> attrs = entityDefCache.get(originalName).getAttributeDefs();
+            for (AttributeDef attributeDef : attrs) {
+                if (attributeDef.getName().equals("qualifiedName")) {
+                    retained.add(attributeDef);
+                }
+            }
+            return retained;
         } else {
             EntityDef entityDef = entityDefCache.get(originalName);
             SortedSet<AttributeDef> aggregated = new TreeSet<>();
@@ -301,8 +308,16 @@ public class ModelCache {
 
     SortedSet<RelationshipAttributeDef> getAllRelationshipsForType(String originalName) {
         if (originalName.equals("Referenceable")) {
-            // Skip attributes from Referenceable, these are directly-managed rather than generated
-            return new TreeSet<>();
+            // Retain only the 'meanings' relationship from Referenceable
+            SortedSet<RelationshipAttributeDef> retained = new TreeSet<>();
+            List<RelationshipAttributeDef> attrs =
+                    entityDefCache.get(originalName).getRelationshipAttributeDefs();
+            for (RelationshipAttributeDef attributeDef : attrs) {
+                if (attributeDef.getName().equals("meanings")) {
+                    retained.add(attributeDef);
+                }
+            }
+            return retained;
         } else {
             EntityDef entityDef = entityDefCache.get(originalName);
             SortedSet<RelationshipAttributeDef> aggregated = new TreeSet<>();
@@ -310,16 +325,6 @@ public class ModelCache {
                     originalName, aggregated, entityDef.getRelationshipAttributeDefs(), originalName);
             return aggregated;
             // No need to recurse, relationships are already inheritance-complete
-            /*List<String> superTypes = entityDef.getSuperTypes();
-            if (superTypes == null || superTypes.isEmpty()) {
-                return aggregated;
-            } else {
-                for (String superType : superTypes) {
-                    Set<RelationshipAttributeDef> again = getAllRelationshipsForType(superType);
-                    addAndLogRelationshipConflicts(originalName, aggregated, again, superType);
-                }
-                return aggregated;
-            }*/
         }
     }
 
@@ -344,10 +349,6 @@ public class ModelCache {
             Collection<RelationshipAttributeDef> toAdd,
             String fromSuperType) {
         for (RelationshipAttributeDef one : toAdd) {
-            if (typeName.equals("Asset") && one.getName().equals("meanings")) {
-                // Rename known 'meanings' relationship conflict
-                one = one.toBuilder().name("assignedTerms").build();
-            }
             boolean added = toAddTo.add(one);
             if (!added) {
                 log.warn("Conflicting relationship found for {}, from {}: {}", typeName, fromSuperType, one.getName());

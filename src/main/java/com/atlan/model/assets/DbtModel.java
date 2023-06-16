@@ -26,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class DbtModel extends Dbt {
+public class DbtModel extends Asset implements IDbtModel, IDbt, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "DbtModel";
@@ -38,15 +38,11 @@ public class DbtModel extends Dbt {
 
     /** TBC */
     @Attribute
-    String dbtStatus;
+    String dbtAccountName;
 
     /** TBC */
     @Attribute
-    String dbtError;
-
-    /** TBC */
-    @Attribute
-    String dbtRawSQL;
+    String dbtAlias;
 
     /** TBC */
     @Attribute
@@ -54,7 +50,47 @@ public class DbtModel extends Dbt {
 
     /** TBC */
     @Attribute
-    String dbtStats;
+    String dbtConnectionContext;
+
+    /** TBC */
+    @Attribute
+    String dbtEnvironmentDbtVersion;
+
+    /** TBC */
+    @Attribute
+    String dbtEnvironmentName;
+
+    /** TBC */
+    @Attribute
+    String dbtError;
+
+    /** TBC */
+    @Attribute
+    Long dbtJobLastRun;
+
+    /** TBC */
+    @Attribute
+    String dbtJobName;
+
+    /** TBC */
+    @Attribute
+    Long dbtJobNextRun;
+
+    /** TBC */
+    @Attribute
+    String dbtJobNextRunHumanized;
+
+    /** TBC */
+    @Attribute
+    String dbtJobSchedule;
+
+    /** TBC */
+    @Attribute
+    String dbtJobScheduleCronHumanized;
+
+    /** TBC */
+    @Attribute
+    String dbtJobStatus;
 
     /** TBC */
     @Attribute
@@ -62,7 +98,7 @@ public class DbtModel extends Dbt {
 
     /** TBC */
     @Attribute
-    Long dbtModelCompileStartedAt;
+    String dbtMeta;
 
     /** TBC */
     @Attribute
@@ -70,7 +106,7 @@ public class DbtModel extends Dbt {
 
     /** TBC */
     @Attribute
-    Long dbtModelExecuteStartedAt;
+    Long dbtModelCompileStartedAt;
 
     /** TBC */
     @Attribute
@@ -78,11 +114,11 @@ public class DbtModel extends Dbt {
 
     /** TBC */
     @Attribute
-    Double dbtModelExecutionTime;
+    Long dbtModelExecuteStartedAt;
 
     /** TBC */
     @Attribute
-    Long dbtModelRunGeneratedAt;
+    Double dbtModelExecutionTime;
 
     /** TBC */
     @Attribute
@@ -90,23 +126,70 @@ public class DbtModel extends Dbt {
 
     /** TBC */
     @Attribute
-    @Singular
-    SortedSet<DbtMetric> dbtMetrics;
+    Long dbtModelRunGeneratedAt;
+
+    /** TBC */
+    @Attribute
+    String dbtPackageName;
+
+    /** TBC */
+    @Attribute
+    String dbtProjectName;
+
+    /** TBC */
+    @Attribute
+    String dbtRawSQL;
+
+    /** TBC */
+    @Attribute
+    String dbtSemanticLayerProxyUrl;
+
+    /** TBC */
+    @Attribute
+    String dbtStats;
+
+    /** TBC */
+    @Attribute
+    String dbtStatus;
 
     /** TBC */
     @Attribute
     @Singular
-    SortedSet<SQL> dbtModelSqlAssets;
+    SortedSet<String> dbtTags;
+
+    /** TBC */
+    @Attribute
+    String dbtUniqueId;
 
     /** TBC */
     @Attribute
     @Singular
-    SortedSet<DbtModelColumn> dbtModelColumns;
+    SortedSet<IDbtMetric> dbtMetrics;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtModelColumn> dbtModelColumns;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISQL> dbtModelSqlAssets;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 
     /** TBC */
     @Attribute
     @JsonProperty("sqlAsset")
-    SQL primarySqlAsset;
+    ISQL primarySqlAsset;
 
     /**
      * Reference to a DbtModel by GUID.
@@ -308,7 +391,7 @@ public class DbtModel extends Dbt {
      * @return the DbtModel that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static DbtModel replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static DbtModel replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (DbtModel) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -323,7 +406,7 @@ public class DbtModel extends Dbt {
      * @return the DbtModel that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static DbtModel appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static DbtModel appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (DbtModel) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -337,7 +420,7 @@ public class DbtModel extends Dbt {
      * @return the DbtModel that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static DbtModel removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static DbtModel removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (DbtModel) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

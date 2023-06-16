@@ -15,9 +15,13 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
-@JsonSubTypes({})
+@JsonSubTypes({
+    @JsonSubTypes.Type(value = Google.class, name = Google.TYPE_NAME),
+    @JsonSubTypes.Type(value = Azure.class, name = Azure.TYPE_NAME),
+    @JsonSubTypes.Type(value = AWS.class, name = AWS.TYPE_NAME),
+})
 @Slf4j
-public abstract class Cloud extends Asset {
+public abstract class Cloud extends Asset implements ICloud, IAsset, IReferenceable {
 
     public static final String TYPE_NAME = "Cloud";
 }

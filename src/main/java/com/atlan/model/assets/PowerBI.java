@@ -4,6 +4,7 @@ package com.atlan.model.assets;
 
 import com.atlan.model.enums.PowerBIEndorsementType;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
+import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -30,9 +31,17 @@ import lombok.extern.slf4j.Slf4j;
     @JsonSubTypes.Type(value = PowerBIPage.class, name = PowerBIPage.TYPE_NAME),
 })
 @Slf4j
-public abstract class PowerBI extends BI {
+public abstract class PowerBI extends Asset implements IPowerBI, IBI, ICatalog, IAsset, IReferenceable {
 
     public static final String TYPE_NAME = "PowerBI";
+
+    /** TBC */
+    @Attribute
+    PowerBIEndorsementType powerBIEndorsement;
+
+    /** TBC */
+    @Attribute
+    String powerBIFormatString;
 
     /** TBC */
     @Attribute
@@ -44,9 +53,11 @@ public abstract class PowerBI extends BI {
 
     /** TBC */
     @Attribute
-    String powerBIFormatString;
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
 
     /** TBC */
     @Attribute
-    PowerBIEndorsementType powerBIEndorsement;
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 }

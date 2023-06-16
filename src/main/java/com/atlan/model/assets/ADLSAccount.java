@@ -17,6 +17,7 @@ import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
+import com.atlan.model.structs.AzureTag;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
@@ -33,7 +34,8 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class ADLSAccount extends ADLS {
+public class ADLSAccount extends Asset
+        implements IADLSAccount, IADLS, IObjectStore, IAzure, ICatalog, IAsset, IReferenceable, ICloud {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "ADLSAccount";
@@ -42,6 +44,42 @@ public class ADLSAccount extends ADLS {
     @Getter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
+
+    /** TBC */
+    @Attribute
+    ADLSAccessTier adlsAccountAccessTier;
+
+    /** TBC */
+    @Attribute
+    ADLSStorageKind adlsAccountKind;
+
+    /** TBC */
+    @Attribute
+    ADLSPerformance adlsAccountPerformance;
+
+    /** TBC */
+    @Attribute
+    ADLSProvisionState adlsAccountProvisionState;
+
+    /** TBC */
+    @Attribute
+    String adlsAccountQualifiedName;
+
+    /** TBC */
+    @Attribute
+    ADLSReplicationType adlsAccountReplication;
+
+    /** TBC */
+    @Attribute
+    String adlsAccountResourceGroup;
+
+    /** TBC */
+    @Attribute
+    String adlsAccountSecondaryLocation;
+
+    /** TBC */
+    @Attribute
+    String adlsAccountSubscription;
 
     /** Entity tag for the asset. An entity tag is a hash of the object and represents changes to the contents of an object only, not its metadata. */
     @Attribute
@@ -53,40 +91,35 @@ public class ADLSAccount extends ADLS {
 
     /** TBC */
     @Attribute
-    String adlsAccountResourceGroup;
-
-    /** TBC */
-    @Attribute
-    String adlsAccountSubscription;
-
-    /** TBC */
-    @Attribute
-    ADLSPerformance adlsAccountPerformance;
-
-    /** TBC */
-    @Attribute
-    ADLSReplicationType adlsAccountReplication;
-
-    /** TBC */
-    @Attribute
-    ADLSStorageKind adlsAccountKind;
-
-    /** TBC */
-    @Attribute
     ADLSAccountStatus adlsPrimaryDiskState;
 
     /** TBC */
     @Attribute
-    ADLSProvisionState adlsAccountProvisionState;
+    String azureLocation;
 
     /** TBC */
     @Attribute
-    ADLSAccessTier adlsAccountAccessTier;
+    String azureResourceId;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    List<AzureTag> azureTags;
 
     /** Containers that exist within this account. */
     @Attribute
     @Singular
-    SortedSet<ADLSContainer> adlsContainers;
+    SortedSet<IADLSContainer> adlsContainers;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 
     /**
      * Reference to a ADLSAccount by GUID.
@@ -314,7 +347,7 @@ public class ADLSAccount extends ADLS {
      * @return the ADLSAccount that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static ADLSAccount replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static ADLSAccount replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (ADLSAccount) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -329,7 +362,7 @@ public class ADLSAccount extends ADLS {
      * @return the ADLSAccount that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static ADLSAccount appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static ADLSAccount appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (ADLSAccount) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -343,7 +376,7 @@ public class ADLSAccount extends ADLS {
      * @return the ADLSAccount that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static ADLSAccount removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static ADLSAccount removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (ADLSAccount) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

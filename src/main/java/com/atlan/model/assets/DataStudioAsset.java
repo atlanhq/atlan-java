@@ -11,8 +11,11 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.GoogleDataStudioAssetType;
 import com.atlan.model.relations.UniqueAttributes;
+import com.atlan.model.structs.GoogleLabel;
+import com.atlan.model.structs.GoogleTag;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -26,7 +29,8 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class DataStudioAsset extends Google {
+public class DataStudioAsset extends Asset
+        implements IDataStudioAsset, IDataStudio, IGoogle, IBI, ICloud, IAsset, IReferenceable, ICatalog {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "DataStudioAsset";
@@ -36,21 +40,65 @@ public class DataStudioAsset extends Google {
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Type of Google Data Studio asset. */
+    /** Owner of the asset within Google Data Studio. */
     @Attribute
-    GoogleDataStudioAssetType dataStudioAssetType;
+    String dataStudioAssetOwner;
 
     /** Title for the asset. */
     @Attribute
     String dataStudioAssetTitle;
 
-    /** Owner of the asset within Google Data Studio. */
+    /** Type of Google Data Studio asset. */
     @Attribute
-    String dataStudioAssetOwner;
+    GoogleDataStudioAssetType dataStudioAssetType;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    List<GoogleLabel> googleLabels;
+
+    /** TBC */
+    @Attribute
+    String googleLocation;
+
+    /** TBC */
+    @Attribute
+    String googleLocationType;
+
+    /** TBC */
+    @Attribute
+    String googleProjectId;
+
+    /** TBC */
+    @Attribute
+    String googleProjectName;
+
+    /** TBC */
+    @Attribute
+    Long googleProjectNumber;
+
+    /** TBC */
+    @Attribute
+    String googleService;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    List<GoogleTag> googleTags;
 
     /** Whether the asset is soft-deleted in Google Data Studio (true) or not (false). */
     @Attribute
     Boolean isTrashedDataStudioAsset;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 
     /**
      * Reference to a DataStudioAsset by GUID.
@@ -270,7 +318,7 @@ public class DataStudioAsset extends Google {
      * @return the DataStudioAsset that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static DataStudioAsset replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static DataStudioAsset replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (DataStudioAsset) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -285,7 +333,7 @@ public class DataStudioAsset extends Google {
      * @return the DataStudioAsset that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static DataStudioAsset appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static DataStudioAsset appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (DataStudioAsset) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -299,7 +347,7 @@ public class DataStudioAsset extends Google {
      * @return the DataStudioAsset that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static DataStudioAsset removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static DataStudioAsset removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (DataStudioAsset) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

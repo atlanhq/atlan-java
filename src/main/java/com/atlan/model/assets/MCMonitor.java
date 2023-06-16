@@ -27,7 +27,8 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class MCMonitor extends MonteCarlo {
+public class MCMonitor extends Asset
+        implements IMCMonitor, IMonteCarlo, IDataQuality, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "MCMonitor";
@@ -37,9 +38,73 @@ public class MCMonitor extends MonteCarlo {
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<String> mcAssetQualifiedNames;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<String> mcLabels;
+
+    /** Condition on which the monitor produces an alert. */
+    @Attribute
+    String mcMonitorAlertCondition;
+
+    /** TBC */
+    @Attribute
+    Double mcMonitorBreachRate;
+
     /** Unique identifier for the monitor. */
     @Attribute
     String mcMonitorId;
+
+    /** Number of incidents associated with this monitor. */
+    @Attribute
+    Long mcMonitorIncidentCount;
+
+    /** Namespace of the monitor. */
+    @Attribute
+    String mcMonitorNamespace;
+
+    /** Comparison logic used for the rule. */
+    @Attribute
+    @Singular
+    List<MCRuleComparison> mcMonitorRuleComparisons;
+
+    /** SQL code for custom SQL rules. */
+    @Attribute
+    String mcMonitorRuleCustomSql;
+
+    /** Whether the rule is currently snoozed (true) or not (false). */
+    @Attribute
+    Boolean mcMonitorRuleIsSnoozed;
+
+    /** Time at which the next execution of the rule should occur. */
+    @Attribute
+    Long mcMonitorRuleNextExecutionTime;
+
+    /** Time at which the previous execution of the rule occurred. */
+    @Attribute
+    Long mcMonitorRulePreviousExecutionTime;
+
+    /** Schedule details for the rule. */
+    @Attribute
+    @Singular("addMcMonitorRuleSchedule")
+    List<MCRuleSchedule> mcMonitorRuleScheduleConfig;
+
+    /** Readable description of the schedule for the rule. */
+    @Attribute
+    String mcMonitorRuleScheduleConfigHumanized;
+
+    /** Type of rule for the monitor. */
+    @Attribute
+    String mcMonitorRuleType;
+
+    /** Type of schedule for the monitor, for example fixed or dynamic. */
+    @Attribute
+    String mcMonitorScheduleType;
 
     /** Status of the monitor. */
     @Attribute
@@ -53,64 +118,20 @@ public class MCMonitor extends MonteCarlo {
     @Attribute
     String mcMonitorWarehouse;
 
-    /** Type of schedule for the monitor, for example fixed or dynamic. */
-    @Attribute
-    String mcMonitorScheduleType;
-
-    /** Namespace of the monitor. */
-    @Attribute
-    String mcMonitorNamespace;
-
-    /** Type of rule for the monitor. */
-    @Attribute
-    String mcMonitorRuleType;
-
-    /** SQL code for custom SQL rules. */
-    @Attribute
-    String mcMonitorRuleCustomSql;
-
-    /** Schedule details for the rule. */
-    @Attribute
-    @Singular("addMcMonitorRuleSchedule")
-    List<MCRuleSchedule> mcMonitorRuleScheduleConfig;
-
-    /** Readable description of the schedule for the rule. */
-    @Attribute
-    String mcMonitorRuleScheduleConfigHumanized;
-
-    /** Condition on which the monitor produces an alert. */
-    @Attribute
-    String mcMonitorAlertCondition;
-
-    /** Time at which the next execution of the rule should occur. */
-    @Attribute
-    Long mcMonitorRuleNextExecutionTime;
-
-    /** Time at which the previous execution of the rule occurred. */
-    @Attribute
-    Long mcMonitorRulePreviousExecutionTime;
-
-    /** Comparison logic used for the rule. */
-    @Attribute
-    @Singular
-    List<MCRuleComparison> mcMonitorRuleComparisons;
-
-    /** Whether the rule is currently snoozed (true) or not (false). */
-    @Attribute
-    Boolean mcMonitorRuleIsSnoozed;
-
     /** TBC */
     @Attribute
-    Double mcMonitorBreachRate;
-
-    /** Number of incidents associated with this monitor. */
-    @Attribute
-    Long mcMonitorIncidentCount;
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
 
     /** Assets impacted by this monitor. */
     @Attribute
     @Singular
-    SortedSet<Asset> mcMonitorAssets;
+    SortedSet<IAsset> mcMonitorAssets;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 
     /**
      * Reference to a MCMonitor by GUID.
@@ -312,7 +333,7 @@ public class MCMonitor extends MonteCarlo {
      * @return the MCMonitor that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static MCMonitor replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static MCMonitor replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (MCMonitor) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -327,7 +348,7 @@ public class MCMonitor extends MonteCarlo {
      * @return the MCMonitor that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static MCMonitor appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static MCMonitor appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (MCMonitor) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -341,7 +362,7 @@ public class MCMonitor extends MonteCarlo {
      * @return the MCMonitor that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static MCMonitor removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static MCMonitor removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (MCMonitor) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

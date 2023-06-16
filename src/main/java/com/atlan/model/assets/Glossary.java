@@ -44,7 +44,7 @@ import lombok.extern.slf4j.Slf4j;
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
 @SuppressWarnings("cast")
-public class Glossary extends Asset {
+public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "AtlasGlossary";
@@ -56,7 +56,12 @@ public class Glossary extends Asset {
 
     /** TBC */
     @Attribute
-    String shortDescription;
+    @Singular
+    Map<String, String> additionalAttributes;
+
+    /** TBC */
+    @Attribute
+    String language;
 
     /** TBC */
     @Attribute
@@ -64,7 +69,7 @@ public class Glossary extends Asset {
 
     /** TBC */
     @Attribute
-    String language;
+    String shortDescription;
 
     /** TBC */
     @Attribute
@@ -73,17 +78,12 @@ public class Glossary extends Asset {
     /** TBC */
     @Attribute
     @Singular
-    Map<String, String> additionalAttributes;
+    SortedSet<IGlossaryCategory> categories;
 
     /** TBC */
     @Attribute
     @Singular
-    SortedSet<GlossaryTerm> terms;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<GlossaryCategory> categories;
+    SortedSet<IGlossaryTerm> terms;
 
     /**
      * Reference to a Glossary by GUID.
@@ -349,11 +349,11 @@ public class Glossary extends Asset {
         private void buildMaps(Map<String, GlossaryCategory> stubMap) {
             for (Map.Entry<String, GlossaryCategory> entry : stubMap.entrySet()) {
                 GlossaryCategory category = entry.getValue();
-                GlossaryCategory parent = category.getParentCategory();
+                IGlossaryCategory parent = category.getParentCategory();
                 if (parent != null) {
                     String parentGuid = parent.getGuid();
                     GlossaryCategory fullParent = map.getOrDefault(parentGuid, stubMap.get(parentGuid));
-                    SortedSet<GlossaryCategory> children = new TreeSet<>(fullParent.getChildrenCategories());
+                    SortedSet<IGlossaryCategory> children = new TreeSet<>(fullParent.getChildrenCategories());
                     children.add(category);
                     fullParent.setChildrenCategories(children);
                     map.put(parent.getGuid(), fullParent);
@@ -366,7 +366,7 @@ public class Glossary extends Asset {
          *
          * @return the root-level categories of the Glossary
          */
-        public List<GlossaryCategory> getRootCategories() {
+        public List<IGlossaryCategory> getRootCategories() {
             if (rootCategories.isEmpty()) {
                 for (String top : topLevel) {
                     rootCategories.add(map.get(top));
@@ -380,9 +380,9 @@ public class Glossary extends Asset {
          *
          * @return all categories in breadth-first order
          */
-        public List<GlossaryCategory> breadthFirst() {
-            List<GlossaryCategory> top = getRootCategories();
-            List<GlossaryCategory> all = new ArrayList<>(top);
+        public List<IGlossaryCategory> breadthFirst() {
+            List<IGlossaryCategory> top = getRootCategories();
+            List<IGlossaryCategory> all = new ArrayList<>(top);
             bfs(all, top);
             return Collections.unmodifiableList(all);
         }
@@ -392,23 +392,23 @@ public class Glossary extends Asset {
          *
          * @return all categories in depth-first order
          */
-        public List<GlossaryCategory> depthFirst() {
-            List<GlossaryCategory> all = new ArrayList<>();
+        public List<IGlossaryCategory> depthFirst() {
+            List<IGlossaryCategory> all = new ArrayList<>();
             dfs(all, getRootCategories());
             return Collections.unmodifiableList(all);
         }
 
-        private void bfs(List<GlossaryCategory> list, Collection<GlossaryCategory> toAdd) {
-            for (GlossaryCategory node : toAdd) {
+        private void bfs(List<IGlossaryCategory> list, Collection<IGlossaryCategory> toAdd) {
+            for (IGlossaryCategory node : toAdd) {
                 list.addAll(node.getChildrenCategories());
             }
-            for (GlossaryCategory node : toAdd) {
+            for (IGlossaryCategory node : toAdd) {
                 bfs(list, node.getChildrenCategories());
             }
         }
 
-        private void dfs(List<GlossaryCategory> list, Collection<GlossaryCategory> toAdd) {
-            for (GlossaryCategory node : toAdd) {
+        private void dfs(List<IGlossaryCategory> list, Collection<IGlossaryCategory> toAdd) {
+            for (IGlossaryCategory node : toAdd) {
                 list.add(node);
                 dfs(list, node.getChildrenCategories());
             }

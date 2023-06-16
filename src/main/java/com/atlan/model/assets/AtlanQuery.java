@@ -11,6 +11,7 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 import lombok.*;
@@ -25,7 +26,8 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class AtlanQuery extends SQL {
+@SuppressWarnings("cast")
+public class AtlanQuery extends Asset implements IAtlanQuery, ISQL, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "Query";
@@ -37,11 +39,15 @@ public class AtlanQuery extends SQL {
 
     /** TBC */
     @Attribute
-    String rawQuery;
+    String collectionQualifiedName;
 
     /** TBC */
     @Attribute
-    String defaultSchemaQualifiedName;
+    String databaseName;
+
+    /** TBC */
+    @Attribute
+    String databaseQualifiedName;
 
     /** TBC */
     @Attribute
@@ -49,7 +55,7 @@ public class AtlanQuery extends SQL {
 
     /** TBC */
     @Attribute
-    String variablesSchemaBase64;
+    String defaultSchemaQualifiedName;
 
     /** TBC */
     @Attribute
@@ -57,15 +63,11 @@ public class AtlanQuery extends SQL {
 
     /** TBC */
     @Attribute
+    Boolean isProfiled;
+
+    /** TBC */
+    @Attribute
     Boolean isSqlSnippet;
-
-    /** TBC */
-    @Attribute
-    String parentQualifiedName;
-
-    /** TBC */
-    @Attribute
-    String collectionQualifiedName;
 
     /** TBC */
     @Attribute
@@ -73,26 +75,113 @@ public class AtlanQuery extends SQL {
 
     /** TBC */
     @Attribute
+    Long lastProfiledAt;
+
+    /** TBC */
+    @Attribute
+    String parentQualifiedName;
+
+    /** TBC */
+    @Attribute
+    Long queryCount;
+
+    /** TBC */
+    @Attribute
+    Long queryCountUpdatedAt;
+
+    /** TBC */
+    @Attribute
+    Long queryUserCount;
+
+    /** TBC */
+    @Attribute
+    @Singular("putQueryUserMap")
+    Map<String, Long> queryUserMap;
+
+    /** TBC */
+    @Attribute
+    String rawQuery;
+
+    /** TBC */
+    @Attribute
+    String schemaName;
+
+    /** TBC */
+    @Attribute
+    String schemaQualifiedName;
+
+    /** TBC */
+    @Attribute
+    String tableName;
+
+    /** TBC */
+    @Attribute
+    String tableQualifiedName;
+
+    /** TBC */
+    @Attribute
+    String variablesSchemaBase64;
+
+    /** TBC */
+    @Attribute
+    String viewName;
+
+    /** TBC */
+    @Attribute
+    String viewQualifiedName;
+
+    /** TBC */
+    @Attribute
     String visualBuilderSchemaBase64;
 
     /** TBC */
     @Attribute
-    Namespace parent;
+    @Singular
+    SortedSet<IColumn> columns;
 
     /** TBC */
     @Attribute
     @Singular
-    SortedSet<Column> columns;
+    SortedSet<IDbtModel> dbtModels;
 
     /** TBC */
     @Attribute
     @Singular
-    SortedSet<Table> tables;
+    SortedSet<IDbtSource> dbtSources;
 
     /** TBC */
     @Attribute
     @Singular
-    SortedSet<View> views;
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    INamespace parent;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtSource> sqlDBTSources;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtModel> sqlDbtModels;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ITable> tables;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IView> views;
 
     /**
      * Reference to a AtlanQuery by GUID.
@@ -294,7 +383,7 @@ public class AtlanQuery extends SQL {
      * @return the AtlanQuery that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static AtlanQuery replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static AtlanQuery replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (AtlanQuery) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -309,7 +398,7 @@ public class AtlanQuery extends SQL {
      * @return the AtlanQuery that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static AtlanQuery appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static AtlanQuery appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (AtlanQuery) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -323,7 +412,7 @@ public class AtlanQuery extends SQL {
      * @return the AtlanQuery that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static AtlanQuery removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static AtlanQuery removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (AtlanQuery) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

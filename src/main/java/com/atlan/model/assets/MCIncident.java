@@ -25,7 +25,8 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class MCIncident extends MonteCarlo {
+public class MCIncident extends Asset
+        implements IMCIncident, IMonteCarlo, IDataQuality, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "MCIncident";
@@ -35,18 +36,14 @@ public class MCIncident extends MonteCarlo {
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Unique identifier for the incident. */
-    @Attribute
-    String mcIncidentId;
-
-    /** Type of incident. */
-    @Attribute
-    String mcIncidentType;
-
     /** TBC */
     @Attribute
     @Singular
-    SortedSet<String> mcIncidentSubTypes;
+    SortedSet<String> mcAssetQualifiedNames;
+
+    /** Unique identifier for the incident. */
+    @Attribute
+    String mcIncidentId;
 
     /** Severity of the incident. */
     @Attribute
@@ -56,18 +53,42 @@ public class MCIncident extends MonteCarlo {
     @Attribute
     String mcIncidentState;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<String> mcIncidentSubTypes;
+
+    /** Type of incident. */
+    @Attribute
+    String mcIncidentType;
+
     /** Name of the warehouse in which the incident occurred. */
     @Attribute
     String mcIncidentWarehouse;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<String> mcLabels;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
     /** Assets impacted by the incident. */
     @Attribute
     @Singular
-    SortedSet<Asset> mcIncidentAssets;
+    SortedSet<IAsset> mcIncidentAssets;
 
     /** Monitor through which this incident occurred. */
     @Attribute
-    MCMonitor mcMonitor;
+    IMCMonitor mcMonitor;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 
     /**
      * Reference to a MCIncident by GUID.
@@ -269,7 +290,7 @@ public class MCIncident extends MonteCarlo {
      * @return the MCIncident that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static MCIncident replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static MCIncident replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (MCIncident) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -284,7 +305,7 @@ public class MCIncident extends MonteCarlo {
      * @return the MCIncident that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static MCIncident appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static MCIncident appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (MCIncident) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -298,7 +319,7 @@ public class MCIncident extends MonteCarlo {
      * @return the MCIncident that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static MCIncident removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static MCIncident removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (MCIncident) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

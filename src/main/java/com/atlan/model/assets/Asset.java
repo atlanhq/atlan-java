@@ -76,53 +76,37 @@ import lombok.extern.slf4j.Slf4j;
 })
 @Slf4j
 @SuppressWarnings("cast")
-public abstract class Asset extends Reference {
+public abstract class Asset extends Reference implements IAsset, IReferenceable {
 
     public static final String TYPE_NAME = "Asset";
 
-    /** Human-readable name of the asset. */
+    /** Indicates whether this asset has lineage (true) or not. */
     @Attribute
-    String name;
+    @JsonProperty("__hasLineage")
+    Boolean hasLineage;
 
-    /** Name used for display purposes (in user interfaces). */
+    /** List of groups who administer the asset. (This is only used for Connection assets.) */
     @Attribute
-    String displayName;
+    @Singular
+    SortedSet<String> adminGroups;
 
-    /** Description of the asset, as crawled from a source. */
+    /** List of roles who administer the asset. (This is only used for Connection assets.) */
     @Attribute
-    String description;
+    @Singular
+    SortedSet<String> adminRoles;
 
-    /** Description of the asset, as provided by a user. If present, this will be used for the description in user interfaces. If not present, the description will be used. */
+    /** List of users who administer the asset. (This is only used for Connection assets.) */
     @Attribute
-    String userDescription;
-
-    /** Name of the Atlan workspace in which the asset exists. */
-    @Attribute
-    String tenantId;
-
-    /** Status of the asset's certification. */
-    @Attribute
-    CertificateStatus certificateStatus;
-
-    /** Human-readable descriptive message that can optionally be submitted when the certificateStatus is changed. */
-    @Attribute
-    String certificateStatusMessage;
-
-    /** Name of the user who last updated the certification of the asset. */
-    @Attribute
-    String certificateUpdatedBy;
-
-    /** Time (epoch) at which the certification was last updated, in milliseconds. */
-    @Attribute
-    Long certificateUpdatedAt;
-
-    /** Brief title for the announcement on this asset. Required when announcementType is specified. */
-    @Attribute
-    String announcementTitle;
+    @Singular
+    SortedSet<String> adminUsers;
 
     /** Detailed message to include in the announcement on this asset. */
     @Attribute
     String announcementMessage;
+
+    /** Brief title for the announcement on this asset. Required when announcementType is specified. */
+    @Attribute
+    String announcementTitle;
 
     /** Type of announcement on the asset. */
     @Attribute
@@ -136,204 +120,9 @@ public abstract class Asset extends Reference {
     @Attribute
     String announcementUpdatedBy;
 
-    /** List of users who own the asset. */
-    @Attribute
-    @Singular
-    SortedSet<String> ownerUsers;
-
-    /** List of groups who own the asset. */
-    @Attribute
-    @Singular
-    SortedSet<String> ownerGroups;
-
-    /** List of users who administer the asset. (This is only used for Connection assets.) */
-    @Attribute
-    @Singular
-    SortedSet<String> adminUsers;
-
-    /** List of groups who administer the asset. (This is only used for Connection assets.) */
-    @Attribute
-    @Singular
-    SortedSet<String> adminGroups;
-
     /** TBC */
     @Attribute
-    @Singular
-    SortedSet<String> viewerUsers;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<String> viewerGroups;
-
-    /** Type of the connector through which this asset is accessible. */
-    @Attribute
-    @JsonProperty("connectorName")
-    AtlanConnectorType connectorType;
-
-    /** TBC */
-    @Attribute
-    String connectionName;
-
-    /** Unique name of the connection through which this asset is accessible. */
-    @Attribute
-    String connectionQualifiedName;
-
-    /** Indicates whether this asset has lineage (true) or not. */
-    @Attribute
-    @JsonProperty("__hasLineage")
-    Boolean hasLineage;
-
-    /** TBC */
-    @Attribute
-    Boolean isDiscoverable;
-
-    /** TBC */
-    @Attribute
-    Boolean isEditable;
-
-    /** TBC */
-    @Attribute
-    String subType;
-
-    /** TBC */
-    @Attribute
-    Double viewScore;
-
-    /** TBC */
-    @Attribute
-    Double popularityScore;
-
-    /** TBC */
-    @Attribute
-    String sourceOwners;
-
-    /** Who created the asset, in the source system. */
-    @Attribute
-    String sourceCreatedBy;
-
-    /** Time (epoch) at which the asset was created in the source system, in milliseconds. */
-    @Attribute
-    Long sourceCreatedAt;
-
-    /** Time (epoch) at which the asset was last updated in the source system, in milliseconds. */
-    @Attribute
-    Long sourceUpdatedAt;
-
-    /** Who last updated the asset in the source system. */
-    @Attribute
-    String sourceUpdatedBy;
-
-    /** URL to the resource within the source application. */
-    @Attribute
-    String sourceURL;
-
-    /** URL to create an embed for a resource (for example, an image of a dashboard) within Atlan. */
-    @Attribute
-    String sourceEmbedURL;
-
-    /** Name of the crawler that last synchronized this asset. */
-    @Attribute
-    String lastSyncWorkflowName;
-
-    /** Time (epoch) at which the asset was last crawled, in milliseconds. */
-    @Attribute
-    Long lastSyncRunAt;
-
-    /** Name of the last run of the crawler that last synchronized this asset. */
-    @Attribute
-    String lastSyncRun;
-
-    /** List of roles who administer the asset. (This is only used for Connection assets.) */
-    @Attribute
-    @Singular
-    SortedSet<String> adminRoles;
-
-    /** Total count of all read operations at source. */
-    @Attribute
-    Long sourceReadCount;
-
-    /** Total number of unique users that read data from asset. */
-    @Attribute
-    Long sourceReadUserCount;
-
-    /** Timestamp of most recent read operation. */
-    @Attribute
-    Long sourceLastReadAt;
-
-    /** Timestamp of last operation that inserted, updated, or deleted rows. */
-    @Attribute
-    Long lastRowChangedAt;
-
-    /** Total cost of all operations at source. */
-    @Attribute
-    Double sourceTotalCost;
-
-    /** The unit of measure for sourceTotalCost. */
-    @Attribute
-    SourceCostUnitType sourceCostUnit;
-
-    /** Total cost of read queries at source. */
-    @Attribute
-    Double sourceReadQueryCost;
-
-    /** List of usernames of the most recent users who read the asset. */
-    @Attribute
-    @Singular
-    @JsonProperty("sourceReadRecentUserList")
-    SortedSet<String> sourceReadRecentUsers;
-
-    /** List of usernames with extra insights for the most recent users who read the asset. */
-    @Attribute
-    @Singular
-    @JsonProperty("sourceReadRecentUserRecordList")
-    List<PopularityInsights> sourceReadRecentUserRecords;
-
-    /** List of usernames of the users who read the asset the most. */
-    @Attribute
-    @Singular
-    @JsonProperty("sourceReadTopUserList")
-    SortedSet<String> sourceReadTopUsers;
-
-    /** List of usernames with extra insights for the users who read the asset the most. */
-    @Attribute
-    @Singular
-    @JsonProperty("sourceReadTopUserRecordList")
-    List<PopularityInsights> sourceReadTopUserRecords;
-
-    /** List of the most popular queries that accessed this asset. */
-    @Attribute
-    @Singular
-    @JsonProperty("sourceReadPopularQueryRecordList")
-    List<PopularityInsights> sourceReadPopularQueryRecords;
-
-    /** List of the most expensive queries that accessed this asset. */
-    @Attribute
-    @Singular
-    @JsonProperty("sourceReadExpensiveQueryRecordList")
-    List<PopularityInsights> sourceReadExpensiveQueryRecords;
-
-    /** List of the slowest queries that accessed this asset. */
-    @Attribute
-    @Singular
-    @JsonProperty("sourceReadSlowQueryRecordList")
-    List<PopularityInsights> sourceReadSlowQueryRecords;
-
-    /** List of most expensive warehouse names. */
-    @Attribute
-    @Singular
-    @JsonProperty("sourceQueryComputeCostList")
-    SortedSet<String> sourceQueryComputeCosts;
-
-    /** List of most expensive warehouses with extra insights. */
-    @Attribute
-    @Singular
-    @JsonProperty("sourceQueryComputeCostRecordList")
-    List<PopularityInsights> sourceQueryComputeCostRecords;
-
-    /** TBC */
-    @Attribute
-    String dbtQualifiedName;
+    String assetDbtAccountName;
 
     /** TBC */
     @Attribute
@@ -341,39 +130,11 @@ public abstract class Asset extends Reference {
 
     /** TBC */
     @Attribute
-    String assetDbtMeta;
+    String assetDbtEnvironmentDbtVersion;
 
     /** TBC */
     @Attribute
-    String assetDbtUniqueId;
-
-    /** TBC */
-    @Attribute
-    String assetDbtAccountName;
-
-    /** TBC */
-    @Attribute
-    String assetDbtProjectName;
-
-    /** TBC */
-    @Attribute
-    String assetDbtPackageName;
-
-    /** TBC */
-    @Attribute
-    String assetDbtJobName;
-
-    /** TBC */
-    @Attribute
-    String assetDbtJobSchedule;
-
-    /** TBC */
-    @Attribute
-    String assetDbtJobStatus;
-
-    /** TBC */
-    @Attribute
-    String assetDbtJobScheduleCronHumanized;
+    String assetDbtEnvironmentName;
 
     /** TBC */
     @Attribute
@@ -381,7 +142,11 @@ public abstract class Asset extends Reference {
 
     /** TBC */
     @Attribute
-    String assetDbtJobLastRunUrl;
+    String assetDbtJobLastRunArtifactS3Path;
+
+    /** TBC */
+    @Attribute
+    Boolean assetDbtJobLastRunArtifactsSaved;
 
     /** TBC */
     @Attribute
@@ -389,23 +154,35 @@ public abstract class Asset extends Reference {
 
     /** TBC */
     @Attribute
-    Long assetDbtJobLastRunUpdatedAt;
-
-    /** TBC */
-    @Attribute
     Long assetDbtJobLastRunDequedAt;
 
     /** TBC */
     @Attribute
-    Long assetDbtJobLastRunStartedAt;
+    String assetDbtJobLastRunExecutedByThreadId;
 
     /** TBC */
     @Attribute
-    String assetDbtJobLastRunTotalDuration;
+    String assetDbtJobLastRunGitBranch;
 
     /** TBC */
     @Attribute
-    String assetDbtJobLastRunTotalDurationHumanized;
+    String assetDbtJobLastRunGitSha;
+
+    /** TBC */
+    @Attribute
+    Boolean assetDbtJobLastRunHasDocsGenerated;
+
+    /** TBC */
+    @Attribute
+    Boolean assetDbtJobLastRunHasSourcesGenerated;
+
+    /** TBC */
+    @Attribute
+    Boolean assetDbtJobLastRunNotificationsSent;
+
+    /** TBC */
+    @Attribute
+    String assetDbtJobLastRunOwnerThreadId;
 
     /** TBC */
     @Attribute
@@ -425,11 +202,7 @@ public abstract class Asset extends Reference {
 
     /** TBC */
     @Attribute
-    String assetDbtJobLastRunGitBranch;
-
-    /** TBC */
-    @Attribute
-    String assetDbtJobLastRunGitSha;
+    Long assetDbtJobLastRunStartedAt;
 
     /** TBC */
     @Attribute
@@ -437,31 +210,23 @@ public abstract class Asset extends Reference {
 
     /** TBC */
     @Attribute
-    String assetDbtJobLastRunOwnerThreadId;
+    String assetDbtJobLastRunTotalDuration;
 
     /** TBC */
     @Attribute
-    String assetDbtJobLastRunExecutedByThreadId;
+    String assetDbtJobLastRunTotalDurationHumanized;
 
     /** TBC */
     @Attribute
-    Boolean assetDbtJobLastRunArtifactsSaved;
+    Long assetDbtJobLastRunUpdatedAt;
 
     /** TBC */
     @Attribute
-    String assetDbtJobLastRunArtifactS3Path;
+    String assetDbtJobLastRunUrl;
 
     /** TBC */
     @Attribute
-    Boolean assetDbtJobLastRunHasDocsGenerated;
-
-    /** TBC */
-    @Attribute
-    Boolean assetDbtJobLastRunHasSourcesGenerated;
-
-    /** TBC */
-    @Attribute
-    Boolean assetDbtJobLastRunNotificationsSent;
+    String assetDbtJobName;
 
     /** TBC */
     @Attribute
@@ -473,16 +238,27 @@ public abstract class Asset extends Reference {
 
     /** TBC */
     @Attribute
-    String assetDbtEnvironmentName;
+    String assetDbtJobSchedule;
 
     /** TBC */
     @Attribute
-    String assetDbtEnvironmentDbtVersion;
+    String assetDbtJobScheduleCronHumanized;
 
     /** TBC */
     @Attribute
-    @Singular
-    SortedSet<String> assetDbtTags;
+    String assetDbtJobStatus;
+
+    /** TBC */
+    @Attribute
+    String assetDbtMeta;
+
+    /** TBC */
+    @Attribute
+    String assetDbtPackageName;
+
+    /** TBC */
+    @Attribute
+    String assetDbtProjectName;
 
     /** TBC */
     @Attribute
@@ -494,12 +270,12 @@ public abstract class Asset extends Reference {
 
     /** TBC */
     @Attribute
-    String sampleDataUrl;
+    @Singular
+    SortedSet<String> assetDbtTags;
 
     /** TBC */
     @Attribute
-    @Singular
-    SortedSet<String> assetTags;
+    String assetDbtUniqueId;
 
     /** TBC */
     @Attribute
@@ -514,12 +290,41 @@ public abstract class Asset extends Reference {
     /** TBC */
     @Attribute
     @Singular
+    SortedSet<String> assetMcIncidentSeverities;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<String> assetMcIncidentStates;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<String> assetMcIncidentSubTypes;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<String> assetMcIncidentTypes;
+
+    /** TBC */
+    @Attribute
+    Long assetMcLastSyncRunAt;
+
+    /** TBC */
+    @Attribute
+    @Singular
     SortedSet<String> assetMcMonitorNames;
 
     /** TBC */
     @Attribute
     @Singular
     SortedSet<String> assetMcMonitorQualifiedNames;
+
+    /** Schedules of all associated Monte Carlo monitors. */
+    @Attribute
+    @Singular
+    SortedSet<String> assetMcMonitorScheduleTypes;
 
     /** Statuses of all associated Monte Carlo monitors. */
     @Attribute
@@ -531,76 +336,273 @@ public abstract class Asset extends Reference {
     @Singular
     SortedSet<String> assetMcMonitorTypes;
 
-    /** Schedules of all associated Monte Carlo monitors. */
+    /** TBC */
     @Attribute
     @Singular
-    SortedSet<String> assetMcMonitorScheduleTypes;
+    SortedSet<String> assetTags;
+
+    /** Status of the asset's certification. */
+    @Attribute
+    CertificateStatus certificateStatus;
+
+    /** Human-readable descriptive message that can optionally be submitted when the certificateStatus is changed. */
+    @Attribute
+    String certificateStatusMessage;
+
+    /** Time (epoch) at which the certification was last updated, in milliseconds. */
+    @Attribute
+    Long certificateUpdatedAt;
+
+    /** Name of the user who last updated the certification of the asset. */
+    @Attribute
+    String certificateUpdatedBy;
+
+    /** TBC */
+    @Attribute
+    String connectionName;
+
+    /** Unique name of the connection through which this asset is accessible. */
+    @Attribute
+    String connectionQualifiedName;
+
+    /** Type of the connector through which this asset is accessible. */
+    @Attribute
+    @JsonProperty("connectorName")
+    AtlanConnectorType connectorType;
+
+    /** TBC */
+    @Attribute
+    String dbtQualifiedName;
+
+    /** Description of the asset, as crawled from a source. */
+    @Attribute
+    String description;
+
+    /** Name used for display purposes (in user interfaces). */
+    @Attribute
+    String displayName;
+
+    /** TBC */
+    @Attribute
+    Boolean isDiscoverable;
+
+    /** TBC */
+    @Attribute
+    Boolean isEditable;
+
+    /** Timestamp of last operation that inserted, updated, or deleted rows. */
+    @Attribute
+    Long lastRowChangedAt;
+
+    /** Name of the last run of the crawler that last synchronized this asset. */
+    @Attribute
+    String lastSyncRun;
+
+    /** Time (epoch) at which the asset was last crawled, in milliseconds. */
+    @Attribute
+    Long lastSyncRunAt;
+
+    /** Name of the crawler that last synchronized this asset. */
+    @Attribute
+    String lastSyncWorkflowName;
+
+    /** Human-readable name of the asset. */
+    @Attribute
+    String name;
+
+    /** List of groups who own the asset. */
+    @Attribute
+    @Singular
+    SortedSet<String> ownerGroups;
+
+    /** List of users who own the asset. */
+    @Attribute
+    @Singular
+    SortedSet<String> ownerUsers;
+
+    /** TBC */
+    @Attribute
+    Double popularityScore;
+
+    /** TBC */
+    @Attribute
+    String qualifiedName;
+
+    /** TBC */
+    @Attribute
+    String sampleDataUrl;
+
+    /** The unit of measure for sourceTotalCost. */
+    @Attribute
+    SourceCostUnitType sourceCostUnit;
+
+    /** Time (epoch) at which the asset was created in the source system, in milliseconds. */
+    @Attribute
+    Long sourceCreatedAt;
+
+    /** Who created the asset, in the source system. */
+    @Attribute
+    String sourceCreatedBy;
+
+    /** URL to create an embed for a resource (for example, an image of a dashboard) within Atlan. */
+    @Attribute
+    String sourceEmbedURL;
+
+    /** Timestamp of most recent read operation. */
+    @Attribute
+    Long sourceLastReadAt;
+
+    /** TBC */
+    @Attribute
+    String sourceOwners;
+
+    /** List of most expensive warehouse names. */
+    @Attribute
+    @Singular
+    @JsonProperty("sourceQueryComputeCostList")
+    SortedSet<String> sourceQueryComputeCosts;
+
+    /** List of most expensive warehouses with extra insights. */
+    @Attribute
+    @Singular
+    @JsonProperty("sourceQueryComputeCostRecordList")
+    List<PopularityInsights> sourceQueryComputeCostRecords;
+
+    /** Total count of all read operations at source. */
+    @Attribute
+    Long sourceReadCount;
+
+    /** List of the most expensive queries that accessed this asset. */
+    @Attribute
+    @Singular
+    @JsonProperty("sourceReadExpensiveQueryRecordList")
+    List<PopularityInsights> sourceReadExpensiveQueryRecords;
+
+    /** List of the most popular queries that accessed this asset. */
+    @Attribute
+    @Singular
+    @JsonProperty("sourceReadPopularQueryRecordList")
+    List<PopularityInsights> sourceReadPopularQueryRecords;
+
+    /** Total cost of read queries at source. */
+    @Attribute
+    Double sourceReadQueryCost;
+
+    /** List of usernames of the most recent users who read the asset. */
+    @Attribute
+    @Singular
+    @JsonProperty("sourceReadRecentUserList")
+    SortedSet<String> sourceReadRecentUsers;
+
+    /** List of usernames with extra insights for the most recent users who read the asset. */
+    @Attribute
+    @Singular
+    @JsonProperty("sourceReadRecentUserRecordList")
+    List<PopularityInsights> sourceReadRecentUserRecords;
+
+    /** List of the slowest queries that accessed this asset. */
+    @Attribute
+    @Singular
+    @JsonProperty("sourceReadSlowQueryRecordList")
+    List<PopularityInsights> sourceReadSlowQueryRecords;
+
+    /** List of usernames of the users who read the asset the most. */
+    @Attribute
+    @Singular
+    @JsonProperty("sourceReadTopUserList")
+    SortedSet<String> sourceReadTopUsers;
+
+    /** List of usernames with extra insights for the users who read the asset the most. */
+    @Attribute
+    @Singular
+    @JsonProperty("sourceReadTopUserRecordList")
+    List<PopularityInsights> sourceReadTopUserRecords;
+
+    /** Total number of unique users that read data from asset. */
+    @Attribute
+    Long sourceReadUserCount;
+
+    /** Total cost of all operations at source. */
+    @Attribute
+    Double sourceTotalCost;
+
+    /** URL to the resource within the source application. */
+    @Attribute
+    String sourceURL;
+
+    /** Time (epoch) at which the asset was last updated in the source system, in milliseconds. */
+    @Attribute
+    Long sourceUpdatedAt;
+
+    /** Who last updated the asset in the source system. */
+    @Attribute
+    String sourceUpdatedBy;
+
+    /** Users who have starred this asset. */
+    @Attribute
+    @Singular("addStarredBy")
+    SortedSet<String> starredBy;
+
+    /** TBC */
+    @Attribute
+    String subType;
+
+    /** Name of the Atlan workspace in which the asset exists. */
+    @Attribute
+    String tenantId;
+
+    /** Description of the asset, as provided by a user. If present, this will be used for the description in user interfaces. If not present, the description will be used. */
+    @Attribute
+    String userDescription;
+
+    /** TBC */
+    @Attribute
+    Double viewScore;
 
     /** TBC */
     @Attribute
     @Singular
-    SortedSet<String> assetMcIncidentTypes;
+    SortedSet<String> viewerGroups;
 
     /** TBC */
     @Attribute
     @Singular
-    SortedSet<String> assetMcIncidentSubTypes;
+    SortedSet<String> viewerUsers;
 
     /** TBC */
     @Attribute
     @Singular
-    SortedSet<String> assetMcIncidentSeverities;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<String> assetMcIncidentStates;
-
-    /** TBC */
-    @Attribute
-    Long assetMcLastSyncRunAt;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<MCMonitor> mcMonitors;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<File> files;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<MCIncident> mcIncidents;
+    SortedSet<IFile> files;
 
     /** Resources that are linked to this asset. */
     @Attribute
     @Singular
-    SortedSet<Link> links;
+    SortedSet<ILink> links;
 
     /** TBC */
     @Attribute
     @Singular
-    SortedSet<Metric> metrics;
+    SortedSet<IMCIncident> mcIncidents;
 
-    /** README that is linked to this asset. */
+    /** TBC */
     @Attribute
-    Readme readme;
+    @Singular
+    SortedSet<IMCMonitor> mcMonitors;
 
-    /** Glossary terms that are linked to this asset. */
+    /** TBC */
     @Attribute
     @Singular
     @JsonProperty("meanings")
-    SortedSet<GlossaryTerm> assignedTerms;
+    SortedSet<IGlossaryTerm> assignedTerms;
 
-    /**
-     * Unique name for this asset. This is typically a concatenation of the asset's name onto its
-     * parent's qualifiedName.
-     */
+    /** TBC */
     @Attribute
-    String qualifiedName;
+    @Singular
+    SortedSet<IMetric> metrics;
+
+    /** README that is linked to this asset. */
+    @Attribute
+    IReadme readme;
 
     /** Internal tracking of fields that should be serialized with null values. */
     @JsonIgnore
@@ -1263,7 +1265,7 @@ public abstract class Asset extends Reference {
      * @return the asset that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    protected static Asset replaceTerms(AssetBuilder<?, ?> builder, List<GlossaryTerm> terms) throws AtlanException {
+    protected static Asset replaceTerms(AssetBuilder<?, ?> builder, List<IGlossaryTerm> terms) throws AtlanException {
         if (terms == null || terms.isEmpty()) {
             Asset asset = builder.removeAssignedTerms().build();
             return updateRelationships(asset);
@@ -1283,16 +1285,16 @@ public abstract class Asset extends Reference {
      * @return the asset that was updated (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    protected static Asset appendTerms(String typeName, String qualifiedName, List<GlossaryTerm> terms)
+    protected static Asset appendTerms(String typeName, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         Asset existing = retrieveFull(typeName, qualifiedName);
         if (terms == null) {
             return existing;
         } else if (existing != null) {
-            Set<GlossaryTerm> replacementTerms = new TreeSet<>();
-            Set<GlossaryTerm> existingTerms = existing.getAssignedTerms();
+            Set<IGlossaryTerm> replacementTerms = new TreeSet<>();
+            Set<IGlossaryTerm> existingTerms = existing.getAssignedTerms();
             if (existingTerms != null) {
-                for (GlossaryTerm term : existingTerms) {
+                for (IGlossaryTerm term : existingTerms) {
                     if (term.getRelationshipStatus() != AtlanStatus.DELETED) {
                         // Only re-include the terms that are not already deleted
                         replacementTerms.add(term);
@@ -1320,21 +1322,21 @@ public abstract class Asset extends Reference {
      * @throws AtlanException on any API problems
      * @throws InvalidRequestException if any of the passed terms are not valid references by GUID to a term
      */
-    protected static Asset removeTerms(String typeName, String qualifiedName, List<GlossaryTerm> terms)
+    protected static Asset removeTerms(String typeName, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         Asset existing = retrieveFull(typeName, qualifiedName);
         if (existing != null) {
-            Set<GlossaryTerm> replacementTerms = new TreeSet<>();
-            Set<GlossaryTerm> existingTerms = existing.getAssignedTerms();
+            Set<IGlossaryTerm> replacementTerms = new TreeSet<>();
+            Set<IGlossaryTerm> existingTerms = existing.getAssignedTerms();
             Set<String> removeGuids = new HashSet<>();
-            for (GlossaryTerm term : terms) {
+            for (IGlossaryTerm term : terms) {
                 if (term.isValidReferenceByGuid()) {
                     removeGuids.add(term.getGuid());
                 } else {
                     throw new InvalidRequestException(ErrorCode.MISSING_TERM_GUID);
                 }
             }
-            for (GlossaryTerm term : existingTerms) {
+            for (IGlossaryTerm term : existingTerms) {
                 String existingTermGuid = term.getGuid();
                 if (!removeGuids.contains(existingTermGuid) && term.getRelationshipStatus() != AtlanStatus.DELETED) {
                     // Only re-include the terms that we are not removing and that are not already deleted
@@ -1355,10 +1357,10 @@ public abstract class Asset extends Reference {
         return null;
     }
 
-    private static Collection<GlossaryTerm> getTermRefs(Collection<GlossaryTerm> terms) {
+    private static Collection<IGlossaryTerm> getTermRefs(Collection<IGlossaryTerm> terms) {
         if (terms != null && !terms.isEmpty()) {
-            Set<GlossaryTerm> termRefs = new TreeSet<>();
-            for (GlossaryTerm term : terms) {
+            Set<IGlossaryTerm> termRefs = new TreeSet<>();
+            for (IGlossaryTerm term : terms) {
                 if (term.getGuid() != null) {
                     termRefs.add(GlossaryTerm.refByGuid(term.getGuid()));
                 } else if (term.getQualifiedName() != null) {

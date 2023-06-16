@@ -27,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class PresetDashboard extends Preset {
+public class PresetDashboard extends Asset implements IPresetDashboard, IPreset, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "PresetDashboard";
@@ -45,6 +45,14 @@ public class PresetDashboard extends Preset {
     @Attribute
     String presetDashboardChangedByURL;
 
+    /** Number of charts within the collection. */
+    @Attribute
+    Long presetDashboardChartCount;
+
+    /** TBC */
+    @Attribute
+    Long presetDashboardId;
+
     /** Whether the collection is managed externally (true) or not (false). */
     @Attribute
     Boolean presetDashboardIsManagedExternally;
@@ -53,27 +61,45 @@ public class PresetDashboard extends Preset {
     @Attribute
     Boolean presetDashboardIsPublished;
 
+    /** TBC */
+    @Attribute
+    String presetDashboardQualifiedName;
+
     /** URL to a thumbnail illustration of the collection. */
     @Attribute
     String presetDashboardThumbnailURL;
 
-    /** Number of charts within the collection. */
+    /** TBC */
     @Attribute
-    Long presetDashboardChartCount;
+    Long presetWorkspaceId;
 
-    /** Datasets contained within the collection. */
+    /** TBC */
+    @Attribute
+    String presetWorkspaceQualifiedName;
+
+    /** TBC */
     @Attribute
     @Singular
-    SortedSet<PresetDataset> presetDatasets;
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 
     /** Charts contained within the collection. */
     @Attribute
     @Singular
-    SortedSet<PresetChart> presetCharts;
+    SortedSet<IPresetChart> presetCharts;
+
+    /** Datasets contained within the collection. */
+    @Attribute
+    @Singular
+    SortedSet<IPresetDataset> presetDatasets;
 
     /** Workspace in which the collection exists. */
     @Attribute
-    PresetWorkspace presetWorkspace;
+    IPresetWorkspace presetWorkspace;
 
     /**
      * Reference to a PresetDashboard by GUID.
@@ -295,7 +321,7 @@ public class PresetDashboard extends Preset {
      * @return the PresetDashboard that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static PresetDashboard replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static PresetDashboard replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (PresetDashboard) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -310,7 +336,7 @@ public class PresetDashboard extends Preset {
      * @return the PresetDashboard that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static PresetDashboard appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static PresetDashboard appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (PresetDashboard) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -324,7 +350,7 @@ public class PresetDashboard extends Preset {
      * @return the PresetDashboard that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static PresetDashboard removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static PresetDashboard removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (PresetDashboard) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

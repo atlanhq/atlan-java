@@ -3,6 +3,7 @@
 package com.atlan.model.assets;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
+import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -24,25 +25,13 @@ import lombok.extern.slf4j.Slf4j;
     @JsonSubTypes.Type(value = SigmaDataElement.class, name = SigmaDataElement.TYPE_NAME),
 })
 @Slf4j
-public abstract class Sigma extends BI {
+public abstract class Sigma extends Asset implements ISigma, IBI, ICatalog, IAsset, IReferenceable {
 
     public static final String TYPE_NAME = "Sigma";
 
     /** TBC */
     @Attribute
-    String sigmaWorkbookQualifiedName;
-
-    /** TBC */
-    @Attribute
-    String sigmaWorkbookName;
-
-    /** TBC */
-    @Attribute
-    String sigmaPageQualifiedName;
-
-    /** TBC */
-    @Attribute
-    String sigmaPageName;
+    String sigmaDataElementName;
 
     /** TBC */
     @Attribute
@@ -50,5 +39,27 @@ public abstract class Sigma extends BI {
 
     /** TBC */
     @Attribute
-    String sigmaDataElementName;
+    String sigmaPageName;
+
+    /** TBC */
+    @Attribute
+    String sigmaPageQualifiedName;
+
+    /** TBC */
+    @Attribute
+    String sigmaWorkbookName;
+
+    /** TBC */
+    @Attribute
+    String sigmaWorkbookQualifiedName;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 }

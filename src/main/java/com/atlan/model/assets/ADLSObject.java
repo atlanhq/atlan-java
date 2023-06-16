@@ -15,10 +15,12 @@ import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
+import com.atlan.model.structs.AzureTag;
 import com.atlan.util.StringUtils;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -33,7 +35,8 @@ import lombok.extern.slf4j.Slf4j;
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
 @SuppressWarnings("cast")
-public class ADLSObject extends ADLS {
+public class ADLSObject extends Asset
+        implements IADLSObject, IADLS, IObjectStore, IAzure, ICatalog, IAsset, IReferenceable, ICloud {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "ADLSObject";
@@ -45,19 +48,15 @@ public class ADLSObject extends ADLS {
 
     /** TBC */
     @Attribute
-    String adlsObjectUrl;
+    String adlsAccountQualifiedName;
 
     /** TBC */
     @Attribute
-    String adlsObjectVersionId;
+    String adlsAccountSecondaryLocation;
 
-    /** TBC */
+    /** Unique name of the container this object exists within. */
     @Attribute
-    ADLSObjectType adlsObjectType;
-
-    /** TBC */
-    @Attribute
-    Long adlsObjectSize;
+    String adlsContainerQualifiedName;
 
     /** TBC */
     @Attribute
@@ -73,23 +72,7 @@ public class ADLSObject extends ADLS {
 
     /** TBC */
     @Attribute
-    Boolean adlsObjectServerEncrypted;
-
-    /** TBC */
-    @Attribute
-    Boolean adlsObjectVersionLevelImmutabilitySupport;
-
-    /** TBC */
-    @Attribute
     String adlsObjectCacheControl;
-
-    /** TBC */
-    @Attribute
-    String adlsObjectContentType;
-
-    /** TBC */
-    @Attribute
-    String adlsObjectContentMD5Hash;
 
     /** TBC */
     @Attribute
@@ -97,7 +80,11 @@ public class ADLSObject extends ADLS {
 
     /** TBC */
     @Attribute
-    ADLSLeaseStatus adlsObjectLeaseStatus;
+    String adlsObjectContentMD5Hash;
+
+    /** TBC */
+    @Attribute
+    String adlsObjectContentType;
 
     /** TBC */
     @Attribute
@@ -105,16 +92,63 @@ public class ADLSObject extends ADLS {
 
     /** TBC */
     @Attribute
+    ADLSLeaseStatus adlsObjectLeaseStatus;
+
+    /** TBC */
+    @Attribute
     @Singular("putAdlsObjectMetadata")
     Map<String, String> adlsObjectMetadata;
 
-    /** Unique name of the container this object exists within. */
+    /** TBC */
     @Attribute
-    String adlsContainerQualifiedName;
+    Boolean adlsObjectServerEncrypted;
+
+    /** TBC */
+    @Attribute
+    Long adlsObjectSize;
+
+    /** TBC */
+    @Attribute
+    ADLSObjectType adlsObjectType;
+
+    /** TBC */
+    @Attribute
+    String adlsObjectUrl;
+
+    /** TBC */
+    @Attribute
+    String adlsObjectVersionId;
+
+    /** TBC */
+    @Attribute
+    Boolean adlsObjectVersionLevelImmutabilitySupport;
+
+    /** TBC */
+    @Attribute
+    String azureLocation;
+
+    /** TBC */
+    @Attribute
+    String azureResourceId;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    List<AzureTag> azureTags;
 
     /** Container this object exists within. */
     @Attribute
-    ADLSContainer adlsContainer;
+    IADLSContainer adlsContainer;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 
     /**
      * Reference to a ADLSObject by GUID.
@@ -346,7 +380,7 @@ public class ADLSObject extends ADLS {
      * @return the ADLSObject that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static ADLSObject replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static ADLSObject replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (ADLSObject) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -361,7 +395,7 @@ public class ADLSObject extends ADLS {
      * @return the ADLSObject that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static ADLSObject appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static ADLSObject appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (ADLSObject) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -375,7 +409,7 @@ public class ADLSObject extends ADLS {
      * @return the ADLSObject that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static ADLSObject removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static ADLSObject removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (ADLSObject) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

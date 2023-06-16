@@ -26,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
 @SuppressWarnings("cast")
-public class AuthService extends Asset {
+public class AuthService extends Asset implements IAuthService, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "AuthService";
@@ -38,11 +38,8 @@ public class AuthService extends Asset {
 
     /** TBC */
     @Attribute
-    String authServiceType;
-
-    /** TBC */
-    @Attribute
-    String tagService;
+    @Singular("putAuthServiceConfig")
+    Map<String, String> authServiceConfig;
 
     /** TBC */
     @Attribute
@@ -50,12 +47,15 @@ public class AuthService extends Asset {
 
     /** TBC */
     @Attribute
-    @Singular("putAuthServiceConfig")
-    Map<String, String> authServiceConfig;
+    Long authServicePolicyLastSync;
 
     /** TBC */
     @Attribute
-    Long authServicePolicyLastSync;
+    String authServiceType;
+
+    /** TBC */
+    @Attribute
+    String tagService;
 
     /**
      * Reference to a AuthService by GUID.
@@ -257,7 +257,7 @@ public class AuthService extends Asset {
      * @return the AuthService that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static AuthService replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static AuthService replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (AuthService) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -272,7 +272,7 @@ public class AuthService extends Asset {
      * @return the AuthService that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static AuthService appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static AuthService appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (AuthService) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -286,7 +286,7 @@ public class AuthService extends Asset {
      * @return the AuthService that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static AuthService removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static AuthService removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (AuthService) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

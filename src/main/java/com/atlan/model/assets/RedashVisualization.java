@@ -11,6 +11,7 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -24,7 +25,8 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class RedashVisualization extends Redash {
+public class RedashVisualization extends Asset
+        implements IRedashVisualization, IRedash, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "RedashVisualization";
@@ -34,9 +36,9 @@ public class RedashVisualization extends Redash {
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Type of the Redash visualization. */
+    /** TBC */
     @Attribute
-    String redashVisualizationType;
+    Boolean redashIsPublished;
 
     /** Name of the query from which the visualization was created. */
     @Attribute
@@ -46,9 +48,23 @@ public class RedashVisualization extends Redash {
     @Attribute
     String redashQueryQualifiedName;
 
+    /** Type of the Redash visualization. */
+    @Attribute
+    String redashVisualizationType;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
     /** Query from which the visualization was created. */
     @Attribute
-    RedashQuery redashQuery;
+    IRedashQuery redashQuery;
 
     /**
      * Reference to a RedashVisualization by GUID.
@@ -251,7 +267,7 @@ public class RedashVisualization extends Redash {
      * @return the RedashVisualization that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static RedashVisualization replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static RedashVisualization replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (RedashVisualization) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -266,7 +282,7 @@ public class RedashVisualization extends Redash {
      * @return the RedashVisualization that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static RedashVisualization appendTerms(String qualifiedName, List<GlossaryTerm> terms)
+    public static RedashVisualization appendTerms(String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (RedashVisualization) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
@@ -281,7 +297,7 @@ public class RedashVisualization extends Redash {
      * @return the RedashVisualization that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static RedashVisualization removeTerms(String qualifiedName, List<GlossaryTerm> terms)
+    public static RedashVisualization removeTerms(String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (RedashVisualization) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }

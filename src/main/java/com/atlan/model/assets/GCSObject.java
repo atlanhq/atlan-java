@@ -10,9 +10,12 @@ import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
+import com.atlan.model.structs.GoogleLabel;
+import com.atlan.model.structs.GoogleTag;
 import com.atlan.util.StringUtils;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -26,7 +29,8 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class GCSObject extends GCS {
+public class GCSObject extends Asset
+        implements IGCSObject, IGCS, IGoogle, IObjectStore, ICloud, IAsset, IReferenceable, ICatalog {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "GCSObject";
@@ -36,6 +40,10 @@ public class GCSObject extends GCS {
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** TBC */
+    @Attribute
+    String gcsAccessControl;
+
     /** Human-readable name of the bucket in which this object exists. */
     @Attribute
     String gcsBucketName;
@@ -44,45 +52,21 @@ public class GCSObject extends GCS {
     @Attribute
     String gcsBucketQualifiedName;
 
-    /** Object size in bytes. */
+    /** TBC */
     @Attribute
-    Long gcsObjectSize;
+    String gcsETag;
 
     /** TBC */
     @Attribute
-    String gcsObjectKey;
+    String gcsEncryptionType;
 
     /** TBC */
     @Attribute
-    String gcsObjectMediaLink;
-
-    /** TBC */
-    @Attribute
-    String gcsObjectHoldType;
-
-    /** TBC */
-    @Attribute
-    Long gcsObjectGenerationId;
+    Long gcsMetaGenerationId;
 
     /** TBC */
     @Attribute
     String gcsObjectCRC32CHash;
-
-    /** TBC */
-    @Attribute
-    String gcsObjectMD5Hash;
-
-    /** TBC */
-    @Attribute
-    Long gcsObjectDataLastModifiedTime;
-
-    /** Type of content in the object. */
-    @Attribute
-    String gcsObjectContentType;
-
-    /** TBC */
-    @Attribute
-    String gcsObjectContentEncoding;
 
     /** Information about how the object's content should be presented. */
     @Attribute
@@ -90,15 +74,103 @@ public class GCSObject extends GCS {
 
     /** TBC */
     @Attribute
+    String gcsObjectContentEncoding;
+
+    /** TBC */
+    @Attribute
     String gcsObjectContentLanguage;
+
+    /** Type of content in the object. */
+    @Attribute
+    String gcsObjectContentType;
+
+    /** TBC */
+    @Attribute
+    Long gcsObjectDataLastModifiedTime;
+
+    /** TBC */
+    @Attribute
+    Long gcsObjectGenerationId;
+
+    /** TBC */
+    @Attribute
+    String gcsObjectHoldType;
+
+    /** TBC */
+    @Attribute
+    String gcsObjectKey;
+
+    /** TBC */
+    @Attribute
+    String gcsObjectMD5Hash;
+
+    /** TBC */
+    @Attribute
+    String gcsObjectMediaLink;
 
     /** TBC */
     @Attribute
     Long gcsObjectRetentionExpirationDate;
 
+    /** Object size in bytes. */
+    @Attribute
+    Long gcsObjectSize;
+
+    /** TBC */
+    @Attribute
+    Boolean gcsRequesterPays;
+
+    /** TBC */
+    @Attribute
+    String gcsStorageClass;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    List<GoogleLabel> googleLabels;
+
+    /** TBC */
+    @Attribute
+    String googleLocation;
+
+    /** TBC */
+    @Attribute
+    String googleLocationType;
+
+    /** TBC */
+    @Attribute
+    String googleProjectId;
+
+    /** TBC */
+    @Attribute
+    String googleProjectName;
+
+    /** TBC */
+    @Attribute
+    Long googleProjectNumber;
+
+    /** TBC */
+    @Attribute
+    String googleService;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    List<GoogleTag> googleTags;
+
     /** GCS bucket in which the object exists. */
     @Attribute
-    GCSBucket gcsBucket;
+    IGCSBucket gcsBucket;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 
     /**
      * Reference to a GCSObject by GUID.
@@ -331,7 +403,7 @@ public class GCSObject extends GCS {
      * @return the GCSObject that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static GCSObject replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static GCSObject replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (GCSObject) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -346,7 +418,7 @@ public class GCSObject extends GCS {
      * @return the GCSObject that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static GCSObject appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static GCSObject appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (GCSObject) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -360,7 +432,7 @@ public class GCSObject extends GCS {
      * @return the GCSObject that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static GCSObject removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static GCSObject removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (GCSObject) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

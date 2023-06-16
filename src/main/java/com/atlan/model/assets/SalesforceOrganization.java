@@ -25,7 +25,8 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class SalesforceOrganization extends Salesforce {
+public class SalesforceOrganization extends Asset
+        implements ISalesforceOrganization, ISalesforce, ISaaS, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "SalesforceOrganization";
@@ -35,6 +36,14 @@ public class SalesforceOrganization extends Salesforce {
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** TBC */
+    @Attribute
+    String apiName;
+
+    /** TBC */
+    @Attribute
+    String organizationQualifiedName;
+
     /** ID of the organization in Salesforce. */
     @Attribute
     String sourceId;
@@ -42,17 +51,27 @@ public class SalesforceOrganization extends Salesforce {
     /** TBC */
     @Attribute
     @Singular
-    SortedSet<SalesforceReport> reports;
+    SortedSet<ISalesforceDashboard> dashboards;
 
     /** TBC */
     @Attribute
     @Singular
-    SortedSet<SalesforceObject> objects;
+    SortedSet<ILineageProcess> inputToProcesses;
 
     /** TBC */
     @Attribute
     @Singular
-    SortedSet<SalesforceDashboard> dashboards;
+    SortedSet<ISalesforceObject> objects;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISalesforceReport> reports;
 
     /**
      * Reference to a SalesforceOrganization by GUID.
@@ -257,7 +276,7 @@ public class SalesforceOrganization extends Salesforce {
      * @return the SalesforceOrganization that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static SalesforceOrganization replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static SalesforceOrganization replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (SalesforceOrganization) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -272,7 +291,7 @@ public class SalesforceOrganization extends Salesforce {
      * @return the SalesforceOrganization that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static SalesforceOrganization appendTerms(String qualifiedName, List<GlossaryTerm> terms)
+    public static SalesforceOrganization appendTerms(String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (SalesforceOrganization) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
@@ -287,7 +306,7 @@ public class SalesforceOrganization extends Salesforce {
      * @return the SalesforceOrganization that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static SalesforceOrganization removeTerms(String qualifiedName, List<GlossaryTerm> terms)
+    public static SalesforceOrganization removeTerms(String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (SalesforceOrganization) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }

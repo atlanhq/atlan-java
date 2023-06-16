@@ -11,6 +11,7 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -24,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class BIProcess extends LineageProcess {
+public class BIProcess extends Asset implements IBIProcess, ILineageProcess, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "BIProcess";
@@ -33,6 +34,33 @@ public class BIProcess extends LineageProcess {
     @Getter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
+
+    /** TBC */
+    @Attribute
+    String ast;
+
+    /** TBC */
+    @Attribute
+    String code;
+
+    /** TBC */
+    @Attribute
+    String sql;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IColumnProcess> columnProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ICatalog> inputs;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ICatalog> outputs;
 
     /**
      * Reference to a BIProcess by GUID.
@@ -234,7 +262,7 @@ public class BIProcess extends LineageProcess {
      * @return the BIProcess that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static BIProcess replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static BIProcess replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (BIProcess) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -249,7 +277,7 @@ public class BIProcess extends LineageProcess {
      * @return the BIProcess that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static BIProcess appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static BIProcess appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (BIProcess) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -263,7 +291,7 @@ public class BIProcess extends LineageProcess {
      * @return the BIProcess that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static BIProcess removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static BIProcess removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (BIProcess) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

@@ -4,6 +4,7 @@ package com.atlan.model.assets;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import java.util.Map;
+import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -22,17 +23,18 @@ import lombok.extern.slf4j.Slf4j;
 })
 @Slf4j
 @SuppressWarnings("cast")
-public abstract class API extends Catalog {
+public abstract class API extends Asset implements IAPI, ICatalog, IAsset, IReferenceable {
 
     public static final String TYPE_NAME = "API";
 
     /** TBC */
     @Attribute
-    String apiSpecType;
+    @Singular
+    Map<String, String> apiExternalDocs;
 
     /** TBC */
     @Attribute
-    String apiSpecVersion;
+    Boolean apiIsAuthOptional;
 
     /** TBC */
     @Attribute
@@ -44,10 +46,19 @@ public abstract class API extends Catalog {
 
     /** TBC */
     @Attribute
-    @Singular
-    Map<String, String> apiExternalDocs;
+    String apiSpecType;
 
     /** TBC */
     @Attribute
-    Boolean apiIsAuthOptional;
+    String apiSpecVersion;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 }

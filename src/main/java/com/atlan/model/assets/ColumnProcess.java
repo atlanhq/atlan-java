@@ -14,6 +14,7 @@ import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -30,7 +31,7 @@ import lombok.extern.slf4j.Slf4j;
     @JsonSubTypes.Type(value = DbtColumnProcess.class, name = DbtColumnProcess.TYPE_NAME),
 })
 @Slf4j
-public class ColumnProcess extends LineageProcess {
+public class ColumnProcess extends Asset implements IColumnProcess, ILineageProcess, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "ColumnProcess";
@@ -40,9 +41,36 @@ public class ColumnProcess extends LineageProcess {
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** TBC */
+    @Attribute
+    String ast;
+
+    /** TBC */
+    @Attribute
+    String code;
+
+    /** TBC */
+    @Attribute
+    String sql;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IColumnProcess> columnProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ICatalog> inputs;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ICatalog> outputs;
+
     /** Parent process that contains this column-level process. */
     @Attribute
-    LineageProcess process;
+    ILineageProcess process;
 
     /**
      * Reference to a ColumnProcess by GUID.
@@ -133,7 +161,8 @@ public class ColumnProcess extends LineageProcess {
         AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         String connectionName = StringUtils.getNameFromQualifiedName(connectionQualifiedName);
         return ColumnProcess.builder()
-                .qualifiedName(generateQualifiedName(name, connectionQualifiedName, id, inputs, outputs, parent))
+                .qualifiedName(LineageProcess.generateQualifiedName(
+                        name, connectionQualifiedName, id, inputs, outputs, parent))
                 .name(name)
                 .connectorType(connectorType)
                 .connectionName(connectionName)
@@ -274,7 +303,7 @@ public class ColumnProcess extends LineageProcess {
      * @return the ColumnProcess that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static ColumnProcess replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static ColumnProcess replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (ColumnProcess) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -289,7 +318,7 @@ public class ColumnProcess extends LineageProcess {
      * @return the ColumnProcess that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static ColumnProcess appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static ColumnProcess appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (ColumnProcess) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -303,7 +332,7 @@ public class ColumnProcess extends LineageProcess {
      * @return the ColumnProcess that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static ColumnProcess removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static ColumnProcess removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (ColumnProcess) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

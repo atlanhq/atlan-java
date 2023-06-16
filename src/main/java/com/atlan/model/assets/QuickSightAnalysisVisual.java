@@ -11,6 +11,7 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -24,7 +25,8 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class QuickSightAnalysisVisual extends QuickSight {
+public class QuickSightAnalysisVisual extends Asset
+        implements IQuickSightAnalysisVisual, IQuickSight, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "QuickSightAnalysisVisual";
@@ -40,7 +42,29 @@ public class QuickSightAnalysisVisual extends QuickSight {
 
     /** TBC */
     @Attribute
-    QuickSightAnalysis quickSightAnalysis;
+    String quickSightId;
+
+    /** TBC */
+    @Attribute
+    String quickSightSheetId;
+
+    /** TBC */
+    @Attribute
+    String quickSightSheetName;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    IQuickSightAnalysis quickSightAnalysis;
 
     /**
      * Reference to a QuickSightAnalysisVisual by GUID.
@@ -245,7 +269,7 @@ public class QuickSightAnalysisVisual extends QuickSight {
      * @return the QuickSightAnalysisVisual that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static QuickSightAnalysisVisual replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static QuickSightAnalysisVisual replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (QuickSightAnalysisVisual) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -260,7 +284,7 @@ public class QuickSightAnalysisVisual extends QuickSight {
      * @return the QuickSightAnalysisVisual that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static QuickSightAnalysisVisual appendTerms(String qualifiedName, List<GlossaryTerm> terms)
+    public static QuickSightAnalysisVisual appendTerms(String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (QuickSightAnalysisVisual) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
@@ -275,7 +299,7 @@ public class QuickSightAnalysisVisual extends QuickSight {
      * @return the QuickSightAnalysisVisual that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static QuickSightAnalysisVisual removeTerms(String qualifiedName, List<GlossaryTerm> terms)
+    public static QuickSightAnalysisVisual removeTerms(String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (QuickSightAnalysisVisual) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }

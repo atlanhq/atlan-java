@@ -14,6 +14,7 @@ import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 import lombok.*;
@@ -28,7 +29,8 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class Schema extends SQL {
+@SuppressWarnings("cast")
+public class Schema extends Asset implements ISchema, ISQL, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "Schema";
@@ -38,54 +40,141 @@ public class Schema extends SQL {
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** TBC */
+    @Attribute
+    String databaseName;
+
+    /** TBC */
+    @Attribute
+    String databaseQualifiedName;
+
+    /** TBC */
+    @Attribute
+    Boolean isProfiled;
+
+    /** TBC */
+    @Attribute
+    Long lastProfiledAt;
+
+    /** TBC */
+    @Attribute
+    Long queryCount;
+
+    /** TBC */
+    @Attribute
+    Long queryCountUpdatedAt;
+
+    /** TBC */
+    @Attribute
+    Long queryUserCount;
+
+    /** TBC */
+    @Attribute
+    @Singular("putQueryUserMap")
+    Map<String, Long> queryUserMap;
+
+    /** TBC */
+    @Attribute
+    String schemaName;
+
+    /** TBC */
+    @Attribute
+    String schemaQualifiedName;
+
     /** Number of tables in this schema. */
     @Attribute
     Integer tableCount;
+
+    /** TBC */
+    @Attribute
+    String tableName;
+
+    /** TBC */
+    @Attribute
+    String tableQualifiedName;
+
+    /** TBC */
+    @Attribute
+    String viewName;
+
+    /** TBC */
+    @Attribute
+    String viewQualifiedName;
 
     /** Number of views in this schema. */
     @Attribute
     @JsonProperty("viewsCount")
     Integer viewCount;
 
-    /** Tags applied to this schema in Snowflake. */
+    /** Database in which this schema exists. */
+    @Attribute
+    IDatabase database;
+
+    /** TBC */
     @Attribute
     @Singular
-    SortedSet<SnowflakeTag> snowflakeTags;
+    SortedSet<IDbtModel> dbtModels;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtSource> dbtSources;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
 
     /** Materialized views that exist within this schema. */
     @Attribute
     @Singular
     @JsonProperty("materialisedViews")
-    SortedSet<MaterializedView> materializedViews;
+    SortedSet<IMaterializedView> materializedViews;
 
-    /** Tables that exist within this schema. */
+    /** TBC */
     @Attribute
     @Singular
-    SortedSet<Table> tables;
-
-    /** Database in which this schema exists. */
-    @Attribute
-    Database database;
-
-    /** Snowflake Pipes that are defined within this schema. */
-    @Attribute
-    @Singular
-    SortedSet<SnowflakePipe> snowflakePipes;
-
-    /** Snowflake Streams that are defined within this schema. */
-    @Attribute
-    @Singular
-    SortedSet<SnowflakeStream> snowflakeStreams;
+    SortedSet<ILineageProcess> outputFromProcesses;
 
     /** Stored procedures (routines) that are defined within this schema. */
     @Attribute
     @Singular
-    SortedSet<Procedure> procedures;
+    SortedSet<IProcedure> procedures;
+
+    /** Snowflake Pipes that are defined within this schema. */
+    @Attribute
+    @Singular
+    SortedSet<ISnowflakePipe> snowflakePipes;
+
+    /** Snowflake Streams that are defined within this schema. */
+    @Attribute
+    @Singular
+    SortedSet<ISnowflakeStream> snowflakeStreams;
+
+    /** Tags applied to this schema in Snowflake. */
+    @Attribute
+    @Singular
+    SortedSet<ISnowflakeTag> snowflakeTags;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtSource> sqlDBTSources;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtModel> sqlDbtModels;
+
+    /** Tables that exist within this schema. */
+    @Attribute
+    @Singular
+    SortedSet<ITable> tables;
 
     /** Views that exist within this schema. */
     @Attribute
     @Singular
-    SortedSet<View> views;
+    SortedSet<IView> views;
 
     /**
      * Reference to a Schema by GUID.
@@ -320,7 +409,7 @@ public class Schema extends SQL {
      * @return the Schema that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static Schema replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static Schema replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (Schema) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -335,7 +424,7 @@ public class Schema extends SQL {
      * @return the Schema that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static Schema appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static Schema appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (Schema) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -349,7 +438,7 @@ public class Schema extends SQL {
      * @return the Schema that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static Schema removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static Schema removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (Schema) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

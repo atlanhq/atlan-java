@@ -9,6 +9,7 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
+import com.atlan.model.enums.AssetSidebarTab;
 import com.atlan.model.enums.AuthPolicyCategory;
 import com.atlan.model.enums.AuthPolicyResourceCategory;
 import com.atlan.model.enums.AuthPolicyType;
@@ -38,7 +39,7 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class Purpose extends AccessControl {
+public class Purpose extends Asset implements IPurpose, IAccessControl, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "Purpose";
@@ -48,11 +49,34 @@ public class Purpose extends AccessControl {
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** TBC */
+    @Attribute
+    String channelLink;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<AssetSidebarTab> denyAssetTabs;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<String> denyCustomMetadataGuids;
+
+    /** TBC */
+    @Attribute
+    Boolean isAccessControlEnabled;
+
     /** Tags on which this purpose is applied. */
     @Attribute
     @Singular
     @JsonProperty("purposeClassifications")
     SortedSet<String> purposeAtlanTags;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IAuthPolicy> policies;
 
     /**
      * Reference to a Purpose by GUID.

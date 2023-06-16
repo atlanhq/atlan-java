@@ -3,6 +3,7 @@
 package com.atlan.model.assets;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
+import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -21,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
     @JsonSubTypes.Type(value = MetabaseDashboard.class, name = MetabaseDashboard.TYPE_NAME),
 })
 @Slf4j
-public abstract class Metabase extends BI {
+public abstract class Metabase extends Asset implements IMetabase, IBI, ICatalog, IAsset, IReferenceable {
 
     public static final String TYPE_NAME = "Metabase";
 
@@ -32,4 +33,14 @@ public abstract class Metabase extends BI {
     /** TBC */
     @Attribute
     String metabaseCollectionQualifiedName;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 }

@@ -20,21 +20,17 @@ import lombok.extern.slf4j.Slf4j;
     @JsonSubTypes.Type(value = DbtMetric.class, name = DbtMetric.TYPE_NAME),
 })
 @Slf4j
-public abstract class Metric extends DataQuality {
+public abstract class Metric extends Asset implements IMetric, IDataQuality, ICatalog, IAsset, IReferenceable {
 
     public static final String TYPE_NAME = "Metric";
 
     /** TBC */
     @Attribute
-    String metricType;
+    String metricFilters;
 
     /** TBC */
     @Attribute
     String metricSQL;
-
-    /** TBC */
-    @Attribute
-    String metricFilters;
 
     /** TBC */
     @Attribute
@@ -43,15 +39,29 @@ public abstract class Metric extends DataQuality {
 
     /** TBC */
     @Attribute
-    @Singular
-    SortedSet<Asset> assets;
+    String metricType;
 
     /** TBC */
     @Attribute
     @Singular
-    SortedSet<Column> metricDimensionColumns;
+    SortedSet<IAsset> assets;
 
     /** TBC */
     @Attribute
-    Column metricTimestampColumn;
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IColumn> metricDimensionColumns;
+
+    /** TBC */
+    @Attribute
+    IColumn metricTimestampColumn;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 }

@@ -22,30 +22,30 @@ import lombok.extern.slf4j.Slf4j;
     @JsonSubTypes.Type(value = Purpose.class, name = Purpose.TYPE_NAME),
 })
 @Slf4j
-public abstract class AccessControl extends Asset {
+public abstract class AccessControl extends Asset implements IAccessControl, IAsset, IReferenceable {
 
     public static final String TYPE_NAME = "AccessControl";
 
-    /** Whether the access object is activated (true) or deactivated (false). */
+    /** Link to a Slack channel that is used to discuss this access control object. */
     @Attribute
-    Boolean isAccessControlEnabled;
-
-    /** Unique identifiers (GUIDs) of custom metadata that should be hidden from this access control object. */
-    @Attribute
-    @Singular
-    SortedSet<String> denyCustomMetadataGuids;
+    String channelLink;
 
     /** Asset sidebar tabs that should be hidden from this access control object. */
     @Attribute
     @Singular
     SortedSet<AssetSidebarTab> denyAssetTabs;
 
-    /** Link to a Slack channel that is used to discuss this access control object. */
+    /** Unique identifiers (GUIDs) of custom metadata that should be hidden from this access control object. */
     @Attribute
-    String channelLink;
+    @Singular
+    SortedSet<String> denyCustomMetadataGuids;
+
+    /** Whether the access object is activated (true) or deactivated (false). */
+    @Attribute
+    Boolean isAccessControlEnabled;
 
     /** Policies associated with this access control object. */
     @Attribute
     @Singular
-    SortedSet<AuthPolicy> policies;
+    SortedSet<IAuthPolicy> policies;
 }

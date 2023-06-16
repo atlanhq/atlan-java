@@ -26,7 +26,8 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class QuickSightDataset extends QuickSight {
+public class QuickSightDataset extends Asset
+        implements IQuickSightDataset, IQuickSight, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "QuickSightDataset";
@@ -38,21 +39,43 @@ public class QuickSightDataset extends QuickSight {
 
     /** TBC */
     @Attribute
-    QuickSightDatasetImportMode quickSightDatasetImportMode;
-
-    /** TBC */
-    @Attribute
     Long quickSightDatasetColumnCount;
 
     /** TBC */
     @Attribute
-    @Singular
-    SortedSet<QuickSightFolder> quickSightDatasetFolders;
+    QuickSightDatasetImportMode quickSightDatasetImportMode;
+
+    /** TBC */
+    @Attribute
+    String quickSightId;
+
+    /** TBC */
+    @Attribute
+    String quickSightSheetId;
+
+    /** TBC */
+    @Attribute
+    String quickSightSheetName;
 
     /** TBC */
     @Attribute
     @Singular
-    SortedSet<QuickSightDatasetField> quickSightDatasetFields;
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IQuickSightDatasetField> quickSightDatasetFields;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IQuickSightFolder> quickSightDatasetFolders;
 
     /**
      * Reference to a QuickSightDataset by GUID.
@@ -254,7 +277,7 @@ public class QuickSightDataset extends QuickSight {
      * @return the QuickSightDataset that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static QuickSightDataset replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static QuickSightDataset replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (QuickSightDataset) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -269,7 +292,7 @@ public class QuickSightDataset extends QuickSight {
      * @return the QuickSightDataset that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static QuickSightDataset appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static QuickSightDataset appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (QuickSightDataset) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -283,7 +306,7 @@ public class QuickSightDataset extends QuickSight {
      * @return the QuickSightDataset that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static QuickSightDataset removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static QuickSightDataset removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (QuickSightDataset) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

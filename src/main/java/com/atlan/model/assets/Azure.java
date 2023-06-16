@@ -21,13 +21,13 @@ import lombok.extern.slf4j.Slf4j;
     @JsonSubTypes.Type(value = ADLS.class, name = ADLS.TYPE_NAME),
 })
 @Slf4j
-public abstract class Azure extends Catalog {
+public abstract class Azure extends Asset implements IAzure, ICloud, IAsset, IReferenceable {
 
     public static final String TYPE_NAME = "Azure";
 
     /** TBC */
     @Attribute
-    String azureResourceId;
+    String adlsAccountSecondaryLocation;
 
     /** TBC */
     @Attribute
@@ -35,7 +35,7 @@ public abstract class Azure extends Catalog {
 
     /** TBC */
     @Attribute
-    String adlsAccountSecondaryLocation;
+    String azureResourceId;
 
     /** Tags that have been applied to this Azure asset. */
     @Attribute

@@ -30,19 +30,19 @@ import lombok.extern.slf4j.Slf4j;
     @JsonSubTypes.Type(value = SQL.class, name = SQL.TYPE_NAME),
 })
 @Slf4j
-public abstract class Catalog extends Asset {
+public abstract class Catalog extends Asset implements ICatalog, IAsset, IReferenceable {
 
     public static final String TYPE_NAME = "Catalog";
 
     /** Processes to which this asset provides input. */
     @Attribute
     @Singular
-    SortedSet<LineageProcess> inputToProcesses;
+    SortedSet<ILineageProcess> inputToProcesses;
 
     /** Processes from which this asset is produced as output. */
     @Attribute
     @Singular
-    SortedSet<LineageProcess> outputFromProcesses;
+    SortedSet<ILineageProcess> outputFromProcesses;
 
     /**
      * Reference to an asset by its qualifiedName.
@@ -52,7 +52,7 @@ public abstract class Catalog extends Asset {
      * @return reference to an asset that can be used for defining a lineage relationship to the asset
      */
     public static Catalog getLineageReference(String typeName, String qualifiedName) {
-        Catalog ref = null;
+        ICatalog ref = null;
         switch (typeName) {
             case ADLSAccount.TYPE_NAME:
                 ref = ADLSAccount.refByQualifiedName(qualifiedName);
@@ -307,6 +307,6 @@ public abstract class Catalog extends Asset {
                 // Do nothing — not a supported Catalog subtype
                 break;
         }
-        return ref;
+        return (Catalog) ref;
     }
 }

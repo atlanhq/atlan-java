@@ -8,6 +8,7 @@ import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
+import com.atlan.model.enums.PowerBIEndorsementType;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class PowerBITable extends PowerBI {
+public class PowerBITable extends Asset implements IPowerBITable, IPowerBI, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "PowerBITable";
@@ -37,16 +38,19 @@ public class PowerBITable extends PowerBI {
 
     /** TBC */
     @Attribute
-    String workspaceQualifiedName;
-
-    /** TBC */
-    @Attribute
     String datasetQualifiedName;
 
     /** TBC */
     @Attribute
-    @Singular
-    SortedSet<String> powerBITableSourceExpressions;
+    PowerBIEndorsementType powerBIEndorsement;
+
+    /** TBC */
+    @Attribute
+    String powerBIFormatString;
+
+    /** TBC */
+    @Attribute
+    Boolean powerBIIsHidden;
 
     /** TBC */
     @Attribute
@@ -58,17 +62,40 @@ public class PowerBITable extends PowerBI {
 
     /** TBC */
     @Attribute
-    @Singular
-    SortedSet<PowerBIMeasure> measures;
+    String powerBITableQualifiedName;
 
     /** TBC */
     @Attribute
     @Singular
-    SortedSet<PowerBIColumn> columns;
+    SortedSet<String> powerBITableSourceExpressions;
 
     /** TBC */
     @Attribute
-    PowerBIDataset dataset;
+    String workspaceQualifiedName;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IPowerBIColumn> columns;
+
+    /** TBC */
+    @Attribute
+    IPowerBIDataset dataset;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IPowerBIMeasure> measures;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 
     /**
      * Reference to a PowerBITable by GUID.
@@ -270,7 +297,7 @@ public class PowerBITable extends PowerBI {
      * @return the PowerBITable that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static PowerBITable replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static PowerBITable replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (PowerBITable) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -285,7 +312,7 @@ public class PowerBITable extends PowerBI {
      * @return the PowerBITable that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static PowerBITable appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static PowerBITable appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (PowerBITable) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -299,7 +326,7 @@ public class PowerBITable extends PowerBI {
      * @return the PowerBITable that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static PowerBITable removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static PowerBITable removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (PowerBITable) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

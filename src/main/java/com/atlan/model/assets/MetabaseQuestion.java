@@ -25,7 +25,8 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class MetabaseQuestion extends Metabase {
+public class MetabaseQuestion extends Asset
+        implements IMetabaseQuestion, IMetabase, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "MetabaseQuestion";
@@ -37,11 +38,15 @@ public class MetabaseQuestion extends Metabase {
 
     /** TBC */
     @Attribute
-    Long metabaseDashboardCount;
+    String metabaseCollectionName;
 
     /** TBC */
     @Attribute
-    String metabaseQueryType;
+    String metabaseCollectionQualifiedName;
+
+    /** TBC */
+    @Attribute
+    Long metabaseDashboardCount;
 
     /** TBC */
     @Attribute
@@ -49,12 +54,26 @@ public class MetabaseQuestion extends Metabase {
 
     /** TBC */
     @Attribute
-    @Singular
-    SortedSet<MetabaseDashboard> metabaseDashboards;
+    String metabaseQueryType;
 
     /** TBC */
     @Attribute
-    MetabaseCollection metabaseCollection;
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    IMetabaseCollection metabaseCollection;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IMetabaseDashboard> metabaseDashboards;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 
     /**
      * Reference to a MetabaseQuestion by GUID.
@@ -256,7 +275,7 @@ public class MetabaseQuestion extends Metabase {
      * @return the MetabaseQuestion that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static MetabaseQuestion replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static MetabaseQuestion replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (MetabaseQuestion) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -271,7 +290,7 @@ public class MetabaseQuestion extends Metabase {
      * @return the MetabaseQuestion that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static MetabaseQuestion appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static MetabaseQuestion appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (MetabaseQuestion) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -285,7 +304,7 @@ public class MetabaseQuestion extends Metabase {
      * @return the MetabaseQuestion that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static MetabaseQuestion removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static MetabaseQuestion removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (MetabaseQuestion) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

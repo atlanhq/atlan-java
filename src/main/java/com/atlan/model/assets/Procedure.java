@@ -12,6 +12,8 @@ import com.atlan.model.relations.UniqueAttributes;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -25,7 +27,8 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class Procedure extends SQL {
+@SuppressWarnings("cast")
+public class Procedure extends Asset implements IProcedure, ISQL, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "Procedure";
@@ -35,14 +38,101 @@ public class Procedure extends SQL {
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** TBC */
+    @Attribute
+    String databaseName;
+
+    /** TBC */
+    @Attribute
+    String databaseQualifiedName;
+
     /** Logic of the procedure. */
     @Attribute
     String definition;
 
+    /** TBC */
+    @Attribute
+    Boolean isProfiled;
+
+    /** TBC */
+    @Attribute
+    Long lastProfiledAt;
+
+    /** TBC */
+    @Attribute
+    Long queryCount;
+
+    /** TBC */
+    @Attribute
+    Long queryCountUpdatedAt;
+
+    /** TBC */
+    @Attribute
+    Long queryUserCount;
+
+    /** TBC */
+    @Attribute
+    @Singular("putQueryUserMap")
+    Map<String, Long> queryUserMap;
+
+    /** TBC */
+    @Attribute
+    String schemaName;
+
+    /** TBC */
+    @Attribute
+    String schemaQualifiedName;
+
+    /** TBC */
+    @Attribute
+    String tableName;
+
+    /** TBC */
+    @Attribute
+    String tableQualifiedName;
+
+    /** TBC */
+    @Attribute
+    String viewName;
+
+    /** TBC */
+    @Attribute
+    String viewQualifiedName;
+
     /** Schema in which the procedure is contained. */
     @Attribute
     @JsonProperty("atlanSchema")
-    Schema schema;
+    ISchema schema;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtModel> dbtModels;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtSource> dbtSources;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtSource> sqlDBTSources;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtModel> sqlDbtModels;
 
     /**
      * Reference to a Procedure by GUID.
@@ -244,7 +334,7 @@ public class Procedure extends SQL {
      * @return the Procedure that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static Procedure replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static Procedure replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (Procedure) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -259,7 +349,7 @@ public class Procedure extends SQL {
      * @return the Procedure that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static Procedure appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static Procedure appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (Procedure) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -273,7 +363,7 @@ public class Procedure extends SQL {
      * @return the Procedure that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static Procedure removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static Procedure removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (Procedure) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

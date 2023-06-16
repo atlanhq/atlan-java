@@ -8,9 +8,11 @@ import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
+import com.atlan.model.enums.PowerBIEndorsementType;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -24,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class PowerBIMeasure extends PowerBI {
+public class PowerBIMeasure extends Asset implements IPowerBIMeasure, IPowerBI, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "PowerBIMeasure";
@@ -36,15 +38,15 @@ public class PowerBIMeasure extends PowerBI {
 
     /** TBC */
     @Attribute
-    String workspaceQualifiedName;
-
-    /** TBC */
-    @Attribute
     String datasetQualifiedName;
 
     /** TBC */
     @Attribute
-    String powerBIMeasureExpression;
+    PowerBIEndorsementType powerBIEndorsement;
+
+    /** TBC */
+    @Attribute
+    String powerBIFormatString;
 
     /** TBC */
     @Attribute
@@ -52,7 +54,33 @@ public class PowerBIMeasure extends PowerBI {
 
     /** TBC */
     @Attribute
-    PowerBITable table;
+    Boolean powerBIIsHidden;
+
+    /** TBC */
+    @Attribute
+    String powerBIMeasureExpression;
+
+    /** TBC */
+    @Attribute
+    String powerBITableQualifiedName;
+
+    /** TBC */
+    @Attribute
+    String workspaceQualifiedName;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    IPowerBITable table;
 
     /**
      * Reference to a PowerBIMeasure by GUID.
@@ -254,7 +282,7 @@ public class PowerBIMeasure extends PowerBI {
      * @return the PowerBIMeasure that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static PowerBIMeasure replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static PowerBIMeasure replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (PowerBIMeasure) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -269,7 +297,7 @@ public class PowerBIMeasure extends PowerBI {
      * @return the PowerBIMeasure that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static PowerBIMeasure appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static PowerBIMeasure appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (PowerBIMeasure) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -283,7 +311,7 @@ public class PowerBIMeasure extends PowerBI {
      * @return the PowerBIMeasure that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static PowerBIMeasure removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static PowerBIMeasure removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (PowerBIMeasure) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 
