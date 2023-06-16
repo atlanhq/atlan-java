@@ -11,6 +11,10 @@ import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.GoogleLabel;
 import com.atlan.model.structs.GoogleTag;
 import com.atlan.model.structs.PopularityInsights;
+import com.atlan.serde.AssetDeserializer;
+import com.atlan.serde.AssetSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
@@ -20,6 +24,8 @@ import javax.annotation.processing.Generated;
  * Base class for Google Cloud Storage assets.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
+@JsonSerialize(using = AssetSerializer.class)
+@JsonDeserialize(using = AssetDeserializer.class)
 public interface IGCS {
 
     /** TBC */

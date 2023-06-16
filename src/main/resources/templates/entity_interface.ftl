@@ -25,6 +25,11 @@ import ${packageRoot}.enums.${attribute.type.name};
 import ${packageRoot}.structs.${attribute.type.name};
 </#if>
 </#list>
+import com.atlan.serde.AssetDeserializer;
+import com.atlan.serde.AssetSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 
 import java.util.List;
 import java.util.Map;
@@ -36,6 +41,8 @@ import javax.annotation.processing.Generated;
  * ${description}
  */
 @Generated(value="${generatorName}")
+@JsonSerialize(using = AssetSerializer.class)
+@JsonDeserialize(using = AssetDeserializer.class)
 public interface I${className} {
 
     <#list interfaceAttributes as attribute>

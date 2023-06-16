@@ -51,7 +51,7 @@ public abstract class Catalog extends Asset implements ICatalog, IAsset, IRefere
      * @param qualifiedName the qualifiedName of the asset to reference
      * @return reference to an asset that can be used for defining a lineage relationship to the asset
      */
-    public static Catalog getLineageReference(String typeName, String qualifiedName) {
+    public static ICatalog getLineageReference(String typeName, String qualifiedName) {
         ICatalog ref = null;
         switch (typeName) {
             case ADLSAccount.TYPE_NAME:
@@ -307,6 +307,6 @@ public abstract class Catalog extends Asset implements ICatalog, IAsset, IRefere
                 // Do nothing — not a supported Catalog subtype
                 break;
         }
-        return (Catalog) ref;
+        return ref;
     }
 }

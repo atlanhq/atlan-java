@@ -368,8 +368,6 @@ public class TableauDatasourceTest {
             .project(TableauProject.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .field(TableauCalculatedField.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .field(TableauCalculatedField.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .field(TableauDatasourceField.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .field(TableauDatasourceField.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .build();
 
     private static final int hash = full.hashCode();

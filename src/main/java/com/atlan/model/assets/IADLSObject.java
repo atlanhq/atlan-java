@@ -15,6 +15,10 @@ import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.AzureTag;
 import com.atlan.model.structs.PopularityInsights;
+import com.atlan.serde.AssetDeserializer;
+import com.atlan.serde.AssetSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
@@ -24,6 +28,8 @@ import javax.annotation.processing.Generated;
  * Instance of an Azure Data Lake Storage (ADLS) blob / object in Atlan.
  */
 @Generated(value = "com.atlan.generators.ModelGeneratorV2")
+@JsonSerialize(using = AssetSerializer.class)
+@JsonDeserialize(using = AssetDeserializer.class)
 public interface IADLSObject {
 
     /** TBC */
