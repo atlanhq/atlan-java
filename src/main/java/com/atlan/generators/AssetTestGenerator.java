@@ -100,7 +100,7 @@ public class AssetTestGenerator extends AssetGenerator {
                         break;
                 }
             }
-        } else {
+        } else if (!assetGenerator.getOriginalName().equals("Referenceable")) {
             log.warn("No attributes found for {}, skipping any test inclusion.", assetGenerator.getOriginalName());
         }
     }
