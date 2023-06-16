@@ -23,7 +23,9 @@ public class AssetGenerator extends TypeGenerator {
 
     private final EntityDef entityDef;
     private String parentClassName;
-    private List<Attribute> attributes;
+    private List<Attribute> interfaceAttributes;
+    private List<Attribute> classAttributes;
+    private List<Attribute> nonInheritedAttributes;
     private List<AssetGenerator> originalSuperTypes = null;
     private List<AssetGenerator> fullSubTypes = null;
     private List<String> originalSubTypes = null;
@@ -123,11 +125,28 @@ public class AssetGenerator extends TypeGenerator {
         } else {
             allAttributes = cache.getAllNonAssetAttributesForType(getOriginalName());
         }
-        attributes = new ArrayList<>();
+        nonInheritedAttributes = new ArrayList<>();
+        for (AttributeDef attributeDef :
+                cache.getEntityDefCache().get(getOriginalName()).getAttributeDefs()) {
+            Attribute attribute = new Attribute(className, attributeDef, cfg);
+            if (!attribute.getType().getName().equals("Internal")) {
+                nonInheritedAttributes.add(attribute);
+                checkAndAddMapContainer(attribute);
+            }
+        }
+        classAttributes = new ArrayList<>();
         for (AttributeDef attributeDef : allAttributes) {
             Attribute attribute = new Attribute(className, attributeDef, cfg);
             if (!attribute.getType().getName().equals("Internal")) {
-                attributes.add(attribute);
+                classAttributes.add(attribute);
+                checkAndAddMapContainer(attribute);
+            }
+        }
+        interfaceAttributes = new ArrayList<>();
+        for (AttributeDef attributeDef : cache.getAllAttributesForType(getOriginalName())) {
+            Attribute attribute = new Attribute(className, attributeDef, cfg);
+            if (!attribute.getType().getName().equals("Internal")) {
+                interfaceAttributes.add(attribute);
                 checkAndAddMapContainer(attribute);
             }
         }
@@ -140,10 +159,28 @@ public class AssetGenerator extends TypeGenerator {
         } else {
             allRelationships = cache.getAllNonAssetRelationshipsForType(getOriginalName());
         }
+        Set<String> uniqueRelationships = cache.getUniqueRelationshipsForType(getOriginalName());
+        for (RelationshipAttributeDef relationshipAttributeDef :
+                cache.getEntityDefCache().get(getOriginalName()).getRelationshipAttributeDefs()) {
+            if (uniqueRelationships.contains(relationshipAttributeDef.getName())) {
+                Attribute attribute = new Attribute(className, relationshipAttributeDef, cfg);
+                if (!attribute.getType().getName().equals("Internal")) {
+                    nonInheritedAttributes.add(attribute);
+                    checkAndAddMapContainer(attribute);
+                }
+            }
+        }
         for (RelationshipAttributeDef relationshipAttributeDef : allRelationships) {
             Attribute attribute = new Attribute(className, relationshipAttributeDef, cfg);
             if (!attribute.getType().getName().equals("Internal")) {
-                attributes.add(attribute);
+                classAttributes.add(attribute);
+                checkAndAddMapContainer(attribute);
+            }
+        }
+        for (RelationshipAttributeDef relationshipAttributeDef : cache.getAllRelationshipsForType(getOriginalName())) {
+            Attribute attribute = new Attribute(className, relationshipAttributeDef, cfg);
+            if (!attribute.getType().getName().equals("Internal")) {
+                interfaceAttributes.add(attribute);
                 checkAndAddMapContainer(attribute);
             }
         }

@@ -279,44 +279,61 @@ public class ModelCache {
     }
 
     SortedSet<AttributeDef> getAllAttributesForType(String originalName) {
-        EntityDef entityDef = entityDefCache.get(originalName);
-        SortedSet<AttributeDef> aggregated = new TreeSet<>();
-        addAndLogAttributeConflicts(originalName, aggregated, entityDef.getAttributeDefs(), originalName);
-        Set<String> superTypes = getAllSuperTypesForType(originalName);
-        if (superTypes.isEmpty() || (superTypes.size() == 1 && superTypes.contains(originalName))) {
-            return aggregated;
+        if (originalName.equals("Referenceable")) {
+            // Skip attributes from Referenceable, these are directly-managed rather than generated
+            return new TreeSet<>();
         } else {
-            for (String superType : superTypes) {
-                Set<AttributeDef> again = getAllAttributesForType(superType);
-                addAndLogAttributeConflicts(originalName, aggregated, again, superType);
+            EntityDef entityDef = entityDefCache.get(originalName);
+            SortedSet<AttributeDef> aggregated = new TreeSet<>();
+            addAndLogAttributeConflicts(originalName, aggregated, entityDef.getAttributeDefs(), originalName);
+            List<String> superTypes = entityDef.getSuperTypes();
+            if (superTypes == null || superTypes.isEmpty()) {
+                return aggregated;
+            } else {
+                for (String superType : superTypes) {
+                    Set<AttributeDef> again = getAllAttributesForType(superType);
+                    addAndLogAttributeConflicts(originalName, aggregated, again, superType);
+                }
+                return aggregated;
             }
-            return aggregated;
         }
     }
 
     SortedSet<RelationshipAttributeDef> getAllRelationshipsForType(String originalName) {
-        EntityDef entityDef = entityDefCache.get(originalName);
-        SortedSet<RelationshipAttributeDef> aggregated = new TreeSet<>();
-        addAndLogRelationshipConflicts(
-                originalName, aggregated, entityDef.getRelationshipAttributeDefs(), originalName);
-        Set<String> superTypes = getAllSuperTypesForType(originalName);
-        if (superTypes.isEmpty() || (superTypes.size() == 1 && superTypes.contains(originalName))) {
-            return aggregated;
+        if (originalName.equals("Referenceable")) {
+            // Skip attributes from Referenceable, these are directly-managed rather than generated
+            return new TreeSet<>();
         } else {
-            for (String superType : superTypes) {
-                Set<RelationshipAttributeDef> again = getAllRelationshipsForType(superType);
-                addAndLogRelationshipConflicts(originalName, aggregated, again, superType);
-            }
+            EntityDef entityDef = entityDefCache.get(originalName);
+            SortedSet<RelationshipAttributeDef> aggregated = new TreeSet<>();
+            addAndLogRelationshipConflicts(
+                    originalName, aggregated, entityDef.getRelationshipAttributeDefs(), originalName);
             return aggregated;
+            // No need to recurse, relationships are already inheritance-complete
+            /*List<String> superTypes = entityDef.getSuperTypes();
+            if (superTypes == null || superTypes.isEmpty()) {
+                return aggregated;
+            } else {
+                for (String superType : superTypes) {
+                    Set<RelationshipAttributeDef> again = getAllRelationshipsForType(superType);
+                    addAndLogRelationshipConflicts(originalName, aggregated, again, superType);
+                }
+                return aggregated;
+            }*/
         }
     }
+
+    // Set of attributes that are known to conflict with relationship attributes of the same name
+    private static final Set<String> attributesToIgnore = Set.of("inputs", "outputs");
 
     private void addAndLogAttributeConflicts(
             String typeName, SortedSet<AttributeDef> toAddTo, Collection<AttributeDef> toAdd, String fromSuperType) {
         for (AttributeDef one : toAdd) {
-            boolean unmatched = toAddTo.add(one);
-            if (!unmatched) {
-                log.warn("Conflicting attribute found for {}, from {}: {}", typeName, fromSuperType, one.getName());
+            if (!attributesToIgnore.contains(one.getName())) {
+                boolean added = toAddTo.add(one);
+                if (!added) {
+                    log.warn("Conflicting attribute found for {}, from {}: {}", typeName, fromSuperType, one.getName());
+                }
             }
         }
     }
@@ -327,8 +344,12 @@ public class ModelCache {
             Collection<RelationshipAttributeDef> toAdd,
             String fromSuperType) {
         for (RelationshipAttributeDef one : toAdd) {
-            boolean unmatched = toAddTo.add(one);
-            if (!unmatched) {
+            if (typeName.equals("Asset") && one.getName().equals("meanings")) {
+                // Rename known 'meanings' relationship conflict
+                one = one.toBuilder().name("assignedTerms").build();
+            }
+            boolean added = toAddTo.add(one);
+            if (!added) {
                 log.warn("Conflicting relationship found for {}, from {}: {}", typeName, fromSuperType, one.getName());
             }
         }

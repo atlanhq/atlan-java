@@ -79,13 +79,6 @@ public class GeneratorConfig {
     private Set<String> forceNonAbstractAssets;
 
     /**
-     * Overrides the single parent class a given type should extend, since we do
-     * not currently support polymorphic inheritance through the SDK.
-     */
-    @Singular
-    private Map<String, String> parentForAssets;
-
-    /**
      * Mapping of attributes that need an explicit singular form (word), when it
      * cannot automatically be inferred by Lombok.
      */
@@ -176,17 +169,6 @@ public class GeneratorConfig {
                 .forceNonAbstractAsset("Process")
                 .forceNonAbstractAsset("ColumnProcess")
                 .forceNonAbstractAsset("QlikSpace")
-                .parentForAsset("Asset", "Reference")
-                .parentForAsset("S3", "AWS")
-                .parentForAsset("DataStudioAsset", "Google")
-                .parentForAsset("DbtColumnProcess", "ColumnProcess")
-                .parentForAsset("DbtProcess", "Process")
-                .parentForAsset("DbtMetric", "Metric")
-                .parentForAsset("AWS", "Catalog")
-                .parentForAsset("Google", "Catalog")
-                .parentForAsset("Azure", "Catalog")
-                .parentForAsset("GCS", "Google")
-                .parentForAsset("ADLS", "Azure")
                 .singularForAttribute("seeAlso", "seeAlsoOne")
                 .singularForAttribute("replacedByTerm", "replacedByTerm")
                 .singularForAttribute("validValuesFor", "validValueFor")
@@ -275,26 +257,6 @@ public class GeneratorConfig {
      */
     public boolean forceNonAbstract(String originalName) {
         return forceNonAbstractAssets.contains(originalName);
-    }
-
-    /**
-     * Retrieve the name of the singular type that we should extend for inheritance.
-     *
-     * @param originalName unmodified name of the type definition to determine inheritance for
-     * @param superTypes list of super types that are defined for that type
-     * @return the name of a single type to use for inheritance
-     */
-    public String getSingleTypeToExtend(String originalName, List<String> superTypes) {
-        if (parentForAssets.containsKey(originalName)) {
-            return parentForAssets.get(originalName);
-        } else if (superTypes == null || superTypes.isEmpty()) {
-            return "AtlanObject";
-        } else if (superTypes.size() == 1) {
-            return superTypes.get(0);
-        } else {
-            log.warn("Multiple superTypes detected — returning only the first: {}", superTypes);
-            return superTypes.get(0);
-        }
     }
 
     /**

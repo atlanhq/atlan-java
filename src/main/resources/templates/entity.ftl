@@ -39,7 +39,7 @@ import com.atlan.model.enums.DataAction;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.KeywordFields;
 import com.atlan.model.relations.UniqueAttributes;
-<#list attributes as attribute>
+<#list classAttributes as attribute>
 <#if attribute.type.type == "ENUM">
 import ${packageRoot}.enums.${attribute.type.name};
 <#elseif attribute.type.type == "STRUCT">
@@ -125,7 +125,7 @@ import javax.annotation.processing.Generated;
 </#if>
 @Slf4j
 <#if mapContainers?? || className == "Asset">@SuppressWarnings("cast")</#if>
-public <#if abstract>abstract</#if> class ${className} extends ${parentClassName} implements <#list superTypes as parent>I${parent}<#sep>, </#sep></#list> {
+public <#if abstract>abstract</#if> class ${className} extends ${parentClassName} implements I${className}<#list superTypes as parent>, I${parent}</#list> {
 <#if !abstract>    private static final long serialVersionUID = 2L;</#if>
 
     public static final String TYPE_NAME = "${originalName}";
@@ -137,7 +137,7 @@ public <#if abstract>abstract</#if> class ${className} extends ${parentClassName
     String typeName = TYPE_NAME;
 </#if>
 
-<#list attributes as attribute>
+<#list classAttributes as attribute>
     /** ${attribute.description} */
     @Attribute
     <#if attribute.singular??>@Singular<#if attribute.singular?has_content>("${attribute.singular}")</#if></#if>
@@ -145,9 +145,15 @@ public <#if abstract>abstract</#if> class ${className} extends ${parentClassName
     <#if attribute.renamed != attribute.originalName>
     @JsonProperty("${attribute.originalName}")
     </#if>
-    ${attribute.fullType} ${attribute.renamed};
+    ${attribute.referenceType} ${attribute.renamed};
 
 </#list>
+    /** {@inheritDoc} */
+    @Override
+    public ${className} to${className?cap_first}() {
+        return this;
+    }
+
 <#if !abstract>
     /**
      * Reference to a ${className} by GUID.

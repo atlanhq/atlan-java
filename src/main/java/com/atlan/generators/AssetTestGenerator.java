@@ -8,10 +8,7 @@ import com.atlan.model.typedefs.EntityDef;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -56,13 +53,14 @@ public class AssetTestGenerator extends AssetGenerator {
         EntityDef typeDetails = assetGenerator.getEntityDef();
         List<String> superTypes = typeDetails.getSuperTypes();
         if (superTypes != null && !superTypes.isEmpty()) {
-            String singleSuperType = cfg.getSingleTypeToExtend(assetGenerator.getOriginalName(), superTypes);
-            if (singleSuperType != null && !singleSuperType.equals("Reference")) {
-                // We can short-circuit when the next level up is Reference (the top)
-                addTestAttributes(cache.getCachedAssetType(singleSuperType), true);
+            for (String superType : superTypes) {
+                if (superType != null && !superType.equals("Reference")) {
+                    // We can short-circuit when the next level up is Reference (the top)
+                    addTestAttributes(cache.getCachedAssetType(superType), true);
+                }
             }
         }
-        List<Attribute> attributes = assetGenerator.getAttributes();
+        List<Attribute> attributes = assetGenerator.getNonInheritedAttributes();
         if (attributes != null) {
             for (Attribute attribute : attributes) {
                 TestAttribute.TestAttributeBuilder builder =

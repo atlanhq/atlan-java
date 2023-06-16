@@ -17,7 +17,8 @@ import com.atlan.model.enums.PurposeMetadataAction;
 import com.atlan.model.enums.DataAction;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.KeywordFields;
-<#list attributes as attribute>
+import com.atlan.model.relations.UniqueAttributes;
+<#list interfaceAttributes as attribute>
 <#if attribute.type.type == "ENUM">
 import ${packageRoot}.enums.${attribute.type.name};
 <#elseif attribute.type.type == "STRUCT">
@@ -37,9 +38,41 @@ import javax.annotation.processing.Generated;
 @Generated(value="${generatorName}")
 public interface I${className} {
 
-    <#list attributes as attribute>
+    <#list interfaceAttributes as attribute>
     /** ${attribute.description} */
-    ${attribute.fullType} get${attribute.renamed?cap_first}();
+    ${attribute.referenceType} get${attribute.renamed?cap_first}();
 
     </#list>
+    /** Convert this interface into a full-fledged object. */
+    ${className} to${className?cap_first}();
+
+    /** Name of the type that defines the asset. */
+    String getTypeName();
+
+    /** Globally-unique identifier for the asset. */
+    String getGuid();
+
+    /** Human-readable name of the asset. */
+    String getDisplayText();
+
+    /** Status of the asset (if this is a related asset). */
+    String getEntityStatus();
+
+    /** Type of the relationship (if this is a related asset). */
+    String getRelationshipType();
+
+    /** Unique identifier of the relationship (when this is a related asset). */
+    String getRelationshipGuid();
+
+    /** Status of the relationship (when this is a related asset). */
+    AtlanStatus getRelationshipStatus();
+
+    /** Attributes specific to the relationship (unused). */
+    Map<String, Object> getRelationshipAttributes();
+
+    /**
+     * Attribute(s) that uniquely identify the asset (when this is a related asset).
+     * If the guid is not provided, these must be provided.
+     */
+    UniqueAttributes getUniqueAttributes();
 }
