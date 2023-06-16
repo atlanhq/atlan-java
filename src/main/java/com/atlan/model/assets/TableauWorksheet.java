@@ -40,27 +40,6 @@ public class TableauWorksheet extends Asset
 
     /** TBC */
     @Attribute
-    @Singular("addProjectHierarchy")
-    List<Map<String, String>> projectHierarchy;
-
-    /** TBC */
-    @Attribute
-    String projectQualifiedName;
-
-    /** TBC */
-    @Attribute
-    String siteQualifiedName;
-
-    /** TBC */
-    @Attribute
-    String topLevelProjectQualifiedName;
-
-    /** TBC */
-    @Attribute
-    String workbookQualifiedName;
-
-    /** TBC */
-    @Attribute
     @Singular
     SortedSet<ITableauCalculatedField> calculatedFields;
 
@@ -86,7 +65,28 @@ public class TableauWorksheet extends Asset
 
     /** TBC */
     @Attribute
+    @Singular("addProjectHierarchy")
+    List<Map<String, String>> projectHierarchy;
+
+    /** TBC */
+    @Attribute
+    String projectQualifiedName;
+
+    /** TBC */
+    @Attribute
+    String siteQualifiedName;
+
+    /** TBC */
+    @Attribute
+    String topLevelProjectQualifiedName;
+
+    /** TBC */
+    @Attribute
     ITableauWorkbook workbook;
+
+    /** TBC */
+    @Attribute
+    String workbookQualifiedName;
 
     /**
      * Reference to a TableauWorksheet by GUID.

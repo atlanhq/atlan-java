@@ -8,10 +8,7 @@ import com.atlan.model.typedefs.EntityDef;
 import com.atlan.model.typedefs.RelationshipAttributeDef;
 import freemarker.template.TemplateNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -23,9 +20,9 @@ public class AssetGenerator extends TypeGenerator {
 
     private final EntityDef entityDef;
     private String parentClassName;
-    private List<Attribute> interfaceAttributes;
-    private List<Attribute> classAttributes;
-    private List<Attribute> nonInheritedAttributes;
+    private SortedSet<Attribute<?>> interfaceAttributes;
+    private SortedSet<Attribute<?>> classAttributes;
+    private SortedSet<Attribute<?>> nonInheritedAttributes;
     private List<AssetGenerator> originalSuperTypes = null;
     private List<AssetGenerator> fullSubTypes = null;
     private List<String> originalSubTypes = null;
@@ -133,26 +130,26 @@ public class AssetGenerator extends TypeGenerator {
         } else {
             allAttributes = cache.getAllNonAssetAttributesForType(getOriginalName());
         }
-        nonInheritedAttributes = new ArrayList<>();
+        nonInheritedAttributes = new TreeSet<>();
         for (AttributeDef attributeDef :
                 cache.getEntityDefCache().get(getOriginalName()).getAttributeDefs()) {
-            Attribute attribute = new Attribute(className, attributeDef, cfg);
+            Attribute<?> attribute = new Attribute<>(className, attributeDef, cfg);
             if (!attribute.getType().getName().equals("Internal")) {
                 nonInheritedAttributes.add(attribute);
                 checkAndAddMapContainer(attribute);
             }
         }
-        classAttributes = new ArrayList<>();
+        classAttributes = new TreeSet<>();
         for (AttributeDef attributeDef : allAttributes) {
-            Attribute attribute = new Attribute(className, attributeDef, cfg);
+            Attribute<?> attribute = new Attribute<>(className, attributeDef, cfg);
             if (!attribute.getType().getName().equals("Internal")) {
                 classAttributes.add(attribute);
                 checkAndAddMapContainer(attribute);
             }
         }
-        interfaceAttributes = new ArrayList<>();
+        interfaceAttributes = new TreeSet<>();
         for (AttributeDef attributeDef : cache.getAllAttributesForType(getOriginalName())) {
-            Attribute attribute = new Attribute(className, attributeDef, cfg);
+            Attribute<?> attribute = new Attribute<>(className, attributeDef, cfg);
             if (!attribute.getType().getName().equals("Internal")) {
                 interfaceAttributes.add(attribute);
                 checkAndAddMapContainer(attribute);
@@ -171,7 +168,7 @@ public class AssetGenerator extends TypeGenerator {
         for (RelationshipAttributeDef relationshipAttributeDef :
                 cache.getEntityDefCache().get(getOriginalName()).getRelationshipAttributeDefs()) {
             if (uniqueRelationships.contains(relationshipAttributeDef.getName())) {
-                Attribute attribute = new Attribute(className, relationshipAttributeDef, cfg);
+                Attribute<?> attribute = new Attribute<>(className, relationshipAttributeDef, cfg);
                 if (!attribute.getType().getName().equals("Internal")) {
                     nonInheritedAttributes.add(attribute);
                     checkAndAddMapContainer(attribute);
@@ -179,14 +176,14 @@ public class AssetGenerator extends TypeGenerator {
             }
         }
         for (RelationshipAttributeDef relationshipAttributeDef : allRelationships) {
-            Attribute attribute = new Attribute(className, relationshipAttributeDef, cfg);
+            Attribute<?> attribute = new Attribute<>(className, relationshipAttributeDef, cfg);
             if (!attribute.getType().getName().equals("Internal")) {
                 classAttributes.add(attribute);
                 checkAndAddMapContainer(attribute);
             }
         }
         for (RelationshipAttributeDef relationshipAttributeDef : cache.getAllRelationshipsForType(getOriginalName())) {
-            Attribute attribute = new Attribute(className, relationshipAttributeDef, cfg);
+            Attribute<?> attribute = new Attribute<>(className, relationshipAttributeDef, cfg);
             if (!attribute.getType().getName().equals("Internal")) {
                 interfaceAttributes.add(attribute);
                 checkAndAddMapContainer(attribute);
@@ -194,7 +191,7 @@ public class AssetGenerator extends TypeGenerator {
         }
     }
 
-    private void checkAndAddMapContainer(Attribute attribute) {
+    private void checkAndAddMapContainer(Attribute<?> attribute) {
         if (attribute.getType().getContainer() != null
                 && attribute.getType().getContainer().contains("Map")) {
             if (mapContainers == null) {
@@ -205,7 +202,13 @@ public class AssetGenerator extends TypeGenerator {
     }
 
     @Getter
-    public static class Attribute extends AttributeGenerator {
+    public static class Attribute<T extends Attribute<?>> extends AttributeGenerator implements Comparable<T> {
+
+        // Sort attribute definitions in a set based purely on their name (two attributes
+        // in the same set with the same name should be a conflict / duplicate)
+        private static final Comparator<String> stringComparator = Comparator.nullsFirst(String::compareTo);
+        private static final Comparator<Attribute<?>> attributeComparator =
+                Comparator.comparing(Attribute::getRenamed, stringComparator);
 
         // Override these properties that would normally be SortedSet<> with List<>,
         // as ordering is crucial to their proper operation.
@@ -245,6 +248,13 @@ public class AssetGenerator extends TypeGenerator {
                 return cfg.resolveSingular(getOriginalName());
             }
             return null;
+        }
+
+        /** {@inheritDoc} */
+        @Override
+        @SuppressWarnings("rawtypes")
+        public int compareTo(Attribute o) {
+            return attributeComparator.compare(this, o);
         }
     }
 }

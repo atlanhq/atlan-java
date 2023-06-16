@@ -39,6 +39,11 @@ public class DbtMetric extends Asset
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<IAsset> assets;
+
+    /** TBC */
+    @Attribute
     String dbtAccountName;
 
     /** TBC */
@@ -92,7 +97,16 @@ public class DbtMetric extends Asset
     /** TBC */
     @Attribute
     @Singular
+    SortedSet<IColumn> dbtMetricFilterColumns;
+
+    /** TBC */
+    @Attribute
+    @Singular
     List<DbtMetricFilter> dbtMetricFilters;
+
+    /** TBC */
+    @Attribute
+    IDbtModel dbtModel;
 
     /** TBC */
     @Attribute
@@ -117,6 +131,16 @@ public class DbtMetric extends Asset
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IColumn> metricDimensionColumns;
+
+    /** TBC */
+    @Attribute
     String metricFilters;
 
     /** TBC */
@@ -130,35 +154,11 @@ public class DbtMetric extends Asset
 
     /** TBC */
     @Attribute
-    String metricType;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IAsset> assets;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IColumn> dbtMetricFilterColumns;
-
-    /** TBC */
-    @Attribute
-    IDbtModel dbtModel;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IColumn> metricDimensionColumns;
-
-    /** TBC */
-    @Attribute
     IColumn metricTimestampColumn;
+
+    /** TBC */
+    @Attribute
+    String metricType;
 
     /** TBC */
     @Attribute

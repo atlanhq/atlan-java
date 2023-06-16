@@ -27,9 +27,6 @@ import javax.annotation.processing.Generated;
 public interface ISalesforceField {
 
     /** TBC */
-    Boolean getHasLineage();
-
-    /** TBC */
     SortedSet<String> getAdminGroups();
 
     /** TBC */
@@ -213,6 +210,9 @@ public interface ISalesforceField {
     SortedSet<String> getAssetTags();
 
     /** TBC */
+    SortedSet<IGlossaryTerm> getAssignedTerms();
+
+    /** TBC */
     CertificateStatus getCertificateStatus();
 
     /** TBC */
@@ -249,10 +249,19 @@ public interface ISalesforceField {
     String getDisplayName();
 
     /** TBC */
+    SortedSet<IFile> getFiles();
+
+    /** TBC */
     String getFormula();
 
     /** TBC */
+    Boolean getHasLineage();
+
+    /** TBC */
     String getInlineHelpText();
+
+    /** TBC */
+    SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
     Boolean getIsCalculated();
@@ -291,13 +300,31 @@ public interface ISalesforceField {
     String getLastSyncWorkflowName();
 
     /** TBC */
+    SortedSet<ILink> getLinks();
+
+    /** TBC */
+    SortedSet<ISalesforceObject> getLookupObjects();
+
+    /** TBC */
     Long getMaxLength();
+
+    /** TBC */
+    SortedSet<IMCIncident> getMcIncidents();
+
+    /** TBC */
+    SortedSet<IMCMonitor> getMcMonitors();
+
+    /** TBC */
+    SortedSet<IMetric> getMetrics();
 
     /** TBC */
     String getName();
 
     /** Number of digits allowed to the right of the decimal point. */
     Double getNumericScale();
+
+    /** TBC */
+    ISalesforceObject getObject();
 
     /** TBC */
     String getObjectQualifiedName();
@@ -307,6 +334,9 @@ public interface ISalesforceField {
 
     /** TBC */
     String getOrganizationQualifiedName();
+
+    /** TBC */
+    SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
     SortedSet<String> getOwnerGroups();
@@ -325,6 +355,9 @@ public interface ISalesforceField {
 
     /** TBC */
     String getQualifiedName();
+
+    /** TBC */
+    IReadme getReadme();
 
     /** TBC */
     String getSampleDataUrl();
@@ -348,10 +381,10 @@ public interface ISalesforceField {
     String getSourceOwners();
 
     /** TBC */
-    SortedSet<String> getSourceQueryComputeCosts();
+    List<PopularityInsights> getSourceQueryComputeCostRecords();
 
     /** TBC */
-    List<PopularityInsights> getSourceQueryComputeCostRecords();
+    SortedSet<String> getSourceQueryComputeCosts();
 
     /** TBC */
     Long getSourceReadCount();
@@ -366,19 +399,19 @@ public interface ISalesforceField {
     Double getSourceReadQueryCost();
 
     /** TBC */
-    SortedSet<String> getSourceReadRecentUsers();
+    List<PopularityInsights> getSourceReadRecentUserRecords();
 
     /** TBC */
-    List<PopularityInsights> getSourceReadRecentUserRecords();
+    SortedSet<String> getSourceReadRecentUsers();
 
     /** TBC */
     List<PopularityInsights> getSourceReadSlowQueryRecords();
 
     /** TBC */
-    SortedSet<String> getSourceReadTopUsers();
+    List<PopularityInsights> getSourceReadTopUserRecords();
 
     /** TBC */
-    List<PopularityInsights> getSourceReadTopUserRecords();
+    SortedSet<String> getSourceReadTopUsers();
 
     /** TBC */
     Long getSourceReadUserCount();
@@ -415,39 +448,6 @@ public interface ISalesforceField {
 
     /** TBC */
     SortedSet<String> getViewerUsers();
-
-    /** TBC */
-    SortedSet<IFile> getFiles();
-
-    /** TBC */
-    SortedSet<ILineageProcess> getInputToProcesses();
-
-    /** TBC */
-    SortedSet<ILink> getLinks();
-
-    /** TBC */
-    SortedSet<ISalesforceObject> getLookupObjects();
-
-    /** TBC */
-    SortedSet<IMCIncident> getMcIncidents();
-
-    /** TBC */
-    SortedSet<IMCMonitor> getMcMonitors();
-
-    /** TBC */
-    SortedSet<IGlossaryTerm> getAssignedTerms();
-
-    /** TBC */
-    SortedSet<IMetric> getMetrics();
-
-    /** TBC */
-    ISalesforceObject getObject();
-
-    /** TBC */
-    SortedSet<ILineageProcess> getOutputFromProcesses();
-
-    /** TBC */
-    IReadme getReadme();
 
     /** Name of the type that defines the asset. */
     String getTypeName();

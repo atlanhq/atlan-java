@@ -40,6 +40,16 @@ public class MicroStrategyReport extends Asset
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** Attributes related to this report. */
+    @Attribute
+    @Singular
+    SortedSet<IMicroStrategyAttribute> microStrategyAttributes;
+
+    /** TBC */
+    @Attribute
     Long microStrategyCertifiedAt;
 
     /** TBC */
@@ -65,6 +75,15 @@ public class MicroStrategyReport extends Asset
     @Singular("putMicroStrategyLocation")
     List<Map<String, String>> microStrategyLocation;
 
+    /** Metrics used within the report. */
+    @Attribute
+    @Singular
+    SortedSet<IMicroStrategyMetric> microStrategyMetrics;
+
+    /** Project containing the report. */
+    @Attribute
+    IMicroStrategyProject microStrategyProject;
+
     /** TBC */
     @Attribute
     String microStrategyProjectName;
@@ -86,25 +105,6 @@ public class MicroStrategyReport extends Asset
     /** Whether the report is a Grid or Chart. */
     @Attribute
     String microStrategyReportType;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** Attributes related to this report. */
-    @Attribute
-    @Singular
-    SortedSet<IMicroStrategyAttribute> microStrategyAttributes;
-
-    /** Metrics used within the report. */
-    @Attribute
-    @Singular
-    SortedSet<IMicroStrategyMetric> microStrategyMetrics;
-
-    /** Project containing the report. */
-    @Attribute
-    IMicroStrategyProject microStrategyProject;
 
     /** TBC */
     @Attribute

@@ -29,9 +29,6 @@ import javax.annotation.processing.Generated;
 public interface IColumn {
 
     /** TBC */
-    Boolean getHasLineage();
-
-    /** TBC */
     SortedSet<String> getAdminGroups();
 
     /** TBC */
@@ -212,6 +209,9 @@ public interface IColumn {
     SortedSet<String> getAssetTags();
 
     /** TBC */
+    SortedSet<IGlossaryTerm> getAssignedTerms();
+
+    /** TBC */
     CertificateStatus getCertificateStatus();
 
     /** TBC */
@@ -228,6 +228,9 @@ public interface IColumn {
 
     /** Average length of values in a string column. */
     Double getColumnAverageLength();
+
+    /** TBC */
+    SortedSet<IDbtModelColumn> getColumnDbtModelColumns();
 
     /** Level of nesting, used for STRUCT/NESTED columns */
     Integer getColumnDepthLevel();
@@ -310,6 +313,9 @@ public interface IColumn {
     /** TBC */
     AtlanConnectorType getConnectorType();
 
+    /** TBC */
+    SortedSet<IMetric> getDataQualityMetricDimensions();
+
     /** Data type of values in the column. */
     String getDataType();
 
@@ -320,7 +326,19 @@ public interface IColumn {
     String getDatabaseQualifiedName();
 
     /** TBC */
+    SortedSet<IDbtMetric> getDbtMetrics();
+
+    /** TBC */
+    SortedSet<IDbtModelColumn> getDbtModelColumns();
+
+    /** TBC */
+    SortedSet<IDbtModel> getDbtModels();
+
+    /** TBC */
     String getDbtQualifiedName();
+
+    /** TBC */
+    SortedSet<IDbtSource> getDbtSources();
 
     /** TBC */
     String getDefaultValue();
@@ -330,6 +348,21 @@ public interface IColumn {
 
     /** TBC */
     String getDisplayName();
+
+    /** TBC */
+    SortedSet<IFile> getFiles();
+
+    /** Column this column refers to as a foreign key. */
+    IColumn getForeignKeyFrom();
+
+    /** All the columns that refer to this column as a foreign key. */
+    SortedSet<IColumn> getForeignKeyTo();
+
+    /** TBC */
+    Boolean getHasLineage();
+
+    /** TBC */
+    SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
     Boolean getIsClustered();
@@ -382,14 +415,35 @@ public interface IColumn {
     /** TBC */
     String getLastSyncWorkflowName();
 
+    /** TBC */
+    SortedSet<ILink> getLinks();
+
+    /** Materialized view in which this column exists, or empty if the column instead exists in a table or view. */
+    IMaterializedView getMaterializedView();
+
     /** Maximum length of a value in this column. */
     Long getMaxLength();
+
+    /** TBC */
+    SortedSet<IMCIncident> getMcIncidents();
+
+    /** TBC */
+    SortedSet<IMCMonitor> getMcMonitors();
+
+    /** TBC */
+    SortedSet<IMetric> getMetricTimestamps();
+
+    /** TBC */
+    SortedSet<IMetric> getMetrics();
 
     /** TBC */
     String getName();
 
     /** TBC */
     Integer getNestedColumnCount();
+
+    /** TBC */
+    SortedSet<IColumn> getNestedColumns();
 
     /** Number of digits allowed to the right of the decimal point. */
     Double getNumericScale();
@@ -398,10 +452,16 @@ public interface IColumn {
     Integer getOrder();
 
     /** TBC */
+    SortedSet<ILineageProcess> getOutputFromProcesses();
+
+    /** TBC */
     SortedSet<String> getOwnerGroups();
 
     /** TBC */
     SortedSet<String> getOwnerUsers();
+
+    /** TBC */
+    IColumn getParentColumn();
 
     /** TBC */
     String getParentColumnName();
@@ -427,6 +487,9 @@ public interface IColumn {
     /** TBC */
     String getQualifiedName();
 
+    /** Queries that involve this column. */
+    SortedSet<IAtlanQuery> getQueries();
+
     /** TBC */
     Long getQueryCount();
 
@@ -441,6 +504,9 @@ public interface IColumn {
 
     /** TBC */
     String getRawDataTypeDefinition();
+
+    /** TBC */
+    IReadme getReadme();
 
     /** TBC */
     String getSampleDataUrl();
@@ -470,10 +536,10 @@ public interface IColumn {
     String getSourceOwners();
 
     /** TBC */
-    SortedSet<String> getSourceQueryComputeCosts();
+    List<PopularityInsights> getSourceQueryComputeCostRecords();
 
     /** TBC */
-    List<PopularityInsights> getSourceQueryComputeCostRecords();
+    SortedSet<String> getSourceQueryComputeCosts();
 
     /** TBC */
     Long getSourceReadCount();
@@ -488,19 +554,19 @@ public interface IColumn {
     Double getSourceReadQueryCost();
 
     /** TBC */
-    SortedSet<String> getSourceReadRecentUsers();
+    List<PopularityInsights> getSourceReadRecentUserRecords();
 
     /** TBC */
-    List<PopularityInsights> getSourceReadRecentUserRecords();
+    SortedSet<String> getSourceReadRecentUsers();
 
     /** TBC */
     List<PopularityInsights> getSourceReadSlowQueryRecords();
 
     /** TBC */
-    SortedSet<String> getSourceReadTopUsers();
+    List<PopularityInsights> getSourceReadTopUserRecords();
 
     /** TBC */
-    List<PopularityInsights> getSourceReadTopUserRecords();
+    SortedSet<String> getSourceReadTopUsers();
 
     /** TBC */
     Long getSourceReadUserCount();
@@ -518,6 +584,12 @@ public interface IColumn {
     String getSourceUpdatedBy();
 
     /** TBC */
+    SortedSet<IDbtSource> getSqlDBTSources();
+
+    /** TBC */
+    SortedSet<IDbtModel> getSqlDbtModels();
+
+    /** TBC */
     SortedSet<String> getStarredBy();
 
     /** TBC */
@@ -526,8 +598,14 @@ public interface IColumn {
     /** TBC */
     String getSubType();
 
+    /** Table in which this column exists, or empty if the column instead exists in a view or materialized view. */
+    ITable getTable();
+
     /** TBC */
     String getTableName();
+
+    /** TBC */
+    ITablePartition getTablePartition();
 
     /** TBC */
     String getTableQualifiedName();
@@ -540,6 +618,9 @@ public interface IColumn {
 
     /** TBC */
     Map<String, String> getValidations();
+
+    /** View in which this column exists, or empty if the column instead exists in a table or materialized view. */
+    IView getView();
 
     /** TBC */
     String getViewName();
@@ -555,87 +636,6 @@ public interface IColumn {
 
     /** TBC */
     SortedSet<String> getViewerUsers();
-
-    /** TBC */
-    SortedSet<IDbtModelColumn> getColumnDbtModelColumns();
-
-    /** TBC */
-    SortedSet<IMetric> getDataQualityMetricDimensions();
-
-    /** TBC */
-    SortedSet<IDbtMetric> getDbtMetrics();
-
-    /** TBC */
-    SortedSet<IDbtModelColumn> getDbtModelColumns();
-
-    /** TBC */
-    SortedSet<IDbtModel> getDbtModels();
-
-    /** TBC */
-    SortedSet<IDbtSource> getDbtSources();
-
-    /** TBC */
-    SortedSet<IFile> getFiles();
-
-    /** Column this column refers to as a foreign key. */
-    IColumn getForeignKeyFrom();
-
-    /** All the columns that refer to this column as a foreign key. */
-    SortedSet<IColumn> getForeignKeyTo();
-
-    /** TBC */
-    SortedSet<ILineageProcess> getInputToProcesses();
-
-    /** TBC */
-    SortedSet<ILink> getLinks();
-
-    /** Materialized view in which this column exists, or empty if the column instead exists in a table or view. */
-    IMaterializedView getMaterializedView();
-
-    /** TBC */
-    SortedSet<IMCIncident> getMcIncidents();
-
-    /** TBC */
-    SortedSet<IMCMonitor> getMcMonitors();
-
-    /** TBC */
-    SortedSet<IGlossaryTerm> getAssignedTerms();
-
-    /** TBC */
-    SortedSet<IMetric> getMetricTimestamps();
-
-    /** TBC */
-    SortedSet<IMetric> getMetrics();
-
-    /** TBC */
-    SortedSet<IColumn> getNestedColumns();
-
-    /** TBC */
-    SortedSet<ILineageProcess> getOutputFromProcesses();
-
-    /** TBC */
-    IColumn getParentColumn();
-
-    /** Queries that involve this column. */
-    SortedSet<IAtlanQuery> getQueries();
-
-    /** TBC */
-    IReadme getReadme();
-
-    /** TBC */
-    SortedSet<IDbtSource> getSqlDBTSources();
-
-    /** TBC */
-    SortedSet<IDbtModel> getSqlDbtModels();
-
-    /** Table in which this column exists, or empty if the column instead exists in a view or materialized view. */
-    ITable getTable();
-
-    /** TBC */
-    ITablePartition getTablePartition();
-
-    /** View in which this column exists, or empty if the column instead exists in a table or materialized view. */
-    IView getView();
 
     /** Name of the type that defines the asset. */
     String getTypeName();

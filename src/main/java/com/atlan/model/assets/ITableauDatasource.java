@@ -27,9 +27,6 @@ import javax.annotation.processing.Generated;
 public interface ITableauDatasource {
 
     /** TBC */
-    Boolean getHasLineage();
-
-    /** TBC */
     SortedSet<String> getAdminGroups();
 
     /** TBC */
@@ -210,6 +207,9 @@ public interface ITableauDatasource {
     SortedSet<String> getAssetTags();
 
     /** TBC */
+    SortedSet<IGlossaryTerm> getAssignedTerms();
+
+    /** TBC */
     CertificateStatus getCertificateStatus();
 
     /** TBC */
@@ -249,7 +249,19 @@ public interface ITableauDatasource {
     String getDisplayName();
 
     /** TBC */
+    SortedSet<ITableauCalculatedField> getFields();
+
+    /** TBC */
+    SortedSet<IFile> getFiles();
+
+    /** TBC */
     Boolean getHasExtracts();
+
+    /** TBC */
+    Boolean getHasLineage();
+
+    /** TBC */
+    SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
     Boolean getIsCertified();
@@ -276,7 +288,22 @@ public interface ITableauDatasource {
     String getLastSyncWorkflowName();
 
     /** TBC */
+    SortedSet<ILink> getLinks();
+
+    /** TBC */
+    SortedSet<IMCIncident> getMcIncidents();
+
+    /** TBC */
+    SortedSet<IMCMonitor> getMcMonitors();
+
+    /** TBC */
+    SortedSet<IMetric> getMetrics();
+
+    /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
     SortedSet<String> getOwnerGroups();
@@ -288,6 +315,9 @@ public interface ITableauDatasource {
     Double getPopularityScore();
 
     /** TBC */
+    ITableauProject getProject();
+
+    /** TBC */
     List<Map<String, String>> getProjectHierarchy();
 
     /** TBC */
@@ -295,6 +325,9 @@ public interface ITableauDatasource {
 
     /** TBC */
     String getQualifiedName();
+
+    /** TBC */
+    IReadme getReadme();
 
     /** TBC */
     String getSampleDataUrl();
@@ -321,10 +354,10 @@ public interface ITableauDatasource {
     String getSourceOwners();
 
     /** TBC */
-    SortedSet<String> getSourceQueryComputeCosts();
+    List<PopularityInsights> getSourceQueryComputeCostRecords();
 
     /** TBC */
-    List<PopularityInsights> getSourceQueryComputeCostRecords();
+    SortedSet<String> getSourceQueryComputeCosts();
 
     /** TBC */
     Long getSourceReadCount();
@@ -339,19 +372,19 @@ public interface ITableauDatasource {
     Double getSourceReadQueryCost();
 
     /** TBC */
-    SortedSet<String> getSourceReadRecentUsers();
+    List<PopularityInsights> getSourceReadRecentUserRecords();
 
     /** TBC */
-    List<PopularityInsights> getSourceReadRecentUserRecords();
+    SortedSet<String> getSourceReadRecentUsers();
 
     /** TBC */
     List<PopularityInsights> getSourceReadSlowQueryRecords();
 
     /** TBC */
-    SortedSet<String> getSourceReadTopUsers();
+    List<PopularityInsights> getSourceReadTopUserRecords();
 
     /** TBC */
-    List<PopularityInsights> getSourceReadTopUserRecords();
+    SortedSet<String> getSourceReadTopUsers();
 
     /** TBC */
     Long getSourceReadUserCount();
@@ -399,43 +432,10 @@ public interface ITableauDatasource {
     SortedSet<String> getViewerUsers();
 
     /** TBC */
-    String getWorkbookQualifiedName();
-
-    /** TBC */
-    SortedSet<ITableauCalculatedField> getFields();
-
-    /** TBC */
-    SortedSet<IFile> getFiles();
-
-    /** TBC */
-    SortedSet<ILineageProcess> getInputToProcesses();
-
-    /** TBC */
-    SortedSet<ILink> getLinks();
-
-    /** TBC */
-    SortedSet<IMCIncident> getMcIncidents();
-
-    /** TBC */
-    SortedSet<IMCMonitor> getMcMonitors();
-
-    /** TBC */
-    SortedSet<IGlossaryTerm> getAssignedTerms();
-
-    /** TBC */
-    SortedSet<IMetric> getMetrics();
-
-    /** TBC */
-    SortedSet<ILineageProcess> getOutputFromProcesses();
-
-    /** TBC */
-    ITableauProject getProject();
-
-    /** TBC */
-    IReadme getReadme();
-
-    /** TBC */
     ITableauWorkbook getWorkbook();
+
+    /** TBC */
+    String getWorkbookQualifiedName();
 
     /** Name of the type that defines the asset. */
     String getTypeName();

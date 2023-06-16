@@ -45,10 +45,6 @@ public class BIProcess extends Asset implements IBIProcess, ILineageProcess, IAs
 
     /** TBC */
     @Attribute
-    String sql;
-
-    /** TBC */
-    @Attribute
     @Singular
     SortedSet<IColumnProcess> columnProcesses;
 
@@ -61,6 +57,10 @@ public class BIProcess extends Asset implements IBIProcess, ILineageProcess, IAs
     @Attribute
     @Singular
     SortedSet<ICatalog> outputs;
+
+    /** TBC */
+    @Attribute
+    String sql;
 
     /**
      * Reference to a BIProcess by GUID.

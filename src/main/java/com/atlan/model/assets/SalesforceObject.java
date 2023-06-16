@@ -44,6 +44,16 @@ public class SalesforceObject extends Asset
     @Attribute
     Long fieldCount;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISalesforceField> fields;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
     /** Whether the object is a custom object (true) or not (false). */
     @Attribute
     Boolean isCustom;
@@ -58,26 +68,16 @@ public class SalesforceObject extends Asset
 
     /** TBC */
     @Attribute
-    String organizationQualifiedName;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ISalesforceField> fields;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
     @Singular
     SortedSet<ISalesforceField> lookupFields;
 
     /** TBC */
     @Attribute
     ISalesforceOrganization organization;
+
+    /** TBC */
+    @Attribute
+    String organizationQualifiedName;
 
     /** TBC */
     @Attribute

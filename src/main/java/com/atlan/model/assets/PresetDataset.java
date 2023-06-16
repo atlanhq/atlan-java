@@ -39,6 +39,20 @@ public class PresetDataset extends Asset implements IPresetDataset, IPreset, IBI
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** Collection in which the dataset exists. */
+    @Attribute
+    IPresetDashboard presetDashboard;
+
+    /** TBC */
+    @Attribute
     Long presetDashboardId;
 
     /** TBC */
@@ -64,20 +78,6 @@ public class PresetDataset extends Asset implements IPresetDataset, IPreset, IBI
     /** TBC */
     @Attribute
     String presetWorkspaceQualifiedName;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> outputFromProcesses;
-
-    /** Collection in which the dataset exists. */
-    @Attribute
-    IPresetDashboard presetDashboard;
 
     /**
      * Reference to a PresetDataset by GUID.

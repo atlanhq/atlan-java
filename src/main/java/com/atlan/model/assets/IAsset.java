@@ -26,9 +26,6 @@ import javax.annotation.processing.Generated;
 @JsonDeserialize(using = AssetDeserializer.class)
 public interface IAsset {
 
-    /** Indicates whether this asset has lineage (true) or not. */
-    Boolean getHasLineage();
-
     /** List of groups who administer the asset. (This is only used for Connection assets.) */
     SortedSet<String> getAdminGroups();
 
@@ -209,6 +206,9 @@ public interface IAsset {
     /** TBC */
     SortedSet<String> getAssetTags();
 
+    /** TBC */
+    SortedSet<IGlossaryTerm> getAssignedTerms();
+
     /** Status of the asset's certification. */
     CertificateStatus getCertificateStatus();
 
@@ -240,6 +240,12 @@ public interface IAsset {
     String getDisplayName();
 
     /** TBC */
+    SortedSet<IFile> getFiles();
+
+    /** Indicates whether this asset has lineage (true) or not. */
+    Boolean getHasLineage();
+
+    /** TBC */
     Boolean getIsDiscoverable();
 
     /** TBC */
@@ -257,6 +263,18 @@ public interface IAsset {
     /** Name of the crawler that last synchronized this asset. */
     String getLastSyncWorkflowName();
 
+    /** Resources that are linked to this asset. */
+    SortedSet<ILink> getLinks();
+
+    /** TBC */
+    SortedSet<IMCIncident> getMcIncidents();
+
+    /** TBC */
+    SortedSet<IMCMonitor> getMcMonitors();
+
+    /** TBC */
+    SortedSet<IMetric> getMetrics();
+
     /** Human-readable name of the asset. */
     String getName();
 
@@ -271,6 +289,9 @@ public interface IAsset {
 
     /** TBC */
     String getQualifiedName();
+
+    /** README that is linked to this asset. */
+    IReadme getReadme();
 
     /** TBC */
     String getSampleDataUrl();
@@ -293,11 +314,11 @@ public interface IAsset {
     /** TBC */
     String getSourceOwners();
 
-    /** List of most expensive warehouse names. */
-    SortedSet<String> getSourceQueryComputeCosts();
-
     /** List of most expensive warehouses with extra insights. */
     List<PopularityInsights> getSourceQueryComputeCostRecords();
+
+    /** List of most expensive warehouse names. */
+    SortedSet<String> getSourceQueryComputeCosts();
 
     /** Total count of all read operations at source. */
     Long getSourceReadCount();
@@ -311,20 +332,20 @@ public interface IAsset {
     /** Total cost of read queries at source. */
     Double getSourceReadQueryCost();
 
-    /** List of usernames of the most recent users who read the asset. */
-    SortedSet<String> getSourceReadRecentUsers();
-
     /** List of usernames with extra insights for the most recent users who read the asset. */
     List<PopularityInsights> getSourceReadRecentUserRecords();
+
+    /** List of usernames of the most recent users who read the asset. */
+    SortedSet<String> getSourceReadRecentUsers();
 
     /** List of the slowest queries that accessed this asset. */
     List<PopularityInsights> getSourceReadSlowQueryRecords();
 
-    /** List of usernames of the users who read the asset the most. */
-    SortedSet<String> getSourceReadTopUsers();
-
     /** List of usernames with extra insights for the users who read the asset the most. */
     List<PopularityInsights> getSourceReadTopUserRecords();
+
+    /** List of usernames of the users who read the asset the most. */
+    SortedSet<String> getSourceReadTopUsers();
 
     /** Total number of unique users that read data from asset. */
     Long getSourceReadUserCount();
@@ -361,27 +382,6 @@ public interface IAsset {
 
     /** TBC */
     SortedSet<String> getViewerUsers();
-
-    /** TBC */
-    SortedSet<IFile> getFiles();
-
-    /** Resources that are linked to this asset. */
-    SortedSet<ILink> getLinks();
-
-    /** TBC */
-    SortedSet<IMCIncident> getMcIncidents();
-
-    /** TBC */
-    SortedSet<IMCMonitor> getMcMonitors();
-
-    /** TBC */
-    SortedSet<IGlossaryTerm> getAssignedTerms();
-
-    /** TBC */
-    SortedSet<IMetric> getMetrics();
-
-    /** README that is linked to this asset. */
-    IReadme getReadme();
 
     /** Name of the type that defines the asset. */
     String getTypeName();

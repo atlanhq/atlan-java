@@ -40,6 +40,16 @@ public class MicroStrategyProject extends Asset
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** Attributes contained within the project. */
+    @Attribute
+    @Singular
+    SortedSet<IMicroStrategyAttribute> microStrategyAttributes;
+
+    /** TBC */
+    @Attribute
     Long microStrategyCertifiedAt;
 
     /** TBC */
@@ -55,43 +65,6 @@ public class MicroStrategyProject extends Asset
     @Attribute
     @Singular
     SortedSet<String> microStrategyCubeQualifiedNames;
-
-    /** TBC */
-    @Attribute
-    Boolean microStrategyIsCertified;
-
-    /** TBC */
-    @Attribute
-    @Singular("putMicroStrategyLocation")
-    List<Map<String, String>> microStrategyLocation;
-
-    /** TBC */
-    @Attribute
-    String microStrategyProjectName;
-
-    /** TBC */
-    @Attribute
-    String microStrategyProjectQualifiedName;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<String> microStrategyReportNames;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<String> microStrategyReportQualifiedNames;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** Attributes contained within the project. */
-    @Attribute
-    @Singular
-    SortedSet<IMicroStrategyAttribute> microStrategyAttributes;
 
     /** Cubes contained within the project. */
     @Attribute
@@ -113,10 +86,37 @@ public class MicroStrategyProject extends Asset
     @Singular
     SortedSet<IMicroStrategyFact> microStrategyFacts;
 
+    /** TBC */
+    @Attribute
+    Boolean microStrategyIsCertified;
+
+    /** TBC */
+    @Attribute
+    @Singular("putMicroStrategyLocation")
+    List<Map<String, String>> microStrategyLocation;
+
     /** Metrics contained within the project. */
     @Attribute
     @Singular
     SortedSet<IMicroStrategyMetric> microStrategyMetrics;
+
+    /** TBC */
+    @Attribute
+    String microStrategyProjectName;
+
+    /** TBC */
+    @Attribute
+    String microStrategyProjectQualifiedName;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<String> microStrategyReportNames;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<String> microStrategyReportQualifiedNames;
 
     /** Reports contained within the project. */
     @Attribute

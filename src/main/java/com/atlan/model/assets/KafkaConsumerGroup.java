@@ -39,6 +39,11 @@ public class KafkaConsumerGroup extends Asset
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
     Long kafkaConsumerGroupMemberCount;
 
     /** TBC */
@@ -55,11 +60,6 @@ public class KafkaConsumerGroup extends Asset
     @Attribute
     @Singular
     SortedSet<String> kafkaTopicQualifiedNames;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
 
     /** Topics for this consumer group. */
     @Attribute

@@ -28,14 +28,6 @@ public abstract class Thoughtspot extends Asset implements IThoughtspot, IBI, IC
 
     /** TBC */
     @Attribute
-    String thoughtspotChartType;
-
-    /** TBC */
-    @Attribute
-    String thoughtspotQuestionText;
-
-    /** TBC */
-    @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
@@ -43,4 +35,12 @@ public abstract class Thoughtspot extends Asset implements IThoughtspot, IBI, IC
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    String thoughtspotChartType;
+
+    /** TBC */
+    @Attribute
+    String thoughtspotQuestionText;
 }

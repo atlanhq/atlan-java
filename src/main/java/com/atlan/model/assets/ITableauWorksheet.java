@@ -27,9 +27,6 @@ import javax.annotation.processing.Generated;
 public interface ITableauWorksheet {
 
     /** TBC */
-    Boolean getHasLineage();
-
-    /** TBC */
     SortedSet<String> getAdminGroups();
 
     /** TBC */
@@ -210,6 +207,12 @@ public interface ITableauWorksheet {
     SortedSet<String> getAssetTags();
 
     /** TBC */
+    SortedSet<IGlossaryTerm> getAssignedTerms();
+
+    /** TBC */
+    SortedSet<ITableauCalculatedField> getCalculatedFields();
+
+    /** TBC */
     CertificateStatus getCertificateStatus();
 
     /** TBC */
@@ -231,6 +234,12 @@ public interface ITableauWorksheet {
     AtlanConnectorType getConnectorType();
 
     /** TBC */
+    SortedSet<ITableauDashboard> getDashboards();
+
+    /** TBC */
+    SortedSet<ITableauDatasourceField> getDatasourceFields();
+
+    /** TBC */
     String getDbtQualifiedName();
 
     /** TBC */
@@ -238,6 +247,15 @@ public interface ITableauWorksheet {
 
     /** TBC */
     String getDisplayName();
+
+    /** TBC */
+    SortedSet<IFile> getFiles();
+
+    /** TBC */
+    Boolean getHasLineage();
+
+    /** TBC */
+    SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
     Boolean getIsDiscoverable();
@@ -258,7 +276,22 @@ public interface ITableauWorksheet {
     String getLastSyncWorkflowName();
 
     /** TBC */
+    SortedSet<ILink> getLinks();
+
+    /** TBC */
+    SortedSet<IMCIncident> getMcIncidents();
+
+    /** TBC */
+    SortedSet<IMCMonitor> getMcMonitors();
+
+    /** TBC */
+    SortedSet<IMetric> getMetrics();
+
+    /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
     SortedSet<String> getOwnerGroups();
@@ -277,6 +310,9 @@ public interface ITableauWorksheet {
 
     /** TBC */
     String getQualifiedName();
+
+    /** TBC */
+    IReadme getReadme();
 
     /** TBC */
     String getSampleDataUrl();
@@ -303,10 +339,10 @@ public interface ITableauWorksheet {
     String getSourceOwners();
 
     /** TBC */
-    SortedSet<String> getSourceQueryComputeCosts();
+    List<PopularityInsights> getSourceQueryComputeCostRecords();
 
     /** TBC */
-    List<PopularityInsights> getSourceQueryComputeCostRecords();
+    SortedSet<String> getSourceQueryComputeCosts();
 
     /** TBC */
     Long getSourceReadCount();
@@ -321,19 +357,19 @@ public interface ITableauWorksheet {
     Double getSourceReadQueryCost();
 
     /** TBC */
-    SortedSet<String> getSourceReadRecentUsers();
+    List<PopularityInsights> getSourceReadRecentUserRecords();
 
     /** TBC */
-    List<PopularityInsights> getSourceReadRecentUserRecords();
+    SortedSet<String> getSourceReadRecentUsers();
 
     /** TBC */
     List<PopularityInsights> getSourceReadSlowQueryRecords();
 
     /** TBC */
-    SortedSet<String> getSourceReadTopUsers();
+    List<PopularityInsights> getSourceReadTopUserRecords();
 
     /** TBC */
-    List<PopularityInsights> getSourceReadTopUserRecords();
+    SortedSet<String> getSourceReadTopUsers();
 
     /** TBC */
     Long getSourceReadUserCount();
@@ -375,46 +411,10 @@ public interface ITableauWorksheet {
     SortedSet<String> getViewerUsers();
 
     /** TBC */
-    String getWorkbookQualifiedName();
-
-    /** TBC */
-    SortedSet<ITableauCalculatedField> getCalculatedFields();
-
-    /** TBC */
-    SortedSet<ITableauDashboard> getDashboards();
-
-    /** TBC */
-    SortedSet<ITableauDatasourceField> getDatasourceFields();
-
-    /** TBC */
-    SortedSet<IFile> getFiles();
-
-    /** TBC */
-    SortedSet<ILineageProcess> getInputToProcesses();
-
-    /** TBC */
-    SortedSet<ILink> getLinks();
-
-    /** TBC */
-    SortedSet<IMCIncident> getMcIncidents();
-
-    /** TBC */
-    SortedSet<IMCMonitor> getMcMonitors();
-
-    /** TBC */
-    SortedSet<IGlossaryTerm> getAssignedTerms();
-
-    /** TBC */
-    SortedSet<IMetric> getMetrics();
-
-    /** TBC */
-    SortedSet<ILineageProcess> getOutputFromProcesses();
-
-    /** TBC */
-    IReadme getReadme();
-
-    /** TBC */
     ITableauWorkbook getWorkbook();
+
+    /** TBC */
+    String getWorkbookQualifiedName();
 
     /** Name of the type that defines the asset. */
     String getTypeName();

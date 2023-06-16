@@ -38,14 +38,6 @@ public class ThoughtspotAnswer extends Asset
 
     /** TBC */
     @Attribute
-    String thoughtspotChartType;
-
-    /** TBC */
-    @Attribute
-    String thoughtspotQuestionText;
-
-    /** TBC */
-    @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
@@ -53,6 +45,14 @@ public class ThoughtspotAnswer extends Asset
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    String thoughtspotChartType;
+
+    /** TBC */
+    @Attribute
+    String thoughtspotQuestionText;
 
     /**
      * Reference to a ThoughtspotAnswer by GUID.

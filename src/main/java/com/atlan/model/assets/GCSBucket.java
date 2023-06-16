@@ -83,6 +83,11 @@ public class GCSBucket extends Asset
     @Attribute
     Long gcsObjectCount;
 
+    /** GCS objects within this bucket. */
+    @Attribute
+    @Singular
+    SortedSet<IGCSObject> gcsObjects;
+
     /** TBC */
     @Attribute
     Boolean gcsRequesterPays;
@@ -124,11 +129,6 @@ public class GCSBucket extends Asset
     @Attribute
     @Singular
     List<GoogleTag> googleTags;
-
-    /** GCS objects within this bucket. */
-    @Attribute
-    @Singular
-    SortedSet<IGCSObject> gcsObjects;
 
     /** TBC */
     @Attribute

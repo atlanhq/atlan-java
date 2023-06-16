@@ -38,7 +38,25 @@ public class PowerBITile extends Asset implements IPowerBITile, IPowerBI, IBI, I
 
     /** TBC */
     @Attribute
+    IPowerBIDashboard dashboard;
+
+    /** TBC */
+    @Attribute
     String dashboardQualifiedName;
+
+    /** TBC */
+    @Attribute
+    IPowerBIDataset dataset;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 
     /** TBC */
     @Attribute
@@ -58,29 +76,11 @@ public class PowerBITile extends Asset implements IPowerBITile, IPowerBI, IBI, I
 
     /** TBC */
     @Attribute
-    String workspaceQualifiedName;
-
-    /** TBC */
-    @Attribute
-    IPowerBIDashboard dashboard;
-
-    /** TBC */
-    @Attribute
-    IPowerBIDataset dataset;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> outputFromProcesses;
-
-    /** TBC */
-    @Attribute
     IPowerBIReport report;
+
+    /** TBC */
+    @Attribute
+    String workspaceQualifiedName;
 
     /**
      * Reference to a PowerBITile by GUID.

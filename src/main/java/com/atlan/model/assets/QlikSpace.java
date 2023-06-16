@@ -41,11 +41,31 @@ public class QlikSpace extends Asset implements IQlikSpace, IQlik, IBI, ICatalog
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
     String qlikAppId;
 
     /** TBC */
     @Attribute
     String qlikAppQualifiedName;
+
+    /** Apps contained within the space. */
+    @Attribute
+    @Singular
+    SortedSet<IQlikApp> qlikApps;
+
+    /** Datasets contained within the space. */
+    @Attribute
+    @Singular
+    SortedSet<IQlikDataset> qlikDatasets;
 
     /** TBC */
     @Attribute
@@ -74,26 +94,6 @@ public class QlikSpace extends Asset implements IQlikSpace, IQlik, IBI, ICatalog
     /** Type of space, for example: Private, Shared, etc. */
     @Attribute
     String qlikSpaceType;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> outputFromProcesses;
-
-    /** Apps contained within the space. */
-    @Attribute
-    @Singular
-    SortedSet<IQlikApp> qlikApps;
-
-    /** Datasets contained within the space. */
-    @Attribute
-    @Singular
-    SortedSet<IQlikDataset> qlikDatasets;
 
     /**
      * Reference to a QlikSpace by GUID.

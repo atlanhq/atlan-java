@@ -75,6 +75,21 @@ public class S3Bucket extends Asset
     @Singular
     List<AwsTag> awsTags;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** S3 objects within this bucket. */
+    @Attribute
+    @Singular
+    SortedSet<IS3Object> objects;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
     /** Whether versioning is enabled for the bucket. */
     @Attribute
     Boolean s3BucketVersioningEnabled;
@@ -90,21 +105,6 @@ public class S3Bucket extends Asset
     /** Number of objects within the bucket. */
     @Attribute
     Long s3ObjectCount;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** S3 objects within this bucket. */
-    @Attribute
-    @Singular
-    SortedSet<IS3Object> objects;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> outputFromProcesses;
 
     /**
      * Reference to a S3Bucket by GUID.

@@ -37,6 +37,16 @@ public class QlikDataset extends Asset implements IQlikDataset, IQlik, IBI, ICat
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
     String qlikAppId;
 
     /** TBC */
@@ -75,6 +85,10 @@ public class QlikDataset extends Asset implements IQlikDataset, IQlik, IBI, ICat
     @Attribute
     String qlikQRI;
 
+    /** Space in which the dataset exists. */
+    @Attribute
+    IQlikSpace qlikSpace;
+
     /** TBC */
     @Attribute
     String qlikSpaceId;
@@ -82,20 +96,6 @@ public class QlikDataset extends Asset implements IQlikDataset, IQlik, IBI, ICat
     /** TBC */
     @Attribute
     String qlikSpaceQualifiedName;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> outputFromProcesses;
-
-    /** Space in which the dataset exists. */
-    @Attribute
-    IQlikSpace qlikSpace;
 
     /**
      * Reference to a QlikDataset by GUID.

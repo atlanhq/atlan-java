@@ -32,6 +32,16 @@ public abstract class QuickSight extends Asset implements IQuickSight, IBI, ICat
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
     String quickSightId;
 
     /** TBC */
@@ -41,14 +51,4 @@ public abstract class QuickSight extends Asset implements IQuickSight, IBI, ICat
     /** TBC */
     @Attribute
     String quickSightSheetName;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> outputFromProcesses;
 }

@@ -46,9 +46,24 @@ public class Procedure extends Asset implements IProcedure, ISQL, ICatalog, IAss
     @Attribute
     String databaseQualifiedName;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtModel> dbtModels;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtSource> dbtSources;
+
     /** Logic of the procedure. */
     @Attribute
     String definition;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
 
     /** TBC */
     @Attribute
@@ -57,6 +72,11 @@ public class Procedure extends Asset implements IProcedure, ISQL, ICatalog, IAss
     /** TBC */
     @Attribute
     Long lastProfiledAt;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 
     /** TBC */
     @Attribute
@@ -75,6 +95,11 @@ public class Procedure extends Asset implements IProcedure, ISQL, ICatalog, IAss
     @Singular("putQueryUserMap")
     Map<String, Long> queryUserMap;
 
+    /** Schema in which the procedure is contained. */
+    @Attribute
+    @JsonProperty("atlanSchema")
+    ISchema schema;
+
     /** TBC */
     @Attribute
     String schemaName;
@@ -82,6 +107,16 @@ public class Procedure extends Asset implements IProcedure, ISQL, ICatalog, IAss
     /** TBC */
     @Attribute
     String schemaQualifiedName;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtSource> sqlDBTSources;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtModel> sqlDbtModels;
 
     /** TBC */
     @Attribute
@@ -98,41 +133,6 @@ public class Procedure extends Asset implements IProcedure, ISQL, ICatalog, IAss
     /** TBC */
     @Attribute
     String viewQualifiedName;
-
-    /** Schema in which the procedure is contained. */
-    @Attribute
-    @JsonProperty("atlanSchema")
-    ISchema schema;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IDbtModel> dbtModels;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IDbtSource> dbtSources;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> outputFromProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IDbtSource> sqlDBTSources;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IDbtModel> sqlDbtModels;
 
     /**
      * Reference to a Procedure by GUID.

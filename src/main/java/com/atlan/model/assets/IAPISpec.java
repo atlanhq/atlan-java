@@ -27,9 +27,6 @@ import javax.annotation.processing.Generated;
 public interface IAPISpec {
 
     /** TBC */
-    Boolean getHasLineage();
-
-    /** TBC */
     SortedSet<String> getAdminGroups();
 
     /** TBC */
@@ -58,6 +55,9 @@ public interface IAPISpec {
 
     /** TBC */
     Boolean getApiIsAuthOptional();
+
+    /** TBC */
+    SortedSet<IAPIPath> getApiPaths();
 
     /** TBC */
     String getApiSpecContactEmail();
@@ -252,6 +252,9 @@ public interface IAPISpec {
     SortedSet<String> getAssetTags();
 
     /** TBC */
+    SortedSet<IGlossaryTerm> getAssignedTerms();
+
+    /** TBC */
     CertificateStatus getCertificateStatus();
 
     /** TBC */
@@ -282,6 +285,15 @@ public interface IAPISpec {
     String getDisplayName();
 
     /** TBC */
+    SortedSet<IFile> getFiles();
+
+    /** TBC */
+    Boolean getHasLineage();
+
+    /** TBC */
+    SortedSet<ILineageProcess> getInputToProcesses();
+
+    /** TBC */
     Boolean getIsDiscoverable();
 
     /** TBC */
@@ -300,7 +312,22 @@ public interface IAPISpec {
     String getLastSyncWorkflowName();
 
     /** TBC */
+    SortedSet<ILink> getLinks();
+
+    /** TBC */
+    SortedSet<IMCIncident> getMcIncidents();
+
+    /** TBC */
+    SortedSet<IMCMonitor> getMcMonitors();
+
+    /** TBC */
+    SortedSet<IMetric> getMetrics();
+
+    /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
     SortedSet<String> getOwnerGroups();
@@ -313,6 +340,9 @@ public interface IAPISpec {
 
     /** TBC */
     String getQualifiedName();
+
+    /** TBC */
+    IReadme getReadme();
 
     /** TBC */
     String getSampleDataUrl();
@@ -336,10 +366,10 @@ public interface IAPISpec {
     String getSourceOwners();
 
     /** TBC */
-    SortedSet<String> getSourceQueryComputeCosts();
+    List<PopularityInsights> getSourceQueryComputeCostRecords();
 
     /** TBC */
-    List<PopularityInsights> getSourceQueryComputeCostRecords();
+    SortedSet<String> getSourceQueryComputeCosts();
 
     /** TBC */
     Long getSourceReadCount();
@@ -354,19 +384,19 @@ public interface IAPISpec {
     Double getSourceReadQueryCost();
 
     /** TBC */
-    SortedSet<String> getSourceReadRecentUsers();
+    List<PopularityInsights> getSourceReadRecentUserRecords();
 
     /** TBC */
-    List<PopularityInsights> getSourceReadRecentUserRecords();
+    SortedSet<String> getSourceReadRecentUsers();
 
     /** TBC */
     List<PopularityInsights> getSourceReadSlowQueryRecords();
 
     /** TBC */
-    SortedSet<String> getSourceReadTopUsers();
+    List<PopularityInsights> getSourceReadTopUserRecords();
 
     /** TBC */
-    List<PopularityInsights> getSourceReadTopUserRecords();
+    SortedSet<String> getSourceReadTopUsers();
 
     /** TBC */
     Long getSourceReadUserCount();
@@ -403,36 +433,6 @@ public interface IAPISpec {
 
     /** TBC */
     SortedSet<String> getViewerUsers();
-
-    /** TBC */
-    SortedSet<IAPIPath> getApiPaths();
-
-    /** TBC */
-    SortedSet<IFile> getFiles();
-
-    /** TBC */
-    SortedSet<ILineageProcess> getInputToProcesses();
-
-    /** TBC */
-    SortedSet<ILink> getLinks();
-
-    /** TBC */
-    SortedSet<IMCIncident> getMcIncidents();
-
-    /** TBC */
-    SortedSet<IMCMonitor> getMcMonitors();
-
-    /** TBC */
-    SortedSet<IGlossaryTerm> getAssignedTerms();
-
-    /** TBC */
-    SortedSet<IMetric> getMetrics();
-
-    /** TBC */
-    SortedSet<ILineageProcess> getOutputFromProcesses();
-
-    /** TBC */
-    IReadme getReadme();
 
     /** Name of the type that defines the asset. */
     String getTypeName();

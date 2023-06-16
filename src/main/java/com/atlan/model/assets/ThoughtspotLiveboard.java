@@ -38,14 +38,6 @@ public class ThoughtspotLiveboard extends Asset
 
     /** TBC */
     @Attribute
-    String thoughtspotChartType;
-
-    /** TBC */
-    @Attribute
-    String thoughtspotQuestionText;
-
-    /** TBC */
-    @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
@@ -54,10 +46,18 @@ public class ThoughtspotLiveboard extends Asset
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
 
+    /** TBC */
+    @Attribute
+    String thoughtspotChartType;
+
     /** Dashlets within the Liveboard. */
     @Attribute
     @Singular
     SortedSet<IThoughtspotDashlet> thoughtspotDashlets;
+
+    /** TBC */
+    @Attribute
+    String thoughtspotQuestionText;
 
     /**
      * Reference to a ThoughtspotLiveboard by GUID.

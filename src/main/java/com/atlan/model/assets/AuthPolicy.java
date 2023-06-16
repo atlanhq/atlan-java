@@ -43,6 +43,10 @@ public class AuthPolicy extends Asset implements IAuthPolicy, IAsset, IReference
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Access control object to which this policy belongs. */
+    @Attribute
+    IAccessControl accessControl;
+
     /** Whether the policy is activated (true) or deactivated (false). */
     @Attribute
     Boolean isPolicyEnabled;
@@ -117,10 +121,6 @@ public class AuthPolicy extends Asset implements IAuthPolicy, IAsset, IReference
     @Attribute
     @Singular("addPolicyValiditySchedule")
     List<AuthPolicyValiditySchedule> policyValiditySchedule;
-
-    /** Access control object to which this policy belongs. */
-    @Attribute
-    IAccessControl accessControl;
 
     /**
      * Reference to a AuthPolicy by GUID.

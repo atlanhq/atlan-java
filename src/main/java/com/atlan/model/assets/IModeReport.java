@@ -27,9 +27,6 @@ import javax.annotation.processing.Generated;
 public interface IModeReport {
 
     /** TBC */
-    Boolean getHasLineage();
-
-    /** TBC */
     SortedSet<String> getAdminGroups();
 
     /** TBC */
@@ -210,6 +207,9 @@ public interface IModeReport {
     SortedSet<String> getAssetTags();
 
     /** TBC */
+    SortedSet<IGlossaryTerm> getAssignedTerms();
+
+    /** TBC */
     CertificateStatus getCertificateStatus();
 
     /** TBC */
@@ -240,6 +240,15 @@ public interface IModeReport {
     String getDisplayName();
 
     /** TBC */
+    SortedSet<IFile> getFiles();
+
+    /** TBC */
+    Boolean getHasLineage();
+
+    /** TBC */
+    SortedSet<ILineageProcess> getInputToProcesses();
+
+    /** TBC */
     Boolean getIsDiscoverable();
 
     /** TBC */
@@ -258,10 +267,25 @@ public interface IModeReport {
     String getLastSyncWorkflowName();
 
     /** TBC */
+    SortedSet<ILink> getLinks();
+
+    /** TBC */
+    SortedSet<IMCIncident> getMcIncidents();
+
+    /** TBC */
+    SortedSet<IMCMonitor> getMcMonitors();
+
+    /** TBC */
+    SortedSet<IMetric> getMetrics();
+
+    /** TBC */
     Long getModeChartCount();
 
     /** TBC */
     String getModeCollectionToken();
+
+    /** TBC */
+    SortedSet<IModeCollection> getModeCollections();
 
     /** TBC */
     String getModeId();
@@ -271,6 +295,9 @@ public interface IModeReport {
 
     /** TBC */
     Boolean getModeIsShared();
+
+    /** TBC */
+    SortedSet<IModeQuery> getModeQueries();
 
     /** TBC */
     Long getModeQueryCount();
@@ -309,6 +336,9 @@ public interface IModeReport {
     String getName();
 
     /** TBC */
+    SortedSet<ILineageProcess> getOutputFromProcesses();
+
+    /** TBC */
     SortedSet<String> getOwnerGroups();
 
     /** TBC */
@@ -319,6 +349,9 @@ public interface IModeReport {
 
     /** TBC */
     String getQualifiedName();
+
+    /** TBC */
+    IReadme getReadme();
 
     /** TBC */
     String getSampleDataUrl();
@@ -342,10 +375,10 @@ public interface IModeReport {
     String getSourceOwners();
 
     /** TBC */
-    SortedSet<String> getSourceQueryComputeCosts();
+    List<PopularityInsights> getSourceQueryComputeCostRecords();
 
     /** TBC */
-    List<PopularityInsights> getSourceQueryComputeCostRecords();
+    SortedSet<String> getSourceQueryComputeCosts();
 
     /** TBC */
     Long getSourceReadCount();
@@ -360,19 +393,19 @@ public interface IModeReport {
     Double getSourceReadQueryCost();
 
     /** TBC */
-    SortedSet<String> getSourceReadRecentUsers();
+    List<PopularityInsights> getSourceReadRecentUserRecords();
 
     /** TBC */
-    List<PopularityInsights> getSourceReadRecentUserRecords();
+    SortedSet<String> getSourceReadRecentUsers();
 
     /** TBC */
     List<PopularityInsights> getSourceReadSlowQueryRecords();
 
     /** TBC */
-    SortedSet<String> getSourceReadTopUsers();
+    List<PopularityInsights> getSourceReadTopUserRecords();
 
     /** TBC */
-    List<PopularityInsights> getSourceReadTopUserRecords();
+    SortedSet<String> getSourceReadTopUsers();
 
     /** TBC */
     Long getSourceReadUserCount();
@@ -409,39 +442,6 @@ public interface IModeReport {
 
     /** TBC */
     SortedSet<String> getViewerUsers();
-
-    /** TBC */
-    SortedSet<IFile> getFiles();
-
-    /** TBC */
-    SortedSet<ILineageProcess> getInputToProcesses();
-
-    /** TBC */
-    SortedSet<ILink> getLinks();
-
-    /** TBC */
-    SortedSet<IMCIncident> getMcIncidents();
-
-    /** TBC */
-    SortedSet<IMCMonitor> getMcMonitors();
-
-    /** TBC */
-    SortedSet<IGlossaryTerm> getAssignedTerms();
-
-    /** TBC */
-    SortedSet<IMetric> getMetrics();
-
-    /** TBC */
-    SortedSet<IModeCollection> getModeCollections();
-
-    /** TBC */
-    SortedSet<IModeQuery> getModeQueries();
-
-    /** TBC */
-    SortedSet<ILineageProcess> getOutputFromProcesses();
-
-    /** TBC */
-    IReadme getReadme();
 
     /** Name of the type that defines the asset. */
     String getTypeName();

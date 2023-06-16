@@ -27,9 +27,6 @@ import javax.annotation.processing.Generated;
 public interface IMicroStrategyVisualization {
 
     /** TBC */
-    Boolean getHasLineage();
-
-    /** TBC */
     SortedSet<String> getAdminGroups();
 
     /** TBC */
@@ -210,6 +207,9 @@ public interface IMicroStrategyVisualization {
     SortedSet<String> getAssetTags();
 
     /** TBC */
+    SortedSet<IGlossaryTerm> getAssignedTerms();
+
+    /** TBC */
     CertificateStatus getCertificateStatus();
 
     /** TBC */
@@ -240,6 +240,15 @@ public interface IMicroStrategyVisualization {
     String getDisplayName();
 
     /** TBC */
+    SortedSet<IFile> getFiles();
+
+    /** TBC */
+    Boolean getHasLineage();
+
+    /** TBC */
+    SortedSet<ILineageProcess> getInputToProcesses();
+
+    /** TBC */
     Boolean getIsDiscoverable();
 
     /** TBC */
@@ -258,6 +267,18 @@ public interface IMicroStrategyVisualization {
     String getLastSyncWorkflowName();
 
     /** TBC */
+    SortedSet<ILink> getLinks();
+
+    /** TBC */
+    SortedSet<IMCIncident> getMcIncidents();
+
+    /** TBC */
+    SortedSet<IMCMonitor> getMcMonitors();
+
+    /** TBC */
+    SortedSet<IMetric> getMetrics();
+
+    /** TBC */
     Long getMicroStrategyCertifiedAt();
 
     /** TBC */
@@ -268,6 +289,9 @@ public interface IMicroStrategyVisualization {
 
     /** TBC */
     SortedSet<String> getMicroStrategyCubeQualifiedNames();
+
+    /** Dossier containing the visualization. */
+    IMicroStrategyDossier getMicroStrategyDossier();
 
     /** Simple name of the dossier containing this visualization. */
     String getMicroStrategyDossierName();
@@ -280,6 +304,9 @@ public interface IMicroStrategyVisualization {
 
     /** TBC */
     List<Map<String, String>> getMicroStrategyLocation();
+
+    /** Project containing the visualization. */
+    IMicroStrategyProject getMicroStrategyProject();
 
     /** TBC */
     String getMicroStrategyProjectName();
@@ -300,6 +327,9 @@ public interface IMicroStrategyVisualization {
     String getName();
 
     /** TBC */
+    SortedSet<ILineageProcess> getOutputFromProcesses();
+
+    /** TBC */
     SortedSet<String> getOwnerGroups();
 
     /** TBC */
@@ -310,6 +340,9 @@ public interface IMicroStrategyVisualization {
 
     /** TBC */
     String getQualifiedName();
+
+    /** TBC */
+    IReadme getReadme();
 
     /** TBC */
     String getSampleDataUrl();
@@ -333,10 +366,10 @@ public interface IMicroStrategyVisualization {
     String getSourceOwners();
 
     /** TBC */
-    SortedSet<String> getSourceQueryComputeCosts();
+    List<PopularityInsights> getSourceQueryComputeCostRecords();
 
     /** TBC */
-    List<PopularityInsights> getSourceQueryComputeCostRecords();
+    SortedSet<String> getSourceQueryComputeCosts();
 
     /** TBC */
     Long getSourceReadCount();
@@ -351,19 +384,19 @@ public interface IMicroStrategyVisualization {
     Double getSourceReadQueryCost();
 
     /** TBC */
-    SortedSet<String> getSourceReadRecentUsers();
+    List<PopularityInsights> getSourceReadRecentUserRecords();
 
     /** TBC */
-    List<PopularityInsights> getSourceReadRecentUserRecords();
+    SortedSet<String> getSourceReadRecentUsers();
 
     /** TBC */
     List<PopularityInsights> getSourceReadSlowQueryRecords();
 
     /** TBC */
-    SortedSet<String> getSourceReadTopUsers();
+    List<PopularityInsights> getSourceReadTopUserRecords();
 
     /** TBC */
-    List<PopularityInsights> getSourceReadTopUserRecords();
+    SortedSet<String> getSourceReadTopUsers();
 
     /** TBC */
     Long getSourceReadUserCount();
@@ -400,39 +433,6 @@ public interface IMicroStrategyVisualization {
 
     /** TBC */
     SortedSet<String> getViewerUsers();
-
-    /** TBC */
-    SortedSet<IFile> getFiles();
-
-    /** TBC */
-    SortedSet<ILineageProcess> getInputToProcesses();
-
-    /** TBC */
-    SortedSet<ILink> getLinks();
-
-    /** TBC */
-    SortedSet<IMCIncident> getMcIncidents();
-
-    /** TBC */
-    SortedSet<IMCMonitor> getMcMonitors();
-
-    /** TBC */
-    SortedSet<IGlossaryTerm> getAssignedTerms();
-
-    /** TBC */
-    SortedSet<IMetric> getMetrics();
-
-    /** Dossier containing the visualization. */
-    IMicroStrategyDossier getMicroStrategyDossier();
-
-    /** Project containing the visualization. */
-    IMicroStrategyProject getMicroStrategyProject();
-
-    /** TBC */
-    SortedSet<ILineageProcess> getOutputFromProcesses();
-
-    /** TBC */
-    IReadme getReadme();
 
     /** Name of the type that defines the asset. */
     String getTypeName();

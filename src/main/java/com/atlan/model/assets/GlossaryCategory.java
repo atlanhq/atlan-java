@@ -52,14 +52,6 @@ public class GlossaryCategory extends Asset implements IGlossaryCategory, IAsset
 
     /** TBC */
     @Attribute
-    String longDescription;
-
-    /** TBC */
-    @Attribute
-    String shortDescription;
-
-    /** TBC */
-    @Attribute
     IGlossary anchor;
 
     /** TBC */
@@ -70,7 +62,15 @@ public class GlossaryCategory extends Asset implements IGlossaryCategory, IAsset
 
     /** TBC */
     @Attribute
+    String longDescription;
+
+    /** TBC */
+    @Attribute
     IGlossaryCategory parentCategory;
+
+    /** TBC */
+    @Attribute
+    String shortDescription;
 
     /** TBC */
     @Attribute

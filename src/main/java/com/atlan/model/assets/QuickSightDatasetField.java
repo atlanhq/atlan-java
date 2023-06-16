@@ -39,6 +39,20 @@ public class QuickSightDatasetField extends Asset
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    IQuickSightDataset quickSightDataset;
+
+    /** TBC */
+    @Attribute
     QuickSightDatasetFieldType quickSightDatasetFieldType;
 
     /** TBC */
@@ -56,20 +70,6 @@ public class QuickSightDatasetField extends Asset
     /** TBC */
     @Attribute
     String quickSightSheetName;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> outputFromProcesses;
-
-    /** TBC */
-    @Attribute
-    IQuickSightDataset quickSightDataset;
 
     /**
      * Reference to a QuickSightDatasetField by GUID.

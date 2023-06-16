@@ -42,6 +42,16 @@ public class PowerBIColumn extends Asset implements IPowerBIColumn, IPowerBI, IB
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
     String powerBIColumnDataCategory;
 
     /** TBC */
@@ -74,21 +84,11 @@ public class PowerBIColumn extends Asset implements IPowerBIColumn, IPowerBI, IB
 
     /** TBC */
     @Attribute
-    String workspaceQualifiedName;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> outputFromProcesses;
-
-    /** TBC */
-    @Attribute
     IPowerBITable table;
+
+    /** TBC */
+    @Attribute
+    String workspaceQualifiedName;
 
     /**
      * Reference to a PowerBIColumn by GUID.

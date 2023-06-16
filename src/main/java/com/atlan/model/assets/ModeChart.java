@@ -37,11 +37,20 @@ public class ModeChart extends Asset implements IModeChart, IMode, IBI, ICatalog
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
     String modeChartType;
 
     /** TBC */
     @Attribute
     String modeId;
+
+    /** TBC */
+    @Attribute
+    IModeQuery modeQuery;
 
     /** TBC */
     @Attribute
@@ -74,15 +83,6 @@ public class ModeChart extends Asset implements IModeChart, IMode, IBI, ICatalog
     /** TBC */
     @Attribute
     String modeWorkspaceUsername;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    IModeQuery modeQuery;
 
     /** TBC */
     @Attribute

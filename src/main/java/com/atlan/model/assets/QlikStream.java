@@ -37,11 +37,31 @@ public class QlikStream extends Asset implements IQlikStream, IQlikSpace, IQlik,
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
     String qlikAppId;
 
     /** TBC */
     @Attribute
     String qlikAppQualifiedName;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IQlikApp> qlikApps;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IQlikDataset> qlikDatasets;
 
     /** TBC */
     @Attribute
@@ -70,26 +90,6 @@ public class QlikStream extends Asset implements IQlikStream, IQlikSpace, IQlik,
     /** TBC */
     @Attribute
     String qlikSpaceType;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> outputFromProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IQlikApp> qlikApps;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IQlikDataset> qlikDatasets;
 
     /**
      * Reference to a QlikStream by GUID.

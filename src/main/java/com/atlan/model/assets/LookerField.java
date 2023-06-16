@@ -37,6 +37,15 @@ public class LookerField extends Asset implements ILookerField, ILooker, IBI, IC
 
     /** TBC */
     @Attribute
+    ILookerExplore explore;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
     String lookerExploreQualifiedName;
 
     /** TBC */
@@ -53,28 +62,11 @@ public class LookerField extends Asset implements ILookerField, ILooker, IBI, IC
 
     /** TBC */
     @Attribute
-    String modelName;
-
-    /** TBC */
-    @Attribute
-    String projectName;
-
-    /** TBC */
-    @Attribute
-    String sourceDefinition;
-
-    /** TBC */
-    @Attribute
-    ILookerExplore explore;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
     ILookerModel model;
+
+    /** TBC */
+    @Attribute
+    String modelName;
 
     /** TBC */
     @Attribute
@@ -84,6 +76,14 @@ public class LookerField extends Asset implements ILookerField, ILooker, IBI, IC
     /** TBC */
     @Attribute
     ILookerProject project;
+
+    /** TBC */
+    @Attribute
+    String projectName;
+
+    /** TBC */
+    @Attribute
+    String sourceDefinition;
 
     /** TBC */
     @Attribute

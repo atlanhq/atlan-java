@@ -27,9 +27,6 @@ import javax.annotation.processing.Generated;
 public interface IMicroStrategyProject {
 
     /** TBC */
-    Boolean getHasLineage();
-
-    /** TBC */
     SortedSet<String> getAdminGroups();
 
     /** TBC */
@@ -210,6 +207,9 @@ public interface IMicroStrategyProject {
     SortedSet<String> getAssetTags();
 
     /** TBC */
+    SortedSet<IGlossaryTerm> getAssignedTerms();
+
+    /** TBC */
     CertificateStatus getCertificateStatus();
 
     /** TBC */
@@ -240,6 +240,15 @@ public interface IMicroStrategyProject {
     String getDisplayName();
 
     /** TBC */
+    SortedSet<IFile> getFiles();
+
+    /** TBC */
+    Boolean getHasLineage();
+
+    /** TBC */
+    SortedSet<ILineageProcess> getInputToProcesses();
+
+    /** TBC */
     Boolean getIsDiscoverable();
 
     /** TBC */
@@ -258,6 +267,21 @@ public interface IMicroStrategyProject {
     String getLastSyncWorkflowName();
 
     /** TBC */
+    SortedSet<ILink> getLinks();
+
+    /** TBC */
+    SortedSet<IMCIncident> getMcIncidents();
+
+    /** TBC */
+    SortedSet<IMCMonitor> getMcMonitors();
+
+    /** TBC */
+    SortedSet<IMetric> getMetrics();
+
+    /** Attributes contained within the project. */
+    SortedSet<IMicroStrategyAttribute> getMicroStrategyAttributes();
+
+    /** TBC */
     Long getMicroStrategyCertifiedAt();
 
     /** TBC */
@@ -269,11 +293,26 @@ public interface IMicroStrategyProject {
     /** TBC */
     SortedSet<String> getMicroStrategyCubeQualifiedNames();
 
+    /** Cubes contained within the project. */
+    SortedSet<IMicroStrategyCube> getMicroStrategyCubes();
+
+    /** Documents contained within the project. */
+    SortedSet<IMicroStrategyDocument> getMicroStrategyDocuments();
+
+    /** Dossiers contained within the project. */
+    SortedSet<IMicroStrategyDossier> getMicroStrategyDossiers();
+
+    /** Facts contained within the project. */
+    SortedSet<IMicroStrategyFact> getMicroStrategyFacts();
+
     /** TBC */
     Boolean getMicroStrategyIsCertified();
 
     /** TBC */
     List<Map<String, String>> getMicroStrategyLocation();
+
+    /** Metrics contained within the project. */
+    SortedSet<IMicroStrategyMetric> getMicroStrategyMetrics();
 
     /** TBC */
     String getMicroStrategyProjectName();
@@ -287,8 +326,17 @@ public interface IMicroStrategyProject {
     /** TBC */
     SortedSet<String> getMicroStrategyReportQualifiedNames();
 
+    /** Reports contained within the project. */
+    SortedSet<IMicroStrategyReport> getMicroStrategyReports();
+
+    /** Visualizations contained within the project. */
+    SortedSet<IMicroStrategyVisualization> getMicroStrategyVisualizations();
+
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
     SortedSet<String> getOwnerGroups();
@@ -301,6 +349,9 @@ public interface IMicroStrategyProject {
 
     /** TBC */
     String getQualifiedName();
+
+    /** TBC */
+    IReadme getReadme();
 
     /** TBC */
     String getSampleDataUrl();
@@ -324,10 +375,10 @@ public interface IMicroStrategyProject {
     String getSourceOwners();
 
     /** TBC */
-    SortedSet<String> getSourceQueryComputeCosts();
+    List<PopularityInsights> getSourceQueryComputeCostRecords();
 
     /** TBC */
-    List<PopularityInsights> getSourceQueryComputeCostRecords();
+    SortedSet<String> getSourceQueryComputeCosts();
 
     /** TBC */
     Long getSourceReadCount();
@@ -342,19 +393,19 @@ public interface IMicroStrategyProject {
     Double getSourceReadQueryCost();
 
     /** TBC */
-    SortedSet<String> getSourceReadRecentUsers();
+    List<PopularityInsights> getSourceReadRecentUserRecords();
 
     /** TBC */
-    List<PopularityInsights> getSourceReadRecentUserRecords();
+    SortedSet<String> getSourceReadRecentUsers();
 
     /** TBC */
     List<PopularityInsights> getSourceReadSlowQueryRecords();
 
     /** TBC */
-    SortedSet<String> getSourceReadTopUsers();
+    List<PopularityInsights> getSourceReadTopUserRecords();
 
     /** TBC */
-    List<PopularityInsights> getSourceReadTopUserRecords();
+    SortedSet<String> getSourceReadTopUsers();
 
     /** TBC */
     Long getSourceReadUserCount();
@@ -391,57 +442,6 @@ public interface IMicroStrategyProject {
 
     /** TBC */
     SortedSet<String> getViewerUsers();
-
-    /** TBC */
-    SortedSet<IFile> getFiles();
-
-    /** TBC */
-    SortedSet<ILineageProcess> getInputToProcesses();
-
-    /** TBC */
-    SortedSet<ILink> getLinks();
-
-    /** TBC */
-    SortedSet<IMCIncident> getMcIncidents();
-
-    /** TBC */
-    SortedSet<IMCMonitor> getMcMonitors();
-
-    /** TBC */
-    SortedSet<IGlossaryTerm> getAssignedTerms();
-
-    /** TBC */
-    SortedSet<IMetric> getMetrics();
-
-    /** Attributes contained within the project. */
-    SortedSet<IMicroStrategyAttribute> getMicroStrategyAttributes();
-
-    /** Cubes contained within the project. */
-    SortedSet<IMicroStrategyCube> getMicroStrategyCubes();
-
-    /** Documents contained within the project. */
-    SortedSet<IMicroStrategyDocument> getMicroStrategyDocuments();
-
-    /** Dossiers contained within the project. */
-    SortedSet<IMicroStrategyDossier> getMicroStrategyDossiers();
-
-    /** Facts contained within the project. */
-    SortedSet<IMicroStrategyFact> getMicroStrategyFacts();
-
-    /** Metrics contained within the project. */
-    SortedSet<IMicroStrategyMetric> getMicroStrategyMetrics();
-
-    /** Reports contained within the project. */
-    SortedSet<IMicroStrategyReport> getMicroStrategyReports();
-
-    /** Visualizations contained within the project. */
-    SortedSet<IMicroStrategyVisualization> getMicroStrategyVisualizations();
-
-    /** TBC */
-    SortedSet<ILineageProcess> getOutputFromProcesses();
-
-    /** TBC */
-    IReadme getReadme();
 
     /** Name of the type that defines the asset. */
     String getTypeName();

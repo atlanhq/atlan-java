@@ -38,26 +38,6 @@ public class QuickSightDashboard extends Asset
 
     /** TBC */
     @Attribute
-    Long quickSightDashboardLastPublishedTime;
-
-    /** TBC */
-    @Attribute
-    Long quickSightDashboardPublishedVersionNumber;
-
-    /** TBC */
-    @Attribute
-    String quickSightId;
-
-    /** TBC */
-    @Attribute
-    String quickSightSheetId;
-
-    /** TBC */
-    @Attribute
-    String quickSightSheetName;
-
-    /** TBC */
-    @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
@@ -73,8 +53,28 @@ public class QuickSightDashboard extends Asset
 
     /** TBC */
     @Attribute
+    Long quickSightDashboardLastPublishedTime;
+
+    /** TBC */
+    @Attribute
+    Long quickSightDashboardPublishedVersionNumber;
+
+    /** TBC */
+    @Attribute
     @Singular
     SortedSet<IQuickSightDashboardVisual> quickSightDashboardVisuals;
+
+    /** TBC */
+    @Attribute
+    String quickSightId;
+
+    /** TBC */
+    @Attribute
+    String quickSightSheetId;
+
+    /** TBC */
+    @Attribute
+    String quickSightSheetName;
 
     /**
      * Reference to a QuickSightDashboard by GUID.

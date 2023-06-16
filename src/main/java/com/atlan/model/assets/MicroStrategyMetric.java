@@ -38,6 +38,11 @@ public class MicroStrategyMetric extends Asset
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
     /** Simple names of the related MicroStrategy attributes. */
     @Attribute
     @Singular
@@ -47,6 +52,11 @@ public class MicroStrategyMetric extends Asset
     @Attribute
     @Singular
     SortedSet<String> microStrategyAttributeQualifiedNames;
+
+    /** Attributes related to this metric. */
+    @Attribute
+    @Singular
+    SortedSet<IMicroStrategyAttribute> microStrategyAttributes;
 
     /** TBC */
     @Attribute
@@ -66,6 +76,11 @@ public class MicroStrategyMetric extends Asset
     @Singular
     SortedSet<String> microStrategyCubeQualifiedNames;
 
+    /** Cubes related to this metric. */
+    @Attribute
+    @Singular
+    SortedSet<IMicroStrategyCube> microStrategyCubes;
+
     /** Simple names of the related MicroStrategy facts. */
     @Attribute
     @Singular
@@ -76,6 +91,11 @@ public class MicroStrategyMetric extends Asset
     @Singular
     SortedSet<String> microStrategyFactQualifiedNames;
 
+    /** Facts related to this metric. */
+    @Attribute
+    @Singular
+    SortedSet<IMicroStrategyFact> microStrategyFacts;
+
     /** TBC */
     @Attribute
     Boolean microStrategyIsCertified;
@@ -84,6 +104,11 @@ public class MicroStrategyMetric extends Asset
     @Attribute
     @Singular("putMicroStrategyLocation")
     List<Map<String, String>> microStrategyLocation;
+
+    /** Metrics that are children of this metric. */
+    @Attribute
+    @Singular
+    SortedSet<IMicroStrategyMetric> microStrategyMetricChildren;
 
     /** Expression that defines the metric. */
     @Attribute
@@ -98,6 +123,15 @@ public class MicroStrategyMetric extends Asset
     @Attribute
     @Singular
     SortedSet<String> microStrategyMetricParentQualifiedNames;
+
+    /** Metrics that are parents of this metric. */
+    @Attribute
+    @Singular
+    SortedSet<IMicroStrategyMetric> microStrategyMetricParents;
+
+    /** Project containing the metric. */
+    @Attribute
+    IMicroStrategyProject microStrategyProject;
 
     /** TBC */
     @Attribute
@@ -116,40 +150,6 @@ public class MicroStrategyMetric extends Asset
     @Attribute
     @Singular
     SortedSet<String> microStrategyReportQualifiedNames;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** Attributes related to this metric. */
-    @Attribute
-    @Singular
-    SortedSet<IMicroStrategyAttribute> microStrategyAttributes;
-
-    /** Cubes related to this metric. */
-    @Attribute
-    @Singular
-    SortedSet<IMicroStrategyCube> microStrategyCubes;
-
-    /** Facts related to this metric. */
-    @Attribute
-    @Singular
-    SortedSet<IMicroStrategyFact> microStrategyFacts;
-
-    /** Metrics that are children of this metric. */
-    @Attribute
-    @Singular
-    SortedSet<IMicroStrategyMetric> microStrategyMetricChildren;
-
-    /** Metrics that are parents of this metric. */
-    @Attribute
-    @Singular
-    SortedSet<IMicroStrategyMetric> microStrategyMetricParents;
-
-    /** Project containing the metric. */
-    @Attribute
-    IMicroStrategyProject microStrategyProject;
 
     /** Reports related to this metric. */
     @Attribute

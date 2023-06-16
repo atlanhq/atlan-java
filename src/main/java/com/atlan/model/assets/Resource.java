@@ -31,11 +31,21 @@ public abstract class Resource extends Asset implements IResource, ICatalog, IAs
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
     Boolean isGlobal;
 
     /** TBC */
     @Attribute
     String link;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 
     /** TBC */
     @Attribute
@@ -45,14 +55,4 @@ public abstract class Resource extends Asset implements IResource, ICatalog, IAs
     @Attribute
     @Singular("putResourceMetadata")
     Map<String, String> resourceMetadata;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> outputFromProcesses;
 }

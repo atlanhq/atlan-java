@@ -31,6 +31,16 @@ public abstract class Sigma extends Asset implements ISigma, IBI, ICatalog, IAss
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
     String sigmaDataElementName;
 
     /** TBC */
@@ -52,14 +62,4 @@ public abstract class Sigma extends Asset implements ISigma, IBI, ICatalog, IAss
     /** TBC */
     @Attribute
     String sigmaWorkbookQualifiedName;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> outputFromProcesses;
 }

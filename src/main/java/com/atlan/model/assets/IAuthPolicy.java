@@ -33,8 +33,8 @@ import javax.annotation.processing.Generated;
 @JsonDeserialize(using = AssetDeserializer.class)
 public interface IAuthPolicy {
 
-    /** TBC */
-    Boolean getHasLineage();
+    /** Access control object to which this policy belongs. */
+    IAccessControl getAccessControl();
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -217,6 +217,9 @@ public interface IAuthPolicy {
     SortedSet<String> getAssetTags();
 
     /** TBC */
+    SortedSet<IGlossaryTerm> getAssignedTerms();
+
+    /** TBC */
     CertificateStatus getCertificateStatus();
 
     /** TBC */
@@ -247,6 +250,12 @@ public interface IAuthPolicy {
     String getDisplayName();
 
     /** TBC */
+    SortedSet<IFile> getFiles();
+
+    /** TBC */
+    Boolean getHasLineage();
+
+    /** TBC */
     Boolean getIsDiscoverable();
 
     /** TBC */
@@ -266,6 +275,18 @@ public interface IAuthPolicy {
 
     /** TBC */
     String getLastSyncWorkflowName();
+
+    /** TBC */
+    SortedSet<ILink> getLinks();
+
+    /** TBC */
+    SortedSet<IMCIncident> getMcIncidents();
+
+    /** TBC */
+    SortedSet<IMCMonitor> getMcMonitors();
+
+    /** TBC */
+    SortedSet<IMetric> getMetrics();
 
     /** TBC */
     String getName();
@@ -331,6 +352,9 @@ public interface IAuthPolicy {
     String getQualifiedName();
 
     /** TBC */
+    IReadme getReadme();
+
+    /** TBC */
     String getSampleDataUrl();
 
     /** TBC */
@@ -352,10 +376,10 @@ public interface IAuthPolicy {
     String getSourceOwners();
 
     /** TBC */
-    SortedSet<String> getSourceQueryComputeCosts();
+    List<PopularityInsights> getSourceQueryComputeCostRecords();
 
     /** TBC */
-    List<PopularityInsights> getSourceQueryComputeCostRecords();
+    SortedSet<String> getSourceQueryComputeCosts();
 
     /** TBC */
     Long getSourceReadCount();
@@ -370,19 +394,19 @@ public interface IAuthPolicy {
     Double getSourceReadQueryCost();
 
     /** TBC */
-    SortedSet<String> getSourceReadRecentUsers();
+    List<PopularityInsights> getSourceReadRecentUserRecords();
 
     /** TBC */
-    List<PopularityInsights> getSourceReadRecentUserRecords();
+    SortedSet<String> getSourceReadRecentUsers();
 
     /** TBC */
     List<PopularityInsights> getSourceReadSlowQueryRecords();
 
     /** TBC */
-    SortedSet<String> getSourceReadTopUsers();
+    List<PopularityInsights> getSourceReadTopUserRecords();
 
     /** TBC */
-    List<PopularityInsights> getSourceReadTopUserRecords();
+    SortedSet<String> getSourceReadTopUsers();
 
     /** TBC */
     Long getSourceReadUserCount();
@@ -419,30 +443,6 @@ public interface IAuthPolicy {
 
     /** TBC */
     SortedSet<String> getViewerUsers();
-
-    /** Access control object to which this policy belongs. */
-    IAccessControl getAccessControl();
-
-    /** TBC */
-    SortedSet<IFile> getFiles();
-
-    /** TBC */
-    SortedSet<ILink> getLinks();
-
-    /** TBC */
-    SortedSet<IMCIncident> getMcIncidents();
-
-    /** TBC */
-    SortedSet<IMCMonitor> getMcMonitors();
-
-    /** TBC */
-    SortedSet<IGlossaryTerm> getAssignedTerms();
-
-    /** TBC */
-    SortedSet<IMetric> getMetrics();
-
-    /** TBC */
-    IReadme getReadme();
 
     /** Name of the type that defines the asset. */
     String getTypeName();

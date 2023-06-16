@@ -37,6 +37,16 @@ public class ModeQuery extends Asset implements IModeQuery, IMode, IBI, ICatalog
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IModeChart> modeCharts;
+
+    /** TBC */
+    @Attribute
     String modeId;
 
     /** TBC */
@@ -50,6 +60,10 @@ public class ModeQuery extends Asset implements IModeQuery, IMode, IBI, ICatalog
     /** TBC */
     @Attribute
     String modeRawQuery;
+
+    /** TBC */
+    @Attribute
+    IModeReport modeReport;
 
     /** TBC */
     @Attribute
@@ -78,20 +92,6 @@ public class ModeQuery extends Asset implements IModeQuery, IMode, IBI, ICatalog
     /** TBC */
     @Attribute
     String modeWorkspaceUsername;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IModeChart> modeCharts;
-
-    /** TBC */
-    @Attribute
-    IModeReport modeReport;
 
     /** TBC */
     @Attribute

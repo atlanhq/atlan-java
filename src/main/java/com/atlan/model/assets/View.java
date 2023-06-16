@@ -48,6 +48,11 @@ public class View extends Asset implements IView, ISQL, ICatalog, IAsset, IRefer
     @Attribute
     Long columnCount;
 
+    /** Columns that exist within this view. */
+    @Attribute
+    @Singular
+    SortedSet<IColumn> columns;
+
     /** TBC */
     @Attribute
     String databaseName;
@@ -56,9 +61,24 @@ public class View extends Asset implements IView, ISQL, ICatalog, IAsset, IRefer
     @Attribute
     String databaseQualifiedName;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtModel> dbtModels;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtSource> dbtSources;
+
     /** Definition of the view (DDL). */
     @Attribute
     String definition;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
 
     /** TBC */
     @Attribute
@@ -75,6 +95,16 @@ public class View extends Asset implements IView, ISQL, ICatalog, IAsset, IRefer
     /** TBC */
     @Attribute
     Long lastProfiledAt;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** Queries that involve this view. */
+    @Attribute
+    @Singular
+    SortedSet<IAtlanQuery> queries;
 
     /** TBC */
     @Attribute
@@ -102,6 +132,11 @@ public class View extends Asset implements IView, ISQL, ICatalog, IAsset, IRefer
     @Attribute
     Long rowCount;
 
+    /** Schema in which this view exists. */
+    @Attribute
+    @JsonProperty("atlanSchema")
+    ISchema schema;
+
     /** TBC */
     @Attribute
     String schemaName;
@@ -113,6 +148,16 @@ public class View extends Asset implements IView, ISQL, ICatalog, IAsset, IRefer
     /** Size of the view in bytes. */
     @Attribute
     Long sizeBytes;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtSource> sqlDBTSources;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtModel> sqlDbtModels;
 
     /** TBC */
     @Attribute
@@ -129,51 +174,6 @@ public class View extends Asset implements IView, ISQL, ICatalog, IAsset, IRefer
     /** TBC */
     @Attribute
     String viewQualifiedName;
-
-    /** Schema in which this view exists. */
-    @Attribute
-    @JsonProperty("atlanSchema")
-    ISchema schema;
-
-    /** Columns that exist within this view. */
-    @Attribute
-    @Singular
-    SortedSet<IColumn> columns;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IDbtModel> dbtModels;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IDbtSource> dbtSources;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> outputFromProcesses;
-
-    /** Queries that involve this view. */
-    @Attribute
-    @Singular
-    SortedSet<IAtlanQuery> queries;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IDbtSource> sqlDBTSources;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IDbtModel> sqlDbtModels;
 
     /**
      * Reference to a View by GUID.

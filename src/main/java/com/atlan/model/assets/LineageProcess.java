@@ -56,10 +56,6 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
 
     /** TBC */
     @Attribute
-    String sql;
-
-    /** TBC */
-    @Attribute
     @Singular
     SortedSet<IColumnProcess> columnProcesses;
 
@@ -72,6 +68,10 @@ public class LineageProcess extends Asset implements ILineageProcess, IAsset, IR
     @Attribute
     @Singular
     SortedSet<ICatalog> outputs;
+
+    /** TBC */
+    @Attribute
+    String sql;
 
     /**
      * Reference to a LineageProcess by GUID.

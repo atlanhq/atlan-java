@@ -27,9 +27,6 @@ import javax.annotation.processing.Generated;
 public interface ITableauProject {
 
     /** TBC */
-    Boolean getHasLineage();
-
-    /** TBC */
     SortedSet<String> getAdminGroups();
 
     /** TBC */
@@ -210,6 +207,9 @@ public interface ITableauProject {
     SortedSet<String> getAssetTags();
 
     /** TBC */
+    SortedSet<IGlossaryTerm> getAssignedTerms();
+
+    /** TBC */
     CertificateStatus getCertificateStatus();
 
     /** TBC */
@@ -222,6 +222,9 @@ public interface ITableauProject {
     String getCertificateUpdatedBy();
 
     /** TBC */
+    SortedSet<ITableauProject> getChildProjects();
+
+    /** TBC */
     String getConnectionName();
 
     /** TBC */
@@ -231,6 +234,9 @@ public interface ITableauProject {
     AtlanConnectorType getConnectorType();
 
     /** TBC */
+    SortedSet<ITableauDatasource> getDatasources();
+
+    /** TBC */
     String getDbtQualifiedName();
 
     /** TBC */
@@ -238,6 +244,18 @@ public interface ITableauProject {
 
     /** TBC */
     String getDisplayName();
+
+    /** TBC */
+    SortedSet<IFile> getFiles();
+
+    /** TBC */
+    SortedSet<ITableauFlow> getFlows();
+
+    /** TBC */
+    Boolean getHasLineage();
+
+    /** TBC */
+    SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
     Boolean getIsDiscoverable();
@@ -261,13 +279,31 @@ public interface ITableauProject {
     String getLastSyncWorkflowName();
 
     /** TBC */
+    SortedSet<ILink> getLinks();
+
+    /** TBC */
+    SortedSet<IMCIncident> getMcIncidents();
+
+    /** TBC */
+    SortedSet<IMCMonitor> getMcMonitors();
+
+    /** TBC */
+    SortedSet<IMetric> getMetrics();
+
+    /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
     SortedSet<String> getOwnerGroups();
 
     /** TBC */
     SortedSet<String> getOwnerUsers();
+
+    /** TBC */
+    ITableauProject getParentProject();
 
     /** TBC */
     Double getPopularityScore();
@@ -279,7 +315,13 @@ public interface ITableauProject {
     String getQualifiedName();
 
     /** TBC */
+    IReadme getReadme();
+
+    /** TBC */
     String getSampleDataUrl();
+
+    /** TBC */
+    ITableauSite getSite();
 
     /** TBC */
     String getSiteQualifiedName();
@@ -303,10 +345,10 @@ public interface ITableauProject {
     String getSourceOwners();
 
     /** TBC */
-    SortedSet<String> getSourceQueryComputeCosts();
+    List<PopularityInsights> getSourceQueryComputeCostRecords();
 
     /** TBC */
-    List<PopularityInsights> getSourceQueryComputeCostRecords();
+    SortedSet<String> getSourceQueryComputeCosts();
 
     /** TBC */
     Long getSourceReadCount();
@@ -321,19 +363,19 @@ public interface ITableauProject {
     Double getSourceReadQueryCost();
 
     /** TBC */
-    SortedSet<String> getSourceReadRecentUsers();
+    List<PopularityInsights> getSourceReadRecentUserRecords();
 
     /** TBC */
-    List<PopularityInsights> getSourceReadRecentUserRecords();
+    SortedSet<String> getSourceReadRecentUsers();
 
     /** TBC */
     List<PopularityInsights> getSourceReadSlowQueryRecords();
 
     /** TBC */
-    SortedSet<String> getSourceReadTopUsers();
+    List<PopularityInsights> getSourceReadTopUserRecords();
 
     /** TBC */
-    List<PopularityInsights> getSourceReadTopUserRecords();
+    SortedSet<String> getSourceReadTopUsers();
 
     /** TBC */
     Long getSourceReadUserCount();
@@ -373,45 +415,6 @@ public interface ITableauProject {
 
     /** TBC */
     SortedSet<String> getViewerUsers();
-
-    /** TBC */
-    SortedSet<ITableauProject> getChildProjects();
-
-    /** TBC */
-    SortedSet<ITableauDatasource> getDatasources();
-
-    /** TBC */
-    SortedSet<IFile> getFiles();
-
-    /** TBC */
-    SortedSet<ITableauFlow> getFlows();
-
-    /** TBC */
-    SortedSet<ILineageProcess> getInputToProcesses();
-
-    /** TBC */
-    SortedSet<ILink> getLinks();
-
-    /** TBC */
-    SortedSet<IMCIncident> getMcIncidents();
-
-    /** TBC */
-    SortedSet<IMCMonitor> getMcMonitors();
-
-    /** TBC */
-    SortedSet<IGlossaryTerm> getAssignedTerms();
-
-    /** TBC */
-    SortedSet<ILineageProcess> getOutputFromProcesses();
-
-    /** TBC */
-    ITableauProject getParentProject();
-
-    /** TBC */
-    IReadme getReadme();
-
-    /** TBC */
-    ITableauSite getSite();
 
     /** TBC */
     SortedSet<ITableauWorkbook> getWorkbooks();

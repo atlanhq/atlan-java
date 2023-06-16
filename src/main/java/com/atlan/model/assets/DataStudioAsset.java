@@ -86,14 +86,14 @@ public class DataStudioAsset extends Asset
     @Singular
     List<GoogleTag> googleTags;
 
-    /** Whether the asset is soft-deleted in Google Data Studio (true) or not (false). */
-    @Attribute
-    Boolean isTrashedDataStudioAsset;
-
     /** TBC */
     @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
+
+    /** Whether the asset is soft-deleted in Google Data Studio (true) or not (false). */
+    @Attribute
+    Boolean isTrashedDataStudioAsset;
 
     /** TBC */
     @Attribute

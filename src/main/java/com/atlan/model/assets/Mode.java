@@ -30,6 +30,11 @@ public abstract class Mode extends Asset implements IMode, IBI, ICatalog, IAsset
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
     String modeId;
 
     /** TBC */
@@ -63,11 +68,6 @@ public abstract class Mode extends Asset implements IMode, IBI, ICatalog, IAsset
     /** TBC */
     @Attribute
     String modeWorkspaceUsername;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
 
     /** TBC */
     @Attribute

@@ -37,6 +37,16 @@ public class SigmaWorkbook extends Asset implements ISigmaWorkbook, ISigma, IBI,
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
     String sigmaDataElementName;
 
     /** TBC */
@@ -55,6 +65,11 @@ public class SigmaWorkbook extends Asset implements ISigmaWorkbook, ISigma, IBI,
     @Attribute
     String sigmaPageQualifiedName;
 
+    /** Pages that exist within this workbook. */
+    @Attribute
+    @Singular
+    SortedSet<ISigmaPage> sigmaPages;
+
     /** TBC */
     @Attribute
     String sigmaWorkbookName;
@@ -62,21 +77,6 @@ public class SigmaWorkbook extends Asset implements ISigmaWorkbook, ISigma, IBI,
     /** TBC */
     @Attribute
     String sigmaWorkbookQualifiedName;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> outputFromProcesses;
-
-    /** Pages that exist within this workbook. */
-    @Attribute
-    @Singular
-    SortedSet<ISigmaPage> sigmaPages;
 
     /**
      * Reference to a SigmaWorkbook by GUID.

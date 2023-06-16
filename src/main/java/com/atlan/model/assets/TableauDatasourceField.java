@@ -40,6 +40,10 @@ public class TableauDatasourceField extends Asset
 
     /** TBC */
     @Attribute
+    ITableauDatasource datasource;
+
+    /** TBC */
+    @Attribute
     String datasourceFieldType;
 
     /** TBC */
@@ -49,6 +53,16 @@ public class TableauDatasourceField extends Asset
     /** TBC */
     @Attribute
     String fullyQualifiedName;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 
     /** TBC */
     @Attribute
@@ -105,20 +119,6 @@ public class TableauDatasourceField extends Asset
     /** TBC */
     @Attribute
     String workbookQualifiedName;
-
-    /** TBC */
-    @Attribute
-    ITableauDatasource datasource;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> outputFromProcesses;
 
     /** TBC */
     @Attribute

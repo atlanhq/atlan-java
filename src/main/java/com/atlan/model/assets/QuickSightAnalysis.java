@@ -40,12 +40,27 @@ public class QuickSightAnalysis extends Asset
     /** TBC */
     @Attribute
     @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
     SortedSet<String> quickSightAnalysisCalculatedFields;
 
     /** TBC */
     @Attribute
     @Singular
     SortedSet<String> quickSightAnalysisFilterGroups;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IQuickSightFolder> quickSightAnalysisFolders;
 
     /** TBC */
     @Attribute
@@ -58,6 +73,11 @@ public class QuickSightAnalysis extends Asset
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<IQuickSightAnalysisVisual> quickSightAnalysisVisuals;
+
+    /** TBC */
+    @Attribute
     String quickSightId;
 
     /** TBC */
@@ -67,26 +87,6 @@ public class QuickSightAnalysis extends Asset
     /** TBC */
     @Attribute
     String quickSightSheetName;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> outputFromProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IQuickSightFolder> quickSightAnalysisFolders;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IQuickSightAnalysisVisual> quickSightAnalysisVisuals;
 
     /**
      * Reference to a QuickSightAnalysis by GUID.

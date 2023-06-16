@@ -50,6 +50,11 @@ public class MaterializedView extends Asset implements IMaterializedView, ISQL, 
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<IColumn> columns;
+
+    /** TBC */
+    @Attribute
     String databaseName;
 
     /** TBC */
@@ -58,7 +63,22 @@ public class MaterializedView extends Asset implements IMaterializedView, ISQL, 
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<IDbtModel> dbtModels;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtSource> dbtSources;
+
+    /** TBC */
+    @Attribute
     String definition;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
 
     /** TBC */
     @Attribute
@@ -75,6 +95,11 @@ public class MaterializedView extends Asset implements IMaterializedView, ISQL, 
     /** TBC */
     @Attribute
     Long lastProfiledAt;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 
     /** TBC */
     @Attribute
@@ -112,6 +137,11 @@ public class MaterializedView extends Asset implements IMaterializedView, ISQL, 
 
     /** TBC */
     @Attribute
+    @JsonProperty("atlanSchema")
+    ISchema schema;
+
+    /** TBC */
+    @Attribute
     String schemaName;
 
     /** TBC */
@@ -121,6 +151,16 @@ public class MaterializedView extends Asset implements IMaterializedView, ISQL, 
     /** TBC */
     @Attribute
     Long sizeBytes;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtSource> sqlDBTSources;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtModel> sqlDbtModels;
 
     /** TBC */
     @Attribute
@@ -145,46 +185,6 @@ public class MaterializedView extends Asset implements IMaterializedView, ISQL, 
     /** TBC */
     @Attribute
     String viewQualifiedName;
-
-    /** TBC */
-    @Attribute
-    @JsonProperty("atlanSchema")
-    ISchema schema;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IColumn> columns;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IDbtModel> dbtModels;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IDbtSource> dbtSources;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> outputFromProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IDbtSource> sqlDBTSources;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IDbtModel> sqlDbtModels;
 
     /**
      * Reference to a MaterializedView by GUID.

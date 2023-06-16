@@ -40,6 +40,11 @@ public class MicroStrategyFact extends Asset
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
     Long microStrategyCertifiedAt;
 
     /** TBC */
@@ -70,6 +75,15 @@ public class MicroStrategyFact extends Asset
     @Singular("putMicroStrategyLocation")
     List<Map<String, String>> microStrategyLocation;
 
+    /** Metrics where the fact is used. */
+    @Attribute
+    @Singular
+    SortedSet<IMicroStrategyMetric> microStrategyMetrics;
+
+    /** Project containing the fact. */
+    @Attribute
+    IMicroStrategyProject microStrategyProject;
+
     /** TBC */
     @Attribute
     String microStrategyProjectName;
@@ -87,20 +101,6 @@ public class MicroStrategyFact extends Asset
     @Attribute
     @Singular
     SortedSet<String> microStrategyReportQualifiedNames;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** Metrics where the fact is used. */
-    @Attribute
-    @Singular
-    SortedSet<IMicroStrategyMetric> microStrategyMetrics;
-
-    /** Project containing the fact. */
-    @Attribute
-    IMicroStrategyProject microStrategyProject;
 
     /** TBC */
     @Attribute

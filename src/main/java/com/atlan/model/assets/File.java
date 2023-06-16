@@ -40,11 +40,20 @@ public class File extends Asset implements IFile, IResource, ICatalog, IAsset, I
 
     /** TBC */
     @Attribute
+    IAsset fileAssets;
+
+    /** TBC */
+    @Attribute
     String filePath;
 
     /** TBC */
     @Attribute
     FileType fileType;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
 
     /** TBC */
     @Attribute
@@ -56,26 +65,17 @@ public class File extends Asset implements IFile, IResource, ICatalog, IAsset, I
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
     String reference;
 
     /** TBC */
     @Attribute
     @Singular("putResourceMetadata")
     Map<String, String> resourceMetadata;
-
-    /** TBC */
-    @Attribute
-    IAsset fileAssets;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> outputFromProcesses;
 
     /**
      * Reference to a File by GUID.

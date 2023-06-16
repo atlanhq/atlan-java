@@ -28,9 +28,6 @@ import javax.annotation.processing.Generated;
 public interface IPowerBIWorkspace {
 
     /** TBC */
-    Boolean getHasLineage();
-
-    /** TBC */
     SortedSet<String> getAdminGroups();
 
     /** TBC */
@@ -211,6 +208,9 @@ public interface IPowerBIWorkspace {
     SortedSet<String> getAssetTags();
 
     /** TBC */
+    SortedSet<IGlossaryTerm> getAssignedTerms();
+
+    /** TBC */
     CertificateStatus getCertificateStatus();
 
     /** TBC */
@@ -235,10 +235,19 @@ public interface IPowerBIWorkspace {
     Long getDashboardCount();
 
     /** TBC */
+    SortedSet<IPowerBIDashboard> getDashboards();
+
+    /** TBC */
     Long getDataflowCount();
 
     /** TBC */
+    SortedSet<IPowerBIDataflow> getDataflows();
+
+    /** TBC */
     Long getDatasetCount();
+
+    /** TBC */
+    SortedSet<IPowerBIDataset> getDatasets();
 
     /** TBC */
     String getDbtQualifiedName();
@@ -248,6 +257,15 @@ public interface IPowerBIWorkspace {
 
     /** TBC */
     String getDisplayName();
+
+    /** TBC */
+    SortedSet<IFile> getFiles();
+
+    /** TBC */
+    Boolean getHasLineage();
+
+    /** TBC */
+    SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
     Boolean getIsDiscoverable();
@@ -268,7 +286,22 @@ public interface IPowerBIWorkspace {
     String getLastSyncWorkflowName();
 
     /** TBC */
+    SortedSet<ILink> getLinks();
+
+    /** TBC */
+    SortedSet<IMCIncident> getMcIncidents();
+
+    /** TBC */
+    SortedSet<IMCMonitor> getMcMonitors();
+
+    /** TBC */
+    SortedSet<IMetric> getMetrics();
+
+    /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
     SortedSet<String> getOwnerGroups();
@@ -295,7 +328,13 @@ public interface IPowerBIWorkspace {
     String getQualifiedName();
 
     /** TBC */
+    IReadme getReadme();
+
+    /** TBC */
     Long getReportCount();
+
+    /** TBC */
+    SortedSet<IPowerBIReport> getReports();
 
     /** TBC */
     String getSampleDataUrl();
@@ -319,10 +358,10 @@ public interface IPowerBIWorkspace {
     String getSourceOwners();
 
     /** TBC */
-    SortedSet<String> getSourceQueryComputeCosts();
+    List<PopularityInsights> getSourceQueryComputeCostRecords();
 
     /** TBC */
-    List<PopularityInsights> getSourceQueryComputeCostRecords();
+    SortedSet<String> getSourceQueryComputeCosts();
 
     /** TBC */
     Long getSourceReadCount();
@@ -337,19 +376,19 @@ public interface IPowerBIWorkspace {
     Double getSourceReadQueryCost();
 
     /** TBC */
-    SortedSet<String> getSourceReadRecentUsers();
+    List<PopularityInsights> getSourceReadRecentUserRecords();
 
     /** TBC */
-    List<PopularityInsights> getSourceReadRecentUserRecords();
+    SortedSet<String> getSourceReadRecentUsers();
 
     /** TBC */
     List<PopularityInsights> getSourceReadSlowQueryRecords();
 
     /** TBC */
-    SortedSet<String> getSourceReadTopUsers();
+    List<PopularityInsights> getSourceReadTopUserRecords();
 
     /** TBC */
-    List<PopularityInsights> getSourceReadTopUserRecords();
+    SortedSet<String> getSourceReadTopUsers();
 
     /** TBC */
     Long getSourceReadUserCount();
@@ -389,45 +428,6 @@ public interface IPowerBIWorkspace {
 
     /** TBC */
     String getWebUrl();
-
-    /** TBC */
-    SortedSet<IPowerBIDashboard> getDashboards();
-
-    /** TBC */
-    SortedSet<IPowerBIDataflow> getDataflows();
-
-    /** TBC */
-    SortedSet<IPowerBIDataset> getDatasets();
-
-    /** TBC */
-    SortedSet<IFile> getFiles();
-
-    /** TBC */
-    SortedSet<ILineageProcess> getInputToProcesses();
-
-    /** TBC */
-    SortedSet<ILink> getLinks();
-
-    /** TBC */
-    SortedSet<IMCIncident> getMcIncidents();
-
-    /** TBC */
-    SortedSet<IMCMonitor> getMcMonitors();
-
-    /** TBC */
-    SortedSet<IGlossaryTerm> getAssignedTerms();
-
-    /** TBC */
-    SortedSet<IMetric> getMetrics();
-
-    /** TBC */
-    SortedSet<ILineageProcess> getOutputFromProcesses();
-
-    /** TBC */
-    IReadme getReadme();
-
-    /** TBC */
-    SortedSet<IPowerBIReport> getReports();
 
     /** Name of the type that defines the asset. */
     String getTypeName();

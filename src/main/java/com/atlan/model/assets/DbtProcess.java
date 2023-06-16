@@ -45,6 +45,11 @@ public class DbtProcess extends Asset implements IDbtProcess, IDbt, ILineageProc
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<IColumnProcess> columnProcesses;
+
+    /** TBC */
+    @Attribute
     String dbtAccountName;
 
     /** TBC */
@@ -122,15 +127,6 @@ public class DbtProcess extends Asset implements IDbtProcess, IDbt, ILineageProc
 
     /** TBC */
     @Attribute
-    String sql;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IColumnProcess> columnProcesses;
-
-    /** TBC */
-    @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
@@ -148,6 +144,10 @@ public class DbtProcess extends Asset implements IDbtProcess, IDbt, ILineageProc
     @Attribute
     @Singular
     SortedSet<ICatalog> outputs;
+
+    /** TBC */
+    @Attribute
+    String sql;
 
     /**
      * Reference to a DbtProcess by GUID.

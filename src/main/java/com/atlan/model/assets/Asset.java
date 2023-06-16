@@ -80,11 +80,6 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
 
     public static final String TYPE_NAME = "Asset";
 
-    /** Indicates whether this asset has lineage (true) or not. */
-    @Attribute
-    @JsonProperty("__hasLineage")
-    Boolean hasLineage;
-
     /** List of groups who administer the asset. (This is only used for Connection assets.) */
     @Attribute
     @Singular
@@ -341,6 +336,12 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @Singular
     SortedSet<String> assetTags;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    @JsonProperty("meanings")
+    SortedSet<IGlossaryTerm> assignedTerms;
+
     /** Status of the asset's certification. */
     @Attribute
     CertificateStatus certificateStatus;
@@ -384,6 +385,16 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<IFile> files;
+
+    /** Indicates whether this asset has lineage (true) or not. */
+    @Attribute
+    @JsonProperty("__hasLineage")
+    Boolean hasLineage;
+
+    /** TBC */
+    @Attribute
     Boolean isDiscoverable;
 
     /** TBC */
@@ -406,6 +417,26 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @Attribute
     String lastSyncWorkflowName;
 
+    /** Resources that are linked to this asset. */
+    @Attribute
+    @Singular
+    SortedSet<ILink> links;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IMCIncident> mcIncidents;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IMCMonitor> mcMonitors;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IMetric> metrics;
+
     /** Human-readable name of the asset. */
     @Attribute
     String name;
@@ -427,6 +458,10 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     /** TBC */
     @Attribute
     String qualifiedName;
+
+    /** README that is linked to this asset. */
+    @Attribute
+    IReadme readme;
 
     /** TBC */
     @Attribute
@@ -456,17 +491,17 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @Attribute
     String sourceOwners;
 
-    /** List of most expensive warehouse names. */
-    @Attribute
-    @Singular
-    @JsonProperty("sourceQueryComputeCostList")
-    SortedSet<String> sourceQueryComputeCosts;
-
     /** List of most expensive warehouses with extra insights. */
     @Attribute
     @Singular
     @JsonProperty("sourceQueryComputeCostRecordList")
     List<PopularityInsights> sourceQueryComputeCostRecords;
+
+    /** List of most expensive warehouse names. */
+    @Attribute
+    @Singular
+    @JsonProperty("sourceQueryComputeCostList")
+    SortedSet<String> sourceQueryComputeCosts;
 
     /** Total count of all read operations at source. */
     @Attribute
@@ -488,17 +523,17 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @Attribute
     Double sourceReadQueryCost;
 
-    /** List of usernames of the most recent users who read the asset. */
-    @Attribute
-    @Singular
-    @JsonProperty("sourceReadRecentUserList")
-    SortedSet<String> sourceReadRecentUsers;
-
     /** List of usernames with extra insights for the most recent users who read the asset. */
     @Attribute
     @Singular
     @JsonProperty("sourceReadRecentUserRecordList")
     List<PopularityInsights> sourceReadRecentUserRecords;
+
+    /** List of usernames of the most recent users who read the asset. */
+    @Attribute
+    @Singular
+    @JsonProperty("sourceReadRecentUserList")
+    SortedSet<String> sourceReadRecentUsers;
 
     /** List of the slowest queries that accessed this asset. */
     @Attribute
@@ -506,17 +541,17 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @JsonProperty("sourceReadSlowQueryRecordList")
     List<PopularityInsights> sourceReadSlowQueryRecords;
 
-    /** List of usernames of the users who read the asset the most. */
-    @Attribute
-    @Singular
-    @JsonProperty("sourceReadTopUserList")
-    SortedSet<String> sourceReadTopUsers;
-
     /** List of usernames with extra insights for the users who read the asset the most. */
     @Attribute
     @Singular
     @JsonProperty("sourceReadTopUserRecordList")
     List<PopularityInsights> sourceReadTopUserRecords;
+
+    /** List of usernames of the users who read the asset the most. */
+    @Attribute
+    @Singular
+    @JsonProperty("sourceReadTopUserList")
+    SortedSet<String> sourceReadTopUsers;
 
     /** Total number of unique users that read data from asset. */
     @Attribute
@@ -568,41 +603,6 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @Attribute
     @Singular
     SortedSet<String> viewerUsers;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IFile> files;
-
-    /** Resources that are linked to this asset. */
-    @Attribute
-    @Singular
-    SortedSet<ILink> links;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IMCIncident> mcIncidents;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IMCMonitor> mcMonitors;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    @JsonProperty("meanings")
-    SortedSet<IGlossaryTerm> assignedTerms;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IMetric> metrics;
-
-    /** README that is linked to this asset. */
-    @Attribute
-    IReadme readme;
 
     /** Internal tracking of fields that should be serialized with null values. */
     @JsonIgnore

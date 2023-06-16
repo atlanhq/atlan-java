@@ -51,10 +51,6 @@ public class ColumnProcess extends Asset implements IColumnProcess, ILineageProc
 
     /** TBC */
     @Attribute
-    String sql;
-
-    /** TBC */
-    @Attribute
     @Singular
     SortedSet<IColumnProcess> columnProcesses;
 
@@ -71,6 +67,10 @@ public class ColumnProcess extends Asset implements IColumnProcess, ILineageProc
     /** Parent process that contains this column-level process. */
     @Attribute
     ILineageProcess process;
+
+    /** TBC */
+    @Attribute
+    String sql;
 
     /**
      * Reference to a ColumnProcess by GUID.

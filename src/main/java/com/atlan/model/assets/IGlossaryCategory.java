@@ -27,9 +27,6 @@ import javax.annotation.processing.Generated;
 public interface IGlossaryCategory {
 
     /** TBC */
-    Boolean getHasLineage();
-
-    /** TBC */
     Map<String, String> getAdditionalAttributes();
 
     /** TBC */
@@ -40,6 +37,9 @@ public interface IGlossaryCategory {
 
     /** TBC */
     SortedSet<String> getAdminUsers();
+
+    /** TBC */
+    IGlossary getAnchor();
 
     /** TBC */
     String getAnnouncementMessage();
@@ -213,6 +213,9 @@ public interface IGlossaryCategory {
     SortedSet<String> getAssetTags();
 
     /** TBC */
+    SortedSet<IGlossaryTerm> getAssignedTerms();
+
+    /** TBC */
     CertificateStatus getCertificateStatus();
 
     /** TBC */
@@ -223,6 +226,9 @@ public interface IGlossaryCategory {
 
     /** TBC */
     String getCertificateUpdatedBy();
+
+    /** TBC */
+    SortedSet<IGlossaryCategory> getChildrenCategories();
 
     /** TBC */
     String getConnectionName();
@@ -243,6 +249,12 @@ public interface IGlossaryCategory {
     String getDisplayName();
 
     /** TBC */
+    SortedSet<IFile> getFiles();
+
+    /** TBC */
+    Boolean getHasLineage();
+
+    /** TBC */
     Boolean getIsDiscoverable();
 
     /** TBC */
@@ -261,7 +273,19 @@ public interface IGlossaryCategory {
     String getLastSyncWorkflowName();
 
     /** TBC */
+    SortedSet<ILink> getLinks();
+
+    /** TBC */
     String getLongDescription();
+
+    /** TBC */
+    SortedSet<IMCIncident> getMcIncidents();
+
+    /** TBC */
+    SortedSet<IMCMonitor> getMcMonitors();
+
+    /** TBC */
+    SortedSet<IMetric> getMetrics();
 
     /** TBC */
     String getName();
@@ -273,10 +297,16 @@ public interface IGlossaryCategory {
     SortedSet<String> getOwnerUsers();
 
     /** TBC */
+    IGlossaryCategory getParentCategory();
+
+    /** TBC */
     Double getPopularityScore();
 
     /** TBC */
     String getQualifiedName();
+
+    /** TBC */
+    IReadme getReadme();
 
     /** TBC */
     String getSampleDataUrl();
@@ -303,10 +333,10 @@ public interface IGlossaryCategory {
     String getSourceOwners();
 
     /** TBC */
-    SortedSet<String> getSourceQueryComputeCosts();
+    List<PopularityInsights> getSourceQueryComputeCostRecords();
 
     /** TBC */
-    List<PopularityInsights> getSourceQueryComputeCostRecords();
+    SortedSet<String> getSourceQueryComputeCosts();
 
     /** TBC */
     Long getSourceReadCount();
@@ -321,19 +351,19 @@ public interface IGlossaryCategory {
     Double getSourceReadQueryCost();
 
     /** TBC */
-    SortedSet<String> getSourceReadRecentUsers();
+    List<PopularityInsights> getSourceReadRecentUserRecords();
 
     /** TBC */
-    List<PopularityInsights> getSourceReadRecentUserRecords();
+    SortedSet<String> getSourceReadRecentUsers();
 
     /** TBC */
     List<PopularityInsights> getSourceReadSlowQueryRecords();
 
     /** TBC */
-    SortedSet<String> getSourceReadTopUsers();
+    List<PopularityInsights> getSourceReadTopUserRecords();
 
     /** TBC */
-    List<PopularityInsights> getSourceReadTopUserRecords();
+    SortedSet<String> getSourceReadTopUsers();
 
     /** TBC */
     Long getSourceReadUserCount();
@@ -360,6 +390,9 @@ public interface IGlossaryCategory {
     String getTenantId();
 
     /** TBC */
+    SortedSet<IGlossaryTerm> getTerms();
+
+    /** TBC */
     String getUserDescription();
 
     /** TBC */
@@ -370,39 +403,6 @@ public interface IGlossaryCategory {
 
     /** TBC */
     SortedSet<String> getViewerUsers();
-
-    /** TBC */
-    IGlossary getAnchor();
-
-    /** TBC */
-    SortedSet<IGlossaryCategory> getChildrenCategories();
-
-    /** TBC */
-    SortedSet<IFile> getFiles();
-
-    /** TBC */
-    SortedSet<ILink> getLinks();
-
-    /** TBC */
-    SortedSet<IMCIncident> getMcIncidents();
-
-    /** TBC */
-    SortedSet<IMCMonitor> getMcMonitors();
-
-    /** TBC */
-    SortedSet<IGlossaryTerm> getAssignedTerms();
-
-    /** TBC */
-    SortedSet<IMetric> getMetrics();
-
-    /** TBC */
-    IGlossaryCategory getParentCategory();
-
-    /** TBC */
-    IReadme getReadme();
-
-    /** TBC */
-    SortedSet<IGlossaryTerm> getTerms();
 
     /** Name of the type that defines the asset. */
     String getTypeName();

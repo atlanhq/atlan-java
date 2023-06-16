@@ -50,6 +50,11 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
     @Attribute
     Double columnAverageLength;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtModelColumn> columnDbtModelColumns;
+
     /** Level of nesting, used for STRUCT/NESTED columns */
     @Attribute
     Integer columnDepthLevel;
@@ -150,6 +155,11 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
     @Attribute
     Double columnVariance;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IMetric> dataQualityMetricDimensions;
+
     /** Data type of values in the column. */
     @Attribute
     String dataType;
@@ -164,7 +174,41 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<IDbtMetric> dbtMetrics;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtModelColumn> dbtModelColumns;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtModel> dbtModels;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtSource> dbtSources;
+
+    /** TBC */
+    @Attribute
     String defaultValue;
+
+    /** Column this column refers to as a foreign key. */
+    @Attribute
+    IColumn foreignKeyFrom;
+
+    /** All the columns that refer to this column as a foreign key. */
+    @Attribute
+    @Singular("addForeignKeyTo")
+    SortedSet<IColumn> foreignKeyTo;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
 
     /** TBC */
     @Attribute
@@ -210,13 +254,28 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
     @Attribute
     Long lastProfiledAt;
 
+    /** Materialized view in which this column exists, or empty if the column instead exists in a table or view. */
+    @Attribute
+    @JsonProperty("materialisedView")
+    IMaterializedView materializedView;
+
     /** Maximum length of a value in this column. */
     @Attribute
     Long maxLength;
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<IMetric> metricTimestamps;
+
+    /** TBC */
+    @Attribute
     Integer nestedColumnCount;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IColumn> nestedColumns;
 
     /** Number of digits allowed to the right of the decimal point. */
     @Attribute
@@ -225,6 +284,15 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
     /** Order (position) in which the column appears in the table (starting at 1). */
     @Attribute
     Integer order;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    IColumn parentColumn;
 
     /** TBC */
     @Attribute
@@ -249,6 +317,11 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
     /** Total number of digits allowed when the dataType is numeric. */
     @Attribute
     Integer precision;
+
+    /** Queries that involve this column. */
+    @Attribute
+    @Singular
+    SortedSet<IAtlanQuery> queries;
 
     /** TBC */
     @Attribute
@@ -281,11 +354,29 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<IDbtSource> sqlDBTSources;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtModel> sqlDbtModels;
+
+    /** TBC */
+    @Attribute
     String subDataType;
+
+    /** Table in which this column exists, or empty if the column instead exists in a view or materialized view. */
+    @Attribute
+    ITable table;
 
     /** TBC */
     @Attribute
     String tableName;
+
+    /** TBC */
+    @Attribute
+    ITablePartition tablePartition;
 
     /** TBC */
     @Attribute
@@ -296,6 +387,10 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
     @Singular
     Map<String, String> validations;
 
+    /** View in which this column exists, or empty if the column instead exists in a table or materialized view. */
+    @Attribute
+    IView view;
+
     /** TBC */
     @Attribute
     String viewName;
@@ -303,101 +398,6 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
     /** TBC */
     @Attribute
     String viewQualifiedName;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IDbtModelColumn> columnDbtModelColumns;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IMetric> dataQualityMetricDimensions;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IDbtMetric> dbtMetrics;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IDbtModelColumn> dbtModelColumns;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IDbtModel> dbtModels;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IDbtSource> dbtSources;
-
-    /** Column this column refers to as a foreign key. */
-    @Attribute
-    IColumn foreignKeyFrom;
-
-    /** All the columns that refer to this column as a foreign key. */
-    @Attribute
-    @Singular("addForeignKeyTo")
-    SortedSet<IColumn> foreignKeyTo;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** Materialized view in which this column exists, or empty if the column instead exists in a table or view. */
-    @Attribute
-    @JsonProperty("materialisedView")
-    IMaterializedView materializedView;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IMetric> metricTimestamps;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IColumn> nestedColumns;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> outputFromProcesses;
-
-    /** TBC */
-    @Attribute
-    IColumn parentColumn;
-
-    /** Queries that involve this column. */
-    @Attribute
-    @Singular
-    SortedSet<IAtlanQuery> queries;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IDbtSource> sqlDBTSources;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IDbtModel> sqlDbtModels;
-
-    /** Table in which this column exists, or empty if the column instead exists in a view or materialized view. */
-    @Attribute
-    ITable table;
-
-    /** TBC */
-    @Attribute
-    ITablePartition tablePartition;
-
-    /** View in which this column exists, or empty if the column instead exists in a table or materialized view. */
-    @Attribute
-    IView view;
 
     /**
      * Reference to a Column by GUID.

@@ -37,6 +37,16 @@ public class SigmaDataset extends Asset implements ISigmaDataset, ISigma, IBI, I
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
     String sigmaDataElementName;
 
     /** TBC */
@@ -46,6 +56,11 @@ public class SigmaDataset extends Asset implements ISigmaDataset, ISigma, IBI, I
     /** Number of columns that exist within this dataset. */
     @Attribute
     Long sigmaDatasetColumnCount;
+
+    /** Columns that exist within this dataset. */
+    @Attribute
+    @Singular
+    SortedSet<ISigmaDatasetColumn> sigmaDatasetColumns;
 
     /** TBC */
     @Attribute
@@ -62,21 +77,6 @@ public class SigmaDataset extends Asset implements ISigmaDataset, ISigma, IBI, I
     /** TBC */
     @Attribute
     String sigmaWorkbookQualifiedName;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> outputFromProcesses;
-
-    /** Columns that exist within this dataset. */
-    @Attribute
-    @Singular
-    SortedSet<ISigmaDatasetColumn> sigmaDatasetColumns;
 
     /**
      * Reference to a SigmaDataset by GUID.

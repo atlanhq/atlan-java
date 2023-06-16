@@ -77,12 +77,12 @@ public class Persona extends Asset implements IPersona, IAccessControl, IAsset, 
 
     /** TBC */
     @Attribute
-    String roleId;
+    @Singular
+    SortedSet<IAuthPolicy> policies;
 
     /** TBC */
     @Attribute
-    @Singular
-    SortedSet<IAuthPolicy> policies;
+    String roleId;
 
     /**
      * Reference to a Persona by GUID.

@@ -35,14 +35,6 @@ public class RedashDashboard extends Asset implements IRedashDashboard, IRedash,
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Number of widgets in the Redash dashboard. */
-    @Attribute
-    Long redashDashboardWidgetCount;
-
-    /** TBC */
-    @Attribute
-    Boolean redashIsPublished;
-
     /** TBC */
     @Attribute
     @Singular
@@ -52,6 +44,14 @@ public class RedashDashboard extends Asset implements IRedashDashboard, IRedash,
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** Number of widgets in the Redash dashboard. */
+    @Attribute
+    Long redashDashboardWidgetCount;
+
+    /** TBC */
+    @Attribute
+    Boolean redashIsPublished;
 
     /**
      * Reference to a RedashDashboard by GUID.

@@ -37,10 +37,6 @@ public class LookerView extends Asset implements ILookerView, ILooker, IBI, ICat
 
     /** TBC */
     @Attribute
-    String projectName;
-
-    /** TBC */
-    @Attribute
     @Singular
     SortedSet<ILookerField> fields;
 
@@ -57,6 +53,10 @@ public class LookerView extends Asset implements ILookerView, ILooker, IBI, ICat
     /** TBC */
     @Attribute
     ILookerProject project;
+
+    /** TBC */
+    @Attribute
+    String projectName;
 
     /**
      * Reference to a LookerView by GUID.

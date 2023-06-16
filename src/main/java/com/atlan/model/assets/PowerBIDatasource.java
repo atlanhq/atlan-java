@@ -46,6 +46,21 @@ public class PowerBIDatasource extends Asset
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<IPowerBIDataset> datasets;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
     PowerBIEndorsementType powerBIEndorsement;
 
     /** TBC */
@@ -59,21 +74,6 @@ public class PowerBIDatasource extends Asset
     /** TBC */
     @Attribute
     String powerBITableQualifiedName;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IPowerBIDataset> datasets;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> outputFromProcesses;
 
     /**
      * Reference to a PowerBIDatasource by GUID.

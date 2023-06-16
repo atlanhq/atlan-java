@@ -39,6 +39,16 @@ public class PowerBIDashboard extends Asset
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
     PowerBIEndorsementType powerBIEndorsement;
 
     /** TBC */
@@ -59,30 +69,20 @@ public class PowerBIDashboard extends Asset
 
     /** TBC */
     @Attribute
-    String webUrl;
-
-    /** TBC */
-    @Attribute
-    String workspaceQualifiedName;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> outputFromProcesses;
-
-    /** TBC */
-    @Attribute
     @Singular
     SortedSet<IPowerBITile> tiles;
 
     /** TBC */
     @Attribute
+    String webUrl;
+
+    /** TBC */
+    @Attribute
     IPowerBIWorkspace workspace;
+
+    /** TBC */
+    @Attribute
+    String workspaceQualifiedName;
 
     /**
      * Reference to a PowerBIDashboard by GUID.

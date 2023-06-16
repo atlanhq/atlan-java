@@ -40,7 +40,7 @@ public class AssetTestGenerator extends AssetGenerator {
     @Getter
     @Builder
     public static final class TestAttribute {
-        private Attribute details;
+        private Attribute<?> details;
         private String builderMethod;
         private List<String> values;
         private List<String> rawValues;
@@ -60,9 +60,9 @@ public class AssetTestGenerator extends AssetGenerator {
                 }
             }
         }
-        List<Attribute> attributes = assetGenerator.getNonInheritedAttributes();
+        Set<Attribute<?>> attributes = assetGenerator.getNonInheritedAttributes();
         if (attributes != null) {
-            for (Attribute attribute : attributes) {
+            for (Attribute<?> attribute : attributes) {
                 TestAttribute.TestAttributeBuilder builder =
                         TestAttribute.builder().details(attribute);
                 MappedType type = attribute.getType();

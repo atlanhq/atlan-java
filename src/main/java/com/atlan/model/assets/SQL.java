@@ -45,6 +45,21 @@ public abstract class SQL extends Asset implements ISQL, ICatalog, IAsset, IRefe
     @Attribute
     String databaseQualifiedName;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtModel> dbtModels;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtSource> dbtSources;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
     /** Whether the asset has been profiled (true) or not (false). */
     @Attribute
     Boolean isProfiled;
@@ -52,6 +67,11 @@ public abstract class SQL extends Asset implements ISQL, ICatalog, IAsset, IRefe
     /** Time (epoch) at which the asset was last profiled, in milliseconds. */
     @Attribute
     Long lastProfiledAt;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 
     /** TBC */
     @Attribute
@@ -78,6 +98,16 @@ public abstract class SQL extends Asset implements ISQL, ICatalog, IAsset, IRefe
     @Attribute
     String schemaQualifiedName;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtSource> sqlDBTSources;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtModel> sqlDbtModels;
+
     /** Simple name of the table in which this SQL asset exists, or empty if it does not exist within a table. */
     @Attribute
     String tableName;
@@ -93,34 +123,4 @@ public abstract class SQL extends Asset implements ISQL, ICatalog, IAsset, IRefe
     /** Unique name of the view in which this SQL asset exists, or empty if it does not exist within a view. */
     @Attribute
     String viewQualifiedName;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IDbtModel> dbtModels;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IDbtSource> dbtSources;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> outputFromProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IDbtSource> sqlDBTSources;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IDbtModel> sqlDbtModels;
 }

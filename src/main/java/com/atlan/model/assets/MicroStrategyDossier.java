@@ -40,6 +40,11 @@ public class MicroStrategyDossier extends Asset
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
     Long microStrategyCertifiedAt;
 
     /** TBC */
@@ -70,6 +75,10 @@ public class MicroStrategyDossier extends Asset
     @Singular("putMicroStrategyLocation")
     List<Map<String, String>> microStrategyLocation;
 
+    /** Project containing the dossier. */
+    @Attribute
+    IMicroStrategyProject microStrategyProject;
+
     /** TBC */
     @Attribute
     String microStrategyProjectName;
@@ -87,15 +96,6 @@ public class MicroStrategyDossier extends Asset
     @Attribute
     @Singular
     SortedSet<String> microStrategyReportQualifiedNames;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** Project containing the dossier. */
-    @Attribute
-    IMicroStrategyProject microStrategyProject;
 
     /** Visualizations used within the dossier. */
     @Attribute

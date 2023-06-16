@@ -26,23 +26,6 @@ public abstract class Metric extends Asset implements IMetric, IDataQuality, ICa
 
     /** TBC */
     @Attribute
-    String metricFilters;
-
-    /** TBC */
-    @Attribute
-    String metricSQL;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<String> metricTimeGrains;
-
-    /** TBC */
-    @Attribute
-    String metricType;
-
-    /** TBC */
-    @Attribute
     @Singular
     SortedSet<IAsset> assets;
 
@@ -58,7 +41,24 @@ public abstract class Metric extends Asset implements IMetric, IDataQuality, ICa
 
     /** TBC */
     @Attribute
+    String metricFilters;
+
+    /** TBC */
+    @Attribute
+    String metricSQL;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<String> metricTimeGrains;
+
+    /** TBC */
+    @Attribute
     IColumn metricTimestampColumn;
+
+    /** TBC */
+    @Attribute
+    String metricType;
 
     /** TBC */
     @Attribute

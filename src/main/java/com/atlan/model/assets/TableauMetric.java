@@ -39,6 +39,20 @@ public class TableauMetric extends Asset implements ITableauMetric, ITableau, IB
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    ITableauProject project;
+
+    /** TBC */
+    @Attribute
     @Singular("addProjectHierarchy")
     List<Map<String, String>> projectHierarchy;
 
@@ -53,20 +67,6 @@ public class TableauMetric extends Asset implements ITableauMetric, ITableau, IB
     /** TBC */
     @Attribute
     String topLevelProjectQualifiedName;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> outputFromProcesses;
-
-    /** TBC */
-    @Attribute
-    ITableauProject project;
 
     /**
      * Reference to a TableauMetric by GUID.

@@ -43,11 +43,36 @@ public class PowerBIWorkspace extends Asset
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<IPowerBIDashboard> dashboards;
+
+    /** TBC */
+    @Attribute
     Long dataflowCount;
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<IPowerBIDataflow> dataflows;
+
+    /** TBC */
+    @Attribute
     Long datasetCount;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IPowerBIDataset> datasets;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 
     /** TBC */
     @Attribute
@@ -71,37 +96,12 @@ public class PowerBIWorkspace extends Asset
 
     /** TBC */
     @Attribute
-    String webUrl;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IPowerBIDashboard> dashboards;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IPowerBIDataflow> dataflows;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IPowerBIDataset> datasets;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> outputFromProcesses;
-
-    /** TBC */
-    @Attribute
     @Singular
     SortedSet<IPowerBIReport> reports;
+
+    /** TBC */
+    @Attribute
+    String webUrl;
 
     /**
      * Reference to a PowerBIWorkspace by GUID.

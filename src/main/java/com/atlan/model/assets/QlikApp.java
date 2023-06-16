@@ -37,6 +37,16 @@ public class QlikApp extends Asset implements IQlikApp, IQlik, IBI, ICatalog, IA
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
     String qlikAppId;
 
     /** TBC */
@@ -79,24 +89,6 @@ public class QlikApp extends Asset implements IQlikApp, IQlik, IBI, ICatalog, IA
     @Attribute
     String qlikQRI;
 
-    /** TBC */
-    @Attribute
-    String qlikSpaceId;
-
-    /** TBC */
-    @Attribute
-    String qlikSpaceQualifiedName;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> outputFromProcesses;
-
     /** Sheets that exist within the app. */
     @Attribute
     @Singular
@@ -105,6 +97,14 @@ public class QlikApp extends Asset implements IQlikApp, IQlik, IBI, ICatalog, IA
     /** Space in which the app exists. */
     @Attribute
     IQlikSpace qlikSpace;
+
+    /** TBC */
+    @Attribute
+    String qlikSpaceId;
+
+    /** TBC */
+    @Attribute
+    String qlikSpaceQualifiedName;
 
     /**
      * Reference to a QlikApp by GUID.

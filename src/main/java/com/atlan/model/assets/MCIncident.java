@@ -39,7 +39,17 @@ public class MCIncident extends Asset
     /** TBC */
     @Attribute
     @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
     SortedSet<String> mcAssetQualifiedNames;
+
+    /** Assets impacted by the incident. */
+    @Attribute
+    @Singular
+    SortedSet<IAsset> mcIncidentAssets;
 
     /** Unique identifier for the incident. */
     @Attribute
@@ -70,16 +80,6 @@ public class MCIncident extends Asset
     @Attribute
     @Singular
     SortedSet<String> mcLabels;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** Assets impacted by the incident. */
-    @Attribute
-    @Singular
-    SortedSet<IAsset> mcIncidentAssets;
 
     /** Monitor through which this incident occurred. */
     @Attribute

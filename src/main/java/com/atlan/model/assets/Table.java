@@ -48,6 +48,11 @@ public class Table extends Asset implements ITable, ISQL, ICatalog, IAsset, IRef
     @Attribute
     Long columnCount;
 
+    /** Columns that exist within this table. */
+    @Attribute
+    @Singular
+    SortedSet<IColumn> columns;
+
     /** TBC */
     @Attribute
     String databaseName;
@@ -55,6 +60,21 @@ public class Table extends Asset implements ITable, ISQL, ICatalog, IAsset, IRef
     /** TBC */
     @Attribute
     String databaseQualifiedName;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtModel> dbtModels;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtSource> dbtSources;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ITable> dimensions;
 
     /** TBC */
     @Attribute
@@ -67,6 +87,16 @@ public class Table extends Asset implements ITable, ISQL, ICatalog, IAsset, IRef
     /** TBC */
     @Attribute
     String externalLocationRegion;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ITable> facts;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
 
     /** TBC */
     @Attribute
@@ -90,6 +120,11 @@ public class Table extends Asset implements ITable, ISQL, ICatalog, IAsset, IRef
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
     Long partitionCount;
 
     /** TBC */
@@ -99,6 +134,16 @@ public class Table extends Asset implements ITable, ISQL, ICatalog, IAsset, IRef
     /** TBC */
     @Attribute
     String partitionStrategy;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ITablePartition> partitions;
+
+    /** Queries that involve this table. */
+    @Attribute
+    @Singular
+    SortedSet<IAtlanQuery> queries;
 
     /** TBC */
     @Attribute
@@ -126,6 +171,11 @@ public class Table extends Asset implements ITable, ISQL, ICatalog, IAsset, IRef
     @Attribute
     Long rowCount;
 
+    /** Schema in which this table exists. */
+    @Attribute
+    @JsonProperty("atlanSchema")
+    ISchema schema;
+
     /** TBC */
     @Attribute
     String schemaName;
@@ -137,6 +187,16 @@ public class Table extends Asset implements ITable, ISQL, ICatalog, IAsset, IRef
     /** Size of the table in bytes. */
     @Attribute
     Long sizeBytes;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtSource> sqlDBTSources;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtModel> sqlDbtModels;
 
     /** TBC */
     @Attribute
@@ -153,66 +213,6 @@ public class Table extends Asset implements ITable, ISQL, ICatalog, IAsset, IRef
     /** TBC */
     @Attribute
     String viewQualifiedName;
-
-    /** Schema in which this table exists. */
-    @Attribute
-    @JsonProperty("atlanSchema")
-    ISchema schema;
-
-    /** Columns that exist within this table. */
-    @Attribute
-    @Singular
-    SortedSet<IColumn> columns;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IDbtModel> dbtModels;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IDbtSource> dbtSources;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ITable> dimensions;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ITable> facts;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> outputFromProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ITablePartition> partitions;
-
-    /** Queries that involve this table. */
-    @Attribute
-    @Singular
-    SortedSet<IAtlanQuery> queries;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IDbtSource> sqlDBTSources;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IDbtModel> sqlDbtModels;
 
     /**
      * Reference to a Table by GUID.

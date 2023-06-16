@@ -40,27 +40,6 @@ public class TableauWorkbook extends Asset
 
     /** TBC */
     @Attribute
-    @Singular("addProjectHierarchy")
-    List<Map<String, String>> projectHierarchy;
-
-    /** TBC */
-    @Attribute
-    String projectQualifiedName;
-
-    /** TBC */
-    @Attribute
-    String siteQualifiedName;
-
-    /** TBC */
-    @Attribute
-    String topLevelProjectName;
-
-    /** TBC */
-    @Attribute
-    String topLevelProjectQualifiedName;
-
-    /** TBC */
-    @Attribute
     @Singular
     SortedSet<ITableauDashboard> dashboards;
 
@@ -82,6 +61,27 @@ public class TableauWorkbook extends Asset
     /** TBC */
     @Attribute
     ITableauProject project;
+
+    /** TBC */
+    @Attribute
+    @Singular("addProjectHierarchy")
+    List<Map<String, String>> projectHierarchy;
+
+    /** TBC */
+    @Attribute
+    String projectQualifiedName;
+
+    /** TBC */
+    @Attribute
+    String siteQualifiedName;
+
+    /** TBC */
+    @Attribute
+    String topLevelProjectName;
+
+    /** TBC */
+    @Attribute
+    String topLevelProjectQualifiedName;
 
     /** TBC */
     @Attribute

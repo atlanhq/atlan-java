@@ -102,6 +102,16 @@ public class DbtModel extends Asset implements IDbtModel, IDbt, ICatalog, IAsset
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<IDbtMetric> dbtMetrics;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtModelColumn> dbtModelColumns;
+
+    /** TBC */
+    @Attribute
     Long dbtModelCompileCompletedAt;
 
     /** TBC */
@@ -127,6 +137,11 @@ public class DbtModel extends Asset implements IDbtModel, IDbt, ICatalog, IAsset
     /** TBC */
     @Attribute
     Long dbtModelRunGeneratedAt;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISQL> dbtModelSqlAssets;
 
     /** TBC */
     @Attribute
@@ -160,21 +175,6 @@ public class DbtModel extends Asset implements IDbtModel, IDbt, ICatalog, IAsset
     /** TBC */
     @Attribute
     String dbtUniqueId;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IDbtMetric> dbtMetrics;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IDbtModelColumn> dbtModelColumns;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ISQL> dbtModelSqlAssets;
 
     /** TBC */
     @Attribute

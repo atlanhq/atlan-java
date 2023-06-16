@@ -27,10 +27,20 @@ public abstract class Tag extends Asset implements ITag, ICatalog, IAsset, IRefe
 
     public static final String TYPE_NAME = "Tag";
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
     /** Name of the classification in Atlan that is mapped to this tag. */
     @Attribute
     @JsonProperty("mappedClassificationName")
     String mappedAtlanTagName;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 
     /** Allowed values for the tag in the source system. These are denormalized from tagAttributes for ease of querying. */
     @Attribute
@@ -45,14 +55,4 @@ public abstract class Tag extends Asset implements ITag, ICatalog, IAsset, IRefe
     /** Unique identifier of the tag in the source system. */
     @Attribute
     String tagId;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> outputFromProcesses;
 }

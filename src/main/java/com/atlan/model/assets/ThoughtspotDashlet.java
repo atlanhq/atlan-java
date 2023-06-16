@@ -38,7 +38,21 @@ public class ThoughtspotDashlet extends Asset
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
     String thoughtspotChartType;
+
+    /** Liveboard in which the Dashlet exists. */
+    @Attribute
+    IThoughtspotLiveboard thoughtspotLiveboard;
 
     /** Name of the Liveboard in which the Dashlet exists. */
     @Attribute
@@ -51,20 +65,6 @@ public class ThoughtspotDashlet extends Asset
     /** TBC */
     @Attribute
     String thoughtspotQuestionText;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> outputFromProcesses;
-
-    /** Liveboard in which the Dashlet exists. */
-    @Attribute
-    IThoughtspotLiveboard thoughtspotLiveboard;
 
     /**
      * Reference to a ThoughtspotDashlet by GUID.

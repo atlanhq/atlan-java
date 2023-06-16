@@ -37,6 +37,21 @@ public class PresetDashboard extends Asset implements IPresetDashboard, IPreset,
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** Charts contained within the collection. */
+    @Attribute
+    @Singular
+    SortedSet<IPresetChart> presetCharts;
+
     /** Username of the user who last changed the collection. */
     @Attribute
     String presetDashboardChangedByName;
@@ -69,29 +84,6 @@ public class PresetDashboard extends Asset implements IPresetDashboard, IPreset,
     @Attribute
     String presetDashboardThumbnailURL;
 
-    /** TBC */
-    @Attribute
-    Long presetWorkspaceId;
-
-    /** TBC */
-    @Attribute
-    String presetWorkspaceQualifiedName;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> outputFromProcesses;
-
-    /** Charts contained within the collection. */
-    @Attribute
-    @Singular
-    SortedSet<IPresetChart> presetCharts;
-
     /** Datasets contained within the collection. */
     @Attribute
     @Singular
@@ -100,6 +92,14 @@ public class PresetDashboard extends Asset implements IPresetDashboard, IPreset,
     /** Workspace in which the collection exists. */
     @Attribute
     IPresetWorkspace presetWorkspace;
+
+    /** TBC */
+    @Attribute
+    Long presetWorkspaceId;
+
+    /** TBC */
+    @Attribute
+    String presetWorkspaceQualifiedName;
 
     /**
      * Reference to a PresetDashboard by GUID.

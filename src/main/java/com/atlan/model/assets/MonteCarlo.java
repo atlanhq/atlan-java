@@ -28,17 +28,17 @@ public abstract class MonteCarlo extends Asset implements IMonteCarlo, IDataQual
     /** TBC */
     @Attribute
     @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
     SortedSet<String> mcAssetQualifiedNames;
 
     /** TBC */
     @Attribute
     @Singular
     SortedSet<String> mcLabels;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
 
     /** TBC */
     @Attribute

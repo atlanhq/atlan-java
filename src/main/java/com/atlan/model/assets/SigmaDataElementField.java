@@ -38,6 +38,20 @@ public class SigmaDataElementField extends Asset
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** Data element that contains this data element field. */
+    @Attribute
+    ISigmaDataElement sigmaDataElement;
+
+    /** TBC */
+    @Attribute
     String sigmaDataElementFieldFormula;
 
     /** TBC */
@@ -67,20 +81,6 @@ public class SigmaDataElementField extends Asset
     /** TBC */
     @Attribute
     String sigmaWorkbookQualifiedName;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> outputFromProcesses;
-
-    /** Data element that contains this data element field. */
-    @Attribute
-    ISigmaDataElement sigmaDataElement;
 
     /**
      * Reference to a SigmaDataElementField by GUID.

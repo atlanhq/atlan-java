@@ -38,11 +38,26 @@ public class PresetWorkspace extends Asset implements IPresetWorkspace, IPreset,
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
     Long presetDashboardId;
 
     /** TBC */
     @Attribute
     String presetDashboardQualifiedName;
+
+    /** Collections within this workspace. */
+    @Attribute
+    @Singular
+    SortedSet<IPresetDashboard> presetDashboards;
 
     /** ID of the cluster for the Preset workspace. */
     @Attribute
@@ -87,21 +102,6 @@ public class PresetWorkspace extends Asset implements IPresetWorkspace, IPreset,
     /** Status of the workspace. */
     @Attribute
     String presetWorkspaceStatus;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> outputFromProcesses;
-
-    /** Collections within this workspace. */
-    @Attribute
-    @Singular
-    SortedSet<IPresetDashboard> presetDashboards;
 
     /**
      * Reference to a PresetWorkspace by GUID.

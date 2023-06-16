@@ -81,6 +81,11 @@ public class ADLSAccount extends Asset
     @Attribute
     String adlsAccountSubscription;
 
+    /** Containers that exist within this account. */
+    @Attribute
+    @Singular
+    SortedSet<IADLSContainer> adlsContainers;
+
     /** Entity tag for the asset. An entity tag is a hash of the object and represents changes to the contents of an object only, not its metadata. */
     @Attribute
     String adlsETag;
@@ -105,11 +110,6 @@ public class ADLSAccount extends Asset
     @Attribute
     @Singular
     List<AzureTag> azureTags;
-
-    /** Containers that exist within this account. */
-    @Attribute
-    @Singular
-    SortedSet<IADLSContainer> adlsContainers;
 
     /** TBC */
     @Attribute

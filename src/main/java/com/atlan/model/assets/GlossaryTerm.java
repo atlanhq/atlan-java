@@ -56,23 +56,6 @@ public class GlossaryTerm extends Asset implements IGlossaryTerm, IAsset, IRefer
 
     /** TBC */
     @Attribute
-    @Singular
-    SortedSet<String> examples;
-
-    /** TBC */
-    @Attribute
-    String longDescription;
-
-    /** TBC */
-    @Attribute
-    String shortDescription;
-
-    /** TBC */
-    @Attribute
-    String usage;
-
-    /** TBC */
-    @Attribute
     IGlossary anchor;
 
     /** TBC */
@@ -97,8 +80,17 @@ public class GlossaryTerm extends Asset implements IGlossaryTerm, IAsset, IRefer
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<String> examples;
+
+    /** TBC */
+    @Attribute
     @Singular("isATerm")
     SortedSet<IGlossaryTerm> isA;
+
+    /** TBC */
+    @Attribute
+    String longDescription;
 
     /** TBC */
     @Attribute
@@ -127,6 +119,10 @@ public class GlossaryTerm extends Asset implements IGlossaryTerm, IAsset, IRefer
 
     /** TBC */
     @Attribute
+    String shortDescription;
+
+    /** TBC */
+    @Attribute
     @Singular
     SortedSet<IGlossaryTerm> synonyms;
 
@@ -139,6 +135,10 @@ public class GlossaryTerm extends Asset implements IGlossaryTerm, IAsset, IRefer
     @Attribute
     @Singular
     SortedSet<IGlossaryTerm> translationTerms;
+
+    /** TBC */
+    @Attribute
+    String usage;
 
     /** TBC */
     @Attribute

@@ -27,9 +27,6 @@ import javax.annotation.processing.Generated;
 public interface IAtlanQuery {
 
     /** TBC */
-    Boolean getHasLineage();
-
-    /** TBC */
     SortedSet<String> getAdminGroups();
 
     /** TBC */
@@ -210,6 +207,9 @@ public interface IAtlanQuery {
     SortedSet<String> getAssetTags();
 
     /** TBC */
+    SortedSet<IGlossaryTerm> getAssignedTerms();
+
+    /** TBC */
     CertificateStatus getCertificateStatus();
 
     /** TBC */
@@ -223,6 +223,9 @@ public interface IAtlanQuery {
 
     /** TBC */
     String getCollectionQualifiedName();
+
+    /** TBC */
+    SortedSet<IColumn> getColumns();
 
     /** TBC */
     String getConnectionName();
@@ -240,7 +243,13 @@ public interface IAtlanQuery {
     String getDatabaseQualifiedName();
 
     /** TBC */
+    SortedSet<IDbtModel> getDbtModels();
+
+    /** TBC */
     String getDbtQualifiedName();
+
+    /** TBC */
+    SortedSet<IDbtSource> getDbtSources();
 
     /** TBC */
     String getDefaultDatabaseQualifiedName();
@@ -253,6 +262,15 @@ public interface IAtlanQuery {
 
     /** TBC */
     String getDisplayName();
+
+    /** TBC */
+    SortedSet<IFile> getFiles();
+
+    /** TBC */
+    Boolean getHasLineage();
+
+    /** TBC */
+    SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
     Boolean getIsDiscoverable();
@@ -288,13 +306,31 @@ public interface IAtlanQuery {
     String getLastSyncWorkflowName();
 
     /** TBC */
+    SortedSet<ILink> getLinks();
+
+    /** TBC */
+    SortedSet<IMCIncident> getMcIncidents();
+
+    /** TBC */
+    SortedSet<IMCMonitor> getMcMonitors();
+
+    /** TBC */
+    SortedSet<IMetric> getMetrics();
+
+    /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
     SortedSet<String> getOwnerGroups();
 
     /** TBC */
     SortedSet<String> getOwnerUsers();
+
+    /** TBC */
+    INamespace getParent();
 
     /** TBC */
     String getParentQualifiedName();
@@ -319,6 +355,9 @@ public interface IAtlanQuery {
 
     /** TBC */
     String getRawQuery();
+
+    /** TBC */
+    IReadme getReadme();
 
     /** TBC */
     String getSampleDataUrl();
@@ -348,10 +387,10 @@ public interface IAtlanQuery {
     String getSourceOwners();
 
     /** TBC */
-    SortedSet<String> getSourceQueryComputeCosts();
+    List<PopularityInsights> getSourceQueryComputeCostRecords();
 
     /** TBC */
-    List<PopularityInsights> getSourceQueryComputeCostRecords();
+    SortedSet<String> getSourceQueryComputeCosts();
 
     /** TBC */
     Long getSourceReadCount();
@@ -366,19 +405,19 @@ public interface IAtlanQuery {
     Double getSourceReadQueryCost();
 
     /** TBC */
-    SortedSet<String> getSourceReadRecentUsers();
+    List<PopularityInsights> getSourceReadRecentUserRecords();
 
     /** TBC */
-    List<PopularityInsights> getSourceReadRecentUserRecords();
+    SortedSet<String> getSourceReadRecentUsers();
 
     /** TBC */
     List<PopularityInsights> getSourceReadSlowQueryRecords();
 
     /** TBC */
-    SortedSet<String> getSourceReadTopUsers();
+    List<PopularityInsights> getSourceReadTopUserRecords();
 
     /** TBC */
-    List<PopularityInsights> getSourceReadTopUserRecords();
+    SortedSet<String> getSourceReadTopUsers();
 
     /** TBC */
     Long getSourceReadUserCount();
@@ -396,6 +435,12 @@ public interface IAtlanQuery {
     String getSourceUpdatedBy();
 
     /** TBC */
+    SortedSet<IDbtSource> getSqlDBTSources();
+
+    /** TBC */
+    SortedSet<IDbtModel> getSqlDbtModels();
+
+    /** TBC */
     SortedSet<String> getStarredBy();
 
     /** TBC */
@@ -406,6 +451,9 @@ public interface IAtlanQuery {
 
     /** TBC */
     String getTableQualifiedName();
+
+    /** TBC */
+    SortedSet<ITable> getTables();
 
     /** TBC */
     String getTenantId();
@@ -432,58 +480,10 @@ public interface IAtlanQuery {
     SortedSet<String> getViewerUsers();
 
     /** TBC */
-    String getVisualBuilderSchemaBase64();
-
-    /** TBC */
-    SortedSet<IColumn> getColumns();
-
-    /** TBC */
-    SortedSet<IDbtModel> getDbtModels();
-
-    /** TBC */
-    SortedSet<IDbtSource> getDbtSources();
-
-    /** TBC */
-    SortedSet<IFile> getFiles();
-
-    /** TBC */
-    SortedSet<ILineageProcess> getInputToProcesses();
-
-    /** TBC */
-    SortedSet<ILink> getLinks();
-
-    /** TBC */
-    SortedSet<IMCIncident> getMcIncidents();
-
-    /** TBC */
-    SortedSet<IMCMonitor> getMcMonitors();
-
-    /** TBC */
-    SortedSet<IGlossaryTerm> getAssignedTerms();
-
-    /** TBC */
-    SortedSet<IMetric> getMetrics();
-
-    /** TBC */
-    SortedSet<ILineageProcess> getOutputFromProcesses();
-
-    /** TBC */
-    INamespace getParent();
-
-    /** TBC */
-    IReadme getReadme();
-
-    /** TBC */
-    SortedSet<IDbtSource> getSqlDBTSources();
-
-    /** TBC */
-    SortedSet<IDbtModel> getSqlDbtModels();
-
-    /** TBC */
-    SortedSet<ITable> getTables();
-
-    /** TBC */
     SortedSet<IView> getViews();
+
+    /** TBC */
+    String getVisualBuilderSchemaBase64();
 
     /** Name of the type that defines the asset. */
     String getTypeName();

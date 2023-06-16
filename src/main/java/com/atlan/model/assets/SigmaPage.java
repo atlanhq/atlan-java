@@ -35,6 +35,16 @@ public class SigmaPage extends Asset implements ISigmaPage, ISigma, IBI, ICatalo
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
     /** Number of data elements that exist within this page. */
     @Attribute
     Long sigmaDataElementCount;
@@ -47,6 +57,11 @@ public class SigmaPage extends Asset implements ISigmaPage, ISigma, IBI, ICatalo
     @Attribute
     String sigmaDataElementQualifiedName;
 
+    /** Data elements within this page. */
+    @Attribute
+    @Singular
+    SortedSet<ISigmaDataElement> sigmaDataElements;
+
     /** TBC */
     @Attribute
     String sigmaPageName;
@@ -55,6 +70,10 @@ public class SigmaPage extends Asset implements ISigmaPage, ISigma, IBI, ICatalo
     @Attribute
     String sigmaPageQualifiedName;
 
+    /** Workbook that contains this page. */
+    @Attribute
+    ISigmaWorkbook sigmaWorkbook;
+
     /** TBC */
     @Attribute
     String sigmaWorkbookName;
@@ -62,25 +81,6 @@ public class SigmaPage extends Asset implements ISigmaPage, ISigma, IBI, ICatalo
     /** TBC */
     @Attribute
     String sigmaWorkbookQualifiedName;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> outputFromProcesses;
-
-    /** Data elements within this page. */
-    @Attribute
-    @Singular
-    SortedSet<ISigmaDataElement> sigmaDataElements;
-
-    /** Workbook that contains this page. */
-    @Attribute
-    ISigmaWorkbook sigmaWorkbook;
 
     /**
      * Reference to a SigmaPage by GUID.

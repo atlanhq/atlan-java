@@ -27,9 +27,6 @@ import javax.annotation.processing.Generated;
 public interface ILookerLook {
 
     /** TBC */
-    Boolean getHasLineage();
-
-    /** TBC */
     SortedSet<String> getAdminGroups();
 
     /** TBC */
@@ -210,6 +207,9 @@ public interface ILookerLook {
     SortedSet<String> getAssetTags();
 
     /** TBC */
+    SortedSet<IGlossaryTerm> getAssignedTerms();
+
+    /** TBC */
     CertificateStatus getCertificateStatus();
 
     /** TBC */
@@ -231,6 +231,9 @@ public interface ILookerLook {
     AtlanConnectorType getConnectorType();
 
     /** TBC */
+    ILookerDashboard getDashboard();
+
+    /** TBC */
     String getDbtQualifiedName();
 
     /** TBC */
@@ -240,7 +243,19 @@ public interface ILookerLook {
     String getDisplayName();
 
     /** TBC */
+    SortedSet<IFile> getFiles();
+
+    /** TBC */
+    ILookerFolder getFolder();
+
+    /** TBC */
     String getFolderName();
+
+    /** TBC */
+    Boolean getHasLineage();
+
+    /** TBC */
+    SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
     Boolean getIsDiscoverable();
@@ -261,10 +276,28 @@ public interface ILookerLook {
     String getLastSyncWorkflowName();
 
     /** TBC */
+    SortedSet<ILink> getLinks();
+
+    /** TBC */
+    SortedSet<IMCIncident> getMcIncidents();
+
+    /** TBC */
+    SortedSet<IMCMonitor> getMcMonitors();
+
+    /** TBC */
+    SortedSet<IMetric> getMetrics();
+
+    /** TBC */
+    ILookerModel getModel();
+
+    /** TBC */
     String getModelName();
 
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
     SortedSet<String> getOwnerGroups();
@@ -277,6 +310,12 @@ public interface ILookerLook {
 
     /** TBC */
     String getQualifiedName();
+
+    /** TBC */
+    ILookerQuery getQuery();
+
+    /** TBC */
+    IReadme getReadme();
 
     /** TBC */
     String getSampleDataUrl();
@@ -309,10 +348,10 @@ public interface ILookerLook {
     String getSourceOwners();
 
     /** TBC */
-    SortedSet<String> getSourceQueryComputeCosts();
+    List<PopularityInsights> getSourceQueryComputeCostRecords();
 
     /** TBC */
-    List<PopularityInsights> getSourceQueryComputeCostRecords();
+    SortedSet<String> getSourceQueryComputeCosts();
 
     /** TBC */
     Integer getSourceQueryId();
@@ -330,19 +369,19 @@ public interface ILookerLook {
     Double getSourceReadQueryCost();
 
     /** TBC */
-    SortedSet<String> getSourceReadRecentUsers();
+    List<PopularityInsights> getSourceReadRecentUserRecords();
 
     /** TBC */
-    List<PopularityInsights> getSourceReadRecentUserRecords();
+    SortedSet<String> getSourceReadRecentUsers();
 
     /** TBC */
     List<PopularityInsights> getSourceReadSlowQueryRecords();
 
     /** TBC */
-    SortedSet<String> getSourceReadTopUsers();
+    List<PopularityInsights> getSourceReadTopUserRecords();
 
     /** TBC */
-    List<PopularityInsights> getSourceReadTopUserRecords();
+    SortedSet<String> getSourceReadTopUsers();
 
     /** TBC */
     Long getSourceReadUserCount();
@@ -378,6 +417,9 @@ public interface ILookerLook {
     String getTenantId();
 
     /** TBC */
+    ILookerTile getTile();
+
+    /** TBC */
     String getUserDescription();
 
     /** TBC */
@@ -388,48 +430,6 @@ public interface ILookerLook {
 
     /** TBC */
     SortedSet<String> getViewerUsers();
-
-    /** TBC */
-    ILookerDashboard getDashboard();
-
-    /** TBC */
-    SortedSet<IFile> getFiles();
-
-    /** TBC */
-    ILookerFolder getFolder();
-
-    /** TBC */
-    SortedSet<ILineageProcess> getInputToProcesses();
-
-    /** TBC */
-    SortedSet<ILink> getLinks();
-
-    /** TBC */
-    SortedSet<IMCIncident> getMcIncidents();
-
-    /** TBC */
-    SortedSet<IMCMonitor> getMcMonitors();
-
-    /** TBC */
-    SortedSet<IGlossaryTerm> getAssignedTerms();
-
-    /** TBC */
-    SortedSet<IMetric> getMetrics();
-
-    /** TBC */
-    ILookerModel getModel();
-
-    /** TBC */
-    SortedSet<ILineageProcess> getOutputFromProcesses();
-
-    /** TBC */
-    ILookerQuery getQuery();
-
-    /** TBC */
-    IReadme getReadme();
-
-    /** TBC */
-    ILookerTile getTile();
 
     /** Name of the type that defines the asset. */
     String getTypeName();

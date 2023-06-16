@@ -64,14 +64,6 @@ public abstract class S3 extends Asset implements IS3, IObjectStore, IAWS, ICata
     @Singular
     List<AwsTag> awsTags;
 
-    /** Entity tag for the asset. An entity tag is a hash of the object and represents changes to the contents of an object only, not its metadata. */
-    @Attribute
-    String s3ETag;
-
-    /** TBC */
-    @Attribute
-    String s3Encryption;
-
     /** TBC */
     @Attribute
     @Singular
@@ -81,6 +73,14 @@ public abstract class S3 extends Asset implements IS3, IObjectStore, IAWS, ICata
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** Entity tag for the asset. An entity tag is a hash of the object and represents changes to the contents of an object only, not its metadata. */
+    @Attribute
+    String s3ETag;
+
+    /** TBC */
+    @Attribute
+    String s3Encryption;
 
     /**
      * Generate a unique S3 name.

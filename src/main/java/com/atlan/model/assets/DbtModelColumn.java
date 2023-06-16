@@ -89,11 +89,20 @@ public class DbtModelColumn extends Asset implements IDbtModelColumn, IDbt, ICat
 
     /** TBC */
     @Attribute
+    IDbtModel dbtModel;
+
+    /** TBC */
+    @Attribute
     String dbtModelColumnDataType;
 
     /** TBC */
     @Attribute
     Integer dbtModelColumnOrder;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IColumn> dbtModelColumnSqlColumns;
 
     /** TBC */
     @Attribute
@@ -119,15 +128,6 @@ public class DbtModelColumn extends Asset implements IDbtModelColumn, IDbt, ICat
     /** TBC */
     @Attribute
     String dbtUniqueId;
-
-    /** TBC */
-    @Attribute
-    IDbtModel dbtModel;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IColumn> dbtModelColumnSqlColumns;
 
     /** TBC */
     @Attribute

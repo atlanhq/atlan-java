@@ -41,6 +41,11 @@ public class MCMonitor extends Asset
     /** TBC */
     @Attribute
     @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
     SortedSet<String> mcAssetQualifiedNames;
 
     /** TBC */
@@ -51,6 +56,11 @@ public class MCMonitor extends Asset
     /** Condition on which the monitor produces an alert. */
     @Attribute
     String mcMonitorAlertCondition;
+
+    /** Assets impacted by this monitor. */
+    @Attribute
+    @Singular
+    SortedSet<IAsset> mcMonitorAssets;
 
     /** TBC */
     @Attribute
@@ -117,16 +127,6 @@ public class MCMonitor extends Asset
     /** Name of the warehouse for the monitor. */
     @Attribute
     String mcMonitorWarehouse;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** Assets impacted by this monitor. */
-    @Attribute
-    @Singular
-    SortedSet<IAsset> mcMonitorAssets;
 
     /** TBC */
     @Attribute

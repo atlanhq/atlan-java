@@ -35,14 +35,6 @@ public class Folder extends Asset implements IFolder, INamespace, IAsset, IRefer
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** qualifiedName of the collection in which this folder exists. */
-    @Attribute
-    String collectionQualifiedName;
-
-    /** TBC */
-    @Attribute
-    String parentQualifiedName;
-
     /** TBC */
     @Attribute
     @Singular
@@ -53,9 +45,17 @@ public class Folder extends Asset implements IFolder, INamespace, IAsset, IRefer
     @Singular
     SortedSet<IAtlanQuery> childrenQueries;
 
+    /** qualifiedName of the collection in which this folder exists. */
+    @Attribute
+    String collectionQualifiedName;
+
     /** Namespace in which this folder exists. */
     @Attribute
     INamespace parent;
+
+    /** TBC */
+    @Attribute
+    String parentQualifiedName;
 
     /**
      * Reference to a Folder by GUID.

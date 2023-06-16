@@ -38,30 +38,6 @@ public class PowerBIDataset extends Asset implements IPowerBIDataset, IPowerBI, 
 
     /** TBC */
     @Attribute
-    PowerBIEndorsementType powerBIEndorsement;
-
-    /** TBC */
-    @Attribute
-    String powerBIFormatString;
-
-    /** TBC */
-    @Attribute
-    Boolean powerBIIsHidden;
-
-    /** TBC */
-    @Attribute
-    String powerBITableQualifiedName;
-
-    /** TBC */
-    @Attribute
-    String webUrl;
-
-    /** TBC */
-    @Attribute
-    String workspaceQualifiedName;
-
-    /** TBC */
-    @Attribute
     @Singular
     SortedSet<IPowerBIDataflow> dataflows;
 
@@ -82,6 +58,22 @@ public class PowerBIDataset extends Asset implements IPowerBIDataset, IPowerBI, 
 
     /** TBC */
     @Attribute
+    PowerBIEndorsementType powerBIEndorsement;
+
+    /** TBC */
+    @Attribute
+    String powerBIFormatString;
+
+    /** TBC */
+    @Attribute
+    Boolean powerBIIsHidden;
+
+    /** TBC */
+    @Attribute
+    String powerBITableQualifiedName;
+
+    /** TBC */
+    @Attribute
     @Singular
     SortedSet<IPowerBIReport> reports;
 
@@ -97,7 +89,15 @@ public class PowerBIDataset extends Asset implements IPowerBIDataset, IPowerBI, 
 
     /** TBC */
     @Attribute
+    String webUrl;
+
+    /** TBC */
+    @Attribute
     IPowerBIWorkspace workspace;
+
+    /** TBC */
+    @Attribute
+    String workspaceQualifiedName;
 
     /**
      * Reference to a PowerBIDataset by GUID.

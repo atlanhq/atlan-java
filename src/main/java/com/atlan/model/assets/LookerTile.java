@@ -37,6 +37,19 @@ public class LookerTile extends Asset implements ILookerTile, ILooker, IBI, ICat
 
     /** TBC */
     @Attribute
+    ILookerDashboard dashboard;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    ILookerLook look;
+
+    /** TBC */
+    @Attribute
     Integer lookId;
 
     /** TBC */
@@ -53,6 +66,15 @@ public class LookerTile extends Asset implements ILookerTile, ILooker, IBI, ICat
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    ILookerQuery query;
+
+    /** TBC */
+    @Attribute
     Integer queryID;
 
     /** TBC */
@@ -62,28 +84,6 @@ public class LookerTile extends Asset implements ILookerTile, ILooker, IBI, ICat
     /** TBC */
     @Attribute
     String subtitleText;
-
-    /** TBC */
-    @Attribute
-    ILookerDashboard dashboard;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    ILookerLook look;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> outputFromProcesses;
-
-    /** TBC */
-    @Attribute
-    ILookerQuery query;
 
     /**
      * Reference to a LookerTile by GUID.

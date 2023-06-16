@@ -61,6 +61,11 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<IGlossaryCategory> categories;
+
+    /** TBC */
+    @Attribute
     String language;
 
     /** TBC */
@@ -73,17 +78,12 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
 
     /** TBC */
     @Attribute
-    String usage;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IGlossaryCategory> categories;
-
-    /** TBC */
-    @Attribute
     @Singular
     SortedSet<IGlossaryTerm> terms;
+
+    /** TBC */
+    @Attribute
+    String usage;
 
     /**
      * Reference to a Glossary by GUID.

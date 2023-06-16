@@ -43,6 +43,11 @@ public class AtlanQuery extends Asset implements IAtlanQuery, ISQL, ICatalog, IA
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<IColumn> columns;
+
+    /** TBC */
+    @Attribute
     String databaseName;
 
     /** TBC */
@@ -51,11 +56,26 @@ public class AtlanQuery extends Asset implements IAtlanQuery, ISQL, ICatalog, IA
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<IDbtModel> dbtModels;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtSource> dbtSources;
+
+    /** TBC */
+    @Attribute
     String defaultDatabaseQualifiedName;
 
     /** TBC */
     @Attribute
     String defaultSchemaQualifiedName;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
 
     /** TBC */
     @Attribute
@@ -76,6 +96,15 @@ public class AtlanQuery extends Asset implements IAtlanQuery, ISQL, ICatalog, IA
     /** TBC */
     @Attribute
     Long lastProfiledAt;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    INamespace parent;
 
     /** TBC */
     @Attribute
@@ -112,11 +141,26 @@ public class AtlanQuery extends Asset implements IAtlanQuery, ISQL, ICatalog, IA
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<IDbtSource> sqlDBTSources;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtModel> sqlDbtModels;
+
+    /** TBC */
+    @Attribute
     String tableName;
 
     /** TBC */
     @Attribute
     String tableQualifiedName;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ITable> tables;
 
     /** TBC */
     @Attribute
@@ -132,56 +176,12 @@ public class AtlanQuery extends Asset implements IAtlanQuery, ISQL, ICatalog, IA
 
     /** TBC */
     @Attribute
-    String visualBuilderSchemaBase64;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IColumn> columns;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IDbtModel> dbtModels;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IDbtSource> dbtSources;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> outputFromProcesses;
-
-    /** TBC */
-    @Attribute
-    INamespace parent;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IDbtSource> sqlDBTSources;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IDbtModel> sqlDbtModels;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ITable> tables;
-
-    /** TBC */
-    @Attribute
     @Singular
     SortedSet<IView> views;
+
+    /** TBC */
+    @Attribute
+    String visualBuilderSchemaBase64;
 
     /**
      * Reference to a AtlanQuery by GUID.

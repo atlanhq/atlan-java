@@ -35,6 +35,11 @@ public abstract class MicroStrategy extends Asset implements IMicroStrategy, IBI
 
     public static final String TYPE_NAME = "MicroStrategy";
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
     /** Date when the asset was certified in MicroStrategy. */
     @Attribute
     Long microStrategyCertifiedAt;
@@ -79,11 +84,6 @@ public abstract class MicroStrategy extends Asset implements IMicroStrategy, IBI
     @Attribute
     @Singular
     SortedSet<String> microStrategyReportQualifiedNames;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
 
     /** TBC */
     @Attribute

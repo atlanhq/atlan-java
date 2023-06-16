@@ -279,52 +279,79 @@ public class ModelCache {
     }
 
     SortedSet<AttributeDef> getAllAttributesForType(String originalName) {
-        if (originalName.equals("Referenceable")) {
-            // Retain only the 'qualifiedName' attribute from Referenceable
-            SortedSet<AttributeDef> retained = new TreeSet<>();
-            List<AttributeDef> attrs = entityDefCache.get(originalName).getAttributeDefs();
-            for (AttributeDef attributeDef : attrs) {
-                if (attributeDef.getName().equals("qualifiedName")) {
-                    retained.add(attributeDef);
-                }
-            }
-            return retained;
-        } else {
+        SortedSet<AttributeDef> full = new TreeSet<>();
+        getAttributesForType(originalName, full, new HashSet<>());
+        return full;
+    }
+
+    private void getAttributesForType(
+            String originalName, SortedSet<AttributeDef> aggregated, Set<String> processedTypes) {
+        if (!processedTypes.contains(originalName)) {
             EntityDef entityDef = entityDefCache.get(originalName);
-            SortedSet<AttributeDef> aggregated = new TreeSet<>();
-            addAndLogAttributeConflicts(originalName, aggregated, entityDef.getAttributeDefs(), originalName);
-            List<String> superTypes = entityDef.getSuperTypes();
-            if (superTypes == null || superTypes.isEmpty()) {
-                return aggregated;
-            } else {
-                for (String superType : superTypes) {
-                    Set<AttributeDef> again = getAllAttributesForType(superType);
-                    addAndLogAttributeConflicts(originalName, aggregated, again, superType);
+            if (originalName.equals("Referenceable")) {
+                // Retain only the 'qualifiedName' attribute from Referenceable
+                List<AttributeDef> attrs = entityDefCache.get(originalName).getAttributeDefs();
+                for (AttributeDef attributeDef : attrs) {
+                    if (attributeDef.getName().equals("qualifiedName")) {
+                        aggregated.add(attributeDef);
+                    }
                 }
-                return aggregated;
+            } else {
+                addAndLogAttributeConflicts(originalName, aggregated, entityDef.getAttributeDefs(), originalName);
+                processedTypes.add(originalName);
+                List<String> superTypes = entityDef.getSuperTypes();
+                if (superTypes != null && !superTypes.isEmpty()) {
+                    for (String superType : superTypes) {
+                        getAttributesForType(superType, aggregated, processedTypes);
+                    }
+                }
             }
         }
     }
 
     SortedSet<RelationshipAttributeDef> getAllRelationshipsForType(String originalName) {
-        if (originalName.equals("Referenceable")) {
-            // Retain only the 'meanings' relationship from Referenceable
-            SortedSet<RelationshipAttributeDef> retained = new TreeSet<>();
-            List<RelationshipAttributeDef> attrs =
-                    entityDefCache.get(originalName).getRelationshipAttributeDefs();
-            for (RelationshipAttributeDef attributeDef : attrs) {
-                if (attributeDef.getName().equals("meanings")) {
-                    retained.add(attributeDef);
+        SortedSet<RelationshipAttributeDef> full = new TreeSet<>();
+        getRelationshipsForType(originalName, full, new HashSet<>());
+        return full;
+    }
+
+    private void getRelationshipsForType(
+            String originalName, SortedSet<RelationshipAttributeDef> aggregated, Set<String> processedTypes) {
+        if (!processedTypes.contains(originalName)) {
+            EntityDef entityDef = entityDefCache.get(originalName);
+            if (originalName.equals("Referenceable")) {
+                // Retain only the 'meanings' relationship from Referenceable
+                List<RelationshipAttributeDef> attrs = entityDef.getRelationshipAttributeDefs();
+                for (RelationshipAttributeDef attributeDef : attrs) {
+                    if (attributeDef.getName().equals("meanings")) {
+                        aggregated.add(attributeDef);
+                    }
+                }
+            } else {
+                Set<String> uniqueRelationships = getUniqueRelationshipsForType(originalName);
+                Set<RelationshipAttributeDef> retained = new TreeSet<>();
+                for (RelationshipAttributeDef attributeDef : entityDef.getRelationshipAttributeDefs()) {
+                    if (uniqueRelationships.contains(attributeDef.getName())) {
+                        boolean added = retained.add(attributeDef);
+                        if (!added) {
+                            log.warn(
+                                    "Conflicting relationship found for {}, within own typedef: {}",
+                                    originalName,
+                                    attributeDef.getName());
+                        }
+                    }
+                }
+                if (!retained.isEmpty()) {
+                    addAndLogRelationshipConflicts(originalName, aggregated, retained, originalName);
+                }
+                processedTypes.add(originalName);
+                List<String> superTypes = entityDef.getSuperTypes();
+                if (superTypes != null && !superTypes.isEmpty()) {
+                    for (String superType : superTypes) {
+                        getRelationshipsForType(superType, aggregated, processedTypes);
+                    }
                 }
             }
-            return retained;
-        } else {
-            EntityDef entityDef = entityDefCache.get(originalName);
-            SortedSet<RelationshipAttributeDef> aggregated = new TreeSet<>();
-            addAndLogRelationshipConflicts(
-                    originalName, aggregated, entityDef.getRelationshipAttributeDefs(), originalName);
-            return aggregated;
-            // No need to recurse, relationships are already inheritance-complete
         }
     }
 

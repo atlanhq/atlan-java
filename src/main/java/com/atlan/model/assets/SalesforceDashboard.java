@@ -46,18 +46,6 @@ public class SalesforceDashboard extends Asset
 
     /** TBC */
     @Attribute
-    String organizationQualifiedName;
-
-    /** Number of reports linked to the dashboard in Salesforce. */
-    @Attribute
-    Long reportCount;
-
-    /** ID of the dashboard in Salesforce. */
-    @Attribute
-    String sourceId;
-
-    /** TBC */
-    @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
@@ -67,13 +55,25 @@ public class SalesforceDashboard extends Asset
 
     /** TBC */
     @Attribute
+    String organizationQualifiedName;
+
+    /** TBC */
+    @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** Number of reports linked to the dashboard in Salesforce. */
+    @Attribute
+    Long reportCount;
 
     /** Reports linked to the dashboard in Salesforce. */
     @Attribute
     @Singular
     SortedSet<ISalesforceReport> reports;
+
+    /** ID of the dashboard in Salesforce. */
+    @Attribute
+    String sourceId;
 
     /**
      * Reference to a SalesforceDashboard by GUID.

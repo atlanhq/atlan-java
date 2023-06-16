@@ -38,6 +38,11 @@ public class MicroStrategyAttribute extends Asset
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
     /** Attribute form name, description, display format and expression as a JSON string. */
     @Attribute
     String microStrategyAttributeForms;
@@ -60,6 +65,11 @@ public class MicroStrategyAttribute extends Asset
     @Singular
     SortedSet<String> microStrategyCubeQualifiedNames;
 
+    /** Cubes where the attribute is used. */
+    @Attribute
+    @Singular
+    SortedSet<IMicroStrategyCube> microStrategyCubes;
+
     /** TBC */
     @Attribute
     Boolean microStrategyIsCertified;
@@ -68,6 +78,15 @@ public class MicroStrategyAttribute extends Asset
     @Attribute
     @Singular("putMicroStrategyLocation")
     List<Map<String, String>> microStrategyLocation;
+
+    /** Metrics where the attribute is used. */
+    @Attribute
+    @Singular
+    SortedSet<IMicroStrategyMetric> microStrategyMetrics;
+
+    /** Project containing the attribute. */
+    @Attribute
+    IMicroStrategyProject microStrategyProject;
 
     /** TBC */
     @Attribute
@@ -86,25 +105,6 @@ public class MicroStrategyAttribute extends Asset
     @Attribute
     @Singular
     SortedSet<String> microStrategyReportQualifiedNames;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** Cubes where the attribute is used. */
-    @Attribute
-    @Singular
-    SortedSet<IMicroStrategyCube> microStrategyCubes;
-
-    /** Metrics where the attribute is used. */
-    @Attribute
-    @Singular
-    SortedSet<IMicroStrategyMetric> microStrategyMetrics;
-
-    /** Project containing the attribute. */
-    @Attribute
-    IMicroStrategyProject microStrategyProject;
 
     /** Reports where the attribute is used. */
     @Attribute

@@ -76,6 +76,20 @@ public class S3Object extends Asset
     @Singular
     List<AwsTag> awsTags;
 
+    /** S3 bucket in which the object exists. */
+    @Attribute
+    IS3Bucket bucket;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
     /** Name of the bucket in which the object exists. */
     @Attribute
     String s3BucketName;
@@ -119,20 +133,6 @@ public class S3Object extends Asset
     /** Version of the object. This is only applicable when versioning is enabled on the bucket in which the object exists. */
     @Attribute
     String s3ObjectVersionId;
-
-    /** S3 bucket in which the object exists. */
-    @Attribute
-    IS3Bucket bucket;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> outputFromProcesses;
 
     /**
      * Reference to a S3Object by GUID.

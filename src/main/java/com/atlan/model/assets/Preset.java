@@ -27,6 +27,16 @@ public abstract class Preset extends Asset implements IPreset, IBI, ICatalog, IA
 
     public static final String TYPE_NAME = "Preset";
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
     /** ID of the Preset asset's collection. */
     @Attribute
     Long presetDashboardId;
@@ -42,14 +52,4 @@ public abstract class Preset extends Asset implements IPreset, IBI, ICatalog, IA
     /** qualifiedName of the Preset asset's workspace. */
     @Attribute
     String presetWorkspaceQualifiedName;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> outputFromProcesses;
 }

@@ -40,6 +40,10 @@ public class Schema extends Asset implements ISchema, ISQL, ICatalog, IAsset, IR
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Database in which this schema exists. */
+    @Attribute
+    IDatabase database;
+
     /** TBC */
     @Attribute
     String databaseName;
@@ -50,11 +54,42 @@ public class Schema extends Asset implements ISchema, ISQL, ICatalog, IAsset, IR
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<IDbtModel> dbtModels;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtSource> dbtSources;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
     Boolean isProfiled;
 
     /** TBC */
     @Attribute
     Long lastProfiledAt;
+
+    /** Materialized views that exist within this schema. */
+    @Attribute
+    @Singular
+    @JsonProperty("materialisedViews")
+    SortedSet<IMaterializedView> materializedViews;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** Stored procedures (routines) that are defined within this schema. */
+    @Attribute
+    @Singular
+    SortedSet<IProcedure> procedures;
 
     /** TBC */
     @Attribute
@@ -81,66 +116,6 @@ public class Schema extends Asset implements ISchema, ISQL, ICatalog, IAsset, IR
     @Attribute
     String schemaQualifiedName;
 
-    /** Number of tables in this schema. */
-    @Attribute
-    Integer tableCount;
-
-    /** TBC */
-    @Attribute
-    String tableName;
-
-    /** TBC */
-    @Attribute
-    String tableQualifiedName;
-
-    /** TBC */
-    @Attribute
-    String viewName;
-
-    /** TBC */
-    @Attribute
-    String viewQualifiedName;
-
-    /** Number of views in this schema. */
-    @Attribute
-    @JsonProperty("viewsCount")
-    Integer viewCount;
-
-    /** Database in which this schema exists. */
-    @Attribute
-    IDatabase database;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IDbtModel> dbtModels;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IDbtSource> dbtSources;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** Materialized views that exist within this schema. */
-    @Attribute
-    @Singular
-    @JsonProperty("materialisedViews")
-    SortedSet<IMaterializedView> materializedViews;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> outputFromProcesses;
-
-    /** Stored procedures (routines) that are defined within this schema. */
-    @Attribute
-    @Singular
-    SortedSet<IProcedure> procedures;
-
     /** Snowflake Pipes that are defined within this schema. */
     @Attribute
     @Singular
@@ -166,10 +141,35 @@ public class Schema extends Asset implements ISchema, ISQL, ICatalog, IAsset, IR
     @Singular
     SortedSet<IDbtModel> sqlDbtModels;
 
+    /** Number of tables in this schema. */
+    @Attribute
+    Integer tableCount;
+
+    /** TBC */
+    @Attribute
+    String tableName;
+
+    /** TBC */
+    @Attribute
+    String tableQualifiedName;
+
     /** Tables that exist within this schema. */
     @Attribute
     @Singular
     SortedSet<ITable> tables;
+
+    /** Number of views in this schema. */
+    @Attribute
+    @JsonProperty("viewsCount")
+    Integer viewCount;
+
+    /** TBC */
+    @Attribute
+    String viewName;
+
+    /** TBC */
+    @Attribute
+    String viewQualifiedName;
 
     /** Views that exist within this schema. */
     @Attribute

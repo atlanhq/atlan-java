@@ -41,27 +41,6 @@ public class QuickSightFolder extends Asset
 
     /** TBC */
     @Attribute
-    @Singular("addQuickSightFolderHierarchy")
-    List<Map<String, String>> quickSightFolderHierarchy;
-
-    /** TBC */
-    @Attribute
-    QuickSightFolderType quickSightFolderType;
-
-    /** TBC */
-    @Attribute
-    String quickSightId;
-
-    /** TBC */
-    @Attribute
-    String quickSightSheetId;
-
-    /** TBC */
-    @Attribute
-    String quickSightSheetName;
-
-    /** TBC */
-    @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
@@ -84,6 +63,27 @@ public class QuickSightFolder extends Asset
     @Attribute
     @Singular
     SortedSet<IQuickSightDataset> quickSightDatasets;
+
+    /** TBC */
+    @Attribute
+    @Singular("addQuickSightFolderHierarchy")
+    List<Map<String, String>> quickSightFolderHierarchy;
+
+    /** TBC */
+    @Attribute
+    QuickSightFolderType quickSightFolderType;
+
+    /** TBC */
+    @Attribute
+    String quickSightId;
+
+    /** TBC */
+    @Attribute
+    String quickSightSheetId;
+
+    /** TBC */
+    @Attribute
+    String quickSightSheetName;
 
     /**
      * Reference to a QuickSightFolder by GUID.

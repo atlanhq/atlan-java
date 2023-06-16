@@ -40,6 +40,16 @@ public class TableauDashboard extends Asset
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
     @Singular("addProjectHierarchy")
     List<Map<String, String>> projectHierarchy;
 
@@ -57,21 +67,11 @@ public class TableauDashboard extends Asset
 
     /** TBC */
     @Attribute
-    String workbookQualifiedName;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> outputFromProcesses;
-
-    /** TBC */
-    @Attribute
     ITableauWorkbook workbook;
+
+    /** TBC */
+    @Attribute
+    String workbookQualifiedName;
 
     /** TBC */
     @Attribute

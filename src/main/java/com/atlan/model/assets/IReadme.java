@@ -27,9 +27,6 @@ import javax.annotation.processing.Generated;
 public interface IReadme {
 
     /** TBC */
-    Boolean getHasLineage();
-
-    /** TBC */
     SortedSet<String> getAdminGroups();
 
     /** TBC */
@@ -52,6 +49,9 @@ public interface IReadme {
 
     /** TBC */
     String getAnnouncementUpdatedBy();
+
+    /** Asset to which the README is linked. */
+    IAsset getAsset();
 
     /** TBC */
     String getAssetDbtAccountName();
@@ -210,6 +210,9 @@ public interface IReadme {
     SortedSet<String> getAssetTags();
 
     /** TBC */
+    SortedSet<IGlossaryTerm> getAssignedTerms();
+
+    /** TBC */
     CertificateStatus getCertificateStatus();
 
     /** TBC */
@@ -240,6 +243,15 @@ public interface IReadme {
     String getDisplayName();
 
     /** TBC */
+    SortedSet<IFile> getFiles();
+
+    /** TBC */
+    Boolean getHasLineage();
+
+    /** TBC */
+    SortedSet<ILineageProcess> getInputToProcesses();
+
+    /** TBC */
     Boolean getIsDiscoverable();
 
     /** TBC */
@@ -264,7 +276,22 @@ public interface IReadme {
     String getLink();
 
     /** TBC */
+    SortedSet<ILink> getLinks();
+
+    /** TBC */
+    SortedSet<IMCIncident> getMcIncidents();
+
+    /** TBC */
+    SortedSet<IMCMonitor> getMcMonitors();
+
+    /** TBC */
+    SortedSet<IMetric> getMetrics();
+
+    /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
     SortedSet<String> getOwnerGroups();
@@ -279,6 +306,9 @@ public interface IReadme {
     String getQualifiedName();
 
     /** TBC */
+    IReadme getReadme();
+
+    /** TBC */
     String getReference();
 
     /** TBC */
@@ -286,6 +316,9 @@ public interface IReadme {
 
     /** TBC */
     String getSampleDataUrl();
+
+    /** TBC */
+    SortedSet<IReadme> getSeeAlso();
 
     /** TBC */
     SourceCostUnitType getSourceCostUnit();
@@ -306,10 +339,10 @@ public interface IReadme {
     String getSourceOwners();
 
     /** TBC */
-    SortedSet<String> getSourceQueryComputeCosts();
+    List<PopularityInsights> getSourceQueryComputeCostRecords();
 
     /** TBC */
-    List<PopularityInsights> getSourceQueryComputeCostRecords();
+    SortedSet<String> getSourceQueryComputeCosts();
 
     /** TBC */
     Long getSourceReadCount();
@@ -324,19 +357,19 @@ public interface IReadme {
     Double getSourceReadQueryCost();
 
     /** TBC */
-    SortedSet<String> getSourceReadRecentUsers();
+    List<PopularityInsights> getSourceReadRecentUserRecords();
 
     /** TBC */
-    List<PopularityInsights> getSourceReadRecentUserRecords();
+    SortedSet<String> getSourceReadRecentUsers();
 
     /** TBC */
     List<PopularityInsights> getSourceReadSlowQueryRecords();
 
     /** TBC */
-    SortedSet<String> getSourceReadTopUsers();
+    List<PopularityInsights> getSourceReadTopUserRecords();
 
     /** TBC */
-    List<PopularityInsights> getSourceReadTopUserRecords();
+    SortedSet<String> getSourceReadTopUsers();
 
     /** TBC */
     Long getSourceReadUserCount();
@@ -373,39 +406,6 @@ public interface IReadme {
 
     /** TBC */
     SortedSet<String> getViewerUsers();
-
-    /** Asset to which the README is linked. */
-    IAsset getAsset();
-
-    /** TBC */
-    SortedSet<IFile> getFiles();
-
-    /** TBC */
-    SortedSet<ILineageProcess> getInputToProcesses();
-
-    /** TBC */
-    SortedSet<ILink> getLinks();
-
-    /** TBC */
-    SortedSet<IMCIncident> getMcIncidents();
-
-    /** TBC */
-    SortedSet<IMCMonitor> getMcMonitors();
-
-    /** TBC */
-    SortedSet<IGlossaryTerm> getAssignedTerms();
-
-    /** TBC */
-    SortedSet<IMetric> getMetrics();
-
-    /** TBC */
-    SortedSet<ILineageProcess> getOutputFromProcesses();
-
-    /** TBC */
-    IReadme getReadme();
-
-    /** TBC */
-    SortedSet<IReadme> getSeeAlso();
 
     /** Name of the type that defines the asset. */
     String getTypeName();

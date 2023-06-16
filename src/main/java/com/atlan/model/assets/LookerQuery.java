@@ -42,18 +42,6 @@ public class LookerQuery extends Asset implements ILookerQuery, ILooker, IBI, IC
 
     /** TBC */
     @Attribute
-    String sourceDefinition;
-
-    /** TBC */
-    @Attribute
-    String sourceDefinitionDatabase;
-
-    /** TBC */
-    @Attribute
-    String sourceDefinitionSchema;
-
-    /** TBC */
-    @Attribute
     @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
@@ -70,6 +58,18 @@ public class LookerQuery extends Asset implements ILookerQuery, ILooker, IBI, IC
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    String sourceDefinition;
+
+    /** TBC */
+    @Attribute
+    String sourceDefinitionDatabase;
+
+    /** TBC */
+    @Attribute
+    String sourceDefinitionSchema;
 
     /** TBC */
     @Attribute

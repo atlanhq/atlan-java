@@ -37,11 +37,37 @@ public class LookerLook extends Asset implements ILookerLook, ILooker, IBI, ICat
 
     /** TBC */
     @Attribute
+    ILookerDashboard dashboard;
+
+    /** TBC */
+    @Attribute
+    ILookerFolder folder;
+
+    /** TBC */
+    @Attribute
     String folderName;
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    ILookerModel model;
+
+    /** TBC */
+    @Attribute
     String modelName;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    ILookerQuery query;
 
     /** TBC */
     @Attribute
@@ -70,32 +96,6 @@ public class LookerLook extends Asset implements ILookerLook, ILooker, IBI, ICat
     /** TBC */
     @Attribute
     Integer sourcelastUpdaterId;
-
-    /** TBC */
-    @Attribute
-    ILookerDashboard dashboard;
-
-    /** TBC */
-    @Attribute
-    ILookerFolder folder;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    ILookerModel model;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> outputFromProcesses;
-
-    /** TBC */
-    @Attribute
-    ILookerQuery query;
 
     /** TBC */
     @Attribute

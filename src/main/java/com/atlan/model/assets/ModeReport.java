@@ -37,11 +37,21 @@ public class ModeReport extends Asset implements IModeReport, IMode, IBI, ICatal
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
     Long modeChartCount;
 
     /** TBC */
     @Attribute
     String modeCollectionToken;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IModeCollection> modeCollections;
 
     /** TBC */
     @Attribute
@@ -54,6 +64,11 @@ public class ModeReport extends Asset implements IModeReport, IMode, IBI, ICatal
     /** TBC */
     @Attribute
     Boolean modeIsShared;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IModeQuery> modeQueries;
 
     /** TBC */
     @Attribute
@@ -98,21 +113,6 @@ public class ModeReport extends Asset implements IModeReport, IMode, IBI, ICatal
     /** TBC */
     @Attribute
     String modeWorkspaceUsername;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IModeCollection> modeCollections;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IModeQuery> modeQueries;
 
     /** TBC */
     @Attribute

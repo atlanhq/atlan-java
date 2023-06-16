@@ -39,6 +39,16 @@ public class RedashQuery extends Asset implements IRedashQuery, IRedash, IBI, IC
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
     Boolean redashIsPublished;
 
     /** Time when the Redash query was last executed. */
@@ -65,16 +75,6 @@ public class RedashQuery extends Asset implements IRedashQuery, IRedash, IBI, IC
     /** Human-readable schedule of the Redash query. */
     @Attribute
     String redashQueryScheduleHumanized;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> outputFromProcesses;
 
     /** Visualizations of this Redash query. */
     @Attribute

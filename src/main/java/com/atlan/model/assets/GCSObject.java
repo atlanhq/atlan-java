@@ -44,6 +44,10 @@ public class GCSObject extends Asset
     @Attribute
     String gcsAccessControl;
 
+    /** GCS bucket in which the object exists. */
+    @Attribute
+    IGCSBucket gcsBucket;
+
     /** Human-readable name of the bucket in which this object exists. */
     @Attribute
     String gcsBucketName;
@@ -157,10 +161,6 @@ public class GCSObject extends Asset
     @Attribute
     @Singular
     List<GoogleTag> googleTags;
-
-    /** GCS bucket in which the object exists. */
-    @Attribute
-    IGCSBucket gcsBucket;
 
     /** TBC */
     @Attribute

@@ -67,16 +67,16 @@ public class Purpose extends Asset implements IPurpose, IAccessControl, IAsset, 
     @Attribute
     Boolean isAccessControlEnabled;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IAuthPolicy> policies;
+
     /** Tags on which this purpose is applied. */
     @Attribute
     @Singular
     @JsonProperty("purposeClassifications")
     SortedSet<String> purposeAtlanTags;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IAuthPolicy> policies;
 
     /**
      * Reference to a Purpose by GUID.

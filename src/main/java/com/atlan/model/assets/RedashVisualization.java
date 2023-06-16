@@ -38,7 +38,21 @@ public class RedashVisualization extends Asset
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
     Boolean redashIsPublished;
+
+    /** Query from which the visualization was created. */
+    @Attribute
+    IRedashQuery redashQuery;
 
     /** Name of the query from which the visualization was created. */
     @Attribute
@@ -51,20 +65,6 @@ public class RedashVisualization extends Asset
     /** Type of the Redash visualization. */
     @Attribute
     String redashVisualizationType;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> outputFromProcesses;
-
-    /** Query from which the visualization was created. */
-    @Attribute
-    IRedashQuery redashQuery;
 
     /**
      * Reference to a RedashVisualization by GUID.

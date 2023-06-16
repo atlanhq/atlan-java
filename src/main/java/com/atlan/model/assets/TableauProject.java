@@ -39,23 +39,6 @@ public class TableauProject extends Asset implements ITableauProject, ITableau, 
 
     /** TBC */
     @Attribute
-    Boolean isTopLevelProject;
-
-    /** TBC */
-    @Attribute
-    @Singular("addProjectHierarchy")
-    List<Map<String, String>> projectHierarchy;
-
-    /** TBC */
-    @Attribute
-    String siteQualifiedName;
-
-    /** TBC */
-    @Attribute
-    String topLevelProjectQualifiedName;
-
-    /** TBC */
-    @Attribute
     @Singular
     SortedSet<ITableauProject> childProjects;
 
@@ -76,6 +59,10 @@ public class TableauProject extends Asset implements ITableauProject, ITableau, 
 
     /** TBC */
     @Attribute
+    Boolean isTopLevelProject;
+
+    /** TBC */
+    @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
 
@@ -85,7 +72,20 @@ public class TableauProject extends Asset implements ITableauProject, ITableau, 
 
     /** TBC */
     @Attribute
+    @Singular("addProjectHierarchy")
+    List<Map<String, String>> projectHierarchy;
+
+    /** TBC */
+    @Attribute
     ITableauSite site;
+
+    /** TBC */
+    @Attribute
+    String siteQualifiedName;
+
+    /** TBC */
+    @Attribute
+    String topLevelProjectQualifiedName;
 
     /** TBC */
     @Attribute

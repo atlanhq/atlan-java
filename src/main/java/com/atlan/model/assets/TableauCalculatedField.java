@@ -44,11 +44,25 @@ public class TableauCalculatedField extends Asset
 
     /** TBC */
     @Attribute
+    ITableauDatasource datasource;
+
+    /** TBC */
+    @Attribute
     String datasourceQualifiedName;
 
     /** TBC */
     @Attribute
     String formula;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 
     /** TBC */
     @Attribute
@@ -83,20 +97,6 @@ public class TableauCalculatedField extends Asset
     /** TBC */
     @Attribute
     String workbookQualifiedName;
-
-    /** TBC */
-    @Attribute
-    ITableauDatasource datasource;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> outputFromProcesses;
 
     /** TBC */
     @Attribute

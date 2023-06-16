@@ -49,6 +49,11 @@ public class APISpec extends Asset implements IAPISpec, IAPI, ICatalog, IAsset, 
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<IAPIPath> apiPaths;
+
+    /** TBC */
+    @Attribute
     String apiSpecContactEmail;
 
     /** TBC */
@@ -94,11 +99,6 @@ public class APISpec extends Asset implements IAPISpec, IAPI, ICatalog, IAsset, 
     /** TBC */
     @Attribute
     String apiSpecVersion;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IAPIPath> apiPaths;
 
     /** TBC */
     @Attribute

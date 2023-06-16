@@ -37,6 +37,16 @@ public abstract class PowerBI extends Asset implements IPowerBI, IBI, ICatalog, 
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
     PowerBIEndorsementType powerBIEndorsement;
 
     /** TBC */
@@ -50,14 +60,4 @@ public abstract class PowerBI extends Asset implements IPowerBI, IBI, ICatalog, 
     /** TBC */
     @Attribute
     String powerBITableQualifiedName;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> outputFromProcesses;
 }

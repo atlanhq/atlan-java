@@ -27,9 +27,6 @@ import javax.annotation.processing.Generated;
 public interface IGlossaryTerm {
 
     /** TBC */
-    Boolean getHasLineage();
-
-    /** TBC */
     String getAbbreviation();
 
     /** TBC */
@@ -45,6 +42,9 @@ public interface IGlossaryTerm {
     SortedSet<String> getAdminUsers();
 
     /** TBC */
+    IGlossary getAnchor();
+
+    /** TBC */
     String getAnnouncementMessage();
 
     /** TBC */
@@ -58,6 +58,9 @@ public interface IGlossaryTerm {
 
     /** TBC */
     String getAnnouncementUpdatedBy();
+
+    /** TBC */
+    SortedSet<IGlossaryTerm> getAntonyms();
 
     /** TBC */
     String getAssetDbtAccountName();
@@ -216,6 +219,15 @@ public interface IGlossaryTerm {
     SortedSet<String> getAssetTags();
 
     /** TBC */
+    SortedSet<IAsset> getAssignedEntities();
+
+    /** TBC */
+    SortedSet<IGlossaryTerm> getAssignedTerms();
+
+    /** TBC */
+    SortedSet<IGlossaryCategory> getCategories();
+
+    /** TBC */
     CertificateStatus getCertificateStatus();
 
     /** TBC */
@@ -226,6 +238,9 @@ public interface IGlossaryTerm {
 
     /** TBC */
     String getCertificateUpdatedBy();
+
+    /** TBC */
+    SortedSet<IGlossaryTerm> getClassifies();
 
     /** TBC */
     String getConnectionName();
@@ -249,6 +264,15 @@ public interface IGlossaryTerm {
     SortedSet<String> getExamples();
 
     /** TBC */
+    SortedSet<IFile> getFiles();
+
+    /** TBC */
+    Boolean getHasLineage();
+
+    /** TBC */
+    SortedSet<IGlossaryTerm> getIsA();
+
+    /** TBC */
     Boolean getIsDiscoverable();
 
     /** TBC */
@@ -267,7 +291,19 @@ public interface IGlossaryTerm {
     String getLastSyncWorkflowName();
 
     /** TBC */
+    SortedSet<ILink> getLinks();
+
+    /** TBC */
     String getLongDescription();
+
+    /** TBC */
+    SortedSet<IMCIncident> getMcIncidents();
+
+    /** TBC */
+    SortedSet<IMCMonitor> getMcMonitors();
+
+    /** TBC */
+    SortedSet<IMetric> getMetrics();
 
     /** TBC */
     String getName();
@@ -282,10 +318,28 @@ public interface IGlossaryTerm {
     Double getPopularityScore();
 
     /** TBC */
+    SortedSet<IGlossaryTerm> getPreferredTerms();
+
+    /** TBC */
+    SortedSet<IGlossaryTerm> getPreferredToTerms();
+
+    /** TBC */
     String getQualifiedName();
 
     /** TBC */
+    IReadme getReadme();
+
+    /** TBC */
+    SortedSet<IGlossaryTerm> getReplacedBy();
+
+    /** TBC */
+    SortedSet<IGlossaryTerm> getReplacementTerms();
+
+    /** TBC */
     String getSampleDataUrl();
+
+    /** TBC */
+    SortedSet<IGlossaryTerm> getSeeAlso();
 
     /** TBC */
     String getShortDescription();
@@ -309,10 +363,10 @@ public interface IGlossaryTerm {
     String getSourceOwners();
 
     /** TBC */
-    SortedSet<String> getSourceQueryComputeCosts();
+    List<PopularityInsights> getSourceQueryComputeCostRecords();
 
     /** TBC */
-    List<PopularityInsights> getSourceQueryComputeCostRecords();
+    SortedSet<String> getSourceQueryComputeCosts();
 
     /** TBC */
     Long getSourceReadCount();
@@ -327,19 +381,19 @@ public interface IGlossaryTerm {
     Double getSourceReadQueryCost();
 
     /** TBC */
-    SortedSet<String> getSourceReadRecentUsers();
+    List<PopularityInsights> getSourceReadRecentUserRecords();
 
     /** TBC */
-    List<PopularityInsights> getSourceReadRecentUserRecords();
+    SortedSet<String> getSourceReadRecentUsers();
 
     /** TBC */
     List<PopularityInsights> getSourceReadSlowQueryRecords();
 
     /** TBC */
-    SortedSet<String> getSourceReadTopUsers();
+    List<PopularityInsights> getSourceReadTopUserRecords();
 
     /** TBC */
-    List<PopularityInsights> getSourceReadTopUserRecords();
+    SortedSet<String> getSourceReadTopUsers();
 
     /** TBC */
     Long getSourceReadUserCount();
@@ -363,13 +417,28 @@ public interface IGlossaryTerm {
     String getSubType();
 
     /** TBC */
+    SortedSet<IGlossaryTerm> getSynonyms();
+
+    /** TBC */
     String getTenantId();
+
+    /** TBC */
+    SortedSet<IGlossaryTerm> getTranslatedTerms();
+
+    /** TBC */
+    SortedSet<IGlossaryTerm> getTranslationTerms();
 
     /** TBC */
     String getUsage();
 
     /** TBC */
     String getUserDescription();
+
+    /** TBC */
+    SortedSet<IGlossaryTerm> getValidValues();
+
+    /** TBC */
+    SortedSet<IGlossaryTerm> getValidValuesFor();
 
     /** TBC */
     Double getViewScore();
@@ -379,75 +448,6 @@ public interface IGlossaryTerm {
 
     /** TBC */
     SortedSet<String> getViewerUsers();
-
-    /** TBC */
-    IGlossary getAnchor();
-
-    /** TBC */
-    SortedSet<IGlossaryTerm> getAntonyms();
-
-    /** TBC */
-    SortedSet<IAsset> getAssignedEntities();
-
-    /** TBC */
-    SortedSet<IGlossaryCategory> getCategories();
-
-    /** TBC */
-    SortedSet<IGlossaryTerm> getClassifies();
-
-    /** TBC */
-    SortedSet<IFile> getFiles();
-
-    /** TBC */
-    SortedSet<IGlossaryTerm> getIsA();
-
-    /** TBC */
-    SortedSet<ILink> getLinks();
-
-    /** TBC */
-    SortedSet<IMCIncident> getMcIncidents();
-
-    /** TBC */
-    SortedSet<IMCMonitor> getMcMonitors();
-
-    /** TBC */
-    SortedSet<IGlossaryTerm> getAssignedTerms();
-
-    /** TBC */
-    SortedSet<IMetric> getMetrics();
-
-    /** TBC */
-    SortedSet<IGlossaryTerm> getPreferredTerms();
-
-    /** TBC */
-    SortedSet<IGlossaryTerm> getPreferredToTerms();
-
-    /** TBC */
-    IReadme getReadme();
-
-    /** TBC */
-    SortedSet<IGlossaryTerm> getReplacedBy();
-
-    /** TBC */
-    SortedSet<IGlossaryTerm> getReplacementTerms();
-
-    /** TBC */
-    SortedSet<IGlossaryTerm> getSeeAlso();
-
-    /** TBC */
-    SortedSet<IGlossaryTerm> getSynonyms();
-
-    /** TBC */
-    SortedSet<IGlossaryTerm> getTranslatedTerms();
-
-    /** TBC */
-    SortedSet<IGlossaryTerm> getTranslationTerms();
-
-    /** TBC */
-    SortedSet<IGlossaryTerm> getValidValues();
-
-    /** TBC */
-    SortedSet<IGlossaryTerm> getValidValuesFor();
 
     /** Name of the type that defines the asset. */
     String getTypeName();

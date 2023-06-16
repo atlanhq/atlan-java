@@ -38,11 +38,30 @@ public class PowerBIReport extends Asset implements IPowerBIReport, IPowerBI, IB
 
     /** TBC */
     @Attribute
+    IPowerBIDataset dataset;
+
+    /** TBC */
+    @Attribute
     String datasetQualifiedName;
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
     Long pageCount;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IPowerBIPage> pages;
 
     /** TBC */
     @Attribute
@@ -62,39 +81,20 @@ public class PowerBIReport extends Asset implements IPowerBIReport, IPowerBI, IB
 
     /** TBC */
     @Attribute
-    String webUrl;
-
-    /** TBC */
-    @Attribute
-    String workspaceQualifiedName;
-
-    /** TBC */
-    @Attribute
-    IPowerBIDataset dataset;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> outputFromProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IPowerBIPage> pages;
-
-    /** TBC */
-    @Attribute
     @Singular
     SortedSet<IPowerBITile> tiles;
 
     /** TBC */
     @Attribute
+    String webUrl;
+
+    /** TBC */
+    @Attribute
     IPowerBIWorkspace workspace;
+
+    /** TBC */
+    @Attribute
+    String workspaceQualifiedName;
 
     /**
      * Reference to a PowerBIReport by GUID.

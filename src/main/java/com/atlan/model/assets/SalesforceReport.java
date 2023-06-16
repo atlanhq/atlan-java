@@ -42,28 +42,15 @@ public class SalesforceReport extends Asset
     @Attribute
     String apiName;
 
-    /** List of column names on the report. */
-    @Attribute
-    @Singular
-    SortedSet<String> detailColumns;
-
-    /** TBC */
-    @Attribute
-    String organizationQualifiedName;
-
-    /** Type of report in Salesforce. */
-    @Attribute
-    @Singular("putReportType")
-    Map<String, String> reportType;
-
-    /** ID of the report in Salesforce. */
-    @Attribute
-    String sourceId;
-
     /** TBC */
     @Attribute
     @Singular
     SortedSet<ISalesforceDashboard> dashboards;
+
+    /** List of column names on the report. */
+    @Attribute
+    @Singular
+    SortedSet<String> detailColumns;
 
     /** TBC */
     @Attribute
@@ -76,8 +63,21 @@ public class SalesforceReport extends Asset
 
     /** TBC */
     @Attribute
+    String organizationQualifiedName;
+
+    /** TBC */
+    @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** Type of report in Salesforce. */
+    @Attribute
+    @Singular("putReportType")
+    Map<String, String> reportType;
+
+    /** ID of the report in Salesforce. */
+    @Attribute
+    String sourceId;
 
     /**
      * Reference to a SalesforceReport by GUID.

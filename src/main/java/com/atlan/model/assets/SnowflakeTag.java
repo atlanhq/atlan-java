@@ -49,6 +49,21 @@ public class SnowflakeTag extends Asset implements ISnowflakeTag, ITag, ISQL, IC
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<IDbtModel> dbtModels;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtSource> dbtSources;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
     Boolean isProfiled;
 
     /** TBC */
@@ -59,6 +74,11 @@ public class SnowflakeTag extends Asset implements ISnowflakeTag, ITag, ISQL, IC
     @Attribute
     @JsonProperty("mappedClassificationName")
     String mappedAtlanTagName;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 
     /** TBC */
     @Attribute
@@ -77,6 +97,11 @@ public class SnowflakeTag extends Asset implements ISnowflakeTag, ITag, ISQL, IC
     @Singular("putQueryUserMap")
     Map<String, Long> queryUserMap;
 
+    /** Database schemas to which this tag is applied. */
+    @Attribute
+    @JsonProperty("atlanSchema")
+    ISchema schema;
+
     /** TBC */
     @Attribute
     String schemaName;
@@ -84,6 +109,16 @@ public class SnowflakeTag extends Asset implements ISnowflakeTag, ITag, ISQL, IC
     /** TBC */
     @Attribute
     String schemaQualifiedName;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtSource> sqlDBTSources;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtModel> sqlDbtModels;
 
     /** TBC */
     @Attribute
@@ -114,41 +149,6 @@ public class SnowflakeTag extends Asset implements ISnowflakeTag, ITag, ISQL, IC
     /** TBC */
     @Attribute
     String viewQualifiedName;
-
-    /** Database schemas to which this tag is applied. */
-    @Attribute
-    @JsonProperty("atlanSchema")
-    ISchema schema;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IDbtModel> dbtModels;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IDbtSource> dbtSources;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> outputFromProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IDbtSource> sqlDBTSources;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IDbtModel> sqlDbtModels;
 
     /**
      * Reference to a SnowflakeTag by GUID.

@@ -27,9 +27,6 @@ import javax.annotation.processing.Generated;
 public interface IProcedure {
 
     /** TBC */
-    Boolean getHasLineage();
-
-    /** TBC */
     SortedSet<String> getAdminGroups();
 
     /** TBC */
@@ -210,6 +207,9 @@ public interface IProcedure {
     SortedSet<String> getAssetTags();
 
     /** TBC */
+    SortedSet<IGlossaryTerm> getAssignedTerms();
+
+    /** TBC */
     CertificateStatus getCertificateStatus();
 
     /** TBC */
@@ -237,7 +237,13 @@ public interface IProcedure {
     String getDatabaseQualifiedName();
 
     /** TBC */
+    SortedSet<IDbtModel> getDbtModels();
+
+    /** TBC */
     String getDbtQualifiedName();
+
+    /** TBC */
+    SortedSet<IDbtSource> getDbtSources();
 
     /** Logic of the procedure. */
     String getDefinition();
@@ -247,6 +253,15 @@ public interface IProcedure {
 
     /** TBC */
     String getDisplayName();
+
+    /** TBC */
+    SortedSet<IFile> getFiles();
+
+    /** TBC */
+    Boolean getHasLineage();
+
+    /** TBC */
+    SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
     Boolean getIsDiscoverable();
@@ -273,7 +288,22 @@ public interface IProcedure {
     String getLastSyncWorkflowName();
 
     /** TBC */
+    SortedSet<ILink> getLinks();
+
+    /** TBC */
+    SortedSet<IMCIncident> getMcIncidents();
+
+    /** TBC */
+    SortedSet<IMCMonitor> getMcMonitors();
+
+    /** TBC */
+    SortedSet<IMetric> getMetrics();
+
+    /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
     SortedSet<String> getOwnerGroups();
@@ -300,7 +330,13 @@ public interface IProcedure {
     Map<String, Long> getQueryUserMap();
 
     /** TBC */
+    IReadme getReadme();
+
+    /** TBC */
     String getSampleDataUrl();
+
+    /** Schema in which the procedure is contained. */
+    ISchema getSchema();
 
     /** TBC */
     String getSchemaName();
@@ -327,10 +363,10 @@ public interface IProcedure {
     String getSourceOwners();
 
     /** TBC */
-    SortedSet<String> getSourceQueryComputeCosts();
+    List<PopularityInsights> getSourceQueryComputeCostRecords();
 
     /** TBC */
-    List<PopularityInsights> getSourceQueryComputeCostRecords();
+    SortedSet<String> getSourceQueryComputeCosts();
 
     /** TBC */
     Long getSourceReadCount();
@@ -345,19 +381,19 @@ public interface IProcedure {
     Double getSourceReadQueryCost();
 
     /** TBC */
-    SortedSet<String> getSourceReadRecentUsers();
+    List<PopularityInsights> getSourceReadRecentUserRecords();
 
     /** TBC */
-    List<PopularityInsights> getSourceReadRecentUserRecords();
+    SortedSet<String> getSourceReadRecentUsers();
 
     /** TBC */
     List<PopularityInsights> getSourceReadSlowQueryRecords();
 
     /** TBC */
-    SortedSet<String> getSourceReadTopUsers();
+    List<PopularityInsights> getSourceReadTopUserRecords();
 
     /** TBC */
-    List<PopularityInsights> getSourceReadTopUserRecords();
+    SortedSet<String> getSourceReadTopUsers();
 
     /** TBC */
     Long getSourceReadUserCount();
@@ -373,6 +409,12 @@ public interface IProcedure {
 
     /** TBC */
     String getSourceUpdatedBy();
+
+    /** TBC */
+    SortedSet<IDbtSource> getSqlDBTSources();
+
+    /** TBC */
+    SortedSet<IDbtModel> getSqlDbtModels();
 
     /** TBC */
     SortedSet<String> getStarredBy();
@@ -406,48 +448,6 @@ public interface IProcedure {
 
     /** TBC */
     SortedSet<String> getViewerUsers();
-
-    /** Schema in which the procedure is contained. */
-    ISchema getSchema();
-
-    /** TBC */
-    SortedSet<IDbtModel> getDbtModels();
-
-    /** TBC */
-    SortedSet<IDbtSource> getDbtSources();
-
-    /** TBC */
-    SortedSet<IFile> getFiles();
-
-    /** TBC */
-    SortedSet<ILineageProcess> getInputToProcesses();
-
-    /** TBC */
-    SortedSet<ILink> getLinks();
-
-    /** TBC */
-    SortedSet<IMCIncident> getMcIncidents();
-
-    /** TBC */
-    SortedSet<IMCMonitor> getMcMonitors();
-
-    /** TBC */
-    SortedSet<IGlossaryTerm> getAssignedTerms();
-
-    /** TBC */
-    SortedSet<IMetric> getMetrics();
-
-    /** TBC */
-    SortedSet<ILineageProcess> getOutputFromProcesses();
-
-    /** TBC */
-    IReadme getReadme();
-
-    /** TBC */
-    SortedSet<IDbtSource> getSqlDBTSources();
-
-    /** TBC */
-    SortedSet<IDbtModel> getSqlDbtModels();
 
     /** Name of the type that defines the asset. */
     String getTypeName();

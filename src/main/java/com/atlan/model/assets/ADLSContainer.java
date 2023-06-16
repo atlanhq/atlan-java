@@ -41,6 +41,10 @@ public class ADLSContainer extends Asset
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Account this container exists within. */
+    @Attribute
+    IADLSAccount adlsAccount;
+
     /** TBC */
     @Attribute
     String adlsAccountQualifiedName;
@@ -73,6 +77,11 @@ public class ADLSContainer extends Asset
     @Attribute
     Integer adlsObjectCount;
 
+    /** Objects that exist within this container. */
+    @Attribute
+    @Singular
+    SortedSet<IADLSObject> adlsObjects;
+
     /** TBC */
     @Attribute
     String azureLocation;
@@ -85,15 +94,6 @@ public class ADLSContainer extends Asset
     @Attribute
     @Singular
     List<AzureTag> azureTags;
-
-    /** Account this container exists within. */
-    @Attribute
-    IADLSAccount adlsAccount;
-
-    /** Objects that exist within this container. */
-    @Attribute
-    @Singular
-    SortedSet<IADLSObject> adlsObjects;
 
     /** TBC */
     @Attribute

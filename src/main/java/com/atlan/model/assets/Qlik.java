@@ -28,6 +28,16 @@ public abstract class Qlik extends Asset implements IQlik, IBI, ICatalog, IAsset
 
     public static final String TYPE_NAME = "Qlik";
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
     /** Unique identifier (in Qlik) of the app where the asset exists. */
     @Attribute
     String qlikAppId;
@@ -59,14 +69,4 @@ public abstract class Qlik extends Asset implements IQlik, IBI, ICatalog, IAsset
     /** Unique name of the space where the Qlik asset exists. */
     @Attribute
     String qlikSpaceQualifiedName;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> outputFromProcesses;
 }

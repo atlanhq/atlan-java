@@ -37,7 +37,30 @@ public class LookerExplore extends Asset implements ILookerExplore, ILooker, IBI
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<ILookerField> fields;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    ILookerModel model;
+
+    /** TBC */
+    @Attribute
     String modelName;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    ILookerProject project;
 
     /** TBC */
     @Attribute
@@ -54,29 +77,6 @@ public class LookerExplore extends Asset implements ILookerExplore, ILooker, IBI
     /** TBC */
     @Attribute
     String viewName;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILookerField> fields;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    ILookerModel model;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> outputFromProcesses;
-
-    /** TBC */
-    @Attribute
-    ILookerProject project;
 
     /**
      * Reference to a LookerExplore by GUID.

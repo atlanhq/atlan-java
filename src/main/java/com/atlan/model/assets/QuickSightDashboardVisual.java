@@ -38,6 +38,20 @@ public class QuickSightDashboardVisual extends Asset
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    IQuickSightDashboard quickSightDashboard;
+
+    /** TBC */
+    @Attribute
     String quickSightDashboardQualifiedName;
 
     /** TBC */
@@ -51,20 +65,6 @@ public class QuickSightDashboardVisual extends Asset
     /** TBC */
     @Attribute
     String quickSightSheetName;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> outputFromProcesses;
-
-    /** TBC */
-    @Attribute
-    IQuickSightDashboard quickSightDashboard;
 
     /**
      * Reference to a QuickSightDashboardVisual by GUID.

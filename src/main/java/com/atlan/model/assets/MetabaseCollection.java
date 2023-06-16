@@ -38,6 +38,11 @@ public class MetabaseCollection extends Asset
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
     String metabaseCollectionName;
 
     /** TBC */
@@ -50,6 +55,11 @@ public class MetabaseCollection extends Asset
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<IMetabaseDashboard> metabaseDashboards;
+
+    /** TBC */
+    @Attribute
     Boolean metabaseIsPersonalCollection;
 
     /** TBC */
@@ -58,22 +68,12 @@ public class MetabaseCollection extends Asset
 
     /** TBC */
     @Attribute
-    String metabaseSlug;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IMetabaseDashboard> metabaseDashboards;
-
-    /** TBC */
-    @Attribute
     @Singular
     SortedSet<IMetabaseQuestion> metabaseQuestions;
+
+    /** TBC */
+    @Attribute
+    String metabaseSlug;
 
     /** TBC */
     @Attribute

@@ -34,12 +34,12 @@ public abstract class Salesforce extends Asset implements ISalesforce, ISaaS, IC
 
     /** TBC */
     @Attribute
-    String organizationQualifiedName;
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
 
     /** TBC */
     @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
+    String organizationQualifiedName;
 
     /** TBC */
     @Attribute

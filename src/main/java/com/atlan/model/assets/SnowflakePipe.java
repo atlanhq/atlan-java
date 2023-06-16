@@ -48,7 +48,22 @@ public class SnowflakePipe extends Asset implements ISnowflakePipe, ISQL, ICatal
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<IDbtModel> dbtModels;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtSource> dbtSources;
+
+    /** TBC */
+    @Attribute
     String definition;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
 
     /** TBC */
     @Attribute
@@ -57,6 +72,11 @@ public class SnowflakePipe extends Asset implements ISnowflakePipe, ISQL, ICatal
     /** TBC */
     @Attribute
     Long lastProfiledAt;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 
     /** TBC */
     @Attribute
@@ -77,6 +97,11 @@ public class SnowflakePipe extends Asset implements ISnowflakePipe, ISQL, ICatal
 
     /** TBC */
     @Attribute
+    @JsonProperty("atlanSchema")
+    ISchema schema;
+
+    /** TBC */
+    @Attribute
     String schemaName;
 
     /** TBC */
@@ -93,6 +118,16 @@ public class SnowflakePipe extends Asset implements ISnowflakePipe, ISQL, ICatal
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<IDbtSource> sqlDBTSources;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtModel> sqlDbtModels;
+
+    /** TBC */
+    @Attribute
     String tableName;
 
     /** TBC */
@@ -106,41 +141,6 @@ public class SnowflakePipe extends Asset implements ISnowflakePipe, ISQL, ICatal
     /** TBC */
     @Attribute
     String viewQualifiedName;
-
-    /** TBC */
-    @Attribute
-    @JsonProperty("atlanSchema")
-    ISchema schema;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IDbtModel> dbtModels;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IDbtSource> dbtSources;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> outputFromProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IDbtSource> sqlDBTSources;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IDbtModel> sqlDbtModels;
 
     /**
      * Reference to a SnowflakePipe by GUID.

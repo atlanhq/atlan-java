@@ -48,11 +48,31 @@ public class Database extends Asset implements IDatabase, ISQL, ICatalog, IAsset
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<IDbtModel> dbtModels;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtSource> dbtSources;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
     Boolean isProfiled;
 
     /** TBC */
     @Attribute
     Long lastProfiledAt;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 
     /** TBC */
     @Attribute
@@ -83,6 +103,21 @@ public class Database extends Asset implements IDatabase, ISQL, ICatalog, IAsset
     @Attribute
     String schemaQualifiedName;
 
+    /** Schemas that exist within this database. */
+    @Attribute
+    @Singular
+    SortedSet<ISchema> schemas;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtSource> sqlDBTSources;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtModel> sqlDbtModels;
+
     /** TBC */
     @Attribute
     String tableName;
@@ -98,41 +133,6 @@ public class Database extends Asset implements IDatabase, ISQL, ICatalog, IAsset
     /** TBC */
     @Attribute
     String viewQualifiedName;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IDbtModel> dbtModels;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IDbtSource> dbtSources;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> outputFromProcesses;
-
-    /** Schemas that exist within this database. */
-    @Attribute
-    @Singular
-    SortedSet<ISchema> schemas;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IDbtSource> sqlDBTSources;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IDbtModel> sqlDbtModels;
 
     /**
      * Reference to a Database by GUID.

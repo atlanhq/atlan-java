@@ -45,12 +45,26 @@ public class TableauFlow extends Asset implements ITableauFlow, ITableau, IBI, I
     /** TBC */
     @Attribute
     @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
     List<Map<String, String>> outputFields;
 
     /** TBC */
     @Attribute
     @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
     List<Map<String, String>> outputSteps;
+
+    /** TBC */
+    @Attribute
+    ITableauProject project;
 
     /** TBC */
     @Attribute
@@ -68,20 +82,6 @@ public class TableauFlow extends Asset implements ITableauFlow, ITableau, IBI, I
     /** TBC */
     @Attribute
     String topLevelProjectQualifiedName;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> outputFromProcesses;
-
-    /** TBC */
-    @Attribute
-    ITableauProject project;
 
     /**
      * Reference to a TableauFlow by GUID.

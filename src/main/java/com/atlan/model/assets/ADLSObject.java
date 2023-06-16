@@ -54,6 +54,10 @@ public class ADLSObject extends Asset
     @Attribute
     String adlsAccountSecondaryLocation;
 
+    /** Container this object exists within. */
+    @Attribute
+    IADLSContainer adlsContainer;
+
     /** Unique name of the container this object exists within. */
     @Attribute
     String adlsContainerQualifiedName;
@@ -135,10 +139,6 @@ public class ADLSObject extends Asset
     @Attribute
     @Singular
     List<AzureTag> azureTags;
-
-    /** Container this object exists within. */
-    @Attribute
-    IADLSContainer adlsContainer;
 
     /** TBC */
     @Attribute

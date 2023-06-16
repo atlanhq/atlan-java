@@ -37,10 +37,6 @@ public class LookerModel extends Asset implements ILookerModel, ILooker, IBI, IC
 
     /** TBC */
     @Attribute
-    String projectName;
-
-    /** TBC */
-    @Attribute
     @Singular
     SortedSet<ILookerExplore> explores;
 
@@ -66,6 +62,10 @@ public class LookerModel extends Asset implements ILookerModel, ILooker, IBI, IC
     /** TBC */
     @Attribute
     ILookerProject project;
+
+    /** TBC */
+    @Attribute
+    String projectName;
 
     /** TBC */
     @Attribute

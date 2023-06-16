@@ -37,6 +37,11 @@ public class ModeCollection extends Asset implements IModeCollection, IMode, IBI
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
     String modeCollectionState;
 
     /** TBC */
@@ -65,7 +70,16 @@ public class ModeCollection extends Asset implements IModeCollection, IMode, IBI
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<IModeReport> modeReports;
+
+    /** TBC */
+    @Attribute
     String modeToken;
+
+    /** TBC */
+    @Attribute
+    IModeWorkspace modeWorkspace;
 
     /** TBC */
     @Attribute
@@ -78,20 +92,6 @@ public class ModeCollection extends Asset implements IModeCollection, IMode, IBI
     /** TBC */
     @Attribute
     String modeWorkspaceUsername;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IModeReport> modeReports;
-
-    /** TBC */
-    @Attribute
-    IModeWorkspace modeWorkspace;
 
     /** TBC */
     @Attribute

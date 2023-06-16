@@ -36,9 +36,24 @@ public class SigmaDataElement extends Asset
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
     /** Number of data element fields within this data element. */
     @Attribute
     Long sigmaDataElementFieldCount;
+
+    /** Data element fields within this data element. */
+    @Attribute
+    @Singular
+    SortedSet<ISigmaDataElementField> sigmaDataElementFields;
 
     /** TBC */
     @Attribute
@@ -56,6 +71,10 @@ public class SigmaDataElement extends Asset
     @Attribute
     String sigmaDataElementType;
 
+    /** Page that contains this data element. */
+    @Attribute
+    ISigmaPage sigmaPage;
+
     /** TBC */
     @Attribute
     String sigmaPageName;
@@ -71,25 +90,6 @@ public class SigmaDataElement extends Asset
     /** TBC */
     @Attribute
     String sigmaWorkbookQualifiedName;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> outputFromProcesses;
-
-    /** Data element fields within this data element. */
-    @Attribute
-    @Singular
-    SortedSet<ISigmaDataElementField> sigmaDataElementFields;
-
-    /** Page that contains this data element. */
-    @Attribute
-    ISigmaPage sigmaPage;
 
     /**
      * Reference to a SigmaDataElement by GUID.

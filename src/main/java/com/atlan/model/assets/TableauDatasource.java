@@ -53,7 +53,17 @@ public class TableauDatasource extends Asset
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<ITableauCalculatedField> fields;
+
+    /** TBC */
+    @Attribute
     Boolean hasExtracts;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
 
     /** TBC */
     @Attribute
@@ -62,6 +72,15 @@ public class TableauDatasource extends Asset
     /** TBC */
     @Attribute
     Boolean isPublished;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    ITableauProject project;
 
     /** TBC */
     @Attribute
@@ -92,30 +111,11 @@ public class TableauDatasource extends Asset
 
     /** TBC */
     @Attribute
-    String workbookQualifiedName;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ITableauCalculatedField> fields;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> outputFromProcesses;
-
-    /** TBC */
-    @Attribute
-    ITableauProject project;
-
-    /** TBC */
-    @Attribute
     ITableauWorkbook workbook;
+
+    /** TBC */
+    @Attribute
+    String workbookQualifiedName;
 
     /**
      * Reference to a TableauDatasource by GUID.

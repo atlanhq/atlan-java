@@ -38,11 +38,25 @@ public class SigmaDatasetColumn extends Asset
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
     String sigmaDataElementName;
 
     /** TBC */
     @Attribute
     String sigmaDataElementQualifiedName;
+
+    /** Dataset that contains this column. */
+    @Attribute
+    ISigmaDataset sigmaDataset;
 
     /** Human-readable name of the dataset that contains this column. */
     @Attribute
@@ -67,20 +81,6 @@ public class SigmaDatasetColumn extends Asset
     /** TBC */
     @Attribute
     String sigmaWorkbookQualifiedName;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> outputFromProcesses;
-
-    /** Dataset that contains this column. */
-    @Attribute
-    ISigmaDataset sigmaDataset;
 
     /**
      * Reference to a SigmaDatasetColumn by GUID.

@@ -38,6 +38,16 @@ public class PowerBIPage extends Asset implements IPowerBIPage, IPowerBI, IBI, I
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
     PowerBIEndorsementType powerBIEndorsement;
 
     /** TBC */
@@ -54,25 +64,15 @@ public class PowerBIPage extends Asset implements IPowerBIPage, IPowerBI, IBI, I
 
     /** TBC */
     @Attribute
+    IPowerBIReport report;
+
+    /** TBC */
+    @Attribute
     String reportQualifiedName;
 
     /** TBC */
     @Attribute
     String workspaceQualifiedName;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> outputFromProcesses;
-
-    /** TBC */
-    @Attribute
-    IPowerBIReport report;
 
     /**
      * Reference to a PowerBIPage by GUID.

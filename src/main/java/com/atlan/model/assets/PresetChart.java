@@ -39,6 +39,16 @@ public class PresetChart extends Asset implements IPresetChart, IPreset, IBI, IC
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
     /** Markdown-based description of the chart. */
     @Attribute
     String presetChartDescriptionMarkdown;
@@ -47,6 +57,10 @@ public class PresetChart extends Asset implements IPresetChart, IPreset, IBI, IC
     @Attribute
     @Singular("putPresetChartFormData")
     Map<String, String> presetChartFormData;
+
+    /** Collection in which the chart exists. */
+    @Attribute
+    IPresetDashboard presetDashboard;
 
     /** TBC */
     @Attribute
@@ -63,20 +77,6 @@ public class PresetChart extends Asset implements IPresetChart, IPreset, IBI, IC
     /** TBC */
     @Attribute
     String presetWorkspaceQualifiedName;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> outputFromProcesses;
-
-    /** Collection in which the chart exists. */
-    @Attribute
-    IPresetDashboard presetDashboard;
 
     /**
      * Reference to a PresetChart by GUID.

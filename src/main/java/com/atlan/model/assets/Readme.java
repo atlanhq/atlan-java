@@ -35,23 +35,6 @@ public class Readme extends Asset implements IReadme, IResource, ICatalog, IAsse
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** TBC */
-    @Attribute
-    Boolean isGlobal;
-
-    /** TBC */
-    @Attribute
-    String link;
-
-    /** TBC */
-    @Attribute
-    String reference;
-
-    /** TBC */
-    @Attribute
-    @Singular("putResourceMetadata")
-    Map<String, String> resourceMetadata;
-
     /** Asset to which the README is linked. */
     @Attribute
     IAsset asset;
@@ -63,8 +46,25 @@ public class Readme extends Asset implements IReadme, IResource, ICatalog, IAsse
 
     /** TBC */
     @Attribute
+    Boolean isGlobal;
+
+    /** TBC */
+    @Attribute
+    String link;
+
+    /** TBC */
+    @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    String reference;
+
+    /** TBC */
+    @Attribute
+    @Singular("putResourceMetadata")
+    Map<String, String> resourceMetadata;
 
     /** TBC */
     @Attribute

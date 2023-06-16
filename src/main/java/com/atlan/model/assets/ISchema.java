@@ -27,9 +27,6 @@ import javax.annotation.processing.Generated;
 public interface ISchema {
 
     /** TBC */
-    Boolean getHasLineage();
-
-    /** TBC */
     SortedSet<String> getAdminGroups();
 
     /** TBC */
@@ -210,6 +207,9 @@ public interface ISchema {
     SortedSet<String> getAssetTags();
 
     /** TBC */
+    SortedSet<IGlossaryTerm> getAssignedTerms();
+
+    /** TBC */
     CertificateStatus getCertificateStatus();
 
     /** TBC */
@@ -230,6 +230,9 @@ public interface ISchema {
     /** TBC */
     AtlanConnectorType getConnectorType();
 
+    /** Database in which this schema exists. */
+    IDatabase getDatabase();
+
     /** TBC */
     String getDatabaseName();
 
@@ -237,13 +240,28 @@ public interface ISchema {
     String getDatabaseQualifiedName();
 
     /** TBC */
+    SortedSet<IDbtModel> getDbtModels();
+
+    /** TBC */
     String getDbtQualifiedName();
+
+    /** TBC */
+    SortedSet<IDbtSource> getDbtSources();
 
     /** TBC */
     String getDescription();
 
     /** TBC */
     String getDisplayName();
+
+    /** TBC */
+    SortedSet<IFile> getFiles();
+
+    /** TBC */
+    Boolean getHasLineage();
+
+    /** TBC */
+    SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
     Boolean getIsDiscoverable();
@@ -270,7 +288,25 @@ public interface ISchema {
     String getLastSyncWorkflowName();
 
     /** TBC */
+    SortedSet<ILink> getLinks();
+
+    /** Materialized views that exist within this schema. */
+    SortedSet<IMaterializedView> getMaterializedViews();
+
+    /** TBC */
+    SortedSet<IMCIncident> getMcIncidents();
+
+    /** TBC */
+    SortedSet<IMCMonitor> getMcMonitors();
+
+    /** TBC */
+    SortedSet<IMetric> getMetrics();
+
+    /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
     SortedSet<String> getOwnerGroups();
@@ -280,6 +316,9 @@ public interface ISchema {
 
     /** TBC */
     Double getPopularityScore();
+
+    /** Stored procedures (routines) that are defined within this schema. */
+    SortedSet<IProcedure> getProcedures();
 
     /** TBC */
     String getQualifiedName();
@@ -297,6 +336,9 @@ public interface ISchema {
     Map<String, Long> getQueryUserMap();
 
     /** TBC */
+    IReadme getReadme();
+
+    /** TBC */
     String getSampleDataUrl();
 
     /** TBC */
@@ -304,6 +346,15 @@ public interface ISchema {
 
     /** TBC */
     String getSchemaQualifiedName();
+
+    /** Snowflake Pipes that are defined within this schema. */
+    SortedSet<ISnowflakePipe> getSnowflakePipes();
+
+    /** Snowflake Streams that are defined within this schema. */
+    SortedSet<ISnowflakeStream> getSnowflakeStreams();
+
+    /** Tags applied to this schema in Snowflake. */
+    SortedSet<ISnowflakeTag> getSnowflakeTags();
 
     /** TBC */
     SourceCostUnitType getSourceCostUnit();
@@ -324,10 +375,10 @@ public interface ISchema {
     String getSourceOwners();
 
     /** TBC */
-    SortedSet<String> getSourceQueryComputeCosts();
+    List<PopularityInsights> getSourceQueryComputeCostRecords();
 
     /** TBC */
-    List<PopularityInsights> getSourceQueryComputeCostRecords();
+    SortedSet<String> getSourceQueryComputeCosts();
 
     /** TBC */
     Long getSourceReadCount();
@@ -342,19 +393,19 @@ public interface ISchema {
     Double getSourceReadQueryCost();
 
     /** TBC */
-    SortedSet<String> getSourceReadRecentUsers();
+    List<PopularityInsights> getSourceReadRecentUserRecords();
 
     /** TBC */
-    List<PopularityInsights> getSourceReadRecentUserRecords();
+    SortedSet<String> getSourceReadRecentUsers();
 
     /** TBC */
     List<PopularityInsights> getSourceReadSlowQueryRecords();
 
     /** TBC */
-    SortedSet<String> getSourceReadTopUsers();
+    List<PopularityInsights> getSourceReadTopUserRecords();
 
     /** TBC */
-    List<PopularityInsights> getSourceReadTopUserRecords();
+    SortedSet<String> getSourceReadTopUsers();
 
     /** TBC */
     Long getSourceReadUserCount();
@@ -372,6 +423,12 @@ public interface ISchema {
     String getSourceUpdatedBy();
 
     /** TBC */
+    SortedSet<IDbtSource> getSqlDBTSources();
+
+    /** TBC */
+    SortedSet<IDbtModel> getSqlDbtModels();
+
+    /** TBC */
     SortedSet<String> getStarredBy();
 
     /** TBC */
@@ -386,11 +443,17 @@ public interface ISchema {
     /** TBC */
     String getTableQualifiedName();
 
+    /** Tables that exist within this schema. */
+    SortedSet<ITable> getTables();
+
     /** TBC */
     String getTenantId();
 
     /** TBC */
     String getUserDescription();
+
+    /** Number of views in this schema. */
+    Integer getViewCount();
 
     /** TBC */
     String getViewName();
@@ -406,69 +469,6 @@ public interface ISchema {
 
     /** TBC */
     SortedSet<String> getViewerUsers();
-
-    /** Number of views in this schema. */
-    Integer getViewCount();
-
-    /** Database in which this schema exists. */
-    IDatabase getDatabase();
-
-    /** TBC */
-    SortedSet<IDbtModel> getDbtModels();
-
-    /** TBC */
-    SortedSet<IDbtSource> getDbtSources();
-
-    /** TBC */
-    SortedSet<IFile> getFiles();
-
-    /** TBC */
-    SortedSet<ILineageProcess> getInputToProcesses();
-
-    /** TBC */
-    SortedSet<ILink> getLinks();
-
-    /** Materialized views that exist within this schema. */
-    SortedSet<IMaterializedView> getMaterializedViews();
-
-    /** TBC */
-    SortedSet<IMCIncident> getMcIncidents();
-
-    /** TBC */
-    SortedSet<IMCMonitor> getMcMonitors();
-
-    /** TBC */
-    SortedSet<IGlossaryTerm> getAssignedTerms();
-
-    /** TBC */
-    SortedSet<IMetric> getMetrics();
-
-    /** TBC */
-    SortedSet<ILineageProcess> getOutputFromProcesses();
-
-    /** Stored procedures (routines) that are defined within this schema. */
-    SortedSet<IProcedure> getProcedures();
-
-    /** TBC */
-    IReadme getReadme();
-
-    /** Snowflake Pipes that are defined within this schema. */
-    SortedSet<ISnowflakePipe> getSnowflakePipes();
-
-    /** Snowflake Streams that are defined within this schema. */
-    SortedSet<ISnowflakeStream> getSnowflakeStreams();
-
-    /** Tags applied to this schema in Snowflake. */
-    SortedSet<ISnowflakeTag> getSnowflakeTags();
-
-    /** TBC */
-    SortedSet<IDbtSource> getSqlDBTSources();
-
-    /** TBC */
-    SortedSet<IDbtModel> getSqlDbtModels();
-
-    /** Tables that exist within this schema. */
-    SortedSet<ITable> getTables();
 
     /** Views that exist within this schema. */
     SortedSet<IView> getViews();

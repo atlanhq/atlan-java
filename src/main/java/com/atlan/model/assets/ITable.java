@@ -27,9 +27,6 @@ import javax.annotation.processing.Generated;
 public interface ITable {
 
     /** TBC */
-    Boolean getHasLineage();
-
-    /** TBC */
     SortedSet<String> getAdminGroups();
 
     /** TBC */
@@ -213,6 +210,9 @@ public interface ITable {
     SortedSet<String> getAssetTags();
 
     /** TBC */
+    SortedSet<IGlossaryTerm> getAssignedTerms();
+
+    /** TBC */
     CertificateStatus getCertificateStatus();
 
     /** TBC */
@@ -226,6 +226,9 @@ public interface ITable {
 
     /** Number of columns in this table. */
     Long getColumnCount();
+
+    /** Columns that exist within this table. */
+    SortedSet<IColumn> getColumns();
 
     /** TBC */
     String getConnectionName();
@@ -243,10 +246,19 @@ public interface ITable {
     String getDatabaseQualifiedName();
 
     /** TBC */
+    SortedSet<IDbtModel> getDbtModels();
+
+    /** TBC */
     String getDbtQualifiedName();
 
     /** TBC */
+    SortedSet<IDbtSource> getDbtSources();
+
+    /** TBC */
     String getDescription();
+
+    /** TBC */
+    SortedSet<ITable> getDimensions();
 
     /** TBC */
     String getDisplayName();
@@ -259,6 +271,18 @@ public interface ITable {
 
     /** TBC */
     String getExternalLocationRegion();
+
+    /** TBC */
+    SortedSet<ITable> getFacts();
+
+    /** TBC */
+    SortedSet<IFile> getFiles();
+
+    /** TBC */
+    Boolean getHasLineage();
+
+    /** TBC */
+    SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
     Boolean getIsDiscoverable();
@@ -294,7 +318,22 @@ public interface ITable {
     String getLastSyncWorkflowName();
 
     /** TBC */
+    SortedSet<ILink> getLinks();
+
+    /** TBC */
+    SortedSet<IMCIncident> getMcIncidents();
+
+    /** TBC */
+    SortedSet<IMCMonitor> getMcMonitors();
+
+    /** TBC */
+    SortedSet<IMetric> getMetrics();
+
+    /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
     SortedSet<String> getOwnerGroups();
@@ -312,10 +351,16 @@ public interface ITable {
     String getPartitionStrategy();
 
     /** TBC */
+    SortedSet<ITablePartition> getPartitions();
+
+    /** TBC */
     Double getPopularityScore();
 
     /** TBC */
     String getQualifiedName();
+
+    /** Queries that involve this table. */
+    SortedSet<IAtlanQuery> getQueries();
 
     /** TBC */
     Long getQueryCount();
@@ -332,11 +377,17 @@ public interface ITable {
     /** TBC */
     Map<String, Long> getQueryUserMap();
 
+    /** TBC */
+    IReadme getReadme();
+
     /** Number of rows in this table. */
     Long getRowCount();
 
     /** TBC */
     String getSampleDataUrl();
+
+    /** Schema in which this table exists. */
+    ISchema getSchema();
 
     /** TBC */
     String getSchemaName();
@@ -366,10 +417,10 @@ public interface ITable {
     String getSourceOwners();
 
     /** TBC */
-    SortedSet<String> getSourceQueryComputeCosts();
+    List<PopularityInsights> getSourceQueryComputeCostRecords();
 
     /** TBC */
-    List<PopularityInsights> getSourceQueryComputeCostRecords();
+    SortedSet<String> getSourceQueryComputeCosts();
 
     /** TBC */
     Long getSourceReadCount();
@@ -384,19 +435,19 @@ public interface ITable {
     Double getSourceReadQueryCost();
 
     /** TBC */
-    SortedSet<String> getSourceReadRecentUsers();
+    List<PopularityInsights> getSourceReadRecentUserRecords();
 
     /** TBC */
-    List<PopularityInsights> getSourceReadRecentUserRecords();
+    SortedSet<String> getSourceReadRecentUsers();
 
     /** TBC */
     List<PopularityInsights> getSourceReadSlowQueryRecords();
 
     /** TBC */
-    SortedSet<String> getSourceReadTopUsers();
+    List<PopularityInsights> getSourceReadTopUserRecords();
 
     /** TBC */
-    List<PopularityInsights> getSourceReadTopUserRecords();
+    SortedSet<String> getSourceReadTopUsers();
 
     /** TBC */
     Long getSourceReadUserCount();
@@ -412,6 +463,12 @@ public interface ITable {
 
     /** TBC */
     String getSourceUpdatedBy();
+
+    /** TBC */
+    SortedSet<IDbtSource> getSqlDBTSources();
+
+    /** TBC */
+    SortedSet<IDbtModel> getSqlDbtModels();
 
     /** TBC */
     SortedSet<String> getStarredBy();
@@ -445,63 +502,6 @@ public interface ITable {
 
     /** TBC */
     SortedSet<String> getViewerUsers();
-
-    /** Schema in which this table exists. */
-    ISchema getSchema();
-
-    /** Columns that exist within this table. */
-    SortedSet<IColumn> getColumns();
-
-    /** TBC */
-    SortedSet<IDbtModel> getDbtModels();
-
-    /** TBC */
-    SortedSet<IDbtSource> getDbtSources();
-
-    /** TBC */
-    SortedSet<ITable> getDimensions();
-
-    /** TBC */
-    SortedSet<ITable> getFacts();
-
-    /** TBC */
-    SortedSet<IFile> getFiles();
-
-    /** TBC */
-    SortedSet<ILineageProcess> getInputToProcesses();
-
-    /** TBC */
-    SortedSet<ILink> getLinks();
-
-    /** TBC */
-    SortedSet<IMCIncident> getMcIncidents();
-
-    /** TBC */
-    SortedSet<IMCMonitor> getMcMonitors();
-
-    /** TBC */
-    SortedSet<IGlossaryTerm> getAssignedTerms();
-
-    /** TBC */
-    SortedSet<IMetric> getMetrics();
-
-    /** TBC */
-    SortedSet<ILineageProcess> getOutputFromProcesses();
-
-    /** TBC */
-    SortedSet<ITablePartition> getPartitions();
-
-    /** Queries that involve this table. */
-    SortedSet<IAtlanQuery> getQueries();
-
-    /** TBC */
-    IReadme getReadme();
-
-    /** TBC */
-    SortedSet<IDbtSource> getSqlDBTSources();
-
-    /** TBC */
-    SortedSet<IDbtModel> getSqlDbtModels();
 
     /** Name of the type that defines the asset. */
     String getTypeName();

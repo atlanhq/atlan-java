@@ -37,6 +37,16 @@ public class QlikChart extends Asset implements IQlikChart, IQlik, IBI, ICatalog
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
     String qlikAppId;
 
     /** TBC */
@@ -75,6 +85,10 @@ public class QlikChart extends Asset implements IQlikChart, IQlik, IBI, ICatalog
     @Attribute
     String qlikQRI;
 
+    /** Sheet in which the chart exists. */
+    @Attribute
+    IQlikSheet qlikSheet;
+
     /** TBC */
     @Attribute
     String qlikSpaceId;
@@ -82,20 +96,6 @@ public class QlikChart extends Asset implements IQlikChart, IQlik, IBI, ICatalog
     /** TBC */
     @Attribute
     String qlikSpaceQualifiedName;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> outputFromProcesses;
-
-    /** Sheet in which the chart exists. */
-    @Attribute
-    IQlikSheet qlikSheet;
 
     /**
      * Reference to a QlikChart by GUID.

@@ -28,16 +28,16 @@ public abstract class Metabase extends Asset implements IMetabase, IBI, ICatalog
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
     String metabaseCollectionName;
 
     /** TBC */
     @Attribute
     String metabaseCollectionQualifiedName;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
 
     /** TBC */
     @Attribute

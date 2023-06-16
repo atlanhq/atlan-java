@@ -48,11 +48,31 @@ public class SnowflakeStream extends Asset implements ISnowflakeStream, ISQL, IC
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<IDbtModel> dbtModels;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtSource> dbtSources;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
     Boolean isProfiled;
 
     /** TBC */
     @Attribute
     Long lastProfiledAt;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 
     /** TBC */
     @Attribute
@@ -70,6 +90,11 @@ public class SnowflakeStream extends Asset implements ISnowflakeStream, ISQL, IC
     @Attribute
     @Singular("putQueryUserMap")
     Map<String, Long> queryUserMap;
+
+    /** TBC */
+    @Attribute
+    @JsonProperty("atlanSchema")
+    ISchema schema;
 
     /** TBC */
     @Attribute
@@ -101,6 +126,16 @@ public class SnowflakeStream extends Asset implements ISnowflakeStream, ISQL, IC
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<IDbtSource> sqlDBTSources;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtModel> sqlDbtModels;
+
+    /** TBC */
+    @Attribute
     String tableName;
 
     /** TBC */
@@ -114,41 +149,6 @@ public class SnowflakeStream extends Asset implements ISnowflakeStream, ISQL, IC
     /** TBC */
     @Attribute
     String viewQualifiedName;
-
-    /** TBC */
-    @Attribute
-    @JsonProperty("atlanSchema")
-    ISchema schema;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IDbtModel> dbtModels;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IDbtSource> dbtSources;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> outputFromProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IDbtSource> sqlDBTSources;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IDbtModel> sqlDbtModels;
 
     /**
      * Reference to a SnowflakeStream by GUID.

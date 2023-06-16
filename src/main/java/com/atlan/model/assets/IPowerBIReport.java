@@ -28,9 +28,6 @@ import javax.annotation.processing.Generated;
 public interface IPowerBIReport {
 
     /** TBC */
-    Boolean getHasLineage();
-
-    /** TBC */
     SortedSet<String> getAdminGroups();
 
     /** TBC */
@@ -211,6 +208,9 @@ public interface IPowerBIReport {
     SortedSet<String> getAssetTags();
 
     /** TBC */
+    SortedSet<IGlossaryTerm> getAssignedTerms();
+
+    /** TBC */
     CertificateStatus getCertificateStatus();
 
     /** TBC */
@@ -232,6 +232,9 @@ public interface IPowerBIReport {
     AtlanConnectorType getConnectorType();
 
     /** TBC */
+    IPowerBIDataset getDataset();
+
+    /** TBC */
     String getDatasetQualifiedName();
 
     /** TBC */
@@ -242,6 +245,15 @@ public interface IPowerBIReport {
 
     /** TBC */
     String getDisplayName();
+
+    /** TBC */
+    SortedSet<IFile> getFiles();
+
+    /** TBC */
+    Boolean getHasLineage();
+
+    /** TBC */
+    SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
     Boolean getIsDiscoverable();
@@ -262,7 +274,22 @@ public interface IPowerBIReport {
     String getLastSyncWorkflowName();
 
     /** TBC */
+    SortedSet<ILink> getLinks();
+
+    /** TBC */
+    SortedSet<IMCIncident> getMcIncidents();
+
+    /** TBC */
+    SortedSet<IMCMonitor> getMcMonitors();
+
+    /** TBC */
+    SortedSet<IMetric> getMetrics();
+
+    /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
     SortedSet<String> getOwnerGroups();
@@ -272,6 +299,9 @@ public interface IPowerBIReport {
 
     /** TBC */
     Long getPageCount();
+
+    /** TBC */
+    SortedSet<IPowerBIPage> getPages();
 
     /** TBC */
     Double getPopularityScore();
@@ -290,6 +320,9 @@ public interface IPowerBIReport {
 
     /** TBC */
     String getQualifiedName();
+
+    /** TBC */
+    IReadme getReadme();
 
     /** TBC */
     String getSampleDataUrl();
@@ -313,10 +346,10 @@ public interface IPowerBIReport {
     String getSourceOwners();
 
     /** TBC */
-    SortedSet<String> getSourceQueryComputeCosts();
+    List<PopularityInsights> getSourceQueryComputeCostRecords();
 
     /** TBC */
-    List<PopularityInsights> getSourceQueryComputeCostRecords();
+    SortedSet<String> getSourceQueryComputeCosts();
 
     /** TBC */
     Long getSourceReadCount();
@@ -331,19 +364,19 @@ public interface IPowerBIReport {
     Double getSourceReadQueryCost();
 
     /** TBC */
-    SortedSet<String> getSourceReadRecentUsers();
+    List<PopularityInsights> getSourceReadRecentUserRecords();
 
     /** TBC */
-    List<PopularityInsights> getSourceReadRecentUserRecords();
+    SortedSet<String> getSourceReadRecentUsers();
 
     /** TBC */
     List<PopularityInsights> getSourceReadSlowQueryRecords();
 
     /** TBC */
-    SortedSet<String> getSourceReadTopUsers();
+    List<PopularityInsights> getSourceReadTopUserRecords();
 
     /** TBC */
-    List<PopularityInsights> getSourceReadTopUserRecords();
+    SortedSet<String> getSourceReadTopUsers();
 
     /** TBC */
     Long getSourceReadUserCount();
@@ -370,6 +403,9 @@ public interface IPowerBIReport {
     String getTenantId();
 
     /** TBC */
+    SortedSet<IPowerBITile> getTiles();
+
+    /** TBC */
     String getUserDescription();
 
     /** TBC */
@@ -385,46 +421,10 @@ public interface IPowerBIReport {
     String getWebUrl();
 
     /** TBC */
-    String getWorkspaceQualifiedName();
-
-    /** TBC */
-    IPowerBIDataset getDataset();
-
-    /** TBC */
-    SortedSet<IFile> getFiles();
-
-    /** TBC */
-    SortedSet<ILineageProcess> getInputToProcesses();
-
-    /** TBC */
-    SortedSet<ILink> getLinks();
-
-    /** TBC */
-    SortedSet<IMCIncident> getMcIncidents();
-
-    /** TBC */
-    SortedSet<IMCMonitor> getMcMonitors();
-
-    /** TBC */
-    SortedSet<IGlossaryTerm> getAssignedTerms();
-
-    /** TBC */
-    SortedSet<IMetric> getMetrics();
-
-    /** TBC */
-    SortedSet<ILineageProcess> getOutputFromProcesses();
-
-    /** TBC */
-    SortedSet<IPowerBIPage> getPages();
-
-    /** TBC */
-    IReadme getReadme();
-
-    /** TBC */
-    SortedSet<IPowerBITile> getTiles();
-
-    /** TBC */
     IPowerBIWorkspace getWorkspace();
+
+    /** TBC */
+    String getWorkspaceQualifiedName();
 
     /** Name of the type that defines the asset. */
     String getTypeName();

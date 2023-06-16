@@ -40,6 +40,16 @@ public class MicroStrategyCube extends Asset
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** Attributes used by the cube. */
+    @Attribute
+    @Singular
+    SortedSet<IMicroStrategyAttribute> microStrategyAttributes;
+
+    /** TBC */
+    @Attribute
     Long microStrategyCertifiedAt;
 
     /** TBC */
@@ -73,6 +83,15 @@ public class MicroStrategyCube extends Asset
     @Singular("putMicroStrategyLocation")
     List<Map<String, String>> microStrategyLocation;
 
+    /** Metrics where the cube is used. */
+    @Attribute
+    @Singular
+    SortedSet<IMicroStrategyMetric> microStrategyMetrics;
+
+    /** Project containing the cube. */
+    @Attribute
+    IMicroStrategyProject microStrategyProject;
+
     /** TBC */
     @Attribute
     String microStrategyProjectName;
@@ -90,25 +109,6 @@ public class MicroStrategyCube extends Asset
     @Attribute
     @Singular
     SortedSet<String> microStrategyReportQualifiedNames;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** Attributes used by the cube. */
-    @Attribute
-    @Singular
-    SortedSet<IMicroStrategyAttribute> microStrategyAttributes;
-
-    /** Metrics where the cube is used. */
-    @Attribute
-    @Singular
-    SortedSet<IMicroStrategyMetric> microStrategyMetrics;
-
-    /** Project containing the cube. */
-    @Attribute
-    IMicroStrategyProject microStrategyProject;
 
     /** TBC */
     @Attribute

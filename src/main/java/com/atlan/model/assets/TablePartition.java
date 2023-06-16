@@ -49,6 +49,11 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<IColumn> columns;
+
+    /** TBC */
+    @Attribute
     String constraint;
 
     /** TBC */
@@ -61,6 +66,16 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<IDbtModel> dbtModels;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtSource> dbtSources;
+
+    /** TBC */
+    @Attribute
     String externalLocation;
 
     /** TBC */
@@ -70,6 +85,11 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
     /** TBC */
     @Attribute
     String externalLocationRegion;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
 
     /** TBC */
     @Attribute
@@ -90,6 +110,15 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
     /** TBC */
     @Attribute
     Long lastProfiledAt;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    ITable parentTable;
 
     /** TBC */
     @Attribute
@@ -143,6 +172,16 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<IDbtSource> sqlDBTSources;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtModel> sqlDbtModels;
+
+    /** TBC */
+    @Attribute
     String tableName;
 
     /** TBC */
@@ -156,45 +195,6 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
     /** TBC */
     @Attribute
     String viewQualifiedName;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IColumn> columns;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IDbtModel> dbtModels;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IDbtSource> dbtSources;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> outputFromProcesses;
-
-    /** TBC */
-    @Attribute
-    ITable parentTable;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IDbtSource> sqlDBTSources;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IDbtModel> sqlDbtModels;
 
     /**
      * Reference to a TablePartition by GUID.

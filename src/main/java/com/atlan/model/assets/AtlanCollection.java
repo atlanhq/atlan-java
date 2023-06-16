@@ -38,14 +38,6 @@ public class AtlanCollection extends Asset implements IAtlanCollection, INamespa
 
     /** TBC */
     @Attribute
-    String icon;
-
-    /** TBC */
-    @Attribute
-    IconType iconType;
-
-    /** TBC */
-    @Attribute
     @Singular
     SortedSet<IFolder> childrenFolders;
 
@@ -53,6 +45,14 @@ public class AtlanCollection extends Asset implements IAtlanCollection, INamespa
     @Attribute
     @Singular
     SortedSet<IAtlanQuery> childrenQueries;
+
+    /** TBC */
+    @Attribute
+    String icon;
+
+    /** TBC */
+    @Attribute
+    IconType iconType;
 
     /**
      * Reference to a AtlanCollection by GUID.

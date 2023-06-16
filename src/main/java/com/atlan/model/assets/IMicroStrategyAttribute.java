@@ -27,9 +27,6 @@ import javax.annotation.processing.Generated;
 public interface IMicroStrategyAttribute {
 
     /** TBC */
-    Boolean getHasLineage();
-
-    /** TBC */
     SortedSet<String> getAdminGroups();
 
     /** TBC */
@@ -210,6 +207,9 @@ public interface IMicroStrategyAttribute {
     SortedSet<String> getAssetTags();
 
     /** TBC */
+    SortedSet<IGlossaryTerm> getAssignedTerms();
+
+    /** TBC */
     CertificateStatus getCertificateStatus();
 
     /** TBC */
@@ -240,6 +240,15 @@ public interface IMicroStrategyAttribute {
     String getDisplayName();
 
     /** TBC */
+    SortedSet<IFile> getFiles();
+
+    /** TBC */
+    Boolean getHasLineage();
+
+    /** TBC */
+    SortedSet<ILineageProcess> getInputToProcesses();
+
+    /** TBC */
     Boolean getIsDiscoverable();
 
     /** TBC */
@@ -257,6 +266,18 @@ public interface IMicroStrategyAttribute {
     /** TBC */
     String getLastSyncWorkflowName();
 
+    /** TBC */
+    SortedSet<ILink> getLinks();
+
+    /** TBC */
+    SortedSet<IMCIncident> getMcIncidents();
+
+    /** TBC */
+    SortedSet<IMCMonitor> getMcMonitors();
+
+    /** TBC */
+    SortedSet<IMetric> getMetrics();
+
     /** Attribute form name, description, display format and expression as a JSON string. */
     String getMicroStrategyAttributeForms();
 
@@ -272,11 +293,20 @@ public interface IMicroStrategyAttribute {
     /** TBC */
     SortedSet<String> getMicroStrategyCubeQualifiedNames();
 
+    /** Cubes where the attribute is used. */
+    SortedSet<IMicroStrategyCube> getMicroStrategyCubes();
+
     /** TBC */
     Boolean getMicroStrategyIsCertified();
 
     /** TBC */
     List<Map<String, String>> getMicroStrategyLocation();
+
+    /** Metrics where the attribute is used. */
+    SortedSet<IMicroStrategyMetric> getMicroStrategyMetrics();
+
+    /** Project containing the attribute. */
+    IMicroStrategyProject getMicroStrategyProject();
 
     /** TBC */
     String getMicroStrategyProjectName();
@@ -290,8 +320,14 @@ public interface IMicroStrategyAttribute {
     /** TBC */
     SortedSet<String> getMicroStrategyReportQualifiedNames();
 
+    /** Reports where the attribute is used. */
+    SortedSet<IMicroStrategyReport> getMicroStrategyReports();
+
     /** TBC */
     String getName();
+
+    /** TBC */
+    SortedSet<ILineageProcess> getOutputFromProcesses();
 
     /** TBC */
     SortedSet<String> getOwnerGroups();
@@ -304,6 +340,9 @@ public interface IMicroStrategyAttribute {
 
     /** TBC */
     String getQualifiedName();
+
+    /** TBC */
+    IReadme getReadme();
 
     /** TBC */
     String getSampleDataUrl();
@@ -327,10 +366,10 @@ public interface IMicroStrategyAttribute {
     String getSourceOwners();
 
     /** TBC */
-    SortedSet<String> getSourceQueryComputeCosts();
+    List<PopularityInsights> getSourceQueryComputeCostRecords();
 
     /** TBC */
-    List<PopularityInsights> getSourceQueryComputeCostRecords();
+    SortedSet<String> getSourceQueryComputeCosts();
 
     /** TBC */
     Long getSourceReadCount();
@@ -345,19 +384,19 @@ public interface IMicroStrategyAttribute {
     Double getSourceReadQueryCost();
 
     /** TBC */
-    SortedSet<String> getSourceReadRecentUsers();
+    List<PopularityInsights> getSourceReadRecentUserRecords();
 
     /** TBC */
-    List<PopularityInsights> getSourceReadRecentUserRecords();
+    SortedSet<String> getSourceReadRecentUsers();
 
     /** TBC */
     List<PopularityInsights> getSourceReadSlowQueryRecords();
 
     /** TBC */
-    SortedSet<String> getSourceReadTopUsers();
+    List<PopularityInsights> getSourceReadTopUserRecords();
 
     /** TBC */
-    List<PopularityInsights> getSourceReadTopUserRecords();
+    SortedSet<String> getSourceReadTopUsers();
 
     /** TBC */
     Long getSourceReadUserCount();
@@ -394,45 +433,6 @@ public interface IMicroStrategyAttribute {
 
     /** TBC */
     SortedSet<String> getViewerUsers();
-
-    /** TBC */
-    SortedSet<IFile> getFiles();
-
-    /** TBC */
-    SortedSet<ILineageProcess> getInputToProcesses();
-
-    /** TBC */
-    SortedSet<ILink> getLinks();
-
-    /** TBC */
-    SortedSet<IMCIncident> getMcIncidents();
-
-    /** TBC */
-    SortedSet<IMCMonitor> getMcMonitors();
-
-    /** TBC */
-    SortedSet<IGlossaryTerm> getAssignedTerms();
-
-    /** TBC */
-    SortedSet<IMetric> getMetrics();
-
-    /** Cubes where the attribute is used. */
-    SortedSet<IMicroStrategyCube> getMicroStrategyCubes();
-
-    /** Metrics where the attribute is used. */
-    SortedSet<IMicroStrategyMetric> getMicroStrategyMetrics();
-
-    /** Project containing the attribute. */
-    IMicroStrategyProject getMicroStrategyProject();
-
-    /** Reports where the attribute is used. */
-    SortedSet<IMicroStrategyReport> getMicroStrategyReports();
-
-    /** TBC */
-    SortedSet<ILineageProcess> getOutputFromProcesses();
-
-    /** TBC */
-    IReadme getReadme();
 
     /** Name of the type that defines the asset. */
     String getTypeName();

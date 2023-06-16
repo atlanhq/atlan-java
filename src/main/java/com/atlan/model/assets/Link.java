@@ -37,6 +37,10 @@ public class Link extends Asset implements ILink, IResource, ICatalog, IAsset, I
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Asset to which the link is attached. */
+    @Attribute
+    IAsset asset;
+
     /** Icon for the link. */
     @Attribute
     String icon;
@@ -44,6 +48,11 @@ public class Link extends Asset implements ILink, IResource, ICatalog, IAsset, I
     /** Type of icon for the link. */
     @Attribute
     IconType iconType;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
 
     /** TBC */
     @Attribute
@@ -55,26 +64,17 @@ public class Link extends Asset implements ILink, IResource, ICatalog, IAsset, I
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
     String reference;
 
     /** TBC */
     @Attribute
     @Singular("putResourceMetadata")
     Map<String, String> resourceMetadata;
-
-    /** Asset to which the link is attached. */
-    @Attribute
-    IAsset asset;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> outputFromProcesses;
 
     /**
      * Reference to a Link by GUID.

@@ -39,6 +39,16 @@ public class KafkaTopic extends Asset implements IKafkaTopic, IKafka, IEventStor
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** Consumer groups subscribed to this topic. */
+    @Attribute
+    @Singular
+    SortedSet<IKafkaConsumerGroup> kafkaConsumerGroups;
+
+    /** TBC */
+    @Attribute
     KafkaTopicCleanupPolicy kafkaTopicCleanupPolicy;
 
     /** TBC */
@@ -68,16 +78,6 @@ public class KafkaTopic extends Asset implements IKafkaTopic, IKafka, IEventStor
     /** TBC */
     @Attribute
     Long kafkaTopicSizeInBytes;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** Consumer groups subscribed to this topic. */
-    @Attribute
-    @Singular
-    SortedSet<IKafkaConsumerGroup> kafkaConsumerGroups;
 
     /** TBC */
     @Attribute

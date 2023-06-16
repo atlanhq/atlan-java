@@ -39,6 +39,21 @@ public class PowerBIDataflow extends Asset
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<IPowerBIDataset> datasets;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
     PowerBIEndorsementType powerBIEndorsement;
 
     /** TBC */
@@ -59,26 +74,11 @@ public class PowerBIDataflow extends Asset
 
     /** TBC */
     @Attribute
-    String workspaceQualifiedName;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IPowerBIDataset> datasets;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> outputFromProcesses;
-
-    /** TBC */
-    @Attribute
     IPowerBIWorkspace workspace;
+
+    /** TBC */
+    @Attribute
+    String workspaceQualifiedName;
 
     /**
      * Reference to a PowerBIDataflow by GUID.

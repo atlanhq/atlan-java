@@ -46,11 +46,21 @@ public class ReadmeTemplate extends Asset implements IReadmeTemplate, IResource,
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
     Boolean isGlobal;
 
     /** TBC */
     @Attribute
     String link;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 
     /** TBC */
     @Attribute
@@ -60,16 +70,6 @@ public class ReadmeTemplate extends Asset implements IReadmeTemplate, IResource,
     @Attribute
     @Singular("putResourceMetadata")
     Map<String, String> resourceMetadata;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> outputFromProcesses;
 
     /**
      * Reference to a ReadmeTemplate by GUID.

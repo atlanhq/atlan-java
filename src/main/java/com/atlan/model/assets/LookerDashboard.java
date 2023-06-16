@@ -37,7 +37,26 @@ public class LookerDashboard extends Asset implements ILookerDashboard, ILooker,
 
     /** TBC */
     @Attribute
+    ILookerFolder folder;
+
+    /** TBC */
+    @Attribute
     String folderName;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILookerLook> looks;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 
     /** TBC */
     @Attribute
@@ -62,25 +81,6 @@ public class LookerDashboard extends Asset implements ILookerDashboard, ILooker,
     /** TBC */
     @Attribute
     Integer sourcelastUpdaterId;
-
-    /** TBC */
-    @Attribute
-    ILookerFolder folder;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILookerLook> looks;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> outputFromProcesses;
 
     /** TBC */
     @Attribute

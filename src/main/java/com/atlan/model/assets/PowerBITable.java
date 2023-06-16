@@ -38,7 +38,31 @@ public class PowerBITable extends Asset implements IPowerBITable, IPowerBI, IBI,
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<IPowerBIColumn> columns;
+
+    /** TBC */
+    @Attribute
+    IPowerBIDataset dataset;
+
+    /** TBC */
+    @Attribute
     String datasetQualifiedName;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IPowerBIMeasure> measures;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 
     /** TBC */
     @Attribute
@@ -72,30 +96,6 @@ public class PowerBITable extends Asset implements IPowerBITable, IPowerBI, IBI,
     /** TBC */
     @Attribute
     String workspaceQualifiedName;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IPowerBIColumn> columns;
-
-    /** TBC */
-    @Attribute
-    IPowerBIDataset dataset;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IPowerBIMeasure> measures;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> outputFromProcesses;
 
     /**
      * Reference to a PowerBITable by GUID.

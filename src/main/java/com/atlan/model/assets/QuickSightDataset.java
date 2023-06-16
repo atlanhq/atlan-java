@@ -39,7 +39,27 @@ public class QuickSightDataset extends Asset
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
     Long quickSightDatasetColumnCount;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IQuickSightDatasetField> quickSightDatasetFields;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IQuickSightFolder> quickSightDatasetFolders;
 
     /** TBC */
     @Attribute
@@ -56,26 +76,6 @@ public class QuickSightDataset extends Asset
     /** TBC */
     @Attribute
     String quickSightSheetName;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> outputFromProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IQuickSightDatasetField> quickSightDatasetFields;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IQuickSightFolder> quickSightDatasetFolders;
 
     /**
      * Reference to a QuickSightDataset by GUID.

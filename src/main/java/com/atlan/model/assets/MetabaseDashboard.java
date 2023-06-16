@@ -38,6 +38,15 @@ public class MetabaseDashboard extends Asset
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    IMetabaseCollection metabaseCollection;
+
+    /** TBC */
+    @Attribute
     String metabaseCollectionName;
 
     /** TBC */
@@ -47,15 +56,6 @@ public class MetabaseDashboard extends Asset
     /** TBC */
     @Attribute
     Long metabaseQuestionCount;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    IMetabaseCollection metabaseCollection;
 
     /** TBC */
     @Attribute

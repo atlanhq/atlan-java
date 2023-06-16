@@ -76,6 +76,10 @@ public class APIPath extends Asset implements IAPIPath, IAPI, ICatalog, IAsset, 
 
     /** TBC */
     @Attribute
+    IAPISpec apiSpec;
+
+    /** TBC */
+    @Attribute
     String apiSpecName;
 
     /** TBC */
@@ -89,10 +93,6 @@ public class APIPath extends Asset implements IAPIPath, IAPI, ICatalog, IAsset, 
     /** TBC */
     @Attribute
     String apiSpecVersion;
-
-    /** TBC */
-    @Attribute
-    IAPISpec apiSpec;
 
     /** TBC */
     @Attribute

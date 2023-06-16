@@ -40,6 +40,11 @@ public class MicroStrategyVisualization extends Asset
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
     Long microStrategyCertifiedAt;
 
     /** TBC */
@@ -55,6 +60,10 @@ public class MicroStrategyVisualization extends Asset
     @Attribute
     @Singular
     SortedSet<String> microStrategyCubeQualifiedNames;
+
+    /** Dossier containing the visualization. */
+    @Attribute
+    IMicroStrategyDossier microStrategyDossier;
 
     /** Simple name of the dossier containing this visualization. */
     @Attribute
@@ -72,6 +81,10 @@ public class MicroStrategyVisualization extends Asset
     @Attribute
     @Singular("putMicroStrategyLocation")
     List<Map<String, String>> microStrategyLocation;
+
+    /** Project containing the visualization. */
+    @Attribute
+    IMicroStrategyProject microStrategyProject;
 
     /** TBC */
     @Attribute
@@ -94,19 +107,6 @@ public class MicroStrategyVisualization extends Asset
     /** Type of visualization. */
     @Attribute
     String microStrategyVisualizationType;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** Dossier containing the visualization. */
-    @Attribute
-    IMicroStrategyDossier microStrategyDossier;
-
-    /** Project containing the visualization. */
-    @Attribute
-    IMicroStrategyProject microStrategyProject;
 
     /** TBC */
     @Attribute

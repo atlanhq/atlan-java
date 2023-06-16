@@ -37,7 +37,17 @@ public class ModeWorkspace extends Asset implements IModeWorkspace, IMode, IBI, 
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
     Long modeCollectionCount;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IModeCollection> modeCollections;
 
     /** TBC */
     @Attribute
@@ -74,16 +84,6 @@ public class ModeWorkspace extends Asset implements IModeWorkspace, IMode, IBI, 
     /** TBC */
     @Attribute
     String modeWorkspaceUsername;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<IModeCollection> modeCollections;
 
     /** TBC */
     @Attribute

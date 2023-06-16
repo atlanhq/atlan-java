@@ -26,10 +26,6 @@ public abstract class Redash extends Asset implements IRedash, IBI, ICatalog, IA
 
     public static final String TYPE_NAME = "Redash";
 
-    /** Whether the asset is published in Redash (true) or not (false). */
-    @Attribute
-    Boolean redashIsPublished;
-
     /** TBC */
     @Attribute
     @Singular
@@ -39,4 +35,8 @@ public abstract class Redash extends Asset implements IRedash, IBI, ICatalog, IA
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** Whether the asset is published in Redash (true) or not (false). */
+    @Attribute
+    Boolean redashIsPublished;
 }

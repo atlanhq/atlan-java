@@ -42,14 +42,6 @@ public class SalesforceOrganization extends Asset
 
     /** TBC */
     @Attribute
-    String organizationQualifiedName;
-
-    /** ID of the organization in Salesforce. */
-    @Attribute
-    String sourceId;
-
-    /** TBC */
-    @Attribute
     @Singular
     SortedSet<ISalesforceDashboard> dashboards;
 
@@ -65,6 +57,10 @@ public class SalesforceOrganization extends Asset
 
     /** TBC */
     @Attribute
+    String organizationQualifiedName;
+
+    /** TBC */
+    @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
 
@@ -72,6 +68,10 @@ public class SalesforceOrganization extends Asset
     @Attribute
     @Singular
     SortedSet<ISalesforceReport> reports;
+
+    /** ID of the organization in Salesforce. */
+    @Attribute
+    String sourceId;
 
     /**
      * Reference to a SalesforceOrganization by GUID.

@@ -38,6 +38,20 @@ public class QuickSightAnalysisVisual extends Asset
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    IQuickSightAnalysis quickSightAnalysis;
+
+    /** TBC */
+    @Attribute
     String quickSightAnalysisQualifiedName;
 
     /** TBC */
@@ -51,20 +65,6 @@ public class QuickSightAnalysisVisual extends Asset
     /** TBC */
     @Attribute
     String quickSightSheetName;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> outputFromProcesses;
-
-    /** TBC */
-    @Attribute
-    IQuickSightAnalysis quickSightAnalysis;
 
     /**
      * Reference to a QuickSightAnalysisVisual by GUID.

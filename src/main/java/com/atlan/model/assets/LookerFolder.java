@@ -37,22 +37,6 @@ public class LookerFolder extends Asset implements ILookerFolder, ILooker, IBI, 
 
     /** TBC */
     @Attribute
-    Integer sourceChildCount;
-
-    /** TBC */
-    @Attribute
-    Integer sourceContentMetadataId;
-
-    /** TBC */
-    @Attribute
-    Integer sourceCreatorId;
-
-    /** TBC */
-    @Attribute
-    Integer sourceParentID;
-
-    /** TBC */
-    @Attribute
     @Singular
     SortedSet<ILookerDashboard> dashboards;
 
@@ -70,6 +54,22 @@ public class LookerFolder extends Asset implements ILookerFolder, ILooker, IBI, 
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    Integer sourceChildCount;
+
+    /** TBC */
+    @Attribute
+    Integer sourceContentMetadataId;
+
+    /** TBC */
+    @Attribute
+    Integer sourceCreatorId;
+
+    /** TBC */
+    @Attribute
+    Integer sourceParentID;
 
     /**
      * Reference to a LookerFolder by GUID.

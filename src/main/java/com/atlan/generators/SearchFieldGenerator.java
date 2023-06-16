@@ -195,7 +195,7 @@ public class SearchFieldGenerator extends TypeGenerator {
     }
 
     @Getter
-    public static class Field extends AssetGenerator.Attribute implements Comparable<Field> {
+    public static class Field extends AssetGenerator.Attribute<Field> implements Comparable<Field> {
 
         private static final Comparator<String> stringComparator = Comparator.nullsFirst(String::compareTo);
         private static final Comparator<Field> comparator =

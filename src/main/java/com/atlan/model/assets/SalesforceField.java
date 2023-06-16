@@ -58,6 +58,11 @@ public class SalesforceField extends Asset
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
     Boolean isCalculated;
 
     /** TBC */
@@ -82,11 +87,20 @@ public class SalesforceField extends Asset
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<ISalesforceObject> lookupObjects;
+
+    /** TBC */
+    @Attribute
     Long maxLength;
 
     /** Number of digits allowed to the right of the decimal point. */
     @Attribute
     Double numericScale;
+
+    /** TBC */
+    @Attribute
+    ISalesforceObject object;
 
     /** TBC */
     @Attribute
@@ -100,6 +114,11 @@ public class SalesforceField extends Asset
     @Attribute
     String organizationQualifiedName;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
     /** List of values from which a user can pick while adding a record. */
     @Attribute
     @Singular
@@ -108,25 +127,6 @@ public class SalesforceField extends Asset
     /** Total number of digits allowed. */
     @Attribute
     Integer precision;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> inputToProcesses;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ISalesforceObject> lookupObjects;
-
-    /** TBC */
-    @Attribute
-    ISalesforceObject object;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<ILineageProcess> outputFromProcesses;
 
     /**
      * Reference to a SalesforceField by GUID.
