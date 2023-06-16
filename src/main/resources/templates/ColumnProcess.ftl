@@ -14,8 +14,8 @@
             String name,
             String connectionQualifiedName,
             String id,
-            List<Catalog> inputs,
-            List<Catalog> outputs,
+            List<ICatalog> inputs,
+            List<ICatalog> outputs,
             LineageProcess parent) {
         AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         String connectionName = StringUtils.getNameFromQualifiedName(connectionQualifiedName);
