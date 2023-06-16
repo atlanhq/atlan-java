@@ -9,7 +9,7 @@
      */
     public static S3BucketBuilder<?, ?> creator(String name, String connectionQualifiedName, String awsArn) {
         return S3Bucket.builder()
-                .qualifiedName(generateQualifiedName(connectionQualifiedName, awsArn))
+                .qualifiedName(S3.generateQualifiedName(connectionQualifiedName, awsArn))
                 .name(name)
                 .connectionQualifiedName(connectionQualifiedName)
                 .connectorType(AtlanConnectorType.S3)

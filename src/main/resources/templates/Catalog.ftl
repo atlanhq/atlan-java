@@ -7,7 +7,7 @@
      * @return reference to an asset that can be used for defining a lineage relationship to the asset
      */
     public static Catalog getLineageReference(String typeName, String qualifiedName) {
-        Catalog ref = null;
+        ICatalog ref = null;
         switch (typeName) {
             case ADLSAccount.TYPE_NAME:
                 ref = ADLSAccount.refByQualifiedName(qualifiedName);
@@ -262,6 +262,6 @@
                 // Do nothing — not a supported Catalog subtype
                 break;
         }
-        return ref;
+        return (Catalog) ref;
     }
 </#macro>

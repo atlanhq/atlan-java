@@ -156,7 +156,6 @@ public class GeneratorConfig {
                 .renameEnumValue("ResolvingDNS", "RESOLVING_DNS")
                 .renameEnumValue("RA-GRS", "RA_GRS")
                 .doNotGenerateAsset("Referenceable")
-                .doNotGenerateAsset("DataStudio")
                 .doNotGenerateAsset("AtlasServer")
                 .doNotGenerateAsset("DataSet")
                 .doNotGenerateAsset("Infrastructure")

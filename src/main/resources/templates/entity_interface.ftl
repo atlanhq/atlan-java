@@ -43,9 +43,6 @@ public interface I${className} {
     ${attribute.referenceType} get${attribute.renamed?cap_first}();
 
     </#list>
-    /** Convert this interface into a full-fledged object. */
-    ${className} to${className?cap_first}();
-
     /** Name of the type that defines the asset. */
     String getTypeName();
 
@@ -75,4 +72,22 @@ public interface I${className} {
      * If the guid is not provided, these must be provided.
      */
     UniqueAttributes getUniqueAttributes();
+
+    /**
+     * When true, indicates that this object represents a complete view of the entity.
+     * When false, this object is only a reference or some partial view of the entity.
+     */
+    boolean isComplete();
+
+    /**
+     * Indicates whether this object can be used as a valid reference by GUID.
+     * @return true if it is a valid GUID reference, false otherwise
+     */
+    boolean isValidReferenceByGuid();
+
+    /**
+     * Indicates whether this object can be used as a valid reference by qualifiedName.
+     * @return true if it is a valid qualifiedName reference, false otherwise
+     */
+    boolean isValidReferenceByQualifiedName();
 }

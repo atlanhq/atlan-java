@@ -20,7 +20,7 @@
         AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         String connectionName = StringUtils.getNameFromQualifiedName(connectionQualifiedName);
         return ColumnProcess.builder()
-                .qualifiedName(generateQualifiedName(name, connectionQualifiedName, id, inputs, outputs, parent))
+                .qualifiedName(LineageProcess.generateQualifiedName(name, connectionQualifiedName, id, inputs, outputs, parent))
                 .name(name)
                 .connectorType(connectorType)
                 .connectionName(connectionName)

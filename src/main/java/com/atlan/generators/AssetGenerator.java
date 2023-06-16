@@ -46,6 +46,14 @@ public class AssetGenerator extends TypeGenerator {
         super.className = cfg.resolveClassName(originalName);
     }
 
+    public String resolveSuperTypeName(String name) {
+        if (name.equals("Referenceable")) {
+            // Don't rename Referenceable, since we have an actual interface defined for it
+            return name;
+        }
+        return cfg.resolveClassName(name);
+    }
+
     public void resolveDetails() {
         resolveParentClassName();
         resolveSubTypes();
