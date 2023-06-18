@@ -29,6 +29,8 @@ import javax.annotation.processing.Generated;
 @JsonDeserialize(using = AssetDeserializer.class)
 public interface IADLSContainer {
 
+    public static final String TYPE_NAME = "ADLSContainer";
+
     /** Account this container exists within. */
     IADLSAccount getAdlsAccount();
 

@@ -10,9 +10,9 @@ public class CatalogTest {
 
     @Test
     void getReference() {
-        ICatalog one = Catalog.getLineageReference(Column.TYPE_NAME, "one");
+        ICatalog one = ICatalog.getLineageReference(Column.TYPE_NAME, "one");
         assertTrue(one instanceof IColumn);
-        ICatalog two = Catalog.getLineageReference(Column.TYPE_NAME, "one");
+        ICatalog two = ICatalog.getLineageReference(Column.TYPE_NAME, "one");
         assertTrue(two instanceof IColumn);
         assertEquals(one, two, "References are consistent when generated from the same inputs.");
     }

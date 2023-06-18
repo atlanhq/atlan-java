@@ -26,6 +26,8 @@ import javax.annotation.processing.Generated;
 @JsonDeserialize(using = AssetDeserializer.class)
 public interface ISigmaWorkbook {
 
+    public static final String TYPE_NAME = "SigmaWorkbook";
+
     /** TBC */
     SortedSet<String> getAdminGroups();
 

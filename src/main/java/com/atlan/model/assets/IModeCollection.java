@@ -26,6 +26,8 @@ import javax.annotation.processing.Generated;
 @JsonDeserialize(using = AssetDeserializer.class)
 public interface IModeCollection {
 
+    public static final String TYPE_NAME = "ModeCollection";
+
     /** TBC */
     SortedSet<String> getAdminGroups();
 

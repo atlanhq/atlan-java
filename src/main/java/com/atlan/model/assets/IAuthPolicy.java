@@ -33,6 +33,8 @@ import javax.annotation.processing.Generated;
 @JsonDeserialize(using = AssetDeserializer.class)
 public interface IAuthPolicy {
 
+    public static final String TYPE_NAME = "AuthPolicy";
+
     /** Access control object to which this policy belongs. */
     IAccessControl getAccessControl();
 

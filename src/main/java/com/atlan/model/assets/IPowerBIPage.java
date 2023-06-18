@@ -27,6 +27,8 @@ import javax.annotation.processing.Generated;
 @JsonDeserialize(using = AssetDeserializer.class)
 public interface IPowerBIPage {
 
+    public static final String TYPE_NAME = "PowerBIPage";
+
     /** TBC */
     SortedSet<String> getAdminGroups();
 

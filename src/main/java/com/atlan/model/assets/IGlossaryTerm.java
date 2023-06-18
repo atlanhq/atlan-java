@@ -26,6 +26,8 @@ import javax.annotation.processing.Generated;
 @JsonDeserialize(using = AssetDeserializer.class)
 public interface IGlossaryTerm {
 
+    public static final String TYPE_NAME = "AtlasGlossaryTerm";
+
     /** TBC */
     String getAbbreviation();
 

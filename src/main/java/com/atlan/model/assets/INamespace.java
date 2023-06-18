@@ -26,6 +26,8 @@ import javax.annotation.processing.Generated;
 @JsonDeserialize(using = AssetDeserializer.class)
 public interface INamespace {
 
+    public static final String TYPE_NAME = "Namespace";
+
     /** TBC */
     SortedSet<String> getAdminGroups();
 

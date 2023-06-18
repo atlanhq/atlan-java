@@ -26,6 +26,8 @@ import javax.annotation.processing.Generated;
 @JsonDeserialize(using = AssetDeserializer.class)
 public interface IBI {
 
+    public static final String TYPE_NAME = "BI";
+
     /** TBC */
     SortedSet<String> getAdminGroups();
 

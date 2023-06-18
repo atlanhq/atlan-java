@@ -26,6 +26,8 @@ import javax.annotation.processing.Generated;
 @JsonDeserialize(using = AssetDeserializer.class)
 public interface ICloud {
 
+    public static final String TYPE_NAME = "Cloud";
+
     /** TBC */
     SortedSet<String> getAdminGroups();
 

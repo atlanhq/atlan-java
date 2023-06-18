@@ -222,7 +222,7 @@ public class PresetAssetTest extends AtlanLiveTest {
     void searchAssets() throws AtlanException, InterruptedException {
         Query combined = CompoundQuery.builder()
                 .must(beActive())
-                .must(haveSuperType(Preset.TYPE_NAME))
+                .must(haveSuperType(IPreset.TYPE_NAME))
                 .must(have(KeywordFields.QUALIFIED_NAME).startingWith(connection.getQualifiedName()))
                 .build()
                 ._toQuery();

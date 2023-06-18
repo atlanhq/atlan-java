@@ -95,28 +95,28 @@ public class ModelGenerator extends AbstractGenerator {
         for (EntityDef entityDef : cache.getEntityDefCache().values()) {
             if (cfg.includeTypedef(entityDef)) {
                 AssetGenerator generator = cache.getAssetGenerator(entityDef.getName());
+                // Now that all are cached, render the inner details of the generator
+                // before processing the template
+                generator.resolveDetails();
                 createDirectoryIdempotent(cfg.getPackagePath() + File.separator + AssetGenerator.DIRECTORY);
                 String fInterface = cfg.getPackagePath() + File.separator + AssetGenerator.DIRECTORY + File.separator
                         + "I" + generator.getClassName() + ".java";
                 try (BufferedWriter fs = new BufferedWriter(
                         new OutputStreamWriter(new FileOutputStream(fInterface), StandardCharsets.UTF_8))) {
-                    // Now that all are cached, render the inner details of the generator
-                    // before processing the template
-                    generator.resolveDetails();
                     interfaceTemplate.process(generator, fs);
                 } catch (IOException e) {
                     log.error("Unable to open file output: {}", fInterface, e);
                 }
-                String fClass = cfg.getPackagePath() + File.separator + AssetGenerator.DIRECTORY + File.separator
-                        + generator.getClassName() + ".java";
-                try (BufferedWriter fs = new BufferedWriter(
-                        new OutputStreamWriter(new FileOutputStream(fClass), StandardCharsets.UTF_8))) {
-                    // Now that all are cached, render the inner details of the generator
-                    // before processing the template
-                    generator.resolveDetails();
-                    entityTemplate.process(generator, fs);
-                } catch (IOException e) {
-                    log.error("Unable to open file output: {}", fClass, e);
+                if (!generator.isAbstract()) {
+                    // Only generate classes for non-abstract assets (leave the rest as interfaces)
+                    String fClass = cfg.getPackagePath() + File.separator + AssetGenerator.DIRECTORY + File.separator
+                            + generator.getClassName() + ".java";
+                    try (BufferedWriter fs = new BufferedWriter(
+                            new OutputStreamWriter(new FileOutputStream(fClass), StandardCharsets.UTF_8))) {
+                        entityTemplate.process(generator, fs);
+                    } catch (IOException e) {
+                        log.error("Unable to open file output: {}", fClass, e);
+                    }
                 }
             }
         }

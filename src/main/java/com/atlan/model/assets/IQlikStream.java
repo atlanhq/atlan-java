@@ -26,6 +26,8 @@ import javax.annotation.processing.Generated;
 @JsonDeserialize(using = AssetDeserializer.class)
 public interface IQlikStream {
 
+    public static final String TYPE_NAME = "QlikStream";
+
     /** TBC */
     SortedSet<String> getAdminGroups();
 

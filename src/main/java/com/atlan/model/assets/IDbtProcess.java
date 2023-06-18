@@ -26,6 +26,8 @@ import javax.annotation.processing.Generated;
 @JsonDeserialize(using = AssetDeserializer.class)
 public interface IDbtProcess {
 
+    public static final String TYPE_NAME = "DbtProcess";
+
     /** TBC */
     SortedSet<String> getAdminGroups();
 

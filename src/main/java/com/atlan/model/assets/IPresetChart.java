@@ -26,6 +26,8 @@ import javax.annotation.processing.Generated;
 @JsonDeserialize(using = AssetDeserializer.class)
 public interface IPresetChart {
 
+    public static final String TYPE_NAME = "PresetChart";
+
     /** TBC */
     SortedSet<String> getAdminGroups();
 

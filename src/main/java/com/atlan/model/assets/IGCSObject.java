@@ -28,6 +28,8 @@ import javax.annotation.processing.Generated;
 @JsonDeserialize(using = AssetDeserializer.class)
 public interface IGCSObject {
 
+    public static final String TYPE_NAME = "GCSObject";
+
     /** TBC */
     SortedSet<String> getAdminGroups();
 

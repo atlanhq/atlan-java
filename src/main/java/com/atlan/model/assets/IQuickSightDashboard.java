@@ -26,6 +26,8 @@ import javax.annotation.processing.Generated;
 @JsonDeserialize(using = AssetDeserializer.class)
 public interface IQuickSightDashboard {
 
+    public static final String TYPE_NAME = "QuickSightDashboard";
+
     /** TBC */
     SortedSet<String> getAdminGroups();
 

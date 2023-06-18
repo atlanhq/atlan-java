@@ -28,7 +28,6 @@ import com.atlan.serde.AssetDeserializer;
 import com.atlan.serde.AssetSerializer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -60,20 +59,6 @@ import lombok.extern.slf4j.Slf4j;
         include = JsonTypeInfo.As.EXISTING_PROPERTY,
         property = "typeName",
         defaultImpl = IndistinctAsset.class)
-@JsonSubTypes({
-    @JsonSubTypes.Type(value = Connection.class, name = Connection.TYPE_NAME),
-    @JsonSubTypes.Type(value = LineageProcess.class, name = LineageProcess.TYPE_NAME),
-    @JsonSubTypes.Type(value = GlossaryCategory.class, name = GlossaryCategory.TYPE_NAME),
-    @JsonSubTypes.Type(value = Badge.class, name = Badge.TYPE_NAME),
-    @JsonSubTypes.Type(value = AccessControl.class, name = AccessControl.TYPE_NAME),
-    @JsonSubTypes.Type(value = Namespace.class, name = Namespace.TYPE_NAME),
-    @JsonSubTypes.Type(value = Catalog.class, name = Catalog.TYPE_NAME),
-    @JsonSubTypes.Type(value = Glossary.class, name = Glossary.TYPE_NAME),
-    @JsonSubTypes.Type(value = AuthPolicy.class, name = AuthPolicy.TYPE_NAME),
-    @JsonSubTypes.Type(value = GlossaryTerm.class, name = GlossaryTerm.TYPE_NAME),
-    @JsonSubTypes.Type(value = AuthService.class, name = AuthService.TYPE_NAME),
-    @JsonSubTypes.Type(value = Cloud.class, name = Cloud.TYPE_NAME),
-})
 @Slf4j
 @SuppressWarnings("cast")
 public abstract class Asset extends Reference implements IAsset, IReferenceable {

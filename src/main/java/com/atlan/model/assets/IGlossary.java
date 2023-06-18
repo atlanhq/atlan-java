@@ -26,6 +26,8 @@ import javax.annotation.processing.Generated;
 @JsonDeserialize(using = AssetDeserializer.class)
 public interface IGlossary {
 
+    public static final String TYPE_NAME = "AtlasGlossary";
+
     /** TBC */
     Map<String, String> getAdditionalAttributes();
 

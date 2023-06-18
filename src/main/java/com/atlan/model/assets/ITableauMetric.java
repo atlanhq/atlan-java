@@ -26,6 +26,8 @@ import javax.annotation.processing.Generated;
 @JsonDeserialize(using = AssetDeserializer.class)
 public interface ITableauMetric {
 
+    public static final String TYPE_NAME = "TableauMetric";
+
     /** TBC */
     SortedSet<String> getAdminGroups();
 

@@ -26,6 +26,8 @@ import javax.annotation.processing.Generated;
 @JsonDeserialize(using = AssetDeserializer.class)
 public interface ITableauDatasource {
 
+    public static final String TYPE_NAME = "TableauDatasource";
+
     /** TBC */
     SortedSet<String> getAdminGroups();
 

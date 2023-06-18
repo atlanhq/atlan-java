@@ -26,6 +26,8 @@ import javax.annotation.processing.Generated;
 @JsonDeserialize(using = AssetDeserializer.class)
 public interface IInsight {
 
+    public static final String TYPE_NAME = "Insight";
+
     /** TBC */
     SortedSet<String> getAdminGroups();
 

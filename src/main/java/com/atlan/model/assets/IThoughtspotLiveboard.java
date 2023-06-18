@@ -26,6 +26,8 @@ import javax.annotation.processing.Generated;
 @JsonDeserialize(using = AssetDeserializer.class)
 public interface IThoughtspotLiveboard {
 
+    public static final String TYPE_NAME = "ThoughtspotLiveboard";
+
     /** TBC */
     SortedSet<String> getAdminGroups();
 

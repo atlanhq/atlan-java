@@ -26,6 +26,8 @@ import javax.annotation.processing.Generated;
 @JsonDeserialize(using = AssetDeserializer.class)
 public interface IMaterializedView {
 
+    public static final String TYPE_NAME = "MaterialisedView";
+
     /** TBC */
     SortedSet<String> getAdminGroups();
 

@@ -27,6 +27,8 @@ import javax.annotation.processing.Generated;
 @JsonDeserialize(using = AssetDeserializer.class)
 public interface ITag {
 
+    public static final String TYPE_NAME = "Tag";
+
     /** TBC */
     SortedSet<String> getAdminGroups();
 

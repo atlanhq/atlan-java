@@ -26,6 +26,8 @@ import javax.annotation.processing.Generated;
 @JsonDeserialize(using = AssetDeserializer.class)
 public interface ILookerProject {
 
+    public static final String TYPE_NAME = "LookerProject";
+
     /** TBC */
     SortedSet<String> getAdminGroups();
 

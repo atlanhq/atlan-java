@@ -26,6 +26,8 @@ import javax.annotation.processing.Generated;
 @JsonDeserialize(using = AssetDeserializer.class)
 public interface IMetabase {
 
+    public static final String TYPE_NAME = "Metabase";
+
     /** TBC */
     SortedSet<String> getAdminGroups();
 

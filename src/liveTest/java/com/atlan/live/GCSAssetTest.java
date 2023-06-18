@@ -151,7 +151,7 @@ public class GCSAssetTest extends AtlanLiveTest {
     void searchAssets() throws AtlanException, InterruptedException {
         Query combined = CompoundQuery.builder()
                 .must(beActive())
-                .must(haveSuperType(GCS.TYPE_NAME))
+                .must(haveSuperType(IGCS.TYPE_NAME))
                 .must(have(KeywordFields.QUALIFIED_NAME).startingWith(connection.getQualifiedName()))
                 .build()
                 ._toQuery();

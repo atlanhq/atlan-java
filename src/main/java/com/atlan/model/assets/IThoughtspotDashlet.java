@@ -26,6 +26,8 @@ import javax.annotation.processing.Generated;
 @JsonDeserialize(using = AssetDeserializer.class)
 public interface IThoughtspotDashlet {
 
+    public static final String TYPE_NAME = "ThoughtspotDashlet";
+
     /** TBC */
     SortedSet<String> getAdminGroups();
 

@@ -27,6 +27,8 @@ import javax.annotation.processing.Generated;
 @JsonDeserialize(using = AssetDeserializer.class)
 public interface IFile {
 
+    public static final String TYPE_NAME = "File";
+
     /** TBC */
     SortedSet<String> getAdminGroups();
 

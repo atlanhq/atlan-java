@@ -27,6 +27,8 @@ import javax.annotation.processing.Generated;
 @JsonDeserialize(using = AssetDeserializer.class)
 public interface IQuickSightFolder {
 
+    public static final String TYPE_NAME = "QuickSightFolder";
+
     /** TBC */
     SortedSet<String> getAdminGroups();
 

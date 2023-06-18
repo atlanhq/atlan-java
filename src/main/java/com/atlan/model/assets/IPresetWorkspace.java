@@ -26,6 +26,8 @@ import javax.annotation.processing.Generated;
 @JsonDeserialize(using = AssetDeserializer.class)
 public interface IPresetWorkspace {
 
+    public static final String TYPE_NAME = "PresetWorkspace";
+
     /** TBC */
     SortedSet<String> getAdminGroups();
 

@@ -10,7 +10,6 @@ import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -30,11 +29,6 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
-@JsonSubTypes({
-    @JsonSubTypes.Type(value = BIProcess.class, name = BIProcess.TYPE_NAME),
-    @JsonSubTypes.Type(value = DbtProcess.class, name = DbtProcess.TYPE_NAME),
-    @JsonSubTypes.Type(value = ColumnProcess.class, name = ColumnProcess.TYPE_NAME),
-})
 @Slf4j
 public class LineageProcess extends Asset implements ILineageProcess, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;

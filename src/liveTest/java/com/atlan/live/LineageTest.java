@@ -449,7 +449,7 @@ public class LineageTest extends AtlanLiveTest {
         Query combined = CompoundQuery.builder()
                 .must(beActive())
                 .must(haveLineage())
-                .must(haveSuperType(SQL.TYPE_NAME))
+                .must(haveSuperType(ISQL.TYPE_NAME))
                 .must(have(KeywordFields.QUALIFIED_NAME).startingWith(connection.getQualifiedName()))
                 .build()
                 ._toQuery();

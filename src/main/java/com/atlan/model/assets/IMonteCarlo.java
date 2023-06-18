@@ -26,6 +26,8 @@ import javax.annotation.processing.Generated;
 @JsonDeserialize(using = AssetDeserializer.class)
 public interface IMonteCarlo {
 
+    public static final String TYPE_NAME = "MonteCarlo";
+
     /** TBC */
     SortedSet<String> getAdminGroups();
 

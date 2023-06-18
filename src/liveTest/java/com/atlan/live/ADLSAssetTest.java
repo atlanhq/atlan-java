@@ -178,7 +178,7 @@ public class ADLSAssetTest extends AtlanLiveTest {
     void searchAssets() throws AtlanException, InterruptedException {
         Query combined = CompoundQuery.builder()
                 .must(beActive())
-                .must(haveSuperType(ADLS.TYPE_NAME))
+                .must(haveSuperType(IADLS.TYPE_NAME))
                 .must(have(KeywordFields.QUALIFIED_NAME).startingWith(connection.getQualifiedName()))
                 .build()
                 ._toQuery();

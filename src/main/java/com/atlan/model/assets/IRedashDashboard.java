@@ -26,6 +26,8 @@ import javax.annotation.processing.Generated;
 @JsonDeserialize(using = AssetDeserializer.class)
 public interface IRedashDashboard {
 
+    public static final String TYPE_NAME = "RedashDashboard";
+
     /** TBC */
     SortedSet<String> getAdminGroups();
 

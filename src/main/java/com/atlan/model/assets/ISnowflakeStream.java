@@ -26,6 +26,8 @@ import javax.annotation.processing.Generated;
 @JsonDeserialize(using = AssetDeserializer.class)
 public interface ISnowflakeStream {
 
+    public static final String TYPE_NAME = "SnowflakeStream";
+
     /** TBC */
     SortedSet<String> getAdminGroups();
 

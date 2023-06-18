@@ -27,6 +27,8 @@ import javax.annotation.processing.Generated;
 @JsonDeserialize(using = AssetDeserializer.class)
 public interface IS3Bucket {
 
+    public static final String TYPE_NAME = "S3Bucket";
+
     /** TBC */
     SortedSet<String> getAdminGroups();
 

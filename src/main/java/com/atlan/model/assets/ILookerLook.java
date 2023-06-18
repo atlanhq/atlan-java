@@ -26,6 +26,8 @@ import javax.annotation.processing.Generated;
 @JsonDeserialize(using = AssetDeserializer.class)
 public interface ILookerLook {
 
+    public static final String TYPE_NAME = "LookerLook";
+
     /** TBC */
     SortedSet<String> getAdminGroups();
 

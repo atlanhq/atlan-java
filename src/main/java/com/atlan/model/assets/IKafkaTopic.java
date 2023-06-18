@@ -28,6 +28,8 @@ import javax.annotation.processing.Generated;
 @JsonDeserialize(using = AssetDeserializer.class)
 public interface IKafkaTopic {
 
+    public static final String TYPE_NAME = "KafkaTopic";
+
     /** TBC */
     SortedSet<String> getAdminGroups();
 

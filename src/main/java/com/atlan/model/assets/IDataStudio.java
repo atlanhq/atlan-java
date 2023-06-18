@@ -28,6 +28,8 @@ import javax.annotation.processing.Generated;
 @JsonDeserialize(using = AssetDeserializer.class)
 public interface IDataStudio {
 
+    public static final String TYPE_NAME = "DataStudio";
+
     /** TBC */
     SortedSet<String> getAdminGroups();
 

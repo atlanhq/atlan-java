@@ -26,6 +26,8 @@ import javax.annotation.processing.Generated;
 @JsonDeserialize(using = AssetDeserializer.class)
 public interface IQlikSpace {
 
+    public static final String TYPE_NAME = "QlikSpace";
+
     /** TBC */
     SortedSet<String> getAdminGroups();
 

@@ -26,6 +26,8 @@ import javax.annotation.processing.Generated;
 @JsonDeserialize(using = AssetDeserializer.class)
 public interface IMicroStrategyProject {
 
+    public static final String TYPE_NAME = "MicroStrategyProject";
+
     /** TBC */
     SortedSet<String> getAdminGroups();
 

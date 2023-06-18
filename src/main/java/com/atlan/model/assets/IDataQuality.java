@@ -26,6 +26,8 @@ import javax.annotation.processing.Generated;
 @JsonDeserialize(using = AssetDeserializer.class)
 public interface IDataQuality {
 
+    public static final String TYPE_NAME = "DataQuality";
+
     /** TBC */
     SortedSet<String> getAdminGroups();
 

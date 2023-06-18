@@ -28,6 +28,8 @@ import javax.annotation.processing.Generated;
 @JsonDeserialize(using = AssetDeserializer.class)
 public interface IGoogle {
 
+    public static final String TYPE_NAME = "Google";
+
     /** TBC */
     SortedSet<String> getAdminGroups();
 

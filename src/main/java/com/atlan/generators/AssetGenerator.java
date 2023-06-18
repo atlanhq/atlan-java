@@ -56,13 +56,26 @@ public class AssetGenerator extends TypeGenerator {
         resolveRelationships();
     }
 
-    public String getTemplateFile() {
+    public String getClassTemplateFile() {
         try {
             return cfg.getFreemarkerConfig().getTemplate(className + ".ftl").getSourceName();
         } catch (TemplateNotFoundException e) {
             // Do nothing - no template to load or otherwise handle
         } catch (IOException e) {
             log.error("Error reading template: {}.ftl", className, e);
+        }
+        return null;
+    }
+
+    public String getInterfaceTemplateFile() {
+        try {
+            return cfg.getFreemarkerConfig()
+                    .getTemplate("I" + className + ".ftl")
+                    .getSourceName();
+        } catch (TemplateNotFoundException e) {
+            // Do nothing - no template to load or otherwise handle
+        } catch (IOException e) {
+            log.error("Error reading template: I{}.ftl", className, e);
         }
         return null;
     }

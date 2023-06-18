@@ -27,6 +27,8 @@ import javax.annotation.processing.Generated;
 @JsonDeserialize(using = AssetDeserializer.class)
 public interface IBadge {
 
+    public static final String TYPE_NAME = "Badge";
+
     /** TBC */
     SortedSet<String> getAdminGroups();
 

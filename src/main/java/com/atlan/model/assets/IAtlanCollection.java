@@ -27,6 +27,8 @@ import javax.annotation.processing.Generated;
 @JsonDeserialize(using = AssetDeserializer.class)
 public interface IAtlanCollection {
 
+    public static final String TYPE_NAME = "Collection";
+
     /** TBC */
     SortedSet<String> getAdminGroups();
 

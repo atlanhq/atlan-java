@@ -26,6 +26,8 @@ import javax.annotation.processing.Generated;
 @JsonDeserialize(using = AssetDeserializer.class)
 public interface IAPIPath {
 
+    public static final String TYPE_NAME = "APIPath";
+
     /** TBC */
     SortedSet<String> getAdminGroups();
 

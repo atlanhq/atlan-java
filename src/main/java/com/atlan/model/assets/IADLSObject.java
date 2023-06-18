@@ -32,6 +32,8 @@ import javax.annotation.processing.Generated;
 @JsonDeserialize(using = AssetDeserializer.class)
 public interface IADLSObject {
 
+    public static final String TYPE_NAME = "ADLSObject";
+
     /** TBC */
     String getAdlsAccountQualifiedName();
 

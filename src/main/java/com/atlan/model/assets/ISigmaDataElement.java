@@ -26,6 +26,8 @@ import javax.annotation.processing.Generated;
 @JsonDeserialize(using = AssetDeserializer.class)
 public interface ISigmaDataElement {
 
+    public static final String TYPE_NAME = "SigmaDataElement";
+
     /** TBC */
     SortedSet<String> getAdminGroups();
 

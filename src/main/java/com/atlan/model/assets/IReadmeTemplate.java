@@ -27,6 +27,8 @@ import javax.annotation.processing.Generated;
 @JsonDeserialize(using = AssetDeserializer.class)
 public interface IReadmeTemplate {
 
+    public static final String TYPE_NAME = "ReadmeTemplate";
+
     /** TBC */
     SortedSet<String> getAdminGroups();
 

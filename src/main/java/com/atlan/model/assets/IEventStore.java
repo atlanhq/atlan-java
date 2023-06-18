@@ -26,6 +26,8 @@ import javax.annotation.processing.Generated;
 @JsonDeserialize(using = AssetDeserializer.class)
 public interface IEventStore {
 
+    public static final String TYPE_NAME = "EventStore";
+
     /** TBC */
     SortedSet<String> getAdminGroups();
 

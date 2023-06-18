@@ -26,6 +26,8 @@ import javax.annotation.processing.Generated;
 @JsonDeserialize(using = AssetDeserializer.class)
 public interface IPresetDashboard {
 
+    public static final String TYPE_NAME = "PresetDashboard";
+
     /** TBC */
     SortedSet<String> getAdminGroups();
 

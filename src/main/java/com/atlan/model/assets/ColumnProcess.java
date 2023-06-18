@@ -11,7 +11,6 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.util.StringUtils;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
@@ -27,9 +26,6 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
-@JsonSubTypes({
-    @JsonSubTypes.Type(value = DbtColumnProcess.class, name = DbtColumnProcess.TYPE_NAME),
-})
 @Slf4j
 public class ColumnProcess extends Asset implements IColumnProcess, ILineageProcess, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;

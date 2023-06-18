@@ -27,6 +27,8 @@ import javax.annotation.processing.Generated;
 @JsonDeserialize(using = AssetDeserializer.class)
 public interface IADLS {
 
+    public static final String TYPE_NAME = "ADLS";
+
     /** Unique name of the account for this ADLS asset. */
     String getAdlsAccountQualifiedName();
 

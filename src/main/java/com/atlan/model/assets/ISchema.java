@@ -26,6 +26,8 @@ import javax.annotation.processing.Generated;
 @JsonDeserialize(using = AssetDeserializer.class)
 public interface ISchema {
 
+    public static final String TYPE_NAME = "Schema";
+
     /** TBC */
     SortedSet<String> getAdminGroups();
 

@@ -27,6 +27,8 @@ import javax.annotation.processing.Generated;
 @JsonDeserialize(using = AssetDeserializer.class)
 public interface IAzure {
 
+    public static final String TYPE_NAME = "Azure";
+
     /** TBC */
     String getAdlsAccountSecondaryLocation();
 

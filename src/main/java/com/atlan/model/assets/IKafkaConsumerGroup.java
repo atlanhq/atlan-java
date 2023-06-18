@@ -27,6 +27,8 @@ import javax.annotation.processing.Generated;
 @JsonDeserialize(using = AssetDeserializer.class)
 public interface IKafkaConsumerGroup {
 
+    public static final String TYPE_NAME = "KafkaConsumerGroup";
+
     /** TBC */
     SortedSet<String> getAdminGroups();
 

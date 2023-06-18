@@ -26,6 +26,8 @@ import javax.annotation.processing.Generated;
 @JsonDeserialize(using = AssetDeserializer.class)
 public interface IModeChart {
 
+    public static final String TYPE_NAME = "ModeChart";
+
     /** TBC */
     SortedSet<String> getAdminGroups();
 

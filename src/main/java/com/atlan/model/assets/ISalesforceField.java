@@ -26,6 +26,8 @@ import javax.annotation.processing.Generated;
 @JsonDeserialize(using = AssetDeserializer.class)
 public interface ISalesforceField {
 
+    public static final String TYPE_NAME = "SalesforceField";
+
     /** TBC */
     SortedSet<String> getAdminGroups();
 

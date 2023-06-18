@@ -26,6 +26,8 @@ import javax.annotation.processing.Generated;
 @JsonDeserialize(using = AssetDeserializer.class)
 public interface IMetric {
 
+    public static final String TYPE_NAME = "Metric";
+
     /** TBC */
     SortedSet<String> getAdminGroups();
 

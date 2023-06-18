@@ -156,7 +156,7 @@ public class S3AssetTest extends AtlanLiveTest {
     void searchAssets() throws AtlanException, InterruptedException {
         Query combined = CompoundQuery.builder()
                 .must(beActive())
-                .must(haveSuperType(S3.TYPE_NAME))
+                .must(haveSuperType(IS3.TYPE_NAME))
                 .must(have(KeywordFields.QUALIFIED_NAME).startingWith(connection.getQualifiedName()))
                 .build()
                 ._toQuery();

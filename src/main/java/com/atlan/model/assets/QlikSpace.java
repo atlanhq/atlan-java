@@ -9,7 +9,6 @@ import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
@@ -25,9 +24,6 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
-@JsonSubTypes({
-    @JsonSubTypes.Type(value = QlikStream.class, name = QlikStream.TYPE_NAME),
-})
 @Slf4j
 public class QlikSpace extends Asset implements IQlikSpace, IQlik, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;

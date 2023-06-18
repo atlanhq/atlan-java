@@ -27,6 +27,8 @@ import javax.annotation.processing.Generated;
 @JsonDeserialize(using = AssetDeserializer.class)
 public interface IAccessControl {
 
+    public static final String TYPE_NAME = "AccessControl";
+
     /** TBC */
     SortedSet<String> getAdminGroups();
 

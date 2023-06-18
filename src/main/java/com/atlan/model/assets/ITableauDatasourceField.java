@@ -26,6 +26,8 @@ import javax.annotation.processing.Generated;
 @JsonDeserialize(using = AssetDeserializer.class)
 public interface ITableauDatasourceField {
 
+    public static final String TYPE_NAME = "TableauDatasourceField";
+
     /** TBC */
     SortedSet<String> getAdminGroups();
 

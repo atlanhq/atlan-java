@@ -26,6 +26,8 @@ import javax.annotation.processing.Generated;
 @JsonDeserialize(using = AssetDeserializer.class)
 public interface IMCIncident {
 
+    public static final String TYPE_NAME = "MCIncident";
+
     /** TBC */
     SortedSet<String> getAdminGroups();
 

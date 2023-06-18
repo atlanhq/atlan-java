@@ -130,13 +130,6 @@ import javax.annotation.processing.Generated;
         property = "typeName",
         defaultImpl = IndistinctAsset.class)
 </#if>
-<#if subTypes??>
-@JsonSubTypes({
-<#list subTypes as subType>
-    @JsonSubTypes.Type(value = ${subType}.class, name = ${subType}.TYPE_NAME),
-</#list>
-})
-</#if>
 @Slf4j
 <#if mapContainers?? || className == "Asset">@SuppressWarnings("cast")</#if>
 public <#if abstract>abstract</#if> class ${className} extends ${parentClassName} implements I${className}<#list superTypes as parent>, I${resolveSuperTypeName(parent)}</#list> {
@@ -232,8 +225,8 @@ public <#if abstract>abstract</#if> class ${className} extends ${parentClassName
     }
 
 </#if>
-<#if templateFile??>
-<#import templateFile as methods>
+<#if classTemplateFile??>
+<#import classTemplateFile as methods>
 <@methods.all/>
 <#elseif !abstract>
     /**

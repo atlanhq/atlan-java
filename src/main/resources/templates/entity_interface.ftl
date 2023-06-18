@@ -44,7 +44,6 @@ import com.atlan.serde.AssetSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
-
 import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
@@ -58,6 +57,13 @@ import javax.annotation.processing.Generated;
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
 public interface I${className} {
+
+    public static final String TYPE_NAME = "${originalName}";
+
+<#if interfaceTemplateFile??>
+<#import interfaceTemplateFile as methods>
+<@methods.all/>
+</#if>
 
     <#list interfaceAttributes as attribute>
     /** ${attribute.description} */

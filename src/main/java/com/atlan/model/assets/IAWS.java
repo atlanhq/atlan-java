@@ -27,6 +27,8 @@ import javax.annotation.processing.Generated;
 @JsonDeserialize(using = AssetDeserializer.class)
 public interface IAWS {
 
+    public static final String TYPE_NAME = "AWS";
+
     /** TBC */
     SortedSet<String> getAdminGroups();
 
