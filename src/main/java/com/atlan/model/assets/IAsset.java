@@ -208,7 +208,7 @@ public interface IAsset {
     /** TBC */
     SortedSet<String> getAssetTags();
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     SortedSet<IGlossaryTerm> getAssignedTerms();
 
     /** Status of the asset's certification. */

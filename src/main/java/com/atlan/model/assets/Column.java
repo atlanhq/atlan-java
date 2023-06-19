@@ -200,7 +200,7 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
     @Attribute
     IColumn foreignKeyFrom;
 
-    /** All the columns that refer to this column as a foreign key. */
+    /** All the columns that refer to this column as a foreign key. NOTE: when providing values to this relationship, isForeign must also be set to true. */
     @Attribute
     @Singular("addForeignKeyTo")
     SortedSet<IColumn> foreignKeyTo;
@@ -218,7 +218,7 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
     @Attribute
     Boolean isDist;
 
-    /** When true, this column is a foreign key to another table. */
+    /** When true, this column is a foreign key to another table. NOTE: this must be true when using the foreignKeyTo relationship to specify columns that refer to this column as a foreign key. */
     @Attribute
     Boolean isForeign;
 

@@ -273,7 +273,7 @@ Column,Instance of a column in Atlan.,isPartition,TBC
 Column,Instance of a column in Atlan.,partitionOrder,TBC
 Column,Instance of a column in Atlan.,isClustered,TBC
 Column,Instance of a column in Atlan.,isPrimary,"When true, this column is the primary key for the table."
-Column,Instance of a column in Atlan.,isForeign,"When true, this column is a foreign key to another table."
+Column,Instance of a column in Atlan.,isForeign,"When true, this column is a foreign key to another table. NOTE: this must be true when using the foreignKeyTo relationship to specify columns that refer to this column as a foreign key."
 Column,Instance of a column in Atlan.,isIndexed,"When true, this column is indexed in the database."
 Column,Instance of a column in Atlan.,isSort,TBC
 Column,Instance of a column in Atlan.,isDist,TBC
@@ -324,7 +324,7 @@ Column,Instance of a column in Atlan.,materialisedView,"Materialized view in whi
 Column,Instance of a column in Atlan.,parentColumn,TBC
 Column,Instance of a column in Atlan.,queries,Queries that involve this column.
 Column,Instance of a column in Atlan.,metricTimestamps,TBC
-Column,Instance of a column in Atlan.,foreignKeyTo,All the columns that refer to this column as a foreign key.
+Column,Instance of a column in Atlan.,foreignKeyTo,"All the columns that refer to this column as a foreign key. NOTE: when providing values to this relationship, isForeign must also be set to true."
 Column,Instance of a column in Atlan.,foreignKeyFrom,Column this column refers to as a foreign key.
 Column,Instance of a column in Atlan.,dbtMetrics,TBC
 Column,Instance of a column in Atlan.,tablePartition,TBC

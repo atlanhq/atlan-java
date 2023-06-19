@@ -357,7 +357,7 @@ public interface IColumn {
     /** Column this column refers to as a foreign key. */
     IColumn getForeignKeyFrom();
 
-    /** All the columns that refer to this column as a foreign key. */
+    /** All the columns that refer to this column as a foreign key. NOTE: when providing values to this relationship, isForeign must also be set to true. */
     SortedSet<IColumn> getForeignKeyTo();
 
     /** TBC */
@@ -378,7 +378,7 @@ public interface IColumn {
     /** TBC */
     Boolean getIsEditable();
 
-    /** When true, this column is a foreign key to another table. */
+    /** When true, this column is a foreign key to another table. NOTE: this must be true when using the foreignKeyTo relationship to specify columns that refer to this column as a foreign key. */
     Boolean getIsForeign();
 
     /** When true, this column is indexed in the database. */
