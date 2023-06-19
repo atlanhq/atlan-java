@@ -108,6 +108,10 @@ public class Connection extends Asset {
 
     /** TBC */
     @Attribute
+    Long queryTimeout;
+
+    /** TBC */
+    @Attribute
     String defaultCredentialGuid;
 
     /** Despite the name, this is not used for anything. Only the value of connectorName impacts icons. */

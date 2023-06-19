@@ -562,6 +562,11 @@ public abstract class Asset extends Reference {
 
     /** TBC */
     @Attribute
+    @Singular("addStarredBy")
+    SortedSet<String> starredBy;
+
+    /** TBC */
+    @Attribute
     @Singular
     SortedSet<MCMonitor> mcMonitors;
 

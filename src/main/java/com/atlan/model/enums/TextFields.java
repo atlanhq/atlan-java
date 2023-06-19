@@ -234,6 +234,10 @@ public enum TextFields implements AtlanSearchableField {
     /** Human-readable name of the asset. */
     NAME("name"),
     /** TBC */
+    PARENT_COLUMN_NAME("parentColumnName"),
+    /** TBC */
+    PARENT_COLUMN_QUALIFIED_NAME("parentColumnQualifiedName.text"),
+    /** TBC */
     PARENT_QUALIFIED_NAME("parentQualifiedName.text"),
     /** TBC */
     POWER_BI_MEASURE_EXPRESSION("powerBIMeasureExpression"),

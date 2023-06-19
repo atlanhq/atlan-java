@@ -50,9 +50,17 @@ public class Column extends SQL {
     @Attribute
     String subDataType;
 
+    /** TBC */
+    @Attribute
+    String rawDataTypeDefinition;
+
     /** Order (position) in which the column appears in the table (starting at 1). */
     @Attribute
     Integer order;
+
+    /** TBC */
+    @Attribute
+    Integer nestedColumnCount;
 
     /** TBC */
     @Attribute
@@ -122,6 +130,14 @@ public class Column extends SQL {
     @Attribute
     @Singular
     Map<String, String> validations;
+
+    /** TBC */
+    @Attribute
+    String parentColumnQualifiedName;
+
+    /** TBC */
+    @Attribute
+    String parentColumnName;
 
     /** Number of rows that contain distinct values. */
     @Attribute
@@ -227,9 +243,18 @@ public class Column extends SQL {
     @Singular
     List<ColumnValueFrequencyMap> columnTopValues;
 
+    /** Level of nesting, used for STRUCT/NESTED columns */
+    @Attribute
+    Integer columnDepthLevel;
+
     /** View in which this column exists, or empty if the column instead exists in a table or materialized view. */
     @Attribute
     View view;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<Column> nestedColumns;
 
     /** TBC */
     @Attribute
@@ -254,6 +279,10 @@ public class Column extends SQL {
     @Attribute
     @JsonProperty("materialisedView")
     MaterializedView materializedView;
+
+    /** TBC */
+    @Attribute
+    Column parentColumn;
 
     /** Queries that involve this column. */
     @Attribute
