@@ -25,7 +25,8 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class SalesforceField extends Salesforce {
+public class SalesforceField extends Asset
+        implements ISalesforceField, ISalesforce, ISaaS, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "SalesforceField";
@@ -35,17 +36,21 @@ public class SalesforceField extends Salesforce {
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** TBC */
+    @Attribute
+    String apiName;
+
     /** Data type of values in the field. */
     @Attribute
     String dataType;
 
     /** TBC */
     @Attribute
-    String objectQualifiedName;
+    String defaultValueFormula;
 
     /** TBC */
     @Attribute
-    Integer order;
+    String formula;
 
     /** TBC */
     @Attribute
@@ -53,11 +58,12 @@ public class SalesforceField extends Salesforce {
 
     /** TBC */
     @Attribute
-    Boolean isCalculated;
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
 
     /** TBC */
     @Attribute
-    String formula;
+    Boolean isCalculated;
 
     /** TBC */
     @Attribute
@@ -69,28 +75,7 @@ public class SalesforceField extends Salesforce {
 
     /** TBC */
     @Attribute
-    Long maxLength;
-
-    /** TBC */
-    @Attribute
     Boolean isNullable;
-
-    /** Total number of digits allowed. */
-    @Attribute
-    Integer precision;
-
-    /** Number of digits allowed to the right of the decimal point. */
-    @Attribute
-    Double numericScale;
-
-    /** TBC */
-    @Attribute
-    Boolean isUnique;
-
-    /** List of values from which a user can pick while adding a record. */
-    @Attribute
-    @Singular
-    SortedSet<String> picklistValues;
 
     /** Whether the field references a record of multiple objects (true) or not (false). */
     @Attribute
@@ -98,16 +83,50 @@ public class SalesforceField extends Salesforce {
 
     /** TBC */
     @Attribute
-    String defaultValueFormula;
+    Boolean isUnique;
 
     /** TBC */
     @Attribute
     @Singular
-    SortedSet<SalesforceObject> lookupObjects;
+    SortedSet<ISalesforceObject> lookupObjects;
 
     /** TBC */
     @Attribute
-    SalesforceObject object;
+    Long maxLength;
+
+    /** Number of digits allowed to the right of the decimal point. */
+    @Attribute
+    Double numericScale;
+
+    /** TBC */
+    @Attribute
+    ISalesforceObject object;
+
+    /** TBC */
+    @Attribute
+    String objectQualifiedName;
+
+    /** TBC */
+    @Attribute
+    Integer order;
+
+    /** TBC */
+    @Attribute
+    String organizationQualifiedName;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** List of values from which a user can pick while adding a record. */
+    @Attribute
+    @Singular
+    SortedSet<String> picklistValues;
+
+    /** Total number of digits allowed. */
+    @Attribute
+    Integer precision;
 
     /**
      * Reference to a SalesforceField by GUID.
@@ -309,7 +328,7 @@ public class SalesforceField extends Salesforce {
      * @return the SalesforceField that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static SalesforceField replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static SalesforceField replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (SalesforceField) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -324,7 +343,7 @@ public class SalesforceField extends Salesforce {
      * @return the SalesforceField that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static SalesforceField appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static SalesforceField appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (SalesforceField) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -338,7 +357,7 @@ public class SalesforceField extends Salesforce {
      * @return the SalesforceField that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static SalesforceField removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static SalesforceField removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (SalesforceField) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

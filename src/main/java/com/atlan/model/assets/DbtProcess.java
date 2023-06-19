@@ -25,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class DbtProcess extends LineageProcess {
+public class DbtProcess extends Asset implements IDbtProcess, IDbt, ILineageProcess, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "DbtProcess";
@@ -37,17 +37,117 @@ public class DbtProcess extends LineageProcess {
 
     /** TBC */
     @Attribute
+    String ast;
+
+    /** TBC */
+    @Attribute
+    String code;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IColumnProcess> columnProcesses;
+
+    /** TBC */
+    @Attribute
+    String dbtAccountName;
+
+    /** TBC */
+    @Attribute
+    String dbtAlias;
+
+    /** TBC */
+    @Attribute
+    String dbtConnectionContext;
+
+    /** TBC */
+    @Attribute
+    String dbtEnvironmentDbtVersion;
+
+    /** TBC */
+    @Attribute
+    String dbtEnvironmentName;
+
+    /** TBC */
+    @Attribute
+    Long dbtJobLastRun;
+
+    /** TBC */
+    @Attribute
+    String dbtJobName;
+
+    /** TBC */
+    @Attribute
+    Long dbtJobNextRun;
+
+    /** TBC */
+    @Attribute
+    String dbtJobNextRunHumanized;
+
+    /** TBC */
+    @Attribute
+    String dbtJobSchedule;
+
+    /** TBC */
+    @Attribute
+    String dbtJobScheduleCronHumanized;
+
+    /** TBC */
+    @Attribute
+    String dbtJobStatus;
+
+    /** TBC */
+    @Attribute
+    String dbtMeta;
+
+    /** TBC */
+    @Attribute
+    String dbtPackageName;
+
+    /** TBC */
+    @Attribute
     String dbtProcessJobStatus;
 
     /** TBC */
     @Attribute
-    @Singular
-    SortedSet<LineageProcess> inputToProcesses;
+    String dbtProjectName;
+
+    /** TBC */
+    @Attribute
+    String dbtSemanticLayerProxyUrl;
 
     /** TBC */
     @Attribute
     @Singular
-    SortedSet<LineageProcess> outputFromProcesses;
+    SortedSet<String> dbtTags;
+
+    /** TBC */
+    @Attribute
+    String dbtUniqueId;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ICatalog> inputs;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ICatalog> outputs;
+
+    /** TBC */
+    @Attribute
+    String sql;
 
     /**
      * Reference to a DbtProcess by GUID.
@@ -249,7 +349,7 @@ public class DbtProcess extends LineageProcess {
      * @return the DbtProcess that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static DbtProcess replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static DbtProcess replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (DbtProcess) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -264,7 +364,7 @@ public class DbtProcess extends LineageProcess {
      * @return the DbtProcess that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static DbtProcess appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static DbtProcess appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (DbtProcess) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -278,7 +378,7 @@ public class DbtProcess extends LineageProcess {
      * @return the DbtProcess that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static DbtProcess removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static DbtProcess removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (DbtProcess) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

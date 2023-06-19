@@ -32,8 +32,6 @@ public class ModelCache {
     private final Map<String, AssetGenerator> assetCache = new HashMap<>();
     private final Map<String, Set<SearchFieldGenerator.Field>> searchCache = new HashMap<>();
 
-    private final Map<String, Set<String>> uniqueRelationshipsForType = new ConcurrentHashMap<>();
-    private final Map<String, String> subTypeToSuperType = new ConcurrentHashMap<>();
     private final Map<String, List<String>> subTypeToSuperTypes = new ConcurrentHashMap<>();
 
     private GeneratorConfig config = null;
@@ -66,7 +64,7 @@ public class ModelCache {
         try {
             ModelCache cache = new ModelCache();
             cache.config = cfg;
-            cache.cacheRelationshipsForInheritance(cache.getEntityDefCache().values());
+            cache.cacheInheritance(cache.getEntityDefCache().values());
             return cache;
         } catch (AtlanException e) {
             log.error("Unable to refresh typedef caches.", e);
@@ -129,8 +127,26 @@ public class ModelCache {
         return assetCache.get(typeName);
     }
 
+    public Set<String> getUniqueAttributesForType(String originalName) {
+        EntityDef entityDef = entityDefCache.get(originalName);
+        return new TreeSet<>(
+                entityDef.getAttributeDefs().stream().map(AttributeDef::getName).collect(Collectors.toSet()));
+    }
+
     public Set<String> getUniqueRelationshipsForType(String originalName) {
-        return uniqueRelationshipsForType.get(originalName);
+        EntityDef entityDef = entityDefCache.get(originalName);
+        Set<String> startingPoint = new TreeSet<>(entityDef.getRelationshipAttributeDefs().stream()
+                .map(AttributeDef::getName)
+                .collect(Collectors.toSet()));
+        Set<String> superTypes = getAllSuperTypesForType(originalName);
+        for (String superType : superTypes) {
+            EntityDef superDef = entityDefCache.get(superType);
+            Set<String> toRemove = superDef.getRelationshipAttributeDefs().stream()
+                    .map(AttributeDef::getName)
+                    .collect(Collectors.toSet());
+            startingPoint.removeAll(toRemove);
+        }
+        return startingPoint;
     }
 
     public String getTypeDescription(String originalName) {
@@ -198,55 +214,27 @@ public class ModelCache {
         }
     }
 
-    private void cacheRelationshipsForInheritance(Collection<EntityDef> toCache) {
-        // Populate 'relationshipsForType' map so that we don't repeat inherited attributes in subtypes
-        // (this seems to only be a risk for relationship attributes)
+    private void cacheInheritance(Collection<EntityDef> toCache) {
+        // Populate inheritance maps
         if (!toCache.isEmpty()) {
             List<EntityDef> leftOvers = new ArrayList<>();
             for (EntityDef entityDef : toCache) {
                 String typeName = entityDef.getName();
                 List<String> superTypes = entityDef.getSuperTypes();
-                List<RelationshipAttributeDef> relationships = entityDef.getRelationshipAttributeDefs();
                 if (superTypes == null || superTypes.isEmpty()) {
                     subTypeToSuperTypes.put(typeName, new ArrayList<>());
                 } else {
                     subTypeToSuperTypes.put(typeName, superTypes);
                 }
-                if (superTypes == null || superTypes.isEmpty() || typeName.equals("Asset")) {
-                    subTypeToSuperType.put(typeName, "");
-                    uniqueRelationshipsForType.put(
-                            typeName,
-                            relationships.stream()
-                                    .map(RelationshipAttributeDef::getName)
-                                    .collect(Collectors.toSet()));
-                } else {
-                    // TODO: This can be replaced if we move to an interface-based, polymorphic implementation
-                    String singleSuperType = config.getSingleTypeToExtend(typeName, superTypes);
-                    if (uniqueRelationshipsForType.containsKey(singleSuperType)) {
-                        subTypeToSuperType.put(typeName, singleSuperType);
-                        Set<String> inheritedRelationships = getAllInheritedRelationships(singleSuperType);
-                        Set<String> uniqueRelationships = relationships.stream()
-                                .map(RelationshipAttributeDef::getName)
-                                .collect(Collectors.toSet());
-                        uniqueRelationships.removeAll(inheritedRelationships);
-                        uniqueRelationshipsForType.put(typeName, uniqueRelationships);
-                    } else {
-                        leftOvers.add(entityDef);
+                if (superTypes != null && !superTypes.isEmpty() && !typeName.equals("Asset")) {
+                    for (String superType : superTypes) {
+                        if (!subTypeToSuperTypes.containsKey(superType)) {
+                            leftOvers.add(entityDefCache.get(superType));
+                        }
                     }
                 }
             }
-            cacheRelationshipsForInheritance(leftOvers);
-        }
-    }
-
-    private Set<String> getAllInheritedRelationships(String superTypeName) {
-        // Retrieve all relationship attributes from the supertype (and up) for the received type
-        if (superTypeName.equals("")) {
-            return new HashSet<>();
-        } else {
-            Set<String> relations = new HashSet<>(uniqueRelationshipsForType.get(superTypeName));
-            relations.addAll(getAllInheritedRelationships(subTypeToSuperType.get(superTypeName)));
-            return relations;
+            cacheInheritance(leftOvers);
         }
     }
 
@@ -275,6 +263,123 @@ public class ModelCache {
                 now.addAll(again);
             }
             return now;
+        }
+    }
+
+    public SortedSet<AttributeDef> getAllNonAssetAttributesForType(String originalName) {
+        SortedSet<AttributeDef> all = getAllAttributesForType(originalName);
+        all.removeAll(getAllAttributesForType("Asset"));
+        return all;
+    }
+
+    public SortedSet<RelationshipAttributeDef> getAllNonAssetRelationshipsForType(String originalName) {
+        SortedSet<RelationshipAttributeDef> all = getAllRelationshipsForType(originalName);
+        all.removeAll(getAllRelationshipsForType("Asset"));
+        return all;
+    }
+
+    SortedSet<AttributeDef> getAllAttributesForType(String originalName) {
+        SortedSet<AttributeDef> full = new TreeSet<>();
+        getAttributesForType(originalName, full, new HashSet<>());
+        return full;
+    }
+
+    private void getAttributesForType(
+            String originalName, SortedSet<AttributeDef> aggregated, Set<String> processedTypes) {
+        if (!processedTypes.contains(originalName)) {
+            EntityDef entityDef = entityDefCache.get(originalName);
+            if (originalName.equals("Referenceable")) {
+                // Retain only the 'qualifiedName' attribute from Referenceable
+                List<AttributeDef> attrs = entityDefCache.get(originalName).getAttributeDefs();
+                for (AttributeDef attributeDef : attrs) {
+                    if (attributeDef.getName().equals("qualifiedName")) {
+                        aggregated.add(attributeDef);
+                    }
+                }
+            } else {
+                addAndLogAttributeConflicts(originalName, aggregated, entityDef.getAttributeDefs(), originalName);
+                processedTypes.add(originalName);
+                List<String> superTypes = entityDef.getSuperTypes();
+                if (superTypes != null && !superTypes.isEmpty()) {
+                    for (String superType : superTypes) {
+                        getAttributesForType(superType, aggregated, processedTypes);
+                    }
+                }
+            }
+        }
+    }
+
+    SortedSet<RelationshipAttributeDef> getAllRelationshipsForType(String originalName) {
+        SortedSet<RelationshipAttributeDef> full = new TreeSet<>();
+        getRelationshipsForType(originalName, full, new HashSet<>());
+        return full;
+    }
+
+    private void getRelationshipsForType(
+            String originalName, SortedSet<RelationshipAttributeDef> aggregated, Set<String> processedTypes) {
+        if (!processedTypes.contains(originalName)) {
+            EntityDef entityDef = entityDefCache.get(originalName);
+            if (originalName.equals("Referenceable")) {
+                // Retain only the 'meanings' relationship from Referenceable
+                List<RelationshipAttributeDef> attrs = entityDef.getRelationshipAttributeDefs();
+                for (RelationshipAttributeDef attributeDef : attrs) {
+                    if (attributeDef.getName().equals("meanings")) {
+                        aggregated.add(attributeDef);
+                    }
+                }
+            } else {
+                Set<String> uniqueRelationships = getUniqueRelationshipsForType(originalName);
+                Set<RelationshipAttributeDef> retained = new TreeSet<>();
+                for (RelationshipAttributeDef attributeDef : entityDef.getRelationshipAttributeDefs()) {
+                    if (uniqueRelationships.contains(attributeDef.getName())) {
+                        boolean added = retained.add(attributeDef);
+                        if (!added) {
+                            log.warn(
+                                    "Conflicting relationship found for {}, within own typedef: {}",
+                                    originalName,
+                                    attributeDef.getName());
+                        }
+                    }
+                }
+                if (!retained.isEmpty()) {
+                    addAndLogRelationshipConflicts(originalName, aggregated, retained, originalName);
+                }
+                processedTypes.add(originalName);
+                List<String> superTypes = entityDef.getSuperTypes();
+                if (superTypes != null && !superTypes.isEmpty()) {
+                    for (String superType : superTypes) {
+                        getRelationshipsForType(superType, aggregated, processedTypes);
+                    }
+                }
+            }
+        }
+    }
+
+    // Set of attributes that are known to conflict with relationship attributes of the same name
+    private static final Set<String> attributesToIgnore = Set.of("inputs", "outputs");
+
+    private void addAndLogAttributeConflicts(
+            String typeName, SortedSet<AttributeDef> toAddTo, Collection<AttributeDef> toAdd, String fromSuperType) {
+        for (AttributeDef one : toAdd) {
+            if (!attributesToIgnore.contains(one.getName())) {
+                boolean added = toAddTo.add(one);
+                if (!added) {
+                    log.warn("Conflicting attribute found for {}, from {}: {}", typeName, fromSuperType, one.getName());
+                }
+            }
+        }
+    }
+
+    private void addAndLogRelationshipConflicts(
+            String typeName,
+            SortedSet<RelationshipAttributeDef> toAddTo,
+            Collection<RelationshipAttributeDef> toAdd,
+            String fromSuperType) {
+        for (RelationshipAttributeDef one : toAdd) {
+            boolean added = toAddTo.add(one);
+            if (!added) {
+                log.warn("Conflicting relationship found for {}, from {}: {}", typeName, fromSuperType, one.getName());
+            }
         }
     }
 }

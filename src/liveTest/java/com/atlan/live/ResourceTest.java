@@ -90,10 +90,10 @@ public class ResourceTest extends AtlanLiveTest {
         GlossaryTerm t = GlossaryTerm.retrieveByQualifiedName(term.getQualifiedName());
         assertNotNull(t);
         assertTrue(t.isComplete());
-        Readme r = t.getReadme();
+        IReadme r = t.getReadme();
         assertNotNull(r);
         assertEquals(r.getGuid(), readme.getGuid());
-        SortedSet<Link> links = t.getLinks();
+        SortedSet<ILink> links = t.getLinks();
         assertNotNull(links);
         assertEquals(links.size(), 1);
         assertEquals(links.first().getGuid(), link.getGuid());

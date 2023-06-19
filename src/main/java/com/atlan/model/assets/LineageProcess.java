@@ -10,7 +10,6 @@ import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -30,13 +29,8 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
-@JsonSubTypes({
-    @JsonSubTypes.Type(value = BIProcess.class, name = BIProcess.TYPE_NAME),
-    @JsonSubTypes.Type(value = DbtProcess.class, name = DbtProcess.TYPE_NAME),
-    @JsonSubTypes.Type(value = ColumnProcess.class, name = ColumnProcess.TYPE_NAME),
-})
 @Slf4j
-public class LineageProcess extends Asset {
+public class LineageProcess extends Asset implements ILineageProcess, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "Process";
@@ -48,13 +42,7 @@ public class LineageProcess extends Asset {
 
     /** TBC */
     @Attribute
-    @Singular
-    SortedSet<Catalog> inputs;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<Catalog> outputs;
+    String ast;
 
     /** TBC */
     @Attribute
@@ -62,16 +50,22 @@ public class LineageProcess extends Asset {
 
     /** TBC */
     @Attribute
-    String sql;
-
-    /** TBC */
-    @Attribute
-    String ast;
+    @Singular
+    SortedSet<IColumnProcess> columnProcesses;
 
     /** TBC */
     @Attribute
     @Singular
-    SortedSet<ColumnProcess> columnProcesses;
+    SortedSet<ICatalog> inputs;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ICatalog> outputs;
+
+    /** TBC */
+    @Attribute
+    String sql;
 
     /**
      * Reference to a LineageProcess by GUID.
@@ -156,8 +150,8 @@ public class LineageProcess extends Asset {
             String name,
             String connectionQualifiedName,
             String id,
-            List<Catalog> inputs,
-            List<Catalog> outputs,
+            List<ICatalog> inputs,
+            List<ICatalog> outputs,
             LineageProcess parent) {
         AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         return LineageProcess.builder()
@@ -218,8 +212,8 @@ public class LineageProcess extends Asset {
             String name,
             String connectionQualifiedName,
             String id,
-            List<Catalog> inputs,
-            List<Catalog> outputs,
+            List<ICatalog> inputs,
+            List<ICatalog> outputs,
             LineageProcess parent) {
         // If an ID was provided, use that as the unique name for the process
         if (id != null && id.length() > 0) {
@@ -251,9 +245,9 @@ public class LineageProcess extends Asset {
      * @param sb into which to append
      * @param relationships to append
      */
-    private static void appendRelationships(StringBuilder sb, List<Catalog> relationships) {
-        for (Catalog relationship : relationships) {
-            appendRelationship(sb, relationship);
+    private static void appendRelationships(StringBuilder sb, List<ICatalog> relationships) {
+        for (ICatalog relationship : relationships) {
+            appendRelationship(sb, (IAsset) relationship);
         }
     }
 
@@ -262,7 +256,7 @@ public class LineageProcess extends Asset {
      * @param sb into which to append
      * @param relationship to append
      */
-    private static void appendRelationship(StringBuilder sb, Asset relationship) {
+    private static void appendRelationship(StringBuilder sb, IAsset relationship) {
         // TODO: if two calls are made for the same process, but one uses GUIDs for
         //  its references and the other uses qualifiedName, we'll end up with different
         //  hashes (duplicate processes)
@@ -372,7 +366,7 @@ public class LineageProcess extends Asset {
      * @return the LineageProcess that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static LineageProcess replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static LineageProcess replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (LineageProcess) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -387,7 +381,7 @@ public class LineageProcess extends Asset {
      * @return the LineageProcess that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static LineageProcess appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static LineageProcess appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (LineageProcess) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -401,7 +395,7 @@ public class LineageProcess extends Asset {
      * @return the LineageProcess that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static LineageProcess removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static LineageProcess removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (LineageProcess) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

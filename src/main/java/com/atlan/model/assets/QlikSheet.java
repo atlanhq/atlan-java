@@ -25,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class QlikSheet extends Qlik {
+public class QlikSheet extends Asset implements IQlikSheet, IQlik, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "QlikSheet";
@@ -35,18 +35,60 @@ public class QlikSheet extends Qlik {
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Whether the sheet is approved (true) or not (false). */
+    /** TBC */
     @Attribute
-    Boolean qlikSheetIsApproved;
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 
     /** App in which the sheet exists. */
     @Attribute
-    QlikApp qlikApp;
+    IQlikApp qlikApp;
+
+    /** TBC */
+    @Attribute
+    String qlikAppId;
+
+    /** TBC */
+    @Attribute
+    String qlikAppQualifiedName;
 
     /** Charts contained within the sheet. */
     @Attribute
     @Singular
-    SortedSet<QlikChart> qlikCharts;
+    SortedSet<IQlikChart> qlikCharts;
+
+    /** TBC */
+    @Attribute
+    String qlikId;
+
+    /** TBC */
+    @Attribute
+    Boolean qlikIsPublished;
+
+    /** TBC */
+    @Attribute
+    String qlikOwnerId;
+
+    /** TBC */
+    @Attribute
+    String qlikQRI;
+
+    /** Whether the sheet is approved (true) or not (false). */
+    @Attribute
+    Boolean qlikSheetIsApproved;
+
+    /** TBC */
+    @Attribute
+    String qlikSpaceId;
+
+    /** TBC */
+    @Attribute
+    String qlikSpaceQualifiedName;
 
     /**
      * Reference to a QlikSheet by GUID.
@@ -248,7 +290,7 @@ public class QlikSheet extends Qlik {
      * @return the QlikSheet that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static QlikSheet replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static QlikSheet replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (QlikSheet) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -263,7 +305,7 @@ public class QlikSheet extends Qlik {
      * @return the QlikSheet that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static QlikSheet appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static QlikSheet appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (QlikSheet) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -277,7 +319,7 @@ public class QlikSheet extends Qlik {
      * @return the QlikSheet that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static QlikSheet removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static QlikSheet removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (QlikSheet) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

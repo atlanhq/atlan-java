@@ -25,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class LookerView extends Looker {
+public class LookerView extends Asset implements ILookerView, ILooker, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "LookerView";
@@ -37,16 +37,26 @@ public class LookerView extends Looker {
 
     /** TBC */
     @Attribute
-    String projectName;
-
-    /** TBC */
-    @Attribute
-    LookerProject project;
+    @Singular
+    SortedSet<ILookerField> fields;
 
     /** TBC */
     @Attribute
     @Singular
-    SortedSet<LookerField> fields;
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    ILookerProject project;
+
+    /** TBC */
+    @Attribute
+    String projectName;
 
     /**
      * Reference to a LookerView by GUID.
@@ -248,7 +258,7 @@ public class LookerView extends Looker {
      * @return the LookerView that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static LookerView replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static LookerView replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (LookerView) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -263,7 +273,7 @@ public class LookerView extends Looker {
      * @return the LookerView that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static LookerView appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static LookerView appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (LookerView) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -277,7 +287,7 @@ public class LookerView extends Looker {
      * @return the LookerView that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static LookerView removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static LookerView removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (LookerView) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

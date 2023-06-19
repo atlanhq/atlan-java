@@ -8,9 +8,11 @@ import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
+import com.atlan.model.enums.PowerBIEndorsementType;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -24,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class PowerBIColumn extends PowerBI {
+public class PowerBIColumn extends Asset implements IPowerBIColumn, IPowerBI, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "PowerBIColumn";
@@ -36,11 +38,17 @@ public class PowerBIColumn extends PowerBI {
 
     /** TBC */
     @Attribute
-    String workspaceQualifiedName;
+    String datasetQualifiedName;
 
     /** TBC */
     @Attribute
-    String datasetQualifiedName;
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 
     /** TBC */
     @Attribute
@@ -52,15 +60,35 @@ public class PowerBIColumn extends PowerBI {
 
     /** TBC */
     @Attribute
-    String powerBISortByColumn;
-
-    /** TBC */
-    @Attribute
     String powerBIColumnSummarizeBy;
 
     /** TBC */
     @Attribute
-    PowerBITable table;
+    PowerBIEndorsementType powerBIEndorsement;
+
+    /** TBC */
+    @Attribute
+    String powerBIFormatString;
+
+    /** TBC */
+    @Attribute
+    Boolean powerBIIsHidden;
+
+    /** TBC */
+    @Attribute
+    String powerBISortByColumn;
+
+    /** TBC */
+    @Attribute
+    String powerBITableQualifiedName;
+
+    /** TBC */
+    @Attribute
+    IPowerBITable table;
+
+    /** TBC */
+    @Attribute
+    String workspaceQualifiedName;
 
     /**
      * Reference to a PowerBIColumn by GUID.
@@ -262,7 +290,7 @@ public class PowerBIColumn extends PowerBI {
      * @return the PowerBIColumn that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static PowerBIColumn replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static PowerBIColumn replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (PowerBIColumn) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -277,7 +305,7 @@ public class PowerBIColumn extends PowerBI {
      * @return the PowerBIColumn that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static PowerBIColumn appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static PowerBIColumn appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (PowerBIColumn) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -291,7 +319,7 @@ public class PowerBIColumn extends PowerBI {
      * @return the PowerBIColumn that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static PowerBIColumn removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static PowerBIColumn removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (PowerBIColumn) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

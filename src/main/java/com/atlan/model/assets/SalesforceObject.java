@@ -25,7 +25,8 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class SalesforceObject extends Salesforce {
+public class SalesforceObject extends Asset
+        implements ISalesforceObject, ISalesforce, ISaaS, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "SalesforceObject";
@@ -34,6 +35,24 @@ public class SalesforceObject extends Salesforce {
     @Getter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
+
+    /** TBC */
+    @Attribute
+    String apiName;
+
+    /** Number of fields in the object. */
+    @Attribute
+    Long fieldCount;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISalesforceField> fields;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
 
     /** Whether the object is a custom object (true) or not (false). */
     @Attribute
@@ -47,23 +66,23 @@ public class SalesforceObject extends Salesforce {
     @Attribute
     Boolean isQueryable;
 
-    /** Number of fields in the object. */
+    /** TBC */
     @Attribute
-    Long fieldCount;
+    @Singular
+    SortedSet<ISalesforceField> lookupFields;
 
     /** TBC */
     @Attribute
-    SalesforceOrganization organization;
+    ISalesforceOrganization organization;
+
+    /** TBC */
+    @Attribute
+    String organizationQualifiedName;
 
     /** TBC */
     @Attribute
     @Singular
-    SortedSet<SalesforceField> lookupFields;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<SalesforceField> fields;
+    SortedSet<ILineageProcess> outputFromProcesses;
 
     /**
      * Reference to a SalesforceObject by GUID.
@@ -265,7 +284,7 @@ public class SalesforceObject extends Salesforce {
      * @return the SalesforceObject that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static SalesforceObject replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static SalesforceObject replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (SalesforceObject) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -280,7 +299,7 @@ public class SalesforceObject extends Salesforce {
      * @return the SalesforceObject that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static SalesforceObject appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static SalesforceObject appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (SalesforceObject) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -294,7 +313,7 @@ public class SalesforceObject extends Salesforce {
      * @return the SalesforceObject that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static SalesforceObject removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static SalesforceObject removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (SalesforceObject) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

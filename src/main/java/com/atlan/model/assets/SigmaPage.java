@@ -25,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class SigmaPage extends Sigma {
+public class SigmaPage extends Asset implements ISigmaPage, ISigma, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "SigmaPage";
@@ -35,18 +35,52 @@ public class SigmaPage extends Sigma {
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
     /** Number of data elements that exist within this page. */
     @Attribute
     Long sigmaDataElementCount;
 
+    /** TBC */
+    @Attribute
+    String sigmaDataElementName;
+
+    /** TBC */
+    @Attribute
+    String sigmaDataElementQualifiedName;
+
     /** Data elements within this page. */
     @Attribute
     @Singular
-    SortedSet<SigmaDataElement> sigmaDataElements;
+    SortedSet<ISigmaDataElement> sigmaDataElements;
+
+    /** TBC */
+    @Attribute
+    String sigmaPageName;
+
+    /** TBC */
+    @Attribute
+    String sigmaPageQualifiedName;
 
     /** Workbook that contains this page. */
     @Attribute
-    SigmaWorkbook sigmaWorkbook;
+    ISigmaWorkbook sigmaWorkbook;
+
+    /** TBC */
+    @Attribute
+    String sigmaWorkbookName;
+
+    /** TBC */
+    @Attribute
+    String sigmaWorkbookQualifiedName;
 
     /**
      * Reference to a SigmaPage by GUID.
@@ -248,7 +282,7 @@ public class SigmaPage extends Sigma {
      * @return the SigmaPage that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static SigmaPage replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static SigmaPage replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (SigmaPage) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -263,7 +297,7 @@ public class SigmaPage extends Sigma {
      * @return the SigmaPage that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static SigmaPage appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static SigmaPage appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (SigmaPage) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -277,7 +311,7 @@ public class SigmaPage extends Sigma {
      * @return the SigmaPage that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static SigmaPage removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static SigmaPage removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (SigmaPage) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

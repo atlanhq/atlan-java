@@ -35,7 +35,7 @@ import lombok.extern.slf4j.Slf4j;
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
 @SuppressWarnings("cast")
-public class GlossaryTerm extends Asset {
+public class GlossaryTerm extends Asset implements IGlossaryTerm, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "AtlasGlossaryTerm";
@@ -47,24 +47,7 @@ public class GlossaryTerm extends Asset {
 
     /** TBC */
     @Attribute
-    String shortDescription;
-
-    /** TBC */
-    @Attribute
-    String longDescription;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<String> examples;
-
-    /** TBC */
-    @Attribute
     String abbreviation;
-
-    /** TBC */
-    @Attribute
-    String usage;
 
     /** TBC */
     @Attribute
@@ -73,82 +56,99 @@ public class GlossaryTerm extends Asset {
 
     /** TBC */
     @Attribute
-    @Singular
-    SortedSet<GlossaryTerm> translationTerms;
-
-    /** TBC */
-    @Attribute
-    @Singular("validValueFor")
-    SortedSet<GlossaryTerm> validValuesFor;
+    IGlossary anchor;
 
     /** TBC */
     @Attribute
     @Singular
-    SortedSet<GlossaryTerm> synonyms;
-
-    /** TBC */
-    @Attribute
-    @Singular("replacedByTerm")
-    SortedSet<GlossaryTerm> replacedBy;
+    SortedSet<IGlossaryTerm> antonyms;
 
     /** TBC */
     @Attribute
     @Singular
-    SortedSet<GlossaryTerm> validValues;
+    SortedSet<IAsset> assignedEntities;
 
     /** TBC */
     @Attribute
     @Singular
-    SortedSet<GlossaryTerm> replacementTerms;
-
-    /** TBC */
-    @Attribute
-    @Singular("seeAlsoOne")
-    SortedSet<GlossaryTerm> seeAlso;
+    SortedSet<IGlossaryCategory> categories;
 
     /** TBC */
     @Attribute
     @Singular
-    SortedSet<GlossaryTerm> translatedTerms;
+    SortedSet<IGlossaryTerm> classifies;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<String> examples;
 
     /** TBC */
     @Attribute
     @Singular("isATerm")
-    SortedSet<GlossaryTerm> isA;
+    SortedSet<IGlossaryTerm> isA;
 
     /** TBC */
     @Attribute
-    Glossary anchor;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<GlossaryTerm> antonyms;
+    String longDescription;
 
     /** TBC */
     @Attribute
     @Singular
-    SortedSet<Asset> assignedEntities;
+    SortedSet<IGlossaryTerm> preferredTerms;
 
     /** TBC */
     @Attribute
     @Singular
-    SortedSet<GlossaryTerm> classifies;
+    SortedSet<IGlossaryTerm> preferredToTerms;
+
+    /** TBC */
+    @Attribute
+    @Singular("replacedByTerm")
+    SortedSet<IGlossaryTerm> replacedBy;
 
     /** TBC */
     @Attribute
     @Singular
-    SortedSet<GlossaryCategory> categories;
+    SortedSet<IGlossaryTerm> replacementTerms;
+
+    /** TBC */
+    @Attribute
+    @Singular("seeAlsoOne")
+    SortedSet<IGlossaryTerm> seeAlso;
+
+    /** TBC */
+    @Attribute
+    String shortDescription;
 
     /** TBC */
     @Attribute
     @Singular
-    SortedSet<GlossaryTerm> preferredToTerms;
+    SortedSet<IGlossaryTerm> synonyms;
 
     /** TBC */
     @Attribute
     @Singular
-    SortedSet<GlossaryTerm> preferredTerms;
+    SortedSet<IGlossaryTerm> translatedTerms;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IGlossaryTerm> translationTerms;
+
+    /** TBC */
+    @Attribute
+    String usage;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IGlossaryTerm> validValues;
+
+    /** TBC */
+    @Attribute
+    @Singular("validValueFor")
+    SortedSet<IGlossaryTerm> validValuesFor;
 
     /**
      * Reference to a GlossaryTerm by GUID.

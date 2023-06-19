@@ -25,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class ModeReport extends Mode {
+public class ModeReport extends Asset implements IModeReport, IMode, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "ModeReport";
@@ -37,15 +37,8 @@ public class ModeReport extends Mode {
 
     /** TBC */
     @Attribute
-    String modeCollectionToken;
-
-    /** TBC */
-    @Attribute
-    Long modeReportPublishedAt;
-
-    /** TBC */
-    @Attribute
-    Long modeQueryCount;
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
 
     /** TBC */
     @Attribute
@@ -53,7 +46,16 @@ public class ModeReport extends Mode {
 
     /** TBC */
     @Attribute
-    String modeQueryPreview;
+    String modeCollectionToken;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IModeCollection> modeCollections;
+
+    /** TBC */
+    @Attribute
+    String modeId;
 
     /** TBC */
     @Attribute
@@ -66,12 +68,56 @@ public class ModeReport extends Mode {
     /** TBC */
     @Attribute
     @Singular
-    SortedSet<ModeCollection> modeCollections;
+    SortedSet<IModeQuery> modeQueries;
+
+    /** TBC */
+    @Attribute
+    Long modeQueryCount;
+
+    /** TBC */
+    @Attribute
+    String modeQueryName;
+
+    /** TBC */
+    @Attribute
+    String modeQueryPreview;
+
+    /** TBC */
+    @Attribute
+    String modeQueryQualifiedName;
+
+    /** TBC */
+    @Attribute
+    String modeReportName;
+
+    /** TBC */
+    @Attribute
+    Long modeReportPublishedAt;
+
+    /** TBC */
+    @Attribute
+    String modeReportQualifiedName;
+
+    /** TBC */
+    @Attribute
+    String modeToken;
+
+    /** TBC */
+    @Attribute
+    String modeWorkspaceName;
+
+    /** TBC */
+    @Attribute
+    String modeWorkspaceQualifiedName;
+
+    /** TBC */
+    @Attribute
+    String modeWorkspaceUsername;
 
     /** TBC */
     @Attribute
     @Singular
-    SortedSet<ModeQuery> modeQueries;
+    SortedSet<ILineageProcess> outputFromProcesses;
 
     /**
      * Reference to a ModeReport by GUID.
@@ -273,7 +319,7 @@ public class ModeReport extends Mode {
      * @return the ModeReport that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static ModeReport replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static ModeReport replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (ModeReport) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -288,7 +334,7 @@ public class ModeReport extends Mode {
      * @return the ModeReport that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static ModeReport appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static ModeReport appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (ModeReport) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -302,7 +348,7 @@ public class ModeReport extends Mode {
      * @return the ModeReport that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static ModeReport removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static ModeReport removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (ModeReport) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

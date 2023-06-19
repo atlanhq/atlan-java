@@ -11,6 +11,7 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -24,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class LookerField extends Looker {
+public class LookerField extends Asset implements ILookerField, ILooker, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "LookerField";
@@ -36,23 +37,16 @@ public class LookerField extends Looker {
 
     /** TBC */
     @Attribute
-    String projectName;
+    ILookerExplore explore;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
 
     /** TBC */
     @Attribute
     String lookerExploreQualifiedName;
-
-    /** TBC */
-    @Attribute
-    String lookerViewQualifiedName;
-
-    /** TBC */
-    @Attribute
-    String modelName;
-
-    /** TBC */
-    @Attribute
-    String sourceDefinition;
 
     /** TBC */
     @Attribute
@@ -64,19 +58,36 @@ public class LookerField extends Looker {
 
     /** TBC */
     @Attribute
-    LookerExplore explore;
+    String lookerViewQualifiedName;
 
     /** TBC */
     @Attribute
-    LookerProject project;
+    ILookerModel model;
 
     /** TBC */
     @Attribute
-    LookerView view;
+    String modelName;
 
     /** TBC */
     @Attribute
-    LookerModel model;
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    ILookerProject project;
+
+    /** TBC */
+    @Attribute
+    String projectName;
+
+    /** TBC */
+    @Attribute
+    String sourceDefinition;
+
+    /** TBC */
+    @Attribute
+    ILookerView view;
 
     /**
      * Reference to a LookerField by GUID.
@@ -278,7 +289,7 @@ public class LookerField extends Looker {
      * @return the LookerField that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static LookerField replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static LookerField replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (LookerField) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -293,7 +304,7 @@ public class LookerField extends Looker {
      * @return the LookerField that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static LookerField appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static LookerField appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (LookerField) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -307,7 +318,7 @@ public class LookerField extends Looker {
      * @return the LookerField that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static LookerField removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static LookerField removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (LookerField) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

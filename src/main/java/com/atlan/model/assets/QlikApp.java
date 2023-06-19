@@ -25,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class QlikApp extends Qlik {
+public class QlikApp extends Asset implements IQlikApp, IQlik, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "QlikApp";
@@ -35,34 +35,76 @@ public class QlikApp extends Qlik {
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Whether section access or data masking is enabled (true) or not (false). */
+    /** TBC */
     @Attribute
-    Boolean qlikHasSectionAccess;
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
 
-    /** Origin App ID of the Qlik app. */
+    /** TBC */
     @Attribute
-    String qlikOriginAppId;
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 
-    /** Whether the app is encrypted (true) or not (false). */
+    /** TBC */
     @Attribute
-    Boolean qlikIsEncrypted;
+    String qlikAppId;
 
-    /** Whether the app is in direct query mode (true) or not (false). */
+    /** TBC */
     @Attribute
-    Boolean qlikIsDirectQueryMode;
+    String qlikAppQualifiedName;
 
     /** Static space taken up by the app. */
     @Attribute
     Long qlikAppStaticByteSize;
 
-    /** Space in which the app exists. */
+    /** Whether section access or data masking is enabled (true) or not (false). */
     @Attribute
-    QlikSpace qlikSpace;
+    Boolean qlikHasSectionAccess;
+
+    /** TBC */
+    @Attribute
+    String qlikId;
+
+    /** Whether the app is in direct query mode (true) or not (false). */
+    @Attribute
+    Boolean qlikIsDirectQueryMode;
+
+    /** Whether the app is encrypted (true) or not (false). */
+    @Attribute
+    Boolean qlikIsEncrypted;
+
+    /** TBC */
+    @Attribute
+    Boolean qlikIsPublished;
+
+    /** Origin App ID of the Qlik app. */
+    @Attribute
+    String qlikOriginAppId;
+
+    /** TBC */
+    @Attribute
+    String qlikOwnerId;
+
+    /** TBC */
+    @Attribute
+    String qlikQRI;
 
     /** Sheets that exist within the app. */
     @Attribute
     @Singular
-    SortedSet<QlikSheet> qlikSheets;
+    SortedSet<IQlikSheet> qlikSheets;
+
+    /** Space in which the app exists. */
+    @Attribute
+    IQlikSpace qlikSpace;
+
+    /** TBC */
+    @Attribute
+    String qlikSpaceId;
+
+    /** TBC */
+    @Attribute
+    String qlikSpaceQualifiedName;
 
     /**
      * Reference to a QlikApp by GUID.
@@ -264,7 +306,7 @@ public class QlikApp extends Qlik {
      * @return the QlikApp that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static QlikApp replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static QlikApp replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (QlikApp) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -279,7 +321,7 @@ public class QlikApp extends Qlik {
      * @return the QlikApp that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static QlikApp appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static QlikApp appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (QlikApp) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -293,7 +335,7 @@ public class QlikApp extends Qlik {
      * @return the QlikApp that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static QlikApp removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static QlikApp removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (QlikApp) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

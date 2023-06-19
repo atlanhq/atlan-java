@@ -27,7 +27,8 @@ import lombok.extern.slf4j.Slf4j;
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
 @SuppressWarnings("cast")
-public class TableauDashboard extends Tableau {
+public class TableauDashboard extends Asset
+        implements ITableauDashboard, ITableau, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "TableauDashboard";
@@ -39,19 +40,13 @@ public class TableauDashboard extends Tableau {
 
     /** TBC */
     @Attribute
-    String siteQualifiedName;
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
 
     /** TBC */
     @Attribute
-    String projectQualifiedName;
-
-    /** TBC */
-    @Attribute
-    String workbookQualifiedName;
-
-    /** TBC */
-    @Attribute
-    String topLevelProjectQualifiedName;
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 
     /** TBC */
     @Attribute
@@ -60,12 +55,28 @@ public class TableauDashboard extends Tableau {
 
     /** TBC */
     @Attribute
-    TableauWorkbook workbook;
+    String projectQualifiedName;
+
+    /** TBC */
+    @Attribute
+    String siteQualifiedName;
+
+    /** TBC */
+    @Attribute
+    String topLevelProjectQualifiedName;
+
+    /** TBC */
+    @Attribute
+    ITableauWorkbook workbook;
+
+    /** TBC */
+    @Attribute
+    String workbookQualifiedName;
 
     /** TBC */
     @Attribute
     @Singular
-    SortedSet<TableauWorksheet> worksheets;
+    SortedSet<ITableauWorksheet> worksheets;
 
     /**
      * Reference to a TableauDashboard by GUID.
@@ -267,7 +278,7 @@ public class TableauDashboard extends Tableau {
      * @return the TableauDashboard that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static TableauDashboard replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static TableauDashboard replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (TableauDashboard) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -282,7 +293,7 @@ public class TableauDashboard extends Tableau {
      * @return the TableauDashboard that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static TableauDashboard appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static TableauDashboard appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (TableauDashboard) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -296,7 +307,7 @@ public class TableauDashboard extends Tableau {
      * @return the TableauDashboard that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static TableauDashboard removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static TableauDashboard removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (TableauDashboard) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

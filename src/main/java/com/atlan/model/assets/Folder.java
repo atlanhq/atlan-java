@@ -11,6 +11,7 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -24,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class Folder extends Namespace {
+public class Folder extends Asset implements IFolder, INamespace, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "Folder";
@@ -36,7 +37,13 @@ public class Folder extends Namespace {
 
     /** TBC */
     @Attribute
-    String parentQualifiedName;
+    @Singular
+    SortedSet<IFolder> childrenFolders;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IAtlanQuery> childrenQueries;
 
     /** qualifiedName of the collection in which this folder exists. */
     @Attribute
@@ -44,7 +51,11 @@ public class Folder extends Namespace {
 
     /** Namespace in which this folder exists. */
     @Attribute
-    Namespace parent;
+    INamespace parent;
+
+    /** TBC */
+    @Attribute
+    String parentQualifiedName;
 
     /**
      * Reference to a Folder by GUID.
@@ -246,7 +257,7 @@ public class Folder extends Namespace {
      * @return the Folder that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static Folder replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static Folder replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (Folder) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -261,7 +272,7 @@ public class Folder extends Namespace {
      * @return the Folder that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static Folder appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static Folder appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (Folder) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -275,7 +286,7 @@ public class Folder extends Namespace {
      * @return the Folder that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static Folder removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static Folder removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (Folder) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

@@ -39,6 +39,8 @@ public enum NumericFields implements AtlanSearchableField {
     COLUMN_AVERAGE_LENGTH("columnAverageLength"),
     /** Number of columns in this materialized view. */
     COLUMN_COUNT("columnCount"),
+    /** Level of nesting, used for STRUCT/NESTED columns */
+    COLUMN_DEPTH_LEVEL("columnDepthLevel"),
     /** Number of rows that contain distinct values. */
     COLUMN_DISTINCT_VALUES_COUNT("columnDistinctValuesCount"),
     /** TBC */
@@ -175,6 +177,8 @@ public enum NumericFields implements AtlanSearchableField {
     MODE_REPORT_PUBLISHED_AT("modeReportPublishedAt"),
     /** Time (in milliseconds) when the asset was last updated. */
     MODIFICATION_TIMESTAMP("__modificationTimestamp"),
+    /** TBC */
+    NESTED_COLUMN_COUNT("nestedColumnCount"),
     /** Number of digits allowed to the right of the decimal point. */
     NUMERIC_SCALE("numericScale"),
     /** TBC */
@@ -229,6 +233,8 @@ public enum NumericFields implements AtlanSearchableField {
     QUERY_COUNT_UPDATED_AT("queryCountUpdatedAt"),
     /** TBC */
     QUERY_ID("queryID"),
+    /** TBC */
+    QUERY_TIMEOUT("queryTimeout"),
     /** TBC */
     QUERY_USER_COUNT("queryUserCount"),
     /** TBC */

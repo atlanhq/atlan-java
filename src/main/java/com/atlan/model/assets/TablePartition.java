@@ -29,7 +29,7 @@ import lombok.extern.slf4j.Slf4j;
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
 @SuppressWarnings("cast")
-public class TablePartition extends SQL {
+public class TablePartition extends Asset implements ITablePartition, ISQL, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "TablePartition";
@@ -41,7 +41,7 @@ public class TablePartition extends SQL {
 
     /** TBC */
     @Attribute
-    String constraint;
+    String alias;
 
     /** TBC */
     @Attribute
@@ -49,28 +49,30 @@ public class TablePartition extends SQL {
 
     /** TBC */
     @Attribute
-    Long rowCount;
+    @Singular
+    SortedSet<IColumn> columns;
 
     /** TBC */
     @Attribute
-    Long sizeBytes;
+    String constraint;
 
     /** TBC */
     @Attribute
-    String alias;
+    String databaseName;
 
     /** TBC */
     @Attribute
-    Boolean isTemporary;
+    String databaseQualifiedName;
 
     /** TBC */
     @Attribute
-    Boolean isQueryPreview;
+    @Singular
+    SortedSet<IDbtModel> dbtModels;
 
     /** TBC */
     @Attribute
-    @Singular("putQueryPreviewConfig")
-    Map<String, String> queryPreviewConfig;
+    @Singular
+    SortedSet<IDbtSource> dbtSources;
 
     /** TBC */
     @Attribute
@@ -78,11 +80,16 @@ public class TablePartition extends SQL {
 
     /** TBC */
     @Attribute
+    String externalLocationFormat;
+
+    /** TBC */
+    @Attribute
     String externalLocationRegion;
 
     /** TBC */
     @Attribute
-    String externalLocationFormat;
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
 
     /** TBC */
     @Attribute
@@ -90,7 +97,28 @@ public class TablePartition extends SQL {
 
     /** TBC */
     @Attribute
-    String partitionStrategy;
+    Boolean isProfiled;
+
+    /** TBC */
+    @Attribute
+    Boolean isQueryPreview;
+
+    /** TBC */
+    @Attribute
+    Boolean isTemporary;
+
+    /** TBC */
+    @Attribute
+    Long lastProfiledAt;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    ITable parentTable;
 
     /** TBC */
     @Attribute
@@ -102,12 +130,71 @@ public class TablePartition extends SQL {
 
     /** TBC */
     @Attribute
-    @Singular
-    SortedSet<Column> columns;
+    String partitionStrategy;
 
     /** TBC */
     @Attribute
-    Table parentTable;
+    Long queryCount;
+
+    /** TBC */
+    @Attribute
+    Long queryCountUpdatedAt;
+
+    /** TBC */
+    @Attribute
+    @Singular("putQueryPreviewConfig")
+    Map<String, String> queryPreviewConfig;
+
+    /** TBC */
+    @Attribute
+    Long queryUserCount;
+
+    /** TBC */
+    @Attribute
+    @Singular("putQueryUserMap")
+    Map<String, Long> queryUserMap;
+
+    /** TBC */
+    @Attribute
+    Long rowCount;
+
+    /** TBC */
+    @Attribute
+    String schemaName;
+
+    /** TBC */
+    @Attribute
+    String schemaQualifiedName;
+
+    /** TBC */
+    @Attribute
+    Long sizeBytes;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtSource> sqlDBTSources;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtModel> sqlDbtModels;
+
+    /** TBC */
+    @Attribute
+    String tableName;
+
+    /** TBC */
+    @Attribute
+    String tableQualifiedName;
+
+    /** TBC */
+    @Attribute
+    String viewName;
+
+    /** TBC */
+    @Attribute
+    String viewQualifiedName;
 
     /**
      * Reference to a TablePartition by GUID.
@@ -350,7 +437,7 @@ public class TablePartition extends SQL {
      * @return the TablePartition that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static TablePartition replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static TablePartition replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (TablePartition) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -365,7 +452,7 @@ public class TablePartition extends SQL {
      * @return the TablePartition that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static TablePartition appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static TablePartition appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (TablePartition) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -379,7 +466,7 @@ public class TablePartition extends SQL {
      * @return the TablePartition that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static TablePartition removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static TablePartition removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (TablePartition) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

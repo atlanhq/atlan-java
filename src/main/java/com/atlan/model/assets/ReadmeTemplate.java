@@ -10,6 +10,8 @@ import com.atlan.model.enums.IconType;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -23,7 +25,8 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class ReadmeTemplate extends Resource {
+@SuppressWarnings("cast")
+public class ReadmeTemplate extends Asset implements IReadmeTemplate, IResource, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "ReadmeTemplate";
@@ -40,6 +43,33 @@ public class ReadmeTemplate extends Resource {
     /** TBC */
     @Attribute
     IconType iconType;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    Boolean isGlobal;
+
+    /** TBC */
+    @Attribute
+    String link;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    String reference;
+
+    /** TBC */
+    @Attribute
+    @Singular("putResourceMetadata")
+    Map<String, String> resourceMetadata;
 
     /**
      * Reference to a ReadmeTemplate by GUID.

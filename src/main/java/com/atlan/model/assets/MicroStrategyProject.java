@@ -11,6 +11,7 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 import lombok.*;
@@ -25,7 +26,9 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class MicroStrategyProject extends MicroStrategy {
+@SuppressWarnings("cast")
+public class MicroStrategyProject extends Asset
+        implements IMicroStrategyProject, IMicroStrategy, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "MicroStrategyProject";
@@ -35,45 +38,100 @@ public class MicroStrategyProject extends MicroStrategy {
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Reports contained within the project. */
+    /** TBC */
     @Attribute
     @Singular
-    SortedSet<MicroStrategyReport> microStrategyReports;
-
-    /** Facts contained within the project. */
-    @Attribute
-    @Singular
-    SortedSet<MicroStrategyFact> microStrategyFacts;
-
-    /** Metrics contained within the project. */
-    @Attribute
-    @Singular
-    SortedSet<MicroStrategyMetric> microStrategyMetrics;
-
-    /** Visualizations contained within the project. */
-    @Attribute
-    @Singular
-    SortedSet<MicroStrategyVisualization> microStrategyVisualizations;
-
-    /** Documents contained within the project. */
-    @Attribute
-    @Singular
-    SortedSet<MicroStrategyDocument> microStrategyDocuments;
-
-    /** Cubes contained within the project. */
-    @Attribute
-    @Singular
-    SortedSet<MicroStrategyCube> microStrategyCubes;
-
-    /** Dossiers contained within the project. */
-    @Attribute
-    @Singular
-    SortedSet<MicroStrategyDossier> microStrategyDossiers;
+    SortedSet<ILineageProcess> inputToProcesses;
 
     /** Attributes contained within the project. */
     @Attribute
     @Singular
-    SortedSet<MicroStrategyAttribute> microStrategyAttributes;
+    SortedSet<IMicroStrategyAttribute> microStrategyAttributes;
+
+    /** TBC */
+    @Attribute
+    Long microStrategyCertifiedAt;
+
+    /** TBC */
+    @Attribute
+    String microStrategyCertifiedBy;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<String> microStrategyCubeNames;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<String> microStrategyCubeQualifiedNames;
+
+    /** Cubes contained within the project. */
+    @Attribute
+    @Singular
+    SortedSet<IMicroStrategyCube> microStrategyCubes;
+
+    /** Documents contained within the project. */
+    @Attribute
+    @Singular
+    SortedSet<IMicroStrategyDocument> microStrategyDocuments;
+
+    /** Dossiers contained within the project. */
+    @Attribute
+    @Singular
+    SortedSet<IMicroStrategyDossier> microStrategyDossiers;
+
+    /** Facts contained within the project. */
+    @Attribute
+    @Singular
+    SortedSet<IMicroStrategyFact> microStrategyFacts;
+
+    /** TBC */
+    @Attribute
+    Boolean microStrategyIsCertified;
+
+    /** TBC */
+    @Attribute
+    @Singular("putMicroStrategyLocation")
+    List<Map<String, String>> microStrategyLocation;
+
+    /** Metrics contained within the project. */
+    @Attribute
+    @Singular
+    SortedSet<IMicroStrategyMetric> microStrategyMetrics;
+
+    /** TBC */
+    @Attribute
+    String microStrategyProjectName;
+
+    /** TBC */
+    @Attribute
+    String microStrategyProjectQualifiedName;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<String> microStrategyReportNames;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<String> microStrategyReportQualifiedNames;
+
+    /** Reports contained within the project. */
+    @Attribute
+    @Singular
+    SortedSet<IMicroStrategyReport> microStrategyReports;
+
+    /** Visualizations contained within the project. */
+    @Attribute
+    @Singular
+    SortedSet<IMicroStrategyVisualization> microStrategyVisualizations;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 
     /**
      * Reference to a MicroStrategyProject by GUID.
@@ -277,7 +335,7 @@ public class MicroStrategyProject extends MicroStrategy {
      * @return the MicroStrategyProject that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static MicroStrategyProject replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static MicroStrategyProject replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (MicroStrategyProject) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -292,7 +350,7 @@ public class MicroStrategyProject extends MicroStrategy {
      * @return the MicroStrategyProject that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static MicroStrategyProject appendTerms(String qualifiedName, List<GlossaryTerm> terms)
+    public static MicroStrategyProject appendTerms(String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (MicroStrategyProject) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
@@ -307,7 +365,7 @@ public class MicroStrategyProject extends MicroStrategy {
      * @return the MicroStrategyProject that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static MicroStrategyProject removeTerms(String qualifiedName, List<GlossaryTerm> terms)
+    public static MicroStrategyProject removeTerms(String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (MicroStrategyProject) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }

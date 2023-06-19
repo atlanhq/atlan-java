@@ -11,6 +11,7 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -24,7 +25,8 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class SigmaDatasetColumn extends Sigma {
+public class SigmaDatasetColumn extends Asset
+        implements ISigmaDatasetColumn, ISigma, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "SigmaDatasetColumn";
@@ -34,17 +36,51 @@ public class SigmaDatasetColumn extends Sigma {
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Unique name of the dataset that contains this column. */
+    /** TBC */
     @Attribute
-    String sigmaDatasetQualifiedName;
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    String sigmaDataElementName;
+
+    /** TBC */
+    @Attribute
+    String sigmaDataElementQualifiedName;
+
+    /** Dataset that contains this column. */
+    @Attribute
+    ISigmaDataset sigmaDataset;
 
     /** Human-readable name of the dataset that contains this column. */
     @Attribute
     String sigmaDatasetName;
 
-    /** Dataset that contains this column. */
+    /** Unique name of the dataset that contains this column. */
     @Attribute
-    SigmaDataset sigmaDataset;
+    String sigmaDatasetQualifiedName;
+
+    /** TBC */
+    @Attribute
+    String sigmaPageName;
+
+    /** TBC */
+    @Attribute
+    String sigmaPageQualifiedName;
+
+    /** TBC */
+    @Attribute
+    String sigmaWorkbookName;
+
+    /** TBC */
+    @Attribute
+    String sigmaWorkbookQualifiedName;
 
     /**
      * Reference to a SigmaDatasetColumn by GUID.
@@ -246,7 +282,7 @@ public class SigmaDatasetColumn extends Sigma {
      * @return the SigmaDatasetColumn that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static SigmaDatasetColumn replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static SigmaDatasetColumn replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (SigmaDatasetColumn) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -261,7 +297,8 @@ public class SigmaDatasetColumn extends Sigma {
      * @return the SigmaDatasetColumn that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static SigmaDatasetColumn appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static SigmaDatasetColumn appendTerms(String qualifiedName, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (SigmaDatasetColumn) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -275,7 +312,8 @@ public class SigmaDatasetColumn extends Sigma {
      * @return the SigmaDatasetColumn that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static SigmaDatasetColumn removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static SigmaDatasetColumn removeTerms(String qualifiedName, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (SigmaDatasetColumn) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

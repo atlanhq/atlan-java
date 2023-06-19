@@ -3,14 +3,10 @@
 package com.atlan.generators;
 
 import com.atlan.api.TypeDefsEndpoint;
-import com.atlan.model.typedefs.AttributeDef;
-import com.atlan.model.typedefs.EntityDef;
-import com.atlan.model.typedefs.RelationshipAttributeDef;
+import com.atlan.model.typedefs.*;
 import freemarker.template.TemplateNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -22,24 +18,35 @@ public class AssetGenerator extends TypeGenerator {
 
     private final EntityDef entityDef;
     private String parentClassName;
-    private List<Attribute> attributes;
+    private SortedSet<Attribute<?>> interfaceAttributes;
+    private SortedSet<Attribute<?>> classAttributes;
+    private SortedSet<Attribute<?>> nonInheritedAttributes;
     private List<AssetGenerator> originalSuperTypes = null;
     private List<AssetGenerator> fullSubTypes = null;
     private List<String> originalSubTypes = null;
     private List<String> subTypes = null;
     private List<String> mapContainers = null;
-    private boolean hasBuiltInParent = false;
+    private final LinkedHashSet<String> superTypes;
 
     public AssetGenerator(EntityDef entityDef, GeneratorConfig cfg) {
         super(entityDef, cfg);
         this.entityDef = entityDef;
         resolveClassName();
         super.description = cache.getTypeDescription(originalName);
+        this.superTypes = cache.getAllSuperTypesForType(getOriginalName());
     }
 
     @Override
     protected void resolveClassName() {
         super.className = cfg.resolveClassName(originalName);
+    }
+
+    public String resolveSuperTypeName(String name) {
+        if (name.equals("Referenceable")) {
+            // Don't rename Referenceable, since we have an actual interface defined for it
+            return name;
+        }
+        return cfg.resolveClassName(name);
     }
 
     public void resolveDetails() {
@@ -49,7 +56,7 @@ public class AssetGenerator extends TypeGenerator {
         resolveRelationships();
     }
 
-    public String getTemplateFile() {
+    public String getClassTemplateFile() {
         try {
             return cfg.getFreemarkerConfig().getTemplate(className + ".ftl").getSourceName();
         } catch (TemplateNotFoundException e) {
@@ -60,17 +67,54 @@ public class AssetGenerator extends TypeGenerator {
         return null;
     }
 
+    public String getInterfaceTemplateFile() {
+        try {
+            return cfg.getFreemarkerConfig()
+                    .getTemplate("I" + className + ".ftl")
+                    .getSourceName();
+        } catch (TemplateNotFoundException e) {
+            // Do nothing - no template to load or otherwise handle
+        } catch (IOException e) {
+            log.error("Error reading template: I{}.ftl", className, e);
+        }
+        return null;
+    }
+
+    public boolean isBuiltIn(String orgName, String reTyped) {
+        if (orgName != null) {
+            EntityDef entity = cache.getEntityDefCache().get(orgName);
+            if (entity != null) {
+                return (entity.getServiceType() != null
+                        && TypeDefsEndpoint.RESERVED_SERVICE_TYPES.contains(entity.getServiceType()));
+            } else {
+                StructDef struct = cache.getStructDefCache().get(orgName);
+                if (struct != null) {
+                    return (struct.getServiceType() != null
+                                    && TypeDefsEndpoint.RESERVED_SERVICE_TYPES.contains(struct.getServiceType()))
+                            || GeneratorConfig.BUILT_IN_STRUCTS.contains(orgName);
+                } else {
+                    EnumDef enumDef = cache.getEnumDefCache().get(orgName);
+                    return (enumDef != null
+                                    && enumDef.getServiceType() != null
+                                    && TypeDefsEndpoint.RESERVED_SERVICE_TYPES.contains(enumDef.getServiceType()))
+                            || GeneratorConfig.BUILT_IN_ENUMS.contains(orgName)
+                            || (orgName.equals("string") && GeneratorConfig.BUILT_IN_ENUMS.contains(reTyped));
+                }
+            }
+        }
+        return false;
+    }
+
     public boolean isAbstract() {
         return (originalSubTypes != null && !originalSubTypes.isEmpty()) && !cfg.forceNonAbstract(getOriginalName());
     }
 
     public void resolveParentClassName() {
-        String parentOriginalName = cfg.getSingleTypeToExtend(originalName, entityDef.getSuperTypes());
-        EntityDef parent = cache.getEntityDefCache().get(parentOriginalName);
-        this.hasBuiltInParent = (parent != null
-                && parent.getServiceType() != null
-                && TypeDefsEndpoint.RESERVED_SERVICE_TYPES.contains(parent.getServiceType()));
-        this.parentClassName = cfg.resolveClassName(parentOriginalName);
+        if (getOriginalName().equals("Asset")) {
+            this.parentClassName = "Reference";
+        } else {
+            this.parentClassName = "Asset";
+        }
     }
 
     private void resolveSubTypes() {
@@ -86,13 +130,7 @@ public class AssetGenerator extends TypeGenerator {
                 if (cfg.includeTypedef(sub.getEntityDef())) {
                     MappedType subType = cache.getCachedType(originalSubType);
                     if (subType != null) {
-                        String flattened = cfg.getSingleTypeToExtend(
-                                originalSubType, sub.getEntityDef().getSuperTypes());
-                        // Only output the subtype if that subtype still considers this type its parent,
-                        // after polymorphic flattening...
-                        if (flattened == null || flattened.equals(getOriginalName())) {
-                            subTypes.add(subType.getName());
-                        }
+                        subTypes.add(subType.getName());
                     } else {
                         log.warn("Mapped subType was not found: {}", originalSubType);
                     }
@@ -112,44 +150,74 @@ public class AssetGenerator extends TypeGenerator {
     }
 
     private void resolveAttributes() {
-        attributes = new ArrayList<>();
-        for (AttributeDef attributeDef : entityDef.getAttributeDefs()) {
-            Attribute attribute = new Attribute(className, attributeDef, cfg);
+        Set<AttributeDef> allAttributes;
+        if (getOriginalName().equals("Asset")) {
+            allAttributes = cache.getAllAttributesForType(getOriginalName());
+        } else {
+            allAttributes = cache.getAllNonAssetAttributesForType(getOriginalName());
+        }
+        nonInheritedAttributes = new TreeSet<>();
+        for (AttributeDef attributeDef :
+                cache.getEntityDefCache().get(getOriginalName()).getAttributeDefs()) {
+            Attribute<?> attribute = new Attribute<>(className, attributeDef, cfg);
             if (!attribute.getType().getName().equals("Internal")) {
-                attributes.add(attribute);
+                nonInheritedAttributes.add(attribute);
+                checkAndAddMapContainer(attribute);
+            }
+        }
+        classAttributes = new TreeSet<>();
+        for (AttributeDef attributeDef : allAttributes) {
+            Attribute<?> attribute = new Attribute<>(className, attributeDef, cfg);
+            if (!attribute.getType().getName().equals("Internal")) {
+                classAttributes.add(attribute);
+                checkAndAddMapContainer(attribute);
+            }
+        }
+        interfaceAttributes = new TreeSet<>();
+        for (AttributeDef attributeDef : cache.getAllAttributesForType(getOriginalName())) {
+            Attribute<?> attribute = new Attribute<>(className, attributeDef, cfg);
+            if (!attribute.getType().getName().equals("Internal")) {
+                interfaceAttributes.add(attribute);
                 checkAndAddMapContainer(attribute);
             }
         }
     }
 
     private void resolveRelationships() {
+        Set<RelationshipAttributeDef> allRelationships;
+        if (getOriginalName().equals("Asset")) {
+            allRelationships = cache.getAllRelationshipsForType(getOriginalName());
+        } else {
+            allRelationships = cache.getAllNonAssetRelationshipsForType(getOriginalName());
+        }
         Set<String> uniqueRelationships = cache.getUniqueRelationshipsForType(getOriginalName());
-        for (RelationshipAttributeDef relationshipAttributeDef : entityDef.getRelationshipAttributeDefs()) {
-            Attribute attribute = new Attribute(className, relationshipAttributeDef, cfg);
-            if (uniqueRelationships.contains(attribute.getOriginalName())
-                    && !attribute.getType().getName().equals("Internal")) {
-                boolean duplicate = false;
-                for (Attribute existing : attributes) {
-                    if (existing.getRenamed().equals(attribute.getRenamed())) {
-                        duplicate = true;
-                        break;
-                    }
-                }
-                if (duplicate) {
-                    log.warn(
-                            "Found duplicate relationship defined in {} for {} ({}) - skipping.",
-                            className,
-                            attribute.getRenamed(),
-                            attribute.getFullType());
-                } else {
-                    attributes.add(attribute);
+        for (RelationshipAttributeDef relationshipAttributeDef :
+                cache.getEntityDefCache().get(getOriginalName()).getRelationshipAttributeDefs()) {
+            if (uniqueRelationships.contains(relationshipAttributeDef.getName())) {
+                Attribute<?> attribute = new Attribute<>(className, relationshipAttributeDef, cfg);
+                if (!attribute.getType().getName().equals("Internal")) {
+                    nonInheritedAttributes.add(attribute);
                     checkAndAddMapContainer(attribute);
                 }
             }
         }
+        for (RelationshipAttributeDef relationshipAttributeDef : allRelationships) {
+            Attribute<?> attribute = new Attribute<>(className, relationshipAttributeDef, cfg);
+            if (!attribute.getType().getName().equals("Internal")) {
+                classAttributes.add(attribute);
+                checkAndAddMapContainer(attribute);
+            }
+        }
+        for (RelationshipAttributeDef relationshipAttributeDef : cache.getAllRelationshipsForType(getOriginalName())) {
+            Attribute<?> attribute = new Attribute<>(className, relationshipAttributeDef, cfg);
+            if (!attribute.getType().getName().equals("Internal")) {
+                interfaceAttributes.add(attribute);
+                checkAndAddMapContainer(attribute);
+            }
+        }
     }
 
-    private void checkAndAddMapContainer(Attribute attribute) {
+    private void checkAndAddMapContainer(Attribute<?> attribute) {
         if (attribute.getType().getContainer() != null
                 && attribute.getType().getContainer().contains("Map")) {
             if (mapContainers == null) {
@@ -160,11 +228,13 @@ public class AssetGenerator extends TypeGenerator {
     }
 
     @Getter
-    public static class Attribute extends AttributeGenerator {
+    public static class Attribute<T extends Attribute<?>> extends AttributeGenerator implements Comparable<T> {
 
-        // Override these properties that would normally be SortedSet<> with List<>,
-        // as ordering is crucial to their proper operation.
-        private static final Set<String> LIST_OVERRIDES = Set.of("policyResources");
+        // Sort attribute definitions in a set based purely on their name (two attributes
+        // in the same set with the same name should be a conflict / duplicate)
+        private static final Comparator<String> stringComparator = Comparator.nullsFirst(String::compareTo);
+        private static final Comparator<Attribute<?>> attributeComparator =
+                Comparator.comparing(Attribute::getRenamed, stringComparator);
 
         protected Attribute(GeneratorConfig cfg) {
             super(cfg);
@@ -172,9 +242,6 @@ public class AssetGenerator extends TypeGenerator {
 
         public Attribute(String className, AttributeDef attributeDef, GeneratorConfig cfg) {
             super(className, attributeDef, cfg);
-            if (LIST_OVERRIDES.contains(attributeDef.getName())) {
-                setType(getType().toBuilder().container("List<").build());
-            }
         }
 
         @Override
@@ -200,6 +267,13 @@ public class AssetGenerator extends TypeGenerator {
                 return cfg.resolveSingular(getOriginalName());
             }
             return null;
+        }
+
+        /** {@inheritDoc} */
+        @Override
+        @SuppressWarnings("rawtypes")
+        public int compareTo(Attribute o) {
+            return attributeComparator.compare(this, o);
         }
     }
 }

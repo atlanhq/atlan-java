@@ -30,7 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
 @SuppressWarnings("cast")
-public class View extends SQL {
+public class View extends Asset implements IView, ISQL, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "View";
@@ -40,21 +40,79 @@ public class View extends SQL {
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** TBC */
+    @Attribute
+    String alias;
+
     /** Number of columns in this view. */
     @Attribute
     Long columnCount;
 
-    /** Number of rows in this view. */
+    /** Columns that exist within this view. */
     @Attribute
-    Long rowCount;
+    @Singular
+    SortedSet<IColumn> columns;
 
-    /** Size of the view in bytes. */
+    /** TBC */
     @Attribute
-    Long sizeBytes;
+    String databaseName;
+
+    /** TBC */
+    @Attribute
+    String databaseQualifiedName;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtModel> dbtModels;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtSource> dbtSources;
+
+    /** Definition of the view (DDL). */
+    @Attribute
+    String definition;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    Boolean isProfiled;
 
     /** TBC */
     @Attribute
     Boolean isQueryPreview;
+
+    /** Whether this view is temporary (true) or not (false). */
+    @Attribute
+    Boolean isTemporary;
+
+    /** TBC */
+    @Attribute
+    Long lastProfiledAt;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** Queries that involve this view. */
+    @Attribute
+    @Singular
+    SortedSet<IAtlanQuery> queries;
+
+    /** TBC */
+    @Attribute
+    Long queryCount;
+
+    /** TBC */
+    @Attribute
+    Long queryCountUpdatedAt;
 
     /** TBC */
     @Attribute
@@ -63,30 +121,59 @@ public class View extends SQL {
 
     /** TBC */
     @Attribute
-    String alias;
+    Long queryUserCount;
 
-    /** Whether this view is temporary (true) or not (false). */
+    /** TBC */
     @Attribute
-    Boolean isTemporary;
+    @Singular("putQueryUserMap")
+    Map<String, Long> queryUserMap;
 
-    /** Definition of the view (DDL). */
+    /** Number of rows in this view. */
     @Attribute
-    String definition;
-
-    /** Columns that exist within this view. */
-    @Attribute
-    @Singular
-    SortedSet<Column> columns;
-
-    /** Queries that involve this view. */
-    @Attribute
-    @Singular
-    SortedSet<AtlanQuery> queries;
+    Long rowCount;
 
     /** Schema in which this view exists. */
     @Attribute
     @JsonProperty("atlanSchema")
-    Schema schema;
+    ISchema schema;
+
+    /** TBC */
+    @Attribute
+    String schemaName;
+
+    /** TBC */
+    @Attribute
+    String schemaQualifiedName;
+
+    /** Size of the view in bytes. */
+    @Attribute
+    Long sizeBytes;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtSource> sqlDBTSources;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtModel> sqlDbtModels;
+
+    /** TBC */
+    @Attribute
+    String tableName;
+
+    /** TBC */
+    @Attribute
+    String tableQualifiedName;
+
+    /** TBC */
+    @Attribute
+    String viewName;
+
+    /** TBC */
+    @Attribute
+    String viewQualifiedName;
 
     /**
      * Reference to a View by GUID.
@@ -325,7 +412,8 @@ public class View extends SQL {
      * @return the View that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static View replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms) throws AtlanException {
+    public static View replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (View) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
 
@@ -339,7 +427,7 @@ public class View extends SQL {
      * @return the View that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static View appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static View appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (View) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -353,7 +441,7 @@ public class View extends SQL {
      * @return the View that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static View removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static View removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (View) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

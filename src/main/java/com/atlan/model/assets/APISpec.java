@@ -12,6 +12,7 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 import lombok.*;
@@ -26,7 +27,8 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class APISpec extends API {
+@SuppressWarnings("cast")
+public class APISpec extends Asset implements IAPISpec, IAPI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "APISpec";
@@ -38,7 +40,17 @@ public class APISpec extends API {
 
     /** TBC */
     @Attribute
-    String apiSpecTermsOfServiceURL;
+    @Singular
+    Map<String, String> apiExternalDocs;
+
+    /** TBC */
+    @Attribute
+    Boolean apiIsAuthOptional;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IAPIPath> apiPaths;
 
     /** TBC */
     @Attribute
@@ -54,6 +66,10 @@ public class APISpec extends API {
 
     /** TBC */
     @Attribute
+    String apiSpecContractVersion;
+
+    /** TBC */
+    @Attribute
     String apiSpecLicenseName;
 
     /** TBC */
@@ -62,7 +78,11 @@ public class APISpec extends API {
 
     /** TBC */
     @Attribute
-    String apiSpecContractVersion;
+    String apiSpecName;
+
+    /** TBC */
+    @Attribute
+    String apiSpecQualifiedName;
 
     /** TBC */
     @Attribute
@@ -70,8 +90,25 @@ public class APISpec extends API {
 
     /** TBC */
     @Attribute
+    String apiSpecTermsOfServiceURL;
+
+    /** TBC */
+    @Attribute
+    String apiSpecType;
+
+    /** TBC */
+    @Attribute
+    String apiSpecVersion;
+
+    /** TBC */
+    @Attribute
     @Singular
-    SortedSet<APIPath> apiPaths;
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 
     /**
      * Reference to a APISpec by GUID.
@@ -288,7 +325,7 @@ public class APISpec extends API {
      * @return the APISpec that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static APISpec replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static APISpec replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (APISpec) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -303,7 +340,7 @@ public class APISpec extends API {
      * @return the APISpec that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static APISpec appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static APISpec appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (APISpec) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -317,7 +354,7 @@ public class APISpec extends API {
      * @return the APISpec that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static APISpec removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static APISpec removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (APISpec) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

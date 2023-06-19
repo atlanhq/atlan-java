@@ -12,6 +12,7 @@ import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
+import com.atlan.model.structs.AzureTag;
 import com.atlan.util.StringUtils;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +30,8 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class ADLSContainer extends ADLS {
+public class ADLSContainer extends Asset
+        implements IADLSContainer, IADLS, IObjectStore, IAzure, ICatalog, IAsset, IReferenceable, ICloud {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "ADLSContainer";
@@ -39,9 +41,21 @@ public class ADLSContainer extends ADLS {
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Account this container exists within. */
+    @Attribute
+    IADLSAccount adlsAccount;
+
     /** TBC */
     @Attribute
-    String adlsContainerUrl;
+    String adlsAccountQualifiedName;
+
+    /** TBC */
+    @Attribute
+    String adlsAccountSecondaryLocation;
+
+    /** TBC */
+    @Attribute
+    String adlsContainerEncryptionScope;
 
     /** TBC */
     @Attribute
@@ -53,7 +67,7 @@ public class ADLSContainer extends ADLS {
 
     /** TBC */
     @Attribute
-    String adlsContainerEncryptionScope;
+    String adlsContainerUrl;
 
     /** TBC */
     @Attribute
@@ -66,11 +80,30 @@ public class ADLSContainer extends ADLS {
     /** Objects that exist within this container. */
     @Attribute
     @Singular
-    SortedSet<ADLSObject> adlsObjects;
+    SortedSet<IADLSObject> adlsObjects;
 
-    /** Account this container exists within. */
+    /** TBC */
     @Attribute
-    ADLSAccount adlsAccount;
+    String azureLocation;
+
+    /** TBC */
+    @Attribute
+    String azureResourceId;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    List<AzureTag> azureTags;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 
     /**
      * Reference to a ADLSContainer by GUID.
@@ -301,7 +334,7 @@ public class ADLSContainer extends ADLS {
      * @return the ADLSContainer that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static ADLSContainer replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static ADLSContainer replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (ADLSContainer) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -316,7 +349,7 @@ public class ADLSContainer extends ADLS {
      * @return the ADLSContainer that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static ADLSContainer appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static ADLSContainer appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (ADLSContainer) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -330,7 +363,7 @@ public class ADLSContainer extends ADLS {
      * @return the ADLSContainer that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static ADLSContainer removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static ADLSContainer removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (ADLSContainer) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

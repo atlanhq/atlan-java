@@ -670,6 +670,10 @@ public enum KeywordFields implements AtlanSearchableField {
     /** TBC */
     PARAMS("params"),
     /** TBC */
+    PARENT_COLUMN_NAME("parentColumnName.keyword"),
+    /** TBC */
+    PARENT_COLUMN_QUALIFIED_NAME("parentColumnQualifiedName"),
+    /** TBC */
     PARENT_QUALIFIED_NAME("parentQualifiedName"),
     /** TBC */
     PARTITION_LIST("partitionList"),
@@ -832,6 +836,8 @@ public enum KeywordFields implements AtlanSearchableField {
     /** TBC */
     QUICK_SIGHT_SHEET_NAME("quickSightSheetName.keyword"),
     /** TBC */
+    RAW_DATA_TYPE_DEFINITION("rawDataTypeDefinition"),
+    /** TBC */
     RAW_QUERY("rawQuery"),
     /** Name of the query from which the visualization was created. */
     REDASH_QUERY_NAME("redashQueryName.keyword"),
@@ -983,6 +989,8 @@ public enum KeywordFields implements AtlanSearchableField {
     SQL_TABLE_NAME("sqlTableName"),
     /** TBC */
     STALENESS("staleness"),
+    /** Users who have starred this asset. */
+    STARRED_BY("starredBy"),
     /** Asset status in Atlan (active vs deleted). */
     STATE("__state"),
     /** TBC */

@@ -25,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class ModeCollection extends Mode {
+public class ModeCollection extends Asset implements IModeCollection, IMode, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "ModeCollection";
@@ -37,7 +37,8 @@ public class ModeCollection extends Mode {
 
     /** TBC */
     @Attribute
-    String modeCollectionType;
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
 
     /** TBC */
     @Attribute
@@ -45,12 +46,57 @@ public class ModeCollection extends Mode {
 
     /** TBC */
     @Attribute
-    ModeWorkspace modeWorkspace;
+    String modeCollectionType;
+
+    /** TBC */
+    @Attribute
+    String modeId;
+
+    /** TBC */
+    @Attribute
+    String modeQueryName;
+
+    /** TBC */
+    @Attribute
+    String modeQueryQualifiedName;
+
+    /** TBC */
+    @Attribute
+    String modeReportName;
+
+    /** TBC */
+    @Attribute
+    String modeReportQualifiedName;
 
     /** TBC */
     @Attribute
     @Singular
-    SortedSet<ModeReport> modeReports;
+    SortedSet<IModeReport> modeReports;
+
+    /** TBC */
+    @Attribute
+    String modeToken;
+
+    /** TBC */
+    @Attribute
+    IModeWorkspace modeWorkspace;
+
+    /** TBC */
+    @Attribute
+    String modeWorkspaceName;
+
+    /** TBC */
+    @Attribute
+    String modeWorkspaceQualifiedName;
+
+    /** TBC */
+    @Attribute
+    String modeWorkspaceUsername;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 
     /**
      * Reference to a ModeCollection by GUID.
@@ -252,7 +298,7 @@ public class ModeCollection extends Mode {
      * @return the ModeCollection that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static ModeCollection replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static ModeCollection replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (ModeCollection) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -267,7 +313,7 @@ public class ModeCollection extends Mode {
      * @return the ModeCollection that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static ModeCollection appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static ModeCollection appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (ModeCollection) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -281,7 +327,7 @@ public class ModeCollection extends Mode {
      * @return the ModeCollection that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static ModeCollection removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static ModeCollection removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (ModeCollection) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

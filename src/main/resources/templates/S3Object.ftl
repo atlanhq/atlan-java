@@ -12,7 +12,7 @@
             String name, String bucketQualifiedName, String bucketName, String awsArn) {
         String connectionQualifiedName = StringUtils.getConnectionQualifiedName(bucketQualifiedName);
         return S3Object.builder()
-                .qualifiedName(generateQualifiedName(connectionQualifiedName, awsArn))
+                .qualifiedName(IS3.generateQualifiedName(connectionQualifiedName, awsArn))
                 .name(name)
                 .connectionQualifiedName(connectionQualifiedName)
                 .connectorType(AtlanConnectorType.S3)

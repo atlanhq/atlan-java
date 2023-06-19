@@ -10,6 +10,7 @@ import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
+import com.atlan.model.structs.AwsTag;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
@@ -26,7 +27,8 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class S3Bucket extends S3 {
+public class S3Bucket extends Asset
+        implements IS3Bucket, IS3, IObjectStore, IAWS, ICatalog, IAsset, IReferenceable, ICloud {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "S3Bucket";
@@ -36,18 +38,73 @@ public class S3Bucket extends S3 {
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Number of objects within the bucket. */
+    /** TBC */
     @Attribute
-    Long s3ObjectCount;
+    String awsAccountId;
+
+    /** TBC */
+    @Attribute
+    String awsArn;
+
+    /** TBC */
+    @Attribute
+    String awsOwnerId;
+
+    /** TBC */
+    @Attribute
+    String awsOwnerName;
+
+    /** TBC */
+    @Attribute
+    String awsPartition;
+
+    /** TBC */
+    @Attribute
+    String awsRegion;
+
+    /** TBC */
+    @Attribute
+    String awsResourceId;
+
+    /** TBC */
+    @Attribute
+    String awsService;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    List<AwsTag> awsTags;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** S3 objects within this bucket. */
+    @Attribute
+    @Singular
+    SortedSet<IS3Object> objects;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 
     /** Whether versioning is enabled for the bucket. */
     @Attribute
     Boolean s3BucketVersioningEnabled;
 
-    /** S3 objects within this bucket. */
+    /** TBC */
     @Attribute
-    @Singular
-    SortedSet<S3Object> objects;
+    String s3ETag;
+
+    /** TBC */
+    @Attribute
+    String s3Encryption;
+
+    /** Number of objects within the bucket. */
+    @Attribute
+    Long s3ObjectCount;
 
     /**
      * Reference to a S3Bucket by GUID.
@@ -127,7 +184,7 @@ public class S3Bucket extends S3 {
      */
     public static S3BucketBuilder<?, ?> creator(String name, String connectionQualifiedName, String awsArn) {
         return S3Bucket.builder()
-                .qualifiedName(generateQualifiedName(connectionQualifiedName, awsArn))
+                .qualifiedName(IS3.generateQualifiedName(connectionQualifiedName, awsArn))
                 .name(name)
                 .connectionQualifiedName(connectionQualifiedName)
                 .connectorType(AtlanConnectorType.S3)
@@ -266,7 +323,7 @@ public class S3Bucket extends S3 {
      * @return the S3Bucket that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static S3Bucket replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static S3Bucket replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (S3Bucket) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -281,7 +338,7 @@ public class S3Bucket extends S3 {
      * @return the S3Bucket that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static S3Bucket appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static S3Bucket appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (S3Bucket) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -295,7 +352,7 @@ public class S3Bucket extends S3 {
      * @return the S3Bucket that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static S3Bucket removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static S3Bucket removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (S3Bucket) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

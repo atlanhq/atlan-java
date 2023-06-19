@@ -1,11 +1,4 @@
 <#macro all>
-    /**
-     * Unique name for this asset. This is typically a concatenation of the asset's name onto its
-     * parent's qualifiedName.
-     */
-    @Attribute
-    String qualifiedName;
-
     /** Internal tracking of fields that should be serialized with null values. */
     @JsonIgnore
     @Singular
@@ -671,7 +664,7 @@
      * @return the asset that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    protected static Asset replaceTerms(AssetBuilder<?, ?> builder, List<GlossaryTerm> terms) throws AtlanException {
+    protected static Asset replaceTerms(AssetBuilder<?, ?> builder, List<IGlossaryTerm> terms) throws AtlanException {
         if (terms == null || terms.isEmpty()) {
             Asset asset = builder.removeAssignedTerms().build();
             return updateRelationships(asset);
@@ -691,16 +684,16 @@
      * @return the asset that was updated (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    protected static Asset appendTerms(String typeName, String qualifiedName, List<GlossaryTerm> terms)
+    protected static Asset appendTerms(String typeName, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         Asset existing = retrieveFull(typeName, qualifiedName);
         if (terms == null) {
             return existing;
         } else if (existing != null) {
-            Set<GlossaryTerm> replacementTerms = new TreeSet<>();
-            Set<GlossaryTerm> existingTerms = existing.getAssignedTerms();
+            Set<IGlossaryTerm> replacementTerms = new TreeSet<>();
+            Set<IGlossaryTerm> existingTerms = existing.getAssignedTerms();
             if (existingTerms != null) {
-                for (GlossaryTerm term : existingTerms) {
+                for (IGlossaryTerm term : existingTerms) {
                     if (term.getRelationshipStatus() != AtlanStatus.DELETED) {
                         // Only re-include the terms that are not already deleted
                         replacementTerms.add(term);
@@ -728,21 +721,21 @@
      * @throws AtlanException on any API problems
      * @throws InvalidRequestException if any of the passed terms are not valid references by GUID to a term
      */
-    protected static Asset removeTerms(String typeName, String qualifiedName, List<GlossaryTerm> terms)
+    protected static Asset removeTerms(String typeName, String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         Asset existing = retrieveFull(typeName, qualifiedName);
         if (existing != null) {
-            Set<GlossaryTerm> replacementTerms = new TreeSet<>();
-            Set<GlossaryTerm> existingTerms = existing.getAssignedTerms();
+            Set<IGlossaryTerm> replacementTerms = new TreeSet<>();
+            Set<IGlossaryTerm> existingTerms = existing.getAssignedTerms();
             Set<String> removeGuids = new HashSet<>();
-            for (GlossaryTerm term : terms) {
+            for (IGlossaryTerm term : terms) {
                 if (term.isValidReferenceByGuid()) {
                     removeGuids.add(term.getGuid());
                 } else {
                     throw new InvalidRequestException(ErrorCode.MISSING_TERM_GUID);
                 }
             }
-            for (GlossaryTerm term : existingTerms) {
+            for (IGlossaryTerm term : existingTerms) {
                 String existingTermGuid = term.getGuid();
                 if (!removeGuids.contains(existingTermGuid) && term.getRelationshipStatus() != AtlanStatus.DELETED) {
                     // Only re-include the terms that we are not removing and that are not already deleted
@@ -763,10 +756,10 @@
         return null;
     }
 
-    private static Collection<GlossaryTerm> getTermRefs(Collection<GlossaryTerm> terms) {
+    private static Collection<IGlossaryTerm> getTermRefs(Collection<IGlossaryTerm> terms) {
         if (terms != null && !terms.isEmpty()) {
-            Set<GlossaryTerm> termRefs = new TreeSet<>();
-            for (GlossaryTerm term : terms) {
+            Set<IGlossaryTerm> termRefs = new TreeSet<>();
+            for (IGlossaryTerm term : terms) {
                 if (term.getGuid() != null) {
                     termRefs.add(GlossaryTerm.refByGuid(term.getGuid()));
                 } else if (term.getQualifiedName() != null) {

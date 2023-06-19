@@ -3,15 +3,15 @@
      * Retrieve the parent of this Column, irrespective of its type.
      * @return the reference to this Column's parent
      */
-    public SQL getParent() {
+    public ISQL getParent() {
         if (table != null) {
-            return table;
+            return (ISQL) table;
         } else if (view != null) {
-            return view;
+            return (ISQL) view;
         } else if (materializedView != null) {
-            return materializedView;
+            return (ISQL) materializedView;
         } else if (tablePartition != null) {
-            return tablePartition;
+            return (ISQL) tablePartition;
         }
         return null;
     }

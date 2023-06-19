@@ -124,10 +124,10 @@ public class S3AssetTest extends AtlanLiveTest {
         assertEquals(b.getCertificateStatusMessage(), CERTIFICATE_MESSAGE);
         assertNotNull(b.getObjects());
         assertEquals(b.getObjects().size(), 1);
-        Set<String> types = b.getObjects().stream().map(S3Object::getTypeName).collect(Collectors.toSet());
+        Set<String> types = b.getObjects().stream().map(IS3Object::getTypeName).collect(Collectors.toSet());
         assertEquals(types.size(), 1);
         assertTrue(types.contains(S3Object.TYPE_NAME));
-        Set<String> guids = b.getObjects().stream().map(S3Object::getGuid).collect(Collectors.toSet());
+        Set<String> guids = b.getObjects().stream().map(IS3Object::getGuid).collect(Collectors.toSet());
         assertEquals(guids.size(), 1);
         assertTrue(guids.contains(object.getGuid()));
     }
@@ -156,7 +156,7 @@ public class S3AssetTest extends AtlanLiveTest {
     void searchAssets() throws AtlanException, InterruptedException {
         Query combined = CompoundQuery.builder()
                 .must(beActive())
-                .must(haveSuperType(S3.TYPE_NAME))
+                .must(haveSuperType(IS3.TYPE_NAME))
                 .must(have(KeywordFields.QUALIFIED_NAME).startingWith(connection.getQualifiedName()))
                 .build()
                 ._toQuery();

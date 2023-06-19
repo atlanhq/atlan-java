@@ -12,6 +12,8 @@ import com.atlan.model.relations.UniqueAttributes;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -25,7 +27,8 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class SnowflakePipe extends SQL {
+@SuppressWarnings("cast")
+public class SnowflakePipe extends Asset implements ISnowflakePipe, ISQL, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "SnowflakePipe";
@@ -37,7 +40,73 @@ public class SnowflakePipe extends SQL {
 
     /** TBC */
     @Attribute
+    String databaseName;
+
+    /** TBC */
+    @Attribute
+    String databaseQualifiedName;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtModel> dbtModels;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtSource> dbtSources;
+
+    /** TBC */
+    @Attribute
     String definition;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    Boolean isProfiled;
+
+    /** TBC */
+    @Attribute
+    Long lastProfiledAt;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    Long queryCount;
+
+    /** TBC */
+    @Attribute
+    Long queryCountUpdatedAt;
+
+    /** TBC */
+    @Attribute
+    Long queryUserCount;
+
+    /** TBC */
+    @Attribute
+    @Singular("putQueryUserMap")
+    Map<String, Long> queryUserMap;
+
+    /** TBC */
+    @Attribute
+    @JsonProperty("atlanSchema")
+    ISchema schema;
+
+    /** TBC */
+    @Attribute
+    String schemaName;
+
+    /** TBC */
+    @Attribute
+    String schemaQualifiedName;
 
     /** TBC */
     @Attribute
@@ -49,8 +118,29 @@ public class SnowflakePipe extends SQL {
 
     /** TBC */
     @Attribute
-    @JsonProperty("atlanSchema")
-    Schema schema;
+    @Singular
+    SortedSet<IDbtSource> sqlDBTSources;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtModel> sqlDbtModels;
+
+    /** TBC */
+    @Attribute
+    String tableName;
+
+    /** TBC */
+    @Attribute
+    String tableQualifiedName;
+
+    /** TBC */
+    @Attribute
+    String viewName;
+
+    /** TBC */
+    @Attribute
+    String viewQualifiedName;
 
     /**
      * Reference to a SnowflakePipe by GUID.
@@ -252,7 +342,7 @@ public class SnowflakePipe extends SQL {
      * @return the SnowflakePipe that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static SnowflakePipe replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static SnowflakePipe replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (SnowflakePipe) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -267,7 +357,7 @@ public class SnowflakePipe extends SQL {
      * @return the SnowflakePipe that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static SnowflakePipe appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static SnowflakePipe appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (SnowflakePipe) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -281,7 +371,7 @@ public class SnowflakePipe extends SQL {
      * @return the SnowflakePipe that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static SnowflakePipe removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static SnowflakePipe removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (SnowflakePipe) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

@@ -10,6 +10,8 @@ import com.atlan.model.enums.IconType;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.SortedSet;
 import java.util.UUID;
 import javax.annotation.processing.Generated;
 import lombok.*;
@@ -24,7 +26,8 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class Link extends Resource {
+@SuppressWarnings("cast")
+public class Link extends Asset implements ILink, IResource, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "Link";
@@ -34,6 +37,10 @@ public class Link extends Resource {
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** Asset to which the link is attached. */
+    @Attribute
+    IAsset asset;
+
     /** Icon for the link. */
     @Attribute
     String icon;
@@ -42,9 +49,32 @@ public class Link extends Resource {
     @Attribute
     IconType iconType;
 
-    /** Asset to which the link is attached. */
+    /** TBC */
     @Attribute
-    Asset asset;
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    Boolean isGlobal;
+
+    /** TBC */
+    @Attribute
+    String link;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    String reference;
+
+    /** TBC */
+    @Attribute
+    @Singular("putResourceMetadata")
+    Map<String, String> resourceMetadata;
 
     /**
      * Reference to a Link by GUID.

@@ -4,14 +4,10 @@ package com.atlan.generators;
 
 import com.atlan.generators.lombok.Singulars;
 import com.atlan.model.enums.AtlanEnum;
-import com.atlan.model.typedefs.EntityDef;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -37,13 +33,13 @@ public class AssetTestGenerator extends AssetGenerator {
     @Override
     public void resolveDetails() {
         super.resolveDetails();
-        addTestAttributes(asset, false);
+        addTestAttributes(asset);
     }
 
     @Getter
     @Builder
     public static final class TestAttribute {
-        private Attribute details;
+        private Attribute<?> details;
         private String builderMethod;
         private List<String> values;
         private List<String> rawValues;
@@ -52,19 +48,24 @@ public class AssetTestGenerator extends AssetGenerator {
         private boolean relationship;
     }
 
-    private void addTestAttributes(AssetGenerator assetGenerator, boolean fromSuperType) {
-        EntityDef typeDetails = assetGenerator.getEntityDef();
-        List<String> superTypes = typeDetails.getSuperTypes();
+    private void addTestAttributes(AssetGenerator assetGenerator) {
+        Set<String> superTypes = assetGenerator.getSuperTypes();
         if (superTypes != null && !superTypes.isEmpty()) {
-            String singleSuperType = cfg.getSingleTypeToExtend(assetGenerator.getOriginalName(), superTypes);
-            if (singleSuperType != null && !singleSuperType.equals("Reference")) {
-                // We can short-circuit when the next level up is Reference (the top)
-                addTestAttributes(cache.getCachedAssetType(singleSuperType), true);
+            for (String superType : superTypes) {
+                if (superType != null && !superType.equals("Referenceable")) {
+                    // We can short-circuit when the next level up is Referenceable (the top)
+                    addTestAttributes(cache.getCachedAssetType(superType), true);
+                }
             }
         }
-        List<Attribute> attributes = assetGenerator.getAttributes();
+        // Add attributes for this class itself
+        addTestAttributes(assetGenerator, false);
+    }
+
+    private void addTestAttributes(AssetGenerator assetGenerator, boolean fromSuperType) {
+        Set<Attribute<?>> attributes = assetGenerator.getNonInheritedAttributes();
         if (attributes != null) {
-            for (Attribute attribute : attributes) {
+            for (Attribute<?> attribute : attributes) {
                 TestAttribute.TestAttributeBuilder builder =
                         TestAttribute.builder().details(attribute);
                 MappedType type = attribute.getType();
@@ -102,8 +103,8 @@ public class AssetTestGenerator extends AssetGenerator {
                         break;
                 }
             }
-        } else {
-            log.warn("No attributes found for {}, skipping any test inclusion.", assetGenerator.getClassName());
+        } else if (!assetGenerator.getOriginalName().equals("Referenceable")) {
+            log.warn("No attributes found for {}, skipping any test inclusion.", assetGenerator.getOriginalName());
         }
     }
 

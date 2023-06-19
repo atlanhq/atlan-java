@@ -12,6 +12,8 @@ import com.atlan.model.relations.UniqueAttributes;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -25,7 +27,8 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class SnowflakeStream extends SQL {
+@SuppressWarnings("cast")
+public class SnowflakeStream extends Asset implements ISnowflakeStream, ISQL, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "SnowflakeStream";
@@ -37,15 +40,69 @@ public class SnowflakeStream extends SQL {
 
     /** TBC */
     @Attribute
-    String snowflakeStreamType;
+    String databaseName;
 
     /** TBC */
     @Attribute
-    String snowflakeStreamSourceType;
+    String databaseQualifiedName;
 
     /** TBC */
     @Attribute
-    String snowflakeStreamMode;
+    @Singular
+    SortedSet<IDbtModel> dbtModels;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtSource> dbtSources;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    Boolean isProfiled;
+
+    /** TBC */
+    @Attribute
+    Long lastProfiledAt;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    Long queryCount;
+
+    /** TBC */
+    @Attribute
+    Long queryCountUpdatedAt;
+
+    /** TBC */
+    @Attribute
+    Long queryUserCount;
+
+    /** TBC */
+    @Attribute
+    @Singular("putQueryUserMap")
+    Map<String, Long> queryUserMap;
+
+    /** TBC */
+    @Attribute
+    @JsonProperty("atlanSchema")
+    ISchema schema;
+
+    /** TBC */
+    @Attribute
+    String schemaName;
+
+    /** TBC */
+    @Attribute
+    String schemaQualifiedName;
 
     /** TBC */
     @Attribute
@@ -53,12 +110,45 @@ public class SnowflakeStream extends SQL {
 
     /** TBC */
     @Attribute
+    String snowflakeStreamMode;
+
+    /** TBC */
+    @Attribute
+    String snowflakeStreamSourceType;
+
+    /** TBC */
+    @Attribute
     Long snowflakeStreamStaleAfter;
 
     /** TBC */
     @Attribute
-    @JsonProperty("atlanSchema")
-    Schema schema;
+    String snowflakeStreamType;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtSource> sqlDBTSources;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtModel> sqlDbtModels;
+
+    /** TBC */
+    @Attribute
+    String tableName;
+
+    /** TBC */
+    @Attribute
+    String tableQualifiedName;
+
+    /** TBC */
+    @Attribute
+    String viewName;
+
+    /** TBC */
+    @Attribute
+    String viewQualifiedName;
 
     /**
      * Reference to a SnowflakeStream by GUID.
@@ -260,7 +350,7 @@ public class SnowflakeStream extends SQL {
      * @return the SnowflakeStream that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static SnowflakeStream replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static SnowflakeStream replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (SnowflakeStream) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -275,7 +365,7 @@ public class SnowflakeStream extends SQL {
      * @return the SnowflakeStream that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static SnowflakeStream appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static SnowflakeStream appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (SnowflakeStream) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -289,7 +379,7 @@ public class SnowflakeStream extends SQL {
      * @return the SnowflakeStream that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static SnowflakeStream removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static SnowflakeStream removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (SnowflakeStream) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

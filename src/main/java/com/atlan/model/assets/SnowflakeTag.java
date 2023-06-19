@@ -9,9 +9,11 @@ import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
+import com.atlan.model.structs.SourceTagAttribute;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 import lombok.*;
@@ -26,7 +28,8 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class SnowflakeTag extends Tag {
+@SuppressWarnings("cast")
+public class SnowflakeTag extends Asset implements ISnowflakeTag, ITag, ISQL, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "SnowflakeTag";
@@ -36,30 +39,116 @@ public class SnowflakeTag extends Tag {
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** dbt Sources to which this tag is applied. */
+    /** TBC */
     @Attribute
-    @Singular
-    SortedSet<DbtSource> dbtSources;
+    String databaseName;
+
+    /** TBC */
+    @Attribute
+    String databaseQualifiedName;
 
     /** TBC */
     @Attribute
     @Singular
-    SortedSet<DbtModel> sqlDbtModels;
+    SortedSet<IDbtModel> dbtModels;
 
     /** TBC */
     @Attribute
     @Singular
-    SortedSet<DbtSource> sqlDBTSources;
+    SortedSet<IDbtSource> dbtSources;
 
-    /** dbt Models to which this tag is applied. */
+    /** TBC */
     @Attribute
     @Singular
-    SortedSet<DbtModel> dbtModels;
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    Boolean isProfiled;
+
+    /** TBC */
+    @Attribute
+    Long lastProfiledAt;
+
+    /** TBC */
+    @Attribute
+    @JsonProperty("mappedClassificationName")
+    String mappedAtlanTagName;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    Long queryCount;
+
+    /** TBC */
+    @Attribute
+    Long queryCountUpdatedAt;
+
+    /** TBC */
+    @Attribute
+    Long queryUserCount;
+
+    /** TBC */
+    @Attribute
+    @Singular("putQueryUserMap")
+    Map<String, Long> queryUserMap;
 
     /** Database schemas to which this tag is applied. */
     @Attribute
     @JsonProperty("atlanSchema")
-    Schema schema;
+    ISchema schema;
+
+    /** TBC */
+    @Attribute
+    String schemaName;
+
+    /** TBC */
+    @Attribute
+    String schemaQualifiedName;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtSource> sqlDBTSources;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtModel> sqlDbtModels;
+
+    /** TBC */
+    @Attribute
+    String tableName;
+
+    /** TBC */
+    @Attribute
+    String tableQualifiedName;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<String> tagAllowedValues;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    List<SourceTagAttribute> tagAttributes;
+
+    /** TBC */
+    @Attribute
+    String tagId;
+
+    /** TBC */
+    @Attribute
+    String viewName;
+
+    /** TBC */
+    @Attribute
+    String viewQualifiedName;
 
     /**
      * Reference to a SnowflakeTag by GUID.
@@ -261,7 +350,7 @@ public class SnowflakeTag extends Tag {
      * @return the SnowflakeTag that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static SnowflakeTag replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static SnowflakeTag replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (SnowflakeTag) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -276,7 +365,7 @@ public class SnowflakeTag extends Tag {
      * @return the SnowflakeTag that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static SnowflakeTag appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static SnowflakeTag appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (SnowflakeTag) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -290,7 +379,7 @@ public class SnowflakeTag extends Tag {
      * @return the SnowflakeTag that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static SnowflakeTag removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static SnowflakeTag removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (SnowflakeTag) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

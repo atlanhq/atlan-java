@@ -43,7 +43,7 @@ import lombok.extern.slf4j.Slf4j;
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
 @SuppressWarnings("cast")
-public class Connection extends Asset {
+public class Connection extends Asset implements IConnection, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "Connection";
@@ -53,22 +53,6 @@ public class Connection extends Asset {
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Type of connection. */
-    @Attribute
-    AtlanConnectionCategory category;
-
-    /** Subtype of the connection. */
-    @Attribute
-    String subCategory;
-
-    /** Host name of the connection's source. */
-    @Attribute
-    String host;
-
-    /** Port number to the connection's source. */
-    @Attribute
-    Integer port;
-
     /** When true, allow the source to be queried. */
     @Attribute
     Boolean allowQuery;
@@ -77,62 +61,9 @@ public class Connection extends Asset {
     @Attribute
     Boolean allowQueryPreview;
 
-    /** TBC */
+    /** Type of connection. */
     @Attribute
-    @Singular("putQueryPreviewConfig")
-    Map<String, String> queryPreviewConfig;
-
-    /** TBC */
-    @Attribute
-    String queryConfig;
-
-    /** TBC */
-    @Attribute
-    String credentialStrategy;
-
-    /** TBC */
-    @Attribute
-    String previewCredentialStrategy;
-
-    /** TBC */
-    @Attribute
-    String policyStrategy;
-
-    /** TBC */
-    @Attribute
-    QueryUsernameStrategy queryUsernameStrategy;
-
-    /** Maximum number of rows that can be returned for the source. */
-    @Attribute
-    Long rowLimit;
-
-    /** TBC */
-    @Attribute
-    String defaultCredentialGuid;
-
-    /** Despite the name, this is not used for anything. Only the value of connectorName impacts icons. */
-    @Attribute
-    String connectorIcon;
-
-    /** Despite the name, this is not used for anything. Only the value of connectorName impacts icons. */
-    @Attribute
-    String connectorImage;
-
-    /** Despite the name, this is not used for anything. Only the value of connectorName impacts icons. */
-    @Attribute
-    String sourceLogo;
-
-    /** Whether sample data can be previewed for this connection (true) or not (false). */
-    @Attribute
-    Boolean isSampleDataPreviewEnabled;
-
-    /** Number of days over which popularity is calculated, for example 30 days. */
-    @Attribute
-    Long popularityInsightsTimeframe;
-
-    /** Whether the connection has popularity insights (true) or not (false). */
-    @Attribute
-    Boolean hasPopularityInsights;
+    AtlanConnectionCategory category;
 
     /** TBC */
     @Attribute
@@ -142,6 +73,79 @@ public class Connection extends Asset {
     /** TBC */
     @Attribute
     String connectionSSOCredentialGuid;
+
+    /** Despite the name, this is not used for anything. Only the value of connectorName impacts icons. */
+    @Attribute
+    String connectorIcon;
+
+    /** Despite the name, this is not used for anything. Only the value of connectorName impacts icons. */
+    @Attribute
+    String connectorImage;
+
+    /** TBC */
+    @Attribute
+    String credentialStrategy;
+
+    /** TBC */
+    @Attribute
+    String defaultCredentialGuid;
+
+    /** Whether the connection has popularity insights (true) or not (false). */
+    @Attribute
+    Boolean hasPopularityInsights;
+
+    /** Host name of the connection's source. */
+    @Attribute
+    String host;
+
+    /** Whether sample data can be previewed for this connection (true) or not (false). */
+    @Attribute
+    Boolean isSampleDataPreviewEnabled;
+
+    /** TBC */
+    @Attribute
+    String policyStrategy;
+
+    /** Number of days over which popularity is calculated, for example 30 days. */
+    @Attribute
+    Long popularityInsightsTimeframe;
+
+    /** Port number to the connection's source. */
+    @Attribute
+    Integer port;
+
+    /** TBC */
+    @Attribute
+    String previewCredentialStrategy;
+
+    /** TBC */
+    @Attribute
+    String queryConfig;
+
+    /** TBC */
+    @Attribute
+    @Singular("putQueryPreviewConfig")
+    Map<String, String> queryPreviewConfig;
+
+    /** TBC */
+    @Attribute
+    Long queryTimeout;
+
+    /** TBC */
+    @Attribute
+    QueryUsernameStrategy queryUsernameStrategy;
+
+    /** Maximum number of rows that can be returned for the source. */
+    @Attribute
+    Long rowLimit;
+
+    /** Despite the name, this is not used for anything. Only the value of connectorName impacts icons. */
+    @Attribute
+    String sourceLogo;
+
+    /** Subtype of the connection. */
+    @Attribute
+    String subCategory;
 
     /**
      * Reference to a Connection by GUID.
@@ -559,7 +563,7 @@ public class Connection extends Asset {
      * @return the Connection that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static Connection replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static Connection replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (Connection) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -574,7 +578,7 @@ public class Connection extends Asset {
      * @return the Connection that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static Connection appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static Connection appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (Connection) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -588,7 +592,7 @@ public class Connection extends Asset {
      * @return the Connection that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static Connection removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static Connection removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (Connection) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

@@ -12,6 +12,7 @@ import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -26,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
 @SuppressWarnings("cast")
-public class TableauMetric extends Tableau {
+public class TableauMetric extends Asset implements ITableauMetric, ITableau, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "TableauMetric";
@@ -38,15 +39,17 @@ public class TableauMetric extends Tableau {
 
     /** TBC */
     @Attribute
-    String siteQualifiedName;
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
 
     /** TBC */
     @Attribute
-    String projectQualifiedName;
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 
     /** TBC */
     @Attribute
-    String topLevelProjectQualifiedName;
+    ITableauProject project;
 
     /** TBC */
     @Attribute
@@ -55,7 +58,15 @@ public class TableauMetric extends Tableau {
 
     /** TBC */
     @Attribute
-    TableauProject project;
+    String projectQualifiedName;
+
+    /** TBC */
+    @Attribute
+    String siteQualifiedName;
+
+    /** TBC */
+    @Attribute
+    String topLevelProjectQualifiedName;
 
     /**
      * Reference to a TableauMetric by GUID.
@@ -257,7 +268,7 @@ public class TableauMetric extends Tableau {
      * @return the TableauMetric that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static TableauMetric replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static TableauMetric replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (TableauMetric) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -272,7 +283,7 @@ public class TableauMetric extends Tableau {
      * @return the TableauMetric that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static TableauMetric appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static TableauMetric appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (TableauMetric) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -286,7 +297,7 @@ public class TableauMetric extends Tableau {
      * @return the TableauMetric that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static TableauMetric removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static TableauMetric removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (TableauMetric) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

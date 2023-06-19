@@ -29,7 +29,7 @@ import lombok.extern.slf4j.Slf4j;
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
 @SuppressWarnings("cast")
-public class APIPath extends API {
+public class APIPath extends Asset implements IAPIPath, IAPI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "APIPath";
@@ -41,15 +41,12 @@ public class APIPath extends API {
 
     /** TBC */
     @Attribute
-    String apiPathSummary;
+    @Singular
+    Map<String, String> apiExternalDocs;
 
     /** TBC */
     @Attribute
-    String apiPathRawURI;
-
-    /** TBC */
-    @Attribute
-    Boolean apiPathIsTemplated;
+    Boolean apiIsAuthOptional;
 
     /** TBC */
     @Attribute
@@ -67,7 +64,45 @@ public class APIPath extends API {
 
     /** TBC */
     @Attribute
-    APISpec apiSpec;
+    Boolean apiPathIsTemplated;
+
+    /** TBC */
+    @Attribute
+    String apiPathRawURI;
+
+    /** TBC */
+    @Attribute
+    String apiPathSummary;
+
+    /** TBC */
+    @Attribute
+    IAPISpec apiSpec;
+
+    /** TBC */
+    @Attribute
+    String apiSpecName;
+
+    /** TBC */
+    @Attribute
+    String apiSpecQualifiedName;
+
+    /** TBC */
+    @Attribute
+    String apiSpecType;
+
+    /** TBC */
+    @Attribute
+    String apiSpecVersion;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 
     /**
      * Reference to a APIPath by GUID.
@@ -288,7 +323,7 @@ public class APIPath extends API {
      * @return the APIPath that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static APIPath replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static APIPath replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (APIPath) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -303,7 +338,7 @@ public class APIPath extends API {
      * @return the APIPath that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static APIPath appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static APIPath appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (APIPath) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -317,7 +352,7 @@ public class APIPath extends API {
      * @return the APIPath that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static APIPath removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static APIPath removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (APIPath) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

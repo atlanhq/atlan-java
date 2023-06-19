@@ -11,6 +11,7 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 import lombok.*;
@@ -25,7 +26,9 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class MicroStrategyCube extends MicroStrategy {
+@SuppressWarnings("cast")
+public class MicroStrategyCube extends Asset
+        implements IMicroStrategyCube, IMicroStrategy, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "MicroStrategyCube";
@@ -35,27 +38,82 @@ public class MicroStrategyCube extends MicroStrategy {
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Whether the cube is an OLAP or MTDI cube. */
+    /** TBC */
     @Attribute
-    String microStrategyCubeType;
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** Attributes used by the cube. */
+    @Attribute
+    @Singular
+    SortedSet<IMicroStrategyAttribute> microStrategyAttributes;
+
+    /** TBC */
+    @Attribute
+    Long microStrategyCertifiedAt;
+
+    /** TBC */
+    @Attribute
+    String microStrategyCertifiedBy;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<String> microStrategyCubeNames;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<String> microStrategyCubeQualifiedNames;
 
     /** Query used to create the cube. */
     @Attribute
     String microStrategyCubeQuery;
 
+    /** Whether the cube is an OLAP or MTDI cube. */
+    @Attribute
+    String microStrategyCubeType;
+
+    /** TBC */
+    @Attribute
+    Boolean microStrategyIsCertified;
+
+    /** TBC */
+    @Attribute
+    @Singular("putMicroStrategyLocation")
+    List<Map<String, String>> microStrategyLocation;
+
     /** Metrics where the cube is used. */
     @Attribute
     @Singular
-    SortedSet<MicroStrategyMetric> microStrategyMetrics;
+    SortedSet<IMicroStrategyMetric> microStrategyMetrics;
 
     /** Project containing the cube. */
     @Attribute
-    MicroStrategyProject microStrategyProject;
+    IMicroStrategyProject microStrategyProject;
 
-    /** Attributes used by the cube. */
+    /** TBC */
+    @Attribute
+    String microStrategyProjectName;
+
+    /** TBC */
+    @Attribute
+    String microStrategyProjectQualifiedName;
+
+    /** TBC */
     @Attribute
     @Singular
-    SortedSet<MicroStrategyAttribute> microStrategyAttributes;
+    SortedSet<String> microStrategyReportNames;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<String> microStrategyReportQualifiedNames;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 
     /**
      * Reference to a MicroStrategyCube by GUID.
@@ -257,7 +315,7 @@ public class MicroStrategyCube extends MicroStrategy {
      * @return the MicroStrategyCube that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static MicroStrategyCube replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static MicroStrategyCube replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (MicroStrategyCube) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -272,7 +330,7 @@ public class MicroStrategyCube extends MicroStrategy {
      * @return the MicroStrategyCube that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static MicroStrategyCube appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static MicroStrategyCube appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (MicroStrategyCube) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -286,7 +344,7 @@ public class MicroStrategyCube extends MicroStrategy {
      * @return the MicroStrategyCube that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static MicroStrategyCube removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static MicroStrategyCube removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (MicroStrategyCube) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

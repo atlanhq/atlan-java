@@ -10,6 +10,7 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.assets.Asset;
 import com.atlan.model.assets.AuthPolicy;
+import com.atlan.model.assets.IAuthPolicy;
 import com.atlan.model.assets.Purpose;
 import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.enums.*;
@@ -142,9 +143,9 @@ public class PurposeTest extends AtlanLiveTest {
         assertTrue(denied.contains(AssetSidebarTab.LINEAGE));
         assertTrue(denied.contains(AssetSidebarTab.RELATIONS));
         assertTrue(denied.contains(AssetSidebarTab.QUERIES));
-        Set<AuthPolicy> policies = one.getPolicies();
+        Set<IAuthPolicy> policies = one.getPolicies();
         assertEquals(policies.size(), 2);
-        for (AuthPolicy policy : policies) {
+        for (IAuthPolicy policy : policies) {
             // Need to retrieve the full policy if we want to see any info about it
             // (what comes back on the Purpose itself are just policy references)
             AuthPolicy full = AuthPolicy.retrieveByGuid(policy.getGuid());

@@ -25,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class LookerDashboard extends Looker {
+public class LookerDashboard extends Asset implements ILookerDashboard, ILooker, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "LookerDashboard";
@@ -37,23 +37,26 @@ public class LookerDashboard extends Looker {
 
     /** TBC */
     @Attribute
+    ILookerFolder folder;
+
+    /** TBC */
+    @Attribute
     String folderName;
 
     /** TBC */
     @Attribute
-    Integer sourceUserId;
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
 
     /** TBC */
     @Attribute
-    Integer sourceViewCount;
+    @Singular
+    SortedSet<ILookerLook> looks;
 
     /** TBC */
     @Attribute
-    Integer sourceMetadataId;
-
-    /** TBC */
-    @Attribute
-    Integer sourcelastUpdaterId;
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 
     /** TBC */
     @Attribute
@@ -65,17 +68,24 @@ public class LookerDashboard extends Looker {
 
     /** TBC */
     @Attribute
-    @Singular
-    SortedSet<LookerTile> tiles;
+    Integer sourceMetadataId;
+
+    /** TBC */
+    @Attribute
+    Integer sourceUserId;
+
+    /** TBC */
+    @Attribute
+    Integer sourceViewCount;
+
+    /** TBC */
+    @Attribute
+    Integer sourcelastUpdaterId;
 
     /** TBC */
     @Attribute
     @Singular
-    SortedSet<LookerLook> looks;
-
-    /** TBC */
-    @Attribute
-    LookerFolder folder;
+    SortedSet<ILookerTile> tiles;
 
     /**
      * Reference to a LookerDashboard by GUID.
@@ -277,7 +287,7 @@ public class LookerDashboard extends Looker {
      * @return the LookerDashboard that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static LookerDashboard replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static LookerDashboard replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (LookerDashboard) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -292,7 +302,7 @@ public class LookerDashboard extends Looker {
      * @return the LookerDashboard that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static LookerDashboard appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static LookerDashboard appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (LookerDashboard) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -306,7 +316,7 @@ public class LookerDashboard extends Looker {
      * @return the LookerDashboard that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static LookerDashboard removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static LookerDashboard removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (LookerDashboard) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

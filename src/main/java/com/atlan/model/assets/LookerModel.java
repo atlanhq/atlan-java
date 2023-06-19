@@ -25,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class LookerModel extends Looker {
+public class LookerModel extends Asset implements ILookerModel, ILooker, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "LookerModel";
@@ -37,30 +37,40 @@ public class LookerModel extends Looker {
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<ILookerExplore> explores;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILookerField> fields;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    ILookerLook look;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    ILookerProject project;
+
+    /** TBC */
+    @Attribute
     String projectName;
 
     /** TBC */
     @Attribute
     @Singular
-    SortedSet<LookerExplore> explores;
-
-    /** TBC */
-    @Attribute
-    LookerProject project;
-
-    /** TBC */
-    @Attribute
-    LookerLook look;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<LookerQuery> queries;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<LookerField> fields;
+    SortedSet<ILookerQuery> queries;
 
     /**
      * Reference to a LookerModel by GUID.
@@ -262,7 +272,7 @@ public class LookerModel extends Looker {
      * @return the LookerModel that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static LookerModel replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static LookerModel replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (LookerModel) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -277,7 +287,7 @@ public class LookerModel extends Looker {
      * @return the LookerModel that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static LookerModel appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static LookerModel appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (LookerModel) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -291,7 +301,7 @@ public class LookerModel extends Looker {
      * @return the LookerModel that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static LookerModel removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static LookerModel removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (LookerModel) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

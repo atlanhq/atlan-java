@@ -25,7 +25,8 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class MetabaseDashboard extends Metabase {
+public class MetabaseDashboard extends Asset
+        implements IMetabaseDashboard, IMetabase, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "MetabaseDashboard";
@@ -37,16 +38,34 @@ public class MetabaseDashboard extends Metabase {
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    IMetabaseCollection metabaseCollection;
+
+    /** TBC */
+    @Attribute
+    String metabaseCollectionName;
+
+    /** TBC */
+    @Attribute
+    String metabaseCollectionQualifiedName;
+
+    /** TBC */
+    @Attribute
     Long metabaseQuestionCount;
 
     /** TBC */
     @Attribute
     @Singular
-    SortedSet<MetabaseQuestion> metabaseQuestions;
+    SortedSet<IMetabaseQuestion> metabaseQuestions;
 
     /** TBC */
     @Attribute
-    MetabaseCollection metabaseCollection;
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 
     /**
      * Reference to a MetabaseDashboard by GUID.
@@ -248,7 +267,7 @@ public class MetabaseDashboard extends Metabase {
      * @return the MetabaseDashboard that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static MetabaseDashboard replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static MetabaseDashboard replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (MetabaseDashboard) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -263,7 +282,7 @@ public class MetabaseDashboard extends Metabase {
      * @return the MetabaseDashboard that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static MetabaseDashboard appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static MetabaseDashboard appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (MetabaseDashboard) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -277,7 +296,7 @@ public class MetabaseDashboard extends Metabase {
      * @return the MetabaseDashboard that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static MetabaseDashboard removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static MetabaseDashboard removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (MetabaseDashboard) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

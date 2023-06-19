@@ -25,7 +25,8 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class ThoughtspotLiveboard extends Thoughtspot {
+public class ThoughtspotLiveboard extends Asset
+        implements IThoughtspotLiveboard, IThoughtspot, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "ThoughtspotLiveboard";
@@ -35,10 +36,28 @@ public class ThoughtspotLiveboard extends Thoughtspot {
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    String thoughtspotChartType;
+
     /** Dashlets within the Liveboard. */
     @Attribute
     @Singular
-    SortedSet<ThoughtspotDashlet> thoughtspotDashlets;
+    SortedSet<IThoughtspotDashlet> thoughtspotDashlets;
+
+    /** TBC */
+    @Attribute
+    String thoughtspotQuestionText;
 
     /**
      * Reference to a ThoughtspotLiveboard by GUID.
@@ -242,7 +261,7 @@ public class ThoughtspotLiveboard extends Thoughtspot {
      * @return the ThoughtspotLiveboard that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static ThoughtspotLiveboard replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static ThoughtspotLiveboard replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (ThoughtspotLiveboard) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -257,7 +276,7 @@ public class ThoughtspotLiveboard extends Thoughtspot {
      * @return the ThoughtspotLiveboard that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static ThoughtspotLiveboard appendTerms(String qualifiedName, List<GlossaryTerm> terms)
+    public static ThoughtspotLiveboard appendTerms(String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (ThoughtspotLiveboard) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
@@ -272,7 +291,7 @@ public class ThoughtspotLiveboard extends Thoughtspot {
      * @return the ThoughtspotLiveboard that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static ThoughtspotLiveboard removeTerms(String qualifiedName, List<GlossaryTerm> terms)
+    public static ThoughtspotLiveboard removeTerms(String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (ThoughtspotLiveboard) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
