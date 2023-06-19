@@ -105,12 +105,14 @@ public class PersonaTest extends AtlanLiveTest {
                         persona.getGuid(),
                         AuthPolicyType.ALLOW,
                         Set.of(PersonaMetadataAction.READ),
+                        connection.getQualifiedName(),
                         Set.of("entity:" + connection.getQualifiedName()))
                 .build();
         AuthPolicy data = Persona.createDataPolicy(
                         "Allow access to data",
                         persona.getGuid(),
                         AuthPolicyType.ALLOW,
+                        connection.getQualifiedName(),
                         Set.of("entity:" + connection.getQualifiedName()))
                 .build();
         AuthPolicy glossaryPolicy = Persona.createGlossaryPolicy(
