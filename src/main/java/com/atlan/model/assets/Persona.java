@@ -255,6 +255,7 @@ public class Persona extends Asset implements IPersona, IAccessControl, IAsset, 
      * @param personaId unique identifier (GUID) of the persona for which to create this metadata policy
      * @param policyType type of policy (for example allow vs deny)
      * @param actions to include in the policy
+     * @param connectionQualifiedName unique name of the connection whose assets this policy will control
      * @param resources against which to apply the policy, given in the form {@code entity:qualifiedNamePrefix}
      * @return the minimal request necessary to create the metadata policy for the Persona, as a builder
      */
@@ -263,11 +264,13 @@ public class Persona extends Asset implements IPersona, IAccessControl, IAsset, 
             String personaId,
             AuthPolicyType policyType,
             Collection<PersonaMetadataAction> actions,
+            String connectionQualifiedName,
             Collection<String> resources) {
         return AuthPolicy.creator(name)
                 .policyActions(actions)
                 .policyCategory(AuthPolicyCategory.PERSONA)
                 .policyType(policyType)
+                .connectionQualifiedName(connectionQualifiedName)
                 .policyResources(resources)
                 .policyResourceCategory(AuthPolicyResourceCategory.CUSTOM)
                 .policyServiceName("atlas")
@@ -281,15 +284,21 @@ public class Persona extends Asset implements IPersona, IAccessControl, IAsset, 
      * @param name of the policy
      * @param personaId unique identifier (GUID) of the persona for which to create this data policy
      * @param policyType type of policy (for example allow vs deny)
+     * @param connectionQualifiedName unique name of the connection whose assets this policy will control
      * @param resources against which to apply the policy, given in the form {@code entity:qualifiedNamePrefix}
      * @return the minimal request necessary to create the data policy for the Persona, as a builder
      */
     public static AuthPolicy.AuthPolicyBuilder<?, ?> createDataPolicy(
-            String name, String personaId, AuthPolicyType policyType, Collection<String> resources) {
+            String name,
+            String personaId,
+            AuthPolicyType policyType,
+            String connectionQualifiedName,
+            Collection<String> resources) {
         return AuthPolicy.creator(name)
                 .policyAction(DataAction.SELECT)
                 .policyCategory(AuthPolicyCategory.PERSONA)
                 .policyType(policyType)
+                .connectionQualifiedName(connectionQualifiedName)
                 .policyResources(resources)
                 .policyResource("entity-type:*")
                 .policyResourceCategory(AuthPolicyResourceCategory.ENTITY)
