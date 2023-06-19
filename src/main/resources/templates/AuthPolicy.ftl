@@ -6,8 +6,8 @@
      *
      * @param name of the AuthPolicy
      * @return the minimal request necessary to create the AuthPolicy, as a builder
-     * @see Persona#createMetadataPolicy(String, String, AuthPolicyType, Collection, Collection)
-     * @see Persona#createDataPolicy(String, String, AuthPolicyType, Collection)
+     * @see Persona#createMetadataPolicy(String, String, AuthPolicyType, Collection, String, Collection)
+     * @see Persona#createDataPolicy(String, String, AuthPolicyType, String, Collection)
      * @see Persona#createGlossaryPolicy(String, String, AuthPolicyType, Collection, Collection)
      * @see Purpose#createMetadataPolicy(String, String, AuthPolicyType, Collection, Collection, Collection, boolean)
      * @see Purpose#createDataPolicy(String, String, AuthPolicyType, Collection, Collection, boolean)
