@@ -59,6 +59,11 @@ public class RedashDashboardTest {
                             .attribute("String0", 789L)
                             .attribute("String1", "AnotherString")
                             .build())
+            .redashIsPublished(true)
+            .inputToProcess(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .inputToProcess(LineageProcess.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
+            .outputFromProcess(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .outputFromProcess(LineageProcess.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .adminGroup("String0")
             .adminGroup("String1")
             .adminRole("String0")
@@ -343,11 +348,6 @@ public class RedashDashboardTest {
             .viewerGroup("String1")
             .viewerUser("String0")
             .viewerUser("String1")
-            .inputToProcess(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .inputToProcess(LineageProcess.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .outputFromProcess(LineageProcess.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
-            .outputFromProcess(LineageProcess.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
-            .redashIsPublished(true)
             .redashDashboardWidgetCount(123456789L)
             .build();
 

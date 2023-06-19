@@ -4,7 +4,6 @@ package com.atlan.generators;
 
 import com.atlan.generators.lombok.Singulars;
 import com.atlan.model.enums.AtlanEnum;
-import com.atlan.model.typedefs.EntityDef;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -34,7 +33,7 @@ public class AssetTestGenerator extends AssetGenerator {
     @Override
     public void resolveDetails() {
         super.resolveDetails();
-        addTestAttributes(asset, false);
+        addTestAttributes(asset);
     }
 
     @Getter
@@ -49,17 +48,21 @@ public class AssetTestGenerator extends AssetGenerator {
         private boolean relationship;
     }
 
-    private void addTestAttributes(AssetGenerator assetGenerator, boolean fromSuperType) {
-        EntityDef typeDetails = assetGenerator.getEntityDef();
-        List<String> superTypes = typeDetails.getSuperTypes();
+    private void addTestAttributes(AssetGenerator assetGenerator) {
+        Set<String> superTypes = assetGenerator.getSuperTypes();
         if (superTypes != null && !superTypes.isEmpty()) {
             for (String superType : superTypes) {
-                if (superType != null && !superType.equals("Reference")) {
-                    // We can short-circuit when the next level up is Reference (the top)
+                if (superType != null && !superType.equals("Referenceable")) {
+                    // We can short-circuit when the next level up is Referenceable (the top)
                     addTestAttributes(cache.getCachedAssetType(superType), true);
                 }
             }
         }
+        // Add attributes for this class itself
+        addTestAttributes(assetGenerator, false);
+    }
+
+    private void addTestAttributes(AssetGenerator assetGenerator, boolean fromSuperType) {
         Set<Attribute<?>> attributes = assetGenerator.getNonInheritedAttributes();
         if (attributes != null) {
             for (Attribute<?> attribute : attributes) {
