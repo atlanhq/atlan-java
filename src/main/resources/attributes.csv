@@ -190,6 +190,7 @@ Asset,Base class for all assets.,mcIncidents,TBC
 Asset,Base class for all assets.,links,Resources that are linked to this asset.
 Asset,Base class for all assets.,metrics,TBC
 Asset,Base class for all assets.,readme,README that is linked to this asset.
+Asset,Base class for all assets.,meanings,Glossary terms that are linked to this asset.
 AtlasGlossary,Instance of a glossary in Atlan.,shortDescription,Unused.
 AtlasGlossary,Instance of a glossary in Atlan.,longDescription,Unused.
 AtlasGlossary,Instance of a glossary in Atlan.,language,Unused.
@@ -910,6 +911,7 @@ RedashVisualization,Instance of a Redash visualization in Atlan.,redashQuery,Que
 Referenceable,Base class for everything in Atlan.,qualifiedName,Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName.
 Referenceable,Base class for everything in Atlan.,replicatedFrom,Unused.
 Referenceable,Base class for everything in Atlan.,replicatedTo,Unused.
+Referenceable,Base class for everything in Atlan.,meanings,Terms that are linked to this asset.
 Resource,Base class for resources.,link,TBC
 Resource,Base class for resources.,isGlobal,TBC
 Resource,Base class for resources.,reference,TBC
