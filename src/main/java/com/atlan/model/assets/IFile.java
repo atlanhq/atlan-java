@@ -245,10 +245,10 @@ public interface IFile {
     /** TBC */
     IAsset getFileAssets();
 
-    /** TBC */
+    /** URL giving the online location where the file can be accessed. */
     String getFilePath();
 
-    /** TBC */
+    /** Type of the file */
     FileType getFileType();
 
     /** TBC */
