@@ -47,12 +47,12 @@ public class SnowflakeTag extends Asset implements ISnowflakeTag, ITag, ISQL, IC
     @Attribute
     String databaseQualifiedName;
 
-    /** TBC */
+    /** dbt Models to which this tag is applied. */
     @Attribute
     @Singular
     SortedSet<IDbtModel> dbtModels;
 
-    /** TBC */
+    /** dbt Sources to which this tag is applied. */
     @Attribute
     @Singular
     SortedSet<IDbtSource> dbtSources;

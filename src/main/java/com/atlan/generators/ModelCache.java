@@ -140,11 +140,14 @@ public class ModelCache {
                 .collect(Collectors.toSet()));
         Set<String> superTypes = getAllSuperTypesForType(originalName);
         for (String superType : superTypes) {
-            EntityDef superDef = entityDefCache.get(superType);
-            Set<String> toRemove = superDef.getRelationshipAttributeDefs().stream()
-                    .map(AttributeDef::getName)
-                    .collect(Collectors.toSet());
-            startingPoint.removeAll(toRemove);
+            // Skip Referenceable to avoid losing the overloaded 'meanings' relationship
+            if (superType != null && !superType.equals("Referenceable")) {
+                EntityDef superDef = entityDefCache.get(superType);
+                Set<String> toRemove = superDef.getRelationshipAttributeDefs().stream()
+                        .map(AttributeDef::getName)
+                        .collect(Collectors.toSet());
+                startingPoint.removeAll(toRemove);
+            }
         }
         return startingPoint;
     }

@@ -239,13 +239,13 @@ public interface ISnowflakeTag {
     /** TBC */
     String getDatabaseQualifiedName();
 
-    /** TBC */
+    /** dbt Models to which this tag is applied. */
     SortedSet<IDbtModel> getDbtModels();
 
     /** TBC */
     String getDbtQualifiedName();
 
-    /** TBC */
+    /** dbt Sources to which this tag is applied. */
     SortedSet<IDbtSource> getDbtSources();
 
     /** TBC */

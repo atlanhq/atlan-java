@@ -65,7 +65,7 @@ public enum BooleanFields implements AtlanSearchableField {
     IS_EDITABLE("isEditable"),
     /** TBC */
     IS_ENCRYPTED("isEncrypted"),
-    /** When true, this column is a foreign key to another table. */
+    /** When true, this column is a foreign key to another table. NOTE: this must be true when using the foreignKeyTo relationship to specify columns that refer to this column as a foreign key. */
     IS_FOREIGN("isForeign"),
     /** TBC */
     IS_GLOBAL("isGlobal"),

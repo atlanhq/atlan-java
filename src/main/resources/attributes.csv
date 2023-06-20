@@ -190,6 +190,7 @@ Asset,Base class for all assets.,mcIncidents,TBC
 Asset,Base class for all assets.,links,Resources that are linked to this asset.
 Asset,Base class for all assets.,metrics,TBC
 Asset,Base class for all assets.,readme,README that is linked to this asset.
+Asset,Base class for all assets.,meanings,Glossary terms that are linked to this asset.
 AtlasGlossary,Instance of a glossary in Atlan.,shortDescription,Unused.
 AtlasGlossary,Instance of a glossary in Atlan.,longDescription,Unused.
 AtlasGlossary,Instance of a glossary in Atlan.,language,Unused.
@@ -273,7 +274,7 @@ Column,Instance of a column in Atlan.,isPartition,TBC
 Column,Instance of a column in Atlan.,partitionOrder,TBC
 Column,Instance of a column in Atlan.,isClustered,TBC
 Column,Instance of a column in Atlan.,isPrimary,"When true, this column is the primary key for the table."
-Column,Instance of a column in Atlan.,isForeign,"When true, this column is a foreign key to another table."
+Column,Instance of a column in Atlan.,isForeign,"When true, this column is a foreign key to another table. NOTE: this must be true when using the foreignKeyTo relationship to specify columns that refer to this column as a foreign key."
 Column,Instance of a column in Atlan.,isIndexed,"When true, this column is indexed in the database."
 Column,Instance of a column in Atlan.,isSort,TBC
 Column,Instance of a column in Atlan.,isDist,TBC
@@ -324,7 +325,7 @@ Column,Instance of a column in Atlan.,materialisedView,"Materialized view in whi
 Column,Instance of a column in Atlan.,parentColumn,TBC
 Column,Instance of a column in Atlan.,queries,Queries that involve this column.
 Column,Instance of a column in Atlan.,metricTimestamps,TBC
-Column,Instance of a column in Atlan.,foreignKeyTo,All the columns that refer to this column as a foreign key.
+Column,Instance of a column in Atlan.,foreignKeyTo,"All the columns that refer to this column as a foreign key. NOTE: when providing values to this relationship, isForeign must also be set to true."
 Column,Instance of a column in Atlan.,foreignKeyFrom,Column this column refers to as a foreign key.
 Column,Instance of a column in Atlan.,dbtMetrics,TBC
 Column,Instance of a column in Atlan.,tablePartition,TBC
@@ -910,6 +911,7 @@ RedashVisualization,Instance of a Redash visualization in Atlan.,redashQuery,Que
 Referenceable,Base class for everything in Atlan.,qualifiedName,Unique name for this asset. This is typically a concatenation of the asset's name onto its parent's qualifiedName.
 Referenceable,Base class for everything in Atlan.,replicatedFrom,Unused.
 Referenceable,Base class for everything in Atlan.,replicatedTo,Unused.
+Referenceable,Base class for everything in Atlan.,meanings,Terms that are linked to this asset.
 Resource,Base class for resources.,link,TBC
 Resource,Base class for resources.,isGlobal,TBC
 Resource,Base class for resources.,reference,TBC
