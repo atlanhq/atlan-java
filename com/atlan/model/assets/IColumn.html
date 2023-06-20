@@ -2815,7 +2815,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>getForeignKeyTo</h4>
 <pre class="methodSignature">java.util.SortedSet&lt;<a href="IColumn.html" title="interface in com.atlan.model.assets">IColumn</a>&gt;&nbsp;getForeignKeyTo()</pre>
-<div class="block">All the columns that refer to this column as a foreign key.</div>
+<div class="block">All the columns that refer to this column as a foreign key. NOTE: when providing values to this relationship, isForeign must also be set to true.</div>
 </li>
 </ul>
 <a id="getHasLineage()">
@@ -2885,7 +2885,7 @@ public interface <span class="typeNameLabel">IColumn</span></pre>
 <li class="blockList">
 <h4>getIsForeign</h4>
 <pre class="methodSignature">java.lang.Boolean&nbsp;getIsForeign()</pre>
-<div class="block">When true, this column is a foreign key to another table.</div>
+<div class="block">When true, this column is a foreign key to another table. NOTE: this must be true when using the foreignKeyTo relationship to specify columns that refer to this column as a foreign key.</div>
 </li>
 </ul>
 <a id="getIsIndexed()">
