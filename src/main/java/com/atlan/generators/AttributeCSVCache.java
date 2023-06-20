@@ -30,6 +30,7 @@ public class AttributeCSVCache {
     static final String DEFAULT_ATTR_DESCRIPTION = "TBC";
     static final String DEFAULT_CLASS_DESCRIPTION = "TBC";
 
+    private static boolean haveCached = false;
     public static final String DESCRIPTIONS_FILE =
             "src" + File.separator + "main" + File.separator + "resources" + File.separator + "attributes.csv";
 
@@ -38,28 +39,32 @@ public class AttributeCSVCache {
 
     /** Cache all attribute descriptions that are defined in an external CSV file. */
     public static void cacheDescriptions() {
-        try (BufferedReader in = Files.newBufferedReader(Paths.get(DESCRIPTIONS_FILE), UTF_8)) {
-            Iterable<CSVRecord> records = CSVFormat.DEFAULT
-                    .builder()
-                    .setHeader(CSV_HEADER)
-                    .setSkipHeaderRecord(true)
-                    .build()
-                    .parse(in);
-            for (CSVRecord record : records) {
-                String typeName = record.get(CSV_TYPE_NAME);
-                String typeDesc = record.get(CSV_TYPE_DESC);
-                typeNameToDescription.put(typeName, typeDesc == null || typeDesc.length() == 0 ? "" : typeDesc);
-                String attrName = record.get(CSV_ATTR_NAME);
-                String attrDesc = record.get(CSV_ATTR_DESC);
-                if (attrDesc != null && attrDesc.length() > 0) {
-                    // Don't even bother using up memory if there is no description...
-                    String attrQN = getAttrQualifiedName(typeName, attrName);
-                    qualifiedAttrToDescription.put(attrQN, attrDesc);
+        if (!haveCached) {
+            try (BufferedReader in = Files.newBufferedReader(Paths.get(DESCRIPTIONS_FILE), UTF_8)) {
+                Iterable<CSVRecord> records = CSVFormat.DEFAULT
+                        .builder()
+                        .setHeader(CSV_HEADER)
+                        .setSkipHeaderRecord(true)
+                        .build()
+                        .parse(in);
+                for (CSVRecord record : records) {
+                    String typeName = record.get(CSV_TYPE_NAME);
+                    String typeDesc = record.get(CSV_TYPE_DESC);
+                    typeNameToDescription.put(typeName, typeDesc == null || typeDesc.length() == 0 ? "" : typeDesc);
+                    String attrName = record.get(CSV_ATTR_NAME);
+                    String attrDesc = record.get(CSV_ATTR_DESC);
+                    if (attrDesc != null && attrDesc.length() > 0) {
+                        // Don't even bother using up memory if there is no description...
+                        String attrQN = getAttrQualifiedName(typeName, attrName);
+                        qualifiedAttrToDescription.put(attrQN, attrDesc);
+                    }
                 }
+            } catch (IOException e) {
+                log.warn(
+                        "Unable to access or read descriptions CSV file — will only use descriptions direct from type definitions.",
+                        e);
             }
-        } catch (IOException e) {
-            log.error("Unable to access or read descriptions CSV file.", e);
-            System.exit(1);
+            haveCached = true;
         }
     }
 
