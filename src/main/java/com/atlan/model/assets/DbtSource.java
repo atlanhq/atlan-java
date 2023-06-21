@@ -26,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class DbtSource extends Dbt {
+public class DbtSource extends Asset implements IDbtSource, IDbt, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "DbtSource";
@@ -38,7 +38,23 @@ public class DbtSource extends Dbt {
 
     /** TBC */
     @Attribute
-    String dbtState;
+    String dbtAccountName;
+
+    /** TBC */
+    @Attribute
+    String dbtAlias;
+
+    /** TBC */
+    @Attribute
+    String dbtConnectionContext;
+
+    /** TBC */
+    @Attribute
+    String dbtEnvironmentDbtVersion;
+
+    /** TBC */
+    @Attribute
+    String dbtEnvironmentName;
 
     /** TBC */
     @Attribute
@@ -46,13 +62,80 @@ public class DbtSource extends Dbt {
 
     /** TBC */
     @Attribute
+    Long dbtJobLastRun;
+
+    /** TBC */
+    @Attribute
+    String dbtJobName;
+
+    /** TBC */
+    @Attribute
+    Long dbtJobNextRun;
+
+    /** TBC */
+    @Attribute
+    String dbtJobNextRunHumanized;
+
+    /** TBC */
+    @Attribute
+    String dbtJobSchedule;
+
+    /** TBC */
+    @Attribute
+    String dbtJobScheduleCronHumanized;
+
+    /** TBC */
+    @Attribute
+    String dbtJobStatus;
+
+    /** TBC */
+    @Attribute
+    String dbtMeta;
+
+    /** TBC */
+    @Attribute
+    String dbtPackageName;
+
+    /** TBC */
+    @Attribute
+    String dbtProjectName;
+
+    /** TBC */
+    @Attribute
+    String dbtSemanticLayerProxyUrl;
+
+    /** TBC */
+    @Attribute
+    String dbtState;
+
+    /** TBC */
+    @Attribute
     @Singular
-    SortedSet<SQL> sqlAssets;
+    SortedSet<String> dbtTags;
+
+    /** TBC */
+    @Attribute
+    String dbtUniqueId;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 
     /** TBC */
     @Attribute
     @JsonProperty("sqlAsset")
-    SQL primarySqlAsset;
+    ISQL primarySqlAsset;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ISQL> sqlAssets;
 
     /**
      * Reference to a DbtSource by GUID.
@@ -254,7 +337,7 @@ public class DbtSource extends Dbt {
      * @return the DbtSource that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static DbtSource replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static DbtSource replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (DbtSource) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -269,7 +352,7 @@ public class DbtSource extends Dbt {
      * @return the DbtSource that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static DbtSource appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static DbtSource appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (DbtSource) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -283,7 +366,7 @@ public class DbtSource extends Dbt {
      * @return the DbtSource that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static DbtSource removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static DbtSource removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (DbtSource) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

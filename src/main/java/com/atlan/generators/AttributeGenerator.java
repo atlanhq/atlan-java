@@ -13,6 +13,7 @@ public class AttributeGenerator extends TypeGenerator {
 
     private MappedType type;
     private String renamed;
+    private boolean retyped = false;
 
     protected AttributeGenerator(GeneratorConfig cfg) {
         super(cfg);
@@ -51,5 +52,21 @@ public class AttributeGenerator extends TypeGenerator {
             fullType = type.getName();
         }
         return fullType;
+    }
+
+    public String getReferenceType() {
+        String refType;
+        String container = type.getContainer();
+        String baseName = type.getName();
+        if (type.getType() == MappedType.Type.ASSET) {
+            baseName = "I" + baseName;
+        }
+        if (container != null) {
+            long nestingCount = container.chars().filter(c -> c == '<').count();
+            refType = container + baseName + ">".repeat((int) nestingCount);
+        } else {
+            refType = baseName;
+        }
+        return refType;
     }
 }

@@ -30,7 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
 @SuppressWarnings("cast")
-public class MaterializedView extends SQL {
+public class MaterializedView extends Asset implements IMaterializedView, ISQL, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "MaterialisedView";
@@ -42,19 +42,7 @@ public class MaterializedView extends SQL {
 
     /** TBC */
     @Attribute
-    String refreshMode;
-
-    /** TBC */
-    @Attribute
-    String refreshMethod;
-
-    /** TBC */
-    @Attribute
-    String staleness;
-
-    /** TBC */
-    @Attribute
-    Long staleSinceDate;
+    String alias;
 
     /** TBC */
     @Attribute
@@ -62,28 +50,26 @@ public class MaterializedView extends SQL {
 
     /** TBC */
     @Attribute
-    Long rowCount;
+    @Singular
+    SortedSet<IColumn> columns;
 
     /** TBC */
     @Attribute
-    Long sizeBytes;
+    String databaseName;
 
     /** TBC */
     @Attribute
-    Boolean isQueryPreview;
+    String databaseQualifiedName;
 
     /** TBC */
     @Attribute
-    @Singular("putQueryPreviewConfig")
-    Map<String, String> queryPreviewConfig;
+    @Singular
+    SortedSet<IDbtModel> dbtModels;
 
     /** TBC */
     @Attribute
-    String alias;
-
-    /** TBC */
-    @Attribute
-    Boolean isTemporary;
+    @Singular
+    SortedSet<IDbtSource> dbtSources;
 
     /** TBC */
     @Attribute
@@ -92,12 +78,113 @@ public class MaterializedView extends SQL {
     /** TBC */
     @Attribute
     @Singular
-    SortedSet<Column> columns;
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    Boolean isProfiled;
+
+    /** TBC */
+    @Attribute
+    Boolean isQueryPreview;
+
+    /** TBC */
+    @Attribute
+    Boolean isTemporary;
+
+    /** TBC */
+    @Attribute
+    Long lastProfiledAt;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    Long queryCount;
+
+    /** TBC */
+    @Attribute
+    Long queryCountUpdatedAt;
+
+    /** TBC */
+    @Attribute
+    @Singular("putQueryPreviewConfig")
+    Map<String, String> queryPreviewConfig;
+
+    /** TBC */
+    @Attribute
+    Long queryUserCount;
+
+    /** TBC */
+    @Attribute
+    @Singular("putQueryUserMap")
+    Map<String, Long> queryUserMap;
+
+    /** TBC */
+    @Attribute
+    String refreshMethod;
+
+    /** TBC */
+    @Attribute
+    String refreshMode;
+
+    /** TBC */
+    @Attribute
+    Long rowCount;
 
     /** TBC */
     @Attribute
     @JsonProperty("atlanSchema")
-    Schema schema;
+    ISchema schema;
+
+    /** TBC */
+    @Attribute
+    String schemaName;
+
+    /** TBC */
+    @Attribute
+    String schemaQualifiedName;
+
+    /** TBC */
+    @Attribute
+    Long sizeBytes;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtSource> sqlDBTSources;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtModel> sqlDbtModels;
+
+    /** TBC */
+    @Attribute
+    Long staleSinceDate;
+
+    /** TBC */
+    @Attribute
+    String staleness;
+
+    /** TBC */
+    @Attribute
+    String tableName;
+
+    /** TBC */
+    @Attribute
+    String tableQualifiedName;
+
+    /** TBC */
+    @Attribute
+    String viewName;
+
+    /** TBC */
+    @Attribute
+    String viewQualifiedName;
 
     /**
      * Reference to a MaterializedView by GUID.
@@ -336,7 +423,7 @@ public class MaterializedView extends SQL {
      * @return the MaterializedView that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static MaterializedView replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static MaterializedView replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (MaterializedView) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -351,7 +438,7 @@ public class MaterializedView extends SQL {
      * @return the MaterializedView that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static MaterializedView appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static MaterializedView appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (MaterializedView) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -365,7 +452,7 @@ public class MaterializedView extends SQL {
      * @return the MaterializedView that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static MaterializedView removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static MaterializedView removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (MaterializedView) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

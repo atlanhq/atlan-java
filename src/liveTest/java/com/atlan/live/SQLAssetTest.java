@@ -266,8 +266,8 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertTrue(response.getDeletedAssets().isEmpty());
         assertEquals(response.getUpdatedAssets().size(), 1);
         Asset one = response.getUpdatedAssets().get(0);
-        assertTrue(one instanceof SQL);
-        SQL parent = (SQL) one;
+        assertTrue(one instanceof ISQL);
+        ISQL parent = (ISQL) one;
         assertEquals(parent.getQualifiedName(), parentQualifiedName);
         assertEquals(response.getCreatedAssets().size(), 1);
         one = response.getCreatedAssets().get(0);
@@ -485,8 +485,8 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertTrue(response.getDeletedAssets().isEmpty());
         assertEquals(response.getUpdatedAssets().size(), 1);
         Asset one = response.getUpdatedAssets().get(0);
-        assertTrue(one instanceof SQL);
-        SQL parent = (SQL) one;
+        assertTrue(one instanceof ISQL);
+        ISQL parent = (ISQL) one;
         assertEquals(parent.getQualifiedName(), partition.getQualifiedName());
         assertEquals(response.getCreatedAssets().size(), 1);
         one = response.getCreatedAssets().get(0);
@@ -515,8 +515,8 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertTrue(response.getDeletedAssets().isEmpty());
         assertEquals(response.getUpdatedAssets().size(), 1);
         Asset one = response.getUpdatedAssets().get(0);
-        assertTrue(one instanceof SQL);
-        SQL parent = (SQL) one;
+        assertTrue(one instanceof ISQL);
+        ISQL parent = (ISQL) one;
         assertEquals(parent.getQualifiedName(), partition.getQualifiedName());
         assertEquals(response.getCreatedAssets().size(), 1);
         one = response.getCreatedAssets().get(0);
@@ -542,7 +542,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertEquals(byGuid.getGuid(), column5.getGuid());
         assertEquals(byGuid.getQualifiedName(), column5.getQualifiedName());
         assertEquals(byGuid.getName(), COLUMN_NAME5);
-        SQL one = byGuid.getParent();
+        ISQL one = byGuid.getParent();
         assertNotNull(one);
         assertEquals(one.getTypeName(), MaterializedView.TYPE_NAME);
         assertEquals(one.getGuid(), mview.getGuid());
@@ -569,7 +569,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertEquals(byGuid.getGuid(), column7.getGuid());
         assertEquals(byGuid.getQualifiedName(), column7.getQualifiedName());
         assertEquals(byGuid.getName(), COLUMN_NAME7);
-        SQL one = byGuid.getParent();
+        ISQL one = byGuid.getParent();
         assertNotNull(one);
         assertEquals(one.getTypeName(), TablePartition.TYPE_NAME);
         assertEquals(one.getGuid(), partition.getGuid());
@@ -1201,7 +1201,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         // Note: eventual consistency could return results immediately, but prior to
         // index reflecting latest actual state of the replacement...
         validateHasTerms(column, Set.of(term1));
-        GlossaryTerm term = column.getAssignedTerms().first();
+        IGlossaryTerm term = column.getAssignedTerms().first();
         assertEquals(term.getName(), term1.getName());
     }
 
@@ -1247,7 +1247,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         // Note: eventual consistency could return results immediately, but prior to
         // index reflecting latest actual state of the replacement...
         validateHasTerms(column, Set.of(term1));
-        GlossaryTerm term = column.getAssignedTerms().first();
+        IGlossaryTerm term = column.getAssignedTerms().first();
         assertEquals(term.getName(), term1.getName());
     }
 
@@ -1263,13 +1263,13 @@ public class SQLAssetTest extends AtlanLiveTest {
     }
 
     private void validateHasTerms(Column column, Set<GlossaryTerm> terms) {
-        Set<GlossaryTerm> assignedTerms = column.getAssignedTerms();
+        Set<IGlossaryTerm> assignedTerms = column.getAssignedTerms();
         assertNotNull(assignedTerms);
         Set<GlossaryTerm> activeTerms = new HashSet<>();
-        for (GlossaryTerm assignedTerm : assignedTerms) {
+        for (IGlossaryTerm assignedTerm : assignedTerms) {
             if (assignedTerm.getRelationshipStatus() == AtlanStatus.ACTIVE
                     || assignedTerm.getRelationshipStatus() == null) {
-                activeTerms.add(assignedTerm);
+                activeTerms.add((GlossaryTerm) assignedTerm);
             }
         }
         assertEquals(activeTerms.size(), terms.size());
@@ -1650,9 +1650,9 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertTrue(detail instanceof Column);
         column = (Column) detail;
         validateUpdatedColumn(column);
-        Set<GlossaryTerm> terms = column.getAssignedTerms();
+        Set<IGlossaryTerm> terms = column.getAssignedTerms();
         assertEquals(terms.size(), 2);
-        Set<String> termGuids = terms.stream().map(GlossaryTerm::getGuid).collect(Collectors.toSet());
+        Set<String> termGuids = terms.stream().map(IGlossaryTerm::getGuid).collect(Collectors.toSet());
         assertEquals(termGuids.size(), 2);
         assertTrue(termGuids.contains(term1.getGuid()));
         assertTrue(termGuids.contains(term2.getGuid()));
@@ -1677,7 +1677,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         validateUpdatedColumn(column);
         terms = column.getAssignedTerms();
         assertEquals(terms.size(), 2);
-        termGuids = terms.stream().map(GlossaryTerm::getGuid).collect(Collectors.toSet());
+        termGuids = terms.stream().map(IGlossaryTerm::getGuid).collect(Collectors.toSet());
         assertEquals(termGuids.size(), 2);
         assertTrue(termGuids.contains(term1.getGuid()));
         assertTrue(termGuids.contains(term2.getGuid()));

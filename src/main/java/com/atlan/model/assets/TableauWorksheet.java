@@ -27,7 +27,8 @@ import lombok.extern.slf4j.Slf4j;
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
 @SuppressWarnings("cast")
-public class TableauWorksheet extends Tableau {
+public class TableauWorksheet extends Asset
+        implements ITableauWorksheet, ITableau, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "TableauWorksheet";
@@ -39,15 +40,28 @@ public class TableauWorksheet extends Tableau {
 
     /** TBC */
     @Attribute
-    String siteQualifiedName;
+    @Singular
+    SortedSet<ITableauCalculatedField> calculatedFields;
 
     /** TBC */
     @Attribute
-    String projectQualifiedName;
+    @Singular
+    SortedSet<ITableauDashboard> dashboards;
 
     /** TBC */
     @Attribute
-    String topLevelProjectQualifiedName;
+    @Singular
+    SortedSet<ITableauDatasourceField> datasourceFields;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 
     /** TBC */
     @Attribute
@@ -56,26 +70,23 @@ public class TableauWorksheet extends Tableau {
 
     /** TBC */
     @Attribute
+    String projectQualifiedName;
+
+    /** TBC */
+    @Attribute
+    String siteQualifiedName;
+
+    /** TBC */
+    @Attribute
+    String topLevelProjectQualifiedName;
+
+    /** TBC */
+    @Attribute
+    ITableauWorkbook workbook;
+
+    /** TBC */
+    @Attribute
     String workbookQualifiedName;
-
-    /** TBC */
-    @Attribute
-    TableauWorkbook workbook;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<TableauDatasourceField> datasourceFields;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<TableauCalculatedField> calculatedFields;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<TableauDashboard> dashboards;
 
     /**
      * Reference to a TableauWorksheet by GUID.
@@ -277,7 +288,7 @@ public class TableauWorksheet extends Tableau {
      * @return the TableauWorksheet that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static TableauWorksheet replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static TableauWorksheet replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (TableauWorksheet) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -292,7 +303,7 @@ public class TableauWorksheet extends Tableau {
      * @return the TableauWorksheet that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static TableauWorksheet appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static TableauWorksheet appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (TableauWorksheet) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -306,7 +317,7 @@ public class TableauWorksheet extends Tableau {
      * @return the TableauWorksheet that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static TableauWorksheet removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static TableauWorksheet removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (TableauWorksheet) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

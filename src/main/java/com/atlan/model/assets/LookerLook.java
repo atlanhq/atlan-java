@@ -11,6 +11,7 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -24,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class LookerLook extends Looker {
+public class LookerLook extends Asset implements ILookerLook, ILooker, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "LookerLook";
@@ -36,7 +37,53 @@ public class LookerLook extends Looker {
 
     /** TBC */
     @Attribute
+    ILookerDashboard dashboard;
+
+    /** TBC */
+    @Attribute
+    ILookerFolder folder;
+
+    /** TBC */
+    @Attribute
     String folderName;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    ILookerModel model;
+
+    /** TBC */
+    @Attribute
+    String modelName;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    ILookerQuery query;
+
+    /** TBC */
+    @Attribute
+    Integer sourceContentMetadataId;
+
+    /** TBC */
+    @Attribute
+    Long sourceLastAccessedAt;
+
+    /** TBC */
+    @Attribute
+    Long sourceLastViewedAt;
+
+    /** TBC */
+    @Attribute
+    Integer sourceQueryId;
 
     /** TBC */
     @Attribute
@@ -52,43 +99,7 @@ public class LookerLook extends Looker {
 
     /** TBC */
     @Attribute
-    Long sourceLastAccessedAt;
-
-    /** TBC */
-    @Attribute
-    Long sourceLastViewedAt;
-
-    /** TBC */
-    @Attribute
-    Integer sourceContentMetadataId;
-
-    /** TBC */
-    @Attribute
-    Integer sourceQueryId;
-
-    /** TBC */
-    @Attribute
-    String modelName;
-
-    /** TBC */
-    @Attribute
-    LookerQuery query;
-
-    /** TBC */
-    @Attribute
-    LookerFolder folder;
-
-    /** TBC */
-    @Attribute
-    LookerTile tile;
-
-    /** TBC */
-    @Attribute
-    LookerModel model;
-
-    /** TBC */
-    @Attribute
-    LookerDashboard dashboard;
+    ILookerTile tile;
 
     /**
      * Reference to a LookerLook by GUID.
@@ -290,7 +301,7 @@ public class LookerLook extends Looker {
      * @return the LookerLook that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static LookerLook replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static LookerLook replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (LookerLook) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -305,7 +316,7 @@ public class LookerLook extends Looker {
      * @return the LookerLook that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static LookerLook appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static LookerLook appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (LookerLook) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -319,7 +330,7 @@ public class LookerLook extends Looker {
      * @return the LookerLook that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static LookerLook removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static LookerLook removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (LookerLook) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

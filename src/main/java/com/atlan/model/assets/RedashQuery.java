@@ -27,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
 @SuppressWarnings("cast")
-public class RedashQuery extends Redash {
+public class RedashQuery extends Asset implements IRedashQuery, IRedash, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "RedashQuery";
@@ -37,26 +37,40 @@ public class RedashQuery extends Redash {
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** SQL code of the Redash query. */
+    /** TBC */
     @Attribute
-    String redashQuerySQL;
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
 
-    /** Parameters for the Redash query. */
+    /** TBC */
     @Attribute
-    String redashQueryParameters;
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 
-    /** Schedule of the Redash query. */
+    /** TBC */
     @Attribute
-    @Singular("putRedashQuerySchedule")
-    Map<String, String> redashQuerySchedule;
+    Boolean redashIsPublished;
+
+    /** Time when the Redash query was last executed. */
+    @Attribute
+    Long redashQueryLastExecutedAt;
 
     /** Elapsed time of the last run of the Redash query. */
     @Attribute
     Double redashQueryLastExecutionRuntime;
 
-    /** Time when the Redash query was last executed. */
+    /** Parameters for the Redash query. */
     @Attribute
-    Long redashQueryLastExecutedAt;
+    String redashQueryParameters;
+
+    /** SQL code of the Redash query. */
+    @Attribute
+    String redashQuerySQL;
+
+    /** Schedule of the Redash query. */
+    @Attribute
+    @Singular("putRedashQuerySchedule")
+    Map<String, String> redashQuerySchedule;
 
     /** Human-readable schedule of the Redash query. */
     @Attribute
@@ -65,7 +79,7 @@ public class RedashQuery extends Redash {
     /** Visualizations of this Redash query. */
     @Attribute
     @Singular
-    SortedSet<RedashVisualization> redashVisualizations;
+    SortedSet<IRedashVisualization> redashVisualizations;
 
     /**
      * Reference to a RedashQuery by GUID.
@@ -267,7 +281,7 @@ public class RedashQuery extends Redash {
      * @return the RedashQuery that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static RedashQuery replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static RedashQuery replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (RedashQuery) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -282,7 +296,7 @@ public class RedashQuery extends Redash {
      * @return the RedashQuery that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static RedashQuery appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static RedashQuery appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (RedashQuery) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -296,7 +310,7 @@ public class RedashQuery extends Redash {
      * @return the RedashQuery that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static RedashQuery removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static RedashQuery removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (RedashQuery) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

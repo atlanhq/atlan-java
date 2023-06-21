@@ -8,6 +8,7 @@ import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
+import com.atlan.model.enums.PowerBIEndorsementType;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class PowerBIDataset extends PowerBI {
+public class PowerBIDataset extends Asset implements IPowerBIDataset, IPowerBI, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "PowerBIDataset";
@@ -37,7 +38,54 @@ public class PowerBIDataset extends PowerBI {
 
     /** TBC */
     @Attribute
-    String workspaceQualifiedName;
+    @Singular
+    SortedSet<IPowerBIDataflow> dataflows;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IPowerBIDatasource> datasources;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    PowerBIEndorsementType powerBIEndorsement;
+
+    /** TBC */
+    @Attribute
+    String powerBIFormatString;
+
+    /** TBC */
+    @Attribute
+    Boolean powerBIIsHidden;
+
+    /** TBC */
+    @Attribute
+    String powerBITableQualifiedName;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IPowerBIReport> reports;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IPowerBITable> tables;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IPowerBITile> tiles;
 
     /** TBC */
     @Attribute
@@ -45,32 +93,11 @@ public class PowerBIDataset extends PowerBI {
 
     /** TBC */
     @Attribute
-    @Singular
-    SortedSet<PowerBIReport> reports;
+    IPowerBIWorkspace workspace;
 
     /** TBC */
     @Attribute
-    PowerBIWorkspace workspace;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<PowerBIDataflow> dataflows;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<PowerBITile> tiles;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<PowerBITable> tables;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<PowerBIDatasource> datasources;
+    String workspaceQualifiedName;
 
     /**
      * Reference to a PowerBIDataset by GUID.
@@ -272,7 +299,7 @@ public class PowerBIDataset extends PowerBI {
      * @return the PowerBIDataset that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static PowerBIDataset replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static PowerBIDataset replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (PowerBIDataset) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -287,7 +314,7 @@ public class PowerBIDataset extends PowerBI {
      * @return the PowerBIDataset that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static PowerBIDataset appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static PowerBIDataset appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (PowerBIDataset) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -301,7 +328,7 @@ public class PowerBIDataset extends PowerBI {
      * @return the PowerBIDataset that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static PowerBIDataset removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static PowerBIDataset removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (PowerBIDataset) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

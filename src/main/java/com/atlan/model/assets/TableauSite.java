@@ -25,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class TableauSite extends Tableau {
+public class TableauSite extends Asset implements ITableauSite, ITableau, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "TableauSite";
@@ -38,7 +38,17 @@ public class TableauSite extends Tableau {
     /** TBC */
     @Attribute
     @Singular
-    SortedSet<TableauProject> projects;
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ITableauProject> projects;
 
     /**
      * Reference to a TableauSite by GUID.
@@ -240,7 +250,7 @@ public class TableauSite extends Tableau {
      * @return the TableauSite that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static TableauSite replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static TableauSite replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (TableauSite) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -255,7 +265,7 @@ public class TableauSite extends Tableau {
      * @return the TableauSite that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static TableauSite appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static TableauSite appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (TableauSite) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -269,7 +279,7 @@ public class TableauSite extends Tableau {
      * @return the TableauSite that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static TableauSite removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static TableauSite removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (TableauSite) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

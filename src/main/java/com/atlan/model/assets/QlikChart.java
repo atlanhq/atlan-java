@@ -11,6 +11,7 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -24,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class QlikChart extends Qlik {
+public class QlikChart extends Asset implements IQlikChart, IQlik, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "QlikChart";
@@ -34,9 +35,23 @@ public class QlikChart extends Qlik {
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Subtitle of the chart. */
+    /** TBC */
     @Attribute
-    String qlikChartSubtitle;
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    String qlikAppId;
+
+    /** TBC */
+    @Attribute
+    String qlikAppQualifiedName;
 
     /** Footnote on the chart. */
     @Attribute
@@ -46,13 +61,41 @@ public class QlikChart extends Qlik {
     @Attribute
     String qlikChartOrientation;
 
+    /** Subtitle of the chart. */
+    @Attribute
+    String qlikChartSubtitle;
+
     /** Subtype of the chart, for example: bar, graph, pie, etc. */
     @Attribute
     String qlikChartType;
 
+    /** TBC */
+    @Attribute
+    String qlikId;
+
+    /** TBC */
+    @Attribute
+    Boolean qlikIsPublished;
+
+    /** TBC */
+    @Attribute
+    String qlikOwnerId;
+
+    /** TBC */
+    @Attribute
+    String qlikQRI;
+
     /** Sheet in which the chart exists. */
     @Attribute
-    QlikSheet qlikSheet;
+    IQlikSheet qlikSheet;
+
+    /** TBC */
+    @Attribute
+    String qlikSpaceId;
+
+    /** TBC */
+    @Attribute
+    String qlikSpaceQualifiedName;
 
     /**
      * Reference to a QlikChart by GUID.
@@ -254,7 +297,7 @@ public class QlikChart extends Qlik {
      * @return the QlikChart that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static QlikChart replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static QlikChart replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (QlikChart) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -269,7 +312,7 @@ public class QlikChart extends Qlik {
      * @return the QlikChart that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static QlikChart appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static QlikChart appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (QlikChart) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -283,7 +326,7 @@ public class QlikChart extends Qlik {
      * @return the QlikChart that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static QlikChart removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static QlikChart removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (QlikChart) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

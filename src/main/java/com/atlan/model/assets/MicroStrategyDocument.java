@@ -11,6 +11,8 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -24,7 +26,9 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class MicroStrategyDocument extends MicroStrategy {
+@SuppressWarnings("cast")
+public class MicroStrategyDocument extends Asset
+        implements IMicroStrategyDocument, IMicroStrategy, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "MicroStrategyDocument";
@@ -34,9 +38,64 @@ public class MicroStrategyDocument extends MicroStrategy {
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    Long microStrategyCertifiedAt;
+
+    /** TBC */
+    @Attribute
+    String microStrategyCertifiedBy;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<String> microStrategyCubeNames;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<String> microStrategyCubeQualifiedNames;
+
+    /** TBC */
+    @Attribute
+    Boolean microStrategyIsCertified;
+
+    /** TBC */
+    @Attribute
+    @Singular("putMicroStrategyLocation")
+    List<Map<String, String>> microStrategyLocation;
+
     /** Project containing the document. */
     @Attribute
-    MicroStrategyProject microStrategyProject;
+    IMicroStrategyProject microStrategyProject;
+
+    /** TBC */
+    @Attribute
+    String microStrategyProjectName;
+
+    /** TBC */
+    @Attribute
+    String microStrategyProjectQualifiedName;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<String> microStrategyReportNames;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<String> microStrategyReportQualifiedNames;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 
     /**
      * Reference to a MicroStrategyDocument by GUID.
@@ -240,7 +299,7 @@ public class MicroStrategyDocument extends MicroStrategy {
      * @return the MicroStrategyDocument that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static MicroStrategyDocument replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static MicroStrategyDocument replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (MicroStrategyDocument) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -255,7 +314,7 @@ public class MicroStrategyDocument extends MicroStrategy {
      * @return the MicroStrategyDocument that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static MicroStrategyDocument appendTerms(String qualifiedName, List<GlossaryTerm> terms)
+    public static MicroStrategyDocument appendTerms(String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (MicroStrategyDocument) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
@@ -270,7 +329,7 @@ public class MicroStrategyDocument extends MicroStrategy {
      * @return the MicroStrategyDocument that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static MicroStrategyDocument removeTerms(String qualifiedName, List<GlossaryTerm> terms)
+    public static MicroStrategyDocument removeTerms(String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (MicroStrategyDocument) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }

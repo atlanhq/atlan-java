@@ -27,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
 @SuppressWarnings("cast")
-public class TableauProject extends Tableau {
+public class TableauProject extends Asset implements ITableauProject, ITableau, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "TableauProject";
@@ -39,15 +39,36 @@ public class TableauProject extends Tableau {
 
     /** TBC */
     @Attribute
-    String siteQualifiedName;
+    @Singular
+    SortedSet<ITableauProject> childProjects;
 
     /** TBC */
     @Attribute
-    String topLevelProjectQualifiedName;
+    @Singular
+    SortedSet<ITableauDatasource> datasources;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ITableauFlow> flows;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
 
     /** TBC */
     @Attribute
     Boolean isTopLevelProject;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    ITableauProject parentProject;
 
     /** TBC */
     @Attribute
@@ -56,31 +77,20 @@ public class TableauProject extends Tableau {
 
     /** TBC */
     @Attribute
-    TableauProject parentProject;
+    ITableauSite site;
+
+    /** TBC */
+    @Attribute
+    String siteQualifiedName;
+
+    /** TBC */
+    @Attribute
+    String topLevelProjectQualifiedName;
 
     /** TBC */
     @Attribute
     @Singular
-    SortedSet<TableauWorkbook> workbooks;
-
-    /** TBC */
-    @Attribute
-    TableauSite site;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<TableauDatasource> datasources;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<TableauFlow> flows;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<TableauProject> childProjects;
+    SortedSet<ITableauWorkbook> workbooks;
 
     /**
      * Reference to a TableauProject by GUID.
@@ -282,7 +292,7 @@ public class TableauProject extends Tableau {
      * @return the TableauProject that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static TableauProject replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static TableauProject replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (TableauProject) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -297,7 +307,7 @@ public class TableauProject extends Tableau {
      * @return the TableauProject that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static TableauProject appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static TableauProject appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (TableauProject) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -311,7 +321,7 @@ public class TableauProject extends Tableau {
      * @return the TableauProject that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static TableauProject removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static TableauProject removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (TableauProject) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

@@ -8,10 +8,7 @@ import static org.testng.Assert.*;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import com.atlan.api.EntityBulkEndpoint;
 import com.atlan.exception.AtlanException;
-import com.atlan.model.assets.Asset;
-import com.atlan.model.assets.Glossary;
-import com.atlan.model.assets.GlossaryCategory;
-import com.atlan.model.assets.GlossaryTerm;
+import com.atlan.model.assets.*;
 import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.enums.*;
 import com.atlan.model.search.AggregationBucketResult;
@@ -282,10 +279,10 @@ public class GlossaryTest extends AtlanLiveTest {
         assertNotNull(glossary);
         Glossary.CategoryHierarchy tree = glossary.getHierarchy();
         assertNotNull(tree);
-        List<GlossaryCategory> dfs = tree.depthFirst();
+        List<IGlossaryCategory> dfs = tree.depthFirst();
         assertNotNull(dfs);
         assertEquals(dfs.size(), 14);
-        List<String> names = dfs.stream().map(GlossaryCategory::getName).collect(Collectors.toList());
+        List<String> names = dfs.stream().map(IGlossaryCategory::getName).collect(Collectors.toList());
         assertTrue(names.get(0).startsWith("top"));
         assertTrue(names.get(1).startsWith("mid"));
         assertTrue(names.get(2).startsWith("leaf"));
@@ -300,10 +297,10 @@ public class GlossaryTest extends AtlanLiveTest {
         assertTrue(names.get(11).startsWith("mid"));
         assertTrue(names.get(12).startsWith("leaf"));
         assertTrue(names.get(13).startsWith("leaf"));
-        List<GlossaryCategory> bfs = tree.breadthFirst();
+        List<IGlossaryCategory> bfs = tree.breadthFirst();
         assertNotNull(bfs);
         assertEquals(bfs.size(), 14);
-        names = bfs.stream().map(Asset::getName).collect(Collectors.toList());
+        names = bfs.stream().map(IGlossaryCategory::getName).collect(Collectors.toList());
         assertTrue(names.get(0).startsWith("top"));
         assertTrue(names.get(1).startsWith("top"));
         assertTrue(names.get(2).startsWith("mid"));
@@ -318,10 +315,10 @@ public class GlossaryTest extends AtlanLiveTest {
         assertTrue(names.get(11).startsWith("leaf"));
         assertTrue(names.get(12).startsWith("leaf"));
         assertTrue(names.get(13).startsWith("leaf"));
-        List<GlossaryCategory> root = tree.getRootCategories();
+        List<IGlossaryCategory> root = tree.getRootCategories();
         assertNotNull(root);
         assertEquals(root.size(), 2);
-        names = root.stream().map(Asset::getName).collect(Collectors.toList());
+        names = root.stream().map(IGlossaryCategory::getName).collect(Collectors.toList());
         assertTrue(names.get(0).startsWith("top"));
         assertTrue(names.get(1).startsWith("top"));
     }
@@ -352,18 +349,18 @@ public class GlossaryTest extends AtlanLiveTest {
         assertEquals(g.getGuid(), glossary.getGuid());
         assertEquals(g.getQualifiedName(), glossary.getQualifiedName());
         assertEquals(g.getName(), glossary.getName());
-        Set<GlossaryTerm> terms = g.getTerms();
+        Set<IGlossaryTerm> terms = g.getTerms();
         assertNotNull(terms);
         assertEquals(terms.size(), 2);
-        Set<String> guids = terms.stream().map(GlossaryTerm::getGuid).collect(Collectors.toSet());
+        Set<String> guids = terms.stream().map(IGlossaryTerm::getGuid).collect(Collectors.toSet());
         assertNotNull(guids);
         assertEquals(guids.size(), 2);
         assertTrue(guids.contains(term1.getGuid()));
         assertTrue(guids.contains(term2.getGuid()));
-        Set<GlossaryCategory> categories = g.getCategories();
+        Set<IGlossaryCategory> categories = g.getCategories();
         assertNotNull(categories);
         assertEquals(categories.size(), 14);
-        guids = categories.stream().map(GlossaryCategory::getGuid).collect(Collectors.toSet());
+        guids = categories.stream().map(IGlossaryCategory::getGuid).collect(Collectors.toSet());
         assertEquals(guids.size(), 14);
     }
 

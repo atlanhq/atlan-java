@@ -11,6 +11,8 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -24,7 +26,9 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class MicroStrategyVisualization extends MicroStrategy {
+@SuppressWarnings("cast")
+public class MicroStrategyVisualization extends Asset
+        implements IMicroStrategyVisualization, IMicroStrategy, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "MicroStrategyVisualization";
@@ -34,25 +38,80 @@ public class MicroStrategyVisualization extends MicroStrategy {
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Type of visualization. */
+    /** TBC */
     @Attribute
-    String microStrategyVisualizationType;
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
 
-    /** Unique name of the dossier containing this visualization. */
+    /** TBC */
     @Attribute
-    String microStrategyDossierQualifiedName;
+    Long microStrategyCertifiedAt;
+
+    /** TBC */
+    @Attribute
+    String microStrategyCertifiedBy;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<String> microStrategyCubeNames;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<String> microStrategyCubeQualifiedNames;
+
+    /** Dossier containing the visualization. */
+    @Attribute
+    IMicroStrategyDossier microStrategyDossier;
 
     /** Simple name of the dossier containing this visualization. */
     @Attribute
     String microStrategyDossierName;
 
-    /** Dossier containing the visualization. */
+    /** Unique name of the dossier containing this visualization. */
     @Attribute
-    MicroStrategyDossier microStrategyDossier;
+    String microStrategyDossierQualifiedName;
+
+    /** TBC */
+    @Attribute
+    Boolean microStrategyIsCertified;
+
+    /** TBC */
+    @Attribute
+    @Singular("putMicroStrategyLocation")
+    List<Map<String, String>> microStrategyLocation;
 
     /** Project containing the visualization. */
     @Attribute
-    MicroStrategyProject microStrategyProject;
+    IMicroStrategyProject microStrategyProject;
+
+    /** TBC */
+    @Attribute
+    String microStrategyProjectName;
+
+    /** TBC */
+    @Attribute
+    String microStrategyProjectQualifiedName;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<String> microStrategyReportNames;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<String> microStrategyReportQualifiedNames;
+
+    /** Type of visualization. */
+    @Attribute
+    String microStrategyVisualizationType;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 
     /**
      * Reference to a MicroStrategyVisualization by GUID.
@@ -260,7 +319,7 @@ public class MicroStrategyVisualization extends MicroStrategy {
      * @return the MicroStrategyVisualization that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static MicroStrategyVisualization replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static MicroStrategyVisualization replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (MicroStrategyVisualization) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -275,7 +334,7 @@ public class MicroStrategyVisualization extends MicroStrategy {
      * @return the MicroStrategyVisualization that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static MicroStrategyVisualization appendTerms(String qualifiedName, List<GlossaryTerm> terms)
+    public static MicroStrategyVisualization appendTerms(String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (MicroStrategyVisualization) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
@@ -290,7 +349,7 @@ public class MicroStrategyVisualization extends MicroStrategy {
      * @return the MicroStrategyVisualization that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static MicroStrategyVisualization removeTerms(String qualifiedName, List<GlossaryTerm> terms)
+    public static MicroStrategyVisualization removeTerms(String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (MicroStrategyVisualization) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }

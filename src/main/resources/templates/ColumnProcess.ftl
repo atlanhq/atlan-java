@@ -14,13 +14,13 @@
             String name,
             String connectionQualifiedName,
             String id,
-            List<Catalog> inputs,
-            List<Catalog> outputs,
+            List<ICatalog> inputs,
+            List<ICatalog> outputs,
             LineageProcess parent) {
         AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         String connectionName = StringUtils.getNameFromQualifiedName(connectionQualifiedName);
         return ColumnProcess.builder()
-                .qualifiedName(generateQualifiedName(name, connectionQualifiedName, id, inputs, outputs, parent))
+                .qualifiedName(LineageProcess.generateQualifiedName(name, connectionQualifiedName, id, inputs, outputs, parent))
                 .name(name)
                 .connectorType(connectorType)
                 .connectionName(connectionName)

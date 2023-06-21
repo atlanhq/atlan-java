@@ -39,11 +39,25 @@ import com.atlan.model.enums.DataAction;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.KeywordFields;
 import com.atlan.model.relations.UniqueAttributes;
-<#list attributes as attribute>
+<#list classAttributes as attribute>
 <#if attribute.type.type == "ENUM">
+<#if isBuiltIn(attribute.type.originalBase, attribute.type.name)>
+import com.atlan.model.enums.${attribute.type.name};
+<#else>
 import ${packageRoot}.enums.${attribute.type.name};
+</#if>
 <#elseif attribute.type.type == "STRUCT">
+<#if isBuiltIn(attribute.type.originalBase, attribute.type.name)>
+import com.atlan.model.structs.${attribute.type.name};
+<#else>
 import ${packageRoot}.structs.${attribute.type.name};
+</#if>
+<#elseif attribute.type.type == "ASSET">
+<#if isBuiltIn(attribute.type.originalBase, attribute.type.name)>
+import com.atlan.model.assets.I${attribute.type.name};
+<#else>
+import ${packageRoot}.assets.I${attribute.type.name};
+</#if>
 </#if>
 </#list>
 import com.atlan.model.search.IndexSearchDSL;
@@ -91,10 +105,12 @@ import lombok.extern.slf4j.Slf4j;
 
 import com.atlan.model.assets.Attribute;
 import com.atlan.model.assets.Asset;
-import com.atlan.model.assets.GlossaryTerm;
-<#if hasBuiltInParent>
-import com.atlan.model.assets.${parentClassName};
+import com.atlan.model.assets.IGlossaryTerm;
+<#list superTypes as parent>
+<#if isBuiltIn(parent, parent)>
+import com.atlan.model.assets.I${resolveSuperTypeName(parent)};
 </#if>
+</#list>
 
 import javax.annotation.processing.Generated;
 
@@ -114,16 +130,9 @@ import javax.annotation.processing.Generated;
         property = "typeName",
         defaultImpl = IndistinctAsset.class)
 </#if>
-<#if subTypes??>
-@JsonSubTypes({
-<#list subTypes as subType>
-    @JsonSubTypes.Type(value = ${subType}.class, name = ${subType}.TYPE_NAME),
-</#list>
-})
-</#if>
 @Slf4j
 <#if mapContainers?? || className == "Asset">@SuppressWarnings("cast")</#if>
-public <#if abstract>abstract</#if> class ${className} extends ${parentClassName} {
+public <#if abstract>abstract</#if> class ${className} extends ${parentClassName} implements <#if className == "TableauCalculatedField" || className == "TableauDatasourceField">ITableauField, </#if>I${className}<#list superTypes as parent>, I${resolveSuperTypeName(parent)}</#list> {
 <#if !abstract>    private static final long serialVersionUID = 2L;</#if>
 
     public static final String TYPE_NAME = "${originalName}";
@@ -135,7 +144,7 @@ public <#if abstract>abstract</#if> class ${className} extends ${parentClassName
     String typeName = TYPE_NAME;
 </#if>
 
-<#list attributes as attribute>
+<#list classAttributes as attribute>
     /** ${attribute.description} */
     @Attribute
     <#if attribute.singular??>@Singular<#if attribute.singular?has_content>("${attribute.singular}")</#if></#if>
@@ -143,7 +152,7 @@ public <#if abstract>abstract</#if> class ${className} extends ${parentClassName
     <#if attribute.renamed != attribute.originalName>
     @JsonProperty("${attribute.originalName}")
     </#if>
-    ${attribute.fullType} ${attribute.renamed};
+    ${attribute.referenceType} ${attribute.renamed};
 
 </#list>
 <#if !abstract>
@@ -216,8 +225,8 @@ public <#if abstract>abstract</#if> class ${className} extends ${parentClassName
     }
 
 </#if>
-<#if templateFile??>
-<#import templateFile as methods>
+<#if classTemplateFile??>
+<#import classTemplateFile as methods>
 <@methods.all/>
 <#elseif !abstract>
     /**
@@ -356,7 +365,7 @@ public <#if abstract>abstract</#if> class ${className} extends ${parentClassName
      * @return the ${className} that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static ${className} replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static ${className} replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (${className}) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -371,7 +380,7 @@ public <#if abstract>abstract</#if> class ${className} extends ${parentClassName
      * @return the ${className} that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static ${className} appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static ${className} appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (${className}) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -385,7 +394,7 @@ public <#if abstract>abstract</#if> class ${className} extends ${parentClassName
      * @return the ${className} that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static ${className} removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static ${className} removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (${className}) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 </#if>

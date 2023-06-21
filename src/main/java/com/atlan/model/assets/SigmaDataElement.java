@@ -25,7 +25,8 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class SigmaDataElement extends Sigma {
+public class SigmaDataElement extends Asset
+        implements ISigmaDataElement, ISigma, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "SigmaDataElement";
@@ -37,24 +38,58 @@ public class SigmaDataElement extends Sigma {
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** Number of data element fields within this data element. */
+    @Attribute
+    Long sigmaDataElementFieldCount;
+
+    /** Data element fields within this data element. */
+    @Attribute
+    @Singular
+    SortedSet<ISigmaDataElementField> sigmaDataElementFields;
+
+    /** TBC */
+    @Attribute
+    String sigmaDataElementName;
+
+    /** TBC */
+    @Attribute
+    String sigmaDataElementQualifiedName;
+
+    /** TBC */
+    @Attribute
     String sigmaDataElementQuery;
 
     /** TBC */
     @Attribute
     String sigmaDataElementType;
 
-    /** Number of data element fields within this data element. */
-    @Attribute
-    Long sigmaDataElementFieldCount;
-
     /** Page that contains this data element. */
     @Attribute
-    SigmaPage sigmaPage;
+    ISigmaPage sigmaPage;
 
-    /** Data element fields within this data element. */
+    /** TBC */
     @Attribute
-    @Singular
-    SortedSet<SigmaDataElementField> sigmaDataElementFields;
+    String sigmaPageName;
+
+    /** TBC */
+    @Attribute
+    String sigmaPageQualifiedName;
+
+    /** TBC */
+    @Attribute
+    String sigmaWorkbookName;
+
+    /** TBC */
+    @Attribute
+    String sigmaWorkbookQualifiedName;
 
     /**
      * Reference to a SigmaDataElement by GUID.
@@ -256,7 +291,7 @@ public class SigmaDataElement extends Sigma {
      * @return the SigmaDataElement that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static SigmaDataElement replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static SigmaDataElement replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (SigmaDataElement) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -271,7 +306,7 @@ public class SigmaDataElement extends Sigma {
      * @return the SigmaDataElement that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static SigmaDataElement appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static SigmaDataElement appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (SigmaDataElement) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -285,7 +320,7 @@ public class SigmaDataElement extends Sigma {
      * @return the SigmaDataElement that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static SigmaDataElement removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static SigmaDataElement removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (SigmaDataElement) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

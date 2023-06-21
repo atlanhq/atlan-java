@@ -30,7 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
 @SuppressWarnings("cast")
-public class Table extends SQL {
+public class Table extends Asset implements ITable, ISQL, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "Table";
@@ -40,34 +40,41 @@ public class Table extends SQL {
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Number of columns in this table. */
-    @Attribute
-    Long columnCount;
-
-    /** Number of rows in this table. */
-    @Attribute
-    Long rowCount;
-
-    /** Size of the table in bytes. */
-    @Attribute
-    Long sizeBytes;
-
     /** TBC */
     @Attribute
     String alias;
 
-    /** Whether this table is temporary (true) or not (false). */
+    /** Number of columns in this table. */
     @Attribute
-    Boolean isTemporary;
+    Long columnCount;
+
+    /** Columns that exist within this table. */
+    @Attribute
+    @Singular
+    SortedSet<IColumn> columns;
 
     /** TBC */
     @Attribute
-    Boolean isQueryPreview;
+    String databaseName;
 
     /** TBC */
     @Attribute
-    @Singular("putQueryPreviewConfig")
-    Map<String, String> queryPreviewConfig;
+    String databaseQualifiedName;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtModel> dbtModels;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtSource> dbtSources;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ITable> dimensions;
 
     /** TBC */
     @Attribute
@@ -75,11 +82,21 @@ public class Table extends SQL {
 
     /** TBC */
     @Attribute
+    String externalLocationFormat;
+
+    /** TBC */
+    @Attribute
     String externalLocationRegion;
 
     /** TBC */
     @Attribute
-    String externalLocationFormat;
+    @Singular
+    SortedSet<ITable> facts;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
 
     /** TBC */
     @Attribute
@@ -87,7 +104,24 @@ public class Table extends SQL {
 
     /** TBC */
     @Attribute
-    String partitionStrategy;
+    Boolean isProfiled;
+
+    /** TBC */
+    @Attribute
+    Boolean isQueryPreview;
+
+    /** Whether this table is temporary (true) or not (false). */
+    @Attribute
+    Boolean isTemporary;
+
+    /** TBC */
+    @Attribute
+    Long lastProfiledAt;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 
     /** TBC */
     @Attribute
@@ -99,33 +133,86 @@ public class Table extends SQL {
 
     /** TBC */
     @Attribute
-    @Singular
-    SortedSet<TablePartition> partitions;
+    String partitionStrategy;
 
-    /** Columns that exist within this table. */
+    /** TBC */
     @Attribute
     @Singular
-    SortedSet<Column> columns;
+    SortedSet<ITablePartition> partitions;
 
     /** Queries that involve this table. */
     @Attribute
     @Singular
-    SortedSet<AtlanQuery> queries;
+    SortedSet<IAtlanQuery> queries;
 
     /** TBC */
     @Attribute
-    @Singular
-    SortedSet<Table> facts;
+    Long queryCount;
+
+    /** TBC */
+    @Attribute
+    Long queryCountUpdatedAt;
+
+    /** TBC */
+    @Attribute
+    @Singular("putQueryPreviewConfig")
+    Map<String, String> queryPreviewConfig;
+
+    /** TBC */
+    @Attribute
+    Long queryUserCount;
+
+    /** TBC */
+    @Attribute
+    @Singular("putQueryUserMap")
+    Map<String, Long> queryUserMap;
+
+    /** Number of rows in this table. */
+    @Attribute
+    Long rowCount;
 
     /** Schema in which this table exists. */
     @Attribute
     @JsonProperty("atlanSchema")
-    Schema schema;
+    ISchema schema;
+
+    /** TBC */
+    @Attribute
+    String schemaName;
+
+    /** TBC */
+    @Attribute
+    String schemaQualifiedName;
+
+    /** Size of the table in bytes. */
+    @Attribute
+    Long sizeBytes;
 
     /** TBC */
     @Attribute
     @Singular
-    SortedSet<Table> dimensions;
+    SortedSet<IDbtSource> sqlDBTSources;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtModel> sqlDbtModels;
+
+    /** TBC */
+    @Attribute
+    String tableName;
+
+    /** TBC */
+    @Attribute
+    String tableQualifiedName;
+
+    /** TBC */
+    @Attribute
+    String viewName;
+
+    /** TBC */
+    @Attribute
+    String viewQualifiedName;
 
     /**
      * Reference to a Table by GUID.
@@ -364,7 +451,7 @@ public class Table extends SQL {
      * @return the Table that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static Table replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static Table replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (Table) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -379,7 +466,7 @@ public class Table extends SQL {
      * @return the Table that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static Table appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static Table appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (Table) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -393,7 +480,7 @@ public class Table extends SQL {
      * @return the Table that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static Table removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static Table removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (Table) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

@@ -8,6 +8,7 @@ import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
+import com.atlan.model.enums.PowerBIEndorsementType;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class PowerBIReport extends PowerBI {
+public class PowerBIReport extends Asset implements IPowerBIReport, IPowerBI, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "PowerBIReport";
@@ -37,7 +38,7 @@ public class PowerBIReport extends PowerBI {
 
     /** TBC */
     @Attribute
-    String workspaceQualifiedName;
+    IPowerBIDataset dataset;
 
     /** TBC */
     @Attribute
@@ -45,7 +46,13 @@ public class PowerBIReport extends PowerBI {
 
     /** TBC */
     @Attribute
-    String webUrl;
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 
     /** TBC */
     @Attribute
@@ -53,21 +60,41 @@ public class PowerBIReport extends PowerBI {
 
     /** TBC */
     @Attribute
-    PowerBIWorkspace workspace;
+    @Singular
+    SortedSet<IPowerBIPage> pages;
+
+    /** TBC */
+    @Attribute
+    PowerBIEndorsementType powerBIEndorsement;
+
+    /** TBC */
+    @Attribute
+    String powerBIFormatString;
+
+    /** TBC */
+    @Attribute
+    Boolean powerBIIsHidden;
+
+    /** TBC */
+    @Attribute
+    String powerBITableQualifiedName;
 
     /** TBC */
     @Attribute
     @Singular
-    SortedSet<PowerBITile> tiles;
+    SortedSet<IPowerBITile> tiles;
 
     /** TBC */
     @Attribute
-    @Singular
-    SortedSet<PowerBIPage> pages;
+    String webUrl;
 
     /** TBC */
     @Attribute
-    PowerBIDataset dataset;
+    IPowerBIWorkspace workspace;
+
+    /** TBC */
+    @Attribute
+    String workspaceQualifiedName;
 
     /**
      * Reference to a PowerBIReport by GUID.
@@ -269,7 +296,7 @@ public class PowerBIReport extends PowerBI {
      * @return the PowerBIReport that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static PowerBIReport replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static PowerBIReport replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (PowerBIReport) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -284,7 +311,7 @@ public class PowerBIReport extends PowerBI {
      * @return the PowerBIReport that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static PowerBIReport appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static PowerBIReport appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (PowerBIReport) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -298,7 +325,7 @@ public class PowerBIReport extends PowerBI {
      * @return the PowerBIReport that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static PowerBIReport removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static PowerBIReport removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (PowerBIReport) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

@@ -27,7 +27,8 @@ import lombok.extern.slf4j.Slf4j;
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
 @SuppressWarnings("cast")
-public class SalesforceReport extends Salesforce {
+public class SalesforceReport extends Asset
+        implements ISalesforceReport, ISalesforce, ISaaS, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "SalesforceReport";
@@ -37,14 +38,14 @@ public class SalesforceReport extends Salesforce {
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** ID of the report in Salesforce. */
+    /** TBC */
     @Attribute
-    String sourceId;
+    String apiName;
 
-    /** Type of report in Salesforce. */
+    /** TBC */
     @Attribute
-    @Singular("putReportType")
-    Map<String, String> reportType;
+    @Singular
+    SortedSet<ISalesforceDashboard> dashboards;
 
     /** List of column names on the report. */
     @Attribute
@@ -53,12 +54,30 @@ public class SalesforceReport extends Salesforce {
 
     /** TBC */
     @Attribute
-    SalesforceOrganization organization;
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    ISalesforceOrganization organization;
+
+    /** TBC */
+    @Attribute
+    String organizationQualifiedName;
 
     /** TBC */
     @Attribute
     @Singular
-    SortedSet<SalesforceDashboard> dashboards;
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** Type of report in Salesforce. */
+    @Attribute
+    @Singular("putReportType")
+    Map<String, String> reportType;
+
+    /** ID of the report in Salesforce. */
+    @Attribute
+    String sourceId;
 
     /**
      * Reference to a SalesforceReport by GUID.
@@ -260,7 +279,7 @@ public class SalesforceReport extends Salesforce {
      * @return the SalesforceReport that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static SalesforceReport replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static SalesforceReport replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (SalesforceReport) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -275,7 +294,7 @@ public class SalesforceReport extends Salesforce {
      * @return the SalesforceReport that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static SalesforceReport appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static SalesforceReport appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (SalesforceReport) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -289,7 +308,7 @@ public class SalesforceReport extends Salesforce {
      * @return the SalesforceReport that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static SalesforceReport removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static SalesforceReport removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (SalesforceReport) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

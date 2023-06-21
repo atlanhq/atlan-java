@@ -28,7 +28,8 @@ import lombok.extern.slf4j.Slf4j;
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
 @SuppressWarnings("cast")
-public class QuickSightFolder extends QuickSight {
+public class QuickSightFolder extends Asset
+        implements IQuickSightFolder, IQuickSight, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "QuickSightFolder";
@@ -40,7 +41,28 @@ public class QuickSightFolder extends QuickSight {
 
     /** TBC */
     @Attribute
-    QuickSightFolderType quickSightFolderType;
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IQuickSightAnalysis> quickSightAnalyses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IQuickSightDashboard> quickSightDashboards;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IQuickSightDataset> quickSightDatasets;
 
     /** TBC */
     @Attribute
@@ -49,18 +71,19 @@ public class QuickSightFolder extends QuickSight {
 
     /** TBC */
     @Attribute
-    @Singular
-    SortedSet<QuickSightDashboard> quickSightDashboards;
+    QuickSightFolderType quickSightFolderType;
 
     /** TBC */
     @Attribute
-    @Singular
-    SortedSet<QuickSightAnalysis> quickSightAnalyses;
+    String quickSightId;
 
     /** TBC */
     @Attribute
-    @Singular
-    SortedSet<QuickSightDataset> quickSightDatasets;
+    String quickSightSheetId;
+
+    /** TBC */
+    @Attribute
+    String quickSightSheetName;
 
     /**
      * Reference to a QuickSightFolder by GUID.
@@ -262,7 +285,7 @@ public class QuickSightFolder extends QuickSight {
      * @return the QuickSightFolder that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static QuickSightFolder replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static QuickSightFolder replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (QuickSightFolder) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -277,7 +300,7 @@ public class QuickSightFolder extends QuickSight {
      * @return the QuickSightFolder that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static QuickSightFolder appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static QuickSightFolder appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (QuickSightFolder) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -291,7 +314,7 @@ public class QuickSightFolder extends QuickSight {
      * @return the QuickSightFolder that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static QuickSightFolder removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static QuickSightFolder removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (QuickSightFolder) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

@@ -145,10 +145,11 @@ public class ADLSAssetTest extends AtlanLiveTest {
         assertNotNull(b.getAdlsObjects());
         assertEquals(b.getAdlsObjects().size(), 1);
         Set<String> types =
-                b.getAdlsObjects().stream().map(ADLSObject::getTypeName).collect(Collectors.toSet());
+                b.getAdlsObjects().stream().map(IADLSObject::getTypeName).collect(Collectors.toSet());
         assertEquals(types.size(), 1);
         assertTrue(types.contains(ADLSObject.TYPE_NAME));
-        Set<String> guids = b.getAdlsObjects().stream().map(ADLSObject::getGuid).collect(Collectors.toSet());
+        Set<String> guids =
+                b.getAdlsObjects().stream().map(IADLSObject::getGuid).collect(Collectors.toSet());
         assertEquals(guids.size(), 1);
         assertTrue(guids.contains(object.getGuid()));
     }
@@ -177,7 +178,7 @@ public class ADLSAssetTest extends AtlanLiveTest {
     void searchAssets() throws AtlanException, InterruptedException {
         Query combined = CompoundQuery.builder()
                 .must(beActive())
-                .must(haveSuperType(ADLS.TYPE_NAME))
+                .must(haveSuperType(IADLS.TYPE_NAME))
                 .must(have(KeywordFields.QUALIFIED_NAME).startingWith(connection.getQualifiedName()))
                 .build()
                 ._toQuery();
@@ -219,25 +220,25 @@ public class ADLSAssetTest extends AtlanLiveTest {
         assertEquals(entities.size(), 3);
 
         Asset one = entities.get(0);
-        assertTrue(one instanceof ADLS);
+        assertTrue(one instanceof IADLS);
         assertFalse(one.isComplete());
-        ADLS asset = (ADLS) one;
+        IADLS asset = (IADLS) one;
         assertEquals(asset.getQualifiedName(), account.getQualifiedName());
         assertEquals(asset.getName(), account.getName());
         assertEquals(asset.getConnectionQualifiedName(), connection.getQualifiedName());
 
         one = entities.get(1);
-        assertTrue(one instanceof ADLS);
+        assertTrue(one instanceof IADLS);
         assertFalse(one.isComplete());
-        asset = (ADLS) one;
+        asset = (IADLS) one;
         assertEquals(asset.getQualifiedName(), container.getQualifiedName());
         assertEquals(asset.getName(), container.getName());
         assertEquals(asset.getConnectionQualifiedName(), connection.getQualifiedName());
 
         one = entities.get(2);
-        assertTrue(one instanceof ADLS);
+        assertTrue(one instanceof IADLS);
         assertFalse(one.isComplete());
-        asset = (ADLS) one;
+        asset = (IADLS) one;
         assertEquals(asset.getQualifiedName(), object.getQualifiedName());
         assertEquals(asset.getName(), object.getName());
         assertEquals(asset.getConnectionQualifiedName(), connection.getQualifiedName());

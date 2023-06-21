@@ -14,8 +14,8 @@
             String name,
             String connectionQualifiedName,
             String id,
-            List<Catalog> inputs,
-            List<Catalog> outputs,
+            List<ICatalog> inputs,
+            List<ICatalog> outputs,
             LineageProcess parent) {
         AtlanConnectorType connectorType = Connection.getConnectorTypeFromQualifiedName(connectionQualifiedName);
         return LineageProcess.builder()
@@ -76,8 +76,8 @@
             String name,
             String connectionQualifiedName,
             String id,
-            List<Catalog> inputs,
-            List<Catalog> outputs,
+            List<ICatalog> inputs,
+            List<ICatalog> outputs,
             LineageProcess parent) {
         // If an ID was provided, use that as the unique name for the process
         if (id != null && id.length() > 0) {
@@ -109,9 +109,9 @@
      * @param sb into which to append
      * @param relationships to append
      */
-    private static void appendRelationships(StringBuilder sb, List<Catalog> relationships) {
-        for (Catalog relationship : relationships) {
-            appendRelationship(sb, relationship);
+    private static void appendRelationships(StringBuilder sb, List<ICatalog> relationships) {
+        for (ICatalog relationship : relationships) {
+            appendRelationship(sb, (IAsset) relationship);
         }
     }
 
@@ -120,7 +120,7 @@
      * @param sb into which to append
      * @param relationship to append
      */
-    private static void appendRelationship(StringBuilder sb, Asset relationship) {
+    private static void appendRelationship(StringBuilder sb, IAsset relationship) {
         // TODO: if two calls are made for the same process, but one uses GUIDs for
         //  its references and the other uses qualifiedName, we'll end up with different
         //  hashes (duplicate processes)

@@ -7,6 +7,7 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
+import com.atlan.model.enums.AssetSidebarTab;
 import com.atlan.model.enums.AuthPolicyCategory;
 import com.atlan.model.enums.AuthPolicyResourceCategory;
 import com.atlan.model.enums.AuthPolicyType;
@@ -36,7 +37,7 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class Persona extends AccessControl {
+public class Persona extends Asset implements IPersona, IAccessControl, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "Persona";
@@ -45,6 +46,24 @@ public class Persona extends AccessControl {
     @Getter(onMethod_ = {@Override})
     @Builder.Default
     String typeName = TYPE_NAME;
+
+    /** TBC */
+    @Attribute
+    String channelLink;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<AssetSidebarTab> denyAssetTabs;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<String> denyCustomMetadataGuids;
+
+    /** TBC */
+    @Attribute
+    Boolean isAccessControlEnabled;
 
     /** Groups for whom this persona is accessible. */
     @Attribute
@@ -55,6 +74,11 @@ public class Persona extends AccessControl {
     @Attribute
     @Singular
     SortedSet<String> personaUsers;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IAuthPolicy> policies;
 
     /** TBC */
     @Attribute
@@ -231,6 +255,7 @@ public class Persona extends AccessControl {
      * @param personaId unique identifier (GUID) of the persona for which to create this metadata policy
      * @param policyType type of policy (for example allow vs deny)
      * @param actions to include in the policy
+     * @param connectionQualifiedName unique name of the connection whose assets this policy will control
      * @param resources against which to apply the policy, given in the form {@code entity:qualifiedNamePrefix}
      * @return the minimal request necessary to create the metadata policy for the Persona, as a builder
      */
@@ -239,11 +264,13 @@ public class Persona extends AccessControl {
             String personaId,
             AuthPolicyType policyType,
             Collection<PersonaMetadataAction> actions,
+            String connectionQualifiedName,
             Collection<String> resources) {
         return AuthPolicy.creator(name)
                 .policyActions(actions)
                 .policyCategory(AuthPolicyCategory.PERSONA)
                 .policyType(policyType)
+                .connectionQualifiedName(connectionQualifiedName)
                 .policyResources(resources)
                 .policyResourceCategory(AuthPolicyResourceCategory.CUSTOM)
                 .policyServiceName("atlas")
@@ -257,15 +284,21 @@ public class Persona extends AccessControl {
      * @param name of the policy
      * @param personaId unique identifier (GUID) of the persona for which to create this data policy
      * @param policyType type of policy (for example allow vs deny)
+     * @param connectionQualifiedName unique name of the connection whose assets this policy will control
      * @param resources against which to apply the policy, given in the form {@code entity:qualifiedNamePrefix}
      * @return the minimal request necessary to create the data policy for the Persona, as a builder
      */
     public static AuthPolicy.AuthPolicyBuilder<?, ?> createDataPolicy(
-            String name, String personaId, AuthPolicyType policyType, Collection<String> resources) {
+            String name,
+            String personaId,
+            AuthPolicyType policyType,
+            String connectionQualifiedName,
+            Collection<String> resources) {
         return AuthPolicy.creator(name)
                 .policyAction(DataAction.SELECT)
                 .policyCategory(AuthPolicyCategory.PERSONA)
                 .policyType(policyType)
+                .connectionQualifiedName(connectionQualifiedName)
                 .policyResources(resources)
                 .policyResource("entity-type:*")
                 .policyResourceCategory(AuthPolicyResourceCategory.ENTITY)

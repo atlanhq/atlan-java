@@ -9,6 +9,7 @@ import com.atlan.exception.NotFoundException;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 import lombok.*;
@@ -23,7 +24,8 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class Readme extends Resource {
+@SuppressWarnings("cast")
+public class Readme extends Asset implements IReadme, IResource, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "Readme";
@@ -35,12 +37,39 @@ public class Readme extends Resource {
 
     /** Asset to which the README is linked. */
     @Attribute
-    Asset asset;
+    IAsset asset;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    Boolean isGlobal;
+
+    /** TBC */
+    @Attribute
+    String link;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    String reference;
+
+    /** TBC */
+    @Attribute
+    @Singular("putResourceMetadata")
+    Map<String, String> resourceMetadata;
 
     /** TBC */
     @Attribute
     @Singular("seeAlsoOne")
-    SortedSet<Readme> seeAlso;
+    SortedSet<IReadme> seeAlso;
 
     /**
      * Reference to a Readme by GUID.

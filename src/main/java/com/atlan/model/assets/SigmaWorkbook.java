@@ -25,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class SigmaWorkbook extends Sigma {
+public class SigmaWorkbook extends Asset implements ISigmaWorkbook, ISigma, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "SigmaWorkbook";
@@ -35,14 +35,48 @@ public class SigmaWorkbook extends Sigma {
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    String sigmaDataElementName;
+
+    /** TBC */
+    @Attribute
+    String sigmaDataElementQualifiedName;
+
     /** Number of pages that exist within this workbook. */
     @Attribute
     Long sigmaPageCount;
 
+    /** TBC */
+    @Attribute
+    String sigmaPageName;
+
+    /** TBC */
+    @Attribute
+    String sigmaPageQualifiedName;
+
     /** Pages that exist within this workbook. */
     @Attribute
     @Singular
-    SortedSet<SigmaPage> sigmaPages;
+    SortedSet<ISigmaPage> sigmaPages;
+
+    /** TBC */
+    @Attribute
+    String sigmaWorkbookName;
+
+    /** TBC */
+    @Attribute
+    String sigmaWorkbookQualifiedName;
 
     /**
      * Reference to a SigmaWorkbook by GUID.
@@ -244,7 +278,7 @@ public class SigmaWorkbook extends Sigma {
      * @return the SigmaWorkbook that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static SigmaWorkbook replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static SigmaWorkbook replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (SigmaWorkbook) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -259,7 +293,7 @@ public class SigmaWorkbook extends Sigma {
      * @return the SigmaWorkbook that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static SigmaWorkbook appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static SigmaWorkbook appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (SigmaWorkbook) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -273,7 +307,7 @@ public class SigmaWorkbook extends Sigma {
      * @return the SigmaWorkbook that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static SigmaWorkbook removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static SigmaWorkbook removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (SigmaWorkbook) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

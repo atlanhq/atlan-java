@@ -26,7 +26,8 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class QuickSightAnalysis extends QuickSight {
+public class QuickSightAnalysis extends Asset
+        implements IQuickSightAnalysis, IQuickSight, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "QuickSightAnalysis";
@@ -38,7 +39,13 @@ public class QuickSightAnalysis extends QuickSight {
 
     /** TBC */
     @Attribute
-    QuickSightAnalysisStatus quickSightAnalysisStatus;
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 
     /** TBC */
     @Attribute
@@ -48,22 +55,38 @@ public class QuickSightAnalysis extends QuickSight {
     /** TBC */
     @Attribute
     @Singular
-    SortedSet<String> quickSightAnalysisParameterDeclarations;
-
-    /** TBC */
-    @Attribute
-    @Singular
     SortedSet<String> quickSightAnalysisFilterGroups;
 
     /** TBC */
     @Attribute
     @Singular
-    SortedSet<QuickSightAnalysisVisual> quickSightAnalysisVisuals;
+    SortedSet<IQuickSightFolder> quickSightAnalysisFolders;
 
     /** TBC */
     @Attribute
     @Singular
-    SortedSet<QuickSightFolder> quickSightAnalysisFolders;
+    SortedSet<String> quickSightAnalysisParameterDeclarations;
+
+    /** TBC */
+    @Attribute
+    QuickSightAnalysisStatus quickSightAnalysisStatus;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IQuickSightAnalysisVisual> quickSightAnalysisVisuals;
+
+    /** TBC */
+    @Attribute
+    String quickSightId;
+
+    /** TBC */
+    @Attribute
+    String quickSightSheetId;
+
+    /** TBC */
+    @Attribute
+    String quickSightSheetName;
 
     /**
      * Reference to a QuickSightAnalysis by GUID.
@@ -265,7 +288,7 @@ public class QuickSightAnalysis extends QuickSight {
      * @return the QuickSightAnalysis that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static QuickSightAnalysis replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static QuickSightAnalysis replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (QuickSightAnalysis) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -280,7 +303,8 @@ public class QuickSightAnalysis extends QuickSight {
      * @return the QuickSightAnalysis that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static QuickSightAnalysis appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static QuickSightAnalysis appendTerms(String qualifiedName, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (QuickSightAnalysis) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -294,7 +318,8 @@ public class QuickSightAnalysis extends QuickSight {
      * @return the QuickSightAnalysis that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static QuickSightAnalysis removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static QuickSightAnalysis removeTerms(String qualifiedName, List<IGlossaryTerm> terms)
+            throws AtlanException {
         return (QuickSightAnalysis) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

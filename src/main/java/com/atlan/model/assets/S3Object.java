@@ -10,9 +10,11 @@ import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
+import com.atlan.model.structs.AwsTag;
 import com.atlan.util.StringUtils;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -26,7 +28,8 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class S3Object extends S3 {
+public class S3Object extends Asset
+        implements IS3Object, IS3, IObjectStore, IAWS, ICatalog, IAsset, IReferenceable, ICloud {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "S3Object";
@@ -36,9 +39,56 @@ public class S3Object extends S3 {
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Time (epoch) at which the object was last updated, in milliseconds, or when it was created if it has never been modified. */
+    /** TBC */
     @Attribute
-    Long s3ObjectLastModifiedTime;
+    String awsAccountId;
+
+    /** TBC */
+    @Attribute
+    String awsArn;
+
+    /** TBC */
+    @Attribute
+    String awsOwnerId;
+
+    /** TBC */
+    @Attribute
+    String awsOwnerName;
+
+    /** TBC */
+    @Attribute
+    String awsPartition;
+
+    /** TBC */
+    @Attribute
+    String awsRegion;
+
+    /** TBC */
+    @Attribute
+    String awsResourceId;
+
+    /** TBC */
+    @Attribute
+    String awsService;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    List<AwsTag> awsTags;
+
+    /** S3 bucket in which the object exists. */
+    @Attribute
+    IS3Bucket bucket;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 
     /** Name of the bucket in which the object exists. */
     @Attribute
@@ -48,6 +98,30 @@ public class S3Object extends S3 {
     @Attribute
     String s3BucketQualifiedName;
 
+    /** TBC */
+    @Attribute
+    String s3ETag;
+
+    /** TBC */
+    @Attribute
+    String s3Encryption;
+
+    /** Information about how the object's content should be presented. */
+    @Attribute
+    String s3ObjectContentDisposition;
+
+    /** Type of content in the object. */
+    @Attribute
+    String s3ObjectContentType;
+
+    /** Unique identity of the object in an S3 bucket. This is usually the concatenation of any prefix (folder) in the S3 bucket with the name of the object (file) itself. */
+    @Attribute
+    String s3ObjectKey;
+
+    /** Time (epoch) at which the object was last updated, in milliseconds, or when it was created if it has never been modified. */
+    @Attribute
+    Long s3ObjectLastModifiedTime;
+
     /** Object size in bytes. */
     @Attribute
     Long s3ObjectSize;
@@ -56,25 +130,9 @@ public class S3Object extends S3 {
     @Attribute
     String s3ObjectStorageClass;
 
-    /** Unique identity of the object in an S3 bucket. This is usually the concatenation of any prefix (folder) in the S3 bucket with the name of the object (file) itself. */
-    @Attribute
-    String s3ObjectKey;
-
-    /** Type of content in the object. */
-    @Attribute
-    String s3ObjectContentType;
-
-    /** Information about how the object's content should be presented. */
-    @Attribute
-    String s3ObjectContentDisposition;
-
     /** Version of the object. This is only applicable when versioning is enabled on the bucket in which the object exists. */
     @Attribute
     String s3ObjectVersionId;
-
-    /** S3 bucket in which the object exists. */
-    @Attribute
-    S3Bucket bucket;
 
     /**
      * Reference to a S3Object by GUID.
@@ -157,7 +215,7 @@ public class S3Object extends S3 {
             String name, String bucketQualifiedName, String bucketName, String awsArn) {
         String connectionQualifiedName = StringUtils.getConnectionQualifiedName(bucketQualifiedName);
         return S3Object.builder()
-                .qualifiedName(generateQualifiedName(connectionQualifiedName, awsArn))
+                .qualifiedName(IS3.generateQualifiedName(connectionQualifiedName, awsArn))
                 .name(name)
                 .connectionQualifiedName(connectionQualifiedName)
                 .connectorType(AtlanConnectorType.S3)
@@ -299,7 +357,7 @@ public class S3Object extends S3 {
      * @return the S3Object that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static S3Object replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static S3Object replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (S3Object) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -314,7 +372,7 @@ public class S3Object extends S3 {
      * @return the S3Object that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static S3Object appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static S3Object appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (S3Object) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -328,7 +386,7 @@ public class S3Object extends S3 {
      * @return the S3Object that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static S3Object removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static S3Object removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (S3Object) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

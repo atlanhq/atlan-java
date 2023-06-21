@@ -25,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class LookerFolder extends Looker {
+public class LookerFolder extends Asset implements ILookerFolder, ILooker, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "LookerFolder";
@@ -37,6 +37,30 @@ public class LookerFolder extends Looker {
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<ILookerDashboard> dashboards;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILookerLook> looks;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    Integer sourceChildCount;
+
+    /** TBC */
+    @Attribute
     Integer sourceContentMetadataId;
 
     /** TBC */
@@ -45,21 +69,7 @@ public class LookerFolder extends Looker {
 
     /** TBC */
     @Attribute
-    Integer sourceChildCount;
-
-    /** TBC */
-    @Attribute
     Integer sourceParentID;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<LookerLook> looks;
-
-    /** TBC */
-    @Attribute
-    @Singular
-    SortedSet<LookerDashboard> dashboards;
 
     /**
      * Reference to a LookerFolder by GUID.
@@ -261,7 +271,7 @@ public class LookerFolder extends Looker {
      * @return the LookerFolder that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static LookerFolder replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static LookerFolder replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (LookerFolder) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -276,7 +286,7 @@ public class LookerFolder extends Looker {
      * @return the LookerFolder that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static LookerFolder appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static LookerFolder appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (LookerFolder) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -290,7 +300,7 @@ public class LookerFolder extends Looker {
      * @return the LookerFolder that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static LookerFolder removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static LookerFolder removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (LookerFolder) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

@@ -119,10 +119,10 @@ public class GCSAssetTest extends AtlanLiveTest {
         assertNotNull(b.getGcsObjects());
         assertEquals(b.getGcsObjects().size(), 1);
         Set<String> types =
-                b.getGcsObjects().stream().map(GCSObject::getTypeName).collect(Collectors.toSet());
+                b.getGcsObjects().stream().map(IGCSObject::getTypeName).collect(Collectors.toSet());
         assertEquals(types.size(), 1);
         assertTrue(types.contains(GCSObject.TYPE_NAME));
-        Set<String> guids = b.getGcsObjects().stream().map(GCSObject::getGuid).collect(Collectors.toSet());
+        Set<String> guids = b.getGcsObjects().stream().map(IGCSObject::getGuid).collect(Collectors.toSet());
         assertEquals(guids.size(), 1);
         assertTrue(guids.contains(object.getGuid()));
     }
@@ -151,7 +151,7 @@ public class GCSAssetTest extends AtlanLiveTest {
     void searchAssets() throws AtlanException, InterruptedException {
         Query combined = CompoundQuery.builder()
                 .must(beActive())
-                .must(haveSuperType(GCS.TYPE_NAME))
+                .must(haveSuperType(IGCS.TYPE_NAME))
                 .must(have(KeywordFields.QUALIFIED_NAME).startingWith(connection.getQualifiedName()))
                 .build()
                 ._toQuery();
@@ -193,17 +193,17 @@ public class GCSAssetTest extends AtlanLiveTest {
         assertEquals(entities.size(), 2);
 
         Asset one = entities.get(0);
-        assertTrue(one instanceof GCS);
+        assertTrue(one instanceof IGCS);
         assertFalse(one.isComplete());
-        GCS asset = (GCS) one;
+        IGCS asset = (IGCS) one;
         assertEquals(asset.getQualifiedName(), bucket.getQualifiedName());
         assertEquals(asset.getName(), bucket.getName());
         assertEquals(asset.getConnectionQualifiedName(), connection.getQualifiedName());
 
         one = entities.get(1);
-        assertTrue(one instanceof GCS);
+        assertTrue(one instanceof IGCS);
         assertFalse(one.isComplete());
-        asset = (GCS) one;
+        asset = (IGCS) one;
         assertEquals(asset.getQualifiedName(), object.getQualifiedName());
         assertEquals(asset.getName(), object.getName());
         assertEquals(asset.getConnectionQualifiedName(), connection.getQualifiedName());

@@ -10,6 +10,8 @@ import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
+import com.atlan.model.structs.GoogleLabel;
+import com.atlan.model.structs.GoogleTag;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
@@ -26,7 +28,8 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class GCSBucket extends GCS {
+public class GCSBucket extends Asset
+        implements IGCSBucket, IGCS, IGoogle, IObjectStore, ICloud, IAsset, IReferenceable, ICatalog {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "GCSBucket";
@@ -38,11 +41,15 @@ public class GCSBucket extends GCS {
 
     /** TBC */
     @Attribute
-    Long gcsObjectCount;
+    String gcsAccessControl;
 
     /** TBC */
     @Attribute
-    Boolean gcsBucketVersioningEnabled;
+    String gcsBucketLifecycleRules;
+
+    /** TBC */
+    @Attribute
+    Long gcsBucketRetentionEffectiveTime;
 
     /** TBC */
     @Attribute
@@ -54,20 +61,84 @@ public class GCSBucket extends GCS {
 
     /** TBC */
     @Attribute
-    Long gcsBucketRetentionEffectiveTime;
-
-    /** TBC */
-    @Attribute
-    String gcsBucketLifecycleRules;
-
-    /** TBC */
-    @Attribute
     String gcsBucketRetentionPolicy;
+
+    /** TBC */
+    @Attribute
+    Boolean gcsBucketVersioningEnabled;
+
+    /** TBC */
+    @Attribute
+    String gcsETag;
+
+    /** TBC */
+    @Attribute
+    String gcsEncryptionType;
+
+    /** TBC */
+    @Attribute
+    Long gcsMetaGenerationId;
+
+    /** TBC */
+    @Attribute
+    Long gcsObjectCount;
 
     /** GCS objects within this bucket. */
     @Attribute
     @Singular
-    SortedSet<GCSObject> gcsObjects;
+    SortedSet<IGCSObject> gcsObjects;
+
+    /** TBC */
+    @Attribute
+    Boolean gcsRequesterPays;
+
+    /** TBC */
+    @Attribute
+    String gcsStorageClass;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    List<GoogleLabel> googleLabels;
+
+    /** TBC */
+    @Attribute
+    String googleLocation;
+
+    /** TBC */
+    @Attribute
+    String googleLocationType;
+
+    /** TBC */
+    @Attribute
+    String googleProjectId;
+
+    /** TBC */
+    @Attribute
+    String googleProjectName;
+
+    /** TBC */
+    @Attribute
+    Long googleProjectNumber;
+
+    /** TBC */
+    @Attribute
+    String googleService;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    List<GoogleTag> googleTags;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 
     /**
      * Reference to a GCSBucket by GUID.
@@ -295,7 +366,7 @@ public class GCSBucket extends GCS {
      * @return the GCSBucket that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static GCSBucket replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static GCSBucket replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (GCSBucket) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -310,7 +381,7 @@ public class GCSBucket extends GCS {
      * @return the GCSBucket that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static GCSBucket appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static GCSBucket appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (GCSBucket) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -324,7 +395,7 @@ public class GCSBucket extends GCS {
      * @return the GCSBucket that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static GCSBucket removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static GCSBucket removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (GCSBucket) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

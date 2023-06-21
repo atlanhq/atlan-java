@@ -25,7 +25,8 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class QuickSightDashboard extends QuickSight {
+public class QuickSightDashboard extends Asset
+        implements IQuickSightDashboard, IQuickSight, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "QuickSightDashboard";
@@ -37,7 +38,18 @@ public class QuickSightDashboard extends QuickSight {
 
     /** TBC */
     @Attribute
-    Long quickSightDashboardPublishedVersionNumber;
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IQuickSightFolder> quickSightDashboardFolders;
 
     /** TBC */
     @Attribute
@@ -45,13 +57,24 @@ public class QuickSightDashboard extends QuickSight {
 
     /** TBC */
     @Attribute
-    @Singular
-    SortedSet<QuickSightFolder> quickSightDashboardFolders;
+    Long quickSightDashboardPublishedVersionNumber;
 
     /** TBC */
     @Attribute
     @Singular
-    SortedSet<QuickSightDashboardVisual> quickSightDashboardVisuals;
+    SortedSet<IQuickSightDashboardVisual> quickSightDashboardVisuals;
+
+    /** TBC */
+    @Attribute
+    String quickSightId;
+
+    /** TBC */
+    @Attribute
+    String quickSightSheetId;
+
+    /** TBC */
+    @Attribute
+    String quickSightSheetName;
 
     /**
      * Reference to a QuickSightDashboard by GUID.
@@ -254,7 +277,7 @@ public class QuickSightDashboard extends QuickSight {
      * @return the QuickSightDashboard that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static QuickSightDashboard replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static QuickSightDashboard replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (QuickSightDashboard) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -269,7 +292,7 @@ public class QuickSightDashboard extends QuickSight {
      * @return the QuickSightDashboard that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static QuickSightDashboard appendTerms(String qualifiedName, List<GlossaryTerm> terms)
+    public static QuickSightDashboard appendTerms(String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (QuickSightDashboard) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
@@ -284,7 +307,7 @@ public class QuickSightDashboard extends QuickSight {
      * @return the QuickSightDashboard that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static QuickSightDashboard removeTerms(String qualifiedName, List<GlossaryTerm> terms)
+    public static QuickSightDashboard removeTerms(String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (QuickSightDashboard) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }

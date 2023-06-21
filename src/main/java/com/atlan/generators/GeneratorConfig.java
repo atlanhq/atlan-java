@@ -4,6 +4,10 @@ package com.atlan.generators;
 
 import com.atlan.api.TypeDefsEndpoint;
 import com.atlan.model.typedefs.TypeDef;
+import freemarker.cache.ClassTemplateLoader;
+import freemarker.cache.FileTemplateLoader;
+import freemarker.cache.MultiTemplateLoader;
+import freemarker.cache.TemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.TemplateExceptionHandler;
 import java.io.File;
@@ -25,6 +29,96 @@ import lombok.extern.slf4j.Slf4j;
 public class GeneratorConfig {
 
     private static final Pattern WORD_FINDER = Pattern.compile("(([A-Z]?[a-z0-9]+)|([A-Z0-9]))");
+
+    private static final Map<String, String> DEFAULT_CLASS_RENAMES = Map.ofEntries(
+            Map.entry("google_datastudio_asset_type", "GoogleDataStudioAssetType"),
+            Map.entry("powerbi_endorsement", "PowerBIEndorsementType"),
+            Map.entry("Referenceable", "Asset"),
+            Map.entry("Process", "LineageProcess"),
+            Map.entry("Collection", "AtlanCollection"),
+            Map.entry("Query", "AtlanQuery"),
+            Map.entry("AtlasGlossary", "Glossary"),
+            Map.entry("AtlasGlossaryCategory", "GlossaryCategory"),
+            Map.entry("AtlasGlossaryTerm", "GlossaryTerm"),
+            Map.entry("MaterialisedView", "MaterializedView"));
+
+    private static final Map<String, String> DEFAULT_SINGULARS = Map.ofEntries(
+            Map.entry("seeAlso", "seeAlsoOne"),
+            Map.entry("replacedByTerm", "replacedByTerm"),
+            Map.entry("validValuesFor", "validValueFor"),
+            Map.entry("isA", "isATerm"),
+            Map.entry("replacedBy", "replacedByTerm"),
+            Map.entry("childrenCategories", "childCategory"),
+            Map.entry("queryUserMap", "putQueryUserMap"),
+            Map.entry("queryPreviewConfig", "putQueryPreviewConfig"),
+            Map.entry("reportType", "putReportType"),
+            Map.entry("projectHierarchy", "addProjectHierarchy"),
+            Map.entry("certifier", "putCertifier"),
+            Map.entry("presetChartFormData", "putPresetChartFormData"),
+            Map.entry("resourceMetadata", "putResourceMetadata"),
+            Map.entry("adlsObjectMetadata", "putAdlsObjectMetadata"),
+            Map.entry("columnHistogram", "addColumnHistogram"),
+            Map.entry("foreignKeyTo", "addForeignKeyTo"),
+            Map.entry("quickSightFolderHierarchy", "addQuickSightFolderHierarchy"),
+            Map.entry("columnMaxs", "addColumnMax"),
+            Map.entry("columnMins", "addColumnMin"),
+            Map.entry("redashQuerySchedule", "putRedashQuerySchedule"),
+            Map.entry("mcMonitorRuleScheduleConfig", "addMcMonitorRuleSchedule"),
+            Map.entry("policyValiditySchedule", "addPolicyValiditySchedule"),
+            Map.entry("authServiceConfig", "putAuthServiceConfig"),
+            Map.entry("microStrategyLocation", "putMicroStrategyLocation"),
+            Map.entry("starredBy", "addStarredBy"));
+
+    private static final Map<String, String> DEFAULT_ATTRIBUTE_RENAMES = Map.ofEntries(
+            Map.entry("connectorName", "connectorType"),
+            Map.entry("__hasLineage", "hasLineage"),
+            Map.entry("viewsCount", "viewCount"),
+            Map.entry("materialisedView", "materializedView"),
+            Map.entry("materialisedViews", "materializedViews"),
+            Map.entry("atlanSchema", "schema"),
+            Map.entry("sourceQueryComputeCostList", "sourceQueryComputeCosts"),
+            Map.entry("sourceReadTopUserList", "sourceReadTopUsers"),
+            Map.entry("sourceReadRecentUserList", "sourceReadRecentUsers"),
+            Map.entry("sourceReadRecentUserRecordList", "sourceReadRecentUserRecords"),
+            Map.entry("sourceReadTopUserRecordList", "sourceReadTopUserRecords"),
+            Map.entry("sourceReadPopularQueryRecordList", "sourceReadPopularQueryRecords"),
+            Map.entry("sourceReadExpensiveQueryRecordList", "sourceReadExpensiveQueryRecords"),
+            Map.entry("sourceReadSlowQueryRecordList", "sourceReadSlowQueryRecords"),
+            Map.entry("sourceQueryComputeCostRecordList", "sourceQueryComputeCostRecords"),
+            Map.entry("meanings", "assignedTerms"),
+            Map.entry("sqlAsset", "primarySqlAsset"),
+            Map.entry("mappedClassificationName", "mappedAtlanTagName"),
+            Map.entry("purposeClassifications", "purposeAtlanTags"));
+
+    private static final Map<String, String> DEFAULT_ATTRIBUTE_ENUMS = Map.ofEntries(
+            Map.entry("announcementType", "AtlanAnnouncementType"),
+            Map.entry("connectorName", "AtlanConnectorType"),
+            Map.entry("category", "AtlanConnectionCategory"),
+            Map.entry("policyCategory", "AuthPolicyCategory"),
+            Map.entry("policyResourceCategory", "AuthPolicyResourceCategory"),
+            Map.entry("policyActions", "AtlanPolicyAction"),
+            Map.entry("denyAssetTabs", "AssetSidebarTab"),
+            Map.entry("policyMaskType", "DataMaskingType"));
+
+    private static final Map<String, Map<String, String>> DEFAULT_TYPE_OVERRIDES =
+            Map.of("TableauDatasource", Map.of("fields", "TableauField"));
+
+    // These are built-in structs, with no serviceType defined
+    static final Set<String> BUILT_IN_STRUCTS = Set.of("Histogram", "ColumnValueFrequencyMap");
+
+    // These are built-in enums, self-managed (not persisted in Atlas)
+    static final Set<String> BUILT_IN_ENUMS = Set.of(
+            "AtlanAnnouncementType",
+            "AtlanConnectionCategory",
+            "AtlanConnectorType",
+            "AtlanDeleteType",
+            "AtlanStatus",
+            "AtlanPolicyAction",
+            "PersonaMetadataAction",
+            "PersonaGlossaryAction",
+            "PurposeMetadataAction",
+            "DataAction",
+            "CertificateStatus");
 
     @Getter
     private Configuration freemarkerConfig;
@@ -79,13 +173,6 @@ public class GeneratorConfig {
     private Set<String> forceNonAbstractAssets;
 
     /**
-     * Overrides the single parent class a given type should extend, since we do
-     * not currently support polymorphic inheritance through the SDK.
-     */
-    @Singular
-    private Map<String, String> parentForAssets;
-
-    /**
      * Mapping of attributes that need an explicit singular form (word), when it
      * cannot automatically be inferred by Lombok.
      */
@@ -100,12 +187,32 @@ public class GeneratorConfig {
     private Map<String, String> renameAttributes;
 
     /**
-     * Mapping of attributes that should have a different type than what appears in
-     * the type definition, usually used to set a manually-maintained enumeration instead
-     * of a free-form string value.
+     * Mapping of attributes that should have an enumerated type rather than a primitive type
+     * (typically String). This is usually used to set a manually-maintained enumeration that
+     * overrides such primitive types found in the typedef itself.
      */
     @Singular
-    private Map<String, String> retypeAttributes;
+    private Map<String, String> attributeToEnums;
+
+    /**
+     * Mapping of type to attribute to new type to use for that attribute. This is used to override
+     * where the same attribute may be overloaded in the typedef (from being inherited from multiple
+     * parents with different types from each). Usually this is used to manually-maintain a super-interface
+     * that can cover both inherited types.
+     */
+    @Singular
+    private Map<String, Map<String, String>> retypeAttributes;
+
+    /**
+     * Configuration for generating using embedded templates in a jar file.
+     *
+     * @param generatorClass top-level class that is used to generate the code
+     * @param packageRoot root Java package location for the generated models
+     * @throws IOException if there is any problem configuring the templates through the classloader
+     */
+    public static GeneratorConfigBuilder creator(Class<?> generatorClass, String packageRoot) throws IOException {
+        return creator(generatorClass, null, packageRoot);
+    }
 
     /**
      * Configuration for generating using local directory for templates.
@@ -122,22 +229,12 @@ public class GeneratorConfig {
                 .packageRoot(packageRoot)
                 .freemarkerConfig(createConfig(directoryForTemplateLoading))
                 .packagePath(createPackagePath(packageRoot))
-                .testPath(createTestPath(packageRoot));
-    }
-
-    /**
-     * Configuration for generating using embedded templates in a jar file.
-     *
-     * @param generatorClass top-level class that is used to generate the code
-     * @param packageRoot root Java package location for the generated models
-     */
-    public static GeneratorConfigBuilder creator(Class<?> generatorClass, String packageRoot) {
-        return GeneratorConfig.builder()
-                .generatorName(generatorClass.getCanonicalName())
-                .packageRoot(packageRoot)
-                .freemarkerConfig(createConfig())
-                .packagePath(createPackagePath(packageRoot))
-                .testPath(createTestPath(packageRoot));
+                .testPath(createTestPath(packageRoot))
+                .renameClasses(DEFAULT_CLASS_RENAMES)
+                .singularForAttributes(DEFAULT_SINGULARS)
+                .renameAttributes(DEFAULT_ATTRIBUTE_RENAMES)
+                .attributeToEnums(DEFAULT_ATTRIBUTE_ENUMS)
+                .retypeAttributes(DEFAULT_TYPE_OVERRIDES);
     }
 
     /**
@@ -145,25 +242,20 @@ public class GeneratorConfig {
      *
      * @param generatorClass top-level class that is used to generate the code
      * @return default configuration
+     * @throws IOException if there is any problem configuring the templates through the classloader
      */
-    public static GeneratorConfigBuilder getDefault(Class<?> generatorClass) {
+    public static GeneratorConfigBuilder getDefault(Class<?> generatorClass) throws IOException {
         return GeneratorConfig.creator(generatorClass, "com.atlan.model")
                 .serviceTypes(TypeDefsEndpoint.RESERVED_SERVICE_TYPES)
                 .preferTypeDefDescriptions(false)
-                .renameClass("google_datastudio_asset_type", "GoogleDataStudioAssetType")
-                .renameClass("powerbi_endorsement", "PowerBIEndorsementType")
-                .renameClass("Referenceable", "Asset")
-                .renameClass("Process", "LineageProcess")
-                .renameClass("Collection", "AtlanCollection")
-                .renameClass("Query", "AtlanQuery")
-                .renameClass("AtlasGlossary", "Glossary")
-                .renameClass("AtlasGlossaryCategory", "GlossaryCategory")
-                .renameClass("AtlasGlossaryTerm", "GlossaryTerm")
-                .renameClass("MaterialisedView", "MaterializedView")
+                .renameClasses(DEFAULT_CLASS_RENAMES)
+                .singularForAttributes(DEFAULT_SINGULARS)
+                .renameAttributes(DEFAULT_ATTRIBUTE_RENAMES)
+                .attributeToEnums(DEFAULT_ATTRIBUTE_ENUMS)
+                .retypeAttributes(DEFAULT_TYPE_OVERRIDES)
                 .renameEnumValue("ResolvingDNS", "RESOLVING_DNS")
                 .renameEnumValue("RA-GRS", "RA_GRS")
                 .doNotGenerateAsset("Referenceable")
-                .doNotGenerateAsset("DataStudio")
                 .doNotGenerateAsset("AtlasServer")
                 .doNotGenerateAsset("DataSet")
                 .doNotGenerateAsset("Infrastructure")
@@ -175,69 +267,7 @@ public class GeneratorConfig {
                 .doNotGenerateAsset("__internal")
                 .forceNonAbstractAsset("Process")
                 .forceNonAbstractAsset("ColumnProcess")
-                .forceNonAbstractAsset("QlikSpace")
-                .parentForAsset("Asset", "Reference")
-                .parentForAsset("S3", "AWS")
-                .parentForAsset("DataStudioAsset", "Google")
-                .parentForAsset("DbtColumnProcess", "ColumnProcess")
-                .parentForAsset("DbtProcess", "Process")
-                .parentForAsset("DbtMetric", "Metric")
-                .parentForAsset("AWS", "Catalog")
-                .parentForAsset("Google", "Catalog")
-                .parentForAsset("Azure", "Catalog")
-                .parentForAsset("GCS", "Google")
-                .parentForAsset("ADLS", "Azure")
-                .singularForAttribute("seeAlso", "seeAlsoOne")
-                .singularForAttribute("replacedByTerm", "replacedByTerm")
-                .singularForAttribute("validValuesFor", "validValueFor")
-                .singularForAttribute("isA", "isATerm")
-                .singularForAttribute("replacedBy", "replacedByTerm")
-                .singularForAttribute("childrenCategories", "childCategory")
-                .singularForAttribute("queryUserMap", "putQueryUserMap")
-                .singularForAttribute("queryPreviewConfig", "putQueryPreviewConfig")
-                .singularForAttribute("reportType", "putReportType")
-                .singularForAttribute("projectHierarchy", "addProjectHierarchy")
-                .singularForAttribute("certifier", "putCertifier")
-                .singularForAttribute("presetChartFormData", "putPresetChartFormData")
-                .singularForAttribute("resourceMetadata", "putResourceMetadata")
-                .singularForAttribute("adlsObjectMetadata", "putAdlsObjectMetadata")
-                .singularForAttribute("columnHistogram", "addColumnHistogram")
-                .singularForAttribute("foreignKeyTo", "addForeignKeyTo")
-                .singularForAttribute("quickSightFolderHierarchy", "addQuickSightFolderHierarchy")
-                .singularForAttribute("columnMaxs", "addColumnMax")
-                .singularForAttribute("columnMins", "addColumnMin")
-                .singularForAttribute("redashQuerySchedule", "putRedashQuerySchedule")
-                .singularForAttribute("mcMonitorRuleScheduleConfig", "addMcMonitorRuleSchedule")
-                .singularForAttribute("policyValiditySchedule", "addPolicyValiditySchedule")
-                .singularForAttribute("authServiceConfig", "putAuthServiceConfig")
-                .singularForAttribute("microStrategyLocation", "putMicroStrategyLocation")
-                .renameAttribute("connectorName", "connectorType")
-                .renameAttribute("__hasLineage", "hasLineage")
-                .renameAttribute("viewsCount", "viewCount")
-                .renameAttribute("materialisedView", "materializedView")
-                .renameAttribute("materialisedViews", "materializedViews")
-                .renameAttribute("atlanSchema", "schema")
-                .renameAttribute("sourceQueryComputeCostList", "sourceQueryComputeCosts")
-                .renameAttribute("sourceReadTopUserList", "sourceReadTopUsers")
-                .renameAttribute("sourceReadRecentUserList", "sourceReadRecentUsers")
-                .renameAttribute("sourceReadRecentUserRecordList", "sourceReadRecentUserRecords")
-                .renameAttribute("sourceReadTopUserRecordList", "sourceReadTopUserRecords")
-                .renameAttribute("sourceReadPopularQueryRecordList", "sourceReadPopularQueryRecords")
-                .renameAttribute("sourceReadExpensiveQueryRecordList", "sourceReadExpensiveQueryRecords")
-                .renameAttribute("sourceReadSlowQueryRecordList", "sourceReadSlowQueryRecords")
-                .renameAttribute("sourceQueryComputeCostRecordList", "sourceQueryComputeCostRecords")
-                .renameAttribute("meanings", "assignedTerms")
-                .renameAttribute("sqlAsset", "primarySqlAsset")
-                .renameAttribute("mappedClassificationName", "mappedAtlanTagName")
-                .renameAttribute("purposeClassifications", "purposeAtlanTags")
-                .retypeAttribute("announcementType", "AtlanAnnouncementType")
-                .retypeAttribute("connectorName", "AtlanConnectorType")
-                .retypeAttribute("category", "AtlanConnectionCategory")
-                .retypeAttribute("policyCategory", "AuthPolicyCategory")
-                .retypeAttribute("policyResourceCategory", "AuthPolicyResourceCategory")
-                .retypeAttribute("policyActions", "AtlanPolicyAction")
-                .retypeAttribute("denyAssetTabs", "AssetSidebarTab")
-                .retypeAttribute("policyMaskType", "DataMaskingType");
+                .forceNonAbstractAsset("QlikSpace");
     }
 
     /**
@@ -277,26 +307,6 @@ public class GeneratorConfig {
     }
 
     /**
-     * Retrieve the name of the singular type that we should extend for inheritance.
-     *
-     * @param originalName unmodified name of the type definition to determine inheritance for
-     * @param superTypes list of super types that are defined for that type
-     * @return the name of a single type to use for inheritance
-     */
-    public String getSingleTypeToExtend(String originalName, List<String> superTypes) {
-        if (parentForAssets.containsKey(originalName)) {
-            return parentForAssets.get(originalName);
-        } else if (superTypes == null || superTypes.isEmpty()) {
-            return "AtlanObject";
-        } else if (superTypes.size() == 1) {
-            return superTypes.get(0);
-        } else {
-            log.warn("Multiple superTypes detected — returning only the first: {}", superTypes);
-            return superTypes.get(0);
-        }
-    }
-
-    /**
      * Resolve the provided name to an attribute name, renaming it if configured and otherwise
      * just lowerCamelCasing the name.
      *
@@ -315,7 +325,22 @@ public class GeneratorConfig {
      * @return the resolved enumeration name for the attribute in the POJO, or null if not referring to an enumeration
      */
     public String resolveAttributeToEnumeration(String originalName) {
-        return retypeAttributes.getOrDefault(originalName, null);
+        return attributeToEnums.getOrDefault(originalName, null);
+    }
+
+    /**
+     * Resolve the type of the attribute to an overridden type, if configured, or return null
+     * if there is no type override for this attribute.
+     *
+     * @param typeName unmodified name of the type
+     * @param attributeName unmodified name of the attribute definition
+     * @return the resolved type override for the POJO, or null if no override
+     */
+    public String resolveAttributeToTypeOverride(String typeName, String attributeName) {
+        if (retypeAttributes.containsKey(typeName)) {
+            return retypeAttributes.get(typeName).getOrDefault(attributeName, null);
+        }
+        return null;
     }
 
     /**
@@ -386,13 +411,20 @@ public class GeneratorConfig {
 
     private static Configuration createConfig(File directoryForTemplateLoading) throws IOException {
         Configuration cfg = createConfigBase();
-        cfg.setDirectoryForTemplateLoading(directoryForTemplateLoading);
-        return cfg;
-    }
-
-    private static Configuration createConfig() {
-        Configuration cfg = createConfigBase();
-        cfg.setClassLoaderForTemplateLoading(GeneratorConfig.class.getClassLoader(), "templates");
+        ClassTemplateLoader ctl = new ClassTemplateLoader(GeneratorConfig.class.getClassLoader(), "templates");
+        FileTemplateLoader ftl = null;
+        if (directoryForTemplateLoading != null && directoryForTemplateLoading.exists()) {
+            ftl = new FileTemplateLoader(directoryForTemplateLoading);
+        }
+        if (ftl != null) {
+            // If a directory has been provided, configure it as a fallback location in which to
+            // look for templates, but still use the classloader as the first place to go for
+            // the templates
+            MultiTemplateLoader mtl = new MultiTemplateLoader(new TemplateLoader[] {ctl, ftl});
+            cfg.setTemplateLoader(mtl);
+        } else {
+            cfg.setTemplateLoader(ctl);
+        }
         return cfg;
     }
 

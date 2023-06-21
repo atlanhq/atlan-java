@@ -280,10 +280,10 @@ public class RequestsTest extends AtlanLiveTest {
         assertTrue(only.getPropagate());
         assertFalse(only.getRemovePropagationsOnEntityDelete());
         assertEquals(only.getEntityGuid(), term.getGuid());
-        Set<Asset> assets = revised.getAssignedEntities();
+        Set<IAsset> assets = revised.getAssignedEntities();
         assertNotNull(assets);
         assertEquals(assets.size(), 1);
-        Asset one = new ArrayList<>(assets).get(0);
+        IAsset one = new ArrayList<>(assets).get(0);
         assertTrue(one instanceof Database);
         assertEquals(one.getGuid(), database.getGuid());
     }

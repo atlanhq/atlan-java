@@ -32,7 +32,7 @@ import lombok.extern.slf4j.Slf4j;
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
 @SuppressWarnings("cast")
-public class Column extends SQL {
+public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "Column";
@@ -42,86 +42,22 @@ public class Column extends SQL {
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** Data type of values in the column. */
-    @Attribute
-    String dataType;
-
     /** TBC */
     @Attribute
-    String subDataType;
+    Double columnAverage;
 
-    /** Order (position) in which the column appears in the table (starting at 1). */
+    /** Average length of values in a string column. */
     @Attribute
-    Integer order;
-
-    /** TBC */
-    @Attribute
-    Boolean isPartition;
-
-    /** TBC */
-    @Attribute
-    Integer partitionOrder;
-
-    /** TBC */
-    @Attribute
-    Boolean isClustered;
-
-    /** When true, this column is the primary key for the table. */
-    @Attribute
-    Boolean isPrimary;
-
-    /** When true, this column is a foreign key to another table. */
-    @Attribute
-    Boolean isForeign;
-
-    /** When true, this column is indexed in the database. */
-    @Attribute
-    Boolean isIndexed;
-
-    /** TBC */
-    @Attribute
-    Boolean isSort;
-
-    /** TBC */
-    @Attribute
-    Boolean isDist;
-
-    /** TBC */
-    @Attribute
-    Boolean isPinned;
-
-    /** TBC */
-    @Attribute
-    String pinnedBy;
-
-    /** TBC */
-    @Attribute
-    Long pinnedAt;
-
-    /** Total number of digits allowed when the dataType is numeric. */
-    @Attribute
-    Integer precision;
-
-    /** TBC */
-    @Attribute
-    String defaultValue;
-
-    /** When true, the values in this column can be null. */
-    @Attribute
-    Boolean isNullable;
-
-    /** Number of digits allowed to the right of the decimal point. */
-    @Attribute
-    Double numericScale;
-
-    /** Maximum length of a value in this column. */
-    @Attribute
-    Long maxLength;
+    Double columnAverageLength;
 
     /** TBC */
     @Attribute
     @Singular
-    Map<String, String> validations;
+    SortedSet<IDbtModelColumn> columnDbtModelColumns;
+
+    /** Level of nesting, used for STRUCT/NESTED columns */
+    @Attribute
+    Integer columnDepthLevel;
 
     /** Number of rows that contain distinct values. */
     @Attribute
@@ -130,6 +66,14 @@ public class Column extends SQL {
     /** TBC */
     @Attribute
     Long columnDistinctValuesCountLong;
+
+    /** Number of rows that contain duplicate values. */
+    @Attribute
+    Integer columnDuplicateValuesCount;
+
+    /** TBC */
+    @Attribute
+    Long columnDuplicateValuesCountLong;
 
     /** List of values in a histogram that represents the contents of the column. */
     @Attribute
@@ -140,50 +84,6 @@ public class Column extends SQL {
     @Attribute
     Double columnMax;
 
-    /** Least value in a numeric column. */
-    @Attribute
-    Double columnMin;
-
-    /** Arithmetic mean of the values in a numeric column. */
-    @Attribute
-    Double columnMean;
-
-    /** Calculated sum of the values in a numeric column. */
-    @Attribute
-    Double columnSum;
-
-    /** Calculated median of the values in a numeric column. */
-    @Attribute
-    Double columnMedian;
-
-    /** Calculated standard deviation of the values in a numeric column. */
-    @Attribute
-    Double columnStandardDeviation;
-
-    /** Number of rows in which a value in this column appears only once. */
-    @Attribute
-    Integer columnUniqueValuesCount;
-
-    /** TBC */
-    @Attribute
-    Long columnUniqueValuesCountLong;
-
-    /** TBC */
-    @Attribute
-    Double columnAverage;
-
-    /** Average length of values in a string column. */
-    @Attribute
-    Double columnAverageLength;
-
-    /** Number of rows that contain duplicate values. */
-    @Attribute
-    Integer columnDuplicateValuesCount;
-
-    /** TBC */
-    @Attribute
-    Long columnDuplicateValuesCountLong;
-
     /** Length of the longest value in a string column. */
     @Attribute
     Integer columnMaximumStringLength;
@@ -192,6 +92,18 @@ public class Column extends SQL {
     @Attribute
     @Singular("addColumnMax")
     SortedSet<String> columnMaxs;
+
+    /** Arithmetic mean of the values in a numeric column. */
+    @Attribute
+    Double columnMean;
+
+    /** Calculated median of the values in a numeric column. */
+    @Attribute
+    Double columnMedian;
+
+    /** Least value in a numeric column. */
+    @Attribute
+    Double columnMin;
 
     /** Length of the shortest value in a string column. */
     @Attribute
@@ -214,6 +126,27 @@ public class Column extends SQL {
     @Attribute
     Double columnMissingValuesPercentage;
 
+    /** Calculated standard deviation of the values in a numeric column. */
+    @Attribute
+    Double columnStandardDeviation;
+
+    /** Calculated sum of the values in a numeric column. */
+    @Attribute
+    Double columnSum;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    List<ColumnValueFrequencyMap> columnTopValues;
+
+    /** Number of rows in which a value in this column appears only once. */
+    @Attribute
+    Integer columnUniqueValuesCount;
+
+    /** TBC */
+    @Attribute
+    Long columnUniqueValuesCountLong;
+
     /** Ratio indicating how unique data in the column is: 0 indicates that all values are the same, 100 indicates that all values in the column are unique. */
     @Attribute
     Double columnUniquenessPercentage;
@@ -225,63 +158,246 @@ public class Column extends SQL {
     /** TBC */
     @Attribute
     @Singular
-    List<ColumnValueFrequencyMap> columnTopValues;
+    SortedSet<IMetric> dataQualityMetricDimensions;
 
-    /** View in which this column exists, or empty if the column instead exists in a table or materialized view. */
+    /** Data type of values in the column. */
     @Attribute
-    View view;
+    String dataType;
+
+    /** TBC */
+    @Attribute
+    String databaseName;
+
+    /** TBC */
+    @Attribute
+    String databaseQualifiedName;
 
     /** TBC */
     @Attribute
     @Singular
-    SortedSet<Metric> dataQualityMetricDimensions;
+    SortedSet<IDbtMetric> dbtMetrics;
 
     /** TBC */
     @Attribute
     @Singular
-    SortedSet<DbtModelColumn> dbtModelColumns;
-
-    /** Table in which this column exists, or empty if the column instead exists in a view or materialized view. */
-    @Attribute
-    Table table;
+    SortedSet<IDbtModelColumn> dbtModelColumns;
 
     /** TBC */
     @Attribute
     @Singular
-    SortedSet<DbtModelColumn> columnDbtModelColumns;
+    SortedSet<IDbtModel> dbtModels;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtSource> dbtSources;
+
+    /** TBC */
+    @Attribute
+    String defaultValue;
+
+    /** Column this column refers to as a foreign key. */
+    @Attribute
+    IColumn foreignKeyFrom;
+
+    /** All the columns that refer to this column as a foreign key. NOTE: when providing values to this relationship, isForeign must also be set to true. */
+    @Attribute
+    @Singular("addForeignKeyTo")
+    SortedSet<IColumn> foreignKeyTo;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    Boolean isClustered;
+
+    /** TBC */
+    @Attribute
+    Boolean isDist;
+
+    /** When true, this column is a foreign key to another table. NOTE: this must be true when using the foreignKeyTo relationship to specify columns that refer to this column as a foreign key. */
+    @Attribute
+    Boolean isForeign;
+
+    /** When true, this column is indexed in the database. */
+    @Attribute
+    Boolean isIndexed;
+
+    /** When true, the values in this column can be null. */
+    @Attribute
+    Boolean isNullable;
+
+    /** TBC */
+    @Attribute
+    Boolean isPartition;
+
+    /** TBC */
+    @Attribute
+    Boolean isPinned;
+
+    /** When true, this column is the primary key for the table. */
+    @Attribute
+    Boolean isPrimary;
+
+    /** TBC */
+    @Attribute
+    Boolean isProfiled;
+
+    /** TBC */
+    @Attribute
+    Boolean isSort;
+
+    /** TBC */
+    @Attribute
+    Long lastProfiledAt;
 
     /** Materialized view in which this column exists, or empty if the column instead exists in a table or view. */
     @Attribute
     @JsonProperty("materialisedView")
-    MaterializedView materializedView;
+    IMaterializedView materializedView;
+
+    /** Maximum length of a value in this column. */
+    @Attribute
+    Long maxLength;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IMetric> metricTimestamps;
+
+    /** TBC */
+    @Attribute
+    Integer nestedColumnCount;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IColumn> nestedColumns;
+
+    /** Number of digits allowed to the right of the decimal point. */
+    @Attribute
+    Double numericScale;
+
+    /** Order (position) in which the column appears in the table (starting at 1). */
+    @Attribute
+    Integer order;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    IColumn parentColumn;
+
+    /** TBC */
+    @Attribute
+    String parentColumnName;
+
+    /** TBC */
+    @Attribute
+    String parentColumnQualifiedName;
+
+    /** TBC */
+    @Attribute
+    Integer partitionOrder;
+
+    /** TBC */
+    @Attribute
+    Long pinnedAt;
+
+    /** TBC */
+    @Attribute
+    String pinnedBy;
+
+    /** Total number of digits allowed when the dataType is numeric. */
+    @Attribute
+    Integer precision;
 
     /** Queries that involve this column. */
     @Attribute
     @Singular
-    SortedSet<AtlanQuery> queries;
+    SortedSet<IAtlanQuery> queries;
+
+    /** TBC */
+    @Attribute
+    Long queryCount;
+
+    /** TBC */
+    @Attribute
+    Long queryCountUpdatedAt;
+
+    /** TBC */
+    @Attribute
+    Long queryUserCount;
+
+    /** TBC */
+    @Attribute
+    @Singular("putQueryUserMap")
+    Map<String, Long> queryUserMap;
+
+    /** TBC */
+    @Attribute
+    String rawDataTypeDefinition;
+
+    /** TBC */
+    @Attribute
+    String schemaName;
+
+    /** TBC */
+    @Attribute
+    String schemaQualifiedName;
 
     /** TBC */
     @Attribute
     @Singular
-    SortedSet<Metric> metricTimestamps;
-
-    /** All the columns that refer to this column as a foreign key. */
-    @Attribute
-    @Singular("addForeignKeyTo")
-    SortedSet<Column> foreignKeyTo;
-
-    /** Column this column refers to as a foreign key. */
-    @Attribute
-    Column foreignKeyFrom;
+    SortedSet<IDbtSource> sqlDBTSources;
 
     /** TBC */
     @Attribute
     @Singular
-    SortedSet<DbtMetric> dbtMetrics;
+    SortedSet<IDbtModel> sqlDbtModels;
 
     /** TBC */
     @Attribute
-    TablePartition tablePartition;
+    String subDataType;
+
+    /** Table in which this column exists, or empty if the column instead exists in a view or materialized view. */
+    @Attribute
+    ITable table;
+
+    /** TBC */
+    @Attribute
+    String tableName;
+
+    /** TBC */
+    @Attribute
+    ITablePartition tablePartition;
+
+    /** TBC */
+    @Attribute
+    String tableQualifiedName;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    Map<String, String> validations;
+
+    /** View in which this column exists, or empty if the column instead exists in a table or materialized view. */
+    @Attribute
+    IView view;
+
+    /** TBC */
+    @Attribute
+    String viewName;
+
+    /** TBC */
+    @Attribute
+    String viewQualifiedName;
 
     /**
      * Reference to a Column by GUID.
@@ -355,15 +471,15 @@ public class Column extends SQL {
      * Retrieve the parent of this Column, irrespective of its type.
      * @return the reference to this Column's parent
      */
-    public SQL getParent() {
+    public ISQL getParent() {
         if (table != null) {
-            return table;
+            return (ISQL) table;
         } else if (view != null) {
-            return view;
+            return (ISQL) view;
         } else if (materializedView != null) {
-            return materializedView;
+            return (ISQL) materializedView;
         } else if (tablePartition != null) {
-            return tablePartition;
+            return (ISQL) tablePartition;
         }
         return null;
     }
@@ -573,7 +689,7 @@ public class Column extends SQL {
      * @return the Column that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static Column replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static Column replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (Column) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -588,7 +704,7 @@ public class Column extends SQL {
      * @return the Column that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static Column appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static Column appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (Column) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -602,7 +718,7 @@ public class Column extends SQL {
      * @return the Column that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static Column removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static Column removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (Column) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 

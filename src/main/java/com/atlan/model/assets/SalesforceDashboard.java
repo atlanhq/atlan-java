@@ -25,7 +25,8 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class SalesforceDashboard extends Salesforce {
+public class SalesforceDashboard extends Asset
+        implements ISalesforceDashboard, ISalesforce, ISaaS, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "SalesforceDashboard";
@@ -35,13 +36,31 @@ public class SalesforceDashboard extends Salesforce {
     @Builder.Default
     String typeName = TYPE_NAME;
 
-    /** ID of the dashboard in Salesforce. */
+    /** TBC */
     @Attribute
-    String sourceId;
+    String apiName;
 
     /** Type of dashboard in Salesforce. */
     @Attribute
     String dashboardType;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    ISalesforceOrganization organization;
+
+    /** TBC */
+    @Attribute
+    String organizationQualifiedName;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
 
     /** Number of reports linked to the dashboard in Salesforce. */
     @Attribute
@@ -50,11 +69,11 @@ public class SalesforceDashboard extends Salesforce {
     /** Reports linked to the dashboard in Salesforce. */
     @Attribute
     @Singular
-    SortedSet<SalesforceReport> reports;
+    SortedSet<ISalesforceReport> reports;
 
-    /** TBC */
+    /** ID of the dashboard in Salesforce. */
     @Attribute
-    SalesforceOrganization organization;
+    String sourceId;
 
     /**
      * Reference to a SalesforceDashboard by GUID.
@@ -257,7 +276,7 @@ public class SalesforceDashboard extends Salesforce {
      * @return the SalesforceDashboard that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static SalesforceDashboard replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static SalesforceDashboard replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (SalesforceDashboard) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -272,7 +291,7 @@ public class SalesforceDashboard extends Salesforce {
      * @return the SalesforceDashboard that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static SalesforceDashboard appendTerms(String qualifiedName, List<GlossaryTerm> terms)
+    public static SalesforceDashboard appendTerms(String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (SalesforceDashboard) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
@@ -287,7 +306,7 @@ public class SalesforceDashboard extends Salesforce {
      * @return the SalesforceDashboard that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static SalesforceDashboard removeTerms(String qualifiedName, List<GlossaryTerm> terms)
+    public static SalesforceDashboard removeTerms(String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (SalesforceDashboard) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }

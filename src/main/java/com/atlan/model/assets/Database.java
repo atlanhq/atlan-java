@@ -12,6 +12,7 @@ import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.SortedSet;
 import javax.annotation.processing.Generated;
 import lombok.*;
@@ -26,7 +27,8 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @Slf4j
-public class Database extends SQL {
+@SuppressWarnings("cast")
+public class Database extends Asset implements IDatabase, ISQL, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "Database";
@@ -36,14 +38,101 @@ public class Database extends SQL {
     @Builder.Default
     String typeName = TYPE_NAME;
 
+    /** TBC */
+    @Attribute
+    String databaseName;
+
+    /** TBC */
+    @Attribute
+    String databaseQualifiedName;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtModel> dbtModels;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtSource> dbtSources;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> inputToProcesses;
+
+    /** TBC */
+    @Attribute
+    Boolean isProfiled;
+
+    /** TBC */
+    @Attribute
+    Long lastProfiledAt;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<ILineageProcess> outputFromProcesses;
+
+    /** TBC */
+    @Attribute
+    Long queryCount;
+
+    /** TBC */
+    @Attribute
+    Long queryCountUpdatedAt;
+
+    /** TBC */
+    @Attribute
+    Long queryUserCount;
+
+    /** TBC */
+    @Attribute
+    @Singular("putQueryUserMap")
+    Map<String, Long> queryUserMap;
+
     /** Number of schemas in this database. */
     @Attribute
     Integer schemaCount;
 
+    /** TBC */
+    @Attribute
+    String schemaName;
+
+    /** TBC */
+    @Attribute
+    String schemaQualifiedName;
+
     /** Schemas that exist within this database. */
     @Attribute
     @Singular
-    SortedSet<Schema> schemas;
+    SortedSet<ISchema> schemas;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtSource> sqlDBTSources;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtModel> sqlDbtModels;
+
+    /** TBC */
+    @Attribute
+    String tableName;
+
+    /** TBC */
+    @Attribute
+    String tableQualifiedName;
+
+    /** TBC */
+    @Attribute
+    String viewName;
+
+    /** TBC */
+    @Attribute
+    String viewQualifiedName;
 
     /**
      * Reference to a Database by GUID.
@@ -273,7 +362,7 @@ public class Database extends SQL {
      * @return the Database that was updated (note that it will NOT contain details of the replaced terms)
      * @throws AtlanException on any API problems
      */
-    public static Database replaceTerms(String qualifiedName, String name, List<GlossaryTerm> terms)
+    public static Database replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
         return (Database) Asset.replaceTerms(updater(qualifiedName, name), terms);
     }
@@ -288,7 +377,7 @@ public class Database extends SQL {
      * @return the Database that was updated  (note that it will NOT contain details of the appended terms)
      * @throws AtlanException on any API problems
      */
-    public static Database appendTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static Database appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (Database) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
     }
 
@@ -302,7 +391,7 @@ public class Database extends SQL {
      * @return the Database that was updated (note that it will NOT contain details of the resulting terms)
      * @throws AtlanException on any API problems
      */
-    public static Database removeTerms(String qualifiedName, List<GlossaryTerm> terms) throws AtlanException {
+    public static Database removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
         return (Database) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
     }
 
