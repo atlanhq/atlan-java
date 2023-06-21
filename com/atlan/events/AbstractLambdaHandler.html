@@ -260,12 +260,15 @@ implements <a href="AtlanEventHandler.html" title="interface in com.atlan.events
 <li class="blockList">
 <h4>processEvent</h4>
 <pre class="methodSignature">public abstract&nbsp;void&nbsp;processEvent&#8203;(<a href="../model/events/AtlanEvent.html" title="class in com.atlan.model.events">AtlanEvent</a>&nbsp;event,
-                                  com.amazonaws.services.lambda.runtime.Context&nbsp;context)</pre>
+                                  com.amazonaws.services.lambda.runtime.Context&nbsp;context)
+                           throws java.io.IOException</pre>
 <div class="block">Implement the logic for how the Atlan event should be processed through overriding this method.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>event</code> - the event payload, from Atlan</dd>
 <dd><code>context</code> - context in which the event was received by the AWS Lambda function</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code>java.io.IOException</code> - on any error during processing of the event</dd>
 </dl>
 </li>
 </ul>
