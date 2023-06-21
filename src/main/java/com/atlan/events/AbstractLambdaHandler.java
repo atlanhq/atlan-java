@@ -29,8 +29,9 @@ public abstract class AbstractLambdaHandler implements AtlanEventHandler, Reques
      *
      * @param event the event payload, from Atlan
      * @param context context in which the event was received by the AWS Lambda function
+     * @throws IOException on any error during processing of the event
      */
-    public abstract void processEvent(AtlanEvent event, Context context);
+    public abstract void processEvent(AtlanEvent event, Context context) throws IOException;
 
     /**
      * {@inheritDoc}
