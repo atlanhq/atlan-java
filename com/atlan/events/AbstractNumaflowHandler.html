@@ -27,8 +27,8 @@
     catch(err) {
     }
 //-->
-var data = {"i0":6,"i1":10};
-var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],8:["t4","Concrete Methods"]};
+var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":6,"i7":10,"i8":9,"i9":9};
+var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -214,13 +214,57 @@ implements <a href="AtlanEventHandler.html" title="interface in com.atlan.events
 </a>
 <h3>Method Summary</h3>
 <table class="memberSummary">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colSecond" scope="col">Method</th>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
+<td class="colFirst"><code>protected static io.numaproj.numaflow.function.types.MessageList</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#drop()">drop</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Drop the message.</div>
+</td>
+</tr>
+<tr id="i1" class="rowColor">
+<td class="colFirst"><code>protected static io.numaproj.numaflow.function.types.MessageList</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#failed(java.lang.String%5B%5D,byte%5B%5D)">failed</a></span>&#8203;(java.lang.String[]&nbsp;keys,
+      byte[]&nbsp;data)</code></th>
+<td class="colLast">
+<div class="block">Route the message as failed.</div>
+</td>
+</tr>
+<tr id="i2" class="altColor">
+<td class="colFirst"><code>protected static io.numaproj.numaflow.function.types.MessageList</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#failed(java.lang.String%5B%5D,io.numaproj.numaflow.function.interfaces.Datum)">failed</a></span>&#8203;(java.lang.String[]&nbsp;keys,
+      io.numaproj.numaflow.function.interfaces.Datum&nbsp;data)</code></th>
+<td class="colLast">
+<div class="block">Route the message as failed.</div>
+</td>
+</tr>
+<tr id="i3" class="rowColor">
+<td class="colFirst"><code>protected static io.numaproj.numaflow.function.types.MessageList</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#forward(byte%5B%5D)">forward</a></span>&#8203;(byte[]&nbsp;data)</code></th>
+<td class="colLast">
+<div class="block">Route the message forward, as-is.</div>
+</td>
+</tr>
+<tr id="i4" class="altColor">
+<td class="colFirst"><code>protected static io.numaproj.numaflow.function.types.MessageList</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#forward(io.numaproj.numaflow.function.interfaces.Datum)">forward</a></span>&#8203;(io.numaproj.numaflow.function.interfaces.Datum&nbsp;data)</code></th>
+<td class="colLast">
+<div class="block">Route the message forward, as-is.</div>
+</td>
+</tr>
+<tr id="i5" class="rowColor">
+<td class="colFirst"><code>protected static <a href="../model/events/AtlanEvent.html" title="class in com.atlan.model.events">AtlanEvent</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAtlanEvent(io.numaproj.numaflow.function.interfaces.Datum)">getAtlanEvent</a></span>&#8203;(io.numaproj.numaflow.function.interfaces.Datum&nbsp;data)</code></th>
+<td class="colLast">
+<div class="block">Translate the Numaflow message into an Atlan event object.</div>
+</td>
+</tr>
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>abstract io.numaproj.numaflow.function.types.MessageList</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#processEvent(com.atlan.model.events.AtlanEvent,java.lang.String%5B%5D,io.numaproj.numaflow.function.interfaces.Datum)">processEvent</a></span>&#8203;(<a href="../model/events/AtlanEvent.html" title="class in com.atlan.model.events">AtlanEvent</a>&nbsp;event,
             java.lang.String[]&nbsp;keys,
@@ -229,10 +273,26 @@ implements <a href="AtlanEventHandler.html" title="interface in com.atlan.events
 <div class="block">Implement the logic for how the Atlan event should be processed through overriding this method.</div>
 </td>
 </tr>
-<tr id="i1" class="rowColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>io.numaproj.numaflow.function.types.MessageList</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#processMessage(java.lang.String%5B%5D,io.numaproj.numaflow.function.interfaces.Datum)">processMessage</a></span>&#8203;(java.lang.String[]&nbsp;keys,
               io.numaproj.numaflow.function.interfaces.Datum&nbsp;data)</code></th>
+</tr>
+<tr id="i8" class="altColor">
+<td class="colFirst"><code>protected static io.numaproj.numaflow.function.types.MessageList</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#succeeded(java.lang.String%5B%5D,byte%5B%5D)">succeeded</a></span>&#8203;(java.lang.String[]&nbsp;keys,
+         byte[]&nbsp;data)</code></th>
+<td class="colLast">
+<div class="block">Route the message as succeeded.</div>
+</td>
+</tr>
+<tr id="i9" class="rowColor">
+<td class="colFirst"><code>protected static io.numaproj.numaflow.function.types.MessageList</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#succeeded(java.lang.String%5B%5D,io.numaproj.numaflow.function.interfaces.Datum)">succeeded</a></span>&#8203;(java.lang.String[]&nbsp;keys,
+         io.numaproj.numaflow.function.interfaces.Datum&nbsp;data)</code></th>
+<td class="colLast">
+<div class="block">Route the message as succeeded.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -339,7 +399,7 @@ implements <a href="AtlanEventHandler.html" title="interface in com.atlan.events
 <a id="processMessage(java.lang.String[],io.numaproj.numaflow.function.interfaces.Datum)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>processMessage</h4>
 <pre class="methodSignature">public&nbsp;io.numaproj.numaflow.function.types.MessageList&nbsp;processMessage&#8203;(java.lang.String[]&nbsp;keys,
@@ -347,6 +407,146 @@ implements <a href="AtlanEventHandler.html" title="interface in com.atlan.events
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code>processMessage</code>&nbsp;in class&nbsp;<code>io.numaproj.numaflow.function.handlers.MapHandler</code></dd>
+</dl>
+</li>
+</ul>
+<a id="getAtlanEvent(io.numaproj.numaflow.function.interfaces.Datum)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getAtlanEvent</h4>
+<pre class="methodSignature">protected static&nbsp;<a href="../model/events/AtlanEvent.html" title="class in com.atlan.model.events">AtlanEvent</a>&nbsp;getAtlanEvent&#8203;(io.numaproj.numaflow.function.interfaces.Datum&nbsp;data)
+                                   throws java.io.IOException</pre>
+<div class="block">Translate the Numaflow message into an Atlan event object.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>data</code> - the Numaflow message</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>an Atlan event object representation of the message</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code>java.io.IOException</code> - if an Atlan event cannot be parsed from the message</dd>
+</dl>
+</li>
+</ul>
+<a id="failed(java.lang.String[],io.numaproj.numaflow.function.interfaces.Datum)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>failed</h4>
+<pre class="methodSignature">protected static&nbsp;io.numaproj.numaflow.function.types.MessageList&nbsp;failed&#8203;(java.lang.String[]&nbsp;keys,
+                                                                        io.numaproj.numaflow.function.interfaces.Datum&nbsp;data)</pre>
+<div class="block">Route the message as failed.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>keys</code> - the Numaflow keys for the message</dd>
+<dd><code>data</code> - the Numaflow message</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a message list indicating the message failed to be processed</dd>
+</dl>
+</li>
+</ul>
+<a id="failed(java.lang.String[],byte[])">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>failed</h4>
+<pre class="methodSignature">protected static&nbsp;io.numaproj.numaflow.function.types.MessageList&nbsp;failed&#8203;(java.lang.String[]&nbsp;keys,
+                                                                        byte[]&nbsp;data)</pre>
+<div class="block">Route the message as failed.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>keys</code> - the Numaflow keys for the message</dd>
+<dd><code>data</code> - the Numaflow message</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a message list indicating the message failed to be processed</dd>
+</dl>
+</li>
+</ul>
+<a id="succeeded(java.lang.String[],io.numaproj.numaflow.function.interfaces.Datum)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>succeeded</h4>
+<pre class="methodSignature">protected static&nbsp;io.numaproj.numaflow.function.types.MessageList&nbsp;succeeded&#8203;(java.lang.String[]&nbsp;keys,
+                                                                           io.numaproj.numaflow.function.interfaces.Datum&nbsp;data)</pre>
+<div class="block">Route the message as succeeded.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>keys</code> - the Numaflow keys for the message</dd>
+<dd><code>data</code> - the Numaflow message</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a message list indicating the message was successfully processed</dd>
+</dl>
+</li>
+</ul>
+<a id="succeeded(java.lang.String[],byte[])">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>succeeded</h4>
+<pre class="methodSignature">protected static&nbsp;io.numaproj.numaflow.function.types.MessageList&nbsp;succeeded&#8203;(java.lang.String[]&nbsp;keys,
+                                                                           byte[]&nbsp;data)</pre>
+<div class="block">Route the message as succeeded.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>keys</code> - the Numaflow keys for the message</dd>
+<dd><code>data</code> - the Numaflow message</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a message list indicating the message was successfully processed</dd>
+</dl>
+</li>
+</ul>
+<a id="forward(io.numaproj.numaflow.function.interfaces.Datum)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>forward</h4>
+<pre class="methodSignature">protected static&nbsp;io.numaproj.numaflow.function.types.MessageList&nbsp;forward&#8203;(io.numaproj.numaflow.function.interfaces.Datum&nbsp;data)</pre>
+<div class="block">Route the message forward, as-is.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>data</code> - the Numaflow message</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a message list indicating the message should be forwarded as-is</dd>
+</dl>
+</li>
+</ul>
+<a id="forward(byte[])">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>forward</h4>
+<pre class="methodSignature">protected static&nbsp;io.numaproj.numaflow.function.types.MessageList&nbsp;forward&#8203;(byte[]&nbsp;data)</pre>
+<div class="block">Route the message forward, as-is.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>data</code> - the Numaflow message</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a message list indicating the message should be forwarded as-is</dd>
+</dl>
+</li>
+</ul>
+<a id="drop()">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>drop</h4>
+<pre class="methodSignature">protected static&nbsp;io.numaproj.numaflow.function.types.MessageList&nbsp;drop()</pre>
+<div class="block">Drop the message. Mostly this should be used when receiving an event that is
+ the result of this handler taking an action on a previous event.
+ (Without this, we could have an infinite loop of that action being applied
+ over and over again.)</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a message list indicating the message can be safely ignored</dd>
 </dl>
 </li>
 </ul>
