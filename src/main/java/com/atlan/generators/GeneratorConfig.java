@@ -90,7 +90,7 @@ public class GeneratorConfig {
             Map.entry("mappedClassificationName", "mappedAtlanTagName"),
             Map.entry("purposeClassifications", "purposeAtlanTags"));
 
-    private static final Map<String, String> DEFAULT_ATTRIBUTE_RETYPES = Map.ofEntries(
+    private static final Map<String, String> DEFAULT_ATTRIBUTE_ENUMS = Map.ofEntries(
             Map.entry("announcementType", "AtlanAnnouncementType"),
             Map.entry("connectorName", "AtlanConnectorType"),
             Map.entry("category", "AtlanConnectionCategory"),
@@ -99,6 +99,9 @@ public class GeneratorConfig {
             Map.entry("policyActions", "AtlanPolicyAction"),
             Map.entry("denyAssetTabs", "AssetSidebarTab"),
             Map.entry("policyMaskType", "DataMaskingType"));
+
+    private static final Map<String, Map<String, String>> DEFAULT_TYPE_OVERRIDES =
+            Map.of("TableauDatasource", Map.of("fields", "TableauField"));
 
     // These are built-in structs, with no serviceType defined
     static final Set<String> BUILT_IN_STRUCTS = Set.of("Histogram", "ColumnValueFrequencyMap");
@@ -184,12 +187,21 @@ public class GeneratorConfig {
     private Map<String, String> renameAttributes;
 
     /**
-     * Mapping of attributes that should have a different type than what appears in
-     * the type definition, usually used to set a manually-maintained enumeration instead
-     * of a free-form string value.
+     * Mapping of attributes that should have an enumerated type rather than a primitive type
+     * (typically String). This is usually used to set a manually-maintained enumeration that
+     * overrides such primitive types found in the typedef itself.
      */
     @Singular
-    private Map<String, String> retypeAttributes;
+    private Map<String, String> attributeToEnums;
+
+    /**
+     * Mapping of type to attribute to new type to use for that attribute. This is used to override
+     * where the same attribute may be overloaded in the typedef (from being inherited from multiple
+     * parents with different types from each). Usually this is used to manually-maintain a super-interface
+     * that can cover both inherited types.
+     */
+    @Singular
+    private Map<String, Map<String, String>> retypeAttributes;
 
     /**
      * Configuration for generating using embedded templates in a jar file.
@@ -221,7 +233,8 @@ public class GeneratorConfig {
                 .renameClasses(DEFAULT_CLASS_RENAMES)
                 .singularForAttributes(DEFAULT_SINGULARS)
                 .renameAttributes(DEFAULT_ATTRIBUTE_RENAMES)
-                .retypeAttributes(DEFAULT_ATTRIBUTE_RETYPES);
+                .attributeToEnums(DEFAULT_ATTRIBUTE_ENUMS)
+                .retypeAttributes(DEFAULT_TYPE_OVERRIDES);
     }
 
     /**
@@ -238,7 +251,8 @@ public class GeneratorConfig {
                 .renameClasses(DEFAULT_CLASS_RENAMES)
                 .singularForAttributes(DEFAULT_SINGULARS)
                 .renameAttributes(DEFAULT_ATTRIBUTE_RENAMES)
-                .retypeAttributes(DEFAULT_ATTRIBUTE_RETYPES)
+                .attributeToEnums(DEFAULT_ATTRIBUTE_ENUMS)
+                .retypeAttributes(DEFAULT_TYPE_OVERRIDES)
                 .renameEnumValue("ResolvingDNS", "RESOLVING_DNS")
                 .renameEnumValue("RA-GRS", "RA_GRS")
                 .doNotGenerateAsset("Referenceable")
@@ -311,7 +325,22 @@ public class GeneratorConfig {
      * @return the resolved enumeration name for the attribute in the POJO, or null if not referring to an enumeration
      */
     public String resolveAttributeToEnumeration(String originalName) {
-        return retypeAttributes.getOrDefault(originalName, null);
+        return attributeToEnums.getOrDefault(originalName, null);
+    }
+
+    /**
+     * Resolve the type of the attribute to an overridden type, if configured, or return null
+     * if there is no type override for this attribute.
+     *
+     * @param typeName unmodified name of the type
+     * @param attributeName unmodified name of the attribute definition
+     * @return the resolved type override for the POJO, or null if no override
+     */
+    public String resolveAttributeToTypeOverride(String typeName, String attributeName) {
+        if (retypeAttributes.containsKey(typeName)) {
+            return retypeAttributes.get(typeName).getOrDefault(attributeName, null);
+        }
+        return null;
     }
 
     /**
