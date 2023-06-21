@@ -24,6 +24,12 @@ public abstract class AbstractLambdaHandler implements AtlanEventHandler, Reques
 
     private static final String SIGNING_SECRET = System.getenv("SIGNING_SECRET");
 
+    /**
+     * Implement the logic for how the Atlan event should be processed through overriding this method.
+     *
+     * @param event the event payload, from Atlan
+     * @param context context in which the event was received by the AWS Lambda function
+     */
     public abstract void processEvent(AtlanEvent event, Context context);
 
     /**
