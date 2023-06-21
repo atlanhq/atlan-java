@@ -10,11 +10,13 @@ import io.numaproj.numaflow.function.types.Message;
 import io.numaproj.numaflow.function.types.MessageList;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 /**
  * Base class for event handlers.
  */
+@Getter
 @Slf4j
 public abstract class AbstractNumaflowHandler extends MapHandler implements AtlanEventHandler {
 
@@ -31,23 +33,22 @@ public abstract class AbstractNumaflowHandler extends MapHandler implements Atla
      * Implement the logic for how the Atlan event should be processed through overriding this method.
      *
      * @param event the event payload, from Atlan
-     * @param keys unique key of the event, for use in returned message list
      * @return an array of messages that can be passed to further vertexes in the pipeline, often produced by one of the helper methods
-     * @see #succeeded(String[], String)
-     * @see #failed(String[], String)
-     * @see #forward(String)
+     * @see #succeeded(String[], byte[])
+     * @see #failed(String[], byte[])
+     * @see #forward(byte[])
      * @see #drop()
      */
-    public abstract MessageList processEvent(AtlanEvent event, String[] keys);
+    public abstract MessageList processEvent(AtlanEvent event, String[] keys, Datum data);
 
     /** {@inheritDoc} */
     @Override
     public MessageList processMessage(String[] keys, Datum data) {
         try {
-            return processEvent(getAtlanEvent(data), keys);
+            return processEvent(getAtlanEvent(data), keys, data);
         } catch (IOException e) {
             log.error("Unable to deserialize event: {}", new String(data.getValue(), StandardCharsets.UTF_8), e);
-            return failed(keys, new String(data.getValue()));
+            return failed(keys, data.getValue());
         }
     }
 
@@ -69,10 +70,21 @@ public abstract class AbstractNumaflowHandler extends MapHandler implements Atla
      * @param data the Numaflow message
      * @return a message list indicating the message failed to be processed
      */
-    static MessageList failed(String keys[], String data) {
+    static MessageList failed(String keys[], Datum data) {
+        return failed(keys, data.getValue());
+    }
+
+    /**
+     * Route the message as failed.
+     *
+     * @param keys the Numaflow keys for the message
+     * @param data the Numaflow message
+     * @return a message list indicating the message failed to be processed
+     */
+    static MessageList failed(String keys[], byte[] data) {
         log.info("Routing to: {}", FAILURE);
         return MessageList.newBuilder()
-                .addMessage(new Message(data.getBytes(StandardCharsets.UTF_8), keys, new String[] {FAILURE}))
+                .addMessage(new Message(data, keys, new String[] {FAILURE}))
                 .build();
     }
 
@@ -83,10 +95,21 @@ public abstract class AbstractNumaflowHandler extends MapHandler implements Atla
      * @param data the Numaflow message
      * @return a message list indicating the message was successfully processed
      */
-    static MessageList succeeded(String keys[], String data) {
+    static MessageList succeeded(String keys[], Datum data) {
+        return succeeded(keys, data.getValue());
+    }
+
+    /**
+     * Route the message as succeeded.
+     *
+     * @param keys the Numaflow keys for the message
+     * @param data the Numaflow message
+     * @return a message list indicating the message was successfully processed
+     */
+    static MessageList succeeded(String keys[], byte[] data) {
         log.info("Routing to: {}", SUCCESS);
         return MessageList.newBuilder()
-                .addMessage(new Message(data.getBytes(StandardCharsets.UTF_8), keys, new String[] {SUCCESS}))
+                .addMessage(new Message(data, keys, new String[] {SUCCESS}))
                 .build();
     }
 
@@ -96,10 +119,18 @@ public abstract class AbstractNumaflowHandler extends MapHandler implements Atla
      * @param data the Numaflow message
      * @return a message list indicating the message should be forwarded as-is
      */
-    static MessageList forward(String data) {
-        return MessageList.newBuilder()
-                .addMessage(new Message(data.getBytes(StandardCharsets.UTF_8)))
-                .build();
+    static MessageList forward(Datum data) {
+        return forward(data.getValue());
+    }
+
+    /**
+     * Route the message forward, as-is.
+     *
+     * @param data the Numaflow message
+     * @return a message list indicating the message should be forwarded as-is
+     */
+    static MessageList forward(byte[] data) {
+        return MessageList.newBuilder().addMessage(new Message(data)).build();
     }
 
     /**
