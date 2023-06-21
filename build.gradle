@@ -99,6 +99,9 @@ dependencies {
     api group: "co.elastic.clients", name: "elasticsearch-java", version: "8.5.1"
     api group: 'org.freemarker', name: 'freemarker', version: '2.3.32'
     api group: 'org.apache.commons', name: 'commons-csv', version: '1.9.0'
+    api platform('software.amazon.awssdk:bom:2.18.21')
+    api 'software.amazon.awssdk:s3:2.18.24'
+    api 'com.amazonaws:aws-lambda-java-core:1.2.2'
     implementation group: "io.github.classgraph", name: "classgraph", version: "4.8.160"
     numaflow group: "io.numaproj.numaflow", name: "numaflow-java", version: "+"
     numaflow "io.netty:netty-transport-native-epoll:4.1.79.Final:linux-x86_64"
