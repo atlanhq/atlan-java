@@ -59,7 +59,7 @@ public abstract class AbstractNumaflowHandler extends MapHandler implements Atla
      * @return an Atlan event object representation of the message
      * @throws IOException if an Atlan event cannot be parsed from the message
      */
-    static AtlanEvent getAtlanEvent(Datum data) throws IOException {
+    protected static AtlanEvent getAtlanEvent(Datum data) throws IOException {
         return AtlanEventHandler.getAtlanEvent(data.getValue());
     }
 
@@ -70,7 +70,7 @@ public abstract class AbstractNumaflowHandler extends MapHandler implements Atla
      * @param data the Numaflow message
      * @return a message list indicating the message failed to be processed
      */
-    static MessageList failed(String keys[], Datum data) {
+    protected static MessageList failed(String keys[], Datum data) {
         return failed(keys, data.getValue());
     }
 
@@ -81,7 +81,7 @@ public abstract class AbstractNumaflowHandler extends MapHandler implements Atla
      * @param data the Numaflow message
      * @return a message list indicating the message failed to be processed
      */
-    static MessageList failed(String keys[], byte[] data) {
+    protected static MessageList failed(String keys[], byte[] data) {
         log.info("Routing to: {}", FAILURE);
         return MessageList.newBuilder()
                 .addMessage(new Message(data, keys, new String[] {FAILURE}))
@@ -95,7 +95,7 @@ public abstract class AbstractNumaflowHandler extends MapHandler implements Atla
      * @param data the Numaflow message
      * @return a message list indicating the message was successfully processed
      */
-    static MessageList succeeded(String keys[], Datum data) {
+    protected static MessageList succeeded(String keys[], Datum data) {
         return succeeded(keys, data.getValue());
     }
 
@@ -106,7 +106,7 @@ public abstract class AbstractNumaflowHandler extends MapHandler implements Atla
      * @param data the Numaflow message
      * @return a message list indicating the message was successfully processed
      */
-    static MessageList succeeded(String keys[], byte[] data) {
+    protected static MessageList succeeded(String keys[], byte[] data) {
         log.info("Routing to: {}", SUCCESS);
         return MessageList.newBuilder()
                 .addMessage(new Message(data, keys, new String[] {SUCCESS}))
@@ -119,7 +119,7 @@ public abstract class AbstractNumaflowHandler extends MapHandler implements Atla
      * @param data the Numaflow message
      * @return a message list indicating the message should be forwarded as-is
      */
-    static MessageList forward(Datum data) {
+    protected static MessageList forward(Datum data) {
         return forward(data.getValue());
     }
 
@@ -129,7 +129,7 @@ public abstract class AbstractNumaflowHandler extends MapHandler implements Atla
      * @param data the Numaflow message
      * @return a message list indicating the message should be forwarded as-is
      */
-    static MessageList forward(byte[] data) {
+    protected static MessageList forward(byte[] data) {
         return MessageList.newBuilder().addMessage(new Message(data)).build();
     }
 
@@ -141,7 +141,7 @@ public abstract class AbstractNumaflowHandler extends MapHandler implements Atla
      *
      * @return a message list indicating the message can be safely ignored
      */
-    static MessageList drop() {
+    protected static MessageList drop() {
         return MessageList.newBuilder().addMessage(Message.toDrop()).build();
     }
 }
