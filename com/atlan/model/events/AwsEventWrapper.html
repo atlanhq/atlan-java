@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10};
+var data = {"i0":9,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -138,7 +138,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <hr>
 <pre>public class <span class="typeNameLabel">AwsEventWrapper</span>
 extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core">AtlanObject</a></pre>
-<div class="block">Details that wrap events when sent through AWS (EventBridge).</div>
+<div class="block">Details that wrap events when sent through AWS (Lambda).</div>
 </li>
 </ul>
 </div>
@@ -162,6 +162,11 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <tr class="altColor">
 <td class="colFirst"><code>static class&nbsp;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="AwsEventWrapper.AwsEventWrapperBuilder.html" title="class in com.atlan.model.events">AwsEventWrapper.AwsEventWrapperBuilder</a>&lt;<a href="AwsEventWrapper.AwsEventWrapperBuilder.html" title="type parameter in AwsEventWrapper.AwsEventWrapperBuilder">C</a> extends <a href="AwsEventWrapper.html" title="class in com.atlan.model.events">AwsEventWrapper</a>,&#8203;<a href="AwsEventWrapper.AwsEventWrapperBuilder.html" title="type parameter in AwsEventWrapper.AwsEventWrapperBuilder">B</a> extends <a href="AwsEventWrapper.AwsEventWrapperBuilder.html" title="class in com.atlan.model.events">AwsEventWrapper.AwsEventWrapperBuilder</a>&lt;<a href="AwsEventWrapper.AwsEventWrapperBuilder.html" title="type parameter in AwsEventWrapper.AwsEventWrapperBuilder">C</a>,&#8203;<a href="AwsEventWrapper.AwsEventWrapperBuilder.html" title="type parameter in AwsEventWrapper.AwsEventWrapperBuilder">B</a>&gt;&gt;</span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static class&nbsp;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="AwsEventWrapper.AwsRequestContext.html" title="class in com.atlan.model.events">AwsEventWrapper.AwsRequestContext</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
@@ -192,6 +197,18 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <tr class="altColor">
 <td class="colFirst"><code>protected </code></td>
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.atlan.model.events.AwsEventWrapper.AwsEventWrapperBuilder)">AwsEventWrapper</a></span>&#8203;(<a href="AwsEventWrapper.AwsEventWrapperBuilder.html" title="class in com.atlan.model.events">AwsEventWrapper.AwsEventWrapperBuilder</a>&lt;?,&#8203;?&gt;&nbsp;b)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>&nbsp;</code></td>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.util.Map,com.atlan.model.events.AwsEventWrapper.AwsRequestContext,java.lang.String,boolean)">AwsEventWrapper</a></span>&#8203;(java.lang.String&nbsp;version,
+               java.lang.String&nbsp;routeKey,
+               java.lang.String&nbsp;rawPath,
+               java.lang.String&nbsp;rawQueryString,
+               java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;headers,
+               <a href="AwsEventWrapper.AwsRequestContext.html" title="class in com.atlan.model.events">AwsEventWrapper.AwsRequestContext</a>&nbsp;requestContext,
+               java.lang.String&nbsp;body,
+               boolean&nbsp;isBase64Encoded)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
@@ -229,80 +246,66 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAccount()">getAccount</a></span>()</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getBody()">getBody</a></span>()</code></th>
 <td class="colLast">
-<div class="block">TBC</div>
+<div class="block">Actual contents of the event that was sent by Atlan.</div>
 </td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code><a href="AtlanEvent.html" title="class in com.atlan.model.events">AtlanEvent</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDetail()">getDetail</a></span>()</code></th>
+<td class="colFirst"><code>java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getHeaders()">getHeaders</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Details of the event.</div>
+<div class="block">Headers that were used when sending the event through to the Lambda URL.</div>
 </td>
 </tr>
 <tr id="i5" class="rowColor">
-<td class="colFirst"><code><a href="../enums/AtlanEventType.html" title="enum in com.atlan.model.enums">AtlanEventType</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDetailType()">getDetailType</a></span>()</code></th>
+<td class="colFirst"><code>boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIsBase64Encoded()">getIsBase64Encoded</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Type of the event.</div>
+<div class="block">Whether the contents are base64-encoded (true) or plain text (false).</div>
 </td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getId()">getId</a></span>()</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRawPath()">getRawPath</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Unique identifier (GUID) of the event.</div>
+<div class="block">TBC</div>
 </td>
 </tr>
 <tr id="i7" class="rowColor">
-<td class="colFirst"><code><a href="AtlanEventPayload.html" title="class in com.atlan.model.events">AtlanEventPayload</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPayload()">getPayload</a></span>()</code></th>
+<td class="colFirst"><code>java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRawQueryString()">getRawQueryString</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Retrieve the detailed payload from the event.</div>
+<div class="block">TBC</div>
 </td>
 </tr>
 <tr id="i8" class="altColor">
-<td class="colFirst"><code>java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRegion()">getRegion</a></span>()</code></th>
+<td class="colFirst"><code><a href="AwsEventWrapper.AwsRequestContext.html" title="class in com.atlan.model.events">AwsEventWrapper.AwsRequestContext</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRequestContext()">getRequestContext</a></span>()</code></th>
 <td class="colLast">
-<div class="block">AWS region on which the event was created.</div>
+<div class="block">TBC</div>
 </td>
 </tr>
 <tr id="i9" class="rowColor">
-<td class="colFirst"><code>java.util.List&lt;java.lang.Object&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getResources()">getResources</a></span>()</code></th>
+<td class="colFirst"><code>java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRouteKey()">getRouteKey</a></span>()</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getSource()">getSource</a></span>()</code></th>
-<td class="colLast">
-<div class="block">Source of the event.</div>
-</td>
-</tr>
-<tr id="i11" class="rowColor">
-<td class="colFirst"><code>java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTime()">getTime</a></span>()</code></th>
-<td class="colLast">
-<div class="block">Time at which the event was created.</div>
-</td>
-</tr>
-<tr id="i12" class="altColor">
-<td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getVersion()">getVersion</a></span>()</code></th>
 <td class="colLast">
 <div class="block">TBC</div>
 </td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hashCode()">hashCode</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code><a href="AwsEventWrapper.AwsEventWrapperBuilder.html" title="class in com.atlan.model.events">AwsEventWrapper.AwsEventWrapperBuilder</a>&lt;?,&#8203;?&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toBuilder()">toBuilder</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
@@ -338,6 +341,22 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
+<a id="&lt;init&gt;(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.util.Map,com.atlan.model.events.AwsEventWrapper.AwsRequestContext,java.lang.String,boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>AwsEventWrapper</h4>
+<pre>public&nbsp;AwsEventWrapper&#8203;(java.lang.String&nbsp;version,
+                       java.lang.String&nbsp;routeKey,
+                       java.lang.String&nbsp;rawPath,
+                       java.lang.String&nbsp;rawQueryString,
+                       java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;headers,
+                       <a href="AwsEventWrapper.AwsRequestContext.html" title="class in com.atlan.model.events">AwsEventWrapper.AwsRequestContext</a>&nbsp;requestContext,
+                       java.lang.String&nbsp;body,
+                       boolean&nbsp;isBase64Encoded)</pre>
+</li>
+</ul>
 <a id="&lt;init&gt;(com.atlan.model.events.AwsEventWrapper.AwsEventWrapperBuilder)">
 <!--   -->
 </a>
@@ -357,20 +376,6 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a id="getPayload()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getPayload</h4>
-<pre class="methodSignature">public&nbsp;<a href="AtlanEventPayload.html" title="class in com.atlan.model.events">AtlanEventPayload</a>&nbsp;getPayload()</pre>
-<div class="block">Retrieve the detailed payload from the event.</div>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>the detailed message (payload) contained in the event.</dd>
-</dl>
-</li>
-</ul>
 <a id="builder()">
 <!--   -->
 </a>
@@ -399,84 +404,74 @@ extends <a href="../core/AtlanObject.html" title="class in com.atlan.model.core"
 <div class="block">TBC</div>
 </li>
 </ul>
-<a id="getId()">
+<a id="getRouteKey()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>getId</h4>
-<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getId()</pre>
-<div class="block">Unique identifier (GUID) of the event.</div>
-</li>
-</ul>
-<a id="getDetailType()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getDetailType</h4>
-<pre class="methodSignature">public&nbsp;<a href="../enums/AtlanEventType.html" title="enum in com.atlan.model.enums">AtlanEventType</a>&nbsp;getDetailType()</pre>
-<div class="block">Type of the event.</div>
-</li>
-</ul>
-<a id="getSource()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getSource</h4>
-<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getSource()</pre>
-<div class="block">Source of the event.</div>
-</li>
-</ul>
-<a id="getAccount()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getAccount</h4>
-<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getAccount()</pre>
+<h4>getRouteKey</h4>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getRouteKey()</pre>
 <div class="block">TBC</div>
 </li>
 </ul>
-<a id="getTime()">
+<a id="getRawPath()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>getTime</h4>
-<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getTime()</pre>
-<div class="block">Time at which the event was created.</div>
-</li>
-</ul>
-<a id="getRegion()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getRegion</h4>
-<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getRegion()</pre>
-<div class="block">AWS region on which the event was created.</div>
-</li>
-</ul>
-<a id="getResources()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getResources</h4>
-<pre class="methodSignature">public&nbsp;java.util.List&lt;java.lang.Object&gt;&nbsp;getResources()</pre>
+<h4>getRawPath</h4>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getRawPath()</pre>
 <div class="block">TBC</div>
 </li>
 </ul>
-<a id="getDetail()">
+<a id="getRawQueryString()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>getDetail</h4>
-<pre class="methodSignature">public&nbsp;<a href="AtlanEvent.html" title="class in com.atlan.model.events">AtlanEvent</a>&nbsp;getDetail()</pre>
-<div class="block">Details of the event.</div>
+<h4>getRawQueryString</h4>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getRawQueryString()</pre>
+<div class="block">TBC</div>
+</li>
+</ul>
+<a id="getHeaders()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getHeaders</h4>
+<pre class="methodSignature">public&nbsp;java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;getHeaders()</pre>
+<div class="block">Headers that were used when sending the event through to the Lambda URL.</div>
+</li>
+</ul>
+<a id="getRequestContext()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getRequestContext</h4>
+<pre class="methodSignature">public&nbsp;<a href="AwsEventWrapper.AwsRequestContext.html" title="class in com.atlan.model.events">AwsEventWrapper.AwsRequestContext</a>&nbsp;getRequestContext()</pre>
+<div class="block">TBC</div>
+</li>
+</ul>
+<a id="getBody()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getBody</h4>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getBody()</pre>
+<div class="block">Actual contents of the event that was sent by Atlan.</div>
+</li>
+</ul>
+<a id="getIsBase64Encoded()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getIsBase64Encoded</h4>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;getIsBase64Encoded()</pre>
+<div class="block">Whether the contents are base64-encoded (true) or plain text (false).</div>
 </li>
 </ul>
 <a id="equals(java.lang.Object)">
