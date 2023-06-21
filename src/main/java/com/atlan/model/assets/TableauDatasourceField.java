@@ -28,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @SuppressWarnings("cast")
 public class TableauDatasourceField extends Asset
-        implements ITableauDatasourceField, ITableau, IBI, ICatalog, IAsset, IReferenceable {
+        implements ITableauField, ITableauDatasourceField, ITableau, IBI, ICatalog, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "TableauDatasourceField";

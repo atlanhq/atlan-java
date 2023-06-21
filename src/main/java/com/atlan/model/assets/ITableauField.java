@@ -16,17 +16,17 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
-import javax.annotation.processing.Generated;
 
 /**
- * Instance of a Tableau datasource in Atlan.
+ * Instance of a Tableau calculated or datasource field in Atlan.
+ * (Note that this is necessary, and not generated, to cater for the attribute 'fields' on
+ * TableauDatasource that can refer to either of these types of Tableau fields, through two
+ * different RelationshipDefs that use the same endpoint name 'fields' and thus cause an overload
+ * of the attribute name.)
  */
-@Generated(value = "com.atlan.generators.ModelGeneratorV2")
 @JsonSerialize(using = AssetSerializer.class)
 @JsonDeserialize(using = AssetDeserializer.class)
-public interface ITableauDatasource {
-
-    public static final String TYPE_NAME = "TableauDatasource";
+public interface ITableauField {
 
     /** TBC */
     SortedSet<String> getAdminGroups();
@@ -224,15 +224,6 @@ public interface ITableauDatasource {
     String getCertificateUpdatedBy();
 
     /** TBC */
-    String getCertificationNote();
-
-    /** TBC */
-    Map<String, String> getCertifier();
-
-    /** TBC */
-    String getCertifierDisplayName();
-
-    /** TBC */
     String getConnectionName();
 
     /** TBC */
@@ -240,6 +231,12 @@ public interface ITableauDatasource {
 
     /** TBC */
     AtlanConnectorType getConnectorType();
+
+    /** TBC */
+    ITableauDatasource getDatasource();
+
+    /** TBC */
+    String getDatasourceQualifiedName();
 
     /** TBC */
     String getDbtQualifiedName();
@@ -251,13 +248,7 @@ public interface ITableauDatasource {
     String getDisplayName();
 
     /** TBC */
-    SortedSet<ITableauField> getFields();
-
-    /** TBC */
     SortedSet<IFile> getFiles();
-
-    /** TBC */
-    Boolean getHasExtracts();
 
     /** TBC */
     Boolean getHasLineage();
@@ -266,16 +257,10 @@ public interface ITableauDatasource {
     SortedSet<ILineageProcess> getInputToProcesses();
 
     /** TBC */
-    Boolean getIsCertified();
-
-    /** TBC */
     Boolean getIsDiscoverable();
 
     /** TBC */
     Boolean getIsEditable();
-
-    /** TBC */
-    Boolean getIsPublished();
 
     /** TBC */
     Long getLastRowChangedAt();
@@ -315,9 +300,6 @@ public interface ITableauDatasource {
 
     /** TBC */
     Double getPopularityScore();
-
-    /** TBC */
-    ITableauProject getProject();
 
     /** TBC */
     List<Map<String, String>> getProjectHierarchy();
@@ -416,10 +398,7 @@ public interface ITableauDatasource {
     String getTopLevelProjectQualifiedName();
 
     /** TBC */
-    List<Map<String, String>> getUpstreamDatasources();
-
-    /** TBC */
-    List<Map<String, String>> getUpstreamTables();
+    List<Map<String, String>> getUpstreamFields();
 
     /** TBC */
     String getUserDescription();
@@ -434,10 +413,10 @@ public interface ITableauDatasource {
     SortedSet<String> getViewerUsers();
 
     /** TBC */
-    ITableauWorkbook getWorkbook();
+    String getWorkbookQualifiedName();
 
     /** TBC */
-    String getWorkbookQualifiedName();
+    SortedSet<ITableauWorksheet> getWorksheets();
 
     /** Name of the type that defines the asset. */
     String getTypeName();
