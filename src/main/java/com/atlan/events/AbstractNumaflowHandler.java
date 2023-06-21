@@ -3,7 +3,6 @@
 package com.atlan.events;
 
 import com.atlan.Atlan;
-import com.atlan.model.assets.Asset;
 import com.atlan.model.events.AtlanEvent;
 import io.numaproj.numaflow.function.handlers.MapHandler;
 import io.numaproj.numaflow.function.interfaces.Datum;
@@ -34,9 +33,9 @@ public abstract class AbstractNumaflowHandler extends MapHandler implements Atla
      * @param event the event payload, from Atlan
      * @param keys unique key of the event, for use in returned message list
      * @return an array of messages that can be passed to further vertexes in the pipeline, often produced by one of the helper methods
-     * @see #succeeded(String[], Datum)
-     * @see #failed(String[], Datum)
-     * @see #forward(Datum)
+     * @see #succeeded(String[], String)
+     * @see #failed(String[], String)
+     * @see #forward(String)
      * @see #drop()
      */
     public abstract MessageList processEvent(AtlanEvent event, String[] keys);
@@ -44,7 +43,12 @@ public abstract class AbstractNumaflowHandler extends MapHandler implements Atla
     /** {@inheritDoc} */
     @Override
     public MessageList processMessage(String[] keys, Datum data) {
-        return processEvent(getAtlanEvent(data), keys);
+        try {
+            return processEvent(getAtlanEvent(data), keys);
+        } catch (IOException e) {
+            log.error("Unable to deserialize event: {}", new String(data.getValue(), StandardCharsets.UTF_8), e);
+            return failed(keys, new String(data.getValue()));
+        }
     }
 
     /**
@@ -52,25 +56,10 @@ public abstract class AbstractNumaflowHandler extends MapHandler implements Atla
      *
      * @param data the Numaflow message
      * @return an Atlan event object representation of the message
+     * @throws IOException if an Atlan event cannot be parsed from the message
      */
-    static AtlanEvent getAtlanEvent(Datum data) {
-        try {
-            return AtlanEventHandler.getAtlanEvent(data.getValue());
-        } catch (IOException e) {
-            log.error("Unable to deserialize event: {}", new String(data.getValue(), StandardCharsets.UTF_8), e);
-        }
-        return null;
-    }
-
-    /**
-     * Translate the Numaflow message directly into the Atlan asset nested in its payload.
-     *
-     * @param data the Numaflow message
-     * @return the nested asset object in the event, or null if there is none
-     */
-    static Asset getAssetFromEvent(Datum data) {
-        AtlanEvent event = getAtlanEvent(data);
-        return AtlanEventHandler.getAssetFromEvent(event);
+    static AtlanEvent getAtlanEvent(Datum data) throws IOException {
+        return AtlanEventHandler.getAtlanEvent(data.getValue());
     }
 
     /**
@@ -80,10 +69,10 @@ public abstract class AbstractNumaflowHandler extends MapHandler implements Atla
      * @param data the Numaflow message
      * @return a message list indicating the message failed to be processed
      */
-    static MessageList failed(String keys[], Datum data) {
+    static MessageList failed(String keys[], String data) {
         log.info("Routing to: {}", FAILURE);
         return MessageList.newBuilder()
-                .addMessage(new Message(data.getValue(), keys, new String[] {FAILURE}))
+                .addMessage(new Message(data.getBytes(StandardCharsets.UTF_8), keys, new String[] {FAILURE}))
                 .build();
     }
 
@@ -94,10 +83,10 @@ public abstract class AbstractNumaflowHandler extends MapHandler implements Atla
      * @param data the Numaflow message
      * @return a message list indicating the message was successfully processed
      */
-    static MessageList succeeded(String keys[], Datum data) {
+    static MessageList succeeded(String keys[], String data) {
         log.info("Routing to: {}", SUCCESS);
         return MessageList.newBuilder()
-                .addMessage(new Message(data.getValue(), keys, new String[] {SUCCESS}))
+                .addMessage(new Message(data.getBytes(StandardCharsets.UTF_8), keys, new String[] {SUCCESS}))
                 .build();
     }
 
@@ -107,8 +96,10 @@ public abstract class AbstractNumaflowHandler extends MapHandler implements Atla
      * @param data the Numaflow message
      * @return a message list indicating the message should be forwarded as-is
      */
-    static MessageList forward(Datum data) {
-        return MessageList.newBuilder().addMessage(new Message(data.getValue())).build();
+    static MessageList forward(String data) {
+        return MessageList.newBuilder()
+                .addMessage(new Message(data.getBytes(StandardCharsets.UTF_8)))
+                .build();
     }
 
     /**
