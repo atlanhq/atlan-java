@@ -13,6 +13,7 @@ import com.atlan.model.search.IndexSearchDSL;
 import com.atlan.model.search.IndexSearchRequest;
 import com.atlan.model.search.IndexSearchResponse;
 import com.atlan.serde.Serde;
+import com.atlan.util.AssetBatch;
 import com.atlan.util.QueryFactory;
 import java.io.IOException;
 import java.util.*;
@@ -50,18 +51,22 @@ public interface AtlanEventHandler {
     }
 
     /**
-     * Calculate any changes to apply to the asset, and return a minimally-updated form of the asset
+     * Calculate any changes to apply to assets, and return a collection of the minimally-updated form of the assets
      * with those changes applied (in-memory). Typically, you will want to call {@link Asset#trimToRequired()}
-     * on the currentView before making any changes, to ensure a minimal set of changes are applied to the
+     * on the currentView of each asset before making any changes, to ensure a minimal set of changes are applied to the
      * asset (minimizing the risk of accidentally clobbering any other changes someone may make to the asset
      * between this in-memory set of changes and the subsequent application of those changes to Atlan itself).
+     * Also, you should call your {@link #hasChanges(Asset, Asset, Logger)} method for each asset
+     * to determine whether it actually has any changes to include before returning it from this method.
+     * NOTE: The returned assets from this method should be ONLY those assets on which updates are actually being
+     * applied, or you will risk an infinite loop of events triggering changes, more events, more changes, etc.
      *
      * @param currentView the current view / state of the asset in Atlan, as the starting point for any changes
      * @param log a logger to log anything you want
-     * @return the updated (in-memory) asset
+     * @return a collection of only those assets that have changes to send to Atlan (empty, if there are no changes to send)
      * @throws AtlanException if there are any problems calculating or applying changes (in-memory) to the asset
      */
-    Asset calculateChanges(Asset currentView, Logger log) throws AtlanException;
+    Collection<Asset> calculateChanges(Asset currentView, Logger log) throws AtlanException;
 
     /**
      * Check the key information this event processing is meant to handle between the original asset and the
@@ -82,14 +87,18 @@ public interface AtlanEventHandler {
     }
 
     /**
-     * Actually send the changed asset to Atlan so that it is persisted.
+     * Actually send the changed assets to Atlan so that they are persisted.
      *
-     * @param latest the in-memory-modified asset to send to Atlan
+     * @param changedAssets the in-memory-modified assets to send to Atlan
      * @param log a logger to log anything you want
      * @throws AtlanException if there are any problems actually updating the asset in Atlan
      */
-    default void upsertChanges(Asset latest, Logger log) throws AtlanException {
-        latest.upsertMergingCM(false);
+    default void upsertChanges(Collection<Asset> changedAssets, Logger log) throws AtlanException {
+        AssetBatch batch = new AssetBatch("event-driven", 20, false, AssetBatch.CustomMetadataHandling.MERGE);
+        for (Asset one : changedAssets) {
+            batch.add(one);
+        }
+        batch.flush();
     }
 
     String WEBHOOK_VALIDATION_REQUEST =
