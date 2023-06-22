@@ -3,6 +3,8 @@
 package com.atlan.events;
 
 import com.atlan.Atlan;
+import com.atlan.exception.AtlanException;
+import com.atlan.model.assets.Asset;
 import com.atlan.model.events.AtlanEvent;
 import io.numaproj.numaflow.function.handlers.MapHandler;
 import io.numaproj.numaflow.function.interfaces.Datum;
@@ -18,7 +20,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Getter
 @Slf4j
-public abstract class AbstractNumaflowHandler extends MapHandler implements AtlanEventHandler {
+public abstract class AbstractNumaflowHandler extends MapHandler {
 
     public static final String FAILURE = "failure";
     public static final String SUCCESS = "success";
@@ -29,17 +31,51 @@ public abstract class AbstractNumaflowHandler extends MapHandler implements Atla
         Atlan.setApiToken(System.getenv("ATLAN_API_KEY"));
     }
 
+    private final AtlanEventHandler handler;
+
+    public AbstractNumaflowHandler(AtlanEventHandler handler) {
+        this.handler = handler;
+    }
+
     /**
-     * Implement the logic for how the Atlan event should be processed through overriding this method.
+     * Handle the Atlan event using the standard 5-step flow:
+     * 1. Validate prerequisites.
+     * 2. Retrieve current state of the asset.
+     * 3. Apply any changes (in-memory).
+     * 4. Determine whether any changes actually would be applied (idempotency).
+     * 5. Apply changes back to Atlan (only if (4) shows there are changes to apply).
      *
      * @param event the event payload, from Atlan
+     * @param keys the Numaflow keys for the message
+     * @param data the Numanflow message itself
      * @return an array of messages that can be passed to further vertexes in the pipeline, often produced by one of the helper methods
-     * @see #succeeded(String[], byte[])
-     * @see #failed(String[], byte[])
-     * @see #forward(byte[])
-     * @see #drop()
      */
-    public abstract MessageList processEvent(AtlanEvent event, String[] keys, Datum data);
+    public MessageList processEvent(AtlanEvent event, String[] keys, Datum data) {
+        try {
+            if (!handler.validatePrerequisites(event, log)) {
+                return failed(keys, data);
+            }
+        } catch (AtlanException e) {
+            log.error("Unable to validate prerequisites, failing.", e);
+            return failed(keys, data);
+        }
+        try {
+            Asset current = handler.getCurrentState(event.getPayload().getAsset(), log);
+            Asset updated = handler.calculateChanges(current, log);
+            if (handler.hasChanges(current, updated, log)) {
+                handler.upsertChanges(updated, log);
+                return succeeded(keys, data);
+            } else {
+                return drop();
+            }
+        } catch (AtlanException e) {
+            log.error(
+                    "Unable to update Atlan asset: {}",
+                    event.getPayload().getAsset().getQualifiedName(),
+                    e);
+            return failed(keys, data);
+        }
+    }
 
     /** {@inheritDoc} */
     @Override

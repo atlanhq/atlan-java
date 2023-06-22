@@ -5,6 +5,8 @@ package com.atlan.events;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestStreamHandler;
 import com.atlan.Atlan;
+import com.atlan.exception.AtlanException;
+import com.atlan.model.assets.Asset;
 import com.atlan.model.events.AtlanEvent;
 import com.atlan.model.events.AwsEventWrapper;
 import com.atlan.serde.Serde;
@@ -14,7 +16,7 @@ import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public abstract class AbstractLambdaHandler implements AtlanEventHandler, RequestStreamHandler {
+public abstract class AbstractLambdaHandler implements RequestStreamHandler {
 
     // Set up Atlan connectivity through environment variables
     static {
@@ -24,14 +26,48 @@ public abstract class AbstractLambdaHandler implements AtlanEventHandler, Reques
 
     private static final String SIGNING_SECRET = System.getenv("SIGNING_SECRET");
 
+    private final AtlanEventHandler handler;
+
+    public AbstractLambdaHandler(AtlanEventHandler handler) {
+        this.handler = handler;
+    }
+
     /**
-     * Implement the logic for how the Atlan event should be processed through overriding this method.
+     * Handle the Atlan event using the standard 5-step flow:
+     * 1. Validate prerequisites.
+     * 2. Retrieve current state of the asset.
+     * 3. Apply any changes (in-memory).
+     * 4. Determine whether any changes actually would be applied (idempotency).
+     * 5. Apply changes back to Atlan (only if (4) shows there are changes to apply).
      *
      * @param event the event payload, from Atlan
      * @param context context in which the event was received by the AWS Lambda function
      * @throws IOException on any error during processing of the event
      */
-    public abstract void processEvent(AtlanEvent event, Context context) throws IOException;
+    public void processEvent(AtlanEvent event, Context context) throws IOException {
+        boolean proceed;
+        try {
+            proceed = handler.validatePrerequisites(event, log);
+        } catch (AtlanException e) {
+            throw new IOException("Unable to validate prerequisites, failing.", e);
+        }
+        if (proceed) {
+            try {
+                Asset current = handler.getCurrentState(event.getPayload().getAsset(), log);
+                Asset updated = handler.calculateChanges(current, log);
+                if (handler.hasChanges(current, updated, log)) {
+                    handler.upsertChanges(updated, log);
+                }
+            } catch (AtlanException e) {
+                throw new IOException(
+                        "Unable to update Atlan asset: "
+                                + event.getPayload().getAsset().getQualifiedName(),
+                        e);
+            }
+        } else {
+            throw new IOException("Prerequisites failed, will not proceed with processing the event.");
+        }
+    }
 
     /**
      * {@inheritDoc}
