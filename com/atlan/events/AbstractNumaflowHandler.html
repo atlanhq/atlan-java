@@ -27,8 +27,8 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":6,"i7":10,"i8":9,"i9":9};
-var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],8:["t4","Concrete Methods"]};
+var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":10,"i7":10,"i8":10,"i9":9,"i10":9};
+var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -135,14 +135,9 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="description">
 <ul class="blockList">
 <li class="blockList">
-<dl>
-<dt>All Implemented Interfaces:</dt>
-<dd><code><a href="AtlanEventHandler.html" title="interface in com.atlan.events">AtlanEventHandler</a></code></dd>
-</dl>
 <hr>
 <pre>public abstract class <span class="typeNameLabel">AbstractNumaflowHandler</span>
-extends io.numaproj.numaflow.function.handlers.MapHandler
-implements <a href="AtlanEventHandler.html" title="interface in com.atlan.events">AtlanEventHandler</a></pre>
+extends io.numaproj.numaflow.function.handlers.MapHandler</pre>
 <div class="block">Base class for event handlers.</div>
 </li>
 </ul>
@@ -175,13 +170,6 @@ implements <a href="AtlanEventHandler.html" title="interface in com.atlan.events
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
-<ul class="blockList">
-<li class="blockList"><a id="fields.inherited.from.class.com.atlan.events.AtlanEventHandler">
-<!--   -->
-</a>
-<h3>Fields inherited from interface&nbsp;com.atlan.events.<a href="AtlanEventHandler.html" title="interface in com.atlan.events">AtlanEventHandler</a></h3>
-<code><a href="AtlanEventHandler.html#WEBHOOK_VALIDATION_REQUEST">WEBHOOK_VALIDATION_REQUEST</a></code></li>
-</ul>
 </li>
 </ul>
 </section>
@@ -199,7 +187,7 @@ implements <a href="AtlanEventHandler.html" title="interface in com.atlan.events
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E()">AbstractNumaflowHandler</a></span>()</code></th>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.atlan.events.AtlanEventHandler)">AbstractNumaflowHandler</a></span>&#8203;(<a href="AtlanEventHandler.html" title="interface in com.atlan.events">AtlanEventHandler</a>&nbsp;handler)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
@@ -214,7 +202,7 @@ implements <a href="AtlanEventHandler.html" title="interface in com.atlan.events
 </a>
 <h3>Method Summary</h3>
 <table class="memberSummary">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colSecond" scope="col">Method</th>
@@ -265,20 +253,26 @@ implements <a href="AtlanEventHandler.html" title="interface in com.atlan.events
 </td>
 </tr>
 <tr id="i6" class="altColor">
-<td class="colFirst"><code>abstract io.numaproj.numaflow.function.types.MessageList</code></td>
+<td class="colFirst"><code><a href="AtlanEventHandler.html" title="interface in com.atlan.events">AtlanEventHandler</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getHandler()">getHandler</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i7" class="rowColor">
+<td class="colFirst"><code>io.numaproj.numaflow.function.types.MessageList</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#processEvent(com.atlan.model.events.AtlanEvent,java.lang.String%5B%5D,io.numaproj.numaflow.function.interfaces.Datum)">processEvent</a></span>&#8203;(<a href="../model/events/AtlanEvent.html" title="class in com.atlan.model.events">AtlanEvent</a>&nbsp;event,
             java.lang.String[]&nbsp;keys,
             io.numaproj.numaflow.function.interfaces.Datum&nbsp;data)</code></th>
 <td class="colLast">
-<div class="block">Implement the logic for how the Atlan event should be processed through overriding this method.</div>
+<div class="block">Handle the Atlan event using the standard 5-step flow:
+ 1.</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>io.numaproj.numaflow.function.types.MessageList</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#processMessage(java.lang.String%5B%5D,io.numaproj.numaflow.function.interfaces.Datum)">processMessage</a></span>&#8203;(java.lang.String[]&nbsp;keys,
               io.numaproj.numaflow.function.interfaces.Datum&nbsp;data)</code></th>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>protected static io.numaproj.numaflow.function.types.MessageList</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#succeeded(java.lang.String%5B%5D,byte%5B%5D)">succeeded</a></span>&#8203;(java.lang.String[]&nbsp;keys,
          byte[]&nbsp;data)</code></th>
@@ -286,7 +280,7 @@ implements <a href="AtlanEventHandler.html" title="interface in com.atlan.events
 <div class="block">Route the message as succeeded.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>protected static io.numaproj.numaflow.function.types.MessageList</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#succeeded(java.lang.String%5B%5D,io.numaproj.numaflow.function.interfaces.Datum)">succeeded</a></span>&#8203;(java.lang.String[]&nbsp;keys,
          io.numaproj.numaflow.function.interfaces.Datum&nbsp;data)</code></th>
@@ -354,13 +348,13 @@ implements <a href="AtlanEventHandler.html" title="interface in com.atlan.events
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a id="&lt;init&gt;()">
+<a id="&lt;init&gt;(com.atlan.events.AtlanEventHandler)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>AbstractNumaflowHandler</h4>
-<pre>public&nbsp;AbstractNumaflowHandler()</pre>
+<pre>public&nbsp;AbstractNumaflowHandler&#8203;(<a href="AtlanEventHandler.html" title="interface in com.atlan.events">AtlanEventHandler</a>&nbsp;handler)</pre>
 </li>
 </ul>
 </li>
@@ -379,20 +373,22 @@ implements <a href="AtlanEventHandler.html" title="interface in com.atlan.events
 <ul class="blockList">
 <li class="blockList">
 <h4>processEvent</h4>
-<pre class="methodSignature">public abstract&nbsp;io.numaproj.numaflow.function.types.MessageList&nbsp;processEvent&#8203;(<a href="../model/events/AtlanEvent.html" title="class in com.atlan.model.events">AtlanEvent</a>&nbsp;event,
-                                                                             java.lang.String[]&nbsp;keys,
-                                                                             io.numaproj.numaflow.function.interfaces.Datum&nbsp;data)</pre>
-<div class="block">Implement the logic for how the Atlan event should be processed through overriding this method.</div>
+<pre class="methodSignature">public&nbsp;io.numaproj.numaflow.function.types.MessageList&nbsp;processEvent&#8203;(<a href="../model/events/AtlanEvent.html" title="class in com.atlan.model.events">AtlanEvent</a>&nbsp;event,
+                                                                    java.lang.String[]&nbsp;keys,
+                                                                    io.numaproj.numaflow.function.interfaces.Datum&nbsp;data)</pre>
+<div class="block">Handle the Atlan event using the standard 5-step flow:
+ 1. Validate prerequisites.
+ 2. Retrieve current state of the asset.
+ 3. Apply any changes (in-memory).
+ 4. Determine whether any changes actually would be applied (idempotency).
+ 5. Apply changes back to Atlan (only if (4) shows there are changes to apply).</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>event</code> - the event payload, from Atlan</dd>
+<dd><code>keys</code> - the Numaflow keys for the message</dd>
+<dd><code>data</code> - the Numanflow message itself</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>an array of messages that can be passed to further vertexes in the pipeline, often produced by one of the helper methods</dd>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="#succeeded(java.lang.String%5B%5D,byte%5B%5D)"><code>succeeded(String[], byte[])</code></a>, 
-<a href="#failed(java.lang.String%5B%5D,byte%5B%5D)"><code>failed(String[], byte[])</code></a>, 
-<a href="#forward(byte%5B%5D)"><code>forward(byte[])</code></a>, 
-<a href="#drop()"><code>drop()</code></a></dd>
 </dl>
 </li>
 </ul>
@@ -536,7 +532,7 @@ implements <a href="AtlanEventHandler.html" title="interface in com.atlan.events
 <a id="drop()">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>drop</h4>
 <pre class="methodSignature">protected static&nbsp;io.numaproj.numaflow.function.types.MessageList&nbsp;drop()</pre>
@@ -548,6 +544,15 @@ implements <a href="AtlanEventHandler.html" title="interface in com.atlan.events
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>a message list indicating the message can be safely ignored</dd>
 </dl>
+</li>
+</ul>
+<a id="getHandler()">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>getHandler</h4>
+<pre class="methodSignature">public&nbsp;<a href="AtlanEventHandler.html" title="interface in com.atlan.events">AtlanEventHandler</a>&nbsp;getHandler()</pre>
 </li>
 </ul>
 </li>
