@@ -15,12 +15,82 @@ import com.atlan.model.search.IndexSearchResponse;
 import com.atlan.serde.Serde;
 import com.atlan.util.QueryFactory;
 import java.io.IOException;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+import org.slf4j.Logger;
 
 public interface AtlanEventHandler {
+
+    /**
+     * Validate the prerequisites expected by the event handler. These should generally run before
+     * trying to do any other actions.
+     * This default implementation will only confirm that an event has been received and there are
+     * details of an asset embedded within the event.
+     *
+     * @param event the event to be processed
+     * @param log a logger to log anything you want
+     * @return true if the prerequisites are met, otherwise false
+     * @throws AtlanException optionally throw any errors on unexpected problems
+     */
+    default boolean validatePrerequisites(AtlanEvent event, Logger log) throws AtlanException {
+        return event != null && event.getPayload() != null && event.getPayload().getAsset() != null;
+    }
+
+    /**
+     * Retrieve the current state of the asset, with minimal required info to handle any logic
+     * the event handler requires to make its decisions.
+     * This default implementation will only really check that the asset still exists in Atlan.
+     *
+     * @param fromEvent the asset from the event (which could be stale at this point)
+     * @param log a logger to log anything you want
+     * @return the current state of the asset, as retrieved from Atlan
+     * @throws AtlanException if there are any problems retrieving the current state of the asset from Atlan
+     */
+    default Asset getCurrentState(Asset fromEvent, Logger log) throws AtlanException {
+        return getCurrentViewOfAsset(fromEvent, null, false, false);
+    }
+
+    /**
+     * Calculate any changes to apply to the asset, and return a minimally-updated form of the asset
+     * with those changes applied (in-memory). Typically, you will want to call {@link Asset#trimToRequired()}
+     * on the currentView before making any changes, to ensure a minimal set of changes are applied to the
+     * asset (minimizing the risk of accidentally clobbering any other changes someone may make to the asset
+     * between this in-memory set of changes and the subsequent application of those changes to Atlan itself).
+     *
+     * @param currentView the current view / state of the asset in Atlan, as the starting point for any changes
+     * @param log a logger to log anything you want
+     * @return the updated (in-memory) asset
+     * @throws AtlanException if there are any problems calculating or applying changes (in-memory) to the asset
+     */
+    Asset calculateChanges(Asset currentView, Logger log) throws AtlanException;
+
+    /**
+     * Check the key information this event processing is meant to handle between the original asset and the
+     * in-memory-modified asset. Only return true if there is actually a change to be applied to this asset in
+     * Atlan - this ensures idempotency, and avoids an infinite loop of making changes repeatedly in Atlan,
+     * which triggers a new event, a new change, a new event, and so on.
+     * This default implementation only blindly checks for equality. It is likely you would want to check
+     * specific attributes' values, rather than the entire object, for equality when determining whether a relevant
+     * change has been made (or not) to the asset.
+     *
+     * @param current the current view / state of the asset in Atlan, that was the starting point for any change calculations
+     * @param modified the in-memory-modified asset against which to check if any changes actually need to be sent to Atlan
+     * @param log a logger to log anything you want
+     * @return true if the modified asset should be sent on to (updated in) Atlan, or false if there are no actual changes to apply
+     */
+    default boolean hasChanges(Asset current, Asset modified, Logger log) {
+        return !Objects.equals(current, modified);
+    }
+
+    /**
+     * Actually send the changed asset to Atlan so that it is persisted.
+     *
+     * @param latest the in-memory-modified asset to send to Atlan
+     * @param log a logger to log anything you want
+     * @throws AtlanException if there are any problems actually updating the asset in Atlan
+     */
+    default void upsertChanges(Asset latest, Logger log) throws AtlanException {
+        latest.upsertMergingCM(false);
+    }
 
     String WEBHOOK_VALIDATION_REQUEST =
             "{\"atlan-webhook\": \"Hello, humans of data! It worked. Excited to see what you build!\"}";
