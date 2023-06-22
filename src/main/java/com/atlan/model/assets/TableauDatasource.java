@@ -54,7 +54,7 @@ public class TableauDatasource extends Asset
     /** TBC */
     @Attribute
     @Singular
-    SortedSet<ITableauCalculatedField> fields;
+    SortedSet<ITableauField> fields;
 
     /** TBC */
     @Attribute

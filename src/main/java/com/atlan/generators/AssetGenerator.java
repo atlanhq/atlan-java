@@ -260,6 +260,14 @@ public class AssetGenerator extends TypeGenerator {
                         .type(MappedType.Type.ENUM)
                         .build());
             }
+            String assetTypeOverride = cfg.resolveAttributeToTypeOverride(className, getOriginalName());
+            if (assetTypeOverride != null) {
+                setType(getType().toBuilder()
+                        .name(assetTypeOverride)
+                        .type(MappedType.Type.ASSET)
+                        .build());
+                setRetyped(true);
+            }
         }
 
         public String getSingular() {

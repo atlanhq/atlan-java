@@ -13,6 +13,7 @@ public class AttributeGenerator extends TypeGenerator {
 
     private MappedType type;
     private String renamed;
+    private boolean retyped = false;
 
     protected AttributeGenerator(GeneratorConfig cfg) {
         super(cfg);

@@ -93,7 +93,14 @@ public class AssetTestGenerator extends AssetGenerator {
                         addEnum(builder, multiValued, type.getName());
                         break;
                     case ASSET:
-                        addAssetRef(builder, multiValued, type.getName());
+                        if (!attribute.getRetyped()) {
+                            addAssetRef(builder, multiValued, type.getName());
+                        } else {
+                            // If the attribute was retyped, use the original base type for
+                            // generating test values, or we'll end up with a non-existent
+                            // abstract class for the test
+                            addAssetRef(builder, multiValued, type.getOriginalBase());
+                        }
                         break;
                     case STRUCT:
                         addStructRef(builder, multiValued, type.getName());
