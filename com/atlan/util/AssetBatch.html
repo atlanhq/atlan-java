@@ -300,13 +300,16 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>add</h4>
-<pre class="methodSignature">public&nbsp;<a href="../model/core/AssetMutationResponse.html" title="class in com.atlan.model.core">AssetMutationResponse</a>&nbsp;add&#8203;(<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;single)</pre>
+<pre class="methodSignature">public&nbsp;<a href="../model/core/AssetMutationResponse.html" title="class in com.atlan.model.core">AssetMutationResponse</a>&nbsp;add&#8203;(<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;single)
+                          throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
 <div class="block">Add an asset to the batch to be processed.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>single</code> - the asset to add to a batch</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the assets that were created or updated in this batch, or null if the batch is still queued</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any problems adding the asset to or processing the batch</dd>
 </dl>
 </li>
 </ul>
@@ -316,11 +319,14 @@ extends java.lang.Object</pre>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>flush</h4>
-<pre class="methodSignature">public&nbsp;<a href="../model/core/AssetMutationResponse.html" title="class in com.atlan.model.core">AssetMutationResponse</a>&nbsp;flush()</pre>
+<pre class="methodSignature">public&nbsp;<a href="../model/core/AssetMutationResponse.html" title="class in com.atlan.model.core">AssetMutationResponse</a>&nbsp;flush()
+                            throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
 <div class="block">Flush any remaining assets in the batch.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the mutation response from the queued batch of assets that were flushed</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any problems flushing (submitting) the batch</dd>
 </dl>
 </li>
 </ul>

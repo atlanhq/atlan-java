@@ -168,11 +168,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code><a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a></code></td>
+<td class="colFirst"><code>java.util.Collection&lt;<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#calculateChanges(com.atlan.model.assets.Asset,org.slf4j.Logger)">calculateChanges</a></span>&#8203;(<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;currentView,
                 org.slf4j.Logger&nbsp;log)</code></th>
 <td class="colLast">
-<div class="block">Calculate any changes to apply to the asset, and return a minimally-updated form of the asset
+<div class="block">Calculate any changes to apply to assets, and return a collection of the minimally-updated form of the assets
  with those changes applied (in-memory).</div>
 </td>
 </tr>
@@ -303,10 +303,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </tr>
 <tr id="i17" class="rowColor">
 <td class="colFirst"><code>default void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#upsertChanges(com.atlan.model.assets.Asset,org.slf4j.Logger)">upsertChanges</a></span>&#8203;(<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;latest,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#upsertChanges(java.util.Collection,org.slf4j.Logger)">upsertChanges</a></span>&#8203;(java.util.Collection&lt;<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;&nbsp;changedAssets,
              org.slf4j.Logger&nbsp;log)</code></th>
 <td class="colLast">
-<div class="block">Actually send the changed asset to Atlan so that it is persisted.</div>
+<div class="block">Actually send the changed assets to Atlan so that they are persisted.</div>
 </td>
 </tr>
 <tr id="i18" class="altColor">
@@ -418,20 +418,24 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <ul class="blockList">
 <li class="blockList">
 <h4>calculateChanges</h4>
-<pre class="methodSignature"><a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;calculateChanges&#8203;(<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;currentView,
-                       org.slf4j.Logger&nbsp;log)
-                throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
-<div class="block">Calculate any changes to apply to the asset, and return a minimally-updated form of the asset
+<pre class="methodSignature">java.util.Collection&lt;<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;&nbsp;calculateChanges&#8203;(<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;currentView,
+                                             org.slf4j.Logger&nbsp;log)
+                                      throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Calculate any changes to apply to assets, and return a collection of the minimally-updated form of the assets
  with those changes applied (in-memory). Typically, you will want to call <a href="../model/assets/Asset.html#trimToRequired()"><code>Asset.trimToRequired()</code></a>
- on the currentView before making any changes, to ensure a minimal set of changes are applied to the
+ on the currentView of each asset before making any changes, to ensure a minimal set of changes are applied to the
  asset (minimizing the risk of accidentally clobbering any other changes someone may make to the asset
- between this in-memory set of changes and the subsequent application of those changes to Atlan itself).</div>
+ between this in-memory set of changes and the subsequent application of those changes to Atlan itself).
+ Also, you should call your <a href="#hasChanges(com.atlan.model.assets.Asset,com.atlan.model.assets.Asset,org.slf4j.Logger)"><code>hasChanges(Asset, Asset, Logger)</code></a> method for each asset
+ to determine whether it actually has any changes to include before returning it from this method.
+ NOTE: The returned assets from this method should be ONLY those assets on which updates are actually being
+ applied, or you will risk an infinite loop of events triggering changes, more events, more changes, etc.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>currentView</code> - the current view / state of the asset in Atlan, as the starting point for any changes</dd>
 <dd><code>log</code> - a logger to log anything you want</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the updated (in-memory) asset</dd>
+<dd>a collection of only those assets that have changes to send to Atlan (empty, if there are no changes to send)</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - if there are any problems calculating or applying changes (in-memory) to the asset</dd>
 </dl>
@@ -463,19 +467,19 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dl>
 </li>
 </ul>
-<a id="upsertChanges(com.atlan.model.assets.Asset,org.slf4j.Logger)">
+<a id="upsertChanges(java.util.Collection,org.slf4j.Logger)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>upsertChanges</h4>
-<pre class="methodSignature">default&nbsp;void&nbsp;upsertChanges&#8203;(<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;latest,
+<pre class="methodSignature">default&nbsp;void&nbsp;upsertChanges&#8203;(java.util.Collection&lt;<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;&nbsp;changedAssets,
                            org.slf4j.Logger&nbsp;log)
                     throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
-<div class="block">Actually send the changed asset to Atlan so that it is persisted.</div>
+<div class="block">Actually send the changed assets to Atlan so that they are persisted.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>latest</code> - the in-memory-modified asset to send to Atlan</dd>
+<dd><code>changedAssets</code> - the in-memory-modified assets to send to Atlan</dd>
 <dd><code>log</code> - a logger to log anything you want</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - if there are any problems actually updating the asset in Atlan</dd>
