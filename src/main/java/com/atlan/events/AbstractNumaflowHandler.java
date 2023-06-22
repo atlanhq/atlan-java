@@ -12,6 +12,7 @@ import io.numaproj.numaflow.function.types.Message;
 import io.numaproj.numaflow.function.types.MessageList;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.Collection;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -61,8 +62,8 @@ public abstract class AbstractNumaflowHandler extends MapHandler {
         }
         try {
             Asset current = handler.getCurrentState(event.getPayload().getAsset(), log);
-            Asset updated = handler.calculateChanges(current, log);
-            if (handler.hasChanges(current, updated, log)) {
+            Collection<Asset> updated = handler.calculateChanges(current, log);
+            if (!updated.isEmpty()) {
                 handler.upsertChanges(updated, log);
                 return succeeded(keys, data);
             } else {

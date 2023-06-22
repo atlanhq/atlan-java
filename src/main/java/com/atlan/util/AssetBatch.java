@@ -60,8 +60,9 @@ public class AssetBatch {
      *
      * @param single the asset to add to a batch
      * @return the assets that were created or updated in this batch, or null if the batch is still queued
+     * @throws AtlanException on any problems adding the asset to or processing the batch
      */
-    public AssetMutationResponse add(Asset single) {
+    public AssetMutationResponse add(Asset single) throws AtlanException {
         _batch.add(single);
         return process();
     }
@@ -71,8 +72,9 @@ public class AssetBatch {
      * otherwise do nothing.
      *
      * @return the assets that were created or updated in this batch, or null if the batch is still queued
+     * @throws AtlanException on any problems processing the batch
      */
-    private AssetMutationResponse process() {
+    private AssetMutationResponse process() throws AtlanException {
         // Once we reach our batch size, create them and then start a new batch
         if (_batch.size() == maxSize) {
             return flush();
@@ -85,25 +87,22 @@ public class AssetBatch {
      * Flush any remaining assets in the batch.
      *
      * @return the mutation response from the queued batch of assets that were flushed
+     * @throws AtlanException on any problems flushing (submitting) the batch
      */
-    public AssetMutationResponse flush() {
+    public AssetMutationResponse flush() throws AtlanException {
         AssetMutationResponse response = null;
         if (!_batch.isEmpty()) {
-            try {
-                log.info("... upserting next batch of ({}) {}s...", _batch.size(), typeName);
-                switch (customMetadataHandling) {
-                    case IGNORE:
-                        response = EntityBulkEndpoint.upsert(_batch, replaceAtlanTags);
-                        break;
-                    case OVERWRITE:
-                        response = EntityBulkEndpoint.upsertReplacingCM(_batch, replaceAtlanTags);
-                        break;
-                    case MERGE:
-                        response = EntityBulkEndpoint.upsertMergingCM(_batch, replaceAtlanTags);
-                        break;
-                }
-            } catch (AtlanException e) {
-                log.error("Unexpected exception while trying to upsert: {}", _batch, e);
+            log.info("... upserting next batch of ({}) {}s...", _batch.size(), typeName);
+            switch (customMetadataHandling) {
+                case IGNORE:
+                    response = EntityBulkEndpoint.upsert(_batch, replaceAtlanTags);
+                    break;
+                case OVERWRITE:
+                    response = EntityBulkEndpoint.upsertReplacingCM(_batch, replaceAtlanTags);
+                    break;
+                case MERGE:
+                    response = EntityBulkEndpoint.upsertMergingCM(_batch, replaceAtlanTags);
+                    break;
             }
             _batch = new ArrayList<>();
         }

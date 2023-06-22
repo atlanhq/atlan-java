@@ -12,6 +12,7 @@ import com.atlan.model.events.AwsEventWrapper;
 import com.atlan.serde.Serde;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.util.Collection;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 
@@ -54,8 +55,8 @@ public abstract class AbstractLambdaHandler implements RequestStreamHandler {
         if (proceed) {
             try {
                 Asset current = handler.getCurrentState(event.getPayload().getAsset(), log);
-                Asset updated = handler.calculateChanges(current, log);
-                if (handler.hasChanges(current, updated, log)) {
+                Collection<Asset> updated = handler.calculateChanges(current, log);
+                if (!updated.isEmpty()) {
                     handler.upsertChanges(updated, log);
                 }
             } catch (AtlanException e) {
