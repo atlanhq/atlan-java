@@ -10,6 +10,7 @@ import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.enums.FileType;
 import com.atlan.model.relations.UniqueAttributes;
+import com.atlan.util.StringUtils;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -42,11 +43,11 @@ public class File extends Asset implements IFile, IResource, ICatalog, IAsset, I
     @Attribute
     IAsset fileAssets;
 
-    /** TBC */
+    /** URL giving the online location where the file can be accessed. */
     @Attribute
     String filePath;
 
-    /** TBC */
+    /** Type of the file */
     @Attribute
     FileType fileType;
 
@@ -143,6 +144,33 @@ public class File extends Asset implements IFile, IResource, ICatalog, IAsset, I
      */
     public static boolean restore(String qualifiedName) throws AtlanException {
         return Asset.restore(TYPE_NAME, qualifiedName);
+    }
+
+    /**
+     * Builds the minimal object necessary to create a File.
+     *
+     * @param name of the File (if multiple files with the same name exist in the connection, also include the path that makes this file unique)
+     * @param connectionQualifiedName unique name of the connection in which the file is contained
+     * @param type of the File
+     * @return the minimal request necessary to update the File, as a builder
+     */
+    public static FileBuilder<?, ?> creator(String name, String connectionQualifiedName, FileType type) {
+        return File.builder()
+                .connectionQualifiedName(connectionQualifiedName)
+                .name(name)
+                .qualifiedName(generateQualifiedName(connectionQualifiedName, name))
+                .fileType(type);
+    }
+
+    /**
+     * Generate a unique File name.
+     *
+     * @param connectionQualifiedName unique name of the connection in which the file is contained
+     * @param name of the File (including any path details, if necessary to ensure this file is unique within the connection)
+     * @return a unique name for the File
+     */
+    public static String generateQualifiedName(String connectionQualifiedName, String name) {
+        return connectionQualifiedName + "/" + StringUtils.trimPathDelimiters(name);
     }
 
     /**

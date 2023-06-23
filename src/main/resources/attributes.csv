@@ -409,8 +409,8 @@ DbtSource,Instance of a dbt source asset in Atlan.,dbtState,TBC
 DbtSource,Instance of a dbt source asset in Atlan.,dbtFreshnessCriteria,TBC
 DbtSource,Instance of a dbt source asset in Atlan.,sqlAssets,TBC
 DbtSource,Instance of a dbt source asset in Atlan.,sqlAsset,TBC
-File,Instance of a file in Atlan.,fileType,TBC
-File,Instance of a file in Atlan.,filePath,TBC
+File,Instance of a file in Atlan.,fileType,Type of the file
+File,Instance of a file in Atlan.,filePath,URL giving the online location where the file can be accessed.
 File,Instance of a file in Atlan.,fileAssets,TBC
 Folder,Instance of a folder within a query collection in Atlan.,parentQualifiedName,TBC
 Folder,Instance of a folder within a query collection in Atlan.,collectionQualifiedName,qualifiedName of the collection in which this folder exists.

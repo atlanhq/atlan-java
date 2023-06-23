@@ -1,0 +1,62 @@
+<#macro all>
+    /**
+     * Builds the minimal object necessary to create a File.
+     *
+     * @param name of the File (if multiple files with the same name exist in the connection, also include the path that makes this file unique)
+     * @param connectionQualifiedName unique name of the connection in which the file is contained
+     * @param type of the File
+     * @return the minimal request necessary to update the File, as a builder
+     */
+    public static FileBuilder<?, ?> creator(String name, String connectionQualifiedName, FileType type) {
+        return File.builder()
+                .connectionQualifiedName(connectionQualifiedName)
+                .name(name)
+                .qualifiedName(generateQualifiedName(connectionQualifiedName, name))
+                .fileType(type);
+    }
+
+    /**
+     * Generate a unique File name.
+     *
+     * @param connectionQualifiedName unique name of the connection in which the file is contained
+     * @param name of the File (including any path details, if necessary to ensure this file is unique within the connection)
+     * @return a unique name for the File
+     */
+    public static String generateQualifiedName(String connectionQualifiedName, String name) {
+        return connectionQualifiedName + "/" + StringUtils.trimPathDelimiters(name);
+    }
+
+    /**
+     * Builds the minimal object necessary to update a File.
+     *
+     * @param qualifiedName of the File
+     * @param name of the File
+     * @return the minimal request necessary to update the File, as a builder
+     */
+    public static FileBuilder<?, ?> updater(String qualifiedName, String name) {
+        return File.builder().qualifiedName(qualifiedName).name(name);
+    }
+
+    /**
+     * Builds the minimal object necessary to apply an update to a File, from a potentially
+     * more-complete File object.
+     *
+     * @return the minimal object necessary to update the File, as a builder
+     * @throws InvalidRequestException if any of the minimal set of required properties for File are not found in the initial object
+     */
+    @Override
+    public FileBuilder<?, ?> trimToRequired() throws InvalidRequestException {
+        List<String> missing = new ArrayList<>();
+        if (this.getQualifiedName() == null || this.getQualifiedName().length() == 0) {
+            missing.add("qualifiedName");
+        }
+        if (this.getName() == null || this.getName().length() == 0) {
+            missing.add("name");
+        }
+        if (!missing.isEmpty()) {
+            throw new InvalidRequestException(
+                    ErrorCode.MISSING_REQUIRED_UPDATE_PARAM, "File", String.join(",", missing));
+        }
+        return updater(this.getQualifiedName(), this.getName());
+    }
+</#macro>

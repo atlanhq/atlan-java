@@ -1,0 +1,237 @@
+/* SPDX-License-Identifier: Apache-2.0 */
+/* Copyright 2022 Atlan Pte. Ltd. */
+package com.atlan.live;
+
+import static com.atlan.util.QueryFactory.*;
+import static org.testng.Assert.*;
+
+import co.elastic.clients.elasticsearch._types.SortOrder;
+import co.elastic.clients.elasticsearch._types.query_dsl.Query;
+import com.atlan.Atlan;
+import com.atlan.exception.AtlanException;
+import com.atlan.model.assets.*;
+import com.atlan.model.core.AssetMutationResponse;
+import com.atlan.model.enums.*;
+import com.atlan.model.search.AggregationBucketResult;
+import com.atlan.model.search.IndexSearchDSL;
+import com.atlan.model.search.IndexSearchRequest;
+import com.atlan.model.search.IndexSearchResponse;
+import com.atlan.net.HttpClient;
+import java.util.List;
+import lombok.extern.slf4j.Slf4j;
+import org.testng.annotations.Test;
+
+/**
+ * Tests all aspects of File assets.
+ */
+@Slf4j
+public class FileTest extends AtlanLiveTest {
+
+    private static final String PREFIX = makeUnique("File");
+
+    public static final AtlanConnectorType CONNECTOR_TYPE = AtlanConnectorType.API;
+    public static final String CONNECTION_NAME = PREFIX;
+    private static final String FILE_NAME = PREFIX + "-file.pdf";
+
+    private static Connection connection = null;
+    private static File file = null;
+
+    @Test(groups = {"file.create.connection"})
+    void createConnection() throws AtlanException {
+        connection = ConnectionTest.createConnection(CONNECTION_NAME, CONNECTOR_TYPE);
+    }
+
+    @Test(
+            groups = {"file.create.file"},
+            dependsOnGroups = {"file.create.connection"})
+    void createFile() throws AtlanException {
+        File toCreate = File.creator(FILE_NAME, connection.getQualifiedName(), FileType.PDF)
+                .filePath("https://www.example.com")
+                .build();
+        AssetMutationResponse response = toCreate.upsert();
+        Asset one = validateSingleCreate(response);
+        assertTrue(one instanceof File);
+        file = (File) one;
+        assertNotNull(file.getGuid());
+        assertNotNull(file.getQualifiedName());
+        assertEquals(file.getQualifiedName(), File.generateQualifiedName(connection.getQualifiedName(), FILE_NAME));
+        assertEquals(file.getName(), FILE_NAME);
+        assertNull(file.getConnectorType());
+        assertEquals(file.getConnectionQualifiedName(), connection.getQualifiedName());
+        assertEquals(file.getFileType(), FileType.PDF);
+        assertEquals(file.getFilePath(), "https://www.example.com");
+    }
+
+    @Test(
+            groups = {"file.update.file"},
+            dependsOnGroups = {"file.create.file"})
+    void updateFile() throws AtlanException {
+        File updated = File.updateCertificate(file.getQualifiedName(), CERTIFICATE_STATUS, CERTIFICATE_MESSAGE);
+        assertNotNull(updated);
+        assertEquals(updated.getCertificateStatus(), CERTIFICATE_STATUS);
+        assertEquals(updated.getCertificateStatusMessage(), CERTIFICATE_MESSAGE);
+        updated = File.updateAnnouncement(
+                file.getQualifiedName(), ANNOUNCEMENT_TYPE, ANNOUNCEMENT_TITLE, ANNOUNCEMENT_MESSAGE);
+        assertNotNull(updated);
+        assertEquals(updated.getAnnouncementType(), ANNOUNCEMENT_TYPE);
+        assertEquals(updated.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
+        assertEquals(updated.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
+    }
+
+    @Test(
+            groups = {"file.read.file"},
+            dependsOnGroups = {"file.update.file"})
+    void retrieveFile() throws AtlanException {
+        File r = File.retrieveByGuid(file.getGuid());
+        assertNotNull(r);
+        assertTrue(r.isComplete());
+        assertEquals(r.getGuid(), file.getGuid());
+        assertEquals(r.getQualifiedName(), file.getQualifiedName());
+        assertEquals(r.getName(), FILE_NAME);
+        assertEquals(r.getCertificateStatus(), CERTIFICATE_STATUS);
+        assertEquals(r.getCertificateStatusMessage(), CERTIFICATE_MESSAGE);
+        assertEquals(r.getAnnouncementType(), ANNOUNCEMENT_TYPE);
+        assertEquals(r.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
+        assertEquals(r.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
+    }
+
+    @Test(
+            groups = {"file.update.file.again"},
+            dependsOnGroups = {"file.read.file"})
+    void updateFileAgain() throws AtlanException {
+        File updated = File.removeCertificate(file.getQualifiedName(), FILE_NAME);
+        assertNotNull(updated);
+        assertNull(updated.getCertificateStatus());
+        assertNull(updated.getCertificateStatusMessage());
+        assertEquals(updated.getAnnouncementType(), ANNOUNCEMENT_TYPE);
+        assertEquals(updated.getAnnouncementTitle(), ANNOUNCEMENT_TITLE);
+        assertEquals(updated.getAnnouncementMessage(), ANNOUNCEMENT_MESSAGE);
+        updated = File.removeAnnouncement(file.getQualifiedName(), FILE_NAME);
+        assertNotNull(updated);
+        assertNull(updated.getAnnouncementType());
+        assertNull(updated.getAnnouncementTitle());
+        assertNull(updated.getAnnouncementMessage());
+    }
+
+    @Test(
+            groups = {"file.search.files"},
+            dependsOnGroups = {"file.update.file.again"})
+    void searchFiles() throws AtlanException, InterruptedException {
+        Query combined = CompoundQuery.builder()
+                .must(beActive())
+                .must(beOfType(File.TYPE_NAME))
+                .must(have(KeywordFields.QUALIFIED_NAME).startingWith(connection.getQualifiedName()))
+                .build()
+                ._toQuery();
+
+        IndexSearchRequest index = IndexSearchRequest.builder()
+                .dsl(IndexSearchDSL.builder()
+                        .from(0)
+                        .size(10)
+                        .query(combined)
+                        .aggregation("type", Aggregate.bucketBy(KeywordFields.TYPE_NAME))
+                        .sortOption(Sort.by(NumericFields.TIMESTAMP, SortOrder.Asc))
+                        .build())
+                .attribute("name")
+                .attribute("connectionQualifiedName")
+                .build();
+
+        IndexSearchResponse response = index.search();
+        assertNotNull(response);
+
+        int count = 0;
+        while (response.getApproximateCount() < 1L && count < Atlan.getMaxNetworkRetries()) {
+            Thread.sleep(HttpClient.waitTime(count).toMillis());
+            response = index.search();
+            count++;
+        }
+
+        assertNotNull(response.getAggregations());
+        assertEquals(response.getAggregations().size(), 1);
+        assertTrue(response.getAggregations().get("type") instanceof AggregationBucketResult);
+        assertEquals(
+                ((AggregationBucketResult) response.getAggregations().get("type"))
+                        .getBuckets()
+                        .size(),
+                1);
+
+        assertEquals(response.getApproximateCount().longValue(), 1L);
+        List<Asset> entities = response.getAssets();
+        assertNotNull(entities);
+        assertEquals(entities.size(), 1);
+
+        Asset one = entities.get(0);
+        assertTrue(one instanceof File);
+        assertFalse(one.isComplete());
+        File asset = (File) one;
+        assertEquals(asset.getQualifiedName(), file.getQualifiedName());
+        assertEquals(asset.getName(), file.getName());
+        assertEquals(asset.getConnectionQualifiedName(), connection.getQualifiedName());
+    }
+
+    @Test(
+            groups = {"file.delete.file"},
+            dependsOnGroups = {"file.update.*", "file.search.*"})
+    void deleteFile() throws AtlanException {
+        AssetMutationResponse response = Asset.delete(file.getGuid()).block();
+        assertNotNull(response);
+        assertTrue(response.getCreatedAssets().isEmpty());
+        assertTrue(response.getUpdatedAssets().isEmpty());
+        assertEquals(response.getDeletedAssets().size(), 1);
+        Asset one = response.getDeletedAssets().get(0);
+        assertTrue(one instanceof File);
+        File s = (File) one;
+        assertEquals(s.getGuid(), file.getGuid());
+        assertEquals(s.getQualifiedName(), file.getQualifiedName());
+        assertEquals(s.getDeleteHandler(), "SOFT");
+        assertEquals(s.getStatus(), AtlanStatus.DELETED);
+    }
+
+    @Test(
+            groups = {"file.delete.file.read"},
+            dependsOnGroups = {"file.delete.file"})
+    void readDeletedFile() throws AtlanException {
+        File deleted = File.retrieveByGuid(file.getGuid());
+        assertNotNull(deleted);
+        assertEquals(deleted.getGuid(), file.getGuid());
+        assertEquals(deleted.getQualifiedName(), file.getQualifiedName());
+        assertEquals(deleted.getStatus(), AtlanStatus.DELETED);
+    }
+
+    @Test(
+            groups = {"file.delete.file.restore"},
+            dependsOnGroups = {"file.delete.file.read"})
+    void restoreFile() throws AtlanException {
+        assertTrue(File.restore(file.getQualifiedName()));
+        File restored = File.retrieveByQualifiedName(file.getQualifiedName());
+        assertEquals(restored.getGuid(), file.getGuid());
+        assertEquals(restored.getQualifiedName(), file.getQualifiedName());
+        assertEquals(restored.getStatus(), AtlanStatus.ACTIVE);
+    }
+
+    @Test(
+            groups = {"file.purge.file"},
+            dependsOnGroups = {"file.delete.file.restore"})
+    void purgeFile() throws AtlanException {
+        AssetMutationResponse response = Asset.purge(file.getGuid());
+        assertNotNull(response);
+        assertTrue(response.getCreatedAssets().isEmpty());
+        assertTrue(response.getUpdatedAssets().isEmpty());
+        assertEquals(response.getDeletedAssets().size(), 1);
+        Asset one = response.getDeletedAssets().get(0);
+        assertTrue(one instanceof File);
+        File s = (File) one;
+        assertEquals(s.getGuid(), file.getGuid());
+        assertEquals(s.getQualifiedName(), file.getQualifiedName());
+        assertEquals(s.getDeleteHandler(), "PURGE");
+        assertEquals(s.getStatus(), AtlanStatus.DELETED);
+    }
+
+    @Test(
+            groups = {"file.purge.connection"},
+            dependsOnGroups = {"file.create.*", "file.read.*", "file.search.*", "file.update.*", "file.purge.*"},
+            alwaysRun = true)
+    void purgeConnection() throws AtlanException, InterruptedException {
+        ConnectionTest.deleteConnection(connection.getQualifiedName(), log);
+    }
+}

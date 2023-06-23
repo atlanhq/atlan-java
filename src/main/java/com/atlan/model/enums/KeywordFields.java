@@ -409,9 +409,9 @@ public enum KeywordFields implements AtlanSearchableField {
     EXTERNAL_LOCATION_REGION("externalLocationRegion"),
     /** TBC */
     FIELDS("fields"),
-    /** TBC */
+    /** URL giving the online location where the file can be accessed. */
     FILE_PATH("filePath"),
-    /** TBC */
+    /** Type of the file */
     FILE_TYPE("fileType"),
     /** TBC */
     FOLDER_NAME("folderName"),
