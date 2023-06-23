@@ -243,3 +243,9 @@ jacoco
     // test code instrumentation for Java 18
     toolVersion = "0.8.8"
 }
+
+task buildZip(type: Zip) {
+    into('java/lib') {
+        from shadowJar
+    }
+}
