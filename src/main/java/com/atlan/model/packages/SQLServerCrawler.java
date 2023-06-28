@@ -140,6 +140,7 @@ public class SQLServerCrawler extends AbstractCrawler {
         }
         argsBuilder = argsBuilder
                 .parameter(NameValuePair.of("publish-mode", "production"))
+                .parameter(NameValuePair.of("atlas-auth-type", "internal"))
                 .parameter(NameValuePair.of("extraction-method", "direct"));
 
         String atlanName = PREFIX + "-default-mssql-" + epoch;
