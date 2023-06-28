@@ -127,4 +127,24 @@ public final class StringUtils {
         }
         return null;
     }
+
+    /**
+     * Remove any leading and trailing /-slashes from the provided string.
+     *
+     * @param toTrim the string to trim
+     * @return the string, without any leading or trailing / (if any)
+     */
+    public static String trimPathDelimiters(String toTrim) {
+        if (toTrim == null) {
+            return "";
+        } else {
+            if (toTrim.startsWith("/")) {
+                toTrim = toTrim.substring(1);
+            }
+            if (toTrim.endsWith("/")) {
+                toTrim = toTrim.substring(0, toTrim.length() - 1);
+            }
+            return toTrim;
+        }
+    }
 }

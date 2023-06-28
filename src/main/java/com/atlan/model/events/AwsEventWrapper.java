@@ -3,65 +3,122 @@
 package com.atlan.model.events;
 
 import com.atlan.model.core.AtlanObject;
-import com.atlan.model.enums.AtlanEventType;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import java.util.List;
-import lombok.Builder;
+import java.util.Map;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.experimental.SuperBuilder;
-import lombok.extern.jackson.Jacksonized;
 
 /**
- * Details that wrap events when sent through AWS (EventBridge).
+ * Details that wrap events when sent through AWS (Lambda).
  */
 @Getter
-@Jacksonized
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 public class AwsEventWrapper extends AtlanObject {
-    /** TBC */
-    @Builder.Default
-    String version = "0";
 
-    /** Unique identifier (GUID) of the event. */
-    String id;
-
-    /** Type of the event. */
-    @JsonProperty("detail-type")
-    AtlanEventType detailType;
-
-    /** Source of the event. */
-    @Builder.Default
-    String source = "com.atlan.kafka";
-
-    /** TBC */
-    String account;
-
-    /** Time at which the event was created. */
-    String time;
-
-    /** AWS region on which the event was created. */
-    String region;
+    @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+    public AwsEventWrapper(
+            @JsonProperty("version") String version,
+            @JsonProperty("routeKey") String routeKey,
+            @JsonProperty("rawPath") String rawPath,
+            @JsonProperty("rawQueryString") String rawQueryString,
+            @JsonProperty("headers") Map<String, String> headers,
+            @JsonProperty("requestContext") AwsRequestContext requestContext,
+            @JsonProperty("body") String body,
+            @JsonProperty("isBase64Encoded") boolean isBase64Encoded) {
+        this.version = version;
+        this.routeKey = routeKey;
+        this.rawPath = rawPath;
+        this.rawQueryString = rawQueryString;
+        this.headers = headers;
+        this.requestContext = requestContext;
+        this.body = body;
+        this.isBase64Encoded = isBase64Encoded;
+    }
 
     /** TBC */
-    @JsonIgnore
-    List<Object> resources;
+    final String version;
 
-    /** Details of the event. */
-    AtlanEvent detail;
+    /** TBC */
+    final String routeKey;
 
-    /**
-     * Retrieve the detailed payload from the event.
-     *
-     * @return the detailed message (payload) contained in the event.
-     */
-    @JsonIgnore
-    public AtlanEventPayload getPayload() {
-        if (detail != null) {
-            return detail.getPayload();
+    /** TBC */
+    final String rawPath;
+
+    /** TBC */
+    final String rawQueryString;
+
+    /** Headers that were used when sending the event through to the Lambda URL. */
+    final Map<String, String> headers;
+
+    /** TBC */
+    final AwsRequestContext requestContext;
+
+    /** Actual contents of the event that was sent by Atlan. */
+    final String body;
+
+    /** Whether the contents are base64-encoded (true) or plain text (false). */
+    final boolean isBase64Encoded;
+
+    @Getter
+    @SuperBuilder(toBuilder = true)
+    @EqualsAndHashCode(callSuper = true)
+    public static final class AwsRequestContext extends AtlanObject {
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        public AwsRequestContext(
+                @JsonProperty("accountId") String accountId,
+                @JsonProperty("apiId") String apiId,
+                @JsonProperty("domainName") String domainName,
+                @JsonProperty("domainPrefix") String domainPrefix,
+                @JsonProperty("http") Map<String, String> http,
+                @JsonProperty("requestId") String requestId,
+                @JsonProperty("routeKey") String routeKey,
+                @JsonProperty("stage") String stage,
+                @JsonProperty("time") String time,
+                @JsonProperty("timeEpoch") Long timeEpoch) {
+            this.accountId = accountId;
+            this.apiId = apiId;
+            this.domainName = domainName;
+            this.domainPrefix = domainPrefix;
+            this.http = http;
+            this.requestId = requestId;
+            this.routeKey = routeKey;
+            this.stage = stage;
+            this.time = time;
+            this.timeEpoch = timeEpoch;
         }
-        return null;
+
+        /** Account from which the request originated. */
+        final String accountId;
+
+        /** TBC */
+        final String apiId;
+
+        /** TBC */
+        final String domainName;
+
+        /** TBC */
+        final String domainPrefix;
+
+        /** TBC */
+        final Map<String, String> http;
+
+        /** TBC */
+        final String requestId;
+
+        /** TBC */
+        final String routeKey;
+
+        /** TBC */
+        final String stage;
+
+        /** Time at which the event was received, as a formatted string. */
+        final String time;
+
+        /** Time at which the event was received, epoch-based, in milliseconds. */
+        final Long timeEpoch;
     }
 }

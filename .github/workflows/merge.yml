@@ -25,7 +25,7 @@ jobs:
       - name: Check formatting
         run: ./gradlew spotlessCheck
       - name: Build artifacts
-        run: ./gradlew assemble shadowJar
+        run: ./gradlew assemble shadowJar buildZip
         env:
           GH_USERNAME: ${{ github.actor }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -33,6 +33,10 @@ jobs:
         with:
           name: jar-with-dependencies
           path: build/libs/atlan-java-*-jar-with-dependencies.jar
+      - uses: actions/upload-artifact@v3
+        with:
+          name: lambda-layer
+          path: build/distributions/atlan-java-*.zip
   publish-docs:
     runs-on: ubuntu-latest
     name: "JavaDocs"
