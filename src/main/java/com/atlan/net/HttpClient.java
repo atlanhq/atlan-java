@@ -213,17 +213,17 @@ public abstract class HttpClient {
                 && (exception.getCause() != null)
                 && (exception.getCause() instanceof ConnectException
                         || exception.getCause() instanceof SocketTimeoutException)) {
-            log.debug(" ... network issue, will retry.");
+            log.debug(" ... network issue, will retry.", exception);
             return true;
         }
 
         if (response != null) {
             if (response.code() == 403) {
                 // Retry on permission failure (since these are granted asynchronously)
-                log.debug(" ... no permission for the operation (yet), will retry.");
+                log.debug(" ... no permission for the operation (yet), will retry: {}", response.body(), exception);
             } else if (response.code() >= 500) {
                 // Retry on 500, 503, and other internal errors.
-                log.debug(" ... internal server error, will retry: {}", response.body());
+                log.debug(" ... internal server error, will retry: {}", response.body(), exception);
             }
             return (response.code() == 403 || response.code() >= 500);
         }
