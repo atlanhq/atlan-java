@@ -512,11 +512,8 @@ public class GlossaryTest extends AtlanLiveTest {
                 .build()
                 ._toQuery();
 
-        IndexSearchRequest index = IndexSearchRequest.builder()
-                .dsl(IndexSearchDSL.builder()
-                        .from(0)
+        IndexSearchRequest index = IndexSearchRequest.builder(IndexSearchDSL.builder(combined)
                         .size(100)
-                        .query(combined)
                         .aggregation("type", Aggregate.bucketBy(KeywordFields.TYPE_NAME))
                         .build())
                 .attributes(Collections.singletonList("anchor"))

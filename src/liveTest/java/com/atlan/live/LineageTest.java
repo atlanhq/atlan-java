@@ -221,34 +221,61 @@ public class LineageTest extends AtlanLiveTest {
             groups = {"lineage.read.lineage"},
             dependsOnGroups = {"lineage.create.lineage.*"})
     void fetchLineageListStart() throws AtlanException {
-        LineageListRequest lineage = LineageListRequest.builder()
-                .guid(table.getGuid())
-                .attribute("name")
-                .build();
+        LineageListRequest lineage =
+                LineageListRequest.builder(table).attribute("name").build();
         LineageListResponse response = lineage.fetch();
         assertNotNull(response);
-        assertNotNull(response.getEntities());
-        assertEquals(response.getEntities().size(), 4);
+        assertNotNull(response.getAssets());
+        assertEquals(response.getAssets().size(), 4);
         assertEquals(response.getEntityCount(), 4);
-        Asset one = response.getEntities().get(0);
+        Asset one = response.getAssets().get(0);
         assertTrue(one instanceof LineageProcess);
-        one = response.getEntities().get(1);
+        one = response.getAssets().get(1);
         assertTrue(one instanceof MaterializedView);
         assertEquals(one.getGuid(), mview.getGuid());
-        one = response.getEntities().get(2);
+        one = response.getAssets().get(2);
         assertTrue(one instanceof LineageProcess);
-        one = response.getEntities().get(3);
+        one = response.getAssets().get(3);
         assertTrue(one instanceof View);
         assertEquals(one.getGuid(), view.getGuid());
-        lineage = LineageListRequest.builder()
-                .guid(table.getGuid())
+        lineage = LineageListRequest.builder(table)
                 .direction(AtlanLineageDirection.UPSTREAM)
                 .build();
         response = lineage.fetch();
         assertNotNull(response);
-        assertNotNull(response.getEntities());
-        assertTrue(response.getEntities().isEmpty());
+        assertNotNull(response.getAssets());
+        assertTrue(response.getAssets().isEmpty());
         assertFalse(response.getHasMore());
+    }
+
+    @Test(
+            groups = {"lineage.read.lineage"},
+            dependsOnGroups = {"lineage.create.lineage.*"})
+    void testLineageListIterators() throws AtlanException {
+        LineageListRequest lineage =
+                LineageListRequest.builder(table).attribute("name").build();
+        LineageListResponse response = lineage.fetch();
+        int count = 0;
+        for (Asset a : response) {
+            assertTrue(a instanceof LineageProcess || a instanceof MaterializedView || a instanceof View);
+            count++;
+        }
+        assertEquals(count, 4);
+        response.forEach(a -> {
+            assertTrue(a instanceof LineageProcess || a instanceof MaterializedView || a instanceof View);
+        });
+        List<Asset> results = response.stream().collect(Collectors.toList());
+        assertEquals(results.size(), 4);
+        Asset one = results.get(0);
+        assertTrue(one instanceof LineageProcess);
+        one = results.get(1);
+        assertTrue(one instanceof MaterializedView);
+        assertEquals(one.getGuid(), mview.getGuid());
+        one = results.get(2);
+        assertTrue(one instanceof LineageProcess);
+        one = results.get(3);
+        assertTrue(one instanceof View);
+        assertEquals(one.getGuid(), view.getGuid());
     }
 
     @Test(
@@ -318,32 +345,29 @@ public class LineageTest extends AtlanLiveTest {
             groups = {"lineage.read.lineage"},
             dependsOnGroups = {"lineage.create.lineage.*"})
     void fetchLineageListMiddle() throws AtlanException {
-        LineageListRequest lineage = LineageListRequest.builder()
-                .guid(mview.getGuid())
-                .attribute("name")
-                .build();
+        LineageListRequest lineage =
+                LineageListRequest.builder(mview).attribute("name").build();
         LineageListResponse response = lineage.fetch();
         assertNotNull(response);
-        assertNotNull(response.getEntities());
-        assertEquals(response.getEntities().size(), 2);
+        assertNotNull(response.getAssets());
+        assertEquals(response.getAssets().size(), 2);
         assertEquals(response.getEntityCount(), 2);
-        Asset one = response.getEntities().get(0);
+        Asset one = response.getAssets().get(0);
         assertTrue(one instanceof LineageProcess);
-        one = response.getEntities().get(1);
+        one = response.getAssets().get(1);
         assertTrue(one instanceof View);
         assertEquals(one.getGuid(), view.getGuid());
-        lineage = LineageListRequest.builder()
-                .guid(mview.getGuid())
+        lineage = LineageListRequest.builder(mview)
                 .direction(AtlanLineageDirection.UPSTREAM)
                 .build();
         response = lineage.fetch();
         assertNotNull(response);
-        assertNotNull(response.getEntities());
-        assertEquals(response.getEntities().size(), 2);
+        assertNotNull(response.getAssets());
+        assertEquals(response.getAssets().size(), 2);
         assertEquals(response.getEntityCount(), 2);
-        one = response.getEntities().get(0);
+        one = response.getAssets().get(0);
         assertTrue(one instanceof LineageProcess);
-        one = response.getEntities().get(1);
+        one = response.getAssets().get(1);
         assertTrue(one instanceof Table);
         assertEquals(one.getGuid(), table.getGuid());
     }
@@ -397,33 +421,31 @@ public class LineageTest extends AtlanLiveTest {
             groups = {"lineage.read.lineage.end"},
             dependsOnGroups = {"lineage.create.lineage.*"})
     void fetchLineageListEnd() throws AtlanException {
-        LineageListRequest lineage = LineageListRequest.builder()
-                .guid(view.getGuid())
+        LineageListRequest lineage = LineageListRequest.builder(view)
                 .direction(AtlanLineageDirection.DOWNSTREAM)
                 .attribute("name")
                 .build();
         LineageListResponse response = lineage.fetch();
         assertNotNull(response);
-        assertNotNull(response.getEntities());
-        assertTrue(response.getEntities().isEmpty());
+        assertNotNull(response.getAssets());
+        assertTrue(response.getAssets().isEmpty());
         assertFalse(response.getHasMore());
-        lineage = LineageListRequest.builder()
-                .guid(view.getGuid())
+        lineage = LineageListRequest.builder(view)
                 .direction(AtlanLineageDirection.UPSTREAM)
                 .build();
         response = lineage.fetch();
         assertNotNull(response);
-        assertNotNull(response.getEntities());
-        assertEquals(response.getEntities().size(), 4);
+        assertNotNull(response.getAssets());
+        assertEquals(response.getAssets().size(), 4);
         assertEquals(response.getEntityCount(), 4);
-        Asset one = response.getEntities().get(0);
+        Asset one = response.getAssets().get(0);
         assertTrue(one instanceof LineageProcess);
-        one = response.getEntities().get(1);
+        one = response.getAssets().get(1);
         assertTrue(one instanceof MaterializedView);
         assertEquals(one.getGuid(), mview.getGuid());
-        one = response.getEntities().get(2);
+        one = response.getAssets().get(2);
         assertTrue(one instanceof LineageProcess);
-        one = response.getEntities().get(3);
+        one = response.getAssets().get(3);
         assertTrue(one instanceof Table);
         assertEquals(one.getGuid(), table.getGuid());
     }
@@ -454,8 +476,7 @@ public class LineageTest extends AtlanLiveTest {
                 .build()
                 ._toQuery();
 
-        IndexSearchRequest index = IndexSearchRequest.builder()
-                .dsl(IndexSearchDSL.builder().query(combined).build())
+        IndexSearchRequest index = IndexSearchRequest.builder(IndexSearchDSL.of(combined))
                 .attribute("name")
                 .attribute("__hasLineage")
                 .build();

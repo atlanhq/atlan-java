@@ -223,8 +223,7 @@
                 .must(QueryFactory.have(KeywordFields.CONNECTOR_TYPE).eq(type.getValue()))
                 .build()
                 ._toQuery();
-        IndexSearchRequest.IndexSearchRequestBuilder<?, ?> builder = IndexSearchRequest.builder()
-                .dsl(IndexSearchDSL.builder().query(filter).build());
+        IndexSearchRequest.IndexSearchRequestBuilder<?, ?> builder = IndexSearchRequest.builder(filter);
         if (attributes != null && !attributes.isEmpty()) {
             builder.attributes(attributes);
         }

@@ -8,6 +8,7 @@ import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.core.AtlanObject;
 import com.atlan.model.enums.AtlanLineageDirection;
+import com.atlan.model.relations.Reference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 import lombok.*;
@@ -16,9 +17,33 @@ import lombok.extern.jackson.Jacksonized;
 
 @Getter
 @Jacksonized
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = false)
 public class LineageListRequest extends AtlanObject {
+
+    /**
+     * Build a lineage list request starting from the provided GUID and using default options.
+     * (Searches for up to 1000000 downstream assets with minimal attributes and relationships,
+     * paging 10 asset at a time, excluding both assigned terms and Atlan tags.)
+     *
+     * @param ref an asset reference that contains at least a GUID, from which to start traversing lineage
+     * @return the lineage list request starting from that asset (reference)
+     */
+    public static LineageListRequestBuilder<?, ?> builder(Reference ref) {
+        return builder(ref.getGuid());
+    }
+
+    /**
+     * Build a lineage list request starting from the provided GUID and using default options.
+     * (Searches for up to 1000000 downstream assets with minimal attributes and relationships,
+     * paging 10 asset at a time, excluding both assigned terms and Atlan tags.)
+     *
+     * @param guid unique identifier (GUID) from which to start traversing lineage
+     * @return the lineage list request starting from that GUID
+     */
+    public static LineageListRequestBuilder<?, ?> builder(String guid) {
+        return _internal().guid(guid);
+    }
 
     /** Unique identifier of the asset for which to retrieve lineage. */
     String guid;

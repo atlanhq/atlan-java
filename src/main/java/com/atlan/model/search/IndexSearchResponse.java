@@ -60,8 +60,7 @@ public class IndexSearchResponse extends ApiResource implements Iterable<Asset> 
         int page = dsl.getSize() == null ? 10 : dsl.getSize();
         dsl = dsl.toBuilder().from(from + page).build();
 
-        IndexSearchRequest.IndexSearchRequestBuilder<?, ?> next =
-                IndexSearchRequest.builder().dsl(dsl);
+        IndexSearchRequest.IndexSearchRequestBuilder<?, ?> next = IndexSearchRequest.builder(dsl);
         if (searchParameters.getAttributes() != null) {
             next = next.attributes(searchParameters.getAttributes());
         }

@@ -77,8 +77,8 @@
                 .must(QueryFactory.have(KeywordFields.NAME).eq(name))
                 .build()
                 ._toQuery();
-        IndexSearchRequest.IndexSearchRequestBuilder<?, ?> builder = IndexSearchRequest.builder()
-                .dsl(IndexSearchDSL.builder().from(0).size(2).query(filter).build());
+        IndexSearchRequest.IndexSearchRequestBuilder<?, ?> builder = IndexSearchRequest.builder(
+                IndexSearchDSL.builder(filter).size(2).build());
         if (attributes != null && !attributes.isEmpty()) {
             builder.attributes(attributes);
         }
@@ -137,13 +137,10 @@
                 .must(QueryFactory.have(KeywordFields.GLOSSARY).eq(getQualifiedName()))
                 .build()
                 ._toQuery();
-        IndexSearchRequest.IndexSearchRequestBuilder<?, ?> builder = IndexSearchRequest.builder()
-                .dsl(IndexSearchDSL.builder()
-                        .from(0)
+        IndexSearchRequest.IndexSearchRequestBuilder<?, ?> builder = IndexSearchRequest.builder(
+                IndexSearchDSL.builder(filter)
                         .size(20)
-                        .query(filter)
-                        .sortOption(SortOptions.of(s -> s.field(
-                                FieldSort.of(f -> f.field("name.keyword").order(SortOrder.Asc)))))
+                        .sortOption(QueryFactory.Sort.by(KeywordFields.NAME, SortOrder.Asc))
                         .build())
                 .attribute("parentCategory");
         if (attributes != null) {

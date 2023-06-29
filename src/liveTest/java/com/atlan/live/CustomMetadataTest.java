@@ -494,8 +494,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
                 .build()
                 ._toQuery();
 
-        IndexSearchRequest index = IndexSearchRequest.builder()
-                .dsl(IndexSearchDSL.builder().query(combined).build())
+        IndexSearchRequest index = IndexSearchRequest.builder(combined)
                 .attribute("name")
                 .attribute("anchor")
                 .relationAttribute("name")
@@ -537,8 +536,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
                 .build()
                 ._toQuery();
 
-        IndexSearchRequest index = IndexSearchRequest.builder()
-                .dsl(IndexSearchDSL.builder().query(combined).build())
+        IndexSearchRequest index = IndexSearchRequest.builder(combined)
                 .attribute("name")
                 .attribute("anchor")
                 .relationAttribute("name")

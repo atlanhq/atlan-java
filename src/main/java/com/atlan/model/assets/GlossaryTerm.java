@@ -312,8 +312,8 @@ public class GlossaryTerm extends Asset implements IGlossaryTerm, IAsset, IRefer
                 .must(QueryFactory.have(KeywordFields.GLOSSARY).eq(glossaryQualifiedName))
                 .build()
                 ._toQuery();
-        IndexSearchRequest.IndexSearchRequestBuilder<?, ?> builder = IndexSearchRequest.builder()
-                .dsl(IndexSearchDSL.builder().from(0).size(2).query(filter).build());
+        IndexSearchRequest.IndexSearchRequestBuilder<?, ?> builder = IndexSearchRequest.builder(
+                IndexSearchDSL.builder(filter).size(2).build());
         if (attributes != null && !attributes.isEmpty()) {
             builder.attributes(attributes);
         }

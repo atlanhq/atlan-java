@@ -2,8 +2,6 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
-import co.elastic.clients.elasticsearch._types.FieldSort;
-import co.elastic.clients.elasticsearch._types.SortOptions;
 import co.elastic.clients.elasticsearch._types.SortOrder;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import com.atlan.exception.AtlanException;
@@ -231,8 +229,8 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
                 .must(QueryFactory.have(KeywordFields.NAME).eq(name))
                 .build()
                 ._toQuery();
-        IndexSearchRequest.IndexSearchRequestBuilder<?, ?> builder = IndexSearchRequest.builder()
-                .dsl(IndexSearchDSL.builder().from(0).size(2).query(filter).build());
+        IndexSearchRequest.IndexSearchRequestBuilder<?, ?> builder = IndexSearchRequest.builder(
+                IndexSearchDSL.builder(filter).size(2).build());
         if (attributes != null && !attributes.isEmpty()) {
             builder.attributes(attributes);
         }
@@ -291,14 +289,11 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
                 .must(QueryFactory.have(KeywordFields.GLOSSARY).eq(getQualifiedName()))
                 .build()
                 ._toQuery();
-        IndexSearchRequest.IndexSearchRequestBuilder<?, ?> builder = IndexSearchRequest.builder()
-                .dsl(IndexSearchDSL.builder()
-                        .from(0)
-                        .size(20)
-                        .query(filter)
-                        .sortOption(SortOptions.of(s -> s.field(
-                                FieldSort.of(f -> f.field("name.keyword").order(SortOrder.Asc)))))
-                        .build())
+        IndexSearchRequest.IndexSearchRequestBuilder<?, ?> builder = IndexSearchRequest.builder(
+                        IndexSearchDSL.builder(filter)
+                                .size(20)
+                                .sortOption(QueryFactory.Sort.by(KeywordFields.NAME, SortOrder.Asc))
+                                .build())
                 .attribute("parentCategory");
         if (attributes != null) {
             builder.attributes(attributes);
