@@ -49,8 +49,7 @@
             missing.add("name");
         }
         if (this.getAnchor() == null
-                || this.getAnchor().getGuid() == null
-                || this.getAnchor().getGuid().length() == 0) {
+                || !this.getAnchor().isValidReferenceByGuid()) {
             missing.add("anchor.guid");
         }
         if (!missing.isEmpty()) {

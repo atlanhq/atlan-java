@@ -195,9 +195,7 @@ public class GlossaryCategory extends Asset implements IGlossaryCategory, IAsset
         if (this.getName() == null || this.getName().length() == 0) {
             missing.add("name");
         }
-        if (this.getAnchor() == null
-                || this.getAnchor().getGuid() == null
-                || this.getAnchor().getGuid().length() == 0) {
+        if (this.getAnchor() == null || !this.getAnchor().isValidReferenceByGuid()) {
             missing.add("anchor.guid");
         }
         if (!missing.isEmpty()) {
