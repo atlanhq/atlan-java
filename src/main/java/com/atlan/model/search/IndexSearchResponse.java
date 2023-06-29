@@ -11,8 +11,9 @@ import com.atlan.serde.Serde;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
@@ -22,7 +23,7 @@ import lombok.Getter;
  */
 @Getter
 @EqualsAndHashCode(callSuper = false)
-public class IndexSearchResponse extends ApiResource {
+public class IndexSearchResponse extends ApiResource implements Iterable<Asset> {
     private static final long serialVersionUID = 2L;
 
     /** Type of query. */
@@ -68,5 +69,57 @@ public class IndexSearchResponse extends ApiResource {
             next = next.relationAttributes(searchParameters.getRelationAttributes());
         }
         return next.build().search();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public Iterator<Asset> iterator() {
+        return new IndexSearchResponseIterator(this);
+    }
+
+    /**
+     * Stream the results (lazily) for processing without needing to manually manage paging.
+     * @return a lazily-loaded stream of results from the search
+     */
+    public Stream<Asset> stream() {
+        return StreamSupport.stream(
+                Spliterators.spliterator(iterator(), approximateCount, Spliterator.NONNULL + Spliterator.ORDERED),
+                false);
+    }
+
+    /**
+     * Allow results to be iterated through without managing paging retrievals.
+     */
+    private static class IndexSearchResponseIterator implements Iterator<Asset> {
+
+        private IndexSearchResponse response;
+        private int i;
+
+        public IndexSearchResponseIterator(IndexSearchResponse response) {
+            this.response = response;
+            this.i = 0;
+        }
+
+        /** {@inheritDoc} */
+        @Override
+        public boolean hasNext() {
+            if (response.getAssets() != null && response.getAssets().size() > i) {
+                return true;
+            } else {
+                try {
+                    response = response.getNextPage();
+                    i = 0;
+                    return response.getAssets() != null && response.getAssets().size() > i;
+                } catch (AtlanException e) {
+                    throw new RuntimeException("Unable to iterate through all pages of search results.", e);
+                }
+            }
+        }
+
+        /** {@inheritDoc} */
+        @Override
+        public Asset next() {
+            return response.getAssets().get(i++);
+        }
     }
 }
