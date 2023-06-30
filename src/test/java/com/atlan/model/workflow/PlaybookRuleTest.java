@@ -6,7 +6,6 @@ import static org.testng.Assert.*;
 
 import com.atlan.model.enums.PlaybookActionOperator;
 import com.atlan.model.enums.PlaybookActionType;
-import com.atlan.model.search.IndexSearchDSL;
 import com.atlan.model.search.IndexSearchRequest;
 import com.atlan.serde.Serde;
 import com.atlan.util.QueryFactory;
@@ -18,11 +17,7 @@ public class PlaybookRuleTest {
     private static final PlaybookRule full = PlaybookRule.builder()
             .name("name")
             .config(PlaybookRuleConfig.builder()
-                    .query(IndexSearchRequest.builder()
-                            .dsl(IndexSearchDSL.builder()
-                                    .from(0)
-                                    .query(QueryFactory.beActive())
-                                    .build())
+                    .query(IndexSearchRequest.builder(QueryFactory.beActive())
                             .attribute("anchor")
                             .relationAttribute("guid")
                             .build())

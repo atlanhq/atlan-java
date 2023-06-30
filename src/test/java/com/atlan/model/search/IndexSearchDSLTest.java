@@ -27,12 +27,8 @@ public class IndexSearchDSLTest {
     private static final Query combined =
             BoolQuery.of(b -> b.must(byState).must(byType))._toQuery();
 
-    private static final IndexSearchDSL full = IndexSearchDSL.builder()
-            .from(0)
-            .size(10)
-            .query(combined)
-            .sortOption(sort)
-            .build();
+    private static final IndexSearchDSL full =
+            IndexSearchDSL.builder(combined).size(10).sortOption(sort).build();
 
     private static IndexSearchDSL frodo;
     private static String serialized;
