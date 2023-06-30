@@ -16,7 +16,6 @@ import com.atlan.model.enums.KeywordFields;
 import com.atlan.model.enums.PersonaGlossaryAction;
 import com.atlan.model.enums.PersonaMetadataAction;
 import com.atlan.model.relations.UniqueAttributes;
-import com.atlan.model.search.IndexSearchDSL;
 import com.atlan.model.search.IndexSearchRequest;
 import com.atlan.model.search.IndexSearchResponse;
 import com.atlan.util.QueryFactory;
@@ -221,8 +220,7 @@ public class Persona extends Asset implements IPersona, IAccessControl, IAsset, 
                 .must(QueryFactory.have(KeywordFields.NAME).eq(name))
                 .build()
                 ._toQuery();
-        IndexSearchRequest.IndexSearchRequestBuilder<?, ?> builder = IndexSearchRequest.builder()
-                .dsl(IndexSearchDSL.builder().query(filter).build());
+        IndexSearchRequest.IndexSearchRequestBuilder<?, ?> builder = IndexSearchRequest.builder(filter);
         if (attributes != null && !attributes.isEmpty()) {
             builder.attributes(attributes);
         }

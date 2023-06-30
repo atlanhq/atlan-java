@@ -144,10 +144,7 @@ public class DataStudioAssetTest extends AtlanLiveTest {
                 .build()
                 ._toQuery();
 
-        IndexSearchRequest index = IndexSearchRequest.builder()
-                .dsl(IndexSearchDSL.builder()
-                        .from(0)
-                        .size(10)
+        IndexSearchRequest index = IndexSearchRequest.builder(IndexSearchDSL.builder(combined)
                         .query(combined)
                         .aggregation("type", Aggregate.bucketBy(KeywordFields.TYPE_NAME))
                         .sortOption(Sort.by(NumericFields.TIMESTAMP, SortOrder.Asc))

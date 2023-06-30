@@ -6,7 +6,10 @@ import com.atlan.exception.AtlanException;
 import com.atlan.model.assets.Asset;
 import com.atlan.net.ApiResource;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.*;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 import lombok.*;
 import lombok.extern.jackson.Jacksonized;
 
@@ -14,11 +17,12 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 @Builder
 @EqualsAndHashCode(callSuper = false)
-public class LineageListResponse extends ApiResource {
+public class LineageListResponse extends ApiResource implements Iterable<Asset> {
     private static final long serialVersionUID = 2L;
 
     /** Entities in the lineage requested. */
-    List<Asset> entities;
+    @JsonProperty("entities")
+    List<Asset> assets;
 
     /** Whether there are more entities present in lineage that can be traversed (true) or not (false). */
     Boolean hasMore;
@@ -42,5 +46,58 @@ public class LineageListResponse extends ApiResource {
         LineageListRequest nextRequest =
                 searchParameters.toBuilder().from(from + page).build();
         return nextRequest.fetch();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public Iterator<Asset> iterator() {
+        return new LineageListResponseIterator(this);
+    }
+
+    /**
+     * Stream the results (lazily) for processing without needing to manually manage paging.
+     * @return a lazily-loaded stream of results from the search
+     */
+    public Stream<Asset> stream() {
+        return StreamSupport.stream(
+                Spliterators.spliteratorUnknownSize(iterator(), Spliterator.NONNULL + Spliterator.ORDERED), false);
+    }
+
+    /**
+     * Allow results to be iterated through without managing paging retrievals.
+     */
+    private static class LineageListResponseIterator implements Iterator<Asset> {
+
+        private LineageListResponse response;
+        private int i;
+
+        public LineageListResponseIterator(LineageListResponse response) {
+            this.response = response;
+            this.i = 0;
+        }
+
+        /** {@inheritDoc} */
+        @Override
+        public boolean hasNext() {
+            if (response.getAssets() != null && response.getAssets().size() > i) {
+                return true;
+            } else if (!response.getHasMore()) {
+                return false;
+            } else {
+                try {
+                    response = response.getNextPage();
+                    i = 0;
+                    return response.getAssets() != null && response.getAssets().size() > i;
+                } catch (AtlanException e) {
+                    throw new RuntimeException("Unable to iterate through all pages of lineage results.", e);
+                }
+            }
+        }
+
+        /** {@inheritDoc} */
+        @Override
+        public Asset next() {
+            return response.getAssets().get(i++);
+        }
     }
 }

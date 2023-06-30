@@ -596,11 +596,8 @@ public class SQLAssetTest extends AtlanLiveTest {
                 .build()
                 ._toQuery();
 
-        IndexSearchRequest index = IndexSearchRequest.builder()
-                .dsl(IndexSearchDSL.builder()
-                        .from(0)
+        IndexSearchRequest index = IndexSearchRequest.builder(IndexSearchDSL.builder(combined)
                         .size(50)
-                        .query(combined)
                         .aggregation("type", Aggregate.bucketBy(KeywordFields.TYPE_NAME))
                         .sortOption(Sort.by(NumericFields.TIMESTAMP, SortOrder.Asc))
                         .build())
@@ -742,6 +739,57 @@ public class SQLAssetTest extends AtlanLiveTest {
         assertEquals(column.getGuid(), column8.getGuid());
         assertEquals(column.getQualifiedName(), column8.getQualifiedName());
         assertEquals(column.getName(), COLUMN_NAME8);
+    }
+
+    @Test(
+            groups = {"asset.search.byParentQN"},
+            dependsOnGroups = {"asset.create.*"})
+    void testSearchIterators() throws AtlanException, InterruptedException {
+        Query combined = CompoundQuery.builder()
+                .must(beActive())
+                .must(have(KeywordFields.QUALIFIED_NAME).startingWith(connection.getQualifiedName()))
+                .build()
+                ._toQuery();
+
+        IndexSearchRequest index = IndexSearchRequest.builder(
+                        IndexSearchDSL.builder(combined).size(5).build())
+                .attribute("name")
+                .build();
+
+        IndexSearchResponse response = index.search();
+        assertNotNull(response);
+
+        int count = 0;
+        while (response.getApproximateCount() < 16L && count < Atlan.getMaxNetworkRetries()) {
+            Thread.sleep(HttpClient.waitTime(count).toMillis());
+            response = index.search();
+            count++;
+        }
+
+        for (Asset a : response) {
+            assertTrue(a instanceof Connection
+                    || a instanceof Database
+                    || a instanceof Schema
+                    || a instanceof Table
+                    || a instanceof View
+                    || a instanceof MaterializedView
+                    || a instanceof TablePartition
+                    || a instanceof Column);
+        }
+
+        response.forEach(a -> {
+            assertTrue(a instanceof Connection
+                    || a instanceof Database
+                    || a instanceof Schema
+                    || a instanceof Table
+                    || a instanceof View
+                    || a instanceof MaterializedView
+                    || a instanceof TablePartition
+                    || a instanceof Column);
+        });
+
+        List<Asset> results = response.stream().collect(Collectors.toList());
+        assertEquals(results.size(), 16);
     }
 
     @Test(groups = {"asset.create.group.owners"})
@@ -951,8 +999,7 @@ public class SQLAssetTest extends AtlanLiveTest {
                 .build()
                 ._toQuery();
 
-        IndexSearchRequest index = IndexSearchRequest.builder()
-                .dsl(IndexSearchDSL.builder().query(combined).build())
+        IndexSearchRequest index = IndexSearchRequest.builder(combined)
                 .attribute("name")
                 .attribute("connectionQualifiedName")
                 .build();
@@ -991,10 +1038,8 @@ public class SQLAssetTest extends AtlanLiveTest {
                 .build()
                 ._toQuery();
 
-        IndexSearchRequest index = IndexSearchRequest.builder()
-                .dsl(IndexSearchDSL.builder().query(combined).build())
-                .attribute("name")
-                .build();
+        IndexSearchRequest index =
+                IndexSearchRequest.builder(combined).attribute("name").build();
 
         IndexSearchResponse response = index.search();
         assertNotNull(response);
@@ -1170,8 +1215,7 @@ public class SQLAssetTest extends AtlanLiveTest {
                 .build()
                 ._toQuery();
 
-        IndexSearchRequest index = IndexSearchRequest.builder()
-                .dsl(IndexSearchDSL.builder().query(combined).build())
+        IndexSearchRequest index = IndexSearchRequest.builder(combined)
                 .attribute("name")
                 .attribute("meanings")
                 .attribute("connectionQualifiedName")
@@ -1216,8 +1260,7 @@ public class SQLAssetTest extends AtlanLiveTest {
                 .build()
                 ._toQuery();
 
-        IndexSearchRequest index = IndexSearchRequest.builder()
-                .dsl(IndexSearchDSL.builder().query(combined).build())
+        IndexSearchRequest index = IndexSearchRequest.builder(combined)
                 .attribute("name")
                 .attribute("meanings")
                 .attribute("connectionQualifiedName")

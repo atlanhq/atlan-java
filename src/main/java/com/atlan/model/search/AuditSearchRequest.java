@@ -49,14 +49,12 @@ public class AuditSearchRequest extends AtlanObject {
      */
     public static AuditSearchRequestBuilder<?, ?> byGuid(String guid, int size) {
         return AuditSearchRequest.builder()
-                .dsl(IndexSearchDSL.builder()
-                        .from(0)
-                        .size(size)
-                        .sortOption(LATEST_FIRST)
-                        .query(BoolQuery.of(b -> b.filter(
+                .dsl(IndexSearchDSL.builder(BoolQuery.of(b -> b.filter(
                                         TermQuery.of(t -> t.field("entityId").value(guid))
                                                 ._toQuery()))
                                 ._toQuery())
+                        .size(size)
+                        .sortOption(LATEST_FIRST)
                         .build());
     }
 
@@ -70,17 +68,15 @@ public class AuditSearchRequest extends AtlanObject {
      */
     public static AuditSearchRequestBuilder<?, ?> byQualifiedName(String typeName, String qualifiedName, int size) {
         return AuditSearchRequest.builder()
-                .dsl(IndexSearchDSL.builder()
-                        .from(0)
-                        .size(size)
-                        .sortOption(LATEST_FIRST)
-                        .query(BoolQuery.of(b -> b.must(List.of(
+                .dsl(IndexSearchDSL.builder(BoolQuery.of(b -> b.must(List.of(
                                         TermQuery.of(t -> t.field("entityQualifiedName")
                                                         .value(qualifiedName))
                                                 ._toQuery(),
                                         TermQuery.of(t -> t.field("typeName").value(typeName))
                                                 ._toQuery())))
                                 ._toQuery())
+                        .size(size)
+                        .sortOption(LATEST_FIRST)
                         .build());
     }
 
@@ -93,14 +89,12 @@ public class AuditSearchRequest extends AtlanObject {
      */
     public static AuditSearchRequestBuilder<?, ?> byUser(String userName, int size) {
         return AuditSearchRequest.builder()
-                .dsl(IndexSearchDSL.builder()
-                        .from(0)
-                        .size(size)
-                        .sortOption(LATEST_FIRST)
-                        .query(BoolQuery.of(b -> b.must(List.of(
+                .dsl(IndexSearchDSL.builder(BoolQuery.of(b -> b.must(List.of(
                                         TermQuery.of(t -> t.field("user").value(userName))
                                                 ._toQuery())))
                                 ._toQuery())
+                        .size(size)
+                        .sortOption(LATEST_FIRST)
                         .build());
     }
 }

@@ -124,11 +124,8 @@ public class FileTest extends AtlanLiveTest {
                 .build()
                 ._toQuery();
 
-        IndexSearchRequest index = IndexSearchRequest.builder()
-                .dsl(IndexSearchDSL.builder()
-                        .from(0)
+        IndexSearchRequest index = IndexSearchRequest.builder(IndexSearchDSL.builder(combined)
                         .size(10)
-                        .query(combined)
                         .aggregation("type", Aggregate.bucketBy(KeywordFields.TYPE_NAME))
                         .sortOption(Sort.by(NumericFields.TIMESTAMP, SortOrder.Asc))
                         .build())

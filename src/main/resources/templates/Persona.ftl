@@ -69,8 +69,7 @@
                 .must(QueryFactory.have(KeywordFields.NAME).eq(name))
                 .build()
                 ._toQuery();
-        IndexSearchRequest.IndexSearchRequestBuilder<?, ?> builder = IndexSearchRequest.builder()
-                .dsl(IndexSearchDSL.builder().query(filter).build());
+        IndexSearchRequest.IndexSearchRequestBuilder<?, ?> builder = IndexSearchRequest.builder(filter);
         if (attributes != null && !attributes.isEmpty()) {
             builder.attributes(attributes);
         }

@@ -18,6 +18,7 @@ import io.github.classgraph.ClassGraph;
 import io.github.classgraph.ClassInfo;
 import io.github.classgraph.ScanResult;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -40,6 +41,7 @@ public class Serde {
     /** JSONP mapper through which to do Jackson-based (de-)serialization of Elastic objects. */
     static final JsonpMapper jsonpMapper = new JacksonJsonpMapper();
 
+    private static final Map<String, JsonDeserializer<?>> deserializerCache = new ConcurrentHashMap<>();
     private static final Map<String, Class<?>> assetClasses = scanAssets();
 
     private static Map<String, Class<?>> scanAssets() {
@@ -90,7 +92,11 @@ public class Serde {
                     DeserializationConfig config, BeanDescription beanDesc, JsonDeserializer<?> deserializer) {
                 Class<?> enclosing = beanDesc.getBeanClass().getEnclosingClass();
                 if (enclosing != null && enclosing.getSuperclass() == AtlanStruct.class) {
-                    return new StructDeserializer(deserializer);
+                    if (!deserializerCache.containsKey(beanDesc.getBeanClass().getCanonicalName())) {
+                        deserializerCache.put(
+                                beanDesc.getBeanClass().getCanonicalName(), new StructDeserializer(deserializer));
+                    }
+                    return deserializerCache.get(beanDesc.getBeanClass().getCanonicalName());
                 }
                 return deserializer;
             }

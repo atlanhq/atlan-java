@@ -91,7 +91,10 @@ public class Reference extends AtlanObject implements Comparable<Reference>, Aud
     public boolean isValidReferenceByGuid() {
         // Careful: because typeName is overridden (for default setting) in
         // derived classes, we must use the getter here and not the member directly
-        return getTypeName() != null && getGuid() != null;
+        return getTypeName() != null
+                && getTypeName().length() > 0
+                && getGuid() != null
+                && getGuid().length() > 0;
     }
 
     /**
@@ -104,8 +107,10 @@ public class Reference extends AtlanObject implements Comparable<Reference>, Aud
         // Careful: because typeName is overridden (for default setting) in
         // derived classes, we must use the getter here and not the member directly
         return getTypeName() != null
+                && getTypeName().length() > 0
                 && getUniqueAttributes() != null
-                && getUniqueAttributes().getQualifiedName() != null;
+                && getUniqueAttributes().getQualifiedName() != null
+                && getUniqueAttributes().getQualifiedName().length() > 0;
     }
 
     /**

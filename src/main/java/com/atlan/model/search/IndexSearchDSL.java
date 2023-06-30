@@ -15,19 +15,48 @@ import lombok.extern.jackson.Jacksonized;
 
 @Getter
 @Jacksonized
-@SuperBuilder(toBuilder = true)
+@SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = false)
 @SuppressWarnings("cast")
 public class IndexSearchDSL extends AtlanObject {
     private static final long serialVersionUID = 2L;
 
-    /** Starting point for paging. */
-    Integer from;
+    /**
+     * Build a search using the provided query and default options.
+     *
+     * @param query to use for the search
+     * @return the search DSL for that query, with default options
+     */
+    public static IndexSearchDSL of(Query query) {
+        return builder(query).build();
+    }
 
-    /** Number of results to return per page. */
-    Integer size;
+    /**
+     * Build a search using the provided query and default options.
+     *
+     * @param query to use for the search
+     * @return a search DSL builder for that query, with default options
+     */
+    public static IndexSearchDSLBuilder<?, ?> builder(Query query) {
+        return IndexSearchDSL._internal().query(query);
+    }
 
-    /** When true, specify the precise number of results in the response, otherwise estimate and max-out at 10,000. */
+    /**
+     * Starting point for paging. Defaults to 0 (very first result) if not overridden.
+     */
+    @Builder.Default
+    Integer from = 0;
+
+    /**
+     * Number of results to return per page. Defaults to 20 results per page if not overridden.
+     */
+    @Builder.Default
+    Integer size = 20;
+
+    /**
+     * When true, specify the precise number of results in the response, otherwise estimate and max-out at 10,000.
+     * (Defaults to true.)
+     */
     @Builder.Default
     @JsonProperty("track_total_hits")
     Boolean trackTotalHits = true;

@@ -9,7 +9,6 @@ import com.atlan.model.assets.ILineageProcess;
 import com.atlan.model.enums.KeywordFields;
 import com.atlan.model.events.AtlanEvent;
 import com.atlan.model.events.AtlanEventPayload;
-import com.atlan.model.search.IndexSearchDSL;
 import com.atlan.model.search.IndexSearchRequest;
 import com.atlan.model.search.IndexSearchResponse;
 import com.atlan.serde.Serde;
@@ -242,16 +241,12 @@ public interface AtlanEventHandler {
     static Asset getCurrentViewOfAsset(
             Asset fromEvent, Collection<String> limitedToAttributes, boolean includeMeanings, boolean includeAtlanTags)
             throws AtlanException {
-        IndexSearchRequest request = IndexSearchRequest.builder()
-                .dsl(IndexSearchDSL.builder()
-                        .query(QueryFactory.CompoundQuery.builder()
-                                .must(QueryFactory.beActive())
-                                .must(QueryFactory.beOfType(fromEvent.getTypeName()))
-                                .must(QueryFactory.have(KeywordFields.QUALIFIED_NAME)
-                                        .eq(fromEvent.getQualifiedName()))
-                                .build()
-                                ._toQuery())
-                        .build())
+        IndexSearchRequest request = IndexSearchRequest.builder(QueryFactory.CompoundQuery.builder()
+                        .must(QueryFactory.beActive())
+                        .must(QueryFactory.beOfType(fromEvent.getTypeName()))
+                        .must(QueryFactory.have(KeywordFields.QUALIFIED_NAME).eq(fromEvent.getQualifiedName()))
+                        .build()
+                        ._toQuery())
                 .excludeAtlanTags(!includeAtlanTags)
                 .excludeMeanings(!includeMeanings)
                 .attributes(limitedToAttributes == null ? Collections.emptySet() : limitedToAttributes)
