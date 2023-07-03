@@ -8,6 +8,7 @@ import com.atlan.Atlan;
 import com.atlan.api.EntityBulkEndpoint;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.InvalidRequestException;
+import com.atlan.exception.NotFoundException;
 import com.atlan.model.assets.Asset;
 import com.atlan.model.assets.AuthPolicy;
 import com.atlan.model.assets.IAuthPolicy;
@@ -88,12 +89,16 @@ public class PurposeTest extends AtlanLiveTest {
             groups = {"purpose.read.purposes.1"},
             dependsOnGroups = {"purpose.update.purposes"})
     void findPurposeByName() throws AtlanException, InterruptedException {
-        List<Purpose> purposes = Purpose.findByName(PURPOSE_NAME, null);
+        List<Purpose> purposes = null;
         int count = 0;
-        while (purposes.isEmpty() && count < Atlan.getMaxNetworkRetries()) {
-            Thread.sleep(HttpClient.waitTime(count).toMillis());
-            purposes = Purpose.findByName(PURPOSE_NAME, null);
-            count++;
+        while (count < Atlan.getMaxNetworkRetries()) {
+            try {
+                purposes = Purpose.findByName(PURPOSE_NAME, null);
+                break;
+            } catch (NotFoundException e) {
+                Thread.sleep(HttpClient.waitTime(count).toMillis());
+                count++;
+            }
         }
         assertNotNull(purposes);
         assertEquals(purposes.size(), 1);
