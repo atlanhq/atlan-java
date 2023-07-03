@@ -367,7 +367,7 @@ public class SearchFieldGenerator extends TypeGenerator {
             return attrName.replaceAll("_", "")
                     .replaceAll("([A-Z]+)([A-Z][a-z])", "$1_$2")
                     .replaceAll("([a-z])([A-Z])", "$1_$2")
-                    .toUpperCase();
+                    .toUpperCase(Locale.ROOT);
         }
     }
 }

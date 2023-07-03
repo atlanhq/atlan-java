@@ -362,7 +362,7 @@ public class GeneratorConfig {
     public String resolveEnumValue(String value) {
         if (renameEnumValues.containsKey(value)) {
             return renameEnumValues.get(value);
-        } else if (value.toUpperCase().equals(value)) {
+        } else if (value.toUpperCase(Locale.ROOT).equals(value)) {
             return value;
         }
         String[] words = value.split("[\\W-]+");
@@ -376,7 +376,7 @@ public class GeneratorConfig {
         }
         StringBuilder builder = new StringBuilder();
         for (String word : words) {
-            word = word.isEmpty() ? word : word.toUpperCase();
+            word = word.isEmpty() ? word : word.toUpperCase(Locale.ROOT);
             builder.append(word).append("_");
         }
         String built = builder.toString();

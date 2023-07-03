@@ -8,6 +8,7 @@ import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options
 import com.atlan.Atlan;
 import com.atlan.model.enums.AtlanTypeCategory;
 import com.github.tomakehurst.wiremock.WireMockServer;
+import java.util.Locale;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 
@@ -26,19 +27,19 @@ public class MockAtlanTest {
 
     private void setStubs() {
         server.stubFor(get(urlEqualTo("/api/meta/types/typedefs?type="
-                        + AtlanTypeCategory.CUSTOM_METADATA.getValue().toLowerCase()))
+                        + AtlanTypeCategory.CUSTOM_METADATA.getValue().toLowerCase(Locale.ROOT)))
                 .willReturn(aResponse()
                         .withHeader("Content-Type", "application/json")
                         .withBodyFile("typedefs-custom-metadata.json")
                         .withStatus(200)));
         server.stubFor(get(urlEqualTo("/api/meta/types/typedefs?type="
-                        + AtlanTypeCategory.ATLAN_TAG.getValue().toLowerCase()))
+                        + AtlanTypeCategory.ATLAN_TAG.getValue().toLowerCase(Locale.ROOT)))
                 .willReturn(aResponse()
                         .withHeader("Content-Type", "application/json")
                         .withBodyFile("typedefs-atlan-tags.json")
                         .withStatus(200)));
         server.stubFor(get(urlEqualTo("/api/meta/types/typedefs?type="
-                        + AtlanTypeCategory.ENUM.getValue().toLowerCase()))
+                        + AtlanTypeCategory.ENUM.getValue().toLowerCase(Locale.ROOT)))
                 .willReturn(aResponse()
                         .withHeader("Content-Type", "application/json")
                         .withBodyFile("typedefs-enum.json")

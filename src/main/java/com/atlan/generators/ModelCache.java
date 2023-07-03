@@ -253,7 +253,7 @@ public class ModelCache {
         return searchCache.get(AttributeCSVCache.getAttrQualifiedName(className, attrName));
     }
 
-    public LinkedHashSet<String> getAllSuperTypesForType(String typeName) {
+    public Set<String> getAllSuperTypesForType(String typeName) {
         List<String> next = subTypeToSuperTypes.get(typeName);
         if (next.isEmpty()) {
             LinkedHashSet<String> root = new LinkedHashSet<>();
@@ -262,7 +262,7 @@ public class ModelCache {
         } else {
             LinkedHashSet<String> now = new LinkedHashSet<>(next);
             for (String superType : next) {
-                LinkedHashSet<String> again = getAllSuperTypesForType(superType);
+                Set<String> again = getAllSuperTypesForType(superType);
                 now.addAll(again);
             }
             return now;

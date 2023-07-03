@@ -24,6 +24,7 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -50,7 +51,7 @@ public class TypeDefsEndpoint extends AtlasEndpoint {
         String url = String.format(
                 "%s%s",
                 getBaseUrl(),
-                String.format("%s?type=%s", endpoint, category.getValue().toLowerCase()));
+                String.format("%s?type=%s", endpoint, category.getValue().toLowerCase(Locale.ROOT)));
         return ApiResource.request(ApiResource.RequestMethod.GET, url, "", TypeDefResponse.class, null);
     }
 

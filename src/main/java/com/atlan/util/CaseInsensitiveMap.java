@@ -4,11 +4,7 @@ package com.atlan.util;
 
 /* Based on original code from https://github.com/stripe/stripe-java (under MIT license) */
 import java.io.Serializable;
-import java.util.AbstractMap;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -143,7 +139,7 @@ public class CaseInsensitiveMap<V> extends AbstractMap<String, V> implements Map
         if (key == null) {
             return null;
         } else if (key instanceof String) {
-            return ((String) key).toLowerCase();
+            return ((String) key).toLowerCase(Locale.ROOT);
         }
         throw new IllegalArgumentException("key must be a String");
     }

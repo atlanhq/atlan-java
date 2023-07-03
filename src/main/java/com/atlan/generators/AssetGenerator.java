@@ -26,7 +26,7 @@ public class AssetGenerator extends TypeGenerator {
     private List<String> originalSubTypes = null;
     private List<String> subTypes = null;
     private List<String> mapContainers = null;
-    private final LinkedHashSet<String> superTypes;
+    private final Set<String> superTypes;
 
     public AssetGenerator(EntityDef entityDef, GeneratorConfig cfg) {
         super(entityDef, cfg);

@@ -9,6 +9,7 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -57,7 +58,7 @@ public final class StringUtils {
         if (methodName.startsWith("set") || methodName.startsWith("get")) {
             StringBuilder sb = new StringBuilder(methodName);
             sb.delete(0, 3);
-            sb.replace(0, 1, sb.substring(0, 1).toLowerCase());
+            sb.replace(0, 1, sb.substring(0, 1).toLowerCase(Locale.ROOT));
             return sb.toString();
         }
         return null;
