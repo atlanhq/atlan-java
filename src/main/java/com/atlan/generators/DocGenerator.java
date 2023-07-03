@@ -11,6 +11,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
@@ -44,7 +45,7 @@ public class DocGenerator extends AbstractGenerator {
                 // Now that all are cached, render the inner details of the generator
                 // before processing the template
                 generator.resolveDetails();
-                String originalName = generator.getOriginalName().toLowerCase();
+                String originalName = generator.getOriginalName().toLowerCase(Locale.ROOT);
                 // First the overall asset file
                 createDirectoryIdempotent(AssetDocGenerator.DIRECTORY);
                 String filename = AssetDocGenerator.DIRECTORY + File.separator + originalName + ".md";

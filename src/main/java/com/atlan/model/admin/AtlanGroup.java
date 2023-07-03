@@ -9,6 +9,7 @@ import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.core.AtlanObject;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;
+import java.util.Locale;
 import java.util.SortedSet;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -89,7 +90,7 @@ public class AtlanGroup extends AtlanObject {
      * @return internal name for the group
      */
     public static String generateName(String alias) {
-        String internal = alias.toLowerCase();
+        String internal = alias.toLowerCase(Locale.ROOT);
         return internal.replace(" ", "_");
     }
 

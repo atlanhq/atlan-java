@@ -92,22 +92,22 @@ repositories {
 }
 
 dependencies {
-    errorprone group: "com.google.errorprone", name: "error_prone_core", version: "2.14.0"
+    errorprone group: "com.google.errorprone", name: "error_prone_core", version: "2.20.0"
     errorproneJavac group: "com.google.errorprone", name: "javac", version:"9+181-r4173-1"
-    api group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.14.1"
-    api group: "org.slf4j", name: "slf4j-api", version: "1.7.32"
-    api group: "co.elastic.clients", name: "elasticsearch-java", version: "8.5.1"
+    api group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.15.2"
+    api group: "org.slf4j", name: "slf4j-api", version: "2.0.7"
+    api group: "co.elastic.clients", name: "elasticsearch-java", version: "8.8.2"
     api group: 'org.freemarker', name: 'freemarker', version: '2.3.32'
-    api group: 'org.apache.commons', name: 'commons-csv', version: '1.9.0'
-    api platform('software.amazon.awssdk:bom:2.18.21')
-    api 'software.amazon.awssdk:s3:2.18.24'
+    api group: 'org.apache.commons', name: 'commons-csv', version: '1.10.0'
+    api platform('software.amazon.awssdk:bom:2.20.96')
+    api 'software.amazon.awssdk:s3:2.20.96'
     api 'com.amazonaws:aws-lambda-java-core:1.2.2'
     implementation group: "io.github.classgraph", name: "classgraph", version: "4.8.160"
     numaflow group: "io.numaproj.numaflow", name: "numaflow-java", version: "0.4.6"
-    numaflow "io.netty:netty-transport-native-epoll:4.1.79.Final:linux-x86_64"
+    numaflow "io.netty:netty-transport-native-epoll:4.1.94.Final:linux-x86_64"
     testImplementation group: 'com.aventrix.jnanoid', name: 'jnanoid', version: '2.0.0'
-    testImplementation group: 'org.testng', name: 'testng', version: '7.7.0'
-    testImplementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.11'
+    testImplementation group: 'org.testng', name: 'testng', version: '7.8.0'
+    testImplementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.4.8'
     testImplementation group: 'com.github.tomakehurst', name: 'wiremock', version: '2.27.2'
 }
 
@@ -141,8 +141,8 @@ testing {
             useTestNG()
             dependencies {
                 implementation project
-                implementation group: 'org.testng', name: 'testng', version: '7.7.0'
-                implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.11'
+                implementation group: 'org.testng', name: 'testng', version: '7.8.0'
+                implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.4.8'
                 implementation group: 'com.github.tomakehurst', name: 'wiremock', version: '2.27.2'
             }
             sources {
@@ -167,8 +167,8 @@ testing {
             dependencies {
                 implementation project
                 implementation group: 'com.aventrix.jnanoid', name: 'jnanoid', version: '2.0.0'
-                implementation group: 'org.testng', name: 'testng', version: '7.7.0'
-                implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.11'
+                implementation group: 'org.testng', name: 'testng', version: '7.8.0'
+                implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.4.8'
             }
             sources {
                 java {
@@ -187,8 +187,8 @@ testing {
             }
             dependencies {
                 implementation project
-                implementation group: 'org.testng', name: 'testng', version: '7.7.0'
-                implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.11'
+                implementation group: 'org.testng', name: 'testng', version: '7.8.0'
+                implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.4.8'
             }
             sources {
                 java {

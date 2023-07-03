@@ -4,8 +4,8 @@ package com.atlan.generators;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -16,7 +16,7 @@ public class AssetDocGenerator extends AssetTestGenerator {
     public static final String DIRECTORY =
             "src" + File.separator + "generate" + File.separator + "resources" + File.separator + "markdown";
 
-    private final LinkedHashSet<String> superTypes;
+    private final Set<String> superTypes;
 
     public AssetDocGenerator(AssetGenerator asset, GeneratorConfig cfg) {
         super(asset, cfg);
