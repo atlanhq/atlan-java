@@ -4,11 +4,11 @@ package com.atlan.model.events;
 
 import static org.testng.Assert.*;
 
+import com.atlan.Atlan;
 import com.atlan.model.assets.Glossary;
 import com.atlan.model.assets.GlossaryTerm;
 import com.atlan.model.enums.*;
-import com.atlan.serde.Serde;
-import com.fasterxml.jackson.core.JsonProcessingException;
+import java.io.IOException;
 import org.testng.annotations.Test;
 
 public class AssetCreateTest {
@@ -47,9 +47,9 @@ public class AssetCreateTest {
     @Test(
             groups = {"AssetCreate.deserialize"},
             dependsOnGroups = {"AssetCreate.serialize"})
-    void deserialization() throws JsonProcessingException {
+    void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = Serde.mapper.readValue(serialized, AtlanEvent.class);
+        frodo = Atlan.getDefaultClient().readValue(serialized, AtlanEvent.class);
         assertNotNull(frodo);
     }
 

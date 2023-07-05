@@ -167,6 +167,9 @@ public interface IQuickSightAnalysisVisual {
     SortedSet<String> getAssetDbtTags();
 
     /** TBC */
+    String getAssetDbtTestStatus();
+
+    /** TBC */
     String getAssetDbtUniqueId();
 
     /** TBC */
@@ -301,7 +304,7 @@ public interface IQuickSightAnalysisVisual {
     /** TBC */
     IQuickSightAnalysis getQuickSightAnalysis();
 
-    /** TBC */
+    /** Qualified name of the QuickSight Analysis */
     String getQuickSightAnalysisQualifiedName();
 
     /** TBC */

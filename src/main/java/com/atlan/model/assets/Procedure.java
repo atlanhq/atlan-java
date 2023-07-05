@@ -56,6 +56,11 @@ public class Procedure extends Asset implements IProcedure, ISQL, ICatalog, IAss
     @Singular
     SortedSet<IDbtSource> dbtSources;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtTest> dbtTests;
+
     /** Logic of the procedure. */
     @Attribute
     String definition;

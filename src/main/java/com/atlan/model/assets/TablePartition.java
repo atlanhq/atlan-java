@@ -76,6 +76,11 @@ public class TablePartition extends Asset implements ITablePartition, ISQL, ICat
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<IDbtTest> dbtTests;
+
+    /** TBC */
+    @Attribute
     String externalLocation;
 
     /** TBC */

@@ -127,6 +127,11 @@ public class DbtModelColumn extends Asset implements IDbtModelColumn, IDbt, ICat
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<IDbtTest> dbtTests;
+
+    /** TBC */
+    @Attribute
     String dbtUniqueId;
 
     /** TBC */

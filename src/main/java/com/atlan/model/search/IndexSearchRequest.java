@@ -3,7 +3,7 @@
 package com.atlan.model.search;
 
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
-import com.atlan.api.IndexSearchEndpoint;
+import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.core.AtlanObject;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -80,6 +80,6 @@ public class IndexSearchRequest extends AtlanObject {
 
     /** Run the search. */
     public IndexSearchResponse search() throws AtlanException {
-        return IndexSearchEndpoint.search(this);
+        return Atlan.getDefaultClient().assets().search(this);
     }
 }

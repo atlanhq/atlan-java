@@ -59,6 +59,11 @@ public class SnowflakeStream extends Asset implements ISnowflakeStream, ISQL, IC
     /** TBC */
     @Attribute
     @Singular
+    SortedSet<IDbtTest> dbtTests;
+
+    /** TBC */
+    @Attribute
+    @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
     /** TBC */

@@ -2,6 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.api;
 
+import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.admin.RoleResponse;
 import com.atlan.net.ApiResource;
@@ -12,6 +13,12 @@ import com.atlan.net.ApiResource;
 public class RolesEndpoint extends HeraclesEndpoint {
 
     private static final String endpoint = "/roles";
+
+    private final AtlanClient client;
+
+    public RolesEndpoint(AtlanClient client) {
+        this.client = client;
+    }
 
     // TODO: eventually provide a rich RQL object for the filter
 
@@ -26,7 +33,7 @@ public class RolesEndpoint extends HeraclesEndpoint {
      * @return a list of roles that match the provided criteria
      * @throws AtlanException on any API communication issue
      */
-    public static RoleResponse getRoles(String filter, String sort, boolean count, int offset, int limit)
+    public RoleResponse getRoles(String filter, String sort, boolean count, int offset, int limit)
             throws AtlanException {
         if (filter == null) {
             filter = "";
@@ -36,14 +43,14 @@ public class RolesEndpoint extends HeraclesEndpoint {
         }
         String url = String.format(
                 "%s%s?filter=%s&sort=%s&count=%s&offset=%s&limit=%s",
-                getBaseUrl(),
+                getBaseUrl(client),
                 endpoint,
                 ApiResource.urlEncode(filter),
                 ApiResource.urlEncode(sort),
                 count,
                 offset,
                 limit);
-        return ApiResource.request(ApiResource.RequestMethod.GET, url, "", RoleResponse.class, null);
+        return ApiResource.request(client, ApiResource.RequestMethod.GET, url, "", RoleResponse.class, null);
     }
 
     /**
@@ -53,12 +60,12 @@ public class RolesEndpoint extends HeraclesEndpoint {
      * @return a list of roles that match the provided criteria
      * @throws AtlanException on any API communication issue
      */
-    public static RoleResponse getRoles(String filter) throws AtlanException {
+    public RoleResponse getRoles(String filter) throws AtlanException {
         if (filter == null) {
             filter = "";
         }
-        String url = String.format("%s%s?filter=%s", getBaseUrl(), endpoint, ApiResource.urlEncode(filter));
-        return ApiResource.request(ApiResource.RequestMethod.GET, url, "", RoleResponse.class, null);
+        String url = String.format("%s%s?filter=%s", getBaseUrl(client), endpoint, ApiResource.urlEncode(filter));
+        return ApiResource.request(client, ApiResource.RequestMethod.GET, url, "", RoleResponse.class, null);
     }
 
     /**
@@ -67,8 +74,8 @@ public class RolesEndpoint extends HeraclesEndpoint {
      * @return a list of all the roles in Atlan
      * @throws AtlanException on any API communication issue
      */
-    public static RoleResponse getAllRoles() throws AtlanException {
-        String url = String.format("%s%s", getBaseUrl(), endpoint);
-        return ApiResource.request(ApiResource.RequestMethod.GET, url, "", RoleResponse.class, null);
+    public RoleResponse getAllRoles() throws AtlanException {
+        String url = String.format("%s%s", getBaseUrl(client), endpoint);
+        return ApiResource.request(client, ApiResource.RequestMethod.GET, url, "", RoleResponse.class, null);
     }
 }

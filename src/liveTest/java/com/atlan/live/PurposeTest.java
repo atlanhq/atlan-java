@@ -5,7 +5,6 @@ package com.atlan.live;
 import static org.testng.Assert.*;
 
 import com.atlan.Atlan;
-import com.atlan.api.EntityBulkEndpoint;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
@@ -41,7 +40,7 @@ public class PurposeTest extends AtlanLiveTest {
     void createAtlanTag() throws AtlanException {
         AtlanTagDef cls =
                 AtlanTagDef.creator(ATLAN_TAG_NAME, AtlanTagColor.GREEN).build();
-        AtlanTagDef response = cls.create();
+        AtlanTagDef response = cls.create(Atlan.getDefaultClient());
         assertNotNull(response);
     }
 
@@ -91,7 +90,7 @@ public class PurposeTest extends AtlanLiveTest {
     void findPurposeByName() throws AtlanException, InterruptedException {
         List<Purpose> purposes = null;
         int count = 0;
-        while (count < Atlan.getMaxNetworkRetries()) {
+        while (purposes == null && count < Atlan.getMaxNetworkRetries()) {
             try {
                 purposes = Purpose.findByName(PURPOSE_NAME, null);
                 break;
@@ -122,7 +121,7 @@ public class PurposeTest extends AtlanLiveTest {
                         "Mask the data", purpose.getGuid(), AuthPolicyType.DATA_MASK, null, null, true)
                 .policyMaskType(DataMaskingType.HASH)
                 .build();
-        AssetMutationResponse response = EntityBulkEndpoint.upsert(List.of(metadata, data), false);
+        AssetMutationResponse response = Atlan.getDefaultClient().assets().save(List.of(metadata, data), false);
         assertNotNull(response);
         assertEquals(response.getUpdatedAssets().size(), 1);
         Asset one = response.getUpdatedAssets().get(0);
@@ -190,6 +189,6 @@ public class PurposeTest extends AtlanLiveTest {
             dependsOnGroups = {"purpose.create.*", "purpose.update.*", "purpose.read.*", "purpose.purge.purposes"},
             alwaysRun = true)
     void purgeAtlanTags() throws AtlanException {
-        AtlanTagDef.purge(ATLAN_TAG_NAME);
+        AtlanTagDef.purge(ATLAN_TAG_NAME, Atlan.getDefaultClient());
     }
 }

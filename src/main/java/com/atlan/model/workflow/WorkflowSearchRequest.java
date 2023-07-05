@@ -7,7 +7,7 @@ import co.elastic.clients.elasticsearch._types.NestedSortValue;
 import co.elastic.clients.elasticsearch._types.SortOptions;
 import co.elastic.clients.elasticsearch._types.SortOrder;
 import co.elastic.clients.elasticsearch._types.query_dsl.*;
-import com.atlan.api.WorkflowsEndpoint;
+import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.search.IndexSearchDSL;
 import java.util.List;
@@ -29,7 +29,7 @@ public class WorkflowSearchRequest extends IndexSearchDSL {
      * @return results from running the search
      */
     public WorkflowSearchResponse search() throws AtlanException {
-        return WorkflowsEndpoint.searchRuns(this);
+        return Atlan.getDefaultClient().workflows().searchRuns(this);
     }
 
     /**
@@ -59,7 +59,7 @@ public class WorkflowSearchRequest extends IndexSearchDSL {
                 .query(query)
                 .build();
 
-        WorkflowSearchResponse response = WorkflowsEndpoint.searchRuns(request);
+        WorkflowSearchResponse response = Atlan.getDefaultClient().workflows().searchRuns(request);
         if (response != null) {
             List<WorkflowSearchResult> results = response.getHits().getHits();
             if (results != null && !results.isEmpty()) {
@@ -94,7 +94,7 @@ public class WorkflowSearchRequest extends IndexSearchDSL {
                 .query(query)
                 .build();
 
-        WorkflowSearchResponse response = WorkflowsEndpoint.searchRuns(request);
+        WorkflowSearchResponse response = Atlan.getDefaultClient().workflows().searchRuns(request);
         if (response != null) {
             List<WorkflowSearchResult> results = response.getHits().getHits();
             if (results != null && !results.isEmpty()) {
@@ -131,7 +131,7 @@ public class WorkflowSearchRequest extends IndexSearchDSL {
                 .query(query)
                 .build();
 
-        WorkflowSearchResponse response = WorkflowsEndpoint.search(request);
+        WorkflowSearchResponse response = Atlan.getDefaultClient().workflows().search(request);
         if (response != null && response.getHits() != null) {
             return response.getHits().getHits();
         }

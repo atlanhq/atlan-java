@@ -21,9 +21,13 @@ import com.atlan.model.enums.SourceCostUnitType;
 import com.atlan.model.relations.Reference;
 import com.atlan.model.structs.PopularityInsights;
 import com.atlan.net.HttpClient;
+import com.atlan.serde.AssetDeserializer;
+import com.atlan.serde.AssetSerializer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -45,6 +49,8 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@JsonSerialize(using = AssetSerializer.class)
+@JsonDeserialize(using = AssetDeserializer.class)
 @JsonTypeInfo(
         use = JsonTypeInfo.Id.NAME,
         include = JsonTypeInfo.As.EXISTING_PROPERTY,
@@ -244,6 +250,10 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @Singular
     SortedSet<String> assetDbtTags;
 
+    /** All associated dbt test statuses */
+    @Attribute
+    String assetDbtTestStatus;
+
     /** TBC */
     @Attribute
     String assetDbtUniqueId;
@@ -312,7 +322,7 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     @Singular
     SortedSet<String> assetTags;
 
-    /** TBC */
+    /** Glossary terms that are linked to this asset. */
     @Attribute
     @Singular
     @JsonProperty("meanings")
@@ -1218,7 +1228,7 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
             return false;
         } else if (existing.getStatus() == AtlanStatus.ACTIVE) {
             // Already active, but this could be due to the async nature of the delete handlers
-            if (retryCount < Atlan.getDefaultClient().getMaxNetworkRetries()) {
+            if (retryCount < Atlan.getMaxNetworkRetries()) {
                 // So continue to retry up to the maximum number of allowed retries
                 log.debug(
                         "Attempted to restore an active asset, retrying status check for async delete handling (attempt: {}).",

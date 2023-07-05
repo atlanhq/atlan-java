@@ -47,7 +47,7 @@ public class QuickSightDataset extends Asset
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
 
-    /** TBC */
+    /** Quicksight dataset column count indicates number of columns present in the dataset */
     @Attribute
     Long quickSightDatasetColumnCount;
 
@@ -61,7 +61,7 @@ public class QuickSightDataset extends Asset
     @Singular
     SortedSet<IQuickSightFolder> quickSightDatasetFolders;
 
-    /** TBC */
+    /** Quicksight dataset importMode indicates a value that indicates whether you want to import the data into SPICE */
     @Attribute
     QuickSightDatasetImportMode quickSightDatasetImportMode;
 

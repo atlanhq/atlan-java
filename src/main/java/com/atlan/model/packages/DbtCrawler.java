@@ -2,7 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.packages;
 
-import com.atlan.cache.RoleCache;
+import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.admin.PackageParameter;
@@ -29,7 +29,14 @@ public class DbtCrawler extends AbstractCrawler {
      */
     public static Workflow mtCloudAuth(String connectionName, String apiToken) throws AtlanException {
         return mtCloudAuth(
-                connectionName, apiToken, List.of(RoleCache.getIdForName("$admin")), null, null, null, null, null);
+                connectionName,
+                apiToken,
+                List.of(Atlan.getDefaultClient().getRoleCache().getIdForName("$admin")),
+                null,
+                null,
+                null,
+                null,
+                null);
     }
 
     /**

@@ -2,7 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.admin;
 
-import com.atlan.api.UsersEndpoint;
+import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
@@ -107,7 +107,7 @@ public class AtlanUser extends AtlanObject {
      * @throws AtlanException on any error during API invocation
      */
     public void create() throws AtlanException {
-        UsersEndpoint.createUser(this);
+        Atlan.getDefaultClient().users().create(this);
     }
 
     /**
@@ -121,7 +121,7 @@ public class AtlanUser extends AtlanObject {
         if (this.id == null || this.id.length() == 0) {
             throw new InvalidRequestException(ErrorCode.MISSING_USER_ID);
         }
-        return UsersEndpoint.updateUser(this.id, this);
+        return Atlan.getDefaultClient().users().update(this.id, this);
     }
 
     /**
@@ -131,7 +131,7 @@ public class AtlanUser extends AtlanObject {
      * @throws AtlanException on any error during API invocation
      */
     public static void delete(String id) throws AtlanException {
-        UsersEndpoint.deleteUser(id);
+        Atlan.getDefaultClient().users().delete(id);
     }
 
     /**
@@ -144,7 +144,7 @@ public class AtlanUser extends AtlanObject {
         if (this.id == null || this.id.length() == 0) {
             throw new InvalidRequestException(ErrorCode.MISSING_USER_ID);
         }
-        UsersEndpoint.addToGroups(this.id, groupIds);
+        Atlan.getDefaultClient().users().addToGroups(this.id, groupIds);
     }
 
     /**
@@ -157,7 +157,7 @@ public class AtlanUser extends AtlanObject {
         if (this.id == null || this.id.length() == 0) {
             throw new InvalidRequestException(ErrorCode.MISSING_USER_ID);
         }
-        return UsersEndpoint.getGroups(this.id);
+        return Atlan.getDefaultClient().users().listGroups(this.id);
     }
 
     /**
@@ -166,7 +166,7 @@ public class AtlanUser extends AtlanObject {
      * @throws AtlanException on any error during API invocation
      */
     public static List<AtlanUser> retrieveAll() throws AtlanException {
-        return UsersEndpoint.getAllUsers();
+        return Atlan.getDefaultClient().users().list();
     }
 
     /**
@@ -181,7 +181,7 @@ public class AtlanUser extends AtlanObject {
      * @throws AtlanException on any error during API invocation
      */
     public static List<AtlanUser> retrieveByEmail(String email) throws AtlanException {
-        UserResponse response = UsersEndpoint.getUsers("{\"email\":{\"$ilike\":\"%" + email + "%\"}}");
+        UserResponse response = Atlan.getDefaultClient().users().list("{\"email\":{\"$ilike\":\"%" + email + "%\"}}");
         if (response != null && response.getRecords() != null) {
             return response.getRecords();
         } else {
@@ -198,7 +198,7 @@ public class AtlanUser extends AtlanObject {
      * @throws AtlanException on any error during API invocation
      */
     public static AtlanUser retrieveByUsername(String user) throws AtlanException {
-        UserResponse response = UsersEndpoint.getUsers("{\"username\":\"" + user + "\"}");
+        UserResponse response = Atlan.getDefaultClient().users().list("{\"username\":\"" + user + "\"}");
         if (response != null && response.getRecords() != null) {
             return response.getRecords().get(0);
         } else {
@@ -214,8 +214,9 @@ public class AtlanUser extends AtlanObject {
      * @throws AtlanException on any error during API invocation
      */
     public UserMinimalResponse activate() throws AtlanException {
-        return UsersEndpoint.updateUser(
-                this.id, AtlanUser.builder().enabled(true).build());
+        return Atlan.getDefaultClient()
+                .users()
+                .update(this.id, AtlanUser.builder().enabled(true).build());
     }
 
     /**
@@ -226,8 +227,9 @@ public class AtlanUser extends AtlanObject {
      * @throws AtlanException on any error during API invocation
      */
     public UserMinimalResponse deactivate() throws AtlanException {
-        return UsersEndpoint.updateUser(
-                this.id, AtlanUser.builder().enabled(false).build());
+        return Atlan.getDefaultClient()
+                .users()
+                .update(this.id, AtlanUser.builder().enabled(false).build());
     }
 
     /**
@@ -237,7 +239,7 @@ public class AtlanUser extends AtlanObject {
      * @throws AtlanException on any API communication issue
      */
     public void changeRole(String roleId) throws AtlanException {
-        UsersEndpoint.changeRole(this.id, roleId);
+        Atlan.getDefaultClient().users().changeRole(this.id, roleId);
     }
 
     /**
@@ -247,7 +249,7 @@ public class AtlanUser extends AtlanObject {
      * @throws AtlanException on any API communication issue
      */
     public SessionResponse fetchSessions() throws AtlanException {
-        return UsersEndpoint.getSessions(this.id);
+        return Atlan.getDefaultClient().users().listSessions(this.id);
     }
 
     @Getter

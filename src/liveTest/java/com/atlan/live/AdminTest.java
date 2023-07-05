@@ -4,9 +4,7 @@ package com.atlan.live;
 
 import static org.testng.Assert.*;
 
-import com.atlan.api.GroupsEndpoint;
-import com.atlan.api.UsersEndpoint;
-import com.atlan.cache.RoleCache;
+import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.admin.*;
 import java.util.List;
@@ -68,13 +66,13 @@ public class AdminTest extends AtlanLiveTest {
 
     @Test(groups = {"admin.read.roles"})
     void retrieveRoles() throws AtlanException {
-        String adminRoleGuid = RoleCache.getIdForName("$admin");
+        String adminRoleGuid = Atlan.getDefaultClient().getRoleCache().getIdForName("$admin");
         assertNotNull(adminRoleGuid);
     }
 
     @Test(groups = {"admin.read.sessions"})
     void retrieveSessions() throws AtlanException {
-        UserMinimalResponse response = UsersEndpoint.getCurrentUser();
+        UserMinimalResponse response = Atlan.getDefaultClient().users().getCurrentUser();
         assertNotNull(response);
         AtlanUser user = response.toAtlanUser();
         assertNotNull(user);
@@ -131,7 +129,7 @@ public class AdminTest extends AtlanLiveTest {
         user.create();
         AtlanUser user2 = AtlanUser.creator(USER_EMAIL2, "$guest").build();
         AtlanUser user3 = AtlanUser.creator(USER_EMAIL3, "$guest").build();
-        UsersEndpoint.createUsers(List.of(user2, user3));
+        Atlan.getDefaultClient().users().create(List.of(user2, user3));
     }
 
     @Test(
@@ -170,7 +168,8 @@ public class AdminTest extends AtlanLiveTest {
             dependsOnGroups = {"admin.read.users.1"})
     void createGroups2() throws AtlanException {
         AtlanGroup group = AtlanGroup.creator(GROUP_NAME2).build();
-        CreateGroupResponse response = GroupsEndpoint.createGroup(group, List.of(user2.getId(), user3.getId()));
+        CreateGroupResponse response =
+                Atlan.getDefaultClient().groups().create(group, List.of(user2.getId(), user3.getId()));
         String groupGuid2 = response.getGroup();
         assertNotNull(groupGuid2);
         Map<String, CreateGroupResponse.UserStatus> statusMap = response.getUsers();
@@ -191,7 +190,7 @@ public class AdminTest extends AtlanLiveTest {
     void updateUsers() throws AtlanException {
         AtlanUser user = AtlanUser.updater(user1.getId()).build();
         user.addToGroups(List.of(group1.getId()));
-        user.changeRole(RoleCache.getIdForName("$member"));
+        user.changeRole(Atlan.getDefaultClient().getRoleCache().getIdForName("$member"));
         GroupResponse response = user.fetchGroups();
         assertNotNull(response);
         assertNotNull(response.getRecords());

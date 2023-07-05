@@ -2,8 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.serde;
 
-import com.atlan.cache.AtlanTagCache;
-import com.atlan.cache.CustomMetadataCache;
+import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.admin.*;
@@ -29,12 +28,15 @@ public class AtlanRequestSerializer extends StdSerializer<AtlanRequest> {
     private static final long serialVersionUID = 2L;
     public static final String DELETED = "(DELETED)";
 
-    public AtlanRequestSerializer() {
-        this(null);
+    private final AtlanClient client;
+
+    public AtlanRequestSerializer(AtlanClient client) {
+        this(AtlanRequest.class, client);
     }
 
-    public AtlanRequestSerializer(Class<AtlanRequest> t) {
+    public AtlanRequestSerializer(Class<AtlanRequest> t, AtlanClient client) {
         super(t);
+        this.client = client;
     }
 
     /**
@@ -62,7 +64,7 @@ public class AtlanRequestSerializer extends StdSerializer<AtlanRequest> {
             String clsName = cls.getTypeName();
             String clsId;
             try {
-                clsId = AtlanTagCache.getIdForName(clsName);
+                clsId = client.getAtlanTagCache().getIdForName(clsName);
             } catch (NotFoundException e) {
                 clsId = DELETED;
             } catch (AtlanException e) {
@@ -74,9 +76,9 @@ public class AtlanRequestSerializer extends StdSerializer<AtlanRequest> {
             String cmName = destinationAttribute;
             Map<String, Object> attrValues = new HashMap<>();
             try {
-                destinationAttribute = CustomMetadataCache.getIdForName(cmName);
-                CustomMetadataCache.getAttributesFromCustomMetadata(
-                        destinationAttribute, cmName, cm.getAttributes(), attrValues);
+                destinationAttribute = client.getCustomMetadataCache().getIdForName(cmName);
+                client.getCustomMetadataCache()
+                        .getAttributesFromCustomMetadata(destinationAttribute, cmName, cm.getAttributes(), attrValues);
             } catch (NotFoundException e) {
                 destinationAttribute = DELETED;
             } catch (AtlanException e) {

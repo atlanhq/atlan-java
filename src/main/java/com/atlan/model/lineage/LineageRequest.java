@@ -2,7 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.lineage;
 
-import com.atlan.api.LineageEndpoint;
+import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.core.AtlanObject;
 import com.atlan.model.enums.AtlanLineageDirection;
@@ -67,6 +67,6 @@ public class LineageRequest extends AtlanObject {
 
     /** Fetch the lineage defined by this object. */
     public LineageResponse fetch() throws AtlanException {
-        return LineageEndpoint.fetch(this);
+        return Atlan.getDefaultClient().assets().lineage(this);
     }
 }

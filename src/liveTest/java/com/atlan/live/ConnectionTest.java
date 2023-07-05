@@ -5,8 +5,6 @@ package com.atlan.live;
 import static org.testng.Assert.*;
 
 import com.atlan.Atlan;
-import com.atlan.api.WorkflowsEndpoint;
-import com.atlan.cache.RoleCache;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
@@ -44,7 +42,7 @@ public class ConnectionTest extends AtlanLiveTest {
      * @throws AtlanException on any error creating or reading-back the connection
      */
     public static Connection createConnection(String prefix, AtlanConnectorType type) throws AtlanException {
-        String adminRoleGuid = RoleCache.getIdForName("$admin");
+        String adminRoleGuid = Atlan.getDefaultClient().getRoleCache().getIdForName("$admin");
         Connection connection = Connection.creator(prefix, type, List.of(adminRoleGuid), null, null)
                 .build();
         AssetMutationResponse response = connection.upsert().block();
@@ -81,7 +79,7 @@ public class ConnectionTest extends AtlanLiveTest {
             AtlanWorkflowPhase state = response.monitorStatus(log);
             assertNotNull(state);
             assertEquals(state, AtlanWorkflowPhase.SUCCESS);
-            WorkflowsEndpoint.archive(workflowName);
+            Atlan.getDefaultClient().workflows().archive(workflowName);
         } catch (InvalidRequestException e) {
             // Can happen if two deletion workflows are run at the same time,
             // in which case we should wait a few seconds and try again

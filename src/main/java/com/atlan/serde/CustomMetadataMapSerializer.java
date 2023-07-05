@@ -2,7 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.serde;
 
-import com.atlan.cache.CustomMetadataCache;
+import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.core.CustomMetadataAttributes;
 import com.atlan.util.JacksonUtils;
@@ -26,12 +26,16 @@ import lombok.extern.slf4j.Slf4j;
 public class CustomMetadataMapSerializer extends StdSerializer<Map<String, CustomMetadataAttributes>> {
     private static final long serialVersionUID = 2L;
 
-    public CustomMetadataMapSerializer() {
-        this(null);
+    private final AtlanClient client;
+
+    // TODO: Pass the Map<String, CustomMetadataAttributes> to the other constructor, rather than null
+    public CustomMetadataMapSerializer(AtlanClient client) {
+        this(null, client);
     }
 
-    public CustomMetadataMapSerializer(Class<Map<String, CustomMetadataAttributes>> t) {
+    public CustomMetadataMapSerializer(Class<Map<String, CustomMetadataAttributes>> t, AtlanClient client) {
         super(t);
+        this.client = client;
     }
 
     /**
@@ -65,10 +69,11 @@ public class CustomMetadataMapSerializer extends StdSerializer<Map<String, Custo
                         JacksonUtils.serializeObject(gen, cmId, Collections.emptyMap());
                     } else {
                         try {
-                            cmId = CustomMetadataCache.getIdForName(cmName);
+                            cmId = client.getCustomMetadataCache().getIdForName(cmName);
                             if (cma != null) {
                                 Map<String, Object> idToValue = new HashMap<>();
-                                CustomMetadataCache.getIdMapFromNameMap(cmName, cma.getAttributes(), idToValue);
+                                client.getCustomMetadataCache()
+                                        .getIdMapFromNameMap(cmName, cma.getAttributes(), idToValue);
                                 JacksonUtils.serializeObject(gen, cmId, idToValue);
                             } else {
                                 JacksonUtils.serializeObject(gen, cmId, Collections.emptyMap());

@@ -2,6 +2,7 @@
 /* Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.api;
 
+import com.atlan.AtlanClient;
 import com.atlan.exception.ApiConnectionException;
 
 /**
@@ -11,7 +12,7 @@ public abstract class HeraclesEndpoint extends AbstractEndpoint {
     private static final String PREFIX = "/api/service";
     private static final String SERVICE = "http://heracles-service.heracles";
 
-    protected static String getBaseUrl() throws ApiConnectionException {
-        return getBaseUrl(SERVICE, PREFIX);
+    protected static String getBaseUrl(AtlanClient client) throws ApiConnectionException {
+        return getBaseUrl(client, SERVICE, PREFIX);
     }
 }

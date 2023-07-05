@@ -194,6 +194,11 @@ public class Column extends Asset implements IColumn, ISQL, ICatalog, IAsset, IR
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<IDbtTest> dbtTests;
+
+    /** TBC */
+    @Attribute
     String defaultValue;
 
     /** Column this column refers to as a foreign key. */

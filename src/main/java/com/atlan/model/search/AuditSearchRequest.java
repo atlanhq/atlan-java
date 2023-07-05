@@ -7,7 +7,7 @@ import co.elastic.clients.elasticsearch._types.SortOptions;
 import co.elastic.clients.elasticsearch._types.SortOrder;
 import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
 import co.elastic.clients.elasticsearch._types.query_dsl.TermQuery;
-import com.atlan.api.AuditSearchEndpoint;
+import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.core.AtlanObject;
 import java.util.List;
@@ -37,7 +37,7 @@ public class AuditSearchRequest extends AtlanObject {
 
     /** Run the search. */
     public AuditSearchResponse search() throws AtlanException {
-        return AuditSearchEndpoint.search(this);
+        return Atlan.getDefaultClient().assets().auditLogs(this);
     }
 
     /**

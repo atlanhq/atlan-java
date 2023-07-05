@@ -168,6 +168,9 @@ public interface IQuickSightDataset {
     SortedSet<String> getAssetDbtTags();
 
     /** TBC */
+    String getAssetDbtTestStatus();
+
+    /** TBC */
     String getAssetDbtUniqueId();
 
     /** TBC */
@@ -299,7 +302,7 @@ public interface IQuickSightDataset {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** Quicksight dataset column count indicates number of columns present in the dataset */
     Long getQuickSightDatasetColumnCount();
 
     /** TBC */
@@ -308,7 +311,7 @@ public interface IQuickSightDataset {
     /** TBC */
     SortedSet<IQuickSightFolder> getQuickSightDatasetFolders();
 
-    /** TBC */
+    /** Quicksight dataset importMode indicates a value that indicates whether you want to import the data into SPICE */
     QuickSightDatasetImportMode getQuickSightDatasetImportMode();
 
     /** TBC */

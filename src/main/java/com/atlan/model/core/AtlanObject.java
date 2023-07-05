@@ -3,8 +3,8 @@
 package com.atlan.model.core;
 
 /* Based on original code from https://github.com/stripe/stripe-java (under MIT license) */
-import com.atlan.serde.Serde;
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.atlan.Atlan;
+import java.io.IOException;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
@@ -25,8 +25,8 @@ public abstract class AtlanObject {
 
     public String toJson() {
         try {
-            return Serde.mapper.writeValueAsString(this);
-        } catch (JsonProcessingException e) {
+            return Atlan.getDefaultClient().writeValueAsString(this);
+        } catch (IOException e) {
             log.error("Unable to serialize this object: {}", this.getClass().getName(), e);
         }
         return null;

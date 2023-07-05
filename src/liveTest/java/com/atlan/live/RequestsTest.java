@@ -5,7 +5,6 @@ package com.atlan.live;
 import static org.testng.Assert.*;
 
 import com.atlan.Atlan;
-import com.atlan.api.ApiTokensEndpoint;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.admin.*;
 import com.atlan.model.assets.*;
@@ -32,7 +31,7 @@ public class RequestsTest extends AtlanLiveTest {
 
     private static final String ATTR_VALUE_DESCRIPTION = "A new description, as requested.";
 
-    private static final String originalToken = Atlan.getApiToken();
+    private static final String originalToken = Atlan.getDefaultClient().getApiToken();
     private static String requestsToken = null;
     private static ApiToken token = null;
     private static Glossary glossary = null;
@@ -107,7 +106,7 @@ public class RequestsTest extends AtlanLiveTest {
             groups = {"request.read.token"},
             dependsOnGroups = {"request.create.token"})
     void retrieveTokens() throws AtlanException {
-        ApiTokenResponse response = ApiTokensEndpoint.getTokens();
+        ApiTokenResponse response = Atlan.getDefaultClient().apiTokens().list();
         assertNotNull(response);
         assertTrue(response.getTotalRecord() > 1);
         assertTrue(response.getTotalRecord() < 100);

@@ -2,7 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.packages;
 
-import com.atlan.cache.RoleCache;
+import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
@@ -40,7 +40,7 @@ public class TableauCrawler extends AbstractCrawler {
                 username,
                 password,
                 null,
-                List.of(RoleCache.getIdForName("$admin")),
+                List.of(Atlan.getDefaultClient().getRoleCache().getIdForName("$admin")),
                 null,
                 null,
                 null,

@@ -2,7 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.serde;
 
-import com.atlan.cache.AtlanTagCache;
+import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.core.AtlanTag;
 import com.atlan.model.enums.AtlanStatus;
@@ -24,12 +24,15 @@ import lombok.extern.slf4j.Slf4j;
 public class AtlanTagSerializer extends StdSerializer<AtlanTag> {
     private static final long serialVersionUID = 2L;
 
-    public AtlanTagSerializer() {
-        this(null);
+    private final AtlanClient client;
+
+    public AtlanTagSerializer(AtlanClient client) {
+        this(AtlanTag.class, client);
     }
 
-    public AtlanTagSerializer(Class<AtlanTag> t) {
+    public AtlanTagSerializer(Class<AtlanTag> t, AtlanClient client) {
         super(t);
+        this.client = client;
     }
 
     /**
@@ -58,7 +61,7 @@ public class AtlanTagSerializer extends StdSerializer<AtlanTag> {
                 clsId = Serde.DELETED_AUDIT_OBJECT;
             } else {
                 try {
-                    clsId = AtlanTagCache.getIdForName(clsName);
+                    clsId = client.getAtlanTagCache().getIdForName(clsName);
                 } catch (AtlanException e) {
                     throw new IOException("Unable to find Atlan tag with name: " + clsName, e);
                 }

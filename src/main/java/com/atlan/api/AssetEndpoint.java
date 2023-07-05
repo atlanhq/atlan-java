@@ -208,7 +208,7 @@ public class AssetEndpoint extends AtlasEndpoint {
             throws AtlanException {
         String url = String.format(
                 "%s%s",
-                client.getBaseUrl(),
+                getBaseUrl(client),
                 String.format(
                         "%s?replaceClassifications=%s&replaceBusinessAttributes=true&overwriteBusinessAttributes=true",
                         bulk_endpoint, replaceAtlanTags));
@@ -243,7 +243,7 @@ public class AssetEndpoint extends AtlasEndpoint {
             throws AtlanException {
         String url = String.format(
                 "%s%s",
-                client.getBaseUrl(),
+                getBaseUrl(client),
                 String.format(
                         "%s?replaceClassifications=%s&replaceBusinessAttributes=false&overwriteBusinessAttributes=false",
                         bulk_endpoint, replaceAtlanTags));

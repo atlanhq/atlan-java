@@ -2,8 +2,8 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.serde;
 
-import com.atlan.cache.AtlanTagCache;
-import com.atlan.cache.CustomMetadataCache;
+import com.atlan.Atlan;
+import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.admin.*;
@@ -25,12 +25,15 @@ public class AtlanRequestDeserializer extends StdDeserializer<AtlanRequest> {
 
     private static final long serialVersionUID = 2L;
 
-    public AtlanRequestDeserializer() {
-        this(null);
+    private final AtlanClient client;
+
+    public AtlanRequestDeserializer(AtlanClient client) {
+        this(AtlanRequest.class, client);
     }
 
-    public AtlanRequestDeserializer(Class<?> t) {
+    public AtlanRequestDeserializer(Class<?> t, AtlanClient client) {
         super(t);
+        this.client = client;
     }
 
     /**
@@ -74,7 +77,7 @@ public class AtlanRequestDeserializer extends StdDeserializer<AtlanRequest> {
                                 JacksonUtils.deserializeBoolean(jsonPayload, "removePropagationsOnEntityDelete");
                         String humanReadableAtlanTag;
                         try {
-                            humanReadableAtlanTag = AtlanTagCache.getNameForId(typeName);
+                            humanReadableAtlanTag = client.getAtlanTagCache().getNameForId(typeName);
                         } catch (NotFoundException e) {
                             humanReadableAtlanTag = AtlanRequestSerializer.DELETED;
                         } catch (AtlanException e) {
@@ -94,8 +97,9 @@ public class AtlanRequestDeserializer extends StdDeserializer<AtlanRequest> {
                         String cmId = destinationAttribute;
                         CustomMetadataAttributes cma;
                         try {
-                            destinationAttribute = CustomMetadataCache.getNameForId(cmId);
-                            cma = CustomMetadataCache.getCustomMetadataAttributes(cmId, jsonPayload);
+                            destinationAttribute =
+                                    client.getCustomMetadataCache().getNameForId(cmId);
+                            cma = client.getCustomMetadataCache().getCustomMetadataAttributes(cmId, jsonPayload);
                         } catch (NotFoundException e) {
                             destinationAttribute = AtlanRequestSerializer.DELETED;
                             cma = CustomMetadataAttributes.builder().build();
@@ -129,7 +133,8 @@ public class AtlanRequestDeserializer extends StdDeserializer<AtlanRequest> {
                     // Inject typeName into the destinationEntity so that we can deserialize it
                     // appropriately
                     ((ObjectNode) destinationEntity).set("typeName", entityType);
-                    builder.destinationEntity(Serde.mapper.convertValue(destinationEntity, new TypeReference<>() {}));
+                    builder.destinationEntity(
+                            Atlan.getDefaultClient().convertValue(destinationEntity, new TypeReference<>() {}));
                 }
                 return builder.id(JacksonUtils.deserializeString(root, "id"))
                         .version(JacksonUtils.deserializeString(root, "version"))

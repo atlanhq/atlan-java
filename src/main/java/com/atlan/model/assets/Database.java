@@ -59,6 +59,11 @@ public class Database extends Asset implements IDatabase, ISQL, ICatalog, IAsset
     /** TBC */
     @Attribute
     @Singular
+    SortedSet<IDbtTest> dbtTests;
+
+    /** TBC */
+    @Attribute
+    @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
     /** TBC */

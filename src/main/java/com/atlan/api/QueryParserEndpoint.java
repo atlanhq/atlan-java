@@ -2,6 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.api;
 
+import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.admin.ParsedQuery;
 import com.atlan.model.admin.QueryParserRequest;
@@ -14,6 +15,12 @@ public class QueryParserEndpoint extends HekaEndpoint {
 
     private static final String endpoint = "/query/parse";
 
+    private final AtlanClient client;
+
+    public QueryParserEndpoint(AtlanClient client) {
+        this.client = client;
+    }
+
     /**
      * Parses the provided query to describe its component parts.
      *
@@ -21,8 +28,8 @@ public class QueryParserEndpoint extends HekaEndpoint {
      * @return parsed explanation of the query
      * @throws AtlanException on any issues with API communication
      */
-    public static ParsedQuery parseQuery(QueryParserRequest request) throws AtlanException {
-        String url = String.format("%s%s", getBaseUrl(), endpoint);
-        return ApiResource.request(ApiResource.RequestMethod.POST, url, request, ParsedQuery.class, null);
+    public ParsedQuery parse(QueryParserRequest request) throws AtlanException {
+        String url = String.format("%s%s", getBaseUrl(client), endpoint);
+        return ApiResource.request(client, ApiResource.RequestMethod.POST, url, request, ParsedQuery.class, null);
     }
 }

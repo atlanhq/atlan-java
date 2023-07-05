@@ -6,7 +6,7 @@ import static com.atlan.util.QueryFactory.*;
 import static org.testng.Assert.*;
 
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
-import com.atlan.api.EntityBulkEndpoint;
+import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.assets.*;
 import com.atlan.model.core.AssetMutationResponse;
@@ -101,7 +101,7 @@ public class GlossaryTest extends AtlanLiveTest {
             }
             toCreate.add(one);
         }
-        AssetMutationResponse response = EntityBulkEndpoint.upsert(toCreate, false);
+        AssetMutationResponse response = Atlan.getDefaultClient().assets().save(toCreate, false);
         assertNotNull(response);
         assertEquals(response.getDeletedAssets().size(), 0);
         assertEquals(response.getCreatedAssets().size(), names.size());
@@ -648,9 +648,18 @@ public class GlossaryTest extends AtlanLiveTest {
             dependsOnGroups = {"glossary.purge.category", "glossary.purge.term"},
             alwaysRun = true)
     void purgeHierarchy() throws AtlanException {
-        AssetMutationResponse response = EntityBulkEndpoint.delete(
-                List.of(leaf1aaGuid, leaf1abGuid, leaf1bbGuid, leaf2aaGuid, leaf2abGuid, leaf2baGuid, leaf2bbGuid),
-                AtlanDeleteType.PURGE);
+        AssetMutationResponse response = Atlan.getDefaultClient()
+                .assets()
+                .delete(
+                        List.of(
+                                leaf1aaGuid,
+                                leaf1abGuid,
+                                leaf1bbGuid,
+                                leaf2aaGuid,
+                                leaf2abGuid,
+                                leaf2baGuid,
+                                leaf2bbGuid),
+                        AtlanDeleteType.PURGE);
         assertNotNull(response);
         assertEquals(response.getCreatedAssets().size(), 0);
         assertEquals(response.getUpdatedAssets().size(), 0);
@@ -658,8 +667,9 @@ public class GlossaryTest extends AtlanLiveTest {
         assertNotNull(entities);
         assertEquals(entities.size(), 7);
 
-        response =
-                EntityBulkEndpoint.delete(List.of(mid1aGuid, mid1bGuid, mid2aGuid, mid2bGuid), AtlanDeleteType.PURGE);
+        response = Atlan.getDefaultClient()
+                .assets()
+                .delete(List.of(mid1aGuid, mid1bGuid, mid2aGuid, mid2bGuid), AtlanDeleteType.PURGE);
         assertNotNull(response);
         assertEquals(response.getCreatedAssets().size(), 0);
         assertEquals(response.getUpdatedAssets().size(), 0);
@@ -667,7 +677,7 @@ public class GlossaryTest extends AtlanLiveTest {
         assertNotNull(entities);
         assertEquals(entities.size(), 4);
 
-        response = EntityBulkEndpoint.delete(List.of(top1Guid, top2Guid), AtlanDeleteType.PURGE);
+        response = Atlan.getDefaultClient().assets().delete(List.of(top1Guid, top2Guid), AtlanDeleteType.PURGE);
         assertNotNull(response);
         assertEquals(response.getCreatedAssets().size(), 0);
         assertEquals(response.getUpdatedAssets().size(), 0);

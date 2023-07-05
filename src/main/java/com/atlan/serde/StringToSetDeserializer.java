@@ -2,6 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.serde;
 
+import com.atlan.Atlan;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationContext;
@@ -36,6 +37,6 @@ public class StringToSetDeserializer extends StdDeserializer<Set<String>> {
      * @throws IOException on any errors during parsing
      */
     public static Set<String> deserialize(String value) throws IOException {
-        return Serde.mapper.readValue(value, new TypeReference<>() {});
+        return Atlan.getDefaultClient().readValue(value, new TypeReference<>() {});
     }
 }

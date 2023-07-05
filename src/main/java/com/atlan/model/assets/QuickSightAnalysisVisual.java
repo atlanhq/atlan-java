@@ -50,7 +50,7 @@ public class QuickSightAnalysisVisual extends Asset
     @Attribute
     IQuickSightAnalysis quickSightAnalysis;
 
-    /** TBC */
+    /** Qualified name of the QuickSight Analysis */
     @Attribute
     String quickSightAnalysisQualifiedName;
 

@@ -10,9 +10,9 @@ import co.elastic.clients.elasticsearch._types.SortOrder;
 import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import co.elastic.clients.elasticsearch._types.query_dsl.TermQuery;
+import com.atlan.Atlan;
 import com.atlan.model.assets.S3Object;
-import com.atlan.serde.Serde;
-import com.fasterxml.jackson.core.JsonProcessingException;
+import java.io.IOException;
 import org.testng.annotations.Test;
 
 public class IndexSearchDSLTest {
@@ -43,9 +43,9 @@ public class IndexSearchDSLTest {
     @Test(
             groups = {"IndexSearchDSL.deserialize"},
             dependsOnGroups = {"IndexSearchDSL.serialize"})
-    void deserialization() throws JsonProcessingException {
+    void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = Serde.mapper.readValue(serialized, IndexSearchDSL.class);
+        frodo = Atlan.getDefaultClient().readValue(serialized, IndexSearchDSL.class);
         assertNotNull(frodo);
     }
 

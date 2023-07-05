@@ -65,6 +65,11 @@ public class Schema extends Asset implements ISchema, ISQL, ICatalog, IAsset, IR
     /** TBC */
     @Attribute
     @Singular
+    SortedSet<IDbtTest> dbtTests;
+
+    /** TBC */
+    @Attribute
+    @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
     /** TBC */

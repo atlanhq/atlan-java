@@ -2,8 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.typedefs;
 
-import com.atlan.api.TypeDefsEndpoint;
-import com.atlan.cache.CustomMetadataCache;
+import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.enums.AtlanTypeCategory;
 import lombok.Builder;
@@ -48,9 +47,9 @@ public class CustomMetadataDef extends TypeDef {
      * @throws AtlanException on any API communication issues
      */
     public CustomMetadataDef create() throws AtlanException {
-        TypeDefResponse response = TypeDefsEndpoint.createTypeDef(this);
+        TypeDefResponse response = Atlan.getDefaultClient().typeDefs().create(this);
         if (response != null && !response.getCustomMetadataDefs().isEmpty()) {
-            CustomMetadataCache.refreshCache();
+            Atlan.getDefaultClient().getCustomMetadataCache().refreshCache();
             return response.getCustomMetadataDefs().get(0);
         }
         return null;
@@ -64,9 +63,9 @@ public class CustomMetadataDef extends TypeDef {
      * @throws AtlanException on any API communication issues
      */
     public CustomMetadataDef update() throws AtlanException {
-        TypeDefResponse response = TypeDefsEndpoint.updateTypeDef(this);
+        TypeDefResponse response = Atlan.getDefaultClient().typeDefs().update(this);
         if (response != null && !response.getCustomMetadataDefs().isEmpty()) {
-            CustomMetadataCache.refreshCache();
+            Atlan.getDefaultClient().getCustomMetadataCache().refreshCache();
             return response.getCustomMetadataDefs().get(0);
         }
         return null;
@@ -80,8 +79,8 @@ public class CustomMetadataDef extends TypeDef {
      * @throws AtlanException on any error during the API invocation
      */
     public static void purge(String displayName) throws AtlanException {
-        String internalName = CustomMetadataCache.getIdForName(displayName);
-        TypeDefsEndpoint.purgeTypeDef(internalName);
-        CustomMetadataCache.refreshCache();
+        String internalName = Atlan.getDefaultClient().getCustomMetadataCache().getIdForName(displayName);
+        Atlan.getDefaultClient().typeDefs().purge(internalName);
+        Atlan.getDefaultClient().getCustomMetadataCache().refreshCache();
     }
 }

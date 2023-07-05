@@ -17,11 +17,11 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class GroupCache {
 
-    private static Map<String, String> mapIdToName = new ConcurrentHashMap<>();
-    private static Map<String, String> mapNameToId = new ConcurrentHashMap<>();
-    private static Map<String, String> mapAliasToId = new ConcurrentHashMap<>();
+    private Map<String, String> mapIdToName = new ConcurrentHashMap<>();
+    private Map<String, String> mapNameToId = new ConcurrentHashMap<>();
+    private Map<String, String> mapAliasToId = new ConcurrentHashMap<>();
 
-    private static synchronized void refreshCache() throws AtlanException {
+    private synchronized void refreshCache() throws AtlanException {
         log.debug("Refreshing cache of groups...");
         List<AtlanGroup> groups = AtlanGroup.retrieveAll();
         mapIdToName = new ConcurrentHashMap<>();
@@ -45,7 +45,7 @@ public class GroupCache {
      * @throws NotFoundException if the group cannot be found (does not exist) in Atlan
      * @throws InvalidRequestException if no name was provided for the group to retrieve
      */
-    public static String getIdForName(String name) throws AtlanException {
+    public String getIdForName(String name) throws AtlanException {
         if (name != null && name.length() > 0) {
             String groupId = mapNameToId.get(name);
             if (groupId == null) {
@@ -70,7 +70,7 @@ public class GroupCache {
      * @throws NotFoundException if the group cannot be found (does not exist) in Atlan
      * @throws InvalidRequestException if no name was provided for the group to retrieve
      */
-    public static String getIdForAlias(String alias) throws AtlanException {
+    public String getIdForAlias(String alias) throws AtlanException {
         if (alias != null && alias.length() > 0) {
             String groupId = mapAliasToId.get(alias);
             if (groupId == null) {
@@ -95,7 +95,7 @@ public class GroupCache {
      * @throws NotFoundException if the group cannot be found (does not exist) in Atlan
      * @throws InvalidRequestException if no name was provided for the group to retrieve
      */
-    public static String getNameForId(String id) throws AtlanException {
+    public String getNameForId(String id) throws AtlanException {
         if (id != null && id.length() > 0) {
             String groupName = mapIdToName.get(id);
             if (groupName == null) {

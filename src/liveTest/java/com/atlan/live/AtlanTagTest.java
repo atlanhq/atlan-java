@@ -4,6 +4,7 @@ package com.atlan.live;
 
 import static org.testng.Assert.*;
 
+import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.enums.*;
 import com.atlan.model.typedefs.AtlanTagDef;
@@ -26,7 +27,7 @@ public class AtlanTagTest extends AtlanLiveTest {
      */
     static void createAtlanTag(String name) throws AtlanException {
         AtlanTagDef atlanTagDef = AtlanTagDef.creator(name, AtlanTagColor.GREEN).build();
-        AtlanTagDef response = atlanTagDef.create();
+        AtlanTagDef response = atlanTagDef.create(Atlan.getDefaultClient());
         assertNotNull(response);
         assertEquals(response.getCategory(), AtlanTypeCategory.ATLAN_TAG);
         String uniqueName = response.getName();
@@ -43,7 +44,7 @@ public class AtlanTagTest extends AtlanLiveTest {
      * @throws AtlanException on any error deleting the Atlan tag
      */
     static void deleteAtlanTag(String name) throws AtlanException {
-        AtlanTagDef.purge(name);
+        AtlanTagDef.purge(name, Atlan.getDefaultClient());
     }
 
     @Test(groups = {"tag.create.image"})
@@ -53,7 +54,7 @@ public class AtlanTagTest extends AtlanLiveTest {
                         "https://github.com/great-expectations/great_expectations/raw/develop/docs/docusaurus/static/img/gx-mark-160.png",
                         AtlanTagColor.YELLOW)
                 .build();
-        AtlanTagDef response = tag.create();
+        AtlanTagDef response = tag.create(Atlan.getDefaultClient());
         assertNotNull(response);
         assertEquals(response.getCategory(), AtlanTypeCategory.ATLAN_TAG);
         String uniqueName = response.getName();
@@ -70,7 +71,7 @@ public class AtlanTagTest extends AtlanLiveTest {
     void createTagWithIcon() throws AtlanException {
         AtlanTagDef tag = AtlanTagDef.creator(TAG_WITH_ICON, AtlanIcon.BOOK_BOOKMARK, AtlanTagColor.YELLOW)
                 .build();
-        AtlanTagDef response = tag.create();
+        AtlanTagDef response = tag.create(Atlan.getDefaultClient());
         assertNotNull(response);
         assertEquals(response.getCategory(), AtlanTypeCategory.ATLAN_TAG);
         String uniqueName = response.getName();

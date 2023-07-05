@@ -167,6 +167,9 @@ public interface IDbtSource {
     SortedSet<String> getAssetDbtTags();
 
     /** TBC */
+    String getAssetDbtTestStatus();
+
+    /** TBC */
     String getAssetDbtUniqueId();
 
     /** TBC */
@@ -291,6 +294,9 @@ public interface IDbtSource {
 
     /** TBC */
     SortedSet<String> getDbtTags();
+
+    /** TBC */
+    SortedSet<IDbtTest> getDbtTests();
 
     /** TBC */
     String getDbtUniqueId();

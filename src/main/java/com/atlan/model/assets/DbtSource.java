@@ -115,6 +115,11 @@ public class DbtSource extends Asset implements IDbtSource, IDbt, ICatalog, IAss
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<IDbtTest> dbtTests;
+
+    /** TBC */
+    @Attribute
     String dbtUniqueId;
 
     /** TBC */

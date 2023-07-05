@@ -74,6 +74,11 @@ public class Table extends Asset implements ITable, ISQL, ICatalog, IAsset, IRef
     /** TBC */
     @Attribute
     @Singular
+    SortedSet<IDbtTest> dbtTests;
+
+    /** TBC */
+    @Attribute
+    @Singular
     SortedSet<ITable> dimensions;
 
     /** TBC */

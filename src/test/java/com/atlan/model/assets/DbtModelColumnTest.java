@@ -4,12 +4,12 @@ package com.atlan.model.assets;
 
 import static org.testng.Assert.*;
 
+import com.atlan.Atlan;
 import com.atlan.model.core.AtlanTag;
 import com.atlan.model.core.CustomMetadataAttributes;
 import com.atlan.model.enums.*;
 import com.atlan.model.structs.*;
-import com.atlan.serde.Serde;
-import com.fasterxml.jackson.core.JsonProcessingException;
+import java.io.IOException;
 import java.util.*;
 import javax.annotation.processing.Generated;
 import org.testng.annotations.Test;
@@ -132,6 +132,7 @@ public class DbtModelColumnTest {
             .assetDbtSourceFreshnessCriteria("String0")
             .assetDbtTag("String0")
             .assetDbtTag("String1")
+            .assetDbtTestStatus("String0")
             .assetDbtUniqueId("String0")
             .assetMcIncidentName("String0")
             .assetMcIncidentName("String1")
@@ -374,6 +375,8 @@ public class DbtModelColumnTest {
             .dbtModelColumnSqlColumn(Column.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .dbtModelColumnSqlColumn(Column.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .dbtModelQualifiedName("String0")
+            .dbtTest(DbtTest.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .dbtTest(DbtTest.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .sqlColumn(Column.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .build();
 
@@ -399,9 +402,9 @@ public class DbtModelColumnTest {
     @Test(
             groups = {"DbtModelColumn.deserialize"},
             dependsOnGroups = {"DbtModelColumn.serialize"})
-    void deserialization() throws JsonProcessingException {
+    void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = Serde.mapper.readValue(serialized, DbtModelColumn.class);
+        frodo = Atlan.getDefaultClient().readValue(serialized, DbtModelColumn.class);
         assertNotNull(frodo);
     }
 

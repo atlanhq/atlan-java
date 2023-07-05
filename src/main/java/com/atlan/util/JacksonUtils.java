@@ -2,10 +2,10 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.util;
 
+import com.atlan.Atlan;
 import com.atlan.cache.ReflectionCache;
 import com.atlan.model.enums.AtlanPolicyAction;
 import com.atlan.serde.AtlanPolicyActionDeserializer;
-import com.atlan.serde.Serde;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -221,7 +221,7 @@ public class JacksonUtils {
     public static <T> T deserializeObject(JsonNode node, String path, TypeReference<T> typeReference)
             throws JsonProcessingException {
         JsonNode value = node.get(path);
-        return value == null || value.isNull() ? null : Serde.mapper.convertValue(value, typeReference);
+        return value == null || value.isNull() ? null : Atlan.getDefaultClient().convertValue(value, typeReference);
     }
 
     /**

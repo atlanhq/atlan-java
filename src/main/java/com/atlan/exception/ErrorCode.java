@@ -14,7 +14,7 @@ public enum ErrorCode implements ExceptionMessageSet {
             -1,
             "ATLAN-JAVA--1-002",
             "No base URL is configured in the SDK.",
-            "You must first use Atlan.setBaseUrl() before making an API call."),
+            "You must call Atlan.setBaseUrl() FIRST, before making any API call or calling Atlan.setApiToken()."),
 
     INVALID_REQUEST_PASSTHROUGH(
             400,

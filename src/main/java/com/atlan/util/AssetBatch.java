@@ -2,7 +2,7 @@
 /* Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.util;
 
-import com.atlan.api.EntityBulkEndpoint;
+import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.assets.Asset;
 import com.atlan.model.core.AssetMutationResponse;
@@ -95,13 +95,13 @@ public class AssetBatch {
             log.info("... upserting next batch of ({}) {}s...", _batch.size(), typeName);
             switch (customMetadataHandling) {
                 case IGNORE:
-                    response = EntityBulkEndpoint.upsert(_batch, replaceAtlanTags);
+                    response = Atlan.getDefaultClient().assets().save(_batch, replaceAtlanTags);
                     break;
                 case OVERWRITE:
-                    response = EntityBulkEndpoint.upsertReplacingCM(_batch, replaceAtlanTags);
+                    response = Atlan.getDefaultClient().assets().saveReplacingCM(_batch, replaceAtlanTags);
                     break;
                 case MERGE:
-                    response = EntityBulkEndpoint.upsertMergingCM(_batch, replaceAtlanTags);
+                    response = Atlan.getDefaultClient().assets().saveMergingCM(_batch, replaceAtlanTags);
                     break;
             }
             _batch = new ArrayList<>();

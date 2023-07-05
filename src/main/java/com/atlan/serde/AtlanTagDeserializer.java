@@ -2,7 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.serde;
 
-import com.atlan.cache.AtlanTagCache;
+import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.core.AtlanTag;
@@ -23,8 +23,11 @@ import java.io.IOException;
 public class AtlanTagDeserializer extends StdDeserializer<AtlanTag> {
     private static final long serialVersionUID = 2L;
 
-    public AtlanTagDeserializer() {
+    private final AtlanClient client;
+
+    public AtlanTagDeserializer(AtlanClient client) {
         super(AtlanTag.class);
+        this.client = client;
     }
 
     /**
@@ -59,7 +62,7 @@ public class AtlanTagDeserializer extends StdDeserializer<AtlanTag> {
         String clsName = null;
         try {
             // Translate the ID-string to a human-readable name
-            clsName = AtlanTagCache.getNameForId(clsId);
+            clsName = client.getAtlanTagCache().getNameForId(clsId);
         } catch (NotFoundException e) {
             // Do nothing: if not found, the Atlan tag was deleted since but the
             // audit record remains

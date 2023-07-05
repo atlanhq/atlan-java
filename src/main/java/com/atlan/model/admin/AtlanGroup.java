@@ -2,7 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.admin;
 
-import com.atlan.api.GroupsEndpoint;
+import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
@@ -100,7 +100,7 @@ public class AtlanGroup extends AtlanObject {
      * @throws AtlanException on any error during API invocation
      */
     public String create() throws AtlanException {
-        return GroupsEndpoint.createGroup(this);
+        return Atlan.getDefaultClient().groups().create(this);
     }
 
     /**
@@ -112,7 +112,7 @@ public class AtlanGroup extends AtlanObject {
         if (this.id == null || this.id.length() == 0) {
             throw new InvalidRequestException(ErrorCode.MISSING_GROUP_ID);
         }
-        GroupsEndpoint.updateGroup(this.id, this);
+        Atlan.getDefaultClient().groups().update(this.id, this);
     }
 
     /**
@@ -122,7 +122,7 @@ public class AtlanGroup extends AtlanObject {
      * @throws AtlanException on any error during API invocation
      */
     public static void delete(String id) throws AtlanException {
-        GroupsEndpoint.deleteGroup(id);
+        Atlan.getDefaultClient().groups().purge(id);
     }
 
     /**
@@ -131,7 +131,7 @@ public class AtlanGroup extends AtlanObject {
      * @throws AtlanException on any error during API invocation
      */
     public static List<AtlanGroup> retrieveAll() throws AtlanException {
-        return GroupsEndpoint.getAllGroups();
+        return Atlan.getDefaultClient().groups().list();
     }
 
     /**
@@ -145,7 +145,8 @@ public class AtlanGroup extends AtlanObject {
      * @throws AtlanException on any error during API invocation
      */
     public static List<AtlanGroup> retrieveByName(String alias) throws AtlanException {
-        GroupResponse response = GroupsEndpoint.getGroups("{\"$and\":[{\"alias\":{\"$ilike\":\"%" + alias + "%\"}}]}");
+        GroupResponse response =
+                Atlan.getDefaultClient().groups().list("{\"$and\":[{\"alias\":{\"$ilike\":\"%" + alias + "%\"}}]}");
         if (response != null && response.getRecords() != null) {
             return response.getRecords();
         } else {
@@ -163,7 +164,7 @@ public class AtlanGroup extends AtlanObject {
         if (this.id == null || this.id.length() == 0) {
             throw new InvalidRequestException(ErrorCode.MISSING_GROUP_ID);
         }
-        GroupsEndpoint.removeUsersFromGroup(this.id, userIds);
+        Atlan.getDefaultClient().groups().removeMembers(this.id, userIds);
     }
 
     /**
@@ -176,7 +177,7 @@ public class AtlanGroup extends AtlanObject {
         if (this.id == null || this.id.length() == 0) {
             throw new InvalidRequestException(ErrorCode.MISSING_GROUP_ID);
         }
-        return GroupsEndpoint.getGroupMembers(this.id);
+        return Atlan.getDefaultClient().groups().listMembers(this.id);
     }
 
     @Getter

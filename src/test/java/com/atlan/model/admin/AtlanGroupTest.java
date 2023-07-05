@@ -4,8 +4,8 @@ package com.atlan.model.admin;
 
 import static org.testng.Assert.*;
 
-import com.atlan.serde.Serde;
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.atlan.Atlan;
+import java.io.IOException;
 import java.util.List;
 import org.testng.annotations.Test;
 
@@ -44,9 +44,9 @@ public class AtlanGroupTest {
     @Test(
             groups = {"AtlanGroup.deserialize"},
             dependsOnGroups = {"AtlanGroup.serialize"})
-    void deserialization() throws JsonProcessingException {
+    void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = Serde.mapper.readValue(serialized, AtlanGroup.class);
+        frodo = Atlan.getDefaultClient().readValue(serialized, AtlanGroup.class);
         assertNotNull(frodo);
     }
 

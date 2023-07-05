@@ -20,6 +20,10 @@ public abstract class Atlan {
     public static volatile boolean enableTelemetry = true;
 
     private static final Map<String, AtlanClient> clientCache = new ConcurrentHashMap<>();
+    private static final String INVALID_CLIENT_MSG =
+            ErrorCode.NO_BASE_URL.getMessageDefinition().getErrorId() + " "
+                    + ErrorCode.NO_BASE_URL.getMessageDefinition().getErrorMessage() + " "
+                    + ErrorCode.NO_BASE_URL.getMessageDefinition().getUserAction();
 
     private static AtlanClient defaultClient = null;
 
@@ -30,8 +34,7 @@ public abstract class Atlan {
      */
     public static AtlanClient getInstance(final String baseURL) {
         if (baseURL == null) {
-            throw new IllegalStateException(
-                    ErrorCode.NO_BASE_URL.getMessageDefinition().getErrorMessage());
+            throw new IllegalStateException(INVALID_CLIENT_MSG);
         }
         String prepped = baseURL;
         if (baseURL.endsWith("/")) {
@@ -61,8 +64,7 @@ public abstract class Atlan {
      */
     public static void setApiToken(final String apiToken) {
         if (defaultClient == null) {
-            throw new IllegalStateException(
-                    ErrorCode.NO_BASE_URL.getMessageDefinition().getErrorMessage());
+            throw new IllegalStateException(INVALID_CLIENT_MSG);
         }
         defaultClient.setApiToken(apiToken);
     }
@@ -74,8 +76,7 @@ public abstract class Atlan {
      */
     public static AtlanClient getDefaultClient() {
         if (defaultClient == null) {
-            throw new IllegalStateException(
-                    ErrorCode.NO_BASE_URL.getMessageDefinition().getErrorMessage());
+            throw new IllegalStateException(INVALID_CLIENT_MSG);
         }
         return defaultClient;
     }

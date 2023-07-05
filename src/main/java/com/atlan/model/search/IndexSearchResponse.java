@@ -2,15 +2,15 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.search;
 
+import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.LogicException;
 import com.atlan.model.assets.Asset;
 import com.atlan.net.ApiResource;
-import com.atlan.serde.Serde;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.core.JsonProcessingException;
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
@@ -52,8 +52,8 @@ public class IndexSearchResponse extends ApiResource implements Iterable<Asset> 
     public IndexSearchResponse getNextPage() throws AtlanException {
         IndexSearchDSL dsl;
         try {
-            dsl = Serde.mapper.readValue(searchParameters.getQuery(), IndexSearchDSL.class);
-        } catch (JsonProcessingException e) {
+            dsl = Atlan.getDefaultClient().readValue(searchParameters.getQuery(), IndexSearchDSL.class);
+        } catch (IOException e) {
             throw new LogicException(ErrorCode.UNABLE_TO_PARSE_ORIGINAL_QUERY, e);
         }
         int from = dsl.getFrom() == null ? 0 : dsl.getFrom();

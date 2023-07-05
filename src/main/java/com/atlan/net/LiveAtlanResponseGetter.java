@@ -3,11 +3,12 @@
 package com.atlan.net;
 
 /* Based on original code from https://github.com/stripe/stripe-java (under MIT license) */
+import com.atlan.Atlan;
+import com.atlan.AtlanClient;
 import com.atlan.exception.*;
 import com.atlan.model.core.AtlanError;
 import com.atlan.model.core.AtlanResponseInterface;
-import com.atlan.serde.Serde;
-import com.fasterxml.jackson.core.JsonProcessingException;
+import java.io.IOException;
 import java.io.InputStream;
 
 /**
@@ -36,6 +37,7 @@ public class LiveAtlanResponseGetter implements AtlanResponseGetter {
     /**
      * Makes a request to an Atlan's API.
      *
+     * @param client connectivity to Atlan
      * @param method to use for the request
      * @param url of the endpoint (with all path and query parameters) for the request
      * @param body payload for the request, if any
@@ -47,15 +49,21 @@ public class LiveAtlanResponseGetter implements AtlanResponseGetter {
      */
     @Override
     public <T extends AtlanResponseInterface> T request(
-            ApiResource.RequestMethod method, String url, String body, Class<T> clazz, RequestOptions options)
+            AtlanClient client,
+            ApiResource.RequestMethod method,
+            String url,
+            String body,
+            Class<T> clazz,
+            RequestOptions options)
             throws AtlanException {
-        AtlanRequest request = new AtlanRequest(method, url, body, options);
+        AtlanRequest request = new AtlanRequest(client, method, url, body, options);
         return request(request, clazz);
     }
 
     /**
      * Makes a request to Atlan's API, to upload a file.
      *
+     * @param client connectivity to Atlan
      * @param method to use for the request
      * @param url of the endpoint (with all path and query parameters) for the request
      * @param upload file to be uploaded
@@ -68,6 +76,7 @@ public class LiveAtlanResponseGetter implements AtlanResponseGetter {
      */
     @Override
     public <T extends AtlanResponseInterface> T request(
+            AtlanClient client,
             ApiResource.RequestMethod method,
             String url,
             InputStream upload,
@@ -75,7 +84,7 @@ public class LiveAtlanResponseGetter implements AtlanResponseGetter {
             Class<T> clazz,
             RequestOptions options)
             throws AtlanException {
-        AtlanRequest request = new AtlanRequest(method, url, upload, filename, options);
+        AtlanRequest request = new AtlanRequest(client, method, url, upload, filename, options);
         return request(request, clazz);
     }
 
@@ -101,8 +110,8 @@ public class LiveAtlanResponseGetter implements AtlanResponseGetter {
         T resource = null;
         if (clazz != null) {
             try {
-                resource = Serde.mapper.readValue(responseBody, clazz);
-            } catch (JsonProcessingException e) {
+                resource = request.client().readValue(responseBody, clazz);
+            } catch (IOException e) {
                 raiseMalformedJsonError(responseBody, responseCode, e);
             }
         }
@@ -153,8 +162,8 @@ public class LiveAtlanResponseGetter implements AtlanResponseGetter {
         }
 
         try {
-            error = Serde.mapper.readValue(response.body(), AtlanError.class);
-        } catch (JsonProcessingException e) {
+            error = Atlan.getDefaultClient().readValue(response.body(), AtlanError.class);
+        } catch (IOException e) {
             raiseMalformedJsonError(response.body(), response.code(), e);
         }
         if (error == null) {

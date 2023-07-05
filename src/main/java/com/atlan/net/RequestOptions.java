@@ -11,17 +11,10 @@ import lombok.EqualsAndHashCode;
 /**
  * Class to encapsulate all the options that can be overridden on individual API calls.
  * For the moment, only {@link #getDefault()} is used (behind-the-scenes), but this would provide the foundation
- * to open up per-request variations of things like he maximum number of retries to allow.
+ * to open up per-request variations of things like the maximum number of retries to allow.
  */
 @EqualsAndHashCode(callSuper = false)
 public class RequestOptions {
-    private final String apiKey;
-    private final String clientId;
-    private final String idempotencyKey;
-    private final String atlanAccount;
-    /** Atlan version always set at {@link Atlan#VERSION}. */
-    private final String atlanVersion = Atlan.VERSION;
-
     private final int connectTimeout;
     private final int readTimeout;
 
@@ -36,56 +29,20 @@ public class RequestOptions {
      */
     public static RequestOptions getDefault() {
         return new RequestOptions(
-                Atlan.getApiToken(),
-                Atlan.clientId,
-                null,
-                null,
-                Atlan.getConnectTimeout(),
-                Atlan.getReadTimeout(),
-                Atlan.getMaxNetworkRetries(),
-                Atlan.getConnectionProxy(),
-                Atlan.getProxyCredential());
+                Atlan.DEFAULT_CONNECT_TIMEOUT, Atlan.DEFAULT_READ_TIMEOUT, Atlan.DEFAULT_NETWORK_RETRIES, null, null);
     }
 
     private RequestOptions(
-            String apiKey,
-            String clientId,
-            String idempotencyKey,
-            String atlanAccount,
             int connectTimeout,
             int readTimeout,
             int maxNetworkRetries,
             Proxy connectionProxy,
             PasswordAuthentication proxyCredential) {
-        this.apiKey = apiKey;
-        this.clientId = clientId;
-        this.idempotencyKey = idempotencyKey;
-        this.atlanAccount = atlanAccount;
         this.connectTimeout = connectTimeout;
         this.readTimeout = readTimeout;
         this.maxNetworkRetries = maxNetworkRetries;
         this.connectionProxy = connectionProxy;
         this.proxyCredential = proxyCredential;
-    }
-
-    public String getApiKey() {
-        return apiKey;
-    }
-
-    public String getClientId() {
-        return clientId;
-    }
-
-    public String getIdempotencyKey() {
-        return idempotencyKey;
-    }
-
-    public String getAtlanAccount() {
-        return atlanAccount;
-    }
-
-    public String getAtlanVersion() {
-        return atlanVersion;
     }
 
     public int getReadTimeout() {
@@ -112,20 +69,7 @@ public class RequestOptions {
         return new RequestOptionsBuilder();
     }
 
-    /**
-     * Convert request options to builder, retaining invariant values for the integration.
-     *
-     * @return option builder.
-     */
-    public RequestOptionsBuilder toBuilder() {
-        return new RequestOptionsBuilder().setApiKey(this.apiKey).setAtlanAccount(this.atlanAccount);
-    }
-
     public static final class RequestOptionsBuilder {
-        private String apiKey;
-        private String clientId;
-        private String idempotencyKey;
-        private String atlanAccount;
         private int connectTimeout;
         private int readTimeout;
         private int maxNetworkRetries;
@@ -137,46 +81,11 @@ public class RequestOptions {
          * default values.
          */
         public RequestOptionsBuilder() {
-            this.apiKey = Atlan.getApiToken();
-            this.clientId = Atlan.clientId;
-            this.connectTimeout = Atlan.getConnectTimeout();
-            this.readTimeout = Atlan.getReadTimeout();
-            this.maxNetworkRetries = Atlan.getMaxNetworkRetries();
-            this.connectionProxy = Atlan.getConnectionProxy();
-            this.proxyCredential = Atlan.getProxyCredential();
-        }
-
-        public String getApiKey() {
-            return apiKey;
-        }
-
-        public RequestOptionsBuilder setApiKey(String apiKey) {
-            this.apiKey = normalizeApiKey(apiKey);
-            return this;
-        }
-
-        public RequestOptionsBuilder clearApiKey() {
-            this.apiKey = null;
-            return this;
-        }
-
-        public String getClientId() {
-            return clientId;
-        }
-
-        public RequestOptionsBuilder setClientId(String clientId) {
-            this.clientId = normalizeClientId(clientId);
-            return this;
-        }
-
-        public RequestOptionsBuilder clearClientId() {
-            this.clientId = null;
-            return this;
-        }
-
-        public RequestOptionsBuilder setIdempotencyKey(String idempotencyKey) {
-            this.idempotencyKey = idempotencyKey;
-            return this;
+            this.connectTimeout = Atlan.DEFAULT_CONNECT_TIMEOUT;
+            this.readTimeout = Atlan.DEFAULT_READ_TIMEOUT;
+            this.maxNetworkRetries = Atlan.DEFAULT_NETWORK_RETRIES;
+            this.connectionProxy = null;
+            this.proxyCredential = null;
         }
 
         public int getConnectTimeout() {
@@ -244,99 +153,9 @@ public class RequestOptions {
             return this;
         }
 
-        public RequestOptionsBuilder clearIdempotencyKey() {
-            this.idempotencyKey = null;
-            return this;
-        }
-
-        public String getIdempotencyKey() {
-            return this.idempotencyKey;
-        }
-
-        public String getAtlanAccount() {
-            return this.atlanAccount;
-        }
-
-        public RequestOptionsBuilder setAtlanAccount(String atlanAccount) {
-            this.atlanAccount = atlanAccount;
-            return this;
-        }
-
-        public RequestOptionsBuilder clearAtlanAccount() {
-            return setAtlanAccount(null);
-        }
-
         /** Constructs a {@link RequestOptions} with the specified values. */
         public RequestOptions build() {
-            return new RequestOptions(
-                    normalizeApiKey(this.apiKey),
-                    normalizeClientId(this.clientId),
-                    normalizeIdempotencyKey(this.idempotencyKey),
-                    normalizeAtlanAccount(this.atlanAccount),
-                    connectTimeout,
-                    readTimeout,
-                    maxNetworkRetries,
-                    connectionProxy,
-                    proxyCredential);
-        }
-    }
-
-    private static String normalizeApiKey(String apiKey) {
-        // null apiKeys are considered "valid"
-        if (apiKey == null) {
-            return null;
-        }
-        String normalized = apiKey.trim();
-        if (normalized.isEmpty()) {
-            throw new InvalidRequestOptionsException("Empty API key specified!");
-        }
-        return normalized;
-    }
-
-    private static String normalizeClientId(String clientId) {
-        // null client_ids are considered "valid"
-        if (clientId == null) {
-            return null;
-        }
-        String normalized = clientId.trim();
-        if (normalized.isEmpty()) {
-            throw new InvalidRequestOptionsException("Empty client_id specified!");
-        }
-        return normalized;
-    }
-
-    private static String normalizeIdempotencyKey(String idempotencyKey) {
-        if (idempotencyKey == null) {
-            return null;
-        }
-        String normalized = idempotencyKey.trim();
-        if (normalized.isEmpty()) {
-            throw new InvalidRequestOptionsException("Empty Idempotency Key Specified!");
-        }
-        if (normalized.length() > 255) {
-            throw new InvalidRequestOptionsException(String.format(
-                    "Idempotency Key length was %d, which is larger than the 255 character " + "maximum!",
-                    normalized.length()));
-        }
-        return normalized;
-    }
-
-    private static String normalizeAtlanAccount(String atlanAccount) {
-        if (atlanAccount == null) {
-            return null;
-        }
-        String normalized = atlanAccount.trim();
-        if (normalized.isEmpty()) {
-            throw new InvalidRequestOptionsException("Empty Atlan account specified!");
-        }
-        return normalized;
-    }
-
-    public static class InvalidRequestOptionsException extends RuntimeException {
-        private static final long serialVersionUID = 1L;
-
-        public InvalidRequestOptionsException(String message) {
-            super(message);
+            return new RequestOptions(connectTimeout, readTimeout, maxNetworkRetries, connectionProxy, proxyCredential);
         }
     }
 }

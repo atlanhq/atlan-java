@@ -64,12 +64,12 @@ public class QuickSightFolder extends Asset
     @Singular
     SortedSet<IQuickSightDataset> quickSightDatasets;
 
-    /** TBC */
+    /** Detailed path of the folder */
     @Attribute
     @Singular("addQuickSightFolderHierarchy")
     List<Map<String, String>> quickSightFolderHierarchy;
 
-    /** TBC */
+    /** Shared or private type of folder */
     @Attribute
     QuickSightFolderType quickSightFolderType;
 

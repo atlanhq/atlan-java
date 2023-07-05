@@ -2,7 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.typedefs;
 
-import com.atlan.cache.EnumCache;
+import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.core.AtlanObject;
 import com.atlan.model.enums.AtlanAttributeType;
@@ -74,7 +74,10 @@ public class AttributeDef extends AtlanObject implements Comparable<AttributeDef
             builder.typeName(baseType).options(AttributeDefOptions.of(type, optionsName));
         }
         if (addEnumValues) {
-            builder.enumValues(EnumCache.getByName(optionsName).getValidValues());
+            builder.enumValues(Atlan.getDefaultClient()
+                    .getEnumCache()
+                    .getByName(optionsName)
+                    .getValidValues());
         }
         return builder.build();
     }

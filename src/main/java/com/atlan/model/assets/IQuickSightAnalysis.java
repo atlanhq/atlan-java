@@ -168,6 +168,9 @@ public interface IQuickSightAnalysis {
     SortedSet<String> getAssetDbtTags();
 
     /** TBC */
+    String getAssetDbtTestStatus();
+
+    /** TBC */
     String getAssetDbtUniqueId();
 
     /** TBC */
@@ -299,19 +302,19 @@ public interface IQuickSightAnalysis {
     /** TBC */
     String getQualifiedName();
 
-    /** TBC */
+    /** Calculated fields of quicksight analysis  */
     SortedSet<String> getQuickSightAnalysisCalculatedFields();
 
-    /** TBC */
+    /** Filter groups used for quicksight analysis */
     SortedSet<String> getQuickSightAnalysisFilterGroups();
 
     /** TBC */
     SortedSet<IQuickSightFolder> getQuickSightAnalysisFolders();
 
-    /** TBC */
+    /** parameters used for quicksight analysis  */
     SortedSet<String> getQuickSightAnalysisParameterDeclarations();
 
-    /** TBC */
+    /** Status of quicksight analysis */
     QuickSightAnalysisStatus getQuickSightAnalysisStatus();
 
     /** TBC */

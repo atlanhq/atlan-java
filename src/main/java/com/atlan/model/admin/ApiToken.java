@@ -2,7 +2,7 @@
 /* Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.admin;
 
-import com.atlan.api.ApiTokensEndpoint;
+import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
@@ -92,7 +92,7 @@ public class ApiToken extends AtlanObject {
      */
     public static ApiToken create(String displayName, String description, Set<String> personas, Long validity)
             throws AtlanException {
-        return ApiTokensEndpoint.create(displayName, description, personas, validity);
+        return Atlan.getDefaultClient().apiTokens().create(displayName, description, personas, validity);
     }
 
     /**
@@ -103,8 +103,9 @@ public class ApiToken extends AtlanObject {
      * @throws AtlanException on any error during API invocation
      */
     public static ApiToken retrieveByName(String displayName) throws AtlanException {
-        ApiTokenResponse response =
-                ApiTokensEndpoint.getTokens("{\"displayName\":\"" + displayName + "\"}", "-createdAt", 0, 2);
+        ApiTokenResponse response = Atlan.getDefaultClient()
+                .apiTokens()
+                .list("{\"displayName\":\"" + displayName + "\"}", "-createdAt", 0, 2);
         if (response != null && response.getRecords() != null) {
             return response.getRecords().get(0);
         } else {
@@ -136,7 +137,7 @@ public class ApiToken extends AtlanObject {
                 }
             }
         }
-        return ApiTokensEndpoint.update(this.id, this.displayName, description, personas);
+        return Atlan.getDefaultClient().apiTokens().update(this.id, this.displayName, description, personas);
     }
 
     /**
@@ -146,7 +147,7 @@ public class ApiToken extends AtlanObject {
      * @throws AtlanException on any API communication issues
      */
     public static void delete(String guid) throws AtlanException {
-        ApiTokensEndpoint.delete(guid);
+        Atlan.getDefaultClient().apiTokens().delete(guid);
     }
 
     @Getter

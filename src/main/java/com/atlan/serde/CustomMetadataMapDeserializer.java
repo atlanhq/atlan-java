@@ -2,7 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.serde;
 
-import com.atlan.cache.CustomMetadataCache;
+import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.core.CustomMetadataAttributes;
 import com.fasterxml.jackson.core.JsonParser;
@@ -26,8 +26,11 @@ import lombok.extern.slf4j.Slf4j;
 public class CustomMetadataMapDeserializer extends StdDeserializer<Map<String, CustomMetadataAttributes>> {
     private static final long serialVersionUID = 2L;
 
-    public CustomMetadataMapDeserializer() {
+    private final AtlanClient client;
+
+    public CustomMetadataMapDeserializer(AtlanClient client) {
         super(CustomMetadataMapDeserializer.class);
+        this.client = client;
     }
 
     /**
@@ -62,8 +65,9 @@ public class CustomMetadataMapDeserializer extends StdDeserializer<Map<String, C
         for (Iterator<String> it = root.fieldNames(); it.hasNext(); ) {
             String cmId = it.next();
             try {
-                String cmName = CustomMetadataCache.getNameForId(cmId);
-                CustomMetadataAttributes cma = CustomMetadataCache.getCustomMetadataAttributes(cmId, root.get(cmId));
+                String cmName = client.getCustomMetadataCache().getNameForId(cmId);
+                CustomMetadataAttributes cma =
+                        client.getCustomMetadataCache().getCustomMetadataAttributes(cmId, root.get(cmId));
                 map.put(cmName, cma);
             } catch (AtlanException e) {
                 log.error(

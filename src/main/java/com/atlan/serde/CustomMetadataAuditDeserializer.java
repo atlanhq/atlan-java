@@ -2,7 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.serde;
 
-import com.atlan.cache.CustomMetadataCache;
+import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.core.CustomMetadataAttributes;
@@ -24,8 +24,11 @@ import lombok.extern.slf4j.Slf4j;
 public class CustomMetadataAuditDeserializer extends StdDeserializer<CustomMetadataAttributesAuditDetail> {
     private static final long serialVersionUID = 2L;
 
-    public CustomMetadataAuditDeserializer() {
+    private final AtlanClient client;
+
+    public CustomMetadataAuditDeserializer(AtlanClient client) {
         super(CustomMetadataAttributesAuditDetail.class);
+        this.client = client;
     }
 
     /**
@@ -63,7 +66,7 @@ public class CustomMetadataAuditDeserializer extends StdDeserializer<CustomMetad
         String cmName = null;
         try {
             // Translate the ID-string to a human-readable name
-            cmName = CustomMetadataCache.getNameForId(cmId);
+            cmName = client.getCustomMetadataCache().getNameForId(cmId);
         } catch (NotFoundException e) {
             // Do nothing: if not found, the custom metadata was deleted since but the
             // audit record remains
@@ -80,7 +83,7 @@ public class CustomMetadataAuditDeserializer extends StdDeserializer<CustomMetad
 
             CustomMetadataAttributes cma;
             try {
-                cma = CustomMetadataCache.getCustomMetadataAttributes(cmId, attributes);
+                cma = client.getCustomMetadataCache().getCustomMetadataAttributes(cmId, attributes);
             } catch (AtlanException e) {
                 throw new IOException("Unable to translate custom metadata attributes: " + attributes, e);
             }

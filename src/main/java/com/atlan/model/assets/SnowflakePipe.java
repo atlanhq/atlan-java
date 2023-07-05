@@ -58,6 +58,11 @@ public class SnowflakePipe extends Asset implements ISnowflakePipe, ISQL, ICatal
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<IDbtTest> dbtTests;
+
+    /** TBC */
+    @Attribute
     String definition;
 
     /** TBC */

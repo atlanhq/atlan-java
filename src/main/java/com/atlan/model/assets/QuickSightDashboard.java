@@ -51,11 +51,11 @@ public class QuickSightDashboard extends Asset
     @Singular
     SortedSet<IQuickSightFolder> quickSightDashboardFolders;
 
-    /** TBC */
+    /** Last published time of dashboard */
     @Attribute
     Long quickSightDashboardLastPublishedTime;
 
-    /** TBC */
+    /** Version number of the dashboard published */
     @Attribute
     Long quickSightDashboardPublishedVersionNumber;
 

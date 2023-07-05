@@ -2,8 +2,8 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.typedefs;
 
-import com.atlan.api.TypeDefsEndpoint;
-import com.atlan.cache.AtlanTagCache;
+import com.atlan.Atlan;
+import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.enums.AtlanIcon;
 import com.atlan.model.enums.AtlanTagColor;
@@ -91,13 +91,15 @@ public class AtlanTagDef extends TypeDef {
 
     /**
      * Create this Atlan tag definition in Atlan.
+     *
+     * @param client connectivity to an Atlan tenant
      * @return the result of the creation, or null if the creation failed
      * @throws AtlanException on any API communication issues
      */
-    public AtlanTagDef create() throws AtlanException {
-        TypeDefResponse response = TypeDefsEndpoint.createTypeDef(this);
+    public AtlanTagDef create(AtlanClient client) throws AtlanException {
+        TypeDefResponse response = client.typeDefs().create(this);
         if (response != null && !response.getAtlanTagDefs().isEmpty()) {
-            AtlanTagCache.refreshCache();
+            client.getAtlanTagCache().refreshCache();
             return response.getAtlanTagDefs().get(0);
         }
         return null;
@@ -108,11 +110,12 @@ public class AtlanTagDef extends TypeDef {
      * If there are any existing Atlan tag instances, this operation will fail.
      *
      * @param displayName human-readable name of the Atlan tag
+     * @param client connectivity to an Atlan tenant
      * @throws AtlanException on any error during the API invocation
      */
-    public static void purge(String displayName) throws AtlanException {
-        String internalName = AtlanTagCache.getIdForName(displayName);
-        TypeDefsEndpoint.purgeTypeDef(internalName);
-        AtlanTagCache.refreshCache();
+    public static void purge(String displayName, AtlanClient client) throws AtlanException {
+        String internalName = client.getAtlanTagCache().getIdForName(displayName);
+        Atlan.getDefaultClient().typeDefs().purge(internalName);
+        client.getAtlanTagCache().refreshCache();
     }
 }

@@ -12,7 +12,7 @@ import com.atlan.model.enums.*;
 import com.atlan.model.structs.*;
 import ${packageRoot}.enums.*;
 import ${packageRoot}.structs.*;
-import com.fasterxml.jackson.core.JsonProcessingException;
+import java.io.IOException;
 import java.util.*;
 import org.testng.annotations.Test;
 
@@ -88,7 +88,7 @@ public class ${className}Test {
     @Test(
             groups = {"${className}.deserialize"},
             dependsOnGroups = {"${className}.serialize"})
-    void deserialization() throws JsonProcessingException {
+    void deserialization() throws IOException {
         assertNotNull(serialized);
         frodo = Atlan.getDefaultClient().readValue(serialized, ${className}.class);
         assertNotNull(frodo);

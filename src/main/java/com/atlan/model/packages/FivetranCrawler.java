@@ -2,7 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.packages;
 
-import com.atlan.cache.RoleCache;
+import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.admin.PackageParameter;
@@ -29,7 +29,13 @@ public class FivetranCrawler extends AbstractCrawler {
      * @throws AtlanException if there is any issue obtaining the admin role GUID
      */
     public static Workflow directApiAuth(String connectionName, String apiKey, String apiSecret) throws AtlanException {
-        return directApiAuth(connectionName, apiKey, apiSecret, List.of(RoleCache.getIdForName("$admin")), null, null);
+        return directApiAuth(
+                connectionName,
+                apiKey,
+                apiSecret,
+                List.of(Atlan.getDefaultClient().getRoleCache().getIdForName("$admin")),
+                null,
+                null);
     }
 
     /**

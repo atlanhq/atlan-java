@@ -4,12 +4,12 @@ package com.atlan.model.assets;
 
 import static org.testng.Assert.*;
 
+import com.atlan.Atlan;
 import com.atlan.model.core.AtlanTag;
 import com.atlan.model.core.CustomMetadataAttributes;
 import com.atlan.model.enums.*;
 import com.atlan.model.structs.*;
-import com.atlan.serde.Serde;
-import com.fasterxml.jackson.core.JsonProcessingException;
+import java.io.IOException;
 import java.util.*;
 import javax.annotation.processing.Generated;
 import org.testng.annotations.Test;
@@ -133,6 +133,7 @@ public class DbtColumnProcessTest {
             .assetDbtSourceFreshnessCriteria("String0")
             .assetDbtTag("String0")
             .assetDbtTag("String1")
+            .assetDbtTestStatus("String0")
             .assetDbtUniqueId("String0")
             .assetMcIncidentName("String0")
             .assetMcIncidentName("String1")
@@ -403,9 +404,9 @@ public class DbtColumnProcessTest {
     @Test(
             groups = {"DbtColumnProcess.deserialize"},
             dependsOnGroups = {"DbtColumnProcess.serialize"})
-    void deserialization() throws JsonProcessingException {
+    void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = Serde.mapper.readValue(serialized, DbtColumnProcess.class);
+        frodo = Atlan.getDefaultClient().readValue(serialized, DbtColumnProcess.class);
         assertNotNull(frodo);
     }
 

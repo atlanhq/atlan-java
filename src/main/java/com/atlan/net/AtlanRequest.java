@@ -3,7 +3,7 @@
 package com.atlan.net;
 
 /* Based on original code from https://github.com/stripe/stripe-java (under MIT license) */
-import com.atlan.Atlan;
+import com.atlan.AtlanClient;
 import com.atlan.exception.ApiConnectionException;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.AuthenticationException;
@@ -16,7 +16,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Value;
@@ -27,6 +26,9 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Accessors(fluent = true)
 public class AtlanRequest {
+    /** Connectivity to the Atlan tenant. */
+    AtlanClient client;
+
     /** The HTTP method for the request (GET, POST or DELETE). */
     ApiResource.RequestMethod method;
 
@@ -57,29 +59,33 @@ public class AtlanRequest {
     /**
      * Initializes a new instance of the {@link AtlanRequest} class, used for the majority of requests.
      *
+     * @param client connectivity to an Atlan tenant
      * @param method the HTTP method
      * @param url the URL of the request
      * @param body the body of the request
      * @param options the special modifiers of the request
      * @throws AtlanException if the request cannot be initialized for any reason
      */
-    public AtlanRequest(ApiResource.RequestMethod method, String url, String body, RequestOptions options)
+    public AtlanRequest(
+            AtlanClient client, ApiResource.RequestMethod method, String url, String body, RequestOptions options)
             throws AtlanException {
         try {
+            this.client = client;
             this.body = body;
             this.options = (options != null) ? options : RequestOptions.getDefault();
             this.method = method;
             this.url = new URL(url);
             this.content = (body == null || body.length() == 0) ? null : HttpContent.buildJSONEncodedContent(body);
-            this.headers = buildHeaders(method, this.options);
+            this.headers = buildHeaders();
         } catch (IOException e) {
-            throw new ApiConnectionException(ErrorCode.CONNECTION_ERROR, e, Atlan.getBaseUrlSafe());
+            throw new ApiConnectionException(ErrorCode.CONNECTION_ERROR, e, client.getBaseUrl());
         }
     }
 
     /**
      * Initializes a new instance of the {@link AtlanRequest} class, used specifically for uploading files (images).
      *
+     * @param client connectivity to an Atlan tenant
      * @param method the HTTP method
      * @param url the URL of the request
      * @param file the file to be uploaded through the request
@@ -88,18 +94,24 @@ public class AtlanRequest {
      * @throws AtlanException if the request cannot be initialized for any reason
      */
     public AtlanRequest(
-            ApiResource.RequestMethod method, String url, InputStream file, String filename, RequestOptions options)
+            AtlanClient client,
+            ApiResource.RequestMethod method,
+            String url,
+            InputStream file,
+            String filename,
+            RequestOptions options)
             throws AtlanException {
         try {
+            this.client = client;
             this.body = null;
             this.options = (options != null) ? options : RequestOptions.getDefault();
             this.method = method;
             this.url = new URL(url);
             this.content =
                     HttpContent.buildMultipartFormDataContent(List.of(new KeyValuePair<>("file", file)), filename);
-            this.headers = buildHeaders(method, this.options);
+            this.headers = buildHeaders();
         } catch (IOException e) {
-            throw new ApiConnectionException(ErrorCode.CONNECTION_ERROR, e, Atlan.getBaseUrlSafe());
+            throw new ApiConnectionException(ErrorCode.CONNECTION_ERROR, e, client.getBaseUrl());
         }
     }
 
@@ -112,6 +124,7 @@ public class AtlanRequest {
      */
     public AtlanRequest withAdditionalHeader(String name, String value) {
         return new AtlanRequest(
+                this.client,
                 this.method,
                 this.url,
                 this.content,
@@ -120,9 +133,8 @@ public class AtlanRequest {
                 this.options);
     }
 
-    private static HttpHeaders buildHeaders(ApiResource.RequestMethod method, RequestOptions options)
-            throws AuthenticationException {
-        Map<String, List<String>> headerMap = new HashMap<String, List<String>>();
+    private HttpHeaders buildHeaders() throws AuthenticationException {
+        Map<String, List<String>> headerMap = new HashMap<>();
 
         // Accept
         headerMap.put("Accept", Arrays.asList("application/json"));
@@ -131,34 +143,15 @@ public class AtlanRequest {
         headerMap.put("Accept-Charset", Arrays.asList(ApiResource.CHARSET.name()));
 
         // Authorization
-        String apiKey = options.getApiKey();
-        if (apiKey == null) {
+        String apiToken = client.getApiToken();
+        if (apiToken == null) {
             throw new AuthenticationException(ErrorCode.NO_API_TOKEN);
-        } else if (apiKey.isEmpty()) {
+        } else if (apiToken.isEmpty()) {
             throw new AuthenticationException(ErrorCode.EMPTY_API_TOKEN);
-        } else if (StringUtils.containsWhitespace(apiKey)) {
+        } else if (StringUtils.containsWhitespace(apiToken)) {
             throw new AuthenticationException(ErrorCode.INVALID_API_TOKEN);
         }
-        headerMap.put("Authorization", Arrays.asList(String.format("Bearer %s", apiKey)));
-
-        // Atlan-Version
-        if (options.getAtlanVersion() != null) {
-            headerMap.put("Atlan-Version", Arrays.asList(options.getAtlanVersion()));
-        } else {
-            throw new IllegalStateException("`atlanVersion` value must be set.");
-        }
-
-        // Atlan-Account
-        if (options.getAtlanAccount() != null) {
-            headerMap.put("Atlan-Account", Arrays.asList(options.getAtlanAccount()));
-        }
-
-        // Idempotency-Key
-        if (options.getIdempotencyKey() != null) {
-            headerMap.put("Idempotency-Key", Arrays.asList(options.getIdempotencyKey()));
-        } else if (method == ApiResource.RequestMethod.POST) {
-            headerMap.put("Idempotency-Key", Arrays.asList(UUID.randomUUID().toString()));
-        }
+        headerMap.put("Authorization", Arrays.asList(String.format("Bearer %s", apiToken)));
 
         return HttpHeaders.of(headerMap);
     }

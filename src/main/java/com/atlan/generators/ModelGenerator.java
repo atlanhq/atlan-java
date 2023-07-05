@@ -107,7 +107,7 @@ public class ModelGenerator extends AbstractGenerator {
                 } catch (IOException e) {
                     log.error("Unable to open file output: {}", fInterface, e);
                 }
-                if (!generator.isAbstract()) {
+                if (generator.getOriginalName().equals("Asset") || !generator.isAbstract()) {
                     // Only generate classes for non-abstract assets (leave the rest as interfaces)
                     String fClass = cfg.getPackagePath() + File.separator + AssetGenerator.DIRECTORY + File.separator
                             + generator.getClassName() + ".java";

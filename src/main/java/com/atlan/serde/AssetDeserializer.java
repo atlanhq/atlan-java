@@ -2,8 +2,8 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.serde;
 
-import com.atlan.cache.AtlanTagCache;
-import com.atlan.cache.CustomMetadataCache;
+import com.atlan.Atlan;
+import com.atlan.AtlanClient;
 import com.atlan.cache.ReflectionCache;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.NotFoundException;
@@ -38,13 +38,15 @@ import lombok.extern.slf4j.Slf4j;
 public class AssetDeserializer extends StdDeserializer<Asset> {
 
     private static final long serialVersionUID = 2L;
+    private final AtlanClient client;
 
-    public AssetDeserializer() {
-        this(null);
+    public AssetDeserializer(AtlanClient client) {
+        this(Asset.class, client);
     }
 
-    public AssetDeserializer(Class<?> t) {
+    public AssetDeserializer(Class<?> t, AtlanClient client) {
         super(t);
+        this.client = client;
     }
 
     /**
@@ -206,7 +208,7 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
         if (!leftOverAttributes.isEmpty()) {
             // Translate these into custom metadata structure
             try {
-                cm = CustomMetadataCache.getCustomMetadataFromSearchResult(leftOverAttributes);
+                cm = client.getCustomMetadataCache().getCustomMetadataFromSearchResult(leftOverAttributes);
             } catch (AtlanException e) {
                 e.printStackTrace();
                 throw new IOException("Unable to deserialize custom metadata from search result.", e);
@@ -217,7 +219,7 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
         if (businessAttributes != null) {
             // Translate these into custom metadata structure
             try {
-                cm = CustomMetadataCache.getCustomMetadataFromBusinessAttributes(businessAttributes);
+                cm = client.getCustomMetadataCache().getCustomMetadataFromBusinessAttributes(businessAttributes);
             } catch (AtlanException e) {
                 e.printStackTrace();
                 throw new IOException("Unable to deserialize custom metadata.", e);
@@ -230,7 +232,7 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
             // Translate these IDs in to human-readable names
             try {
                 for (JsonNode element : classificationNames) {
-                    String name = AtlanTagCache.getNameForId(element.asText());
+                    String name = client.getAtlanTagCache().getNameForId(element.asText());
                     clsNames.add(name);
                 }
             } catch (AtlanException e) {
@@ -290,9 +292,11 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
                         .getTypeName()
                         .equals("java.util.Map<? extends java.lang.String, ? extends java.lang.Long>")) {
             // TODO: Unclear why this cannot be handled more generically, but nothing else seems to work
-            method.invoke(builder, Serde.mapper.convertValue(jsonObject, new TypeReference<Map<String, Long>>() {}));
+            method.invoke(
+                    builder,
+                    Atlan.getDefaultClient().convertValue(jsonObject, new TypeReference<Map<String, Long>>() {}));
         } else {
-            method.invoke(builder, Serde.mapper.convertValue(jsonObject, paramClass));
+            method.invoke(builder, Atlan.getDefaultClient().convertValue(jsonObject, paramClass));
         }
     }
 
@@ -312,7 +316,7 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
             if (fieldName.equals("purposeAtlanTags")) {
                 String value;
                 try {
-                    value = AtlanTagCache.getNameForId(element.asText());
+                    value = client.getAtlanTagCache().getNameForId(element.asText());
                 } catch (NotFoundException e) {
                     value = Serde.DELETED_AUDIT_OBJECT;
                 } catch (AtlanException e) {
@@ -324,7 +328,7 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
         } else if (element.isArray()) {
             throw new IOException("Directly-nested arrays are not supported.");
         } else if (element.isObject()) {
-            return Serde.mapper.convertValue(element, innerClass);
+            return Atlan.getDefaultClient().convertValue(element, innerClass);
         }
         return null;
     }
@@ -340,7 +344,7 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
             Object value = JacksonUtils.deserializePrimitive(primitive, method);
             if (fieldName.equals("mappedAtlanTagName")) {
                 try {
-                    value = AtlanTagCache.getNameForId(primitive.asText());
+                    value = client.getAtlanTagCache().getNameForId(primitive.asText());
                 } catch (NotFoundException e) {
                     value = Serde.DELETED_AUDIT_OBJECT;
                 } catch (AtlanException e) {

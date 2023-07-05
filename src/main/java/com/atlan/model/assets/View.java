@@ -71,6 +71,11 @@ public class View extends Asset implements IView, ISQL, ICatalog, IAsset, IRefer
     @Singular
     SortedSet<IDbtSource> dbtSources;
 
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtTest> dbtTests;
+
     /** Definition of the view (DDL). */
     @Attribute
     String definition;

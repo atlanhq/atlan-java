@@ -9,8 +9,7 @@ import co.elastic.clients.elasticsearch._types.SortOrder;
 import co.elastic.clients.elasticsearch._types.aggregations.Aggregation;
 import co.elastic.clients.elasticsearch._types.query_dsl.*;
 import co.elastic.clients.json.JsonData;
-import com.atlan.cache.AtlanTagCache;
-import com.atlan.cache.CustomMetadataCache;
+import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
@@ -97,7 +96,7 @@ public class QueryFactory {
     public static Query beTaggedByAtLeastOneOf(Collection<String> atlanTagNames) throws AtlanException {
         List<String> values = new ArrayList<>();
         for (String name : atlanTagNames) {
-            values.add(AtlanTagCache.getIdForName(name));
+            values.add(Atlan.getDefaultClient().getAtlanTagCache().getIdForName(name));
         }
         return CompoundQuery.builder()
                 .should(have(KeywordFields.TRAIT_NAMES).beOneOf(values)) // direct Atlan tags
@@ -157,7 +156,8 @@ public class QueryFactory {
      * @throws AtlanException if there is any problem resolving the custom metadata, such as it not existing
      */
     public static FieldQuery haveCM(String cmName, String cmAttributeName) throws AtlanException {
-        String attributeId = CustomMetadataCache.getAttrIdForName(cmName, cmAttributeName);
+        String attributeId =
+                Atlan.getDefaultClient().getCustomMetadataCache().getAttrIdForName(cmName, cmAttributeName);
         return new FieldQuery(
                 SearchableCMField.builder().attributeId(attributeId).build());
     }

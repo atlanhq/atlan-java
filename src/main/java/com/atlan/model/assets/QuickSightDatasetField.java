@@ -51,11 +51,11 @@ public class QuickSightDatasetField extends Asset
     @Attribute
     IQuickSightDataset quickSightDataset;
 
-    /** TBC */
+    /** Datatype of column in the dataset */
     @Attribute
     QuickSightDatasetFieldType quickSightDatasetFieldType;
 
-    /** TBC */
+    /** Qualified name of the parent dataset */
     @Attribute
     String quickSightDatasetQualifiedName;
 

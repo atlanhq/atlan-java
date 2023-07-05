@@ -19,15 +19,21 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class RoleCache {
 
-    private static Map<String, AtlanRole> cacheById = new ConcurrentHashMap<>();
-    private static Map<String, String> mapIdToName = new ConcurrentHashMap<>();
-    private static Map<String, String> mapNameToId = new ConcurrentHashMap<>();
+    private Map<String, AtlanRole> cacheById = new ConcurrentHashMap<>();
+    private Map<String, String> mapIdToName = new ConcurrentHashMap<>();
+    private Map<String, String> mapNameToId = new ConcurrentHashMap<>();
 
-    private static synchronized void refreshCache() throws AtlanException {
+    private final RolesEndpoint rolesEndpoint;
+
+    public RoleCache(RolesEndpoint rolesEndpoint) {
+        this.rolesEndpoint = rolesEndpoint;
+    }
+
+    private synchronized void refreshCache() throws AtlanException {
         log.debug("Refreshing cache of roles...");
         // Note: we will only retrieve and cache the workspace-level roles, which all
         // start with '$'
-        RoleResponse response = RolesEndpoint.getRoles("{\"name\":{\"$ilike\":\"$%\"}}");
+        RoleResponse response = rolesEndpoint.getRoles("{\"name\":{\"$ilike\":\"$%\"}}");
         List<AtlanRole> roles;
         if (response != null) {
             roles = response.getRecords();
@@ -54,7 +60,7 @@ public class RoleCache {
      * @throws NotFoundException if the role cannot be found (does not exist) in Atlan
      * @throws InvalidRequestException if no name was provided for the role to retrieve
      */
-    public static String getIdForName(String name) throws AtlanException {
+    public String getIdForName(String name) throws AtlanException {
         if (name != null && name.length() > 0) {
             String roleId = mapNameToId.get(name);
             if (roleId == null) {
@@ -79,7 +85,7 @@ public class RoleCache {
      * @throws NotFoundException if the role cannot be found (does not exist) in Atlan
      * @throws InvalidRequestException if no name was provided for the role to retrieve
      */
-    public static String getNameForId(String id) throws AtlanException {
+    public String getNameForId(String id) throws AtlanException {
         if (id != null && id.length() > 0) {
             String roleName = mapIdToName.get(id);
             if (roleName == null) {

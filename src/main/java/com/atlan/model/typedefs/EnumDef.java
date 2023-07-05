@@ -2,8 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.typedefs;
 
-import com.atlan.api.TypeDefsEndpoint;
-import com.atlan.cache.EnumCache;
+import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.core.AtlanObject;
 import com.atlan.model.enums.AtlanTypeCategory;
@@ -68,7 +67,7 @@ public class EnumDef extends TypeDef {
      * @throws AtlanException on any API communication issues
      */
     public EnumDef create() throws AtlanException {
-        TypeDefResponse response = TypeDefsEndpoint.createTypeDef(this);
+        TypeDefResponse response = Atlan.getDefaultClient().typeDefs().create(this);
         if (response != null && !response.getEnumDefs().isEmpty()) {
             return response.getEnumDefs().get(0);
         }
@@ -83,8 +82,8 @@ public class EnumDef extends TypeDef {
      * @throws AtlanException on any error during the API invocation
      */
     public static void purge(String displayName) throws AtlanException {
-        TypeDefsEndpoint.purgeTypeDef(displayName);
-        EnumCache.refreshCache();
+        Atlan.getDefaultClient().typeDefs().purge(displayName);
+        Atlan.getDefaultClient().getEnumCache().refreshCache();
     }
 
     /**

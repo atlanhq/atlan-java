@@ -167,6 +167,9 @@ public interface IQuickSightDashboard {
     SortedSet<String> getAssetDbtTags();
 
     /** TBC */
+    String getAssetDbtTestStatus();
+
+    /** TBC */
     String getAssetDbtUniqueId();
 
     /** TBC */
@@ -301,10 +304,10 @@ public interface IQuickSightDashboard {
     /** TBC */
     SortedSet<IQuickSightFolder> getQuickSightDashboardFolders();
 
-    /** TBC */
+    /** Last published time of dashboard */
     Long getQuickSightDashboardLastPublishedTime();
 
-    /** TBC */
+    /** Version number of the dashboard published */
     Long getQuickSightDashboardPublishedVersionNumber();
 
     /** TBC */

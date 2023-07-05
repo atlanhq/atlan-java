@@ -2,6 +2,8 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.api;
 
+import com.atlan.Atlan;
+import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ConflictException;
 import com.atlan.exception.ErrorCode;
@@ -10,7 +12,6 @@ import com.atlan.model.enums.AtlanTypeCategory;
 import com.atlan.model.typedefs.*;
 import com.atlan.model.typedefs.TypeDefResponse;
 import com.atlan.net.ApiResource;
-import com.atlan.serde.Serde;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
@@ -40,6 +41,12 @@ public class TypeDefsEndpoint extends AtlasEndpoint {
     private static final String endpoint_singular = "/types/typedef";
     private static final String endpoint_by_name = "/types/typedef/name";
 
+    private final AtlanClient client;
+
+    public TypeDefsEndpoint(AtlanClient client) {
+        this.client = client;
+    }
+
     /**
      * Retrieves a list of the type definitions in Atlan.
      *
@@ -47,12 +54,12 @@ public class TypeDefsEndpoint extends AtlasEndpoint {
      * @return the requested list of type definitions
      * @throws AtlanException on any API communication issue
      */
-    public static TypeDefResponse getTypeDefs(AtlanTypeCategory category) throws AtlanException {
+    public TypeDefResponse list(AtlanTypeCategory category) throws AtlanException {
         String url = String.format(
                 "%s%s",
-                getBaseUrl(),
+                getBaseUrl(client),
                 String.format("%s?type=%s", endpoint, category.getValue().toLowerCase(Locale.ROOT)));
-        return ApiResource.request(ApiResource.RequestMethod.GET, url, "", TypeDefResponse.class, null);
+        return ApiResource.request(client, ApiResource.RequestMethod.GET, url, "", TypeDefResponse.class, null);
     }
 
     /**
@@ -62,10 +69,10 @@ public class TypeDefsEndpoint extends AtlasEndpoint {
      * @return details of that specific type definition
      * @throws AtlanException on any API communication issue
      */
-    public static TypeDef getTypeDefByName(String internalName) throws AtlanException {
-        String url = String.format("%s%s/%s", getBaseUrl(), endpoint_by_name, internalName);
+    public TypeDef get(String internalName) throws AtlanException {
+        String url = String.format("%s%s/%s", getBaseUrl(client), endpoint_by_name, internalName);
         WrappedTypeDef response =
-                ApiResource.request(ApiResource.RequestMethod.GET, url, "", WrappedTypeDef.class, null);
+                ApiResource.request(client, ApiResource.RequestMethod.GET, url, "", WrappedTypeDef.class, null);
         return response.getTypeDef();
     }
 
@@ -77,7 +84,7 @@ public class TypeDefsEndpoint extends AtlasEndpoint {
      * @return the resulting type definition that was created
      * @throws AtlanException on any API communication issue
      */
-    public static TypeDefResponse createTypeDef(TypeDef typeDef) throws AtlanException {
+    public TypeDefResponse create(TypeDef typeDef) throws AtlanException {
         TypeDefResponse response = null;
         if (typeDef != null) {
             switch (typeDef.getCategory()) {
@@ -102,9 +109,9 @@ public class TypeDefsEndpoint extends AtlasEndpoint {
      * @param typeDef to create
      * @return the resulting type definition that was created
      * @throws AtlanException on any API communication issue
-     * @see #createTypeDef(TypeDef)
+     * @see #create(TypeDef)
      */
-    public static TypeDefResponse createInternal(TypeDef typeDef) throws AtlanException {
+    public TypeDefResponse createInternal(TypeDef typeDef) throws AtlanException {
         TypeDefResponse.TypeDefResponseBuilder builder = TypeDefResponse.builder();
         if (typeDef != null) {
             String serviceType = typeDef.getServiceType();
@@ -137,10 +144,10 @@ public class TypeDefsEndpoint extends AtlasEndpoint {
         return builder.build();
     }
 
-    private static TypeDefResponse createInternal(TypeDefResponse.TypeDefResponseBuilder builder)
-            throws AtlanException {
-        String url = String.format("%s%s", getBaseUrl(), endpoint);
-        return ApiResource.request(ApiResource.RequestMethod.POST, url, builder.build(), TypeDefResponse.class, null);
+    private TypeDefResponse createInternal(TypeDefResponse.TypeDefResponseBuilder builder) throws AtlanException {
+        String url = String.format("%s%s", getBaseUrl(client), endpoint);
+        return ApiResource.request(
+                client, ApiResource.RequestMethod.POST, url, builder.build(), TypeDefResponse.class, null);
     }
 
     /**
@@ -151,7 +158,7 @@ public class TypeDefsEndpoint extends AtlasEndpoint {
      * @return the resulting type definition that was updated
      * @throws AtlanException on any API communication issue
      */
-    public static TypeDefResponse updateTypeDef(TypeDef typeDef) throws AtlanException {
+    public TypeDefResponse update(TypeDef typeDef) throws AtlanException {
         TypeDefResponse response = null;
         if (typeDef != null) {
             switch (typeDef.getCategory()) {
@@ -177,7 +184,7 @@ public class TypeDefsEndpoint extends AtlasEndpoint {
      * @return the resulting type definition that was updated
      * @throws AtlanException on any API communication issue
      */
-    public static TypeDefResponse updateInternal(TypeDef typeDef) throws AtlanException {
+    public TypeDefResponse updateInternal(TypeDef typeDef) throws AtlanException {
         TypeDefResponse.TypeDefResponseBuilder builder = TypeDefResponse.builder();
         if (typeDef != null) {
             String serviceType = typeDef.getServiceType();
@@ -210,10 +217,10 @@ public class TypeDefsEndpoint extends AtlasEndpoint {
         return builder.build();
     }
 
-    private static TypeDefResponse updateInternal(TypeDefResponse.TypeDefResponseBuilder builder)
-            throws AtlanException {
-        String url = String.format("%s%s", getBaseUrl(), endpoint);
-        return ApiResource.request(ApiResource.RequestMethod.PUT, url, builder.build(), TypeDefResponse.class, null);
+    private TypeDefResponse updateInternal(TypeDefResponse.TypeDefResponseBuilder builder) throws AtlanException {
+        String url = String.format("%s%s", getBaseUrl(client), endpoint);
+        return ApiResource.request(
+                client, ApiResource.RequestMethod.PUT, url, builder.build(), TypeDefResponse.class, null);
     }
 
     /**
@@ -222,16 +229,17 @@ public class TypeDefsEndpoint extends AtlasEndpoint {
      * @param internalName the internal hashed-string name of the type definition
      * @throws AtlanException on any API communication issue
      */
-    public static void purgeTypeDef(String internalName) throws AtlanException {
-        TypeDef typeDef = getTypeDefByName(internalName);
+    public void purge(String internalName) throws AtlanException {
+        TypeDef typeDef = get(internalName);
         String serviceType = typeDef.getServiceType();
         if (serviceType != null && RESERVED_SERVICE_TYPES.contains(serviceType)) {
             throw new ConflictException(ErrorCode.RESERVED_SERVICE_TYPE, serviceType);
         }
         String url = String.format(
                 "%s%s",
-                getBaseUrl(), String.format("%s/name/%s", endpoint_singular, StringUtils.encodeContent(internalName)));
-        ApiResource.request(ApiResource.RequestMethod.DELETE, url, "", null, null);
+                getBaseUrl(client),
+                String.format("%s/name/%s", endpoint_singular, StringUtils.encodeContent(internalName)));
+        ApiResource.request(client, ApiResource.RequestMethod.DELETE, url, "", null, null);
     }
 
     /**
@@ -288,7 +296,7 @@ public class TypeDefsEndpoint extends AtlasEndpoint {
         public void serialize(WrappedTypeDef wrappedTypeDef, JsonGenerator gen, SerializerProvider sp)
                 throws IOException, JsonProcessingException {
             TypeDef typeDef = wrappedTypeDef.getTypeDef();
-            Serde.mapper.writeValue(gen, typeDef);
+            Atlan.getDefaultClient().writeValue(gen, typeDef);
         }
     }
 }

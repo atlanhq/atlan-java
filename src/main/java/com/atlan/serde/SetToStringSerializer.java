@@ -2,6 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.serde;
 
+import com.atlan.Atlan;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.SerializerProvider;
@@ -37,6 +38,6 @@ public class SetToStringSerializer extends StdSerializer<Set<String>> {
      * @throws IOException on any errors during parsing
      */
     public static String serialize(Set<String> value) throws IOException {
-        return Serde.mapper.writeValueAsString(value);
+        return Atlan.getDefaultClient().writeValueAsString(value);
     }
 }

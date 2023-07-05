@@ -174,6 +174,11 @@ public class DbtModel extends Asset implements IDbtModel, IDbt, ICatalog, IAsset
 
     /** TBC */
     @Attribute
+    @Singular
+    SortedSet<IDbtTest> dbtTests;
+
+    /** TBC */
+    @Attribute
     String dbtUniqueId;
 
     /** TBC */

@@ -9,6 +9,7 @@ import co.elastic.clients.elasticsearch._types.SortOrder;
 import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
 import co.elastic.clients.elasticsearch._types.query_dsl.NestedQuery;
 import co.elastic.clients.elasticsearch._types.query_dsl.TermQuery;
+import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.workflow.WorkflowSearchRequest;
 import com.atlan.model.workflow.WorkflowSearchResponse;
@@ -18,6 +19,10 @@ import com.atlan.model.workflow.WorkflowSearchResponse;
  */
 public class PlaybooksEndpoint extends WorkflowsEndpoint {
 
+    public PlaybooksEndpoint(AtlanClient client) {
+        super(client);
+    }
+
     /**
      * List the requested number of most recently created playbooks.
      *
@@ -25,7 +30,7 @@ public class PlaybooksEndpoint extends WorkflowsEndpoint {
      * @return the most recently created playbooks
      * @throws AtlanException on any API communication issue
      */
-    public static WorkflowSearchResponse list(int max) throws AtlanException {
+    public WorkflowSearchResponse list(int max) throws AtlanException {
         WorkflowSearchRequest request = WorkflowSearchRequest.builder()
                 .from(0)
                 .size(max)

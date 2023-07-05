@@ -9,7 +9,6 @@ import com.atlan.exception.AtlanException;
 import com.atlan.model.assets.Asset;
 import com.atlan.model.events.AtlanEvent;
 import com.atlan.model.events.AwsEventWrapper;
-import com.atlan.serde.Serde;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.Collection;
@@ -79,7 +78,7 @@ public abstract class AbstractLambdaHandler implements RequestStreamHandler {
                 output) {
             // Parse the AWS payload... (for some reason readValue directly on InputStream just times out)
             String request = getRequestAsString(input);
-            AwsEventWrapper wrapper = Serde.mapper.readValue(request, AwsEventWrapper.class);
+            AwsEventWrapper wrapper = Atlan.getDefaultClient().readValue(request, AwsEventWrapper.class);
             // Pull out the embedded Atlan request...
             String body = wrapper.getBody();
             if (AtlanEventHandler.isValidationRequest(body)) {

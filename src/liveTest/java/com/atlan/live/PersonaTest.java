@@ -5,7 +5,6 @@ package com.atlan.live;
 import static org.testng.Assert.*;
 
 import com.atlan.Atlan;
-import com.atlan.api.EntityBulkEndpoint;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.assets.*;
@@ -87,7 +86,7 @@ public class PersonaTest extends AtlanLiveTest {
     void findPersonaByName() throws AtlanException, InterruptedException {
         List<Persona> list = null;
         int count = 0;
-        while (count < Atlan.getMaxNetworkRetries()) {
+        while (list == null && count < Atlan.getMaxNetworkRetries()) {
             try {
                 list = Persona.findByName(PERSONA_NAME, null);
             } catch (NotFoundException e) {
@@ -126,7 +125,8 @@ public class PersonaTest extends AtlanLiveTest {
                         Set.of(PersonaGlossaryAction.CREATE, PersonaGlossaryAction.UPDATE),
                         Set.of("entity:" + glossary.getQualifiedName()))
                 .build();
-        AssetMutationResponse response = EntityBulkEndpoint.upsert(List.of(metadata, data, glossaryPolicy), false);
+        AssetMutationResponse response =
+                Atlan.getDefaultClient().assets().save(List.of(metadata, data, glossaryPolicy), false);
         assertNotNull(response);
         assertEquals(response.getUpdatedAssets().size(), 1);
         Asset one = response.getUpdatedAssets().get(0);

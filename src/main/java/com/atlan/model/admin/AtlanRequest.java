@@ -2,7 +2,7 @@
 /* Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.model.admin;
 
-import com.atlan.api.RequestsEndpoint;
+import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.assets.*;
 import com.atlan.model.core.AtlanObject;
@@ -183,7 +183,7 @@ public abstract class AtlanRequest extends AtlanObject {
      * @throws AtlanException on any API interaction issues
      */
     public void create() throws AtlanException {
-        RequestsEndpoint.createRequest(this);
+        Atlan.getDefaultClient().requests().create(this);
     }
 
     /**
@@ -193,7 +193,7 @@ public abstract class AtlanRequest extends AtlanObject {
      * @throws AtlanException on any API communication issue
      */
     public static AtlanRequestResponse list() throws AtlanException {
-        return RequestsEndpoint.getRequests();
+        return Atlan.getDefaultClient().requests().list();
     }
 
     /**
@@ -204,7 +204,7 @@ public abstract class AtlanRequest extends AtlanObject {
      * @throws AtlanException on any API communication issue
      */
     public static AtlanRequest retrieveByGuid(String guid) throws AtlanException {
-        return RequestsEndpoint.getRequestByGuid(guid);
+        return Atlan.getDefaultClient().requests().get(guid);
     }
 
     /**
@@ -216,7 +216,7 @@ public abstract class AtlanRequest extends AtlanObject {
      * @throws AtlanException on any API interaction issues
      */
     public static boolean approve(String guid, String message) throws AtlanException {
-        return RequestsEndpoint.approveRequest(guid, message);
+        return Atlan.getDefaultClient().requests().approve(guid, message);
     }
 
     /**
@@ -228,6 +228,6 @@ public abstract class AtlanRequest extends AtlanObject {
      * @throws AtlanException on any API interaction issues
      */
     public static boolean reject(String guid, String message) throws AtlanException {
-        return RequestsEndpoint.rejectRequest(guid, message);
+        return Atlan.getDefaultClient().requests().reject(guid, message);
     }
 }

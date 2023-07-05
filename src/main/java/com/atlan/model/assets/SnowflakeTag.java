@@ -60,6 +60,11 @@ public class SnowflakeTag extends Asset implements ISnowflakeTag, ITag, ISQL, IC
     /** TBC */
     @Attribute
     @Singular
+    SortedSet<IDbtTest> dbtTests;
+
+    /** TBC */
+    @Attribute
+    @Singular
     SortedSet<ILineageProcess> inputToProcesses;
 
     /** TBC */

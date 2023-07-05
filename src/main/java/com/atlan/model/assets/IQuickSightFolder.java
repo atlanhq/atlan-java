@@ -168,6 +168,9 @@ public interface IQuickSightFolder {
     SortedSet<String> getAssetDbtTags();
 
     /** TBC */
+    String getAssetDbtTestStatus();
+
+    /** TBC */
     String getAssetDbtUniqueId();
 
     /** TBC */
@@ -308,10 +311,10 @@ public interface IQuickSightFolder {
     /** TBC */
     SortedSet<IQuickSightDataset> getQuickSightDatasets();
 
-    /** TBC */
+    /** Detailed path of the folder */
     List<Map<String, String>> getQuickSightFolderHierarchy();
 
-    /** TBC */
+    /** Shared or private type of folder */
     QuickSightFolderType getQuickSightFolderType();
 
     /** TBC */

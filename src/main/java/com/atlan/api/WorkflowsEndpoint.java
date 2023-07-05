@@ -2,6 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.api;
 
+import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.core.AtlanObject;
 import com.atlan.model.workflow.*;
@@ -22,6 +23,12 @@ public class WorkflowsEndpoint extends HeraclesEndpoint {
     private static final String runs_endpoint = "/runs";
     private static final String runs_search_endpoint = runs_endpoint + "/indexsearch";
 
+    private final AtlanClient client;
+
+    public WorkflowsEndpoint(AtlanClient client) {
+        this.client = client;
+    }
+
     /**
      * Run the provided workflow.
      *
@@ -29,9 +36,9 @@ public class WorkflowsEndpoint extends HeraclesEndpoint {
      * @return details of the workflow run
      * @throws AtlanException on any API communication issue
      */
-    public static WorkflowResponse run(Workflow workflow) throws AtlanException {
-        String url = String.format("%s%s", getBaseUrl(), String.format("%s?submit=true", workflows_endpoint));
-        return ApiResource.request(ApiResource.RequestMethod.POST, url, workflow, WorkflowResponse.class, null);
+    public WorkflowResponse run(Workflow workflow) throws AtlanException {
+        String url = String.format("%s%s", getBaseUrl(client), String.format("%s?submit=true", workflows_endpoint));
+        return ApiResource.request(client, ApiResource.RequestMethod.POST, url, workflow, WorkflowResponse.class, null);
     }
 
     /**
@@ -41,13 +48,14 @@ public class WorkflowsEndpoint extends HeraclesEndpoint {
      * @return details of the workflow run
      * @throws AtlanException on any API communication issue
      */
-    public static WorkflowRunResponse run(WorkflowSearchResultDetail workflow) throws AtlanException {
-        String url = String.format("%s%s", getBaseUrl(), workflows_endpoint_run_existing);
+    public WorkflowRunResponse run(WorkflowSearchResultDetail workflow) throws AtlanException {
+        String url = String.format("%s%s", getBaseUrl(client), workflows_endpoint_run_existing);
         ReRunRequest request = ReRunRequest.builder()
                 .namespace(workflow.getMetadata().getNamespace())
                 .resourceName(workflow.getMetadata().getName())
                 .build();
-        return ApiResource.request(ApiResource.RequestMethod.POST, url, request, WorkflowRunResponse.class, null);
+        return ApiResource.request(
+                client, ApiResource.RequestMethod.POST, url, request, WorkflowRunResponse.class, null);
     }
 
     /**
@@ -56,10 +64,10 @@ public class WorkflowsEndpoint extends HeraclesEndpoint {
      * @param workflowName the workflow to delete
      * @throws AtlanException on any API communication issue
      */
-    public static void archive(String workflowName) throws AtlanException {
-        String url =
-                String.format("%s%s", getBaseUrl(), String.format("%s/%s/archive", workflows_endpoint, workflowName));
-        ApiResource.request(ApiResource.RequestMethod.POST, url, "", null, null);
+    public void archive(String workflowName) throws AtlanException {
+        String url = String.format(
+                "%s%s", getBaseUrl(client), String.format("%s/%s/archive", workflows_endpoint, workflowName));
+        ApiResource.request(client, ApiResource.RequestMethod.POST, url, "", null, null);
     }
 
     /**
@@ -69,9 +77,10 @@ public class WorkflowsEndpoint extends HeraclesEndpoint {
      * @return the matching workflow runs
      * @throws AtlanException on any API communication issue
      */
-    public static WorkflowSearchResponse searchRuns(WorkflowSearchRequest request) throws AtlanException {
-        String url = String.format("%s%s", getBaseUrl(), runs_search_endpoint);
-        return ApiResource.request(ApiResource.RequestMethod.POST, url, request, WorkflowSearchResponse.class, null);
+    public WorkflowSearchResponse searchRuns(WorkflowSearchRequest request) throws AtlanException {
+        String url = String.format("%s%s", getBaseUrl(client), runs_search_endpoint);
+        return ApiResource.request(
+                client, ApiResource.RequestMethod.POST, url, request, WorkflowSearchResponse.class, null);
     }
 
     /**
@@ -81,9 +90,10 @@ public class WorkflowsEndpoint extends HeraclesEndpoint {
      * @return the matching workflows
      * @throws AtlanException on any API communication issue
      */
-    public static WorkflowSearchResponse search(WorkflowSearchRequest request) throws AtlanException {
-        String url = String.format("%s%s", getBaseUrl(), workflows_search_endpoint);
-        return ApiResource.request(ApiResource.RequestMethod.POST, url, request, WorkflowSearchResponse.class, null);
+    public WorkflowSearchResponse search(WorkflowSearchRequest request) throws AtlanException {
+        String url = String.format("%s%s", getBaseUrl(client), workflows_search_endpoint);
+        return ApiResource.request(
+                client, ApiResource.RequestMethod.POST, url, request, WorkflowSearchResponse.class, null);
     }
 
     /**

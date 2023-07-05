@@ -2,7 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.lineage;
 
-import com.atlan.api.LineageEndpoint;
+import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
@@ -113,6 +113,6 @@ public class LineageListRequest extends AtlanObject {
         if (direction == AtlanLineageDirection.BOTH) {
             throw new InvalidRequestException(ErrorCode.INVALID_LINEAGE_DIRECTION);
         }
-        return LineageEndpoint.fetch(this);
+        return Atlan.getDefaultClient().assets().lineage(this);
     }
 }

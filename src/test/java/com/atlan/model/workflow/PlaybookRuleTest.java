@@ -4,12 +4,12 @@ package com.atlan.model.workflow;
 
 import static org.testng.Assert.*;
 
+import com.atlan.Atlan;
 import com.atlan.model.enums.PlaybookActionOperator;
 import com.atlan.model.enums.PlaybookActionType;
 import com.atlan.model.search.IndexSearchRequest;
-import com.atlan.serde.Serde;
 import com.atlan.util.QueryFactory;
-import com.fasterxml.jackson.core.JsonProcessingException;
+import java.io.IOException;
 import org.testng.annotations.Test;
 
 public class PlaybookRuleTest {
@@ -57,9 +57,9 @@ public class PlaybookRuleTest {
     @Test(
             groups = {"PlaybookRule.deserialize"},
             dependsOnGroups = {"PlaybookRule.serialize"})
-    void deserialization() throws JsonProcessingException {
+    void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = Serde.mapper.readValue(serialized, PlaybookRule.class);
+        frodo = Atlan.getDefaultClient().readValue(serialized, PlaybookRule.class);
         assertNotNull(frodo);
     }
 

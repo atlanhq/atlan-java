@@ -47,12 +47,12 @@ public class QuickSightAnalysis extends Asset
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
 
-    /** TBC */
+    /** Calculated fields of quicksight analysis  */
     @Attribute
     @Singular
     SortedSet<String> quickSightAnalysisCalculatedFields;
 
-    /** TBC */
+    /** Filter groups used for quicksight analysis */
     @Attribute
     @Singular
     SortedSet<String> quickSightAnalysisFilterGroups;
@@ -62,12 +62,12 @@ public class QuickSightAnalysis extends Asset
     @Singular
     SortedSet<IQuickSightFolder> quickSightAnalysisFolders;
 
-    /** TBC */
+    /** parameters used for quicksight analysis  */
     @Attribute
     @Singular
     SortedSet<String> quickSightAnalysisParameterDeclarations;
 
-    /** TBC */
+    /** Status of quicksight analysis */
     @Attribute
     QuickSightAnalysisStatus quickSightAnalysisStatus;
 

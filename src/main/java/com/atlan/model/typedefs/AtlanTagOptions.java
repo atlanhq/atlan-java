@@ -2,7 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.typedefs;
 
-import com.atlan.api.ImagesEndpoint;
+import com.atlan.Atlan;
 import com.atlan.exception.ApiException;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
@@ -65,7 +65,7 @@ public class AtlanTagOptions extends AtlanObject {
      */
     public static AtlanTagOptions withImage(String url, AtlanTagColor color) throws AtlanException {
         try {
-            AtlanImage result = ImagesEndpoint.uploadImage(url);
+            AtlanImage result = Atlan.getDefaultClient().images().upload(url);
             return AtlanTagOptions.builder()
                     .color(color)
                     .iconType(TagIconType.IMAGE)

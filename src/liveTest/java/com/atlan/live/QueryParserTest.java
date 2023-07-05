@@ -4,7 +4,7 @@ package com.atlan.live;
 
 import static org.testng.Assert.*;
 
-import com.atlan.api.QueryParserEndpoint;
+import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.admin.ParsedQuery;
 import com.atlan.model.admin.QueryParserRequest;
@@ -24,7 +24,7 @@ public class QueryParserTest extends AtlanLiveTest {
                 .defaultDatabase("ORDERS")
                 .defaultSchema("PRODUCTION")
                 .build();
-        ParsedQuery response = QueryParserEndpoint.parseQuery(request);
+        ParsedQuery response = Atlan.getDefaultClient().queryParser().parse(request);
         assertNotNull(response);
         assertFalse(response.getObjects().isEmpty());
         assertFalse(response.getRelationships().isEmpty());
@@ -39,7 +39,7 @@ public class QueryParserTest extends AtlanLiveTest {
                 .defaultDatabase("ORDERS")
                 .defaultSchema("PRODUCTION")
                 .build();
-        ParsedQuery response = QueryParserEndpoint.parseQuery(request);
+        ParsedQuery response = Atlan.getDefaultClient().queryParser().parse(request);
         assertNotNull(response);
         assertTrue(response.getObjects().isEmpty());
         assertTrue(response.getRelationships().isEmpty());

@@ -5,16 +5,10 @@ package com.atlan;
 /* Based on original code from https://github.com/stripe/stripe-java (under MIT license) */
 import com.atlan.api.*;
 import com.atlan.cache.*;
-import com.atlan.model.admin.AtlanRequest;
-import com.atlan.model.assets.Asset;
-import com.atlan.model.core.AtlanTag;
 import com.atlan.serde.*;
-import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.*;
-import com.fasterxml.jackson.databind.Module;
-import com.fasterxml.jackson.databind.deser.BeanDeserializerFactory;
-import com.fasterxml.jackson.databind.module.SimpleModule;
 import java.io.IOException;
 import java.net.PasswordAuthentication;
 import java.net.Proxy;
@@ -60,6 +54,9 @@ public class AtlanClient {
     private GroupsEndpoint groupsEndpoint = null;
     private UsersEndpoint usersEndpoint = null;
     private WorkflowsEndpoint workflowsEndpoint = null;
+    private QueryParserEndpoint queryParserEndpoint = null;
+    private PlaybooksEndpoint playbooksEndpoint = null;
+    private LogsEndpoint logsEndpoint = null;
     private ImagesEndpoint imagesEndpoint = null;
     private AssetEndpoint assetEndpoint = null;
     private RequestsEndpoint requestsEndpoint = null;
@@ -80,7 +77,7 @@ public class AtlanClient {
                 apiBase = baseURL;
             }
         }
-        mapper = createMapper();
+        mapper = Serde.createMapper(this);
         typeDefsEndpoint = new TypeDefsEndpoint(this);
         rolesEndpoint = new RolesEndpoint(this);
         atlanTagCache = new AtlanTagCache(typeDefsEndpoint);
@@ -89,34 +86,6 @@ public class AtlanClient {
         groupCache = new GroupCache();
         roleCache = new RoleCache(rolesEndpoint);
         userCache = new UserCache();
-    }
-
-    /**
-     * Set up the tenant-specific serialization and deserialization.
-     * @return an ObjectMapper for the tenant-specific transformations
-     */
-    private ObjectMapper createMapper() {
-        // Set default options
-        ObjectMapper om = new ObjectMapper(
-                        null, null, new ClientAwareDeserializationContext(BeanDeserializerFactory.instance, null, this))
-                .setSerializationInclusion(JsonInclude.Include.NON_EMPTY)
-                .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        // Set standard (non-tenant-specific) modules
-        for (Module m : Serde.SIMPLE_MODULES) {
-            om.registerModule(m);
-        }
-        // Add tenant-specific modules
-        ClientAwareSerializerProvider casp = new ClientAwareSerializerProvider(this);
-        SimpleModule tenantSpecific = new SimpleModule()
-                .addSerializer(AtlanTag.class, new AtlanTagSerializer(this))
-                .addDeserializer(AtlanTag.class, new AtlanTagDeserializer(this))
-                .addSerializer(Asset.class, new AssetSerializer(this))
-                .addDeserializer(Asset.class, new AssetDeserializer(this))
-                .addSerializer(AtlanRequest.class, new AtlanRequestSerializer(this))
-                .addDeserializer(AtlanRequest.class, new AtlanRequestDeserializer(this));
-        om.registerModule(tenantSpecific);
-        om.setSerializerProvider(casp);
-        return om;
     }
 
     /**
@@ -129,6 +98,30 @@ public class AtlanClient {
      */
     public <T> T readValue(String value, Class<T> clazz) throws IOException {
         return mapper.readValue(value, clazz);
+    }
+
+    /**
+     * Deserialize a byte-array value into an object.
+     * @param value the value to deserialize
+     * @param clazz the expected object type of the deserialization
+     * @return the deserialized object
+     * @param <T> type of the deserialized object
+     * @throws IOException on any errors doing the deserialization
+     */
+    public <T> T readValue(byte[] value, Class<T> clazz) throws IOException {
+        return mapper.readValue(value, clazz);
+    }
+
+    /**
+     * Deserialize a string value into an object.
+     * @param value the value to deserialize
+     * @param typeRef the expected object type of the deserialization
+     * @return the deserialized object
+     * @param <T> type of the deserialized object
+     * @throws IOException on any errors doing the deserialization
+     */
+    public <T> T readValue(String value, TypeReference<T> typeRef) throws IOException {
+        return mapper.readValue(value, typeRef);
     }
 
     /**
@@ -166,26 +159,60 @@ public class AtlanClient {
         return mapper.writeValueAsString(value);
     }
 
+    /**
+     * Serialize an object through the provided {@link JsonGenerator}.
+     * @param g JSON generator through which to serialize the object
+     * @param value object to serialize
+     * @throws IOException on any errors doing the serialization
+     */
+    public void writeValue(JsonGenerator g, Object value) throws IOException {
+        mapper.writeValue(g, value);
+    }
+
+    /**
+     * Retrieve the cache of Atlan tags specific to this client.
+     * @return the cache of Atlan tags specific to this client.
+     */
     public AtlanTagCache getAtlanTagCache() {
         return atlanTagCache;
     }
 
+    /**
+     * Retrieve the cache of custom metadata structures specific to this client.
+     * @return the cache of custom metadata structures specific to this client.
+     */
     public CustomMetadataCache getCustomMetadataCache() {
         return customMetadataCache;
     }
 
+    /**
+     * Retrieve the cache of enums specific to this client.
+     * @return the cache of enums specific to this client.
+     */
     public EnumCache getEnumCache() {
         return enumCache;
     }
 
+    /**
+     * Retrieve the cache of groups specific to this client.
+     * @return the cache of groups specific to this client.
+     */
     public GroupCache getGroupCache() {
         return groupCache;
     }
 
+    /**
+     * Retrieve the cache of workspace roles specific to this client.
+     * @return the cache of workspace roles specific to this client.
+     */
     public RoleCache getRoleCache() {
         return roleCache;
     }
 
+    /**
+     * Retrieve the cache of users specific to this client.
+     * @return the cache of users specific to this client.
+     */
     public UserCache getUserCache() {
         return userCache;
     }
@@ -421,6 +448,39 @@ public class AtlanClient {
             workflowsEndpoint = new WorkflowsEndpoint(this);
         }
         return workflowsEndpoint;
+    }
+
+    /**
+     * Returns the endpoint with operations to parse queries.
+     * @return the endpoint with operations to parse queries.
+     */
+    public QueryParserEndpoint queryParser() {
+        if (queryParserEndpoint == null) {
+            queryParserEndpoint = new QueryParserEndpoint(this);
+        }
+        return queryParserEndpoint;
+    }
+
+    /**
+     * Returns the endpoint with operations to manage playbooks.
+     * @return the endpoint with operations to manage playbooks.
+     */
+    public PlaybooksEndpoint playbooks() {
+        if (playbooksEndpoint == null) {
+            playbooksEndpoint = new PlaybooksEndpoint(this);
+        }
+        return playbooksEndpoint;
+    }
+
+    /**
+     * Returns the endpoint with operations to view logs.
+     * @return the endpoint with operations to view logs.
+     */
+    public LogsEndpoint logs() {
+        if (logsEndpoint == null) {
+            logsEndpoint = new LogsEndpoint(this);
+        }
+        return logsEndpoint;
     }
 
     /**

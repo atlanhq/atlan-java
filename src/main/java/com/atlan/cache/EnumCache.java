@@ -20,11 +20,17 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class EnumCache {
 
-    private static Map<String, EnumDef> cacheById = new ConcurrentHashMap<>();
+    private Map<String, EnumDef> cacheById = new ConcurrentHashMap<>();
 
-    public static synchronized void refreshCache() throws AtlanException {
+    private final TypeDefsEndpoint typeDefsEndpoint;
+
+    public EnumCache(TypeDefsEndpoint typeDefsEndpoint) {
+        this.typeDefsEndpoint = typeDefsEndpoint;
+    }
+
+    public synchronized void refreshCache() throws AtlanException {
         log.debug("Refreshing cache of enumerations...");
-        TypeDefResponse response = TypeDefsEndpoint.getTypeDefs(AtlanTypeCategory.ENUM);
+        TypeDefResponse response = typeDefsEndpoint.list(AtlanTypeCategory.ENUM);
         List<EnumDef> enumerations;
         if (response != null) {
             enumerations = response.getEnumDefs();
@@ -47,7 +53,7 @@ public class EnumCache {
      * @throws NotFoundException if the enumeration cannot be found (does not exist) in Atlan
      * @throws InvalidRequestException if no name was provided for the enumeration to retrieve
      */
-    public static EnumDef getByName(String name) throws AtlanException {
+    public EnumDef getByName(String name) throws AtlanException {
         if (name != null && name.length() > 0) {
             EnumDef enumDef = cacheById.get(name);
             if (enumDef == null) {

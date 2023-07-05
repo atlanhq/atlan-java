@@ -2,6 +2,7 @@
 /* Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.events;
 
+import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.assets.Asset;
 import com.atlan.model.assets.ICatalog;
@@ -11,7 +12,6 @@ import com.atlan.model.events.AtlanEvent;
 import com.atlan.model.events.AtlanEventPayload;
 import com.atlan.model.search.IndexSearchRequest;
 import com.atlan.model.search.IndexSearchResponse;
-import com.atlan.serde.Serde;
 import com.atlan.util.AssetBatch;
 import com.atlan.util.QueryFactory;
 import java.io.IOException;
@@ -131,7 +131,7 @@ public interface AtlanEventHandler {
      * @throws IOException on any problems deserializing the event details
      */
     static AtlanEvent getAtlanEvent(String data) throws IOException {
-        return Serde.mapper.readValue(data, AtlanEvent.class);
+        return Atlan.getDefaultClient().readValue(data, AtlanEvent.class);
     }
 
     /**
@@ -142,7 +142,7 @@ public interface AtlanEventHandler {
      * @throws IOException on any problems deserializing the event details
      */
     static AtlanEvent getAtlanEvent(byte[] data) throws IOException {
-        return Serde.mapper.readValue(data, AtlanEvent.class);
+        return Atlan.getDefaultClient().readValue(data, AtlanEvent.class);
     }
 
     /**
