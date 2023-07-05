@@ -441,11 +441,18 @@ public class CustomMetadataCache {
         Iterator<String> itrCM = businessAttributes.fieldNames();
         while (itrCM.hasNext()) {
             String cmId = itrCM.next();
-            String cmName = getNameForId(cmId);
-            JsonNode bmAttrs = businessAttributes.get(cmId);
-            CustomMetadataAttributes cma = getCustomMetadataAttributes(cmId, bmAttrs);
-            if (!cma.isEmpty()) {
-                map.put(cmName, cma);
+            try {
+                String cmName = getNameForId(cmId);
+                JsonNode bmAttrs = businessAttributes.get(cmId);
+                CustomMetadataAttributes cma = getCustomMetadataAttributes(cmId, bmAttrs);
+                if (!cma.isEmpty()) {
+                    map.put(cmName, cma);
+                }
+            } catch (NotFoundException e) {
+                log.warn(
+                        "Custom metadata with ID {} could not be found, likely deleted in parallel with this processing so it will be skipped.",
+                        cmId,
+                        e);
             }
         }
         return map;
@@ -518,40 +525,47 @@ public class CustomMetadataCache {
             int indexOfDot = compositeId.indexOf(".");
             if (indexOfDot > 0) {
                 String cmId = compositeId.substring(0, indexOfDot);
-                String cmName = getNameForId(cmId);
-                if (!builderMap.containsKey(cmName)) {
-                    builderMap.put(cmName, CustomMetadataAttributes.builder());
-                }
-                String attrId = compositeId.substring(indexOfDot + 1);
-                String cmAttrName = getAttrNameForIdFromSetId(cmId, attrId);
-                JsonNode jsonValue = entry.getValue();
-                if (jsonValue.isArray()) {
-                    Set<Object> values = new HashSet<>();
-                    ArrayNode array = (ArrayNode) jsonValue;
-                    for (JsonNode element : array) {
-                        Object primitive = deserializePrimitive(element);
-                        values.add(primitive);
+                try {
+                    String cmName = getNameForId(cmId);
+                    if (!builderMap.containsKey(cmName)) {
+                        builderMap.put(cmName, CustomMetadataAttributes.builder());
                     }
-                    if (!values.isEmpty()) {
-                        // It seems assets that previously had multivalued custom metadata that was later
-                        // removed retain an empty set for that attribute, but this is equivalent to the
-                        // custom metadata not existing from a UI and delete-ability perspective (so we will
-                        // treat as non-existent in the deserialization as well)
-                        if (archivedAttrIds.containsKey(attrId)) {
-                            builderMap.get(cmName).archivedAttribute(cmAttrName, values);
-                        } else {
-                            builderMap.get(cmName).attribute(cmAttrName, values);
+                    String attrId = compositeId.substring(indexOfDot + 1);
+                    String cmAttrName = getAttrNameForIdFromSetId(cmId, attrId);
+                    JsonNode jsonValue = entry.getValue();
+                    if (jsonValue.isArray()) {
+                        Set<Object> values = new HashSet<>();
+                        ArrayNode array = (ArrayNode) jsonValue;
+                        for (JsonNode element : array) {
+                            Object primitive = deserializePrimitive(element);
+                            values.add(primitive);
                         }
-                    }
-                } else if (jsonValue.isValueNode()) {
-                    Object primitive = deserializePrimitive(jsonValue);
-                    if (archivedAttrIds.containsKey(attrId)) {
-                        builderMap.get(cmName).archivedAttribute(cmAttrName, primitive);
+                        if (!values.isEmpty()) {
+                            // It seems assets that previously had multivalued custom metadata that was later
+                            // removed retain an empty set for that attribute, but this is equivalent to the
+                            // custom metadata not existing from a UI and delete-ability perspective (so we will
+                            // treat as non-existent in the deserialization as well)
+                            if (archivedAttrIds.containsKey(attrId)) {
+                                builderMap.get(cmName).archivedAttribute(cmAttrName, values);
+                            } else {
+                                builderMap.get(cmName).attribute(cmAttrName, values);
+                            }
+                        }
+                    } else if (jsonValue.isValueNode()) {
+                        Object primitive = deserializePrimitive(jsonValue);
+                        if (archivedAttrIds.containsKey(attrId)) {
+                            builderMap.get(cmName).archivedAttribute(cmAttrName, primitive);
+                        } else {
+                            builderMap.get(cmName).attribute(cmAttrName, primitive);
+                        }
                     } else {
-                        builderMap.get(cmName).attribute(cmAttrName, primitive);
+                        throw new LogicException(ErrorCode.UNABLE_TO_DESERIALIZE, jsonValue.toString());
                     }
-                } else {
-                    throw new LogicException(ErrorCode.UNABLE_TO_DESERIALIZE, jsonValue.toString());
+                } catch (NotFoundException e) {
+                    log.warn(
+                            "Custom metadata with ID {} could not be found, likely deleted in parallel with this processing so it will be skipped.",
+                            cmId,
+                            e);
                 }
             }
         }
