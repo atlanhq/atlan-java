@@ -57,7 +57,7 @@ public class AssetMutationResponse extends ApiResource {
 
     /**
      * Retrieve the list of assets that were partially updated.
-     * Note: this should only ever be populated by calls to the {@link com.atlan.api.EntityUniqueAttributesEndpoint}
+     * Note: this should only ever be populated by calls to the certain endpoints
      * @return list of partially updated assets, or an empty list of none were partially updated
      */
     public List<Asset> getPartiallyUpdatedAssets() {
