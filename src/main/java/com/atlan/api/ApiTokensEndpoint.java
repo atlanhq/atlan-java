@@ -2,7 +2,6 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.api;
 
-import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.admin.ApiToken;
@@ -33,10 +32,8 @@ public class ApiTokensEndpoint extends HeraclesEndpoint {
 
     private static final String endpoint = "/apikeys";
 
-    private final AtlanClient client;
-
     public ApiTokensEndpoint(AtlanClient client) {
-        this.client = client;
+        super(client);
     }
 
     /**
@@ -87,7 +84,7 @@ public class ApiTokensEndpoint extends HeraclesEndpoint {
      */
     public ApiTokenResponse list(String filter, String sort, int offset, int limit, RequestOptions options)
             throws AtlanException {
-        String url = String.format("%s%s?limit=%s&offset=%s", getBaseUrl(client), endpoint, limit, offset);
+        String url = String.format("%s%s?limit=%s&offset=%s", getBaseUrl(), endpoint, limit, offset);
         if (sort != null) {
             url = String.format("%s&sort=%s", url, sort);
         }
@@ -126,7 +123,7 @@ public class ApiTokensEndpoint extends HeraclesEndpoint {
     public ApiToken create(
             String displayName, String description, Set<String> personas, Long validitySeconds, RequestOptions options)
             throws AtlanException {
-        String url = String.format("%s%s", getBaseUrl(client), endpoint);
+        String url = String.format("%s%s", getBaseUrl(), endpoint);
         ApiTokenRequest atr = new ApiTokenRequest(displayName, description, personas, validitySeconds);
         WrappedApiToken response =
                 ApiResource.request(client, ApiResource.RequestMethod.POST, url, atr, WrappedApiToken.class, options);
@@ -163,7 +160,7 @@ public class ApiTokensEndpoint extends HeraclesEndpoint {
     public ApiToken update(
             String guid, String displayName, String description, Set<String> personas, RequestOptions options)
             throws AtlanException {
-        String url = String.format("%s%s/%s", getBaseUrl(client), endpoint, guid);
+        String url = String.format("%s%s/%s", getBaseUrl(), endpoint, guid);
         ApiTokenRequest atr = new ApiTokenRequest(displayName, description, personas, null);
         WrappedApiToken response =
                 ApiResource.request(client, ApiResource.RequestMethod.POST, url, atr, WrappedApiToken.class, options);
@@ -191,7 +188,7 @@ public class ApiTokensEndpoint extends HeraclesEndpoint {
      * @throws AtlanException on any API communication issue
      */
     public void delete(String guid, RequestOptions options) throws AtlanException {
-        String url = String.format("%s%s/%s", getBaseUrl(client), endpoint, guid);
+        String url = String.format("%s%s/%s", getBaseUrl(), endpoint, guid);
         ApiResource.request(client, ApiResource.RequestMethod.DELETE, url, "", null, options);
     }
 
@@ -250,7 +247,7 @@ public class ApiTokensEndpoint extends HeraclesEndpoint {
         private static final long serialVersionUID = 2L;
 
         public WrappedApiTokenDeserializer() {
-            this(null);
+            this(WrappedApiToken.class);
         }
 
         public WrappedApiTokenDeserializer(Class<?> t) {
@@ -270,12 +267,16 @@ public class ApiTokensEndpoint extends HeraclesEndpoint {
     private static class WrappedApiTokenSerializer extends StdSerializer<WrappedApiToken> {
         private static final long serialVersionUID = 2L;
 
-        public WrappedApiTokenSerializer() {
-            this(null);
+        private final AtlanClient client;
+
+        @SuppressWarnings("UnusedMethod")
+        public WrappedApiTokenSerializer(AtlanClient client) {
+            this(WrappedApiToken.class, client);
         }
 
-        public WrappedApiTokenSerializer(Class<WrappedApiToken> t) {
+        public WrappedApiTokenSerializer(Class<WrappedApiToken> t, AtlanClient client) {
             super(t);
+            this.client = client;
         }
 
         /**
@@ -285,7 +286,7 @@ public class ApiTokensEndpoint extends HeraclesEndpoint {
         public void serialize(WrappedApiToken wrappedToken, JsonGenerator gen, SerializerProvider sp)
                 throws IOException, JsonProcessingException {
             ApiToken token = wrappedToken.getToken();
-            Atlan.getDefaultClient().writeValue(gen, token);
+            client.writeValue(gen, token);
         }
     }
 }

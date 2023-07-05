@@ -20,10 +20,8 @@ public class ImagesEndpoint extends HeraclesEndpoint {
 
     private static final String endpoint = "/images";
 
-    private final AtlanClient client;
-
     public ImagesEndpoint(AtlanClient client) {
-        this.client = client;
+        super(client);
     }
 
     /**
@@ -61,7 +59,7 @@ public class ImagesEndpoint extends HeraclesEndpoint {
      * @throws AtlanException on any API communication issues
      */
     public AtlanImage upload(InputStream imageSrc, String filename) throws AtlanException {
-        String url = String.format("%s%s", getBaseUrl(client), endpoint);
+        String url = String.format("%s%s", getBaseUrl(), endpoint);
         return ApiResource.request(
                 client, ApiResource.RequestMethod.POST, url, imageSrc, filename, AtlanImage.class, null);
     }

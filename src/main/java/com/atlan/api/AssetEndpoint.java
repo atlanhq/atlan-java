@@ -4,7 +4,6 @@ package com.atlan.api;
 
 import co.elastic.clients.elasticsearch._types.SortOptions;
 import co.elastic.clients.elasticsearch._types.SortOrder;
-import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
@@ -48,10 +47,8 @@ public class AssetEndpoint extends AtlasEndpoint {
     private static final String lineage_endpoint = "/lineage/getlineage";
     private static final String lineage_list_endpoint = "/lineage/list";
 
-    private final AtlanClient client;
-
     public AssetEndpoint(AtlanClient client) {
-        this.client = client;
+        super(client);
     }
 
     /**
@@ -74,7 +71,7 @@ public class AssetEndpoint extends AtlasEndpoint {
      * @throws AtlanException on any API interaction problems
      */
     public AuditSearchResponse auditLogs(AuditSearchRequest request, RequestOptions options) throws AtlanException {
-        String url = String.format("%s%s", getBaseUrl(client), audit_endpoint);
+        String url = String.format("%s%s", getBaseUrl(), audit_endpoint);
         return ApiResource.request(
                 client, ApiResource.RequestMethod.POST, url, request, AuditSearchResponse.class, options);
     }
@@ -134,7 +131,7 @@ public class AssetEndpoint extends AtlasEndpoint {
             throws AtlanException {
         String url = String.format(
                 "%s%s",
-                getBaseUrl(client),
+                getBaseUrl(),
                 String.format(
                         "%s?replaceClassifications=%s&replaceBusinessAttributes=false&overwriteBusinessAttributes=false",
                         bulk_endpoint, replaceAtlanTags));
@@ -170,7 +167,7 @@ public class AssetEndpoint extends AtlasEndpoint {
             throws AtlanException {
         String url = String.format(
                 "%s%s",
-                getBaseUrl(client),
+                getBaseUrl(),
                 String.format(
                         "%s?replaceClassifications=%s&replaceBusinessAttributes=true&overwriteBusinessAttributes=false",
                         bulk_endpoint, replaceAtlanTags));
@@ -208,7 +205,7 @@ public class AssetEndpoint extends AtlasEndpoint {
             throws AtlanException {
         String url = String.format(
                 "%s%s",
-                getBaseUrl(client),
+                getBaseUrl(),
                 String.format(
                         "%s?replaceClassifications=%s&replaceBusinessAttributes=true&overwriteBusinessAttributes=true",
                         bulk_endpoint, replaceAtlanTags));
@@ -243,7 +240,7 @@ public class AssetEndpoint extends AtlasEndpoint {
             throws AtlanException {
         String url = String.format(
                 "%s%s",
-                getBaseUrl(client),
+                getBaseUrl(),
                 String.format(
                         "%s?replaceClassifications=%s&replaceBusinessAttributes=false&overwriteBusinessAttributes=false",
                         bulk_endpoint, replaceAtlanTags));
@@ -300,7 +297,7 @@ public class AssetEndpoint extends AtlasEndpoint {
                 guidList.setLength(guidList.length() - 1);
                 String url = String.format(
                         "%s%s",
-                        getBaseUrl(client), String.format("%s?%s&deleteType=%s", bulk_endpoint, guidList, deleteType));
+                        getBaseUrl(), String.format("%s?%s&deleteType=%s", bulk_endpoint, guidList, deleteType));
                 return ApiResource.request(
                         client, ApiResource.RequestMethod.DELETE, url, "", AssetDeletionResponse.class, options);
             }
@@ -353,7 +350,7 @@ public class AssetEndpoint extends AtlasEndpoint {
     public AssetMutationResponse restore(List<Asset> values, RequestOptions options) throws AtlanException {
         String url = String.format(
                 "%s%s",
-                getBaseUrl(client),
+                getBaseUrl(),
                 String.format(
                         "%s?replaceClassifications=false&replaceBusinessAttributes=false&overwriteBusinessAttributes=false",
                         bulk_endpoint));
@@ -393,7 +390,7 @@ public class AssetEndpoint extends AtlasEndpoint {
             throws AtlanException {
         String url = String.format(
                 "%s%s",
-                getBaseUrl(client),
+                getBaseUrl(),
                 String.format(
                         "%s%s?ignoreRelationships=%s&minExtInfo=%s",
                         guid_endpoint, ApiResource.urlEncodeId(guid), ignoreRelationships, minExtInfo));
@@ -431,11 +428,10 @@ public class AssetEndpoint extends AtlasEndpoint {
             client.getCustomMetadataCache().getIdForName(cmName);
             String url = String.format(
                     "%s%s",
-                    getBaseUrl(client),
+                    getBaseUrl(),
                     String.format(
                             "%s%s/businessmetadata?isOverwrite=false", guid_endpoint, ApiResource.urlEncodeId(guid)));
-            CustomMetadataUpdateRequest cmur =
-                    new CustomMetadataUpdateRequest(client, cmName, values.getAttributes(), true);
+            CustomMetadataUpdateRequest cmur = new CustomMetadataUpdateRequest(cmName, values.getAttributes(), true);
             ApiResource.request(client, ApiResource.RequestMethod.POST, url, cmur, null, options);
         }
     }
@@ -473,11 +469,11 @@ public class AssetEndpoint extends AtlasEndpoint {
         }
         String url = String.format(
                 "%s%s",
-                getBaseUrl(client),
+                getBaseUrl(),
                 String.format(
                         "%s%s/businessmetadata/%s",
                         guid_endpoint, ApiResource.urlEncodeId(guid), ApiResource.urlEncodeId(cmId)));
-        CustomMetadataUpdateRequest cmur = new CustomMetadataUpdateRequest(client, cmName, baseMap, false);
+        CustomMetadataUpdateRequest cmur = new CustomMetadataUpdateRequest(cmName, baseMap, false);
         ApiResource.request(client, ApiResource.RequestMethod.POST, url, cmur, null, options);
     }
 
@@ -552,7 +548,7 @@ public class AssetEndpoint extends AtlasEndpoint {
             throws AtlanException {
         String url = String.format(
                 "%s%s",
-                getBaseUrl(client),
+                getBaseUrl(),
                 String.format(
                         "%s%s?attr:qualifiedName=%s&ignoreRelationships=%s&minExtInfo=%s",
                         unique_attr_endpoint,
@@ -595,7 +591,7 @@ public class AssetEndpoint extends AtlasEndpoint {
             String typeName, String qualifiedName, Asset value, RequestOptions options) throws AtlanException {
         String url = String.format(
                 "%s%s",
-                getBaseUrl(client),
+                getBaseUrl(),
                 String.format(
                         "%s%s?attr:qualifiedName=%s",
                         unique_attr_endpoint, typeName, ApiResource.urlEncode(qualifiedName)));
@@ -701,7 +697,7 @@ public class AssetEndpoint extends AtlasEndpoint {
         }
         String url = String.format(
                 "%s%s",
-                getBaseUrl(client),
+                getBaseUrl(),
                 String.format(
                         "%s%s/classifications?attr:qualifiedName=%s",
                         unique_attr_endpoint, typeName, ApiResource.urlEncode(qualifiedName)));
@@ -746,7 +742,7 @@ public class AssetEndpoint extends AtlasEndpoint {
         String atlanTagId = client.getAtlanTagCache().getIdForName(atlanTagName);
         String url = String.format(
                 "%s%s",
-                getBaseUrl(client),
+                getBaseUrl(),
                 String.format(
                         "%s%s/classification/%s?attr:qualifiedName=%s",
                         unique_attr_endpoint, typeName, atlanTagId, ApiResource.urlEncode(qualifiedName)));
@@ -784,7 +780,7 @@ public class AssetEndpoint extends AtlasEndpoint {
      * @throws AtlanException on any API interaction problems
      */
     public IndexSearchResponse search(IndexSearchRequest request, RequestOptions options) throws AtlanException {
-        String url = String.format("%s%s", getBaseUrl(client), search_endpoint);
+        String url = String.format("%s%s", getBaseUrl(), search_endpoint);
         if (request.getDsl().getSort() == null || request.getDsl().getSort().isEmpty()) {
             // If no sort has been provided, explicitly sort by _doc for consistency of paging
             // operations
@@ -809,7 +805,7 @@ public class AssetEndpoint extends AtlasEndpoint {
      * @see #lineage(LineageListRequest)
      */
     public LineageResponse lineage(LineageRequest request) throws AtlanException {
-        String url = String.format("%s%s", getBaseUrl(client), lineage_endpoint);
+        String url = String.format("%s%s", getBaseUrl(), lineage_endpoint);
         return ApiResource.request(client, ApiResource.RequestMethod.POST, url, request, LineageResponse.class, null);
     }
 
@@ -833,7 +829,7 @@ public class AssetEndpoint extends AtlasEndpoint {
      * @throws AtlanException on any API interaction problems
      */
     public LineageListResponse lineage(LineageListRequest request, RequestOptions options) throws AtlanException {
-        String url = String.format("%s%s", getBaseUrl(client), lineage_list_endpoint);
+        String url = String.format("%s%s", getBaseUrl(), lineage_list_endpoint);
         return ApiResource.request(
                 client, ApiResource.RequestMethod.POST, url, request, LineageListResponse.class, options);
     }
@@ -849,9 +845,9 @@ public class AssetEndpoint extends AtlasEndpoint {
         }
 
         @Override
-        public String toJson() {
+        public String toJson(AtlanClient client) {
             try {
-                return Atlan.getDefaultClient().writeValueAsString(tags);
+                return client.writeValueAsString(tags);
             } catch (IOException e) {
                 throw new RuntimeException("Unable to serialize list of Atlan tags.", e);
             }
@@ -884,11 +880,7 @@ public class AssetEndpoint extends AtlasEndpoint {
         /** Mapping of custom metadata attributes to values, all by internal IDs. */
         private final transient Map<String, Object> attributes;
 
-        private final transient AtlanClient client;
-
-        public CustomMetadataUpdateRequest(
-                AtlanClient client, String name, Map<String, Object> attributes, boolean includeName) {
-            this.client = client;
+        public CustomMetadataUpdateRequest(String name, Map<String, Object> attributes, boolean includeName) {
             this.name = name;
             this.attributes = attributes;
             this.includeName = includeName;
@@ -900,7 +892,7 @@ public class AssetEndpoint extends AtlasEndpoint {
          * @return the JSON for the embedded map
          */
         @Override
-        public String toJson() {
+        public String toJson(AtlanClient client) {
             Map<String, Object> businessMetadataAttributes = new LinkedHashMap<>();
             try {
                 client.getCustomMetadataCache().getIdMapFromNameMap(name, attributes, businessMetadataAttributes);
@@ -908,9 +900,9 @@ public class AssetEndpoint extends AtlasEndpoint {
                     Map<String, Map<String, Object>> wrapped = new LinkedHashMap<>();
                     String cmId = client.getCustomMetadataCache().getIdForName(name);
                     wrapped.put(cmId, businessMetadataAttributes);
-                    return Atlan.getDefaultClient().writeValueAsString(wrapped);
+                    return client.writeValueAsString(wrapped);
                 } else {
-                    return Atlan.getDefaultClient().writeValueAsString(businessMetadataAttributes);
+                    return client.writeValueAsString(businessMetadataAttributes);
                 }
             } catch (AtlanException | IOException e) {
                 throw new RuntimeException(

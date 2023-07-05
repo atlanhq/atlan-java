@@ -27,23 +27,21 @@ public class LogsEndpoint extends HeraclesEndpoint {
     private static final String endpoint_main = endpoint + "/main";
     private static final String endpoint_login = endpoint + "/login";
 
-    private final AtlanClient client;
-
     public LogsEndpoint(AtlanClient client) {
-        this.client = client;
+        super(client);
     }
 
     // TODO: Looks like this maps to the Keycloak endpoint GET /{realm}/admin-events
     //  - Can reuse the model from AtlanUser.AdminEvent
     public RawResponse getMain() throws AtlanException {
-        String url = String.format("%s%s?operationTypes=CREATE", getBaseUrl(client), endpoint_main);
+        String url = String.format("%s%s?operationTypes=CREATE", getBaseUrl(), endpoint_main);
         return ApiResource.request(client, ApiResource.RequestMethod.GET, url, "", RawResponse.class, null);
     }
 
     // TODO: Looks like this maps to the Keycloak endpoint ???
     //  - Can reuse the model from AtlanUser.LoginEvent
     public RawResponse getLogins() throws AtlanException {
-        String url = String.format("%s%s", getBaseUrl(client), endpoint_login);
+        String url = String.format("%s%s", getBaseUrl(), endpoint_login);
         return ApiResource.request(client, ApiResource.RequestMethod.GET, url, "", RawResponse.class, null);
     }
 

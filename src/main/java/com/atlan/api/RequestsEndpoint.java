@@ -2,7 +2,6 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.api;
 
-import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.admin.*;
@@ -32,10 +31,8 @@ public class RequestsEndpoint extends HeraclesEndpoint {
     private static final String endpoint = "/requests";
     private static final int defaultLimit = 40;
 
-    private final AtlanClient client;
-
     public RequestsEndpoint(AtlanClient client) {
-        this.client = client;
+        super(client);
     }
 
     // TODO: eventually provide a rich RQL object for the filter
@@ -48,7 +45,7 @@ public class RequestsEndpoint extends HeraclesEndpoint {
      * @throws AtlanException on any API communication issue
      */
     public AtlanRequest get(String guid) throws AtlanException {
-        String url = String.format("%s%s/%s", getBaseUrl(client), endpoint, guid);
+        String url = String.format("%s%s/%s", getBaseUrl(), endpoint, guid);
         WrappedRequest result =
                 ApiResource.request(client, ApiResource.RequestMethod.GET, url, "", WrappedRequest.class, null);
         if (result != null) {
@@ -76,12 +73,7 @@ public class RequestsEndpoint extends HeraclesEndpoint {
         }
         String url = String.format(
                 "%s%s?limit=%s&offset=%s&sort=%s&filter=%s",
-                getBaseUrl(client),
-                endpoint,
-                limit,
-                offset,
-                ApiResource.urlEncode(sort),
-                ApiResource.urlEncode(filter));
+                getBaseUrl(), endpoint, limit, offset, ApiResource.urlEncode(sort), ApiResource.urlEncode(filter));
         return ApiResource.request(client, ApiResource.RequestMethod.GET, url, "", AtlanRequestResponse.class, null);
     }
 
@@ -130,12 +122,7 @@ public class RequestsEndpoint extends HeraclesEndpoint {
         }
         String url = String.format(
                 "%s%s/actionable?limit=%s&offset=%s&sort=%s&filter=%s",
-                getBaseUrl(client),
-                endpoint,
-                limit,
-                offset,
-                ApiResource.urlEncode(sort),
-                ApiResource.urlEncode(filter));
+                getBaseUrl(), endpoint, limit, offset, ApiResource.urlEncode(sort), ApiResource.urlEncode(filter));
         return ApiResource.request(client, ApiResource.RequestMethod.GET, url, "", AtlanRequestResponse.class, null);
     }
 
@@ -179,7 +166,7 @@ public class RequestsEndpoint extends HeraclesEndpoint {
      * @throws AtlanException on any API communication issue
      */
     public void create(List<AtlanRequest> requests) throws AtlanException {
-        String url = String.format("%s%s/bulk", getBaseUrl(client), endpoint);
+        String url = String.format("%s%s/bulk", getBaseUrl(), endpoint);
         BulkRequest br = new BulkRequest(requests);
         ApiResource.request(client, ApiResource.RequestMethod.POST, url, br, null, null);
     }
@@ -209,7 +196,7 @@ public class RequestsEndpoint extends HeraclesEndpoint {
     }
 
     private boolean action(String guid, AtlanRequestStatus action, String message) throws AtlanException {
-        String url = String.format("%s%s/%s/action", getBaseUrl(client), endpoint, guid);
+        String url = String.format("%s%s/%s/action", getBaseUrl(), endpoint, guid);
         if (message == null) {
             message = "";
         }
@@ -295,12 +282,16 @@ public class RequestsEndpoint extends HeraclesEndpoint {
     private static class WrappedRequestSerializer extends StdSerializer<WrappedRequest> {
         private static final long serialVersionUID = 2L;
 
-        public WrappedRequestSerializer() {
-            this(null);
+        private final AtlanClient client;
+
+        @SuppressWarnings("UnusedMethod")
+        public WrappedRequestSerializer(AtlanClient client) {
+            this(WrappedRequest.class, client);
         }
 
-        public WrappedRequestSerializer(Class<WrappedRequest> t) {
+        public WrappedRequestSerializer(Class<WrappedRequest> t, AtlanClient client) {
             super(t);
+            this.client = client;
         }
 
         /**
@@ -310,7 +301,7 @@ public class RequestsEndpoint extends HeraclesEndpoint {
         public void serialize(WrappedRequest wrappedRequest, JsonGenerator gen, SerializerProvider sp)
                 throws IOException, JsonProcessingException {
             AtlanRequest request = wrappedRequest.getRequest();
-            Atlan.getDefaultClient().writeValue(gen, List.of(request));
+            client.writeValue(gen, List.of(request));
         }
     }
 
@@ -353,12 +344,16 @@ public class RequestsEndpoint extends HeraclesEndpoint {
     private static class WrappedStringSerializer extends StdSerializer<WrappedString> {
         private static final long serialVersionUID = 2L;
 
-        public WrappedStringSerializer() {
-            this(null);
+        private final AtlanClient client;
+
+        @SuppressWarnings("UnusedMethod")
+        public WrappedStringSerializer(AtlanClient client) {
+            this(WrappedString.class, client);
         }
 
-        public WrappedStringSerializer(Class<WrappedString> t) {
+        public WrappedStringSerializer(Class<WrappedString> t, AtlanClient client) {
             super(t);
+            this.client = client;
         }
 
         /**
@@ -368,7 +363,7 @@ public class RequestsEndpoint extends HeraclesEndpoint {
         public void serialize(WrappedString wrappedString, JsonGenerator gen, SerializerProvider sp)
                 throws IOException, JsonProcessingException {
             String string = wrappedString.getResult();
-            Atlan.getDefaultClient().writeValue(gen, string);
+            client.writeValue(gen, string);
         }
     }
 }

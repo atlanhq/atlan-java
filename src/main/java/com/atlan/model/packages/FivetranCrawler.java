@@ -2,7 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.packages;
 
-import com.atlan.Atlan;
+import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.admin.PackageParameter;
@@ -22,18 +22,21 @@ public class FivetranCrawler extends AbstractCrawler {
      * Builds the minimal object necessary to create a new crawler for Fivetran,
      * using basic authentication, with the default settings.
      *
+     * @param client connectivity to Atlan
      * @param connectionName name of the connection to create
      * @param apiKey through which to access Fivetran APIs
      * @param apiSecret through which to access Fivetran APIs
      * @return the minimal workflow necessary to crawl Fivetran
      * @throws AtlanException if there is any issue obtaining the admin role GUID
      */
-    public static Workflow directApiAuth(String connectionName, String apiKey, String apiSecret) throws AtlanException {
+    public static Workflow directApiAuth(AtlanClient client, String connectionName, String apiKey, String apiSecret)
+            throws AtlanException {
         return directApiAuth(
+                client,
                 connectionName,
                 apiKey,
                 apiSecret,
-                List.of(Atlan.getDefaultClient().getRoleCache().getIdForName("$admin")),
+                List.of(client.getRoleCache().getIdForName("$admin")),
                 null,
                 null);
     }
@@ -41,6 +44,7 @@ public class FivetranCrawler extends AbstractCrawler {
     /**
      * Builds the minimal object necessary to create a new crawler for Fivetran.
      *
+     * @param client connectivity to Atlan
      * @param connectionName name of the connection to create
      * @param apiKey through which to access Fivetran APIs
      * @param apiSecret through which to access Fivetran APIs
@@ -53,6 +57,7 @@ public class FivetranCrawler extends AbstractCrawler {
      * @throws AtlanException on any other error, such as an inability to retrieve the users, groups or roles in Atlan
      */
     public static Workflow directApiAuth(
+            AtlanClient client,
             String connectionName,
             String apiKey,
             String apiSecret,
@@ -86,7 +91,7 @@ public class FivetranCrawler extends AbstractCrawler {
         credentialBody.put("connectorConfigName", "atlan-connectors-fivetran");
 
         WorkflowParameters.WorkflowParametersBuilder<?, ?> argsBuilder = WorkflowParameters.builder()
-                .parameter(NameValuePair.of("connection", connection.toJson()))
+                .parameter(NameValuePair.of("connection", connection.toJson(client)))
                 .parameter(NameValuePair.of("credential-guid", "{{credentialGuid}}"));
 
         String runName = PREFIX + "-" + epoch;

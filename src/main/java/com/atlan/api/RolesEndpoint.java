@@ -14,10 +14,8 @@ public class RolesEndpoint extends HeraclesEndpoint {
 
     private static final String endpoint = "/roles";
 
-    private final AtlanClient client;
-
     public RolesEndpoint(AtlanClient client) {
-        this.client = client;
+        super(client);
     }
 
     // TODO: eventually provide a rich RQL object for the filter
@@ -43,7 +41,7 @@ public class RolesEndpoint extends HeraclesEndpoint {
         }
         String url = String.format(
                 "%s%s?filter=%s&sort=%s&count=%s&offset=%s&limit=%s",
-                getBaseUrl(client),
+                getBaseUrl(),
                 endpoint,
                 ApiResource.urlEncode(filter),
                 ApiResource.urlEncode(sort),
@@ -64,7 +62,7 @@ public class RolesEndpoint extends HeraclesEndpoint {
         if (filter == null) {
             filter = "";
         }
-        String url = String.format("%s%s?filter=%s", getBaseUrl(client), endpoint, ApiResource.urlEncode(filter));
+        String url = String.format("%s%s?filter=%s", getBaseUrl(), endpoint, ApiResource.urlEncode(filter));
         return ApiResource.request(client, ApiResource.RequestMethod.GET, url, "", RoleResponse.class, null);
     }
 
@@ -75,7 +73,7 @@ public class RolesEndpoint extends HeraclesEndpoint {
      * @throws AtlanException on any API communication issue
      */
     public RoleResponse getAllRoles() throws AtlanException {
-        String url = String.format("%s%s", getBaseUrl(client), endpoint);
+        String url = String.format("%s%s", getBaseUrl(), endpoint);
         return ApiResource.request(client, ApiResource.RequestMethod.GET, url, "", RoleResponse.class, null);
     }
 }

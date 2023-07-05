@@ -2,7 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.packages;
 
-import com.atlan.Atlan;
+import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.admin.PackageParameter;
@@ -22,6 +22,7 @@ public class SigmaCrawler extends AbstractCrawler {
      * Builds the minimal object necessary to create a new crawler for Sigma,
      * using token-based authentication, with the default settings.
      *
+     * @param client connectivity to Atlan
      * @param connectionName name of the connection to create
      * @param hostname of the Sigma instance
      * @param clientId through which to access Sigma
@@ -29,15 +30,17 @@ public class SigmaCrawler extends AbstractCrawler {
      * @return the minimal workflow necessary to crawl Sigma
      * @throws AtlanException if there is any issue obtaining the admin role GUID
      */
-    public static Workflow tokenBased(String connectionName, String hostname, String clientId, String apiToken)
+    public static Workflow tokenBased(
+            AtlanClient client, String connectionName, String hostname, String clientId, String apiToken)
             throws AtlanException {
         return tokenBased(
+                client,
                 connectionName,
                 hostname,
                 443,
                 clientId,
                 apiToken,
-                List.of(Atlan.getDefaultClient().getRoleCache().getIdForName("$admin")),
+                List.of(client.getRoleCache().getIdForName("$admin")),
                 null,
                 null,
                 "{}",
@@ -47,6 +50,7 @@ public class SigmaCrawler extends AbstractCrawler {
     /**
      * Builds the minimal object necessary to create a new crawler for Sigma.
      *
+     * @param client connectivity to Atlan
      * @param connectionName name of the connection to create
      * @param hostname of the Sigma instance
      * @param port on which the Sigma instance is running
@@ -63,6 +67,7 @@ public class SigmaCrawler extends AbstractCrawler {
      * @throws AtlanException on any other error, such as an inability to retrieve the users, groups or roles in Atlan
      */
     public static Workflow tokenBased(
+            AtlanClient client,
             String connectionName,
             String hostname,
             int port,
@@ -103,7 +108,7 @@ public class SigmaCrawler extends AbstractCrawler {
                 .parameter(NameValuePair.of("atlas-auth-type", "internal"))
                 .parameter(NameValuePair.of("include-filter", includeFilter))
                 .parameter(NameValuePair.of("exclude-filter", excludeFilter))
-                .parameter(NameValuePair.of("connection", connection.toJson()))
+                .parameter(NameValuePair.of("connection", connection.toJson(client)))
                 .parameter(NameValuePair.of("publish-mode", "production"));
 
         String atlanName = PREFIX + "-default-sigma-" + epoch;

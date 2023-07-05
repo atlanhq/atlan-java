@@ -73,7 +73,7 @@ public class AtlanRequestTest {
     @Test(groups = {"AtlanRequest.serialize"})
     void serialization() {
         assertNotNull(full);
-        serialized = full.toJson();
+        serialized = full.toJson(Atlan.getDefaultClient());
         assertNotNull(serialized);
         assertEquals(full.hashCode(), HASH, "Object is mutated by serialization.");
     }
@@ -93,7 +93,7 @@ public class AtlanRequestTest {
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
-        String backAgain = frodo.toJson();
+        String backAgain = frodo.toJson(Atlan.getDefaultClient());
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
     }
 

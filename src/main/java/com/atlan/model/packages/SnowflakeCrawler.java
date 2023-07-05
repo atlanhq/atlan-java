@@ -2,7 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.packages;
 
-import com.atlan.Atlan;
+import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
@@ -24,6 +24,7 @@ public class SnowflakeCrawler extends AbstractCrawler {
      * Builds the minimal object necessary to create a new crawler for Snowflake,
      * using basic authentication, with the default settings.
      *
+     * @param client connectivity to Atlan
      * @param connectionName name of the connection to create
      * @param hostname of the Snowflake instance
      * @param username through which to access Snowflake
@@ -34,9 +35,16 @@ public class SnowflakeCrawler extends AbstractCrawler {
      * @throws AtlanException if there is any issue obtaining the admin role GUID
      */
     public static Workflow infoSchemaBasicAuth(
-            String connectionName, String hostname, String username, String password, String role, String warehouse)
+            AtlanClient client,
+            String connectionName,
+            String hostname,
+            String username,
+            String password,
+            String role,
+            String warehouse)
             throws AtlanException {
         return infoSchemaBasicAuth(
+                client,
                 connectionName,
                 hostname,
                 443,
@@ -44,7 +52,7 @@ public class SnowflakeCrawler extends AbstractCrawler {
                 password,
                 role,
                 warehouse,
-                List.of(Atlan.getDefaultClient().getRoleCache().getIdForName("$admin")),
+                List.of(client.getRoleCache().getIdForName("$admin")),
                 null,
                 null,
                 true,
@@ -57,6 +65,7 @@ public class SnowflakeCrawler extends AbstractCrawler {
     /**
      * Builds the minimal object necessary to create a new crawler for Snowflake.
      *
+     * @param client connectivity to Atlan
      * @param connectionName name of the connection to create
      * @param hostname of the Snowflake instance
      * @param port on which the Snowflake instance is running
@@ -82,6 +91,7 @@ public class SnowflakeCrawler extends AbstractCrawler {
      * @throws AtlanException on any other error, such as an inability to retrieve the users, groups or roles in Atlan
      */
     public static Workflow infoSchemaBasicAuth(
+            AtlanClient client,
             String connectionName,
             String hostname,
             int port,
@@ -133,7 +143,7 @@ public class SnowflakeCrawler extends AbstractCrawler {
                 .parameter(NameValuePair.of("control-config-strategy", "default"))
                 .parameter(NameValuePair.of("enable-lineage", true))
                 .parameter(NameValuePair.of("enable-snowflake-tags", false))
-                .parameter(NameValuePair.of("connection", connection.toJson()));
+                .parameter(NameValuePair.of("connection", connection.toJson(client)));
         try {
             if (!toInclude.isEmpty()) {
                 argsBuilder = argsBuilder.parameter(

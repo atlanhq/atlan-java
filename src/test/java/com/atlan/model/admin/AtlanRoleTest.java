@@ -25,7 +25,7 @@ public class AtlanRoleTest {
     @Test(groups = {"AtlanRole.serialize"})
     void serialization() {
         assertNotNull(full);
-        serialized = full.toJson();
+        serialized = full.toJson(Atlan.getDefaultClient());
         assertNotNull(serialized);
     }
 
@@ -44,7 +44,7 @@ public class AtlanRoleTest {
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
-        String backAgain = frodo.toJson();
+        String backAgain = frodo.toJson(Atlan.getDefaultClient());
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
     }
 

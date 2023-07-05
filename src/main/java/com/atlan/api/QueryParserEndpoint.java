@@ -15,10 +15,8 @@ public class QueryParserEndpoint extends HekaEndpoint {
 
     private static final String endpoint = "/query/parse";
 
-    private final AtlanClient client;
-
     public QueryParserEndpoint(AtlanClient client) {
-        this.client = client;
+        super(client);
     }
 
     /**
@@ -29,7 +27,7 @@ public class QueryParserEndpoint extends HekaEndpoint {
      * @throws AtlanException on any issues with API communication
      */
     public ParsedQuery parse(QueryParserRequest request) throws AtlanException {
-        String url = String.format("%s%s", getBaseUrl(client), endpoint);
+        String url = String.format("%s%s", getBaseUrl(), endpoint);
         return ApiResource.request(client, ApiResource.RequestMethod.POST, url, request, ParsedQuery.class, null);
     }
 }

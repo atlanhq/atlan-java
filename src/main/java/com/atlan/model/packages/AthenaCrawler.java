@@ -2,7 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.packages;
 
-import com.atlan.Atlan;
+import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
@@ -24,6 +24,7 @@ public class AthenaCrawler extends AbstractCrawler {
      * Builds the minimal object necessary to create a new crawler for Athena,
      * using basic authentication, with the default settings.
      *
+     * @param client connectivity to Atlan
      * @param connectionName name of the connection to create
      * @param hostname of the Athena instance
      * @param accessKey through which to access Athena
@@ -33,9 +34,15 @@ public class AthenaCrawler extends AbstractCrawler {
      * @throws AtlanException if there is any issue obtaining the admin role GUID
      */
     public static Workflow iamUserAuth(
-            String connectionName, String hostname, String accessKey, String secretKey, String s3OutputLocation)
+            AtlanClient client,
+            String connectionName,
+            String hostname,
+            String accessKey,
+            String secretKey,
+            String s3OutputLocation)
             throws AtlanException {
         return iamUserAuth(
+                client,
                 connectionName,
                 hostname,
                 443,
@@ -43,7 +50,7 @@ public class AthenaCrawler extends AbstractCrawler {
                 secretKey,
                 s3OutputLocation,
                 "primary",
-                List.of(Atlan.getDefaultClient().getRoleCache().getIdForName("$admin")),
+                List.of(client.getRoleCache().getIdForName("$admin")),
                 null,
                 null,
                 true,
@@ -56,6 +63,7 @@ public class AthenaCrawler extends AbstractCrawler {
     /**
      * Builds the minimal object necessary to create a new crawler for Athena.
      *
+     * @param client connectivity to Atlan
      * @param connectionName name of the connection to create
      * @param hostname of the Athena instance
      * @param port on which the Athena instance is running
@@ -81,6 +89,7 @@ public class AthenaCrawler extends AbstractCrawler {
      * @throws AtlanException on any other error, such as an inability to retrieve the users, groups or roles in Atlan
      */
     public static Workflow iamUserAuth(
+            AtlanClient client,
             String connectionName,
             String hostname,
             int port,
@@ -127,7 +136,7 @@ public class AthenaCrawler extends AbstractCrawler {
         WorkflowParameters.WorkflowParametersBuilder<?, ?> argsBuilder = WorkflowParameters.builder()
                 .parameter(NameValuePair.of("credentials-fetch-strategy", "credential_guid"))
                 .parameter(NameValuePair.of("credential-guid", "{{credentialGuid}}"))
-                .parameter(NameValuePair.of("connection", connection.toJson()))
+                .parameter(NameValuePair.of("connection", connection.toJson(client)))
                 .parameter(NameValuePair.of("publish-mode", "production"))
                 .parameter(NameValuePair.of("atlas-auth-type", "internal"));
         try {

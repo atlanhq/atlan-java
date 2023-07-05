@@ -127,7 +127,7 @@ public abstract class ApiResource extends AtlanObject implements AtlanResponseIn
             RequestOptions options)
             throws AtlanException {
         checkNullTypedParams(url, payload);
-        return request(client, method, url, payload.toJson(), clazz, options);
+        return request(client, method, url, payload.toJson(client), clazz, options);
     }
 
     /**

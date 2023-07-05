@@ -12,7 +12,11 @@ public abstract class HekaEndpoint extends AbstractEndpoint {
     private static final String PREFIX = "/api/sql";
     private static final String SERVICE = "http://heka-service.heka";
 
-    protected static String getBaseUrl(AtlanClient client) throws ApiConnectionException {
-        return getBaseUrl(client, SERVICE, PREFIX);
+    public HekaEndpoint(AtlanClient client) {
+        super(client);
+    }
+
+    protected String getBaseUrl() throws ApiConnectionException {
+        return getBaseUrl(SERVICE, PREFIX);
     }
 }

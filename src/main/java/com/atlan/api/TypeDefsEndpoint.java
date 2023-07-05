@@ -2,7 +2,6 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.api;
 
-import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ConflictException;
@@ -41,10 +40,8 @@ public class TypeDefsEndpoint extends AtlasEndpoint {
     private static final String endpoint_singular = "/types/typedef";
     private static final String endpoint_by_name = "/types/typedef/name";
 
-    private final AtlanClient client;
-
     public TypeDefsEndpoint(AtlanClient client) {
-        this.client = client;
+        super(client);
     }
 
     /**
@@ -57,7 +54,7 @@ public class TypeDefsEndpoint extends AtlasEndpoint {
     public TypeDefResponse list(AtlanTypeCategory category) throws AtlanException {
         String url = String.format(
                 "%s%s",
-                getBaseUrl(client),
+                getBaseUrl(),
                 String.format("%s?type=%s", endpoint, category.getValue().toLowerCase(Locale.ROOT)));
         return ApiResource.request(client, ApiResource.RequestMethod.GET, url, "", TypeDefResponse.class, null);
     }
@@ -70,7 +67,7 @@ public class TypeDefsEndpoint extends AtlasEndpoint {
      * @throws AtlanException on any API communication issue
      */
     public TypeDef get(String internalName) throws AtlanException {
-        String url = String.format("%s%s/%s", getBaseUrl(client), endpoint_by_name, internalName);
+        String url = String.format("%s%s/%s", getBaseUrl(), endpoint_by_name, internalName);
         WrappedTypeDef response =
                 ApiResource.request(client, ApiResource.RequestMethod.GET, url, "", WrappedTypeDef.class, null);
         return response.getTypeDef();
@@ -145,7 +142,7 @@ public class TypeDefsEndpoint extends AtlasEndpoint {
     }
 
     private TypeDefResponse createInternal(TypeDefResponse.TypeDefResponseBuilder builder) throws AtlanException {
-        String url = String.format("%s%s", getBaseUrl(client), endpoint);
+        String url = String.format("%s%s", getBaseUrl(), endpoint);
         return ApiResource.request(
                 client, ApiResource.RequestMethod.POST, url, builder.build(), TypeDefResponse.class, null);
     }
@@ -218,7 +215,7 @@ public class TypeDefsEndpoint extends AtlasEndpoint {
     }
 
     private TypeDefResponse updateInternal(TypeDefResponse.TypeDefResponseBuilder builder) throws AtlanException {
-        String url = String.format("%s%s", getBaseUrl(client), endpoint);
+        String url = String.format("%s%s", getBaseUrl(), endpoint);
         return ApiResource.request(
                 client, ApiResource.RequestMethod.PUT, url, builder.build(), TypeDefResponse.class, null);
     }
@@ -237,8 +234,7 @@ public class TypeDefsEndpoint extends AtlasEndpoint {
         }
         String url = String.format(
                 "%s%s",
-                getBaseUrl(client),
-                String.format("%s/name/%s", endpoint_singular, StringUtils.encodeContent(internalName)));
+                getBaseUrl(), String.format("%s/name/%s", endpoint_singular, StringUtils.encodeContent(internalName)));
         ApiResource.request(client, ApiResource.RequestMethod.DELETE, url, "", null, null);
     }
 
@@ -281,12 +277,16 @@ public class TypeDefsEndpoint extends AtlasEndpoint {
     private static class WrappedTypeDefSerializer extends StdSerializer<WrappedTypeDef> {
         private static final long serialVersionUID = 2L;
 
-        public WrappedTypeDefSerializer() {
-            this(null);
+        private final AtlanClient client;
+
+        @SuppressWarnings("UnusedMethod")
+        public WrappedTypeDefSerializer(AtlanClient client) {
+            this(WrappedTypeDef.class, client);
         }
 
-        public WrappedTypeDefSerializer(Class<WrappedTypeDef> t) {
+        public WrappedTypeDefSerializer(Class<WrappedTypeDef> t, AtlanClient client) {
             super(t);
+            this.client = client;
         }
 
         /**
@@ -296,7 +296,7 @@ public class TypeDefsEndpoint extends AtlasEndpoint {
         public void serialize(WrappedTypeDef wrappedTypeDef, JsonGenerator gen, SerializerProvider sp)
                 throws IOException, JsonProcessingException {
             TypeDef typeDef = wrappedTypeDef.getTypeDef();
-            Atlan.getDefaultClient().writeValue(gen, typeDef);
+            client.writeValue(gen, typeDef);
         }
     }
 }

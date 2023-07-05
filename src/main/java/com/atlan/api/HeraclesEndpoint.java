@@ -12,7 +12,11 @@ public abstract class HeraclesEndpoint extends AbstractEndpoint {
     private static final String PREFIX = "/api/service";
     private static final String SERVICE = "http://heracles-service.heracles";
 
-    protected static String getBaseUrl(AtlanClient client) throws ApiConnectionException {
-        return getBaseUrl(client, SERVICE, PREFIX);
+    protected HeraclesEndpoint(AtlanClient client) {
+        super(client);
+    }
+
+    protected String getBaseUrl() throws ApiConnectionException {
+        return getBaseUrl(SERVICE, PREFIX);
     }
 }
