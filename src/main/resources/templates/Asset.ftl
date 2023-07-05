@@ -92,7 +92,7 @@
      * @throws AtlanException on any error during the API invocation
      */
     public AssetMutationResponse upsert() throws AtlanException {
-        return EntityBulkEndpoint.upsert(this, false);
+        return Atlan.getDefaultClient().assets().save(this, false);
     }
 
     /**
@@ -106,7 +106,7 @@
      */
     public AssetMutationResponse upsert(boolean replaceAtlanTags)
             throws AtlanException {
-        return EntityBulkEndpoint.upsert(this, replaceAtlanTags);
+        return Atlan.getDefaultClient().assets().save(this, replaceAtlanTags);
     }
 
     /**
@@ -121,7 +121,7 @@
      */
     public AssetMutationResponse upsertMergingCM(boolean replaceAtlanTags)
             throws AtlanException {
-        return EntityBulkEndpoint.upsertMergingCM(List.of(this), replaceAtlanTags);
+        return Atlan.getDefaultClient().assets().saveMergingCM(List.of(this), replaceAtlanTags);
     }
 
     /**
@@ -137,7 +137,7 @@
      */
     public AssetMutationResponse upsertReplacingCM(boolean replaceAtlanTags)
             throws AtlanException {
-        return EntityBulkEndpoint.upsertReplacingCM(List.of(this), replaceAtlanTags);
+        return Atlan.getDefaultClient().assets().saveReplacingCM(List.of(this), replaceAtlanTags);
     }
 
     /**
@@ -149,7 +149,7 @@
      * @throws AtlanException on any error during the API invocation, such as the {@link com.atlan.exception.NotFoundException} if the asset does not exist
      */
     public static Asset retrieveFull(String guid) throws AtlanException {
-        AssetResponse response = EntityGuidEndpoint.retrieve(guid, false, false);
+        AssetResponse response = Atlan.getDefaultClient().assets().get(guid, false, false);
         Asset asset = response.getAsset();
         if (asset != null) {
             asset.setCompleteObject();
@@ -166,7 +166,7 @@
      * @throws AtlanException on any error during the API invocation, such as the {@link com.atlan.exception.NotFoundException} if the asset does not exist
      */
     public static Asset retrieveMinimal(String guid) throws AtlanException {
-        AssetResponse response = EntityGuidEndpoint.retrieve(guid, true, true);
+        AssetResponse response = Atlan.getDefaultClient().assets().get(guid, true, true);
         return response.getAsset();
     }
 
@@ -180,7 +180,7 @@
      * @throws AtlanException on any error during the API invocation, such as the {@link com.atlan.exception.NotFoundException} if the asset does not exist
      */
     protected static Asset retrieveFull(String typeName, String qualifiedName) throws AtlanException {
-        AssetResponse response = EntityUniqueAttributesEndpoint.retrieve(typeName, qualifiedName, false, false);
+        AssetResponse response = Atlan.getDefaultClient().assets().get(typeName, qualifiedName, false, false);
         Asset asset = response.getAsset();
         if (asset != null) {
             asset.setCompleteObject();
@@ -198,7 +198,7 @@
      * @throws AtlanException on any error during the API invocation, such as the {@link com.atlan.exception.NotFoundException} if the asset does not exist
      */
     public static Asset retrieveMinimal(String typeName, String qualifiedName) throws AtlanException {
-        AssetResponse response = EntityUniqueAttributesEndpoint.retrieve(typeName, qualifiedName, true, true);
+        AssetResponse response = Atlan.getDefaultClient().assets().get(typeName, qualifiedName, true, true);
         return response.getAsset();
     }
 
@@ -211,7 +211,7 @@
      * @throws AtlanException on any error during the API invocation
      */
     public static AssetDeletionResponse delete(String guid) throws AtlanException {
-        return EntityBulkEndpoint.delete(guid, AtlanDeleteType.SOFT);
+        return Atlan.getDefaultClient().assets().delete(guid, AtlanDeleteType.SOFT);
     }
 
     /**
@@ -222,7 +222,7 @@
      * @throws AtlanException on any error during the API invocation
      */
     public static AssetDeletionResponse purge(String guid) throws AtlanException {
-        return EntityBulkEndpoint.delete(guid, AtlanDeleteType.PURGE);
+        return Atlan.getDefaultClient().assets().delete(guid, AtlanDeleteType.PURGE);
     }
 
     /**
@@ -236,7 +236,7 @@
      */
     public static void updateCustomMetadataAttributes(String guid, String cmName, CustomMetadataAttributes attributes)
             throws AtlanException {
-        EntityGuidEndpoint.updateCustomMetadataAttributes(guid, cmName, attributes);
+        Atlan.getDefaultClient().assets().updateCustomMetadataAttributes(guid, cmName, attributes);
     }
 
     /**
@@ -250,7 +250,7 @@
      */
     public static void replaceCustomMetadata(String guid, String cmName, CustomMetadataAttributes attributes)
             throws AtlanException {
-        EntityGuidEndpoint.replaceCustomMetadata(guid, cmName, attributes);
+        Atlan.getDefaultClient().assets().replaceCustomMetadata(guid, cmName, attributes);
     }
 
     /**
@@ -261,7 +261,7 @@
      * @throws AtlanException on any API problems, or if the custom metadata is not defined in Atlan
      */
     public static void removeCustomMetadata(String guid, String cmName) throws AtlanException {
-        EntityGuidEndpoint.removeCustomMetadata(guid, cmName);
+        Atlan.getDefaultClient().assets().removeCustomMetadata(guid, cmName);
     }
 
     /**
@@ -349,7 +349,7 @@
     @Deprecated
     protected static void addAtlanTags(String typeName, String qualifiedName, List<String> atlanTagNames)
             throws AtlanException {
-        EntityUniqueAttributesEndpoint.addAtlanTags(typeName, qualifiedName, atlanTagNames);
+        Atlan.getDefaultClient().assets().addAtlanTags(typeName, qualifiedName, atlanTagNames);
     }
 
     /**
@@ -373,7 +373,7 @@
             boolean removePropagationsOnDelete,
             boolean restrictLineagePropagation)
             throws AtlanException {
-        EntityUniqueAttributesEndpoint.addAtlanTags(
+        Atlan.getDefaultClient().assets().addAtlanTags(
                 typeName,
                 qualifiedName,
                 atlanTagNames,
@@ -392,7 +392,7 @@
      */
     protected static void removeAtlanTag(String typeName, String qualifiedName, String atlanTagName)
             throws AtlanException {
-        EntityUniqueAttributesEndpoint.removeAtlanTag(typeName, qualifiedName, atlanTagName, true);
+        Atlan.getDefaultClient().assets().removeAtlanTag(typeName, qualifiedName, atlanTagName, true);
     }
 
     /**
@@ -522,7 +522,7 @@
     }
 
     private static Asset updateAttributes(Asset asset) throws AtlanException {
-        AssetMutationResponse response = EntityBulkEndpoint.upsert(asset, false);
+        AssetMutationResponse response = Atlan.getDefaultClient().assets().save(asset, false);
         if (response != null && !response.getUpdatedAssets().isEmpty()) {
             return response.getUpdatedAssets().get(0);
         }
@@ -530,7 +530,7 @@
     }
 
     private static Asset replaceAtlanTags(Asset asset) throws AtlanException {
-        AssetMutationResponse response = EntityBulkEndpoint.upsert(asset, true);
+        AssetMutationResponse response = Atlan.getDefaultClient().assets().save(asset, true);
         if (response != null && !response.getUpdatedAssets().isEmpty()) {
             return response.getUpdatedAssets().get(0);
         }
@@ -594,7 +594,7 @@
 
     private static Asset updateAttributes(String typeName, String qualifiedName, Asset asset) throws AtlanException {
         AssetMutationResponse response =
-                EntityUniqueAttributesEndpoint.updateAttributes(typeName, qualifiedName, asset);
+                Atlan.getDefaultClient().assets().updateAttributes(typeName, qualifiedName, asset);
         if (response != null && !response.getPartiallyUpdatedAssets().isEmpty()) {
             return response.getPartiallyUpdatedAssets().get(0);
         }
@@ -774,7 +774,7 @@
 
     private static Asset updateRelationships(Asset asset) throws AtlanException {
         String typeNameToUpdate = asset.getTypeName();
-        AssetMutationResponse response = EntityBulkEndpoint.upsert(asset, false);
+        AssetMutationResponse response = Atlan.getDefaultClient().assets().save(asset, false);
         if (response != null && !response.getUpdatedAssets().isEmpty()) {
             for (Asset result : response.getUpdatedAssets()) {
                 if (result.getTypeName().equals(typeNameToUpdate)) {
@@ -793,7 +793,7 @@
     }
 
     private static Optional<String> restore(Asset asset) throws AtlanException {
-        AssetMutationResponse response = EntityBulkEndpoint.restore(asset);
+        AssetMutationResponse response = Atlan.getDefaultClient().assets().restore(asset);
         if (response != null && !response.getGuidAssignments().isEmpty()) {
             return response.getGuidAssignments().values().stream().findFirst();
         }

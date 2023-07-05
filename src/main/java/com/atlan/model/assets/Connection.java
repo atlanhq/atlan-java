@@ -3,10 +3,7 @@
 package com.atlan.model.assets;
 
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
-import com.atlan.api.EntityBulkEndpoint;
-import com.atlan.cache.GroupCache;
-import com.atlan.cache.RoleCache;
-import com.atlan.cache.UserCache;
+import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
@@ -267,7 +264,7 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
                 .connectorType(connectorType);
         if (adminRoles != null && !adminRoles.isEmpty()) {
             for (String roleId : adminRoles) {
-                RoleCache.getNameForId(roleId);
+                Atlan.getDefaultClient().getRoleCache().getNameForId(roleId);
             }
             adminFound = true;
             builder.adminRoles(adminRoles);
@@ -276,7 +273,7 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
         }
         if (adminGroups != null && !adminGroups.isEmpty()) {
             for (String groupAlias : adminGroups) {
-                GroupCache.getIdForAlias(groupAlias);
+                Atlan.getDefaultClient().getGroupCache().getIdForAlias(groupAlias);
             }
             adminFound = true;
             builder.adminGroups(adminGroups);
@@ -285,7 +282,7 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
         }
         if (adminUsers != null && !adminUsers.isEmpty()) {
             for (String userName : adminUsers) {
-                UserCache.getIdForName(userName);
+                Atlan.getDefaultClient().getUserCache().getIdForName(userName);
             }
             adminFound = true;
             builder.adminUsers(adminUsers);
@@ -314,20 +311,20 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
         // (the cache retrievals will throw errors directly if there are any)
         if (adminRoles != null && !adminRoles.isEmpty()) {
             for (String roleId : adminRoles) {
-                RoleCache.getNameForId(roleId);
+                Atlan.getDefaultClient().getRoleCache().getNameForId(roleId);
             }
         }
         if (adminGroups != null && !adminGroups.isEmpty()) {
             for (String groupAlias : adminGroups) {
-                GroupCache.getIdForAlias(groupAlias);
+                Atlan.getDefaultClient().getGroupCache().getIdForAlias(groupAlias);
             }
         }
         if (adminUsers != null && !adminUsers.isEmpty()) {
             for (String userName : adminUsers) {
-                UserCache.getIdForName(userName);
+                Atlan.getDefaultClient().getUserCache().getIdForName(userName);
             }
         }
-        return EntityBulkEndpoint.connectionUpsert(this, false);
+        return Atlan.getDefaultClient().assets().save(this, false);
     }
 
     /**
@@ -346,20 +343,20 @@ public class Connection extends Asset implements IConnection, IAsset, IReference
         // (the cache retrievals will throw errors directly if there are any)
         if (adminRoles != null && !adminRoles.isEmpty()) {
             for (String roleId : adminRoles) {
-                RoleCache.getNameForId(roleId);
+                Atlan.getDefaultClient().getRoleCache().getNameForId(roleId);
             }
         }
         if (adminGroups != null && !adminGroups.isEmpty()) {
             for (String groupAlias : adminGroups) {
-                GroupCache.getIdForAlias(groupAlias);
+                Atlan.getDefaultClient().getGroupCache().getIdForAlias(groupAlias);
             }
         }
         if (adminUsers != null && !adminUsers.isEmpty()) {
             for (String userName : adminUsers) {
-                UserCache.getIdForName(userName);
+                Atlan.getDefaultClient().getUserCache().getIdForName(userName);
             }
         }
-        return EntityBulkEndpoint.connectionUpsert(this, replaceAtlanTags);
+        return Atlan.getDefaultClient().assets().save(this, replaceAtlanTags);
     }
 
     /**

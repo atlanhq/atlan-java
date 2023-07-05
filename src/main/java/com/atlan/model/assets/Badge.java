@@ -2,7 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
-import com.atlan.cache.CustomMetadataCache;
+import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
@@ -121,8 +121,8 @@ public class Badge extends Asset implements IBadge, IAsset, IReferenceable {
      * @throws AtlanException if the specified custom metadata for the badge cannot be found
      */
     public static BadgeBuilder<?, ?> creator(String name, String cmName, String cmAttribute) throws AtlanException {
-        String cmId = CustomMetadataCache.getIdForName(cmName);
-        String cmAttrId = CustomMetadataCache.getAttrIdForName(cmName, cmAttribute);
+        String cmId = Atlan.getDefaultClient().getCustomMetadataCache().getIdForName(cmName);
+        String cmAttrId = Atlan.getDefaultClient().getCustomMetadataCache().getAttrIdForName(cmName, cmAttribute);
         return Badge.builder()
                 .qualifiedName(generateQualifiedName(cmName, cmAttribute))
                 .name(name)
@@ -138,8 +138,8 @@ public class Badge extends Asset implements IBadge, IAsset, IReferenceable {
      * @throws AtlanException if the specified custom metadata cannot be found
      */
     public static String generateQualifiedName(String cmName, String cmAttribute) throws AtlanException {
-        String cmId = CustomMetadataCache.getIdForName(cmName);
-        String cmAttrId = CustomMetadataCache.getAttrIdForName(cmName, cmAttribute);
+        String cmId = Atlan.getDefaultClient().getCustomMetadataCache().getIdForName(cmName);
+        String cmAttrId = Atlan.getDefaultClient().getCustomMetadataCache().getAttrIdForName(cmName, cmAttribute);
         return "badges/global/" + cmId + "." + cmAttrId;
     }
 

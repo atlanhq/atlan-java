@@ -9,8 +9,8 @@
      * @throws AtlanException if the specified custom metadata for the badge cannot be found
      */
     public static BadgeBuilder<?, ?> creator(String name, String cmName, String cmAttribute) throws AtlanException {
-        String cmId = CustomMetadataCache.getIdForName(cmName);
-        String cmAttrId = CustomMetadataCache.getAttrIdForName(cmName, cmAttribute);
+        String cmId = Atlan.getDefaultClient().getCustomMetadataCache().getIdForName(cmName);
+        String cmAttrId = Atlan.getDefaultClient().getCustomMetadataCache().getAttrIdForName(cmName, cmAttribute);
         return Badge.builder()
                 .qualifiedName(generateQualifiedName(cmName, cmAttribute))
                 .name(name)
@@ -26,8 +26,8 @@
      * @throws AtlanException if the specified custom metadata cannot be found
      */
     public static String generateQualifiedName(String cmName, String cmAttribute) throws AtlanException {
-        String cmId = CustomMetadataCache.getIdForName(cmName);
-        String cmAttrId = CustomMetadataCache.getAttrIdForName(cmName, cmAttribute);
+        String cmId = Atlan.getDefaultClient().getCustomMetadataCache().getIdForName(cmName);
+        String cmAttrId = Atlan.getDefaultClient().getCustomMetadataCache().getAttrIdForName(cmName, cmAttribute);
         return "badges/global/" + cmId + "." + cmAttrId;
     }
 

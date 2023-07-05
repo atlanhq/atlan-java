@@ -2,7 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.workflow;
 
-import com.atlan.api.WorkflowsEndpoint;
+import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.core.AtlanObject;
 import com.atlan.model.enums.AtlanWorkflowPhase;
@@ -42,7 +42,7 @@ public class WorkflowSearchResult extends AtlanObject {
      */
     public WorkflowRunResponse rerun() throws AtlanException {
         if (_source != null) {
-            return WorkflowsEndpoint.run(_source);
+            return Atlan.getDefaultClient().workflows().run(_source);
         }
         return null;
     }

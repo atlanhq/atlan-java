@@ -3,8 +3,7 @@
 package com.atlan.model.assets;
 
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
-import com.atlan.cache.GroupCache;
-import com.atlan.cache.UserCache;
+import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
@@ -284,7 +283,7 @@ public class Purpose extends Asset implements IPurpose, IAccessControl, IAsset, 
         } else {
             if (policyGroups != null && !policyGroups.isEmpty()) {
                 for (String groupAlias : policyGroups) {
-                    GroupCache.getIdForAlias(groupAlias);
+                    Atlan.getDefaultClient().getGroupCache().getIdForAlias(groupAlias);
                 }
                 targetFound = true;
                 builder.policyGroups(policyGroups);
@@ -293,7 +292,7 @@ public class Purpose extends Asset implements IPurpose, IAccessControl, IAsset, 
             }
             if (policyUsers != null && !policyUsers.isEmpty()) {
                 for (String userName : policyUsers) {
-                    UserCache.getIdForName(userName);
+                    Atlan.getDefaultClient().getUserCache().getIdForName(userName);
                 }
                 targetFound = true;
                 builder.policyUsers(policyUsers);
@@ -343,7 +342,7 @@ public class Purpose extends Asset implements IPurpose, IAccessControl, IAsset, 
         } else {
             if (policyGroups != null && !policyGroups.isEmpty()) {
                 for (String groupAlias : policyGroups) {
-                    GroupCache.getIdForAlias(groupAlias);
+                    Atlan.getDefaultClient().getGroupCache().getIdForAlias(groupAlias);
                 }
                 targetFound = true;
                 builder.policyGroups(policyGroups);
@@ -352,7 +351,7 @@ public class Purpose extends Asset implements IPurpose, IAccessControl, IAsset, 
             }
             if (policyUsers != null && !policyUsers.isEmpty()) {
                 for (String userName : policyUsers) {
-                    UserCache.getIdForName(userName);
+                    Atlan.getDefaultClient().getUserCache().getIdForName(userName);
                 }
                 targetFound = true;
                 builder.policyUsers(policyUsers);

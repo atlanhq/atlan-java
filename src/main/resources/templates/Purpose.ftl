@@ -138,7 +138,7 @@
         } else {
             if (policyGroups != null && !policyGroups.isEmpty()) {
                 for (String groupAlias : policyGroups) {
-                    GroupCache.getIdForAlias(groupAlias);
+                    Atlan.getDefaultClient().getGroupCache().getIdForAlias(groupAlias);
                 }
                 targetFound = true;
                 builder.policyGroups(policyGroups);
@@ -147,7 +147,7 @@
             }
             if (policyUsers != null && !policyUsers.isEmpty()) {
                 for (String userName : policyUsers) {
-                    UserCache.getIdForName(userName);
+                    Atlan.getDefaultClient().getUserCache().getIdForName(userName);
                 }
                 targetFound = true;
                 builder.policyUsers(policyUsers);
@@ -197,7 +197,7 @@
         } else {
             if (policyGroups != null && !policyGroups.isEmpty()) {
                 for (String groupAlias : policyGroups) {
-                    GroupCache.getIdForAlias(groupAlias);
+                    Atlan.getDefaultClient().getGroupCache().getIdForAlias(groupAlias);
                 }
                 targetFound = true;
                 builder.policyGroups(policyGroups);
@@ -206,7 +206,7 @@
             }
             if (policyUsers != null && !policyUsers.isEmpty()) {
                 for (String userName : policyUsers) {
-                    UserCache.getIdForName(userName);
+                    Atlan.getDefaultClient().getUserCache().getIdForName(userName);
                 }
                 targetFound = true;
                 builder.policyUsers(policyUsers);
