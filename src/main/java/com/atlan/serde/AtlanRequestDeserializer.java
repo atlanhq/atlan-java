@@ -2,7 +2,6 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.serde;
 
-import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.NotFoundException;
@@ -133,8 +132,7 @@ public class AtlanRequestDeserializer extends StdDeserializer<AtlanRequest> {
                     // Inject typeName into the destinationEntity so that we can deserialize it
                     // appropriately
                     ((ObjectNode) destinationEntity).set("typeName", entityType);
-                    builder.destinationEntity(
-                            Atlan.getDefaultClient().convertValue(destinationEntity, new TypeReference<>() {}));
+                    builder.destinationEntity(client.convertValue(destinationEntity, new TypeReference<>() {}));
                 }
                 return builder.id(JacksonUtils.deserializeString(root, "id"))
                         .version(JacksonUtils.deserializeString(root, "version"))
@@ -156,24 +154,24 @@ public class AtlanRequestDeserializer extends StdDeserializer<AtlanRequest> {
                         .requestType(JacksonUtils.deserializeString(root, "requestType"))
                         .approvedBy(JacksonUtils.deserializeString(root, "approvedBy"))
                         .rejectedBy(JacksonUtils.deserializeString(root, "rejectedBy"))
-                        .status(JacksonUtils.deserializeObject(root, "status", new TypeReference<>() {}))
+                        .status(JacksonUtils.deserializeObject(client, root, "status", new TypeReference<>() {}))
                         .message(JacksonUtils.deserializeString(root, "message"))
                         .approvalType(JacksonUtils.deserializeString(root, "approvalType"))
                         .hash(JacksonUtils.deserializeLong(root, "hash"))
                         .isDuplicate(JacksonUtils.deserializeBoolean(root, "isDuplicate"))
                         .destinationValueAction(JacksonUtils.deserializeString(root, "destinationValueAction"))
-                        .requestApproverUsers(
-                                JacksonUtils.deserializeObject(root, "requestApproverUsers", new TypeReference<>() {}))
-                        .requestApproverGroups(
-                                JacksonUtils.deserializeObject(root, "requestApproverGroups", new TypeReference<>() {}))
-                        .requestApproverRoles(
-                                JacksonUtils.deserializeObject(root, "requestApproverRoles", new TypeReference<>() {}))
-                        .requestDenyUsers(
-                                JacksonUtils.deserializeObject(root, "requestDenyUsers", new TypeReference<>() {}))
-                        .requestDenyGroups(
-                                JacksonUtils.deserializeObject(root, "requestDenyGroups", new TypeReference<>() {}))
-                        .requestDenyRoles(
-                                JacksonUtils.deserializeObject(root, "requestDenyRoles", new TypeReference<>() {}))
+                        .requestApproverUsers(JacksonUtils.deserializeObject(
+                                client, root, "requestApproverUsers", new TypeReference<>() {}))
+                        .requestApproverGroups(JacksonUtils.deserializeObject(
+                                client, root, "requestApproverGroups", new TypeReference<>() {}))
+                        .requestApproverRoles(JacksonUtils.deserializeObject(
+                                client, root, "requestApproverRoles", new TypeReference<>() {}))
+                        .requestDenyUsers(JacksonUtils.deserializeObject(
+                                client, root, "requestDenyUsers", new TypeReference<>() {}))
+                        .requestDenyGroups(JacksonUtils.deserializeObject(
+                                client, root, "requestDenyGroups", new TypeReference<>() {}))
+                        .requestDenyRoles(JacksonUtils.deserializeObject(
+                                client, root, "requestDenyRoles", new TypeReference<>() {}))
                         .build();
             }
 

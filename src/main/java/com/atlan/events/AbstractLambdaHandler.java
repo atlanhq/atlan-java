@@ -56,7 +56,7 @@ public abstract class AbstractLambdaHandler implements RequestStreamHandler {
                 Asset current = handler.getCurrentState(event.getPayload().getAsset(), log);
                 Collection<Asset> updated = handler.calculateChanges(current, log);
                 if (!updated.isEmpty()) {
-                    handler.upsertChanges(updated, log);
+                    handler.saveChanges(Atlan.getDefaultClient(), updated, log);
                 }
             } catch (AtlanException e) {
                 throw new IOException(
@@ -91,7 +91,7 @@ public abstract class AbstractLambdaHandler implements RequestStreamHandler {
                 if (AtlanEventHandler.validSignature(SIGNING_SECRET, wrapper.getHeaders())) {
                     // pull out the embedded Atlan event and delegate it to be processed...
                     try {
-                        processEvent(AtlanEventHandler.getAtlanEvent(body), context);
+                        processEvent(AtlanEventHandler.getAtlanEvent(Atlan.getDefaultClient(), body), context);
                     } catch (IOException e) {
                         log.error("Unable to process the event.", e);
                     }

@@ -6,6 +6,7 @@ package com.atlan.net;
 import com.atlan.Atlan;
 import com.atlan.exception.ApiConnectionException;
 import com.atlan.exception.AtlanException;
+import com.atlan.serde.Serde;
 import com.atlan.util.Stopwatch;
 import java.io.IOException;
 import java.net.ConnectException;
@@ -174,9 +175,9 @@ public abstract class HttpClient {
 
         try {
             if (Atlan.getAppInfo() != null) {
-                propertyMap.put("application", Atlan.getDefaultClient().writeValueAsString(Atlan.getAppInfo()));
+                propertyMap.put("application", Serde.allInclusiveMapper.writeValueAsString(Atlan.getAppInfo()));
             }
-            return Atlan.getDefaultClient().writeValueAsString(propertyMap);
+            return Serde.allInclusiveMapper.writeValueAsString(propertyMap);
         } catch (IOException e) {
             throw new RuntimeException("Unable to build client user agent string.", e);
         }

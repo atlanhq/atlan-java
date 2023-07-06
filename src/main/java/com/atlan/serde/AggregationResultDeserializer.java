@@ -2,6 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.serde;
 
+import com.atlan.AtlanClient;
 import com.atlan.model.search.AggregationBucketResult;
 import com.atlan.model.search.AggregationMetricResult;
 import com.atlan.model.search.AggregationResult;
@@ -21,12 +22,15 @@ public class AggregationResultDeserializer extends StdDeserializer<AggregationRe
 
     private static final long serialVersionUID = 2L;
 
-    public AggregationResultDeserializer() {
-        this(null);
+    private final AtlanClient client;
+
+    public AggregationResultDeserializer(AtlanClient client) {
+        this(AggregationResult.class, client);
     }
 
-    public AggregationResultDeserializer(Class<?> t) {
+    public AggregationResultDeserializer(Class<?> t, AtlanClient client) {
         super(t);
+        this.client = client;
     }
 
     /**
@@ -58,7 +62,7 @@ public class AggregationResultDeserializer extends StdDeserializer<AggregationRe
             return AggregationBucketResult.builder()
                     .docCountErrorUpperBound(JacksonUtils.deserializeLong(root, "doc_count_error_upper_bound"))
                     .sumOtherDocCount(JacksonUtils.deserializeLong(root, "sum_other_doc_count"))
-                    .buckets(JacksonUtils.deserializeObject(root, "buckets", new TypeReference<>() {}))
+                    .buckets(JacksonUtils.deserializeObject(client, root, "buckets", new TypeReference<>() {}))
                     .build();
         } else {
             throw new IOException("Aggregation currently not handled: " + root);

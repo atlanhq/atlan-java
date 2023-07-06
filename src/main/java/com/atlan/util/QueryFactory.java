@@ -10,6 +10,7 @@ import co.elastic.clients.elasticsearch._types.aggregations.Aggregation;
 import co.elastic.clients.elasticsearch._types.query_dsl.*;
 import co.elastic.clients.json.JsonData;
 import com.atlan.Atlan;
+import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
@@ -94,9 +95,24 @@ public class QueryFactory {
      * @throws AtlanException on any error communicating with the API to refresh the Atlan tag cache
      */
     public static Query beTaggedByAtLeastOneOf(Collection<String> atlanTagNames) throws AtlanException {
+        return beTaggedByAtLeastOneOf(Atlan.getDefaultClient(), atlanTagNames);
+    }
+
+    /**
+     * Returns a query that will only match assets that have at least one of the Atlan tags
+     * provided. This will match irrespective of the Atlan tag being directly applied to the
+     * asset, or if it was propagated to the asset.
+     *
+     * @param client connectivity to Atlan
+     * @param atlanTagNames human-readable names of the Atlan tags
+     * @return a query that will only match assets that have at least one of the Atlan tags provided
+     * @throws AtlanException on any error communicating with the API to refresh the Atlan tag cache
+     */
+    public static Query beTaggedByAtLeastOneOf(AtlanClient client, Collection<String> atlanTagNames)
+            throws AtlanException {
         List<String> values = new ArrayList<>();
         for (String name : atlanTagNames) {
-            values.add(Atlan.getDefaultClient().getAtlanTagCache().getIdForName(name));
+            values.add(client.getAtlanTagCache().getIdForName(name));
         }
         return CompoundQuery.builder()
                 .should(have(KeywordFields.TRAIT_NAMES).beOneOf(values)) // direct Atlan tags
@@ -156,8 +172,22 @@ public class QueryFactory {
      * @throws AtlanException if there is any problem resolving the custom metadata, such as it not existing
      */
     public static FieldQuery haveCM(String cmName, String cmAttributeName) throws AtlanException {
-        String attributeId =
-                Atlan.getDefaultClient().getCustomMetadataCache().getAttrIdForName(cmName, cmAttributeName);
+        return haveCM(Atlan.getDefaultClient(), cmName, cmAttributeName);
+    }
+
+    /**
+     * Returns the start of a query against any custom metadata field. You need to call one of the
+     * operations on the returned FieldQuery object to actually complete building the query against
+     * the field.
+     *
+     * @param client connectivity to Atlan
+     * @param cmName name of the custom metadata set
+     * @param cmAttributeName name of the custom metadata attribute within the set
+     * @return a FieldQuery object that can be used to complete construction of the query
+     * @throws AtlanException if there is any problem resolving the custom metadata, such as it not existing
+     */
+    public static FieldQuery haveCM(AtlanClient client, String cmName, String cmAttributeName) throws AtlanException {
+        String attributeId = client.getCustomMetadataCache().getAttrIdForName(cmName, cmAttributeName);
         return new FieldQuery(
                 SearchableCMField.builder().attributeId(attributeId).build());
     }

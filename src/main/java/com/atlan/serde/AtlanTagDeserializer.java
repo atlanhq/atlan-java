@@ -74,7 +74,8 @@ public class AtlanTagDeserializer extends StdDeserializer<AtlanTag> {
             return AtlanTag.builder()
                     .typeName(Serde.DELETED_AUDIT_OBJECT)
                     .entityGuid(JacksonUtils.deserializeString(root, "entityGuid"))
-                    .entityStatus(JacksonUtils.deserializeObject(root, "entityStatus", new TypeReference<>() {}))
+                    .entityStatus(
+                            JacksonUtils.deserializeObject(client, root, "entityStatus", new TypeReference<>() {}))
                     .propagate(JacksonUtils.deserializeBoolean(root, "propagate"))
                     .removePropagationsOnEntityDelete(
                             JacksonUtils.deserializeBoolean(root, "removePropagationsOnEntityDelete"))
@@ -87,7 +88,8 @@ public class AtlanTagDeserializer extends StdDeserializer<AtlanTag> {
             return AtlanTag.builder()
                     .typeName(clsName)
                     .entityGuid(JacksonUtils.deserializeString(root, "entityGuid"))
-                    .entityStatus(JacksonUtils.deserializeObject(root, "entityStatus", new TypeReference<>() {}))
+                    .entityStatus(
+                            JacksonUtils.deserializeObject(client, root, "entityStatus", new TypeReference<>() {}))
                     .propagate(JacksonUtils.deserializeBoolean(root, "propagate"))
                     .removePropagationsOnEntityDelete(
                             JacksonUtils.deserializeBoolean(root, "removePropagationsOnEntityDelete"))

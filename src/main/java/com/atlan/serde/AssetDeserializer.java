@@ -2,7 +2,6 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.serde;
 
-import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.cache.ReflectionCache;
 import com.atlan.exception.AtlanException;
@@ -117,28 +116,32 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
                 .relationshipType(JacksonUtils.deserializeString(root, "relationshipType"))
                 .relationshipGuid(JacksonUtils.deserializeString(root, "relationshipGuid"))
                 .relationshipStatus(
-                        JacksonUtils.deserializeObject(root, "relationshipStatus", new TypeReference<>() {}))
-                .uniqueAttributes(JacksonUtils.deserializeObject(root, "uniqueAttributes", new TypeReference<>() {}))
-                .status(JacksonUtils.deserializeObject(root, "status", new TypeReference<>() {}))
+                        JacksonUtils.deserializeObject(client, root, "relationshipStatus", new TypeReference<>() {}))
+                .uniqueAttributes(
+                        JacksonUtils.deserializeObject(client, root, "uniqueAttributes", new TypeReference<>() {}))
+                .status(JacksonUtils.deserializeObject(client, root, "status", new TypeReference<>() {}))
                 .createdBy(JacksonUtils.deserializeString(root, "createdBy"))
                 .updatedBy(JacksonUtils.deserializeString(root, "updatedBy"))
                 .createTime(JacksonUtils.deserializeLong(root, "createTime"))
                 .updateTime(JacksonUtils.deserializeLong(root, "updateTime"))
                 .deleteHandler(JacksonUtils.deserializeString(root, "deleteHandler"))
                 .isIncomplete(JacksonUtils.deserializeBoolean(root, "isIncomplete"));
-        Set<AtlanTag> atlanTags = JacksonUtils.deserializeObject(root, "classifications", new TypeReference<>() {});
+        Set<AtlanTag> atlanTags =
+                JacksonUtils.deserializeObject(client, root, "classifications", new TypeReference<>() {});
         if (atlanTags != null) {
             builder.atlanTags(atlanTags);
         }
-        TreeSet<String> meaningNames = JacksonUtils.deserializeObject(root, "meaningNames", new TypeReference<>() {});
+        TreeSet<String> meaningNames =
+                JacksonUtils.deserializeObject(client, root, "meaningNames", new TypeReference<>() {});
         if (meaningNames != null) {
             builder.meaningNames(meaningNames);
         }
-        TreeSet<Meaning> meanings = JacksonUtils.deserializeObject(root, "meanings", new TypeReference<>() {});
+        TreeSet<Meaning> meanings = JacksonUtils.deserializeObject(client, root, "meanings", new TypeReference<>() {});
         if (meanings != null) {
             builder.meanings(meanings);
         }
-        TreeSet<String> pendingTasks = JacksonUtils.deserializeObject(root, "pendingTasks", new TypeReference<>() {});
+        TreeSet<String> pendingTasks =
+                JacksonUtils.deserializeObject(client, root, "pendingTasks", new TypeReference<>() {});
         if (pendingTasks != null) {
             builder.pendingTasks(pendingTasks);
         }
@@ -292,11 +295,9 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
                         .getTypeName()
                         .equals("java.util.Map<? extends java.lang.String, ? extends java.lang.Long>")) {
             // TODO: Unclear why this cannot be handled more generically, but nothing else seems to work
-            method.invoke(
-                    builder,
-                    Atlan.getDefaultClient().convertValue(jsonObject, new TypeReference<Map<String, Long>>() {}));
+            method.invoke(builder, client.convertValue(jsonObject, new TypeReference<Map<String, Long>>() {}));
         } else {
-            method.invoke(builder, Atlan.getDefaultClient().convertValue(jsonObject, paramClass));
+            method.invoke(builder, client.convertValue(jsonObject, paramClass));
         }
     }
 
@@ -328,7 +329,7 @@ public class AssetDeserializer extends StdDeserializer<Asset> {
         } else if (element.isArray()) {
             throw new IOException("Directly-nested arrays are not supported.");
         } else if (element.isObject()) {
-            return Atlan.getDefaultClient().convertValue(element, innerClass);
+            return client.convertValue(element, innerClass);
         }
         return null;
     }

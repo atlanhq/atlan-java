@@ -2,7 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.util;
 
-import com.atlan.Atlan;
+import com.atlan.AtlanClient;
 import com.atlan.cache.ReflectionCache;
 import com.atlan.model.enums.AtlanPolicyAction;
 import com.atlan.serde.AtlanPolicyActionDeserializer;
@@ -211,6 +211,7 @@ public class JacksonUtils {
     /**
      * Deserialize the provided path into a full object, or null if there is no value at the path.
      *
+     * @param client connectivity to Atlan
      * @param node from which to pull the value
      * @param path at which to find the value
      * @param typeReference of the expected value
@@ -218,10 +219,11 @@ public class JacksonUtils {
      * @param <T> the type of the object's value
      * @throws JsonProcessingException on any problems parsing the expected value
      */
-    public static <T> T deserializeObject(JsonNode node, String path, TypeReference<T> typeReference)
+    public static <T> T deserializeObject(
+            AtlanClient client, JsonNode node, String path, TypeReference<T> typeReference)
             throws JsonProcessingException {
         JsonNode value = node.get(path);
-        return value == null || value.isNull() ? null : Atlan.getDefaultClient().convertValue(value, typeReference);
+        return value == null || value.isNull() ? null : client.convertValue(value, typeReference);
     }
 
     /**

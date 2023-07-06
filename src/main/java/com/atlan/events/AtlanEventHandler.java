@@ -2,7 +2,7 @@
 /* Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.events;
 
-import com.atlan.Atlan;
+import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.assets.Asset;
 import com.atlan.model.assets.ICatalog;
@@ -88,12 +88,13 @@ public interface AtlanEventHandler {
     /**
      * Actually send the changed assets to Atlan so that they are persisted.
      *
+     * @param client connectivity to Atlan
      * @param changedAssets the in-memory-modified assets to send to Atlan
      * @param log a logger to log anything you want
      * @throws AtlanException if there are any problems actually updating the asset in Atlan
      */
-    default void upsertChanges(Collection<Asset> changedAssets, Logger log) throws AtlanException {
-        AssetBatch batch = new AssetBatch("event-driven", 20, false, AssetBatch.CustomMetadataHandling.MERGE);
+    default void saveChanges(AtlanClient client, Collection<Asset> changedAssets, Logger log) throws AtlanException {
+        AssetBatch batch = new AssetBatch(client, "event-driven", 20, false, AssetBatch.CustomMetadataHandling.MERGE);
         for (Asset one : changedAssets) {
             batch.add(one);
         }
@@ -126,58 +127,25 @@ public interface AtlanEventHandler {
     /**
      * Translate the JSON payload into an Atlan event object.
      *
+     * @param client connectivity to Atlan
      * @param data the JSON payload
      * @return an Atlan event object representation of the payload
      * @throws IOException on any problems deserializing the event details
      */
-    static AtlanEvent getAtlanEvent(String data) throws IOException {
-        return Atlan.getDefaultClient().readValue(data, AtlanEvent.class);
+    static AtlanEvent getAtlanEvent(AtlanClient client, String data) throws IOException {
+        return client.readValue(data, AtlanEvent.class);
     }
 
     /**
      * Translate the JSON payload into an Atlan event object.
      *
+     * @param client connectivity to Atlan
      * @param data the JSON payload
      * @return an Atlan event object representation of the payload
      * @throws IOException on any problems deserializing the event details
      */
-    static AtlanEvent getAtlanEvent(byte[] data) throws IOException {
-        return Atlan.getDefaultClient().readValue(data, AtlanEvent.class);
-    }
-
-    /**
-     * Translate the JSON payload directly into the Atlan asset nested in the payload.
-     *
-     * @param data the JSON payload
-     * @return the nested asset object in the event, or null if there is none
-     * @throws IOException on any problems deserializing the event details
-     */
-    static Asset getAssetFromEvent(String data) throws IOException {
-        return getAssetFromEvent(getAtlanEvent(data));
-    }
-
-    /**
-     * Translate the JSON payload directly into the Atlan asset nested in the payload.
-     *
-     * @param data the JSON payload
-     * @return the nested asset object in the event, or null if there is none
-     * @throws IOException on any problems deserializing the event details
-     */
-    static Asset getAssetFromEvent(byte[] data) throws IOException {
-        return getAssetFromEvent(getAtlanEvent(data));
-    }
-
-    /**
-     * Retrieve the asset nested within the Atlan event.
-     *
-     * @param event containing asset information
-     * @return the nested asset object in the event, or null if there is none
-     */
-    static Asset getAssetFromEvent(AtlanEvent event) {
-        if (event == null || event.getPayload() == null || event.getPayload().getAsset() == null) {
-            return null;
-        }
-        return event.getPayload().getAsset();
+    static AtlanEvent getAtlanEvent(AtlanClient client, byte[] data) throws IOException {
+        return client.readValue(data, AtlanEvent.class);
     }
 
     /**

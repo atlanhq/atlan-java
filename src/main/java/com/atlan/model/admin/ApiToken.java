@@ -3,6 +3,7 @@
 package com.atlan.model.admin;
 
 import com.atlan.Atlan;
+import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
@@ -273,8 +274,11 @@ public class ApiToken extends AtlanObject {
     static class ApiTokenAttributesDeserializer extends StdDeserializer<ApiTokenAttributes> {
         private static final long serialVersionUID = 2L;
 
-        public ApiTokenAttributesDeserializer() {
+        private final AtlanClient client;
+
+        public ApiTokenAttributesDeserializer(AtlanClient client) {
             super(ApiToken.class);
+            this.client = client;
         }
 
         /**
@@ -300,7 +304,7 @@ public class ApiToken extends AtlanObject {
                 // TODO: Convert the string into an actual array, then proceed with an attempt to deserialize
                 personas = Collections.emptySet();
             } else if (personasJson.isArray()) {
-                personas = JacksonUtils.deserializeObject(root, "personas", new TypeReference<>() {});
+                personas = JacksonUtils.deserializeObject(client, root, "personas", new TypeReference<>() {});
             }
 
             Set<String> workspacePermissions = new TreeSet<>();
@@ -309,7 +313,7 @@ public class ApiToken extends AtlanObject {
                 workspacePermissions = StringToSetDeserializer.deserialize(workspacePermissionsJson.asText());
             } else if (workspacePermissionsJson.isArray()) {
                 workspacePermissions =
-                        JacksonUtils.deserializeObject(root, "workspacePermissions", new TypeReference<>() {});
+                        JacksonUtils.deserializeObject(client, root, "workspacePermissions", new TypeReference<>() {});
             }
 
             return ApiTokenAttributes.builder()

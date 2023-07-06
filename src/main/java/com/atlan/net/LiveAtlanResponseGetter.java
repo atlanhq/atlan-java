@@ -3,11 +3,11 @@
 package com.atlan.net;
 
 /* Based on original code from https://github.com/stripe/stripe-java (under MIT license) */
-import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.*;
 import com.atlan.model.core.AtlanError;
 import com.atlan.model.core.AtlanResponseInterface;
+import com.atlan.serde.Serde;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -162,7 +162,7 @@ public class LiveAtlanResponseGetter implements AtlanResponseGetter {
         }
 
         try {
-            error = Atlan.getDefaultClient().readValue(response.body(), AtlanError.class);
+            error = Serde.allInclusiveMapper.readValue(response.body(), AtlanError.class);
         } catch (IOException e) {
             raiseMalformedJsonError(response.body(), response.code(), e);
         }
