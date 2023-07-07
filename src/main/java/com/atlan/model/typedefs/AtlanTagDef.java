@@ -99,7 +99,6 @@ public class AtlanTagDef extends TypeDef {
     public AtlanTagDef create(AtlanClient client) throws AtlanException {
         TypeDefResponse response = client.typeDefs().create(this);
         if (response != null && !response.getAtlanTagDefs().isEmpty()) {
-            client.getAtlanTagCache().refreshCache();
             return response.getAtlanTagDefs().get(0);
         }
         return null;

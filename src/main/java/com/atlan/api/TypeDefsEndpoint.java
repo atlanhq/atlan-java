@@ -148,6 +148,7 @@ public class TypeDefsEndpoint extends AtlasEndpoint {
                 if (!response.getEnumDefs().isEmpty()) {
                     client.getEnumCache().refreshCache();
                 }
+                return response;
             }
         }
         // If there was no typedef provided, just return an empty response (noop)
