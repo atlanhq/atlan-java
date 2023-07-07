@@ -5,6 +5,7 @@ package com.atlan.live;
 import static org.testng.Assert.*;
 
 import com.atlan.Atlan;
+import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.enums.*;
 import com.atlan.model.typedefs.AtlanTagDef;
@@ -26,8 +27,19 @@ public class AtlanTagTest extends AtlanLiveTest {
      * @throws AtlanException on any error creating or reading-back the Atlan tag
      */
     static void createAtlanTag(String name) throws AtlanException {
+        createAtlanTag(Atlan.getDefaultClient(), name);
+    }
+
+    /**
+     * Create a new Atlan tag with a unique name.
+     *
+     * @param client connectivity to the Atlan tenant in which to create the tag
+     * @param name to make the Atlan tag unique
+     * @throws AtlanException on any error creating or reading-back the Atlan tag
+     */
+    static void createAtlanTag(AtlanClient client, String name) throws AtlanException {
         AtlanTagDef atlanTagDef = AtlanTagDef.creator(name, AtlanTagColor.GREEN).build();
-        AtlanTagDef response = atlanTagDef.create(Atlan.getDefaultClient());
+        AtlanTagDef response = atlanTagDef.create(client);
         assertNotNull(response);
         assertEquals(response.getCategory(), AtlanTypeCategory.ATLAN_TAG);
         String uniqueName = response.getName();

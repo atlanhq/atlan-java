@@ -32,7 +32,22 @@ public abstract class Atlan {
      *
      * @param baseURL base URL of the tenant for which to configure a client
      */
-    public static AtlanClient getInstance(final String baseURL) {
+    public static AtlanClient getClient(final String baseURL) {
+        return getClient(baseURL, null);
+    }
+
+    /**
+     * Retrieve the Atlan client configured for the provided tenant URL, with a given unique name.
+     * Note: generally we would advise having only a single client per tenant URL, but this method
+     * is provided for any rare case where you might want to have multiple clients against a single
+     * tenant. Note that this increases resource usage:
+     * - Information for that tenant will be cached independently in every client (increased heap)
+     * - Cache refreshes will be done independently in every client (increased latency for operations)
+     *
+     * @param baseURL base URL of the tenant for which to configure a client
+     * @param name a unique name for this client
+     */
+    public static AtlanClient getClient(final String baseURL, final String name) {
         if (baseURL == null) {
             throw new IllegalStateException(INVALID_CLIENT_MSG);
         }
@@ -40,10 +55,14 @@ public abstract class Atlan {
         if (baseURL.endsWith("/")) {
             prepped = baseURL.substring(0, baseURL.lastIndexOf("/"));
         }
-        if (!clientCache.containsKey(prepped)) {
-            clientCache.put(baseURL, new AtlanClient(prepped));
+        String key = prepped;
+        if (name != null && name.length() > 0) {
+            key = prepped + "#" + key;
         }
-        return clientCache.get(baseURL);
+        if (!clientCache.containsKey(key)) {
+            clientCache.put(key, new AtlanClient(prepped));
+        }
+        return clientCache.get(key);
     }
 
     /**
@@ -53,7 +72,7 @@ public abstract class Atlan {
      * @see #setApiToken(String)
      */
     public static void setBaseUrl(final String baseURL) {
-        defaultClient = getInstance(baseURL);
+        defaultClient = getClient(baseURL);
     }
 
     /**

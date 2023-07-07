@@ -36,7 +36,10 @@ public class WorkflowsEndpoint extends HeraclesEndpoint {
      */
     public WorkflowResponse run(Workflow workflow) throws AtlanException {
         String url = String.format("%s%s", getBaseUrl(), String.format("%s?submit=true", workflows_endpoint));
-        return ApiResource.request(client, ApiResource.RequestMethod.POST, url, workflow, WorkflowResponse.class, null);
+        WorkflowResponse response = ApiResource.request(
+                client, ApiResource.RequestMethod.POST, url, workflow, WorkflowResponse.class, null);
+        response.setClient(client);
+        return response;
     }
 
     /**
@@ -52,8 +55,10 @@ public class WorkflowsEndpoint extends HeraclesEndpoint {
                 .namespace(workflow.getMetadata().getNamespace())
                 .resourceName(workflow.getMetadata().getName())
                 .build();
-        return ApiResource.request(
+        WorkflowRunResponse response = ApiResource.request(
                 client, ApiResource.RequestMethod.POST, url, request, WorkflowRunResponse.class, null);
+        response.setClient(client);
+        return response;
     }
 
     /**

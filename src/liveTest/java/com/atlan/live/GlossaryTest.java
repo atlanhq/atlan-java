@@ -7,6 +7,7 @@ import static org.testng.Assert.*;
 
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import com.atlan.Atlan;
+import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.assets.*;
 import com.atlan.model.core.AssetMutationResponse;
@@ -61,8 +62,20 @@ public class GlossaryTest extends AtlanLiveTest {
      * @throws AtlanException on any error creating or reading-back the glossary
      */
     static Glossary createGlossary(String name) throws AtlanException {
+        return createGlossary(Atlan.getDefaultClient(), name);
+    }
+
+    /**
+     * Create a new glossary with a unique name.
+     *
+     * @param client connectivity to the Atlan tenant in which to create the glossary
+     * @param name to make the glossary unique
+     * @return the glossary that was created
+     * @throws AtlanException on any error creating or reading-back the glossary
+     */
+    static Glossary createGlossary(AtlanClient client, String name) throws AtlanException {
         Glossary glossary = Glossary.creator(name).build();
-        AssetMutationResponse response = glossary.save();
+        AssetMutationResponse response = glossary.save(client);
         assertNotNull(response);
         assertEquals(response.getDeletedAssets().size(), 0);
         assertEquals(response.getUpdatedAssets().size(), 0);
@@ -127,8 +140,21 @@ public class GlossaryTest extends AtlanLiveTest {
      * @throws AtlanException on any error creating or reading-back the glossary term
      */
     static GlossaryTerm createTerm(String name, String glossaryId) throws AtlanException {
+        return createTerm(Atlan.getDefaultClient(), name, glossaryId);
+    }
+
+    /**
+     * Create a new glossary term with a unique name.
+     *
+     * @param client connectivity to the Atlan tenant in which to create the term
+     * @param name to make the glossary term unique
+     * @param glossaryId GUID of the glossary in which to create the term
+     * @return the glossary term that was created
+     * @throws AtlanException on any error creating or reading-back the glossary term
+     */
+    static GlossaryTerm createTerm(AtlanClient client, String name, String glossaryId) throws AtlanException {
         GlossaryTerm term = GlossaryTerm.creator(name, glossaryId, null).build();
-        AssetMutationResponse response = term.save();
+        AssetMutationResponse response = term.save(client);
         assertNotNull(response);
         assertEquals(response.getDeletedAssets().size(), 0);
         assertEquals(response.getUpdatedAssets().size(), 1);

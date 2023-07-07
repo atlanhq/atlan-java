@@ -2,19 +2,27 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.workflow;
 
+import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.enums.AtlanWorkflowPhase;
 import com.atlan.net.ApiResource;
 import com.atlan.net.HttpClient;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.Setter;
 import org.slf4j.Logger;
 
 @Getter
 @EqualsAndHashCode(callSuper = false)
 public class WorkflowResponse extends ApiResource {
     private static final long serialVersionUID = 2L;
+
+    /** Connectivity to the Atlan tenant where the workflow request was run. */
+    @Setter
+    @JsonIgnore
+    AtlanClient client;
 
     WorkflowMetadata metadata;
     WorkflowSpec spec;
@@ -82,6 +90,6 @@ public class WorkflowResponse extends ApiResource {
      * @throws AtlanException on any API errors searching for the workflow run
      */
     protected WorkflowSearchResult getRunDetails(String name) throws AtlanException {
-        return WorkflowSearchRequest.findLatestRun(name);
+        return WorkflowSearchRequest.findLatestRun(client, name);
     }
 }

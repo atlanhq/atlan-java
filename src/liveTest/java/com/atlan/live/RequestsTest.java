@@ -5,6 +5,7 @@ package com.atlan.live;
 import static org.testng.Assert.*;
 
 import com.atlan.Atlan;
+import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.admin.*;
 import com.atlan.model.assets.*;
@@ -31,8 +32,7 @@ public class RequestsTest extends AtlanLiveTest {
 
     private static final String ATTR_VALUE_DESCRIPTION = "A new description, as requested.";
 
-    private static final String originalToken = Atlan.getDefaultClient().getApiToken();
-    private static String requestsToken = null;
+    private static AtlanClient requestsClient = null;
     private static ApiToken token = null;
     private static Glossary glossary = null;
     private static Connection connection = null;
@@ -65,26 +65,23 @@ public class RequestsTest extends AtlanLiveTest {
      * @throws AtlanException on any errors purging the group
      */
     static void deleteToken(String guid) throws AtlanException {
-        ApiToken.delete(guid);
+        ApiToken.delete(Atlan.getDefaultClient(), guid);
     }
 
     @Test(groups = {"request.create.glossary"})
     void createGlossary() throws AtlanException {
-        Atlan.setApiToken(originalToken);
-        glossary = GlossaryTest.createGlossary(GLOSSARY_NAME);
+        glossary = GlossaryTest.createGlossary(Atlan.getDefaultClient(), GLOSSARY_NAME);
         term = GlossaryTest.createTerm(TERM_NAME, glossary.getGuid());
     }
 
     @Test(groups = {"request.create.atlantag"})
     void createAtlanTag() throws AtlanException {
-        Atlan.setApiToken(originalToken);
-        AtlanTagTest.createAtlanTag(ATLAN_TAG_NAME);
+        AtlanTagTest.createAtlanTag(Atlan.getDefaultClient(), ATLAN_TAG_NAME);
     }
 
     @Test(groups = {"request.create.connection"})
     void createConnection() throws AtlanException {
-        Atlan.setApiToken(originalToken);
-        connection = ConnectionTest.createConnection(PREFIX, CONNECTOR_TYPE);
+        connection = ConnectionTest.createConnection(Atlan.getDefaultClient(), PREFIX, CONNECTOR_TYPE);
         Database toCreate =
                 Database.creator(PREFIX, connection.getQualifiedName()).build();
         AssetMutationResponse response = toCreate.save();
@@ -99,7 +96,9 @@ public class RequestsTest extends AtlanLiveTest {
     void createToken() throws AtlanException {
         token = createToken(API_TOKEN_NAME);
         assertNotNull(token.getClientId());
-        requestsToken = token.getAttributes().getAccessToken();
+        String requestsToken = token.getAttributes().getAccessToken();
+        requestsClient = Atlan.getClient(System.getenv("ATLAN_BASE_URL"), "requests");
+        requestsClient.setApiToken(requestsToken);
     }
 
     @Test(
@@ -151,7 +150,6 @@ public class RequestsTest extends AtlanLiveTest {
             groups = {"request.create.request"},
             dependsOnGroups = {"request.read.token", "request.create.glossary"})
     void createAttributeRequest() throws AtlanException {
-        Atlan.setApiToken(requestsToken);
         AttributeRequest toCreate = AttributeRequest.creator(
                         term.getGuid(),
                         term.getQualifiedName(),
@@ -159,14 +157,13 @@ public class RequestsTest extends AtlanLiveTest {
                         "userDescription",
                         ATTR_VALUE_DESCRIPTION)
                 .build();
-        toCreate.create();
+        toCreate.create(requestsClient);
     }
 
     @Test(
             groups = {"request.create.request"},
             dependsOnGroups = {"request.read.token", "request.create.glossary", "request.create.connection"})
     void createTermLinkRequest() throws AtlanException {
-        Atlan.setApiToken(requestsToken);
         TermLinkRequest toCreate = TermLinkRequest.creator(
                         database.getGuid(),
                         database.getQualifiedName(),
@@ -174,21 +171,20 @@ public class RequestsTest extends AtlanLiveTest {
                         term.getGuid(),
                         term.getQualifiedName())
                 .build();
-        toCreate.create();
+        toCreate.create(requestsClient);
     }
 
     @Test(
             groups = {"request.create.request"},
             dependsOnGroups = {"request.read.token", "request.create.glossary"})
     void createAtlanTagRequest() throws AtlanException {
-        Atlan.setApiToken(requestsToken);
         AtlanTagRequest toCreate = AtlanTagRequest.creator(
                         term.getGuid(),
                         term.getQualifiedName(),
                         GlossaryTerm.TYPE_NAME,
                         AtlanTagPayload.of(ATLAN_TAG_NAME))
                 .build();
-        toCreate.create();
+        toCreate.create(requestsClient);
     }
 
     @Test(
@@ -196,8 +192,7 @@ public class RequestsTest extends AtlanLiveTest {
             dependsOnGroups = {"request.create.request"},
             alwaysRun = true)
     void readRequests() throws AtlanException {
-        Atlan.setApiToken(originalToken);
-        AtlanRequestResponse response = AtlanRequest.list();
+        AtlanRequestResponse response = AtlanRequest.list(Atlan.getDefaultClient());
         assertNotNull(response);
         assertTrue(response.getTotalRecord() > 0);
         for (AtlanRequest request : response.getRecords()) {
@@ -227,12 +222,11 @@ public class RequestsTest extends AtlanLiveTest {
             dependsOnGroups = {"request.read.requests"},
             alwaysRun = true)
     void readRequest() throws AtlanException {
-        Atlan.setApiToken(originalToken);
-        AtlanRequest response = AtlanRequest.retrieveByGuid(attributeRequestGuid);
+        AtlanRequest response = Atlan.getDefaultClient().requests().get(attributeRequestGuid);
         assertTrue(response instanceof AttributeRequest);
-        response = AtlanRequest.retrieveByGuid(atlanTagRequestGuid);
+        response = Atlan.getDefaultClient().requests().get(atlanTagRequestGuid);
         assertTrue(response instanceof AtlanTagRequest);
-        response = AtlanRequest.retrieveByGuid(termLinkRequestGuid);
+        response = Atlan.getDefaultClient().requests().get(termLinkRequestGuid);
         assertTrue(response instanceof TermLinkRequest);
     }
 
@@ -241,8 +235,7 @@ public class RequestsTest extends AtlanLiveTest {
             dependsOnGroups = {"request.read.request"},
             alwaysRun = true)
     void approveAttributeRequest() throws AtlanException {
-        Atlan.setApiToken(originalToken);
-        assertTrue(AtlanRequest.approve(attributeRequestGuid, "Description change approved!"));
+        assertTrue(Atlan.getDefaultClient().requests().approve(attributeRequestGuid, "Description change approved!"));
     }
 
     @Test(
@@ -250,8 +243,7 @@ public class RequestsTest extends AtlanLiveTest {
             dependsOnGroups = {"request.read.request"},
             alwaysRun = true)
     void approveAtlanTagRequest() throws AtlanException {
-        Atlan.setApiToken(originalToken);
-        assertTrue(AtlanRequest.approve(atlanTagRequestGuid, "Atlan tag approved!"));
+        assertTrue(Atlan.getDefaultClient().requests().approve(atlanTagRequestGuid, "Atlan tag approved!"));
     }
 
     @Test(
@@ -259,8 +251,7 @@ public class RequestsTest extends AtlanLiveTest {
             dependsOnGroups = {"request.read.request"},
             alwaysRun = true)
     void approveTermLinkRequest() throws AtlanException {
-        Atlan.setApiToken(originalToken);
-        assertTrue(AtlanRequest.approve(termLinkRequestGuid, "Term link approved!"));
+        assertTrue(Atlan.getDefaultClient().requests().approve(termLinkRequestGuid, "Term link approved!"));
     }
 
     @Test(
@@ -268,8 +259,7 @@ public class RequestsTest extends AtlanLiveTest {
             dependsOnGroups = {"request.approve.request"},
             alwaysRun = true)
     void readTerm() throws AtlanException {
-        Atlan.setApiToken(originalToken);
-        GlossaryTerm revised = GlossaryTerm.retrieveByGuid(term.getGuid());
+        GlossaryTerm revised = GlossaryTerm.retrieveByGuid(Atlan.getDefaultClient(), term.getGuid());
         assertNotNull(revised);
         assertEquals(revised.getUserDescription(), ATTR_VALUE_DESCRIPTION);
         assertNotNull(revised.getAtlanTags());
@@ -292,7 +282,6 @@ public class RequestsTest extends AtlanLiveTest {
             dependsOnGroups = {"request.create.*", "request.read.*", "request.update.*"},
             alwaysRun = true)
     void purgeToken() throws AtlanException {
-        Atlan.setApiToken(originalToken);
         deleteToken(token.getId());
     }
 
@@ -301,7 +290,7 @@ public class RequestsTest extends AtlanLiveTest {
             dependsOnGroups = {"request.create.*", "request.read.*", "request.update.*"},
             alwaysRun = true)
     void purgeConnection() throws AtlanException, InterruptedException {
-        ConnectionTest.deleteConnection(connection.getQualifiedName(), log);
+        ConnectionTest.deleteConnection(Atlan.getDefaultClient(), connection.getQualifiedName(), log);
     }
 
     @Test(
@@ -309,7 +298,6 @@ public class RequestsTest extends AtlanLiveTest {
             dependsOnGroups = {"request.create.*", "request.read.*", "request.update.*", "request.purge.connection"},
             alwaysRun = true)
     void purgeGlossary() throws AtlanException {
-        Atlan.setApiToken(originalToken);
         GlossaryTest.deleteTerm(term.getGuid());
         GlossaryTest.deleteGlossary(glossary.getGuid());
     }
@@ -325,7 +313,6 @@ public class RequestsTest extends AtlanLiveTest {
             },
             alwaysRun = true)
     void purgeAtlanTag() throws AtlanException {
-        Atlan.setApiToken(originalToken);
         AtlanTagTest.deleteAtlanTag(ATLAN_TAG_NAME);
     }
 }
