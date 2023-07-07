@@ -44,7 +44,7 @@ public class PersonaTest extends AtlanLiveTest {
     @Test(groups = {"persona.create.personas"})
     void createPersonas() throws AtlanException {
         Persona toCreate = Persona.creator(PERSONA_NAME).build();
-        AssetMutationResponse response = toCreate.upsert();
+        AssetMutationResponse response = toCreate.save();
         assertNotNull(response);
         assertTrue(response.getDeletedAssets().isEmpty());
         assertTrue(response.getUpdatedAssets().isEmpty());
@@ -69,7 +69,7 @@ public class PersonaTest extends AtlanLiveTest {
                 .denyAssetTab(AssetSidebarTab.RELATIONS)
                 .denyAssetTab(AssetSidebarTab.QUERIES)
                 .build();
-        AssetMutationResponse response = toUpdate.upsert();
+        AssetMutationResponse response = toUpdate.save();
         assertNotNull(response);
         assertEquals(response.getUpdatedAssets().size(), 1);
         Asset one = response.getUpdatedAssets().get(0);

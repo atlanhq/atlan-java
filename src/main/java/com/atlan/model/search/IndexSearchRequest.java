@@ -4,6 +4,7 @@ package com.atlan.model.search;
 
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import com.atlan.Atlan;
+import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.core.AtlanObject;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -78,8 +79,22 @@ public class IndexSearchRequest extends AtlanObject {
     @JsonProperty("excludeClassifications")
     Boolean excludeAtlanTags = false;
 
-    /** Run the search. */
+    /**
+     * Run the search.
+     *
+     * @return the matching assets
+     */
     public IndexSearchResponse search() throws AtlanException {
-        return Atlan.getDefaultClient().assets().search(this);
+        return search(Atlan.getDefaultClient());
+    }
+
+    /**
+     * Run the search.
+     *
+     * @param client connectivity to the Atlan tenant on which to run the search
+     * @return the matching assets
+     */
+    public IndexSearchResponse search(AtlanClient client) throws AtlanException {
+        return client.assets().search(this);
     }
 }

@@ -2,6 +2,8 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
+import com.atlan.Atlan;
+import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
@@ -97,7 +99,19 @@ public class RedashVisualization extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the RedashVisualization does not exist or the provided GUID is not a RedashVisualization
      */
     public static RedashVisualization retrieveByGuid(String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(guid);
+        return retrieveByGuid(Atlan.getDefaultClient(), guid);
+    }
+
+    /**
+     * Retrieves a RedashVisualization by its GUID, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param guid of the RedashVisualization to retrieve
+     * @return the requested full RedashVisualization, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the RedashVisualization does not exist or the provided GUID is not a RedashVisualization
+     */
+    public static RedashVisualization retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
+        Asset asset = Asset.retrieveFull(client, guid);
         if (asset == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
         } else if (asset instanceof RedashVisualization) {
@@ -115,7 +129,20 @@ public class RedashVisualization extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the RedashVisualization does not exist
      */
     public static RedashVisualization retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        Asset asset = Asset.retrieveFull(TYPE_NAME, qualifiedName);
+        return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
+    }
+
+    /**
+     * Retrieves a RedashVisualization by its qualifiedName, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param qualifiedName of the RedashVisualization to retrieve
+     * @return the requested full RedashVisualization, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the RedashVisualization does not exist
+     */
+    public static RedashVisualization retrieveByQualifiedName(AtlanClient client, String qualifiedName)
+            throws AtlanException {
+        Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
         if (asset instanceof RedashVisualization) {
             return (RedashVisualization) asset;
         } else {
@@ -131,7 +158,19 @@ public class RedashVisualization extends Asset
      * @throws AtlanException on any API problems
      */
     public static boolean restore(String qualifiedName) throws AtlanException {
-        return Asset.restore(TYPE_NAME, qualifiedName);
+        return restore(Atlan.getDefaultClient(), qualifiedName);
+    }
+
+    /**
+     * Restore the archived (soft-deleted) RedashVisualization to active.
+     *
+     * @param client connectivity to the Atlan tenant on which to restore the asset
+     * @param qualifiedName for the RedashVisualization
+     * @return true if the RedashVisualization is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
+        return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
 
     /**
@@ -177,7 +216,21 @@ public class RedashVisualization extends Asset
      * @throws AtlanException on any API problems
      */
     public static RedashVisualization removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (RedashVisualization) Asset.removeDescription(updater(qualifiedName, name));
+        return removeDescription(Atlan.getDefaultClient(), qualifiedName, name);
+    }
+
+    /**
+     * Remove the system description from a RedashVisualization.
+     *
+     * @param client connectivity to the Atlan tenant on which to remove the asset's description
+     * @param qualifiedName of the RedashVisualization
+     * @param name of the RedashVisualization
+     * @return the updated RedashVisualization, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static RedashVisualization removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
+        return (RedashVisualization) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
     /**
@@ -189,7 +242,21 @@ public class RedashVisualization extends Asset
      * @throws AtlanException on any API problems
      */
     public static RedashVisualization removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (RedashVisualization) Asset.removeUserDescription(updater(qualifiedName, name));
+        return removeUserDescription(Atlan.getDefaultClient(), qualifiedName, name);
+    }
+
+    /**
+     * Remove the user's description from a RedashVisualization.
+     *
+     * @param client connectivity to the Atlan tenant on which to remove the asset's description
+     * @param qualifiedName of the RedashVisualization
+     * @param name of the RedashVisualization
+     * @return the updated RedashVisualization, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static RedashVisualization removeUserDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
+        return (RedashVisualization) Asset.removeUserDescription(client, updater(qualifiedName, name));
     }
 
     /**
@@ -201,7 +268,21 @@ public class RedashVisualization extends Asset
      * @throws AtlanException on any API problems
      */
     public static RedashVisualization removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (RedashVisualization) Asset.removeOwners(updater(qualifiedName, name));
+        return removeOwners(Atlan.getDefaultClient(), qualifiedName, name);
+    }
+
+    /**
+     * Remove the owners from a RedashVisualization.
+     *
+     * @param client connectivity to the Atlan tenant from which to remove the RedashVisualization's owners
+     * @param qualifiedName of the RedashVisualization
+     * @param name of the RedashVisualization
+     * @return the updated RedashVisualization, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static RedashVisualization removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
+        return (RedashVisualization) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
     /**
@@ -215,7 +296,24 @@ public class RedashVisualization extends Asset
      */
     public static RedashVisualization updateCertificate(
             String qualifiedName, CertificateStatus certificate, String message) throws AtlanException {
-        return (RedashVisualization) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
+        return updateCertificate(Atlan.getDefaultClient(), qualifiedName, certificate, message);
+    }
+
+    /**
+     * Update the certificate on a RedashVisualization.
+     *
+     * @param client connectivity to the Atlan tenant on which to update the RedashVisualization's certificate
+     * @param qualifiedName of the RedashVisualization
+     * @param certificate to use
+     * @param message (optional) message, or null if no message
+     * @return the updated RedashVisualization, or null if the update failed
+     * @throws AtlanException on any API problems
+     */
+    public static RedashVisualization updateCertificate(
+            AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
+            throws AtlanException {
+        return (RedashVisualization)
+                Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -227,7 +325,21 @@ public class RedashVisualization extends Asset
      * @throws AtlanException on any API problems
      */
     public static RedashVisualization removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (RedashVisualization) Asset.removeCertificate(updater(qualifiedName, name));
+        return removeCertificate(Atlan.getDefaultClient(), qualifiedName, name);
+    }
+
+    /**
+     * Remove the certificate from a RedashVisualization.
+     *
+     * @param client connectivity to the Atlan tenant from which to remove the RedashVisualization's certificate
+     * @param qualifiedName of the RedashVisualization
+     * @param name of the RedashVisualization
+     * @return the updated RedashVisualization, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static RedashVisualization removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
+        return (RedashVisualization) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
     /**
@@ -242,8 +354,25 @@ public class RedashVisualization extends Asset
      */
     public static RedashVisualization updateAnnouncement(
             String qualifiedName, AtlanAnnouncementType type, String title, String message) throws AtlanException {
+        return updateAnnouncement(Atlan.getDefaultClient(), qualifiedName, type, title, message);
+    }
+
+    /**
+     * Update the announcement on a RedashVisualization.
+     *
+     * @param client connectivity to the Atlan tenant on which to update the RedashVisualization's announcement
+     * @param qualifiedName of the RedashVisualization
+     * @param type type of announcement to set
+     * @param title (optional) title of the announcement to set (or null for no title)
+     * @param message (optional) message of the announcement to set (or null for no message)
+     * @return the result of the update, or null if the update failed
+     * @throws AtlanException on any API problems
+     */
+    public static RedashVisualization updateAnnouncement(
+            AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
+            throws AtlanException {
         return (RedashVisualization)
-                Asset.updateAnnouncement(builder(), TYPE_NAME, qualifiedName, type, title, message);
+                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -255,7 +384,21 @@ public class RedashVisualization extends Asset
      * @throws AtlanException on any API problems
      */
     public static RedashVisualization removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (RedashVisualization) Asset.removeAnnouncement(updater(qualifiedName, name));
+        return removeAnnouncement(Atlan.getDefaultClient(), qualifiedName, name);
+    }
+
+    /**
+     * Remove the announcement from a RedashVisualization.
+     *
+     * @param client connectivity to the Atlan client from which to remove the RedashVisualization's announcement
+     * @param qualifiedName of the RedashVisualization
+     * @param name of the RedashVisualization
+     * @return the updated RedashVisualization, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static RedashVisualization removeAnnouncement(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
+        return (RedashVisualization) Asset.removeAnnouncement(client, updater(qualifiedName, name));
     }
 
     /**
@@ -269,7 +412,22 @@ public class RedashVisualization extends Asset
      */
     public static RedashVisualization replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
-        return (RedashVisualization) Asset.replaceTerms(updater(qualifiedName, name), terms);
+        return replaceTerms(Atlan.getDefaultClient(), qualifiedName, name, terms);
+    }
+
+    /**
+     * Replace the terms linked to the RedashVisualization.
+     *
+     * @param client connectivity to the Atlan tenant on which to replace the RedashVisualization's assigned terms
+     * @param qualifiedName for the RedashVisualization
+     * @param name human-readable name of the RedashVisualization
+     * @param terms the list of terms to replace on the RedashVisualization, or null to remove all terms from the RedashVisualization
+     * @return the RedashVisualization that was updated (note that it will NOT contain details of the replaced terms)
+     * @throws AtlanException on any API problems
+     */
+    public static RedashVisualization replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+        return (RedashVisualization) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 
     /**
@@ -284,7 +442,23 @@ public class RedashVisualization extends Asset
      */
     public static RedashVisualization appendTerms(String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
-        return (RedashVisualization) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
+        return appendTerms(Atlan.getDefaultClient(), qualifiedName, terms);
+    }
+
+    /**
+     * Link additional terms to the RedashVisualization, without replacing existing terms linked to the RedashVisualization.
+     * Note: this operation must make two API calls — one to retrieve the RedashVisualization's existing terms,
+     * and a second to append the new terms.
+     *
+     * @param client connectivity to the Atlan tenant on which to append terms to the RedashVisualization
+     * @param qualifiedName for the RedashVisualization
+     * @param terms the list of terms to append to the RedashVisualization
+     * @return the RedashVisualization that was updated  (note that it will NOT contain details of the appended terms)
+     * @throws AtlanException on any API problems
+     */
+    public static RedashVisualization appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
+            throws AtlanException {
+        return (RedashVisualization) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
     /**
@@ -299,7 +473,23 @@ public class RedashVisualization extends Asset
      */
     public static RedashVisualization removeTerms(String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
-        return (RedashVisualization) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
+        return removeTerms(Atlan.getDefaultClient(), qualifiedName, terms);
+    }
+
+    /**
+     * Remove terms from a RedashVisualization, without replacing all existing terms linked to the RedashVisualization.
+     * Note: this operation must make two API calls — one to retrieve the RedashVisualization's existing terms,
+     * and a second to remove the provided terms.
+     *
+     * @param client connectivity to the Atlan tenant from which to remove terms from the RedashVisualization
+     * @param qualifiedName for the RedashVisualization
+     * @param terms the list of terms to remove from the RedashVisualization, which must be referenced by GUID
+     * @return the RedashVisualization that was updated (note that it will NOT contain details of the resulting terms)
+     * @throws AtlanException on any API problems
+     */
+    public static RedashVisualization removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
+            throws AtlanException {
+        return (RedashVisualization) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
     /**
@@ -314,7 +504,23 @@ public class RedashVisualization extends Asset
      */
     public static RedashVisualization appendAtlanTags(String qualifiedName, List<String> atlanTagNames)
             throws AtlanException {
-        return (RedashVisualization) Asset.appendAtlanTags(TYPE_NAME, qualifiedName, atlanTagNames);
+        return appendAtlanTags(Atlan.getDefaultClient(), qualifiedName, atlanTagNames);
+    }
+
+    /**
+     * Add Atlan tags to a RedashVisualization, without replacing existing Atlan tags linked to the RedashVisualization.
+     * Note: this operation must make two API calls — one to retrieve the RedashVisualization's existing Atlan tags,
+     * and a second to append the new Atlan tags.
+     *
+     * @param client connectivity to the Atlan tenant on which to append Atlan tags to the RedashVisualization
+     * @param qualifiedName of the RedashVisualization
+     * @param atlanTagNames human-readable names of the Atlan tags to add
+     * @throws AtlanException on any API problems
+     * @return the updated RedashVisualization
+     */
+    public static RedashVisualization appendAtlanTags(
+            AtlanClient client, String qualifiedName, List<String> atlanTagNames) throws AtlanException {
+        return (RedashVisualization) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 
     /**
@@ -337,7 +543,39 @@ public class RedashVisualization extends Asset
             boolean removePropagationsOnDelete,
             boolean restrictLineagePropagation)
             throws AtlanException {
+        return appendAtlanTags(
+                Atlan.getDefaultClient(),
+                qualifiedName,
+                atlanTagNames,
+                propagate,
+                removePropagationsOnDelete,
+                restrictLineagePropagation);
+    }
+
+    /**
+     * Add Atlan tags to a RedashVisualization, without replacing existing Atlan tags linked to the RedashVisualization.
+     * Note: this operation must make two API calls — one to retrieve the RedashVisualization's existing Atlan tags,
+     * and a second to append the new Atlan tags.
+     *
+     * @param client connectivity to the Atlan tenant on which to append Atlan tags to the RedashVisualization
+     * @param qualifiedName of the RedashVisualization
+     * @param atlanTagNames human-readable names of the Atlan tags to add
+     * @param propagate whether to propagate the Atlan tag (true) or not (false)
+     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
+     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
+     * @throws AtlanException on any API problems
+     * @return the updated RedashVisualization
+     */
+    public static RedashVisualization appendAtlanTags(
+            AtlanClient client,
+            String qualifiedName,
+            List<String> atlanTagNames,
+            boolean propagate,
+            boolean removePropagationsOnDelete,
+            boolean restrictLineagePropagation)
+            throws AtlanException {
         return (RedashVisualization) Asset.appendAtlanTags(
+                client,
                 TYPE_NAME,
                 qualifiedName,
                 atlanTagNames,
@@ -356,7 +594,22 @@ public class RedashVisualization extends Asset
      */
     @Deprecated
     public static void addAtlanTags(String qualifiedName, List<String> atlanTagNames) throws AtlanException {
-        Asset.addAtlanTags(TYPE_NAME, qualifiedName, atlanTagNames);
+        addAtlanTags(Atlan.getDefaultClient(), qualifiedName, atlanTagNames);
+    }
+
+    /**
+     * Add Atlan tags to a RedashVisualization.
+     *
+     * @param client connectivity to the Atlan tenant on which to add Atlan tags to the RedashVisualization
+     * @param qualifiedName of the RedashVisualization
+     * @param atlanTagNames human-readable names of the Atlan tags to add
+     * @throws AtlanException on any API problems, or if any of the Atlan tags already exist on the RedashVisualization
+     * @deprecated see {@link #appendAtlanTags(String, List)} instead
+     */
+    @Deprecated
+    public static void addAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
+            throws AtlanException {
+        Asset.addAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 
     /**
@@ -378,7 +631,38 @@ public class RedashVisualization extends Asset
             boolean removePropagationsOnDelete,
             boolean restrictLineagePropagation)
             throws AtlanException {
+        addAtlanTags(
+                Atlan.getDefaultClient(),
+                qualifiedName,
+                atlanTagNames,
+                propagate,
+                removePropagationsOnDelete,
+                restrictLineagePropagation);
+    }
+
+    /**
+     * Add Atlan tags to a RedashVisualization.
+     *
+     * @param client connectivity to the Atlan tenant on which to add Atlan tags to the RedashVisualization
+     * @param qualifiedName of the RedashVisualization
+     * @param atlanTagNames human-readable names of the Atlan tags to add
+     * @param propagate whether to propagate the Atlan tag (true) or not (false)
+     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
+     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
+     * @throws AtlanException on any API problems, or if any of the Atlan tags already exist on the RedashVisualization
+     * @deprecated see {@link #appendAtlanTags(String, List, boolean, boolean, boolean)} instead
+     */
+    @Deprecated
+    public static void addAtlanTags(
+            AtlanClient client,
+            String qualifiedName,
+            List<String> atlanTagNames,
+            boolean propagate,
+            boolean removePropagationsOnDelete,
+            boolean restrictLineagePropagation)
+            throws AtlanException {
         Asset.addAtlanTags(
+                client,
                 TYPE_NAME,
                 qualifiedName,
                 atlanTagNames,
@@ -395,6 +679,19 @@ public class RedashVisualization extends Asset
      * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the RedashVisualization
      */
     public static void removeAtlanTag(String qualifiedName, String atlanTagName) throws AtlanException {
-        Asset.removeAtlanTag(TYPE_NAME, qualifiedName, atlanTagName);
+        removeAtlanTag(Atlan.getDefaultClient(), qualifiedName, atlanTagName);
+    }
+
+    /**
+     * Remove an Atlan tag from a RedashVisualization.
+     *
+     * @param client connectivity to the Atlan tenant from which to remove an Atlan tag from a RedashVisualization
+     * @param qualifiedName of the RedashVisualization
+     * @param atlanTagName human-readable name of the Atlan tag to remove
+     * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the RedashVisualization
+     */
+    public static void removeAtlanTag(AtlanClient client, String qualifiedName, String atlanTagName)
+            throws AtlanException {
+        Asset.removeAtlanTag(client, TYPE_NAME, qualifiedName, atlanTagName);
     }
 }

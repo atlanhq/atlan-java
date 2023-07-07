@@ -791,8 +791,10 @@ public class AssetEndpoint extends AtlasEndpoint {
                             .build())
                     .build();
         }
-        return ApiResource.request(
+        IndexSearchResponse response = ApiResource.request(
                 client, ApiResource.RequestMethod.POST, url, request, IndexSearchResponse.class, options);
+        response.setClient(client);
+        return response;
     }
 
     /**
@@ -830,8 +832,10 @@ public class AssetEndpoint extends AtlasEndpoint {
      */
     public LineageListResponse lineage(LineageListRequest request, RequestOptions options) throws AtlanException {
         String url = String.format("%s%s", getBaseUrl(), lineage_list_endpoint);
-        return ApiResource.request(
+        LineageListResponse response = ApiResource.request(
                 client, ApiResource.RequestMethod.POST, url, request, LineageListResponse.class, options);
+        response.setClient(client);
+        return response;
     }
 
     /**

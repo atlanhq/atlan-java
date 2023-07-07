@@ -89,7 +89,7 @@ public class SQLAssetTest extends AtlanLiveTest {
      */
     static Database createDatabase(String name, String connectionQualifiedName) throws AtlanException {
         Database database = Database.creator(name, connectionQualifiedName).build();
-        AssetMutationResponse response = database.upsert();
+        AssetMutationResponse response = database.save();
         Asset one = validateSingleCreate(response);
         assertTrue(one instanceof Database);
         database = (Database) one;
@@ -109,7 +109,7 @@ public class SQLAssetTest extends AtlanLiveTest {
      */
     static Schema createSchema(String name, String databaseQualifiedName) throws AtlanException {
         Schema schema = Schema.creator(name, databaseQualifiedName).build();
-        AssetMutationResponse response = schema.upsert();
+        AssetMutationResponse response = schema.save();
         assertNotNull(response);
         assertTrue(response.getDeletedAssets().isEmpty());
         assertEquals(response.getUpdatedAssets().size(), 1);
@@ -138,7 +138,7 @@ public class SQLAssetTest extends AtlanLiveTest {
      */
     static Table createTable(String name, String schemaQualifiedName) throws AtlanException {
         Table table = Table.creator(name, schemaQualifiedName).columnCount(2L).build();
-        AssetMutationResponse response = table.upsert();
+        AssetMutationResponse response = table.save();
         assertNotNull(response);
         assertTrue(response.getDeletedAssets().isEmpty());
         assertEquals(response.getUpdatedAssets().size(), 1);
@@ -167,7 +167,7 @@ public class SQLAssetTest extends AtlanLiveTest {
      */
     static View createView(String name, String schemaQualifiedName) throws AtlanException {
         View view = View.creator(name, schemaQualifiedName).columnCount(2L).build();
-        AssetMutationResponse response = view.upsert();
+        AssetMutationResponse response = view.save();
         assertNotNull(response);
         assertTrue(response.getDeletedAssets().isEmpty());
         assertEquals(response.getUpdatedAssets().size(), 1);
@@ -198,7 +198,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         MaterializedView mview = MaterializedView.creator(name, schemaQualifiedName)
                 .columnCount(2L)
                 .build();
-        AssetMutationResponse response = mview.upsert();
+        AssetMutationResponse response = mview.save();
         assertNotNull(response);
         assertTrue(response.getDeletedAssets().isEmpty());
         assertEquals(response.getUpdatedAssets().size(), 1);
@@ -228,7 +228,7 @@ public class SQLAssetTest extends AtlanLiveTest {
     static TablePartition createTablePartition(String name, String tableQualifiedName) throws AtlanException {
         TablePartition partition =
                 TablePartition.creator(name, tableQualifiedName).columnCount(2L).build();
-        AssetMutationResponse response = partition.upsert();
+        AssetMutationResponse response = partition.save();
         assertNotNull(response);
         assertTrue(response.getDeletedAssets().isEmpty());
         assertEquals(response.getUpdatedAssets().size(), 1);
@@ -261,7 +261,7 @@ public class SQLAssetTest extends AtlanLiveTest {
             throws AtlanException {
         Column column =
                 Column.creator(name, parentType, parentQualifiedName, order).build();
-        AssetMutationResponse response = column.upsert();
+        AssetMutationResponse response = column.save();
         assertNotNull(response);
         assertTrue(response.getDeletedAssets().isEmpty());
         assertEquals(response.getUpdatedAssets().size(), 1);
@@ -363,7 +363,7 @@ public class SQLAssetTest extends AtlanLiveTest {
                 .isPartitioned(true)
                 .partitionCount(1L)
                 .build();
-        AssetMutationResponse response = table.upsert();
+        AssetMutationResponse response = table.save();
         assertNotNull(response);
         assertTrue(response.getDeletedAssets().isEmpty());
         assertEquals(response.getUpdatedAssets().size(), 1);
@@ -480,7 +480,7 @@ public class SQLAssetTest extends AtlanLiveTest {
                 .partitionOrder(1)
                 .isPartition(true)
                 .build();
-        AssetMutationResponse response = column.upsert();
+        AssetMutationResponse response = column.save();
         assertNotNull(response);
         assertTrue(response.getDeletedAssets().isEmpty());
         assertEquals(response.getUpdatedAssets().size(), 1);
@@ -510,7 +510,7 @@ public class SQLAssetTest extends AtlanLiveTest {
                 .partitionOrder(2)
                 .isPartition(true)
                 .build();
-        AssetMutationResponse response = column.upsert();
+        AssetMutationResponse response = column.save();
         assertNotNull(response);
         assertTrue(response.getDeletedAssets().isEmpty());
         assertEquals(response.getUpdatedAssets().size(), 1);
@@ -804,7 +804,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         Column toUpdate = Column.updater(column5.getQualifiedName(), COLUMN_NAME5)
                 .ownerGroup(ownerGroup.getName())
                 .build();
-        AssetMutationResponse response = toUpdate.upsert();
+        AssetMutationResponse response = toUpdate.save();
         Asset one = validateSingleUpdate(response);
         assertTrue(one instanceof Column);
         Column updated = (Column) one;
@@ -875,7 +875,7 @@ public class SQLAssetTest extends AtlanLiveTest {
                 .description(DESCRIPTION)
                 .userDescription(DESCRIPTION)
                 .build();
-        AssetMutationResponse response = toUpdate.upsert();
+        AssetMutationResponse response = toUpdate.save();
         Asset one = validateSingleUpdate(response);
         assertTrue(one instanceof Column);
         Column updated = (Column) one;
@@ -915,7 +915,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         Column toUpdate = Column.updater(column5.getQualifiedName(), COLUMN_NAME5)
                 .atlanTag(AtlanTag.of(ATLAN_TAG_NAME1))
                 .build();
-        AssetMutationResponse response = toUpdate.upsert(true);
+        AssetMutationResponse response = toUpdate.save(true);
         Asset one = validateSingleUpdate(response);
         assertTrue(one instanceof Column);
         Column column = (Column) one;
@@ -930,7 +930,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         Column toUpdate = Column.updater(column5.getQualifiedName(), COLUMN_NAME5)
                 .removeAtlanTags()
                 .build();
-        AssetMutationResponse response = toUpdate.upsert(true);
+        AssetMutationResponse response = toUpdate.save(true);
         Asset one = validateSingleUpdate(response);
         assertTrue(one instanceof Column);
         Column column = (Column) one;
@@ -1070,7 +1070,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         Column column = Column.updater(column5.getQualifiedName(), COLUMN_NAME5)
                 .removeAtlanTags()
                 .build();
-        AssetMutationResponse response = column.upsert(true);
+        AssetMutationResponse response = column.save(true);
         Asset one = validateSingleUpdate(response);
         assertTrue(one instanceof Column);
         column = (Column) one;
@@ -1101,7 +1101,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         Column toUpdate = Column.updater(column5.getQualifiedName(), COLUMN_NAME5)
                 .assignedTerm(GlossaryTerm.refByGuid(term1.getGuid()))
                 .build();
-        AssetMutationResponse response = toUpdate.upsert();
+        AssetMutationResponse response = toUpdate.save();
         assertNotNull(response);
         assertTrue(response.getCreatedAssets().isEmpty());
         assertTrue(response.getDeletedAssets().isEmpty());
@@ -1128,7 +1128,7 @@ public class SQLAssetTest extends AtlanLiveTest {
         Column toUpdate = Column.updater(column5.getQualifiedName(), COLUMN_NAME5)
                 .removeAssignedTerms()
                 .build();
-        AssetMutationResponse response = toUpdate.upsert();
+        AssetMutationResponse response = toUpdate.save();
         assertNotNull(response);
         assertTrue(response.getCreatedAssets().isEmpty());
         assertTrue(response.getDeletedAssets().isEmpty());

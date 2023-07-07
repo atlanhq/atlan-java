@@ -2,6 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.lineage;
 
+import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.assets.Asset;
 import com.atlan.net.ApiResource;
@@ -19,6 +20,11 @@ import lombok.extern.jackson.Jacksonized;
 @EqualsAndHashCode(callSuper = false)
 public class LineageListResponse extends ApiResource implements Iterable<Asset> {
     private static final long serialVersionUID = 2L;
+
+    /** Connectivity to the Atlan tenant where the lineage request was run. */
+    @Setter
+    @JsonIgnore
+    AtlanClient client;
 
     /** Entities in the lineage requested. */
     @JsonProperty("entities")
@@ -45,7 +51,7 @@ public class LineageListResponse extends ApiResource implements Iterable<Asset> 
         int page = searchParameters.getSize() == null ? 10 : searchParameters.getSize();
         LineageListRequest nextRequest =
                 searchParameters.toBuilder().from(from + page).build();
-        return nextRequest.fetch();
+        return nextRequest.fetch(client);
     }
 
     /** {@inheritDoc} */

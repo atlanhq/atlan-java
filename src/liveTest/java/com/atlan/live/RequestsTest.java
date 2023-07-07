@@ -87,7 +87,7 @@ public class RequestsTest extends AtlanLiveTest {
         connection = ConnectionTest.createConnection(PREFIX, CONNECTOR_TYPE);
         Database toCreate =
                 Database.creator(PREFIX, connection.getQualifiedName()).build();
-        AssetMutationResponse response = toCreate.upsert();
+        AssetMutationResponse response = toCreate.save();
         assertNotNull(response);
         assertNotNull(response.getCreatedAssets());
         assertEquals(response.getCreatedAssets().size(), 1);

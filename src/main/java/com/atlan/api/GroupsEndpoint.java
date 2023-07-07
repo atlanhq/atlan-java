@@ -101,6 +101,25 @@ public class GroupsEndpoint extends HeraclesEndpoint {
     }
 
     /**
+     * Retrieves all groups with a name that contains the provided string.
+     * (This could include a complete group name, in which case there should be at
+     * most a single item in the returned list, or could be a partial group name
+     * to retrieve all groups with that naming convention.)
+     *
+     * @param alias name (as it appears in the UI) on which to filter the groups
+     * @return all groups whose name (in the UI) contains the provided string
+     * @throws AtlanException on any error during API invocation
+     */
+    public List<AtlanGroup> get(String alias) throws AtlanException {
+        GroupResponse response = list("{\"$and\":[{\"alias\":{\"$ilike\":\"%" + alias + "%\"}}]}");
+        if (response != null && response.getRecords() != null) {
+            return response.getRecords();
+        } else {
+            return null;
+        }
+    }
+
+    /**
      * Create a new group.
      *
      * @param group the details of the new group

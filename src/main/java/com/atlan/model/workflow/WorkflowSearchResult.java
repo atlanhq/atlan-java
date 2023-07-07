@@ -3,6 +3,7 @@
 package com.atlan.model.workflow;
 
 import com.atlan.Atlan;
+import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.core.AtlanObject;
 import com.atlan.model.enums.AtlanWorkflowPhase;
@@ -41,8 +42,19 @@ public class WorkflowSearchResult extends AtlanObject {
      * @throws AtlanException on any API communication issue
      */
     public WorkflowRunResponse rerun() throws AtlanException {
+        return rerun(Atlan.getDefaultClient());
+    }
+
+    /**
+     * Re-run this workflow.
+     *
+     * @param client connectivity to the Atlan tenant on which to rerun the workflow
+     * @return details of the workflow run
+     * @throws AtlanException on any API communication issue
+     */
+    public WorkflowRunResponse rerun(AtlanClient client) throws AtlanException {
         if (_source != null) {
-            return Atlan.getDefaultClient().workflows().run(_source);
+            return client.workflows().run(_source);
         }
         return null;
     }

@@ -3,6 +3,7 @@
 package com.atlan.model.lineage;
 
 import com.atlan.Atlan;
+import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
@@ -108,11 +109,25 @@ public class LineageListRequest extends AtlanObject {
     @JsonProperty("excludeClassifications")
     Boolean excludeAtlanTags = true;
 
-    /** Fetch the lineage defined by this object. */
+    /**
+     * Fetch the lineage defined by this object.
+     *
+     * @return the results of the requested lineage
+     */
     public LineageListResponse fetch() throws AtlanException {
+        return fetch(Atlan.getDefaultClient());
+    }
+
+    /**
+     * Fetch the lineage defined by this object.
+     *
+     * @param client connectivity to the Atlan tenant from which to fetch the lineage
+     * @return the results of the requested lineage
+     */
+    public LineageListResponse fetch(AtlanClient client) throws AtlanException {
         if (direction == AtlanLineageDirection.BOTH) {
             throw new InvalidRequestException(ErrorCode.INVALID_LINEAGE_DIRECTION);
         }
-        return Atlan.getDefaultClient().assets().lineage(this);
+        return client.assets().lineage(this);
     }
 }

@@ -78,7 +78,19 @@ public class ApiToken extends AtlanObject {
      * @throws AtlanException on any API communication issues
      */
     public static ApiToken create(String displayName) throws AtlanException {
-        return create(displayName, null, null, -1L);
+        return create(Atlan.getDefaultClient(), displayName);
+    }
+
+    /**
+     * Create a new API token that never expires and is not assigned to any personas.
+     *
+     * @param client connectivity to the Atlan tenant on which to create the new API token
+     * @param displayName readable name for the API token
+     * @return the API token details
+     * @throws AtlanException on any API communication issues
+     */
+    public static ApiToken create(AtlanClient client, String displayName) throws AtlanException {
+        return create(client, displayName, null, null, -1L);
     }
 
     /**
@@ -93,7 +105,24 @@ public class ApiToken extends AtlanObject {
      */
     public static ApiToken create(String displayName, String description, Set<String> personas, Long validity)
             throws AtlanException {
-        return Atlan.getDefaultClient().apiTokens().create(displayName, description, personas, validity);
+        return create(Atlan.getDefaultClient(), displayName, description, personas, validity);
+    }
+
+    /**
+     * Create a new API token with the provided details.
+     *
+     * @param client connectivity to the Atlan tenant on which to create the new API token
+     * @param displayName readable name for the API token
+     * @param description explanation of the API token
+     * @param personas unique identifiers (GUIDs) of personas to link to the token
+     * @param validity time in seconds after which the token should expire (negative numbers are treated as a token should never expire)
+     * @return the API token details
+     * @throws AtlanException on any API communication issues
+     */
+    public static ApiToken create(
+            AtlanClient client, String displayName, String description, Set<String> personas, Long validity)
+            throws AtlanException {
+        return client.apiTokens().create(displayName, description, personas, validity);
     }
 
     /**
@@ -104,14 +133,19 @@ public class ApiToken extends AtlanObject {
      * @throws AtlanException on any error during API invocation
      */
     public static ApiToken retrieveByName(String displayName) throws AtlanException {
-        ApiTokenResponse response = Atlan.getDefaultClient()
-                .apiTokens()
-                .list("{\"displayName\":\"" + displayName + "\"}", "-createdAt", 0, 2);
-        if (response != null && response.getRecords() != null) {
-            return response.getRecords().get(0);
-        } else {
-            return null;
-        }
+        return retrieveByName(Atlan.getDefaultClient(), displayName);
+    }
+
+    /**
+     * Retrieves the API token with a name that exactly matches the provided string.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the API token
+     * @param displayName name (as it appears in the UI) by which to retrieve the API token
+     * @return the API token whose name (in the UI) contains the provided string, or null if there is none
+     * @throws AtlanException on any error during API invocation
+     */
+    public static ApiToken retrieveByName(AtlanClient client, String displayName) throws AtlanException {
+        return client.apiTokens().get(displayName);
     }
 
     /**
@@ -121,6 +155,17 @@ public class ApiToken extends AtlanObject {
      * @throws AtlanException on any error during API invocation
      */
     public ApiToken update() throws AtlanException {
+        return update(Atlan.getDefaultClient());
+    }
+
+    /**
+     * Sends this API token to Atlan to update it in Atlan.
+     *
+     * @param client connectivity to the Atlan tenant on which to update the API token
+     * @return the updated API token
+     * @throws AtlanException on any error during API invocation
+     */
+    public ApiToken update(AtlanClient client) throws AtlanException {
         if (this.id == null || this.id.length() == 0) {
             throw new InvalidRequestException(ErrorCode.MISSING_TOKEN_ID);
         }
@@ -138,7 +183,7 @@ public class ApiToken extends AtlanObject {
                 }
             }
         }
-        return Atlan.getDefaultClient().apiTokens().update(this.id, this.displayName, description, personas);
+        return client.apiTokens().update(this.id, this.displayName, description, personas);
     }
 
     /**
@@ -148,7 +193,18 @@ public class ApiToken extends AtlanObject {
      * @throws AtlanException on any API communication issues
      */
     public static void delete(String guid) throws AtlanException {
-        Atlan.getDefaultClient().apiTokens().delete(guid);
+        delete(Atlan.getDefaultClient(), guid);
+    }
+
+    /**
+     * Delete (purge) the API token with the provided GUID.
+     *
+     * @param client connectivity to the Atlan tenant from which to remove the API token
+     * @param guid unique identifier (GUID) of the API token to hard-delete
+     * @throws AtlanException on any API communication issues
+     */
+    public static void delete(AtlanClient client, String guid) throws AtlanException {
+        client.apiTokens().purge(guid);
     }
 
     @Getter
@@ -310,7 +366,7 @@ public class ApiToken extends AtlanObject {
             Set<String> workspacePermissions = new TreeSet<>();
             JsonNode workspacePermissionsJson = root.get("workspacePermissions");
             if (workspacePermissionsJson.isTextual()) {
-                workspacePermissions = StringToSetDeserializer.deserialize(workspacePermissionsJson.asText());
+                workspacePermissions = StringToSetDeserializer.deserialize(client, workspacePermissionsJson.asText());
             } else if (workspacePermissionsJson.isArray()) {
                 workspacePermissions =
                         JacksonUtils.deserializeObject(client, root, "workspacePermissions", new TypeReference<>() {});

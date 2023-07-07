@@ -2,6 +2,8 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
+import com.atlan.Atlan;
+import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
@@ -128,7 +130,19 @@ public class QlikChart extends Asset implements IQlikChart, IQlik, IBI, ICatalog
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the QlikChart does not exist or the provided GUID is not a QlikChart
      */
     public static QlikChart retrieveByGuid(String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(guid);
+        return retrieveByGuid(Atlan.getDefaultClient(), guid);
+    }
+
+    /**
+     * Retrieves a QlikChart by its GUID, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param guid of the QlikChart to retrieve
+     * @return the requested full QlikChart, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the QlikChart does not exist or the provided GUID is not a QlikChart
+     */
+    public static QlikChart retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
+        Asset asset = Asset.retrieveFull(client, guid);
         if (asset == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
         } else if (asset instanceof QlikChart) {
@@ -146,7 +160,19 @@ public class QlikChart extends Asset implements IQlikChart, IQlik, IBI, ICatalog
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the QlikChart does not exist
      */
     public static QlikChart retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        Asset asset = Asset.retrieveFull(TYPE_NAME, qualifiedName);
+        return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
+    }
+
+    /**
+     * Retrieves a QlikChart by its qualifiedName, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param qualifiedName of the QlikChart to retrieve
+     * @return the requested full QlikChart, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the QlikChart does not exist
+     */
+    public static QlikChart retrieveByQualifiedName(AtlanClient client, String qualifiedName) throws AtlanException {
+        Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
         if (asset instanceof QlikChart) {
             return (QlikChart) asset;
         } else {
@@ -162,7 +188,19 @@ public class QlikChart extends Asset implements IQlikChart, IQlik, IBI, ICatalog
      * @throws AtlanException on any API problems
      */
     public static boolean restore(String qualifiedName) throws AtlanException {
-        return Asset.restore(TYPE_NAME, qualifiedName);
+        return restore(Atlan.getDefaultClient(), qualifiedName);
+    }
+
+    /**
+     * Restore the archived (soft-deleted) QlikChart to active.
+     *
+     * @param client connectivity to the Atlan tenant on which to restore the asset
+     * @param qualifiedName for the QlikChart
+     * @return true if the QlikChart is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
+        return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
 
     /**
@@ -208,7 +246,21 @@ public class QlikChart extends Asset implements IQlikChart, IQlik, IBI, ICatalog
      * @throws AtlanException on any API problems
      */
     public static QlikChart removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (QlikChart) Asset.removeDescription(updater(qualifiedName, name));
+        return removeDescription(Atlan.getDefaultClient(), qualifiedName, name);
+    }
+
+    /**
+     * Remove the system description from a QlikChart.
+     *
+     * @param client connectivity to the Atlan tenant on which to remove the asset's description
+     * @param qualifiedName of the QlikChart
+     * @param name of the QlikChart
+     * @return the updated QlikChart, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static QlikChart removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
+        return (QlikChart) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
     /**
@@ -220,7 +272,21 @@ public class QlikChart extends Asset implements IQlikChart, IQlik, IBI, ICatalog
      * @throws AtlanException on any API problems
      */
     public static QlikChart removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (QlikChart) Asset.removeUserDescription(updater(qualifiedName, name));
+        return removeUserDescription(Atlan.getDefaultClient(), qualifiedName, name);
+    }
+
+    /**
+     * Remove the user's description from a QlikChart.
+     *
+     * @param client connectivity to the Atlan tenant on which to remove the asset's description
+     * @param qualifiedName of the QlikChart
+     * @param name of the QlikChart
+     * @return the updated QlikChart, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static QlikChart removeUserDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
+        return (QlikChart) Asset.removeUserDescription(client, updater(qualifiedName, name));
     }
 
     /**
@@ -232,7 +298,20 @@ public class QlikChart extends Asset implements IQlikChart, IQlik, IBI, ICatalog
      * @throws AtlanException on any API problems
      */
     public static QlikChart removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (QlikChart) Asset.removeOwners(updater(qualifiedName, name));
+        return removeOwners(Atlan.getDefaultClient(), qualifiedName, name);
+    }
+
+    /**
+     * Remove the owners from a QlikChart.
+     *
+     * @param client connectivity to the Atlan tenant from which to remove the QlikChart's owners
+     * @param qualifiedName of the QlikChart
+     * @param name of the QlikChart
+     * @return the updated QlikChart, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static QlikChart removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+        return (QlikChart) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
     /**
@@ -246,7 +325,23 @@ public class QlikChart extends Asset implements IQlikChart, IQlik, IBI, ICatalog
      */
     public static QlikChart updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (QlikChart) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
+        return updateCertificate(Atlan.getDefaultClient(), qualifiedName, certificate, message);
+    }
+
+    /**
+     * Update the certificate on a QlikChart.
+     *
+     * @param client connectivity to the Atlan tenant on which to update the QlikChart's certificate
+     * @param qualifiedName of the QlikChart
+     * @param certificate to use
+     * @param message (optional) message, or null if no message
+     * @return the updated QlikChart, or null if the update failed
+     * @throws AtlanException on any API problems
+     */
+    public static QlikChart updateCertificate(
+            AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
+            throws AtlanException {
+        return (QlikChart) Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -258,7 +353,21 @@ public class QlikChart extends Asset implements IQlikChart, IQlik, IBI, ICatalog
      * @throws AtlanException on any API problems
      */
     public static QlikChart removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (QlikChart) Asset.removeCertificate(updater(qualifiedName, name));
+        return removeCertificate(Atlan.getDefaultClient(), qualifiedName, name);
+    }
+
+    /**
+     * Remove the certificate from a QlikChart.
+     *
+     * @param client connectivity to the Atlan tenant from which to remove the QlikChart's certificate
+     * @param qualifiedName of the QlikChart
+     * @param name of the QlikChart
+     * @return the updated QlikChart, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static QlikChart removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
+        return (QlikChart) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
     /**
@@ -273,7 +382,24 @@ public class QlikChart extends Asset implements IQlikChart, IQlik, IBI, ICatalog
      */
     public static QlikChart updateAnnouncement(
             String qualifiedName, AtlanAnnouncementType type, String title, String message) throws AtlanException {
-        return (QlikChart) Asset.updateAnnouncement(builder(), TYPE_NAME, qualifiedName, type, title, message);
+        return updateAnnouncement(Atlan.getDefaultClient(), qualifiedName, type, title, message);
+    }
+
+    /**
+     * Update the announcement on a QlikChart.
+     *
+     * @param client connectivity to the Atlan tenant on which to update the QlikChart's announcement
+     * @param qualifiedName of the QlikChart
+     * @param type type of announcement to set
+     * @param title (optional) title of the announcement to set (or null for no title)
+     * @param message (optional) message of the announcement to set (or null for no message)
+     * @return the result of the update, or null if the update failed
+     * @throws AtlanException on any API problems
+     */
+    public static QlikChart updateAnnouncement(
+            AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
+            throws AtlanException {
+        return (QlikChart) Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -285,7 +411,21 @@ public class QlikChart extends Asset implements IQlikChart, IQlik, IBI, ICatalog
      * @throws AtlanException on any API problems
      */
     public static QlikChart removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (QlikChart) Asset.removeAnnouncement(updater(qualifiedName, name));
+        return removeAnnouncement(Atlan.getDefaultClient(), qualifiedName, name);
+    }
+
+    /**
+     * Remove the announcement from a QlikChart.
+     *
+     * @param client connectivity to the Atlan client from which to remove the QlikChart's announcement
+     * @param qualifiedName of the QlikChart
+     * @param name of the QlikChart
+     * @return the updated QlikChart, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static QlikChart removeAnnouncement(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
+        return (QlikChart) Asset.removeAnnouncement(client, updater(qualifiedName, name));
     }
 
     /**
@@ -299,7 +439,22 @@ public class QlikChart extends Asset implements IQlikChart, IQlik, IBI, ICatalog
      */
     public static QlikChart replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
-        return (QlikChart) Asset.replaceTerms(updater(qualifiedName, name), terms);
+        return replaceTerms(Atlan.getDefaultClient(), qualifiedName, name, terms);
+    }
+
+    /**
+     * Replace the terms linked to the QlikChart.
+     *
+     * @param client connectivity to the Atlan tenant on which to replace the QlikChart's assigned terms
+     * @param qualifiedName for the QlikChart
+     * @param name human-readable name of the QlikChart
+     * @param terms the list of terms to replace on the QlikChart, or null to remove all terms from the QlikChart
+     * @return the QlikChart that was updated (note that it will NOT contain details of the replaced terms)
+     * @throws AtlanException on any API problems
+     */
+    public static QlikChart replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+        return (QlikChart) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 
     /**
@@ -313,7 +468,23 @@ public class QlikChart extends Asset implements IQlikChart, IQlik, IBI, ICatalog
      * @throws AtlanException on any API problems
      */
     public static QlikChart appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
-        return (QlikChart) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
+        return appendTerms(Atlan.getDefaultClient(), qualifiedName, terms);
+    }
+
+    /**
+     * Link additional terms to the QlikChart, without replacing existing terms linked to the QlikChart.
+     * Note: this operation must make two API calls — one to retrieve the QlikChart's existing terms,
+     * and a second to append the new terms.
+     *
+     * @param client connectivity to the Atlan tenant on which to append terms to the QlikChart
+     * @param qualifiedName for the QlikChart
+     * @param terms the list of terms to append to the QlikChart
+     * @return the QlikChart that was updated  (note that it will NOT contain details of the appended terms)
+     * @throws AtlanException on any API problems
+     */
+    public static QlikChart appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
+            throws AtlanException {
+        return (QlikChart) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
     /**
@@ -327,7 +498,23 @@ public class QlikChart extends Asset implements IQlikChart, IQlik, IBI, ICatalog
      * @throws AtlanException on any API problems
      */
     public static QlikChart removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
-        return (QlikChart) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
+        return removeTerms(Atlan.getDefaultClient(), qualifiedName, terms);
+    }
+
+    /**
+     * Remove terms from a QlikChart, without replacing all existing terms linked to the QlikChart.
+     * Note: this operation must make two API calls — one to retrieve the QlikChart's existing terms,
+     * and a second to remove the provided terms.
+     *
+     * @param client connectivity to the Atlan tenant from which to remove terms from the QlikChart
+     * @param qualifiedName for the QlikChart
+     * @param terms the list of terms to remove from the QlikChart, which must be referenced by GUID
+     * @return the QlikChart that was updated (note that it will NOT contain details of the resulting terms)
+     * @throws AtlanException on any API problems
+     */
+    public static QlikChart removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
+            throws AtlanException {
+        return (QlikChart) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
     /**
@@ -341,7 +528,23 @@ public class QlikChart extends Asset implements IQlikChart, IQlik, IBI, ICatalog
      * @return the updated QlikChart
      */
     public static QlikChart appendAtlanTags(String qualifiedName, List<String> atlanTagNames) throws AtlanException {
-        return (QlikChart) Asset.appendAtlanTags(TYPE_NAME, qualifiedName, atlanTagNames);
+        return appendAtlanTags(Atlan.getDefaultClient(), qualifiedName, atlanTagNames);
+    }
+
+    /**
+     * Add Atlan tags to a QlikChart, without replacing existing Atlan tags linked to the QlikChart.
+     * Note: this operation must make two API calls — one to retrieve the QlikChart's existing Atlan tags,
+     * and a second to append the new Atlan tags.
+     *
+     * @param client connectivity to the Atlan tenant on which to append Atlan tags to the QlikChart
+     * @param qualifiedName of the QlikChart
+     * @param atlanTagNames human-readable names of the Atlan tags to add
+     * @throws AtlanException on any API problems
+     * @return the updated QlikChart
+     */
+    public static QlikChart appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
+            throws AtlanException {
+        return (QlikChart) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 
     /**
@@ -364,7 +567,39 @@ public class QlikChart extends Asset implements IQlikChart, IQlik, IBI, ICatalog
             boolean removePropagationsOnDelete,
             boolean restrictLineagePropagation)
             throws AtlanException {
+        return appendAtlanTags(
+                Atlan.getDefaultClient(),
+                qualifiedName,
+                atlanTagNames,
+                propagate,
+                removePropagationsOnDelete,
+                restrictLineagePropagation);
+    }
+
+    /**
+     * Add Atlan tags to a QlikChart, without replacing existing Atlan tags linked to the QlikChart.
+     * Note: this operation must make two API calls — one to retrieve the QlikChart's existing Atlan tags,
+     * and a second to append the new Atlan tags.
+     *
+     * @param client connectivity to the Atlan tenant on which to append Atlan tags to the QlikChart
+     * @param qualifiedName of the QlikChart
+     * @param atlanTagNames human-readable names of the Atlan tags to add
+     * @param propagate whether to propagate the Atlan tag (true) or not (false)
+     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
+     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
+     * @throws AtlanException on any API problems
+     * @return the updated QlikChart
+     */
+    public static QlikChart appendAtlanTags(
+            AtlanClient client,
+            String qualifiedName,
+            List<String> atlanTagNames,
+            boolean propagate,
+            boolean removePropagationsOnDelete,
+            boolean restrictLineagePropagation)
+            throws AtlanException {
         return (QlikChart) Asset.appendAtlanTags(
+                client,
                 TYPE_NAME,
                 qualifiedName,
                 atlanTagNames,
@@ -383,7 +618,22 @@ public class QlikChart extends Asset implements IQlikChart, IQlik, IBI, ICatalog
      */
     @Deprecated
     public static void addAtlanTags(String qualifiedName, List<String> atlanTagNames) throws AtlanException {
-        Asset.addAtlanTags(TYPE_NAME, qualifiedName, atlanTagNames);
+        addAtlanTags(Atlan.getDefaultClient(), qualifiedName, atlanTagNames);
+    }
+
+    /**
+     * Add Atlan tags to a QlikChart.
+     *
+     * @param client connectivity to the Atlan tenant on which to add Atlan tags to the QlikChart
+     * @param qualifiedName of the QlikChart
+     * @param atlanTagNames human-readable names of the Atlan tags to add
+     * @throws AtlanException on any API problems, or if any of the Atlan tags already exist on the QlikChart
+     * @deprecated see {@link #appendAtlanTags(String, List)} instead
+     */
+    @Deprecated
+    public static void addAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
+            throws AtlanException {
+        Asset.addAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 
     /**
@@ -405,7 +655,38 @@ public class QlikChart extends Asset implements IQlikChart, IQlik, IBI, ICatalog
             boolean removePropagationsOnDelete,
             boolean restrictLineagePropagation)
             throws AtlanException {
+        addAtlanTags(
+                Atlan.getDefaultClient(),
+                qualifiedName,
+                atlanTagNames,
+                propagate,
+                removePropagationsOnDelete,
+                restrictLineagePropagation);
+    }
+
+    /**
+     * Add Atlan tags to a QlikChart.
+     *
+     * @param client connectivity to the Atlan tenant on which to add Atlan tags to the QlikChart
+     * @param qualifiedName of the QlikChart
+     * @param atlanTagNames human-readable names of the Atlan tags to add
+     * @param propagate whether to propagate the Atlan tag (true) or not (false)
+     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
+     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
+     * @throws AtlanException on any API problems, or if any of the Atlan tags already exist on the QlikChart
+     * @deprecated see {@link #appendAtlanTags(String, List, boolean, boolean, boolean)} instead
+     */
+    @Deprecated
+    public static void addAtlanTags(
+            AtlanClient client,
+            String qualifiedName,
+            List<String> atlanTagNames,
+            boolean propagate,
+            boolean removePropagationsOnDelete,
+            boolean restrictLineagePropagation)
+            throws AtlanException {
         Asset.addAtlanTags(
+                client,
                 TYPE_NAME,
                 qualifiedName,
                 atlanTagNames,
@@ -422,6 +703,19 @@ public class QlikChart extends Asset implements IQlikChart, IQlik, IBI, ICatalog
      * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the QlikChart
      */
     public static void removeAtlanTag(String qualifiedName, String atlanTagName) throws AtlanException {
-        Asset.removeAtlanTag(TYPE_NAME, qualifiedName, atlanTagName);
+        removeAtlanTag(Atlan.getDefaultClient(), qualifiedName, atlanTagName);
+    }
+
+    /**
+     * Remove an Atlan tag from a QlikChart.
+     *
+     * @param client connectivity to the Atlan tenant from which to remove an Atlan tag from a QlikChart
+     * @param qualifiedName of the QlikChart
+     * @param atlanTagName human-readable name of the Atlan tag to remove
+     * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the QlikChart
+     */
+    public static void removeAtlanTag(AtlanClient client, String qualifiedName, String atlanTagName)
+            throws AtlanException {
+        Asset.removeAtlanTag(client, TYPE_NAME, qualifiedName, atlanTagName);
     }
 }

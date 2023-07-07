@@ -8,6 +8,7 @@ import co.elastic.clients.elasticsearch._types.SortOrder;
 import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
 import co.elastic.clients.elasticsearch._types.query_dsl.TermQuery;
 import com.atlan.Atlan;
+import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.core.AtlanObject;
 import java.util.List;
@@ -35,9 +36,23 @@ public class AuditSearchRequest extends AtlanObject {
     @Singular
     List<String> attributes;
 
-    /** Run the search. */
+    /**
+     * Run the search.
+     *
+     * @return the matching audit log records
+     */
     public AuditSearchResponse search() throws AtlanException {
-        return Atlan.getDefaultClient().assets().auditLogs(this);
+        return search(Atlan.getDefaultClient());
+    }
+
+    /**
+     * Run the search.
+     *
+     * @param client connectivity to the Atlan tenant on which to search the audit logs
+     * @return the matching audit log records
+     */
+    public AuditSearchResponse search(AtlanClient client) throws AtlanException {
+        return client.assets().auditLogs(this);
     }
 
     /**

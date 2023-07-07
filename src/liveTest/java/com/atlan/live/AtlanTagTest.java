@@ -44,7 +44,7 @@ public class AtlanTagTest extends AtlanLiveTest {
      * @throws AtlanException on any error deleting the Atlan tag
      */
     static void deleteAtlanTag(String name) throws AtlanException {
-        AtlanTagDef.purge(name, Atlan.getDefaultClient());
+        AtlanTagDef.purge(name);
     }
 
     @Test(groups = {"tag.create.image"})

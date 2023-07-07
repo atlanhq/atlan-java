@@ -3,6 +3,7 @@
 package com.atlan.model.typedefs;
 
 import com.atlan.Atlan;
+import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.enums.AtlanTypeCategory;
 import lombok.Builder;
@@ -47,9 +48,19 @@ public class CustomMetadataDef extends TypeDef {
      * @throws AtlanException on any API communication issues
      */
     public CustomMetadataDef create() throws AtlanException {
-        TypeDefResponse response = Atlan.getDefaultClient().typeDefs().create(this);
+        return create(Atlan.getDefaultClient());
+    }
+
+    /**
+     * Create this custom metadata definition in Atlan.
+     *
+     * @param client connectivity to the Atlan tenant on which to create the custom metadata
+     * @return the result of the creation, or null if the creation failed
+     * @throws AtlanException on any API communication issues
+     */
+    public CustomMetadataDef create(AtlanClient client) throws AtlanException {
+        TypeDefResponse response = client.typeDefs().create(this);
         if (response != null && !response.getCustomMetadataDefs().isEmpty()) {
-            Atlan.getDefaultClient().getCustomMetadataCache().refreshCache();
             return response.getCustomMetadataDefs().get(0);
         }
         return null;
@@ -59,13 +70,26 @@ public class CustomMetadataDef extends TypeDef {
      * Update this custom metadata definition in Atlan.
      * Note: there are many restrictions on what you can / should update, so this should really be treated
      * as an internal method. (This will also force a refresh of the custom metadata cache.)
+     *
      * @return the result of the update, or null if the update failed
      * @throws AtlanException on any API communication issues
      */
     public CustomMetadataDef update() throws AtlanException {
-        TypeDefResponse response = Atlan.getDefaultClient().typeDefs().update(this);
+        return update(Atlan.getDefaultClient());
+    }
+
+    /**
+     * Update this custom metadata definition in Atlan.
+     * Note: there are many restrictions on what you can / should update, so this should really be treated
+     * as an internal method. (This will also force a refresh of the custom metadata cache.)
+     *
+     * @param client connectivity to the Atlan tenant on which to update the custom metadata
+     * @return the result of the update, or null if the update failed
+     * @throws AtlanException on any API communication issues
+     */
+    public CustomMetadataDef update(AtlanClient client) throws AtlanException {
+        TypeDefResponse response = client.typeDefs().update(this);
         if (response != null && !response.getCustomMetadataDefs().isEmpty()) {
-            Atlan.getDefaultClient().getCustomMetadataCache().refreshCache();
             return response.getCustomMetadataDefs().get(0);
         }
         return null;
@@ -79,8 +103,19 @@ public class CustomMetadataDef extends TypeDef {
      * @throws AtlanException on any error during the API invocation
      */
     public static void purge(String displayName) throws AtlanException {
-        String internalName = Atlan.getDefaultClient().getCustomMetadataCache().getIdForName(displayName);
-        Atlan.getDefaultClient().typeDefs().purge(internalName);
-        Atlan.getDefaultClient().getCustomMetadataCache().refreshCache();
+        purge(Atlan.getDefaultClient(), displayName);
+    }
+
+    /**
+     * Hard-deletes (purges) a custom metadata definition by its human-readable name. This operation is irreversible.
+     * If there are any existing uses of the custom metadata on an asset, this operation will fail.
+     *
+     * @param client connectivity to the Atlan tenant from which to purge the custom metadata
+     * @param displayName human-readable name of the custom metadata definition
+     * @throws AtlanException on any error during the API invocation
+     */
+    public static void purge(AtlanClient client, String displayName) throws AtlanException {
+        String internalName = client.getCustomMetadataCache().getIdForName(displayName);
+        client.typeDefs().purge(internalName);
     }
 }

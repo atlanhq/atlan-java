@@ -3,6 +3,7 @@
 package com.atlan.model.admin;
 
 import com.atlan.Atlan;
+import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
@@ -100,7 +101,17 @@ public class AtlanGroup extends AtlanObject {
      * @throws AtlanException on any error during API invocation
      */
     public String create() throws AtlanException {
-        return Atlan.getDefaultClient().groups().create(this);
+        return create(Atlan.getDefaultClient());
+    }
+
+    /** Send this group to Atlan to create the group in Atlan.
+     *
+     * @param client connectivity to the Atlan tenant on which to create the group
+     * @return the unique identifier (GUID) of the group that was created, or null if no group was created
+     * @throws AtlanException on any error during API invocation
+     */
+    public String create(AtlanClient client) throws AtlanException {
+        return client.groups().create(this);
     }
 
     /**
@@ -109,10 +120,20 @@ public class AtlanGroup extends AtlanObject {
      * @throws AtlanException on any error during API invocation
      */
     public void update() throws AtlanException {
+        update(Atlan.getDefaultClient());
+    }
+
+    /**
+     * Send this group to Atlan to update the group in Atlan.
+     *
+     * @param client connectivity to the Atlan tenant on which to update the group
+     * @throws AtlanException on any error during API invocation
+     */
+    public void update(AtlanClient client) throws AtlanException {
         if (this.id == null || this.id.length() == 0) {
             throw new InvalidRequestException(ErrorCode.MISSING_GROUP_ID);
         }
-        Atlan.getDefaultClient().groups().update(this.id, this);
+        client.groups().update(this.id, this);
     }
 
     /**
@@ -122,16 +143,39 @@ public class AtlanGroup extends AtlanObject {
      * @throws AtlanException on any error during API invocation
      */
     public static void delete(String id) throws AtlanException {
-        Atlan.getDefaultClient().groups().purge(id);
+        delete(Atlan.getDefaultClient(), id);
+    }
+
+    /**
+     * Delete a group from Atlan.
+     *
+     * @param client connectivity to the Atlan tenant from which to delete the group
+     * @param id unique identifier (GUID) of the group to delete
+     * @throws AtlanException on any error during API invocation
+     */
+    public static void delete(AtlanClient client, String id) throws AtlanException {
+        client.groups().purge(id);
     }
 
     /**
      * Retrieves all groups currently defined in Atlan.
+     *
      * @return the list of groups currently defined in Atlan
      * @throws AtlanException on any error during API invocation
      */
     public static List<AtlanGroup> retrieveAll() throws AtlanException {
-        return Atlan.getDefaultClient().groups().list();
+        return retrieveAll(Atlan.getDefaultClient());
+    }
+
+    /**
+     * Retrieves all groups currently defined in Atlan.
+     *
+     * @param client connectivity to the Atlan tenant from which to list the groups
+     * @return the list of groups currently defined in Atlan
+     * @throws AtlanException on any error during API invocation
+     */
+    public static List<AtlanGroup> retrieveAll(AtlanClient client) throws AtlanException {
+        return client.groups().list();
     }
 
     /**
@@ -145,13 +189,22 @@ public class AtlanGroup extends AtlanObject {
      * @throws AtlanException on any error during API invocation
      */
     public static List<AtlanGroup> retrieveByName(String alias) throws AtlanException {
-        GroupResponse response =
-                Atlan.getDefaultClient().groups().list("{\"$and\":[{\"alias\":{\"$ilike\":\"%" + alias + "%\"}}]}");
-        if (response != null && response.getRecords() != null) {
-            return response.getRecords();
-        } else {
-            return null;
-        }
+        return retrieveByName(Atlan.getDefaultClient(), alias);
+    }
+
+    /**
+     * Retrieves all groups with a name that contains the provided string.
+     * (This could include a complete group name, in which case there should be at
+     * most a single item in the returned list, or could be a partial group name
+     * to retrieve all groups with that naming convention.)
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the group
+     * @param alias name (as it appears in the UI) on which to filter the groups
+     * @return all groups whose name (in the UI) contains the provided string
+     * @throws AtlanException on any error during API invocation
+     */
+    public static List<AtlanGroup> retrieveByName(AtlanClient client, String alias) throws AtlanException {
+        return client.groups().get(alias);
     }
 
     /**
@@ -161,10 +214,21 @@ public class AtlanGroup extends AtlanObject {
      * @throws AtlanException on any API communication issue
      */
     public void removeUsers(List<String> userIds) throws AtlanException {
+        removeUsers(Atlan.getDefaultClient(), userIds);
+    }
+
+    /**
+     * Remove one or more users from this group.
+     *
+     * @param client connectivity to the Atlan tenant from which to remove the users from the group
+     * @param userIds unique identifiers (GUIDs) of the users to remove from the group
+     * @throws AtlanException on any API communication issue
+     */
+    public void removeUsers(AtlanClient client, List<String> userIds) throws AtlanException {
         if (this.id == null || this.id.length() == 0) {
             throw new InvalidRequestException(ErrorCode.MISSING_GROUP_ID);
         }
-        Atlan.getDefaultClient().groups().removeMembers(this.id, userIds);
+        client.groups().removeMembers(this.id, userIds);
     }
 
     /**
@@ -174,10 +238,21 @@ public class AtlanGroup extends AtlanObject {
      * @throws AtlanException on any API communication issue
      */
     public UserResponse fetchUsers() throws AtlanException {
+        return fetchUsers(Atlan.getDefaultClient());
+    }
+
+    /**
+     * Fetch the users that belong to this group.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the users belonging to the group
+     * @return details of the users that belong to this group
+     * @throws AtlanException on any API communication issue
+     */
+    public UserResponse fetchUsers(AtlanClient client) throws AtlanException {
         if (this.id == null || this.id.length() == 0) {
             throw new InvalidRequestException(ErrorCode.MISSING_GROUP_ID);
         }
-        return Atlan.getDefaultClient().groups().listMembers(this.id);
+        return client.groups().listMembers(this.id);
     }
 
     @Getter

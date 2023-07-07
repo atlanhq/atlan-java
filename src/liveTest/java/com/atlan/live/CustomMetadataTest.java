@@ -269,7 +269,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
                 .badgeCondition(BadgeCondition.of(BadgeComparisonOperator.LT, 5, BadgeConditionColor.YELLOW))
                 .badgeCondition(BadgeCondition.of(BadgeComparisonOperator.LTE, 2, BadgeConditionColor.RED))
                 .build();
-        AssetMutationResponse response = toCreate.upsert();
+        AssetMutationResponse response = toCreate.save();
         assertNotNull(response);
         assertEquals(response.getCreatedAssets().size(), 1);
         assertTrue(response.getCreatedAssets().get(0) instanceof Badge);
@@ -288,7 +288,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
                 .badgeCondition(BadgeCondition.of(BadgeComparisonOperator.EQ, "Accuracy", "#aabbcc"))
                 .badgeCondition(BadgeCondition.of(BadgeComparisonOperator.EQ, "Consistency", "#ccbbaa"))
                 .build();
-        response = toCreate.upsert();
+        response = toCreate.save();
         assertNotNull(response);
         assertEquals(response.getCreatedAssets().size(), 1);
         assertTrue(response.getCreatedAssets().get(0) instanceof Badge);
@@ -308,7 +308,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
                 .userDescription("License associated with this asset.")
                 .badgeCondition(BadgeCondition.of(BadgeComparisonOperator.EQ, "CC BY", BadgeConditionColor.GREEN))
                 .build();
-        response = toCreate.upsert();
+        response = toCreate.save();
         assertNotNull(response);
         assertEquals(response.getCreatedAssets().size(), 1);
         assertTrue(response.getCreatedAssets().get(0) instanceof Badge);
@@ -325,7 +325,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
                 .badgeCondition(BadgeCondition.of(BadgeComparisonOperator.EQ, true, BadgeConditionColor.RED))
                 .badgeCondition(BadgeCondition.of(BadgeComparisonOperator.EQ, false, BadgeConditionColor.GREEN))
                 .build();
-        response = toCreate.upsert();
+        response = toCreate.save();
         assertNotNull(response);
         assertEquals(response.getCreatedAssets().size(), 1);
         assertTrue(response.getCreatedAssets().get(0) instanceof Badge);
@@ -775,7 +775,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
         GlossaryTerm toUpdate = GlossaryTerm.updater(term.getQualifiedName(), term.getName(), glossary.getGuid())
                 .customMetadata(CM_RACI, cm1)
                 .build();
-        AssetMutationResponse response = toUpdate.upsertReplacingCM(false);
+        AssetMutationResponse response = toUpdate.saveReplacingCM(false);
         assertNotNull(response);
         assertTrue(response.getDeletedAssets().isEmpty());
         assertTrue(response.getCreatedAssets().isEmpty());
@@ -801,7 +801,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
         GlossaryTerm toUpdate = GlossaryTerm.updater(term.getQualifiedName(), term.getName(), glossary.getGuid())
                 .removeCustomMetadata()
                 .build();
-        AssetMutationResponse response = toUpdate.upsertReplacingCM(false);
+        AssetMutationResponse response = toUpdate.saveReplacingCM(false);
         assertNotNull(response);
         assertTrue(response.getDeletedAssets().isEmpty());
         assertTrue(response.getCreatedAssets().isEmpty());

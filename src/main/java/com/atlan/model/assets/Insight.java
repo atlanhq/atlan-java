@@ -2,6 +2,8 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
+import com.atlan.Atlan;
+import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
@@ -76,7 +78,19 @@ public class Insight extends Asset implements IInsight, ICatalog, IAsset, IRefer
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Insight does not exist or the provided GUID is not a Insight
      */
     public static Insight retrieveByGuid(String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(guid);
+        return retrieveByGuid(Atlan.getDefaultClient(), guid);
+    }
+
+    /**
+     * Retrieves a Insight by its GUID, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param guid of the Insight to retrieve
+     * @return the requested full Insight, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Insight does not exist or the provided GUID is not a Insight
+     */
+    public static Insight retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
+        Asset asset = Asset.retrieveFull(client, guid);
         if (asset == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
         } else if (asset instanceof Insight) {
@@ -94,7 +108,19 @@ public class Insight extends Asset implements IInsight, ICatalog, IAsset, IRefer
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Insight does not exist
      */
     public static Insight retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        Asset asset = Asset.retrieveFull(TYPE_NAME, qualifiedName);
+        return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
+    }
+
+    /**
+     * Retrieves a Insight by its qualifiedName, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param qualifiedName of the Insight to retrieve
+     * @return the requested full Insight, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Insight does not exist
+     */
+    public static Insight retrieveByQualifiedName(AtlanClient client, String qualifiedName) throws AtlanException {
+        Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
         if (asset instanceof Insight) {
             return (Insight) asset;
         } else {
@@ -110,7 +136,19 @@ public class Insight extends Asset implements IInsight, ICatalog, IAsset, IRefer
      * @throws AtlanException on any API problems
      */
     public static boolean restore(String qualifiedName) throws AtlanException {
-        return Asset.restore(TYPE_NAME, qualifiedName);
+        return restore(Atlan.getDefaultClient(), qualifiedName);
+    }
+
+    /**
+     * Restore the archived (soft-deleted) Insight to active.
+     *
+     * @param client connectivity to the Atlan tenant on which to restore the asset
+     * @param qualifiedName for the Insight
+     * @return true if the Insight is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
+        return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
 
     /**
@@ -156,7 +194,21 @@ public class Insight extends Asset implements IInsight, ICatalog, IAsset, IRefer
      * @throws AtlanException on any API problems
      */
     public static Insight removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (Insight) Asset.removeDescription(updater(qualifiedName, name));
+        return removeDescription(Atlan.getDefaultClient(), qualifiedName, name);
+    }
+
+    /**
+     * Remove the system description from a Insight.
+     *
+     * @param client connectivity to the Atlan tenant on which to remove the asset's description
+     * @param qualifiedName of the Insight
+     * @param name of the Insight
+     * @return the updated Insight, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static Insight removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
+        return (Insight) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
     /**
@@ -168,7 +220,21 @@ public class Insight extends Asset implements IInsight, ICatalog, IAsset, IRefer
      * @throws AtlanException on any API problems
      */
     public static Insight removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (Insight) Asset.removeUserDescription(updater(qualifiedName, name));
+        return removeUserDescription(Atlan.getDefaultClient(), qualifiedName, name);
+    }
+
+    /**
+     * Remove the user's description from a Insight.
+     *
+     * @param client connectivity to the Atlan tenant on which to remove the asset's description
+     * @param qualifiedName of the Insight
+     * @param name of the Insight
+     * @return the updated Insight, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static Insight removeUserDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
+        return (Insight) Asset.removeUserDescription(client, updater(qualifiedName, name));
     }
 
     /**
@@ -180,7 +246,20 @@ public class Insight extends Asset implements IInsight, ICatalog, IAsset, IRefer
      * @throws AtlanException on any API problems
      */
     public static Insight removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (Insight) Asset.removeOwners(updater(qualifiedName, name));
+        return removeOwners(Atlan.getDefaultClient(), qualifiedName, name);
+    }
+
+    /**
+     * Remove the owners from a Insight.
+     *
+     * @param client connectivity to the Atlan tenant from which to remove the Insight's owners
+     * @param qualifiedName of the Insight
+     * @param name of the Insight
+     * @return the updated Insight, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static Insight removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+        return (Insight) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
     /**
@@ -194,7 +273,23 @@ public class Insight extends Asset implements IInsight, ICatalog, IAsset, IRefer
      */
     public static Insight updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (Insight) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
+        return updateCertificate(Atlan.getDefaultClient(), qualifiedName, certificate, message);
+    }
+
+    /**
+     * Update the certificate on a Insight.
+     *
+     * @param client connectivity to the Atlan tenant on which to update the Insight's certificate
+     * @param qualifiedName of the Insight
+     * @param certificate to use
+     * @param message (optional) message, or null if no message
+     * @return the updated Insight, or null if the update failed
+     * @throws AtlanException on any API problems
+     */
+    public static Insight updateCertificate(
+            AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
+            throws AtlanException {
+        return (Insight) Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -206,7 +301,21 @@ public class Insight extends Asset implements IInsight, ICatalog, IAsset, IRefer
      * @throws AtlanException on any API problems
      */
     public static Insight removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (Insight) Asset.removeCertificate(updater(qualifiedName, name));
+        return removeCertificate(Atlan.getDefaultClient(), qualifiedName, name);
+    }
+
+    /**
+     * Remove the certificate from a Insight.
+     *
+     * @param client connectivity to the Atlan tenant from which to remove the Insight's certificate
+     * @param qualifiedName of the Insight
+     * @param name of the Insight
+     * @return the updated Insight, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static Insight removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
+        return (Insight) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
     /**
@@ -221,7 +330,24 @@ public class Insight extends Asset implements IInsight, ICatalog, IAsset, IRefer
      */
     public static Insight updateAnnouncement(
             String qualifiedName, AtlanAnnouncementType type, String title, String message) throws AtlanException {
-        return (Insight) Asset.updateAnnouncement(builder(), TYPE_NAME, qualifiedName, type, title, message);
+        return updateAnnouncement(Atlan.getDefaultClient(), qualifiedName, type, title, message);
+    }
+
+    /**
+     * Update the announcement on a Insight.
+     *
+     * @param client connectivity to the Atlan tenant on which to update the Insight's announcement
+     * @param qualifiedName of the Insight
+     * @param type type of announcement to set
+     * @param title (optional) title of the announcement to set (or null for no title)
+     * @param message (optional) message of the announcement to set (or null for no message)
+     * @return the result of the update, or null if the update failed
+     * @throws AtlanException on any API problems
+     */
+    public static Insight updateAnnouncement(
+            AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
+            throws AtlanException {
+        return (Insight) Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -233,7 +359,21 @@ public class Insight extends Asset implements IInsight, ICatalog, IAsset, IRefer
      * @throws AtlanException on any API problems
      */
     public static Insight removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (Insight) Asset.removeAnnouncement(updater(qualifiedName, name));
+        return removeAnnouncement(Atlan.getDefaultClient(), qualifiedName, name);
+    }
+
+    /**
+     * Remove the announcement from a Insight.
+     *
+     * @param client connectivity to the Atlan client from which to remove the Insight's announcement
+     * @param qualifiedName of the Insight
+     * @param name of the Insight
+     * @return the updated Insight, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static Insight removeAnnouncement(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
+        return (Insight) Asset.removeAnnouncement(client, updater(qualifiedName, name));
     }
 
     /**
@@ -247,7 +387,22 @@ public class Insight extends Asset implements IInsight, ICatalog, IAsset, IRefer
      */
     public static Insight replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
-        return (Insight) Asset.replaceTerms(updater(qualifiedName, name), terms);
+        return replaceTerms(Atlan.getDefaultClient(), qualifiedName, name, terms);
+    }
+
+    /**
+     * Replace the terms linked to the Insight.
+     *
+     * @param client connectivity to the Atlan tenant on which to replace the Insight's assigned terms
+     * @param qualifiedName for the Insight
+     * @param name human-readable name of the Insight
+     * @param terms the list of terms to replace on the Insight, or null to remove all terms from the Insight
+     * @return the Insight that was updated (note that it will NOT contain details of the replaced terms)
+     * @throws AtlanException on any API problems
+     */
+    public static Insight replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
+        return (Insight) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 
     /**
@@ -261,7 +416,23 @@ public class Insight extends Asset implements IInsight, ICatalog, IAsset, IRefer
      * @throws AtlanException on any API problems
      */
     public static Insight appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
-        return (Insight) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
+        return appendTerms(Atlan.getDefaultClient(), qualifiedName, terms);
+    }
+
+    /**
+     * Link additional terms to the Insight, without replacing existing terms linked to the Insight.
+     * Note: this operation must make two API calls — one to retrieve the Insight's existing terms,
+     * and a second to append the new terms.
+     *
+     * @param client connectivity to the Atlan tenant on which to append terms to the Insight
+     * @param qualifiedName for the Insight
+     * @param terms the list of terms to append to the Insight
+     * @return the Insight that was updated  (note that it will NOT contain details of the appended terms)
+     * @throws AtlanException on any API problems
+     */
+    public static Insight appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
+            throws AtlanException {
+        return (Insight) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
     /**
@@ -275,7 +446,23 @@ public class Insight extends Asset implements IInsight, ICatalog, IAsset, IRefer
      * @throws AtlanException on any API problems
      */
     public static Insight removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
-        return (Insight) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
+        return removeTerms(Atlan.getDefaultClient(), qualifiedName, terms);
+    }
+
+    /**
+     * Remove terms from a Insight, without replacing all existing terms linked to the Insight.
+     * Note: this operation must make two API calls — one to retrieve the Insight's existing terms,
+     * and a second to remove the provided terms.
+     *
+     * @param client connectivity to the Atlan tenant from which to remove terms from the Insight
+     * @param qualifiedName for the Insight
+     * @param terms the list of terms to remove from the Insight, which must be referenced by GUID
+     * @return the Insight that was updated (note that it will NOT contain details of the resulting terms)
+     * @throws AtlanException on any API problems
+     */
+    public static Insight removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
+            throws AtlanException {
+        return (Insight) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
     /**
@@ -289,7 +476,23 @@ public class Insight extends Asset implements IInsight, ICatalog, IAsset, IRefer
      * @return the updated Insight
      */
     public static Insight appendAtlanTags(String qualifiedName, List<String> atlanTagNames) throws AtlanException {
-        return (Insight) Asset.appendAtlanTags(TYPE_NAME, qualifiedName, atlanTagNames);
+        return appendAtlanTags(Atlan.getDefaultClient(), qualifiedName, atlanTagNames);
+    }
+
+    /**
+     * Add Atlan tags to a Insight, without replacing existing Atlan tags linked to the Insight.
+     * Note: this operation must make two API calls — one to retrieve the Insight's existing Atlan tags,
+     * and a second to append the new Atlan tags.
+     *
+     * @param client connectivity to the Atlan tenant on which to append Atlan tags to the Insight
+     * @param qualifiedName of the Insight
+     * @param atlanTagNames human-readable names of the Atlan tags to add
+     * @throws AtlanException on any API problems
+     * @return the updated Insight
+     */
+    public static Insight appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
+            throws AtlanException {
+        return (Insight) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 
     /**
@@ -312,7 +515,39 @@ public class Insight extends Asset implements IInsight, ICatalog, IAsset, IRefer
             boolean removePropagationsOnDelete,
             boolean restrictLineagePropagation)
             throws AtlanException {
+        return appendAtlanTags(
+                Atlan.getDefaultClient(),
+                qualifiedName,
+                atlanTagNames,
+                propagate,
+                removePropagationsOnDelete,
+                restrictLineagePropagation);
+    }
+
+    /**
+     * Add Atlan tags to a Insight, without replacing existing Atlan tags linked to the Insight.
+     * Note: this operation must make two API calls — one to retrieve the Insight's existing Atlan tags,
+     * and a second to append the new Atlan tags.
+     *
+     * @param client connectivity to the Atlan tenant on which to append Atlan tags to the Insight
+     * @param qualifiedName of the Insight
+     * @param atlanTagNames human-readable names of the Atlan tags to add
+     * @param propagate whether to propagate the Atlan tag (true) or not (false)
+     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
+     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
+     * @throws AtlanException on any API problems
+     * @return the updated Insight
+     */
+    public static Insight appendAtlanTags(
+            AtlanClient client,
+            String qualifiedName,
+            List<String> atlanTagNames,
+            boolean propagate,
+            boolean removePropagationsOnDelete,
+            boolean restrictLineagePropagation)
+            throws AtlanException {
         return (Insight) Asset.appendAtlanTags(
+                client,
                 TYPE_NAME,
                 qualifiedName,
                 atlanTagNames,
@@ -331,7 +566,22 @@ public class Insight extends Asset implements IInsight, ICatalog, IAsset, IRefer
      */
     @Deprecated
     public static void addAtlanTags(String qualifiedName, List<String> atlanTagNames) throws AtlanException {
-        Asset.addAtlanTags(TYPE_NAME, qualifiedName, atlanTagNames);
+        addAtlanTags(Atlan.getDefaultClient(), qualifiedName, atlanTagNames);
+    }
+
+    /**
+     * Add Atlan tags to a Insight.
+     *
+     * @param client connectivity to the Atlan tenant on which to add Atlan tags to the Insight
+     * @param qualifiedName of the Insight
+     * @param atlanTagNames human-readable names of the Atlan tags to add
+     * @throws AtlanException on any API problems, or if any of the Atlan tags already exist on the Insight
+     * @deprecated see {@link #appendAtlanTags(String, List)} instead
+     */
+    @Deprecated
+    public static void addAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
+            throws AtlanException {
+        Asset.addAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 
     /**
@@ -353,7 +603,38 @@ public class Insight extends Asset implements IInsight, ICatalog, IAsset, IRefer
             boolean removePropagationsOnDelete,
             boolean restrictLineagePropagation)
             throws AtlanException {
+        addAtlanTags(
+                Atlan.getDefaultClient(),
+                qualifiedName,
+                atlanTagNames,
+                propagate,
+                removePropagationsOnDelete,
+                restrictLineagePropagation);
+    }
+
+    /**
+     * Add Atlan tags to a Insight.
+     *
+     * @param client connectivity to the Atlan tenant on which to add Atlan tags to the Insight
+     * @param qualifiedName of the Insight
+     * @param atlanTagNames human-readable names of the Atlan tags to add
+     * @param propagate whether to propagate the Atlan tag (true) or not (false)
+     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
+     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
+     * @throws AtlanException on any API problems, or if any of the Atlan tags already exist on the Insight
+     * @deprecated see {@link #appendAtlanTags(String, List, boolean, boolean, boolean)} instead
+     */
+    @Deprecated
+    public static void addAtlanTags(
+            AtlanClient client,
+            String qualifiedName,
+            List<String> atlanTagNames,
+            boolean propagate,
+            boolean removePropagationsOnDelete,
+            boolean restrictLineagePropagation)
+            throws AtlanException {
         Asset.addAtlanTags(
+                client,
                 TYPE_NAME,
                 qualifiedName,
                 atlanTagNames,
@@ -370,6 +651,19 @@ public class Insight extends Asset implements IInsight, ICatalog, IAsset, IRefer
      * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the Insight
      */
     public static void removeAtlanTag(String qualifiedName, String atlanTagName) throws AtlanException {
-        Asset.removeAtlanTag(TYPE_NAME, qualifiedName, atlanTagName);
+        removeAtlanTag(Atlan.getDefaultClient(), qualifiedName, atlanTagName);
+    }
+
+    /**
+     * Remove an Atlan tag from a Insight.
+     *
+     * @param client connectivity to the Atlan tenant from which to remove an Atlan tag from a Insight
+     * @param qualifiedName of the Insight
+     * @param atlanTagName human-readable name of the Atlan tag to remove
+     * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the Insight
+     */
+    public static void removeAtlanTag(AtlanClient client, String qualifiedName, String atlanTagName)
+            throws AtlanException {
+        Asset.removeAtlanTag(client, TYPE_NAME, qualifiedName, atlanTagName);
     }
 }

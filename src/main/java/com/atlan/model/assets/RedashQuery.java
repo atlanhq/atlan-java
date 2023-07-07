@@ -2,6 +2,8 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
+import com.atlan.Atlan;
+import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
@@ -112,7 +114,19 @@ public class RedashQuery extends Asset implements IRedashQuery, IRedash, IBI, IC
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the RedashQuery does not exist or the provided GUID is not a RedashQuery
      */
     public static RedashQuery retrieveByGuid(String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(guid);
+        return retrieveByGuid(Atlan.getDefaultClient(), guid);
+    }
+
+    /**
+     * Retrieves a RedashQuery by its GUID, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param guid of the RedashQuery to retrieve
+     * @return the requested full RedashQuery, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the RedashQuery does not exist or the provided GUID is not a RedashQuery
+     */
+    public static RedashQuery retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
+        Asset asset = Asset.retrieveFull(client, guid);
         if (asset == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
         } else if (asset instanceof RedashQuery) {
@@ -130,7 +144,19 @@ public class RedashQuery extends Asset implements IRedashQuery, IRedash, IBI, IC
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the RedashQuery does not exist
      */
     public static RedashQuery retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        Asset asset = Asset.retrieveFull(TYPE_NAME, qualifiedName);
+        return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
+    }
+
+    /**
+     * Retrieves a RedashQuery by its qualifiedName, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param qualifiedName of the RedashQuery to retrieve
+     * @return the requested full RedashQuery, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the RedashQuery does not exist
+     */
+    public static RedashQuery retrieveByQualifiedName(AtlanClient client, String qualifiedName) throws AtlanException {
+        Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
         if (asset instanceof RedashQuery) {
             return (RedashQuery) asset;
         } else {
@@ -146,7 +172,19 @@ public class RedashQuery extends Asset implements IRedashQuery, IRedash, IBI, IC
      * @throws AtlanException on any API problems
      */
     public static boolean restore(String qualifiedName) throws AtlanException {
-        return Asset.restore(TYPE_NAME, qualifiedName);
+        return restore(Atlan.getDefaultClient(), qualifiedName);
+    }
+
+    /**
+     * Restore the archived (soft-deleted) RedashQuery to active.
+     *
+     * @param client connectivity to the Atlan tenant on which to restore the asset
+     * @param qualifiedName for the RedashQuery
+     * @return true if the RedashQuery is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
+        return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
 
     /**
@@ -192,7 +230,21 @@ public class RedashQuery extends Asset implements IRedashQuery, IRedash, IBI, IC
      * @throws AtlanException on any API problems
      */
     public static RedashQuery removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (RedashQuery) Asset.removeDescription(updater(qualifiedName, name));
+        return removeDescription(Atlan.getDefaultClient(), qualifiedName, name);
+    }
+
+    /**
+     * Remove the system description from a RedashQuery.
+     *
+     * @param client connectivity to the Atlan tenant on which to remove the asset's description
+     * @param qualifiedName of the RedashQuery
+     * @param name of the RedashQuery
+     * @return the updated RedashQuery, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static RedashQuery removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
+        return (RedashQuery) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
     /**
@@ -204,7 +256,21 @@ public class RedashQuery extends Asset implements IRedashQuery, IRedash, IBI, IC
      * @throws AtlanException on any API problems
      */
     public static RedashQuery removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (RedashQuery) Asset.removeUserDescription(updater(qualifiedName, name));
+        return removeUserDescription(Atlan.getDefaultClient(), qualifiedName, name);
+    }
+
+    /**
+     * Remove the user's description from a RedashQuery.
+     *
+     * @param client connectivity to the Atlan tenant on which to remove the asset's description
+     * @param qualifiedName of the RedashQuery
+     * @param name of the RedashQuery
+     * @return the updated RedashQuery, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static RedashQuery removeUserDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
+        return (RedashQuery) Asset.removeUserDescription(client, updater(qualifiedName, name));
     }
 
     /**
@@ -216,7 +282,21 @@ public class RedashQuery extends Asset implements IRedashQuery, IRedash, IBI, IC
      * @throws AtlanException on any API problems
      */
     public static RedashQuery removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (RedashQuery) Asset.removeOwners(updater(qualifiedName, name));
+        return removeOwners(Atlan.getDefaultClient(), qualifiedName, name);
+    }
+
+    /**
+     * Remove the owners from a RedashQuery.
+     *
+     * @param client connectivity to the Atlan tenant from which to remove the RedashQuery's owners
+     * @param qualifiedName of the RedashQuery
+     * @param name of the RedashQuery
+     * @return the updated RedashQuery, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static RedashQuery removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
+        return (RedashQuery) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
     /**
@@ -230,7 +310,23 @@ public class RedashQuery extends Asset implements IRedashQuery, IRedash, IBI, IC
      */
     public static RedashQuery updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (RedashQuery) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
+        return updateCertificate(Atlan.getDefaultClient(), qualifiedName, certificate, message);
+    }
+
+    /**
+     * Update the certificate on a RedashQuery.
+     *
+     * @param client connectivity to the Atlan tenant on which to update the RedashQuery's certificate
+     * @param qualifiedName of the RedashQuery
+     * @param certificate to use
+     * @param message (optional) message, or null if no message
+     * @return the updated RedashQuery, or null if the update failed
+     * @throws AtlanException on any API problems
+     */
+    public static RedashQuery updateCertificate(
+            AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
+            throws AtlanException {
+        return (RedashQuery) Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -242,7 +338,21 @@ public class RedashQuery extends Asset implements IRedashQuery, IRedash, IBI, IC
      * @throws AtlanException on any API problems
      */
     public static RedashQuery removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (RedashQuery) Asset.removeCertificate(updater(qualifiedName, name));
+        return removeCertificate(Atlan.getDefaultClient(), qualifiedName, name);
+    }
+
+    /**
+     * Remove the certificate from a RedashQuery.
+     *
+     * @param client connectivity to the Atlan tenant from which to remove the RedashQuery's certificate
+     * @param qualifiedName of the RedashQuery
+     * @param name of the RedashQuery
+     * @return the updated RedashQuery, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static RedashQuery removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
+        return (RedashQuery) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
     /**
@@ -257,7 +367,25 @@ public class RedashQuery extends Asset implements IRedashQuery, IRedash, IBI, IC
      */
     public static RedashQuery updateAnnouncement(
             String qualifiedName, AtlanAnnouncementType type, String title, String message) throws AtlanException {
-        return (RedashQuery) Asset.updateAnnouncement(builder(), TYPE_NAME, qualifiedName, type, title, message);
+        return updateAnnouncement(Atlan.getDefaultClient(), qualifiedName, type, title, message);
+    }
+
+    /**
+     * Update the announcement on a RedashQuery.
+     *
+     * @param client connectivity to the Atlan tenant on which to update the RedashQuery's announcement
+     * @param qualifiedName of the RedashQuery
+     * @param type type of announcement to set
+     * @param title (optional) title of the announcement to set (or null for no title)
+     * @param message (optional) message of the announcement to set (or null for no message)
+     * @return the result of the update, or null if the update failed
+     * @throws AtlanException on any API problems
+     */
+    public static RedashQuery updateAnnouncement(
+            AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
+            throws AtlanException {
+        return (RedashQuery)
+                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -269,7 +397,21 @@ public class RedashQuery extends Asset implements IRedashQuery, IRedash, IBI, IC
      * @throws AtlanException on any API problems
      */
     public static RedashQuery removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (RedashQuery) Asset.removeAnnouncement(updater(qualifiedName, name));
+        return removeAnnouncement(Atlan.getDefaultClient(), qualifiedName, name);
+    }
+
+    /**
+     * Remove the announcement from a RedashQuery.
+     *
+     * @param client connectivity to the Atlan client from which to remove the RedashQuery's announcement
+     * @param qualifiedName of the RedashQuery
+     * @param name of the RedashQuery
+     * @return the updated RedashQuery, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static RedashQuery removeAnnouncement(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
+        return (RedashQuery) Asset.removeAnnouncement(client, updater(qualifiedName, name));
     }
 
     /**
@@ -283,7 +425,22 @@ public class RedashQuery extends Asset implements IRedashQuery, IRedash, IBI, IC
      */
     public static RedashQuery replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
-        return (RedashQuery) Asset.replaceTerms(updater(qualifiedName, name), terms);
+        return replaceTerms(Atlan.getDefaultClient(), qualifiedName, name, terms);
+    }
+
+    /**
+     * Replace the terms linked to the RedashQuery.
+     *
+     * @param client connectivity to the Atlan tenant on which to replace the RedashQuery's assigned terms
+     * @param qualifiedName for the RedashQuery
+     * @param name human-readable name of the RedashQuery
+     * @param terms the list of terms to replace on the RedashQuery, or null to remove all terms from the RedashQuery
+     * @return the RedashQuery that was updated (note that it will NOT contain details of the replaced terms)
+     * @throws AtlanException on any API problems
+     */
+    public static RedashQuery replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+        return (RedashQuery) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 
     /**
@@ -297,7 +454,23 @@ public class RedashQuery extends Asset implements IRedashQuery, IRedash, IBI, IC
      * @throws AtlanException on any API problems
      */
     public static RedashQuery appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
-        return (RedashQuery) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
+        return appendTerms(Atlan.getDefaultClient(), qualifiedName, terms);
+    }
+
+    /**
+     * Link additional terms to the RedashQuery, without replacing existing terms linked to the RedashQuery.
+     * Note: this operation must make two API calls — one to retrieve the RedashQuery's existing terms,
+     * and a second to append the new terms.
+     *
+     * @param client connectivity to the Atlan tenant on which to append terms to the RedashQuery
+     * @param qualifiedName for the RedashQuery
+     * @param terms the list of terms to append to the RedashQuery
+     * @return the RedashQuery that was updated  (note that it will NOT contain details of the appended terms)
+     * @throws AtlanException on any API problems
+     */
+    public static RedashQuery appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
+            throws AtlanException {
+        return (RedashQuery) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
     /**
@@ -311,7 +484,23 @@ public class RedashQuery extends Asset implements IRedashQuery, IRedash, IBI, IC
      * @throws AtlanException on any API problems
      */
     public static RedashQuery removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
-        return (RedashQuery) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
+        return removeTerms(Atlan.getDefaultClient(), qualifiedName, terms);
+    }
+
+    /**
+     * Remove terms from a RedashQuery, without replacing all existing terms linked to the RedashQuery.
+     * Note: this operation must make two API calls — one to retrieve the RedashQuery's existing terms,
+     * and a second to remove the provided terms.
+     *
+     * @param client connectivity to the Atlan tenant from which to remove terms from the RedashQuery
+     * @param qualifiedName for the RedashQuery
+     * @param terms the list of terms to remove from the RedashQuery, which must be referenced by GUID
+     * @return the RedashQuery that was updated (note that it will NOT contain details of the resulting terms)
+     * @throws AtlanException on any API problems
+     */
+    public static RedashQuery removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
+            throws AtlanException {
+        return (RedashQuery) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
     /**
@@ -325,7 +514,23 @@ public class RedashQuery extends Asset implements IRedashQuery, IRedash, IBI, IC
      * @return the updated RedashQuery
      */
     public static RedashQuery appendAtlanTags(String qualifiedName, List<String> atlanTagNames) throws AtlanException {
-        return (RedashQuery) Asset.appendAtlanTags(TYPE_NAME, qualifiedName, atlanTagNames);
+        return appendAtlanTags(Atlan.getDefaultClient(), qualifiedName, atlanTagNames);
+    }
+
+    /**
+     * Add Atlan tags to a RedashQuery, without replacing existing Atlan tags linked to the RedashQuery.
+     * Note: this operation must make two API calls — one to retrieve the RedashQuery's existing Atlan tags,
+     * and a second to append the new Atlan tags.
+     *
+     * @param client connectivity to the Atlan tenant on which to append Atlan tags to the RedashQuery
+     * @param qualifiedName of the RedashQuery
+     * @param atlanTagNames human-readable names of the Atlan tags to add
+     * @throws AtlanException on any API problems
+     * @return the updated RedashQuery
+     */
+    public static RedashQuery appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
+            throws AtlanException {
+        return (RedashQuery) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 
     /**
@@ -348,7 +553,39 @@ public class RedashQuery extends Asset implements IRedashQuery, IRedash, IBI, IC
             boolean removePropagationsOnDelete,
             boolean restrictLineagePropagation)
             throws AtlanException {
+        return appendAtlanTags(
+                Atlan.getDefaultClient(),
+                qualifiedName,
+                atlanTagNames,
+                propagate,
+                removePropagationsOnDelete,
+                restrictLineagePropagation);
+    }
+
+    /**
+     * Add Atlan tags to a RedashQuery, without replacing existing Atlan tags linked to the RedashQuery.
+     * Note: this operation must make two API calls — one to retrieve the RedashQuery's existing Atlan tags,
+     * and a second to append the new Atlan tags.
+     *
+     * @param client connectivity to the Atlan tenant on which to append Atlan tags to the RedashQuery
+     * @param qualifiedName of the RedashQuery
+     * @param atlanTagNames human-readable names of the Atlan tags to add
+     * @param propagate whether to propagate the Atlan tag (true) or not (false)
+     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
+     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
+     * @throws AtlanException on any API problems
+     * @return the updated RedashQuery
+     */
+    public static RedashQuery appendAtlanTags(
+            AtlanClient client,
+            String qualifiedName,
+            List<String> atlanTagNames,
+            boolean propagate,
+            boolean removePropagationsOnDelete,
+            boolean restrictLineagePropagation)
+            throws AtlanException {
         return (RedashQuery) Asset.appendAtlanTags(
+                client,
                 TYPE_NAME,
                 qualifiedName,
                 atlanTagNames,
@@ -367,7 +604,22 @@ public class RedashQuery extends Asset implements IRedashQuery, IRedash, IBI, IC
      */
     @Deprecated
     public static void addAtlanTags(String qualifiedName, List<String> atlanTagNames) throws AtlanException {
-        Asset.addAtlanTags(TYPE_NAME, qualifiedName, atlanTagNames);
+        addAtlanTags(Atlan.getDefaultClient(), qualifiedName, atlanTagNames);
+    }
+
+    /**
+     * Add Atlan tags to a RedashQuery.
+     *
+     * @param client connectivity to the Atlan tenant on which to add Atlan tags to the RedashQuery
+     * @param qualifiedName of the RedashQuery
+     * @param atlanTagNames human-readable names of the Atlan tags to add
+     * @throws AtlanException on any API problems, or if any of the Atlan tags already exist on the RedashQuery
+     * @deprecated see {@link #appendAtlanTags(String, List)} instead
+     */
+    @Deprecated
+    public static void addAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
+            throws AtlanException {
+        Asset.addAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 
     /**
@@ -389,7 +641,38 @@ public class RedashQuery extends Asset implements IRedashQuery, IRedash, IBI, IC
             boolean removePropagationsOnDelete,
             boolean restrictLineagePropagation)
             throws AtlanException {
+        addAtlanTags(
+                Atlan.getDefaultClient(),
+                qualifiedName,
+                atlanTagNames,
+                propagate,
+                removePropagationsOnDelete,
+                restrictLineagePropagation);
+    }
+
+    /**
+     * Add Atlan tags to a RedashQuery.
+     *
+     * @param client connectivity to the Atlan tenant on which to add Atlan tags to the RedashQuery
+     * @param qualifiedName of the RedashQuery
+     * @param atlanTagNames human-readable names of the Atlan tags to add
+     * @param propagate whether to propagate the Atlan tag (true) or not (false)
+     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
+     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
+     * @throws AtlanException on any API problems, or if any of the Atlan tags already exist on the RedashQuery
+     * @deprecated see {@link #appendAtlanTags(String, List, boolean, boolean, boolean)} instead
+     */
+    @Deprecated
+    public static void addAtlanTags(
+            AtlanClient client,
+            String qualifiedName,
+            List<String> atlanTagNames,
+            boolean propagate,
+            boolean removePropagationsOnDelete,
+            boolean restrictLineagePropagation)
+            throws AtlanException {
         Asset.addAtlanTags(
+                client,
                 TYPE_NAME,
                 qualifiedName,
                 atlanTagNames,
@@ -406,6 +689,19 @@ public class RedashQuery extends Asset implements IRedashQuery, IRedash, IBI, IC
      * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the RedashQuery
      */
     public static void removeAtlanTag(String qualifiedName, String atlanTagName) throws AtlanException {
-        Asset.removeAtlanTag(TYPE_NAME, qualifiedName, atlanTagName);
+        removeAtlanTag(Atlan.getDefaultClient(), qualifiedName, atlanTagName);
+    }
+
+    /**
+     * Remove an Atlan tag from a RedashQuery.
+     *
+     * @param client connectivity to the Atlan tenant from which to remove an Atlan tag from a RedashQuery
+     * @param qualifiedName of the RedashQuery
+     * @param atlanTagName human-readable name of the Atlan tag to remove
+     * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the RedashQuery
+     */
+    public static void removeAtlanTag(AtlanClient client, String qualifiedName, String atlanTagName)
+            throws AtlanException {
+        Asset.removeAtlanTag(client, TYPE_NAME, qualifiedName, atlanTagName);
     }
 }

@@ -62,7 +62,7 @@ public class GlossaryTest extends AtlanLiveTest {
      */
     static Glossary createGlossary(String name) throws AtlanException {
         Glossary glossary = Glossary.creator(name).build();
-        AssetMutationResponse response = glossary.upsert();
+        AssetMutationResponse response = glossary.save();
         assertNotNull(response);
         assertEquals(response.getDeletedAssets().size(), 0);
         assertEquals(response.getUpdatedAssets().size(), 0);
@@ -128,7 +128,7 @@ public class GlossaryTest extends AtlanLiveTest {
      */
     static GlossaryTerm createTerm(String name, String glossaryId) throws AtlanException {
         GlossaryTerm term = GlossaryTerm.creator(name, glossaryId, null).build();
-        AssetMutationResponse response = term.upsert();
+        AssetMutationResponse response = term.save();
         assertNotNull(response);
         assertEquals(response.getDeletedAssets().size(), 0);
         assertEquals(response.getUpdatedAssets().size(), 1);
@@ -387,7 +387,7 @@ public class GlossaryTest extends AtlanLiveTest {
                 .announcementTitle(ANNOUNCEMENT_TITLE)
                 .announcementMessage(ANNOUNCEMENT_MESSAGE)
                 .build();
-        AssetMutationResponse response = g.upsert();
+        AssetMutationResponse response = g.save();
         Asset one = validateSingleUpdate(response);
         assertTrue(one instanceof Glossary);
         g = (Glossary) one;
@@ -416,7 +416,7 @@ public class GlossaryTest extends AtlanLiveTest {
                 .announcementTitle(ANNOUNCEMENT_TITLE)
                 .announcementMessage(ANNOUNCEMENT_MESSAGE)
                 .build();
-        AssetMutationResponse response = toUpdate.upsert();
+        AssetMutationResponse response = toUpdate.save();
         Asset one = validateSingleUpdate(response);
         assertTrue(one instanceof GlossaryCategory);
         GlossaryCategory c = (GlossaryCategory) one;
@@ -446,7 +446,7 @@ public class GlossaryTest extends AtlanLiveTest {
                         category.getAnchor().getGuid())
                 .removeAnnouncement()
                 .build();
-        AssetMutationResponse response = toUpdate.upsert();
+        AssetMutationResponse response = toUpdate.save();
         Asset one = validateSingleUpdate(response);
         assertTrue(one instanceof GlossaryCategory);
         GlossaryCategory c = (GlossaryCategory) one;
@@ -470,7 +470,7 @@ public class GlossaryTest extends AtlanLiveTest {
                 .announcementMessage(ANNOUNCEMENT_MESSAGE)
                 .category(GlossaryCategory.refByGuid(category.getGuid()))
                 .build();
-        AssetMutationResponse response = term.upsert();
+        AssetMutationResponse response = term.save();
         assertNotNull(response);
         assertEquals(response.getDeletedAssets().size(), 0);
         assertEquals(response.getCreatedAssets().size(), 0);

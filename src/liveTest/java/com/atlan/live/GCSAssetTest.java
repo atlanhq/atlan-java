@@ -51,7 +51,7 @@ public class GCSAssetTest extends AtlanLiveTest {
     void createBucket() throws AtlanException {
         GCSBucket gcsBucket =
                 GCSBucket.creator(BUCKET_NAME, connection.getQualifiedName()).build();
-        AssetMutationResponse response = gcsBucket.upsert();
+        AssetMutationResponse response = gcsBucket.save();
         Asset one = validateSingleCreate(response);
         assertTrue(one instanceof GCSBucket);
         bucket = (GCSBucket) one;
@@ -67,7 +67,7 @@ public class GCSAssetTest extends AtlanLiveTest {
     void createObject() throws AtlanException {
         GCSObject gcsObject =
                 GCSObject.creator(OBJECT_NAME, bucket.getQualifiedName()).build();
-        AssetMutationResponse response = gcsObject.upsert();
+        AssetMutationResponse response = gcsObject.save();
         assertNotNull(response);
         assertTrue(response.getDeletedAssets().isEmpty());
         assertEquals(response.getUpdatedAssets().size(), 1);

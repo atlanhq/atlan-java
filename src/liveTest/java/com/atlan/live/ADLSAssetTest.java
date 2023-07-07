@@ -53,7 +53,7 @@ public class ADLSAssetTest extends AtlanLiveTest {
     void createAccount() throws AtlanException {
         ADLSAccount adlsAccount =
                 ADLSAccount.creator(ACCOUNT_NAME, connection.getQualifiedName()).build();
-        AssetMutationResponse response = adlsAccount.upsert();
+        AssetMutationResponse response = adlsAccount.save();
         Asset one = validateSingleCreate(response);
         assertTrue(one instanceof ADLSAccount);
         account = (ADLSAccount) one;
@@ -70,7 +70,7 @@ public class ADLSAssetTest extends AtlanLiveTest {
     void createContainer() throws AtlanException {
         ADLSContainer adlsContainer = ADLSContainer.creator(CONTAINER_NAME, account.getQualifiedName())
                 .build();
-        AssetMutationResponse response = adlsContainer.upsert();
+        AssetMutationResponse response = adlsContainer.save();
         assertEquals(response.getUpdatedAssets().size(), 1);
         Asset one = response.getUpdatedAssets().get(0);
         assertTrue(one instanceof ADLSAccount);
@@ -94,7 +94,7 @@ public class ADLSAssetTest extends AtlanLiveTest {
     void createObject() throws AtlanException {
         ADLSObject adlsObject =
                 ADLSObject.creator(OBJECT_NAME, container.getQualifiedName()).build();
-        AssetMutationResponse response = adlsObject.upsert();
+        AssetMutationResponse response = adlsObject.save();
         assertNotNull(response);
         assertTrue(response.getDeletedAssets().isEmpty());
         assertEquals(response.getUpdatedAssets().size(), 1);

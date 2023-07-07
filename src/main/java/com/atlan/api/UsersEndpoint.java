@@ -102,6 +102,67 @@ public class UsersEndpoint extends HeraclesEndpoint {
     }
 
     /**
+     * Retrieves all users with email addresses that contain the provided email.
+     * (This could include a complete email address, in which case there should be at
+     * most a single item in the returned list, or could be a partial email address
+     * such as "@example.com" to retrieve all users with that domain in their email
+     * address.)
+     *
+     * @param email on which to filter the users
+     * @return all users whose email addresses contain the provided string
+     * @throws AtlanException on any error during API invocation
+     */
+    public List<AtlanUser> getByEmail(String email) throws AtlanException {
+        UserResponse response = list("{\"email\":{\"$ilike\":\"%" + email + "%\"}}");
+        if (response != null && response.getRecords() != null) {
+            return response.getRecords();
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Retrieves a user based on the username. (This attempts an exact match on username rather than a
+     * contains search.)
+     *
+     * @param user the username by which to find the user
+     * @return the user with that username
+     * @throws AtlanException on any error during API invocation
+     */
+    public AtlanUser getByUsername(String user) throws AtlanException {
+        UserResponse response = list("{\"username\":\"" + user + "\"}");
+        if (response != null && response.getRecords() != null) {
+            return response.getRecords().get(0);
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Enable this user to log into Atlan. This will only affect users who are deactivated, and will
+     * allow them to login again once completed.
+     *
+     * @param id the unique identifier (GUID) of the user to activate
+     * @return the result of the update to the user
+     * @throws AtlanException on any error during API invocation
+     */
+    public UserMinimalResponse activate(String id) throws AtlanException {
+        return update(id, AtlanUser.builder().enabled(true).build());
+    }
+
+    /**
+     * Prevent this user from logging into Atlan. This will only affect users who are activated, and will
+     * prevent them logging in once completed.
+     *
+     * @param id the unique identifier (GUID) of the user to deactivate
+     * @return the result of the update to the user
+     * @throws AtlanException on any error during API invocation
+     */
+    public UserMinimalResponse deactivate(String id) throws AtlanException {
+        return update(id, AtlanUser.builder().enabled(false).build());
+    }
+
+    /**
      * Create a new user.
      *
      * @param user the details of the new user

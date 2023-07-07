@@ -44,6 +44,33 @@
             List<String> adminGroups,
             List<String> adminUsers)
             throws AtlanException {
+        return creator(Atlan.getDefaultClient(), name, connectorType, adminRoles, adminGroups, adminUsers);
+    }
+
+    /**
+     * Builds the minimal object necessary to create a connection.
+     * Note: at least one of {@code #adminRoles}, {@code #adminGroups}, or {@code #adminUsers} must be
+     * provided or an InvalidRequestException will be thrown.
+     *
+     * @param client connectivity to the Atlan tenant where the connection is intended to be created
+     * @param name of the connection
+     * @param connectorType type of the connection's connector (this determines what logo appears for the assets)
+     * @param adminRoles the GUIDs of the roles that can administer this connection
+     * @param adminGroups the names of the groups that can administer this connection
+     * @param adminUsers the names of the users that can administer this connection
+     * @return the minimal object necessary to create the connection, as a builder
+     * @throws InvalidRequestException if no admin has been defined for the connection, or an invalid admin has been defined
+     * @throws NotFoundException if a non-existent admin has been defined for the connection
+     * @throws AtlanException on any other error related to the request, such as an inability to retrieve the existing admins in the system
+     */
+    public static ConnectionBuilder<?, ?> creator(
+            AtlanClient client,
+            String name,
+            AtlanConnectorType connectorType,
+            List<String> adminRoles,
+            List<String> adminGroups,
+            List<String> adminUsers)
+            throws AtlanException {
         boolean adminFound = false;
         ConnectionBuilder<?, ?> builder = Connection.builder()
                 .name(name)
@@ -52,7 +79,7 @@
                 .connectorType(connectorType);
         if (adminRoles != null && !adminRoles.isEmpty()) {
             for (String roleId : adminRoles) {
-                Atlan.getDefaultClient().getRoleCache().getNameForId(roleId);
+                client.getRoleCache().getNameForId(roleId);
             }
             adminFound = true;
             builder.adminRoles(adminRoles);
@@ -61,7 +88,7 @@
         }
         if (adminGroups != null && !adminGroups.isEmpty()) {
             for (String groupAlias : adminGroups) {
-                Atlan.getDefaultClient().getGroupCache().getIdForAlias(groupAlias);
+                client.getGroupCache().getIdForAlias(groupAlias);
             }
             adminFound = true;
             builder.adminGroups(adminGroups);
@@ -70,7 +97,7 @@
         }
         if (adminUsers != null && !adminUsers.isEmpty()) {
             for (String userName : adminUsers) {
-                Atlan.getDefaultClient().getUserCache().getIdForName(userName);
+                client.getUserCache().getIdForName(userName);
             }
             adminFound = true;
             builder.adminUsers(adminUsers);
@@ -92,31 +119,80 @@
      * @return details of the created or updated asset
      * @throws AtlanException on any error during the API invocation
      * @throws NotFoundException if any of the provided connection admins do not actually exist
+     * @deprecated see {@link #save()} instead
      */
+    @Deprecated
     @Override
     public ConnectionCreationResponse upsert() throws AtlanException {
+        return save(Atlan.getDefaultClient());
+    }
+
+    /**
+     * If an asset with the same qualifiedName exists, updates the existing asset. Otherwise, creates the asset.
+     * No Atlan tags or custom metadata will be changed if updating an existing asset, irrespective of what
+     * is included in the asset itself when the method is called.
+     *
+     * @return details of the created or updated asset
+     * @throws AtlanException on any error during the API invocation
+     * @throws NotFoundException if any of the provided connection admins do not actually exist
+     */
+    @Override
+    public ConnectionCreationResponse save() throws AtlanException {
+        return save(Atlan.getDefaultClient());
+    }
+
+    /**
+     * If an asset with the same qualifiedName exists, updates the existing asset. Otherwise, creates the asset.
+     * No Atlan tags or custom metadata will be changed if updating an existing asset, irrespective of what
+     * is included in the asset itself when the method is called.
+     *
+     * @param client connectivity to the Atlan tenant where this connection should be saved
+     * @return details of the created or updated asset
+     * @throws AtlanException on any error during the API invocation
+     * @throws NotFoundException if any of the provided connection admins do not actually exist
+     */
+    @Override
+    public ConnectionCreationResponse save(AtlanClient client) throws AtlanException {
         // Validate the provided connection admins prior to attempting to create
         // (the cache retrievals will throw errors directly if there are any)
         if (adminRoles != null && !adminRoles.isEmpty()) {
             for (String roleId : adminRoles) {
-                Atlan.getDefaultClient().getRoleCache().getNameForId(roleId);
+                client.getRoleCache().getNameForId(roleId);
             }
         }
         if (adminGroups != null && !adminGroups.isEmpty()) {
             for (String groupAlias : adminGroups) {
-                Atlan.getDefaultClient().getGroupCache().getIdForAlias(groupAlias);
+                client.getGroupCache().getIdForAlias(groupAlias);
             }
         }
         if (adminUsers != null && !adminUsers.isEmpty()) {
             for (String userName : adminUsers) {
-                Atlan.getDefaultClient().getUserCache().getIdForName(userName);
+                client.getUserCache().getIdForName(userName);
             }
         }
-        return Atlan.getDefaultClient().assets().save(this, false);
+        return client.assets().save(this, false);
     }
 
     /**
-     * If no asset exists, has the same behavior as the {@link #upsert()} method.
+     * If no asset exists, has the same behavior as the {@link #save()} method.
+     * If an asset does exist, optionally overwrites any Atlan tags. Custom metadata will always
+     * be entirely ignored using this method.
+     *
+     * @param replaceAtlanTags whether to replace Atlan tags during an update (true) or not (false)
+     * @return details of the created or updated asset
+     * @throws AtlanException on any error during the API invocation
+     * @throws NotFoundException if any of the provided connection admins do not actually exist
+     * @deprecated see {@link #save(boolean)} instead
+     */
+    @Deprecated
+    @Override
+    public ConnectionCreationResponse upsert(boolean replaceAtlanTags)
+            throws AtlanException {
+        return save(Atlan.getDefaultClient(), replaceAtlanTags);
+    }
+
+    /**
+     * If no asset exists, has the same behavior as the {@link #save()} method.
      * If an asset does exist, optionally overwrites any Atlan tags. Custom metadata will always
      * be entirely ignored using this method.
      *
@@ -126,26 +202,43 @@
      * @throws NotFoundException if any of the provided connection admins do not actually exist
      */
     @Override
-    public ConnectionCreationResponse upsert(boolean replaceAtlanTags)
+    public ConnectionCreationResponse save(boolean replaceAtlanTags)
+            throws AtlanException {
+        return save(Atlan.getDefaultClient(), replaceAtlanTags);
+    }
+
+    /**
+     * If no asset exists, has the same behavior as the {@link #save()} method.
+     * If an asset does exist, optionally overwrites any Atlan tags. Custom metadata will always
+     * be entirely ignored using this method.
+     *
+     * @param client connectivity to the Atlan tenant where this connection should be saved
+     * @param replaceAtlanTags whether to replace Atlan tags during an update (true) or not (false)
+     * @return details of the created or updated asset
+     * @throws AtlanException on any error during the API invocation
+     * @throws NotFoundException if any of the provided connection admins do not actually exist
+     */
+    @Override
+    public ConnectionCreationResponse save(AtlanClient client, boolean replaceAtlanTags)
             throws AtlanException {
         // Validate the provided connection admins prior to attempting to create
         // (the cache retrievals will throw errors directly if there are any)
         if (adminRoles != null && !adminRoles.isEmpty()) {
             for (String roleId : adminRoles) {
-                Atlan.getDefaultClient().getRoleCache().getNameForId(roleId);
+                client.getRoleCache().getNameForId(roleId);
             }
         }
         if (adminGroups != null && !adminGroups.isEmpty()) {
             for (String groupAlias : adminGroups) {
-                Atlan.getDefaultClient().getGroupCache().getIdForAlias(groupAlias);
+                client.getGroupCache().getIdForAlias(groupAlias);
             }
         }
         if (adminUsers != null && !adminUsers.isEmpty()) {
             for (String userName : adminUsers) {
-                Atlan.getDefaultClient().getUserCache().getIdForName(userName);
+                client.getUserCache().getIdForName(userName);
             }
         }
-        return Atlan.getDefaultClient().assets().save(this, replaceAtlanTags);
+        return client.assets().save(this, replaceAtlanTags);
     }
 
     /**

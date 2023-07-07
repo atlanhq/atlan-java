@@ -54,7 +54,7 @@ public class S3AssetTest extends AtlanLiveTest {
     void createBucket() throws AtlanException {
         S3Bucket toCreate = S3Bucket.creator(BUCKET_NAME, connection.getQualifiedName(), BUCKET_ARN)
                 .build();
-        AssetMutationResponse response = toCreate.upsert();
+        AssetMutationResponse response = toCreate.save();
         Asset one = validateSingleCreate(response);
         assertTrue(one instanceof S3Bucket);
         bucket = (S3Bucket) one;
@@ -71,7 +71,7 @@ public class S3AssetTest extends AtlanLiveTest {
     void createObject() throws AtlanException {
         S3Object toCreate = S3Object.creator(OBJECT_NAME, bucket.getQualifiedName(), BUCKET_NAME, OBJECT_ARN)
                 .build();
-        AssetMutationResponse response = toCreate.upsert();
+        AssetMutationResponse response = toCreate.save();
         assertNotNull(response);
         assertTrue(response.getDeletedAssets().isEmpty());
         assertEquals(response.getUpdatedAssets().size(), 1);

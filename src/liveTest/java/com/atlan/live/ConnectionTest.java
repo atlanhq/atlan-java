@@ -45,7 +45,7 @@ public class ConnectionTest extends AtlanLiveTest {
         String adminRoleGuid = Atlan.getDefaultClient().getRoleCache().getIdForName("$admin");
         Connection connection = Connection.creator(prefix, type, List.of(adminRoleGuid), null, null)
                 .build();
-        AssetMutationResponse response = connection.upsert().block();
+        AssetMutationResponse response = connection.save().block();
         assertNotNull(response);
         assertTrue(response.getUpdatedAssets().isEmpty());
         assertTrue(response.getDeletedAssets().isEmpty());

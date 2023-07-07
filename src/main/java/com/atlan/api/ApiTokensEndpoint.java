@@ -95,6 +95,22 @@ public class ApiTokensEndpoint extends HeraclesEndpoint {
     }
 
     /**
+     * Retrieves the API token with a name that exactly matches the provided string.
+     *
+     * @param displayName name (as it appears in the UI) by which to retrieve the API token
+     * @return the API token whose name (in the UI) contains the provided string, or null if there is none
+     * @throws AtlanException on any error during API invocation
+     */
+    public ApiToken get(String displayName) throws AtlanException {
+        ApiTokenResponse response = list("{\"displayName\":\"" + displayName + "\"}", "-createdAt", 0, 2);
+        if (response != null && response.getRecords() != null) {
+            return response.getRecords().get(0);
+        } else {
+            return null;
+        }
+    }
+
+    /**
      * Create a new API token with the provided settings.
      *
      * @param displayName human-readable name for the API token
@@ -176,8 +192,8 @@ public class ApiTokensEndpoint extends HeraclesEndpoint {
      * @param guid unique identifier (GUID) of the API token to delete
      * @throws AtlanException on any API communication issue
      */
-    public void delete(String guid) throws AtlanException {
-        delete(guid, null);
+    public void purge(String guid) throws AtlanException {
+        purge(guid, null);
     }
 
     /**
@@ -187,7 +203,7 @@ public class ApiTokensEndpoint extends HeraclesEndpoint {
      * @param options to override default client settings
      * @throws AtlanException on any API communication issue
      */
-    public void delete(String guid, RequestOptions options) throws AtlanException {
+    public void purge(String guid, RequestOptions options) throws AtlanException {
         String url = String.format("%s%s/%s", getBaseUrl(), endpoint, guid);
         ApiResource.request(client, ApiResource.RequestMethod.DELETE, url, "", null, options);
     }

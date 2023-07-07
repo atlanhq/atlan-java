@@ -2,6 +2,8 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
+import com.atlan.Atlan;
+import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
@@ -118,7 +120,19 @@ public class LookerDashboard extends Asset implements ILookerDashboard, ILooker,
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the LookerDashboard does not exist or the provided GUID is not a LookerDashboard
      */
     public static LookerDashboard retrieveByGuid(String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(guid);
+        return retrieveByGuid(Atlan.getDefaultClient(), guid);
+    }
+
+    /**
+     * Retrieves a LookerDashboard by its GUID, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param guid of the LookerDashboard to retrieve
+     * @return the requested full LookerDashboard, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the LookerDashboard does not exist or the provided GUID is not a LookerDashboard
+     */
+    public static LookerDashboard retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
+        Asset asset = Asset.retrieveFull(client, guid);
         if (asset == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
         } else if (asset instanceof LookerDashboard) {
@@ -136,7 +150,20 @@ public class LookerDashboard extends Asset implements ILookerDashboard, ILooker,
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the LookerDashboard does not exist
      */
     public static LookerDashboard retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        Asset asset = Asset.retrieveFull(TYPE_NAME, qualifiedName);
+        return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
+    }
+
+    /**
+     * Retrieves a LookerDashboard by its qualifiedName, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param qualifiedName of the LookerDashboard to retrieve
+     * @return the requested full LookerDashboard, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the LookerDashboard does not exist
+     */
+    public static LookerDashboard retrieveByQualifiedName(AtlanClient client, String qualifiedName)
+            throws AtlanException {
+        Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
         if (asset instanceof LookerDashboard) {
             return (LookerDashboard) asset;
         } else {
@@ -152,7 +179,19 @@ public class LookerDashboard extends Asset implements ILookerDashboard, ILooker,
      * @throws AtlanException on any API problems
      */
     public static boolean restore(String qualifiedName) throws AtlanException {
-        return Asset.restore(TYPE_NAME, qualifiedName);
+        return restore(Atlan.getDefaultClient(), qualifiedName);
+    }
+
+    /**
+     * Restore the archived (soft-deleted) LookerDashboard to active.
+     *
+     * @param client connectivity to the Atlan tenant on which to restore the asset
+     * @param qualifiedName for the LookerDashboard
+     * @return true if the LookerDashboard is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
+        return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
 
     /**
@@ -198,7 +237,21 @@ public class LookerDashboard extends Asset implements ILookerDashboard, ILooker,
      * @throws AtlanException on any API problems
      */
     public static LookerDashboard removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (LookerDashboard) Asset.removeDescription(updater(qualifiedName, name));
+        return removeDescription(Atlan.getDefaultClient(), qualifiedName, name);
+    }
+
+    /**
+     * Remove the system description from a LookerDashboard.
+     *
+     * @param client connectivity to the Atlan tenant on which to remove the asset's description
+     * @param qualifiedName of the LookerDashboard
+     * @param name of the LookerDashboard
+     * @return the updated LookerDashboard, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static LookerDashboard removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
+        return (LookerDashboard) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
     /**
@@ -210,7 +263,21 @@ public class LookerDashboard extends Asset implements ILookerDashboard, ILooker,
      * @throws AtlanException on any API problems
      */
     public static LookerDashboard removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (LookerDashboard) Asset.removeUserDescription(updater(qualifiedName, name));
+        return removeUserDescription(Atlan.getDefaultClient(), qualifiedName, name);
+    }
+
+    /**
+     * Remove the user's description from a LookerDashboard.
+     *
+     * @param client connectivity to the Atlan tenant on which to remove the asset's description
+     * @param qualifiedName of the LookerDashboard
+     * @param name of the LookerDashboard
+     * @return the updated LookerDashboard, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static LookerDashboard removeUserDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
+        return (LookerDashboard) Asset.removeUserDescription(client, updater(qualifiedName, name));
     }
 
     /**
@@ -222,7 +289,21 @@ public class LookerDashboard extends Asset implements ILookerDashboard, ILooker,
      * @throws AtlanException on any API problems
      */
     public static LookerDashboard removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (LookerDashboard) Asset.removeOwners(updater(qualifiedName, name));
+        return removeOwners(Atlan.getDefaultClient(), qualifiedName, name);
+    }
+
+    /**
+     * Remove the owners from a LookerDashboard.
+     *
+     * @param client connectivity to the Atlan tenant from which to remove the LookerDashboard's owners
+     * @param qualifiedName of the LookerDashboard
+     * @param name of the LookerDashboard
+     * @return the updated LookerDashboard, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static LookerDashboard removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
+        return (LookerDashboard) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
     /**
@@ -236,7 +317,24 @@ public class LookerDashboard extends Asset implements ILookerDashboard, ILooker,
      */
     public static LookerDashboard updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (LookerDashboard) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
+        return updateCertificate(Atlan.getDefaultClient(), qualifiedName, certificate, message);
+    }
+
+    /**
+     * Update the certificate on a LookerDashboard.
+     *
+     * @param client connectivity to the Atlan tenant on which to update the LookerDashboard's certificate
+     * @param qualifiedName of the LookerDashboard
+     * @param certificate to use
+     * @param message (optional) message, or null if no message
+     * @return the updated LookerDashboard, or null if the update failed
+     * @throws AtlanException on any API problems
+     */
+    public static LookerDashboard updateCertificate(
+            AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
+            throws AtlanException {
+        return (LookerDashboard)
+                Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -248,7 +346,21 @@ public class LookerDashboard extends Asset implements ILookerDashboard, ILooker,
      * @throws AtlanException on any API problems
      */
     public static LookerDashboard removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (LookerDashboard) Asset.removeCertificate(updater(qualifiedName, name));
+        return removeCertificate(Atlan.getDefaultClient(), qualifiedName, name);
+    }
+
+    /**
+     * Remove the certificate from a LookerDashboard.
+     *
+     * @param client connectivity to the Atlan tenant from which to remove the LookerDashboard's certificate
+     * @param qualifiedName of the LookerDashboard
+     * @param name of the LookerDashboard
+     * @return the updated LookerDashboard, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static LookerDashboard removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
+        return (LookerDashboard) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
     /**
@@ -263,7 +375,25 @@ public class LookerDashboard extends Asset implements ILookerDashboard, ILooker,
      */
     public static LookerDashboard updateAnnouncement(
             String qualifiedName, AtlanAnnouncementType type, String title, String message) throws AtlanException {
-        return (LookerDashboard) Asset.updateAnnouncement(builder(), TYPE_NAME, qualifiedName, type, title, message);
+        return updateAnnouncement(Atlan.getDefaultClient(), qualifiedName, type, title, message);
+    }
+
+    /**
+     * Update the announcement on a LookerDashboard.
+     *
+     * @param client connectivity to the Atlan tenant on which to update the LookerDashboard's announcement
+     * @param qualifiedName of the LookerDashboard
+     * @param type type of announcement to set
+     * @param title (optional) title of the announcement to set (or null for no title)
+     * @param message (optional) message of the announcement to set (or null for no message)
+     * @return the result of the update, or null if the update failed
+     * @throws AtlanException on any API problems
+     */
+    public static LookerDashboard updateAnnouncement(
+            AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
+            throws AtlanException {
+        return (LookerDashboard)
+                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -275,7 +405,21 @@ public class LookerDashboard extends Asset implements ILookerDashboard, ILooker,
      * @throws AtlanException on any API problems
      */
     public static LookerDashboard removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (LookerDashboard) Asset.removeAnnouncement(updater(qualifiedName, name));
+        return removeAnnouncement(Atlan.getDefaultClient(), qualifiedName, name);
+    }
+
+    /**
+     * Remove the announcement from a LookerDashboard.
+     *
+     * @param client connectivity to the Atlan client from which to remove the LookerDashboard's announcement
+     * @param qualifiedName of the LookerDashboard
+     * @param name of the LookerDashboard
+     * @return the updated LookerDashboard, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static LookerDashboard removeAnnouncement(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
+        return (LookerDashboard) Asset.removeAnnouncement(client, updater(qualifiedName, name));
     }
 
     /**
@@ -289,7 +433,22 @@ public class LookerDashboard extends Asset implements ILookerDashboard, ILooker,
      */
     public static LookerDashboard replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
-        return (LookerDashboard) Asset.replaceTerms(updater(qualifiedName, name), terms);
+        return replaceTerms(Atlan.getDefaultClient(), qualifiedName, name, terms);
+    }
+
+    /**
+     * Replace the terms linked to the LookerDashboard.
+     *
+     * @param client connectivity to the Atlan tenant on which to replace the LookerDashboard's assigned terms
+     * @param qualifiedName for the LookerDashboard
+     * @param name human-readable name of the LookerDashboard
+     * @param terms the list of terms to replace on the LookerDashboard, or null to remove all terms from the LookerDashboard
+     * @return the LookerDashboard that was updated (note that it will NOT contain details of the replaced terms)
+     * @throws AtlanException on any API problems
+     */
+    public static LookerDashboard replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+        return (LookerDashboard) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 
     /**
@@ -303,7 +462,23 @@ public class LookerDashboard extends Asset implements ILookerDashboard, ILooker,
      * @throws AtlanException on any API problems
      */
     public static LookerDashboard appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
-        return (LookerDashboard) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
+        return appendTerms(Atlan.getDefaultClient(), qualifiedName, terms);
+    }
+
+    /**
+     * Link additional terms to the LookerDashboard, without replacing existing terms linked to the LookerDashboard.
+     * Note: this operation must make two API calls — one to retrieve the LookerDashboard's existing terms,
+     * and a second to append the new terms.
+     *
+     * @param client connectivity to the Atlan tenant on which to append terms to the LookerDashboard
+     * @param qualifiedName for the LookerDashboard
+     * @param terms the list of terms to append to the LookerDashboard
+     * @return the LookerDashboard that was updated  (note that it will NOT contain details of the appended terms)
+     * @throws AtlanException on any API problems
+     */
+    public static LookerDashboard appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
+            throws AtlanException {
+        return (LookerDashboard) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
     /**
@@ -317,7 +492,23 @@ public class LookerDashboard extends Asset implements ILookerDashboard, ILooker,
      * @throws AtlanException on any API problems
      */
     public static LookerDashboard removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
-        return (LookerDashboard) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
+        return removeTerms(Atlan.getDefaultClient(), qualifiedName, terms);
+    }
+
+    /**
+     * Remove terms from a LookerDashboard, without replacing all existing terms linked to the LookerDashboard.
+     * Note: this operation must make two API calls — one to retrieve the LookerDashboard's existing terms,
+     * and a second to remove the provided terms.
+     *
+     * @param client connectivity to the Atlan tenant from which to remove terms from the LookerDashboard
+     * @param qualifiedName for the LookerDashboard
+     * @param terms the list of terms to remove from the LookerDashboard, which must be referenced by GUID
+     * @return the LookerDashboard that was updated (note that it will NOT contain details of the resulting terms)
+     * @throws AtlanException on any API problems
+     */
+    public static LookerDashboard removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
+            throws AtlanException {
+        return (LookerDashboard) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
     /**
@@ -332,7 +523,23 @@ public class LookerDashboard extends Asset implements ILookerDashboard, ILooker,
      */
     public static LookerDashboard appendAtlanTags(String qualifiedName, List<String> atlanTagNames)
             throws AtlanException {
-        return (LookerDashboard) Asset.appendAtlanTags(TYPE_NAME, qualifiedName, atlanTagNames);
+        return appendAtlanTags(Atlan.getDefaultClient(), qualifiedName, atlanTagNames);
+    }
+
+    /**
+     * Add Atlan tags to a LookerDashboard, without replacing existing Atlan tags linked to the LookerDashboard.
+     * Note: this operation must make two API calls — one to retrieve the LookerDashboard's existing Atlan tags,
+     * and a second to append the new Atlan tags.
+     *
+     * @param client connectivity to the Atlan tenant on which to append Atlan tags to the LookerDashboard
+     * @param qualifiedName of the LookerDashboard
+     * @param atlanTagNames human-readable names of the Atlan tags to add
+     * @throws AtlanException on any API problems
+     * @return the updated LookerDashboard
+     */
+    public static LookerDashboard appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
+            throws AtlanException {
+        return (LookerDashboard) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 
     /**
@@ -355,7 +562,39 @@ public class LookerDashboard extends Asset implements ILookerDashboard, ILooker,
             boolean removePropagationsOnDelete,
             boolean restrictLineagePropagation)
             throws AtlanException {
+        return appendAtlanTags(
+                Atlan.getDefaultClient(),
+                qualifiedName,
+                atlanTagNames,
+                propagate,
+                removePropagationsOnDelete,
+                restrictLineagePropagation);
+    }
+
+    /**
+     * Add Atlan tags to a LookerDashboard, without replacing existing Atlan tags linked to the LookerDashboard.
+     * Note: this operation must make two API calls — one to retrieve the LookerDashboard's existing Atlan tags,
+     * and a second to append the new Atlan tags.
+     *
+     * @param client connectivity to the Atlan tenant on which to append Atlan tags to the LookerDashboard
+     * @param qualifiedName of the LookerDashboard
+     * @param atlanTagNames human-readable names of the Atlan tags to add
+     * @param propagate whether to propagate the Atlan tag (true) or not (false)
+     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
+     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
+     * @throws AtlanException on any API problems
+     * @return the updated LookerDashboard
+     */
+    public static LookerDashboard appendAtlanTags(
+            AtlanClient client,
+            String qualifiedName,
+            List<String> atlanTagNames,
+            boolean propagate,
+            boolean removePropagationsOnDelete,
+            boolean restrictLineagePropagation)
+            throws AtlanException {
         return (LookerDashboard) Asset.appendAtlanTags(
+                client,
                 TYPE_NAME,
                 qualifiedName,
                 atlanTagNames,
@@ -374,7 +613,22 @@ public class LookerDashboard extends Asset implements ILookerDashboard, ILooker,
      */
     @Deprecated
     public static void addAtlanTags(String qualifiedName, List<String> atlanTagNames) throws AtlanException {
-        Asset.addAtlanTags(TYPE_NAME, qualifiedName, atlanTagNames);
+        addAtlanTags(Atlan.getDefaultClient(), qualifiedName, atlanTagNames);
+    }
+
+    /**
+     * Add Atlan tags to a LookerDashboard.
+     *
+     * @param client connectivity to the Atlan tenant on which to add Atlan tags to the LookerDashboard
+     * @param qualifiedName of the LookerDashboard
+     * @param atlanTagNames human-readable names of the Atlan tags to add
+     * @throws AtlanException on any API problems, or if any of the Atlan tags already exist on the LookerDashboard
+     * @deprecated see {@link #appendAtlanTags(String, List)} instead
+     */
+    @Deprecated
+    public static void addAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
+            throws AtlanException {
+        Asset.addAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 
     /**
@@ -396,7 +650,38 @@ public class LookerDashboard extends Asset implements ILookerDashboard, ILooker,
             boolean removePropagationsOnDelete,
             boolean restrictLineagePropagation)
             throws AtlanException {
+        addAtlanTags(
+                Atlan.getDefaultClient(),
+                qualifiedName,
+                atlanTagNames,
+                propagate,
+                removePropagationsOnDelete,
+                restrictLineagePropagation);
+    }
+
+    /**
+     * Add Atlan tags to a LookerDashboard.
+     *
+     * @param client connectivity to the Atlan tenant on which to add Atlan tags to the LookerDashboard
+     * @param qualifiedName of the LookerDashboard
+     * @param atlanTagNames human-readable names of the Atlan tags to add
+     * @param propagate whether to propagate the Atlan tag (true) or not (false)
+     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
+     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
+     * @throws AtlanException on any API problems, or if any of the Atlan tags already exist on the LookerDashboard
+     * @deprecated see {@link #appendAtlanTags(String, List, boolean, boolean, boolean)} instead
+     */
+    @Deprecated
+    public static void addAtlanTags(
+            AtlanClient client,
+            String qualifiedName,
+            List<String> atlanTagNames,
+            boolean propagate,
+            boolean removePropagationsOnDelete,
+            boolean restrictLineagePropagation)
+            throws AtlanException {
         Asset.addAtlanTags(
+                client,
                 TYPE_NAME,
                 qualifiedName,
                 atlanTagNames,
@@ -413,6 +698,19 @@ public class LookerDashboard extends Asset implements ILookerDashboard, ILooker,
      * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the LookerDashboard
      */
     public static void removeAtlanTag(String qualifiedName, String atlanTagName) throws AtlanException {
-        Asset.removeAtlanTag(TYPE_NAME, qualifiedName, atlanTagName);
+        removeAtlanTag(Atlan.getDefaultClient(), qualifiedName, atlanTagName);
+    }
+
+    /**
+     * Remove an Atlan tag from a LookerDashboard.
+     *
+     * @param client connectivity to the Atlan tenant from which to remove an Atlan tag from a LookerDashboard
+     * @param qualifiedName of the LookerDashboard
+     * @param atlanTagName human-readable name of the Atlan tag to remove
+     * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the LookerDashboard
+     */
+    public static void removeAtlanTag(AtlanClient client, String qualifiedName, String atlanTagName)
+            throws AtlanException {
+        Asset.removeAtlanTag(client, TYPE_NAME, qualifiedName, atlanTagName);
     }
 }

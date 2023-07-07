@@ -51,7 +51,7 @@ public class PurposeTest extends AtlanLiveTest {
         Purpose toCreate = Purpose.creator(PURPOSE_NAME, List.of(ATLAN_TAG_NAME))
                 .description("Example purpose for testing purposes.")
                 .build();
-        AssetMutationResponse response = toCreate.upsert();
+        AssetMutationResponse response = toCreate.save();
         assertNotNull(response);
         assertEquals(response.getDeletedAssets().size(), 0);
         assertEquals(response.getUpdatedAssets().size(), 0);
@@ -73,7 +73,7 @@ public class PurposeTest extends AtlanLiveTest {
                 .denyAssetTab(AssetSidebarTab.RELATIONS)
                 .denyAssetTab(AssetSidebarTab.QUERIES)
                 .build();
-        AssetMutationResponse response = toUpdate.upsert();
+        AssetMutationResponse response = toUpdate.save();
         assertNotNull(response);
         assertEquals(response.getUpdatedAssets().size(), 1);
         Asset one = response.getUpdatedAssets().get(0);
@@ -189,6 +189,6 @@ public class PurposeTest extends AtlanLiveTest {
             dependsOnGroups = {"purpose.create.*", "purpose.update.*", "purpose.read.*", "purpose.purge.purposes"},
             alwaysRun = true)
     void purgeAtlanTags() throws AtlanException {
-        AtlanTagDef.purge(ATLAN_TAG_NAME, Atlan.getDefaultClient());
+        AtlanTagDef.purge(ATLAN_TAG_NAME);
     }
 }

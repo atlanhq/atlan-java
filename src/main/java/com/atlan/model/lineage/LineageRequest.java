@@ -3,6 +3,7 @@
 package com.atlan.model.lineage;
 
 import com.atlan.Atlan;
+import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.core.AtlanObject;
 import com.atlan.model.enums.AtlanLineageDirection;
@@ -65,8 +66,22 @@ public class LineageRequest extends AtlanObject {
     @Singular
     List<String> attributes;
 
-    /** Fetch the lineage defined by this object. */
+    /**
+     * Fetch the lineage defined by this object.
+     *
+     * @return the results of the requested lineage
+     */
     public LineageResponse fetch() throws AtlanException {
-        return Atlan.getDefaultClient().assets().lineage(this);
+        return fetch(Atlan.getDefaultClient());
+    }
+
+    /**
+     * Fetch the lineage defined by this object.
+     *
+     * @param client connectivity to the Atlan tenant from which to fetch lineage
+     * @return the results of the requested lineage
+     */
+    public LineageResponse fetch(AtlanClient client) throws AtlanException {
+        return client.assets().lineage(this);
     }
 }

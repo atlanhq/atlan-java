@@ -76,6 +76,7 @@ public class TypeDefsEndpoint extends AtlasEndpoint {
     /**
      * Create a new type definition in Atlan.
      * Note: only custom metadata, enumerations, and Atlan tag type definitions are currently supported.
+     * Furthermore, if any of these are created their respective cache will be force-refreshed.
      *
      * @param typeDef to create
      * @return the resulting type definition that was created
@@ -102,6 +103,7 @@ public class TypeDefsEndpoint extends AtlasEndpoint {
     /**
      * Create a new type definition in Atlan.
      * NOTE: INTERNAL USE ONLY. This will NOT work without specially-configured policies - use createTypeDef instead.
+     * Furthermore, if any of Atlan tag, enum or custom metadata is created their respective cache will be force-refreshed.
      *
      * @param typeDef to create
      * @return the resulting type definition that was created
@@ -135,7 +137,18 @@ public class TypeDefsEndpoint extends AtlasEndpoint {
                     builder.relationshipDefs(List.of((RelationshipDef) typeDef));
                     break;
             }
-            return createInternal(builder);
+            TypeDefResponse response = createInternal(builder);
+            if (response != null) {
+                if (!response.getAtlanTagDefs().isEmpty()) {
+                    client.getAtlanTagCache().refreshCache();
+                }
+                if (!response.getCustomMetadataDefs().isEmpty()) {
+                    client.getCustomMetadataCache().refreshCache();
+                }
+                if (!response.getEnumDefs().isEmpty()) {
+                    client.getEnumCache().refreshCache();
+                }
+            }
         }
         // If there was no typedef provided, just return an empty response (noop)
         return builder.build();
@@ -150,6 +163,7 @@ public class TypeDefsEndpoint extends AtlasEndpoint {
     /**
      * Update an existing type definition in Atlan.
      * Note: only custom metadata and Atlan tag type definitions are currently supported.
+     * Furthermore, if any of these are updated their respective cache will be force-refreshed.
      *
      * @param typeDef to update
      * @return the resulting type definition that was updated
@@ -176,6 +190,7 @@ public class TypeDefsEndpoint extends AtlasEndpoint {
     /**
      * Update an existing type definition in Atlan.
      * Note: only custom metadata and Atlan tag type definitions are currently supported.
+     * Furthermore, if any Atlan tag, enum or custom metadata is updated their respective cache will be force-refreshed.
      *
      * @param typeDef to update
      * @return the resulting type definition that was updated
@@ -208,7 +223,18 @@ public class TypeDefsEndpoint extends AtlasEndpoint {
                     builder.relationshipDefs(List.of((RelationshipDef) typeDef));
                     break;
             }
-            return updateInternal(builder);
+            TypeDefResponse response = updateInternal(builder);
+            if (response != null) {
+                if (!response.getAtlanTagDefs().isEmpty()) {
+                    client.getAtlanTagCache().refreshCache();
+                }
+                if (!response.getCustomMetadataDefs().isEmpty()) {
+                    client.getCustomMetadataCache().refreshCache();
+                }
+                if (!response.getEnumDefs().isEmpty()) {
+                    client.getEnumCache().refreshCache();
+                }
+            }
         }
         // If there was no typedef provided, just return an empty response (noop)
         return builder.build();
@@ -222,6 +248,7 @@ public class TypeDefsEndpoint extends AtlasEndpoint {
 
     /**
      * Delete the type definition.
+     * Furthermore, if an Atlan tag, enum or custom metadata is deleted their respective cache will be force-refreshed
      *
      * @param internalName the internal hashed-string name of the type definition
      * @throws AtlanException on any API communication issue
@@ -236,6 +263,20 @@ public class TypeDefsEndpoint extends AtlasEndpoint {
                 "%s%s",
                 getBaseUrl(), String.format("%s/name/%s", endpoint_singular, StringUtils.encodeContent(internalName)));
         ApiResource.request(client, ApiResource.RequestMethod.DELETE, url, "", null, null);
+        switch (typeDef.getCategory()) {
+            case ATLAN_TAG:
+                client.getAtlanTagCache().refreshCache();
+                break;
+            case ENUM:
+                client.getEnumCache().refreshCache();
+                break;
+            case CUSTOM_METADATA:
+                client.getCustomMetadataCache().refreshCache();
+                break;
+            default:
+                // Do nothing, no other typedefs are cached
+                break;
+        }
     }
 
     /**

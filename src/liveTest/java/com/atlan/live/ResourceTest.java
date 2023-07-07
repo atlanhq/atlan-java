@@ -40,7 +40,7 @@ public class ResourceTest extends AtlanLiveTest {
     void addReadme() throws AtlanException {
         Readme toCreate = Readme.creator(GlossaryTerm.refByGuid(term.getGuid()), term.getName(), README_CONTENT)
                 .build();
-        AssetMutationResponse response = toCreate.upsert();
+        AssetMutationResponse response = toCreate.save();
         assertNotNull(response);
         assertTrue(response.getDeletedAssets().isEmpty());
         assertEquals(response.getCreatedAssets().size(), 1);
@@ -64,7 +64,7 @@ public class ResourceTest extends AtlanLiveTest {
     void addLink() throws AtlanException {
         Link toCreate = Link.creator(GlossaryTerm.refByGuid(term.getGuid()), LINK_TITLE, LINK_URL)
                 .build();
-        AssetMutationResponse response = toCreate.upsert();
+        AssetMutationResponse response = toCreate.save();
         assertNotNull(response);
         assertTrue(response.getDeletedAssets().isEmpty());
         assertEquals(response.getCreatedAssets().size(), 1);

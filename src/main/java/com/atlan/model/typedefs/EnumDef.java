@@ -3,6 +3,7 @@
 package com.atlan.model.typedefs;
 
 import com.atlan.Atlan;
+import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.core.AtlanObject;
 import com.atlan.model.enums.AtlanTypeCategory;
@@ -67,7 +68,18 @@ public class EnumDef extends TypeDef {
      * @throws AtlanException on any API communication issues
      */
     public EnumDef create() throws AtlanException {
-        TypeDefResponse response = Atlan.getDefaultClient().typeDefs().create(this);
+        return create(Atlan.getDefaultClient());
+    }
+
+    /**
+     * Create this enumeration definition in Atlan.
+     *
+     * @param client connectivity to the Atlan tenant on which to create the enumeration
+     * @return the result of the creation, or null if the creation failed
+     * @throws AtlanException on any API communication issues
+     */
+    public EnumDef create(AtlanClient client) throws AtlanException {
+        TypeDefResponse response = client.typeDefs().create(this);
         if (response != null && !response.getEnumDefs().isEmpty()) {
             return response.getEnumDefs().get(0);
         }
@@ -82,8 +94,19 @@ public class EnumDef extends TypeDef {
      * @throws AtlanException on any error during the API invocation
      */
     public static void purge(String displayName) throws AtlanException {
-        Atlan.getDefaultClient().typeDefs().purge(displayName);
-        Atlan.getDefaultClient().getEnumCache().refreshCache();
+        purge(Atlan.getDefaultClient(), displayName);
+    }
+
+    /**
+     * Hard-deletes (purges) an enumeration by its human-readable name. This operation is irreversible.
+     * If there are any existing enumeration instances, this operation will fail.
+     *
+     * @param client connectivity to the Atlan tenant from which to purge the enumeration
+     * @param displayName human-readable name of the enumeration
+     * @throws AtlanException on any error during the API invocation
+     */
+    public static void purge(AtlanClient client, String displayName) throws AtlanException {
+        client.typeDefs().purge(displayName);
     }
 
     /**

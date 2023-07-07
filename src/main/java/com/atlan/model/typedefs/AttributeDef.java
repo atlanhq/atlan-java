@@ -3,6 +3,7 @@
 package com.atlan.model.typedefs;
 
 import com.atlan.Atlan;
+import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.core.AtlanObject;
 import com.atlan.model.enums.AtlanAttributeType;
@@ -47,6 +48,27 @@ public class AttributeDef extends AtlanObject implements Comparable<AttributeDef
     public static AttributeDef of(
             String displayName, AtlanCustomAttributePrimitiveType type, String optionsName, boolean multiValued)
             throws AtlanException {
+        return of(Atlan.getDefaultClient(), displayName, type, optionsName, multiValued);
+    }
+
+    /**
+     * Instantiate an attribute definition from the provided parameters.
+     *
+     * @param client connectivity to the Atlan tenant on which this attribute is intended to be created
+     * @param displayName human-readable name of the attribute
+     * @param type primitive type of the attribute
+     * @param optionsName name of the options (enumeration) if the primitive type is an enumeration (can be null otherwise)
+     * @param multiValued true if multiple values are allowed for the attribute, otherwise false
+     * @return the attribute definition
+     * @throws AtlanException if there is any API error trying to construct the attribute (usually due to a non-existent enumeration)
+     */
+    public static AttributeDef of(
+            AtlanClient client,
+            String displayName,
+            AtlanCustomAttributePrimitiveType type,
+            String optionsName,
+            boolean multiValued)
+            throws AtlanException {
         AttributeDefBuilder<?, ?> builder = AttributeDef.builder().displayName(displayName);
         String baseType;
         boolean addEnumValues = false;
@@ -74,10 +96,7 @@ public class AttributeDef extends AtlanObject implements Comparable<AttributeDef
             builder.typeName(baseType).options(AttributeDefOptions.of(type, optionsName));
         }
         if (addEnumValues) {
-            builder.enumValues(Atlan.getDefaultClient()
-                    .getEnumCache()
-                    .getByName(optionsName)
-                    .getValidValues());
+            builder.enumValues(client.getEnumCache().getByName(optionsName).getValidValues());
         }
         return builder.build();
     }

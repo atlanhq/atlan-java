@@ -94,7 +94,7 @@ public class LineageTest extends AtlanLiveTest {
                         List.of(MaterializedView.refByGuid(mview.getGuid())),
                         null)
                 .build();
-        AssetMutationResponse response = toCreate.upsert();
+        AssetMutationResponse response = toCreate.save();
         assertNotNull(response);
         assertEquals(response.getCreatedAssets().size(), 1);
         Asset one = response.getCreatedAssets().get(0);
@@ -143,7 +143,7 @@ public class LineageTest extends AtlanLiveTest {
                         List.of(View.refByGuid(view.getGuid())),
                         null)
                 .build();
-        AssetMutationResponse response = toCreate.upsert();
+        AssetMutationResponse response = toCreate.save();
         assertNotNull(response);
         assertEquals(response.getCreatedAssets().size(), 1);
         Asset one = response.getCreatedAssets().get(0);

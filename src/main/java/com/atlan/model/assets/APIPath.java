@@ -2,6 +2,8 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
+import com.atlan.Atlan;
+import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
@@ -135,7 +137,19 @@ public class APIPath extends Asset implements IAPIPath, IAPI, ICatalog, IAsset, 
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the APIPath does not exist or the provided GUID is not a APIPath
      */
     public static APIPath retrieveByGuid(String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(guid);
+        return retrieveByGuid(Atlan.getDefaultClient(), guid);
+    }
+
+    /**
+     * Retrieves a APIPath by its GUID, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param guid of the APIPath to retrieve
+     * @return the requested full APIPath, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the APIPath does not exist or the provided GUID is not a APIPath
+     */
+    public static APIPath retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
+        Asset asset = Asset.retrieveFull(client, guid);
         if (asset == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
         } else if (asset instanceof APIPath) {
@@ -153,7 +167,19 @@ public class APIPath extends Asset implements IAPIPath, IAPI, ICatalog, IAsset, 
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the APIPath does not exist
      */
     public static APIPath retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        Asset asset = Asset.retrieveFull(TYPE_NAME, qualifiedName);
+        return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
+    }
+
+    /**
+     * Retrieves a APIPath by its qualifiedName, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param qualifiedName of the APIPath to retrieve
+     * @return the requested full APIPath, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the APIPath does not exist
+     */
+    public static APIPath retrieveByQualifiedName(AtlanClient client, String qualifiedName) throws AtlanException {
+        Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
         if (asset instanceof APIPath) {
             return (APIPath) asset;
         } else {
@@ -169,7 +195,19 @@ public class APIPath extends Asset implements IAPIPath, IAPI, ICatalog, IAsset, 
      * @throws AtlanException on any API problems
      */
     public static boolean restore(String qualifiedName) throws AtlanException {
-        return Asset.restore(TYPE_NAME, qualifiedName);
+        return restore(Atlan.getDefaultClient(), qualifiedName);
+    }
+
+    /**
+     * Restore the archived (soft-deleted) APIPath to active.
+     *
+     * @param client connectivity to the Atlan tenant on which to restore the asset
+     * @param qualifiedName for the APIPath
+     * @return true if the APIPath is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
+        return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
 
     /**
@@ -234,7 +272,21 @@ public class APIPath extends Asset implements IAPIPath, IAPI, ICatalog, IAsset, 
      * @throws AtlanException on any API problems
      */
     public static APIPath removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (APIPath) Asset.removeDescription(updater(qualifiedName, name));
+        return removeDescription(Atlan.getDefaultClient(), qualifiedName, name);
+    }
+
+    /**
+     * Remove the system description from a APIPath.
+     *
+     * @param client connectivity to the Atlan tenant on which to remove the asset's description
+     * @param qualifiedName of the APIPath
+     * @param name of the APIPath
+     * @return the updated APIPath, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static APIPath removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
+        return (APIPath) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
     /**
@@ -246,7 +298,21 @@ public class APIPath extends Asset implements IAPIPath, IAPI, ICatalog, IAsset, 
      * @throws AtlanException on any API problems
      */
     public static APIPath removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (APIPath) Asset.removeUserDescription(updater(qualifiedName, name));
+        return removeUserDescription(Atlan.getDefaultClient(), qualifiedName, name);
+    }
+
+    /**
+     * Remove the user's description from a APIPath.
+     *
+     * @param client connectivity to the Atlan tenant on which to remove the asset's description
+     * @param qualifiedName of the APIPath
+     * @param name of the APIPath
+     * @return the updated APIPath, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static APIPath removeUserDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
+        return (APIPath) Asset.removeUserDescription(client, updater(qualifiedName, name));
     }
 
     /**
@@ -258,7 +324,20 @@ public class APIPath extends Asset implements IAPIPath, IAPI, ICatalog, IAsset, 
      * @throws AtlanException on any API problems
      */
     public static APIPath removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (APIPath) Asset.removeOwners(updater(qualifiedName, name));
+        return removeOwners(Atlan.getDefaultClient(), qualifiedName, name);
+    }
+
+    /**
+     * Remove the owners from a APIPath.
+     *
+     * @param client connectivity to the Atlan tenant from which to remove the APIPath's owners
+     * @param qualifiedName of the APIPath
+     * @param name of the APIPath
+     * @return the updated APIPath, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static APIPath removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+        return (APIPath) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
     /**
@@ -272,7 +351,23 @@ public class APIPath extends Asset implements IAPIPath, IAPI, ICatalog, IAsset, 
      */
     public static APIPath updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (APIPath) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
+        return updateCertificate(Atlan.getDefaultClient(), qualifiedName, certificate, message);
+    }
+
+    /**
+     * Update the certificate on a APIPath.
+     *
+     * @param client connectivity to the Atlan tenant on which to update the APIPath's certificate
+     * @param qualifiedName of the APIPath
+     * @param certificate to use
+     * @param message (optional) message, or null if no message
+     * @return the updated APIPath, or null if the update failed
+     * @throws AtlanException on any API problems
+     */
+    public static APIPath updateCertificate(
+            AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
+            throws AtlanException {
+        return (APIPath) Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -284,7 +379,21 @@ public class APIPath extends Asset implements IAPIPath, IAPI, ICatalog, IAsset, 
      * @throws AtlanException on any API problems
      */
     public static APIPath removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (APIPath) Asset.removeCertificate(updater(qualifiedName, name));
+        return removeCertificate(Atlan.getDefaultClient(), qualifiedName, name);
+    }
+
+    /**
+     * Remove the certificate from a APIPath.
+     *
+     * @param client connectivity to the Atlan tenant from which to remove the APIPath's certificate
+     * @param qualifiedName of the APIPath
+     * @param name of the APIPath
+     * @return the updated APIPath, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static APIPath removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
+        return (APIPath) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
     /**
@@ -299,7 +408,24 @@ public class APIPath extends Asset implements IAPIPath, IAPI, ICatalog, IAsset, 
      */
     public static APIPath updateAnnouncement(
             String qualifiedName, AtlanAnnouncementType type, String title, String message) throws AtlanException {
-        return (APIPath) Asset.updateAnnouncement(builder(), TYPE_NAME, qualifiedName, type, title, message);
+        return updateAnnouncement(Atlan.getDefaultClient(), qualifiedName, type, title, message);
+    }
+
+    /**
+     * Update the announcement on a APIPath.
+     *
+     * @param client connectivity to the Atlan tenant on which to update the APIPath's announcement
+     * @param qualifiedName of the APIPath
+     * @param type type of announcement to set
+     * @param title (optional) title of the announcement to set (or null for no title)
+     * @param message (optional) message of the announcement to set (or null for no message)
+     * @return the result of the update, or null if the update failed
+     * @throws AtlanException on any API problems
+     */
+    public static APIPath updateAnnouncement(
+            AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
+            throws AtlanException {
+        return (APIPath) Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -311,7 +437,21 @@ public class APIPath extends Asset implements IAPIPath, IAPI, ICatalog, IAsset, 
      * @throws AtlanException on any API problems
      */
     public static APIPath removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (APIPath) Asset.removeAnnouncement(updater(qualifiedName, name));
+        return removeAnnouncement(Atlan.getDefaultClient(), qualifiedName, name);
+    }
+
+    /**
+     * Remove the announcement from a APIPath.
+     *
+     * @param client connectivity to the Atlan client from which to remove the APIPath's announcement
+     * @param qualifiedName of the APIPath
+     * @param name of the APIPath
+     * @return the updated APIPath, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static APIPath removeAnnouncement(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
+        return (APIPath) Asset.removeAnnouncement(client, updater(qualifiedName, name));
     }
 
     /**
@@ -325,7 +465,22 @@ public class APIPath extends Asset implements IAPIPath, IAPI, ICatalog, IAsset, 
      */
     public static APIPath replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
-        return (APIPath) Asset.replaceTerms(updater(qualifiedName, name), terms);
+        return replaceTerms(Atlan.getDefaultClient(), qualifiedName, name, terms);
+    }
+
+    /**
+     * Replace the terms linked to the APIPath.
+     *
+     * @param client connectivity to the Atlan tenant on which to replace the APIPath's assigned terms
+     * @param qualifiedName for the APIPath
+     * @param name human-readable name of the APIPath
+     * @param terms the list of terms to replace on the APIPath, or null to remove all terms from the APIPath
+     * @return the APIPath that was updated (note that it will NOT contain details of the replaced terms)
+     * @throws AtlanException on any API problems
+     */
+    public static APIPath replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
+        return (APIPath) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 
     /**
@@ -339,7 +494,23 @@ public class APIPath extends Asset implements IAPIPath, IAPI, ICatalog, IAsset, 
      * @throws AtlanException on any API problems
      */
     public static APIPath appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
-        return (APIPath) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
+        return appendTerms(Atlan.getDefaultClient(), qualifiedName, terms);
+    }
+
+    /**
+     * Link additional terms to the APIPath, without replacing existing terms linked to the APIPath.
+     * Note: this operation must make two API calls — one to retrieve the APIPath's existing terms,
+     * and a second to append the new terms.
+     *
+     * @param client connectivity to the Atlan tenant on which to append terms to the APIPath
+     * @param qualifiedName for the APIPath
+     * @param terms the list of terms to append to the APIPath
+     * @return the APIPath that was updated  (note that it will NOT contain details of the appended terms)
+     * @throws AtlanException on any API problems
+     */
+    public static APIPath appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
+            throws AtlanException {
+        return (APIPath) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
     /**
@@ -353,7 +524,23 @@ public class APIPath extends Asset implements IAPIPath, IAPI, ICatalog, IAsset, 
      * @throws AtlanException on any API problems
      */
     public static APIPath removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
-        return (APIPath) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
+        return removeTerms(Atlan.getDefaultClient(), qualifiedName, terms);
+    }
+
+    /**
+     * Remove terms from a APIPath, without replacing all existing terms linked to the APIPath.
+     * Note: this operation must make two API calls — one to retrieve the APIPath's existing terms,
+     * and a second to remove the provided terms.
+     *
+     * @param client connectivity to the Atlan tenant from which to remove terms from the APIPath
+     * @param qualifiedName for the APIPath
+     * @param terms the list of terms to remove from the APIPath, which must be referenced by GUID
+     * @return the APIPath that was updated (note that it will NOT contain details of the resulting terms)
+     * @throws AtlanException on any API problems
+     */
+    public static APIPath removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
+            throws AtlanException {
+        return (APIPath) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
     /**
@@ -367,7 +554,23 @@ public class APIPath extends Asset implements IAPIPath, IAPI, ICatalog, IAsset, 
      * @return the updated APIPath
      */
     public static APIPath appendAtlanTags(String qualifiedName, List<String> atlanTagNames) throws AtlanException {
-        return (APIPath) Asset.appendAtlanTags(TYPE_NAME, qualifiedName, atlanTagNames);
+        return appendAtlanTags(Atlan.getDefaultClient(), qualifiedName, atlanTagNames);
+    }
+
+    /**
+     * Add Atlan tags to a APIPath, without replacing existing Atlan tags linked to the APIPath.
+     * Note: this operation must make two API calls — one to retrieve the APIPath's existing Atlan tags,
+     * and a second to append the new Atlan tags.
+     *
+     * @param client connectivity to the Atlan tenant on which to append Atlan tags to the APIPath
+     * @param qualifiedName of the APIPath
+     * @param atlanTagNames human-readable names of the Atlan tags to add
+     * @throws AtlanException on any API problems
+     * @return the updated APIPath
+     */
+    public static APIPath appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
+            throws AtlanException {
+        return (APIPath) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 
     /**
@@ -390,7 +593,39 @@ public class APIPath extends Asset implements IAPIPath, IAPI, ICatalog, IAsset, 
             boolean removePropagationsOnDelete,
             boolean restrictLineagePropagation)
             throws AtlanException {
+        return appendAtlanTags(
+                Atlan.getDefaultClient(),
+                qualifiedName,
+                atlanTagNames,
+                propagate,
+                removePropagationsOnDelete,
+                restrictLineagePropagation);
+    }
+
+    /**
+     * Add Atlan tags to a APIPath, without replacing existing Atlan tags linked to the APIPath.
+     * Note: this operation must make two API calls — one to retrieve the APIPath's existing Atlan tags,
+     * and a second to append the new Atlan tags.
+     *
+     * @param client connectivity to the Atlan tenant on which to append Atlan tags to the APIPath
+     * @param qualifiedName of the APIPath
+     * @param atlanTagNames human-readable names of the Atlan tags to add
+     * @param propagate whether to propagate the Atlan tag (true) or not (false)
+     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
+     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
+     * @throws AtlanException on any API problems
+     * @return the updated APIPath
+     */
+    public static APIPath appendAtlanTags(
+            AtlanClient client,
+            String qualifiedName,
+            List<String> atlanTagNames,
+            boolean propagate,
+            boolean removePropagationsOnDelete,
+            boolean restrictLineagePropagation)
+            throws AtlanException {
         return (APIPath) Asset.appendAtlanTags(
+                client,
                 TYPE_NAME,
                 qualifiedName,
                 atlanTagNames,
@@ -409,7 +644,22 @@ public class APIPath extends Asset implements IAPIPath, IAPI, ICatalog, IAsset, 
      */
     @Deprecated
     public static void addAtlanTags(String qualifiedName, List<String> atlanTagNames) throws AtlanException {
-        Asset.addAtlanTags(TYPE_NAME, qualifiedName, atlanTagNames);
+        addAtlanTags(Atlan.getDefaultClient(), qualifiedName, atlanTagNames);
+    }
+
+    /**
+     * Add Atlan tags to a APIPath.
+     *
+     * @param client connectivity to the Atlan tenant on which to add Atlan tags to the APIPath
+     * @param qualifiedName of the APIPath
+     * @param atlanTagNames human-readable names of the Atlan tags to add
+     * @throws AtlanException on any API problems, or if any of the Atlan tags already exist on the APIPath
+     * @deprecated see {@link #appendAtlanTags(String, List)} instead
+     */
+    @Deprecated
+    public static void addAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
+            throws AtlanException {
+        Asset.addAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 
     /**
@@ -431,7 +681,38 @@ public class APIPath extends Asset implements IAPIPath, IAPI, ICatalog, IAsset, 
             boolean removePropagationsOnDelete,
             boolean restrictLineagePropagation)
             throws AtlanException {
+        addAtlanTags(
+                Atlan.getDefaultClient(),
+                qualifiedName,
+                atlanTagNames,
+                propagate,
+                removePropagationsOnDelete,
+                restrictLineagePropagation);
+    }
+
+    /**
+     * Add Atlan tags to a APIPath.
+     *
+     * @param client connectivity to the Atlan tenant on which to add Atlan tags to the APIPath
+     * @param qualifiedName of the APIPath
+     * @param atlanTagNames human-readable names of the Atlan tags to add
+     * @param propagate whether to propagate the Atlan tag (true) or not (false)
+     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
+     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
+     * @throws AtlanException on any API problems, or if any of the Atlan tags already exist on the APIPath
+     * @deprecated see {@link #appendAtlanTags(String, List, boolean, boolean, boolean)} instead
+     */
+    @Deprecated
+    public static void addAtlanTags(
+            AtlanClient client,
+            String qualifiedName,
+            List<String> atlanTagNames,
+            boolean propagate,
+            boolean removePropagationsOnDelete,
+            boolean restrictLineagePropagation)
+            throws AtlanException {
         Asset.addAtlanTags(
+                client,
                 TYPE_NAME,
                 qualifiedName,
                 atlanTagNames,
@@ -448,6 +729,19 @@ public class APIPath extends Asset implements IAPIPath, IAPI, ICatalog, IAsset, 
      * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the APIPath
      */
     public static void removeAtlanTag(String qualifiedName, String atlanTagName) throws AtlanException {
-        Asset.removeAtlanTag(TYPE_NAME, qualifiedName, atlanTagName);
+        removeAtlanTag(Atlan.getDefaultClient(), qualifiedName, atlanTagName);
+    }
+
+    /**
+     * Remove an Atlan tag from a APIPath.
+     *
+     * @param client connectivity to the Atlan tenant from which to remove an Atlan tag from a APIPath
+     * @param qualifiedName of the APIPath
+     * @param atlanTagName human-readable name of the Atlan tag to remove
+     * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the APIPath
+     */
+    public static void removeAtlanTag(AtlanClient client, String qualifiedName, String atlanTagName)
+            throws AtlanException {
+        Asset.removeAtlanTag(client, TYPE_NAME, qualifiedName, atlanTagName);
     }
 }

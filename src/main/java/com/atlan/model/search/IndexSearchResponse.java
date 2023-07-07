@@ -2,7 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.search;
 
-import com.atlan.Atlan;
+import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.LogicException;
@@ -16,6 +16,7 @@ import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Captures the response from a search against Atlan. Also provides the ability to iteratively
@@ -25,6 +26,11 @@ import lombok.Getter;
 @EqualsAndHashCode(callSuper = false)
 public class IndexSearchResponse extends ApiResource implements Iterable<Asset> {
     private static final long serialVersionUID = 2L;
+
+    /** Connectivity to the Atlan tenant where the search was run. */
+    @Setter
+    @JsonIgnore
+    AtlanClient client;
 
     /** Type of query. */
     String queryType;
@@ -52,7 +58,7 @@ public class IndexSearchResponse extends ApiResource implements Iterable<Asset> 
     public IndexSearchResponse getNextPage() throws AtlanException {
         IndexSearchDSL dsl;
         try {
-            dsl = Atlan.getDefaultClient().readValue(searchParameters.getQuery(), IndexSearchDSL.class);
+            dsl = client.readValue(searchParameters.getQuery(), IndexSearchDSL.class);
         } catch (IOException e) {
             throw new LogicException(ErrorCode.UNABLE_TO_PARSE_ORIGINAL_QUERY, e);
         }
@@ -67,7 +73,7 @@ public class IndexSearchResponse extends ApiResource implements Iterable<Asset> 
         if (searchParameters.getRelationAttributes() != null) {
             next = next.relationAttributes(searchParameters.getRelationAttributes());
         }
-        return next.build().search();
+        return next.build().search(client);
     }
 
     /** {@inheritDoc} */

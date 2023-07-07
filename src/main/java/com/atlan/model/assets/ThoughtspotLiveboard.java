@@ -2,6 +2,8 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
+import com.atlan.Atlan;
+import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
@@ -90,7 +92,19 @@ public class ThoughtspotLiveboard extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ThoughtspotLiveboard does not exist or the provided GUID is not a ThoughtspotLiveboard
      */
     public static ThoughtspotLiveboard retrieveByGuid(String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(guid);
+        return retrieveByGuid(Atlan.getDefaultClient(), guid);
+    }
+
+    /**
+     * Retrieves a ThoughtspotLiveboard by its GUID, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param guid of the ThoughtspotLiveboard to retrieve
+     * @return the requested full ThoughtspotLiveboard, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ThoughtspotLiveboard does not exist or the provided GUID is not a ThoughtspotLiveboard
+     */
+    public static ThoughtspotLiveboard retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
+        Asset asset = Asset.retrieveFull(client, guid);
         if (asset == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
         } else if (asset instanceof ThoughtspotLiveboard) {
@@ -108,7 +122,20 @@ public class ThoughtspotLiveboard extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ThoughtspotLiveboard does not exist
      */
     public static ThoughtspotLiveboard retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        Asset asset = Asset.retrieveFull(TYPE_NAME, qualifiedName);
+        return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
+    }
+
+    /**
+     * Retrieves a ThoughtspotLiveboard by its qualifiedName, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param qualifiedName of the ThoughtspotLiveboard to retrieve
+     * @return the requested full ThoughtspotLiveboard, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ThoughtspotLiveboard does not exist
+     */
+    public static ThoughtspotLiveboard retrieveByQualifiedName(AtlanClient client, String qualifiedName)
+            throws AtlanException {
+        Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
         if (asset instanceof ThoughtspotLiveboard) {
             return (ThoughtspotLiveboard) asset;
         } else {
@@ -124,7 +151,19 @@ public class ThoughtspotLiveboard extends Asset
      * @throws AtlanException on any API problems
      */
     public static boolean restore(String qualifiedName) throws AtlanException {
-        return Asset.restore(TYPE_NAME, qualifiedName);
+        return restore(Atlan.getDefaultClient(), qualifiedName);
+    }
+
+    /**
+     * Restore the archived (soft-deleted) ThoughtspotLiveboard to active.
+     *
+     * @param client connectivity to the Atlan tenant on which to restore the asset
+     * @param qualifiedName for the ThoughtspotLiveboard
+     * @return true if the ThoughtspotLiveboard is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
+        return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
 
     /**
@@ -170,7 +209,21 @@ public class ThoughtspotLiveboard extends Asset
      * @throws AtlanException on any API problems
      */
     public static ThoughtspotLiveboard removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (ThoughtspotLiveboard) Asset.removeDescription(updater(qualifiedName, name));
+        return removeDescription(Atlan.getDefaultClient(), qualifiedName, name);
+    }
+
+    /**
+     * Remove the system description from a ThoughtspotLiveboard.
+     *
+     * @param client connectivity to the Atlan tenant on which to remove the asset's description
+     * @param qualifiedName of the ThoughtspotLiveboard
+     * @param name of the ThoughtspotLiveboard
+     * @return the updated ThoughtspotLiveboard, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static ThoughtspotLiveboard removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
+        return (ThoughtspotLiveboard) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
     /**
@@ -182,7 +235,21 @@ public class ThoughtspotLiveboard extends Asset
      * @throws AtlanException on any API problems
      */
     public static ThoughtspotLiveboard removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (ThoughtspotLiveboard) Asset.removeUserDescription(updater(qualifiedName, name));
+        return removeUserDescription(Atlan.getDefaultClient(), qualifiedName, name);
+    }
+
+    /**
+     * Remove the user's description from a ThoughtspotLiveboard.
+     *
+     * @param client connectivity to the Atlan tenant on which to remove the asset's description
+     * @param qualifiedName of the ThoughtspotLiveboard
+     * @param name of the ThoughtspotLiveboard
+     * @return the updated ThoughtspotLiveboard, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static ThoughtspotLiveboard removeUserDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
+        return (ThoughtspotLiveboard) Asset.removeUserDescription(client, updater(qualifiedName, name));
     }
 
     /**
@@ -194,7 +261,21 @@ public class ThoughtspotLiveboard extends Asset
      * @throws AtlanException on any API problems
      */
     public static ThoughtspotLiveboard removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (ThoughtspotLiveboard) Asset.removeOwners(updater(qualifiedName, name));
+        return removeOwners(Atlan.getDefaultClient(), qualifiedName, name);
+    }
+
+    /**
+     * Remove the owners from a ThoughtspotLiveboard.
+     *
+     * @param client connectivity to the Atlan tenant from which to remove the ThoughtspotLiveboard's owners
+     * @param qualifiedName of the ThoughtspotLiveboard
+     * @param name of the ThoughtspotLiveboard
+     * @return the updated ThoughtspotLiveboard, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static ThoughtspotLiveboard removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
+        return (ThoughtspotLiveboard) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
     /**
@@ -208,8 +289,24 @@ public class ThoughtspotLiveboard extends Asset
      */
     public static ThoughtspotLiveboard updateCertificate(
             String qualifiedName, CertificateStatus certificate, String message) throws AtlanException {
+        return updateCertificate(Atlan.getDefaultClient(), qualifiedName, certificate, message);
+    }
+
+    /**
+     * Update the certificate on a ThoughtspotLiveboard.
+     *
+     * @param client connectivity to the Atlan tenant on which to update the ThoughtspotLiveboard's certificate
+     * @param qualifiedName of the ThoughtspotLiveboard
+     * @param certificate to use
+     * @param message (optional) message, or null if no message
+     * @return the updated ThoughtspotLiveboard, or null if the update failed
+     * @throws AtlanException on any API problems
+     */
+    public static ThoughtspotLiveboard updateCertificate(
+            AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
+            throws AtlanException {
         return (ThoughtspotLiveboard)
-                Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
+                Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -221,7 +318,21 @@ public class ThoughtspotLiveboard extends Asset
      * @throws AtlanException on any API problems
      */
     public static ThoughtspotLiveboard removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (ThoughtspotLiveboard) Asset.removeCertificate(updater(qualifiedName, name));
+        return removeCertificate(Atlan.getDefaultClient(), qualifiedName, name);
+    }
+
+    /**
+     * Remove the certificate from a ThoughtspotLiveboard.
+     *
+     * @param client connectivity to the Atlan tenant from which to remove the ThoughtspotLiveboard's certificate
+     * @param qualifiedName of the ThoughtspotLiveboard
+     * @param name of the ThoughtspotLiveboard
+     * @return the updated ThoughtspotLiveboard, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static ThoughtspotLiveboard removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
+        return (ThoughtspotLiveboard) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
     /**
@@ -236,8 +347,25 @@ public class ThoughtspotLiveboard extends Asset
      */
     public static ThoughtspotLiveboard updateAnnouncement(
             String qualifiedName, AtlanAnnouncementType type, String title, String message) throws AtlanException {
+        return updateAnnouncement(Atlan.getDefaultClient(), qualifiedName, type, title, message);
+    }
+
+    /**
+     * Update the announcement on a ThoughtspotLiveboard.
+     *
+     * @param client connectivity to the Atlan tenant on which to update the ThoughtspotLiveboard's announcement
+     * @param qualifiedName of the ThoughtspotLiveboard
+     * @param type type of announcement to set
+     * @param title (optional) title of the announcement to set (or null for no title)
+     * @param message (optional) message of the announcement to set (or null for no message)
+     * @return the result of the update, or null if the update failed
+     * @throws AtlanException on any API problems
+     */
+    public static ThoughtspotLiveboard updateAnnouncement(
+            AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
+            throws AtlanException {
         return (ThoughtspotLiveboard)
-                Asset.updateAnnouncement(builder(), TYPE_NAME, qualifiedName, type, title, message);
+                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -249,7 +377,21 @@ public class ThoughtspotLiveboard extends Asset
      * @throws AtlanException on any API problems
      */
     public static ThoughtspotLiveboard removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (ThoughtspotLiveboard) Asset.removeAnnouncement(updater(qualifiedName, name));
+        return removeAnnouncement(Atlan.getDefaultClient(), qualifiedName, name);
+    }
+
+    /**
+     * Remove the announcement from a ThoughtspotLiveboard.
+     *
+     * @param client connectivity to the Atlan client from which to remove the ThoughtspotLiveboard's announcement
+     * @param qualifiedName of the ThoughtspotLiveboard
+     * @param name of the ThoughtspotLiveboard
+     * @return the updated ThoughtspotLiveboard, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static ThoughtspotLiveboard removeAnnouncement(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
+        return (ThoughtspotLiveboard) Asset.removeAnnouncement(client, updater(qualifiedName, name));
     }
 
     /**
@@ -263,7 +405,22 @@ public class ThoughtspotLiveboard extends Asset
      */
     public static ThoughtspotLiveboard replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
-        return (ThoughtspotLiveboard) Asset.replaceTerms(updater(qualifiedName, name), terms);
+        return replaceTerms(Atlan.getDefaultClient(), qualifiedName, name, terms);
+    }
+
+    /**
+     * Replace the terms linked to the ThoughtspotLiveboard.
+     *
+     * @param client connectivity to the Atlan tenant on which to replace the ThoughtspotLiveboard's assigned terms
+     * @param qualifiedName for the ThoughtspotLiveboard
+     * @param name human-readable name of the ThoughtspotLiveboard
+     * @param terms the list of terms to replace on the ThoughtspotLiveboard, or null to remove all terms from the ThoughtspotLiveboard
+     * @return the ThoughtspotLiveboard that was updated (note that it will NOT contain details of the replaced terms)
+     * @throws AtlanException on any API problems
+     */
+    public static ThoughtspotLiveboard replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+        return (ThoughtspotLiveboard) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 
     /**
@@ -278,7 +435,23 @@ public class ThoughtspotLiveboard extends Asset
      */
     public static ThoughtspotLiveboard appendTerms(String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
-        return (ThoughtspotLiveboard) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
+        return appendTerms(Atlan.getDefaultClient(), qualifiedName, terms);
+    }
+
+    /**
+     * Link additional terms to the ThoughtspotLiveboard, without replacing existing terms linked to the ThoughtspotLiveboard.
+     * Note: this operation must make two API calls — one to retrieve the ThoughtspotLiveboard's existing terms,
+     * and a second to append the new terms.
+     *
+     * @param client connectivity to the Atlan tenant on which to append terms to the ThoughtspotLiveboard
+     * @param qualifiedName for the ThoughtspotLiveboard
+     * @param terms the list of terms to append to the ThoughtspotLiveboard
+     * @return the ThoughtspotLiveboard that was updated  (note that it will NOT contain details of the appended terms)
+     * @throws AtlanException on any API problems
+     */
+    public static ThoughtspotLiveboard appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
+            throws AtlanException {
+        return (ThoughtspotLiveboard) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
     /**
@@ -293,7 +466,23 @@ public class ThoughtspotLiveboard extends Asset
      */
     public static ThoughtspotLiveboard removeTerms(String qualifiedName, List<IGlossaryTerm> terms)
             throws AtlanException {
-        return (ThoughtspotLiveboard) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
+        return removeTerms(Atlan.getDefaultClient(), qualifiedName, terms);
+    }
+
+    /**
+     * Remove terms from a ThoughtspotLiveboard, without replacing all existing terms linked to the ThoughtspotLiveboard.
+     * Note: this operation must make two API calls — one to retrieve the ThoughtspotLiveboard's existing terms,
+     * and a second to remove the provided terms.
+     *
+     * @param client connectivity to the Atlan tenant from which to remove terms from the ThoughtspotLiveboard
+     * @param qualifiedName for the ThoughtspotLiveboard
+     * @param terms the list of terms to remove from the ThoughtspotLiveboard, which must be referenced by GUID
+     * @return the ThoughtspotLiveboard that was updated (note that it will NOT contain details of the resulting terms)
+     * @throws AtlanException on any API problems
+     */
+    public static ThoughtspotLiveboard removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
+            throws AtlanException {
+        return (ThoughtspotLiveboard) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
     /**
@@ -308,7 +497,23 @@ public class ThoughtspotLiveboard extends Asset
      */
     public static ThoughtspotLiveboard appendAtlanTags(String qualifiedName, List<String> atlanTagNames)
             throws AtlanException {
-        return (ThoughtspotLiveboard) Asset.appendAtlanTags(TYPE_NAME, qualifiedName, atlanTagNames);
+        return appendAtlanTags(Atlan.getDefaultClient(), qualifiedName, atlanTagNames);
+    }
+
+    /**
+     * Add Atlan tags to a ThoughtspotLiveboard, without replacing existing Atlan tags linked to the ThoughtspotLiveboard.
+     * Note: this operation must make two API calls — one to retrieve the ThoughtspotLiveboard's existing Atlan tags,
+     * and a second to append the new Atlan tags.
+     *
+     * @param client connectivity to the Atlan tenant on which to append Atlan tags to the ThoughtspotLiveboard
+     * @param qualifiedName of the ThoughtspotLiveboard
+     * @param atlanTagNames human-readable names of the Atlan tags to add
+     * @throws AtlanException on any API problems
+     * @return the updated ThoughtspotLiveboard
+     */
+    public static ThoughtspotLiveboard appendAtlanTags(
+            AtlanClient client, String qualifiedName, List<String> atlanTagNames) throws AtlanException {
+        return (ThoughtspotLiveboard) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 
     /**
@@ -331,7 +536,39 @@ public class ThoughtspotLiveboard extends Asset
             boolean removePropagationsOnDelete,
             boolean restrictLineagePropagation)
             throws AtlanException {
+        return appendAtlanTags(
+                Atlan.getDefaultClient(),
+                qualifiedName,
+                atlanTagNames,
+                propagate,
+                removePropagationsOnDelete,
+                restrictLineagePropagation);
+    }
+
+    /**
+     * Add Atlan tags to a ThoughtspotLiveboard, without replacing existing Atlan tags linked to the ThoughtspotLiveboard.
+     * Note: this operation must make two API calls — one to retrieve the ThoughtspotLiveboard's existing Atlan tags,
+     * and a second to append the new Atlan tags.
+     *
+     * @param client connectivity to the Atlan tenant on which to append Atlan tags to the ThoughtspotLiveboard
+     * @param qualifiedName of the ThoughtspotLiveboard
+     * @param atlanTagNames human-readable names of the Atlan tags to add
+     * @param propagate whether to propagate the Atlan tag (true) or not (false)
+     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
+     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
+     * @throws AtlanException on any API problems
+     * @return the updated ThoughtspotLiveboard
+     */
+    public static ThoughtspotLiveboard appendAtlanTags(
+            AtlanClient client,
+            String qualifiedName,
+            List<String> atlanTagNames,
+            boolean propagate,
+            boolean removePropagationsOnDelete,
+            boolean restrictLineagePropagation)
+            throws AtlanException {
         return (ThoughtspotLiveboard) Asset.appendAtlanTags(
+                client,
                 TYPE_NAME,
                 qualifiedName,
                 atlanTagNames,
@@ -350,7 +587,22 @@ public class ThoughtspotLiveboard extends Asset
      */
     @Deprecated
     public static void addAtlanTags(String qualifiedName, List<String> atlanTagNames) throws AtlanException {
-        Asset.addAtlanTags(TYPE_NAME, qualifiedName, atlanTagNames);
+        addAtlanTags(Atlan.getDefaultClient(), qualifiedName, atlanTagNames);
+    }
+
+    /**
+     * Add Atlan tags to a ThoughtspotLiveboard.
+     *
+     * @param client connectivity to the Atlan tenant on which to add Atlan tags to the ThoughtspotLiveboard
+     * @param qualifiedName of the ThoughtspotLiveboard
+     * @param atlanTagNames human-readable names of the Atlan tags to add
+     * @throws AtlanException on any API problems, or if any of the Atlan tags already exist on the ThoughtspotLiveboard
+     * @deprecated see {@link #appendAtlanTags(String, List)} instead
+     */
+    @Deprecated
+    public static void addAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
+            throws AtlanException {
+        Asset.addAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 
     /**
@@ -372,7 +624,38 @@ public class ThoughtspotLiveboard extends Asset
             boolean removePropagationsOnDelete,
             boolean restrictLineagePropagation)
             throws AtlanException {
+        addAtlanTags(
+                Atlan.getDefaultClient(),
+                qualifiedName,
+                atlanTagNames,
+                propagate,
+                removePropagationsOnDelete,
+                restrictLineagePropagation);
+    }
+
+    /**
+     * Add Atlan tags to a ThoughtspotLiveboard.
+     *
+     * @param client connectivity to the Atlan tenant on which to add Atlan tags to the ThoughtspotLiveboard
+     * @param qualifiedName of the ThoughtspotLiveboard
+     * @param atlanTagNames human-readable names of the Atlan tags to add
+     * @param propagate whether to propagate the Atlan tag (true) or not (false)
+     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
+     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
+     * @throws AtlanException on any API problems, or if any of the Atlan tags already exist on the ThoughtspotLiveboard
+     * @deprecated see {@link #appendAtlanTags(String, List, boolean, boolean, boolean)} instead
+     */
+    @Deprecated
+    public static void addAtlanTags(
+            AtlanClient client,
+            String qualifiedName,
+            List<String> atlanTagNames,
+            boolean propagate,
+            boolean removePropagationsOnDelete,
+            boolean restrictLineagePropagation)
+            throws AtlanException {
         Asset.addAtlanTags(
+                client,
                 TYPE_NAME,
                 qualifiedName,
                 atlanTagNames,
@@ -389,6 +672,19 @@ public class ThoughtspotLiveboard extends Asset
      * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the ThoughtspotLiveboard
      */
     public static void removeAtlanTag(String qualifiedName, String atlanTagName) throws AtlanException {
-        Asset.removeAtlanTag(TYPE_NAME, qualifiedName, atlanTagName);
+        removeAtlanTag(Atlan.getDefaultClient(), qualifiedName, atlanTagName);
+    }
+
+    /**
+     * Remove an Atlan tag from a ThoughtspotLiveboard.
+     *
+     * @param client connectivity to the Atlan tenant from which to remove an Atlan tag from a ThoughtspotLiveboard
+     * @param qualifiedName of the ThoughtspotLiveboard
+     * @param atlanTagName human-readable name of the Atlan tag to remove
+     * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the ThoughtspotLiveboard
+     */
+    public static void removeAtlanTag(AtlanClient client, String qualifiedName, String atlanTagName)
+            throws AtlanException {
+        Asset.removeAtlanTag(client, TYPE_NAME, qualifiedName, atlanTagName);
     }
 }

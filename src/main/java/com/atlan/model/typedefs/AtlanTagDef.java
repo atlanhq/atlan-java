@@ -110,12 +110,23 @@ public class AtlanTagDef extends TypeDef {
      * If there are any existing Atlan tag instances, this operation will fail.
      *
      * @param displayName human-readable name of the Atlan tag
+     * @throws AtlanException on any error during the API invocation
+     */
+    public static void purge(String displayName) throws AtlanException {
+        purge(Atlan.getDefaultClient(), displayName);
+    }
+
+    /**
+     * Hard-deletes (purges) an Atlan tag by its human-readable name. This operation is irreversible.
+     * If there are any existing Atlan tag instances, this operation will fail.
+     *
+     * @param client connectivity to the Atlan tenant from which the Atlan tag should be purged
+     * @param displayName human-readable name of the Atlan tag
      * @param client connectivity to an Atlan tenant
      * @throws AtlanException on any error during the API invocation
      */
-    public static void purge(String displayName, AtlanClient client) throws AtlanException {
+    public static void purge(AtlanClient client, String displayName) throws AtlanException {
         String internalName = client.getAtlanTagCache().getIdForName(displayName);
-        Atlan.getDefaultClient().typeDefs().purge(internalName);
-        client.getAtlanTagCache().refreshCache();
+        client.typeDefs().purge(internalName);
     }
 }
