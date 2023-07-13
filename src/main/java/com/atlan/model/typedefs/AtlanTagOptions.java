@@ -2,7 +2,8 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.typedefs;
 
-import com.atlan.api.ImagesEndpoint;
+import com.atlan.Atlan;
+import com.atlan.AtlanClient;
 import com.atlan.exception.ApiException;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
@@ -64,8 +65,21 @@ public class AtlanTagOptions extends AtlanObject {
      * @throws AtlanException on any API communication issues trying to upload the image
      */
     public static AtlanTagOptions withImage(String url, AtlanTagColor color) throws AtlanException {
+        return withImage(Atlan.getDefaultClient(), url, color);
+    }
+
+    /**
+     * Provide Atlan tag options that set the image and color for the tag, using an uploaded image.
+     *
+     * @param client connectivity to the Atlan tenant in which the tag is intended to be created
+     * @param url URL to the image to use for the Atlan tag
+     * @param color to use to represent the Atlan tag
+     * @return the necessary options for setting this image and color for the Atlan tag
+     * @throws AtlanException on any API communication issues trying to upload the image
+     */
+    public static AtlanTagOptions withImage(AtlanClient client, String url, AtlanTagColor color) throws AtlanException {
         try {
-            AtlanImage result = ImagesEndpoint.uploadImage(url);
+            AtlanImage result = client.images().upload(url);
             return AtlanTagOptions.builder()
                     .color(color)
                     .iconType(TagIconType.IMAGE)

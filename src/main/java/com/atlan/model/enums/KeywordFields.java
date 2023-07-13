@@ -171,6 +171,8 @@ public enum KeywordFields implements AtlanSearchableField {
     ASSET_DBT_SOURCE_FRESHNESS_CRITERIA("assetDbtSourceFreshnessCriteria"),
     /** TBC */
     ASSET_DBT_TAGS("assetDbtTags"),
+    /** All associated dbt test statuses */
+    ASSET_DBT_TEST_STATUS("assetDbtTestStatus"),
     /** TBC */
     ASSET_DBT_UNIQUE_ID("assetDbtUniqueId.keyword"),
     /** TBC */
@@ -375,6 +377,22 @@ public enum KeywordFields implements AtlanSearchableField {
     DBT_STATUS("dbtStatus"),
     /** TBC */
     DBT_TAGS("dbtTags"),
+    /** The compiled code of a test ( tests in dbt can be defined using python ) */
+    DBT_TEST_COMPILED_CODE("dbtTestCompiledCode"),
+    /** The compiled sql of a test */
+    DBT_TEST_COMPILED_SQL("dbtTestCompiledSQL"),
+    /** The error message in the case of state being "error" */
+    DBT_TEST_ERROR("dbtTestError"),
+    /** The language in which a dbt test is written. Example: sql,python */
+    DBT_TEST_LANGUAGE("dbtTestLanguage"),
+    /** The raw code of a test ( tests in dbt can be defined using python ) */
+    DBT_TEST_RAW_CODE("dbtTestRawCode"),
+    /** The raw sql of a test */
+    DBT_TEST_RAW_SQL("dbtTestRawSQL"),
+    /** The test results. Can be one of, in order of severity, "error", "fail", "warn", "pass" */
+    DBT_TEST_STATE("dbtTestState"),
+    /** Status provides the details of the results of a test. For errors, it reads "ERROR". */
+    DBT_TEST_STATUS("dbtTestStatus"),
     /** TBC */
     DBT_UNIQUE_ID("dbtUniqueId.keyword"),
     /** TBC */
@@ -807,27 +825,27 @@ public enum KeywordFields implements AtlanSearchableField {
     QUERY_USERNAME_STRATEGY("queryUsernameStrategy"),
     /** TBC */
     QUERY_USER_MAP("queryUserMap"),
-    /** TBC */
+    /** Calculated fields of quicksight analysis  */
     QUICK_SIGHT_ANALYSIS_CALCULATED_FIELDS("quickSightAnalysisCalculatedFields"),
-    /** TBC */
+    /** Filter groups used for quicksight analysis */
     QUICK_SIGHT_ANALYSIS_FILTER_GROUPS("quickSightAnalysisFilterGroups"),
-    /** TBC */
+    /** parameters used for quicksight analysis  */
     QUICK_SIGHT_ANALYSIS_PARAMETER_DECLARATIONS("quickSightAnalysisParameterDeclarations"),
-    /** TBC */
+    /** Qualified name of the QuickSight Analysis */
     QUICK_SIGHT_ANALYSIS_QUALIFIED_NAME("quickSightAnalysisQualifiedName"),
-    /** TBC */
+    /** Status of quicksight analysis */
     QUICK_SIGHT_ANALYSIS_STATUS("quickSightAnalysisStatus"),
     /** TBC */
     QUICK_SIGHT_DASHBOARD_QUALIFIED_NAME("quickSightDashboardQualifiedName"),
-    /** TBC */
+    /** Datatype of column in the dataset */
     QUICK_SIGHT_DATASET_FIELD_TYPE("quickSightDatasetFieldType"),
-    /** TBC */
+    /** Quicksight dataset importMode indicates a value that indicates whether you want to import the data into SPICE */
     QUICK_SIGHT_DATASET_IMPORT_MODE("quickSightDatasetImportMode"),
-    /** TBC */
+    /** Qualified name of the parent dataset */
     QUICK_SIGHT_DATASET_QUALIFIED_NAME("quickSightDatasetQualifiedName"),
-    /** TBC */
+    /** Detailed path of the folder */
     QUICK_SIGHT_FOLDER_HIERARCHY("quickSightFolderHierarchy"),
-    /** TBC */
+    /** Shared or private type of folder */
     QUICK_SIGHT_FOLDER_TYPE("quickSightFolderType"),
     /** TBC */
     QUICK_SIGHT_ID("quickSightId"),

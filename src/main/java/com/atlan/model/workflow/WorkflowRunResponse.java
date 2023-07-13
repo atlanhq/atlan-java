@@ -22,6 +22,6 @@ public class WorkflowRunResponse extends WorkflowResponse {
      */
     @Override
     protected WorkflowSearchResult getRunDetails(String name) throws AtlanException {
-        return WorkflowSearchRequest.findRunByName(name);
+        return WorkflowSearchRequest.findRunByName(client, name);
     }
 }

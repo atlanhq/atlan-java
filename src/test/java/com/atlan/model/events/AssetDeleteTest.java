@@ -4,11 +4,11 @@ package com.atlan.model.events;
 
 import static org.testng.Assert.*;
 
+import com.atlan.Atlan;
 import com.atlan.model.assets.Glossary;
 import com.atlan.model.assets.GlossaryTerm;
 import com.atlan.model.enums.*;
-import com.atlan.serde.Serde;
-import com.fasterxml.jackson.core.JsonProcessingException;
+import java.io.IOException;
 import org.testng.annotations.Test;
 
 public class AssetDeleteTest {
@@ -39,7 +39,7 @@ public class AssetDeleteTest {
             dependsOnGroups = {"AssetDelete.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
-        serialized = full.toJson();
+        serialized = full.toJson(Atlan.getDefaultClient());
         assertNotNull(serialized);
         assertEquals(full.hashCode(), HASH, "Object is mutated by serialization.");
     }
@@ -47,9 +47,9 @@ public class AssetDeleteTest {
     @Test(
             groups = {"AssetDelete.deserialize"},
             dependsOnGroups = {"AssetDelete.serialize"})
-    void deserialization() throws JsonProcessingException {
+    void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = Serde.mapper.readValue(serialized, AtlanEvent.class);
+        frodo = Atlan.getDefaultClient().readValue(serialized, AtlanEvent.class);
         assertNotNull(frodo);
     }
 
@@ -59,7 +59,7 @@ public class AssetDeleteTest {
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
-        String backAgain = frodo.toJson();
+        String backAgain = frodo.toJson(Atlan.getDefaultClient());
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
     }
 

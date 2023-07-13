@@ -56,7 +56,7 @@ public class PresetAssetTest extends AtlanLiveTest {
     void createWorkspace() throws AtlanException {
         PresetWorkspace toCreate = PresetWorkspace.creator(WORKSPACE_NAME, connection.getQualifiedName())
                 .build();
-        AssetMutationResponse response = toCreate.upsert();
+        AssetMutationResponse response = toCreate.save();
         Asset one = validateSingleCreate(response);
         assertTrue(one instanceof PresetWorkspace);
         workspace = (PresetWorkspace) one;
@@ -73,7 +73,7 @@ public class PresetAssetTest extends AtlanLiveTest {
     void createCollection() throws AtlanException {
         PresetDashboard toCreate = PresetDashboard.creator(COLLECTION_NAME, workspace.getQualifiedName())
                 .build();
-        AssetMutationResponse response = toCreate.upsert();
+        AssetMutationResponse response = toCreate.save();
         assertNotNull(response);
         assertTrue(response.getDeletedAssets().isEmpty());
         assertEquals(response.getUpdatedAssets().size(), 1);
@@ -100,7 +100,7 @@ public class PresetAssetTest extends AtlanLiveTest {
     void createChart() throws AtlanException {
         PresetChart toCreate =
                 PresetChart.creator(CHART_NAME, collection.getQualifiedName()).build();
-        AssetMutationResponse response = toCreate.upsert();
+        AssetMutationResponse response = toCreate.save();
         assertNotNull(response);
         assertTrue(response.getDeletedAssets().isEmpty());
         assertEquals(response.getUpdatedAssets().size(), 1);
@@ -128,7 +128,7 @@ public class PresetAssetTest extends AtlanLiveTest {
     void createDataset() throws AtlanException {
         PresetDataset toCreate = PresetDataset.creator(DATASET_NAME, collection.getQualifiedName())
                 .build();
-        AssetMutationResponse response = toCreate.upsert();
+        AssetMutationResponse response = toCreate.save();
         assertNotNull(response);
         assertTrue(response.getDeletedAssets().isEmpty());
         assertEquals(response.getUpdatedAssets().size(), 1);

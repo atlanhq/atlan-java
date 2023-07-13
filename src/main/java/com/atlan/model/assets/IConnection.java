@@ -175,6 +175,9 @@ public interface IConnection {
     SortedSet<String> getAssetDbtTags();
 
     /** TBC */
+    String getAssetDbtTestStatus();
+
+    /** TBC */
     String getAssetDbtUniqueId();
 
     /** TBC */

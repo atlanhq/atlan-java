@@ -170,6 +170,9 @@ public interface IMaterializedView {
     SortedSet<String> getAssetDbtTags();
 
     /** TBC */
+    String getAssetDbtTestStatus();
+
+    /** TBC */
     String getAssetDbtUniqueId();
 
     /** TBC */
@@ -255,6 +258,9 @@ public interface IMaterializedView {
 
     /** TBC */
     SortedSet<IDbtSource> getDbtSources();
+
+    /** TBC */
+    SortedSet<IDbtTest> getDbtTests();
 
     /** TBC */
     String getDefinition();

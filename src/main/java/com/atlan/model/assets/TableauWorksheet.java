@@ -2,6 +2,8 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
+import com.atlan.Atlan;
+import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
@@ -119,7 +121,19 @@ public class TableauWorksheet extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the TableauWorksheet does not exist or the provided GUID is not a TableauWorksheet
      */
     public static TableauWorksheet retrieveByGuid(String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(guid);
+        return retrieveByGuid(Atlan.getDefaultClient(), guid);
+    }
+
+    /**
+     * Retrieves a TableauWorksheet by its GUID, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param guid of the TableauWorksheet to retrieve
+     * @return the requested full TableauWorksheet, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the TableauWorksheet does not exist or the provided GUID is not a TableauWorksheet
+     */
+    public static TableauWorksheet retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
+        Asset asset = Asset.retrieveFull(client, guid);
         if (asset == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
         } else if (asset instanceof TableauWorksheet) {
@@ -137,7 +151,20 @@ public class TableauWorksheet extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the TableauWorksheet does not exist
      */
     public static TableauWorksheet retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        Asset asset = Asset.retrieveFull(TYPE_NAME, qualifiedName);
+        return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
+    }
+
+    /**
+     * Retrieves a TableauWorksheet by its qualifiedName, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param qualifiedName of the TableauWorksheet to retrieve
+     * @return the requested full TableauWorksheet, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the TableauWorksheet does not exist
+     */
+    public static TableauWorksheet retrieveByQualifiedName(AtlanClient client, String qualifiedName)
+            throws AtlanException {
+        Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
         if (asset instanceof TableauWorksheet) {
             return (TableauWorksheet) asset;
         } else {
@@ -153,7 +180,19 @@ public class TableauWorksheet extends Asset
      * @throws AtlanException on any API problems
      */
     public static boolean restore(String qualifiedName) throws AtlanException {
-        return Asset.restore(TYPE_NAME, qualifiedName);
+        return restore(Atlan.getDefaultClient(), qualifiedName);
+    }
+
+    /**
+     * Restore the archived (soft-deleted) TableauWorksheet to active.
+     *
+     * @param client connectivity to the Atlan tenant on which to restore the asset
+     * @param qualifiedName for the TableauWorksheet
+     * @return true if the TableauWorksheet is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
+        return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
 
     /**
@@ -199,7 +238,21 @@ public class TableauWorksheet extends Asset
      * @throws AtlanException on any API problems
      */
     public static TableauWorksheet removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (TableauWorksheet) Asset.removeDescription(updater(qualifiedName, name));
+        return removeDescription(Atlan.getDefaultClient(), qualifiedName, name);
+    }
+
+    /**
+     * Remove the system description from a TableauWorksheet.
+     *
+     * @param client connectivity to the Atlan tenant on which to remove the asset's description
+     * @param qualifiedName of the TableauWorksheet
+     * @param name of the TableauWorksheet
+     * @return the updated TableauWorksheet, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static TableauWorksheet removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
+        return (TableauWorksheet) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
     /**
@@ -211,7 +264,21 @@ public class TableauWorksheet extends Asset
      * @throws AtlanException on any API problems
      */
     public static TableauWorksheet removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (TableauWorksheet) Asset.removeUserDescription(updater(qualifiedName, name));
+        return removeUserDescription(Atlan.getDefaultClient(), qualifiedName, name);
+    }
+
+    /**
+     * Remove the user's description from a TableauWorksheet.
+     *
+     * @param client connectivity to the Atlan tenant on which to remove the asset's description
+     * @param qualifiedName of the TableauWorksheet
+     * @param name of the TableauWorksheet
+     * @return the updated TableauWorksheet, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static TableauWorksheet removeUserDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
+        return (TableauWorksheet) Asset.removeUserDescription(client, updater(qualifiedName, name));
     }
 
     /**
@@ -223,7 +290,21 @@ public class TableauWorksheet extends Asset
      * @throws AtlanException on any API problems
      */
     public static TableauWorksheet removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (TableauWorksheet) Asset.removeOwners(updater(qualifiedName, name));
+        return removeOwners(Atlan.getDefaultClient(), qualifiedName, name);
+    }
+
+    /**
+     * Remove the owners from a TableauWorksheet.
+     *
+     * @param client connectivity to the Atlan tenant from which to remove the TableauWorksheet's owners
+     * @param qualifiedName of the TableauWorksheet
+     * @param name of the TableauWorksheet
+     * @return the updated TableauWorksheet, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static TableauWorksheet removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
+        return (TableauWorksheet) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
     /**
@@ -237,7 +318,24 @@ public class TableauWorksheet extends Asset
      */
     public static TableauWorksheet updateCertificate(
             String qualifiedName, CertificateStatus certificate, String message) throws AtlanException {
-        return (TableauWorksheet) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
+        return updateCertificate(Atlan.getDefaultClient(), qualifiedName, certificate, message);
+    }
+
+    /**
+     * Update the certificate on a TableauWorksheet.
+     *
+     * @param client connectivity to the Atlan tenant on which to update the TableauWorksheet's certificate
+     * @param qualifiedName of the TableauWorksheet
+     * @param certificate to use
+     * @param message (optional) message, or null if no message
+     * @return the updated TableauWorksheet, or null if the update failed
+     * @throws AtlanException on any API problems
+     */
+    public static TableauWorksheet updateCertificate(
+            AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
+            throws AtlanException {
+        return (TableauWorksheet)
+                Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -249,7 +347,21 @@ public class TableauWorksheet extends Asset
      * @throws AtlanException on any API problems
      */
     public static TableauWorksheet removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (TableauWorksheet) Asset.removeCertificate(updater(qualifiedName, name));
+        return removeCertificate(Atlan.getDefaultClient(), qualifiedName, name);
+    }
+
+    /**
+     * Remove the certificate from a TableauWorksheet.
+     *
+     * @param client connectivity to the Atlan tenant from which to remove the TableauWorksheet's certificate
+     * @param qualifiedName of the TableauWorksheet
+     * @param name of the TableauWorksheet
+     * @return the updated TableauWorksheet, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static TableauWorksheet removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
+        return (TableauWorksheet) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
     /**
@@ -264,7 +376,25 @@ public class TableauWorksheet extends Asset
      */
     public static TableauWorksheet updateAnnouncement(
             String qualifiedName, AtlanAnnouncementType type, String title, String message) throws AtlanException {
-        return (TableauWorksheet) Asset.updateAnnouncement(builder(), TYPE_NAME, qualifiedName, type, title, message);
+        return updateAnnouncement(Atlan.getDefaultClient(), qualifiedName, type, title, message);
+    }
+
+    /**
+     * Update the announcement on a TableauWorksheet.
+     *
+     * @param client connectivity to the Atlan tenant on which to update the TableauWorksheet's announcement
+     * @param qualifiedName of the TableauWorksheet
+     * @param type type of announcement to set
+     * @param title (optional) title of the announcement to set (or null for no title)
+     * @param message (optional) message of the announcement to set (or null for no message)
+     * @return the result of the update, or null if the update failed
+     * @throws AtlanException on any API problems
+     */
+    public static TableauWorksheet updateAnnouncement(
+            AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
+            throws AtlanException {
+        return (TableauWorksheet)
+                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -276,7 +406,21 @@ public class TableauWorksheet extends Asset
      * @throws AtlanException on any API problems
      */
     public static TableauWorksheet removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (TableauWorksheet) Asset.removeAnnouncement(updater(qualifiedName, name));
+        return removeAnnouncement(Atlan.getDefaultClient(), qualifiedName, name);
+    }
+
+    /**
+     * Remove the announcement from a TableauWorksheet.
+     *
+     * @param client connectivity to the Atlan client from which to remove the TableauWorksheet's announcement
+     * @param qualifiedName of the TableauWorksheet
+     * @param name of the TableauWorksheet
+     * @return the updated TableauWorksheet, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static TableauWorksheet removeAnnouncement(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
+        return (TableauWorksheet) Asset.removeAnnouncement(client, updater(qualifiedName, name));
     }
 
     /**
@@ -290,7 +434,22 @@ public class TableauWorksheet extends Asset
      */
     public static TableauWorksheet replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
-        return (TableauWorksheet) Asset.replaceTerms(updater(qualifiedName, name), terms);
+        return replaceTerms(Atlan.getDefaultClient(), qualifiedName, name, terms);
+    }
+
+    /**
+     * Replace the terms linked to the TableauWorksheet.
+     *
+     * @param client connectivity to the Atlan tenant on which to replace the TableauWorksheet's assigned terms
+     * @param qualifiedName for the TableauWorksheet
+     * @param name human-readable name of the TableauWorksheet
+     * @param terms the list of terms to replace on the TableauWorksheet, or null to remove all terms from the TableauWorksheet
+     * @return the TableauWorksheet that was updated (note that it will NOT contain details of the replaced terms)
+     * @throws AtlanException on any API problems
+     */
+    public static TableauWorksheet replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+        return (TableauWorksheet) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 
     /**
@@ -304,7 +463,23 @@ public class TableauWorksheet extends Asset
      * @throws AtlanException on any API problems
      */
     public static TableauWorksheet appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
-        return (TableauWorksheet) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
+        return appendTerms(Atlan.getDefaultClient(), qualifiedName, terms);
+    }
+
+    /**
+     * Link additional terms to the TableauWorksheet, without replacing existing terms linked to the TableauWorksheet.
+     * Note: this operation must make two API calls — one to retrieve the TableauWorksheet's existing terms,
+     * and a second to append the new terms.
+     *
+     * @param client connectivity to the Atlan tenant on which to append terms to the TableauWorksheet
+     * @param qualifiedName for the TableauWorksheet
+     * @param terms the list of terms to append to the TableauWorksheet
+     * @return the TableauWorksheet that was updated  (note that it will NOT contain details of the appended terms)
+     * @throws AtlanException on any API problems
+     */
+    public static TableauWorksheet appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
+            throws AtlanException {
+        return (TableauWorksheet) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
     /**
@@ -318,7 +493,23 @@ public class TableauWorksheet extends Asset
      * @throws AtlanException on any API problems
      */
     public static TableauWorksheet removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
-        return (TableauWorksheet) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
+        return removeTerms(Atlan.getDefaultClient(), qualifiedName, terms);
+    }
+
+    /**
+     * Remove terms from a TableauWorksheet, without replacing all existing terms linked to the TableauWorksheet.
+     * Note: this operation must make two API calls — one to retrieve the TableauWorksheet's existing terms,
+     * and a second to remove the provided terms.
+     *
+     * @param client connectivity to the Atlan tenant from which to remove terms from the TableauWorksheet
+     * @param qualifiedName for the TableauWorksheet
+     * @param terms the list of terms to remove from the TableauWorksheet, which must be referenced by GUID
+     * @return the TableauWorksheet that was updated (note that it will NOT contain details of the resulting terms)
+     * @throws AtlanException on any API problems
+     */
+    public static TableauWorksheet removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
+            throws AtlanException {
+        return (TableauWorksheet) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
     /**
@@ -333,7 +524,23 @@ public class TableauWorksheet extends Asset
      */
     public static TableauWorksheet appendAtlanTags(String qualifiedName, List<String> atlanTagNames)
             throws AtlanException {
-        return (TableauWorksheet) Asset.appendAtlanTags(TYPE_NAME, qualifiedName, atlanTagNames);
+        return appendAtlanTags(Atlan.getDefaultClient(), qualifiedName, atlanTagNames);
+    }
+
+    /**
+     * Add Atlan tags to a TableauWorksheet, without replacing existing Atlan tags linked to the TableauWorksheet.
+     * Note: this operation must make two API calls — one to retrieve the TableauWorksheet's existing Atlan tags,
+     * and a second to append the new Atlan tags.
+     *
+     * @param client connectivity to the Atlan tenant on which to append Atlan tags to the TableauWorksheet
+     * @param qualifiedName of the TableauWorksheet
+     * @param atlanTagNames human-readable names of the Atlan tags to add
+     * @throws AtlanException on any API problems
+     * @return the updated TableauWorksheet
+     */
+    public static TableauWorksheet appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
+            throws AtlanException {
+        return (TableauWorksheet) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 
     /**
@@ -356,7 +563,39 @@ public class TableauWorksheet extends Asset
             boolean removePropagationsOnDelete,
             boolean restrictLineagePropagation)
             throws AtlanException {
+        return appendAtlanTags(
+                Atlan.getDefaultClient(),
+                qualifiedName,
+                atlanTagNames,
+                propagate,
+                removePropagationsOnDelete,
+                restrictLineagePropagation);
+    }
+
+    /**
+     * Add Atlan tags to a TableauWorksheet, without replacing existing Atlan tags linked to the TableauWorksheet.
+     * Note: this operation must make two API calls — one to retrieve the TableauWorksheet's existing Atlan tags,
+     * and a second to append the new Atlan tags.
+     *
+     * @param client connectivity to the Atlan tenant on which to append Atlan tags to the TableauWorksheet
+     * @param qualifiedName of the TableauWorksheet
+     * @param atlanTagNames human-readable names of the Atlan tags to add
+     * @param propagate whether to propagate the Atlan tag (true) or not (false)
+     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
+     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
+     * @throws AtlanException on any API problems
+     * @return the updated TableauWorksheet
+     */
+    public static TableauWorksheet appendAtlanTags(
+            AtlanClient client,
+            String qualifiedName,
+            List<String> atlanTagNames,
+            boolean propagate,
+            boolean removePropagationsOnDelete,
+            boolean restrictLineagePropagation)
+            throws AtlanException {
         return (TableauWorksheet) Asset.appendAtlanTags(
+                client,
                 TYPE_NAME,
                 qualifiedName,
                 atlanTagNames,
@@ -375,7 +614,22 @@ public class TableauWorksheet extends Asset
      */
     @Deprecated
     public static void addAtlanTags(String qualifiedName, List<String> atlanTagNames) throws AtlanException {
-        Asset.addAtlanTags(TYPE_NAME, qualifiedName, atlanTagNames);
+        addAtlanTags(Atlan.getDefaultClient(), qualifiedName, atlanTagNames);
+    }
+
+    /**
+     * Add Atlan tags to a TableauWorksheet.
+     *
+     * @param client connectivity to the Atlan tenant on which to add Atlan tags to the TableauWorksheet
+     * @param qualifiedName of the TableauWorksheet
+     * @param atlanTagNames human-readable names of the Atlan tags to add
+     * @throws AtlanException on any API problems, or if any of the Atlan tags already exist on the TableauWorksheet
+     * @deprecated see {@link #appendAtlanTags(String, List)} instead
+     */
+    @Deprecated
+    public static void addAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
+            throws AtlanException {
+        Asset.addAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 
     /**
@@ -397,7 +651,38 @@ public class TableauWorksheet extends Asset
             boolean removePropagationsOnDelete,
             boolean restrictLineagePropagation)
             throws AtlanException {
+        addAtlanTags(
+                Atlan.getDefaultClient(),
+                qualifiedName,
+                atlanTagNames,
+                propagate,
+                removePropagationsOnDelete,
+                restrictLineagePropagation);
+    }
+
+    /**
+     * Add Atlan tags to a TableauWorksheet.
+     *
+     * @param client connectivity to the Atlan tenant on which to add Atlan tags to the TableauWorksheet
+     * @param qualifiedName of the TableauWorksheet
+     * @param atlanTagNames human-readable names of the Atlan tags to add
+     * @param propagate whether to propagate the Atlan tag (true) or not (false)
+     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
+     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
+     * @throws AtlanException on any API problems, or if any of the Atlan tags already exist on the TableauWorksheet
+     * @deprecated see {@link #appendAtlanTags(String, List, boolean, boolean, boolean)} instead
+     */
+    @Deprecated
+    public static void addAtlanTags(
+            AtlanClient client,
+            String qualifiedName,
+            List<String> atlanTagNames,
+            boolean propagate,
+            boolean removePropagationsOnDelete,
+            boolean restrictLineagePropagation)
+            throws AtlanException {
         Asset.addAtlanTags(
+                client,
                 TYPE_NAME,
                 qualifiedName,
                 atlanTagNames,
@@ -414,6 +699,19 @@ public class TableauWorksheet extends Asset
      * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the TableauWorksheet
      */
     public static void removeAtlanTag(String qualifiedName, String atlanTagName) throws AtlanException {
-        Asset.removeAtlanTag(TYPE_NAME, qualifiedName, atlanTagName);
+        removeAtlanTag(Atlan.getDefaultClient(), qualifiedName, atlanTagName);
+    }
+
+    /**
+     * Remove an Atlan tag from a TableauWorksheet.
+     *
+     * @param client connectivity to the Atlan tenant from which to remove an Atlan tag from a TableauWorksheet
+     * @param qualifiedName of the TableauWorksheet
+     * @param atlanTagName human-readable name of the Atlan tag to remove
+     * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the TableauWorksheet
+     */
+    public static void removeAtlanTag(AtlanClient client, String qualifiedName, String atlanTagName)
+            throws AtlanException {
+        Asset.removeAtlanTag(client, TYPE_NAME, qualifiedName, atlanTagName);
     }
 }

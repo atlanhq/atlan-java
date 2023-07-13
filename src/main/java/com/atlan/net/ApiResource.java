@@ -4,6 +4,7 @@ package com.atlan.net;
 
 /* Based on original code from https://github.com/stripe/stripe-java (under MIT license) */
 import com.atlan.Atlan;
+import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
@@ -63,7 +64,7 @@ public abstract class ApiResource extends AtlanObject implements AtlanResponseIn
         if ((this.rawJsonObject == null) && (this.getLastResponse() != null)) {
             try {
                 this.rawJsonObject =
-                        Serde.mapper.readTree(this.getLastResponse().body());
+                        Serde.allInclusiveMapper.readTree(this.getLastResponse().body());
             } catch (JsonProcessingException e) {
                 log.error(
                         "Unable to parse raw JSON tree — invalid JSON? {}",
@@ -107,6 +108,7 @@ public abstract class ApiResource extends AtlanObject implements AtlanResponseIn
     /**
      * Pass-through to the request-handling method after confirming thatthe provided payload is non-null.
      *
+     * @param client connectivity to Atlan
      * @param method for the request
      * @param url of the request
      * @param payload to send in the request
@@ -117,10 +119,15 @@ public abstract class ApiResource extends AtlanObject implements AtlanResponseIn
      * @throws AtlanException on any API interaction problem
      */
     public static <T extends ApiResource> T request(
-            ApiResource.RequestMethod method, String url, AtlanObject payload, Class<T> clazz, RequestOptions options)
+            AtlanClient client,
+            ApiResource.RequestMethod method,
+            String url,
+            AtlanObject payload,
+            Class<T> clazz,
+            RequestOptions options)
             throws AtlanException {
         checkNullTypedParams(url, payload);
-        return request(method, url, payload.toJson(), clazz, options);
+        return request(client, method, url, payload.toJson(client), clazz, options);
     }
 
     /**
@@ -128,6 +135,7 @@ public abstract class ApiResource extends AtlanObject implements AtlanResponseIn
      * This method wraps debug-level logging lines around the request to show precisely what was constructed and sent
      * to Atlan and precisely what was returned (prior to deserialization).
      *
+     * @param client connectivity to Atlan
      * @param method for the request
      * @param url of the request
      * @param body to send in the request, if any (to not send any use an empty string)
@@ -138,10 +146,15 @@ public abstract class ApiResource extends AtlanObject implements AtlanResponseIn
      * @throws AtlanException on any API interaction problem
      */
     public static <T extends ApiResource> T request(
-            ApiResource.RequestMethod method, String url, String body, Class<T> clazz, RequestOptions options)
+            AtlanClient client,
+            ApiResource.RequestMethod method,
+            String url,
+            String body,
+            Class<T> clazz,
+            RequestOptions options)
             throws AtlanException {
         log.debug("({}) {} with: {}", method, url, body);
-        T response = ApiResource.atlanResponseGetter.request(method, url, body, clazz, options);
+        T response = ApiResource.atlanResponseGetter.request(client, method, url, body, clazz, options);
         if (log.isDebugEnabled()) {
             if (response != null) {
                 if (Atlan.enableTelemetry) {
@@ -160,6 +173,7 @@ public abstract class ApiResource extends AtlanObject implements AtlanResponseIn
     }
 
     public static <T extends ApiResource> T request(
+            AtlanClient client,
             ApiResource.RequestMethod method,
             String url,
             InputStream payload,
@@ -171,7 +185,7 @@ public abstract class ApiResource extends AtlanObject implements AtlanResponseIn
             throw new IllegalArgumentException(String.format("Found null input stream for %s.", url));
         }
         log.debug("({}) {} with: {}", method, url, filename);
-        T response = ApiResource.atlanResponseGetter.request(method, url, payload, filename, clazz, options);
+        T response = ApiResource.atlanResponseGetter.request(client, method, url, payload, filename, clazz, options);
         if (log.isDebugEnabled()) {
             if (response != null) {
                 if (Atlan.enableTelemetry) {

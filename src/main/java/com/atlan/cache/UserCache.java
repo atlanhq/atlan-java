@@ -17,11 +17,11 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class UserCache {
 
-    private static Map<String, String> mapIdToName = new ConcurrentHashMap<>();
-    private static Map<String, String> mapNameToId = new ConcurrentHashMap<>();
-    private static Map<String, String> mapEmailToId = new ConcurrentHashMap<>();
+    private Map<String, String> mapIdToName = new ConcurrentHashMap<>();
+    private Map<String, String> mapNameToId = new ConcurrentHashMap<>();
+    private Map<String, String> mapEmailToId = new ConcurrentHashMap<>();
 
-    private static synchronized void refreshCache() throws AtlanException {
+    private synchronized void refreshCache() throws AtlanException {
         log.debug("Refreshing cache of users...");
         List<AtlanUser> users = AtlanUser.retrieveAll();
         mapIdToName = new ConcurrentHashMap<>();
@@ -45,7 +45,7 @@ public class UserCache {
      * @throws NotFoundException if the user cannot be found (does not exist) in Atlan
      * @throws InvalidRequestException if no name was provided for the user to retrieve
      */
-    public static String getIdForName(String username) throws AtlanException {
+    public String getIdForName(String username) throws AtlanException {
         if (username != null && username.length() > 0) {
             String userId = mapNameToId.get(username);
             if (userId == null) {
@@ -70,7 +70,7 @@ public class UserCache {
      * @throws NotFoundException if the user cannot be found (does not exist) in Atlan
      * @throws InvalidRequestException if no name was provided for the user to retrieve
      */
-    public static String getIdForEmail(String email) throws AtlanException {
+    public String getIdForEmail(String email) throws AtlanException {
         if (email != null && email.length() > 0) {
             String userId = mapEmailToId.get(email);
             if (userId == null) {
@@ -95,7 +95,7 @@ public class UserCache {
      * @throws NotFoundException if the user cannot be found (does not exist) in Atlan
      * @throws InvalidRequestException if no name was provided for the user to retrieve
      */
-    public static String getNameForId(String id) throws AtlanException {
+    public String getNameForId(String id) throws AtlanException {
         if (id != null && id.length() > 0) {
             String userName = mapIdToName.get(id);
             if (userName == null) {

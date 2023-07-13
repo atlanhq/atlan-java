@@ -2,6 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.api;
 
+import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.admin.AtlanImage;
 import com.atlan.net.ApiResource;
@@ -19,6 +20,10 @@ public class ImagesEndpoint extends HeraclesEndpoint {
 
     private static final String endpoint = "/images";
 
+    public ImagesEndpoint(AtlanClient client) {
+        super(client);
+    }
+
     /**
      * Upload an image from a given URL.
      *
@@ -28,9 +33,9 @@ public class ImagesEndpoint extends HeraclesEndpoint {
      * @throws MalformedURLException if the provided URL is invalid
      * @throws IOException on any issues accessing or reading from the provided URL
      */
-    public static AtlanImage uploadImage(String fromUrl) throws AtlanException, MalformedURLException, IOException {
+    public AtlanImage upload(String fromUrl) throws AtlanException, MalformedURLException, IOException {
         URL url = new URL(fromUrl);
-        return uploadImage(url.openStream(), url.getFile());
+        return upload(url.openStream(), url.getFile());
     }
 
     /**
@@ -41,8 +46,8 @@ public class ImagesEndpoint extends HeraclesEndpoint {
      * @throws AtlanException on any API communication issues
      * @throws IOException on any issues accessing or reading from the provided file
      */
-    public static AtlanImage uploadImage(File file) throws AtlanException, IOException {
-        return uploadImage(new FileInputStream(file), file.getName());
+    public AtlanImage upload(File file) throws AtlanException, IOException {
+        return upload(new FileInputStream(file), file.getName());
     }
 
     /**
@@ -53,8 +58,9 @@ public class ImagesEndpoint extends HeraclesEndpoint {
      * @return details of the uploaded image
      * @throws AtlanException on any API communication issues
      */
-    public static AtlanImage uploadImage(InputStream imageSrc, String filename) throws AtlanException {
+    public AtlanImage upload(InputStream imageSrc, String filename) throws AtlanException {
         String url = String.format("%s%s", getBaseUrl(), endpoint);
-        return ApiResource.request(ApiResource.RequestMethod.POST, url, imageSrc, filename, AtlanImage.class, null);
+        return ApiResource.request(
+                client, ApiResource.RequestMethod.POST, url, imageSrc, filename, AtlanImage.class, null);
     }
 }

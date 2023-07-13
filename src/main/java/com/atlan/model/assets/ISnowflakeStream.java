@@ -167,6 +167,9 @@ public interface ISnowflakeStream {
     SortedSet<String> getAssetDbtTags();
 
     /** TBC */
+    String getAssetDbtTestStatus();
+
+    /** TBC */
     String getAssetDbtUniqueId();
 
     /** TBC */
@@ -246,6 +249,9 @@ public interface ISnowflakeStream {
 
     /** TBC */
     SortedSet<IDbtSource> getDbtSources();
+
+    /** TBC */
+    SortedSet<IDbtTest> getDbtTests();
 
     /** TBC */
     String getDescription();

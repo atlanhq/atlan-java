@@ -49,7 +49,7 @@ public class HttpURLConnectionClient extends HttpClient {
             return new AtlanResponseStream(responseCode, headers, responseStream);
 
         } catch (IOException e) {
-            throw new ApiConnectionException(ErrorCode.CONNECTION_ERROR, e, Atlan.getBaseUrlSafe());
+            throw new ApiConnectionException(ErrorCode.CONNECTION_ERROR, e, Atlan.getBaseUrl());
         }
     }
 
@@ -66,7 +66,7 @@ public class HttpURLConnectionClient extends HttpClient {
         try {
             return responseStream.unstream();
         } catch (IOException e) {
-            throw new ApiConnectionException(ErrorCode.CONNECTION_ERROR, e, Atlan.getBaseUrlSafe());
+            throw new ApiConnectionException(ErrorCode.CONNECTION_ERROR, e, Atlan.getBaseUrl());
         }
     }
 

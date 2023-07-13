@@ -50,7 +50,7 @@ public class DataStudioAssetTest extends AtlanLiveTest {
         DataStudioAsset toCreate = DataStudioAsset.creator(
                         REPORT_NAME, connection.getQualifiedName(), GoogleDataStudioAssetType.REPORT)
                 .build();
-        AssetMutationResponse response = toCreate.upsert();
+        AssetMutationResponse response = toCreate.save();
         Asset one = validateSingleCreate(response);
         assertTrue(one instanceof DataStudioAsset);
         report = (DataStudioAsset) one;
@@ -69,7 +69,7 @@ public class DataStudioAssetTest extends AtlanLiveTest {
         DataStudioAsset toCreate = DataStudioAsset.creator(
                         SOURCE_NAME, connection.getQualifiedName(), GoogleDataStudioAssetType.DATA_SOURCE)
                 .build();
-        AssetMutationResponse response = toCreate.upsert();
+        AssetMutationResponse response = toCreate.save();
         Asset one = validateSingleCreate(response);
         assertTrue(one instanceof DataStudioAsset);
         source = (DataStudioAsset) one;

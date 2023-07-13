@@ -2,7 +2,7 @@
 /* Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.generators;
 
-import com.atlan.api.TypeDefsEndpoint;
+import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.enums.AtlanTypeCategory;
 import com.atlan.model.typedefs.*;
@@ -40,22 +40,28 @@ public class ModelCache {
     private ModelCache() throws AtlanException {
         enumDefCache = new ConcurrentHashMap<>();
         for (EnumDef enumDef :
-                TypeDefsEndpoint.getTypeDefs(AtlanTypeCategory.ENUM).getEnumDefs()) {
+                Atlan.getDefaultClient().typeDefs().list(AtlanTypeCategory.ENUM).getEnumDefs()) {
             enumDefCache.put(enumDef.getName(), enumDef);
         }
         structDefCache = new ConcurrentHashMap<>();
-        for (StructDef structDef :
-                TypeDefsEndpoint.getTypeDefs(AtlanTypeCategory.STRUCT).getStructDefs()) {
+        for (StructDef structDef : Atlan.getDefaultClient()
+                .typeDefs()
+                .list(AtlanTypeCategory.STRUCT)
+                .getStructDefs()) {
             structDefCache.put(structDef.getName(), structDef);
         }
         entityDefCache = new ConcurrentHashMap<>();
-        for (EntityDef entityDef :
-                TypeDefsEndpoint.getTypeDefs(AtlanTypeCategory.ENTITY).getEntityDefs()) {
+        for (EntityDef entityDef : Atlan.getDefaultClient()
+                .typeDefs()
+                .list(AtlanTypeCategory.ENTITY)
+                .getEntityDefs()) {
             entityDefCache.put(entityDef.getName(), entityDef);
         }
         relationshipDefCache = new ConcurrentHashMap<>();
-        for (RelationshipDef relationshipDef :
-                TypeDefsEndpoint.getTypeDefs(AtlanTypeCategory.RELATIONSHIP).getRelationshipDefs()) {
+        for (RelationshipDef relationshipDef : Atlan.getDefaultClient()
+                .typeDefs()
+                .list(AtlanTypeCategory.RELATIONSHIP)
+                .getRelationshipDefs()) {
             relationshipDefCache.put(relationshipDef.getName(), relationshipDef);
         }
     }

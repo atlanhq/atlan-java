@@ -48,7 +48,7 @@ public class FileTest extends AtlanLiveTest {
         File toCreate = File.creator(FILE_NAME, connection.getQualifiedName(), FileType.PDF)
                 .filePath("https://www.example.com")
                 .build();
-        AssetMutationResponse response = toCreate.upsert();
+        AssetMutationResponse response = toCreate.save();
         Asset one = validateSingleCreate(response);
         assertTrue(one instanceof File);
         file = (File) one;

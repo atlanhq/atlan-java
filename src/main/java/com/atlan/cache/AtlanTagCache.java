@@ -21,15 +21,21 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class AtlanTagCache {
 
-    private static Map<String, AtlanTagDef> cacheById = new ConcurrentHashMap<>();
-    private static Map<String, String> mapIdToName = new ConcurrentHashMap<>();
-    private static Map<String, String> mapNameToId = new ConcurrentHashMap<>();
-    private static Set<String> deletedIds = ConcurrentHashMap.newKeySet();
-    private static Set<String> deletedNames = ConcurrentHashMap.newKeySet();
+    private Map<String, AtlanTagDef> cacheById = new ConcurrentHashMap<>();
+    private Map<String, String> mapIdToName = new ConcurrentHashMap<>();
+    private Map<String, String> mapNameToId = new ConcurrentHashMap<>();
+    private final Set<String> deletedIds = ConcurrentHashMap.newKeySet();
+    private final Set<String> deletedNames = ConcurrentHashMap.newKeySet();
 
-    public static synchronized void refreshCache() throws AtlanException {
+    private final TypeDefsEndpoint typeDefsEndpoint;
+
+    public AtlanTagCache(TypeDefsEndpoint typeDefsEndpoint) {
+        this.typeDefsEndpoint = typeDefsEndpoint;
+    }
+
+    public synchronized void refreshCache() throws AtlanException {
         log.debug("Refreshing cache of Atlan tags...");
-        TypeDefResponse response = TypeDefsEndpoint.getTypeDefs(AtlanTypeCategory.ATLAN_TAG);
+        TypeDefResponse response = typeDefsEndpoint.list(AtlanTypeCategory.ATLAN_TAG);
         List<AtlanTagDef> tags;
         if (response != null) {
             tags = response.getAtlanTagDefs();
@@ -56,7 +62,7 @@ public class AtlanTagCache {
      * @throws NotFoundException if the Atlan tag cannot be found (does not exist) in Atlan
      * @throws InvalidRequestException if no name was provided for the Atlan tag to retrieve
      */
-    public static String getIdForName(String name) throws AtlanException {
+    public String getIdForName(String name) throws AtlanException {
         if (name != null && name.length() > 0) {
             String cmId = mapNameToId.get(name);
             if (cmId == null && !deletedNames.contains(name)) {
@@ -84,7 +90,7 @@ public class AtlanTagCache {
      * @throws NotFoundException if the Atlan tag cannot be found (does not exist) in Atlan
      * @throws InvalidRequestException if no ID was provided for the Atlan tag to retrieve
      */
-    public static String getNameForId(String id) throws AtlanException {
+    public String getNameForId(String id) throws AtlanException {
         if (id != null && id.length() > 0) {
             String cmName = mapIdToName.get(id);
             if (cmName == null && !deletedIds.contains(id)) {

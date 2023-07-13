@@ -4,9 +4,9 @@ package com.atlan.model.admin;
 
 import static org.testng.Assert.*;
 
+import com.atlan.Atlan;
 import com.atlan.model.enums.*;
-import com.atlan.serde.Serde;
-import com.fasterxml.jackson.core.JsonProcessingException;
+import java.io.IOException;
 import org.testng.annotations.Test;
 
 public class ApiTokenTest {
@@ -37,16 +37,16 @@ public class ApiTokenTest {
     @Test(groups = {"ApiToken.serialize"})
     void serialization() {
         assertNotNull(full);
-        serialized = full.toJson();
+        serialized = full.toJson(Atlan.getDefaultClient());
         assertNotNull(serialized);
     }
 
     @Test(
             groups = {"ApiToken.deserialize"},
             dependsOnGroups = {"ApiToken.serialize"})
-    void deserialization() throws JsonProcessingException {
+    void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = Serde.mapper.readValue(serialized, ApiToken.class);
+        frodo = Atlan.getDefaultClient().readValue(serialized, ApiToken.class);
         assertNotNull(frodo);
     }
 
@@ -56,7 +56,7 @@ public class ApiTokenTest {
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
-        String backAgain = frodo.toJson();
+        String backAgain = frodo.toJson(Atlan.getDefaultClient());
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
     }
 

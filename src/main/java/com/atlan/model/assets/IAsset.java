@@ -166,6 +166,9 @@ public interface IAsset {
     /** TBC */
     SortedSet<String> getAssetDbtTags();
 
+    /** All associated dbt test statuses */
+    String getAssetDbtTestStatus();
+
     /** TBC */
     String getAssetDbtUniqueId();
 

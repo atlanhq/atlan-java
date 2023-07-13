@@ -2,7 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.packages;
 
-import com.atlan.cache.RoleCache;
+import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
@@ -24,6 +24,7 @@ public class PostgreSQLCrawler extends AbstractCrawler {
      * Builds the minimal object necessary to create a new crawler for PostgreSQL,
      * using basic authentication, with the default settings.
      *
+     * @param client connectivity to Atlan
      * @param connectionName name of the connection to create
      * @param hostname of the PostgreSQL instance
      * @param username through which to access PostgreSQL
@@ -33,16 +34,22 @@ public class PostgreSQLCrawler extends AbstractCrawler {
      * @throws AtlanException if there is any issue obtaining the admin role GUID
      */
     public static Workflow directBasicAuth(
-            String connectionName, String hostname, String username, String password, String database)
+            AtlanClient client,
+            String connectionName,
+            String hostname,
+            String username,
+            String password,
+            String database)
             throws AtlanException {
         return directBasicAuth(
+                client,
                 connectionName,
                 hostname,
                 5432,
                 username,
                 password,
                 database,
-                List.of(RoleCache.getIdForName("$admin")),
+                List.of(client.getRoleCache().getIdForName("$admin")),
                 null,
                 null,
                 true,
@@ -55,6 +62,7 @@ public class PostgreSQLCrawler extends AbstractCrawler {
     /**
      * Builds the minimal object necessary to create a new crawler for PostgreSQL.
      *
+     * @param client connectivity to Atlan
      * @param connectionName name of the connection to create
      * @param hostname of the PostgreSQL instance
      * @param port on which the PostgreSQL instance is running
@@ -79,6 +87,7 @@ public class PostgreSQLCrawler extends AbstractCrawler {
      * @throws AtlanException on any other error, such as an inability to retrieve the users, groups or roles in Atlan
      */
     public static Workflow directBasicAuth(
+            AtlanClient client,
             String connectionName,
             String hostname,
             int port,
@@ -128,7 +137,7 @@ public class PostgreSQLCrawler extends AbstractCrawler {
                         .build())
                 .parameter(NameValuePair.builder()
                         .name("connection")
-                        .value(connection.toJson())
+                        .value(connection.toJson(client))
                         .build());
         try {
             if (!toInclude.isEmpty()) {

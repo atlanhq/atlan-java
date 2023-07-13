@@ -2,6 +2,7 @@
 /* Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.api;
 
+import com.atlan.AtlanClient;
 import com.atlan.exception.ApiConnectionException;
 
 /**
@@ -11,7 +12,11 @@ public abstract class AtlasEndpoint extends AbstractEndpoint {
     private static final String PREFIX = "/api/meta";
     private static final String SERVICE = "http://atlas-service-atlas.atlas/api/atlas/v2";
 
-    protected static String getBaseUrl() throws ApiConnectionException {
+    protected AtlasEndpoint(AtlanClient client) {
+        super(client);
+    }
+
+    protected String getBaseUrl() throws ApiConnectionException {
         return getBaseUrl(SERVICE, PREFIX);
     }
 }

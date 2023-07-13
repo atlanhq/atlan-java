@@ -2,7 +2,8 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.admin;
 
-import com.atlan.api.UsersEndpoint;
+import com.atlan.Atlan;
+import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
@@ -107,7 +108,16 @@ public class AtlanUser extends AtlanObject {
      * @throws AtlanException on any error during API invocation
      */
     public void create() throws AtlanException {
-        UsersEndpoint.createUser(this);
+        create(Atlan.getDefaultClient());
+    }
+
+    /** Send this user to Atlan to create the user in Atlan.
+     *
+     * @param client connectivity to the Atlan tenant on which to create the user
+     * @throws AtlanException on any error during API invocation
+     */
+    public void create(AtlanClient client) throws AtlanException {
+        client.users().create(this);
     }
 
     /**
@@ -118,10 +128,22 @@ public class AtlanUser extends AtlanObject {
      * @throws AtlanException on any error during API invocation
      */
     public UserMinimalResponse update() throws AtlanException {
+        return update(Atlan.getDefaultClient());
+    }
+
+    /**
+     * Send this user to Atlan to update the user in Atlan.
+     * Note: you can only update users that have already signed up to Atlan. Users that are
+     * only invited (but have not yet logged in) cannot be updated.
+     *
+     * @param client connectivity to the Atlan tenant where the user should be updated
+     * @throws AtlanException on any error during API invocation
+     */
+    public UserMinimalResponse update(AtlanClient client) throws AtlanException {
         if (this.id == null || this.id.length() == 0) {
             throw new InvalidRequestException(ErrorCode.MISSING_USER_ID);
         }
-        return UsersEndpoint.updateUser(this.id, this);
+        return client.users().update(this.id, this);
     }
 
     /**
@@ -131,7 +153,18 @@ public class AtlanUser extends AtlanObject {
      * @throws AtlanException on any error during API invocation
      */
     public static void delete(String id) throws AtlanException {
-        UsersEndpoint.deleteUser(id);
+        delete(Atlan.getDefaultClient(), id);
+    }
+
+    /**
+     * Delete a user from Atlan.
+     *
+     * @param client connectivity to the Atlan tenant from which the user should be deleted
+     * @param id unique identifier (GUID) of the user to delete
+     * @throws AtlanException on any error during API invocation
+     */
+    public static void delete(AtlanClient client, String id) throws AtlanException {
+        client.users().delete(id);
     }
 
     /**
@@ -141,10 +174,21 @@ public class AtlanUser extends AtlanObject {
      * @throws AtlanException on any API communication issue
      */
     public void addToGroups(List<String> groupIds) throws AtlanException {
+        addToGroups(Atlan.getDefaultClient(), groupIds);
+    }
+
+    /**
+     * Add this user to one or more groups.
+     *
+     * @param client connectivity to the Atlan tenant where the user should be added to one or more groups
+     * @param groupIds unique identifiers (GUIDs) of the groups to add the user into
+     * @throws AtlanException on any API communication issue
+     */
+    public void addToGroups(AtlanClient client, List<String> groupIds) throws AtlanException {
         if (this.id == null || this.id.length() == 0) {
             throw new InvalidRequestException(ErrorCode.MISSING_USER_ID);
         }
-        UsersEndpoint.addToGroups(this.id, groupIds);
+        client.users().addToGroups(this.id, groupIds);
     }
 
     /**
@@ -154,19 +198,42 @@ public class AtlanUser extends AtlanObject {
      * @throws AtlanException on any API communication issue
      */
     public GroupResponse fetchGroups() throws AtlanException {
+        return fetchGroups(Atlan.getDefaultClient());
+    }
+
+    /**
+     * Fetch the groups this user belongs to.
+     *
+     * @param client connectivity to the Atlan tenant from which the groups for the user should be fetched
+     * @return details of the groups the user belongs to
+     * @throws AtlanException on any API communication issue
+     */
+    public GroupResponse fetchGroups(AtlanClient client) throws AtlanException {
         if (this.id == null || this.id.length() == 0) {
             throw new InvalidRequestException(ErrorCode.MISSING_USER_ID);
         }
-        return UsersEndpoint.getGroups(this.id);
+        return client.users().listGroups(this.id);
     }
 
     /**
      * Retrieves all users currently defined in Atlan.
+     *
      * @return the list of users currently defined in Atlan
      * @throws AtlanException on any error during API invocation
      */
     public static List<AtlanUser> retrieveAll() throws AtlanException {
-        return UsersEndpoint.getAllUsers();
+        return retrieveAll(Atlan.getDefaultClient());
+    }
+
+    /**
+     * Retrieves all users currently defined in Atlan.
+     *
+     * @param client connectivity to the Atlan tenant from which users should be listed
+     * @return the list of users currently defined in Atlan
+     * @throws AtlanException on any error during API invocation
+     */
+    public static List<AtlanUser> retrieveAll(AtlanClient client) throws AtlanException {
+        return client.users().list();
     }
 
     /**
@@ -181,12 +248,23 @@ public class AtlanUser extends AtlanObject {
      * @throws AtlanException on any error during API invocation
      */
     public static List<AtlanUser> retrieveByEmail(String email) throws AtlanException {
-        UserResponse response = UsersEndpoint.getUsers("{\"email\":{\"$ilike\":\"%" + email + "%\"}}");
-        if (response != null && response.getRecords() != null) {
-            return response.getRecords();
-        } else {
-            return null;
-        }
+        return retrieveByEmail(Atlan.getDefaultClient(), email);
+    }
+
+    /**
+     * Retrieves all users with email addresses that contain the provided email.
+     * (This could include a complete email address, in which case there should be at
+     * most a single item in the returned list, or could be a partial email address
+     * such as "@example.com" to retrieve all users with that domain in their email
+     * address.)
+     *
+     * @param client connectivity to the Atlan tenant from which to list users
+     * @param email on which to filter the users
+     * @return all users whose email addresses contain the provided string
+     * @throws AtlanException on any error during API invocation
+     */
+    public static List<AtlanUser> retrieveByEmail(AtlanClient client, String email) throws AtlanException {
+        return client.users().getByEmail(email);
     }
 
     /**
@@ -198,12 +276,20 @@ public class AtlanUser extends AtlanObject {
      * @throws AtlanException on any error during API invocation
      */
     public static AtlanUser retrieveByUsername(String user) throws AtlanException {
-        UserResponse response = UsersEndpoint.getUsers("{\"username\":\"" + user + "\"}");
-        if (response != null && response.getRecords() != null) {
-            return response.getRecords().get(0);
-        } else {
-            return null;
-        }
+        return retrieveByUsername(Atlan.getDefaultClient(), user);
+    }
+
+    /**
+     * Retrieves a user based on the username. (This attempts an exact match on username rather than a
+     * contains search.)
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the user
+     * @param user the username by which to find the user
+     * @return the user with that username
+     * @throws AtlanException on any error during API invocation
+     */
+    public static AtlanUser retrieveByUsername(AtlanClient client, String user) throws AtlanException {
+        return client.users().getByUsername(user);
     }
 
     /**
@@ -214,8 +300,19 @@ public class AtlanUser extends AtlanObject {
      * @throws AtlanException on any error during API invocation
      */
     public UserMinimalResponse activate() throws AtlanException {
-        return UsersEndpoint.updateUser(
-                this.id, AtlanUser.builder().enabled(true).build());
+        return activate(Atlan.getDefaultClient());
+    }
+
+    /**
+     * Enable this user to log into Atlan. This will only affect users who are deactivated, and will
+     * allow them to login again once completed.
+     *
+     * @param client connectivity to the Atlan tenant in which to activate the user
+     * @return the result of the update to the user
+     * @throws AtlanException on any error during API invocation
+     */
+    public UserMinimalResponse activate(AtlanClient client) throws AtlanException {
+        return client.users().activate(this.id);
     }
 
     /**
@@ -226,8 +323,19 @@ public class AtlanUser extends AtlanObject {
      * @throws AtlanException on any error during API invocation
      */
     public UserMinimalResponse deactivate() throws AtlanException {
-        return UsersEndpoint.updateUser(
-                this.id, AtlanUser.builder().enabled(false).build());
+        return deactivate(Atlan.getDefaultClient());
+    }
+
+    /**
+     * Prevent this user from logging into Atlan. This will only affect users who are activated, and will
+     * prevent them logging in once completed.
+     *
+     * @param client connectivity to the Atlan tenant in which to deactivate the user
+     * @return the result of the update to the user
+     * @throws AtlanException on any error during API invocation
+     */
+    public UserMinimalResponse deactivate(AtlanClient client) throws AtlanException {
+        return client.users().deactivate(this.id);
     }
 
     /**
@@ -237,7 +345,18 @@ public class AtlanUser extends AtlanObject {
      * @throws AtlanException on any API communication issue
      */
     public void changeRole(String roleId) throws AtlanException {
-        UsersEndpoint.changeRole(this.id, roleId);
+        changeRole(Atlan.getDefaultClient(), roleId);
+    }
+
+    /**
+     * Change the role of this user.
+     *
+     * @param client connectivity to the Atlan tenant in which to change the user's role
+     * @param roleId unique identifier (GUID) of the role to move the user into
+     * @throws AtlanException on any API communication issue
+     */
+    public void changeRole(AtlanClient client, String roleId) throws AtlanException {
+        client.users().changeRole(this.id, roleId);
     }
 
     /**
@@ -247,7 +366,18 @@ public class AtlanUser extends AtlanObject {
      * @throws AtlanException on any API communication issue
      */
     public SessionResponse fetchSessions() throws AtlanException {
-        return UsersEndpoint.getSessions(this.id);
+        return fetchSessions(Atlan.getDefaultClient());
+    }
+
+    /**
+     * Retrieve the sessions for this user.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the user's sessions
+     * @return the list of sessions for this user
+     * @throws AtlanException on any API communication issue
+     */
+    public SessionResponse fetchSessions(AtlanClient client) throws AtlanException {
+        return client.users().listSessions(this.id);
     }
 
     @Getter

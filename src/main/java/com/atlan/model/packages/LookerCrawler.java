@@ -2,7 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.packages;
 
-import com.atlan.cache.RoleCache;
+import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
@@ -24,6 +24,7 @@ public class LookerCrawler extends AbstractCrawler {
      * Builds the minimal object necessary to create a new crawler for Looker,
      * using basic authentication, with the default settings.
      *
+     * @param client connectivity to Atlan
      * @param connectionName name of the connection to create
      * @param hostname of the Looker instance
      * @param clientId through which to access Looker
@@ -32,8 +33,10 @@ public class LookerCrawler extends AbstractCrawler {
      * @throws AtlanException if there is any issue obtaining the admin role GUID
      */
     public static Workflow directResourceOwner(
-            String connectionName, String hostname, String clientId, String clientSecret) throws AtlanException {
+            AtlanClient client, String connectionName, String hostname, String clientId, String clientSecret)
+            throws AtlanException {
         return directResourceOwner(
+                client,
                 connectionName,
                 hostname,
                 443,
@@ -41,7 +44,7 @@ public class LookerCrawler extends AbstractCrawler {
                 clientSecret,
                 null,
                 null,
-                List.of(RoleCache.getIdForName("$admin")),
+                List.of(client.getRoleCache().getIdForName("$admin")),
                 null,
                 null,
                 null,
@@ -53,6 +56,7 @@ public class LookerCrawler extends AbstractCrawler {
     /**
      * Builds the minimal object necessary to create a new crawler for Looker.
      *
+     * @param client connectivity to Atlan
      * @param connectionName name of the connection to create
      * @param hostname of the Looker instance
      * @param port on which the Looker instance is running
@@ -73,6 +77,7 @@ public class LookerCrawler extends AbstractCrawler {
      * @throws AtlanException on any other error, such as an inability to retrieve the users, groups or roles in Atlan
      */
     public static Workflow directResourceOwner(
+            AtlanClient client,
             String connectionName,
             String hostname,
             int port,
@@ -137,7 +142,7 @@ public class LookerCrawler extends AbstractCrawler {
                             "include-projects", Serde.allInclusiveMapper.writeValueAsString(toIncludeProjects)))
                     .parameter(NameValuePair.of(
                             "exclude-projects", Serde.allInclusiveMapper.writeValueAsString(toExcludeProjects)))
-                    .parameter(NameValuePair.of("connection", connection.toJson()))
+                    .parameter(NameValuePair.of("connection", connection.toJson(client)))
                     .parameter(NameValuePair.of("use-field-level-lineage", "" + fieldLevelLineage))
                     .parameter(NameValuePair.of("extraction-method", "direct"));
         } catch (JsonProcessingException e) {

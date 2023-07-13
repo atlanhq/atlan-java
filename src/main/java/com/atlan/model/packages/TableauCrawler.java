@@ -2,7 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.packages;
 
-import com.atlan.cache.RoleCache;
+import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
@@ -24,6 +24,7 @@ public class TableauCrawler extends AbstractCrawler {
      * Builds the minimal object necessary to create a new crawler for Tableau,
      * using basic authentication, with the default settings.
      *
+     * @param client connectivity to Atlan
      * @param connectionName name of the connection to create
      * @param hostname of the Tableau instance
      * @param username through which to access Tableau
@@ -31,16 +32,18 @@ public class TableauCrawler extends AbstractCrawler {
      * @return the minimal workflow necessary to crawl Tableau
      * @throws AtlanException if there is any issue obtaining the admin role GUID
      */
-    public static Workflow basicAuth(String connectionName, String hostname, String username, String password)
+    public static Workflow basicAuth(
+            AtlanClient client, String connectionName, String hostname, String username, String password)
             throws AtlanException {
         return basicAuth(
+                client,
                 connectionName,
                 hostname,
                 443,
                 username,
                 password,
                 null,
-                List.of(RoleCache.getIdForName("$admin")),
+                List.of(client.getRoleCache().getIdForName("$admin")),
                 null,
                 null,
                 null,
@@ -50,6 +53,7 @@ public class TableauCrawler extends AbstractCrawler {
     /**
      * Builds the minimal object necessary to create a new crawler for Tableau.
      *
+     * @param client connectivity to Atlan
      * @param connectionName name of the connection to create
      * @param hostname of the Tableau instance
      * @param port on which the Tableau instance is running
@@ -67,6 +71,7 @@ public class TableauCrawler extends AbstractCrawler {
      * @throws AtlanException on any other error, such as an inability to retrieve the users, groups or roles in Atlan
      */
     public static Workflow basicAuth(
+            AtlanClient client,
             String connectionName,
             String hostname,
             int port,
@@ -114,7 +119,7 @@ public class TableauCrawler extends AbstractCrawler {
 
         WorkflowParameters.WorkflowParametersBuilder<?, ?> argsBuilder = WorkflowParameters.builder()
                 .parameter(NameValuePair.of("credential-guid", "{{credentialGuid}}"))
-                .parameter(NameValuePair.of("connection", connection.toJson()))
+                .parameter(NameValuePair.of("connection", connection.toJson(client)))
                 .parameter(NameValuePair.of("atlas-auth-type", "internal"))
                 .parameter(NameValuePair.of("crawl-unpublished-worksheets-dashboards", "" + true))
                 .parameter(NameValuePair.of("publish-mode", "production"));

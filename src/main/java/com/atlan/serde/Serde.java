@@ -7,11 +7,13 @@ import co.elastic.clients.elasticsearch._types.aggregations.Aggregation;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import co.elastic.clients.json.JsonpMapper;
 import co.elastic.clients.json.jackson.JacksonJsonpMapper;
+import com.atlan.AtlanClient;
 import com.atlan.model.assets.Asset;
 import com.atlan.model.structs.AtlanStruct;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.Module;
+import com.fasterxml.jackson.databind.deser.BeanDeserializerFactory;
 import com.fasterxml.jackson.databind.deser.BeanDeserializerModifier;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import io.github.classgraph.ClassGraph;
@@ -29,12 +31,9 @@ public class Serde {
 
     public static final String DELETED_AUDIT_OBJECT = "(DELETED)";
 
-    private static final Set<Module> modules = createModules();
+    private static final Set<Module> SIMPLE_MODULES = createModules();
 
-    /** Singular ObjectMapper through which to do Jackson-based (de-)serialization. */
-    public static final ObjectMapper mapper = createMapper();
-
-    /** Singular ObjectMapper through which to (de-)serialize native POJOs, including all details. */
+    /** Singular ObjectMapper through which to (de-)serialize raw POJOs, including all details, untranslated. */
     public static final ObjectMapper allInclusiveMapper =
             new ObjectMapper().setSerializationInclusion(JsonInclude.Include.ALWAYS);
 
@@ -105,13 +104,26 @@ public class Serde {
         return set;
     }
 
-    private static ObjectMapper createMapper() {
-        ObjectMapper om = new ObjectMapper()
+    /**
+     * Set up the tenant-specific serialization and deserialization.
+     * @param client providing connectivity to a specific Atlan tenant
+     * @return an ObjectMapper for the tenant-specific transformations
+     */
+    public static ObjectMapper createMapper(AtlanClient client) {
+        // Set default options, using client-aware deserialization
+        ObjectMapper om = new ObjectMapper(
+                        null,
+                        null,
+                        new ClientAwareDeserializationContext(BeanDeserializerFactory.instance, null, client))
                 .setSerializationInclusion(JsonInclude.Include.NON_EMPTY)
                 .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        for (Module m : modules) {
+        // Set standard (non-tenant-specific) modules
+        for (Module m : SIMPLE_MODULES) {
             om.registerModule(m);
         }
+        // Set client-aware serialization
+        ClientAwareSerializerProvider casp = new ClientAwareSerializerProvider(client);
+        om.setSerializerProvider(casp);
         return om;
     }
 }

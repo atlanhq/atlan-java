@@ -2,6 +2,8 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
+import com.atlan.Atlan;
+import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
@@ -115,7 +117,19 @@ public class PowerBIDashboard extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PowerBIDashboard does not exist or the provided GUID is not a PowerBIDashboard
      */
     public static PowerBIDashboard retrieveByGuid(String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(guid);
+        return retrieveByGuid(Atlan.getDefaultClient(), guid);
+    }
+
+    /**
+     * Retrieves a PowerBIDashboard by its GUID, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param guid of the PowerBIDashboard to retrieve
+     * @return the requested full PowerBIDashboard, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PowerBIDashboard does not exist or the provided GUID is not a PowerBIDashboard
+     */
+    public static PowerBIDashboard retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
+        Asset asset = Asset.retrieveFull(client, guid);
         if (asset == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
         } else if (asset instanceof PowerBIDashboard) {
@@ -133,7 +147,20 @@ public class PowerBIDashboard extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PowerBIDashboard does not exist
      */
     public static PowerBIDashboard retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        Asset asset = Asset.retrieveFull(TYPE_NAME, qualifiedName);
+        return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
+    }
+
+    /**
+     * Retrieves a PowerBIDashboard by its qualifiedName, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param qualifiedName of the PowerBIDashboard to retrieve
+     * @return the requested full PowerBIDashboard, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the PowerBIDashboard does not exist
+     */
+    public static PowerBIDashboard retrieveByQualifiedName(AtlanClient client, String qualifiedName)
+            throws AtlanException {
+        Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
         if (asset instanceof PowerBIDashboard) {
             return (PowerBIDashboard) asset;
         } else {
@@ -149,7 +176,19 @@ public class PowerBIDashboard extends Asset
      * @throws AtlanException on any API problems
      */
     public static boolean restore(String qualifiedName) throws AtlanException {
-        return Asset.restore(TYPE_NAME, qualifiedName);
+        return restore(Atlan.getDefaultClient(), qualifiedName);
+    }
+
+    /**
+     * Restore the archived (soft-deleted) PowerBIDashboard to active.
+     *
+     * @param client connectivity to the Atlan tenant on which to restore the asset
+     * @param qualifiedName for the PowerBIDashboard
+     * @return true if the PowerBIDashboard is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
+        return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
 
     /**
@@ -195,7 +234,21 @@ public class PowerBIDashboard extends Asset
      * @throws AtlanException on any API problems
      */
     public static PowerBIDashboard removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (PowerBIDashboard) Asset.removeDescription(updater(qualifiedName, name));
+        return removeDescription(Atlan.getDefaultClient(), qualifiedName, name);
+    }
+
+    /**
+     * Remove the system description from a PowerBIDashboard.
+     *
+     * @param client connectivity to the Atlan tenant on which to remove the asset's description
+     * @param qualifiedName of the PowerBIDashboard
+     * @param name of the PowerBIDashboard
+     * @return the updated PowerBIDashboard, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static PowerBIDashboard removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
+        return (PowerBIDashboard) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
     /**
@@ -207,7 +260,21 @@ public class PowerBIDashboard extends Asset
      * @throws AtlanException on any API problems
      */
     public static PowerBIDashboard removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (PowerBIDashboard) Asset.removeUserDescription(updater(qualifiedName, name));
+        return removeUserDescription(Atlan.getDefaultClient(), qualifiedName, name);
+    }
+
+    /**
+     * Remove the user's description from a PowerBIDashboard.
+     *
+     * @param client connectivity to the Atlan tenant on which to remove the asset's description
+     * @param qualifiedName of the PowerBIDashboard
+     * @param name of the PowerBIDashboard
+     * @return the updated PowerBIDashboard, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static PowerBIDashboard removeUserDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
+        return (PowerBIDashboard) Asset.removeUserDescription(client, updater(qualifiedName, name));
     }
 
     /**
@@ -219,7 +286,21 @@ public class PowerBIDashboard extends Asset
      * @throws AtlanException on any API problems
      */
     public static PowerBIDashboard removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (PowerBIDashboard) Asset.removeOwners(updater(qualifiedName, name));
+        return removeOwners(Atlan.getDefaultClient(), qualifiedName, name);
+    }
+
+    /**
+     * Remove the owners from a PowerBIDashboard.
+     *
+     * @param client connectivity to the Atlan tenant from which to remove the PowerBIDashboard's owners
+     * @param qualifiedName of the PowerBIDashboard
+     * @param name of the PowerBIDashboard
+     * @return the updated PowerBIDashboard, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static PowerBIDashboard removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
+        return (PowerBIDashboard) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
     /**
@@ -233,7 +314,24 @@ public class PowerBIDashboard extends Asset
      */
     public static PowerBIDashboard updateCertificate(
             String qualifiedName, CertificateStatus certificate, String message) throws AtlanException {
-        return (PowerBIDashboard) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
+        return updateCertificate(Atlan.getDefaultClient(), qualifiedName, certificate, message);
+    }
+
+    /**
+     * Update the certificate on a PowerBIDashboard.
+     *
+     * @param client connectivity to the Atlan tenant on which to update the PowerBIDashboard's certificate
+     * @param qualifiedName of the PowerBIDashboard
+     * @param certificate to use
+     * @param message (optional) message, or null if no message
+     * @return the updated PowerBIDashboard, or null if the update failed
+     * @throws AtlanException on any API problems
+     */
+    public static PowerBIDashboard updateCertificate(
+            AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
+            throws AtlanException {
+        return (PowerBIDashboard)
+                Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -245,7 +343,21 @@ public class PowerBIDashboard extends Asset
      * @throws AtlanException on any API problems
      */
     public static PowerBIDashboard removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (PowerBIDashboard) Asset.removeCertificate(updater(qualifiedName, name));
+        return removeCertificate(Atlan.getDefaultClient(), qualifiedName, name);
+    }
+
+    /**
+     * Remove the certificate from a PowerBIDashboard.
+     *
+     * @param client connectivity to the Atlan tenant from which to remove the PowerBIDashboard's certificate
+     * @param qualifiedName of the PowerBIDashboard
+     * @param name of the PowerBIDashboard
+     * @return the updated PowerBIDashboard, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static PowerBIDashboard removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
+        return (PowerBIDashboard) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
     /**
@@ -260,7 +372,25 @@ public class PowerBIDashboard extends Asset
      */
     public static PowerBIDashboard updateAnnouncement(
             String qualifiedName, AtlanAnnouncementType type, String title, String message) throws AtlanException {
-        return (PowerBIDashboard) Asset.updateAnnouncement(builder(), TYPE_NAME, qualifiedName, type, title, message);
+        return updateAnnouncement(Atlan.getDefaultClient(), qualifiedName, type, title, message);
+    }
+
+    /**
+     * Update the announcement on a PowerBIDashboard.
+     *
+     * @param client connectivity to the Atlan tenant on which to update the PowerBIDashboard's announcement
+     * @param qualifiedName of the PowerBIDashboard
+     * @param type type of announcement to set
+     * @param title (optional) title of the announcement to set (or null for no title)
+     * @param message (optional) message of the announcement to set (or null for no message)
+     * @return the result of the update, or null if the update failed
+     * @throws AtlanException on any API problems
+     */
+    public static PowerBIDashboard updateAnnouncement(
+            AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
+            throws AtlanException {
+        return (PowerBIDashboard)
+                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -272,7 +402,21 @@ public class PowerBIDashboard extends Asset
      * @throws AtlanException on any API problems
      */
     public static PowerBIDashboard removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (PowerBIDashboard) Asset.removeAnnouncement(updater(qualifiedName, name));
+        return removeAnnouncement(Atlan.getDefaultClient(), qualifiedName, name);
+    }
+
+    /**
+     * Remove the announcement from a PowerBIDashboard.
+     *
+     * @param client connectivity to the Atlan client from which to remove the PowerBIDashboard's announcement
+     * @param qualifiedName of the PowerBIDashboard
+     * @param name of the PowerBIDashboard
+     * @return the updated PowerBIDashboard, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static PowerBIDashboard removeAnnouncement(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
+        return (PowerBIDashboard) Asset.removeAnnouncement(client, updater(qualifiedName, name));
     }
 
     /**
@@ -286,7 +430,22 @@ public class PowerBIDashboard extends Asset
      */
     public static PowerBIDashboard replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
-        return (PowerBIDashboard) Asset.replaceTerms(updater(qualifiedName, name), terms);
+        return replaceTerms(Atlan.getDefaultClient(), qualifiedName, name, terms);
+    }
+
+    /**
+     * Replace the terms linked to the PowerBIDashboard.
+     *
+     * @param client connectivity to the Atlan tenant on which to replace the PowerBIDashboard's assigned terms
+     * @param qualifiedName for the PowerBIDashboard
+     * @param name human-readable name of the PowerBIDashboard
+     * @param terms the list of terms to replace on the PowerBIDashboard, or null to remove all terms from the PowerBIDashboard
+     * @return the PowerBIDashboard that was updated (note that it will NOT contain details of the replaced terms)
+     * @throws AtlanException on any API problems
+     */
+    public static PowerBIDashboard replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+        return (PowerBIDashboard) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 
     /**
@@ -300,7 +459,23 @@ public class PowerBIDashboard extends Asset
      * @throws AtlanException on any API problems
      */
     public static PowerBIDashboard appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
-        return (PowerBIDashboard) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
+        return appendTerms(Atlan.getDefaultClient(), qualifiedName, terms);
+    }
+
+    /**
+     * Link additional terms to the PowerBIDashboard, without replacing existing terms linked to the PowerBIDashboard.
+     * Note: this operation must make two API calls — one to retrieve the PowerBIDashboard's existing terms,
+     * and a second to append the new terms.
+     *
+     * @param client connectivity to the Atlan tenant on which to append terms to the PowerBIDashboard
+     * @param qualifiedName for the PowerBIDashboard
+     * @param terms the list of terms to append to the PowerBIDashboard
+     * @return the PowerBIDashboard that was updated  (note that it will NOT contain details of the appended terms)
+     * @throws AtlanException on any API problems
+     */
+    public static PowerBIDashboard appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
+            throws AtlanException {
+        return (PowerBIDashboard) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
     /**
@@ -314,7 +489,23 @@ public class PowerBIDashboard extends Asset
      * @throws AtlanException on any API problems
      */
     public static PowerBIDashboard removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
-        return (PowerBIDashboard) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
+        return removeTerms(Atlan.getDefaultClient(), qualifiedName, terms);
+    }
+
+    /**
+     * Remove terms from a PowerBIDashboard, without replacing all existing terms linked to the PowerBIDashboard.
+     * Note: this operation must make two API calls — one to retrieve the PowerBIDashboard's existing terms,
+     * and a second to remove the provided terms.
+     *
+     * @param client connectivity to the Atlan tenant from which to remove terms from the PowerBIDashboard
+     * @param qualifiedName for the PowerBIDashboard
+     * @param terms the list of terms to remove from the PowerBIDashboard, which must be referenced by GUID
+     * @return the PowerBIDashboard that was updated (note that it will NOT contain details of the resulting terms)
+     * @throws AtlanException on any API problems
+     */
+    public static PowerBIDashboard removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
+            throws AtlanException {
+        return (PowerBIDashboard) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
     /**
@@ -329,7 +520,23 @@ public class PowerBIDashboard extends Asset
      */
     public static PowerBIDashboard appendAtlanTags(String qualifiedName, List<String> atlanTagNames)
             throws AtlanException {
-        return (PowerBIDashboard) Asset.appendAtlanTags(TYPE_NAME, qualifiedName, atlanTagNames);
+        return appendAtlanTags(Atlan.getDefaultClient(), qualifiedName, atlanTagNames);
+    }
+
+    /**
+     * Add Atlan tags to a PowerBIDashboard, without replacing existing Atlan tags linked to the PowerBIDashboard.
+     * Note: this operation must make two API calls — one to retrieve the PowerBIDashboard's existing Atlan tags,
+     * and a second to append the new Atlan tags.
+     *
+     * @param client connectivity to the Atlan tenant on which to append Atlan tags to the PowerBIDashboard
+     * @param qualifiedName of the PowerBIDashboard
+     * @param atlanTagNames human-readable names of the Atlan tags to add
+     * @throws AtlanException on any API problems
+     * @return the updated PowerBIDashboard
+     */
+    public static PowerBIDashboard appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
+            throws AtlanException {
+        return (PowerBIDashboard) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 
     /**
@@ -352,7 +559,39 @@ public class PowerBIDashboard extends Asset
             boolean removePropagationsOnDelete,
             boolean restrictLineagePropagation)
             throws AtlanException {
+        return appendAtlanTags(
+                Atlan.getDefaultClient(),
+                qualifiedName,
+                atlanTagNames,
+                propagate,
+                removePropagationsOnDelete,
+                restrictLineagePropagation);
+    }
+
+    /**
+     * Add Atlan tags to a PowerBIDashboard, without replacing existing Atlan tags linked to the PowerBIDashboard.
+     * Note: this operation must make two API calls — one to retrieve the PowerBIDashboard's existing Atlan tags,
+     * and a second to append the new Atlan tags.
+     *
+     * @param client connectivity to the Atlan tenant on which to append Atlan tags to the PowerBIDashboard
+     * @param qualifiedName of the PowerBIDashboard
+     * @param atlanTagNames human-readable names of the Atlan tags to add
+     * @param propagate whether to propagate the Atlan tag (true) or not (false)
+     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
+     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
+     * @throws AtlanException on any API problems
+     * @return the updated PowerBIDashboard
+     */
+    public static PowerBIDashboard appendAtlanTags(
+            AtlanClient client,
+            String qualifiedName,
+            List<String> atlanTagNames,
+            boolean propagate,
+            boolean removePropagationsOnDelete,
+            boolean restrictLineagePropagation)
+            throws AtlanException {
         return (PowerBIDashboard) Asset.appendAtlanTags(
+                client,
                 TYPE_NAME,
                 qualifiedName,
                 atlanTagNames,
@@ -371,7 +610,22 @@ public class PowerBIDashboard extends Asset
      */
     @Deprecated
     public static void addAtlanTags(String qualifiedName, List<String> atlanTagNames) throws AtlanException {
-        Asset.addAtlanTags(TYPE_NAME, qualifiedName, atlanTagNames);
+        addAtlanTags(Atlan.getDefaultClient(), qualifiedName, atlanTagNames);
+    }
+
+    /**
+     * Add Atlan tags to a PowerBIDashboard.
+     *
+     * @param client connectivity to the Atlan tenant on which to add Atlan tags to the PowerBIDashboard
+     * @param qualifiedName of the PowerBIDashboard
+     * @param atlanTagNames human-readable names of the Atlan tags to add
+     * @throws AtlanException on any API problems, or if any of the Atlan tags already exist on the PowerBIDashboard
+     * @deprecated see {@link #appendAtlanTags(String, List)} instead
+     */
+    @Deprecated
+    public static void addAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
+            throws AtlanException {
+        Asset.addAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 
     /**
@@ -393,7 +647,38 @@ public class PowerBIDashboard extends Asset
             boolean removePropagationsOnDelete,
             boolean restrictLineagePropagation)
             throws AtlanException {
+        addAtlanTags(
+                Atlan.getDefaultClient(),
+                qualifiedName,
+                atlanTagNames,
+                propagate,
+                removePropagationsOnDelete,
+                restrictLineagePropagation);
+    }
+
+    /**
+     * Add Atlan tags to a PowerBIDashboard.
+     *
+     * @param client connectivity to the Atlan tenant on which to add Atlan tags to the PowerBIDashboard
+     * @param qualifiedName of the PowerBIDashboard
+     * @param atlanTagNames human-readable names of the Atlan tags to add
+     * @param propagate whether to propagate the Atlan tag (true) or not (false)
+     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
+     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
+     * @throws AtlanException on any API problems, or if any of the Atlan tags already exist on the PowerBIDashboard
+     * @deprecated see {@link #appendAtlanTags(String, List, boolean, boolean, boolean)} instead
+     */
+    @Deprecated
+    public static void addAtlanTags(
+            AtlanClient client,
+            String qualifiedName,
+            List<String> atlanTagNames,
+            boolean propagate,
+            boolean removePropagationsOnDelete,
+            boolean restrictLineagePropagation)
+            throws AtlanException {
         Asset.addAtlanTags(
+                client,
                 TYPE_NAME,
                 qualifiedName,
                 atlanTagNames,
@@ -410,6 +695,19 @@ public class PowerBIDashboard extends Asset
      * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the PowerBIDashboard
      */
     public static void removeAtlanTag(String qualifiedName, String atlanTagName) throws AtlanException {
-        Asset.removeAtlanTag(TYPE_NAME, qualifiedName, atlanTagName);
+        removeAtlanTag(Atlan.getDefaultClient(), qualifiedName, atlanTagName);
+    }
+
+    /**
+     * Remove an Atlan tag from a PowerBIDashboard.
+     *
+     * @param client connectivity to the Atlan tenant from which to remove an Atlan tag from a PowerBIDashboard
+     * @param qualifiedName of the PowerBIDashboard
+     * @param atlanTagName human-readable name of the Atlan tag to remove
+     * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the PowerBIDashboard
+     */
+    public static void removeAtlanTag(AtlanClient client, String qualifiedName, String atlanTagName)
+            throws AtlanException {
+        Asset.removeAtlanTag(client, TYPE_NAME, qualifiedName, atlanTagName);
     }
 }

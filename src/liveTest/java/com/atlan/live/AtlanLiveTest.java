@@ -37,8 +37,8 @@ public abstract class AtlanLiveTest {
     public static final String DESCRIPTION = TESTING_STRING;
 
     static {
-        Atlan.setApiToken(System.getenv("ATLAN_API_KEY"));
         Atlan.setBaseUrl(System.getenv("ATLAN_BASE_URL"));
+        Atlan.setApiToken(System.getenv("ATLAN_API_KEY"));
         Atlan.setMaxNetworkRetries(20);
     }
 

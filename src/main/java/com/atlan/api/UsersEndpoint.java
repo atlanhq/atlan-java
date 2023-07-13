@@ -2,7 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.api;
 
-import com.atlan.cache.RoleCache;
+import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.admin.*;
 import com.atlan.model.core.AtlanObject;
@@ -21,6 +21,10 @@ public class UsersEndpoint extends HeraclesEndpoint {
 
     private static final String endpoint = "/users";
 
+    public UsersEndpoint(AtlanClient client) {
+        super(client);
+    }
+
     // TODO: eventually provide a rich RQL object for the filter
 
     /**
@@ -34,8 +38,7 @@ public class UsersEndpoint extends HeraclesEndpoint {
      * @return a list of users that match the provided criteria
      * @throws AtlanException on any API communication issue
      */
-    public static UserResponse getUsers(String filter, String sort, boolean count, int offset, int limit)
-            throws AtlanException {
+    public UserResponse list(String filter, String sort, boolean count, int offset, int limit) throws AtlanException {
         if (filter == null) {
             filter = "";
         }
@@ -51,7 +54,7 @@ public class UsersEndpoint extends HeraclesEndpoint {
                 count,
                 offset,
                 limit);
-        return ApiResource.request(ApiResource.RequestMethod.GET, url, "", UserResponse.class, null);
+        return ApiResource.request(client, ApiResource.RequestMethod.GET, url, "", UserResponse.class, null);
     }
 
     /**
@@ -61,12 +64,12 @@ public class UsersEndpoint extends HeraclesEndpoint {
      * @return a list of users that match the provided criteria
      * @throws AtlanException on any API communication issue
      */
-    public static UserResponse getUsers(String filter) throws AtlanException {
+    public UserResponse list(String filter) throws AtlanException {
         if (filter == null) {
             filter = "";
         }
         String url = String.format("%s%s?filter=%s", getBaseUrl(), endpoint, ApiResource.urlEncode(filter));
-        return ApiResource.request(ApiResource.RequestMethod.GET, url, "", UserResponse.class, null);
+        return ApiResource.request(client, ApiResource.RequestMethod.GET, url, "", UserResponse.class, null);
     }
 
     /**
@@ -75,20 +78,22 @@ public class UsersEndpoint extends HeraclesEndpoint {
      * @return a list of all the users in Atlan
      * @throws AtlanException on any API communication issue
      */
-    public static List<AtlanUser> getAllUsers() throws AtlanException {
+    public List<AtlanUser> list() throws AtlanException {
         List<AtlanUser> users = new ArrayList<>();
         String unlimitedUrl = String.format("%s%s?sort=username", getBaseUrl(), endpoint);
         int limit = 100;
         int offset = 0;
         String url = String.format("%s&limit=%s&offset=%s", unlimitedUrl, limit, offset);
-        UserResponse response = ApiResource.request(ApiResource.RequestMethod.GET, url, "", UserResponse.class, null);
+        UserResponse response =
+                ApiResource.request(client, ApiResource.RequestMethod.GET, url, "", UserResponse.class, null);
         while (response != null) {
             List<AtlanUser> page = response.getRecords();
             if (page != null) {
                 users.addAll(page);
                 offset += limit;
                 url = String.format("%s&limit=%s&offset=%s", unlimitedUrl, limit, offset);
-                response = ApiResource.request(ApiResource.RequestMethod.GET, url, "", UserResponse.class, null);
+                response =
+                        ApiResource.request(client, ApiResource.RequestMethod.GET, url, "", UserResponse.class, null);
             } else {
                 response = null;
             }
@@ -97,13 +102,74 @@ public class UsersEndpoint extends HeraclesEndpoint {
     }
 
     /**
+     * Retrieves all users with email addresses that contain the provided email.
+     * (This could include a complete email address, in which case there should be at
+     * most a single item in the returned list, or could be a partial email address
+     * such as "@example.com" to retrieve all users with that domain in their email
+     * address.)
+     *
+     * @param email on which to filter the users
+     * @return all users whose email addresses contain the provided string
+     * @throws AtlanException on any error during API invocation
+     */
+    public List<AtlanUser> getByEmail(String email) throws AtlanException {
+        UserResponse response = list("{\"email\":{\"$ilike\":\"%" + email + "%\"}}");
+        if (response != null && response.getRecords() != null) {
+            return response.getRecords();
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Retrieves a user based on the username. (This attempts an exact match on username rather than a
+     * contains search.)
+     *
+     * @param user the username by which to find the user
+     * @return the user with that username
+     * @throws AtlanException on any error during API invocation
+     */
+    public AtlanUser getByUsername(String user) throws AtlanException {
+        UserResponse response = list("{\"username\":\"" + user + "\"}");
+        if (response != null && response.getRecords() != null) {
+            return response.getRecords().get(0);
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Enable this user to log into Atlan. This will only affect users who are deactivated, and will
+     * allow them to login again once completed.
+     *
+     * @param id the unique identifier (GUID) of the user to activate
+     * @return the result of the update to the user
+     * @throws AtlanException on any error during API invocation
+     */
+    public UserMinimalResponse activate(String id) throws AtlanException {
+        return update(id, AtlanUser.builder().enabled(true).build());
+    }
+
+    /**
+     * Prevent this user from logging into Atlan. This will only affect users who are activated, and will
+     * prevent them logging in once completed.
+     *
+     * @param id the unique identifier (GUID) of the user to deactivate
+     * @return the result of the update to the user
+     * @throws AtlanException on any error during API invocation
+     */
+    public UserMinimalResponse deactivate(String id) throws AtlanException {
+        return update(id, AtlanUser.builder().enabled(false).build());
+    }
+
+    /**
      * Create a new user.
      *
      * @param user the details of the new user
      * @throws AtlanException on any API communication issue
      */
-    public static void createUser(AtlanUser user) throws AtlanException {
-        createUsers(List.of(user));
+    public void create(AtlanUser user) throws AtlanException {
+        create(List.of(user));
     }
 
     /**
@@ -112,7 +178,7 @@ public class UsersEndpoint extends HeraclesEndpoint {
      * @param users the details of the new users
      * @throws AtlanException on any API communication issue
      */
-    public static void createUsers(List<AtlanUser> users) throws AtlanException {
+    public void create(List<AtlanUser> users) throws AtlanException {
         String url = String.format("%s%s", getBaseUrl(), endpoint);
         CreateUserRequest.CreateUserRequestBuilder<?, ?> cur = CreateUserRequest.builder();
         for (AtlanUser user : users) {
@@ -120,10 +186,10 @@ public class UsersEndpoint extends HeraclesEndpoint {
             cur.user(CreateUser.builder()
                     .email(user.getEmail())
                     .roleName(roleName)
-                    .roleId(RoleCache.getIdForName(roleName))
+                    .roleId(client.getRoleCache().getIdForName(roleName))
                     .build());
         }
-        ApiResource.request(ApiResource.RequestMethod.POST, url, cur.build(), null, null);
+        ApiResource.request(client, ApiResource.RequestMethod.POST, url, cur.build(), null, null);
     }
 
     /**
@@ -135,9 +201,9 @@ public class UsersEndpoint extends HeraclesEndpoint {
      * @param user the details to update on the user
      * @throws AtlanException on any API communication issue
      */
-    public static UserMinimalResponse updateUser(String id, AtlanUser user) throws AtlanException {
+    public UserMinimalResponse update(String id, AtlanUser user) throws AtlanException {
         String url = String.format("%s%s/%s", getBaseUrl(), endpoint, id);
-        return ApiResource.request(ApiResource.RequestMethod.POST, url, user, UserMinimalResponse.class, null);
+        return ApiResource.request(client, ApiResource.RequestMethod.POST, url, user, UserMinimalResponse.class, null);
     }
 
     /**
@@ -146,9 +212,9 @@ public class UsersEndpoint extends HeraclesEndpoint {
      * @param id unique identifier (GUID) of the user to delete
      * @throws AtlanException on any API communication issue
      */
-    public static void deleteUser(String id) throws AtlanException {
+    public void delete(String id) throws AtlanException {
         String url = String.format("%s%s/%s/delete", getBaseUrl(), endpoint, id);
-        ApiResource.request(ApiResource.RequestMethod.POST, url, "", null, null);
+        ApiResource.request(client, ApiResource.RequestMethod.POST, url, "", null, null);
     }
 
     /**
@@ -157,9 +223,9 @@ public class UsersEndpoint extends HeraclesEndpoint {
      * @param id unique identifier (GUID) of the user
      * @throws AtlanException on any API communication issue
      */
-    public static GroupResponse getGroups(String id) throws AtlanException {
+    public GroupResponse listGroups(String id) throws AtlanException {
         String url = String.format("%s%s/%s/groups", getBaseUrl(), endpoint, id);
-        return ApiResource.request(ApiResource.RequestMethod.GET, url, "", GroupResponse.class, null);
+        return ApiResource.request(client, ApiResource.RequestMethod.GET, url, "", GroupResponse.class, null);
     }
 
     /**
@@ -169,10 +235,10 @@ public class UsersEndpoint extends HeraclesEndpoint {
      * @param groupIds unique identifiers (GUIDs) of the groups to add the user into
      * @throws AtlanException on any API communication issue
      */
-    public static void addToGroups(String id, List<String> groupIds) throws AtlanException {
+    public void addToGroups(String id, List<String> groupIds) throws AtlanException {
         String url = String.format("%s%s/%s/groups", getBaseUrl(), endpoint, id);
         AddToGroupsRequest atgr = AddToGroupsRequest.builder().groups(groupIds).build();
-        ApiResource.request(ApiResource.RequestMethod.POST, url, atgr, null, null);
+        ApiResource.request(client, ApiResource.RequestMethod.POST, url, atgr, null, null);
     }
 
     /**
@@ -182,10 +248,10 @@ public class UsersEndpoint extends HeraclesEndpoint {
      * @param roleId unique identifier (GUID) of the role to move the user into
      * @throws AtlanException on any API communication issue
      */
-    public static void changeRole(String id, String roleId) throws AtlanException {
+    public void changeRole(String id, String roleId) throws AtlanException {
         String url = String.format("%s%s/%s/roles/update", getBaseUrl(), endpoint, id);
         ChangeRoleRequest crr = ChangeRoleRequest.builder().roleId(roleId).build();
-        ApiResource.request(ApiResource.RequestMethod.POST, url, crr, null, null);
+        ApiResource.request(client, ApiResource.RequestMethod.POST, url, crr, null, null);
     }
 
     /**
@@ -194,9 +260,9 @@ public class UsersEndpoint extends HeraclesEndpoint {
      * @return minimalist details about the current user (API token)
      * @throws AtlanException on any API communication issue
      */
-    public static UserMinimalResponse getCurrentUser() throws AtlanException {
+    public UserMinimalResponse getCurrentUser() throws AtlanException {
         String url = String.format("%s%s/current", getBaseUrl(), endpoint);
-        return ApiResource.request(ApiResource.RequestMethod.GET, url, "", UserMinimalResponse.class, null);
+        return ApiResource.request(client, ApiResource.RequestMethod.GET, url, "", UserMinimalResponse.class, null);
     }
 
     /**
@@ -206,9 +272,9 @@ public class UsersEndpoint extends HeraclesEndpoint {
      * @return the list of sessions for that user
      * @throws AtlanException on any API communication issue
      */
-    public static SessionResponse getSessions(String id) throws AtlanException {
+    public SessionResponse listSessions(String id) throws AtlanException {
         String url = String.format("%s%s/%s/sessions", getBaseUrl(), endpoint, id);
-        return ApiResource.request(ApiResource.RequestMethod.GET, url, "", SessionResponse.class, null);
+        return ApiResource.request(client, ApiResource.RequestMethod.GET, url, "", SessionResponse.class, null);
     }
 
     /** Request class for creating a user. */

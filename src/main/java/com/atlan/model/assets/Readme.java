@@ -2,6 +2,8 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
+import com.atlan.Atlan;
+import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
@@ -102,7 +104,19 @@ public class Readme extends Asset implements IReadme, IResource, ICatalog, IAsse
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Readme does not exist or the provided GUID is not a Readme
      */
     public static Readme retrieveByGuid(String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(guid);
+        return retrieveByGuid(Atlan.getDefaultClient(), guid);
+    }
+
+    /**
+     * Retrieves a Readme by its GUID, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param guid of the Readme to retrieve
+     * @return the requested full Readme, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Readme does not exist or the provided GUID is not a Readme
+     */
+    public static Readme retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
+        Asset asset = Asset.retrieveFull(client, guid);
         if (asset == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
         } else if (asset instanceof Readme) {
@@ -120,7 +134,19 @@ public class Readme extends Asset implements IReadme, IResource, ICatalog, IAsse
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Readme does not exist
      */
     public static Readme retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        Asset asset = Asset.retrieveFull(TYPE_NAME, qualifiedName);
+        return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
+    }
+
+    /**
+     * Retrieves a Readme by its qualifiedName, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param qualifiedName of the Readme to retrieve
+     * @return the requested full Readme, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Readme does not exist
+     */
+    public static Readme retrieveByQualifiedName(AtlanClient client, String qualifiedName) throws AtlanException {
+        Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
         if (asset instanceof Readme) {
             return (Readme) asset;
         } else {
@@ -136,7 +162,19 @@ public class Readme extends Asset implements IReadme, IResource, ICatalog, IAsse
      * @throws AtlanException on any API problems
      */
     public static boolean restore(String qualifiedName) throws AtlanException {
-        return Asset.restore(TYPE_NAME, qualifiedName);
+        return restore(Atlan.getDefaultClient(), qualifiedName);
+    }
+
+    /**
+     * Restore the archived (soft-deleted) Readme to active.
+     *
+     * @param client connectivity to the Atlan tenant on which to restore the asset
+     * @param qualifiedName for the Readme
+     * @return true if the Readme is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
+        return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
 
     /**
@@ -218,7 +256,21 @@ public class Readme extends Asset implements IReadme, IResource, ICatalog, IAsse
      * @throws AtlanException on any API problems
      */
     public static Readme removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (Readme) Asset.removeDescription(updater(qualifiedName, name));
+        return removeDescription(Atlan.getDefaultClient(), qualifiedName, name);
+    }
+
+    /**
+     * Remove the system description from a Readme.
+     *
+     * @param client connectivity to the Atlan tenant on which to remove the asset's description
+     * @param qualifiedName of the Readme
+     * @param name of the Readme
+     * @return the updated Readme, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static Readme removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
+        return (Readme) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
     /**
@@ -230,6 +282,20 @@ public class Readme extends Asset implements IReadme, IResource, ICatalog, IAsse
      * @throws AtlanException on any API problems
      */
     public static Readme removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (Readme) Asset.removeUserDescription(updater(qualifiedName, name));
+        return removeUserDescription(Atlan.getDefaultClient(), qualifiedName, name);
+    }
+
+    /**
+     * Remove the user's description from a Readme.
+     *
+     * @param client connectivity to the Atlan tenant on which to remove the asset's description
+     * @param qualifiedName of the Readme
+     * @param name of the Readme
+     * @return the updated Readme, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static Readme removeUserDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
+        return (Readme) Asset.removeUserDescription(client, updater(qualifiedName, name));
     }
 }

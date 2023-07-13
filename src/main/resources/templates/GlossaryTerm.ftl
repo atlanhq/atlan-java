@@ -72,8 +72,25 @@
      */
     public static GlossaryTerm findByName(String name, String glossaryName, Collection<String> attributes)
             throws AtlanException {
-        Glossary glossary = Glossary.findByName(glossaryName, null);
-        return findByNameFast(name, glossary.getQualifiedName(), attributes);
+        return findByName(Atlan.getDefaultClient(), name, glossaryName, attributes);
+    }
+
+    /**
+     * Find a GlossaryTerm by its human-readable name. Note that this operation must run two
+     * separate queries to first resolve the qualifiedName of the glossary, so will be somewhat slower.
+     * If you already have the qualifiedName of the glossary, use findByNameFast instead.
+     *
+     * @param client connectivity to the Atlan tenant in which to search for the GlossaryTerm
+     * @param name of the GlossaryTerm
+     * @param glossaryName human-readable name of the Glossary in which the category exists
+     * @param attributes an optional collection of attributes to retrieve for the GlossaryTerm
+     * @return the GlossaryTerm, if found
+     * @throws AtlanException on any API problems, or if the GlossaryTerm does not exist
+     */
+    public static GlossaryTerm findByName(AtlanClient client, String name, String glossaryName, Collection<String> attributes)
+            throws AtlanException {
+        Glossary glossary = Glossary.findByName(client, glossaryName, null);
+        return findByNameFast(client, name, glossary.getQualifiedName(), attributes);
     }
 
     /**
@@ -86,6 +103,21 @@
      * @throws AtlanException on any API problems, or if the GlossaryTerm does not exist
      */
     public static GlossaryTerm findByNameFast(String name, String glossaryQualifiedName, Collection<String> attributes)
+            throws AtlanException {
+        return findByNameFast(Atlan.getDefaultClient(), name, glossaryQualifiedName, attributes);
+    }
+
+    /**
+     * Find a GlossaryTerm by its human-readable name.
+     *
+     * @param client connectivity to the Atlan tenant in which to search for the GlossaryTerm
+     * @param name of the GlossaryTerm
+     * @param glossaryQualifiedName qualifiedName of the Glossary in which the category exists
+     * @param attributes an optional collection of attributes to retrieve for the GlossaryTerm
+     * @return the GlossaryTerm, if found
+     * @throws AtlanException on any API problems, or if the GlossaryTerm does not exist
+     */
+    public static GlossaryTerm findByNameFast(AtlanClient client, String name, String glossaryQualifiedName, Collection<String> attributes)
             throws AtlanException {
         Query filter = QueryFactory.CompoundQuery.builder()
                 .must(QueryFactory.beActive())
@@ -100,7 +132,7 @@
             builder.attributes(attributes);
         }
         IndexSearchRequest request = builder.build();
-        IndexSearchResponse response = request.search();
+        IndexSearchResponse response = request.search(client);
         if (response != null) {
             long count = response.getApproximateCount();
             if (count > 1) {
@@ -133,7 +165,22 @@
      */
     public static GlossaryTerm removeDescription(String qualifiedName, String name, String glossaryGuid)
             throws AtlanException {
-        return (GlossaryTerm) Asset.removeDescription(updater(qualifiedName, name, glossaryGuid));
+        return removeDescription(Atlan.getDefaultClient(), qualifiedName, name, glossaryGuid);
+    }
+
+    /**
+     * Remove the system description from a GlossaryTerm.
+     *
+     * @param client connectivity to the Atlan tenant from which to remove the GlossaryTerm's description
+     * @param qualifiedName of the GlossaryTerm
+     * @param name of the GlossaryTerm
+     * @param glossaryGuid unique ID (GUID) of the GlossaryTerm's glossary
+     * @return the updated GlossaryTerm, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static GlossaryTerm removeDescription(AtlanClient client, String qualifiedName, String name, String glossaryGuid)
+            throws AtlanException {
+        return (GlossaryTerm) Asset.removeDescription(client, updater(qualifiedName, name, glossaryGuid));
     }
 
     /**
@@ -147,7 +194,22 @@
      */
     public static GlossaryTerm removeUserDescription(String qualifiedName, String name, String glossaryGuid)
             throws AtlanException {
-        return (GlossaryTerm) Asset.removeUserDescription(updater(qualifiedName, name, glossaryGuid));
+        return removeUserDescription(Atlan.getDefaultClient(), qualifiedName, name, glossaryGuid);
+    }
+
+    /**
+     * Remove the user's description from a GlossaryTerm.
+     *
+     * @param client connectivity to the Atlan tenant from which to remove the GlossaryTerm's description
+     * @param qualifiedName of the GlossaryTerm
+     * @param name of the GlossaryTerm
+     * @param glossaryGuid unique ID (GUID) of the GlossaryTerm's glossary
+     * @return the updated GlossaryTerm, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static GlossaryTerm removeUserDescription(AtlanClient client, String qualifiedName, String name, String glossaryGuid)
+            throws AtlanException {
+        return (GlossaryTerm) Asset.removeUserDescription(client, updater(qualifiedName, name, glossaryGuid));
     }
 
     /**
@@ -161,7 +223,22 @@
      */
     public static GlossaryTerm removeOwners(String qualifiedName, String name, String glossaryGuid)
             throws AtlanException {
-        return (GlossaryTerm) Asset.removeOwners(updater(qualifiedName, name, glossaryGuid));
+        return removeOwners(Atlan.getDefaultClient(), qualifiedName, name, glossaryGuid);
+    }
+
+    /**
+     * Remove the owners from a GlossaryTerm.
+     *
+     * @param client connectivity to the Atlan tenant from which to remove the GlossaryTerm's owners
+     * @param qualifiedName of the GlossaryTerm
+     * @param name of the GlossaryTerm
+     * @param glossaryGuid unique ID (GUID) of the GlossaryTerm's glossary
+     * @return the updated GlossaryTerm, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static GlossaryTerm removeOwners(AtlanClient client, String qualifiedName, String name, String glossaryGuid)
+            throws AtlanException {
+        return (GlossaryTerm) Asset.removeOwners(client, updater(qualifiedName, name, glossaryGuid));
     }
 
     /**
@@ -178,7 +255,25 @@
     public static GlossaryTerm updateCertificate(
             String qualifiedName, String name, String glossaryGuid, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (GlossaryTerm) Asset.updateCertificate(updater(qualifiedName, name, glossaryGuid), certificate, message);
+        return updateCertificate(Atlan.getDefaultClient(), qualifiedName, name, glossaryGuid, certificate, message);
+    }
+
+    /**
+     * Update the certificate on a GlossaryTerm.
+     *
+     * @param client connectivity to the Atlan tenant on which to update the GlossarTerm's certificate
+     * @param qualifiedName of the GlossaryTerm
+     * @param name of the GlossaryTerm
+     * @param glossaryGuid unique ID (GUID) of the GlossaryTerm's glossary
+     * @param certificate to use
+     * @param message (optional) message, or null if no message
+     * @return the updated GlossaryTerm, or null if the update failed
+     * @throws AtlanException on any API problems
+     */
+    public static GlossaryTerm updateCertificate(
+            AtlanClient client, String qualifiedName, String name, String glossaryGuid, CertificateStatus certificate, String message)
+            throws AtlanException {
+        return (GlossaryTerm) Asset.updateCertificate(client, updater(qualifiedName, name, glossaryGuid), certificate, message);
     }
 
     /**
@@ -192,7 +287,22 @@
      */
     public static GlossaryTerm removeCertificate(String qualifiedName, String name, String glossaryGuid)
             throws AtlanException {
-        return (GlossaryTerm) Asset.removeCertificate(updater(qualifiedName, name, glossaryGuid));
+        return removeCertificate(Atlan.getDefaultClient(), qualifiedName, name, glossaryGuid);
+    }
+
+    /**
+     * Remove the certificate from a GlossaryTerm.
+     *
+     * @param client connectivity to the Atlan tenant from which to remove the GlossaryTerm's certificate
+     * @param qualifiedName of the GlossaryTerm
+     * @param name of the GlossaryTerm
+     * @param glossaryGuid unique ID (GUID) of the GlossaryTerm's glossary
+     * @return the updated GlossaryTerm, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static GlossaryTerm removeCertificate(AtlanClient client, String qualifiedName, String name, String glossaryGuid)
+            throws AtlanException {
+        return (GlossaryTerm) Asset.removeCertificate(client, updater(qualifiedName, name, glossaryGuid));
     }
 
     /**
@@ -215,8 +325,33 @@
             String title,
             String message)
             throws AtlanException {
+        return updateAnnouncement(Atlan.getDefaultClient(), qualifiedName, name, glossaryGuid, type, title, message);
+    }
+
+    /**
+     * Update the announcement on a GlossaryTerm.
+     *
+     * @param client connectivity to the Atlan tenant on which to update the GlossaryTerm's announcement
+     * @param qualifiedName of the GlossaryTerm
+     * @param name of the GlossaryTerm
+     * @param glossaryGuid unique ID (GUID) of the GlossaryTerm's glossary
+     * @param type type of announcement to set
+     * @param title (optional) title of the announcement to set (or null for no title)
+     * @param message (optional) message of the announcement to set (or null for no message)
+     * @return the updated GlossaryTerm, or null if the update failed
+     * @throws AtlanException on any API problems
+     */
+    public static GlossaryTerm updateAnnouncement(
+            AtlanClient client,
+            String qualifiedName,
+            String name,
+            String glossaryGuid,
+            AtlanAnnouncementType type,
+            String title,
+            String message)
+            throws AtlanException {
         return (GlossaryTerm)
-                Asset.updateAnnouncement(updater(qualifiedName, name, glossaryGuid), type, title, message);
+                Asset.updateAnnouncement(client, updater(qualifiedName, name, glossaryGuid), type, title, message);
     }
 
     /**
@@ -230,6 +365,21 @@
      */
     public static GlossaryTerm removeAnnouncement(String qualifiedName, String name, String glossaryGuid)
             throws AtlanException {
-        return (GlossaryTerm) Asset.removeAnnouncement(updater(qualifiedName, name, glossaryGuid));
+        return removeAnnouncement(Atlan.getDefaultClient(), qualifiedName, name, glossaryGuid);
+    }
+
+    /**
+     * Remove the announcement from a GlossaryTerm.
+     *
+     * @param client connectivity to the Atlan tenant from which to remove the GlossaryTerm's announcement
+     * @param qualifiedName of the GlossaryTerm
+     * @param name of the GlossaryTerm
+     * @param glossaryGuid unique ID (GUID) of the GlossaryTerm's glossary
+     * @return the updated GlossaryTerm, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static GlossaryTerm removeAnnouncement(AtlanClient client, String qualifiedName, String name, String glossaryGuid)
+            throws AtlanException {
+        return (GlossaryTerm) Asset.removeAnnouncement(client, updater(qualifiedName, name, glossaryGuid));
     }
 </#macro>

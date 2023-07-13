@@ -2,6 +2,8 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
+import com.atlan.Atlan;
+import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
@@ -152,7 +154,19 @@ public class ADLSAccount extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ADLSAccount does not exist or the provided GUID is not a ADLSAccount
      */
     public static ADLSAccount retrieveByGuid(String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(guid);
+        return retrieveByGuid(Atlan.getDefaultClient(), guid);
+    }
+
+    /**
+     * Retrieves a ADLSAccount by its GUID, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param guid of the ADLSAccount to retrieve
+     * @return the requested full ADLSAccount, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ADLSAccount does not exist or the provided GUID is not a ADLSAccount
+     */
+    public static ADLSAccount retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
+        Asset asset = Asset.retrieveFull(client, guid);
         if (asset == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
         } else if (asset instanceof ADLSAccount) {
@@ -170,7 +184,19 @@ public class ADLSAccount extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ADLSAccount does not exist
      */
     public static ADLSAccount retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        Asset asset = Asset.retrieveFull(TYPE_NAME, qualifiedName);
+        return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
+    }
+
+    /**
+     * Retrieves a ADLSAccount by its qualifiedName, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param qualifiedName of the ADLSAccount to retrieve
+     * @return the requested full ADLSAccount, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the ADLSAccount does not exist
+     */
+    public static ADLSAccount retrieveByQualifiedName(AtlanClient client, String qualifiedName) throws AtlanException {
+        Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
         if (asset instanceof ADLSAccount) {
             return (ADLSAccount) asset;
         } else {
@@ -186,7 +212,19 @@ public class ADLSAccount extends Asset
      * @throws AtlanException on any API problems
      */
     public static boolean restore(String qualifiedName) throws AtlanException {
-        return Asset.restore(TYPE_NAME, qualifiedName);
+        return restore(Atlan.getDefaultClient(), qualifiedName);
+    }
+
+    /**
+     * Restore the archived (soft-deleted) ADLSAccount to active.
+     *
+     * @param client connectivity to the Atlan tenant on which to restore the asset
+     * @param qualifiedName for the ADLSAccount
+     * @return true if the ADLSAccount is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
+        return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
 
     /**
@@ -258,7 +296,21 @@ public class ADLSAccount extends Asset
      * @throws AtlanException on any API problems
      */
     public static ADLSAccount removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (ADLSAccount) Asset.removeDescription(updater(qualifiedName, name));
+        return removeDescription(Atlan.getDefaultClient(), qualifiedName, name);
+    }
+
+    /**
+     * Remove the system description from a ADLSAccount.
+     *
+     * @param client connectivity to the Atlan tenant on which to remove the asset's description
+     * @param qualifiedName of the ADLSAccount
+     * @param name of the ADLSAccount
+     * @return the updated ADLSAccount, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static ADLSAccount removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
+        return (ADLSAccount) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
     /**
@@ -270,7 +322,21 @@ public class ADLSAccount extends Asset
      * @throws AtlanException on any API problems
      */
     public static ADLSAccount removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (ADLSAccount) Asset.removeUserDescription(updater(qualifiedName, name));
+        return removeUserDescription(Atlan.getDefaultClient(), qualifiedName, name);
+    }
+
+    /**
+     * Remove the user's description from a ADLSAccount.
+     *
+     * @param client connectivity to the Atlan tenant on which to remove the asset's description
+     * @param qualifiedName of the ADLSAccount
+     * @param name of the ADLSAccount
+     * @return the updated ADLSAccount, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static ADLSAccount removeUserDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
+        return (ADLSAccount) Asset.removeUserDescription(client, updater(qualifiedName, name));
     }
 
     /**
@@ -282,7 +348,21 @@ public class ADLSAccount extends Asset
      * @throws AtlanException on any API problems
      */
     public static ADLSAccount removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (ADLSAccount) Asset.removeOwners(updater(qualifiedName, name));
+        return removeOwners(Atlan.getDefaultClient(), qualifiedName, name);
+    }
+
+    /**
+     * Remove the owners from a ADLSAccount.
+     *
+     * @param client connectivity to the Atlan tenant from which to remove the ADLSAccount's owners
+     * @param qualifiedName of the ADLSAccount
+     * @param name of the ADLSAccount
+     * @return the updated ADLSAccount, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static ADLSAccount removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
+        return (ADLSAccount) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
     /**
@@ -296,7 +376,23 @@ public class ADLSAccount extends Asset
      */
     public static ADLSAccount updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (ADLSAccount) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
+        return updateCertificate(Atlan.getDefaultClient(), qualifiedName, certificate, message);
+    }
+
+    /**
+     * Update the certificate on a ADLSAccount.
+     *
+     * @param client connectivity to the Atlan tenant on which to update the ADLSAccount's certificate
+     * @param qualifiedName of the ADLSAccount
+     * @param certificate to use
+     * @param message (optional) message, or null if no message
+     * @return the updated ADLSAccount, or null if the update failed
+     * @throws AtlanException on any API problems
+     */
+    public static ADLSAccount updateCertificate(
+            AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
+            throws AtlanException {
+        return (ADLSAccount) Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -308,7 +404,21 @@ public class ADLSAccount extends Asset
      * @throws AtlanException on any API problems
      */
     public static ADLSAccount removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (ADLSAccount) Asset.removeCertificate(updater(qualifiedName, name));
+        return removeCertificate(Atlan.getDefaultClient(), qualifiedName, name);
+    }
+
+    /**
+     * Remove the certificate from a ADLSAccount.
+     *
+     * @param client connectivity to the Atlan tenant from which to remove the ADLSAccount's certificate
+     * @param qualifiedName of the ADLSAccount
+     * @param name of the ADLSAccount
+     * @return the updated ADLSAccount, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static ADLSAccount removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
+        return (ADLSAccount) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
     /**
@@ -323,7 +433,25 @@ public class ADLSAccount extends Asset
      */
     public static ADLSAccount updateAnnouncement(
             String qualifiedName, AtlanAnnouncementType type, String title, String message) throws AtlanException {
-        return (ADLSAccount) Asset.updateAnnouncement(builder(), TYPE_NAME, qualifiedName, type, title, message);
+        return updateAnnouncement(Atlan.getDefaultClient(), qualifiedName, type, title, message);
+    }
+
+    /**
+     * Update the announcement on a ADLSAccount.
+     *
+     * @param client connectivity to the Atlan tenant on which to update the ADLSAccount's announcement
+     * @param qualifiedName of the ADLSAccount
+     * @param type type of announcement to set
+     * @param title (optional) title of the announcement to set (or null for no title)
+     * @param message (optional) message of the announcement to set (or null for no message)
+     * @return the result of the update, or null if the update failed
+     * @throws AtlanException on any API problems
+     */
+    public static ADLSAccount updateAnnouncement(
+            AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
+            throws AtlanException {
+        return (ADLSAccount)
+                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -335,7 +463,21 @@ public class ADLSAccount extends Asset
      * @throws AtlanException on any API problems
      */
     public static ADLSAccount removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (ADLSAccount) Asset.removeAnnouncement(updater(qualifiedName, name));
+        return removeAnnouncement(Atlan.getDefaultClient(), qualifiedName, name);
+    }
+
+    /**
+     * Remove the announcement from a ADLSAccount.
+     *
+     * @param client connectivity to the Atlan client from which to remove the ADLSAccount's announcement
+     * @param qualifiedName of the ADLSAccount
+     * @param name of the ADLSAccount
+     * @return the updated ADLSAccount, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static ADLSAccount removeAnnouncement(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
+        return (ADLSAccount) Asset.removeAnnouncement(client, updater(qualifiedName, name));
     }
 
     /**
@@ -349,7 +491,22 @@ public class ADLSAccount extends Asset
      */
     public static ADLSAccount replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
-        return (ADLSAccount) Asset.replaceTerms(updater(qualifiedName, name), terms);
+        return replaceTerms(Atlan.getDefaultClient(), qualifiedName, name, terms);
+    }
+
+    /**
+     * Replace the terms linked to the ADLSAccount.
+     *
+     * @param client connectivity to the Atlan tenant on which to replace the ADLSAccount's assigned terms
+     * @param qualifiedName for the ADLSAccount
+     * @param name human-readable name of the ADLSAccount
+     * @param terms the list of terms to replace on the ADLSAccount, or null to remove all terms from the ADLSAccount
+     * @return the ADLSAccount that was updated (note that it will NOT contain details of the replaced terms)
+     * @throws AtlanException on any API problems
+     */
+    public static ADLSAccount replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+        return (ADLSAccount) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 
     /**
@@ -363,7 +520,23 @@ public class ADLSAccount extends Asset
      * @throws AtlanException on any API problems
      */
     public static ADLSAccount appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
-        return (ADLSAccount) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
+        return appendTerms(Atlan.getDefaultClient(), qualifiedName, terms);
+    }
+
+    /**
+     * Link additional terms to the ADLSAccount, without replacing existing terms linked to the ADLSAccount.
+     * Note: this operation must make two API calls — one to retrieve the ADLSAccount's existing terms,
+     * and a second to append the new terms.
+     *
+     * @param client connectivity to the Atlan tenant on which to append terms to the ADLSAccount
+     * @param qualifiedName for the ADLSAccount
+     * @param terms the list of terms to append to the ADLSAccount
+     * @return the ADLSAccount that was updated  (note that it will NOT contain details of the appended terms)
+     * @throws AtlanException on any API problems
+     */
+    public static ADLSAccount appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
+            throws AtlanException {
+        return (ADLSAccount) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
     /**
@@ -377,7 +550,23 @@ public class ADLSAccount extends Asset
      * @throws AtlanException on any API problems
      */
     public static ADLSAccount removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
-        return (ADLSAccount) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
+        return removeTerms(Atlan.getDefaultClient(), qualifiedName, terms);
+    }
+
+    /**
+     * Remove terms from a ADLSAccount, without replacing all existing terms linked to the ADLSAccount.
+     * Note: this operation must make two API calls — one to retrieve the ADLSAccount's existing terms,
+     * and a second to remove the provided terms.
+     *
+     * @param client connectivity to the Atlan tenant from which to remove terms from the ADLSAccount
+     * @param qualifiedName for the ADLSAccount
+     * @param terms the list of terms to remove from the ADLSAccount, which must be referenced by GUID
+     * @return the ADLSAccount that was updated (note that it will NOT contain details of the resulting terms)
+     * @throws AtlanException on any API problems
+     */
+    public static ADLSAccount removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
+            throws AtlanException {
+        return (ADLSAccount) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
     /**
@@ -391,7 +580,23 @@ public class ADLSAccount extends Asset
      * @return the updated ADLSAccount
      */
     public static ADLSAccount appendAtlanTags(String qualifiedName, List<String> atlanTagNames) throws AtlanException {
-        return (ADLSAccount) Asset.appendAtlanTags(TYPE_NAME, qualifiedName, atlanTagNames);
+        return appendAtlanTags(Atlan.getDefaultClient(), qualifiedName, atlanTagNames);
+    }
+
+    /**
+     * Add Atlan tags to a ADLSAccount, without replacing existing Atlan tags linked to the ADLSAccount.
+     * Note: this operation must make two API calls — one to retrieve the ADLSAccount's existing Atlan tags,
+     * and a second to append the new Atlan tags.
+     *
+     * @param client connectivity to the Atlan tenant on which to append Atlan tags to the ADLSAccount
+     * @param qualifiedName of the ADLSAccount
+     * @param atlanTagNames human-readable names of the Atlan tags to add
+     * @throws AtlanException on any API problems
+     * @return the updated ADLSAccount
+     */
+    public static ADLSAccount appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
+            throws AtlanException {
+        return (ADLSAccount) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 
     /**
@@ -414,7 +619,39 @@ public class ADLSAccount extends Asset
             boolean removePropagationsOnDelete,
             boolean restrictLineagePropagation)
             throws AtlanException {
+        return appendAtlanTags(
+                Atlan.getDefaultClient(),
+                qualifiedName,
+                atlanTagNames,
+                propagate,
+                removePropagationsOnDelete,
+                restrictLineagePropagation);
+    }
+
+    /**
+     * Add Atlan tags to a ADLSAccount, without replacing existing Atlan tags linked to the ADLSAccount.
+     * Note: this operation must make two API calls — one to retrieve the ADLSAccount's existing Atlan tags,
+     * and a second to append the new Atlan tags.
+     *
+     * @param client connectivity to the Atlan tenant on which to append Atlan tags to the ADLSAccount
+     * @param qualifiedName of the ADLSAccount
+     * @param atlanTagNames human-readable names of the Atlan tags to add
+     * @param propagate whether to propagate the Atlan tag (true) or not (false)
+     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
+     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
+     * @throws AtlanException on any API problems
+     * @return the updated ADLSAccount
+     */
+    public static ADLSAccount appendAtlanTags(
+            AtlanClient client,
+            String qualifiedName,
+            List<String> atlanTagNames,
+            boolean propagate,
+            boolean removePropagationsOnDelete,
+            boolean restrictLineagePropagation)
+            throws AtlanException {
         return (ADLSAccount) Asset.appendAtlanTags(
+                client,
                 TYPE_NAME,
                 qualifiedName,
                 atlanTagNames,
@@ -433,7 +670,22 @@ public class ADLSAccount extends Asset
      */
     @Deprecated
     public static void addAtlanTags(String qualifiedName, List<String> atlanTagNames) throws AtlanException {
-        Asset.addAtlanTags(TYPE_NAME, qualifiedName, atlanTagNames);
+        addAtlanTags(Atlan.getDefaultClient(), qualifiedName, atlanTagNames);
+    }
+
+    /**
+     * Add Atlan tags to a ADLSAccount.
+     *
+     * @param client connectivity to the Atlan tenant on which to add Atlan tags to the ADLSAccount
+     * @param qualifiedName of the ADLSAccount
+     * @param atlanTagNames human-readable names of the Atlan tags to add
+     * @throws AtlanException on any API problems, or if any of the Atlan tags already exist on the ADLSAccount
+     * @deprecated see {@link #appendAtlanTags(String, List)} instead
+     */
+    @Deprecated
+    public static void addAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
+            throws AtlanException {
+        Asset.addAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 
     /**
@@ -455,7 +707,38 @@ public class ADLSAccount extends Asset
             boolean removePropagationsOnDelete,
             boolean restrictLineagePropagation)
             throws AtlanException {
+        addAtlanTags(
+                Atlan.getDefaultClient(),
+                qualifiedName,
+                atlanTagNames,
+                propagate,
+                removePropagationsOnDelete,
+                restrictLineagePropagation);
+    }
+
+    /**
+     * Add Atlan tags to a ADLSAccount.
+     *
+     * @param client connectivity to the Atlan tenant on which to add Atlan tags to the ADLSAccount
+     * @param qualifiedName of the ADLSAccount
+     * @param atlanTagNames human-readable names of the Atlan tags to add
+     * @param propagate whether to propagate the Atlan tag (true) or not (false)
+     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
+     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
+     * @throws AtlanException on any API problems, or if any of the Atlan tags already exist on the ADLSAccount
+     * @deprecated see {@link #appendAtlanTags(String, List, boolean, boolean, boolean)} instead
+     */
+    @Deprecated
+    public static void addAtlanTags(
+            AtlanClient client,
+            String qualifiedName,
+            List<String> atlanTagNames,
+            boolean propagate,
+            boolean removePropagationsOnDelete,
+            boolean restrictLineagePropagation)
+            throws AtlanException {
         Asset.addAtlanTags(
+                client,
                 TYPE_NAME,
                 qualifiedName,
                 atlanTagNames,
@@ -472,6 +755,19 @@ public class ADLSAccount extends Asset
      * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the ADLSAccount
      */
     public static void removeAtlanTag(String qualifiedName, String atlanTagName) throws AtlanException {
-        Asset.removeAtlanTag(TYPE_NAME, qualifiedName, atlanTagName);
+        removeAtlanTag(Atlan.getDefaultClient(), qualifiedName, atlanTagName);
+    }
+
+    /**
+     * Remove an Atlan tag from a ADLSAccount.
+     *
+     * @param client connectivity to the Atlan tenant from which to remove an Atlan tag from a ADLSAccount
+     * @param qualifiedName of the ADLSAccount
+     * @param atlanTagName human-readable name of the Atlan tag to remove
+     * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the ADLSAccount
+     */
+    public static void removeAtlanTag(AtlanClient client, String qualifiedName, String atlanTagName)
+            throws AtlanException {
+        Asset.removeAtlanTag(client, TYPE_NAME, qualifiedName, atlanTagName);
     }
 }

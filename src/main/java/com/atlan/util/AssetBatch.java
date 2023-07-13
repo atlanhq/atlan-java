@@ -2,7 +2,7 @@
 /* Copyright 2023 Atlan Pte. Ltd. */
 package com.atlan.util;
 
-import com.atlan.api.EntityBulkEndpoint;
+import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.assets.Asset;
 import com.atlan.model.core.AssetMutationResponse;
@@ -22,6 +22,7 @@ public class AssetBatch {
         MERGE
     }
 
+    private final AtlanClient client;
     private List<Asset> _batch;
     private final String typeName;
     private final int maxSize;
@@ -31,23 +32,30 @@ public class AssetBatch {
     /**
      * Create a new batch of assets to be bulk-upserted.
      *
+     * @param client connectivity to Atlan
      * @param typeName name of the type of assets to batch process (used only for logging)
      * @param maxSize maximum size of each batch that should be processed (per API call)
      */
-    public AssetBatch(String typeName, int maxSize) {
-        this(typeName, maxSize, false, CustomMetadataHandling.IGNORE);
+    public AssetBatch(AtlanClient client, String typeName, int maxSize) {
+        this(client, typeName, maxSize, false, CustomMetadataHandling.IGNORE);
     }
 
     /**
      * Create a new batch of assets to be bulk-upserted.
      *
+     * @param client connectivity to Atlan
      * @param typeName name of the type of assets to batch process (used only for logging)
      * @param maxSize maximum size of each batch that should be processed (per API call)
      * @param replaceAtlanTags if true, all Atlan tags on an existing asset will be overwritten; if false, all Atlan tags will be ignored
      * @param customMetadataHandling how to handle custom metadata (ignore it, replace it (wiping out anything pre-existing), or merge it)
      */
     public AssetBatch(
-            String typeName, int maxSize, boolean replaceAtlanTags, CustomMetadataHandling customMetadataHandling) {
+            AtlanClient client,
+            String typeName,
+            int maxSize,
+            boolean replaceAtlanTags,
+            CustomMetadataHandling customMetadataHandling) {
+        this.client = client;
         _batch = new ArrayList<>();
         this.typeName = typeName;
         this.maxSize = maxSize;
@@ -95,13 +103,13 @@ public class AssetBatch {
             log.info("... upserting next batch of ({}) {}s...", _batch.size(), typeName);
             switch (customMetadataHandling) {
                 case IGNORE:
-                    response = EntityBulkEndpoint.upsert(_batch, replaceAtlanTags);
+                    response = client.assets().save(_batch, replaceAtlanTags);
                     break;
                 case OVERWRITE:
-                    response = EntityBulkEndpoint.upsertReplacingCM(_batch, replaceAtlanTags);
+                    response = client.assets().saveReplacingCM(_batch, replaceAtlanTags);
                     break;
                 case MERGE:
-                    response = EntityBulkEndpoint.upsertMergingCM(_batch, replaceAtlanTags);
+                    response = client.assets().saveMergingCM(_batch, replaceAtlanTags);
                     break;
             }
             _batch = new ArrayList<>();

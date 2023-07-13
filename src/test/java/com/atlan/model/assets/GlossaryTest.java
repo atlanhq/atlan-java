@@ -4,12 +4,12 @@ package com.atlan.model.assets;
 
 import static org.testng.Assert.*;
 
+import com.atlan.Atlan;
 import com.atlan.model.core.AtlanTag;
 import com.atlan.model.core.CustomMetadataAttributes;
 import com.atlan.model.enums.*;
 import com.atlan.model.structs.*;
-import com.atlan.serde.Serde;
-import com.fasterxml.jackson.core.JsonProcessingException;
+import java.io.IOException;
 import java.util.*;
 import javax.annotation.processing.Generated;
 import org.testng.annotations.Test;
@@ -109,6 +109,7 @@ public class GlossaryTest {
             .assetDbtSourceFreshnessCriteria("String0")
             .assetDbtTag("String0")
             .assetDbtTag("String1")
+            .assetDbtTestStatus("String0")
             .assetDbtUniqueId("String0")
             .assetMcIncidentName("String0")
             .assetMcIncidentName("String1")
@@ -371,7 +372,7 @@ public class GlossaryTest {
             dependsOnGroups = {"Glossary.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
-        serialized = full.toJson();
+        serialized = full.toJson(Atlan.getDefaultClient());
         assertNotNull(serialized);
         assertEquals(full.hashCode(), hash, "Serialization mutated the original value,");
     }
@@ -379,9 +380,9 @@ public class GlossaryTest {
     @Test(
             groups = {"Glossary.deserialize"},
             dependsOnGroups = {"Glossary.serialize"})
-    void deserialization() throws JsonProcessingException {
+    void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = Serde.mapper.readValue(serialized, Glossary.class);
+        frodo = Atlan.getDefaultClient().readValue(serialized, Glossary.class);
         assertNotNull(frodo);
     }
 
@@ -391,7 +392,7 @@ public class GlossaryTest {
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
-        String backAgain = frodo.toJson();
+        String backAgain = frodo.toJson(Atlan.getDefaultClient());
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
     }
 

@@ -167,6 +167,9 @@ public interface IDbtModelColumn {
     SortedSet<String> getAssetDbtTags();
 
     /** TBC */
+    String getAssetDbtTestStatus();
+
+    /** TBC */
     String getAssetDbtUniqueId();
 
     /** TBC */
@@ -300,6 +303,9 @@ public interface IDbtModelColumn {
 
     /** TBC */
     SortedSet<String> getDbtTags();
+
+    /** TBC */
+    SortedSet<IDbtTest> getDbtTests();
 
     /** TBC */
     String getDbtUniqueId();

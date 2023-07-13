@@ -7,7 +7,8 @@ import co.elastic.clients.elasticsearch._types.NestedSortValue;
 import co.elastic.clients.elasticsearch._types.SortOptions;
 import co.elastic.clients.elasticsearch._types.SortOrder;
 import co.elastic.clients.elasticsearch._types.query_dsl.*;
-import com.atlan.api.WorkflowsEndpoint;
+import com.atlan.Atlan;
+import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.search.IndexSearchDSL;
 import java.util.List;
@@ -29,7 +30,17 @@ public class WorkflowSearchRequest extends IndexSearchDSL {
      * @return results from running the search
      */
     public WorkflowSearchResponse search() throws AtlanException {
-        return WorkflowsEndpoint.searchRuns(this);
+        return search(Atlan.getDefaultClient());
+    }
+
+    /**
+     * Run the search.
+     *
+     * @param client connectivity to the Atlan tenant on which to run the search
+     * @return results from running the search
+     */
+    public WorkflowSearchResponse search(AtlanClient client) throws AtlanException {
+        return client.workflows().searchRuns(this);
     }
 
     /**
@@ -39,6 +50,17 @@ public class WorkflowSearchRequest extends IndexSearchDSL {
      * @return the singular result giving the latest run of the workflow
      */
     public static WorkflowSearchResult findLatestRun(String workflowName) throws AtlanException {
+        return findLatestRun(Atlan.getDefaultClient(), workflowName);
+    }
+
+    /**
+     * Find the latest run of a given workflow.
+     *
+     * @param client connectivity to the Atlan tenant on which to find the latest run of the workflow
+     * @param workflowName name of the workflow for which to find the latest run
+     * @return the singular result giving the latest run of the workflow
+     */
+    public static WorkflowSearchResult findLatestRun(AtlanClient client, String workflowName) throws AtlanException {
 
         SortOptions sort = SortOptions.of(s -> s.field(FieldSort.of(f -> f.field("metadata.creationTimestamp")
                 .order(SortOrder.Desc)
@@ -59,7 +81,7 @@ public class WorkflowSearchRequest extends IndexSearchDSL {
                 .query(query)
                 .build();
 
-        WorkflowSearchResponse response = WorkflowsEndpoint.searchRuns(request);
+        WorkflowSearchResponse response = client.workflows().searchRuns(request);
         if (response != null) {
             List<WorkflowSearchResult> results = response.getHits().getHits();
             if (results != null && !results.isEmpty()) {
@@ -76,6 +98,17 @@ public class WorkflowSearchRequest extends IndexSearchDSL {
      * @return the singular result giving the specific run of the workflow
      */
     public static WorkflowSearchResult findRunByName(String workflowRunName) throws AtlanException {
+        return findRunByName(Atlan.getDefaultClient(), workflowRunName);
+    }
+
+    /**
+     * Find a specific run of a given workflow.
+     *
+     * @param client connectivity to the Atlan tenant on which to find a specific run of the workflow
+     * @param workflowRunName name of the specific workflow run to find
+     * @return the singular result giving the specific run of the workflow
+     */
+    public static WorkflowSearchResult findRunByName(AtlanClient client, String workflowRunName) throws AtlanException {
         SortOptions sort = SortOptions.of(s -> s.field(FieldSort.of(f -> f.field("metadata.creationTimestamp")
                 .order(SortOrder.Desc)
                 .nested(NestedSortValue.of(v -> v.path("metadata"))))));
@@ -94,7 +127,7 @@ public class WorkflowSearchRequest extends IndexSearchDSL {
                 .query(query)
                 .build();
 
-        WorkflowSearchResponse response = WorkflowsEndpoint.searchRuns(request);
+        WorkflowSearchResponse response = client.workflows().searchRuns(request);
         if (response != null) {
             List<WorkflowSearchResult> results = response.getHits().getHits();
             if (results != null && !results.isEmpty()) {
@@ -112,6 +145,19 @@ public class WorkflowSearchRequest extends IndexSearchDSL {
      * @return the list of workflows of the provided type, with the most-recently created first
      */
     public static List<WorkflowSearchResult> findByType(String prefix, int maxResults) throws AtlanException {
+        return findByType(Atlan.getDefaultClient(), prefix, maxResults);
+    }
+
+    /**
+     * Find workflows based on their type (prefix).
+     *
+     * @param client connectivity to the Atlan tenant on which to find the workflows
+     * @param prefix of the workflow, from a package class (for example {@link com.atlan.model.packages.ConnectionDelete#PREFIX}
+     * @param maxResults the maximum number of results to retrieve
+     * @return the list of workflows of the provided type, with the most-recently created first
+     */
+    public static List<WorkflowSearchResult> findByType(AtlanClient client, String prefix, int maxResults)
+            throws AtlanException {
 
         SortOptions sort = SortOptions.of(s -> s.field(FieldSort.of(f -> f.field("metadata.creationTimestamp")
                 .order(SortOrder.Desc)
@@ -131,7 +177,7 @@ public class WorkflowSearchRequest extends IndexSearchDSL {
                 .query(query)
                 .build();
 
-        WorkflowSearchResponse response = WorkflowsEndpoint.search(request);
+        WorkflowSearchResponse response = client.workflows().search(request);
         if (response != null && response.getHits() != null) {
             return response.getHits().getHits();
         }

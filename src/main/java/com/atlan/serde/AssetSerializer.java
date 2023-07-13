@@ -2,8 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.serde;
 
-import com.atlan.cache.AtlanTagCache;
-import com.atlan.cache.CustomMetadataCache;
+import com.atlan.AtlanClient;
 import com.atlan.cache.ReflectionCache;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.NotFoundException;
@@ -30,13 +29,15 @@ import java.util.*;
  */
 public class AssetSerializer extends StdSerializer<Asset> {
     private static final long serialVersionUID = 2L;
+    private final AtlanClient client;
 
-    public AssetSerializer() {
-        this(null);
+    public AssetSerializer(AtlanClient client) {
+        this(Asset.class, client);
     }
 
-    public AssetSerializer(Class<Asset> t) {
+    public AssetSerializer(Class<Asset> t, AtlanClient client) {
         super(t);
+        this.client = client;
     }
 
     /**
@@ -91,7 +92,7 @@ public class AssetSerializer extends StdSerializer<Asset> {
                             if (fieldName.equals("mappedAtlanTagName")) {
                                 String mappedName;
                                 try {
-                                    mappedName = AtlanTagCache.getIdForName(attrValue.toString());
+                                    mappedName = client.getAtlanTagCache().getIdForName(attrValue.toString());
                                 } catch (NotFoundException e) {
                                     mappedName = Serde.DELETED_AUDIT_OBJECT;
                                 } catch (AtlanException e) {
@@ -102,7 +103,8 @@ public class AssetSerializer extends StdSerializer<Asset> {
                                 List<String> mappedNames = new ArrayList<>();
                                 for (Object one : (Collection<?>) attrValue) {
                                     try {
-                                        mappedNames.add(AtlanTagCache.getIdForName(one.toString()));
+                                        mappedNames.add(
+                                                client.getAtlanTagCache().getIdForName(one.toString()));
                                     } catch (NotFoundException e) {
                                         mappedNames.add(Serde.DELETED_AUDIT_OBJECT);
                                     } catch (AtlanException e) {
@@ -119,8 +121,8 @@ public class AssetSerializer extends StdSerializer<Asset> {
                 } else if (fieldName.equals("customMetadataSets")) {
                     // Translate custom metadata to businessAttributes map
                     Map<String, CustomMetadataAttributes> cm = asset.getCustomMetadataSets();
-                    if (cm != null) {
-                        CustomMetadataCache.getBusinessAttributesFromCustomMetadata(cm, businessAttributes);
+                    if (cm != null && !cm.isEmpty()) {
+                        client.getCustomMetadataCache().getBusinessAttributesFromCustomMetadata(cm, businessAttributes);
                     }
                 } else {
                     // For any other (top-level) field, we'll just write it out as-is (skipping any null

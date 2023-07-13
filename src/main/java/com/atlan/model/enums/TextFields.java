@@ -127,6 +127,10 @@ public enum TextFields implements AtlanSearchableField {
     DBT_PROJECT_NAME("dbtProjectName"),
     /** TBC */
     DBT_QUALIFIED_NAME("dbtQualifiedName.text"),
+    /** The raw code of a test ( tests in dbt can be defined using python ) */
+    DBT_TEST_RAW_CODE("dbtTestRawCode.text"),
+    /** The raw sql of a test */
+    DBT_TEST_RAW_SQL("dbtTestRawSQL.text"),
     /** TBC */
     DBT_UNIQUE_ID("dbtUniqueId"),
     /** TBC */
@@ -273,11 +277,11 @@ public enum TextFields implements AtlanSearchableField {
     QLIK_SPACE_QUALIFIED_NAME("qlikSpaceQualifiedName.text"),
     /** Unique fully-qualified name of the asset in Atlan. */
     QUALIFIED_NAME("qualifiedName.text"),
-    /** TBC */
+    /** Qualified name of the QuickSight Analysis */
     QUICK_SIGHT_ANALYSIS_QUALIFIED_NAME("quickSightAnalysisQualifiedName.text"),
     /** TBC */
     QUICK_SIGHT_DASHBOARD_QUALIFIED_NAME("quickSightDashboardQualifiedName.text"),
-    /** TBC */
+    /** Qualified name of the parent dataset */
     QUICK_SIGHT_DATASET_QUALIFIED_NAME("quickSightDatasetQualifiedName.text"),
     /** TBC */
     QUICK_SIGHT_SHEET_NAME("quickSightSheetName"),

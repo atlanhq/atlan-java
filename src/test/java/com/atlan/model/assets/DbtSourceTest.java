@@ -4,12 +4,12 @@ package com.atlan.model.assets;
 
 import static org.testng.Assert.*;
 
+import com.atlan.Atlan;
 import com.atlan.model.core.AtlanTag;
 import com.atlan.model.core.CustomMetadataAttributes;
 import com.atlan.model.enums.*;
 import com.atlan.model.structs.*;
-import com.atlan.serde.Serde;
-import com.fasterxml.jackson.core.JsonProcessingException;
+import java.io.IOException;
 import java.util.*;
 import javax.annotation.processing.Generated;
 import org.testng.annotations.Test;
@@ -132,6 +132,7 @@ public class DbtSourceTest {
             .assetDbtSourceFreshnessCriteria("String0")
             .assetDbtTag("String0")
             .assetDbtTag("String1")
+            .assetDbtTestStatus("String0")
             .assetDbtUniqueId("String0")
             .assetMcIncidentName("String0")
             .assetMcIncidentName("String1")
@@ -370,6 +371,8 @@ public class DbtSourceTest {
             .viewerUser("String1")
             .dbtFreshnessCriteria("String0")
             .dbtState("String0")
+            .dbtTest(DbtTest.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
+            .dbtTest(DbtTest.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
             .primarySqlAsset(TablePartition.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .sqlAsset(TablePartition.refByGuid("705d96f4-bdb6-4792-8dfe-8dc4ca3d2c23"))
             .sqlAsset(TablePartition.refByQualifiedName("default/snowflake/1234567890/test/qualifiedName"))
@@ -389,7 +392,7 @@ public class DbtSourceTest {
             dependsOnGroups = {"DbtSource.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
-        serialized = full.toJson();
+        serialized = full.toJson(Atlan.getDefaultClient());
         assertNotNull(serialized);
         assertEquals(full.hashCode(), hash, "Serialization mutated the original value,");
     }
@@ -397,9 +400,9 @@ public class DbtSourceTest {
     @Test(
             groups = {"DbtSource.deserialize"},
             dependsOnGroups = {"DbtSource.serialize"})
-    void deserialization() throws JsonProcessingException {
+    void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = Serde.mapper.readValue(serialized, DbtSource.class);
+        frodo = Atlan.getDefaultClient().readValue(serialized, DbtSource.class);
         assertNotNull(frodo);
     }
 
@@ -409,7 +412,7 @@ public class DbtSourceTest {
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
-        String backAgain = frodo.toJson();
+        String backAgain = frodo.toJson(Atlan.getDefaultClient());
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
     }
 

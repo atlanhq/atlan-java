@@ -2,7 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.packages;
 
-import com.atlan.cache.RoleCache;
+import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.admin.PackageParameter;
@@ -22,19 +22,30 @@ public class DbtCrawler extends AbstractCrawler {
      * Builds the minimal object necessary to create a new crawler for dbt,
      * using API-based authentication for multi-tenant cloud, with the default settings.
      *
+     * @param client connectivity to Atlan
      * @param connectionName name of the connection to create
      * @param apiToken through which to access dbt APIs
      * @return the minimal workflow necessary to crawl dbt
      * @throws AtlanException if there is any issue obtaining the admin role GUID
      */
-    public static Workflow mtCloudAuth(String connectionName, String apiToken) throws AtlanException {
+    public static Workflow mtCloudAuth(AtlanClient client, String connectionName, String apiToken)
+            throws AtlanException {
         return mtCloudAuth(
-                connectionName, apiToken, List.of(RoleCache.getIdForName("$admin")), null, null, null, null, null);
+                client,
+                connectionName,
+                apiToken,
+                List.of(client.getRoleCache().getIdForName("$admin")),
+                null,
+                null,
+                null,
+                null,
+                null);
     }
 
     /**
      * Builds the minimal object necessary to create a new crawler for dbt.
      *
+     * @param client connectivity to Atlan
      * @param connectionName name of the connection to create
      * @param apiToken through which to access dbt APIs
      * @param adminRoles the GUIDs of the roles that can administer this connection
@@ -51,6 +62,7 @@ public class DbtCrawler extends AbstractCrawler {
      * @throws AtlanException on any other error, such as an inability to retrieve the users, groups or roles in Atlan
      */
     public static Workflow mtCloudAuth(
+            AtlanClient client,
             String connectionName,
             String apiToken,
             List<String> adminRoles,
@@ -85,7 +97,7 @@ public class DbtCrawler extends AbstractCrawler {
         credentialBody.put("connectorConfigName", "atlan-connectors-dbt");
 
         WorkflowParameters.WorkflowParametersBuilder<?, ?> argsBuilder = WorkflowParameters.builder()
-                .parameter(NameValuePair.of("connection", connection.toJson()))
+                .parameter(NameValuePair.of("connection", connection.toJson(client)))
                 .parameter(NameValuePair.of("extraction-method", "api"))
                 .parameter(NameValuePair.of("deployment-type", "multi"))
                 .parameter(NameValuePair.of("core-extraction-method", "s3"))
@@ -110,6 +122,7 @@ public class DbtCrawler extends AbstractCrawler {
     /**
      * Builds the minimal object necessary to create a new crawler for dbt.
      *
+     * @param client connectivity to Atlan
      * @param connectionName name of the connection to create
      * @param bucketName name of the S3 bucket containing the dbt Core JSON files
      * @param s3Prefix prefix within the S3 bucket where the dbt Core JSON files exist
@@ -127,6 +140,7 @@ public class DbtCrawler extends AbstractCrawler {
      * @throws AtlanException on any other error, such as an inability to retrieve the users, groups or roles in Atlan
      */
     public static Workflow coreCrawler(
+            AtlanClient client,
             String connectionName,
             String bucketName,
             String s3Prefix,
@@ -161,7 +175,7 @@ public class DbtCrawler extends AbstractCrawler {
         }
 
         WorkflowParameters.WorkflowParametersBuilder<?, ?> argsBuilder = WorkflowParameters.builder()
-                .parameter(NameValuePair.of("connection", connection.toJson()))
+                .parameter(NameValuePair.of("connection", connection.toJson(client)))
                 .parameter(NameValuePair.of("extraction-method", "core"))
                 .parameter(NameValuePair.of("deployment-type", "multi"))
                 .parameter(NameValuePair.of("core-extraction-method", "s3"))

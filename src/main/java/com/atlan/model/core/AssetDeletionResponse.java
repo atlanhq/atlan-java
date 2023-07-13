@@ -53,7 +53,10 @@ public class AssetDeletionResponse extends AssetMutationResponse implements Atla
         List<Asset> leftovers = new ArrayList<>();
         for (Asset one : toCheck) {
             try {
-                Asset candidate = Asset.retrieveMinimal(one.getGuid());
+                // Note that there seems to be some eventual consistency delay between a
+                // retrieveMinimal and a retrieveFull - to ensure delete status is fully
+                // consistent we need to retrieve the full asset
+                Asset candidate = Asset.retrieveFull(one.getGuid());
                 if (candidate.getStatus() == AtlanStatus.ACTIVE) {
                     leftovers.add(candidate);
                 }

@@ -168,6 +168,9 @@ public interface IQuickSightDatasetField {
     SortedSet<String> getAssetDbtTags();
 
     /** TBC */
+    String getAssetDbtTestStatus();
+
+    /** TBC */
     String getAssetDbtUniqueId();
 
     /** TBC */
@@ -302,10 +305,10 @@ public interface IQuickSightDatasetField {
     /** TBC */
     IQuickSightDataset getQuickSightDataset();
 
-    /** TBC */
+    /** Datatype of column in the dataset */
     QuickSightDatasetFieldType getQuickSightDatasetFieldType();
 
-    /** TBC */
+    /** Qualified name of the parent dataset */
     String getQuickSightDatasetQualifiedName();
 
     /** TBC */

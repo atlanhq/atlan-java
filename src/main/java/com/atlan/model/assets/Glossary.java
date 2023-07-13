@@ -4,6 +4,8 @@ package com.atlan.model.assets;
 
 import co.elastic.clients.elasticsearch._types.SortOrder;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
+import com.atlan.Atlan;
+import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
@@ -114,7 +116,19 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Glossary does not exist or the provided GUID is not a Glossary
      */
     public static Glossary retrieveByGuid(String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(guid);
+        return retrieveByGuid(Atlan.getDefaultClient(), guid);
+    }
+
+    /**
+     * Retrieves a Glossary by its GUID, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param guid of the Glossary to retrieve
+     * @return the requested full Glossary, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Glossary does not exist or the provided GUID is not a Glossary
+     */
+    public static Glossary retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
+        Asset asset = Asset.retrieveFull(client, guid);
         if (asset == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
         } else if (asset instanceof Glossary) {
@@ -132,7 +146,19 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Glossary does not exist
      */
     public static Glossary retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        Asset asset = Asset.retrieveFull(TYPE_NAME, qualifiedName);
+        return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
+    }
+
+    /**
+     * Retrieves a Glossary by its qualifiedName, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param qualifiedName of the Glossary to retrieve
+     * @return the requested full Glossary, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the Glossary does not exist
+     */
+    public static Glossary retrieveByQualifiedName(AtlanClient client, String qualifiedName) throws AtlanException {
+        Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
         if (asset instanceof Glossary) {
             return (Glossary) asset;
         } else {
@@ -148,7 +174,19 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
      * @throws AtlanException on any API problems
      */
     public static boolean restore(String qualifiedName) throws AtlanException {
-        return Asset.restore(TYPE_NAME, qualifiedName);
+        return restore(Atlan.getDefaultClient(), qualifiedName);
+    }
+
+    /**
+     * Restore the archived (soft-deleted) Glossary to active.
+     *
+     * @param client connectivity to the Atlan tenant on which to restore the asset
+     * @param qualifiedName for the Glossary
+     * @return true if the Glossary is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
+        return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
 
     /**
@@ -223,6 +261,20 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
      * @throws AtlanException on any API problems, or if the Glossary does not exist
      */
     public static Glossary findByName(String name, Collection<String> attributes) throws AtlanException {
+        return findByName(Atlan.getDefaultClient(), name, attributes);
+    }
+
+    /**
+     * Find a Glossary by its human-readable name.
+     *
+     * @param client connectivity to the Atlan tenant on which to search for the Glossary
+     * @param name of the Glossary
+     * @param attributes an optional collection of attributes to retrieve for the Glossary
+     * @return the Glossary, if found
+     * @throws AtlanException on any API problems, or if the Glossary does not exist
+     */
+    public static Glossary findByName(AtlanClient client, String name, Collection<String> attributes)
+            throws AtlanException {
         Query filter = QueryFactory.CompoundQuery.builder()
                 .must(QueryFactory.beActive())
                 .must(QueryFactory.beOfType(TYPE_NAME))
@@ -235,7 +287,7 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
             builder.attributes(attributes);
         }
         IndexSearchRequest request = builder.build();
-        IndexSearchResponse response = request.search();
+        IndexSearchResponse response = request.search(client);
         if (response != null) {
             long count = response.getApproximateCount();
             if (count > 1) {
@@ -263,7 +315,20 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
      * @throws AtlanException on any API problems, or if the Glossary does not exist
      */
     public CategoryHierarchy getHierarchy() throws AtlanException {
-        return getHierarchy(null);
+        return getHierarchy(Atlan.getDefaultClient());
+    }
+
+    /**
+     * Retrieve category hierarchy in this Glossary, in a traversable form. You can traverse in either
+     * depth-first ({@link CategoryHierarchy#depthFirst()}) or breadth-first ({@link CategoryHierarchy#breadthFirst()})
+     * order. Both return an ordered list of {@link GlossaryCategory} objects.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the hierarchy
+     * @return a traversable category hierarchy
+     * @throws AtlanException on any API problems, or if the Glossary does not exist
+     */
+    public CategoryHierarchy getHierarchy(AtlanClient client) throws AtlanException {
+        return getHierarchy(client, null);
     }
 
     /**
@@ -279,6 +344,23 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
      * @throws AtlanException on any API problems, or if the Glossary does not exist
      */
     public CategoryHierarchy getHierarchy(List<String> attributes) throws AtlanException {
+        return getHierarchy(Atlan.getDefaultClient(), attributes);
+    }
+
+    /**
+     * Retrieve category hierarchy in this Glossary, in a traversable form. You can traverse in either
+     * depth-first ({@link CategoryHierarchy#depthFirst()}) or breadth-first ({@link CategoryHierarchy#breadthFirst()})
+     * order. Both return an ordered list of {@link GlossaryCategory} objects.
+     * Note: by default, each category will have a minimal set of information (name, GUID, qualifiedName). If you
+     * want additional details about each category, specify the attributes you want in the {@code attributes} parameter
+     * to this method.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the hierarchy
+     * @param attributes to retrieve for each category in the hierarchy
+     * @return a traversable category hierarchy
+     * @throws AtlanException on any API problems, or if the Glossary does not exist
+     */
+    public CategoryHierarchy getHierarchy(AtlanClient client, List<String> attributes) throws AtlanException {
         if (qualifiedName == null) {
             throw new InvalidRequestException(
                     ErrorCode.MISSING_REQUIRED_QUERY_PARAM, Glossary.TYPE_NAME, "qualifiedName");
@@ -299,27 +381,19 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
             builder.attributes(attributes);
         }
         IndexSearchRequest request = builder.build();
-        IndexSearchResponse response = request.search();
+        IndexSearchResponse response = request.search(client);
         if (response != null) {
             Set<String> topCategories = new LinkedHashSet<>();
             Map<String, GlossaryCategory> categoryMap = new HashMap<>();
-            List<Asset> results = response.getAssets();
             // First build up a map in-memory of all the categories
-            while (results != null) {
-                for (Asset one : results) {
-                    if (one instanceof GlossaryCategory) {
-                        GlossaryCategory category = (GlossaryCategory) one;
-                        categoryMap.put(category.getGuid(), category);
-                        if (category.getParentCategory() == null) {
-                            topCategories.add(category.getGuid());
-                        }
-                    } else {
-                        throw new LogicException(ErrorCode.FOUND_UNEXPECTED_ASSET_TYPE, GlossaryCategory.TYPE_NAME);
-                    }
+            response.stream().filter(c -> (c instanceof GlossaryCategory)).forEach(c -> {
+                GlossaryCategory category = (GlossaryCategory) c;
+                categoryMap.put(category.getGuid(), category);
+                if (category.getParentCategory() == null) {
+                    topCategories.add(category.getGuid());
                 }
-                response = response.getNextPage();
-                results = response.getAssets();
-            }
+            });
+            // Then pass that over to a CategoryHierarchy to order
             return new CategoryHierarchy(topCategories, categoryMap);
         }
         throw new NotFoundException(ErrorCode.NO_CATEGORIES, getGuid(), getQualifiedName());
@@ -419,8 +493,22 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
      * @throws AtlanException on any API problems
      */
     public static Glossary removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (Glossary)
-                Asset.removeDescription(builder().qualifiedName(qualifiedName).name(name));
+        return removeDescription(Atlan.getDefaultClient(), qualifiedName, name);
+    }
+
+    /**
+     * Remove the system description from a Glossary.
+     *
+     * @param client connectivity to the Atlan tenant from which to remove the Glossary's description
+     * @param qualifiedName of the Glossary
+     * @param name of the Glossary
+     * @return the updated Glossary, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static Glossary removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
+        return (Glossary) Asset.removeDescription(
+                client, builder().qualifiedName(qualifiedName).name(name));
     }
 
     /**
@@ -432,8 +520,22 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
      * @throws AtlanException on any API problems
      */
     public static Glossary removeUserDescription(String qualifiedName, String name) throws AtlanException {
+        return removeUserDescription(Atlan.getDefaultClient(), qualifiedName, name);
+    }
+
+    /**
+     * Remove the user's description from a Glossary.
+     *
+     * @param client connectivity to the Atlan tenant from which to remove the Glossary's description
+     * @param qualifiedName of the Glossary
+     * @param name of the Glossary
+     * @return the updated Glossary, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static Glossary removeUserDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
         return (Glossary) Asset.removeUserDescription(
-                builder().qualifiedName(qualifiedName).name(name));
+                client, builder().qualifiedName(qualifiedName).name(name));
     }
 
     /**
@@ -445,8 +547,21 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
      * @throws AtlanException on any API problems
      */
     public static Glossary removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (Glossary)
-                Asset.removeOwners(builder().qualifiedName(qualifiedName).name(name));
+        return removeOwners(Atlan.getDefaultClient(), qualifiedName, name);
+    }
+
+    /**
+     * Remove the owners from a Glossary.
+     *
+     * @param client connectivity to the Atlan tenant from which to remove the Glossary's owners
+     * @param qualifiedName of the Glossary
+     * @param name of the Glossary
+     * @return the updated Glossary, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static Glossary removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+        return (Glossary) Asset.removeOwners(
+                client, builder().qualifiedName(qualifiedName).name(name));
     }
 
     /**
@@ -461,7 +576,25 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
      */
     public static Glossary updateCertificate(
             String qualifiedName, String name, CertificateStatus certificate, String message) throws AtlanException {
-        return (Glossary) Asset.updateCertificate(builder().name(name), TYPE_NAME, qualifiedName, certificate, message);
+        return updateCertificate(Atlan.getDefaultClient(), qualifiedName, name, certificate, message);
+    }
+
+    /**
+     * Update the certificate on a Glossary.
+     *
+     * @param client connectivity to the Atlan client on which to update the Glossary's certificate
+     * @param qualifiedName of the Glossary
+     * @param name of the Glossary
+     * @param certificate to use
+     * @param message (optional) message, or null if no message
+     * @return the updated Glossary, or null if the update failed
+     * @throws AtlanException on any API problems
+     */
+    public static Glossary updateCertificate(
+            AtlanClient client, String qualifiedName, String name, CertificateStatus certificate, String message)
+            throws AtlanException {
+        return (Glossary)
+                Asset.updateCertificate(client, builder().name(name), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -473,8 +606,22 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
      * @throws AtlanException on any API problems
      */
     public static Glossary removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (Glossary)
-                Asset.removeCertificate(builder().qualifiedName(qualifiedName).name(name));
+        return removeCertificate(Atlan.getDefaultClient(), qualifiedName, name);
+    }
+
+    /**
+     * Remove the certificate from a Glossary.
+     *
+     * @param client connectivity to the Atlan tenant from which to remove the Glossary's certificate
+     * @param qualifiedName of the Glossary
+     * @param name of the Glossary
+     * @return the updated Glossary, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static Glossary removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
+        return (Glossary) Asset.removeCertificate(
+                client, builder().qualifiedName(qualifiedName).name(name));
     }
 
     /**
@@ -491,8 +638,31 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
     public static Glossary updateAnnouncement(
             String qualifiedName, String name, AtlanAnnouncementType type, String title, String message)
             throws AtlanException {
+        return updateAnnouncement(Atlan.getDefaultClient(), qualifiedName, name, type, title, message);
+    }
+
+    /**
+     * Update the announcement on a Glossary.
+     *
+     * @param client connectivity to the Atlan tenant on which to update the Glossary's announcement
+     * @param qualifiedName of the Glossary
+     * @param name of the Glossary
+     * @param type type of announcement to set
+     * @param title (optional) title of the announcement to set (or null for no title)
+     * @param message (optional) message of the announcement to set (or null for no message)
+     * @return the result of the update, or null if the update failed
+     * @throws AtlanException on any API problems
+     */
+    public static Glossary updateAnnouncement(
+            AtlanClient client,
+            String qualifiedName,
+            String name,
+            AtlanAnnouncementType type,
+            String title,
+            String message)
+            throws AtlanException {
         return (Glossary)
-                Asset.updateAnnouncement(builder().name(name), TYPE_NAME, qualifiedName, type, title, message);
+                Asset.updateAnnouncement(client, builder().name(name), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -504,8 +674,22 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
      * @throws AtlanException on any API problems
      */
     public static Glossary removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (Glossary)
-                Asset.removeAnnouncement(builder().qualifiedName(qualifiedName).name(name));
+        return removeAnnouncement(Atlan.getDefaultClient(), qualifiedName, name);
+    }
+
+    /**
+     * Remove the announcement from a Glossary.
+     *
+     * @param client connectivity to the Atlan tenant from which to remove the Glossary's announcement
+     * @param qualifiedName of the Glossary
+     * @param name of the Glossary
+     * @return the updated Glossary, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static Glossary removeAnnouncement(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
+        return (Glossary) Asset.removeAnnouncement(
+                client, builder().qualifiedName(qualifiedName).name(name));
     }
 
     /**
@@ -519,7 +703,23 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
      * @return the updated Glossary
      */
     public static Glossary appendAtlanTags(String qualifiedName, List<String> atlanTagNames) throws AtlanException {
-        return (Glossary) Asset.appendAtlanTags(TYPE_NAME, qualifiedName, atlanTagNames);
+        return appendAtlanTags(Atlan.getDefaultClient(), qualifiedName, atlanTagNames);
+    }
+
+    /**
+     * Add Atlan tags to a Glossary, without replacing existing Atlan tags linked to the Glossary.
+     * Note: this operation must make two API calls — one to retrieve the Glossary's existing Atlan tags,
+     * and a second to append the new Atlan tags.
+     *
+     * @param client connectivity to the Atlan tenant on which to append Atlan tags to the Glossary
+     * @param qualifiedName of the Glossary
+     * @param atlanTagNames human-readable names of the Atlan tags to add
+     * @throws AtlanException on any API problems
+     * @return the updated Glossary
+     */
+    public static Glossary appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
+            throws AtlanException {
+        return (Glossary) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 
     /**
@@ -542,7 +742,39 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
             boolean removePropagationsOnDelete,
             boolean restrictLineagePropagation)
             throws AtlanException {
+        return appendAtlanTags(
+                Atlan.getDefaultClient(),
+                qualifiedName,
+                atlanTagNames,
+                propagate,
+                removePropagationsOnDelete,
+                restrictLineagePropagation);
+    }
+
+    /**
+     * Add Atlan tags to a Glossary, without replacing existing Atlan tags linked to the Glossary.
+     * Note: this operation must make two API calls — one to retrieve the Glossary's existing Atlan tags,
+     * and a second to append the new Atlan tags.
+     *
+     * @param client connectivity to the Atlan tenant on which to append Atlan tags to the Glossary
+     * @param qualifiedName of the Glossary
+     * @param atlanTagNames human-readable names of the Atlan tags to add
+     * @param propagate whether to propagate the Atlan tag (true) or not (false)
+     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
+     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
+     * @throws AtlanException on any API problems
+     * @return the updated Glossary
+     */
+    public static Glossary appendAtlanTags(
+            AtlanClient client,
+            String qualifiedName,
+            List<String> atlanTagNames,
+            boolean propagate,
+            boolean removePropagationsOnDelete,
+            boolean restrictLineagePropagation)
+            throws AtlanException {
         return (Glossary) Asset.appendAtlanTags(
+                client,
                 TYPE_NAME,
                 qualifiedName,
                 atlanTagNames,
@@ -561,7 +793,22 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
      */
     @Deprecated
     public static void addAtlanTags(String qualifiedName, List<String> atlanTagNames) throws AtlanException {
-        Asset.addAtlanTags(TYPE_NAME, qualifiedName, atlanTagNames);
+        addAtlanTags(Atlan.getDefaultClient(), qualifiedName, atlanTagNames);
+    }
+
+    /**
+     * Add Atlan tags to a Glossary.
+     *
+     * @param client connectivity to the Atlan tenant on which to add Atlan tags to the Glossary
+     * @param qualifiedName of the Glossary
+     * @param atlanTagNames human-readable names of the Atlan tags to add
+     * @throws AtlanException on any API problems, or if any of the Atlan tags already exist on the Glossary
+     * @deprecated see {@link #appendAtlanTags(String, List)} instead
+     */
+    @Deprecated
+    public static void addAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
+            throws AtlanException {
+        Asset.addAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 
     /**
@@ -583,7 +830,38 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
             boolean removePropagationsOnDelete,
             boolean restrictLineagePropagation)
             throws AtlanException {
+        addAtlanTags(
+                Atlan.getDefaultClient(),
+                qualifiedName,
+                atlanTagNames,
+                propagate,
+                removePropagationsOnDelete,
+                restrictLineagePropagation);
+    }
+
+    /**
+     * Add Atlan tags to a Glossary.
+     *
+     * @param client connectivity to the Atlan tenant on which to add Atlan tags to the Glossary
+     * @param qualifiedName of the Glossary
+     * @param atlanTagNames human-readable names of the Atlan tags to add
+     * @param propagate whether to propagate the Atlan tag (true) or not (false)
+     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
+     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
+     * @throws AtlanException on any API problems, or if any of the Atlan tags already exist on the Glossary
+     * @deprecated see {@link #appendAtlanTags(String, List, boolean, boolean, boolean)} instead
+     */
+    @Deprecated
+    public static void addAtlanTags(
+            AtlanClient client,
+            String qualifiedName,
+            List<String> atlanTagNames,
+            boolean propagate,
+            boolean removePropagationsOnDelete,
+            boolean restrictLineagePropagation)
+            throws AtlanException {
         Asset.addAtlanTags(
+                client,
                 TYPE_NAME,
                 qualifiedName,
                 atlanTagNames,
@@ -600,6 +878,19 @@ public class Glossary extends Asset implements IGlossary, IAsset, IReferenceable
      * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the Glossary
      */
     public static void removeAtlanTag(String qualifiedName, String atlanTagName) throws AtlanException {
-        Asset.removeAtlanTag(TYPE_NAME, qualifiedName, atlanTagName);
+        removeAtlanTag(Atlan.getDefaultClient(), qualifiedName, atlanTagName);
+    }
+
+    /**
+     * Remove an Atlan tag from a Glossary.
+     *
+     * @param client connectivity to the Atlan tenant from which to remove an Atlan tag from a Glossary
+     * @param qualifiedName of the Glossary
+     * @param atlanTagName human-readable name of the Atlan tag to remove
+     * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the Glossary
+     */
+    public static void removeAtlanTag(AtlanClient client, String qualifiedName, String atlanTagName)
+            throws AtlanException {
+        Asset.removeAtlanTag(client, TYPE_NAME, qualifiedName, atlanTagName);
     }
 }

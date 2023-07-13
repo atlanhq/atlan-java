@@ -9,7 +9,6 @@ import com.atlan.exception.AtlanException;
 import com.atlan.model.assets.Asset;
 import com.atlan.model.events.AtlanEvent;
 import com.atlan.model.events.AwsEventWrapper;
-import com.atlan.serde.Serde;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.Collection;
@@ -57,7 +56,7 @@ public abstract class AbstractLambdaHandler implements RequestStreamHandler {
                 Asset current = handler.getCurrentState(event.getPayload().getAsset(), log);
                 Collection<Asset> updated = handler.calculateChanges(current, log);
                 if (!updated.isEmpty()) {
-                    handler.upsertChanges(updated, log);
+                    handler.saveChanges(Atlan.getDefaultClient(), updated, log);
                 }
             } catch (AtlanException e) {
                 throw new IOException(
@@ -79,7 +78,7 @@ public abstract class AbstractLambdaHandler implements RequestStreamHandler {
                 output) {
             // Parse the AWS payload... (for some reason readValue directly on InputStream just times out)
             String request = getRequestAsString(input);
-            AwsEventWrapper wrapper = Serde.mapper.readValue(request, AwsEventWrapper.class);
+            AwsEventWrapper wrapper = Atlan.getDefaultClient().readValue(request, AwsEventWrapper.class);
             // Pull out the embedded Atlan request...
             String body = wrapper.getBody();
             if (AtlanEventHandler.isValidationRequest(body)) {
@@ -92,7 +91,7 @@ public abstract class AbstractLambdaHandler implements RequestStreamHandler {
                 if (AtlanEventHandler.validSignature(SIGNING_SECRET, wrapper.getHeaders())) {
                     // pull out the embedded Atlan event and delegate it to be processed...
                     try {
-                        processEvent(AtlanEventHandler.getAtlanEvent(body), context);
+                        processEvent(AtlanEventHandler.getAtlanEvent(Atlan.getDefaultClient(), body), context);
                     } catch (IOException e) {
                         log.error("Unable to process the event.", e);
                     }

@@ -46,7 +46,7 @@ public class APIAssetTest extends AtlanLiveTest {
     void createSpec() throws AtlanException {
         APISpec toCreate =
                 APISpec.creator(SPEC_NAME, connection.getQualifiedName()).build();
-        AssetMutationResponse response = toCreate.upsert();
+        AssetMutationResponse response = toCreate.save();
         Asset one = validateSingleCreate(response);
         assertTrue(one instanceof APISpec);
         spec = (APISpec) one;
@@ -62,7 +62,7 @@ public class APIAssetTest extends AtlanLiveTest {
             dependsOnGroups = {"api.create.spec"})
     void createPath() throws AtlanException {
         APIPath toCreate = APIPath.creator(PATH_NAME, spec.getQualifiedName()).build();
-        AssetMutationResponse response = toCreate.upsert();
+        AssetMutationResponse response = toCreate.save();
         assertNotNull(response);
         assertTrue(response.getDeletedAssets().isEmpty());
         assertEquals(response.getUpdatedAssets().size(), 1);

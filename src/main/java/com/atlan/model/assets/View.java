@@ -2,6 +2,8 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
+import com.atlan.Atlan;
+import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
@@ -70,6 +72,11 @@ public class View extends Asset implements IView, ISQL, ICatalog, IAsset, IRefer
     @Attribute
     @Singular
     SortedSet<IDbtSource> dbtSources;
+
+    /** TBC */
+    @Attribute
+    @Singular
+    SortedSet<IDbtTest> dbtTests;
 
     /** Definition of the view (DDL). */
     @Attribute
@@ -206,7 +213,19 @@ public class View extends Asset implements IView, ISQL, ICatalog, IAsset, IRefer
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the View does not exist or the provided GUID is not a View
      */
     public static View retrieveByGuid(String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(guid);
+        return retrieveByGuid(Atlan.getDefaultClient(), guid);
+    }
+
+    /**
+     * Retrieves a View by its GUID, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param guid of the View to retrieve
+     * @return the requested full View, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the View does not exist or the provided GUID is not a View
+     */
+    public static View retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
+        Asset asset = Asset.retrieveFull(client, guid);
         if (asset == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
         } else if (asset instanceof View) {
@@ -224,7 +243,19 @@ public class View extends Asset implements IView, ISQL, ICatalog, IAsset, IRefer
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the View does not exist
      */
     public static View retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        Asset asset = Asset.retrieveFull(TYPE_NAME, qualifiedName);
+        return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
+    }
+
+    /**
+     * Retrieves a View by its qualifiedName, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param qualifiedName of the View to retrieve
+     * @return the requested full View, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the View does not exist
+     */
+    public static View retrieveByQualifiedName(AtlanClient client, String qualifiedName) throws AtlanException {
+        Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
         if (asset instanceof View) {
             return (View) asset;
         } else {
@@ -240,7 +271,19 @@ public class View extends Asset implements IView, ISQL, ICatalog, IAsset, IRefer
      * @throws AtlanException on any API problems
      */
     public static boolean restore(String qualifiedName) throws AtlanException {
-        return Asset.restore(TYPE_NAME, qualifiedName);
+        return restore(Atlan.getDefaultClient(), qualifiedName);
+    }
+
+    /**
+     * Restore the archived (soft-deleted) View to active.
+     *
+     * @param client connectivity to the Atlan tenant on which to restore the asset
+     * @param qualifiedName for the View
+     * @return true if the View is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
+        return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
 
     /**
@@ -323,7 +366,20 @@ public class View extends Asset implements IView, ISQL, ICatalog, IAsset, IRefer
      * @throws AtlanException on any API problems
      */
     public static View removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (View) Asset.removeDescription(updater(qualifiedName, name));
+        return removeDescription(Atlan.getDefaultClient(), qualifiedName, name);
+    }
+
+    /**
+     * Remove the system description from a View.
+     *
+     * @param client connectivity to the Atlan tenant on which to remove the asset's description
+     * @param qualifiedName of the View
+     * @param name of the View
+     * @return the updated View, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static View removeDescription(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+        return (View) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
     /**
@@ -335,7 +391,21 @@ public class View extends Asset implements IView, ISQL, ICatalog, IAsset, IRefer
      * @throws AtlanException on any API problems
      */
     public static View removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (View) Asset.removeUserDescription(updater(qualifiedName, name));
+        return removeUserDescription(Atlan.getDefaultClient(), qualifiedName, name);
+    }
+
+    /**
+     * Remove the user's description from a View.
+     *
+     * @param client connectivity to the Atlan tenant on which to remove the asset's description
+     * @param qualifiedName of the View
+     * @param name of the View
+     * @return the updated View, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static View removeUserDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
+        return (View) Asset.removeUserDescription(client, updater(qualifiedName, name));
     }
 
     /**
@@ -347,7 +417,20 @@ public class View extends Asset implements IView, ISQL, ICatalog, IAsset, IRefer
      * @throws AtlanException on any API problems
      */
     public static View removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (View) Asset.removeOwners(updater(qualifiedName, name));
+        return removeOwners(Atlan.getDefaultClient(), qualifiedName, name);
+    }
+
+    /**
+     * Remove the owners from a View.
+     *
+     * @param client connectivity to the Atlan tenant from which to remove the View's owners
+     * @param qualifiedName of the View
+     * @param name of the View
+     * @return the updated View, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static View removeOwners(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+        return (View) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
     /**
@@ -361,7 +444,23 @@ public class View extends Asset implements IView, ISQL, ICatalog, IAsset, IRefer
      */
     public static View updateCertificate(String qualifiedName, CertificateStatus certificate, String message)
             throws AtlanException {
-        return (View) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
+        return updateCertificate(Atlan.getDefaultClient(), qualifiedName, certificate, message);
+    }
+
+    /**
+     * Update the certificate on a View.
+     *
+     * @param client connectivity to the Atlan tenant on which to update the View's certificate
+     * @param qualifiedName of the View
+     * @param certificate to use
+     * @param message (optional) message, or null if no message
+     * @return the updated View, or null if the update failed
+     * @throws AtlanException on any API problems
+     */
+    public static View updateCertificate(
+            AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
+            throws AtlanException {
+        return (View) Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -373,7 +472,20 @@ public class View extends Asset implements IView, ISQL, ICatalog, IAsset, IRefer
      * @throws AtlanException on any API problems
      */
     public static View removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (View) Asset.removeCertificate(updater(qualifiedName, name));
+        return removeCertificate(Atlan.getDefaultClient(), qualifiedName, name);
+    }
+
+    /**
+     * Remove the certificate from a View.
+     *
+     * @param client connectivity to the Atlan tenant from which to remove the View's certificate
+     * @param qualifiedName of the View
+     * @param name of the View
+     * @return the updated View, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static View removeCertificate(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+        return (View) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
     /**
@@ -388,7 +500,24 @@ public class View extends Asset implements IView, ISQL, ICatalog, IAsset, IRefer
      */
     public static View updateAnnouncement(
             String qualifiedName, AtlanAnnouncementType type, String title, String message) throws AtlanException {
-        return (View) Asset.updateAnnouncement(builder(), TYPE_NAME, qualifiedName, type, title, message);
+        return updateAnnouncement(Atlan.getDefaultClient(), qualifiedName, type, title, message);
+    }
+
+    /**
+     * Update the announcement on a View.
+     *
+     * @param client connectivity to the Atlan tenant on which to update the View's announcement
+     * @param qualifiedName of the View
+     * @param type type of announcement to set
+     * @param title (optional) title of the announcement to set (or null for no title)
+     * @param message (optional) message of the announcement to set (or null for no message)
+     * @return the result of the update, or null if the update failed
+     * @throws AtlanException on any API problems
+     */
+    public static View updateAnnouncement(
+            AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
+            throws AtlanException {
+        return (View) Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -400,7 +529,20 @@ public class View extends Asset implements IView, ISQL, ICatalog, IAsset, IRefer
      * @throws AtlanException on any API problems
      */
     public static View removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (View) Asset.removeAnnouncement(updater(qualifiedName, name));
+        return removeAnnouncement(Atlan.getDefaultClient(), qualifiedName, name);
+    }
+
+    /**
+     * Remove the announcement from a View.
+     *
+     * @param client connectivity to the Atlan client from which to remove the View's announcement
+     * @param qualifiedName of the View
+     * @param name of the View
+     * @return the updated View, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static View removeAnnouncement(AtlanClient client, String qualifiedName, String name) throws AtlanException {
+        return (View) Asset.removeAnnouncement(client, updater(qualifiedName, name));
     }
 
     /**
@@ -414,7 +556,22 @@ public class View extends Asset implements IView, ISQL, ICatalog, IAsset, IRefer
      */
     public static View replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
-        return (View) Asset.replaceTerms(updater(qualifiedName, name), terms);
+        return replaceTerms(Atlan.getDefaultClient(), qualifiedName, name, terms);
+    }
+
+    /**
+     * Replace the terms linked to the View.
+     *
+     * @param client connectivity to the Atlan tenant on which to replace the View's assigned terms
+     * @param qualifiedName for the View
+     * @param name human-readable name of the View
+     * @param terms the list of terms to replace on the View, or null to remove all terms from the View
+     * @return the View that was updated (note that it will NOT contain details of the replaced terms)
+     * @throws AtlanException on any API problems
+     */
+    public static View replaceTerms(AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms)
+            throws AtlanException {
+        return (View) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 
     /**
@@ -428,7 +585,23 @@ public class View extends Asset implements IView, ISQL, ICatalog, IAsset, IRefer
      * @throws AtlanException on any API problems
      */
     public static View appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
-        return (View) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
+        return appendTerms(Atlan.getDefaultClient(), qualifiedName, terms);
+    }
+
+    /**
+     * Link additional terms to the View, without replacing existing terms linked to the View.
+     * Note: this operation must make two API calls — one to retrieve the View's existing terms,
+     * and a second to append the new terms.
+     *
+     * @param client connectivity to the Atlan tenant on which to append terms to the View
+     * @param qualifiedName for the View
+     * @param terms the list of terms to append to the View
+     * @return the View that was updated  (note that it will NOT contain details of the appended terms)
+     * @throws AtlanException on any API problems
+     */
+    public static View appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
+            throws AtlanException {
+        return (View) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
     /**
@@ -442,7 +615,23 @@ public class View extends Asset implements IView, ISQL, ICatalog, IAsset, IRefer
      * @throws AtlanException on any API problems
      */
     public static View removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
-        return (View) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
+        return removeTerms(Atlan.getDefaultClient(), qualifiedName, terms);
+    }
+
+    /**
+     * Remove terms from a View, without replacing all existing terms linked to the View.
+     * Note: this operation must make two API calls — one to retrieve the View's existing terms,
+     * and a second to remove the provided terms.
+     *
+     * @param client connectivity to the Atlan tenant from which to remove terms from the View
+     * @param qualifiedName for the View
+     * @param terms the list of terms to remove from the View, which must be referenced by GUID
+     * @return the View that was updated (note that it will NOT contain details of the resulting terms)
+     * @throws AtlanException on any API problems
+     */
+    public static View removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
+            throws AtlanException {
+        return (View) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
     /**
@@ -456,7 +645,23 @@ public class View extends Asset implements IView, ISQL, ICatalog, IAsset, IRefer
      * @return the updated View
      */
     public static View appendAtlanTags(String qualifiedName, List<String> atlanTagNames) throws AtlanException {
-        return (View) Asset.appendAtlanTags(TYPE_NAME, qualifiedName, atlanTagNames);
+        return appendAtlanTags(Atlan.getDefaultClient(), qualifiedName, atlanTagNames);
+    }
+
+    /**
+     * Add Atlan tags to a View, without replacing existing Atlan tags linked to the View.
+     * Note: this operation must make two API calls — one to retrieve the View's existing Atlan tags,
+     * and a second to append the new Atlan tags.
+     *
+     * @param client connectivity to the Atlan tenant on which to append Atlan tags to the View
+     * @param qualifiedName of the View
+     * @param atlanTagNames human-readable names of the Atlan tags to add
+     * @throws AtlanException on any API problems
+     * @return the updated View
+     */
+    public static View appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
+            throws AtlanException {
+        return (View) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 
     /**
@@ -479,7 +684,39 @@ public class View extends Asset implements IView, ISQL, ICatalog, IAsset, IRefer
             boolean removePropagationsOnDelete,
             boolean restrictLineagePropagation)
             throws AtlanException {
+        return appendAtlanTags(
+                Atlan.getDefaultClient(),
+                qualifiedName,
+                atlanTagNames,
+                propagate,
+                removePropagationsOnDelete,
+                restrictLineagePropagation);
+    }
+
+    /**
+     * Add Atlan tags to a View, without replacing existing Atlan tags linked to the View.
+     * Note: this operation must make two API calls — one to retrieve the View's existing Atlan tags,
+     * and a second to append the new Atlan tags.
+     *
+     * @param client connectivity to the Atlan tenant on which to append Atlan tags to the View
+     * @param qualifiedName of the View
+     * @param atlanTagNames human-readable names of the Atlan tags to add
+     * @param propagate whether to propagate the Atlan tag (true) or not (false)
+     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
+     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
+     * @throws AtlanException on any API problems
+     * @return the updated View
+     */
+    public static View appendAtlanTags(
+            AtlanClient client,
+            String qualifiedName,
+            List<String> atlanTagNames,
+            boolean propagate,
+            boolean removePropagationsOnDelete,
+            boolean restrictLineagePropagation)
+            throws AtlanException {
         return (View) Asset.appendAtlanTags(
+                client,
                 TYPE_NAME,
                 qualifiedName,
                 atlanTagNames,
@@ -498,7 +735,22 @@ public class View extends Asset implements IView, ISQL, ICatalog, IAsset, IRefer
      */
     @Deprecated
     public static void addAtlanTags(String qualifiedName, List<String> atlanTagNames) throws AtlanException {
-        Asset.addAtlanTags(TYPE_NAME, qualifiedName, atlanTagNames);
+        addAtlanTags(Atlan.getDefaultClient(), qualifiedName, atlanTagNames);
+    }
+
+    /**
+     * Add Atlan tags to a View.
+     *
+     * @param client connectivity to the Atlan tenant on which to add Atlan tags to the View
+     * @param qualifiedName of the View
+     * @param atlanTagNames human-readable names of the Atlan tags to add
+     * @throws AtlanException on any API problems, or if any of the Atlan tags already exist on the View
+     * @deprecated see {@link #appendAtlanTags(String, List)} instead
+     */
+    @Deprecated
+    public static void addAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
+            throws AtlanException {
+        Asset.addAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 
     /**
@@ -520,7 +772,38 @@ public class View extends Asset implements IView, ISQL, ICatalog, IAsset, IRefer
             boolean removePropagationsOnDelete,
             boolean restrictLineagePropagation)
             throws AtlanException {
+        addAtlanTags(
+                Atlan.getDefaultClient(),
+                qualifiedName,
+                atlanTagNames,
+                propagate,
+                removePropagationsOnDelete,
+                restrictLineagePropagation);
+    }
+
+    /**
+     * Add Atlan tags to a View.
+     *
+     * @param client connectivity to the Atlan tenant on which to add Atlan tags to the View
+     * @param qualifiedName of the View
+     * @param atlanTagNames human-readable names of the Atlan tags to add
+     * @param propagate whether to propagate the Atlan tag (true) or not (false)
+     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
+     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
+     * @throws AtlanException on any API problems, or if any of the Atlan tags already exist on the View
+     * @deprecated see {@link #appendAtlanTags(String, List, boolean, boolean, boolean)} instead
+     */
+    @Deprecated
+    public static void addAtlanTags(
+            AtlanClient client,
+            String qualifiedName,
+            List<String> atlanTagNames,
+            boolean propagate,
+            boolean removePropagationsOnDelete,
+            boolean restrictLineagePropagation)
+            throws AtlanException {
         Asset.addAtlanTags(
+                client,
                 TYPE_NAME,
                 qualifiedName,
                 atlanTagNames,
@@ -537,6 +820,19 @@ public class View extends Asset implements IView, ISQL, ICatalog, IAsset, IRefer
      * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the View
      */
     public static void removeAtlanTag(String qualifiedName, String atlanTagName) throws AtlanException {
-        Asset.removeAtlanTag(TYPE_NAME, qualifiedName, atlanTagName);
+        removeAtlanTag(Atlan.getDefaultClient(), qualifiedName, atlanTagName);
+    }
+
+    /**
+     * Remove an Atlan tag from a View.
+     *
+     * @param client connectivity to the Atlan tenant from which to remove an Atlan tag from a View
+     * @param qualifiedName of the View
+     * @param atlanTagName human-readable name of the Atlan tag to remove
+     * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the View
+     */
+    public static void removeAtlanTag(AtlanClient client, String qualifiedName, String atlanTagName)
+            throws AtlanException {
+        Asset.removeAtlanTag(client, TYPE_NAME, qualifiedName, atlanTagName);
     }
 }

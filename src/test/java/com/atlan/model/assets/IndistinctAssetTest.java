@@ -4,12 +4,12 @@ package com.atlan.model.assets;
 
 import static org.testng.Assert.*;
 
+import com.atlan.Atlan;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.AtlanStatus;
 import com.atlan.model.enums.CertificateStatus;
-import com.atlan.serde.Serde;
-import com.fasterxml.jackson.core.JsonProcessingException;
+import java.io.IOException;
 import org.testng.annotations.Test;
 
 public class IndistinctAssetTest {
@@ -124,16 +124,16 @@ public class IndistinctAssetTest {
             dependsOnGroups = {"IndistinctAsset.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
-        serialized = full.toJson();
+        serialized = full.toJson(Atlan.getDefaultClient());
         assertNotNull(serialized);
     }
 
     @Test(
             groups = {"IndistinctAsset.deserialize"},
             dependsOnGroups = {"IndistinctAsset.serialize"})
-    void deserialization() throws JsonProcessingException {
+    void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = Serde.mapper.readValue(serialized, IndistinctAsset.class);
+        frodo = Atlan.getDefaultClient().readValue(serialized, IndistinctAsset.class);
         assertNotNull(frodo);
     }
 
@@ -143,7 +143,7 @@ public class IndistinctAssetTest {
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
-        String backAgain = frodo.toJson();
+        String backAgain = frodo.toJson(Atlan.getDefaultClient());
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
     }
 

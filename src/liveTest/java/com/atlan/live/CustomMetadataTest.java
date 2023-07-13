@@ -7,7 +7,6 @@ import static org.testng.Assert.*;
 
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import com.atlan.Atlan;
-import com.atlan.cache.CustomMetadataCache;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.admin.AtlanGroup;
 import com.atlan.model.assets.*;
@@ -270,7 +269,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
                 .badgeCondition(BadgeCondition.of(BadgeComparisonOperator.LT, 5, BadgeConditionColor.YELLOW))
                 .badgeCondition(BadgeCondition.of(BadgeComparisonOperator.LTE, 2, BadgeConditionColor.RED))
                 .build();
-        AssetMutationResponse response = toCreate.upsert();
+        AssetMutationResponse response = toCreate.save();
         assertNotNull(response);
         assertEquals(response.getCreatedAssets().size(), 1);
         assertTrue(response.getCreatedAssets().get(0) instanceof Badge);
@@ -289,7 +288,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
                 .badgeCondition(BadgeCondition.of(BadgeComparisonOperator.EQ, "Accuracy", "#aabbcc"))
                 .badgeCondition(BadgeCondition.of(BadgeComparisonOperator.EQ, "Consistency", "#ccbbaa"))
                 .build();
-        response = toCreate.upsert();
+        response = toCreate.save();
         assertNotNull(response);
         assertEquals(response.getCreatedAssets().size(), 1);
         assertTrue(response.getCreatedAssets().get(0) instanceof Badge);
@@ -309,7 +308,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
                 .userDescription("License associated with this asset.")
                 .badgeCondition(BadgeCondition.of(BadgeComparisonOperator.EQ, "CC BY", BadgeConditionColor.GREEN))
                 .build();
-        response = toCreate.upsert();
+        response = toCreate.save();
         assertNotNull(response);
         assertEquals(response.getCreatedAssets().size(), 1);
         assertTrue(response.getCreatedAssets().get(0) instanceof Badge);
@@ -326,7 +325,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
                 .badgeCondition(BadgeCondition.of(BadgeComparisonOperator.EQ, true, BadgeConditionColor.RED))
                 .badgeCondition(BadgeCondition.of(BadgeComparisonOperator.EQ, false, BadgeConditionColor.GREEN))
                 .build();
-        response = toCreate.upsert();
+        response = toCreate.save();
         assertNotNull(response);
         assertEquals(response.getCreatedAssets().size(), 1);
         assertTrue(response.getCreatedAssets().get(0) instanceof Badge);
@@ -612,7 +611,8 @@ public class CustomMetadataTest extends AtlanLiveTest {
             groups = {"cm.update.cm.attribute.1"},
             dependsOnGroups = {"cm.create.cm.raci"})
     void removeAttribute() throws AtlanException {
-        CustomMetadataDef existing = CustomMetadataCache.getCustomMetadataDef(CM_RACI);
+        CustomMetadataDef existing =
+                Atlan.getDefaultClient().getCustomMetadataCache().getCustomMetadataDef(CM_RACI);
         List<AttributeDef> existingAttrs = existing.getAttributeDefs();
         List<AttributeDef> updatedAttrs = new ArrayList<>();
         for (AttributeDef existingAttr : existingAttrs) {
@@ -650,7 +650,8 @@ public class CustomMetadataTest extends AtlanLiveTest {
             groups = {"cm.read.cm.structure.1"},
             dependsOnGroups = {"cm.update.cm.attribute.1"})
     void retrieveStructures() throws AtlanException {
-        Map<String, List<AttributeDef>> map = CustomMetadataCache.getAllCustomAttributes();
+        Map<String, List<AttributeDef>> map =
+                Atlan.getDefaultClient().getCustomMetadataCache().getAllCustomAttributes();
         assertNotNull(map);
         assertTrue(map.size() >= 3);
         assertTrue(map.containsKey(CM_RACI));
@@ -658,7 +659,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
         assertTrue(map.containsKey(CM_QUALITY));
         AttributeDef extra = validateRACIStructure(map.get(CM_RACI), 4);
         assertNull(extra);
-        map = CustomMetadataCache.getAllCustomAttributes(true);
+        map = Atlan.getDefaultClient().getCustomMetadataCache().getAllCustomAttributes(true);
         assertNotNull(map);
         assertTrue(map.size() >= 3);
         assertTrue(map.containsKey(CM_RACI));
@@ -678,7 +679,8 @@ public class CustomMetadataTest extends AtlanLiveTest {
             groups = {"cm.update.cm.attribute.2"},
             dependsOnGroups = {"cm.read.cm.structure.1"})
     void recreateAttribute() throws AtlanException {
-        CustomMetadataDef existing = CustomMetadataCache.getCustomMetadataDef(CM_RACI);
+        CustomMetadataDef existing =
+                Atlan.getDefaultClient().getCustomMetadataCache().getCustomMetadataDef(CM_RACI);
         List<AttributeDef> existingAttrs = existing.getAttributeDefs();
         List<AttributeDef> updatedAttrs = new ArrayList<>();
         for (AttributeDef attributeDef : existingAttrs) {
@@ -714,7 +716,8 @@ public class CustomMetadataTest extends AtlanLiveTest {
             dependsOnGroups = {"cm.update.cm.attribute.2"})
     void retrieveStructureWithoutArchived2() {
         try {
-            Map<String, List<AttributeDef>> map = CustomMetadataCache.getAllCustomAttributes();
+            Map<String, List<AttributeDef>> map =
+                    Atlan.getDefaultClient().getCustomMetadataCache().getAllCustomAttributes();
             assertNotNull(map);
             assertTrue(map.size() >= 3);
             assertTrue(map.containsKey(CM_RACI));
@@ -738,7 +741,8 @@ public class CustomMetadataTest extends AtlanLiveTest {
             dependsOnGroups = {"cm.update.cm.attribute.2"})
     void retrieveStructureWithArchived() {
         try {
-            Map<String, List<AttributeDef>> map = CustomMetadataCache.getAllCustomAttributes(true);
+            Map<String, List<AttributeDef>> map =
+                    Atlan.getDefaultClient().getCustomMetadataCache().getAllCustomAttributes(true);
             assertNotNull(map);
             assertTrue(map.size() >= 3);
             assertTrue(map.containsKey(CM_RACI));
@@ -771,7 +775,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
         GlossaryTerm toUpdate = GlossaryTerm.updater(term.getQualifiedName(), term.getName(), glossary.getGuid())
                 .customMetadata(CM_RACI, cm1)
                 .build();
-        AssetMutationResponse response = toUpdate.upsertReplacingCM(false);
+        AssetMutationResponse response = toUpdate.saveReplacingCM(false);
         assertNotNull(response);
         assertTrue(response.getDeletedAssets().isEmpty());
         assertTrue(response.getCreatedAssets().isEmpty());
@@ -797,7 +801,7 @@ public class CustomMetadataTest extends AtlanLiveTest {
         GlossaryTerm toUpdate = GlossaryTerm.updater(term.getQualifiedName(), term.getName(), glossary.getGuid())
                 .removeCustomMetadata()
                 .build();
-        AssetMutationResponse response = toUpdate.upsertReplacingCM(false);
+        AssetMutationResponse response = toUpdate.saveReplacingCM(false);
         assertNotNull(response);
         assertTrue(response.getDeletedAssets().isEmpty());
         assertTrue(response.getCreatedAssets().isEmpty());

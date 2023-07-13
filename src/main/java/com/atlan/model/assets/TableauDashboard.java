@@ -2,6 +2,8 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.model.assets;
 
+import com.atlan.Atlan;
+import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
@@ -109,7 +111,19 @@ public class TableauDashboard extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the TableauDashboard does not exist or the provided GUID is not a TableauDashboard
      */
     public static TableauDashboard retrieveByGuid(String guid) throws AtlanException {
-        Asset asset = Asset.retrieveFull(guid);
+        return retrieveByGuid(Atlan.getDefaultClient(), guid);
+    }
+
+    /**
+     * Retrieves a TableauDashboard by its GUID, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param guid of the TableauDashboard to retrieve
+     * @return the requested full TableauDashboard, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the TableauDashboard does not exist or the provided GUID is not a TableauDashboard
+     */
+    public static TableauDashboard retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
+        Asset asset = Asset.retrieveFull(client, guid);
         if (asset == null) {
             throw new NotFoundException(ErrorCode.ASSET_NOT_FOUND_BY_GUID, guid);
         } else if (asset instanceof TableauDashboard) {
@@ -127,7 +141,20 @@ public class TableauDashboard extends Asset
      * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the TableauDashboard does not exist
      */
     public static TableauDashboard retrieveByQualifiedName(String qualifiedName) throws AtlanException {
-        Asset asset = Asset.retrieveFull(TYPE_NAME, qualifiedName);
+        return retrieveByQualifiedName(Atlan.getDefaultClient(), qualifiedName);
+    }
+
+    /**
+     * Retrieves a TableauDashboard by its qualifiedName, complete with all of its relationships.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the asset
+     * @param qualifiedName of the TableauDashboard to retrieve
+     * @return the requested full TableauDashboard, complete with all of its relationships
+     * @throws AtlanException on any error during the API invocation, such as the {@link NotFoundException} if the TableauDashboard does not exist
+     */
+    public static TableauDashboard retrieveByQualifiedName(AtlanClient client, String qualifiedName)
+            throws AtlanException {
+        Asset asset = Asset.retrieveFull(client, TYPE_NAME, qualifiedName);
         if (asset instanceof TableauDashboard) {
             return (TableauDashboard) asset;
         } else {
@@ -143,7 +170,19 @@ public class TableauDashboard extends Asset
      * @throws AtlanException on any API problems
      */
     public static boolean restore(String qualifiedName) throws AtlanException {
-        return Asset.restore(TYPE_NAME, qualifiedName);
+        return restore(Atlan.getDefaultClient(), qualifiedName);
+    }
+
+    /**
+     * Restore the archived (soft-deleted) TableauDashboard to active.
+     *
+     * @param client connectivity to the Atlan tenant on which to restore the asset
+     * @param qualifiedName for the TableauDashboard
+     * @return true if the TableauDashboard is now active, and false otherwise
+     * @throws AtlanException on any API problems
+     */
+    public static boolean restore(AtlanClient client, String qualifiedName) throws AtlanException {
+        return Asset.restore(client, TYPE_NAME, qualifiedName);
     }
 
     /**
@@ -189,7 +228,21 @@ public class TableauDashboard extends Asset
      * @throws AtlanException on any API problems
      */
     public static TableauDashboard removeDescription(String qualifiedName, String name) throws AtlanException {
-        return (TableauDashboard) Asset.removeDescription(updater(qualifiedName, name));
+        return removeDescription(Atlan.getDefaultClient(), qualifiedName, name);
+    }
+
+    /**
+     * Remove the system description from a TableauDashboard.
+     *
+     * @param client connectivity to the Atlan tenant on which to remove the asset's description
+     * @param qualifiedName of the TableauDashboard
+     * @param name of the TableauDashboard
+     * @return the updated TableauDashboard, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static TableauDashboard removeDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
+        return (TableauDashboard) Asset.removeDescription(client, updater(qualifiedName, name));
     }
 
     /**
@@ -201,7 +254,21 @@ public class TableauDashboard extends Asset
      * @throws AtlanException on any API problems
      */
     public static TableauDashboard removeUserDescription(String qualifiedName, String name) throws AtlanException {
-        return (TableauDashboard) Asset.removeUserDescription(updater(qualifiedName, name));
+        return removeUserDescription(Atlan.getDefaultClient(), qualifiedName, name);
+    }
+
+    /**
+     * Remove the user's description from a TableauDashboard.
+     *
+     * @param client connectivity to the Atlan tenant on which to remove the asset's description
+     * @param qualifiedName of the TableauDashboard
+     * @param name of the TableauDashboard
+     * @return the updated TableauDashboard, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static TableauDashboard removeUserDescription(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
+        return (TableauDashboard) Asset.removeUserDescription(client, updater(qualifiedName, name));
     }
 
     /**
@@ -213,7 +280,21 @@ public class TableauDashboard extends Asset
      * @throws AtlanException on any API problems
      */
     public static TableauDashboard removeOwners(String qualifiedName, String name) throws AtlanException {
-        return (TableauDashboard) Asset.removeOwners(updater(qualifiedName, name));
+        return removeOwners(Atlan.getDefaultClient(), qualifiedName, name);
+    }
+
+    /**
+     * Remove the owners from a TableauDashboard.
+     *
+     * @param client connectivity to the Atlan tenant from which to remove the TableauDashboard's owners
+     * @param qualifiedName of the TableauDashboard
+     * @param name of the TableauDashboard
+     * @return the updated TableauDashboard, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static TableauDashboard removeOwners(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
+        return (TableauDashboard) Asset.removeOwners(client, updater(qualifiedName, name));
     }
 
     /**
@@ -227,7 +308,24 @@ public class TableauDashboard extends Asset
      */
     public static TableauDashboard updateCertificate(
             String qualifiedName, CertificateStatus certificate, String message) throws AtlanException {
-        return (TableauDashboard) Asset.updateCertificate(builder(), TYPE_NAME, qualifiedName, certificate, message);
+        return updateCertificate(Atlan.getDefaultClient(), qualifiedName, certificate, message);
+    }
+
+    /**
+     * Update the certificate on a TableauDashboard.
+     *
+     * @param client connectivity to the Atlan tenant on which to update the TableauDashboard's certificate
+     * @param qualifiedName of the TableauDashboard
+     * @param certificate to use
+     * @param message (optional) message, or null if no message
+     * @return the updated TableauDashboard, or null if the update failed
+     * @throws AtlanException on any API problems
+     */
+    public static TableauDashboard updateCertificate(
+            AtlanClient client, String qualifiedName, CertificateStatus certificate, String message)
+            throws AtlanException {
+        return (TableauDashboard)
+                Asset.updateCertificate(client, builder(), TYPE_NAME, qualifiedName, certificate, message);
     }
 
     /**
@@ -239,7 +337,21 @@ public class TableauDashboard extends Asset
      * @throws AtlanException on any API problems
      */
     public static TableauDashboard removeCertificate(String qualifiedName, String name) throws AtlanException {
-        return (TableauDashboard) Asset.removeCertificate(updater(qualifiedName, name));
+        return removeCertificate(Atlan.getDefaultClient(), qualifiedName, name);
+    }
+
+    /**
+     * Remove the certificate from a TableauDashboard.
+     *
+     * @param client connectivity to the Atlan tenant from which to remove the TableauDashboard's certificate
+     * @param qualifiedName of the TableauDashboard
+     * @param name of the TableauDashboard
+     * @return the updated TableauDashboard, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static TableauDashboard removeCertificate(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
+        return (TableauDashboard) Asset.removeCertificate(client, updater(qualifiedName, name));
     }
 
     /**
@@ -254,7 +366,25 @@ public class TableauDashboard extends Asset
      */
     public static TableauDashboard updateAnnouncement(
             String qualifiedName, AtlanAnnouncementType type, String title, String message) throws AtlanException {
-        return (TableauDashboard) Asset.updateAnnouncement(builder(), TYPE_NAME, qualifiedName, type, title, message);
+        return updateAnnouncement(Atlan.getDefaultClient(), qualifiedName, type, title, message);
+    }
+
+    /**
+     * Update the announcement on a TableauDashboard.
+     *
+     * @param client connectivity to the Atlan tenant on which to update the TableauDashboard's announcement
+     * @param qualifiedName of the TableauDashboard
+     * @param type type of announcement to set
+     * @param title (optional) title of the announcement to set (or null for no title)
+     * @param message (optional) message of the announcement to set (or null for no message)
+     * @return the result of the update, or null if the update failed
+     * @throws AtlanException on any API problems
+     */
+    public static TableauDashboard updateAnnouncement(
+            AtlanClient client, String qualifiedName, AtlanAnnouncementType type, String title, String message)
+            throws AtlanException {
+        return (TableauDashboard)
+                Asset.updateAnnouncement(client, builder(), TYPE_NAME, qualifiedName, type, title, message);
     }
 
     /**
@@ -266,7 +396,21 @@ public class TableauDashboard extends Asset
      * @throws AtlanException on any API problems
      */
     public static TableauDashboard removeAnnouncement(String qualifiedName, String name) throws AtlanException {
-        return (TableauDashboard) Asset.removeAnnouncement(updater(qualifiedName, name));
+        return removeAnnouncement(Atlan.getDefaultClient(), qualifiedName, name);
+    }
+
+    /**
+     * Remove the announcement from a TableauDashboard.
+     *
+     * @param client connectivity to the Atlan client from which to remove the TableauDashboard's announcement
+     * @param qualifiedName of the TableauDashboard
+     * @param name of the TableauDashboard
+     * @return the updated TableauDashboard, or null if the removal failed
+     * @throws AtlanException on any API problems
+     */
+    public static TableauDashboard removeAnnouncement(AtlanClient client, String qualifiedName, String name)
+            throws AtlanException {
+        return (TableauDashboard) Asset.removeAnnouncement(client, updater(qualifiedName, name));
     }
 
     /**
@@ -280,7 +424,22 @@ public class TableauDashboard extends Asset
      */
     public static TableauDashboard replaceTerms(String qualifiedName, String name, List<IGlossaryTerm> terms)
             throws AtlanException {
-        return (TableauDashboard) Asset.replaceTerms(updater(qualifiedName, name), terms);
+        return replaceTerms(Atlan.getDefaultClient(), qualifiedName, name, terms);
+    }
+
+    /**
+     * Replace the terms linked to the TableauDashboard.
+     *
+     * @param client connectivity to the Atlan tenant on which to replace the TableauDashboard's assigned terms
+     * @param qualifiedName for the TableauDashboard
+     * @param name human-readable name of the TableauDashboard
+     * @param terms the list of terms to replace on the TableauDashboard, or null to remove all terms from the TableauDashboard
+     * @return the TableauDashboard that was updated (note that it will NOT contain details of the replaced terms)
+     * @throws AtlanException on any API problems
+     */
+    public static TableauDashboard replaceTerms(
+            AtlanClient client, String qualifiedName, String name, List<IGlossaryTerm> terms) throws AtlanException {
+        return (TableauDashboard) Asset.replaceTerms(client, updater(qualifiedName, name), terms);
     }
 
     /**
@@ -294,7 +453,23 @@ public class TableauDashboard extends Asset
      * @throws AtlanException on any API problems
      */
     public static TableauDashboard appendTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
-        return (TableauDashboard) Asset.appendTerms(TYPE_NAME, qualifiedName, terms);
+        return appendTerms(Atlan.getDefaultClient(), qualifiedName, terms);
+    }
+
+    /**
+     * Link additional terms to the TableauDashboard, without replacing existing terms linked to the TableauDashboard.
+     * Note: this operation must make two API calls — one to retrieve the TableauDashboard's existing terms,
+     * and a second to append the new terms.
+     *
+     * @param client connectivity to the Atlan tenant on which to append terms to the TableauDashboard
+     * @param qualifiedName for the TableauDashboard
+     * @param terms the list of terms to append to the TableauDashboard
+     * @return the TableauDashboard that was updated  (note that it will NOT contain details of the appended terms)
+     * @throws AtlanException on any API problems
+     */
+    public static TableauDashboard appendTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
+            throws AtlanException {
+        return (TableauDashboard) Asset.appendTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
     /**
@@ -308,7 +483,23 @@ public class TableauDashboard extends Asset
      * @throws AtlanException on any API problems
      */
     public static TableauDashboard removeTerms(String qualifiedName, List<IGlossaryTerm> terms) throws AtlanException {
-        return (TableauDashboard) Asset.removeTerms(TYPE_NAME, qualifiedName, terms);
+        return removeTerms(Atlan.getDefaultClient(), qualifiedName, terms);
+    }
+
+    /**
+     * Remove terms from a TableauDashboard, without replacing all existing terms linked to the TableauDashboard.
+     * Note: this operation must make two API calls — one to retrieve the TableauDashboard's existing terms,
+     * and a second to remove the provided terms.
+     *
+     * @param client connectivity to the Atlan tenant from which to remove terms from the TableauDashboard
+     * @param qualifiedName for the TableauDashboard
+     * @param terms the list of terms to remove from the TableauDashboard, which must be referenced by GUID
+     * @return the TableauDashboard that was updated (note that it will NOT contain details of the resulting terms)
+     * @throws AtlanException on any API problems
+     */
+    public static TableauDashboard removeTerms(AtlanClient client, String qualifiedName, List<IGlossaryTerm> terms)
+            throws AtlanException {
+        return (TableauDashboard) Asset.removeTerms(client, TYPE_NAME, qualifiedName, terms);
     }
 
     /**
@@ -323,7 +514,23 @@ public class TableauDashboard extends Asset
      */
     public static TableauDashboard appendAtlanTags(String qualifiedName, List<String> atlanTagNames)
             throws AtlanException {
-        return (TableauDashboard) Asset.appendAtlanTags(TYPE_NAME, qualifiedName, atlanTagNames);
+        return appendAtlanTags(Atlan.getDefaultClient(), qualifiedName, atlanTagNames);
+    }
+
+    /**
+     * Add Atlan tags to a TableauDashboard, without replacing existing Atlan tags linked to the TableauDashboard.
+     * Note: this operation must make two API calls — one to retrieve the TableauDashboard's existing Atlan tags,
+     * and a second to append the new Atlan tags.
+     *
+     * @param client connectivity to the Atlan tenant on which to append Atlan tags to the TableauDashboard
+     * @param qualifiedName of the TableauDashboard
+     * @param atlanTagNames human-readable names of the Atlan tags to add
+     * @throws AtlanException on any API problems
+     * @return the updated TableauDashboard
+     */
+    public static TableauDashboard appendAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
+            throws AtlanException {
+        return (TableauDashboard) Asset.appendAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 
     /**
@@ -346,7 +553,39 @@ public class TableauDashboard extends Asset
             boolean removePropagationsOnDelete,
             boolean restrictLineagePropagation)
             throws AtlanException {
+        return appendAtlanTags(
+                Atlan.getDefaultClient(),
+                qualifiedName,
+                atlanTagNames,
+                propagate,
+                removePropagationsOnDelete,
+                restrictLineagePropagation);
+    }
+
+    /**
+     * Add Atlan tags to a TableauDashboard, without replacing existing Atlan tags linked to the TableauDashboard.
+     * Note: this operation must make two API calls — one to retrieve the TableauDashboard's existing Atlan tags,
+     * and a second to append the new Atlan tags.
+     *
+     * @param client connectivity to the Atlan tenant on which to append Atlan tags to the TableauDashboard
+     * @param qualifiedName of the TableauDashboard
+     * @param atlanTagNames human-readable names of the Atlan tags to add
+     * @param propagate whether to propagate the Atlan tag (true) or not (false)
+     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
+     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
+     * @throws AtlanException on any API problems
+     * @return the updated TableauDashboard
+     */
+    public static TableauDashboard appendAtlanTags(
+            AtlanClient client,
+            String qualifiedName,
+            List<String> atlanTagNames,
+            boolean propagate,
+            boolean removePropagationsOnDelete,
+            boolean restrictLineagePropagation)
+            throws AtlanException {
         return (TableauDashboard) Asset.appendAtlanTags(
+                client,
                 TYPE_NAME,
                 qualifiedName,
                 atlanTagNames,
@@ -365,7 +604,22 @@ public class TableauDashboard extends Asset
      */
     @Deprecated
     public static void addAtlanTags(String qualifiedName, List<String> atlanTagNames) throws AtlanException {
-        Asset.addAtlanTags(TYPE_NAME, qualifiedName, atlanTagNames);
+        addAtlanTags(Atlan.getDefaultClient(), qualifiedName, atlanTagNames);
+    }
+
+    /**
+     * Add Atlan tags to a TableauDashboard.
+     *
+     * @param client connectivity to the Atlan tenant on which to add Atlan tags to the TableauDashboard
+     * @param qualifiedName of the TableauDashboard
+     * @param atlanTagNames human-readable names of the Atlan tags to add
+     * @throws AtlanException on any API problems, or if any of the Atlan tags already exist on the TableauDashboard
+     * @deprecated see {@link #appendAtlanTags(String, List)} instead
+     */
+    @Deprecated
+    public static void addAtlanTags(AtlanClient client, String qualifiedName, List<String> atlanTagNames)
+            throws AtlanException {
+        Asset.addAtlanTags(client, TYPE_NAME, qualifiedName, atlanTagNames);
     }
 
     /**
@@ -387,7 +641,38 @@ public class TableauDashboard extends Asset
             boolean removePropagationsOnDelete,
             boolean restrictLineagePropagation)
             throws AtlanException {
+        addAtlanTags(
+                Atlan.getDefaultClient(),
+                qualifiedName,
+                atlanTagNames,
+                propagate,
+                removePropagationsOnDelete,
+                restrictLineagePropagation);
+    }
+
+    /**
+     * Add Atlan tags to a TableauDashboard.
+     *
+     * @param client connectivity to the Atlan tenant on which to add Atlan tags to the TableauDashboard
+     * @param qualifiedName of the TableauDashboard
+     * @param atlanTagNames human-readable names of the Atlan tags to add
+     * @param propagate whether to propagate the Atlan tag (true) or not (false)
+     * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
+     * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
+     * @throws AtlanException on any API problems, or if any of the Atlan tags already exist on the TableauDashboard
+     * @deprecated see {@link #appendAtlanTags(String, List, boolean, boolean, boolean)} instead
+     */
+    @Deprecated
+    public static void addAtlanTags(
+            AtlanClient client,
+            String qualifiedName,
+            List<String> atlanTagNames,
+            boolean propagate,
+            boolean removePropagationsOnDelete,
+            boolean restrictLineagePropagation)
+            throws AtlanException {
         Asset.addAtlanTags(
+                client,
                 TYPE_NAME,
                 qualifiedName,
                 atlanTagNames,
@@ -404,6 +689,19 @@ public class TableauDashboard extends Asset
      * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the TableauDashboard
      */
     public static void removeAtlanTag(String qualifiedName, String atlanTagName) throws AtlanException {
-        Asset.removeAtlanTag(TYPE_NAME, qualifiedName, atlanTagName);
+        removeAtlanTag(Atlan.getDefaultClient(), qualifiedName, atlanTagName);
+    }
+
+    /**
+     * Remove an Atlan tag from a TableauDashboard.
+     *
+     * @param client connectivity to the Atlan tenant from which to remove an Atlan tag from a TableauDashboard
+     * @param qualifiedName of the TableauDashboard
+     * @param atlanTagName human-readable name of the Atlan tag to remove
+     * @throws AtlanException on any API problems, or if the Atlan tag does not exist on the TableauDashboard
+     */
+    public static void removeAtlanTag(AtlanClient client, String qualifiedName, String atlanTagName)
+            throws AtlanException {
+        Asset.removeAtlanTag(client, TYPE_NAME, qualifiedName, atlanTagName);
     }
 }

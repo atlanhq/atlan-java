@@ -4,10 +4,10 @@ package com.atlan.model.admin;
 
 import static org.testng.Assert.*;
 
+import com.atlan.Atlan;
 import com.atlan.model.assets.GlossaryTerm;
 import com.atlan.model.enums.*;
-import com.atlan.serde.Serde;
-import com.fasterxml.jackson.core.JsonProcessingException;
+import java.io.IOException;
 import org.testng.annotations.Test;
 
 public class AtlanRequestTest {
@@ -73,7 +73,7 @@ public class AtlanRequestTest {
     @Test(groups = {"AtlanRequest.serialize"})
     void serialization() {
         assertNotNull(full);
-        serialized = full.toJson();
+        serialized = full.toJson(Atlan.getDefaultClient());
         assertNotNull(serialized);
         assertEquals(full.hashCode(), HASH, "Object is mutated by serialization.");
     }
@@ -81,9 +81,9 @@ public class AtlanRequestTest {
     @Test(
             groups = {"AtlanRequest.deserialize"},
             dependsOnGroups = {"AtlanRequest.serialize"})
-    void deserialization() throws JsonProcessingException {
+    void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = Serde.mapper.readValue(serialized, AtlanRequest.class);
+        frodo = Atlan.getDefaultClient().readValue(serialized, AtlanRequest.class);
         assertNotNull(frodo);
     }
 
@@ -93,7 +93,7 @@ public class AtlanRequestTest {
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
-        String backAgain = frodo.toJson();
+        String backAgain = frodo.toJson(Atlan.getDefaultClient());
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
     }
 

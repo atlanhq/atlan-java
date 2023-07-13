@@ -2,6 +2,7 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.serde;
 
+import com.atlan.AtlanClient;
 import com.atlan.model.search.AuditDetail;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
@@ -18,12 +19,15 @@ public class AuditDetailDeserializer extends StdDeserializer<AuditDetail> {
 
     private static final long serialVersionUID = 2L;
 
-    public AuditDetailDeserializer() {
-        this(null);
+    private final AtlanClient client;
+
+    public AuditDetailDeserializer(AtlanClient client) {
+        this(AuditDetail.class, client);
     }
 
-    public AuditDetailDeserializer(Class<?> t) {
+    public AuditDetailDeserializer(Class<?> t, AtlanClient client) {
         super(t);
+        this.client = client;
     }
 
     /**
@@ -43,17 +47,19 @@ public class AuditDetailDeserializer extends StdDeserializer<AuditDetail> {
         JsonNode root = parser.getCodec().readTree(parser);
         JsonNode guid = root.get("guid"); // only exists on entities
         JsonNode attributes = root.get("attributes"); // exists on entities and custom metadata
+        // TODO: Cache instances of these deserializers by baseUrl and retrieve them when
+        //  needed, rather than instantiating entirely new ones every time
         if (guid != null && guid.isTextual()) {
             // Delegate to entity deserialization
-            AssetDeserializer entity = new AssetDeserializer();
+            AssetDeserializer entity = new AssetDeserializer(client);
             return entity.deserialize(root);
         } else if (attributes != null) {
             // Delegate to the custom metadata deserialization
-            CustomMetadataAuditDeserializer cm = new CustomMetadataAuditDeserializer();
+            CustomMetadataAuditDeserializer cm = new CustomMetadataAuditDeserializer(client);
             return cm.deserialize(root);
         } else {
             // Delegate to Atlan tag deserialization
-            AtlanTagDeserializer atlanTag = new AtlanTagDeserializer();
+            AtlanTagDeserializer atlanTag = new AtlanTagDeserializer(client);
             return atlanTag.deserialize(root);
         }
     }

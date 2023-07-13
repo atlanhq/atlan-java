@@ -4,15 +4,15 @@ package ${packageRoot}.assets;
 
 import static org.testng.Assert.*;
 
+import com.atlan.Atlan;
 import com.atlan.model.assets.Meaning;
 import com.atlan.model.core.AtlanTag;
 import com.atlan.model.core.CustomMetadataAttributes;
 import com.atlan.model.enums.*;
 import com.atlan.model.structs.*;
-import com.atlan.serde.Serde;
 import ${packageRoot}.enums.*;
 import ${packageRoot}.structs.*;
-import com.fasterxml.jackson.core.JsonProcessingException;
+import java.io.IOException;
 import java.util.*;
 import org.testng.annotations.Test;
 
@@ -80,7 +80,7 @@ public class ${className}Test {
             dependsOnGroups = {"${className}.builderEquivalency"})
     void serialization() {
         assertNotNull(full);
-        serialized = full.toJson();
+        serialized = full.toJson(Atlan.getDefaultClient());
         assertNotNull(serialized);
         assertEquals(full.hashCode(), hash, "Serialization mutated the original value,");
     }
@@ -88,9 +88,9 @@ public class ${className}Test {
     @Test(
             groups = {"${className}.deserialize"},
             dependsOnGroups = {"${className}.serialize"})
-    void deserialization() throws JsonProcessingException {
+    void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = Serde.mapper.readValue(serialized, ${className}.class);
+        frodo = Atlan.getDefaultClient().readValue(serialized, ${className}.class);
         assertNotNull(frodo);
     }
 
@@ -100,7 +100,7 @@ public class ${className}Test {
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
-        String backAgain = frodo.toJson();
+        String backAgain = frodo.toJson(Atlan.getDefaultClient());
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
     }
 

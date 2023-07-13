@@ -139,6 +139,7 @@ Asset,Base class for all assets.,assetDbtPackageName,TBC
 Asset,Base class for all assets.,assetDbtJobName,TBC
 Asset,Base class for all assets.,assetDbtJobSchedule,TBC
 Asset,Base class for all assets.,assetDbtJobStatus,TBC
+Asset,Base class for all assets.,assetDbtTestStatus,All associated dbt test statuses
 Asset,Base class for all assets.,assetDbtJobScheduleCronHumanized,TBC
 Asset,Base class for all assets.,assetDbtJobLastRun,TBC
 Asset,Base class for all assets.,assetDbtJobLastRunUrl,TBC
@@ -395,20 +396,35 @@ DbtModel,Instance of a dbt model in Atlan.,dbtModelExecutionTime,TBC
 DbtModel,Instance of a dbt model in Atlan.,dbtModelRunGeneratedAt,TBC
 DbtModel,Instance of a dbt model in Atlan.,dbtModelRunElapsedTime,TBC
 DbtModel,Instance of a dbt model in Atlan.,dbtMetrics,TBC
+DbtModel,Instance of a dbt model in Atlan.,dbtTests,TBC
 DbtModel,Instance of a dbt model in Atlan.,dbtModelSqlAssets,TBC
 DbtModel,Instance of a dbt model in Atlan.,dbtModelColumns,TBC
 DbtModel,Instance of a dbt model in Atlan.,sqlAsset,TBC
 DbtModelColumn,Instance of a column within a dbt model in Atlan.,dbtModelQualifiedName,TBC
 DbtModelColumn,Instance of a column within a dbt model in Atlan.,dbtModelColumnDataType,TBC
 DbtModelColumn,Instance of a column within a dbt model in Atlan.,dbtModelColumnOrder,TBC
-DbtModelColumn,Instance of a column within a dbt model in Atlan.,dbtModelColumnSqlColumns,TBC
 DbtModelColumn,Instance of a column within a dbt model in Atlan.,sqlColumn,TBC
 DbtModelColumn,Instance of a column within a dbt model in Atlan.,dbtModel,TBC
+DbtModelColumn,Instance of a column within a dbt model in Atlan.,dbtModelColumnSqlColumns,TBC
+DbtModelColumn,Instance of a column within a dbt model in Atlan.,dbtTests,TBC
 DbtProcess,Instance of a lineage process for dbt in Atlan.,dbtProcessJobStatus,TBC
 DbtSource,Instance of a dbt source asset in Atlan.,dbtState,TBC
 DbtSource,Instance of a dbt source asset in Atlan.,dbtFreshnessCriteria,TBC
+DbtSource,Instance of a dbt source asset in Atlan.,dbtTests,TBC
 DbtSource,Instance of a dbt source asset in Atlan.,sqlAssets,TBC
 DbtSource,Instance of a dbt source asset in Atlan.,sqlAsset,TBC
+DbtTest,dbt Test Assets,dbtTestStatus,"Status provides the details of the results of a test. For errors, it reads ""ERROR""."
+DbtTest,dbt Test Assets,dbtTestState,"The test results. Can be one of, in order of severity, ""error"", ""fail"", ""warn"", ""pass"""
+DbtTest,dbt Test Assets,dbtTestError,"The error message in the case of state being ""error"""
+DbtTest,dbt Test Assets,dbtTestRawSQL,The raw sql of a test
+DbtTest,dbt Test Assets,dbtTestCompiledSQL,The compiled sql of a test
+DbtTest,dbt Test Assets,dbtTestRawCode,The raw code of a test ( tests in dbt can be defined using python )
+DbtTest,dbt Test Assets,dbtTestCompiledCode,The compiled code of a test ( tests in dbt can be defined using python )
+DbtTest,dbt Test Assets,dbtTestLanguage,"The language in which a dbt test is written. Example: sql,python"
+DbtTest,dbt Test Assets,dbtSources,TBC
+DbtTest,dbt Test Assets,sqlAssets,TBC
+DbtTest,dbt Test Assets,dbtModels,TBC
+DbtTest,dbt Test Assets,dbtModelColumns,TBC
 File,Instance of a file in Atlan.,fileType,Type of the file
 File,Instance of a file in Atlan.,filePath,URL giving the online location where the file can be accessed.
 File,Instance of a file in Atlan.,fileAssets,TBC
@@ -865,29 +881,29 @@ Query,Instance of a query in Atlan.,views,TBC
 QuickSight,Base class for QuickSight assets.,quickSightId,TBC
 QuickSight,Base class for QuickSight assets.,quickSightSheetId,TBC
 QuickSight,Base class for QuickSight assets.,quickSightSheetName,TBC
-QuickSightAnalysis,Instance of a QuickSight Analysis asset in Atlan.,quickSightAnalysisStatus,TBC
-QuickSightAnalysis,Instance of a QuickSight Analysis asset in Atlan.,quickSightAnalysisCalculatedFields,TBC
-QuickSightAnalysis,Instance of a QuickSight Analysis asset in Atlan.,quickSightAnalysisParameterDeclarations,TBC
-QuickSightAnalysis,Instance of a QuickSight Analysis asset in Atlan.,quickSightAnalysisFilterGroups,TBC
+QuickSightAnalysis,Instance of a QuickSight Analysis asset in Atlan.,quickSightAnalysisStatus,Status of quicksight analysis
+QuickSightAnalysis,Instance of a QuickSight Analysis asset in Atlan.,quickSightAnalysisCalculatedFields,"Calculated fields of quicksight analysis "
+QuickSightAnalysis,Instance of a QuickSight Analysis asset in Atlan.,quickSightAnalysisParameterDeclarations,"parameters used for quicksight analysis "
+QuickSightAnalysis,Instance of a QuickSight Analysis asset in Atlan.,quickSightAnalysisFilterGroups,Filter groups used for quicksight analysis
 QuickSightAnalysis,Instance of a QuickSight Analysis asset in Atlan.,quickSightAnalysisVisuals,TBC
 QuickSightAnalysis,Instance of a QuickSight Analysis asset in Atlan.,quickSightAnalysisFolders,TBC
-QuickSightAnalysisVisual,Instance of a QuickSight Analysis sheet visual in Atlan.,quickSightAnalysisQualifiedName,TBC
+QuickSightAnalysisVisual,Instance of a QuickSight Analysis sheet visual in Atlan.,quickSightAnalysisQualifiedName,Qualified name of the QuickSight Analysis
 QuickSightAnalysisVisual,Instance of a QuickSight Analysis sheet visual in Atlan.,quickSightAnalysis,TBC
-QuickSightDashboard,Instance of a QuickSight Dashboard in Atlan.,quickSightDashboardPublishedVersionNumber,TBC
-QuickSightDashboard,Instance of a QuickSight Dashboard in Atlan.,quickSightDashboardLastPublishedTime,TBC
+QuickSightDashboard,Instance of a QuickSight Dashboard in Atlan.,quickSightDashboardPublishedVersionNumber,Version number of the dashboard published
+QuickSightDashboard,Instance of a QuickSight Dashboard in Atlan.,quickSightDashboardLastPublishedTime,Last published time of dashboard
 QuickSightDashboard,Instance of a QuickSight Dashboard in Atlan.,quickSightDashboardFolders,TBC
 QuickSightDashboard,Instance of a QuickSight Dashboard in Atlan.,quickSightDashboardVisuals,TBC
 QuickSightDashboardVisual,Instance of a QuickSight Dashboard sheet visual in Atlan.,quickSightDashboardQualifiedName,TBC
 QuickSightDashboardVisual,Instance of a QuickSight Dashboard sheet visual in Atlan.,quickSightDashboard,TBC
-QuickSightDataset,Instance of a QuickSight Dataset in Atlan.,quickSightDatasetImportMode,TBC
-QuickSightDataset,Instance of a QuickSight Dataset in Atlan.,quickSightDatasetColumnCount,TBC
+QuickSightDataset,Instance of a QuickSight Dataset in Atlan.,quickSightDatasetImportMode,Quicksight dataset importMode indicates a value that indicates whether you want to import the data into SPICE
+QuickSightDataset,Instance of a QuickSight Dataset in Atlan.,quickSightDatasetColumnCount,Quicksight dataset column count indicates number of columns present in the dataset
 QuickSightDataset,Instance of a QuickSight Dataset in Atlan.,quickSightDatasetFolders,TBC
 QuickSightDataset,Instance of a QuickSight Dataset in Atlan.,quickSightDatasetFields,TBC
-QuickSightDatasetField,Instance of a QuickSight Dataset field in Atlan.,quickSightDatasetFieldType,TBC
-QuickSightDatasetField,Instance of a QuickSight Dataset field in Atlan.,quickSightDatasetQualifiedName,TBC
+QuickSightDatasetField,Instance of a QuickSight Dataset field in Atlan.,quickSightDatasetFieldType,Datatype of column in the dataset
+QuickSightDatasetField,Instance of a QuickSight Dataset field in Atlan.,quickSightDatasetQualifiedName,Qualified name of the parent dataset
 QuickSightDatasetField,Instance of a QuickSight Dataset field in Atlan.,quickSightDataset,TBC
-QuickSightFolder,Instance of a QuickSight Folder in Atlan.,quickSightFolderType,TBC
-QuickSightFolder,Instance of a QuickSight Folder in Atlan.,quickSightFolderHierarchy,TBC
+QuickSightFolder,Instance of a QuickSight Folder in Atlan.,quickSightFolderType,Shared or private type of folder
+QuickSightFolder,Instance of a QuickSight Folder in Atlan.,quickSightFolderHierarchy,Detailed path of the folder
 QuickSightFolder,Instance of a QuickSight Folder in Atlan.,quickSightDashboards,TBC
 QuickSightFolder,Instance of a QuickSight Folder in Atlan.,quickSightAnalyses,TBC
 QuickSightFolder,Instance of a QuickSight Folder in Atlan.,quickSightDatasets,TBC
@@ -949,6 +965,7 @@ SQL,Base class for SQL assets.,dbtSources,TBC
 SQL,Base class for SQL assets.,sqlDbtModels,TBC
 SQL,Base class for SQL assets.,sqlDBTSources,TBC
 SQL,Base class for SQL assets.,dbtModels,TBC
+SQL,Base class for SQL assets.,dbtTests,TBC
 Salesforce,Base class for Salesforce assets.,organizationQualifiedName,TBC
 Salesforce,Base class for Salesforce assets.,apiName,TBC
 SalesforceDashboard,Instance of a Salesforce dashboard in Atlan.,sourceId,ID of the dashboard in Salesforce.

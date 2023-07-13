@@ -23,17 +23,23 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class CustomMetadataCache {
 
-    private static Map<String, CustomMetadataDef> cacheById = new ConcurrentHashMap<>();
-    private static Map<String, String> mapIdToName = new ConcurrentHashMap<>();
-    private static Map<String, String> mapNameToId = new ConcurrentHashMap<>();
+    private Map<String, CustomMetadataDef> cacheById = new ConcurrentHashMap<>();
+    private Map<String, String> mapIdToName = new ConcurrentHashMap<>();
+    private Map<String, String> mapNameToId = new ConcurrentHashMap<>();
 
-    private static Map<String, Map<String, String>> mapAttrIdToName = new ConcurrentHashMap<>();
-    private static Map<String, Map<String, String>> mapAttrNameToId = new ConcurrentHashMap<>();
-    private static Map<String, String> archivedAttrIds = new ConcurrentHashMap<>();
+    private Map<String, Map<String, String>> mapAttrIdToName = new ConcurrentHashMap<>();
+    private Map<String, Map<String, String>> mapAttrNameToId = new ConcurrentHashMap<>();
+    private Map<String, String> archivedAttrIds = new ConcurrentHashMap<>();
 
-    public static synchronized void refreshCache() throws AtlanException {
+    private final TypeDefsEndpoint typeDefsEndpoint;
+
+    public CustomMetadataCache(TypeDefsEndpoint typeDefsEndpoint) {
+        this.typeDefsEndpoint = typeDefsEndpoint;
+    }
+
+    public synchronized void refreshCache() throws AtlanException {
         log.debug("Refreshing cache of custom metadata...");
-        TypeDefResponse response = TypeDefsEndpoint.getTypeDefs(AtlanTypeCategory.CUSTOM_METADATA);
+        TypeDefResponse response = typeDefsEndpoint.list(AtlanTypeCategory.CUSTOM_METADATA);
         List<CustomMetadataDef> customMetadata;
         if (response != null) {
             customMetadata = response.getCustomMetadataDefs();
@@ -82,7 +88,7 @@ public class CustomMetadataCache {
      * @throws NotFoundException if the custom metadata cannot be found (does not exist) in Atlan
      * @throws InvalidRequestException if no name was provided for the custom metadata to retrieve
      */
-    public static String getIdForName(String name) throws AtlanException {
+    public String getIdForName(String name) throws AtlanException {
         if (name != null && name.length() > 0) {
             String cmId = mapNameToId.get(name);
             if (cmId == null) {
@@ -108,7 +114,7 @@ public class CustomMetadataCache {
      * @throws NotFoundException if the custom metadata cannot be found (does not exist) in Atlan
      * @throws InvalidRequestException if no name was provided for the custom metadata to retrieve
      */
-    public static String getNameForId(String id) throws AtlanException {
+    public String getNameForId(String id) throws AtlanException {
         if (id != null && id.length() > 0) {
             String cmName = mapIdToName.get(id);
             if (cmName == null) {
@@ -133,7 +139,7 @@ public class CustomMetadataCache {
      * @return a map from custom metadata set name to all details about all its active attributes
      * @throws AtlanException on any API communication problem if the cache needs to be refreshed
      */
-    public static Map<String, List<AttributeDef>> getAllCustomAttributes() throws AtlanException {
+    public Map<String, List<AttributeDef>> getAllCustomAttributes() throws AtlanException {
         return getAllCustomAttributes(false);
     }
 
@@ -146,7 +152,7 @@ public class CustomMetadataCache {
      * @return a map from custom metadata set name to all details about all its attributes
      * @throws AtlanException on any API communication problem if the cache needs to be refreshed
      */
-    public static Map<String, List<AttributeDef>> getAllCustomAttributes(boolean includeDeleted) throws AtlanException {
+    public Map<String, List<AttributeDef>> getAllCustomAttributes(boolean includeDeleted) throws AtlanException {
         return getAllCustomAttributes(includeDeleted, false);
     }
 
@@ -161,7 +167,7 @@ public class CustomMetadataCache {
      * @return a map from custom metadata set name to all details about all its attributes
      * @throws AtlanException on any API communication problem if the cache needs to be refreshed
      */
-    public static Map<String, List<AttributeDef>> getAllCustomAttributes(boolean includeDeleted, boolean forceRefresh)
+    public Map<String, List<AttributeDef>> getAllCustomAttributes(boolean includeDeleted, boolean forceRefresh)
             throws AtlanException {
         if (cacheById.isEmpty() || forceRefresh) {
             refreshCache();
@@ -199,7 +205,7 @@ public class CustomMetadataCache {
      * @throws NotFoundException if the custom metadata cannot be found (does not exist) in Atlan
      * @throws InvalidRequestException if no name was provided for the custom metadata to retrieve
      */
-    public static String getAttrIdForName(String setName, String attributeName) throws AtlanException {
+    public String getAttrIdForName(String setName, String attributeName) throws AtlanException {
         String setId = getIdForName(setName);
         return getAttrIdForNameFromSetId(setId, attributeName);
     }
@@ -214,7 +220,7 @@ public class CustomMetadataCache {
      * @throws InvalidRequestException if no name was provided for the custom metadata to retrieve
      * @see com.atlan.model.search.IndexSearchRequest.IndexSearchRequestBuilder#attributes(Collection)
      */
-    public static Set<String> getAttributesForSearchResults(String setName) throws AtlanException {
+    public Set<String> getAttributesForSearchResults(String setName) throws AtlanException {
         String setId = getIdForName(setName);
         Set<String> dotNames = _getAttributesForSearchResults(setId);
         if (dotNames == null) {
@@ -225,7 +231,7 @@ public class CustomMetadataCache {
         return dotNames == null ? Collections.emptySet() : Collections.unmodifiableSet(dotNames);
     }
 
-    private static Set<String> _getAttributesForSearchResults(String setId) {
+    private Set<String> _getAttributesForSearchResults(String setId) {
         Map<String, String> subMap = mapAttrNameToId.get(setId);
         if (subMap != null) {
             Collection<String> attrIds = subMap.values();
@@ -247,7 +253,7 @@ public class CustomMetadataCache {
      * @throws NotFoundException if the custom metadata cannot be found (does not exist) in Atlan
      * @throws InvalidRequestException if no name was provided for the custom metadata to retrieve
      */
-    public static CustomMetadataDef getCustomMetadataDef(String setName) throws AtlanException {
+    public CustomMetadataDef getCustomMetadataDef(String setName) throws AtlanException {
         String setId = getIdForName(setName);
         return cacheById.get(setId);
     }
@@ -262,7 +268,7 @@ public class CustomMetadataCache {
      * @throws NotFoundException if the custom metadata property cannot be found (does not exist) in Atlan
      * @throws InvalidRequestException if no name was provided for the custom metadata property to retrieve
      */
-    private static String getAttrIdForNameFromSetId(String setId, String attributeName) throws AtlanException {
+    private String getAttrIdForNameFromSetId(String setId, String attributeName) throws AtlanException {
         if (setId != null && setId.length() > 0) {
             Map<String, String> subMap = mapAttrNameToId.get(setId);
             if (attributeName != null && attributeName.length() > 0) {
@@ -303,7 +309,7 @@ public class CustomMetadataCache {
      * @throws NotFoundException if the custom metadata property cannot be found (does not exist) in Atlan
      * @throws InvalidRequestException if no ID was provided for the custom metadata property to retrieve
      */
-    private static String getAttrNameForIdFromSetId(String setId, String attributeId) throws AtlanException {
+    private String getAttrNameForIdFromSetId(String setId, String attributeId) throws AtlanException {
         if (setId != null && setId.length() > 0) {
             Map<String, String> subMap = mapAttrIdToName.get(setId);
             if (attributeId != null && attributeId.length() > 0) {
@@ -341,7 +347,7 @@ public class CustomMetadataCache {
      * @return a map from custom metadata attribute name (human-readable) to null values
      * @throws AtlanException on any API issues
      */
-    public static Map<String, Object> getEmptyAttributes(String customMetadataName) throws AtlanException {
+    public Map<String, Object> getEmptyAttributes(String customMetadataName) throws AtlanException {
         String cmId = getIdForName(customMetadataName);
         Map<String, String> attributes = mapAttrNameToId.get(cmId);
         Map<String, Object> empty = new LinkedHashMap<>();
@@ -360,7 +366,7 @@ public class CustomMetadataCache {
      * @param businessAttributes business attributes object, which will be changed
      * @throws AtlanException on any API communication problem if the cache needs to be refreshed
      */
-    public static void getBusinessAttributesFromCustomMetadata(
+    public void getBusinessAttributesFromCustomMetadata(
             Map<String, CustomMetadataAttributes> customMetadata, Map<String, Map<String, Object>> businessAttributes)
             throws AtlanException {
         if (customMetadata != null) {
@@ -385,7 +391,7 @@ public class CustomMetadataCache {
      * @param attributes map of custom metadata attributes keyed by hashed-string ID of the attribute
      * @throws AtlanException on any API communication problem if the cache needs to be refreshed
      */
-    public static void getAttributesFromCustomMetadata(
+    public void getAttributesFromCustomMetadata(
             String cmId, String cmName, CustomMetadataAttributes cma, Map<String, Object> attributes)
             throws AtlanException {
         // Start by placing in any custom metadata for archived attributes
@@ -411,7 +417,7 @@ public class CustomMetadataCache {
      * @param idToValue the business metadata to map into
      * @throws AtlanException on any API communication problem if the cache needs to be refreshed
      */
-    public static void getIdMapFromNameMap(
+    public void getIdMapFromNameMap(
             String customMetadataName, Map<String, Object> nameToValue, Map<String, Object> idToValue)
             throws AtlanException {
         String cmId = getIdForName(customMetadataName);
@@ -429,17 +435,24 @@ public class CustomMetadataCache {
      * @return custom metadata object
      * @throws AtlanException on any API communication problem if the cache needs to be refreshed
      */
-    public static Map<String, CustomMetadataAttributes> getCustomMetadataFromBusinessAttributes(
-            JsonNode businessAttributes) throws AtlanException {
+    public Map<String, CustomMetadataAttributes> getCustomMetadataFromBusinessAttributes(JsonNode businessAttributes)
+            throws AtlanException {
         Map<String, CustomMetadataAttributes> map = new LinkedHashMap<>();
         Iterator<String> itrCM = businessAttributes.fieldNames();
         while (itrCM.hasNext()) {
             String cmId = itrCM.next();
-            String cmName = getNameForId(cmId);
-            JsonNode bmAttrs = businessAttributes.get(cmId);
-            CustomMetadataAttributes cma = getCustomMetadataAttributes(cmId, bmAttrs);
-            if (!cma.isEmpty()) {
-                map.put(cmName, cma);
+            try {
+                String cmName = getNameForId(cmId);
+                JsonNode bmAttrs = businessAttributes.get(cmId);
+                CustomMetadataAttributes cma = getCustomMetadataAttributes(cmId, bmAttrs);
+                if (!cma.isEmpty()) {
+                    map.put(cmName, cma);
+                }
+            } catch (NotFoundException e) {
+                log.warn(
+                        "Custom metadata with ID {} could not be found, likely deleted in parallel with this processing so it will be skipped.",
+                        cmId,
+                        e);
             }
         }
         return map;
@@ -453,7 +466,7 @@ public class CustomMetadataCache {
      * @return deserialized CustomMetadataAttributes object
      * @throws AtlanException on any API communication problem if the cache needs to be refreshed
      */
-    public static CustomMetadataAttributes getCustomMetadataAttributes(String cmId, JsonNode attributes)
+    public CustomMetadataAttributes getCustomMetadataAttributes(String cmId, JsonNode attributes)
             throws AtlanException {
         CustomMetadataAttributes.CustomMetadataAttributesBuilder<?, ?> builder = CustomMetadataAttributes.builder();
         Iterator<String> itrCMA = attributes.fieldNames();
@@ -501,7 +514,7 @@ public class CustomMetadataCache {
      * @return custom metadata object
      * @throws AtlanException on any API communication problem if the cache needs to be refreshed
      */
-    public static Map<String, CustomMetadataAttributes> getCustomMetadataFromSearchResult(
+    public Map<String, CustomMetadataAttributes> getCustomMetadataFromSearchResult(
             Map<String, JsonNode> embeddedAttributes) throws AtlanException {
 
         Map<String, CustomMetadataAttributes> map = new LinkedHashMap<>();
@@ -512,40 +525,47 @@ public class CustomMetadataCache {
             int indexOfDot = compositeId.indexOf(".");
             if (indexOfDot > 0) {
                 String cmId = compositeId.substring(0, indexOfDot);
-                String cmName = getNameForId(cmId);
-                if (!builderMap.containsKey(cmName)) {
-                    builderMap.put(cmName, CustomMetadataAttributes.builder());
-                }
-                String attrId = compositeId.substring(indexOfDot + 1);
-                String cmAttrName = getAttrNameForIdFromSetId(cmId, attrId);
-                JsonNode jsonValue = entry.getValue();
-                if (jsonValue.isArray()) {
-                    Set<Object> values = new HashSet<>();
-                    ArrayNode array = (ArrayNode) jsonValue;
-                    for (JsonNode element : array) {
-                        Object primitive = deserializePrimitive(element);
-                        values.add(primitive);
+                try {
+                    String cmName = getNameForId(cmId);
+                    if (!builderMap.containsKey(cmName)) {
+                        builderMap.put(cmName, CustomMetadataAttributes.builder());
                     }
-                    if (!values.isEmpty()) {
-                        // It seems assets that previously had multivalued custom metadata that was later
-                        // removed retain an empty set for that attribute, but this is equivalent to the
-                        // custom metadata not existing from a UI and delete-ability perspective (so we will
-                        // treat as non-existent in the deserialization as well)
-                        if (archivedAttrIds.containsKey(attrId)) {
-                            builderMap.get(cmName).archivedAttribute(cmAttrName, values);
-                        } else {
-                            builderMap.get(cmName).attribute(cmAttrName, values);
+                    String attrId = compositeId.substring(indexOfDot + 1);
+                    String cmAttrName = getAttrNameForIdFromSetId(cmId, attrId);
+                    JsonNode jsonValue = entry.getValue();
+                    if (jsonValue.isArray()) {
+                        Set<Object> values = new HashSet<>();
+                        ArrayNode array = (ArrayNode) jsonValue;
+                        for (JsonNode element : array) {
+                            Object primitive = deserializePrimitive(element);
+                            values.add(primitive);
                         }
-                    }
-                } else if (jsonValue.isValueNode()) {
-                    Object primitive = deserializePrimitive(jsonValue);
-                    if (archivedAttrIds.containsKey(attrId)) {
-                        builderMap.get(cmName).archivedAttribute(cmAttrName, primitive);
+                        if (!values.isEmpty()) {
+                            // It seems assets that previously had multivalued custom metadata that was later
+                            // removed retain an empty set for that attribute, but this is equivalent to the
+                            // custom metadata not existing from a UI and delete-ability perspective (so we will
+                            // treat as non-existent in the deserialization as well)
+                            if (archivedAttrIds.containsKey(attrId)) {
+                                builderMap.get(cmName).archivedAttribute(cmAttrName, values);
+                            } else {
+                                builderMap.get(cmName).attribute(cmAttrName, values);
+                            }
+                        }
+                    } else if (jsonValue.isValueNode()) {
+                        Object primitive = deserializePrimitive(jsonValue);
+                        if (archivedAttrIds.containsKey(attrId)) {
+                            builderMap.get(cmName).archivedAttribute(cmAttrName, primitive);
+                        } else {
+                            builderMap.get(cmName).attribute(cmAttrName, primitive);
+                        }
                     } else {
-                        builderMap.get(cmName).attribute(cmAttrName, primitive);
+                        throw new LogicException(ErrorCode.UNABLE_TO_DESERIALIZE, jsonValue.toString());
                     }
-                } else {
-                    throw new LogicException(ErrorCode.UNABLE_TO_DESERIALIZE, jsonValue.toString());
+                } catch (NotFoundException e) {
+                    log.warn(
+                            "Custom metadata with ID {} could not be found, likely deleted in parallel with this processing so it will be skipped.",
+                            cmId,
+                            e);
                 }
             }
         }

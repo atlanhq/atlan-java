@@ -4,8 +4,8 @@ package com.atlan.model.admin;
 
 import static org.testng.Assert.*;
 
-import com.atlan.serde.Serde;
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.atlan.Atlan;
+import java.io.IOException;
 import org.testng.annotations.Test;
 
 public class AtlanRoleTest {
@@ -25,16 +25,16 @@ public class AtlanRoleTest {
     @Test(groups = {"AtlanRole.serialize"})
     void serialization() {
         assertNotNull(full);
-        serialized = full.toJson();
+        serialized = full.toJson(Atlan.getDefaultClient());
         assertNotNull(serialized);
     }
 
     @Test(
             groups = {"AtlanRole.deserialize"},
             dependsOnGroups = {"AtlanRole.serialize"})
-    void deserialization() throws JsonProcessingException {
+    void deserialization() throws IOException {
         assertNotNull(serialized);
-        frodo = Serde.mapper.readValue(serialized, AtlanRole.class);
+        frodo = Atlan.getDefaultClient().readValue(serialized, AtlanRole.class);
         assertNotNull(frodo);
     }
 
@@ -44,7 +44,7 @@ public class AtlanRoleTest {
     void serializedEquivalency() {
         assertNotNull(serialized);
         assertNotNull(frodo);
-        String backAgain = frodo.toJson();
+        String backAgain = frodo.toJson(Atlan.getDefaultClient());
         assertEquals(backAgain, serialized, "Serialization is not equivalent after serde loop,");
     }
 

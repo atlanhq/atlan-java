@@ -2,11 +2,12 @@
 /* Copyright 2022 Atlan Pte. Ltd. */
 package com.atlan.api;
 
+import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.admin.ApiToken;
 import com.atlan.model.admin.ApiTokenResponse;
 import com.atlan.net.ApiResource;
-import com.atlan.serde.Serde;
+import com.atlan.net.RequestOptions;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
@@ -31,14 +32,29 @@ public class ApiTokensEndpoint extends HeraclesEndpoint {
 
     private static final String endpoint = "/apikeys";
 
+    public ApiTokensEndpoint(AtlanClient client) {
+        super(client);
+    }
+
     /**
      * Retrieves a list of the 100 most recently created tokens defined in Atlan.
      *
      * @return a list of the 100 most recently created tokens in Atlan
      * @throws AtlanException on any API communication issue
      */
-    public static ApiTokenResponse getTokens() throws AtlanException {
-        return getTokens(null, "-createdAt", 0, 100);
+    public ApiTokenResponse list() throws AtlanException {
+        return list(null);
+    }
+
+    /**
+     * Retrieves a list of the 100 most recently created tokens defined in Atlan.
+     *
+     * @param options to override default client settings
+     * @return a list of the 100 most recently created tokens in Atlan
+     * @throws AtlanException on any API communication issue
+     */
+    public ApiTokenResponse list(RequestOptions options) throws AtlanException {
+        return list(null, "-createdAt", 0, 100, options);
     }
 
     /**
@@ -51,7 +67,23 @@ public class ApiTokensEndpoint extends HeraclesEndpoint {
      * @return a list of tokens that match the provided criteria
      * @throws AtlanException on any API communication issue
      */
-    public static ApiTokenResponse getTokens(String filter, String sort, int offset, int limit) throws AtlanException {
+    public ApiTokenResponse list(String filter, String sort, int offset, int limit) throws AtlanException {
+        return list(filter, sort, offset, limit, null);
+    }
+
+    /**
+     * Retrieves a list of the API tokens defined in Atlan.
+     *
+     * @param filter which tokens to retrieve
+     * @param sort property by which to sort the results
+     * @param offset starting point for results to return, for paging
+     * @param limit maximum number of results to be returned
+     * @param options to override default client settings
+     * @return a list of tokens that match the provided criteria
+     * @throws AtlanException on any API communication issue
+     */
+    public ApiTokenResponse list(String filter, String sort, int offset, int limit, RequestOptions options)
+            throws AtlanException {
         String url = String.format("%s%s?limit=%s&offset=%s", getBaseUrl(), endpoint, limit, offset);
         if (sort != null) {
             url = String.format("%s&sort=%s", url, sort);
@@ -59,7 +91,23 @@ public class ApiTokensEndpoint extends HeraclesEndpoint {
         if (filter != null) {
             url = String.format("%s&filter=%s", url, filter);
         }
-        return ApiResource.request(ApiResource.RequestMethod.GET, url, "", ApiTokenResponse.class, null);
+        return ApiResource.request(client, ApiResource.RequestMethod.GET, url, "", ApiTokenResponse.class, options);
+    }
+
+    /**
+     * Retrieves the API token with a name that exactly matches the provided string.
+     *
+     * @param displayName name (as it appears in the UI) by which to retrieve the API token
+     * @return the API token whose name (in the UI) contains the provided string, or null if there is none
+     * @throws AtlanException on any error during API invocation
+     */
+    public ApiToken get(String displayName) throws AtlanException {
+        ApiTokenResponse response = list("{\"displayName\":\"" + displayName + "\"}", "-createdAt", 0, 2);
+        if (response != null && response.getRecords() != null) {
+            return response.getRecords().get(0);
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -72,12 +120,29 @@ public class ApiTokensEndpoint extends HeraclesEndpoint {
      * @return the created API token
      * @throws AtlanException on any API communication issue
      */
-    public static ApiToken create(String displayName, String description, Set<String> personas, Long validitySeconds)
+    public ApiToken create(String displayName, String description, Set<String> personas, Long validitySeconds)
+            throws AtlanException {
+        return create(displayName, description, personas, validitySeconds, null);
+    }
+
+    /**
+     * Create a new API token with the provided settings.
+     *
+     * @param displayName human-readable name for the API token
+     * @param description optional explanation of the API token
+     * @param personas unique identifiers (GUIDs) of personas that should be linked to the token
+     * @param validitySeconds time in seconds after which the token should expire
+     * @param options to override default client settings
+     * @return the created API token
+     * @throws AtlanException on any API communication issue
+     */
+    public ApiToken create(
+            String displayName, String description, Set<String> personas, Long validitySeconds, RequestOptions options)
             throws AtlanException {
         String url = String.format("%s%s", getBaseUrl(), endpoint);
         ApiTokenRequest atr = new ApiTokenRequest(displayName, description, personas, validitySeconds);
         WrappedApiToken response =
-                ApiResource.request(ApiResource.RequestMethod.POST, url, atr, WrappedApiToken.class, null);
+                ApiResource.request(client, ApiResource.RequestMethod.POST, url, atr, WrappedApiToken.class, options);
         if (response != null) {
             return response.getToken();
         }
@@ -93,12 +158,28 @@ public class ApiTokensEndpoint extends HeraclesEndpoint {
      * @return the updated API token
      * @throws AtlanException on any API communication issue
      */
-    public static ApiToken update(String guid, String displayName, String description, Set<String> personas)
+    public ApiToken update(String guid, String displayName, String description, Set<String> personas)
+            throws AtlanException {
+        return update(guid, displayName, description, personas, null);
+    }
+
+    /**
+     * Update an existing API token with the provided settings.
+     *
+     * @param displayName human-readable name for the API token
+     * @param description optional explanation of the API token
+     * @param personas unique identifiers (GUIDs) of personas that should be linked to the token
+     * @param options to override default client settings
+     * @return the updated API token
+     * @throws AtlanException on any API communication issue
+     */
+    public ApiToken update(
+            String guid, String displayName, String description, Set<String> personas, RequestOptions options)
             throws AtlanException {
         String url = String.format("%s%s/%s", getBaseUrl(), endpoint, guid);
         ApiTokenRequest atr = new ApiTokenRequest(displayName, description, personas, null);
         WrappedApiToken response =
-                ApiResource.request(ApiResource.RequestMethod.POST, url, atr, WrappedApiToken.class, null);
+                ApiResource.request(client, ApiResource.RequestMethod.POST, url, atr, WrappedApiToken.class, options);
         if (response != null) {
             return response.getToken();
         }
@@ -111,9 +192,20 @@ public class ApiTokensEndpoint extends HeraclesEndpoint {
      * @param guid unique identifier (GUID) of the API token to delete
      * @throws AtlanException on any API communication issue
      */
-    public static void delete(String guid) throws AtlanException {
+    public void purge(String guid) throws AtlanException {
+        purge(guid, null);
+    }
+
+    /**
+     * Delete (purge) the specified API token.
+     *
+     * @param guid unique identifier (GUID) of the API token to delete
+     * @param options to override default client settings
+     * @throws AtlanException on any API communication issue
+     */
+    public void purge(String guid, RequestOptions options) throws AtlanException {
         String url = String.format("%s%s/%s", getBaseUrl(), endpoint, guid);
-        ApiResource.request(ApiResource.RequestMethod.DELETE, url, "", null, null);
+        ApiResource.request(client, ApiResource.RequestMethod.DELETE, url, "", null, options);
     }
 
     /**
@@ -171,7 +263,7 @@ public class ApiTokensEndpoint extends HeraclesEndpoint {
         private static final long serialVersionUID = 2L;
 
         public WrappedApiTokenDeserializer() {
-            this(null);
+            this(WrappedApiToken.class);
         }
 
         public WrappedApiTokenDeserializer(Class<?> t) {
@@ -191,12 +283,16 @@ public class ApiTokensEndpoint extends HeraclesEndpoint {
     private static class WrappedApiTokenSerializer extends StdSerializer<WrappedApiToken> {
         private static final long serialVersionUID = 2L;
 
-        public WrappedApiTokenSerializer() {
-            this(null);
+        private final AtlanClient client;
+
+        @SuppressWarnings("UnusedMethod")
+        public WrappedApiTokenSerializer(AtlanClient client) {
+            this(WrappedApiToken.class, client);
         }
 
-        public WrappedApiTokenSerializer(Class<WrappedApiToken> t) {
+        public WrappedApiTokenSerializer(Class<WrappedApiToken> t, AtlanClient client) {
             super(t);
+            this.client = client;
         }
 
         /**
@@ -206,7 +302,7 @@ public class ApiTokensEndpoint extends HeraclesEndpoint {
         public void serialize(WrappedApiToken wrappedToken, JsonGenerator gen, SerializerProvider sp)
                 throws IOException, JsonProcessingException {
             ApiToken token = wrappedToken.getToken();
-            Serde.mapper.writeValue(gen, token);
+            client.writeValue(gen, token);
         }
     }
 }
