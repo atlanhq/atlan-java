@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 
 /**
- * Source: keycloak > server-spi-private/src/main/java/org/keycloak/events/admin/OperationType.java
+ * Source (keycloak): server-spi-private/src/main/java/org/keycloak/events/admin/OperationType.java
  */
 public enum AdminOperationType implements AtlanEnum {
     CREATE("CREATE"),

@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 
 /**
- * Source: keycloak > server-spi-private/src/main/java/org/keycloak/events/admin/ResourceType.java
+ * Source (keycloak): server-spi-private/src/main/java/org/keycloak/events/admin/ResourceType.java
  */
 public enum AdminResourceType implements AtlanEnum {
     REALM("REALM"),
