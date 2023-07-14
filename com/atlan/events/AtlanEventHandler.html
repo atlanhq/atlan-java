@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":6,"i1":1,"i2":1,"i3":1,"i4":1,"i5":1,"i6":1,"i7":18,"i8":1,"i9":1,"i10":1,"i11":1,"i12":18,"i13":1,"i14":1,"i15":1,"i16":1,"i17":18,"i18":18,"i19":1};
+var data = {"i0":6,"i1":1,"i2":1,"i3":1,"i4":18,"i5":1,"i6":1,"i7":1,"i8":1,"i9":18,"i10":1,"i11":1,"i12":1,"i13":1,"i14":18,"i15":18,"i16":1};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],16:["t5","Default Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -177,48 +177,29 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code>static <a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAssetFromEvent(byte%5B%5D)">getAssetFromEvent</a></span>&#8203;(byte[]&nbsp;data)</code></th>
+<td class="colFirst"><code>static <a href="../model/events/AtlanEvent.html" title="class in com.atlan.model.events">AtlanEvent</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAtlanEvent(com.atlan.AtlanClient,byte%5B%5D)">getAtlanEvent</a></span>&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+             byte[]&nbsp;data)</code></th>
 <td class="colLast">
-<div class="block">Translate the JSON payload directly into the Atlan asset nested in the payload.</div>
+<div class="block">Translate the JSON payload into an Atlan event object.</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code>static <a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAssetFromEvent(com.atlan.model.events.AtlanEvent)">getAssetFromEvent</a></span>&#8203;(<a href="../model/events/AtlanEvent.html" title="class in com.atlan.model.events">AtlanEvent</a>&nbsp;event)</code></th>
+<td class="colFirst"><code>static <a href="../model/events/AtlanEvent.html" title="class in com.atlan.model.events">AtlanEvent</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAtlanEvent(com.atlan.AtlanClient,java.lang.String)">getAtlanEvent</a></span>&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+             java.lang.String&nbsp;data)</code></th>
 <td class="colLast">
-<div class="block">Retrieve the asset nested within the Atlan event.</div>
+<div class="block">Translate the JSON payload into an Atlan event object.</div>
 </td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code>static <a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAssetFromEvent(java.lang.String)">getAssetFromEvent</a></span>&#8203;(java.lang.String&nbsp;data)</code></th>
-<td class="colLast">
-<div class="block">Translate the JSON payload directly into the Atlan asset nested in the payload.</div>
-</td>
-</tr>
-<tr id="i4" class="altColor">
-<td class="colFirst"><code>static <a href="../model/events/AtlanEvent.html" title="class in com.atlan.model.events">AtlanEvent</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAtlanEvent(byte%5B%5D)">getAtlanEvent</a></span>&#8203;(byte[]&nbsp;data)</code></th>
-<td class="colLast">
-<div class="block">Translate the JSON payload into an Atlan event object.</div>
-</td>
-</tr>
-<tr id="i5" class="rowColor">
-<td class="colFirst"><code>static <a href="../model/events/AtlanEvent.html" title="class in com.atlan.model.events">AtlanEvent</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAtlanEvent(java.lang.String)">getAtlanEvent</a></span>&#8203;(java.lang.String&nbsp;data)</code></th>
-<td class="colLast">
-<div class="block">Translate the JSON payload into an Atlan event object.</div>
-</td>
-</tr>
-<tr id="i6" class="altColor">
 <td class="colFirst"><code>static <a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCurrentFullAsset(com.atlan.model.events.AtlanEvent)">getCurrentFullAsset</a></span>&#8203;(<a href="../model/events/AtlanEvent.html" title="class in com.atlan.model.events">AtlanEvent</a>&nbsp;event)</code></th>
 <td class="colLast">
 <div class="block">Retrieve the full asset from Atlan, to ensure we have the latest information about it.</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>default <a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCurrentState(com.atlan.model.assets.Asset,org.slf4j.Logger)">getCurrentState</a></span>&#8203;(<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;fromEvent,
                org.slf4j.Logger&nbsp;log)</code></th>
@@ -227,7 +208,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
  the event handler requires to make its decisions.</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>static <a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCurrentViewOfAsset(com.atlan.model.assets.Asset,java.util.Collection,boolean,boolean)">getCurrentViewOfAsset</a></span>&#8203;(<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;fromEvent,
                      java.util.Collection&lt;java.lang.String&gt;&nbsp;limitedToAttributes,
@@ -239,7 +220,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
  reasonably up-to-date information about it.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>static <a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCurrentViewOfAsset(com.atlan.model.events.AtlanEvent,java.util.Collection,boolean,boolean)">getCurrentViewOfAsset</a></span>&#8203;(<a href="../model/events/AtlanEvent.html" title="class in com.atlan.model.events">AtlanEvent</a>&nbsp;event,
                      java.util.Collection&lt;java.lang.String&gt;&nbsp;limitedToAttributes,
@@ -251,21 +232,21 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
  reasonably up-to-date information about it.</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>static boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hasAssignedTerms(com.atlan.model.assets.Asset)">hasAssignedTerms</a></span>&#8203;(<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;asset)</code></th>
 <td class="colLast">
 <div class="block">Check if the asset has any assigned terms.</div>
 </td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>static boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hasAtlanTags(com.atlan.model.assets.Asset)">hasAtlanTags</a></span>&#8203;(<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;asset)</code></th>
 <td class="colLast">
 <div class="block">Check if the asset has any Atlan tags.</div>
 </td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>default boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hasChanges(com.atlan.model.assets.Asset,com.atlan.model.assets.Asset,org.slf4j.Logger)">hasChanges</a></span>&#8203;(<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;current,
           <a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;modified,
@@ -275,41 +256,42 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
  in-memory-modified asset.</div>
 </td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>static boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hasDescription(com.atlan.model.assets.Asset)">hasDescription</a></span>&#8203;(<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;asset)</code></th>
 <td class="colLast">
 <div class="block">Check if the asset has either a user-provided or system-provided description.</div>
 </td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>static boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hasLineage(com.atlan.model.assets.Asset)">hasLineage</a></span>&#8203;(<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;asset)</code></th>
 <td class="colLast">
 <div class="block">Check if the asset has any lineage.</div>
 </td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>static boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hasOwner(com.atlan.model.assets.Asset)">hasOwner</a></span>&#8203;(<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;asset)</code></th>
 <td class="colLast">
 <div class="block">Check if the asset has any individual or group owners.</div>
 </td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>static boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isValidationRequest(java.lang.String)">isValidationRequest</a></span>&#8203;(java.lang.String&nbsp;data)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i17" class="rowColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>default void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#upsertChanges(java.util.Collection,org.slf4j.Logger)">upsertChanges</a></span>&#8203;(java.util.Collection&lt;<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;&nbsp;changedAssets,
-             org.slf4j.Logger&nbsp;log)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#saveChanges(com.atlan.AtlanClient,java.util.Collection,org.slf4j.Logger)">saveChanges</a></span>&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+           java.util.Collection&lt;<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;&nbsp;changedAssets,
+           org.slf4j.Logger&nbsp;log)</code></th>
 <td class="colLast">
 <div class="block">Actually send the changed assets to Atlan so that they are persisted.</div>
 </td>
 </tr>
-<tr id="i18" class="altColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code>default boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#validatePrerequisites(com.atlan.model.events.AtlanEvent,org.slf4j.Logger)">validatePrerequisites</a></span>&#8203;(<a href="../model/events/AtlanEvent.html" title="class in com.atlan.model.events">AtlanEvent</a>&nbsp;event,
                      org.slf4j.Logger&nbsp;log)</code></th>
@@ -317,7 +299,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">Validate the prerequisites expected by the event handler.</div>
 </td>
 </tr>
-<tr id="i19" class="rowColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code>static boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#validSignature(java.lang.String,java.util.Map)">validSignature</a></span>&#8203;(java.lang.String&nbsp;expectedSignature,
               java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;headers)</code></th>
@@ -467,18 +449,20 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dl>
 </li>
 </ul>
-<a id="upsertChanges(java.util.Collection,org.slf4j.Logger)">
+<a id="saveChanges(com.atlan.AtlanClient,java.util.Collection,org.slf4j.Logger)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>upsertChanges</h4>
-<pre class="methodSignature">default&nbsp;void&nbsp;upsertChanges&#8203;(java.util.Collection&lt;<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;&nbsp;changedAssets,
-                           org.slf4j.Logger&nbsp;log)
-                    throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<h4>saveChanges</h4>
+<pre class="methodSignature">default&nbsp;void&nbsp;saveChanges&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+                         java.util.Collection&lt;<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&gt;&nbsp;changedAssets,
+                         org.slf4j.Logger&nbsp;log)
+                  throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
 <div class="block">Actually send the changed assets to Atlan so that they are persisted.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>client</code> - connectivity to Atlan</dd>
 <dd><code>changedAssets</code> - the in-memory-modified assets to send to Atlan</dd>
 <dd><code>log</code> - a logger to log anything you want</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
@@ -513,17 +497,19 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dl>
 </li>
 </ul>
-<a id="getAtlanEvent(java.lang.String)">
+<a id="getAtlanEvent(com.atlan.AtlanClient,java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getAtlanEvent</h4>
-<pre class="methodSignature">static&nbsp;<a href="../model/events/AtlanEvent.html" title="class in com.atlan.model.events">AtlanEvent</a>&nbsp;getAtlanEvent&#8203;(java.lang.String&nbsp;data)
+<pre class="methodSignature">static&nbsp;<a href="../model/events/AtlanEvent.html" title="class in com.atlan.model.events">AtlanEvent</a>&nbsp;getAtlanEvent&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+                                java.lang.String&nbsp;data)
                          throws java.io.IOException</pre>
 <div class="block">Translate the JSON payload into an Atlan event object.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>client</code> - connectivity to Atlan</dd>
 <dd><code>data</code> - the JSON payload</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>an Atlan event object representation of the payload</dd>
@@ -532,76 +518,24 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dl>
 </li>
 </ul>
-<a id="getAtlanEvent(byte[])">
+<a id="getAtlanEvent(com.atlan.AtlanClient,byte[])">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>getAtlanEvent</h4>
-<pre class="methodSignature">static&nbsp;<a href="../model/events/AtlanEvent.html" title="class in com.atlan.model.events">AtlanEvent</a>&nbsp;getAtlanEvent&#8203;(byte[]&nbsp;data)
+<pre class="methodSignature">static&nbsp;<a href="../model/events/AtlanEvent.html" title="class in com.atlan.model.events">AtlanEvent</a>&nbsp;getAtlanEvent&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+                                byte[]&nbsp;data)
                          throws java.io.IOException</pre>
 <div class="block">Translate the JSON payload into an Atlan event object.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>client</code> - connectivity to Atlan</dd>
 <dd><code>data</code> - the JSON payload</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>an Atlan event object representation of the payload</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code>java.io.IOException</code> - on any problems deserializing the event details</dd>
-</dl>
-</li>
-</ul>
-<a id="getAssetFromEvent(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getAssetFromEvent</h4>
-<pre class="methodSignature">static&nbsp;<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;getAssetFromEvent&#8203;(java.lang.String&nbsp;data)
-                        throws java.io.IOException</pre>
-<div class="block">Translate the JSON payload directly into the Atlan asset nested in the payload.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>data</code> - the JSON payload</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>the nested asset object in the event, or null if there is none</dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.io.IOException</code> - on any problems deserializing the event details</dd>
-</dl>
-</li>
-</ul>
-<a id="getAssetFromEvent(byte[])">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getAssetFromEvent</h4>
-<pre class="methodSignature">static&nbsp;<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;getAssetFromEvent&#8203;(byte[]&nbsp;data)
-                        throws java.io.IOException</pre>
-<div class="block">Translate the JSON payload directly into the Atlan asset nested in the payload.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>data</code> - the JSON payload</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>the nested asset object in the event, or null if there is none</dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.io.IOException</code> - on any problems deserializing the event details</dd>
-</dl>
-</li>
-</ul>
-<a id="getAssetFromEvent(com.atlan.model.events.AtlanEvent)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getAssetFromEvent</h4>
-<pre class="methodSignature">static&nbsp;<a href="../model/assets/Asset.html" title="class in com.atlan.model.assets">Asset</a>&nbsp;getAssetFromEvent&#8203;(<a href="../model/events/AtlanEvent.html" title="class in com.atlan.model.events">AtlanEvent</a>&nbsp;event)</pre>
-<div class="block">Retrieve the asset nested within the Atlan event.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>event</code> - containing asset information</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>the nested asset object in the event, or null if there is none</dd>
 </dl>
 </li>
 </ul>

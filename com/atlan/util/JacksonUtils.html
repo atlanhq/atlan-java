@@ -209,7 +209,8 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>static &lt;T&gt;&nbsp;T</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#deserializeObject(com.fasterxml.jackson.databind.JsonNode,java.lang.String,com.fasterxml.jackson.core.type.TypeReference)">deserializeObject</a></span>&#8203;(com.fasterxml.jackson.databind.JsonNode&nbsp;node,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#deserializeObject(com.atlan.AtlanClient,com.fasterxml.jackson.databind.JsonNode,java.lang.String,com.fasterxml.jackson.core.type.TypeReference)">deserializeObject</a></span>&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+                 com.fasterxml.jackson.databind.JsonNode&nbsp;node,
                  java.lang.String&nbsp;path,
                  com.fasterxml.jackson.core.type.TypeReference&lt;T&gt;&nbsp;typeReference)</code></th>
 <td class="colLast">
@@ -562,13 +563,14 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a id="deserializeObject(com.fasterxml.jackson.databind.JsonNode,java.lang.String,com.fasterxml.jackson.core.type.TypeReference)">
+<a id="deserializeObject(com.atlan.AtlanClient,com.fasterxml.jackson.databind.JsonNode,java.lang.String,com.fasterxml.jackson.core.type.TypeReference)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>deserializeObject</h4>
-<pre class="methodSignature">public static&nbsp;&lt;T&gt;&nbsp;T&nbsp;deserializeObject&#8203;(com.fasterxml.jackson.databind.JsonNode&nbsp;node,
+<pre class="methodSignature">public static&nbsp;&lt;T&gt;&nbsp;T&nbsp;deserializeObject&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+                                      com.fasterxml.jackson.databind.JsonNode&nbsp;node,
                                       java.lang.String&nbsp;path,
                                       com.fasterxml.jackson.core.type.TypeReference&lt;T&gt;&nbsp;typeReference)
                                throws com.fasterxml.jackson.core.JsonProcessingException</pre>
@@ -577,6 +579,7 @@ extends java.lang.Object</pre>
 <dt><span class="paramLabel">Type Parameters:</span></dt>
 <dd><code>T</code> - the type of the object's value</dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>client</code> - connectivity to Atlan</dd>
 <dd><code>node</code> - from which to pull the value</dd>
 <dd><code>path</code> - at which to find the value</dd>
 <dd><code>typeReference</code> - of the expected value</dd>

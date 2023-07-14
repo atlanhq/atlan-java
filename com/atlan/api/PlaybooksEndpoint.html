@@ -27,8 +27,8 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9};
-var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"]};
+var data = {"i0":10};
+var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -89,7 +89,7 @@ loadScripts(document, 'script');</script>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
@@ -155,6 +155,23 @@ extends <a href="WorkflowsEndpoint.html" title="class in com.atlan.api">Workflow
 <div class="summary">
 <ul class="blockList">
 <li class="blockList">
+<!-- =========== FIELD SUMMARY =========== -->
+<section>
+<ul class="blockList">
+<li class="blockList"><a id="field.summary">
+<!--   -->
+</a>
+<h3>Field Summary</h3>
+<ul class="blockList">
+<li class="blockList"><a id="fields.inherited.from.class.com.atlan.api.AbstractEndpoint">
+<!--   -->
+</a>
+<h3>Fields inherited from class&nbsp;com.atlan.api.<a href="AbstractEndpoint.html" title="class in com.atlan.api">AbstractEndpoint</a></h3>
+<code><a href="AbstractEndpoint.html#client">client</a></code></li>
+</ul>
+</li>
+</ul>
+</section>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
 <section>
 <ul class="blockList">
@@ -169,7 +186,7 @@ extends <a href="WorkflowsEndpoint.html" title="class in com.atlan.api">Workflow
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E()">PlaybooksEndpoint</a></span>()</code></th>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.atlan.AtlanClient)">PlaybooksEndpoint</a></span>&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
@@ -184,14 +201,14 @@ extends <a href="WorkflowsEndpoint.html" title="class in com.atlan.api">Workflow
 </a>
 <h3>Method Summary</h3>
 <table class="memberSummary">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colSecond" scope="col">Method</th>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>static <a href="../model/workflow/WorkflowSearchResponse.html" title="class in com.atlan.model.workflow">WorkflowSearchResponse</a></code></td>
+<td class="colFirst"><code><a href="../model/workflow/WorkflowSearchResponse.html" title="class in com.atlan.model.workflow">WorkflowSearchResponse</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#list(int)">list</a></span>&#8203;(int&nbsp;max)</code></th>
 <td class="colLast">
 <div class="block">List the requested number of most recently created playbooks.</div>
@@ -242,13 +259,13 @@ extends <a href="WorkflowsEndpoint.html" title="class in com.atlan.api">Workflow
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a id="&lt;init&gt;()">
+<a id="&lt;init&gt;(com.atlan.AtlanClient)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>PlaybooksEndpoint</h4>
-<pre>public&nbsp;PlaybooksEndpoint()</pre>
+<pre>public&nbsp;PlaybooksEndpoint&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client)</pre>
 </li>
 </ul>
 </li>
@@ -267,8 +284,8 @@ extends <a href="WorkflowsEndpoint.html" title="class in com.atlan.api">Workflow
 <ul class="blockListLast">
 <li class="blockList">
 <h4>list</h4>
-<pre class="methodSignature">public static&nbsp;<a href="../model/workflow/WorkflowSearchResponse.html" title="class in com.atlan.model.workflow">WorkflowSearchResponse</a>&nbsp;list&#8203;(int&nbsp;max)
-                                   throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<pre class="methodSignature">public&nbsp;<a href="../model/workflow/WorkflowSearchResponse.html" title="class in com.atlan.model.workflow">WorkflowSearchResponse</a>&nbsp;list&#8203;(int&nbsp;max)
+                            throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
 <div class="block">List the requested number of most recently created playbooks.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -332,7 +349,7 @@ extends <a href="WorkflowsEndpoint.html" title="class in com.atlan.api">Workflow
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>

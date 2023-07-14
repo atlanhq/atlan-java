@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -171,26 +171,33 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="LineageListResponse.LineageListResponseBuilder.html" title="class in com.atlan.model.lineage">LineageListResponse.LineageListResponseBuilder</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#client(com.atlan.AtlanClient)">client</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client)</code></th>
+<td class="colLast">
+<div class="block">Connectivity to the Atlan tenant where the lineage request was run.</div>
+</td>
+</tr>
+<tr id="i3" class="rowColor">
+<td class="colFirst"><code><a href="LineageListResponse.LineageListResponseBuilder.html" title="class in com.atlan.model.lineage">LineageListResponse.LineageListResponseBuilder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#entityCount(java.lang.Integer)">entityCount</a></span>&#8203;(java.lang.Integer&nbsp;entityCount)</code></th>
 <td class="colLast">
 <div class="block">Total count of entities returned, equal to the size of the <code>entities</code> list.</div>
 </td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code><a href="LineageListResponse.LineageListResponseBuilder.html" title="class in com.atlan.model.lineage">LineageListResponse.LineageListResponseBuilder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hasMore(java.lang.Boolean)">hasMore</a></span>&#8203;(java.lang.Boolean&nbsp;hasMore)</code></th>
 <td class="colLast">
 <div class="block">Whether there are more entities present in lineage that can be traversed (true) or not (false).</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="LineageListResponse.LineageListResponseBuilder.html" title="class in com.atlan.model.lineage">LineageListResponse.LineageListResponseBuilder</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#searchParameters(com.atlan.model.lineage.LineageListRequest)">searchParameters</a></span>&#8203;(<a href="LineageListRequest.html" title="class in com.atlan.model.lineage">LineageListRequest</a>&nbsp;searchParameters)</code></th>
 <td class="colLast">
 <div class="block">Request used to produce this lineage.</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
@@ -219,6 +226,20 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a id="client(com.atlan.AtlanClient)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>client</h4>
+<pre class="methodSignature">public&nbsp;<a href="LineageListResponse.LineageListResponseBuilder.html" title="class in com.atlan.model.lineage">LineageListResponse.LineageListResponseBuilder</a>&nbsp;client&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client)</pre>
+<div class="block">Connectivity to the Atlan tenant where the lineage request was run.</div>
+<dl>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd><code>this</code>.</dd>
+</dl>
+</li>
+</ul>
 <a id="assets(java.util.List)">
 <!--   -->
 </a>

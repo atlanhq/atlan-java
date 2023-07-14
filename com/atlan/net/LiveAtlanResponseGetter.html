@@ -191,7 +191,8 @@ implements <a href="AtlanResponseGetter.html" title="interface in com.atlan.net"
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>&lt;T extends <a href="../model/core/AtlanResponseInterface.html" title="interface in com.atlan.model.core">AtlanResponseInterface</a>&gt;<br>T</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#request(com.atlan.net.ApiResource.RequestMethod,java.lang.String,java.io.InputStream,java.lang.String,java.lang.Class,com.atlan.net.RequestOptions)">request</a></span>&#8203;(<a href="ApiResource.RequestMethod.html" title="enum in com.atlan.net">ApiResource.RequestMethod</a>&nbsp;method,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#request(com.atlan.AtlanClient,com.atlan.net.ApiResource.RequestMethod,java.lang.String,java.io.InputStream,java.lang.String,java.lang.Class,com.atlan.net.RequestOptions)">request</a></span>&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+       <a href="ApiResource.RequestMethod.html" title="enum in com.atlan.net">ApiResource.RequestMethod</a>&nbsp;method,
        java.lang.String&nbsp;url,
        java.io.InputStream&nbsp;upload,
        java.lang.String&nbsp;filename,
@@ -203,7 +204,8 @@ implements <a href="AtlanResponseGetter.html" title="interface in com.atlan.net"
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>&lt;T extends <a href="../model/core/AtlanResponseInterface.html" title="interface in com.atlan.model.core">AtlanResponseInterface</a>&gt;<br>T</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#request(com.atlan.net.ApiResource.RequestMethod,java.lang.String,java.lang.String,java.lang.Class,com.atlan.net.RequestOptions)">request</a></span>&#8203;(<a href="ApiResource.RequestMethod.html" title="enum in com.atlan.net">ApiResource.RequestMethod</a>&nbsp;method,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#request(com.atlan.AtlanClient,com.atlan.net.ApiResource.RequestMethod,java.lang.String,java.lang.String,java.lang.Class,com.atlan.net.RequestOptions)">request</a></span>&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+       <a href="ApiResource.RequestMethod.html" title="enum in com.atlan.net">ApiResource.RequestMethod</a>&nbsp;method,
        java.lang.String&nbsp;url,
        java.lang.String&nbsp;body,
        java.lang.Class&lt;T&gt;&nbsp;clazz,
@@ -271,13 +273,14 @@ implements <a href="AtlanResponseGetter.html" title="interface in com.atlan.net"
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a id="request(com.atlan.net.ApiResource.RequestMethod,java.lang.String,java.lang.String,java.lang.Class,com.atlan.net.RequestOptions)">
+<a id="request(com.atlan.AtlanClient,com.atlan.net.ApiResource.RequestMethod,java.lang.String,java.lang.String,java.lang.Class,com.atlan.net.RequestOptions)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>request</h4>
-<pre class="methodSignature">public&nbsp;&lt;T extends <a href="../model/core/AtlanResponseInterface.html" title="interface in com.atlan.model.core">AtlanResponseInterface</a>&gt;&nbsp;T&nbsp;request&#8203;(<a href="ApiResource.RequestMethod.html" title="enum in com.atlan.net">ApiResource.RequestMethod</a>&nbsp;method,
+<pre class="methodSignature">public&nbsp;&lt;T extends <a href="../model/core/AtlanResponseInterface.html" title="interface in com.atlan.model.core">AtlanResponseInterface</a>&gt;&nbsp;T&nbsp;request&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+                                                    <a href="ApiResource.RequestMethod.html" title="enum in com.atlan.net">ApiResource.RequestMethod</a>&nbsp;method,
                                                     java.lang.String&nbsp;url,
                                                     java.lang.String&nbsp;body,
                                                     java.lang.Class&lt;T&gt;&nbsp;clazz,
@@ -286,10 +289,11 @@ implements <a href="AtlanResponseGetter.html" title="interface in com.atlan.net"
 <div class="block">Makes a request to an Atlan's API.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="AtlanResponseGetter.html#request(com.atlan.net.ApiResource.RequestMethod,java.lang.String,java.lang.String,java.lang.Class,com.atlan.net.RequestOptions)">request</a></code>&nbsp;in interface&nbsp;<code><a href="AtlanResponseGetter.html" title="interface in com.atlan.net">AtlanResponseGetter</a></code></dd>
+<dd><code><a href="AtlanResponseGetter.html#request(com.atlan.AtlanClient,com.atlan.net.ApiResource.RequestMethod,java.lang.String,java.lang.String,java.lang.Class,com.atlan.net.RequestOptions)">request</a></code>&nbsp;in interface&nbsp;<code><a href="AtlanResponseGetter.html" title="interface in com.atlan.net">AtlanResponseGetter</a></code></dd>
 <dt><span class="paramLabel">Type Parameters:</span></dt>
 <dd><code>T</code> - the type of the response of the request</dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>client</code> - connectivity to Atlan</dd>
 <dd><code>method</code> - to use for the request</dd>
 <dd><code>url</code> - of the endpoint (with all path and query parameters) for the request</dd>
 <dd><code>body</code> - payload for the request, if any</dd>
@@ -302,13 +306,14 @@ implements <a href="AtlanResponseGetter.html" title="interface in com.atlan.net"
 </dl>
 </li>
 </ul>
-<a id="request(com.atlan.net.ApiResource.RequestMethod,java.lang.String,java.io.InputStream,java.lang.String,java.lang.Class,com.atlan.net.RequestOptions)">
+<a id="request(com.atlan.AtlanClient,com.atlan.net.ApiResource.RequestMethod,java.lang.String,java.io.InputStream,java.lang.String,java.lang.Class,com.atlan.net.RequestOptions)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>request</h4>
-<pre class="methodSignature">public&nbsp;&lt;T extends <a href="../model/core/AtlanResponseInterface.html" title="interface in com.atlan.model.core">AtlanResponseInterface</a>&gt;&nbsp;T&nbsp;request&#8203;(<a href="ApiResource.RequestMethod.html" title="enum in com.atlan.net">ApiResource.RequestMethod</a>&nbsp;method,
+<pre class="methodSignature">public&nbsp;&lt;T extends <a href="../model/core/AtlanResponseInterface.html" title="interface in com.atlan.model.core">AtlanResponseInterface</a>&gt;&nbsp;T&nbsp;request&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+                                                    <a href="ApiResource.RequestMethod.html" title="enum in com.atlan.net">ApiResource.RequestMethod</a>&nbsp;method,
                                                     java.lang.String&nbsp;url,
                                                     java.io.InputStream&nbsp;upload,
                                                     java.lang.String&nbsp;filename,
@@ -318,10 +323,11 @@ implements <a href="AtlanResponseGetter.html" title="interface in com.atlan.net"
 <div class="block">Makes a request to Atlan's API, to upload a file.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="AtlanResponseGetter.html#request(com.atlan.net.ApiResource.RequestMethod,java.lang.String,java.io.InputStream,java.lang.String,java.lang.Class,com.atlan.net.RequestOptions)">request</a></code>&nbsp;in interface&nbsp;<code><a href="AtlanResponseGetter.html" title="interface in com.atlan.net">AtlanResponseGetter</a></code></dd>
+<dd><code><a href="AtlanResponseGetter.html#request(com.atlan.AtlanClient,com.atlan.net.ApiResource.RequestMethod,java.lang.String,java.io.InputStream,java.lang.String,java.lang.Class,com.atlan.net.RequestOptions)">request</a></code>&nbsp;in interface&nbsp;<code><a href="AtlanResponseGetter.html" title="interface in com.atlan.net">AtlanResponseGetter</a></code></dd>
 <dt><span class="paramLabel">Type Parameters:</span></dt>
 <dd><code>T</code> - the type of the response of the request</dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>client</code> - connectivity to Atlan</dd>
 <dd><code>method</code> - to use for the request</dd>
 <dd><code>url</code> - of the endpoint (with all path and query parameters) for the request</dd>
 <dd><code>upload</code> - file to be uploaded</dd>

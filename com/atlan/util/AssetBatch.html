@@ -177,14 +177,16 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.lang.String,int)">AssetBatch</a></span>&#8203;(java.lang.String&nbsp;typeName,
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.atlan.AtlanClient,java.lang.String,int)">AssetBatch</a></span>&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+          java.lang.String&nbsp;typeName,
           int&nbsp;maxSize)</code></th>
 <td class="colLast">
 <div class="block">Create a new batch of assets to be bulk-upserted.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.lang.String,int,boolean,com.atlan.util.AssetBatch.CustomMetadataHandling)">AssetBatch</a></span>&#8203;(java.lang.String&nbsp;typeName,
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.atlan.AtlanClient,java.lang.String,int,boolean,com.atlan.util.AssetBatch.CustomMetadataHandling)">AssetBatch</a></span>&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+          java.lang.String&nbsp;typeName,
           int&nbsp;maxSize,
           boolean&nbsp;replaceAtlanTags,
           <a href="AssetBatch.CustomMetadataHandling.html" title="enum in com.atlan.util">AssetBatch.CustomMetadataHandling</a>&nbsp;customMetadataHandling)</code></th>
@@ -248,35 +250,39 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a id="&lt;init&gt;(java.lang.String,int)">
+<a id="&lt;init&gt;(com.atlan.AtlanClient,java.lang.String,int)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>AssetBatch</h4>
-<pre>public&nbsp;AssetBatch&#8203;(java.lang.String&nbsp;typeName,
+<pre>public&nbsp;AssetBatch&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+                  java.lang.String&nbsp;typeName,
                   int&nbsp;maxSize)</pre>
 <div class="block">Create a new batch of assets to be bulk-upserted.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>client</code> - connectivity to Atlan</dd>
 <dd><code>typeName</code> - name of the type of assets to batch process (used only for logging)</dd>
 <dd><code>maxSize</code> - maximum size of each batch that should be processed (per API call)</dd>
 </dl>
 </li>
 </ul>
-<a id="&lt;init&gt;(java.lang.String,int,boolean,com.atlan.util.AssetBatch.CustomMetadataHandling)">
+<a id="&lt;init&gt;(com.atlan.AtlanClient,java.lang.String,int,boolean,com.atlan.util.AssetBatch.CustomMetadataHandling)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>AssetBatch</h4>
-<pre>public&nbsp;AssetBatch&#8203;(java.lang.String&nbsp;typeName,
+<pre>public&nbsp;AssetBatch&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+                  java.lang.String&nbsp;typeName,
                   int&nbsp;maxSize,
                   boolean&nbsp;replaceAtlanTags,
                   <a href="AssetBatch.CustomMetadataHandling.html" title="enum in com.atlan.util">AssetBatch.CustomMetadataHandling</a>&nbsp;customMetadataHandling)</pre>
 <div class="block">Create a new batch of assets to be bulk-upserted.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>client</code> - connectivity to Atlan</dd>
 <dd><code>typeName</code> - name of the type of assets to batch process (used only for logging)</dd>
 <dd><code>maxSize</code> - maximum size of each batch that should be processed (per API call)</dd>
 <dd><code>replaceAtlanTags</code> - if true, all Atlan tags on an existing asset will be overwritten; if false, all Atlan tags will be ignored</dd>

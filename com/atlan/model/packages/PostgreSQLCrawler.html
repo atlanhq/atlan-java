@@ -204,7 +204,8 @@ extends <a href="AbstractCrawler.html" title="class in com.atlan.model.packages"
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>static <a href="../workflow/Workflow.html" title="class in com.atlan.model.workflow">Workflow</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#directBasicAuth(java.lang.String,java.lang.String,int,java.lang.String,java.lang.String,java.lang.String,java.util.List,java.util.List,java.util.List,boolean,boolean,long,java.util.Map,java.util.Map)">directBasicAuth</a></span>&#8203;(java.lang.String&nbsp;connectionName,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#directBasicAuth(com.atlan.AtlanClient,java.lang.String,java.lang.String,int,java.lang.String,java.lang.String,java.lang.String,java.util.List,java.util.List,java.util.List,boolean,boolean,long,java.util.Map,java.util.Map)">directBasicAuth</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+               java.lang.String&nbsp;connectionName,
                java.lang.String&nbsp;hostname,
                int&nbsp;port,
                java.lang.String&nbsp;username,
@@ -224,7 +225,8 @@ extends <a href="AbstractCrawler.html" title="class in com.atlan.model.packages"
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>static <a href="../workflow/Workflow.html" title="class in com.atlan.model.workflow">Workflow</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#directBasicAuth(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String)">directBasicAuth</a></span>&#8203;(java.lang.String&nbsp;connectionName,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#directBasicAuth(com.atlan.AtlanClient,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String)">directBasicAuth</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+               java.lang.String&nbsp;connectionName,
                java.lang.String&nbsp;hostname,
                java.lang.String&nbsp;username,
                java.lang.String&nbsp;password,
@@ -300,13 +302,14 @@ extends <a href="AbstractCrawler.html" title="class in com.atlan.model.packages"
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a id="directBasicAuth(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String)">
+<a id="directBasicAuth(com.atlan.AtlanClient,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>directBasicAuth</h4>
-<pre class="methodSignature">public static&nbsp;<a href="../workflow/Workflow.html" title="class in com.atlan.model.workflow">Workflow</a>&nbsp;directBasicAuth&#8203;(java.lang.String&nbsp;connectionName,
+<pre class="methodSignature">public static&nbsp;<a href="../workflow/Workflow.html" title="class in com.atlan.model.workflow">Workflow</a>&nbsp;directBasicAuth&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+                                       java.lang.String&nbsp;connectionName,
                                        java.lang.String&nbsp;hostname,
                                        java.lang.String&nbsp;username,
                                        java.lang.String&nbsp;password,
@@ -316,6 +319,7 @@ extends <a href="AbstractCrawler.html" title="class in com.atlan.model.packages"
  using basic authentication, with the default settings.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>client</code> - connectivity to Atlan</dd>
 <dd><code>connectionName</code> - name of the connection to create</dd>
 <dd><code>hostname</code> - of the PostgreSQL instance</dd>
 <dd><code>username</code> - through which to access PostgreSQL</dd>
@@ -328,13 +332,14 @@ extends <a href="AbstractCrawler.html" title="class in com.atlan.model.packages"
 </dl>
 </li>
 </ul>
-<a id="directBasicAuth(java.lang.String,java.lang.String,int,java.lang.String,java.lang.String,java.lang.String,java.util.List,java.util.List,java.util.List,boolean,boolean,long,java.util.Map,java.util.Map)">
+<a id="directBasicAuth(com.atlan.AtlanClient,java.lang.String,java.lang.String,int,java.lang.String,java.lang.String,java.lang.String,java.util.List,java.util.List,java.util.List,boolean,boolean,long,java.util.Map,java.util.Map)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>directBasicAuth</h4>
-<pre class="methodSignature">public static&nbsp;<a href="../workflow/Workflow.html" title="class in com.atlan.model.workflow">Workflow</a>&nbsp;directBasicAuth&#8203;(java.lang.String&nbsp;connectionName,
+<pre class="methodSignature">public static&nbsp;<a href="../workflow/Workflow.html" title="class in com.atlan.model.workflow">Workflow</a>&nbsp;directBasicAuth&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+                                       java.lang.String&nbsp;connectionName,
                                        java.lang.String&nbsp;hostname,
                                        int&nbsp;port,
                                        java.lang.String&nbsp;username,
@@ -352,6 +357,7 @@ extends <a href="AbstractCrawler.html" title="class in com.atlan.model.packages"
 <div class="block">Builds the minimal object necessary to create a new crawler for PostgreSQL.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>client</code> - connectivity to Atlan</dd>
 <dd><code>connectionName</code> - name of the connection to create</dd>
 <dd><code>hostname</code> - of the PostgreSQL instance</dd>
 <dd><code>port</code> - on which the PostgreSQL instance is running</dd>

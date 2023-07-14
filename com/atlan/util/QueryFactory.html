@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9,"i9":9,"i10":9,"i11":9,"i12":9};
+var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9,"i9":9,"i10":9,"i11":9,"i12":9,"i13":9,"i14":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -271,27 +271,45 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>static co.elastic.clients.elasticsearch._types.query_dsl.Query</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#beTaggedByAtLeastOneOf(java.util.Collection)">beTaggedByAtLeastOneOf</a></span>&#8203;(java.util.Collection&lt;java.lang.String&gt;&nbsp;atlanTagNames)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#beTaggedByAtLeastOneOf(com.atlan.AtlanClient,java.util.Collection)">beTaggedByAtLeastOneOf</a></span>&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+                      java.util.Collection&lt;java.lang.String&gt;&nbsp;atlanTagNames)</code></th>
 <td class="colLast">
 <div class="block">Returns a query that will only match assets that have at least one of the Atlan tags
  provided.</div>
 </td>
 </tr>
 <tr id="i8" class="altColor">
+<td class="colFirst"><code>static co.elastic.clients.elasticsearch._types.query_dsl.Query</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#beTaggedByAtLeastOneOf(java.util.Collection)">beTaggedByAtLeastOneOf</a></span>&#8203;(java.util.Collection&lt;java.lang.String&gt;&nbsp;atlanTagNames)</code></th>
+<td class="colLast">
+<div class="block">Returns a query that will only match assets that have at least one of the Atlan tags
+ provided.</div>
+</td>
+</tr>
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>static double</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAggregationMetric(com.atlan.model.search.AggregationResult)">getAggregationMetric</a></span>&#8203;(<a href="../model/search/AggregationResult.html" title="class in com.atlan.model.search">AggregationResult</a>&nbsp;result)</code></th>
 <td class="colLast">
 <div class="block">Retrieve the numeric value from the provided aggregation result.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>static <a href="QueryFactory.FieldQuery.html" title="class in com.atlan.util">QueryFactory.FieldQuery</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#have(com.atlan.model.enums.AtlanSearchableField)">have</a></span>&#8203;(<a href="../model/enums/AtlanSearchableField.html" title="interface in com.atlan.model.enums">AtlanSearchableField</a>&nbsp;field)</code></th>
 <td class="colLast">
 <div class="block">Returns the start of a query against any field.</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i11" class="rowColor">
+<td class="colFirst"><code>static <a href="QueryFactory.FieldQuery.html" title="class in com.atlan.util">QueryFactory.FieldQuery</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#haveCM(com.atlan.AtlanClient,java.lang.String,java.lang.String)">haveCM</a></span>&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+      java.lang.String&nbsp;cmName,
+      java.lang.String&nbsp;cmAttributeName)</code></th>
+<td class="colLast">
+<div class="block">Returns the start of a query against any custom metadata field.</div>
+</td>
+</tr>
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>static <a href="QueryFactory.FieldQuery.html" title="class in com.atlan.util">QueryFactory.FieldQuery</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#haveCM(java.lang.String,java.lang.String)">haveCM</a></span>&#8203;(java.lang.String&nbsp;cmName,
       java.lang.String&nbsp;cmAttributeName)</code></th>
@@ -299,14 +317,14 @@ extends java.lang.Object</pre>
 <div class="block">Returns the start of a query against any custom metadata field.</div>
 </td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>static co.elastic.clients.elasticsearch._types.query_dsl.Query</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#haveLineage()">haveLineage</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Returns a query that will only match assets with lineage.</div>
 </td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>static co.elastic.clients.elasticsearch._types.query_dsl.Query</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#haveSuperType(java.lang.String)">haveSuperType</a></span>&#8203;(java.lang.String&nbsp;typeName)</code></th>
 <td class="colLast">
@@ -467,6 +485,29 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
+<a id="beTaggedByAtLeastOneOf(com.atlan.AtlanClient,java.util.Collection)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>beTaggedByAtLeastOneOf</h4>
+<pre class="methodSignature">public static&nbsp;co.elastic.clients.elasticsearch._types.query_dsl.Query&nbsp;beTaggedByAtLeastOneOf&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+                                                                                             java.util.Collection&lt;java.lang.String&gt;&nbsp;atlanTagNames)
+                                                                                      throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Returns a query that will only match assets that have at least one of the Atlan tags
+ provided. This will match irrespective of the Atlan tag being directly applied to the
+ asset, or if it was propagated to the asset.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>client</code> - connectivity to Atlan</dd>
+<dd><code>atlanTagNames</code> - human-readable names of the Atlan tags</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a query that will only match assets that have at least one of the Atlan tags provided</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any error communicating with the API to refresh the Atlan tag cache</dd>
+</dl>
+</li>
+</ul>
 <a id="beDirectlyTagged()">
 <!--   -->
 </a>
@@ -542,6 +583,31 @@ extends java.lang.Object</pre>
  the field.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>cmName</code> - name of the custom metadata set</dd>
+<dd><code>cmAttributeName</code> - name of the custom metadata attribute within the set</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>a FieldQuery object that can be used to complete construction of the query</dd>
+<dt><span class="throwsLabel">Throws:</span></dt>
+<dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - if there is any problem resolving the custom metadata, such as it not existing</dd>
+</dl>
+</li>
+</ul>
+<a id="haveCM(com.atlan.AtlanClient,java.lang.String,java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>haveCM</h4>
+<pre class="methodSignature">public static&nbsp;<a href="QueryFactory.FieldQuery.html" title="class in com.atlan.util">QueryFactory.FieldQuery</a>&nbsp;haveCM&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+                                             java.lang.String&nbsp;cmName,
+                                             java.lang.String&nbsp;cmAttributeName)
+                                      throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Returns the start of a query against any custom metadata field. You need to call one of the
+ operations on the returned FieldQuery object to actually complete building the query against
+ the field.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>client</code> - connectivity to Atlan</dd>
 <dd><code>cmName</code> - name of the custom metadata set</dd>
 <dd><code>cmAttributeName</code> - name of the custom metadata attribute within the set</dd>
 <dt><span class="returnLabel">Returns:</span></dt>

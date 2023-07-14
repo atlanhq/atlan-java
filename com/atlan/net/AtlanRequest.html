@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -156,7 +156,8 @@ extends java.lang.Object</pre>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>&nbsp;</code></td>
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.atlan.net.ApiResource.RequestMethod,java.lang.String,java.io.InputStream,java.lang.String,com.atlan.net.RequestOptions)">AtlanRequest</a></span>&#8203;(<a href="ApiResource.RequestMethod.html" title="enum in com.atlan.net">ApiResource.RequestMethod</a>&nbsp;method,
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.atlan.AtlanClient,com.atlan.net.ApiResource.RequestMethod,java.lang.String,java.io.InputStream,java.lang.String,com.atlan.net.RequestOptions)">AtlanRequest</a></span>&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+            <a href="ApiResource.RequestMethod.html" title="enum in com.atlan.net">ApiResource.RequestMethod</a>&nbsp;method,
             java.lang.String&nbsp;url,
             java.io.InputStream&nbsp;file,
             java.lang.String&nbsp;filename,
@@ -167,7 +168,8 @@ extends java.lang.Object</pre>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>&nbsp;</code></td>
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.atlan.net.ApiResource.RequestMethod,java.lang.String,java.lang.String,com.atlan.net.RequestOptions)">AtlanRequest</a></span>&#8203;(<a href="ApiResource.RequestMethod.html" title="enum in com.atlan.net">ApiResource.RequestMethod</a>&nbsp;method,
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.atlan.AtlanClient,com.atlan.net.ApiResource.RequestMethod,java.lang.String,java.lang.String,com.atlan.net.RequestOptions)">AtlanRequest</a></span>&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+            <a href="ApiResource.RequestMethod.html" title="enum in com.atlan.net">ApiResource.RequestMethod</a>&nbsp;method,
             java.lang.String&nbsp;url,
             java.lang.String&nbsp;body,
             <a href="RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options)</code></th>
@@ -177,7 +179,8 @@ extends java.lang.Object</pre>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>protected </code></td>
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.atlan.net.ApiResource.RequestMethod,java.net.URL,com.atlan.net.HttpContent,com.atlan.net.HttpHeaders,java.lang.String,com.atlan.net.RequestOptions)">AtlanRequest</a></span>&#8203;(<a href="ApiResource.RequestMethod.html" title="enum in com.atlan.net">ApiResource.RequestMethod</a>&nbsp;method,
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.atlan.AtlanClient,com.atlan.net.ApiResource.RequestMethod,java.net.URL,com.atlan.net.HttpContent,com.atlan.net.HttpHeaders,java.lang.String,com.atlan.net.RequestOptions)">AtlanRequest</a></span>&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+            <a href="ApiResource.RequestMethod.html" title="enum in com.atlan.net">ApiResource.RequestMethod</a>&nbsp;method,
             java.net.URL&nbsp;url,
             <a href="HttpContent.html" title="class in com.atlan.net">HttpContent</a>&nbsp;content,
             <a href="HttpHeaders.html" title="class in com.atlan.net">HttpHeaders</a>&nbsp;headers,
@@ -211,23 +214,30 @@ extends java.lang.Object</pre>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
+<td class="colFirst"><code><a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#client()">client</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Connectivity to the Atlan tenant.</div>
+</td>
+</tr>
+<tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="HttpContent.html" title="class in com.atlan.net">HttpContent</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#content()">content</a></span>()</code></th>
 <td class="colLast">
 <div class="block">The body of the request.</div>
 </td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#equals(java.lang.Object)">equals</a></span>&#8203;(java.lang.Object&nbsp;o)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hashCode()">hashCode</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code><a href="HttpHeaders.html" title="class in com.atlan.net">HttpHeaders</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#headers()">headers</a></span>()</code></th>
 <td class="colLast">
@@ -235,33 +245,33 @@ extends java.lang.Object</pre>
  Atlan-Account</code>, <code>Idempotency-Key</code>...).</div>
 </td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code><a href="ApiResource.RequestMethod.html" title="enum in com.atlan.net">ApiResource.RequestMethod</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#method()">method</a></span>()</code></th>
 <td class="colLast">
 <div class="block">The HTTP method for the request (GET, POST or DELETE).</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="RequestOptions.html" title="class in com.atlan.net">RequestOptions</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#options()">options</a></span>()</code></th>
 <td class="colLast">
 <div class="block">The special modifiers of the request.</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>java.net.URL</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#url()">url</a></span>()</code></th>
 <td class="colLast">
 <div class="block">The URL for the request.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code><a href="AtlanRequest.html" title="class in com.atlan.net">AtlanRequest</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#withAdditionalHeader(java.lang.String,java.lang.String)">withAdditionalHeader</a></span>&#8203;(java.lang.String&nbsp;name,
                     java.lang.String&nbsp;value)</code></th>
@@ -293,13 +303,14 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a id="&lt;init&gt;(com.atlan.net.ApiResource.RequestMethod,java.lang.String,java.lang.String,com.atlan.net.RequestOptions)">
+<a id="&lt;init&gt;(com.atlan.AtlanClient,com.atlan.net.ApiResource.RequestMethod,java.lang.String,java.lang.String,com.atlan.net.RequestOptions)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>AtlanRequest</h4>
-<pre>public&nbsp;AtlanRequest&#8203;(<a href="ApiResource.RequestMethod.html" title="enum in com.atlan.net">ApiResource.RequestMethod</a>&nbsp;method,
+<pre>public&nbsp;AtlanRequest&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+                    <a href="ApiResource.RequestMethod.html" title="enum in com.atlan.net">ApiResource.RequestMethod</a>&nbsp;method,
                     java.lang.String&nbsp;url,
                     java.lang.String&nbsp;body,
                     <a href="RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options)
@@ -307,6 +318,7 @@ extends java.lang.Object</pre>
 <div class="block">Initializes a new instance of the <a href="AtlanRequest.html" title="class in com.atlan.net"><code>AtlanRequest</code></a> class, used for the majority of requests.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>client</code> - connectivity to an Atlan tenant</dd>
 <dd><code>method</code> - the HTTP method</dd>
 <dd><code>url</code> - the URL of the request</dd>
 <dd><code>body</code> - the body of the request</dd>
@@ -316,13 +328,14 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a id="&lt;init&gt;(com.atlan.net.ApiResource.RequestMethod,java.lang.String,java.io.InputStream,java.lang.String,com.atlan.net.RequestOptions)">
+<a id="&lt;init&gt;(com.atlan.AtlanClient,com.atlan.net.ApiResource.RequestMethod,java.lang.String,java.io.InputStream,java.lang.String,com.atlan.net.RequestOptions)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>AtlanRequest</h4>
-<pre>public&nbsp;AtlanRequest&#8203;(<a href="ApiResource.RequestMethod.html" title="enum in com.atlan.net">ApiResource.RequestMethod</a>&nbsp;method,
+<pre>public&nbsp;AtlanRequest&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+                    <a href="ApiResource.RequestMethod.html" title="enum in com.atlan.net">ApiResource.RequestMethod</a>&nbsp;method,
                     java.lang.String&nbsp;url,
                     java.io.InputStream&nbsp;file,
                     java.lang.String&nbsp;filename,
@@ -331,6 +344,7 @@ extends java.lang.Object</pre>
 <div class="block">Initializes a new instance of the <a href="AtlanRequest.html" title="class in com.atlan.net"><code>AtlanRequest</code></a> class, used specifically for uploading files (images).</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>client</code> - connectivity to an Atlan tenant</dd>
 <dd><code>method</code> - the HTTP method</dd>
 <dd><code>url</code> - the URL of the request</dd>
 <dd><code>file</code> - the file to be uploaded through the request</dd>
@@ -341,13 +355,14 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a id="&lt;init&gt;(com.atlan.net.ApiResource.RequestMethod,java.net.URL,com.atlan.net.HttpContent,com.atlan.net.HttpHeaders,java.lang.String,com.atlan.net.RequestOptions)">
+<a id="&lt;init&gt;(com.atlan.AtlanClient,com.atlan.net.ApiResource.RequestMethod,java.net.URL,com.atlan.net.HttpContent,com.atlan.net.HttpHeaders,java.lang.String,com.atlan.net.RequestOptions)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>AtlanRequest</h4>
-<pre>protected&nbsp;AtlanRequest&#8203;(<a href="ApiResource.RequestMethod.html" title="enum in com.atlan.net">ApiResource.RequestMethod</a>&nbsp;method,
+<pre>protected&nbsp;AtlanRequest&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+                       <a href="ApiResource.RequestMethod.html" title="enum in com.atlan.net">ApiResource.RequestMethod</a>&nbsp;method,
                        java.net.URL&nbsp;url,
                        <a href="HttpContent.html" title="class in com.atlan.net">HttpContent</a>&nbsp;content,
                        <a href="HttpHeaders.html" title="class in com.atlan.net">HttpHeaders</a>&nbsp;headers,
@@ -381,6 +396,16 @@ extends java.lang.Object</pre>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the new <a href="AtlanRequest.html" title="class in com.atlan.net"><code>AtlanRequest</code></a> instance</dd>
 </dl>
+</li>
+</ul>
+<a id="client()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>client</h4>
+<pre class="methodSignature">public&nbsp;<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client()</pre>
+<div class="block">Connectivity to the Atlan tenant.</div>
 </li>
 </ul>
 <a id="method()">

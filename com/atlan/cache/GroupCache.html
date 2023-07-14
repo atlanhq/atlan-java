@@ -27,8 +27,8 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":9,"i2":9};
-var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"]};
+var data = {"i0":10,"i1":10,"i2":10};
+var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -169,28 +169,28 @@ extends java.lang.Object</pre>
 </a>
 <h3>Method Summary</h3>
 <table class="memberSummary">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colSecond" scope="col">Method</th>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>static java.lang.String</code></td>
+<td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIdForAlias(java.lang.String)">getIdForAlias</a></span>&#8203;(java.lang.String&nbsp;alias)</code></th>
 <td class="colLast">
 <div class="block">Translate the provided alias to its GUID.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code>static java.lang.String</code></td>
+<td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIdForName(java.lang.String)">getIdForName</a></span>&#8203;(java.lang.String&nbsp;name)</code></th>
 <td class="colLast">
 <div class="block">Translate the provided human-readable group name to its GUID.</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code>static java.lang.String</code></td>
+<td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getNameForId(java.lang.String)">getNameForId</a></span>&#8203;(java.lang.String&nbsp;id)</code></th>
 <td class="colLast">
 <div class="block">Translate the provided group GUID to the human-readable group name.</div>
@@ -245,8 +245,8 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getIdForName</h4>
-<pre class="methodSignature">public static&nbsp;java.lang.String&nbsp;getIdForName&#8203;(java.lang.String&nbsp;name)
-                                     throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getIdForName&#8203;(java.lang.String&nbsp;name)
+                              throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
 <div class="block">Translate the provided human-readable group name to its GUID.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -266,8 +266,8 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getIdForAlias</h4>
-<pre class="methodSignature">public static&nbsp;java.lang.String&nbsp;getIdForAlias&#8203;(java.lang.String&nbsp;alias)
-                                      throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getIdForAlias&#8203;(java.lang.String&nbsp;alias)
+                               throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
 <div class="block">Translate the provided alias to its GUID.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -287,8 +287,8 @@ extends java.lang.Object</pre>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getNameForId</h4>
-<pre class="methodSignature">public static&nbsp;java.lang.String&nbsp;getNameForId&#8203;(java.lang.String&nbsp;id)
-                                     throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getNameForId&#8203;(java.lang.String&nbsp;id)
+                              throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
 <div class="block">Translate the provided group GUID to the human-readable group name.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>

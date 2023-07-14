@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9,"i9":9,"i10":9,"i11":9,"i12":9,"i13":9,"i14":9,"i15":9,"i16":9,"i17":9,"i18":9,"i19":9,"i20":9};
+var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -133,12 +133,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <hr>
 <pre>public abstract class <span class="typeNameLabel">Atlan</span>
 extends java.lang.Object</pre>
-<div class="block">Primary point of configuration for the SDK. In particular, use these methods to set up the SDK to run in your
- environment:
-
- - <a href="#setBaseUrl(java.lang.String)"><code>setBaseUrl(String)</code></a> to define your Atlan URL (<code>https://tenant.atlan.com</code>)
- - <a href="#setApiToken(java.lang.String)"><code>setApiToken(String)</code></a> to define the Atlan API token the SDK should use
- - <a href="#setMaxNetworkRetries(int)"><code>setMaxNetworkRetries(int)</code></a> to set the maximum number of retries the SDK should attempt when it hits a problem (default: 10)</div>
+<div class="block">Primary point of configuration for the SDK to one or more tenants.</div>
 </li>
 </ul>
 </div>
@@ -160,13 +155,13 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>static java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clientId">clientId</a></span></code></th>
+<td class="colFirst"><code>static int</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#DEFAULT_CONNECT_TIMEOUT">DEFAULT_CONNECT_TIMEOUT</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#DEFAULT_CONNECT_TIMEOUT">DEFAULT_CONNECT_TIMEOUT</a></span></code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#DEFAULT_NETWORK_RETRIES">DEFAULT_NETWORK_RETRIES</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
@@ -180,11 +175,6 @@ extends java.lang.Object</pre>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>static java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#partnerId">partnerId</a></span></code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="rowColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#VERSION">VERSION</a></span></code></th>
 <td class="colLast">&nbsp;</td>
@@ -229,158 +219,67 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>static java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getApiToken()">getApiToken</a></span>()</code></th>
-<td class="colLast">
-<div class="block">Retrieve the API token to use for authenticating API calls.</div>
-</td>
-</tr>
-<tr id="i1" class="rowColor">
 <td class="colFirst"><code>static java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAppInfo()">getAppInfo</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Returns information about your application.</div>
+<div class="block">Returns information about your application configured in the default client.</div>
 </td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i1" class="rowColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getBaseUrl()">getBaseUrl</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Retrieve the base URL for your tenant of Atlan.</div>
+<div class="block">Retrieve the base URL for the tenant of Atlan configured in the default client.</div>
+</td>
+</tr>
+<tr id="i2" class="altColor">
+<td class="colFirst"><code>static <a href="AtlanClient.html" title="class in com.atlan">AtlanClient</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getClient(java.lang.String)">getClient</a></span>&#8203;(java.lang.String&nbsp;baseURL)</code></th>
+<td class="colLast">
+<div class="block">Retrieve the Atlan client configured for the provided tenant URL.</div>
 </td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code>static java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getBaseUrlSafe()">getBaseUrlSafe</a></span>()</code></th>
+<td class="colFirst"><code>static <a href="AtlanClient.html" title="class in com.atlan">AtlanClient</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getClient(java.lang.String,java.lang.String)">getClient</a></span>&#8203;(java.lang.String&nbsp;baseURL,
+         java.lang.String&nbsp;name)</code></th>
 <td class="colLast">
-<div class="block">Retrieve the base URL for your tenant of Atlan.</div>
+<div class="block">Retrieve the Atlan client configured for the provided tenant URL, with a given unique name.</div>
 </td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code>static java.net.Proxy</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getConnectionProxy()">getConnectionProxy</a></span>()</code></th>
+<td class="colFirst"><code>static <a href="AtlanClient.html" title="class in com.atlan">AtlanClient</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDefaultClient()">getDefaultClient</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Returns the proxy to tunnel all Atlan connections.</div>
+<div class="block">Retrieve the default client that has been configured.</div>
 </td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>static int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getConnectTimeout()">getConnectTimeout</a></span>()</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMaxNetworkRetries()">getMaxNetworkRetries</a></span>()</code></th>
 <td class="colLast">
-<div class="block">Returns the connection timeout.</div>
+<div class="block">Returns the maximum number of times requests will be retried, as configured in the default client.</div>
 </td>
 </tr>
 <tr id="i6" class="altColor">
-<td class="colFirst"><code>static int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMaxNetworkRetries()">getMaxNetworkRetries</a></span>()</code></th>
+<td class="colFirst"><code>static void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setApiToken(java.lang.String)">setApiToken</a></span>&#8203;(java.lang.String&nbsp;apiToken)</code></th>
 <td class="colLast">
-<div class="block">Returns the maximum number of times requests will be retried.</div>
+<div class="block">Set the API token for the default client.</div>
 </td>
 </tr>
 <tr id="i7" class="rowColor">
-<td class="colFirst"><code>static java.net.PasswordAuthentication</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getProxyCredential()">getProxyCredential</a></span>()</code></th>
-<td class="colLast">
-<div class="block">Returns the credential to use for proxy authorization if required.</div>
-</td>
-</tr>
-<tr id="i8" class="altColor">
-<td class="colFirst"><code>static int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getReadTimeout()">getReadTimeout</a></span>()</code></th>
-<td class="colLast">
-<div class="block">Returns the read timeout.</div>
-</td>
-</tr>
-<tr id="i9" class="rowColor">
-<td class="colFirst"><code>static boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isInternal()">isInternal</a></span>()</code></th>
-<td class="colLast">
-<div class="block">Indicates whether the SDK is configured for cluster-internal access (true) or external access (false).</div>
-</td>
-</tr>
-<tr id="i10" class="altColor">
-<td class="colFirst"><code>static void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setApiToken(java.lang.String)">setApiToken</a></span>&#8203;(java.lang.String&nbsp;token)</code></th>
-<td class="colLast">
-<div class="block">Set the API token to use for authenticating API calls.</div>
-</td>
-</tr>
-<tr id="i11" class="rowColor">
-<td class="colFirst"><code>static void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAppInfo(java.lang.String)">setAppInfo</a></span>&#8203;(java.lang.String&nbsp;name)</code></th>
-<td class="colLast">
-<div class="block">Sets information about your application.</div>
-</td>
-</tr>
-<tr id="i12" class="altColor">
-<td class="colFirst"><code>static void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAppInfo(java.lang.String,java.lang.String)">setAppInfo</a></span>&#8203;(java.lang.String&nbsp;name,
-          java.lang.String&nbsp;version)</code></th>
-<td class="colLast">
-<div class="block">Sets information about your application.</div>
-</td>
-</tr>
-<tr id="i13" class="rowColor">
-<td class="colFirst"><code>static void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAppInfo(java.lang.String,java.lang.String,java.lang.String)">setAppInfo</a></span>&#8203;(java.lang.String&nbsp;name,
-          java.lang.String&nbsp;version,
-          java.lang.String&nbsp;url)</code></th>
-<td class="colLast">
-<div class="block">Sets information about your application.</div>
-</td>
-</tr>
-<tr id="i14" class="altColor">
-<td class="colFirst"><code>static void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAppInfo(java.lang.String,java.lang.String,java.lang.String,java.lang.String)">setAppInfo</a></span>&#8203;(java.lang.String&nbsp;name,
-          java.lang.String&nbsp;version,
-          java.lang.String&nbsp;url,
-          java.lang.String&nbsp;partnerId)</code></th>
-<td class="colLast">
-<div class="block">Sets information about your application.</div>
-</td>
-</tr>
-<tr id="i15" class="rowColor">
 <td class="colFirst"><code>static void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setBaseUrl(java.lang.String)">setBaseUrl</a></span>&#8203;(java.lang.String&nbsp;baseURL)</code></th>
 <td class="colLast">
-<div class="block">Set the base URL for your tenant of Atlan.</div>
+<div class="block">Set the base URL for the default client.</div>
 </td>
 </tr>
-<tr id="i16" class="altColor">
-<td class="colFirst"><code>static void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setConnectionProxy(java.net.Proxy)">setConnectionProxy</a></span>&#8203;(java.net.Proxy&nbsp;proxy)</code></th>
-<td class="colLast">
-<div class="block">Set proxy to tunnel all Atlan connections.</div>
-</td>
-</tr>
-<tr id="i17" class="rowColor">
-<td class="colFirst"><code>static void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setConnectTimeout(int)">setConnectTimeout</a></span>&#8203;(int&nbsp;timeout)</code></th>
-<td class="colLast">
-<div class="block">Sets the timeout value that will be used for making new connections to the Atlan API (in
- milliseconds).</div>
-</td>
-</tr>
-<tr id="i18" class="altColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>static void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setMaxNetworkRetries(int)">setMaxNetworkRetries</a></span>&#8203;(int&nbsp;numRetries)</code></th>
 <td class="colLast">
-<div class="block">Sets the maximum number of times requests will be retried.</div>
-</td>
-</tr>
-<tr id="i19" class="rowColor">
-<td class="colFirst"><code>static void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setProxyCredential(java.net.PasswordAuthentication)">setProxyCredential</a></span>&#8203;(java.net.PasswordAuthentication&nbsp;auth)</code></th>
-<td class="colLast">
-<div class="block">Provide credential for proxy authorization if required.</div>
-</td>
-</tr>
-<tr id="i20" class="altColor">
-<td class="colFirst"><code>static void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setReadTimeout(int)">setReadTimeout</a></span>&#8203;(int&nbsp;timeout)</code></th>
-<td class="colLast">
-<div class="block">Sets the timeout value that will be used when reading data from an established connection to
- the Atlan API (in milliseconds).</div>
+<div class="block">Sets the maximum number of times requests will be retried, in the default client.</div>
 </td>
 </tr>
 </table>
@@ -433,6 +332,19 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
+<a id="DEFAULT_NETWORK_RETRIES">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>DEFAULT_NETWORK_RETRIES</h4>
+<pre>public static final&nbsp;int DEFAULT_NETWORK_RETRIES</pre>
+<dl>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../constant-values.html#com.atlan.Atlan.DEFAULT_NETWORK_RETRIES">Constant Field Values</a></dd>
+</dl>
+</li>
+</ul>
 <a id="VERSION">
 <!--   -->
 </a>
@@ -446,31 +358,13 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a id="clientId">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>clientId</h4>
-<pre>public static volatile&nbsp;java.lang.String clientId</pre>
-</li>
-</ul>
 <a id="enableTelemetry">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>enableTelemetry</h4>
-<pre>public static volatile&nbsp;boolean enableTelemetry</pre>
-</li>
-</ul>
-<a id="partnerId">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>partnerId</h4>
-<pre>public static volatile&nbsp;java.lang.String partnerId</pre>
+<h4>enableTelemetry</h4>
+<pre>public static volatile&nbsp;boolean enableTelemetry</pre>
 </li>
 </ul>
 </li>
@@ -502,6 +396,41 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a id="getClient(java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getClient</h4>
+<pre class="methodSignature">public static&nbsp;<a href="AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;getClient&#8203;(java.lang.String&nbsp;baseURL)</pre>
+<div class="block">Retrieve the Atlan client configured for the provided tenant URL.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>baseURL</code> - base URL of the tenant for which to configure a client</dd>
+</dl>
+</li>
+</ul>
+<a id="getClient(java.lang.String,java.lang.String)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getClient</h4>
+<pre class="methodSignature">public static&nbsp;<a href="AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;getClient&#8203;(java.lang.String&nbsp;baseURL,
+                                    java.lang.String&nbsp;name)</pre>
+<div class="block">Retrieve the Atlan client configured for the provided tenant URL, with a given unique name.
+ Note: generally we would advise having only a single client per tenant URL, but this method
+ is provided for any rare case where you might want to have multiple clients against a single
+ tenant. Note that this increases resource usage:
+ - Information for that tenant will be cached independently in every client (increased heap)
+ - Cache refreshes will be done independently in every client (increased latency for operations)</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>baseURL</code> - base URL of the tenant for which to configure a client</dd>
+<dd><code>name</code> - a unique name for this client</dd>
+</dl>
+</li>
+</ul>
 <a id="setBaseUrl(java.lang.String)">
 <!--   -->
 </a>
@@ -509,46 +438,13 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>setBaseUrl</h4>
 <pre class="methodSignature">public static&nbsp;void&nbsp;setBaseUrl&#8203;(java.lang.String&nbsp;baseURL)</pre>
-<div class="block">Set the base URL for your tenant of Atlan.</div>
-</li>
-</ul>
-<a id="getBaseUrl()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getBaseUrl</h4>
-<pre class="methodSignature">public static&nbsp;java.lang.String&nbsp;getBaseUrl()
-                                   throws <a href="exception/ApiConnectionException.html" title="class in com.atlan.exception">ApiConnectionException</a></pre>
-<div class="block">Retrieve the base URL for your tenant of Atlan.</div>
+<div class="block">Set the base URL for the default client. This must be called BEFORE setApiToken.</div>
 <dl>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="exception/ApiConnectionException.html" title="class in com.atlan.exception">ApiConnectionException</a></code> - if no base URL has been defined</dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>baseURL</code> - base URL of the tenant to use as the default client</dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="#setApiToken(java.lang.String)"><code>setApiToken(String)</code></a></dd>
 </dl>
-</li>
-</ul>
-<a id="isInternal()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>isInternal</h4>
-<pre class="methodSignature">public static&nbsp;boolean&nbsp;isInternal()</pre>
-<div class="block">Indicates whether the SDK is configured for cluster-internal access (true) or external access (false).</div>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>boolean indicating whether the SDK is configured for cluster-internal access (true) or not (false)</dd>
-</dl>
-</li>
-</ul>
-<a id="getBaseUrlSafe()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getBaseUrlSafe</h4>
-<pre class="methodSignature">public static&nbsp;java.lang.String&nbsp;getBaseUrlSafe()</pre>
-<div class="block">Retrieve the base URL for your tenant of Atlan.</div>
 </li>
 </ul>
 <a id="setApiToken(java.lang.String)">
@@ -557,106 +453,55 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>setApiToken</h4>
-<pre class="methodSignature">public static&nbsp;void&nbsp;setApiToken&#8203;(java.lang.String&nbsp;token)</pre>
-<div class="block">Set the API token to use for authenticating API calls.</div>
-</li>
-</ul>
-<a id="getApiToken()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getApiToken</h4>
-<pre class="methodSignature">public static&nbsp;java.lang.String&nbsp;getApiToken()</pre>
-<div class="block">Retrieve the API token to use for authenticating API calls.</div>
-</li>
-</ul>
-<a id="setConnectionProxy(java.net.Proxy)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setConnectionProxy</h4>
-<pre class="methodSignature">public static&nbsp;void&nbsp;setConnectionProxy&#8203;(java.net.Proxy&nbsp;proxy)</pre>
-<div class="block">Set proxy to tunnel all Atlan connections.</div>
+<pre class="methodSignature">public static&nbsp;void&nbsp;setApiToken&#8203;(java.lang.String&nbsp;apiToken)</pre>
+<div class="block">Set the API token for the default client. This can only be called AFTER setBaseUrl.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>proxy</code> - proxy host and port setting</dd>
+<dd><code>apiToken</code> - for the default client</dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="#setBaseUrl(java.lang.String)"><code>setBaseUrl(String)</code></a></dd>
 </dl>
 </li>
 </ul>
-<a id="getConnectionProxy()">
+<a id="getDefaultClient()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>getConnectionProxy</h4>
-<pre class="methodSignature">public static&nbsp;java.net.Proxy&nbsp;getConnectionProxy()</pre>
-<div class="block">Returns the proxy to tunnel all Atlan connections.</div>
+<h4>getDefaultClient</h4>
+<pre class="methodSignature">public static&nbsp;<a href="AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;getDefaultClient()</pre>
+<div class="block">Retrieve the default client that has been configured.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>proxy</dd>
+<dd>the default client</dd>
 </dl>
 </li>
 </ul>
-<a id="getConnectTimeout()">
+<a id="getBaseUrl()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>getConnectTimeout</h4>
-<pre class="methodSignature">public static&nbsp;int&nbsp;getConnectTimeout()</pre>
-<div class="block">Returns the connection timeout.</div>
+<h4>getBaseUrl</h4>
+<pre class="methodSignature">public static&nbsp;java.lang.String&nbsp;getBaseUrl()</pre>
+<div class="block">Retrieve the base URL for the tenant of Atlan configured in the default client.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>timeout value in milliseconds</dd>
+<dd>the base URL for the tenant configured in the default client</dd>
 </dl>
 </li>
 </ul>
-<a id="setConnectTimeout(int)">
+<a id="getAppInfo()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>setConnectTimeout</h4>
-<pre class="methodSignature">public static&nbsp;void&nbsp;setConnectTimeout&#8203;(int&nbsp;timeout)</pre>
-<div class="block">Sets the timeout value that will be used for making new connections to the Atlan API (in
- milliseconds).</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>timeout</code> - timeout value in milliseconds</dd>
-</dl>
-</li>
-</ul>
-<a id="getReadTimeout()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getReadTimeout</h4>
-<pre class="methodSignature">public static&nbsp;int&nbsp;getReadTimeout()</pre>
-<div class="block">Returns the read timeout.</div>
+<h4>getAppInfo</h4>
+<pre class="methodSignature">public static&nbsp;java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;getAppInfo()</pre>
+<div class="block">Returns information about your application configured in the default client.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>timeout value in milliseconds</dd>
-</dl>
-</li>
-</ul>
-<a id="setReadTimeout(int)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setReadTimeout</h4>
-<pre class="methodSignature">public static&nbsp;void&nbsp;setReadTimeout&#8203;(int&nbsp;timeout)</pre>
-<div class="block">Sets the timeout value that will be used when reading data from an established connection to
- the Atlan API (in milliseconds).
-
- <p>Note that this value should be set conservatively because some API requests can take time
- and a short timeout increases the likelihood of causing a problem in the backend.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>timeout</code> - timeout value in milliseconds</dd>
+<dd>information about your application configured in the default client</dd>
 </dl>
 </li>
 </ul>
@@ -667,134 +512,24 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>getMaxNetworkRetries</h4>
 <pre class="methodSignature">public static&nbsp;int&nbsp;getMaxNetworkRetries()</pre>
-<div class="block">Returns the maximum number of times requests will be retried.</div>
+<div class="block">Returns the maximum number of times requests will be retried, as configured in the default client.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the maximum number of times requests will be retried</dd>
+<dd>the maximum number of times requests will be retried, as configured in the default client</dd>
 </dl>
 </li>
 </ul>
 <a id="setMaxNetworkRetries(int)">
 <!--   -->
 </a>
-<ul class="blockList">
+<ul class="blockListLast">
 <li class="blockList">
 <h4>setMaxNetworkRetries</h4>
 <pre class="methodSignature">public static&nbsp;void&nbsp;setMaxNetworkRetries&#8203;(int&nbsp;numRetries)</pre>
-<div class="block">Sets the maximum number of times requests will be retried.</div>
+<div class="block">Sets the maximum number of times requests will be retried, in the default client.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>numRetries</code> - the maximum number of times requests will be retried</dd>
-</dl>
-</li>
-</ul>
-<a id="setProxyCredential(java.net.PasswordAuthentication)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setProxyCredential</h4>
-<pre class="methodSignature">public static&nbsp;void&nbsp;setProxyCredential&#8203;(java.net.PasswordAuthentication&nbsp;auth)</pre>
-<div class="block">Provide credential for proxy authorization if required.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>auth</code> - proxy required userName and password</dd>
-</dl>
-</li>
-</ul>
-<a id="getProxyCredential()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getProxyCredential</h4>
-<pre class="methodSignature">public static&nbsp;java.net.PasswordAuthentication&nbsp;getProxyCredential()</pre>
-<div class="block">Returns the credential to use for proxy authorization if required.</div>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>the credential to use for proxy authorization</dd>
-</dl>
-</li>
-</ul>
-<a id="setAppInfo(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setAppInfo</h4>
-<pre class="methodSignature">public static&nbsp;void&nbsp;setAppInfo&#8203;(java.lang.String&nbsp;name)</pre>
-<div class="block">Sets information about your application. The information is passed along to Atlan.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>name</code> - Name of your application (e.g. "MyAwesomeApp")</dd>
-</dl>
-</li>
-</ul>
-<a id="setAppInfo(java.lang.String,java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setAppInfo</h4>
-<pre class="methodSignature">public static&nbsp;void&nbsp;setAppInfo&#8203;(java.lang.String&nbsp;name,
-                              java.lang.String&nbsp;version)</pre>
-<div class="block">Sets information about your application. The information is passed along to Atlan.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>name</code> - Name of your application (e.g. "MyAwesomeApp")</dd>
-<dd><code>version</code> - Version of your application (e.g. "1.2.34")</dd>
-</dl>
-</li>
-</ul>
-<a id="setAppInfo(java.lang.String,java.lang.String,java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setAppInfo</h4>
-<pre class="methodSignature">public static&nbsp;void&nbsp;setAppInfo&#8203;(java.lang.String&nbsp;name,
-                              java.lang.String&nbsp;version,
-                              java.lang.String&nbsp;url)</pre>
-<div class="block">Sets information about your application. The information is passed along to Atlan.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>name</code> - Name of your application (e.g. "MyAwesomeApp")</dd>
-<dd><code>version</code> - Version of your application (e.g. "1.2.34")</dd>
-<dd><code>url</code> - Website for your application (e.g. "https://myawesomeapp.info")</dd>
-</dl>
-</li>
-</ul>
-<a id="setAppInfo(java.lang.String,java.lang.String,java.lang.String,java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setAppInfo</h4>
-<pre class="methodSignature">public static&nbsp;void&nbsp;setAppInfo&#8203;(java.lang.String&nbsp;name,
-                              java.lang.String&nbsp;version,
-                              java.lang.String&nbsp;url,
-                              java.lang.String&nbsp;partnerId)</pre>
-<div class="block">Sets information about your application. The information is passed along to Atlan.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>name</code> - Name of your application (e.g. "MyAwesomeApp")</dd>
-<dd><code>version</code> - Version of your application (e.g. "1.2.34")</dd>
-<dd><code>url</code> - Website for your application (e.g. "https://myawesomeapp.info")</dd>
-<dd><code>partnerId</code> - Your Atlan Partner ID (e.g. "pp_partner_1234")</dd>
-</dl>
-</li>
-</ul>
-<a id="getAppInfo()">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>getAppInfo</h4>
-<pre class="methodSignature">public static&nbsp;java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;getAppInfo()</pre>
-<div class="block">Returns information about your application.</div>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>information about your application</dd>
+<dd><code>numRetries</code> - the maximum number of times requests will be retried in the default client</dd>
 </dl>
 </li>
 </ul>

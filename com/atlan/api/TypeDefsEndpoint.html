@@ -27,8 +27,8 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9};
-var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"]};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10};
+var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -170,6 +170,13 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
+<ul class="blockList">
+<li class="blockList"><a id="fields.inherited.from.class.com.atlan.api.AbstractEndpoint">
+<!--   -->
+</a>
+<h3>Fields inherited from class&nbsp;com.atlan.api.<a href="AbstractEndpoint.html" title="class in com.atlan.api">AbstractEndpoint</a></h3>
+<code><a href="AbstractEndpoint.html#client">client</a></code></li>
+</ul>
 </li>
 </ul>
 </section>
@@ -187,7 +194,7 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E()">TypeDefsEndpoint</a></span>()</code></th>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.atlan.AtlanClient)">TypeDefsEndpoint</a></span>&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
@@ -202,57 +209,57 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
 </a>
 <h3>Method Summary</h3>
 <table class="memberSummary">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colSecond" scope="col">Method</th>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>static <a href="../model/typedefs/TypeDefResponse.html" title="class in com.atlan.model.typedefs">TypeDefResponse</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createInternal(com.atlan.model.typedefs.TypeDef)">createInternal</a></span>&#8203;(<a href="../model/typedefs/TypeDef.html" title="class in com.atlan.model.typedefs">TypeDef</a>&nbsp;typeDef)</code></th>
+<td class="colFirst"><code><a href="../model/typedefs/TypeDefResponse.html" title="class in com.atlan.model.typedefs">TypeDefResponse</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#create(com.atlan.model.typedefs.TypeDef)">create</a></span>&#8203;(<a href="../model/typedefs/TypeDef.html" title="class in com.atlan.model.typedefs">TypeDef</a>&nbsp;typeDef)</code></th>
 <td class="colLast">
 <div class="block">Create a new type definition in Atlan.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code>static <a href="../model/typedefs/TypeDefResponse.html" title="class in com.atlan.model.typedefs">TypeDefResponse</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createTypeDef(com.atlan.model.typedefs.TypeDef)">createTypeDef</a></span>&#8203;(<a href="../model/typedefs/TypeDef.html" title="class in com.atlan.model.typedefs">TypeDef</a>&nbsp;typeDef)</code></th>
+<td class="colFirst"><code><a href="../model/typedefs/TypeDefResponse.html" title="class in com.atlan.model.typedefs">TypeDefResponse</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createInternal(com.atlan.model.typedefs.TypeDef)">createInternal</a></span>&#8203;(<a href="../model/typedefs/TypeDef.html" title="class in com.atlan.model.typedefs">TypeDef</a>&nbsp;typeDef)</code></th>
 <td class="colLast">
 <div class="block">Create a new type definition in Atlan.</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code>static <a href="../model/typedefs/TypeDef.html" title="class in com.atlan.model.typedefs">TypeDef</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTypeDefByName(java.lang.String)">getTypeDefByName</a></span>&#8203;(java.lang.String&nbsp;internalName)</code></th>
+<td class="colFirst"><code><a href="../model/typedefs/TypeDef.html" title="class in com.atlan.model.typedefs">TypeDef</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#get(java.lang.String)">get</a></span>&#8203;(java.lang.String&nbsp;internalName)</code></th>
 <td class="colLast">
 <div class="block">Retrieves a specific type definition from Atlan.</div>
 </td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code>static <a href="../model/typedefs/TypeDefResponse.html" title="class in com.atlan.model.typedefs">TypeDefResponse</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTypeDefs(com.atlan.model.enums.AtlanTypeCategory)">getTypeDefs</a></span>&#8203;(<a href="../model/enums/AtlanTypeCategory.html" title="enum in com.atlan.model.enums">AtlanTypeCategory</a>&nbsp;category)</code></th>
+<td class="colFirst"><code><a href="../model/typedefs/TypeDefResponse.html" title="class in com.atlan.model.typedefs">TypeDefResponse</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#list(com.atlan.model.enums.AtlanTypeCategory)">list</a></span>&#8203;(<a href="../model/enums/AtlanTypeCategory.html" title="enum in com.atlan.model.enums">AtlanTypeCategory</a>&nbsp;category)</code></th>
 <td class="colLast">
 <div class="block">Retrieves a list of the type definitions in Atlan.</div>
 </td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code>static void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#purgeTypeDef(java.lang.String)">purgeTypeDef</a></span>&#8203;(java.lang.String&nbsp;internalName)</code></th>
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#purge(java.lang.String)">purge</a></span>&#8203;(java.lang.String&nbsp;internalName)</code></th>
 <td class="colLast">
 <div class="block">Delete the type definition.</div>
 </td>
 </tr>
 <tr id="i5" class="rowColor">
-<td class="colFirst"><code>static <a href="../model/typedefs/TypeDefResponse.html" title="class in com.atlan.model.typedefs">TypeDefResponse</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateInternal(com.atlan.model.typedefs.TypeDef)">updateInternal</a></span>&#8203;(<a href="../model/typedefs/TypeDef.html" title="class in com.atlan.model.typedefs">TypeDef</a>&nbsp;typeDef)</code></th>
+<td class="colFirst"><code><a href="../model/typedefs/TypeDefResponse.html" title="class in com.atlan.model.typedefs">TypeDefResponse</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#update(com.atlan.model.typedefs.TypeDef)">update</a></span>&#8203;(<a href="../model/typedefs/TypeDef.html" title="class in com.atlan.model.typedefs">TypeDef</a>&nbsp;typeDef)</code></th>
 <td class="colLast">
 <div class="block">Update an existing type definition in Atlan.</div>
 </td>
 </tr>
 <tr id="i6" class="altColor">
-<td class="colFirst"><code>static <a href="../model/typedefs/TypeDefResponse.html" title="class in com.atlan.model.typedefs">TypeDefResponse</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateTypeDef(com.atlan.model.typedefs.TypeDef)">updateTypeDef</a></span>&#8203;(<a href="../model/typedefs/TypeDef.html" title="class in com.atlan.model.typedefs">TypeDef</a>&nbsp;typeDef)</code></th>
+<td class="colFirst"><code><a href="../model/typedefs/TypeDefResponse.html" title="class in com.atlan.model.typedefs">TypeDefResponse</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateInternal(com.atlan.model.typedefs.TypeDef)">updateInternal</a></span>&#8203;(<a href="../model/typedefs/TypeDef.html" title="class in com.atlan.model.typedefs">TypeDef</a>&nbsp;typeDef)</code></th>
 <td class="colLast">
 <div class="block">Update an existing type definition in Atlan.</div>
 </td>
@@ -314,13 +321,13 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a id="&lt;init&gt;()">
+<a id="&lt;init&gt;(com.atlan.AtlanClient)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>TypeDefsEndpoint</h4>
-<pre>public&nbsp;TypeDefsEndpoint()</pre>
+<pre>public&nbsp;TypeDefsEndpoint&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client)</pre>
 </li>
 </ul>
 </li>
@@ -333,14 +340,14 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a id="getTypeDefs(com.atlan.model.enums.AtlanTypeCategory)">
+<a id="list(com.atlan.model.enums.AtlanTypeCategory)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>getTypeDefs</h4>
-<pre class="methodSignature">public static&nbsp;<a href="../model/typedefs/TypeDefResponse.html" title="class in com.atlan.model.typedefs">TypeDefResponse</a>&nbsp;getTypeDefs&#8203;(<a href="../model/enums/AtlanTypeCategory.html" title="enum in com.atlan.model.enums">AtlanTypeCategory</a>&nbsp;category)
-                                   throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<h4>list</h4>
+<pre class="methodSignature">public&nbsp;<a href="../model/typedefs/TypeDefResponse.html" title="class in com.atlan.model.typedefs">TypeDefResponse</a>&nbsp;list&#8203;(<a href="../model/enums/AtlanTypeCategory.html" title="enum in com.atlan.model.enums">AtlanTypeCategory</a>&nbsp;category)
+                     throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
 <div class="block">Retrieves a list of the type definitions in Atlan.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -352,14 +359,14 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
 </dl>
 </li>
 </ul>
-<a id="getTypeDefByName(java.lang.String)">
+<a id="get(java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>getTypeDefByName</h4>
-<pre class="methodSignature">public static&nbsp;<a href="../model/typedefs/TypeDef.html" title="class in com.atlan.model.typedefs">TypeDef</a>&nbsp;getTypeDefByName&#8203;(java.lang.String&nbsp;internalName)
-                                throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<h4>get</h4>
+<pre class="methodSignature">public&nbsp;<a href="../model/typedefs/TypeDef.html" title="class in com.atlan.model.typedefs">TypeDef</a>&nbsp;get&#8203;(java.lang.String&nbsp;internalName)
+            throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
 <div class="block">Retrieves a specific type definition from Atlan.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -371,16 +378,17 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
 </dl>
 </li>
 </ul>
-<a id="createTypeDef(com.atlan.model.typedefs.TypeDef)">
+<a id="create(com.atlan.model.typedefs.TypeDef)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>createTypeDef</h4>
-<pre class="methodSignature">public static&nbsp;<a href="../model/typedefs/TypeDefResponse.html" title="class in com.atlan.model.typedefs">TypeDefResponse</a>&nbsp;createTypeDef&#8203;(<a href="../model/typedefs/TypeDef.html" title="class in com.atlan.model.typedefs">TypeDef</a>&nbsp;typeDef)
-                                     throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<h4>create</h4>
+<pre class="methodSignature">public&nbsp;<a href="../model/typedefs/TypeDefResponse.html" title="class in com.atlan.model.typedefs">TypeDefResponse</a>&nbsp;create&#8203;(<a href="../model/typedefs/TypeDef.html" title="class in com.atlan.model.typedefs">TypeDef</a>&nbsp;typeDef)
+                       throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
 <div class="block">Create a new type definition in Atlan.
- Note: only custom metadata, enumerations, and Atlan tag type definitions are currently supported.</div>
+ Note: only custom metadata, enumerations, and Atlan tag type definitions are currently supported.
+ Furthermore, if any of these are created their respective cache will be force-refreshed.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>typeDef</code> - to create</dd>
@@ -397,10 +405,11 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
 <ul class="blockList">
 <li class="blockList">
 <h4>createInternal</h4>
-<pre class="methodSignature">public static&nbsp;<a href="../model/typedefs/TypeDefResponse.html" title="class in com.atlan.model.typedefs">TypeDefResponse</a>&nbsp;createInternal&#8203;(<a href="../model/typedefs/TypeDef.html" title="class in com.atlan.model.typedefs">TypeDef</a>&nbsp;typeDef)
-                                      throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<pre class="methodSignature">public&nbsp;<a href="../model/typedefs/TypeDefResponse.html" title="class in com.atlan.model.typedefs">TypeDefResponse</a>&nbsp;createInternal&#8203;(<a href="../model/typedefs/TypeDef.html" title="class in com.atlan.model.typedefs">TypeDef</a>&nbsp;typeDef)
+                               throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
 <div class="block">Create a new type definition in Atlan.
- NOTE: INTERNAL USE ONLY. This will NOT work without specially-configured policies - use createTypeDef instead.</div>
+ NOTE: INTERNAL USE ONLY. This will NOT work without specially-configured policies - use createTypeDef instead.
+ Furthermore, if any of Atlan tag, enum or custom metadata is created their respective cache will be force-refreshed.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>typeDef</code> - to create</dd>
@@ -409,20 +418,21 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - on any API communication issue</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="#createTypeDef(com.atlan.model.typedefs.TypeDef)"><code>createTypeDef(TypeDef)</code></a></dd>
+<dd><a href="#create(com.atlan.model.typedefs.TypeDef)"><code>create(TypeDef)</code></a></dd>
 </dl>
 </li>
 </ul>
-<a id="updateTypeDef(com.atlan.model.typedefs.TypeDef)">
+<a id="update(com.atlan.model.typedefs.TypeDef)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>updateTypeDef</h4>
-<pre class="methodSignature">public static&nbsp;<a href="../model/typedefs/TypeDefResponse.html" title="class in com.atlan.model.typedefs">TypeDefResponse</a>&nbsp;updateTypeDef&#8203;(<a href="../model/typedefs/TypeDef.html" title="class in com.atlan.model.typedefs">TypeDef</a>&nbsp;typeDef)
-                                     throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<h4>update</h4>
+<pre class="methodSignature">public&nbsp;<a href="../model/typedefs/TypeDefResponse.html" title="class in com.atlan.model.typedefs">TypeDefResponse</a>&nbsp;update&#8203;(<a href="../model/typedefs/TypeDef.html" title="class in com.atlan.model.typedefs">TypeDef</a>&nbsp;typeDef)
+                       throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
 <div class="block">Update an existing type definition in Atlan.
- Note: only custom metadata and Atlan tag type definitions are currently supported.</div>
+ Note: only custom metadata and Atlan tag type definitions are currently supported.
+ Furthermore, if any of these are updated their respective cache will be force-refreshed.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>typeDef</code> - to update</dd>
@@ -439,10 +449,11 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
 <ul class="blockList">
 <li class="blockList">
 <h4>updateInternal</h4>
-<pre class="methodSignature">public static&nbsp;<a href="../model/typedefs/TypeDefResponse.html" title="class in com.atlan.model.typedefs">TypeDefResponse</a>&nbsp;updateInternal&#8203;(<a href="../model/typedefs/TypeDef.html" title="class in com.atlan.model.typedefs">TypeDef</a>&nbsp;typeDef)
-                                      throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<pre class="methodSignature">public&nbsp;<a href="../model/typedefs/TypeDefResponse.html" title="class in com.atlan.model.typedefs">TypeDefResponse</a>&nbsp;updateInternal&#8203;(<a href="../model/typedefs/TypeDef.html" title="class in com.atlan.model.typedefs">TypeDef</a>&nbsp;typeDef)
+                               throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
 <div class="block">Update an existing type definition in Atlan.
- Note: only custom metadata and Atlan tag type definitions are currently supported.</div>
+ Note: only custom metadata and Atlan tag type definitions are currently supported.
+ Furthermore, if any Atlan tag, enum or custom metadata is updated their respective cache will be force-refreshed.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>typeDef</code> - to update</dd>
@@ -453,15 +464,16 @@ extends <a href="AtlasEndpoint.html" title="class in com.atlan.api">AtlasEndpoin
 </dl>
 </li>
 </ul>
-<a id="purgeTypeDef(java.lang.String)">
+<a id="purge(java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>purgeTypeDef</h4>
-<pre class="methodSignature">public static&nbsp;void&nbsp;purgeTypeDef&#8203;(java.lang.String&nbsp;internalName)
-                         throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
-<div class="block">Delete the type definition.</div>
+<h4>purge</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;purge&#8203;(java.lang.String&nbsp;internalName)
+           throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<div class="block">Delete the type definition.
+ Furthermore, if an Atlan tag, enum or custom metadata is deleted their respective cache will be force-refreshed</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>internalName</code> - the internal hashed-string name of the type definition</dd>

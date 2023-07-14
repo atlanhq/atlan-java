@@ -204,7 +204,8 @@ extends <a href="AbstractCrawler.html" title="class in com.atlan.model.packages"
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>static <a href="../workflow/Workflow.html" title="class in com.atlan.model.workflow">Workflow</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#directResourceOwner(java.lang.String,java.lang.String,int,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.util.List,java.util.List,java.util.List,java.util.List,java.util.List,java.util.List,java.util.List)">directResourceOwner</a></span>&#8203;(java.lang.String&nbsp;connectionName,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#directResourceOwner(com.atlan.AtlanClient,java.lang.String,java.lang.String,int,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.util.List,java.util.List,java.util.List,java.util.List,java.util.List,java.util.List,java.util.List)">directResourceOwner</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+                   java.lang.String&nbsp;connectionName,
                    java.lang.String&nbsp;hostname,
                    int&nbsp;port,
                    java.lang.String&nbsp;clientId,
@@ -224,7 +225,8 @@ extends <a href="AbstractCrawler.html" title="class in com.atlan.model.packages"
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>static <a href="../workflow/Workflow.html" title="class in com.atlan.model.workflow">Workflow</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#directResourceOwner(java.lang.String,java.lang.String,java.lang.String,java.lang.String)">directResourceOwner</a></span>&#8203;(java.lang.String&nbsp;connectionName,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#directResourceOwner(com.atlan.AtlanClient,java.lang.String,java.lang.String,java.lang.String,java.lang.String)">directResourceOwner</a></span>&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+                   java.lang.String&nbsp;connectionName,
                    java.lang.String&nbsp;hostname,
                    java.lang.String&nbsp;clientId,
                    java.lang.String&nbsp;clientSecret)</code></th>
@@ -299,13 +301,14 @@ extends <a href="AbstractCrawler.html" title="class in com.atlan.model.packages"
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a id="directResourceOwner(java.lang.String,java.lang.String,java.lang.String,java.lang.String)">
+<a id="directResourceOwner(com.atlan.AtlanClient,java.lang.String,java.lang.String,java.lang.String,java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>directResourceOwner</h4>
-<pre class="methodSignature">public static&nbsp;<a href="../workflow/Workflow.html" title="class in com.atlan.model.workflow">Workflow</a>&nbsp;directResourceOwner&#8203;(java.lang.String&nbsp;connectionName,
+<pre class="methodSignature">public static&nbsp;<a href="../workflow/Workflow.html" title="class in com.atlan.model.workflow">Workflow</a>&nbsp;directResourceOwner&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+                                           java.lang.String&nbsp;connectionName,
                                            java.lang.String&nbsp;hostname,
                                            java.lang.String&nbsp;clientId,
                                            java.lang.String&nbsp;clientSecret)
@@ -314,6 +317,7 @@ extends <a href="AbstractCrawler.html" title="class in com.atlan.model.packages"
  using basic authentication, with the default settings.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>client</code> - connectivity to Atlan</dd>
 <dd><code>connectionName</code> - name of the connection to create</dd>
 <dd><code>hostname</code> - of the Looker instance</dd>
 <dd><code>clientId</code> - through which to access Looker</dd>
@@ -325,13 +329,14 @@ extends <a href="AbstractCrawler.html" title="class in com.atlan.model.packages"
 </dl>
 </li>
 </ul>
-<a id="directResourceOwner(java.lang.String,java.lang.String,int,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.util.List,java.util.List,java.util.List,java.util.List,java.util.List,java.util.List,java.util.List)">
+<a id="directResourceOwner(com.atlan.AtlanClient,java.lang.String,java.lang.String,int,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.util.List,java.util.List,java.util.List,java.util.List,java.util.List,java.util.List,java.util.List)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>directResourceOwner</h4>
-<pre class="methodSignature">public static&nbsp;<a href="../workflow/Workflow.html" title="class in com.atlan.model.workflow">Workflow</a>&nbsp;directResourceOwner&#8203;(java.lang.String&nbsp;connectionName,
+<pre class="methodSignature">public static&nbsp;<a href="../workflow/Workflow.html" title="class in com.atlan.model.workflow">Workflow</a>&nbsp;directResourceOwner&#8203;(<a href="../../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+                                           java.lang.String&nbsp;connectionName,
                                            java.lang.String&nbsp;hostname,
                                            int&nbsp;port,
                                            java.lang.String&nbsp;clientId,
@@ -349,6 +354,7 @@ extends <a href="AbstractCrawler.html" title="class in com.atlan.model.packages"
 <div class="block">Builds the minimal object necessary to create a new crawler for Looker.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>client</code> - connectivity to Atlan</dd>
 <dd><code>connectionName</code> - name of the connection to create</dd>
 <dd><code>hostname</code> - of the Looker instance</dd>
 <dd><code>port</code> - on which the Looker instance is running</dd>

@@ -27,8 +27,8 @@
     catch(err) {
     }
 //-->
-var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9,"i9":9,"i10":9,"i11":9,"i12":9,"i13":9,"i14":9,"i15":9};
-var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"]};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10};
+var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -155,7 +155,7 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E()">CustomMetadataCache</a></span>()</code></th>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.atlan.api.TypeDefsEndpoint)">CustomMetadataCache</a></span>&#8203;(<a href="../api/TypeDefsEndpoint.html" title="class in com.atlan.api">TypeDefsEndpoint</a>&nbsp;typeDefsEndpoint)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
@@ -170,28 +170,28 @@ extends java.lang.Object</pre>
 </a>
 <h3>Method Summary</h3>
 <table class="memberSummary">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colSecond" scope="col">Method</th>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code>static java.util.Map&lt;java.lang.String,&#8203;java.util.List&lt;<a href="../model/typedefs/AttributeDef.html" title="class in com.atlan.model.typedefs">AttributeDef</a>&gt;&gt;</code></td>
+<td class="colFirst"><code>java.util.Map&lt;java.lang.String,&#8203;java.util.List&lt;<a href="../model/typedefs/AttributeDef.html" title="class in com.atlan.model.typedefs">AttributeDef</a>&gt;&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAllCustomAttributes()">getAllCustomAttributes</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Retrieve all the (active) custom metadata attributes.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code>static java.util.Map&lt;java.lang.String,&#8203;java.util.List&lt;<a href="../model/typedefs/AttributeDef.html" title="class in com.atlan.model.typedefs">AttributeDef</a>&gt;&gt;</code></td>
+<td class="colFirst"><code>java.util.Map&lt;java.lang.String,&#8203;java.util.List&lt;<a href="../model/typedefs/AttributeDef.html" title="class in com.atlan.model.typedefs">AttributeDef</a>&gt;&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAllCustomAttributes(boolean)">getAllCustomAttributes</a></span>&#8203;(boolean&nbsp;includeDeleted)</code></th>
 <td class="colLast">
 <div class="block">Retrieve all the custom metadata attributes.</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code>static java.util.Map&lt;java.lang.String,&#8203;java.util.List&lt;<a href="../model/typedefs/AttributeDef.html" title="class in com.atlan.model.typedefs">AttributeDef</a>&gt;&gt;</code></td>
+<td class="colFirst"><code>java.util.Map&lt;java.lang.String,&#8203;java.util.List&lt;<a href="../model/typedefs/AttributeDef.html" title="class in com.atlan.model.typedefs">AttributeDef</a>&gt;&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAllCustomAttributes(boolean,boolean)">getAllCustomAttributes</a></span>&#8203;(boolean&nbsp;includeDeleted,
                       boolean&nbsp;forceRefresh)</code></th>
 <td class="colLast">
@@ -199,14 +199,14 @@ extends java.lang.Object</pre>
 </td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code>static java.util.Set&lt;java.lang.String&gt;</code></td>
+<td class="colFirst"><code>java.util.Set&lt;java.lang.String&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAttributesForSearchResults(java.lang.String)">getAttributesForSearchResults</a></span>&#8203;(java.lang.String&nbsp;setName)</code></th>
 <td class="colLast">
 <div class="block">Retrieve the full set of custom attributes to include on search results.</div>
 </td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code>static void</code></td>
+<td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAttributesFromCustomMetadata(java.lang.String,java.lang.String,com.atlan.model.core.CustomMetadataAttributes,java.util.Map)">getAttributesFromCustomMetadata</a></span>&#8203;(java.lang.String&nbsp;cmId,
                                java.lang.String&nbsp;cmName,
                                <a href="../model/core/CustomMetadataAttributes.html" title="class in com.atlan.model.core">CustomMetadataAttributes</a>&nbsp;cma,
@@ -216,7 +216,7 @@ extends java.lang.Object</pre>
 </td>
 </tr>
 <tr id="i5" class="rowColor">
-<td class="colFirst"><code>static java.lang.String</code></td>
+<td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAttrIdForName(java.lang.String,java.lang.String)">getAttrIdForName</a></span>&#8203;(java.lang.String&nbsp;setName,
                 java.lang.String&nbsp;attributeName)</code></th>
 <td class="colLast">
@@ -225,7 +225,7 @@ extends java.lang.Object</pre>
 </td>
 </tr>
 <tr id="i6" class="altColor">
-<td class="colFirst"><code>static void</code></td>
+<td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getBusinessAttributesFromCustomMetadata(java.util.Map,java.util.Map)">getBusinessAttributesFromCustomMetadata</a></span>&#8203;(java.util.Map&lt;java.lang.String,&#8203;<a href="../model/core/CustomMetadataAttributes.html" title="class in com.atlan.model.core">CustomMetadataAttributes</a>&gt;&nbsp;customMetadata,
                                        java.util.Map&lt;java.lang.String,&#8203;java.util.Map&lt;java.lang.String,&#8203;java.lang.Object&gt;&gt;&nbsp;businessAttributes)</code></th>
 <td class="colLast">
@@ -233,7 +233,7 @@ extends java.lang.Object</pre>
 </td>
 </tr>
 <tr id="i7" class="rowColor">
-<td class="colFirst"><code>static <a href="../model/core/CustomMetadataAttributes.html" title="class in com.atlan.model.core">CustomMetadataAttributes</a></code></td>
+<td class="colFirst"><code><a href="../model/core/CustomMetadataAttributes.html" title="class in com.atlan.model.core">CustomMetadataAttributes</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCustomMetadataAttributes(java.lang.String,com.fasterxml.jackson.databind.JsonNode)">getCustomMetadataAttributes</a></span>&#8203;(java.lang.String&nbsp;cmId,
                            com.fasterxml.jackson.databind.JsonNode&nbsp;attributes)</code></th>
 <td class="colLast">
@@ -241,42 +241,42 @@ extends java.lang.Object</pre>
 </td>
 </tr>
 <tr id="i8" class="altColor">
-<td class="colFirst"><code>static <a href="../model/typedefs/CustomMetadataDef.html" title="class in com.atlan.model.typedefs">CustomMetadataDef</a></code></td>
+<td class="colFirst"><code><a href="../model/typedefs/CustomMetadataDef.html" title="class in com.atlan.model.typedefs">CustomMetadataDef</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCustomMetadataDef(java.lang.String)">getCustomMetadataDef</a></span>&#8203;(java.lang.String&nbsp;setName)</code></th>
 <td class="colLast">
 <div class="block">Retrieve the full custom metadata structure definition.</div>
 </td>
 </tr>
 <tr id="i9" class="rowColor">
-<td class="colFirst"><code>static java.util.Map&lt;java.lang.String,&#8203;<a href="../model/core/CustomMetadataAttributes.html" title="class in com.atlan.model.core">CustomMetadataAttributes</a>&gt;</code></td>
+<td class="colFirst"><code>java.util.Map&lt;java.lang.String,&#8203;<a href="../model/core/CustomMetadataAttributes.html" title="class in com.atlan.model.core">CustomMetadataAttributes</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCustomMetadataFromBusinessAttributes(com.fasterxml.jackson.databind.JsonNode)">getCustomMetadataFromBusinessAttributes</a></span>&#8203;(com.fasterxml.jackson.databind.JsonNode&nbsp;businessAttributes)</code></th>
 <td class="colLast">
 <div class="block">Translate the provided business attributes object into a custom metadata object.</div>
 </td>
 </tr>
 <tr id="i10" class="altColor">
-<td class="colFirst"><code>static java.util.Map&lt;java.lang.String,&#8203;<a href="../model/core/CustomMetadataAttributes.html" title="class in com.atlan.model.core">CustomMetadataAttributes</a>&gt;</code></td>
+<td class="colFirst"><code>java.util.Map&lt;java.lang.String,&#8203;<a href="../model/core/CustomMetadataAttributes.html" title="class in com.atlan.model.core">CustomMetadataAttributes</a>&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCustomMetadataFromSearchResult(java.util.Map)">getCustomMetadataFromSearchResult</a></span>&#8203;(java.util.Map&lt;java.lang.String,&#8203;com.fasterxml.jackson.databind.JsonNode&gt;&nbsp;embeddedAttributes)</code></th>
 <td class="colLast">
 <div class="block">Translate the provided search result-embedded custom metadata into a custom metadata object.</div>
 </td>
 </tr>
 <tr id="i11" class="rowColor">
-<td class="colFirst"><code>static java.util.Map&lt;java.lang.String,&#8203;java.lang.Object&gt;</code></td>
+<td class="colFirst"><code>java.util.Map&lt;java.lang.String,&#8203;java.lang.Object&gt;</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getEmptyAttributes(java.lang.String)">getEmptyAttributes</a></span>&#8203;(java.lang.String&nbsp;customMetadataName)</code></th>
 <td class="colLast">
 <div class="block">Construct a full set of attributes for the given custom metadata, but where all the values are null.</div>
 </td>
 </tr>
 <tr id="i12" class="altColor">
-<td class="colFirst"><code>static java.lang.String</code></td>
+<td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIdForName(java.lang.String)">getIdForName</a></span>&#8203;(java.lang.String&nbsp;name)</code></th>
 <td class="colLast">
 <div class="block">Translate the provided human-readable custom metadata set name to the Atlan-internal ID string.</div>
 </td>
 </tr>
 <tr id="i13" class="rowColor">
-<td class="colFirst"><code>static void</code></td>
+<td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIdMapFromNameMap(java.lang.String,java.util.Map,java.util.Map)">getIdMapFromNameMap</a></span>&#8203;(java.lang.String&nbsp;customMetadataName,
                    java.util.Map&lt;java.lang.String,&#8203;java.lang.Object&gt;&nbsp;nameToValue,
                    java.util.Map&lt;java.lang.String,&#8203;java.lang.Object&gt;&nbsp;idToValue)</code></th>
@@ -285,14 +285,14 @@ extends java.lang.Object</pre>
 </td>
 </tr>
 <tr id="i14" class="altColor">
-<td class="colFirst"><code>static java.lang.String</code></td>
+<td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getNameForId(java.lang.String)">getNameForId</a></span>&#8203;(java.lang.String&nbsp;id)</code></th>
 <td class="colLast">
 <div class="block">Translate the provided Atlan-internal custom metadata ID string to the human-readable custom metadata set name.</div>
 </td>
 </tr>
 <tr id="i15" class="rowColor">
-<td class="colFirst"><code>static void</code></td>
+<td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#refreshCache()">refreshCache</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
@@ -320,13 +320,13 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a id="&lt;init&gt;()">
+<a id="&lt;init&gt;(com.atlan.api.TypeDefsEndpoint)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>CustomMetadataCache</h4>
-<pre>public&nbsp;CustomMetadataCache()</pre>
+<pre>public&nbsp;CustomMetadataCache&#8203;(<a href="../api/TypeDefsEndpoint.html" title="class in com.atlan.api">TypeDefsEndpoint</a>&nbsp;typeDefsEndpoint)</pre>
 </li>
 </ul>
 </li>
@@ -345,8 +345,8 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>refreshCache</h4>
-<pre class="methodSignature">public static&nbsp;void&nbsp;refreshCache()
-                         throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;refreshCache()
+                  throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code></dd>
@@ -359,8 +359,8 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getIdForName</h4>
-<pre class="methodSignature">public static&nbsp;java.lang.String&nbsp;getIdForName&#8203;(java.lang.String&nbsp;name)
-                                     throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getIdForName&#8203;(java.lang.String&nbsp;name)
+                              throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
 <div class="block">Translate the provided human-readable custom metadata set name to the Atlan-internal ID string.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -380,8 +380,8 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getNameForId</h4>
-<pre class="methodSignature">public static&nbsp;java.lang.String&nbsp;getNameForId&#8203;(java.lang.String&nbsp;id)
-                                     throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getNameForId&#8203;(java.lang.String&nbsp;id)
+                              throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
 <div class="block">Translate the provided Atlan-internal custom metadata ID string to the human-readable custom metadata set name.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -401,8 +401,8 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getAllCustomAttributes</h4>
-<pre class="methodSignature">public static&nbsp;java.util.Map&lt;java.lang.String,&#8203;java.util.List&lt;<a href="../model/typedefs/AttributeDef.html" title="class in com.atlan.model.typedefs">AttributeDef</a>&gt;&gt;&nbsp;getAllCustomAttributes()
-                                                                                                 throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<pre class="methodSignature">public&nbsp;java.util.Map&lt;java.lang.String,&#8203;java.util.List&lt;<a href="../model/typedefs/AttributeDef.html" title="class in com.atlan.model.typedefs">AttributeDef</a>&gt;&gt;&nbsp;getAllCustomAttributes()
+                                                                                          throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
 <div class="block">Retrieve all the (active) custom metadata attributes. The map will be keyed by custom metadata set
  name, and the value will be a listing of all the (active) attributes within that set (with all the details
  of each of those attributes).</div>
@@ -420,8 +420,8 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getAllCustomAttributes</h4>
-<pre class="methodSignature">public static&nbsp;java.util.Map&lt;java.lang.String,&#8203;java.util.List&lt;<a href="../model/typedefs/AttributeDef.html" title="class in com.atlan.model.typedefs">AttributeDef</a>&gt;&gt;&nbsp;getAllCustomAttributes&#8203;(boolean&nbsp;includeDeleted)
-                                                                                                 throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<pre class="methodSignature">public&nbsp;java.util.Map&lt;java.lang.String,&#8203;java.util.List&lt;<a href="../model/typedefs/AttributeDef.html" title="class in com.atlan.model.typedefs">AttributeDef</a>&gt;&gt;&nbsp;getAllCustomAttributes&#8203;(boolean&nbsp;includeDeleted)
+                                                                                          throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
 <div class="block">Retrieve all the custom metadata attributes. The map will be keyed by custom metadata set
  name, and the value will be a listing of all the attributes within that set (with all the details
  of each of those attributes).</div>
@@ -441,9 +441,9 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getAllCustomAttributes</h4>
-<pre class="methodSignature">public static&nbsp;java.util.Map&lt;java.lang.String,&#8203;java.util.List&lt;<a href="../model/typedefs/AttributeDef.html" title="class in com.atlan.model.typedefs">AttributeDef</a>&gt;&gt;&nbsp;getAllCustomAttributes&#8203;(boolean&nbsp;includeDeleted,
-                                                                                                        boolean&nbsp;forceRefresh)
-                                                                                                 throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<pre class="methodSignature">public&nbsp;java.util.Map&lt;java.lang.String,&#8203;java.util.List&lt;<a href="../model/typedefs/AttributeDef.html" title="class in com.atlan.model.typedefs">AttributeDef</a>&gt;&gt;&nbsp;getAllCustomAttributes&#8203;(boolean&nbsp;includeDeleted,
+                                                                                                 boolean&nbsp;forceRefresh)
+                                                                                          throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
 <div class="block">Retrieve all the custom metadata attributes. The map will be keyed by custom metadata set
  name, and the value will be a listing of all the attributes within that set (with all the details
  of each of those attributes).</div>
@@ -465,9 +465,9 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getAttrIdForName</h4>
-<pre class="methodSignature">public static&nbsp;java.lang.String&nbsp;getAttrIdForName&#8203;(java.lang.String&nbsp;setName,
-                                                java.lang.String&nbsp;attributeName)
-                                         throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getAttrIdForName&#8203;(java.lang.String&nbsp;setName,
+                                         java.lang.String&nbsp;attributeName)
+                                  throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
 <div class="block">Translate the provided human-readable custom metadata set and attribute names to the Atlan-internal ID string
  for the attribute.</div>
 <dl>
@@ -489,8 +489,8 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getAttributesForSearchResults</h4>
-<pre class="methodSignature">public static&nbsp;java.util.Set&lt;java.lang.String&gt;&nbsp;getAttributesForSearchResults&#8203;(java.lang.String&nbsp;setName)
-                                                                     throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<pre class="methodSignature">public&nbsp;java.util.Set&lt;java.lang.String&gt;&nbsp;getAttributesForSearchResults&#8203;(java.lang.String&nbsp;setName)
+                                                              throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
 <div class="block">Retrieve the full set of custom attributes to include on search results.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -512,8 +512,8 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getCustomMetadataDef</h4>
-<pre class="methodSignature">public static&nbsp;<a href="../model/typedefs/CustomMetadataDef.html" title="class in com.atlan.model.typedefs">CustomMetadataDef</a>&nbsp;getCustomMetadataDef&#8203;(java.lang.String&nbsp;setName)
-                                              throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<pre class="methodSignature">public&nbsp;<a href="../model/typedefs/CustomMetadataDef.html" title="class in com.atlan.model.typedefs">CustomMetadataDef</a>&nbsp;getCustomMetadataDef&#8203;(java.lang.String&nbsp;setName)
+                                       throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
 <div class="block">Retrieve the full custom metadata structure definition.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -533,8 +533,8 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getEmptyAttributes</h4>
-<pre class="methodSignature">public static&nbsp;java.util.Map&lt;java.lang.String,&#8203;java.lang.Object&gt;&nbsp;getEmptyAttributes&#8203;(java.lang.String&nbsp;customMetadataName)
-                                                                                 throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<pre class="methodSignature">public&nbsp;java.util.Map&lt;java.lang.String,&#8203;java.lang.Object&gt;&nbsp;getEmptyAttributes&#8203;(java.lang.String&nbsp;customMetadataName)
+                                                                          throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
 <div class="block">Construct a full set of attributes for the given custom metadata, but where all the values are null.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -552,9 +552,9 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getBusinessAttributesFromCustomMetadata</h4>
-<pre class="methodSignature">public static&nbsp;void&nbsp;getBusinessAttributesFromCustomMetadata&#8203;(java.util.Map&lt;java.lang.String,&#8203;<a href="../model/core/CustomMetadataAttributes.html" title="class in com.atlan.model.core">CustomMetadataAttributes</a>&gt;&nbsp;customMetadata,
-                                                           java.util.Map&lt;java.lang.String,&#8203;java.util.Map&lt;java.lang.String,&#8203;java.lang.Object&gt;&gt;&nbsp;businessAttributes)
-                                                    throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;getBusinessAttributesFromCustomMetadata&#8203;(java.util.Map&lt;java.lang.String,&#8203;<a href="../model/core/CustomMetadataAttributes.html" title="class in com.atlan.model.core">CustomMetadataAttributes</a>&gt;&nbsp;customMetadata,
+                                                    java.util.Map&lt;java.lang.String,&#8203;java.util.Map&lt;java.lang.String,&#8203;java.lang.Object&gt;&gt;&nbsp;businessAttributes)
+                                             throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
 <div class="block">Translate the provided custom metadata object into a business attributes object.
  We receive the businessAttributes object (rather than creating a new one) to initialize it with
  any existing business attributes.</div>
@@ -573,11 +573,11 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getAttributesFromCustomMetadata</h4>
-<pre class="methodSignature">public static&nbsp;void&nbsp;getAttributesFromCustomMetadata&#8203;(java.lang.String&nbsp;cmId,
-                                                   java.lang.String&nbsp;cmName,
-                                                   <a href="../model/core/CustomMetadataAttributes.html" title="class in com.atlan.model.core">CustomMetadataAttributes</a>&nbsp;cma,
-                                                   java.util.Map&lt;java.lang.String,&#8203;java.lang.Object&gt;&nbsp;attributes)
-                                            throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;getAttributesFromCustomMetadata&#8203;(java.lang.String&nbsp;cmId,
+                                            java.lang.String&nbsp;cmName,
+                                            <a href="../model/core/CustomMetadataAttributes.html" title="class in com.atlan.model.core">CustomMetadataAttributes</a>&nbsp;cma,
+                                            java.util.Map&lt;java.lang.String,&#8203;java.lang.Object&gt;&nbsp;attributes)
+                                     throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
 <div class="block">Translate the provided custom metadata attributes object into a hashed-string ID map of attributes and values.
  We receive the attributes object (rather than creating a new one) to initialize it with any existing attributes.</div>
 <dl>
@@ -597,10 +597,10 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getIdMapFromNameMap</h4>
-<pre class="methodSignature">public static&nbsp;void&nbsp;getIdMapFromNameMap&#8203;(java.lang.String&nbsp;customMetadataName,
-                                       java.util.Map&lt;java.lang.String,&#8203;java.lang.Object&gt;&nbsp;nameToValue,
-                                       java.util.Map&lt;java.lang.String,&#8203;java.lang.Object&gt;&nbsp;idToValue)
-                                throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;getIdMapFromNameMap&#8203;(java.lang.String&nbsp;customMetadataName,
+                                java.util.Map&lt;java.lang.String,&#8203;java.lang.Object&gt;&nbsp;nameToValue,
+                                java.util.Map&lt;java.lang.String,&#8203;java.lang.Object&gt;&nbsp;idToValue)
+                         throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
 <div class="block">Translate the provided map keyed by human-readable attribute name into a map of keyed by attribute id.
  We receive the idToValue map (rather than creating a new one) to initialize it with
  any existing business attributes.</div>
@@ -620,8 +620,8 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getCustomMetadataFromBusinessAttributes</h4>
-<pre class="methodSignature">public static&nbsp;java.util.Map&lt;java.lang.String,&#8203;<a href="../model/core/CustomMetadataAttributes.html" title="class in com.atlan.model.core">CustomMetadataAttributes</a>&gt;&nbsp;getCustomMetadataFromBusinessAttributes&#8203;(com.fasterxml.jackson.databind.JsonNode&nbsp;businessAttributes)
-                                                                                                              throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<pre class="methodSignature">public&nbsp;java.util.Map&lt;java.lang.String,&#8203;<a href="../model/core/CustomMetadataAttributes.html" title="class in com.atlan.model.core">CustomMetadataAttributes</a>&gt;&nbsp;getCustomMetadataFromBusinessAttributes&#8203;(com.fasterxml.jackson.databind.JsonNode&nbsp;businessAttributes)
+                                                                                                       throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
 <div class="block">Translate the provided business attributes object into a custom metadata object.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -639,9 +639,9 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getCustomMetadataAttributes</h4>
-<pre class="methodSignature">public static&nbsp;<a href="../model/core/CustomMetadataAttributes.html" title="class in com.atlan.model.core">CustomMetadataAttributes</a>&nbsp;getCustomMetadataAttributes&#8203;(java.lang.String&nbsp;cmId,
-                                                                   com.fasterxml.jackson.databind.JsonNode&nbsp;attributes)
-                                                            throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<pre class="methodSignature">public&nbsp;<a href="../model/core/CustomMetadataAttributes.html" title="class in com.atlan.model.core">CustomMetadataAttributes</a>&nbsp;getCustomMetadataAttributes&#8203;(java.lang.String&nbsp;cmId,
+                                                            com.fasterxml.jackson.databind.JsonNode&nbsp;attributes)
+                                                     throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
 <div class="block">Translate the provided attributes structure into a human-readable map of attribute names to values.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -660,8 +660,8 @@ extends java.lang.Object</pre>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>getCustomMetadataFromSearchResult</h4>
-<pre class="methodSignature">public static&nbsp;java.util.Map&lt;java.lang.String,&#8203;<a href="../model/core/CustomMetadataAttributes.html" title="class in com.atlan.model.core">CustomMetadataAttributes</a>&gt;&nbsp;getCustomMetadataFromSearchResult&#8203;(java.util.Map&lt;java.lang.String,&#8203;com.fasterxml.jackson.databind.JsonNode&gt;&nbsp;embeddedAttributes)
-                                                                                                        throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
+<pre class="methodSignature">public&nbsp;java.util.Map&lt;java.lang.String,&#8203;<a href="../model/core/CustomMetadataAttributes.html" title="class in com.atlan.model.core">CustomMetadataAttributes</a>&gt;&nbsp;getCustomMetadataFromSearchResult&#8203;(java.util.Map&lt;java.lang.String,&#8203;com.fasterxml.jackson.databind.JsonNode&gt;&nbsp;embeddedAttributes)
+                                                                                                 throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
 <div class="block">Translate the provided search result-embedded custom metadata into a custom metadata object.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
