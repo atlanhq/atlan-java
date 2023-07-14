@@ -7,6 +7,9 @@ import static org.testng.Assert.*;
 import com.atlan.Atlan;
 import com.atlan.exception.AtlanException;
 import com.atlan.model.admin.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -26,6 +29,12 @@ public class AdminTest extends AtlanLiveTest {
     private static final String USER_EMAIL1 = GROUP_NAME1 + EMAIL_DOMAIN;
     private static final String USER_EMAIL2 = GROUP_NAME2 + EMAIL_DOMAIN;
     private static final String USER_EMAIL3 = PREFIX + "3" + EMAIL_DOMAIN;
+
+    private static final DateTimeFormatter SIMPLE_DATE = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    private static final LocalDate NOW = LocalDate.now();
+    private static final LocalDate BEFORE = NOW.minus(1, ChronoUnit.DAYS);
+    private static final String TODAY = SIMPLE_DATE.format(NOW);
+    private static final String YESTERDAY = SIMPLE_DATE.format(BEFORE);
 
     private static AtlanGroup group1 = null;
     private static AtlanGroup group2 = null;
@@ -261,6 +270,37 @@ public class AdminTest extends AtlanLiveTest {
         assertTrue(response.getRecords() == null
                 || response.getRecords().isEmpty()
                 || response.getRecords().size() == defaultGroupCount);
+    }
+
+    @Test(
+            groups = {"admin.read.logs"},
+            dependsOnGroups = {"admin.read.users.*"})
+    void retrieveLogs() throws AtlanException {
+        KeycloakEventResponse events = Atlan.getDefaultClient()
+                .logs()
+                .getEvents(KeycloakEventRequest.builder()
+                        .dateFrom(YESTERDAY)
+                        .dateTo(TODAY)
+                        .build());
+        List<KeycloakEvent> results = events.stream().limit(1000).collect(Collectors.toList());
+        assertNotNull(results);
+        assertTrue(results.size() > 0);
+    }
+
+    @Test(
+            groups = {"admin.read.logs"},
+            dependsOnGroups = {"admin.read.users.*"})
+    void retrieveAdminLogs() throws AtlanException {
+        AdminEventResponse events = Atlan.getDefaultClient()
+                .logs()
+                .getAdminEvents(AdminEventRequest.builder()
+                        .realmId("default")
+                        .dateFrom(YESTERDAY)
+                        .dateTo(TODAY)
+                        .build());
+        List<AdminEvent> results = events.stream().limit(1000).collect(Collectors.toList());
+        assertNotNull(results);
+        assertTrue(results.size() > 0);
     }
 
     @Test(

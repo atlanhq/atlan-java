@@ -80,7 +80,7 @@ public class AtlanUser extends AtlanObject {
     final List<AdminEvent> adminEvents;
 
     /** List of login-related events for this user. */
-    final List<LoginEvent> loginEvents;
+    final List<KeycloakEvent> loginEvents;
 
     /**
      * Builds the minimal object necessary to create (invite) a user.
@@ -409,39 +409,6 @@ public class AtlanUser extends AtlanObject {
         List<String> invitedByName;
     }
 
-    @Getter
-    @Jacksonized
-    @SuperBuilder(toBuilder = true)
-    @EqualsAndHashCode(callSuper = true)
-    public static final class LoginEvent extends AtlanObject {
-        private static final long serialVersionUID = 2L;
-
-        /** Where the login occurred (usually {@code atlan-frontend}). */
-        String clientId;
-
-        /** TBC */
-        @JsonIgnore
-        String details;
-
-        /** IP address from which the user logged in. */
-        String ipAddress;
-
-        /** TBC */
-        String realmId;
-
-        /** Unique identifier (GUID) of the session for the login. */
-        String sessionId;
-
-        /** Time (epoch) when the login occurred, in milliseconds. */
-        Long time;
-
-        /** Type of login event that occurred (usually {@code LOGIN}). */
-        String type;
-
-        /** Unique identifier (GUID) of the user that logged in. */
-        String userId;
-    }
-
     /**
      * Personas associated with a user.
      */
@@ -472,54 +439,5 @@ public class AtlanUser extends AtlanObject {
         public int compareTo(Persona o) {
             return personaComparator.compare(this, o);
         }
-    }
-
-    @Getter
-    @Jacksonized
-    @SuperBuilder(toBuilder = true)
-    @EqualsAndHashCode(callSuper = true)
-    public static final class AdminEvent extends AtlanObject {
-        private static final long serialVersionUID = 2L;
-
-        /** Type of admin operation that occurred. */
-        String operationType;
-
-        /** TBC */
-        String realmId;
-
-        /** TBC */
-        String representation;
-
-        /** TBC */
-        String resourcePath;
-
-        /** Type of resource for the admin operation that occurred. */
-        String resourceType;
-
-        /** Time (epoch) when the admin operation occurred, in milliseconds. */
-        Long time;
-
-        /** TBC */
-        AuthDetails authDetails;
-    }
-
-    @Getter
-    @Jacksonized
-    @SuperBuilder(toBuilder = true)
-    @EqualsAndHashCode(callSuper = true)
-    public static final class AuthDetails extends AtlanObject {
-        private static final long serialVersionUID = 2L;
-
-        /** TBC */
-        String clientId;
-
-        /** TBC */
-        String ipAddress;
-
-        /** TBC */
-        String realmId;
-
-        /** TBC */
-        String userId;
     }
 }

@@ -5,6 +5,9 @@ package com.atlan.model.admin;
 import static org.testng.Assert.*;
 
 import com.atlan.Atlan;
+import com.atlan.model.enums.AdminOperationType;
+import com.atlan.model.enums.AdminResourceType;
+import com.atlan.model.enums.KeycloakEventType;
 import java.io.IOException;
 import java.util.List;
 import org.testng.annotations.Test;
@@ -37,28 +40,28 @@ public class AtlanUserTest {
             // .persona()
             // .purpose()
             .adminEvents(List.of(
-                    AtlanUser.AdminEvent.builder()
-                            .operationType("operationType")
+                    AdminEvent.builder()
+                            .operationType(AdminOperationType.CREATE)
                             .realmId("realmId")
                             .representation("representation")
                             .resourcePath("resourcePath")
-                            .resourceType("resourceType")
+                            .resourceType(AdminResourceType.REALM_ROLE)
                             .time(12345789L)
-                            .authDetails(AtlanUser.AuthDetails.builder()
+                            .authDetails(AuthDetails.builder()
                                     .clientId("clientId")
                                     .ipAddress("ipAddress")
                                     .realmId("realmId")
                                     .userId("userId")
                                     .build())
                             .build(),
-                    AtlanUser.AdminEvent.builder()
-                            .operationType("operationType")
+                    AdminEvent.builder()
+                            .operationType(AdminOperationType.UPDATE)
                             .realmId("realmId")
                             .representation("representation")
                             .resourcePath("resourcePath")
-                            .resourceType("resourceType")
+                            .resourceType(AdminResourceType.REALM_ROLE_MAPPING)
                             .time(23457890L)
-                            .authDetails(AtlanUser.AuthDetails.builder()
+                            .authDetails(AuthDetails.builder()
                                     .clientId("clientId")
                                     .ipAddress("ipAddress")
                                     .realmId("realmId")
@@ -66,22 +69,22 @@ public class AtlanUserTest {
                                     .build())
                             .build()))
             .loginEvents(List.of(
-                    AtlanUser.LoginEvent.builder()
+                    KeycloakEvent.builder()
                             .clientId("clientId")
                             .ipAddress("ipAddress")
                             .realmId("realmId")
                             .sessionId("sessionId")
                             .time(12345789L)
-                            .type("type")
+                            .type(KeycloakEventType.LOGIN)
                             .userId("userId")
                             .build(),
-                    AtlanUser.LoginEvent.builder()
+                    KeycloakEvent.builder()
                             .clientId("clientId")
                             .ipAddress("ipAddress")
                             .realmId("realmId")
                             .sessionId("sessionId")
                             .time(23457890L)
-                            .type("type")
+                            .type(KeycloakEventType.LOGIN)
                             .userId("userId")
                             .build()))
             .build();

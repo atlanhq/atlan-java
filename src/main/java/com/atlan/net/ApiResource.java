@@ -10,6 +10,7 @@ import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.core.AtlanObject;
 import com.atlan.model.core.AtlanResponseInterface;
+import com.atlan.model.enums.AtlanEnum;
 import com.atlan.serde.Serde;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -17,6 +18,11 @@ import java.io.InputStream;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -103,6 +109,126 @@ public abstract class ApiResource extends AtlanObject implements AtlanResponseIn
             throw new InvalidRequestException(ErrorCode.NOTHING_TO_ENCODE);
         }
         return urlEncode(id);
+    }
+
+    /**
+     * Creates the HTTP query string for a given map of parameters.
+     *
+     * @param params The map of parameters.
+     * @return The query string.
+     */
+    public static String createQueryString(Map<String, Object> params) {
+        if (params == null) {
+            return "";
+        }
+
+        Collection<KeyValuePair<String, String>> flatParams = flattenParamsMap(params).stream()
+                .filter(kvp -> kvp.getValue() instanceof String)
+                .map(kvp -> new KeyValuePair<>(kvp.getKey(), (String) kvp.getValue()))
+                .collect(Collectors.toList());
+        return createQueryString(flatParams);
+    }
+
+    /**
+     * Creates the HTTP query string for a collection of name/value tuples.
+     *
+     * @param nameValueCollection The collection of name/value tuples.
+     * @return The query string.
+     */
+    public static String createQueryString(Collection<KeyValuePair<String, String>> nameValueCollection) {
+        if (nameValueCollection == null) {
+            return "";
+        }
+
+        return nameValueCollection.stream()
+                .map(kvp -> String.format("%s=%s", urlEncode(kvp.getKey()), urlEncode(kvp.getValue())))
+                .collect(Collectors.joining("&"));
+    }
+
+    /**
+     * Returns a list of parameters for a given value. The value can be basically anything, as long as
+     * it can be encoded in some way.
+     *
+     * @param value The value for which to create the list of parameters.
+     * @param keyPrefix The key under which new keys should be nested, if any.
+     * @return The list of parameters.
+     */
+    private static List<KeyValuePair<String, Object>> flattenParamsValue(Object value, String keyPrefix) {
+        List<KeyValuePair<String, Object>> flatParams;
+
+        if (value == null) {
+            flatParams = singleParam(keyPrefix, "");
+        } else if (value instanceof Map<?, ?>) {
+            flatParams = flattenParamsMap((Map<?, ?>) value);
+        } else if (value instanceof String) {
+            flatParams = singleParam(keyPrefix, value);
+        } else if (value instanceof Collection<?>) {
+            flatParams = flattenParamsCollection((Collection<?>) value, keyPrefix);
+        } else if (value instanceof AtlanEnum) {
+            flatParams = singleParam(keyPrefix, ((AtlanEnum) value).getValue());
+        } else {
+            flatParams = singleParam(keyPrefix, value.toString());
+        }
+
+        return flatParams;
+    }
+
+    /**
+     * Returns a list of parameters for a given map.
+     *
+     * @param map The map for which to create the list of parameters.
+     * @return The list of parameters.
+     */
+    private static List<KeyValuePair<String, Object>> flattenParamsMap(Map<?, ?> map) {
+        List<KeyValuePair<String, Object>> flatParams = new ArrayList<>();
+        if (map == null) {
+            return flatParams;
+        }
+
+        for (Map.Entry<?, ?> entry : map.entrySet()) {
+            String key = entry.getKey().toString();
+            Object value = entry.getValue();
+            flatParams.addAll(flattenParamsValue(value, key));
+        }
+
+        return flatParams;
+    }
+
+    /**
+     * Returns a list of parameters for a given collection of objects. The parameter keys will be
+     * indexed under the `keyPrefix` parameter. E.g. if the `keyPrefix` is `foo`, then the key for the
+     * first element's will be `foo[0]`, etc.
+     *
+     * @param collection The collection for which to create the list of parameters.
+     * @param keyPrefix The key under which new keys should be nested.
+     * @return The list of parameters.
+     */
+    private static List<KeyValuePair<String, Object>> flattenParamsCollection(
+            Collection<?> collection, String keyPrefix) {
+        List<KeyValuePair<String, Object>> flatParams = new ArrayList<>();
+        if (collection == null) {
+            return flatParams;
+        }
+
+        for (Object value : collection) {
+            String newPrefix = String.format("%s", keyPrefix);
+            flatParams.addAll(flattenParamsValue(value, newPrefix));
+        }
+
+        return flatParams;
+    }
+
+    /**
+     * Creates a list containing a single parameter.
+     *
+     * @param key The parameter's key.
+     * @param value The parameter's value.
+     * @return A list containg the single parameter.
+     */
+    private static List<KeyValuePair<String, Object>> singleParam(String key, Object value) {
+        List<KeyValuePair<String, Object>> flatParams = new ArrayList<>();
+        flatParams.add(new KeyValuePair<>(key, value));
+        return flatParams;
     }
 
     /**
