@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 
 /**
- * Source: keycloak > server-spi-private/src/main/java/org/keycloak/events/EventType.java
+ * Source (keycloak): server-spi-private/src/main/java/org/keycloak/events/EventType.java
  */
 public enum KeycloakEventType implements AtlanEnum {
     LOGIN("LOGIN"),
