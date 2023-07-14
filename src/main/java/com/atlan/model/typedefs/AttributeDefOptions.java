@@ -51,6 +51,7 @@ public class AttributeDefOptions extends AtlanObject {
             DbtModelColumn.TYPE_NAME,
             DbtProcess.TYPE_NAME,
             DbtSource.TYPE_NAME,
+            DbtTag.TYPE_NAME,
             DbtTest.TYPE_NAME,
             File.TYPE_NAME,
             Folder.TYPE_NAME,

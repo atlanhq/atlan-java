@@ -582,7 +582,7 @@
      * @param qualifiedName of the asset
      * @param atlanTagNames human-readable names of the Atlan tags to add
      * @throws AtlanException on any API problems, or if any of the Atlan tags already exist on the asset
-     * @deprecated see {@link #appendAtlanTags(String, String, List)} instead
+     * @deprecated see {@link #appendAtlanTags(AtlanClient, String, String, List)} instead
      */
     @Deprecated
     protected static void addAtlanTags(AtlanClient client, String typeName, String qualifiedName, List<String> atlanTagNames)
@@ -601,7 +601,7 @@
      * @param removePropagationsOnDelete whether to remove the propagated Atlan tags when the Atlan tag is removed from this asset (true) or not (false)
      * @param restrictLineagePropagation whether to avoid propagating through lineage (true) or do propagate through lineage (false)
      * @throws AtlanException on any API problems, or if any of the Atlan tags already exist on the asset
-     * @deprecated see {@link #appendAtlanTags(String, String, List, boolean, boolean, boolean)} instead
+     * @deprecated see {@link #appendAtlanTags(AtlanClient, String, String, List, boolean, boolean, boolean)} instead
      */
     @Deprecated
     protected static void addAtlanTags(
