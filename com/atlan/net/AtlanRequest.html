@@ -156,36 +156,39 @@ extends java.lang.Object</pre>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>&nbsp;</code></td>
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.atlan.AtlanClient,com.atlan.net.ApiResource.RequestMethod,java.lang.String,java.io.InputStream,java.lang.String,com.atlan.net.RequestOptions)">AtlanRequest</a></span>&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.atlan.AtlanClient,com.atlan.net.ApiResource.RequestMethod,java.lang.String,java.io.InputStream,java.lang.String,com.atlan.net.RequestOptions,java.lang.String)">AtlanRequest</a></span>&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
             <a href="ApiResource.RequestMethod.html" title="enum in com.atlan.net">ApiResource.RequestMethod</a>&nbsp;method,
             java.lang.String&nbsp;url,
             java.io.InputStream&nbsp;file,
             java.lang.String&nbsp;filename,
-            <a href="RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options)</code></th>
+            <a href="RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options,
+            java.lang.String&nbsp;requestId)</code></th>
 <td class="colLast">
 <div class="block">Initializes a new instance of the <a href="AtlanRequest.html" title="class in com.atlan.net"><code>AtlanRequest</code></a> class, used specifically for uploading files (images).</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>&nbsp;</code></td>
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.atlan.AtlanClient,com.atlan.net.ApiResource.RequestMethod,java.lang.String,java.lang.String,com.atlan.net.RequestOptions)">AtlanRequest</a></span>&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.atlan.AtlanClient,com.atlan.net.ApiResource.RequestMethod,java.lang.String,java.lang.String,com.atlan.net.RequestOptions,java.lang.String)">AtlanRequest</a></span>&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
             <a href="ApiResource.RequestMethod.html" title="enum in com.atlan.net">ApiResource.RequestMethod</a>&nbsp;method,
             java.lang.String&nbsp;url,
             java.lang.String&nbsp;body,
-            <a href="RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options)</code></th>
+            <a href="RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options,
+            java.lang.String&nbsp;requestId)</code></th>
 <td class="colLast">
 <div class="block">Initializes a new instance of the <a href="AtlanRequest.html" title="class in com.atlan.net"><code>AtlanRequest</code></a> class, used for the majority of requests.</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>protected </code></td>
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.atlan.AtlanClient,com.atlan.net.ApiResource.RequestMethod,java.net.URL,com.atlan.net.HttpContent,com.atlan.net.HttpHeaders,java.lang.String,com.atlan.net.RequestOptions)">AtlanRequest</a></span>&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(com.atlan.AtlanClient,com.atlan.net.ApiResource.RequestMethod,java.net.URL,com.atlan.net.HttpContent,com.atlan.net.HttpHeaders,java.lang.String,com.atlan.net.RequestOptions,java.lang.String)">AtlanRequest</a></span>&#8203;(<a href="../AtlanClient.html" title="class in com.atlan">AtlanClient</a>&nbsp;client,
             <a href="ApiResource.RequestMethod.html" title="enum in com.atlan.net">ApiResource.RequestMethod</a>&nbsp;method,
             java.net.URL&nbsp;url,
             <a href="HttpContent.html" title="class in com.atlan.net">HttpContent</a>&nbsp;content,
             <a href="HttpHeaders.html" title="class in com.atlan.net">HttpHeaders</a>&nbsp;headers,
             java.lang.String&nbsp;body,
-            <a href="RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options)</code></th>
+            <a href="RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options,
+            java.lang.String&nbsp;requestId)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
@@ -261,22 +264,21 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>java.lang.String</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#requestId()">requestId</a></span>()</code></th>
+<td class="colLast">
+<div class="block">Unique identifier (GUID) of this request.</div>
+</td>
+</tr>
+<tr id="i9" class="rowColor">
+<td class="colFirst"><code>java.lang.String</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString()">toString</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>java.net.URL</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#url()">url</a></span>()</code></th>
 <td class="colLast">
 <div class="block">The URL for the request.</div>
-</td>
-</tr>
-<tr id="i10" class="altColor">
-<td class="colFirst"><code><a href="AtlanRequest.html" title="class in com.atlan.net">AtlanRequest</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#withAdditionalHeader(java.lang.String,java.lang.String)">withAdditionalHeader</a></span>&#8203;(java.lang.String&nbsp;name,
-                    java.lang.String&nbsp;value)</code></th>
-<td class="colLast">
-<div class="block">Returns a new <a href="AtlanRequest.html" title="class in com.atlan.net"><code>AtlanRequest</code></a> instance with an additional header.</div>
 </td>
 </tr>
 </table>
@@ -303,7 +305,7 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a id="&lt;init&gt;(com.atlan.AtlanClient,com.atlan.net.ApiResource.RequestMethod,java.lang.String,java.lang.String,com.atlan.net.RequestOptions)">
+<a id="&lt;init&gt;(com.atlan.AtlanClient,com.atlan.net.ApiResource.RequestMethod,java.lang.String,java.lang.String,com.atlan.net.RequestOptions,java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -313,7 +315,8 @@ extends java.lang.Object</pre>
                     <a href="ApiResource.RequestMethod.html" title="enum in com.atlan.net">ApiResource.RequestMethod</a>&nbsp;method,
                     java.lang.String&nbsp;url,
                     java.lang.String&nbsp;body,
-                    <a href="RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options)
+                    <a href="RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options,
+                    java.lang.String&nbsp;requestId)
              throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
 <div class="block">Initializes a new instance of the <a href="AtlanRequest.html" title="class in com.atlan.net"><code>AtlanRequest</code></a> class, used for the majority of requests.</div>
 <dl>
@@ -323,12 +326,13 @@ extends java.lang.Object</pre>
 <dd><code>url</code> - the URL of the request</dd>
 <dd><code>body</code> - the body of the request</dd>
 <dd><code>options</code> - the special modifiers of the request</dd>
+<dd><code>requestId</code> - unique identifier (GUID) of a single request to Atlan</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - if the request cannot be initialized for any reason</dd>
 </dl>
 </li>
 </ul>
-<a id="&lt;init&gt;(com.atlan.AtlanClient,com.atlan.net.ApiResource.RequestMethod,java.lang.String,java.io.InputStream,java.lang.String,com.atlan.net.RequestOptions)">
+<a id="&lt;init&gt;(com.atlan.AtlanClient,com.atlan.net.ApiResource.RequestMethod,java.lang.String,java.io.InputStream,java.lang.String,com.atlan.net.RequestOptions,java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -339,7 +343,8 @@ extends java.lang.Object</pre>
                     java.lang.String&nbsp;url,
                     java.io.InputStream&nbsp;file,
                     java.lang.String&nbsp;filename,
-                    <a href="RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options)
+                    <a href="RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options,
+                    java.lang.String&nbsp;requestId)
              throws <a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></pre>
 <div class="block">Initializes a new instance of the <a href="AtlanRequest.html" title="class in com.atlan.net"><code>AtlanRequest</code></a> class, used specifically for uploading files (images).</div>
 <dl>
@@ -350,12 +355,13 @@ extends java.lang.Object</pre>
 <dd><code>file</code> - the file to be uploaded through the request</dd>
 <dd><code>filename</code> - name of the file the InputStream is reading</dd>
 <dd><code>options</code> - the special modifiers of the request</dd>
+<dd><code>requestId</code> - unique identifier (GUID) of a single request to Atlan</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../exception/AtlanException.html" title="class in com.atlan.exception">AtlanException</a></code> - if the request cannot be initialized for any reason</dd>
 </dl>
 </li>
 </ul>
-<a id="&lt;init&gt;(com.atlan.AtlanClient,com.atlan.net.ApiResource.RequestMethod,java.net.URL,com.atlan.net.HttpContent,com.atlan.net.HttpHeaders,java.lang.String,com.atlan.net.RequestOptions)">
+<a id="&lt;init&gt;(com.atlan.AtlanClient,com.atlan.net.ApiResource.RequestMethod,java.net.URL,com.atlan.net.HttpContent,com.atlan.net.HttpHeaders,java.lang.String,com.atlan.net.RequestOptions,java.lang.String)">
 <!--   -->
 </a>
 <ul class="blockListLast">
@@ -367,7 +373,8 @@ extends java.lang.Object</pre>
                        <a href="HttpContent.html" title="class in com.atlan.net">HttpContent</a>&nbsp;content,
                        <a href="HttpHeaders.html" title="class in com.atlan.net">HttpHeaders</a>&nbsp;headers,
                        java.lang.String&nbsp;body,
-                       <a href="RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options)</pre>
+                       <a href="RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options,
+                       java.lang.String&nbsp;requestId)</pre>
 </li>
 </ul>
 </li>
@@ -380,24 +387,6 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a id="withAdditionalHeader(java.lang.String,java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>withAdditionalHeader</h4>
-<pre class="methodSignature">public&nbsp;<a href="AtlanRequest.html" title="class in com.atlan.net">AtlanRequest</a>&nbsp;withAdditionalHeader&#8203;(java.lang.String&nbsp;name,
-                                         java.lang.String&nbsp;value)</pre>
-<div class="block">Returns a new <a href="AtlanRequest.html" title="class in com.atlan.net"><code>AtlanRequest</code></a> instance with an additional header.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>name</code> - the additional header's name</dd>
-<dd><code>value</code> - the additional header's value</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>the new <a href="AtlanRequest.html" title="class in com.atlan.net"><code>AtlanRequest</code></a> instance</dd>
-</dl>
-</li>
-</ul>
 <a id="client()">
 <!--   -->
 </a>
@@ -469,6 +458,16 @@ extends java.lang.Object</pre>
 <h4>options</h4>
 <pre class="methodSignature">public&nbsp;<a href="RequestOptions.html" title="class in com.atlan.net">RequestOptions</a>&nbsp;options()</pre>
 <div class="block">The special modifiers of the request.</div>
+</li>
+</ul>
+<a id="requestId()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>requestId</h4>
+<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;requestId()</pre>
+<div class="block">Unique identifier (GUID) of this request.</div>
 </li>
 </ul>
 <a id="equals(java.lang.Object)">
