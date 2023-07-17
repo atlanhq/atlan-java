@@ -10,8 +10,13 @@ import lombok.Getter;
  */
 public enum AdminResourceType implements AtlanEnum {
     REALM("REALM"),
+
+    /** Object that controls access to potentially multiple resources. */
     REALM_ROLE("REALM_ROLE"),
+
+    /** Mapping between user(s) and access control objects (roles). */
     REALM_ROLE_MAPPING("REALM_ROLE_MAPPING"),
+
     REALM_SCOPE_MAPPING("REALM_SCOPE_MAPPING"),
     AUTH_FLOW("AUTH_FLOW"),
     AUTH_EXECUTION_FLOW("AUTH_EXECUTION_FLOW"),
@@ -21,13 +26,21 @@ public enum AdminResourceType implements AtlanEnum {
     IDENTITY_PROVIDER("IDENTITY_PROVIDER"),
     IDENTITY_PROVIDER_MAPPER("IDENTITY_PROVIDER_MAPPER"),
     PROTOCOL_MAPPER("PROTOCOL_MAPPER"),
+
+    /** An individual user. */
     USER("USER"),
+
     USER_LOGIN_FAILURE("USER_LOGIN_FAILURE"),
     USER_SESSION("USER_SESSION"),
     USER_FEDERATION_PROVIDER("USER_FEDERATION_PROVIDER"),
     USER_FEDERATION_MAPPER("USER_FEDERATION_MAPPER"),
+
+    /** Mechanism to cluster together multiple users. */
     GROUP("GROUP"),
+
+    /** Association between a user and a group. */
     GROUP_MEMBERSHIP("GROUP_MEMBERSHIP"),
+
     CLIENT("CLIENT"),
     CLIENT_INITIAL_ACCESS_MODEL("CLIENT_INITIAL_ACCESS_MODEL"),
     CLIENT_ROLE("CLIENT_ROLE"),

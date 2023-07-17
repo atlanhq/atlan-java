@@ -9,18 +9,30 @@ import lombok.Getter;
  * Source (keycloak): server-spi-private/src/main/java/org/keycloak/events/EventType.java
  */
 public enum KeycloakEventType implements AtlanEnum {
+
+    /** User has logged in. */
     LOGIN("LOGIN"),
     LOGIN_ERROR("LOGIN_ERROR"),
+
+    /** User has registered. */
     REGISTER("REGISTER"),
     REGISTER_ERROR("REGISTER_ERROR"),
+
+    /** User has logged out. */
     LOGOUT("LOGOUT"),
     LOGOUT_ERROR("LOGOUT_ERROR"),
+
+    /** Application / client has exchanged a code for a token. */
     CODE_TO_TOKEN("CODE_TO_TOKEN"),
     CODE_TO_TOKEN_ERROR("CODE_TO_TOKEN_ERROR"),
+
     CLIENT_LOGIN("CLIENT_LOGIN"),
     CLIENT_LOGIN_ERROR("CLIENT_LOGIN_ERROR"),
+
+    /** Application / client has refreshed a token. */
     REFRESH_TOKEN("REFRESH_TOKEN"),
     REFRESH_TOKEN_ERROR("REFRESH_TOKEN_ERROR"),
+
     VALIDATE_ACCESS_TOKEN("VALIDATE_ACCESS_TOKEN"),
     VALIDATE_ACCESS_TOKEN_ERROR("VALIDATE_ACCESS_TOKEN_ERROR"),
     INTROSPECT_TOKEN("INTROSPECT_TOKEN"),
@@ -29,14 +41,22 @@ public enum KeycloakEventType implements AtlanEnum {
     FEDERATED_IDENTITY_LINK_ERROR("FEDERATED_IDENTITY_LINK_ERROR"),
     REMOVE_FEDERATED_IDENTITY("REMOVE_FEDERATED_IDENTITY"),
     REMOVE_FEDERATED_IDENTITY_ERROR("REMOVE_FEDERATED_IDENTITY_ERROR"),
+
+    /** Email address for an account has changed. */
     UPDATE_EMAIL("UPDATE_EMAIL"),
     UPDATE_EMAIL_ERROR("UPDATE_EMAIL_ERROR"),
+
     UPDATE_PROFILE("UPDATE_PROFILE"),
     UPDATE_PROFILE_ERROR("UPDATE_PROFILE_ERROR"),
+
+    /** Password for an account has changed. */
     UPDATE_PASSWORD("UPDATE_PASSWORD"),
     UPDATE_PASSWORD_ERROR("UPDATE_PASSWORD_ERROR"),
+
     UPDATE_TOTP("UPDATE_TOTP"),
     UPDATE_TOTP_ERROR("UPDATE_TOTP_ERROR"),
+
+    /** Email address for an account has been verified. */
     VERIFY_EMAIL("VERIFY_EMAIL"),
     VERIFY_EMAIL_ERROR("VERIFY_EMAIL_ERROR"),
     VERIFY_PROFILE("VERIFY_PROFILE"),
@@ -49,14 +69,22 @@ public enum KeycloakEventType implements AtlanEnum {
     UPDATE_CONSENT_ERROR("UPDATE_CONSENT_ERROR"),
     REVOKE_GRANT("REVOKE_GRANT"),
     REVOKE_GRANT_ERROR("REVOKE_GRANT_ERROR"),
+
+    /** Verification email has been sent. */
     SEND_VERIFY_EMAIL("SEND_VERIFY_EMAIL"),
     SEND_VERIFY_EMAIL_ERROR("SEND_VERIFY_EMAIL_ERROR"),
+
+    /** Password reset email has been sent. */
     SEND_RESET_PASSWORD("SEND_RESET_PASSWORD"),
     SEND_RESET_PASSWORD_ERROR("SEND_RESET_PASSWORD_ERROR"),
+
     SEND_IDENTITY_PROVIDER_LINK("SEND_IDENTITY_PROVIDER_LINK"),
     SEND_IDENTITY_PROVIDER_LINK_ERROR("SEND_IDENTITY_PROVIDER_LINK_ERROR"),
+
+    /** Password for the account has been reset. */
     RESET_PASSWORD("RESET_PASSWORD"),
     RESET_PASSWORD_ERROR("RESET_PASSWORD_ERROR"),
+
     RESTART_AUTHENTICATION("RESTART_AUTHENTICATION"),
     RESTART_AUTHENTICATION_ERROR("RESTART_AUTHENTICATION_ERROR"),
     INVALID_SIGNATURE("INVALID_SIGNATURE"),
