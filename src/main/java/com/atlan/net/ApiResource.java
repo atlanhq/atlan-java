@@ -282,6 +282,9 @@ public abstract class ApiResource extends AtlanObject implements AtlanResponseIn
         MDC.put("X-Atlan-Request-Id", requestId);
         log.debug("({}) {} with: {}", method, url, body);
         T response = ApiResource.atlanResponseGetter.request(client, method, url, body, clazz, options, requestId);
+        // Ensure we reset the Atlan request ID, so we always have the context from the original
+        // request that was made (even if it in turn triggered off other requests)
+        MDC.put("X-Atlan-Request-Id", requestId);
         if (log.isDebugEnabled()) {
             if (response != null) {
                 if (Atlan.enableTelemetry) {
@@ -317,6 +320,9 @@ public abstract class ApiResource extends AtlanObject implements AtlanResponseIn
         log.debug("({}) {} with: {}", method, url, filename);
         T response = ApiResource.atlanResponseGetter.request(
                 client, method, url, payload, filename, clazz, options, requestId);
+        // Ensure we reset the Atlan request ID, so we always have the context from the original
+        // request that was made (even if it in turn triggered off other requests)
+        MDC.put("X-Atlan-Request-Id", requestId);
         if (log.isDebugEnabled()) {
             if (response != null) {
                 if (Atlan.enableTelemetry) {
