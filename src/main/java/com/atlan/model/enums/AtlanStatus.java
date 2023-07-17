@@ -7,7 +7,8 @@ import lombok.Getter;
 
 public enum AtlanStatus implements AtlanEnum {
     ACTIVE("ACTIVE"),
-    DELETED("DELETED");
+    DELETED("DELETED"),
+    PURGED("PURGED");
 
     @JsonValue
     @Getter(onMethod_ = {@Override})
