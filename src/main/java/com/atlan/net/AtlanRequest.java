@@ -12,10 +12,7 @@ import com.atlan.util.StringUtils;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Value;
@@ -56,6 +53,9 @@ public class AtlanRequest {
     /** The special modifiers of the request. */
     RequestOptions options;
 
+    /** Unique identifier (GUID) of this request. */
+    String requestId;
+
     /**
      * Initializes a new instance of the {@link AtlanRequest} class, used for the majority of requests.
      *
@@ -64,15 +64,22 @@ public class AtlanRequest {
      * @param url the URL of the request
      * @param body the body of the request
      * @param options the special modifiers of the request
+     * @param requestId unique identifier (GUID) of a single request to Atlan
      * @throws AtlanException if the request cannot be initialized for any reason
      */
     public AtlanRequest(
-            AtlanClient client, ApiResource.RequestMethod method, String url, String body, RequestOptions options)
+            AtlanClient client,
+            ApiResource.RequestMethod method,
+            String url,
+            String body,
+            RequestOptions options,
+            String requestId)
             throws AtlanException {
         try {
             this.client = client;
             this.body = body;
             this.options = (options != null) ? options : RequestOptions.getDefault();
+            this.requestId = requestId;
             this.method = method;
             this.url = new URL(url);
             this.content = (body == null || body.length() == 0) ? null : HttpContent.buildJSONEncodedContent(body);
@@ -91,6 +98,7 @@ public class AtlanRequest {
      * @param file the file to be uploaded through the request
      * @param filename name of the file the InputStream is reading
      * @param options the special modifiers of the request
+     * @param requestId unique identifier (GUID) of a single request to Atlan
      * @throws AtlanException if the request cannot be initialized for any reason
      */
     public AtlanRequest(
@@ -99,12 +107,14 @@ public class AtlanRequest {
             String url,
             InputStream file,
             String filename,
-            RequestOptions options)
+            RequestOptions options,
+            String requestId)
             throws AtlanException {
         try {
             this.client = client;
             this.body = null;
             this.options = (options != null) ? options : RequestOptions.getDefault();
+            this.requestId = requestId;
             this.method = method;
             this.url = new URL(url);
             this.content =
@@ -113,24 +123,6 @@ public class AtlanRequest {
         } catch (IOException e) {
             throw new ApiConnectionException(ErrorCode.CONNECTION_ERROR, e, client.getBaseUrl());
         }
-    }
-
-    /**
-     * Returns a new {@link AtlanRequest} instance with an additional header.
-     *
-     * @param name the additional header's name
-     * @param value the additional header's value
-     * @return the new {@link AtlanRequest} instance
-     */
-    public AtlanRequest withAdditionalHeader(String name, String value) {
-        return new AtlanRequest(
-                this.client,
-                this.method,
-                this.url,
-                this.content,
-                this.headers.withAdditionalHeader(name, value),
-                this.body,
-                this.options);
     }
 
     private HttpHeaders buildHeaders() throws AuthenticationException {
@@ -152,6 +144,8 @@ public class AtlanRequest {
             throw new AuthenticationException(ErrorCode.INVALID_API_TOKEN);
         }
         headerMap.put("Authorization", Arrays.asList(String.format("Bearer %s", apiToken)));
+
+        headerMap.put("X-Atlan-Request-Id", List.of(requestId));
 
         return HttpHeaders.of(headerMap);
     }

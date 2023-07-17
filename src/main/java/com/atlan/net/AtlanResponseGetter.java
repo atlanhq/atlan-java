@@ -18,7 +18,8 @@ public interface AtlanResponseGetter {
             String url,
             String body,
             Class<T> clazz,
-            RequestOptions options)
+            RequestOptions options,
+            String requestId)
             throws AtlanException;
 
     <T extends AtlanResponseInterface> T request(
@@ -28,6 +29,7 @@ public interface AtlanResponseGetter {
             InputStream upload,
             String filename,
             Class<T> clazz,
-            RequestOptions options)
+            RequestOptions options,
+            String requestId)
             throws AtlanException;
 }

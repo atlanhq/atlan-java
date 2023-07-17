@@ -18,12 +18,10 @@ import java.io.InputStream;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.MDC;
 
 /**
  * Base class for all response objects.
@@ -279,8 +277,11 @@ public abstract class ApiResource extends AtlanObject implements AtlanResponseIn
             Class<T> clazz,
             RequestOptions options)
             throws AtlanException {
+        // Create a unique ID for every request, and add it to the logging context and header
+        String requestId = UUID.randomUUID().toString();
+        MDC.put("X-Atlan-Request-Id", requestId);
         log.debug("({}) {} with: {}", method, url, body);
-        T response = ApiResource.atlanResponseGetter.request(client, method, url, body, clazz, options);
+        T response = ApiResource.atlanResponseGetter.request(client, method, url, body, clazz, options, requestId);
         if (log.isDebugEnabled()) {
             if (response != null) {
                 if (Atlan.enableTelemetry) {
@@ -310,8 +311,12 @@ public abstract class ApiResource extends AtlanObject implements AtlanResponseIn
         if (payload == null) {
             throw new IllegalArgumentException(String.format("Found null input stream for %s.", url));
         }
+        // Create a unique ID for every request, and add it to the logging context and header
+        String requestId = UUID.randomUUID().toString();
+        MDC.put("X-Atlan-Request-Id", requestId);
         log.debug("({}) {} with: {}", method, url, filename);
-        T response = ApiResource.atlanResponseGetter.request(client, method, url, payload, filename, clazz, options);
+        T response = ApiResource.atlanResponseGetter.request(
+                client, method, url, payload, filename, clazz, options, requestId);
         if (log.isDebugEnabled()) {
             if (response != null) {
                 if (Atlan.enableTelemetry) {
