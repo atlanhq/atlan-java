@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- SPDX-License-Identifier: Apache-2.0 -->
 <configuration>
-    <property name="pattern" value="%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n" />
+    <property name="pattern" value="%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} [ReqId:%X{X-Atlan-Request-Id}] - %msg%n" />
     <appender name="FILE" class="ch.qos.logback.core.FileAppender">
         <file>test.log</file>
         <append>false</append>

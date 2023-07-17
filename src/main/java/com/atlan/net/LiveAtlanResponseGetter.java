@@ -43,6 +43,7 @@ public class LiveAtlanResponseGetter implements AtlanResponseGetter {
      * @param body payload for the request, if any
      * @param clazz the expected response object type from the request
      * @param options any alternative options to use for the request, or null to use default options
+     * @param requestId unique identifier (GUID) of a single request to Atlan
      * @return the response of the request
      * @param <T> the type of the response of the request
      * @throws AtlanException on any API interaction problem, indicating the type of problem encountered
@@ -54,9 +55,10 @@ public class LiveAtlanResponseGetter implements AtlanResponseGetter {
             String url,
             String body,
             Class<T> clazz,
-            RequestOptions options)
+            RequestOptions options,
+            String requestId)
             throws AtlanException {
-        AtlanRequest request = new AtlanRequest(client, method, url, body, options);
+        AtlanRequest request = new AtlanRequest(client, method, url, body, options, requestId);
         return request(request, clazz);
     }
 
@@ -70,6 +72,7 @@ public class LiveAtlanResponseGetter implements AtlanResponseGetter {
      * @param filename name of the file the InputStream is reading
      * @param clazz the expected response object type from the request
      * @param options any alternative options to use for the request, or null to use default options
+     * @param requestId unique identifier (GUID) of a single request to Atlan
      * @return the response of the request
      * @param <T> the type of the response of the request
      * @throws AtlanException on any API interaction problems, indicating the type of problem encountered
@@ -82,9 +85,10 @@ public class LiveAtlanResponseGetter implements AtlanResponseGetter {
             InputStream upload,
             String filename,
             Class<T> clazz,
-            RequestOptions options)
+            RequestOptions options,
+            String requestId)
             throws AtlanException {
-        AtlanRequest request = new AtlanRequest(client, method, url, upload, filename, options);
+        AtlanRequest request = new AtlanRequest(client, method, url, upload, filename, options, requestId);
         return request(request, clazz);
     }
 
