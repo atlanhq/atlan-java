@@ -7,6 +7,7 @@ import com.atlan.exception.AtlanException;
 import com.atlan.model.admin.*;
 import com.atlan.model.enums.AtlanRequestStatus;
 import com.atlan.net.ApiResource;
+import com.atlan.net.RequestOptions;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
@@ -45,9 +46,21 @@ public class RequestsEndpoint extends HeraclesEndpoint {
      * @throws AtlanException on any API communication issue
      */
     public AtlanRequest get(String guid) throws AtlanException {
+        return get(guid, null);
+    }
+
+    /**
+     * Retrieve a single request by its unique identifier (GUID).
+     *
+     * @param guid of the request to retrieve
+     * @param options to override default client settings
+     * @return the unique request, or null if none exists with that GUID
+     * @throws AtlanException on any API communication issue
+     */
+    public AtlanRequest get(String guid, RequestOptions options) throws AtlanException {
         String url = String.format("%s%s/%s", getBaseUrl(), endpoint, guid);
         WrappedRequest result =
-                ApiResource.request(client, ApiResource.RequestMethod.GET, url, "", WrappedRequest.class, null);
+                ApiResource.request(client, ApiResource.RequestMethod.GET, url, "", WrappedRequest.class, options);
         if (result != null) {
             return result.getRequest();
         }
@@ -65,6 +78,22 @@ public class RequestsEndpoint extends HeraclesEndpoint {
      * @throws AtlanException on any API communication issue
      */
     public AtlanRequestResponse list(String filter, String sort, int offset, int limit) throws AtlanException {
+        return list(filter, sort, offset, limit, null);
+    }
+
+    /**
+     * Retrieves a list of the requests defined in Atlan.
+     *
+     * @param filter which requests to retrieve
+     * @param sort property by which to sort the results
+     * @param offset starting point for results to return, for paging
+     * @param limit maximum number of results to be returned
+     * @param options to override default client settings
+     * @return a list of requests that match the provided criteria
+     * @throws AtlanException on any API communication issue
+     */
+    public AtlanRequestResponse list(String filter, String sort, int offset, int limit, RequestOptions options)
+            throws AtlanException {
         if (filter == null) {
             filter = "";
         }
@@ -74,7 +103,7 @@ public class RequestsEndpoint extends HeraclesEndpoint {
         String url = String.format(
                 "%s%s?limit=%s&offset=%s&sort=%s&filter=%s",
                 getBaseUrl(), endpoint, limit, offset, ApiResource.urlEncode(sort), ApiResource.urlEncode(filter));
-        return ApiResource.request(client, ApiResource.RequestMethod.GET, url, "", AtlanRequestResponse.class, null);
+        return ApiResource.request(client, ApiResource.RequestMethod.GET, url, "", AtlanRequestResponse.class, options);
     }
 
     /**
@@ -85,7 +114,19 @@ public class RequestsEndpoint extends HeraclesEndpoint {
      * @throws AtlanException on any API communication issue
      */
     public AtlanRequestResponse list(String filter) throws AtlanException {
-        return list(filter, "-createdAt", 0, defaultLimit);
+        return list(filter, null);
+    }
+
+    /**
+     * Retrieves a list of the requests defined in Atlan.
+     *
+     * @param filter which requests to retrieve
+     * @param options to override default client settings
+     * @return a list of requests that match the provided criteria
+     * @throws AtlanException on any API communication issue
+     */
+    public AtlanRequestResponse list(String filter, RequestOptions options) throws AtlanException {
+        return list(filter, "-createdAt", 0, defaultLimit, options);
     }
 
     /**
@@ -95,11 +136,23 @@ public class RequestsEndpoint extends HeraclesEndpoint {
      * @throws AtlanException on any API communication issue
      */
     public AtlanRequestResponse list() throws AtlanException {
+        return list((RequestOptions) null);
+    }
+
+    /**
+     * Retrieve the list of requests defined in Atlan as you would via the Admin UI.
+     *
+     * @param options to override default client settings
+     * @return a list of all the requests in Atlan
+     * @throws AtlanException on any API communication issue
+     */
+    public AtlanRequestResponse list(RequestOptions options) throws AtlanException {
         return list(
                 "{\"$and\":[{\"isDuplicate\":false},{\"status\":{\"$in\":[\"active\"]}}]}",
                 "-createdAt",
                 0,
-                defaultLimit);
+                defaultLimit,
+                options);
     }
 
     /**
@@ -114,6 +167,22 @@ public class RequestsEndpoint extends HeraclesEndpoint {
      */
     public AtlanRequestResponse listActionable(String filter, String sort, int offset, int limit)
             throws AtlanException {
+        return listActionable(filter, sort, offset, limit, null);
+    }
+
+    /**
+     * Retrieve the list of requests that can be acted upon.
+     *
+     * @param filter which requests to retrieve
+     * @param sort property by which to sort the results
+     * @param offset starting point for results to return, for paging
+     * @param limit maximum number of results to be returned
+     * @param options to override default client settings
+     * @return a list of actionable requests that match the provided criteria
+     * @throws AtlanException on any API communication issue
+     */
+    public AtlanRequestResponse listActionable(
+            String filter, String sort, int offset, int limit, RequestOptions options) throws AtlanException {
         if (filter == null) {
             filter = "";
         }
@@ -123,7 +192,7 @@ public class RequestsEndpoint extends HeraclesEndpoint {
         String url = String.format(
                 "%s%s/actionable?limit=%s&offset=%s&sort=%s&filter=%s",
                 getBaseUrl(), endpoint, limit, offset, ApiResource.urlEncode(sort), ApiResource.urlEncode(filter));
-        return ApiResource.request(client, ApiResource.RequestMethod.GET, url, "", AtlanRequestResponse.class, null);
+        return ApiResource.request(client, ApiResource.RequestMethod.GET, url, "", AtlanRequestResponse.class, options);
     }
 
     /**
@@ -134,7 +203,19 @@ public class RequestsEndpoint extends HeraclesEndpoint {
      * @throws AtlanException on any API communication issue
      */
     public AtlanRequestResponse listActionable(String filter) throws AtlanException {
-        return listActionable(filter, "-createdAt", 0, defaultLimit);
+        return listActionable(filter, null);
+    }
+
+    /**
+     * Retrieve the list of requests that can be acted upon.
+     *
+     * @param filter which requests to retrieve
+     * @param options to override default client settings
+     * @return a list of actionable requests that match the provided criteria
+     * @throws AtlanException on any API communication issue
+     */
+    public AtlanRequestResponse listActionable(String filter, RequestOptions options) throws AtlanException {
+        return listActionable(filter, "-createdAt", 0, defaultLimit, options);
     }
 
     /**
@@ -144,7 +225,18 @@ public class RequestsEndpoint extends HeraclesEndpoint {
      * @throws AtlanException on any API communication issue
      */
     public AtlanRequestResponse listActionable() throws AtlanException {
-        return listActionable("", "-createdAt", 0, defaultLimit); // TODO: check default filter and limit
+        return listActionable((RequestOptions) null);
+    }
+
+    /**
+     * Retrieve the list of requests that can be acted upon.
+     *
+     * @param options to override default client settings
+     * @return a list of actionable requests based on default criteria
+     * @throws AtlanException on any API communication issue
+     */
+    public AtlanRequestResponse listActionable(RequestOptions options) throws AtlanException {
+        return listActionable("", "-createdAt", 0, defaultLimit, options); // TODO: check default filter and limit
     }
 
     /**
@@ -154,8 +246,19 @@ public class RequestsEndpoint extends HeraclesEndpoint {
      * @throws AtlanException on any API communication issue
      */
     public void create(AtlanRequest request) throws AtlanException {
+        create(request, null);
+    }
+
+    /**
+     * Create a new request.
+     *
+     * @param request the details of the new request
+     * @param options to override default client settings
+     * @throws AtlanException on any API communication issue
+     */
+    public void create(AtlanRequest request, RequestOptions options) throws AtlanException {
         if (request != null) {
-            create(List.of(request));
+            create(List.of(request), options);
         }
     }
 
@@ -166,9 +269,20 @@ public class RequestsEndpoint extends HeraclesEndpoint {
      * @throws AtlanException on any API communication issue
      */
     public void create(List<AtlanRequest> requests) throws AtlanException {
+        create(requests, null);
+    }
+
+    /**
+     * Create multiple new requests.
+     *
+     * @param requests the details of the new requests to create
+     * @param options to override default client settings
+     * @throws AtlanException on any API communication issue
+     */
+    public void create(List<AtlanRequest> requests, RequestOptions options) throws AtlanException {
         String url = String.format("%s%s/bulk", getBaseUrl(), endpoint);
         BulkRequest br = new BulkRequest(requests);
-        ApiResource.request(client, ApiResource.RequestMethod.POST, url, br, null, null);
+        ApiResource.request(client, ApiResource.RequestMethod.POST, url, br, null, options);
     }
 
     /**
@@ -180,7 +294,20 @@ public class RequestsEndpoint extends HeraclesEndpoint {
      * @throws AtlanException on any API interaction issues
      */
     public boolean approve(String guid, String message) throws AtlanException {
-        return action(guid, AtlanRequestStatus.APPROVED, message);
+        return approve(guid, message, null);
+    }
+
+    /**
+     * Approve the specified request in Atlan.
+     *
+     * @param guid unique identifier (GUID) of the request to approve
+     * @param message (optional) message to include with the approval
+     * @param options to override default client settings
+     * @return true if the approval succeeded, otherwise false
+     * @throws AtlanException on any API interaction issues
+     */
+    public boolean approve(String guid, String message, RequestOptions options) throws AtlanException {
+        return action(guid, AtlanRequestStatus.APPROVED, message, options);
     }
 
     /**
@@ -192,17 +319,31 @@ public class RequestsEndpoint extends HeraclesEndpoint {
      * @throws AtlanException on any API interaction issues
      */
     public boolean reject(String guid, String message) throws AtlanException {
-        return action(guid, AtlanRequestStatus.REJECTED, message);
+        return reject(guid, message, null);
     }
 
-    private boolean action(String guid, AtlanRequestStatus action, String message) throws AtlanException {
+    /**
+     * Reject the specified request in Atlan.
+     *
+     * @param guid unique identifier (GUID) of the request to reject
+     * @param message (optional) message to include with the rejection
+     * @param options to override default client settings
+     * @return true if the rejection succeeded, otherwise false
+     * @throws AtlanException on any API interaction issues
+     */
+    public boolean reject(String guid, String message, RequestOptions options) throws AtlanException {
+        return action(guid, AtlanRequestStatus.REJECTED, message, options);
+    }
+
+    private boolean action(String guid, AtlanRequestStatus action, String message, RequestOptions options)
+            throws AtlanException {
         String url = String.format("%s%s/%s/action", getBaseUrl(), endpoint, guid);
         if (message == null) {
             message = "";
         }
         AtlanRequestAction ara = new AtlanRequestAction(action, message);
         WrappedString string =
-                ApiResource.request(client, ApiResource.RequestMethod.POST, url, ara, WrappedString.class, null);
+                ApiResource.request(client, ApiResource.RequestMethod.POST, url, ara, WrappedString.class, options);
         return string != null
                 && string.getResult() != null
                 && string.getResult().equals("success");

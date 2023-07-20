@@ -807,8 +807,23 @@ public class AssetEndpoint extends AtlasEndpoint {
      * @see #lineage(LineageListRequest)
      */
     public LineageResponse lineage(LineageRequest request) throws AtlanException {
+        return lineage(request, null);
+    }
+
+    /**
+     * Fetch the requested lineage. This is an older, slower operation that may be deprecated
+     * in the future. If possible, use the lineage list operation instead.
+     *
+     * @param request detailing the search query, parameters, and so on to run
+     * @param options to override default client settings
+     * @return the results of the search
+     * @throws AtlanException on any API interaction problems
+     * @see #lineage(LineageListRequest)
+     */
+    public LineageResponse lineage(LineageRequest request, RequestOptions options) throws AtlanException {
         String url = String.format("%s%s", getBaseUrl(), lineage_endpoint);
-        return ApiResource.request(client, ApiResource.RequestMethod.POST, url, request, LineageResponse.class, null);
+        return ApiResource.request(
+                client, ApiResource.RequestMethod.POST, url, request, LineageResponse.class, options);
     }
 
     /**

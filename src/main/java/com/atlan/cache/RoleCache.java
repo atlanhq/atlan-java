@@ -33,7 +33,7 @@ public class RoleCache {
         log.debug("Refreshing cache of roles...");
         // Note: we will only retrieve and cache the workspace-level roles, which all
         // start with '$'
-        RoleResponse response = rolesEndpoint.getRoles("{\"name\":{\"$ilike\":\"$%\"}}");
+        RoleResponse response = rolesEndpoint.list("{\"name\":{\"$ilike\":\"$%\"}}");
         List<AtlanRole> roles;
         if (response != null) {
             roles = response.getRecords();

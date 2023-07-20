@@ -9,6 +9,7 @@ import com.atlan.model.admin.AdminEventResponse;
 import com.atlan.model.admin.KeycloakEventRequest;
 import com.atlan.model.admin.KeycloakEventResponse;
 import com.atlan.net.ApiResource;
+import com.atlan.net.RequestOptions;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,7 +37,18 @@ public class LogsEndpoint extends HeraclesEndpoint {
      * @throws AtlanException on any issue interacting with the API
      */
     public AdminEventResponse getAdminEvents() throws AtlanException {
-        return getAdminEvents(AdminEventRequest.builder().build());
+        return getAdminEvents((RequestOptions) null);
+    }
+
+    /**
+     * Retrieve the 100 most recent admin events.
+     *
+     * @param options to override default client options
+     * @return a list of the 100 most recent admin events
+     * @throws AtlanException on any issue interacting with the API
+     */
+    public AdminEventResponse getAdminEvents(RequestOptions options) throws AtlanException {
+        return getAdminEvents(AdminEventRequest.builder().build(), options);
     }
 
     /**
@@ -47,6 +59,18 @@ public class LogsEndpoint extends HeraclesEndpoint {
      * @throws AtlanException on any issue interacting with the API
      */
     public AdminEventResponse getAdminEvents(AdminEventRequest request) throws AtlanException {
+        return getAdminEvents(request, null);
+    }
+
+    /**
+     * Retrieve admin events based on the supplied filters.
+     *
+     * @param request details of the filters to apply when retrieving admin events
+     * @param options to override default client options
+     * @return the admin events that match the supplied filters
+     * @throws AtlanException on any issue interacting with the API
+     */
+    public AdminEventResponse getAdminEvents(AdminEventRequest request, RequestOptions options) throws AtlanException {
         Map<String, Object> queryParams = new HashMap<>();
         if (request.getClientId() != null) {
             queryParams.put("authClient", request.getClientId());
@@ -79,7 +103,7 @@ public class LogsEndpoint extends HeraclesEndpoint {
         }
         String url = String.format("%s%s?%s", getBaseUrl(), endpoint_main, ApiResource.createQueryString(queryParams));
         AdminEventResponse response =
-                ApiResource.request(client, ApiResource.RequestMethod.GET, url, "", AdminEventResponse.class, null);
+                ApiResource.request(client, ApiResource.RequestMethod.GET, url, "", AdminEventResponse.class, options);
         response.setRequest(request);
         response.setClient(client);
         return response;
@@ -92,7 +116,18 @@ public class LogsEndpoint extends HeraclesEndpoint {
      * @throws AtlanException on any issue interacting with the API
      */
     public KeycloakEventResponse getEvents() throws AtlanException {
-        return getEvents(KeycloakEventRequest.builder().build());
+        return getEvents((RequestOptions) null);
+    }
+
+    /**
+     * Retrieve the 100 most recent events.
+     *
+     * @param options to override default client settings
+     * @return a list of the 100 most recent events
+     * @throws AtlanException on any issue interacting with the API
+     */
+    public KeycloakEventResponse getEvents(RequestOptions options) throws AtlanException {
+        return getEvents(KeycloakEventRequest.builder().build(), options);
     }
 
     /**
@@ -103,6 +138,18 @@ public class LogsEndpoint extends HeraclesEndpoint {
      * @throws AtlanException on any issue interacting with the API
      */
     public KeycloakEventResponse getEvents(KeycloakEventRequest request) throws AtlanException {
+        return getEvents(request, null);
+    }
+
+    /**
+     * Retrieve all events, based on the supplied filters.
+     *
+     * @param request details of the filters to apply when retrieving events
+     * @param options to override default client settings
+     * @return the events that match the supplied filters
+     * @throws AtlanException on any issue interacting with the API
+     */
+    public KeycloakEventResponse getEvents(KeycloakEventRequest request, RequestOptions options) throws AtlanException {
         Map<String, Object> queryParams = new HashMap<>();
         if (request.getClient() != null) {
             queryParams.put("client", request.getClient());
@@ -125,8 +172,8 @@ public class LogsEndpoint extends HeraclesEndpoint {
             queryParams.put("user", request.getUserId());
         }
         String url = String.format("%s%s?%s", getBaseUrl(), endpoint_login, ApiResource.createQueryString(queryParams));
-        KeycloakEventResponse response =
-                ApiResource.request(client, ApiResource.RequestMethod.GET, url, "", KeycloakEventResponse.class, null);
+        KeycloakEventResponse response = ApiResource.request(
+                client, ApiResource.RequestMethod.GET, url, "", KeycloakEventResponse.class, options);
         response.setRequest(request);
         response.setClient(client);
         return response;
