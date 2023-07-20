@@ -5,6 +5,7 @@ package com.atlan.model.relations;
 import com.atlan.model.core.AtlanObject;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 
@@ -12,6 +13,7 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 @SuperBuilder
 @EqualsAndHashCode(callSuper = false)
+@ToString(callSuper = true)
 public class UniqueAttributes extends AtlanObject {
     private static final long serialVersionUID = 2L;
 

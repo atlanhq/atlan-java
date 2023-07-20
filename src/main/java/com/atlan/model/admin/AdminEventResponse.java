@@ -26,11 +26,13 @@ import java.util.stream.StreamSupport;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @JsonSerialize(using = AdminEventResponse.AdminEventResponseSerializer.class)
 @JsonDeserialize(using = AdminEventResponse.AdminEventResponseDeserializer.class)
 @EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 public class AdminEventResponse extends ApiResource implements Iterable<AdminEvent> {
     private static final long serialVersionUID = 2L;
 

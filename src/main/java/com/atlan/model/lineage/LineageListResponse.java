@@ -18,6 +18,7 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 @Builder
 @EqualsAndHashCode(callSuper = false)
+@ToString(callSuper = true)
 public class LineageListResponse extends ApiResource implements Iterable<Asset> {
     private static final long serialVersionUID = 2L;
 

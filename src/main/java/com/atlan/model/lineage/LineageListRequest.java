@@ -20,6 +20,7 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 @SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = false)
+@ToString(callSuper = true)
 public class LineageListRequest extends AtlanObject {
 
     /**

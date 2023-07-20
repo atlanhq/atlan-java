@@ -16,6 +16,7 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = false)
+@ToString(callSuper = true)
 public class Reference extends AtlanObject implements Comparable<Reference>, AuditDetail {
     private static final long serialVersionUID = 2L;
 

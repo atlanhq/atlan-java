@@ -20,6 +20,7 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 public class AtlanGroup extends AtlanObject {
     private static final long serialVersionUID = 2L;
 
@@ -259,6 +260,7 @@ public class AtlanGroup extends AtlanObject {
     @Jacksonized
     @SuperBuilder(toBuilder = true)
     @EqualsAndHashCode(callSuper = true)
+    @ToString(callSuper = true)
     public static final class GroupAttributes extends AtlanObject {
         private static final long serialVersionUID = 2L;
 

@@ -57,6 +57,7 @@ import lombok.extern.slf4j.Slf4j;
         include = JsonTypeInfo.As.EXISTING_PROPERTY,
         property = "typeName",
         defaultImpl = IndistinctAsset.class)
+@ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings("cast")
 public abstract class Asset extends Reference implements IAsset, IReferenceable {

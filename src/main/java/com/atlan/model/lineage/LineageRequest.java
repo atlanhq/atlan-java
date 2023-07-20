@@ -14,6 +14,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = false)
+@ToString(callSuper = true)
 public class LineageRequest extends AtlanObject {
 
     /** Unique identifier of the asset for which to retrieve lineage. */

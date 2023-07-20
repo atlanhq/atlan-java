@@ -6,11 +6,13 @@ import java.util.SortedSet;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Singular;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 public abstract class AbstractPersonaPolicy extends AbstractPolicy {
 
     /** Unique identifier (GUID) of the connection to which this policy applies. */

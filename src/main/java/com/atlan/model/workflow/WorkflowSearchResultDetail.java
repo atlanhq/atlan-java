@@ -5,9 +5,11 @@ package com.atlan.model.workflow;
 import com.atlan.model.core.AtlanObject;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.ToString;
 
 @Getter
 @EqualsAndHashCode(callSuper = false)
+@ToString(callSuper = true)
 public class WorkflowSearchResultDetail extends AtlanObject {
     private static final long serialVersionUID = 2L;
 

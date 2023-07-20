@@ -6,12 +6,14 @@ import com.atlan.model.core.AtlanObject;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.ToString;
 
 /**
  * Captures the results of a single bucket within an aggregation.
  */
 @Getter
 @EqualsAndHashCode(callSuper = false)
+@ToString(callSuper = true)
 public class AggregationBucketDetails extends AtlanObject {
     private static final long serialVersionUID = 2L;
 

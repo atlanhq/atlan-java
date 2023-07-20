@@ -29,6 +29,7 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 @Slf4j
 public class S3Object extends Asset
         implements IS3Object, IS3, IObjectStore, IAWS, ICatalog, IAsset, IReferenceable, ICloud {

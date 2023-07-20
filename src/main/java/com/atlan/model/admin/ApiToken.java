@@ -34,6 +34,7 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 public class ApiToken extends AtlanObject {
 
     private static final long serialVersionUID = 2L;
@@ -212,6 +213,7 @@ public class ApiToken extends AtlanObject {
     @JsonDeserialize(using = ApiTokenAttributesDeserializer.class)
     @Builder(toBuilder = true)
     @EqualsAndHashCode(callSuper = true)
+    @ToString(callSuper = true)
     public static final class ApiTokenAttributes extends AtlanObject {
 
         /** Time, in seconds, from createdAt after which the token will expire. */
@@ -253,6 +255,7 @@ public class ApiToken extends AtlanObject {
     @Jacksonized
     @Builder(toBuilder = true)
     @EqualsAndHashCode(callSuper = true)
+    @ToString(callSuper = true)
     public static final class ApiTokenPersona extends AtlanObject implements Comparable<ApiTokenPersona> {
 
         private static final Comparator<String> stringComparator = Comparator.nullsFirst(String::compareTo);

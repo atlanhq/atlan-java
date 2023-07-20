@@ -26,6 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 @Slf4j
 public class BIProcess extends Asset implements IBIProcess, ILineageProcess, IAsset, IReferenceable {
     private static final long serialVersionUID = 2L;

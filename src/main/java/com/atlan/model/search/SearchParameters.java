@@ -7,12 +7,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.ToString;
 
 /**
  * Set of search parameters that are returned as part of the response of a search against Atlan.
  */
 @Getter
 @EqualsAndHashCode(callSuper = false)
+@ToString(callSuper = true)
 public class SearchParameters extends AtlanObject {
 
     /** List of attributes that were requested in the search. */

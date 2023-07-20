@@ -26,6 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 @Slf4j
 public class SalesforceField extends Asset
         implements ISalesforceField, ISalesforce, ISaaS, ICatalog, IAsset, IReferenceable {

@@ -7,12 +7,14 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.ToString;
 
 /**
  * Captures the response from a search against Atlan's activity log.
  */
 @Getter
 @EqualsAndHashCode(callSuper = false)
+@ToString(callSuper = true)
 public class AuditSearchResponse extends ApiResource {
     private static final long serialVersionUID = 2L;
 

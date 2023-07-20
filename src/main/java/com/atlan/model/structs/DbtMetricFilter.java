@@ -16,6 +16,7 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 public class DbtMetricFilter extends AtlanStruct {
 
     public static final String TYPE_NAME = "DbtMetricFilter";

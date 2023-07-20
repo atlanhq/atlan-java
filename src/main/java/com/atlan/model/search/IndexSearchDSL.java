@@ -17,6 +17,7 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 @SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = false)
+@ToString(callSuper = true)
 @SuppressWarnings("cast")
 public class IndexSearchDSL extends AtlanObject {
     private static final long serialVersionUID = 2L;

@@ -14,10 +14,12 @@ import java.util.ArrayList;
 import java.util.List;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
 @Getter
 @EqualsAndHashCode(callSuper = false)
+@ToString(callSuper = true)
 @Slf4j
 public class AssetDeletionResponse extends AssetMutationResponse implements AtlanAsyncMutator {
     private static final long serialVersionUID = 2L;

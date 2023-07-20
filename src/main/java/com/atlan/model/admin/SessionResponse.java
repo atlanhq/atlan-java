@@ -8,10 +8,12 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.List;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.ToString;
 
 @Getter
 @JsonDeserialize(using = SessionResponseDeserializer.class)
 @EqualsAndHashCode(callSuper = false)
+@ToString(callSuper = true)
 public class SessionResponse extends ApiResource {
     private static final long serialVersionUID = 2L;
 

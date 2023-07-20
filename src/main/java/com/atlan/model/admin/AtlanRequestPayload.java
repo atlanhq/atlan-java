@@ -3,6 +3,8 @@
 package com.atlan.model.admin;
 
 import com.atlan.model.core.AtlanObject;
+import lombok.ToString;
 
 /** Base class for all request payloads. */
+@ToString(callSuper = true)
 public abstract class AtlanRequestPayload extends AtlanObject {}

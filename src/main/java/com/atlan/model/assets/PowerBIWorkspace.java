@@ -27,6 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 @Slf4j
 public class PowerBIWorkspace extends Asset
         implements IPowerBIWorkspace, IPowerBI, IBI, ICatalog, IAsset, IReferenceable {

@@ -20,6 +20,7 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 public class AtlanUser extends AtlanObject {
     private static final long serialVersionUID = 2L;
 
@@ -384,6 +385,7 @@ public class AtlanUser extends AtlanObject {
     @Jacksonized
     @SuperBuilder(toBuilder = true)
     @EqualsAndHashCode(callSuper = true)
+    @ToString(callSuper = true)
     public static final class UserAttributes extends AtlanObject {
         private static final long serialVersionUID = 2L;
 
@@ -416,6 +418,7 @@ public class AtlanUser extends AtlanObject {
     @Jacksonized
     @SuperBuilder(toBuilder = true)
     @EqualsAndHashCode(callSuper = true)
+    @ToString(callSuper = true)
     public static final class Persona extends AtlanObject implements Comparable<Persona> {
         private static final long serialVersionUID = 2L;
 

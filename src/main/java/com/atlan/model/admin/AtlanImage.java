@@ -10,6 +10,7 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 @Builder
 @EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 public class AtlanImage extends ApiResource {
     private static final long serialVersionUID = 2L;
 

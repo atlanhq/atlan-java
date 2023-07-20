@@ -17,6 +17,7 @@ import java.util.stream.StreamSupport;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  * Captures the response from a search against Atlan. Also provides the ability to iteratively
@@ -24,6 +25,7 @@ import lombok.Setter;
  */
 @Getter
 @EqualsAndHashCode(callSuper = false)
+@ToString(callSuper = true)
 public class IndexSearchResponse extends ApiResource implements Iterable<Asset> {
     private static final long serialVersionUID = 2L;
 

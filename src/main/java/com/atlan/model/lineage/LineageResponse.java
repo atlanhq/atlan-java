@@ -17,6 +17,7 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 @Builder
 @EqualsAndHashCode(callSuper = false)
+@ToString(callSuper = true)
 public class LineageResponse extends ApiResource {
     private static final long serialVersionUID = 2L;
 
@@ -72,6 +73,7 @@ public class LineageResponse extends ApiResource {
 
     /** Traversable graph representation of the lineage results. */
     @JsonIgnore
+    @ToString.Exclude
     private transient LineageGraph graph;
 
     /**

@@ -9,9 +9,11 @@ import java.util.List;
 import java.util.Map;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.ToString;
 
 @Getter
 @EqualsAndHashCode(callSuper = false)
+@ToString(callSuper = true)
 public class WorkflowSearchResultStatus extends AtlanObject {
     private static final long serialVersionUID = 2L;
 

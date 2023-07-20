@@ -25,6 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings("cast")
 public class Readme extends Asset implements IReadme, IResource, ICatalog, IAsset, IReferenceable {

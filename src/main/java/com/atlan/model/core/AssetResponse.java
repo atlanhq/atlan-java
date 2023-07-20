@@ -7,9 +7,11 @@ import com.atlan.net.ApiResource;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.ToString;
 
 @Getter
 @EqualsAndHashCode(callSuper = false)
+@ToString(callSuper = true)
 public class AssetResponse extends ApiResource {
     private static final long serialVersionUID = 2L;
 

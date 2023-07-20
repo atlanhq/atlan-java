@@ -20,6 +20,7 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 @SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 public class IndexSearchRequest extends AtlanObject {
     private static final long serialVersionUID = 2L;
 
