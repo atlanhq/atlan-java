@@ -4,9 +4,10 @@ package com.atlan.model.core;
 
 import co.elastic.clients.elasticsearch._types.SortOptions;
 import co.elastic.clients.elasticsearch._types.query_dsl.Query;
-import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
+import com.atlan.exception.ErrorCode;
+import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.assets.Asset;
 import com.atlan.model.search.IndexSearchDSL;
 import com.atlan.model.search.IndexSearchRequest;
@@ -18,6 +19,9 @@ import lombok.Singular;
 
 @Builder
 public class AssetFilter {
+
+    /** Client through which to retrieve the assets. */
+    AtlanClient client;
 
     /** Filters to choose which assets to include in the results. */
     @Singular
@@ -46,24 +50,15 @@ public class AssetFilter {
     public static class AssetFilterBuilder {
 
         /**
-         * Run the set of filters to retrieve assets that match the supplied criteria,
-         * using the default Atlan client.
+         * Run the set of filters to retrieve assets that match the supplied criteria.
          *
          * @return a stream of assets that match the specified criteria, lazily-fetched
          * @throws AtlanException on any issues interacting with the Atlan APIs
          */
         public Stream<Asset> stream() throws AtlanException {
-            return stream(Atlan.getDefaultClient());
-        }
-
-        /**
-         * Run the set of filters to retrieve assets that match the supplied criteria.
-         *
-         * @param client through which to run the asset retrieval
-         * @return a stream of assets that match the specified criteria, lazily-fetched
-         * @throws AtlanException on any issues interacting with the Atlan APIs
-         */
-        public Stream<Asset> stream(AtlanClient client) throws AtlanException {
+            if (client == null) {
+                throw new InvalidRequestException(ErrorCode.NO_ATLAN_CLIENT);
+            }
             QueryFactory.CompoundQuery.CompoundQueryBuilder query = QueryFactory.CompoundQuery.builder();
             if (filters != null) {
                 query.musts(filters);

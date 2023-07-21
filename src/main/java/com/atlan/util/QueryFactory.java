@@ -399,6 +399,19 @@ public class QueryFactory {
          *
          * @param value the value (prefix) to check the field's value starts with (case-sensitive)
          * @return a query that will only match assets whose value for the field starts with the value provided
+         * @see #startingWith(String)
+         */
+        public Query startsWith(String value) {
+            return startingWith(value);
+        }
+
+        /**
+         * Returns a query that will match all assets whose provided field has a value that starts with
+         * the provided value. Note that this is a case-sensitive match.
+         *
+         * @param value the value (prefix) to check the field's value starts with (case-sensitive)
+         * @return a query that will only match assets whose value for the field starts with the value provided
+         * @see #startsWith(String)
          */
         public Query startingWith(String value) {
             return startingWith(value, false);
@@ -411,6 +424,20 @@ public class QueryFactory {
          * @param value the value (prefix) to check the field's value starts with (case-sensitive)
          * @param caseInsensitive if true will match the value irrespective of case, otherwise will be a case-sensitive match
          * @return a query that will only match assets whose value for the field starts with the value provided
+         * @see #startingWith(String, boolean)
+         */
+        public Query startsWith(String value, boolean caseInsensitive) {
+            return startingWith(value, caseInsensitive);
+        }
+
+        /**
+         * Returns a query that will match all assets whose provided field has a value that starts with
+         * the provided value. Note that this can also be a case-insensitive match.
+         *
+         * @param value the value (prefix) to check the field's value starts with (case-sensitive)
+         * @param caseInsensitive if true will match the value irrespective of case, otherwise will be a case-sensitive match
+         * @return a query that will only match assets whose value for the field starts with the value provided
+         * @see #startsWith(String, boolean)
          */
         public Query startingWith(String value, boolean caseInsensitive) {
             PrefixQuery.Builder builder =
@@ -479,6 +506,19 @@ public class QueryFactory {
          *
          * @param values the values (strings) to check the field's value is exactly equal to
          * @return a query that will only match assets whose value for the field is exactly equal to at least one of the string values provided
+         * @see #beOneOf(Collection)
+         */
+        public Query in(Collection<String> values) {
+            return beOneOf(values);
+        }
+
+        /**
+         * Returns a query that will match all assets whose provided field has a value that exactly equals
+         * at least one of the provided string values.
+         *
+         * @param values the values (strings) to check the field's value is exactly equal to
+         * @return a query that will only match assets whose value for the field is exactly equal to at least one of the string values provided
+         * @see #in(Collection)
          */
         public Query beOneOf(Collection<String> values) {
             List<FieldValue> list = new ArrayList<>();

@@ -23,6 +23,7 @@ import com.atlan.model.search.IndexSearchRequest;
 import com.atlan.model.search.IndexSearchResponse;
 import com.atlan.net.ApiResource;
 import com.atlan.net.RequestOptions;
+import com.atlan.util.QueryFactory;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -52,6 +53,35 @@ public class AssetEndpoint extends AtlasEndpoint {
     }
 
     /**
+     * Start an asset filter that will return all Table assets.
+     * Additional conditions can be chained onto the returned filter before any
+     * asset retrieval is attempted, ensuring all conditions are pushed-down for
+     * optimal retrieval. Only active (non-archived) Table assets will be included.
+     *
+     * @return an asset filter that includes all Table assets
+     */
+    public AssetFilter.AssetFilterBuilder all() {
+        return all(false);
+    }
+
+    /**
+     * Start an asset filter that will return all Table assets.
+     * Additional conditions can be chained onto the returned filter before any
+     * asset retrieval is attempted, ensuring all conditions are pushed-down for
+     * optimal retrieval.
+     *
+     * @param includeArchived when true, archived (soft-deleted) Tables will be included
+     * @return an asset filter that includes all Table assets
+     */
+    public AssetFilter.AssetFilterBuilder all(boolean includeArchived) {
+        AssetFilter.AssetFilterBuilder builder = AssetFilter.builder().client(client);
+        if (!includeArchived) {
+            builder.filter(QueryFactory.active());
+        }
+        return builder;
+    }
+
+    /**
      * Run the requested search.
      *
      * @param request detailing the search query, parameters, and so on to run
@@ -74,6 +104,31 @@ public class AssetEndpoint extends AtlasEndpoint {
         String url = String.format("%s%s", getBaseUrl(), audit_endpoint);
         return ApiResource.request(
                 client, ApiResource.RequestMethod.POST, url, request, AuditSearchResponse.class, options);
+    }
+
+    /**
+     * Creates any asset, not updating any of the existing entity's Atlan tags and entirely
+     * ignoring any custom metadata.
+     *
+     * @param value asset to upsert
+     * @return the results of the upsert
+     * @throws AtlanException on any API interaction problems
+     */
+    public AssetMutationResponse save(Asset value) throws AtlanException {
+        return save(value, null);
+    }
+
+    /**
+     * Creates any asset, not updating any of the existing entity's Atlan tags and entirely
+     * ignoring any custom metadata.
+     *
+     * @param value asset to upsert
+     * @param options to override default client settings
+     * @return the results of the upsert
+     * @throws AtlanException on any API interaction problems
+     */
+    public AssetMutationResponse save(Asset value, RequestOptions options) throws AtlanException {
+        return save(value, false, options);
     }
 
     /**

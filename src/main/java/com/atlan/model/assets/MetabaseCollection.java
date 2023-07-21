@@ -94,7 +94,20 @@ public class MetabaseCollection extends Asset
      * @return an asset filter that includes all MetabaseCollection assets
      */
     public static AssetFilter.AssetFilterBuilder all() {
-        return all(false);
+        return all(Atlan.getDefaultClient());
+    }
+
+    /**
+     * Start an asset filter that will return all MetabaseCollection assets.
+     * Additional conditions can be chained onto the returned filter before any
+     * asset retrieval is attempted, ensuring all conditions are pushed-down for
+     * optimal retrieval. Only active (non-archived) MetabaseCollection assets will be included.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the assets
+     * @return an asset filter that includes all MetabaseCollection assets
+     */
+    public static AssetFilter.AssetFilterBuilder all(AtlanClient client) {
+        return all(client, false);
     }
 
     /**
@@ -107,7 +120,22 @@ public class MetabaseCollection extends Asset
      * @return an asset filter that includes all MetabaseCollection assets
      */
     public static AssetFilter.AssetFilterBuilder all(boolean includeArchived) {
-        AssetFilter.AssetFilterBuilder builder = AssetFilter.builder().filter(QueryFactory.type(TYPE_NAME));
+        return all(Atlan.getDefaultClient(), includeArchived);
+    }
+
+    /**
+     * Start an asset filter that will return all MetabaseCollection assets.
+     * Additional conditions can be chained onto the returned filter before any
+     * asset retrieval is attempted, ensuring all conditions are pushed-down for
+     * optimal retrieval.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the assets
+     * @param includeArchived when true, archived (soft-deleted) MetabaseCollections will be included
+     * @return an asset filter that includes all MetabaseCollection assets
+     */
+    public static AssetFilter.AssetFilterBuilder all(AtlanClient client, boolean includeArchived) {
+        AssetFilter.AssetFilterBuilder builder =
+                AssetFilter.builder().client(client).filter(QueryFactory.type(TYPE_NAME));
         if (!includeArchived) {
             builder.filter(QueryFactory.active());
         }
