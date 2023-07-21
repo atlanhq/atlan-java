@@ -7,11 +7,12 @@ import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import com.atlan.Atlan;
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
+import com.atlan.model.assets.Asset;
 import com.atlan.model.search.IndexSearchDSL;
 import com.atlan.model.search.IndexSearchRequest;
-import com.atlan.model.search.IndexSearchResponse;
 import com.atlan.util.QueryFactory;
 import java.util.List;
+import java.util.stream.Stream;
 import lombok.Builder;
 import lombok.Singular;
 
@@ -54,21 +55,21 @@ public class AssetFilter {
          * Run the set of filters to retrieve assets that match the supplied criteria,
          * using the default Atlan client.
          *
-         * @return the paged set of assets that match the supplied criteria
+         * @return a stream of assets that match the specified criteria, lazily-fetched
          * @throws AtlanException on any issues interacting with the Atlan APIs
          */
-        public IndexSearchResponse go() throws AtlanException {
-            return go(Atlan.getDefaultClient());
+        public Stream<Asset> stream() throws AtlanException {
+            return stream(Atlan.getDefaultClient());
         }
 
         /**
          * Run the set of filters to retrieve assets that match the supplied criteria.
          *
          * @param client through which to run the asset retrieval
-         * @return the paged set of assets that match the supplied criteria
+         * @return a stream of assets that match the specified criteria, lazily-fetched
          * @throws AtlanException on any issues interacting with the Atlan APIs
          */
-        public IndexSearchResponse go(AtlanClient client) throws AtlanException {
+        public Stream<Asset> stream(AtlanClient client) throws AtlanException {
             QueryFactory.CompoundQuery.CompoundQueryBuilder query = QueryFactory.CompoundQuery.builder();
             if (filters != null) {
                 query.musts(filters);
@@ -89,7 +90,7 @@ public class AssetFilter {
             if (relationAttributes != null) {
                 request.relationAttributes(relationAttributes);
             }
-            return request.build().search(client);
+            return request.build().search(client).stream();
         }
     }
 }
