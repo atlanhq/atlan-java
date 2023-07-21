@@ -4,10 +4,13 @@ package com.atlan.util;
 
 import com.atlan.AtlanClient;
 import com.atlan.exception.AtlanException;
+import com.atlan.exception.InvalidRequestException;
 import com.atlan.model.assets.Asset;
+import com.atlan.model.assets.IndistinctAsset;
 import com.atlan.model.core.AssetMutationResponse;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -29,8 +32,16 @@ public class AssetBatch {
     private final boolean replaceAtlanTags;
     private final CustomMetadataHandling customMetadataHandling;
 
+    /** Assets that were created (minimal info only). */
+    @Getter
+    private final List<Asset> created;
+
+    /** Assets that were updated (minimal info only). */
+    @Getter
+    private final List<Asset> updated;
+
     /**
-     * Create a new batch of assets to be bulk-upserted.
+     * Create a new batch of assets to be bulk-saved.
      *
      * @param client connectivity to Atlan
      * @param typeName name of the type of assets to batch process (used only for logging)
@@ -41,7 +52,7 @@ public class AssetBatch {
     }
 
     /**
-     * Create a new batch of assets to be bulk-upserted.
+     * Create a new batch of assets to be bulk-saved.
      *
      * @param client connectivity to Atlan
      * @param typeName name of the type of assets to batch process (used only for logging)
@@ -61,6 +72,8 @@ public class AssetBatch {
         this.maxSize = maxSize;
         this.replaceAtlanTags = replaceAtlanTags;
         this.customMetadataHandling = customMetadataHandling;
+        this.created = new ArrayList<>();
+        this.updated = new ArrayList<>();
     }
 
     /**
@@ -100,7 +113,7 @@ public class AssetBatch {
     public AssetMutationResponse flush() throws AtlanException {
         AssetMutationResponse response = null;
         if (!_batch.isEmpty()) {
-            log.info("... upserting next batch of ({}) {}s...", _batch.size(), typeName);
+            log.debug("... saving next batch of ({}) {}s...", _batch.size(), typeName);
             switch (customMetadataHandling) {
                 case IGNORE:
                     response = client.assets.save(_batch, replaceAtlanTags);
@@ -114,6 +127,26 @@ public class AssetBatch {
             }
             _batch = new ArrayList<>();
         }
+        trackResponse(response);
         return response;
+    }
+
+    private void trackResponse(AssetMutationResponse response) {
+        if (response != null) {
+            response.getCreatedAssets().forEach(a -> track(created, a));
+            response.getUpdatedAssets().forEach(a -> track(updated, a));
+        }
+    }
+
+    private void track(List<Asset> tracker, Asset candidate) {
+        try {
+            tracker.add(candidate.trimToRequired().name(candidate.getName()).build());
+        } catch (InvalidRequestException e) {
+            tracker.add(IndistinctAsset.builder()
+                    .typeName(candidate.getTypeName())
+                    .guid(candidate.getGuid())
+                    .qualifiedName(candidate.getQualifiedName())
+                    .build());
+        }
     }
 }

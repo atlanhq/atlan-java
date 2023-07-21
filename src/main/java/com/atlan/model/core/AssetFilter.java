@@ -19,12 +19,6 @@ import lombok.Singular;
 @Builder
 public class AssetFilter {
 
-    // TODO: Alternative nouns here that would better match the existing QueryFactory
-    //  wording (beActive, have(...), etc)? Or better to change QueryFactory's wording?
-
-    // TODO: Can we add an "update" method that does a seamless redirect to some AssetBatch()
-    //  to mass-update the assets through chaining?
-
     /** Filters to choose which assets to include in the results. */
     @Singular
     List<Query> filters;
