@@ -8,9 +8,11 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
+import com.atlan.model.core.AssetFilter;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
+import com.atlan.util.QueryFactory;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
@@ -91,6 +93,35 @@ public class ModeChart extends Asset implements IModeChart, IMode, IBI, ICatalog
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /**
+     * Start an asset filter that will return all ModeChart assets.
+     * Additional conditions can be chained onto the returned filter before any
+     * asset retrieval is attempted, ensuring all conditions are pushed-down for
+     * optimal retrieval. Only active (non-archived) ModeChart assets will be included.
+     *
+     * @return an asset filter that includes all ModeChart assets
+     */
+    public static AssetFilter.AssetFilterBuilder all() {
+        return all(false);
+    }
+
+    /**
+     * Start an asset filter that will return all ModeChart assets.
+     * Additional conditions can be chained onto the returned filter before any
+     * asset retrieval is attempted, ensuring all conditions are pushed-down for
+     * optimal retrieval.
+     *
+     * @param includeArchived when true, archived (soft-deleted) ModeCharts will be included
+     * @return an asset filter that includes all ModeChart assets
+     */
+    public static AssetFilter.AssetFilterBuilder all(boolean includeArchived) {
+        AssetFilter.AssetFilterBuilder builder = AssetFilter.builder().filter(QueryFactory.type(TYPE_NAME));
+        if (!includeArchived) {
+            builder.filter(QueryFactory.active());
+        }
+        return builder;
+    }
 
     /**
      * Reference to a ModeChart by GUID.

@@ -32,6 +32,17 @@ public class QueryFactory {
      * Returns a query that will only match active assets.
      *
      * @return a query that will only match active assets
+     * @see #beActive()
+     */
+    public static Query active() {
+        return beActive();
+    }
+
+    /**
+     * Returns a query that will only match active assets.
+     *
+     * @return a query that will only match active assets
+     * @see #active()
      */
     public static Query beActive() {
         return ACTIVE;
@@ -41,6 +52,17 @@ public class QueryFactory {
      * Returns a query that will only match soft-deleted (archived) assets.
      *
      * @return a query that will only match soft-deleted (archived) assets
+     * @see #beArchived()
+     */
+    public static Query archived() {
+        return beArchived();
+    }
+
+    /**
+     * Returns a query that will only match soft-deleted (archived) assets.
+     *
+     * @return a query that will only match soft-deleted (archived) assets
+     * @see #archived()
      */
     public static Query beArchived() {
         return ARCHIVED;
@@ -60,6 +82,18 @@ public class QueryFactory {
      *
      * @param typeName for assets to match
      * @return a query that will only match assets of the type provided
+     * @see #beOfType(String)
+     */
+    public static Query type(String typeName) {
+        return beOfType(typeName);
+    }
+
+    /**
+     * Returns a query that will only match assets of the type provided.
+     *
+     * @param typeName for assets to match
+     * @return a query that will only match assets of the type provided
+     * @see #type(String)
      */
     public static Query beOfType(String typeName) {
         return have(KeywordFields.TYPE_NAME).eq(typeName);
@@ -70,6 +104,18 @@ public class QueryFactory {
      *
      * @param typeName of the supertype for assets to match
      * @return a query that will only match assets of a subtype of the type provided
+     * @see #haveSuperType(String)
+     */
+    public static Query superType(String typeName) {
+        return haveSuperType(typeName);
+    }
+
+    /**
+     * Returns a query that will match all assets that are a subtype of the type provided.
+     *
+     * @param typeName of the supertype for assets to match
+     * @return a query that will only match assets of a subtype of the type provided
+     * @see #superType(String)
      */
     public static Query haveSuperType(String typeName) {
         return have(KeywordFields.SUPER_TYPE_NAMES).eq(typeName);
@@ -80,6 +126,18 @@ public class QueryFactory {
      *
      * @param typeNames collection of types that assets need to match one of
      * @return a query that will only match assets that are one of the types provided
+     * @see #beOneOfTypes(Collection)
+     */
+    public static Query types(Collection<String> typeNames) {
+        return beOneOfTypes(typeNames);
+    }
+
+    /**
+     * Returns a query that will match all assets that are one of the types provided.
+     *
+     * @param typeNames collection of types that assets need to match one of
+     * @return a query that will only match assets that are one of the types provided
+     * @see #types(Collection)
      */
     public static Query beOneOfTypes(Collection<String> typeNames) {
         return have(KeywordFields.TYPE_NAME).beOneOf(typeNames);
@@ -93,6 +151,21 @@ public class QueryFactory {
      * @param atlanTagNames human-readable names of the Atlan tags
      * @return a query that will only match assets that have at least one of the Atlan tags provided
      * @throws AtlanException on any error communicating with the API to refresh the Atlan tag cache
+     * @see #beTaggedByAtLeastOneOf(Collection)
+     */
+    public static Query tagged(Collection<String> atlanTagNames) throws AtlanException {
+        return beTaggedByAtLeastOneOf(atlanTagNames);
+    }
+
+    /**
+     * Returns a query that will only match assets that have at least one of the Atlan tags
+     * provided. This will match irrespective of the Atlan tag being directly applied to the
+     * asset, or if it was propagated to the asset.
+     *
+     * @param atlanTagNames human-readable names of the Atlan tags
+     * @return a query that will only match assets that have at least one of the Atlan tags provided
+     * @throws AtlanException on any error communicating with the API to refresh the Atlan tag cache
+     * @see #tagged(Collection)
      */
     public static Query beTaggedByAtLeastOneOf(Collection<String> atlanTagNames) throws AtlanException {
         return beTaggedByAtLeastOneOf(Atlan.getDefaultClient(), atlanTagNames);
@@ -107,6 +180,22 @@ public class QueryFactory {
      * @param atlanTagNames human-readable names of the Atlan tags
      * @return a query that will only match assets that have at least one of the Atlan tags provided
      * @throws AtlanException on any error communicating with the API to refresh the Atlan tag cache
+     * @see #beTaggedByAtLeastOneOf(AtlanClient, Collection)
+     */
+    public static Query tagged(AtlanClient client, Collection<String> atlanTagNames) throws AtlanException {
+        return beTaggedByAtLeastOneOf(client, atlanTagNames);
+    }
+
+    /**
+     * Returns a query that will only match assets that have at least one of the Atlan tags
+     * provided. This will match irrespective of the Atlan tag being directly applied to the
+     * asset, or if it was propagated to the asset.
+     *
+     * @param client connectivity to Atlan
+     * @param atlanTagNames human-readable names of the Atlan tags
+     * @return a query that will only match assets that have at least one of the Atlan tags provided
+     * @throws AtlanException on any error communicating with the API to refresh the Atlan tag cache
+     * @see #tagged(AtlanClient, Collection)
      */
     public static Query beTaggedByAtLeastOneOf(AtlanClient client, Collection<String> atlanTagNames)
             throws AtlanException {
@@ -123,18 +212,62 @@ public class QueryFactory {
     }
 
     /**
+     * Returns a query that will only match assets that have at least one Atlan tag assigned.
+     *
+     * @param directly when true, the asset must have at least one Atlan tag directly assigned (otherwise even propagated tags will suffice)
+     * @return a query that will only match assets that have at least one Atlan tag directly assigned
+     * @see #beDirectlyTagged()
+     * @see #beTagged()
+     */
+    public static Query tagged(boolean directly) {
+        if (directly) {
+            return beDirectlyTagged();
+        } else {
+            return beTagged();
+        }
+    }
+
+    /**
      * Returns a query that will only match assets that have at least one Atlan tag directly assigned.
      *
      * @return a query that will only match assets that have at least one Atlan tag directly assigned
+     * @see #tagged(boolean)
      */
     public static Query beDirectlyTagged() {
         return have(KeywordFields.TRAIT_NAMES).present();
     }
 
     /**
+     * Returns a query that will only match assets that have at least one Atlan tag assigned,
+     * irrespective of whether that tag is directly assigned or propagated.
+     *
+     * @return a query that will only match assets that have at least one Atlan tag assigned
+     * @see #tagged(boolean)
+     */
+    public static Query beTagged() {
+        return CompoundQuery.builder()
+                .should(have(KeywordFields.TRAIT_NAMES).present())
+                .should(have(KeywordFields.PROPAGATED_TRAIT_NAMES).present())
+                .minimum(1)
+                .build()
+                ._toQuery();
+    }
+
+    /**
      * Returns a query that will only match assets that have at least one term assigned.
      *
      * @return a query that will only match assets that have at least one term assigned
+     * @see #beAssignedATerm()
+     */
+    public static Query defined() {
+        return beAssignedATerm();
+    }
+
+    /**
+     * Returns a query that will only match assets that have at least one term assigned.
+     *
+     * @return a query that will only match assets that have at least one term assigned
+     * @see #defined()
      */
     public static Query beAssignedATerm() {
         return have(KeywordFields.ASSIGNED_TERMS).present();
@@ -145,6 +278,18 @@ public class QueryFactory {
      *
      * @param termQualifiedNames the qualifiedNames of the terms
      * @return a query that will only match assets that have at least one of the terms assigned
+     * @see #beDefinedByAtLeastOneOf(Collection)
+     */
+    public static Query definedBy(Collection<String> termQualifiedNames) {
+        return beDefinedByAtLeastOneOf(termQualifiedNames);
+    }
+
+    /**
+     * Returns a query that will only match assets that have at least one of the terms assigned.
+     *
+     * @param termQualifiedNames the qualifiedNames of the terms
+     * @return a query that will only match assets that have at least one of the terms assigned
+     * @see #definedBy(Collection)
      */
     public static Query beDefinedByAtLeastOneOf(Collection<String> termQualifiedNames) {
         return have(KeywordFields.ASSIGNED_TERMS).beOneOf(termQualifiedNames);
@@ -156,6 +301,19 @@ public class QueryFactory {
      *
      * @param field to start the query against
      * @return a FieldQuery object that can be used to complete construction of the query
+     * @see #have(AtlanSearchableField)
+     */
+    public static FieldQuery where(AtlanSearchableField field) {
+        return have(field);
+    }
+
+    /**
+     * Returns the start of a query against any field. You need to call one of the operations
+     * on the returned FieldQuery object to actually complete building the query against the field.
+     *
+     * @param field to start the query against
+     * @return a FieldQuery object that can be used to complete construction of the query
+     * @see #where(AtlanSearchableField)
      */
     public static FieldQuery have(AtlanSearchableField field) {
         return new FieldQuery(field);
@@ -170,6 +328,22 @@ public class QueryFactory {
      * @param cmAttributeName name of the custom metadata attribute within the set
      * @return a FieldQuery object that can be used to complete construction of the query
      * @throws AtlanException if there is any problem resolving the custom metadata, such as it not existing
+     * @see #haveCM(String, String)
+     */
+    public static FieldQuery where(String cmName, String cmAttributeName) throws AtlanException {
+        return haveCM(cmName, cmAttributeName);
+    }
+
+    /**
+     * Returns the start of a query against any custom metadata field. You need to call one of the
+     * operations on the returned FieldQuery object to actually complete building the query against
+     * the field.
+     *
+     * @param cmName name of the custom metadata set
+     * @param cmAttributeName name of the custom metadata attribute within the set
+     * @return a FieldQuery object that can be used to complete construction of the query
+     * @throws AtlanException if there is any problem resolving the custom metadata, such as it not existing
+     * @see #where(String, String)
      */
     public static FieldQuery haveCM(String cmName, String cmAttributeName) throws AtlanException {
         return haveCM(Atlan.getDefaultClient(), cmName, cmAttributeName);
@@ -185,6 +359,23 @@ public class QueryFactory {
      * @param cmAttributeName name of the custom metadata attribute within the set
      * @return a FieldQuery object that can be used to complete construction of the query
      * @throws AtlanException if there is any problem resolving the custom metadata, such as it not existing
+     * @see #haveCM(AtlanClient, String, String)
+     */
+    public static FieldQuery where(AtlanClient client, String cmName, String cmAttributeName) throws AtlanException {
+        return haveCM(client, cmName, cmAttributeName);
+    }
+
+    /**
+     * Returns the start of a query against any custom metadata field. You need to call one of the
+     * operations on the returned FieldQuery object to actually complete building the query against
+     * the field.
+     *
+     * @param client connectivity to Atlan
+     * @param cmName name of the custom metadata set
+     * @param cmAttributeName name of the custom metadata attribute within the set
+     * @return a FieldQuery object that can be used to complete construction of the query
+     * @throws AtlanException if there is any problem resolving the custom metadata, such as it not existing
+     * @see #where(AtlanClient, String, String)
      */
     public static FieldQuery haveCM(AtlanClient client, String cmName, String cmAttributeName) throws AtlanException {
         String attributeId = client.getCustomMetadataCache().getAttrIdForName(cmName, cmAttributeName);

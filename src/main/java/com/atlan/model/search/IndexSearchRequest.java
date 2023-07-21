@@ -96,6 +96,6 @@ public class IndexSearchRequest extends AtlanObject {
      * @return the matching assets
      */
     public IndexSearchResponse search(AtlanClient client) throws AtlanException {
-        return client.assets().search(this);
+        return client.assets.search(this);
     }
 }

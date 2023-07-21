@@ -9,6 +9,7 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
+import com.atlan.model.core.AssetFilter;
 import com.atlan.model.enums.AssetSidebarTab;
 import com.atlan.model.enums.AuthPolicyCategory;
 import com.atlan.model.enums.AuthPolicyResourceCategory;
@@ -85,6 +86,35 @@ public class Persona extends Asset implements IPersona, IAccessControl, IAsset, 
     /** TBC */
     @Attribute
     String roleId;
+
+    /**
+     * Start an asset filter that will return all Persona assets.
+     * Additional conditions can be chained onto the returned filter before any
+     * asset retrieval is attempted, ensuring all conditions are pushed-down for
+     * optimal retrieval. Only active (non-archived) Persona assets will be included.
+     *
+     * @return an asset filter that includes all Persona assets
+     */
+    public static AssetFilter.AssetFilterBuilder all() {
+        return all(false);
+    }
+
+    /**
+     * Start an asset filter that will return all Persona assets.
+     * Additional conditions can be chained onto the returned filter before any
+     * asset retrieval is attempted, ensuring all conditions are pushed-down for
+     * optimal retrieval.
+     *
+     * @param includeArchived when true, archived (soft-deleted) Personas will be included
+     * @return an asset filter that includes all Persona assets
+     */
+    public static AssetFilter.AssetFilterBuilder all(boolean includeArchived) {
+        AssetFilter.AssetFilterBuilder builder = AssetFilter.builder().filter(QueryFactory.type(TYPE_NAME));
+        if (!includeArchived) {
+            builder.filter(QueryFactory.active());
+        }
+        return builder;
+    }
 
     /**
      * Reference to a Persona by GUID.

@@ -123,7 +123,7 @@ public class ApiToken extends AtlanObject {
     public static ApiToken create(
             AtlanClient client, String displayName, String description, Set<String> personas, Long validity)
             throws AtlanException {
-        return client.apiTokens().create(displayName, description, personas, validity);
+        return client.apiTokens.create(displayName, description, personas, validity);
     }
 
     /**
@@ -146,7 +146,7 @@ public class ApiToken extends AtlanObject {
      * @throws AtlanException on any error during API invocation
      */
     public static ApiToken retrieveByName(AtlanClient client, String displayName) throws AtlanException {
-        return client.apiTokens().get(displayName);
+        return client.apiTokens.get(displayName);
     }
 
     /**
@@ -184,7 +184,7 @@ public class ApiToken extends AtlanObject {
                 }
             }
         }
-        return client.apiTokens().update(this.id, this.displayName, description, personas);
+        return client.apiTokens.update(this.id, this.displayName, description, personas);
     }
 
     /**
@@ -205,7 +205,7 @@ public class ApiToken extends AtlanObject {
      * @throws AtlanException on any API communication issues
      */
     public static void delete(AtlanClient client, String guid) throws AtlanException {
-        client.apiTokens().purge(guid);
+        client.apiTokens.purge(guid);
     }
 
     @Getter

@@ -129,6 +129,6 @@ public class LineageListRequest extends AtlanObject {
         if (direction == AtlanLineageDirection.BOTH) {
             throw new InvalidRequestException(ErrorCode.INVALID_LINEAGE_DIRECTION);
         }
-        return client.assets().lineage(this);
+        return client.assets.lineage(this);
     }
 }

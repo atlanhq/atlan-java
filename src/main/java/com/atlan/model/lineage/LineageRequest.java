@@ -83,6 +83,6 @@ public class LineageRequest extends AtlanObject {
      * @return the results of the requested lineage
      */
     public LineageResponse fetch(AtlanClient client) throws AtlanException {
-        return client.assets().lineage(this);
+        return client.assets.lineage(this);
     }
 }

@@ -54,7 +54,7 @@ public class AuditSearchRequest extends AtlanObject {
      * @return the matching audit log records
      */
     public AuditSearchResponse search(AtlanClient client) throws AtlanException {
-        return client.assets().auditLogs(this);
+        return client.assets.auditLogs(this);
     }
 
     /**

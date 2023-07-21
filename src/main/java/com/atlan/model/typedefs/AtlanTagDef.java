@@ -99,7 +99,7 @@ public class AtlanTagDef extends TypeDef {
      * @throws AtlanException on any API communication issues
      */
     public AtlanTagDef create(AtlanClient client) throws AtlanException {
-        TypeDefResponse response = client.typeDefs().create(this);
+        TypeDefResponse response = client.typeDefs.create(this);
         if (response != null && !response.getAtlanTagDefs().isEmpty()) {
             return response.getAtlanTagDefs().get(0);
         }
@@ -128,6 +128,6 @@ public class AtlanTagDef extends TypeDef {
      */
     public static void purge(AtlanClient client, String displayName) throws AtlanException {
         String internalName = client.getAtlanTagCache().getIdForName(displayName);
-        client.typeDefs().purge(internalName);
+        client.typeDefs.purge(internalName);
     }
 }

@@ -81,7 +81,7 @@ public class AtlanTagOptions extends AtlanObject {
      */
     public static AtlanTagOptions withImage(AtlanClient client, String url, AtlanTagColor color) throws AtlanException {
         try {
-            AtlanImage result = client.images().upload(url);
+            AtlanImage result = client.images.upload(url);
             return AtlanTagOptions.builder()
                     .color(color)
                     .iconType(TagIconType.IMAGE)

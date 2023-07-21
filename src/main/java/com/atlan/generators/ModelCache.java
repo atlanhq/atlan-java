@@ -40,26 +40,22 @@ public class ModelCache {
     private ModelCache() throws AtlanException {
         enumDefCache = new ConcurrentHashMap<>();
         for (EnumDef enumDef :
-                Atlan.getDefaultClient().typeDefs().list(AtlanTypeCategory.ENUM).getEnumDefs()) {
+                Atlan.getDefaultClient().typeDefs.list(AtlanTypeCategory.ENUM).getEnumDefs()) {
             enumDefCache.put(enumDef.getName(), enumDef);
         }
         structDefCache = new ConcurrentHashMap<>();
-        for (StructDef structDef : Atlan.getDefaultClient()
-                .typeDefs()
-                .list(AtlanTypeCategory.STRUCT)
-                .getStructDefs()) {
+        for (StructDef structDef :
+                Atlan.getDefaultClient().typeDefs.list(AtlanTypeCategory.STRUCT).getStructDefs()) {
             structDefCache.put(structDef.getName(), structDef);
         }
         entityDefCache = new ConcurrentHashMap<>();
-        for (EntityDef entityDef : Atlan.getDefaultClient()
-                .typeDefs()
-                .list(AtlanTypeCategory.ENTITY)
-                .getEntityDefs()) {
+        for (EntityDef entityDef :
+                Atlan.getDefaultClient().typeDefs.list(AtlanTypeCategory.ENTITY).getEntityDefs()) {
             entityDefCache.put(entityDef.getName(), entityDef);
         }
         relationshipDefCache = new ConcurrentHashMap<>();
         for (RelationshipDef relationshipDef : Atlan.getDefaultClient()
-                .typeDefs()
+                .typeDefs
                 .list(AtlanTypeCategory.RELATIONSHIP)
                 .getRelationshipDefs()) {
             relationshipDefCache.put(relationshipDef.getName(), relationshipDef);

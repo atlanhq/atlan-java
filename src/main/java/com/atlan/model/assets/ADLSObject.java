@@ -8,6 +8,7 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
+import com.atlan.model.core.AssetFilter;
 import com.atlan.model.enums.ADLSAccessTier;
 import com.atlan.model.enums.ADLSLeaseState;
 import com.atlan.model.enums.ADLSLeaseStatus;
@@ -18,6 +19,7 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.AzureTag;
+import com.atlan.util.QueryFactory;
 import com.atlan.util.StringUtils;
 import java.util.ArrayList;
 import java.util.List;
@@ -152,6 +154,35 @@ public class ADLSObject extends Asset
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /**
+     * Start an asset filter that will return all ADLSObject assets.
+     * Additional conditions can be chained onto the returned filter before any
+     * asset retrieval is attempted, ensuring all conditions are pushed-down for
+     * optimal retrieval. Only active (non-archived) ADLSObject assets will be included.
+     *
+     * @return an asset filter that includes all ADLSObject assets
+     */
+    public static AssetFilter.AssetFilterBuilder all() {
+        return all(false);
+    }
+
+    /**
+     * Start an asset filter that will return all ADLSObject assets.
+     * Additional conditions can be chained onto the returned filter before any
+     * asset retrieval is attempted, ensuring all conditions are pushed-down for
+     * optimal retrieval.
+     *
+     * @param includeArchived when true, archived (soft-deleted) ADLSObjects will be included
+     * @return an asset filter that includes all ADLSObject assets
+     */
+    public static AssetFilter.AssetFilterBuilder all(boolean includeArchived) {
+        AssetFilter.AssetFilterBuilder builder = AssetFilter.builder().filter(QueryFactory.type(TYPE_NAME));
+        if (!includeArchived) {
+            builder.filter(QueryFactory.active());
+        }
+        return builder;
+    }
 
     /**
      * Reference to a ADLSObject by GUID.

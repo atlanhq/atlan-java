@@ -195,7 +195,7 @@ public abstract class AtlanRequest extends AtlanObject {
      * @throws AtlanException on any API interaction issues
      */
     public void create(AtlanClient client) throws AtlanException {
-        client.requests().create(this);
+        client.requests.create(this);
     }
 
     /**
@@ -216,7 +216,7 @@ public abstract class AtlanRequest extends AtlanObject {
      * @throws AtlanException on any API communication issue
      */
     public static AtlanRequestResponse list(AtlanClient client) throws AtlanException {
-        return client.requests().list();
+        return client.requests.list();
     }
 
     /**
@@ -239,7 +239,7 @@ public abstract class AtlanRequest extends AtlanObject {
      * @throws AtlanException on any API communication issue
      */
     public static AtlanRequest retrieveByGuid(AtlanClient client, String guid) throws AtlanException {
-        return client.requests().get(guid);
+        return client.requests.get(guid);
     }
 
     /**
@@ -264,7 +264,7 @@ public abstract class AtlanRequest extends AtlanObject {
      * @throws AtlanException on any API interaction issues
      */
     public static boolean approve(AtlanClient client, String guid, String message) throws AtlanException {
-        return client.requests().approve(guid, message);
+        return client.requests.approve(guid, message);
     }
 
     /**
@@ -289,6 +289,6 @@ public abstract class AtlanRequest extends AtlanObject {
      * @throws AtlanException on any API interaction issues
      */
     public static boolean reject(AtlanClient client, String guid, String message) throws AtlanException {
-        return client.requests().reject(guid, message);
+        return client.requests.reject(guid, message);
     }
 }

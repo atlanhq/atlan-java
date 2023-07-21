@@ -52,6 +52,6 @@ public class KeycloakEventRequest extends AtlanObject {
      * @throws AtlanException on any issues interacting with the APIs
      */
     public KeycloakEventResponse search(AtlanClient client) throws AtlanException {
-        return client.logs().getEvents(this);
+        return client.logs.getEvents(this);
     }
 }

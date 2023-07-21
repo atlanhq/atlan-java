@@ -80,7 +80,7 @@ public class EnumDef extends TypeDef {
      * @throws AtlanException on any API communication issues
      */
     public EnumDef create(AtlanClient client) throws AtlanException {
-        TypeDefResponse response = client.typeDefs().create(this);
+        TypeDefResponse response = client.typeDefs.create(this);
         if (response != null && !response.getEnumDefs().isEmpty()) {
             return response.getEnumDefs().get(0);
         }
@@ -107,7 +107,7 @@ public class EnumDef extends TypeDef {
      * @throws AtlanException on any error during the API invocation
      */
     public static void purge(AtlanClient client, String displayName) throws AtlanException {
-        client.typeDefs().purge(displayName);
+        client.typeDefs.purge(displayName);
     }
 
     /**

@@ -56,7 +56,7 @@ public class WorkflowSearchResult extends AtlanObject {
      */
     public WorkflowRunResponse rerun(AtlanClient client) throws AtlanException {
         if (_source != null) {
-            return client.workflows().run(_source);
+            return client.workflows.run(_source);
         }
         return null;
     }

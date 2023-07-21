@@ -63,6 +63,6 @@ public class AdminEventRequest extends AtlanObject {
      * @throws AtlanException on any issues interacting with the APIs
      */
     public AdminEventResponse search(AtlanClient client) throws AtlanException {
-        return client.logs().getAdminEvents(this);
+        return client.logs.getAdminEvents(this);
     }
 }

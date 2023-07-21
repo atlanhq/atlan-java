@@ -112,7 +112,7 @@ public class AtlanGroup extends AtlanObject {
      * @throws AtlanException on any error during API invocation
      */
     public String create(AtlanClient client) throws AtlanException {
-        return client.groups().create(this);
+        return client.groups.create(this);
     }
 
     /**
@@ -134,7 +134,7 @@ public class AtlanGroup extends AtlanObject {
         if (this.id == null || this.id.length() == 0) {
             throw new InvalidRequestException(ErrorCode.MISSING_GROUP_ID);
         }
-        client.groups().update(this.id, this);
+        client.groups.update(this.id, this);
     }
 
     /**
@@ -155,7 +155,7 @@ public class AtlanGroup extends AtlanObject {
      * @throws AtlanException on any error during API invocation
      */
     public static void delete(AtlanClient client, String id) throws AtlanException {
-        client.groups().purge(id);
+        client.groups.purge(id);
     }
 
     /**
@@ -176,7 +176,7 @@ public class AtlanGroup extends AtlanObject {
      * @throws AtlanException on any error during API invocation
      */
     public static List<AtlanGroup> retrieveAll(AtlanClient client) throws AtlanException {
-        return client.groups().list();
+        return client.groups.list();
     }
 
     /**
@@ -205,7 +205,7 @@ public class AtlanGroup extends AtlanObject {
      * @throws AtlanException on any error during API invocation
      */
     public static List<AtlanGroup> retrieveByName(AtlanClient client, String alias) throws AtlanException {
-        return client.groups().get(alias);
+        return client.groups.get(alias);
     }
 
     /**
@@ -229,7 +229,7 @@ public class AtlanGroup extends AtlanObject {
         if (this.id == null || this.id.length() == 0) {
             throw new InvalidRequestException(ErrorCode.MISSING_GROUP_ID);
         }
-        client.groups().removeMembers(this.id, userIds);
+        client.groups.removeMembers(this.id, userIds);
     }
 
     /**
@@ -253,7 +253,7 @@ public class AtlanGroup extends AtlanObject {
         if (this.id == null || this.id.length() == 0) {
             throw new InvalidRequestException(ErrorCode.MISSING_GROUP_ID);
         }
-        return client.groups().listMembers(this.id);
+        return client.groups.listMembers(this.id);
     }
 
     @Getter

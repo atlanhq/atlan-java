@@ -44,6 +44,6 @@ public class Workflow extends AtlanObject {
      * @throws AtlanException on any API communication issue
      */
     public WorkflowResponse run(AtlanClient client) throws AtlanException {
-        return client.workflows().run(this);
+        return client.workflows.run(this);
     }
 }

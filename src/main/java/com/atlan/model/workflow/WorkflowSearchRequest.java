@@ -42,7 +42,7 @@ public class WorkflowSearchRequest extends IndexSearchDSL {
      * @return results from running the search
      */
     public WorkflowSearchResponse search(AtlanClient client) throws AtlanException {
-        return client.workflows().searchRuns(this);
+        return client.workflows.searchRuns(this);
     }
 
     /**
@@ -83,7 +83,7 @@ public class WorkflowSearchRequest extends IndexSearchDSL {
                 .query(query)
                 .build();
 
-        WorkflowSearchResponse response = client.workflows().searchRuns(request);
+        WorkflowSearchResponse response = client.workflows.searchRuns(request);
         if (response != null) {
             List<WorkflowSearchResult> results = response.getHits().getHits();
             if (results != null && !results.isEmpty()) {
@@ -129,7 +129,7 @@ public class WorkflowSearchRequest extends IndexSearchDSL {
                 .query(query)
                 .build();
 
-        WorkflowSearchResponse response = client.workflows().searchRuns(request);
+        WorkflowSearchResponse response = client.workflows.searchRuns(request);
         if (response != null) {
             List<WorkflowSearchResult> results = response.getHits().getHits();
             if (results != null && !results.isEmpty()) {
@@ -179,7 +179,7 @@ public class WorkflowSearchRequest extends IndexSearchDSL {
                 .query(query)
                 .build();
 
-        WorkflowSearchResponse response = client.workflows().search(request);
+        WorkflowSearchResponse response = client.workflows.search(request);
         if (response != null && response.getHits() != null) {
             return response.getHits().getHits();
         }

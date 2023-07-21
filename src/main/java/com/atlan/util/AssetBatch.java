@@ -103,13 +103,13 @@ public class AssetBatch {
             log.info("... upserting next batch of ({}) {}s...", _batch.size(), typeName);
             switch (customMetadataHandling) {
                 case IGNORE:
-                    response = client.assets().save(_batch, replaceAtlanTags);
+                    response = client.assets.save(_batch, replaceAtlanTags);
                     break;
                 case OVERWRITE:
-                    response = client.assets().saveReplacingCM(_batch, replaceAtlanTags);
+                    response = client.assets.saveReplacingCM(_batch, replaceAtlanTags);
                     break;
                 case MERGE:
-                    response = client.assets().saveMergingCM(_batch, replaceAtlanTags);
+                    response = client.assets.saveMergingCM(_batch, replaceAtlanTags);
                     break;
             }
             _batch = new ArrayList<>();

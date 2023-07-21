@@ -121,7 +121,7 @@ public class PurposeTest extends AtlanLiveTest {
                         "Mask the data", purpose.getGuid(), AuthPolicyType.DATA_MASK, null, null, true)
                 .policyMaskType(DataMaskingType.HASH)
                 .build();
-        AssetMutationResponse response = Atlan.getDefaultClient().assets().save(List.of(metadata, data), false);
+        AssetMutationResponse response = Atlan.getDefaultClient().assets.save(List.of(metadata, data), false);
         assertNotNull(response);
         assertEquals(response.getUpdatedAssets().size(), 1);
         Asset one = response.getUpdatedAssets().get(0);
