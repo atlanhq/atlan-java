@@ -24,7 +24,7 @@ public class QueryParserTest extends AtlanLiveTest {
                 .defaultDatabase("ORDERS")
                 .defaultSchema("PRODUCTION")
                 .build();
-        ParsedQuery response = Atlan.getDefaultClient().queryParser().parse(request);
+        ParsedQuery response = Atlan.getDefaultClient().queryParser.parse(request);
         assertNotNull(response);
         assertFalse(response.getObjects().isEmpty());
         assertFalse(response.getRelationships().isEmpty());
@@ -39,7 +39,7 @@ public class QueryParserTest extends AtlanLiveTest {
                 .defaultDatabase("ORDERS")
                 .defaultSchema("PRODUCTION")
                 .build();
-        ParsedQuery response = Atlan.getDefaultClient().queryParser().parse(request);
+        ParsedQuery response = Atlan.getDefaultClient().queryParser.parse(request);
         assertNotNull(response);
         assertTrue(response.getObjects().isEmpty());
         assertTrue(response.getRelationships().isEmpty());

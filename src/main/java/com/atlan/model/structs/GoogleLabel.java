@@ -16,6 +16,7 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 public class GoogleLabel extends AtlanStruct {
 
     public static final String TYPE_NAME = "GoogleLabel";

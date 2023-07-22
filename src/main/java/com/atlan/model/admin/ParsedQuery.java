@@ -17,6 +17,7 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 @Builder(toBuilder = true)
 @EqualsAndHashCode(callSuper = false)
+@ToString(callSuper = true)
 public class ParsedQuery extends ApiResource {
     private static final long serialVersionUID = 2L;
 
@@ -35,6 +36,7 @@ public class ParsedQuery extends ApiResource {
     @Jacksonized
     @SuperBuilder(toBuilder = true)
     @EqualsAndHashCode(callSuper = true)
+    @ToString(callSuper = true)
     public static final class DatabaseObject extends AtlanObject {
         private static final long serialVersionUID = 2L;
 
@@ -79,6 +81,7 @@ public class ParsedQuery extends ApiResource {
     @Jacksonized
     @SuperBuilder(toBuilder = true)
     @EqualsAndHashCode(callSuper = true)
+    @ToString(callSuper = true)
     public static final class Relationship extends AtlanObject {
         private static final long serialVersionUID = 2L;
 
@@ -109,6 +112,7 @@ public class ParsedQuery extends ApiResource {
     @Jacksonized
     @SuperBuilder(toBuilder = true)
     @EqualsAndHashCode(callSuper = true)
+    @ToString(callSuper = true)
     public static final class DatabaseColumn extends AtlanObject {
         private static final long serialVersionUID = 2L;
 
@@ -127,6 +131,7 @@ public class ParsedQuery extends ApiResource {
     @Jacksonized
     @SuperBuilder(toBuilder = true)
     @EqualsAndHashCode(callSuper = true)
+    @ToString(callSuper = true)
     public static final class RelationshipEndpoint extends AtlanObject {
         private static final long serialVersionUID = 2L;
 
@@ -148,6 +153,7 @@ public class ParsedQuery extends ApiResource {
     @Jacksonized
     @SuperBuilder(toBuilder = true)
     @EqualsAndHashCode(callSuper = true)
+    @ToString(callSuper = true)
     public static final class ParseError extends AtlanObject {
         private static final long serialVersionUID = 2L;
 

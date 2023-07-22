@@ -48,18 +48,41 @@ public class AtlanClient {
 
     private final ObjectMapper mapper;
 
-    private final TypeDefsEndpoint typeDefsEndpoint;
-    private final RolesEndpoint rolesEndpoint;
-    private ApiTokensEndpoint apiTokensEndpoint = null;
-    private GroupsEndpoint groupsEndpoint = null;
-    private UsersEndpoint usersEndpoint = null;
-    private WorkflowsEndpoint workflowsEndpoint = null;
-    private QueryParserEndpoint queryParserEndpoint = null;
-    private PlaybooksEndpoint playbooksEndpoint = null;
-    private LogsEndpoint logsEndpoint = null;
-    private ImagesEndpoint imagesEndpoint = null;
-    private AssetEndpoint assetEndpoint = null;
-    private RequestsEndpoint requestsEndpoint = null;
+    /** Endpoint with operations to manage type definitions. */
+    public final TypeDefsEndpoint typeDefs;
+
+    /** Endpoint with operations to manage workspace roles. */
+    public final RolesEndpoint roles;
+
+    /** Endpoint with operations to manage API tokens. */
+    public final ApiTokensEndpoint apiTokens;
+
+    /** Endpoint with operations to manage groups of users. */
+    public final GroupsEndpoint groups;
+
+    /** Endpoint with operations to manage users. */
+    public final UsersEndpoint users;
+
+    /** Endpoint with operations to manage workflows. */
+    public final WorkflowsEndpoint workflows;
+
+    /** Endpoint with operations to manage query parsing. */
+    public final QueryParserEndpoint queryParser;
+
+    /** Endpoint with operations to manage playbooks. */
+    public final PlaybooksEndpoint playbooks;
+
+    /** Endpoint with operations to manage logs. */
+    public final LogsEndpoint logs;
+
+    /** Endpoint with operations to manage images. */
+    public final ImagesEndpoint images;
+
+    /** Endpoint with operations to manage assets. */
+    public final AssetEndpoint assets;
+
+    /** Endpoint with operations to manage requests. */
+    public final RequestsEndpoint requests;
 
     /**
      * Instantiate a new client — this should only be called by the Atlan factory, hence package-private.
@@ -78,13 +101,23 @@ public class AtlanClient {
             }
         }
         mapper = Serde.createMapper(this);
-        typeDefsEndpoint = new TypeDefsEndpoint(this);
-        rolesEndpoint = new RolesEndpoint(this);
-        atlanTagCache = new AtlanTagCache(typeDefsEndpoint);
-        customMetadataCache = new CustomMetadataCache(typeDefsEndpoint);
-        enumCache = new EnumCache(typeDefsEndpoint);
+        typeDefs = new TypeDefsEndpoint(this);
+        roles = new RolesEndpoint(this);
+        apiTokens = new ApiTokensEndpoint(this);
+        groups = new GroupsEndpoint(this);
+        users = new UsersEndpoint(this);
+        workflows = new WorkflowsEndpoint(this);
+        queryParser = new QueryParserEndpoint(this);
+        playbooks = new PlaybooksEndpoint(this);
+        logs = new LogsEndpoint(this);
+        images = new ImagesEndpoint(this);
+        assets = new AssetEndpoint(this);
+        requests = new RequestsEndpoint(this);
+        atlanTagCache = new AtlanTagCache(typeDefs);
+        customMetadataCache = new CustomMetadataCache(typeDefs);
+        enumCache = new EnumCache(typeDefs);
         groupCache = new GroupCache();
-        roleCache = new RoleCache(rolesEndpoint);
+        roleCache = new RoleCache(roles);
         userCache = new UserCache();
     }
 
@@ -396,123 +429,5 @@ public class AtlanClient {
      */
     public Map<String, String> getAppInfo() {
         return appInfo;
-    }
-
-    /**
-     * Returns the endpoint with operations to manage type definitions.
-     * @return the endpoint with operations to manage type definitions.
-     */
-    public TypeDefsEndpoint typeDefs() {
-        return typeDefsEndpoint;
-    }
-
-    /**
-     * Returns the endpoint with operations acting on API tokens.
-     * @return the endpoint with operations acting on API tokens.
-     */
-    public ApiTokensEndpoint apiTokens() {
-        if (apiTokensEndpoint == null) {
-            apiTokensEndpoint = new ApiTokensEndpoint(this);
-        }
-        return apiTokensEndpoint;
-    }
-
-    /**
-     * Returns the endpoint with operations to manage groups of users.
-     * @return the endpoint with operations to manage groups of users.
-     */
-    public GroupsEndpoint groups() {
-        if (groupsEndpoint == null) {
-            groupsEndpoint = new GroupsEndpoint(this);
-        }
-        return groupsEndpoint;
-    }
-
-    /**
-     * Returns the endpoint with operations to manage users.
-     * @return the endpoint with operations to manage users.
-     */
-    public UsersEndpoint users() {
-        if (usersEndpoint == null) {
-            usersEndpoint = new UsersEndpoint(this);
-        }
-        return usersEndpoint;
-    }
-
-    /**
-     * Returns the endpoint with operations to manage workflows.
-     * @return the endpoint with operations to manage workflows.
-     */
-    public WorkflowsEndpoint workflows() {
-        if (workflowsEndpoint == null) {
-            workflowsEndpoint = new WorkflowsEndpoint(this);
-        }
-        return workflowsEndpoint;
-    }
-
-    /**
-     * Returns the endpoint with operations to parse queries.
-     * @return the endpoint with operations to parse queries.
-     */
-    public QueryParserEndpoint queryParser() {
-        if (queryParserEndpoint == null) {
-            queryParserEndpoint = new QueryParserEndpoint(this);
-        }
-        return queryParserEndpoint;
-    }
-
-    /**
-     * Returns the endpoint with operations to manage playbooks.
-     * @return the endpoint with operations to manage playbooks.
-     */
-    public PlaybooksEndpoint playbooks() {
-        if (playbooksEndpoint == null) {
-            playbooksEndpoint = new PlaybooksEndpoint(this);
-        }
-        return playbooksEndpoint;
-    }
-
-    /**
-     * Returns the endpoint with operations to view logs.
-     * @return the endpoint with operations to view logs.
-     */
-    public LogsEndpoint logs() {
-        if (logsEndpoint == null) {
-            logsEndpoint = new LogsEndpoint(this);
-        }
-        return logsEndpoint;
-    }
-
-    /**
-     * Returns the endpoint with operations to manage images.
-     * @return the endpoint with operations to manage images.
-     */
-    public ImagesEndpoint images() {
-        if (imagesEndpoint == null) {
-            imagesEndpoint = new ImagesEndpoint(this);
-        }
-        return imagesEndpoint;
-    }
-
-    /**
-     * Returns the endpoint with operations to manage metadata assets.
-     * @return the endpoint with operations to manage metadata assets.
-     */
-    public AssetEndpoint assets() {
-        if (assetEndpoint == null) {
-            assetEndpoint = new AssetEndpoint(this);
-        }
-        return assetEndpoint;
-    }
-
-    /**
-     * Returns the endpoint with operations to manage requests.
-     * @return the endpoint with operations to manage requests.
-     */
-    public RequestsEndpoint requests() {
-        if (requestsEndpoint == null) {
-            requestsEndpoint = new RequestsEndpoint(this);
-        }
-        return requestsEndpoint;
     }
 }

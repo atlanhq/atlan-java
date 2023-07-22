@@ -26,6 +26,7 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = false)
+@ToString(callSuper = true)
 public class AttributeDef extends AtlanObject implements Comparable<AttributeDef> {
     private static final long serialVersionUID = 2L;
 

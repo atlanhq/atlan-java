@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 @Getter
@@ -23,6 +24,7 @@ import lombok.experimental.SuperBuilder;
     @JsonSubTypes.Type(value = AtlanTagAddPayload.class, name = AtlanTagAddPayload.TYPE_NAME),
     @JsonSubTypes.Type(value = AtlanTagDeletePayload.class, name = AtlanTagDeletePayload.TYPE_NAME),
 })
+@ToString(callSuper = true)
 public abstract class AtlanEventPayload extends AtlanObject {
     /** Type of the event payload. */
     String type;

@@ -170,7 +170,7 @@ public class SearchFieldGenerator extends TypeGenerator {
                 Field field = new Field(getClassName(), entityDef.getName(), attributeDef, toGenerate, cfg);
                 if (!field.getType().getName().equals("Internal") && field.getSearchFieldName() != null) {
                     if (!fields.add(field)) {
-                        log.warn(
+                        log.info(
                                 "Skipping duplicate field {}, from asset {}", field.getEnumName(), entityDef.getName());
                     }
                     cache.addSearchFieldToCache(entityDef.getName(), attributeDef.getName(), field);

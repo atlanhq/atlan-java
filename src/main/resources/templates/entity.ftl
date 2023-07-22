@@ -15,6 +15,7 @@ import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.LogicException;
 import com.atlan.exception.NotFoundException;
 import com.atlan.model.core.AssetDeletionResponse;
+import com.atlan.model.core.AssetFilter;
 import com.atlan.model.core.AssetMutationResponse;
 import com.atlan.model.core.AssetResponse;
 import com.atlan.model.core.AtlanTag;
@@ -124,6 +125,7 @@ import javax.annotation.processing.Generated;
         property = "typeName",
         defaultImpl = IndistinctAsset.class)
 </#if>
+@ToString(callSuper = true)
 @Slf4j
 <#if mapContainers?? || className == "Asset">@SuppressWarnings("cast")</#if>
 public <#if abstract>abstract</#if> class ${className} extends ${parentClassName} implements <#if className == "TableauCalculatedField" || className == "TableauDatasourceField">ITableauField, </#if>I${className}<#list superTypes as parent>, I${resolveSuperTypeName(parent)}</#list> {
@@ -150,6 +152,64 @@ public <#if abstract>abstract</#if> class ${className} extends ${parentClassName
 
 </#list>
 <#if !abstract>
+    /**
+     * Start an asset filter that will return all ${className} assets.
+     * Additional conditions can be chained onto the returned filter before any
+     * asset retrieval is attempted, ensuring all conditions are pushed-down for
+     * optimal retrieval. Only active (non-archived) ${className} assets will be included.
+     *
+     * @return an asset filter that includes all ${className} assets
+     */
+    public static AssetFilter.AssetFilterBuilder all() {
+        return all(Atlan.getDefaultClient());
+    }
+
+    /**
+     * Start an asset filter that will return all ${className} assets.
+     * Additional conditions can be chained onto the returned filter before any
+     * asset retrieval is attempted, ensuring all conditions are pushed-down for
+     * optimal retrieval. Only active (non-archived) ${className} assets will be included.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the assets
+     * @return an asset filter that includes all ${className} assets
+     */
+    public static AssetFilter.AssetFilterBuilder all(AtlanClient client) {
+        return all(client, false);
+    }
+
+    /**
+     * Start an asset filter that will return all ${className} assets.
+     * Additional conditions can be chained onto the returned filter before any
+     * asset retrieval is attempted, ensuring all conditions are pushed-down for
+     * optimal retrieval.
+     *
+     * @param includeArchived when true, archived (soft-deleted) ${className}s will be included
+     * @return an asset filter that includes all ${className} assets
+     */
+    public static AssetFilter.AssetFilterBuilder all(boolean includeArchived) {
+        return all(Atlan.getDefaultClient(), includeArchived);
+    }
+
+    /**
+     * Start an asset filter that will return all ${className} assets.
+     * Additional conditions can be chained onto the returned filter before any
+     * asset retrieval is attempted, ensuring all conditions are pushed-down for
+     * optimal retrieval.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the assets
+     * @param includeArchived when true, archived (soft-deleted) ${className}s will be included
+     * @return an asset filter that includes all ${className} assets
+     */
+    public static AssetFilter.AssetFilterBuilder all(AtlanClient client, boolean includeArchived) {
+        AssetFilter.AssetFilterBuilder builder = AssetFilter.builder()
+            .client(client)
+            .filter(QueryFactory.type(TYPE_NAME));
+        if (!includeArchived) {
+            builder.filter(QueryFactory.active());
+        }
+        return builder;
+    }
+
     /**
      * Reference to a ${className} by GUID.
      *

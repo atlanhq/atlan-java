@@ -6,11 +6,13 @@ import java.util.UUID;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 public class AttributeRequest extends AtlanRequest {
 
     public static final String REQUEST_TYPE = "attribute";

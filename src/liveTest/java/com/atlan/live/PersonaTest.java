@@ -126,7 +126,7 @@ public class PersonaTest extends AtlanLiveTest {
                         Set.of("entity:" + glossary.getQualifiedName()))
                 .build();
         AssetMutationResponse response =
-                Atlan.getDefaultClient().assets().save(List.of(metadata, data, glossaryPolicy), false);
+                Atlan.getDefaultClient().assets.save(List.of(metadata, data, glossaryPolicy), false);
         assertNotNull(response);
         assertEquals(response.getUpdatedAssets().size(), 1);
         Asset one = response.getUpdatedAssets().get(0);

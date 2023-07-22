@@ -6,11 +6,13 @@ import com.atlan.model.core.AtlanObject;
 import java.util.Comparator;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 public abstract class AbstractPolicy extends AtlanObject implements Comparable<AbstractPolicy> {
 
     // Sort policies in a set based first on their name (mandatory and required to be unique)

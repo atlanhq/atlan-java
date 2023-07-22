@@ -6,6 +6,7 @@ import com.atlan.model.core.AtlanObject;
 import com.atlan.model.enums.AtlanComparisonOperator;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 /**
@@ -14,6 +15,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = false)
+@ToString(callSuper = true)
 public class EntityFilter extends AtlanObject {
 
     /** Name of the attribute on which filtering should be applied. */

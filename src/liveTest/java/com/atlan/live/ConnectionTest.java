@@ -109,7 +109,7 @@ public class ConnectionTest extends AtlanLiveTest {
             AtlanWorkflowPhase state = response.monitorStatus(log);
             assertNotNull(state);
             assertEquals(state, AtlanWorkflowPhase.SUCCESS);
-            client.workflows().archive(workflowName);
+            client.workflows.archive(workflowName);
         } catch (InvalidRequestException e) {
             // Can happen if two deletion workflows are run at the same time,
             // in which case we should wait a few seconds and try again

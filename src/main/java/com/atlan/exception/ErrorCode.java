@@ -201,6 +201,11 @@ public enum ErrorCode implements ExceptionMessageSet {
             "ATLAN-JAVA-400-036",
             "The URL provided could not be accessed.",
             "Check the provided URL and attempt to upload again."),
+    NO_ATLAN_CLIENT(
+            400,
+            "ATLAN-JAVA-400-037",
+            "No Atlan client has been provided.",
+            "You must provide an Atlan client to this operation, or it has no information about which Atlan tenant to run against."),
 
     AUTHENTICATION_PASSTHROUGH(
             401,

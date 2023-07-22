@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Map;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 /**
@@ -16,6 +17,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 public class AwsEventWrapper extends AtlanObject {
 
     @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
@@ -65,6 +67,7 @@ public class AwsEventWrapper extends AtlanObject {
     @Getter
     @SuperBuilder(toBuilder = true)
     @EqualsAndHashCode(callSuper = true)
+    @ToString(callSuper = true)
     public static final class AwsRequestContext extends AtlanObject {
 
         @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)

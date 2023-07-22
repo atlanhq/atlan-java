@@ -57,6 +57,7 @@ import lombok.extern.slf4j.Slf4j;
         include = JsonTypeInfo.As.EXISTING_PROPERTY,
         property = "typeName",
         defaultImpl = IndistinctAsset.class)
+@ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings("cast")
 public abstract class Asset extends Reference implements IAsset, IReferenceable {
@@ -668,6 +669,31 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     final SortedSet<String> pendingTasks;
 
     /**
+     * Retrieve the value of the custom metadata attribute from this asset.
+     * Note: returns null in all cases where the custom metadata does not exist, is not available on this asset,
+     * or simply is not assigned any value on this asset.
+     *
+     * @param setName the name of the custom metadata set from which to retrieve the attribute's value
+     * @param attrName the name of the custom metadata attribute for which to retrieve the value
+     * @return the value of that custom metadata attribute on this asset, or null if there is no value
+     */
+    @JsonIgnore
+    public Object getCustomMetadata(String setName, String attrName) {
+        if (customMetadataSets == null) {
+            return null;
+        } else if (!customMetadataSets.containsKey(setName)) {
+            return null;
+        } else {
+            Map<String, Object> attrs = customMetadataSets.get(setName).getAttributes();
+            if (!attrs.containsKey(attrName)) {
+                return null;
+            } else {
+                return attrs.get(attrName);
+            }
+        }
+    }
+
+    /**
      * Reduce the asset to the minimum set of properties required to update it.
      *
      * @return a builder containing the minimal set of properties required to update this asset
@@ -711,7 +737,7 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
      * @throws AtlanException on any error during the API invocation
      */
     public AssetMutationResponse save(AtlanClient client) throws AtlanException {
-        return client.assets().save(this, false);
+        return client.assets.save(this, false);
     }
 
     /**
@@ -753,7 +779,7 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
      * @throws AtlanException on any error during the API invocation
      */
     public AssetMutationResponse save(AtlanClient client, boolean replaceAtlanTags) throws AtlanException {
-        return client.assets().save(this, replaceAtlanTags);
+        return client.assets.save(this, replaceAtlanTags);
     }
 
     /**
@@ -798,7 +824,7 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
      * @throws AtlanException on any error during the API invocation
      */
     public AssetMutationResponse saveMergingCM(AtlanClient client, boolean replaceAtlanTags) throws AtlanException {
-        return client.assets().saveMergingCM(List.of(this), replaceAtlanTags);
+        return client.assets.saveMergingCM(List.of(this), replaceAtlanTags);
     }
 
     /**
@@ -846,7 +872,7 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
      * @throws AtlanException on any error during the API invocation
      */
     public AssetMutationResponse saveReplacingCM(AtlanClient client, boolean replaceAtlanTags) throws AtlanException {
-        return client.assets().saveReplacingCM(List.of(this), replaceAtlanTags);
+        return client.assets.saveReplacingCM(List.of(this), replaceAtlanTags);
     }
 
     /**
@@ -871,7 +897,7 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
      * @throws AtlanException on any error during the API invocation, such as the {@link com.atlan.exception.NotFoundException} if the asset does not exist
      */
     public static Asset retrieveFull(AtlanClient client, String guid) throws AtlanException {
-        AssetResponse response = client.assets().get(guid, false, false);
+        AssetResponse response = client.assets.get(guid, false, false);
         Asset asset = response.getAsset();
         if (asset != null) {
             asset.setCompleteObject();
@@ -901,7 +927,7 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
      * @throws AtlanException on any error during the API invocation, such as the {@link com.atlan.exception.NotFoundException} if the asset does not exist
      */
     public static Asset retrieveMinimal(AtlanClient client, String guid) throws AtlanException {
-        AssetResponse response = client.assets().get(guid, true, true);
+        AssetResponse response = client.assets.get(guid, true, true);
         return response.getAsset();
     }
 
@@ -917,7 +943,7 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
      */
     protected static Asset retrieveFull(AtlanClient client, String typeName, String qualifiedName)
             throws AtlanException {
-        AssetResponse response = client.assets().get(typeName, qualifiedName, false, false);
+        AssetResponse response = client.assets.get(typeName, qualifiedName, false, false);
         Asset asset = response.getAsset();
         if (asset != null) {
             asset.setCompleteObject();
@@ -950,7 +976,7 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
      */
     public static Asset retrieveMinimal(AtlanClient client, String typeName, String qualifiedName)
             throws AtlanException {
-        AssetResponse response = client.assets().get(typeName, qualifiedName, true, true);
+        AssetResponse response = client.assets.get(typeName, qualifiedName, true, true);
         return response.getAsset();
     }
 
@@ -976,7 +1002,7 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
      * @throws AtlanException on any error during the API invocation
      */
     public static AssetDeletionResponse delete(AtlanClient client, String guid) throws AtlanException {
-        return client.assets().delete(guid, AtlanDeleteType.SOFT);
+        return client.assets.delete(guid, AtlanDeleteType.SOFT);
     }
 
     /**
@@ -999,7 +1025,7 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
      * @throws AtlanException on any error during the API invocation
      */
     public static AssetDeletionResponse purge(AtlanClient client, String guid) throws AtlanException {
-        return client.assets().delete(guid, AtlanDeleteType.PURGE);
+        return client.assets.delete(guid, AtlanDeleteType.PURGE);
     }
 
     /**
@@ -1028,7 +1054,7 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
      */
     public static void updateCustomMetadataAttributes(
             AtlanClient client, String guid, String cmName, CustomMetadataAttributes attributes) throws AtlanException {
-        client.assets().updateCustomMetadataAttributes(guid, cmName, attributes);
+        client.assets.updateCustomMetadataAttributes(guid, cmName, attributes);
     }
 
     /**
@@ -1057,7 +1083,7 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
      */
     public static void replaceCustomMetadata(
             AtlanClient client, String guid, String cmName, CustomMetadataAttributes attributes) throws AtlanException {
-        client.assets().replaceCustomMetadata(guid, cmName, attributes);
+        client.assets.replaceCustomMetadata(guid, cmName, attributes);
     }
 
     /**
@@ -1080,7 +1106,7 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
      * @throws AtlanException on any API problems, or if the custom metadata is not defined in Atlan
      */
     public static void removeCustomMetadata(AtlanClient client, String guid, String cmName) throws AtlanException {
-        client.assets().removeCustomMetadata(guid, cmName);
+        client.assets.removeCustomMetadata(guid, cmName);
     }
 
     /**
@@ -1174,7 +1200,7 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     protected static void addAtlanTags(
             AtlanClient client, String typeName, String qualifiedName, List<String> atlanTagNames)
             throws AtlanException {
-        client.assets().addAtlanTags(typeName, qualifiedName, atlanTagNames);
+        client.assets.addAtlanTags(typeName, qualifiedName, atlanTagNames);
     }
 
     /**
@@ -1200,14 +1226,13 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
             boolean removePropagationsOnDelete,
             boolean restrictLineagePropagation)
             throws AtlanException {
-        client.assets()
-                .addAtlanTags(
-                        typeName,
-                        qualifiedName,
-                        atlanTagNames,
-                        propagate,
-                        removePropagationsOnDelete,
-                        restrictLineagePropagation);
+        client.assets.addAtlanTags(
+                typeName,
+                qualifiedName,
+                atlanTagNames,
+                propagate,
+                removePropagationsOnDelete,
+                restrictLineagePropagation);
     }
 
     /**
@@ -1221,7 +1246,7 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
      */
     protected static void removeAtlanTag(AtlanClient client, String typeName, String qualifiedName, String atlanTagName)
             throws AtlanException {
-        client.assets().removeAtlanTag(typeName, qualifiedName, atlanTagName, true);
+        client.assets.removeAtlanTag(typeName, qualifiedName, atlanTagName, true);
     }
 
     /**
@@ -1359,7 +1384,7 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     }
 
     private static Asset updateAttributes(AtlanClient client, Asset asset) throws AtlanException {
-        AssetMutationResponse response = client.assets().save(asset, false);
+        AssetMutationResponse response = client.assets.save(asset, false);
         if (response != null && !response.getUpdatedAssets().isEmpty()) {
             return response.getUpdatedAssets().get(0);
         }
@@ -1367,7 +1392,7 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     }
 
     private static Asset replaceAtlanTags(AtlanClient client, Asset asset) throws AtlanException {
-        AssetMutationResponse response = client.assets().save(asset, true);
+        AssetMutationResponse response = client.assets.save(asset, true);
         if (response != null && !response.getUpdatedAssets().isEmpty()) {
             return response.getUpdatedAssets().get(0);
         }
@@ -1435,7 +1460,7 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
 
     private static Asset updateAttributes(AtlanClient client, String typeName, String qualifiedName, Asset asset)
             throws AtlanException {
-        AssetMutationResponse response = client.assets().updateAttributes(typeName, qualifiedName, asset);
+        AssetMutationResponse response = client.assets.updateAttributes(typeName, qualifiedName, asset);
         if (response != null && !response.getPartiallyUpdatedAssets().isEmpty()) {
             return response.getPartiallyUpdatedAssets().get(0);
         }
@@ -1624,7 +1649,7 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
 
     private static Asset updateRelationships(AtlanClient client, Asset asset) throws AtlanException {
         String typeNameToUpdate = asset.getTypeName();
-        AssetMutationResponse response = client.assets().save(asset, false);
+        AssetMutationResponse response = client.assets.save(asset, false);
         if (response != null && !response.getUpdatedAssets().isEmpty()) {
             for (Asset result : response.getUpdatedAssets()) {
                 if (result.getTypeName().equals(typeNameToUpdate)) {
@@ -1643,7 +1668,7 @@ public abstract class Asset extends Reference implements IAsset, IReferenceable 
     }
 
     private static Optional<String> restore(AtlanClient client, Asset asset) throws AtlanException {
-        AssetMutationResponse response = client.assets().restore(asset);
+        AssetMutationResponse response = client.assets.restore(asset);
         if (response != null && !response.getGuidAssignments().isEmpty()) {
             return response.getGuidAssignments().values().stream().findFirst();
         }

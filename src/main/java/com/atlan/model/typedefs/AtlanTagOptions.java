@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 
@@ -27,6 +28,7 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = false)
+@ToString(callSuper = true)
 public class AtlanTagOptions extends AtlanObject {
     private static final long serialVersionUID = 2L;
 
@@ -79,7 +81,7 @@ public class AtlanTagOptions extends AtlanObject {
      */
     public static AtlanTagOptions withImage(AtlanClient client, String url, AtlanTagColor color) throws AtlanException {
         try {
-            AtlanImage result = client.images().upload(url);
+            AtlanImage result = client.images.upload(url);
             return AtlanTagOptions.builder()
                     .color(color)
                     .iconType(TagIconType.IMAGE)

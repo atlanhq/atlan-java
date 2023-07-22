@@ -5,6 +5,7 @@ package com.atlan.model.search;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.ToString;
 
 /**
  * Captures the results from a metric aggregation.
@@ -12,6 +13,7 @@ import lombok.Getter;
 @Getter
 @Builder
 @EqualsAndHashCode(callSuper = false)
+@ToString(callSuper = true)
 public class AggregationMetricResult extends AggregationResult {
     private static final long serialVersionUID = 2L;
 

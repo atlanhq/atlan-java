@@ -8,15 +8,13 @@ import com.atlan.model.core.AtlanObject;
 import com.atlan.model.enums.AdminOperationType;
 import com.atlan.model.enums.AdminResourceType;
 import java.util.List;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Singular;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 public class AdminEventRequest extends AtlanObject {
     private static final long serialVersionUID = 2L;
 
@@ -65,6 +63,6 @@ public class AdminEventRequest extends AtlanObject {
      * @throws AtlanException on any issues interacting with the APIs
      */
     public AdminEventResponse search(AtlanClient client) throws AtlanException {
-        return client.logs().getAdminEvents(this);
+        return client.logs.getAdminEvents(this);
     }
 }

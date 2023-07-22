@@ -5,10 +5,12 @@ package com.atlan.model.lineage;
 import java.util.*;
 import java.util.stream.Collectors;
 import lombok.Getter;
+import lombok.ToString;
 
 /**
  * Class to represent a lineage graph using an adjacency list implementation.
  */
+@ToString(callSuper = true)
 class LineageGraph {
 
     /** Map from source GUID to target processes and asset GUIDs. */
@@ -156,6 +158,7 @@ class LineageGraph {
 
     /** Class to internally represent the edges in the graph. */
     @Getter
+    @ToString(callSuper = true)
     static class DirectedPair {
         /** Process in-between. */
         String processGuid;

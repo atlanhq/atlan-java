@@ -5,9 +5,11 @@ package com.atlan.model.workflow;
 import com.atlan.exception.AtlanException;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.ToString;
 
 @Getter
 @EqualsAndHashCode(callSuper = false)
+@ToString(callSuper = true)
 public class WorkflowRunResponse extends WorkflowResponse {
     private static final long serialVersionUID = 2L;
 

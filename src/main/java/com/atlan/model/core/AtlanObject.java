@@ -4,7 +4,6 @@ package com.atlan.model.core;
 
 /* Based on original code from https://github.com/stripe/stripe-java (under MIT license) */
 import com.atlan.AtlanClient;
-import com.atlan.serde.Serde;
 import java.io.IOException;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
@@ -22,16 +21,7 @@ public abstract class AtlanObject {
     /** {@inheritDoc} */
     @Override
     public String toString() {
-        return String.format("<%s#%s> JSON: %s", this.getClass().getName(), this.hashCode(), rawJson());
-    }
-
-    private String rawJson() {
-        try {
-            return Serde.allInclusiveMapper.writeValueAsString(this);
-        } catch (IOException e) {
-            log.error("Unable to serialize this object: {}", this.getClass().getName(), e);
-        }
-        return null;
+        return String.format("<%s#%s>", this.getClass().getName(), this.hashCode());
     }
 
     /**

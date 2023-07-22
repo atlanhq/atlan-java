@@ -7,6 +7,7 @@ import com.atlan.serde.CustomMetadataAuditDeserializer;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 /**
@@ -16,6 +17,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @JsonDeserialize(using = CustomMetadataAuditDeserializer.class)
+@ToString(callSuper = true)
 public class CustomMetadataAttributesAuditDetail extends CustomMetadataAttributes implements AuditDetail {
 
     /** Unique name of the custom metadata set (structure). */

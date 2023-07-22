@@ -8,10 +8,12 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
+import com.atlan.model.core.AssetFilter;
 import com.atlan.model.enums.AtlanAnnouncementType;
 import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
+import com.atlan.util.QueryFactory;
 import com.atlan.util.StringUtils;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
@@ -30,6 +32,7 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings("cast")
 public class MaterializedView extends Asset implements IMaterializedView, ISQL, ICatalog, IAsset, IReferenceable {
@@ -192,6 +195,63 @@ public class MaterializedView extends Asset implements IMaterializedView, ISQL, 
     /** TBC */
     @Attribute
     String viewQualifiedName;
+
+    /**
+     * Start an asset filter that will return all MaterializedView assets.
+     * Additional conditions can be chained onto the returned filter before any
+     * asset retrieval is attempted, ensuring all conditions are pushed-down for
+     * optimal retrieval. Only active (non-archived) MaterializedView assets will be included.
+     *
+     * @return an asset filter that includes all MaterializedView assets
+     */
+    public static AssetFilter.AssetFilterBuilder all() {
+        return all(Atlan.getDefaultClient());
+    }
+
+    /**
+     * Start an asset filter that will return all MaterializedView assets.
+     * Additional conditions can be chained onto the returned filter before any
+     * asset retrieval is attempted, ensuring all conditions are pushed-down for
+     * optimal retrieval. Only active (non-archived) MaterializedView assets will be included.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the assets
+     * @return an asset filter that includes all MaterializedView assets
+     */
+    public static AssetFilter.AssetFilterBuilder all(AtlanClient client) {
+        return all(client, false);
+    }
+
+    /**
+     * Start an asset filter that will return all MaterializedView assets.
+     * Additional conditions can be chained onto the returned filter before any
+     * asset retrieval is attempted, ensuring all conditions are pushed-down for
+     * optimal retrieval.
+     *
+     * @param includeArchived when true, archived (soft-deleted) MaterializedViews will be included
+     * @return an asset filter that includes all MaterializedView assets
+     */
+    public static AssetFilter.AssetFilterBuilder all(boolean includeArchived) {
+        return all(Atlan.getDefaultClient(), includeArchived);
+    }
+
+    /**
+     * Start an asset filter that will return all MaterializedView assets.
+     * Additional conditions can be chained onto the returned filter before any
+     * asset retrieval is attempted, ensuring all conditions are pushed-down for
+     * optimal retrieval.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the assets
+     * @param includeArchived when true, archived (soft-deleted) MaterializedViews will be included
+     * @return an asset filter that includes all MaterializedView assets
+     */
+    public static AssetFilter.AssetFilterBuilder all(AtlanClient client, boolean includeArchived) {
+        AssetFilter.AssetFilterBuilder builder =
+                AssetFilter.builder().client(client).filter(QueryFactory.type(TYPE_NAME));
+        if (!includeArchived) {
+            builder.filter(QueryFactory.active());
+        }
+        return builder;
+    }
 
     /**
      * Reference to a MaterializedView by GUID.

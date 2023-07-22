@@ -6,6 +6,7 @@ import java.util.List;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.ToString;
 
 /**
  * Captures the details of an Atlan tag in a request.
@@ -13,6 +14,7 @@ import lombok.Getter;
 @Getter
 @Builder(toBuilder = true)
 @EqualsAndHashCode(callSuper = false)
+@ToString(callSuper = true)
 public class AtlanTagPayload extends AtlanRequestPayload {
 
     /** Name of the Atlan tag. */

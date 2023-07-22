@@ -10,9 +10,11 @@ import com.atlan.model.enums.AtlanWorkflowPhase;
 import java.util.List;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.ToString;
 
 @Getter
 @EqualsAndHashCode(callSuper = false)
+@ToString(callSuper = true)
 public class WorkflowSearchResult extends AtlanObject {
     private static final long serialVersionUID = 2L;
 
@@ -54,7 +56,7 @@ public class WorkflowSearchResult extends AtlanObject {
      */
     public WorkflowRunResponse rerun(AtlanClient client) throws AtlanException {
         if (_source != null) {
-            return client.workflows().run(_source);
+            return client.workflows.run(_source);
         }
         return null;
     }

@@ -170,7 +170,7 @@
                 client.getUserCache().getIdForName(userName);
             }
         }
-        return client.assets().save(this, false);
+        return client.assets.save(this, false);
     }
 
     /**
@@ -238,7 +238,7 @@
                 client.getUserCache().getIdForName(userName);
             }
         }
-        return client.assets().save(this, replaceAtlanTags);
+        return client.assets.save(this, replaceAtlanTags);
     }
 
     /**

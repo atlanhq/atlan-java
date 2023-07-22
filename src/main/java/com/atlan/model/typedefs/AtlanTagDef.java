@@ -12,6 +12,7 @@ import java.util.List;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 
@@ -22,6 +23,7 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 public class AtlanTagDef extends TypeDef {
     private static final long serialVersionUID = 2L;
 
@@ -97,7 +99,7 @@ public class AtlanTagDef extends TypeDef {
      * @throws AtlanException on any API communication issues
      */
     public AtlanTagDef create(AtlanClient client) throws AtlanException {
-        TypeDefResponse response = client.typeDefs().create(this);
+        TypeDefResponse response = client.typeDefs.create(this);
         if (response != null && !response.getAtlanTagDefs().isEmpty()) {
             return response.getAtlanTagDefs().get(0);
         }
@@ -126,6 +128,6 @@ public class AtlanTagDef extends TypeDef {
      */
     public static void purge(AtlanClient client, String displayName) throws AtlanException {
         String internalName = client.getAtlanTagCache().getIdForName(displayName);
-        client.typeDefs().purge(internalName);
+        client.typeDefs.purge(internalName);
     }
 }

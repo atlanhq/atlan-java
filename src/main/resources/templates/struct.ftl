@@ -33,6 +33,7 @@ import javax.annotation.processing.Generated;
 @Jacksonized
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 public class ${className} extends AtlanStruct {
 
     public static final String TYPE_NAME = "${className}";

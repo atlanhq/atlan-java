@@ -26,11 +26,13 @@ import java.util.stream.StreamSupport;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @JsonSerialize(using = KeycloakEventResponse.KeycloakEventResponseSerializer.class)
 @JsonDeserialize(using = KeycloakEventResponse.KeycloakEventResponseDeserializer.class)
 @EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 public class KeycloakEventResponse extends ApiResource implements Iterable<KeycloakEvent> {
     private static final long serialVersionUID = 2L;
 

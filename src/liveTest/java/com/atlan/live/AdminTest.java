@@ -81,7 +81,7 @@ public class AdminTest extends AtlanLiveTest {
 
     @Test(groups = {"admin.read.sessions"})
     void retrieveSessions() throws AtlanException {
-        UserMinimalResponse response = Atlan.getDefaultClient().users().getCurrentUser();
+        UserMinimalResponse response = Atlan.getDefaultClient().users.getCurrentUser();
         assertNotNull(response);
         AtlanUser user = response.toAtlanUser();
         assertNotNull(user);
@@ -138,7 +138,7 @@ public class AdminTest extends AtlanLiveTest {
         user.create();
         AtlanUser user2 = AtlanUser.creator(USER_EMAIL2, "$guest").build();
         AtlanUser user3 = AtlanUser.creator(USER_EMAIL3, "$guest").build();
-        Atlan.getDefaultClient().users().create(List.of(user2, user3));
+        Atlan.getDefaultClient().users.create(List.of(user2, user3));
     }
 
     @Test(
@@ -178,7 +178,7 @@ public class AdminTest extends AtlanLiveTest {
     void createGroups2() throws AtlanException {
         AtlanGroup group = AtlanGroup.creator(GROUP_NAME2).build();
         CreateGroupResponse response =
-                Atlan.getDefaultClient().groups().create(group, List.of(user2.getId(), user3.getId()));
+                Atlan.getDefaultClient().groups.create(group, List.of(user2.getId(), user3.getId()));
         String groupGuid2 = response.getGroup();
         assertNotNull(groupGuid2);
         Map<String, CreateGroupResponse.UserStatus> statusMap = response.getUsers();
@@ -277,7 +277,7 @@ public class AdminTest extends AtlanLiveTest {
             dependsOnGroups = {"admin.read.users.*"})
     void retrieveLogs() throws AtlanException {
         KeycloakEventResponse events = Atlan.getDefaultClient()
-                .logs()
+                .logs
                 .getEvents(KeycloakEventRequest.builder()
                         .dateFrom(YESTERDAY)
                         .dateTo(TODAY)
@@ -292,7 +292,7 @@ public class AdminTest extends AtlanLiveTest {
             dependsOnGroups = {"admin.read.users.*"})
     void retrieveAdminLogs() throws AtlanException {
         AdminEventResponse events = Atlan.getDefaultClient()
-                .logs()
+                .logs
                 .getAdminEvents(AdminEventRequest.builder()
                         .realmId("default")
                         .dateFrom(YESTERDAY)

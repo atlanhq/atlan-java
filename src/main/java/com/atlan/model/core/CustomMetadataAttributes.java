@@ -6,6 +6,7 @@ import java.util.Map;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Singular;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 /**
@@ -14,6 +15,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = false)
+@ToString(callSuper = true)
 @SuppressWarnings("cast")
 public class CustomMetadataAttributes extends AtlanObject {
 

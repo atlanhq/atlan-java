@@ -7,11 +7,13 @@ import com.atlan.model.enums.QueryParserSourceType;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 public class QueryParserRequest extends AtlanObject {
 
     /** SQL query to be parsed. */

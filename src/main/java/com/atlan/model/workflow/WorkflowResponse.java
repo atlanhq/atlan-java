@@ -12,10 +12,12 @@ import java.util.List;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.slf4j.Logger;
 
 @Getter
 @EqualsAndHashCode(callSuper = false)
+@ToString(callSuper = true)
 public class WorkflowResponse extends ApiResource {
     private static final long serialVersionUID = 2L;
 

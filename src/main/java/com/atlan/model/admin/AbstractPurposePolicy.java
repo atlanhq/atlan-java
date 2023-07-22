@@ -7,11 +7,13 @@ import java.util.SortedSet;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Singular;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 public abstract class AbstractPurposePolicy extends AbstractPolicy {
 
     /** Whether this policy applies to all users (true) or not (false). */

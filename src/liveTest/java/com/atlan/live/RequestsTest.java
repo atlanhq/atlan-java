@@ -105,7 +105,7 @@ public class RequestsTest extends AtlanLiveTest {
             groups = {"request.read.token"},
             dependsOnGroups = {"request.create.token"})
     void retrieveTokens() throws AtlanException {
-        ApiTokenResponse response = Atlan.getDefaultClient().apiTokens().list();
+        ApiTokenResponse response = Atlan.getDefaultClient().apiTokens.list();
         assertNotNull(response);
         assertTrue(response.getTotalRecord() > 1);
         assertTrue(response.getTotalRecord() < 100);
@@ -222,11 +222,11 @@ public class RequestsTest extends AtlanLiveTest {
             dependsOnGroups = {"request.read.requests"},
             alwaysRun = true)
     void readRequest() throws AtlanException {
-        AtlanRequest response = Atlan.getDefaultClient().requests().get(attributeRequestGuid);
+        AtlanRequest response = Atlan.getDefaultClient().requests.get(attributeRequestGuid);
         assertTrue(response instanceof AttributeRequest);
-        response = Atlan.getDefaultClient().requests().get(atlanTagRequestGuid);
+        response = Atlan.getDefaultClient().requests.get(atlanTagRequestGuid);
         assertTrue(response instanceof AtlanTagRequest);
-        response = Atlan.getDefaultClient().requests().get(termLinkRequestGuid);
+        response = Atlan.getDefaultClient().requests.get(termLinkRequestGuid);
         assertTrue(response instanceof TermLinkRequest);
     }
 
@@ -235,7 +235,7 @@ public class RequestsTest extends AtlanLiveTest {
             dependsOnGroups = {"request.read.request"},
             alwaysRun = true)
     void approveAttributeRequest() throws AtlanException {
-        assertTrue(Atlan.getDefaultClient().requests().approve(attributeRequestGuid, "Description change approved!"));
+        assertTrue(Atlan.getDefaultClient().requests.approve(attributeRequestGuid, "Description change approved!"));
     }
 
     @Test(
@@ -243,7 +243,7 @@ public class RequestsTest extends AtlanLiveTest {
             dependsOnGroups = {"request.read.request"},
             alwaysRun = true)
     void approveAtlanTagRequest() throws AtlanException {
-        assertTrue(Atlan.getDefaultClient().requests().approve(atlanTagRequestGuid, "Atlan tag approved!"));
+        assertTrue(Atlan.getDefaultClient().requests.approve(atlanTagRequestGuid, "Atlan tag approved!"));
     }
 
     @Test(
@@ -251,7 +251,7 @@ public class RequestsTest extends AtlanLiveTest {
             dependsOnGroups = {"request.read.request"},
             alwaysRun = true)
     void approveTermLinkRequest() throws AtlanException {
-        assertTrue(Atlan.getDefaultClient().requests().approve(termLinkRequestGuid, "Term link approved!"));
+        assertTrue(Atlan.getDefaultClient().requests.approve(termLinkRequestGuid, "Term link approved!"));
     }
 
     @Test(

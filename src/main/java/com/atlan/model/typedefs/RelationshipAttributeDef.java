@@ -4,6 +4,7 @@ package com.atlan.model.typedefs;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 
@@ -14,6 +15,7 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = false)
+@ToString(callSuper = true)
 public class RelationshipAttributeDef extends AttributeDef {
     private static final long serialVersionUID = 2L;
 

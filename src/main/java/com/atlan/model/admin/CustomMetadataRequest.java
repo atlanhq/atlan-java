@@ -5,11 +5,13 @@ package com.atlan.model.admin;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 public class CustomMetadataRequest extends AtlanRequest {
 
     public static final String REQUEST_TYPE = "bm_attribute";

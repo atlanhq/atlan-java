@@ -12,6 +12,7 @@ import com.atlan.model.core.AtlanObject;
 import com.atlan.model.core.AtlanResponseInterface;
 import com.atlan.model.enums.AtlanEnum;
 import com.atlan.serde.Serde;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import java.io.InputStream;
@@ -20,6 +21,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.stream.Collectors;
+import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
 
@@ -27,19 +29,23 @@ import org.slf4j.MDC;
  * Base class for all response objects.
  */
 @Slf4j
+@ToString(callSuper = true)
 public abstract class ApiResource extends AtlanObject implements AtlanResponseInterface {
     public static final Charset CHARSET = StandardCharsets.UTF_8;
 
     private static final AtlanResponseGetter atlanResponseGetter = new LiveAtlanResponseGetter();
 
+    @JsonIgnore
     private transient AtlanResponse lastResponse;
 
+    @JsonIgnore
     private transient JsonNode rawJsonObject;
 
     /**
      * {@inheritDoc}
      */
     @Override
+    @JsonIgnore
     public AtlanResponse getLastResponse() {
         return lastResponse;
     }
@@ -48,6 +54,7 @@ public abstract class ApiResource extends AtlanObject implements AtlanResponseIn
      * {@inheritDoc}
      */
     @Override
+    @JsonIgnore
     public void setLastResponse(AtlanResponse response) {
         this.lastResponse = response;
     }
@@ -63,6 +70,7 @@ public abstract class ApiResource extends AtlanObject implements AtlanResponseIn
      *
      * @return The raw JsonNode.
      */
+    @JsonIgnore
     public JsonNode getRawJsonObject() {
         // Lazily initialize this the first time the getter is called.
         if ((this.rawJsonObject == null) && (this.getLastResponse() != null)) {

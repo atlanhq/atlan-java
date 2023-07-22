@@ -9,6 +9,7 @@ import com.atlan.model.enums.AtlanTypeCategory;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.jackson.Jacksonized;
 
@@ -19,6 +20,7 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 public class CustomMetadataDef extends TypeDef {
     private static final long serialVersionUID = 2L;
 
@@ -59,7 +61,7 @@ public class CustomMetadataDef extends TypeDef {
      * @throws AtlanException on any API communication issues
      */
     public CustomMetadataDef create(AtlanClient client) throws AtlanException {
-        TypeDefResponse response = client.typeDefs().create(this);
+        TypeDefResponse response = client.typeDefs.create(this);
         if (response != null && !response.getCustomMetadataDefs().isEmpty()) {
             return response.getCustomMetadataDefs().get(0);
         }
@@ -88,7 +90,7 @@ public class CustomMetadataDef extends TypeDef {
      * @throws AtlanException on any API communication issues
      */
     public CustomMetadataDef update(AtlanClient client) throws AtlanException {
-        TypeDefResponse response = client.typeDefs().update(this);
+        TypeDefResponse response = client.typeDefs.update(this);
         if (response != null && !response.getCustomMetadataDefs().isEmpty()) {
             return response.getCustomMetadataDefs().get(0);
         }
@@ -116,6 +118,6 @@ public class CustomMetadataDef extends TypeDef {
      */
     public static void purge(AtlanClient client, String displayName) throws AtlanException {
         String internalName = client.getCustomMetadataCache().getIdForName(displayName);
-        client.typeDefs().purge(internalName);
+        client.typeDefs.purge(internalName);
     }
 }

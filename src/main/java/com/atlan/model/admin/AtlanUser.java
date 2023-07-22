@@ -20,6 +20,7 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 public class AtlanUser extends AtlanObject {
     private static final long serialVersionUID = 2L;
 
@@ -117,7 +118,7 @@ public class AtlanUser extends AtlanObject {
      * @throws AtlanException on any error during API invocation
      */
     public void create(AtlanClient client) throws AtlanException {
-        client.users().create(this);
+        client.users.create(this);
     }
 
     /**
@@ -143,7 +144,7 @@ public class AtlanUser extends AtlanObject {
         if (this.id == null || this.id.length() == 0) {
             throw new InvalidRequestException(ErrorCode.MISSING_USER_ID);
         }
-        return client.users().update(this.id, this);
+        return client.users.update(this.id, this);
     }
 
     /**
@@ -164,7 +165,7 @@ public class AtlanUser extends AtlanObject {
      * @throws AtlanException on any error during API invocation
      */
     public static void delete(AtlanClient client, String id) throws AtlanException {
-        client.users().delete(id);
+        client.users.delete(id);
     }
 
     /**
@@ -188,7 +189,7 @@ public class AtlanUser extends AtlanObject {
         if (this.id == null || this.id.length() == 0) {
             throw new InvalidRequestException(ErrorCode.MISSING_USER_ID);
         }
-        client.users().addToGroups(this.id, groupIds);
+        client.users.addToGroups(this.id, groupIds);
     }
 
     /**
@@ -212,7 +213,7 @@ public class AtlanUser extends AtlanObject {
         if (this.id == null || this.id.length() == 0) {
             throw new InvalidRequestException(ErrorCode.MISSING_USER_ID);
         }
-        return client.users().listGroups(this.id);
+        return client.users.listGroups(this.id);
     }
 
     /**
@@ -233,7 +234,7 @@ public class AtlanUser extends AtlanObject {
      * @throws AtlanException on any error during API invocation
      */
     public static List<AtlanUser> retrieveAll(AtlanClient client) throws AtlanException {
-        return client.users().list();
+        return client.users.list();
     }
 
     /**
@@ -264,7 +265,7 @@ public class AtlanUser extends AtlanObject {
      * @throws AtlanException on any error during API invocation
      */
     public static List<AtlanUser> retrieveByEmail(AtlanClient client, String email) throws AtlanException {
-        return client.users().getByEmail(email);
+        return client.users.getByEmail(email);
     }
 
     /**
@@ -289,7 +290,7 @@ public class AtlanUser extends AtlanObject {
      * @throws AtlanException on any error during API invocation
      */
     public static AtlanUser retrieveByUsername(AtlanClient client, String user) throws AtlanException {
-        return client.users().getByUsername(user);
+        return client.users.getByUsername(user);
     }
 
     /**
@@ -312,7 +313,7 @@ public class AtlanUser extends AtlanObject {
      * @throws AtlanException on any error during API invocation
      */
     public UserMinimalResponse activate(AtlanClient client) throws AtlanException {
-        return client.users().activate(this.id);
+        return client.users.activate(this.id);
     }
 
     /**
@@ -335,7 +336,7 @@ public class AtlanUser extends AtlanObject {
      * @throws AtlanException on any error during API invocation
      */
     public UserMinimalResponse deactivate(AtlanClient client) throws AtlanException {
-        return client.users().deactivate(this.id);
+        return client.users.deactivate(this.id);
     }
 
     /**
@@ -356,7 +357,7 @@ public class AtlanUser extends AtlanObject {
      * @throws AtlanException on any API communication issue
      */
     public void changeRole(AtlanClient client, String roleId) throws AtlanException {
-        client.users().changeRole(this.id, roleId);
+        client.users.changeRole(this.id, roleId);
     }
 
     /**
@@ -377,13 +378,14 @@ public class AtlanUser extends AtlanObject {
      * @throws AtlanException on any API communication issue
      */
     public SessionResponse fetchSessions(AtlanClient client) throws AtlanException {
-        return client.users().listSessions(this.id);
+        return client.users.listSessions(this.id);
     }
 
     @Getter
     @Jacksonized
     @SuperBuilder(toBuilder = true)
     @EqualsAndHashCode(callSuper = true)
+    @ToString(callSuper = true)
     public static final class UserAttributes extends AtlanObject {
         private static final long serialVersionUID = 2L;
 
@@ -416,6 +418,7 @@ public class AtlanUser extends AtlanObject {
     @Jacksonized
     @SuperBuilder(toBuilder = true)
     @EqualsAndHashCode(callSuper = true)
+    @ToString(callSuper = true)
     public static final class Persona extends AtlanObject implements Comparable<Persona> {
         private static final long serialVersionUID = 2L;
 

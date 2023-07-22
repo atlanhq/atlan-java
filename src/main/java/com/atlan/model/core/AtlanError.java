@@ -4,9 +4,11 @@ package com.atlan.model.core;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.ToString;
 
 @Getter
 @EqualsAndHashCode(callSuper = false)
+@ToString(callSuper = true)
 public class AtlanError extends AtlanObject {
 
     /** A numeric error code. */

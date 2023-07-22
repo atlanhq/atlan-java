@@ -18,6 +18,7 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 @Builder(toBuilder = true)
 @EqualsAndHashCode(callSuper = false)
+@ToString(callSuper = true)
 public class CreateGroupResponse extends ApiResource {
     private static final long serialVersionUID = 2L;
 
@@ -32,6 +33,7 @@ public class CreateGroupResponse extends ApiResource {
     @Jacksonized
     @SuperBuilder(toBuilder = true)
     @EqualsAndHashCode(callSuper = true)
+    @ToString(callSuper = true)
     public static final class UserStatus extends AtlanObject {
         private static final long serialVersionUID = 2L;
 

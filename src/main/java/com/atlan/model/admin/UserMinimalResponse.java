@@ -6,12 +6,14 @@ import com.atlan.net.ApiResource;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.ToString;
 
 /**
  * Specialized response for minimalist user details, as returned by some operations.
  */
 @Getter
 @EqualsAndHashCode(callSuper = false)
+@ToString(callSuper = true)
 public class UserMinimalResponse extends ApiResource {
     private static final long serialVersionUID = 2L;
 

@@ -7,6 +7,7 @@ import java.util.List;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.ToString;
 
 /**
  * Captures the results from a bucket aggregation.
@@ -14,6 +15,7 @@ import lombok.Getter;
 @Getter
 @Builder
 @EqualsAndHashCode(callSuper = false)
+@ToString(callSuper = true)
 public class AggregationBucketResult extends AggregationResult {
     private static final long serialVersionUID = 2L;
 

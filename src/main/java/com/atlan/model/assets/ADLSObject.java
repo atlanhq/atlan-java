@@ -8,6 +8,7 @@ import com.atlan.exception.AtlanException;
 import com.atlan.exception.ErrorCode;
 import com.atlan.exception.InvalidRequestException;
 import com.atlan.exception.NotFoundException;
+import com.atlan.model.core.AssetFilter;
 import com.atlan.model.enums.ADLSAccessTier;
 import com.atlan.model.enums.ADLSLeaseState;
 import com.atlan.model.enums.ADLSLeaseStatus;
@@ -18,6 +19,7 @@ import com.atlan.model.enums.AtlanConnectorType;
 import com.atlan.model.enums.CertificateStatus;
 import com.atlan.model.relations.UniqueAttributes;
 import com.atlan.model.structs.AzureTag;
+import com.atlan.util.QueryFactory;
 import com.atlan.util.StringUtils;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,10 +37,11 @@ import lombok.extern.slf4j.Slf4j;
 @Getter
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 @Slf4j
 @SuppressWarnings("cast")
 public class ADLSObject extends Asset
-        implements IADLSObject, IADLS, IObjectStore, IAzure, ICatalog, IAsset, IReferenceable, ICloud {
+        implements IADLSObject, IADLS, IAzure, IObjectStore, ICloud, IAsset, IReferenceable, ICatalog {
     private static final long serialVersionUID = 2L;
 
     public static final String TYPE_NAME = "ADLSObject";
@@ -151,6 +154,63 @@ public class ADLSObject extends Asset
     @Attribute
     @Singular
     SortedSet<ILineageProcess> outputFromProcesses;
+
+    /**
+     * Start an asset filter that will return all ADLSObject assets.
+     * Additional conditions can be chained onto the returned filter before any
+     * asset retrieval is attempted, ensuring all conditions are pushed-down for
+     * optimal retrieval. Only active (non-archived) ADLSObject assets will be included.
+     *
+     * @return an asset filter that includes all ADLSObject assets
+     */
+    public static AssetFilter.AssetFilterBuilder all() {
+        return all(Atlan.getDefaultClient());
+    }
+
+    /**
+     * Start an asset filter that will return all ADLSObject assets.
+     * Additional conditions can be chained onto the returned filter before any
+     * asset retrieval is attempted, ensuring all conditions are pushed-down for
+     * optimal retrieval. Only active (non-archived) ADLSObject assets will be included.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the assets
+     * @return an asset filter that includes all ADLSObject assets
+     */
+    public static AssetFilter.AssetFilterBuilder all(AtlanClient client) {
+        return all(client, false);
+    }
+
+    /**
+     * Start an asset filter that will return all ADLSObject assets.
+     * Additional conditions can be chained onto the returned filter before any
+     * asset retrieval is attempted, ensuring all conditions are pushed-down for
+     * optimal retrieval.
+     *
+     * @param includeArchived when true, archived (soft-deleted) ADLSObjects will be included
+     * @return an asset filter that includes all ADLSObject assets
+     */
+    public static AssetFilter.AssetFilterBuilder all(boolean includeArchived) {
+        return all(Atlan.getDefaultClient(), includeArchived);
+    }
+
+    /**
+     * Start an asset filter that will return all ADLSObject assets.
+     * Additional conditions can be chained onto the returned filter before any
+     * asset retrieval is attempted, ensuring all conditions are pushed-down for
+     * optimal retrieval.
+     *
+     * @param client connectivity to the Atlan tenant from which to retrieve the assets
+     * @param includeArchived when true, archived (soft-deleted) ADLSObjects will be included
+     * @return an asset filter that includes all ADLSObject assets
+     */
+    public static AssetFilter.AssetFilterBuilder all(AtlanClient client, boolean includeArchived) {
+        AssetFilter.AssetFilterBuilder builder =
+                AssetFilter.builder().client(client).filter(QueryFactory.type(TYPE_NAME));
+        if (!includeArchived) {
+            builder.filter(QueryFactory.active());
+        }
+        return builder;
+    }
 
     /**
      * Reference to a ADLSObject by GUID.

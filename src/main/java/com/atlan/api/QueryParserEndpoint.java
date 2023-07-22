@@ -7,6 +7,7 @@ import com.atlan.exception.AtlanException;
 import com.atlan.model.admin.ParsedQuery;
 import com.atlan.model.admin.QueryParserRequest;
 import com.atlan.net.ApiResource;
+import com.atlan.net.RequestOptions;
 
 /**
  * API endpoints for parsing SQL queries.
@@ -27,7 +28,19 @@ public class QueryParserEndpoint extends HekaEndpoint {
      * @throws AtlanException on any issues with API communication
      */
     public ParsedQuery parse(QueryParserRequest request) throws AtlanException {
+        return parse(request, null);
+    }
+
+    /**
+     * Parses the provided query to describe its component parts.
+     *
+     * @param request query to parse and configuration options
+     * @param options to override default client settings
+     * @return parsed explanation of the query
+     * @throws AtlanException on any issues with API communication
+     */
+    public ParsedQuery parse(QueryParserRequest request, RequestOptions options) throws AtlanException {
         String url = String.format("%s%s", getBaseUrl(), endpoint);
-        return ApiResource.request(client, ApiResource.RequestMethod.POST, url, request, ParsedQuery.class, null);
+        return ApiResource.request(client, ApiResource.RequestMethod.POST, url, request, ParsedQuery.class, options);
     }
 }

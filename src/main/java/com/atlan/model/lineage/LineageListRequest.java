@@ -20,6 +20,7 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 @SuperBuilder(toBuilder = true, builderMethodName = "_internal")
 @EqualsAndHashCode(callSuper = false)
+@ToString(callSuper = true)
 public class LineageListRequest extends AtlanObject {
 
     /**
@@ -128,6 +129,6 @@ public class LineageListRequest extends AtlanObject {
         if (direction == AtlanLineageDirection.BOTH) {
             throw new InvalidRequestException(ErrorCode.INVALID_LINEAGE_DIRECTION);
         }
-        return client.assets().lineage(this);
+        return client.assets.lineage(this);
     }
 }
